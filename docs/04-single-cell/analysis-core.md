@@ -253,3 +253,93 @@ in [`integration.md`](integration.md). Multimodal joint analysis is in
   - Layer: `B` (tool — `rsomics-infercnv`)
   - Consumes primitives: `anndata-rs` (count matrix IO), `rsomics-stats` (smoothing, HMM), `ndarray`
   - Notes: Core algorithm: (1) normalize scRNA expression matrix, (2) order genes by genomic position, (3) smooth expression across genomic windows per cell, (4) subtract reference (normal cells) to reveal relative gains/losses, (5) optional HMM to call CNV states. The hot path is the per-cell sliding-window smoothing over the gene-position-ordered expression vector — O(cells × genes), embarrassingly parallel across cells. A Rust port with rayon would be a straightforward win over the R version. BSD-3-Clause allows source reading. Key challenge: gene-position annotation requires a GTF/GFF parser (use noodles-gff or rsomics-gff tools).
+
+- [ ] **`CellTypist`** — automated cell-type annotation via logistic regression with pretrained models.
+  - Reference impl: `Python` · [Teichmann lab / celltypist](https://github.com/Teichmann-Lab/celltypist) · `Apache-2.0`
+  - Existing Rust: none verified
+  - Existing Rust kind: `none`
+  - Existing non-C alternatives: —
+  - Parallelism: scikit-learn parallelism (joblib)
+  - SIMD: via numpy/scipy BLAS
+  - Quadrant: —
+  - GPU-amenable: maybe — logistic regression is GPU-friendly for large atlases
+  - Upstream license: `Apache-2.0`
+  - Priority: `P1`
+  - Layer: `B` (tool — `rsomics-celltype-lr`)
+  - Consumes primitives: `anndata-rs`, `linfa-logistic`, `ndarray`, `rayon`
+  - Notes: 53 pretrained models across human/mouse tissues. Core algorithm: multinomial logistic regression on over-clustered data → majority-vote label. Apache-2.0 allows source reading. The pretrained model weights (`.pkl` → convert to flat matrix) are the main dependency.
+
+- [ ] **`SingleR`** — reference-based automated cell-type labelling.
+  - Reference impl: `R` · [Bioconductor SingleR](https://bioconductor.org/packages/release/bioc/html/SingleR.html) · `GPL-3.0`
+  - Existing Rust: none verified
+  - Existing Rust kind: `none`
+  - Existing non-C alternatives: CellTypist (Python), scType (R)
+  - Parallelism: R BiocParallel
+  - SIMD: none
+  - Quadrant: —
+  - GPU-amenable: no — per-cell Spearman correlation, memory-latency-bound
+  - Upstream license: `GPL-3.0`
+  - Priority: `P1`
+  - Layer: `B` (tool — `rsomics-celltype-cor`)
+  - Consumes primitives: `anndata-rs`, `ndarray`, `rayon`, future `rsomics-stats`
+  - Notes: Core: per-cell Spearman correlation against reference profiles → iterative refinement. Clean-room required (GPL). Embarrassingly parallel across cells — rayon natural fit.
+
+- [ ] **`scType`** — marker-based cell-type identification without reference atlas.
+  - Reference impl: `R` · Ianevski et al. 2022, Nat Commun · `MIT`
+  - Existing Rust: none verified
+  - Existing Rust kind: `none`
+  - Existing non-C alternatives: CellTypist (Python), SingleR (R)
+  - Parallelism: minimal
+  - SIMD: none
+  - Quadrant: —
+  - GPU-amenable: no — lightweight scoring
+  - Upstream license: `MIT`
+  - Priority: `P2`
+  - Layer: `subcommand-of-rsomics-celltype-lr` (marker-score alternative)
+  - Consumes primitives: `anndata-rs`, `ndarray`
+  - Notes: Lightweight marker-weight scoring per cluster. Small algorithm, low priority vs CellTypist/SingleR.
+
+- [ ] **`CellChat`** — ligand-receptor cell-cell communication inference.
+  - Reference impl: `R` · [jinworks/CellChat](https://github.com/jinworks/CellChat) · `MIT`
+  - Existing Rust: none verified
+  - Existing Rust kind: `none`
+  - Existing non-C alternatives: LIANA+ (Python)
+  - Parallelism: R parallel
+  - SIMD: none
+  - Quadrant: —
+  - GPU-amenable: no — permutation tests, latency-bound
+  - Upstream license: `MIT`
+  - Priority: `P1`
+  - Layer: `B` (tool — `rsomics-cellchat`)
+  - Consumes primitives: `anndata-rs`, `ndarray`, `rayon`, future `rsomics-stats`
+  - Notes: Core: mass-action signalling probability model over a curated L-R database (CellChatDB). Permutation-based p-values → rayon parallel. Nature Protocols 2024 update. MIT allows source reading.
+
+- [ ] **`LIANA+`** — unified cell-cell communication framework (7+ methods).
+  - Reference impl: `Python` · [saezlab/liana-py](https://github.com/saezlab/liana-py) · `MIT`
+  - Existing Rust: none verified
+  - Existing Rust kind: `none`
+  - Existing non-C alternatives: CellChat (R)
+  - Parallelism: Python multiprocessing
+  - SIMD: none
+  - Quadrant: —
+  - GPU-amenable: no
+  - Upstream license: `MIT`
+  - Priority: `P1`
+  - Layer: `subcommand-of-rsomics-cellchat` (unified L-R scoring)
+  - Consumes primitives: `anndata-rs`, `ndarray`, `rayon`, future `rsomics-stats`
+  - Notes: Meta-framework unifying CellPhoneDB, NATMI, SingleCellSignalR, Connectome, CellChat, logFC, and geometric-mean methods. Nature Cell Biology 2024. Build the rsomics version as a unified L-R scoring crate that supports multiple scoring methods.
+
+- [ ] **`NicheNet`** — network-based ligand activity prioritization.
+  - Reference impl: `R` · [saeyslab/nichenetr](https://github.com/saeyslab/nichenetr) · `MIT`
+  - Existing Rust: none verified
+  - Existing Rust kind: `none`
+  - Existing non-C alternatives: LIANA+ (Python)
+  - Parallelism: minimal
+  - SIMD: none
+  - Quadrant: —
+  - GPU-amenable: no — network propagation, sparse matrix ops
+  - Upstream license: `MIT`
+  - Priority: `P2`
+  - Layer: `subcommand-of-rsomics-cellchat`
+  - Consumes primitives: `anndata-rs`, `ndarray`, `petgraph`
+  - Notes: Prior-knowledge network propagation to prioritize active ligands. Complementary to CellChat/LIANA+.

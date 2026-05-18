@@ -122,3 +122,48 @@ Static clustering and neighbor graphs are in
   - Layer: —
   - Consumes primitives: —
   - Notes: dynverse's value is the benchmarking harness, not the methods. If rsomics ships its own trajectory tools, a small `rsomics-bench-trajectory` crate replicating dynverse's metric suite (TI evaluation) is a useful Phase-4 deliverable.
+
+- [ ] **`CellRank 2`** — RNA-velocity + multi-kernel cell-fate mapping.
+  - Reference impl: `Python` · [theislab/cellrank](https://github.com/theislab/cellrank) · `BSD-3-Clause`
+  - Existing Rust: none verified
+  - Existing Rust kind: `none`
+  - Existing non-C alternatives: —
+  - Parallelism: Python + scipy sparse
+  - SIMD: via numpy BLAS
+  - Quadrant: —
+  - GPU-amenable: maybe — Markov chain operations on transition matrix
+  - Upstream license: `BSD-3-Clause`
+  - Priority: `P1`
+  - Layer: `B` (tool — `rsomics-cellrank`)
+  - Consumes primitives: `anndata-rs`, `ndarray`, `rayon`, `petgraph`, future `rsomics-stats`
+  - Notes: Canonical trajectory-fate mapper combining RNA velocity, pseudotime, CytoTRACE, and custom kernels into a Markov transition matrix. Absorption probabilities reveal terminal fates. Nature Methods 2021+2024 updates. BSD-3-Clause allows source reading.
+
+- [ ] **`CytoTRACE` / `CytoTRACE 2`** — developmental potential / stemness scoring.
+  - Reference impl: `R / Python` · Gulati et al., Science 2020 · `custom academic`
+  - Existing Rust: none verified
+  - Existing Rust kind: `none`
+  - Existing non-C alternatives: —
+  - Parallelism: minimal
+  - SIMD: none
+  - Quadrant: —
+  - GPU-amenable: no — per-cell gene-count correlation scoring
+  - Upstream license: varies (CytoTRACE 2 license requires verification)
+  - Priority: `P2`
+  - Layer: `subcommand-of-rsomics-cellrank` (stemness-scoring kernel)
+  - Consumes primitives: `anndata-rs`, `ndarray`, `rayon`
+  - Notes: Core: correlate gene counts with gene expression diversity per cell → stemness score. v2 adds a neural-net classifier. Simple scoring algorithm, good Rust target.
+
+- [ ] **`Palantir`** — Markov-chain pseudotime with branch fate probabilities.
+  - Reference impl: `Python` · [dpeerlab/Palantir](https://github.com/dpeerlab/Palantir) · `BSD-3-Clause`
+  - Existing Rust: none verified
+  - Existing Rust kind: `none`
+  - Existing non-C alternatives: CellRank (Python)
+  - Parallelism: Python + scipy
+  - SIMD: via numpy BLAS
+  - Quadrant: —
+  - GPU-amenable: maybe — diffusion-component eigendecomposition
+  - Upstream license: `BSD-3-Clause`
+  - Priority: `P2`
+  - Layer: `subcommand-of-rsomics-cellrank` (diffusion-pseudotime kernel)
+  - Consumes primitives: `anndata-rs`, `ndarray`, `rayon`
+  - Notes: Diffusion maps + Markov chain for pseudotime and branch probabilities. Complementary to CellRank (CellRank can use Palantir as a kernel). BSD-3 allows source reading.

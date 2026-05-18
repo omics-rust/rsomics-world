@@ -199,3 +199,33 @@ and largely closed-source) and post-alignment QC (samtools stats, mosdepth
   - Layer: `subcommand-of-rsomics-seqkit` (single binary; seqtk subset of subcommands)
   - Consumes primitives: `needletail`, `noodles-fasta`, `noodles-fastq`
   - Notes: `seqtk-rs` covers the common subcommands. Adopt as a starting point for the broader `rsomics-seqkit` work.
+
+- [ ] **`Dorado`** — ONT's GPU-accelerated neural-network basecaller (successor to Guppy).
+  - Reference impl: `C++ / CUDA` · [nanoporetech/dorado](https://github.com/nanoporetech/dorado) · `Apache-2.0`
+  - Existing Rust: none verified
+  - Existing Rust kind: `none`
+  - Existing non-C alternatives: —
+  - Parallelism: multi-GPU (C++/CUDA)
+  - SIMD: via libtorch / CUDA
+  - Quadrant: —
+  - GPU-amenable: yes — neural-net basecalling is GPU-native
+  - Upstream license: `Apache-2.0`
+  - Priority: `P1`
+  - Layer: `A` (adopt — subprocess wrapper, not a reimplementation)
+  - Consumes primitives: —
+  - Notes: ONT's current basecaller replacing Guppy. Rust reimplementation is impractical (GPU model inference). The rsomics role is an `[A]` subprocess-adopt entry — orchestrate dorado from rsomics pipelines, normalize output formats. Apache-2.0.
+
+- [ ] **`NanoPlot` / `NanoPack2`** — quality visualization and filtering for long-read ONT data.
+  - Reference impl: `Python + Rust (chopper)` · [wdecoster/NanoPlot](https://github.com/wdecoster/NanoPlot) · `MIT`
+  - Existing Rust: [`chopper`](https://crates.io/crates/chopper) — NanoPack2's Rust read-length/quality filter
+  - Existing Rust kind: `partial-port` (chopper only; NanoPlot itself is Python)
+  - Existing non-C alternatives: —
+  - Parallelism: Python multiprocessing (NanoPlot)
+  - SIMD: auto-vectorize (chopper)
+  - Quadrant: ① (chopper)
+  - GPU-amenable: no
+  - Upstream license: `MIT`
+  - Priority: `P2`
+  - Layer: `adopt` (chopper) / `B` (tool — `rsomics-nanoplot` for stats)
+  - Consumes primitives: `noodles-bam`, `needletail`
+  - Notes: `chopper` (Rust, from NanoPack2 author) handles filtering; NanoPlot QC stats are a Rust-rewrite target. Lower priority — long-read QC is less critical than alignment/assembly.

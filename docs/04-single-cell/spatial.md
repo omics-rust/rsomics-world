@@ -165,3 +165,48 @@ analysis is in [`analysis-core.md`](analysis-core.md).
   - Layer: `subcommand-of-rsomics-spatial` (vendor-specific input readers)
   - Consumes primitives: future `rsomics-baysor`, `anndata-rs`, `zarrs`
   - Notes: The unified entry point is the `rsomics-spatial` crate with a Baysor-equivalent segmenter; downstream is the same as Squidpy over an `AnnData`.
+
+- [ ] **`BANKSY`** — spatial clustering unifying cell-typing and tissue domain segmentation.
+  - Reference impl: `Python / R` · Singhal et al., Nature Genetics 2024 · `MIT`
+  - Existing Rust: none verified
+  - Existing Rust kind: `none`
+  - Existing non-C alternatives: Squidpy, Giotto
+  - Parallelism: Python multiprocessing
+  - SIMD: via numpy BLAS
+  - Quadrant: —
+  - GPU-amenable: maybe — augmented-feature matrix construction is dense linear algebra
+  - Upstream license: `MIT`
+  - Priority: `P1`
+  - Layer: `subcommand-of-rsomics-spatial`
+  - Consumes primitives: `anndata-rs`, `ndarray`, `rayon`, `linfa`, `petgraph`
+  - Notes: Augments cell expression with spatially-weighted neighborhood features, then clusters on the joint space. Scalable to millions of cells. Nature Genetics 2024. MIT allows source reading.
+
+- [ ] **`SpatialDE`** — spatially variable gene detection via Gaussian processes.
+  - Reference impl: `Python` · [Teichmann lab / SpatialDE](https://github.com/Teichmann-Lab/SpatialDE) · `MIT`
+  - Existing Rust: none verified
+  - Existing Rust kind: `none`
+  - Existing non-C alternatives: SPARK-X (R)
+  - Parallelism: Python + scipy
+  - SIMD: via numpy BLAS
+  - Quadrant: —
+  - GPU-amenable: maybe — GP kernel evaluations are GPU-friendly
+  - Upstream license: `MIT`
+  - Priority: `P1`
+  - Layer: `subcommand-of-rsomics-spatial` (spatial-DE subcommand)
+  - Consumes primitives: `anndata-rs`, `ndarray`, `rayon`, future `rsomics-stats`
+  - Notes: Per-gene GP likelihood-ratio test for spatial expression variation. Complementary to BANKSY (gene-level vs cluster-level). MIT allows source reading.
+
+- [ ] **`SPARK-X`** — fast non-parametric spatially variable gene detection.
+  - Reference impl: `R` · [xzhoulab/SPARK](https://github.com/xzhoulab/SPARK) · `GPL-2.0`
+  - Existing Rust: none verified
+  - Existing Rust kind: `none`
+  - Existing non-C alternatives: SpatialDE (Python)
+  - Parallelism: minimal
+  - SIMD: none
+  - Quadrant: —
+  - GPU-amenable: no — per-gene rank tests
+  - Upstream license: `GPL-2.0`
+  - Priority: `P1`
+  - Layer: `subcommand-of-rsomics-spatial` (spatial-DE subcommand, nonparametric variant)
+  - Consumes primitives: `anndata-rs`, `ndarray`, `rayon`, future `rsomics-stats`
+  - Notes: Faster than SpatialDE in benchmarks; count-model based, avoids GP fitting. Clean-room required (GPL). Good rayon target — per-gene tests are embarrassingly parallel.

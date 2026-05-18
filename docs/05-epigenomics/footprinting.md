@@ -121,3 +121,18 @@ analysis under a future regulatory-genomics topic.
   - Layer: `subcommand-of-rsomics-footprint` (V-plot mode)
   - Consumes primitives: `noodles-bam`, `ndarray`, `rsomics-intervals`
   - Notes: Small pure-Rust win — the V-plot is just a 2D histogram of fragment midpoint × fragment length around a feature, parallelised across features. Bundle into `rsomics-footprint` as a side feature. **Original entry's `GreenleafLab/pyatac` URL is dead** — logged to `.autopilot/needs-review/external-2026-05-14.md`; will need user adjudication on whether to find a successor V-plot tool or treat the concept as standalone.
+
+- [ ] **`chromVAR`** — TF-associated chromatin accessibility variation from scATAC-seq.
+  - Reference impl: `R` · [GreenleafLab/chromVAR](https://github.com/GreenleafLab/chromVAR) · `MIT`
+  - Existing Rust: none verified
+  - Existing Rust kind: `none`
+  - Existing non-C alternatives: ArchR incorporates chromVAR (R)
+  - Parallelism: R BiocParallel
+  - SIMD: none
+  - Quadrant: —
+  - GPU-amenable: maybe — per-motif deviation scoring is parallel across cells
+  - Upstream license: `MIT`
+  - Priority: `P1`
+  - Layer: `B` (tool — `rsomics-chromvar`)
+  - Consumes primitives: `anndata-rs`, `ndarray`, `rayon`, `rsomics-intervals`, future `rsomics-stats`
+  - Notes: Core: per-cell TF accessibility deviation score based on motif presence in peaks. Embarrassingly parallel across cells × motifs → rayon natural. Standard in every scATAC pipeline (Greenleaf lab). MIT allows source reading.

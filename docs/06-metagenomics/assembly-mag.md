@@ -249,3 +249,33 @@ genomics (Flye, hifiasm-meta) and read classification (see
   - Layer: `adopt`
   - Consumes primitives: —
   - Notes: The relevant Rust tool for the ANI step used by GTDB-Tk and dRep. Adopt as-is.
+
+- [ ] **`Prokka`** — rapid whole-genome prokaryote annotation.
+  - Reference impl: `Perl` · [tseemann/prokka](https://github.com/tseemann/prokka) · `GPL-3.0`
+  - Existing Rust: none verified
+  - Existing Rust kind: `none`
+  - Existing non-C alternatives: Bakta (Python/GPL-3)
+  - Parallelism: forking / GNU parallel
+  - SIMD: none (Perl)
+  - Quadrant: —
+  - GPU-amenable: no — sequential pipeline
+  - Upstream license: `GPL-3.0`
+  - Priority: `P1`
+  - Layer: `B` (tool — `rsomics-annotate`)
+  - Consumes primitives: future `rsomics-hmm`, `noodles-fasta`, `rayon`
+  - Notes: Every MAG assembly pipeline ends with annotation. Core: BLAST/hmmer gene finding + database lookup. Clean-room required (GPL). Modern successor is Bakta.
+
+- [ ] **`Bakta`** — standardized bacterial genome annotation (modern Prokka successor).
+  - Reference impl: `Python` · [oschwengers/bakta](https://github.com/oschwengers/bakta) · `GPL-3.0`
+  - Existing Rust: none verified
+  - Existing Rust kind: `none`
+  - Existing non-C alternatives: Prokka (Perl)
+  - Parallelism: Python multiprocessing + pyhmmer
+  - SIMD: via pyhmmer SSE/AVX
+  - Quadrant: —
+  - GPU-amenable: no — sequential annotation pipeline
+  - Upstream license: `GPL-3.0`
+  - Priority: `P1`
+  - Layer: `subcommand-of-rsomics-annotate`
+  - Consumes primitives: future `rsomics-hmm`, `noodles-fasta`, `rayon`
+  - Notes: Bakta uses a curated AMRFinderPlus + UniProt + Rfam database. Clean-room required (GPL). Share annotation engine with Prokka entry via `rsomics-annotate`.
