@@ -48,8 +48,7 @@ impl Cli {
             Box::new(std::fs::File::create(&self.output).map_err(RsomicsError::Io)?)
         };
 
-        let count =
-            window_bed(&self.a, &self.b, &mut out, self.window)?;
+        let count = window_bed(&self.a, &self.b, &mut out, self.window)?;
 
         if !self.common.quiet {
             eprintln!("{count} overlapping pairs");

@@ -20,9 +20,7 @@ pub fn window_bed(
     let b_intervals = load_intervals(b_path)?;
 
     let file = File::open(a_path)
-        .map_err(|e| RsomicsError::InvalidInput(
-            format!("{}: {e}", a_path.display()),
-        ))?;
+        .map_err(|e| RsomicsError::InvalidInput(format!("{}: {e}", a_path.display())))?;
     let reader = BufReader::new(file);
     let mut out = BufWriter::with_capacity(64 * 1024, output);
     let mut count: u64 = 0;
@@ -46,8 +44,7 @@ pub fn window_bed(
         if let Some(chr_intervals) = b_intervals.get(chrom) {
             for iv in chr_intervals {
                 if a_start < iv.end && a_end > iv.start {
-                    writeln!(out, "{line}\t{}", iv.line)
-                        .map_err(RsomicsError::Io)?;
+                    writeln!(out, "{line}\t{}", iv.line).map_err(RsomicsError::Io)?;
                     count += 1;
                 }
             }
@@ -58,16 +55,11 @@ pub fn window_bed(
     Ok(count)
 }
 
-fn load_intervals(
-    path: &Path,
-) -> Result<BTreeMap<String, Vec<Interval>>> {
+fn load_intervals(path: &Path) -> Result<BTreeMap<String, Vec<Interval>>> {
     let file = File::open(path)
-        .map_err(|e| RsomicsError::InvalidInput(
-            format!("{}: {e}", path.display()),
-        ))?;
+        .map_err(|e| RsomicsError::InvalidInput(format!("{}: {e}", path.display())))?;
     let reader = BufReader::new(file);
-    let mut by_chrom: BTreeMap<String, Vec<Interval>> =
-        BTreeMap::new();
+    let mut by_chrom: BTreeMap<String, Vec<Interval>> = BTreeMap::new();
 
     for line in reader.lines() {
         let line = line.map_err(RsomicsError::Io)?;
@@ -81,14 +73,11 @@ fn load_intervals(
         let chrom = fields[0].to_string();
         let start: u64 = fields[1].parse().unwrap_or(0);
         let end: u64 = fields[2].parse().unwrap_or(0);
-        by_chrom
-            .entry(chrom)
-            .or_default()
-            .push(Interval {
-                line: line.clone(),
-                start,
-                end,
-            });
+        by_chrom.entry(chrom).or_default().push(Interval {
+            line: line.clone(),
+            start,
+            end,
+        });
     }
 
     for ivs in by_chrom.values_mut() {

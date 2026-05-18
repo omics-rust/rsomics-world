@@ -81,11 +81,10 @@ fn load_features(
         if name.is_empty() {
             continue;
         }
-        by_chrom.entry(chrom).or_default().push(Feature {
-            start,
-            end,
-            name,
-        });
+        by_chrom
+            .entry(chrom)
+            .or_default()
+            .push(Feature { start, end, name });
     }
 
     for feats in by_chrom.values_mut() {
