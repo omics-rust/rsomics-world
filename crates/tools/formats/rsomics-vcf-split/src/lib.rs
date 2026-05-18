@@ -41,7 +41,7 @@ pub fn split_vcf(input: &Path, prefix: &Path) -> Result<HashMap<String, u64>> {
         *count += 1;
     }
 
-    for (_, (w, _)) in &mut writers {
+    for (w, _) in writers.values_mut() {
         w.flush().map_err(RsomicsError::Io)?;
     }
 
