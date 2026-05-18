@@ -12,6 +12,9 @@ pub enum SortKey {
 }
 
 pub fn sort(input: &Path, key: SortKey, output: &mut dyn Write) -> Result<u64> {
+    if std::fs::metadata(input).is_ok_and(|m| m.len() == 0) {
+        return Ok(0);
+    }
     let mut reader = parse_fastx_file(input)
         .map_err(|e| RsomicsError::InvalidInput(format!("{}: {e}", input.display())))?;
 

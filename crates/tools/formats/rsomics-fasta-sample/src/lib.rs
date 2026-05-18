@@ -7,6 +7,9 @@ use rand::{Rng, SeedableRng};
 use rsomics_common::{Result, RsomicsError};
 
 pub fn sample(input: &Path, fraction: f64, seed: u64, output: &mut dyn Write) -> Result<u64> {
+    if std::fs::metadata(input).is_ok_and(|m| m.len() == 0) {
+        return Ok(0);
+    }
     let mut reader = parse_fastx_file(input)
         .map_err(|e| RsomicsError::InvalidInput(format!("{}: {e}", input.display())))?;
     let mut out = BufWriter::with_capacity(256 * 1024, output);
