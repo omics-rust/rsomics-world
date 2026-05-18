@@ -6,23 +6,12 @@ use noodles::bam;
 use noodles::sam;
 use rsomics_common::{Result, RsomicsError};
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Default)]
 pub struct ViewFilter {
     pub require_flags: u16,
     pub exclude_flags: u16,
     pub min_mapq: u8,
     pub count_only: bool,
-}
-
-impl Default for ViewFilter {
-    fn default() -> Self {
-        Self {
-            require_flags: 0,
-            exclude_flags: 0,
-            min_mapq: 0,
-            count_only: false,
-        }
-    }
 }
 
 fn passes(flags: sam::alignment::record::Flags, mapq: Option<u8>, f: &ViewFilter) -> bool {

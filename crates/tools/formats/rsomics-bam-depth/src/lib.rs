@@ -26,18 +26,11 @@ impl Default for DepthOpts {
 }
 
 fn tid(r: &bam::Record) -> Option<usize> {
-    r.reference_sequence_id()
-        .transpose()
-        .ok()
-        .flatten()
+    r.reference_sequence_id().transpose().ok().flatten()
 }
 
 fn pos(r: &bam::Record) -> Option<usize> {
-    r.alignment_start()
-        .transpose()
-        .ok()
-        .flatten()
-        .map(|p| p.get())
+    r.alignment_start().transpose().ok().flatten().map(|p| p.get())
 }
 
 pub fn compute_depth(input: &Path, output: &mut dyn Write, opts: &DepthOpts) -> Result<u64> {
@@ -49,7 +42,7 @@ pub fn compute_depth(input: &Path, output: &mut dyn Write, opts: &DepthOpts) -> 
     let ref_names: Vec<String> = header
         .reference_sequences()
         .keys()
-        .map(|k| k.to_string())
+        .map(ToString::to_string)
         .collect();
 
     let mut depth_map: BTreeMap<usize, BTreeMap<usize, u32>> = BTreeMap::new();

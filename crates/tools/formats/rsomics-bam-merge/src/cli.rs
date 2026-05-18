@@ -34,7 +34,7 @@ pub struct Cli {
 
 impl Cli {
     pub fn execute(self) -> Result<()> {
-        let paths: Vec<&std::path::Path> = self.inputs.iter().map(|p| p.as_path()).collect();
+        let paths: Vec<&std::path::Path> = self.inputs.iter().map(PathBuf::as_path).collect();
 
         let mut out: Box<dyn std::io::Write> = if self.output == "-" {
             Box::new(std::io::stdout().lock())
@@ -44,14 +44,14 @@ impl Cli {
 
         let count = merge_bams(&paths, &mut out)?;
 
-        if !self.common.json {
-            eprintln!("merged {count} records from {} files", self.inputs.len());
-        } else {
+        if self.common.json {
             let j = serde_json::json!({
                 "merged_records": count,
                 "input_files": self.inputs.len()
             });
             eprintln!("{j}");
+        } else {
+            eprintln!("merged {count} records from {} files", self.inputs.len());
         }
 
         Ok(())
