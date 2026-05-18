@@ -36,10 +36,25 @@ fn dup_key(record: &bam::Record) -> Option<DupKey> {
     }
 
     let tid = record.reference_sequence_id().transpose().ok().flatten()?;
-    let pos = record.alignment_start().transpose().ok().flatten().map(|p| p.get())?;
+    let pos = record
+        .alignment_start()
+        .transpose()
+        .ok()
+        .flatten()
+        .map(|p| p.get())?;
 
-    let mate_tid = record.mate_reference_sequence_id().transpose().ok().flatten().unwrap_or(0);
-    let mate_pos = record.mate_alignment_start().transpose().ok().flatten().map_or(0, |p| p.get());
+    let mate_tid = record
+        .mate_reference_sequence_id()
+        .transpose()
+        .ok()
+        .flatten()
+        .unwrap_or(0);
+    let mate_pos = record
+        .mate_alignment_start()
+        .transpose()
+        .ok()
+        .flatten()
+        .map_or(0, |p| p.get());
 
     Some(DupKey {
         tid,
@@ -51,7 +66,12 @@ fn dup_key(record: &bam::Record) -> Option<DupKey> {
 }
 
 fn sum_quals(record: &bam::Record) -> u64 {
-    record.quality_scores().as_ref().iter().map(|&q| u64::from(q)).sum()
+    record
+        .quality_scores()
+        .as_ref()
+        .iter()
+        .map(|&q| u64::from(q))
+        .sum()
 }
 
 pub fn markdup(

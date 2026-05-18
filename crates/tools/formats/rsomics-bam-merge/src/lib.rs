@@ -48,7 +48,11 @@ fn tid(r: &bam::Record) -> Option<usize> {
 }
 
 fn pos(r: &bam::Record) -> Option<usize> {
-    r.alignment_start().transpose().ok().flatten().map(|p| p.get())
+    r.alignment_start()
+        .transpose()
+        .ok()
+        .flatten()
+        .map(|p| p.get())
 }
 
 pub fn merge_bams(inputs: &[&Path], output: &mut dyn Write) -> Result<u64> {

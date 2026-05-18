@@ -30,7 +30,11 @@ fn tid(r: &bam::Record) -> Option<usize> {
 }
 
 fn pos(r: &bam::Record) -> Option<usize> {
-    r.alignment_start().transpose().ok().flatten().map(|p| p.get())
+    r.alignment_start()
+        .transpose()
+        .ok()
+        .flatten()
+        .map(|p| p.get())
 }
 
 pub fn compute_depth(input: &Path, output: &mut dyn Write, opts: &DepthOpts) -> Result<u64> {
