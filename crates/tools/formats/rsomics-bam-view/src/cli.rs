@@ -1,7 +1,7 @@
 use std::path::PathBuf;
 
 use clap::Parser;
-use rsomics_common::{CommonFlags, Result, ToolMeta};
+use rsomics_common::{CommonFlags, Result, RsomicsError, ToolMeta};
 use rsomics_help::{Example, FlagSpec, HelpSpec, Origin, Section};
 
 use rsomics_bam_view::{view_bam, ViewFilter};
@@ -23,7 +23,7 @@ pub struct Cli {
     /// Input BAM file.
     pub input: PathBuf,
 
-    /// Output file (default stdout).
+    /// Output BAM file (default stdout).
     #[arg(short = 'o', long = "output", default_value = "-")]
     output: String,
 
@@ -43,14 +43,6 @@ pub struct Cli {
     #[arg(short = 'c', long = "count")]
     count_only: bool,
 
-    /// Omit header in SAM output.
-    #[arg(long = "no-header")]
-    no_header: bool,
-
-    /// Output BAM instead of SAM.
-    #[arg(short = 'b', long = "bam")]
-    bam_output: bool,
-
     #[command(flatten)]
     pub common: CommonFlags,
 }
@@ -62,20 +54,19 @@ impl Cli {
             exclude_flags: self.exclude_flags,
             min_mapq: self.min_mapq,
             count_only: self.count_only,
-            with_header: !self.no_header,
-            output_bam: self.bam_output,
         };
 
         let mut out: Box<dyn std::io::Write> = if self.output == "-" {
             Box::new(std::io::stdout().lock())
         } else {
-            Box::new(std::fs::File::create(&self.output).map_err(rsomics_common::RsomicsError::Io)?)
+            Box::new(std::fs::File::create(&self.output).map_err(RsomicsError::Io)?)
         };
 
         let count = view_bam(&self.input, &mut out, &filter)?;
 
         if self.count_only {
-            writeln!(out, "{count}").map_err(rsomics_common::RsomicsError::Io)?;
+            use std::io::Write;
+            writeln!(std::io::stdout(), "{count}").map_err(RsomicsError::Io)?;
         }
 
         if self.common.json {
@@ -87,19 +78,17 @@ impl Cli {
     }
 }
 
-use std::io::Write;
-
 pub static HELP: HelpSpec = HelpSpec {
     name: META.name,
     version: META.version,
-    tagline: "View, filter, and convert SAM/BAM/CRAM alignments.",
+    tagline: "Filter BAM alignments by flag and mapping quality.",
     origin: Some(Origin {
         upstream: "samtools view",
         upstream_license: "MIT",
         our_license: "MIT OR Apache-2.0",
         paper_doi: Some("10.1093/bioinformatics/btp352"),
     }),
-    usage_lines: &["<input.bam> [-o out.sam] [-f FLAGS] [-F FLAGS] [-b] [-c]"],
+    usage_lines: &["<input.bam> [-o out.bam] [-f FLAGS] [-F FLAGS] [-c]"],
     sections: &[Section {
         title: "OPTIONS",
         flags: &[
@@ -137,17 +126,6 @@ pub static HELP: HelpSpec = HelpSpec {
                 why_default: None,
             },
             FlagSpec {
-                short: Some("-b"),
-                long: "bam",
-                aliases: &[],
-                value: None,
-                type_hint: None,
-                required: false,
-                default: None,
-                description: "Output BAM instead of SAM.",
-                why_default: None,
-            },
-            FlagSpec {
                 short: Some("-c"),
                 long: "count",
                 aliases: &[],
@@ -162,12 +140,8 @@ pub static HELP: HelpSpec = HelpSpec {
     }],
     examples: &[
         Example {
-            description: "View BAM as SAM",
-            command: "rsomics-bam-view input.bam",
-        },
-        Example {
             description: "Filter to properly paired reads",
-            command: "rsomics-bam-view -f 2 input.bam -o filtered.sam",
+            command: "rsomics-bam-view -f 2 input.bam -o filtered.bam",
         },
         Example {
             description: "Count unmapped reads",

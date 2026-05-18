@@ -1,7 +1,5 @@
-#![allow(clippy::cast_precision_loss)]
-
 use std::fs::File;
-use std::io::{BufWriter, Write};
+use std::io::Write;
 use std::path::Path;
 
 use noodles::bam;
@@ -14,8 +12,6 @@ pub struct ViewFilter {
     pub exclude_flags: u16,
     pub min_mapq: u8,
     pub count_only: bool,
-    pub with_header: bool,
-    pub output_bam: bool,
 }
 
 impl Default for ViewFilter {
@@ -25,100 +21,66 @@ impl Default for ViewFilter {
             exclude_flags: 0,
             min_mapq: 0,
             count_only: false,
-            with_header: true,
-            output_bam: false,
         }
     }
 }
 
-fn passes_filter(flags: sam::alignment::record::Flags, mapq: Option<u8>, filter: &ViewFilter) -> bool {
+fn passes(flags: sam::alignment::record::Flags, mapq: Option<u8>, f: &ViewFilter) -> bool {
     let bits = flags.bits();
-    if filter.require_flags != 0 && (bits & filter.require_flags) != filter.require_flags {
+    if f.require_flags != 0 && (bits & f.require_flags) != f.require_flags {
         return false;
     }
-    if filter.exclude_flags != 0 && (bits & filter.exclude_flags) != 0 {
+    if f.exclude_flags != 0 && (bits & f.exclude_flags) != 0 {
         return false;
     }
-    if filter.min_mapq > 0 && mapq.unwrap_or(0) < filter.min_mapq {
+    if f.min_mapq > 0 && mapq.unwrap_or(0) < f.min_mapq {
         return false;
     }
     true
 }
 
-fn record_mapq(record: &bam::Record) -> Option<u8> {
-    record.mapping_quality().map(|q| q.get())
-}
-
 pub fn view_bam(input: &Path, output: &mut dyn Write, filter: &ViewFilter) -> Result<u64> {
-    let mut reader = File::open(input)
-        .map(bam::io::Reader::new)
+    let file = File::open(input)
         .map_err(|e| RsomicsError::InvalidInput(format!("{}: {e}", input.display())))?;
-
+    let mut reader = bam::io::Reader::new(file);
     let header = reader.read_header().map_err(RsomicsError::Io)?;
 
-    if filter.output_bam {
-        return view_bam_to_bam(&mut reader, &header, output, filter);
+    if filter.count_only {
+        return count_bam(&mut reader, filter);
     }
 
-    let mut out = BufWriter::with_capacity(256 * 1024, output);
-
-    if filter.with_header && !filter.count_only {
-        let mut header_writer = sam::io::Writer::new(Vec::new());
-        header_writer
-            .write_header(&header)
-            .map_err(RsomicsError::Io)?;
-        out.write_all(header_writer.get_ref())
-            .map_err(RsomicsError::Io)?;
-    }
+    let mut writer = bam::io::Writer::new(output);
+    writer.write_header(&header).map_err(RsomicsError::Io)?;
 
     let mut count: u64 = 0;
     for result in reader.records() {
         let record = result.map_err(RsomicsError::Io)?;
         let flags = record.flags();
-        let mapq = record_mapq(&record);
+        let mapq = record.mapping_quality().map(|q| q.get());
 
-        if !passes_filter(flags, mapq, filter) {
+        if !passes(flags, mapq, filter) {
             continue;
         }
         count += 1;
-
-        if !filter.count_only {
-            let mut buf = Vec::new();
-            let mut sam_writer = sam::io::Writer::new(&mut buf);
-            sam_writer
-                .write_record(&header, &record)
-                .map_err(RsomicsError::Io)?;
-            out.write_all(&buf).map_err(RsomicsError::Io)?;
-        }
+        writer
+            .write_record(&header, &record)
+            .map_err(RsomicsError::Io)?;
     }
-
-    out.flush().map_err(RsomicsError::Io)?;
     Ok(count)
 }
 
-fn view_bam_to_bam(
-    reader: &mut bam::io::Reader<File>,
-    header: &sam::Header,
-    output: &mut dyn Write,
+fn count_bam<R: std::io::Read>(
+    reader: &mut bam::io::Reader<noodles::bgzf::io::Reader<R>>,
     filter: &ViewFilter,
 ) -> Result<u64> {
-    let mut writer = bam::io::Writer::new(output);
-    writer.write_header(header).map_err(RsomicsError::Io)?;
-
     let mut count: u64 = 0;
     for result in reader.records() {
         let record = result.map_err(RsomicsError::Io)?;
         let flags = record.flags();
-        let mapq = record_mapq(&record);
-
-        if !passes_filter(flags, mapq, filter) {
-            continue;
+        let mapq = record.mapping_quality().map(|q| q.get());
+        if passes(flags, mapq, filter) {
+            count += 1;
         }
-        count += 1;
-
-        writer
-            .write_record(header, &record)
-            .map_err(RsomicsError::Io)?;
     }
     Ok(count)
 }

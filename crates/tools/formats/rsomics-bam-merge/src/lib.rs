@@ -5,6 +5,7 @@ use std::io::Write;
 use std::path::Path;
 
 use noodles::bam;
+use noodles::bgzf;
 use noodles::sam;
 use rsomics_common::{Result, RsomicsError};
 
@@ -62,13 +63,13 @@ pub fn merge_bams(inputs: &[&Path], output: &mut dyn Write) -> Result<u64> {
         return Err(RsomicsError::InvalidInput("no input files".into()));
     }
 
-    let mut readers: Vec<bam::io::Reader<File>> = Vec::with_capacity(inputs.len());
+    let mut readers: Vec<bam::io::Reader<bgzf::io::Reader<File>>> = Vec::with_capacity(inputs.len());
     let mut headers: Vec<sam::Header> = Vec::with_capacity(inputs.len());
 
     for path in inputs {
-        let mut r = File::open(path)
-            .map(bam::io::Reader::new)
+        let file = File::open(path)
             .map_err(|e| RsomicsError::InvalidInput(format!("{}: {e}", path.display())))?;
+        let mut r = bam::io::Reader::new(file);
         let h = r.read_header().map_err(RsomicsError::Io)?;
         headers.push(h);
         readers.push(r);

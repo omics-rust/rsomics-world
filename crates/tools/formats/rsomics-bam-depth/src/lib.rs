@@ -40,14 +40,6 @@ fn pos(r: &bam::Record) -> Option<usize> {
         .map(|p| p.get())
 }
 
-fn end_pos(r: &bam::Record) -> Option<usize> {
-    r.alignment_end()
-        .transpose()
-        .ok()
-        .flatten()
-        .map(|p| p.get())
-}
-
 pub fn compute_depth(input: &Path, output: &mut dyn Write, opts: &DepthOpts) -> Result<u64> {
     let mut reader = File::open(input)
         .map(bam::io::Reader::new)
@@ -77,14 +69,10 @@ pub fn compute_depth(input: &Path, output: &mut dyn Write, opts: &DepthOpts) -> 
 
         let Some(t) = tid(&record) else { continue };
         let Some(start) = pos(&record) else { continue };
-        let end = end_pos(&record).unwrap_or(start);
 
-        let ref_depths = depth_map.entry(t).or_default();
-        for p in start..=end {
-            let d = ref_depths.entry(p).or_insert(0);
-            if *d < opts.max_depth {
-                *d += 1;
-            }
+        let d = depth_map.entry(t).or_default().entry(start).or_insert(0);
+        if *d < opts.max_depth {
+            *d += 1;
         }
     }
 
