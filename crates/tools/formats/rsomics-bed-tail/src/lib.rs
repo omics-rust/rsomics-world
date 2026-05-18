@@ -4,7 +4,7 @@ use std::path::Path;
 
 use rsomics_common::{Result, RsomicsError};
 
-pub fn head(input: &Path, output: &mut dyn Write, n: usize) -> Result<u64> {
+pub fn tail(input: &Path, output: &mut dyn Write, n: usize) -> Result<u64> {
     let file = File::open(input)
         .map_err(|e| RsomicsError::InvalidInput(format!("{}: {e}", input.display())))?;
     let reader = BufReader::new(file);

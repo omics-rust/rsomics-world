@@ -4,7 +4,7 @@ use clap::Parser;
 use rsomics_common::{CommonFlags, Result, RsomicsError, ToolMeta};
 use rsomics_help::{Example, FlagSpec, HelpSpec, Origin, Section};
 
-use rsomics_bed_tail::head;
+use rsomics_bed_tail::tail;
 
 pub const META: ToolMeta = ToolMeta {
     name: env!("CARGO_PKG_NAME"),
@@ -30,7 +30,7 @@ impl Cli {
         } else {
             Box::new(std::fs::File::create(&self.output).map_err(RsomicsError::Io)?)
         };
-        let count = head(&self.input, &mut out, self.n)?;
+        let count = tail(&self.input, &mut out, self.n)?;
         if !self.common.quiet {
             eprintln!("{count} intervals");
         }
@@ -43,7 +43,7 @@ pub static HELP: HelpSpec = HelpSpec {
     version: META.version,
     tagline: "Print last N intervals from BED.",
     origin: Some(Origin {
-        upstream: "head",
+        upstream: "bedtools (tail equivalent)",
         upstream_license: "N/A",
         our_license: "MIT OR Apache-2.0",
         paper_doi: None,
