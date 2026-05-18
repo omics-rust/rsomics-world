@@ -5,7 +5,6 @@ use std::io::{BufWriter, Write};
 use std::path::Path;
 
 use noodles::bam;
-use noodles::sam::alignment::record::Flags;
 use rsomics_common::{Result, RsomicsError};
 use serde::Serialize;
 
