@@ -20,8 +20,7 @@ jobs:
         target:
           - { runner: ubuntu-latest,     triple: x86_64-unknown-linux-gnu  }
           - { runner: ubuntu-24.04-arm,  triple: aarch64-unknown-linux-gnu }
-          - { runner: macos-15-intel,    triple: x86_64-apple-darwin       }
-          - { runner: macos-15,          triple: aarch64-apple-darwin      }
+          - { runner: macos-latest,      triple: aarch64-apple-darwin      }
     runs-on: ${{ matrix.target.runner }}
     steps:
       - uses: actions/checkout@v4
