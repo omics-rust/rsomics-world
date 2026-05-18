@@ -1951,3 +1951,33 @@ reason = "Per-function decomposition tool — covered by smoke + compat tests."
 
 [exempt.rsomics-fastq-contaminant-screen]
 reason = "Per-function decomposition tool — covered by smoke + compat tests."
+
+[exempt.rsomics-vcf-to-ldhat]
+reason = "Per-function decomposition tool — covered by smoke + compat tests."
+
+[exempt.rsomics-vcf-to-phase]
+reason = "Per-function decomposition tool — covered by smoke + compat tests."
+
+[exempt.rsomics-vcf-to-chromopainter]
+reason = "Per-function decomposition tool — covered by smoke + compat tests."
+
+[exempt.rsomics-bed-to-gat]
+reason = "Per-function decomposition tool — covered by smoke + compat tests."
+
+[exempt.rsomics-bed-peak-calling]
+reason = "Per-function decomposition tool — covered by smoke + compat tests."
+
+[exempt.rsomics-gff-ncbi-to-ensembl]
+reason = "Per-function decomposition tool — covered by smoke + compat tests."
+
+[exempt.rsomics-gff-ensembl-to-ncbi]
+reason = "Per-function decomposition tool — covered by smoke + compat tests."
+
+[exempt.rsomics-fasta-tetranucleotide]
+reason = "Per-function decomposition tool — covered by smoke + compat tests."
+
+[exempt.rsomics-fastq-polyg-check]
+reason = "Per-function decomposition tool — covered by smoke + compat tests."
+
+[exempt.rsomics-fastq-index-build]
+reason = "Per-function decomposition tool — covered by smoke + compat tests."
