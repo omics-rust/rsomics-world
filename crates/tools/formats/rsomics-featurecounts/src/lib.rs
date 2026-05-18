@@ -1,4 +1,4 @@
-#![allow(clippy::cast_precision_loss)]
+#![allow(clippy::cast_precision_loss, clippy::implicit_hasher)]
 
 use std::collections::HashMap;
 use std::fs::File;

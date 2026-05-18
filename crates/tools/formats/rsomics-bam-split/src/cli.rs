@@ -4,7 +4,7 @@ use clap::Parser;
 use rsomics_common::{CommonFlags, Result, ToolMeta};
 use rsomics_help::{Example, FlagSpec, HelpSpec, Origin, Section};
 
-use rsomics_bam_split::split_bam;
+use rsomics_bam_split::split_by_reference;
 
 pub const META: ToolMeta = ToolMeta {
     name: env!("CARGO_PKG_NAME"),
@@ -33,7 +33,7 @@ pub struct Cli {
 
 impl Cli {
     pub fn execute(self) -> Result<()> {
-        let counts = split_bam(&self.input, &self.output_prefix)?;
+        let counts = split_by_reference(&self.input, &self.output_prefix)?;
 
         if self.common.json {
             let j = serde_json::json!(counts);
