@@ -119,6 +119,9 @@ impl<'cfg> Pipeline<'cfg> {
 
     #[allow(clippy::missing_errors_doc)]
     pub fn run_se(&self, input: &Path, output: &Path) -> Result<FilterReport> {
+        if std::fs::metadata(input).is_ok_and(|m| m.len() == 0) {
+            return Ok(0);
+        }
         let mut reader = open_fastq(input)?;
         let mut writer = ChunkedWriter::create(output, self.compression)?;
 

@@ -5,6 +5,9 @@ use rsomics_common::{Result, RsomicsError};
 use rsomics_seqio::open_fastq;
 
 pub fn lengths(input: &Path, tab: bool, output: &mut dyn Write) -> Result<u64> {
+    if std::fs::metadata(input).is_ok_and(|m| m.len() == 0) {
+        return Ok(0);
+    }
     let mut reader = open_fastq(input)?;
     let mut out = BufWriter::with_capacity(256 * 1024, output);
     let mut count: u64 = 0;

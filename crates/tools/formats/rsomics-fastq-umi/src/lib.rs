@@ -191,6 +191,9 @@ impl<'cfg> Pipeline<'cfg> {
     }
 
     pub fn run_se(&self, input: &Path, output: &Path) -> Result<UmiReport> {
+        if std::fs::metadata(input).is_ok_and(|m| m.len() == 0) {
+            return Ok(0);
+        }
         let mut reader = open_fastq(input)?;
         let mut writer = ChunkedWriter::create(output, self.compression)?;
         let mut report = UmiReport {

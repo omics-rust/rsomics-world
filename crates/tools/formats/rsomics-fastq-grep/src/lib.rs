@@ -8,6 +8,9 @@ use rsomics_seqio::open_fastq;
 pub fn grep(input: &Path, pattern: &str, invert: bool, output: &mut dyn Write) -> Result<u64> {
     let re =
         Regex::new(pattern).map_err(|e| RsomicsError::InvalidInput(format!("bad regex: {e}")))?;
+    if std::fs::metadata(input).is_ok_and(|m| m.len() == 0) {
+        return Ok(0);
+    }
     let mut reader = open_fastq(input)?;
     let mut out = BufWriter::with_capacity(256 * 1024, output);
     let mut count: u64 = 0;

@@ -88,6 +88,9 @@ impl<'cfg> Pipeline<'cfg> {
         let ch = build_table(&[input], self.cfg)?;
         // mode computed once here (BFC bfc_correct) — per-read would be O(reads × table).
         let mode = ch.hist_mode(self.cfg.min_cov);
+        if std::fs::metadata(input).is_ok_and(|m| m.len() == 0) {
+            return Ok(0);
+        }
         let mut reader = open_fastq(input)?;
         let mut w = ChunkedWriter::create(output, self.compression)?;
         let mut report = CorrectReport::default();
