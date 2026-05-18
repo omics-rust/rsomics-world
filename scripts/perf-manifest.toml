@@ -868,3 +868,6 @@ reason = "Per-function decomposition tool — covered by smoke + compat tests."
 
 [exempt.rsomics-gff-feature-lengths]
 reason = "Per-function decomposition tool — covered by smoke + compat tests."
+
+[exempt.rsomics-vcf-depth-stats]
+reason = "Per-function decomposition tool — covered by smoke + compat tests."
