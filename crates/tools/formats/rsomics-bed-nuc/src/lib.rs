@@ -34,24 +34,32 @@ pub fn bed_nuc(bed_path: &Path, fasta_path: &Path, output: &mut dyn Write) -> Re
         let start: usize = fields[1].parse().unwrap_or(0);
         let end: usize = fields[2].parse().unwrap_or(0);
 
-        let (a, c, g, t, n, other) = if let Some(seq) = seqs.get(chrom) {
+        let bc = if let Some(seq) = seqs.get(chrom) {
             let s = start.min(seq.len());
             let e = end.min(seq.len());
             count_bases(&seq[s..e])
         } else {
-            (0, 0, 0, 0, 0, 0)
+            BaseCounts {
+                adenine: 0,
+                cytosine: 0,
+                guanine: 0,
+                thymine: 0,
+                ambiguous: 0,
+                other: 0,
+            }
         };
 
-        let len = a + c + g + t + n + other;
+        let len = bc.adenine + bc.cytosine + bc.guanine + bc.thymine + bc.ambiguous + bc.other;
         let gc_pct = if len > 0 {
-            (g + c) as f64 / len as f64 * 100.0
+            (bc.guanine + bc.cytosine) as f64 / len as f64 * 100.0
         } else {
             0.0
         };
 
         writeln!(
             out,
-            "{chrom}\t{start}\t{end}\t{a}\t{c}\t{g}\t{t}\t{n}\t{other}\t{len}\t{gc_pct:.2}"
+            "{chrom}\t{start}\t{end}\t{}\t{}\t{}\t{}\t{}\t{}\t{len}\t{gc_pct:.2}",
+            bc.adenine, bc.cytosine, bc.guanine, bc.thymine, bc.ambiguous, bc.other
         )
         .map_err(RsomicsError::Io)?;
         count += 1;
@@ -61,19 +69,35 @@ pub fn bed_nuc(bed_path: &Path, fasta_path: &Path, output: &mut dyn Write) -> Re
     Ok(count)
 }
 
-fn count_bases(seq: &[u8]) -> (u64, u64, u64, u64, u64, u64) {
-    let (mut a, mut c, mut g, mut t, mut n, mut other) = (0, 0, 0, 0, 0, 0);
-    for &b in seq {
-        match b.to_ascii_uppercase() {
-            b'A' => a += 1,
-            b'C' => c += 1,
-            b'G' => g += 1,
-            b'T' => t += 1,
-            b'N' => n += 1,
-            _ => other += 1,
+struct BaseCounts {
+    adenine: u64,
+    cytosine: u64,
+    guanine: u64,
+    thymine: u64,
+    ambiguous: u64,
+    other: u64,
+}
+
+fn count_bases(seq: &[u8]) -> BaseCounts {
+    let mut bc = BaseCounts {
+        adenine: 0,
+        cytosine: 0,
+        guanine: 0,
+        thymine: 0,
+        ambiguous: 0,
+        other: 0,
+    };
+    for &base in seq {
+        match base.to_ascii_uppercase() {
+            b'A' => bc.adenine += 1,
+            b'C' => bc.cytosine += 1,
+            b'G' => bc.guanine += 1,
+            b'T' => bc.thymine += 1,
+            b'N' => bc.ambiguous += 1,
+            _ => bc.other += 1,
         }
     }
-    (a, c, g, t, n, other)
+    bc
 }
 
 fn load_fasta(path: &Path) -> Result<HashMap<String, Vec<u8>>> {
