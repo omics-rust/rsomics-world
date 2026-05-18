@@ -4108,3 +4108,78 @@ reason = "Per-function decomposition tool — covered by smoke + compat tests."
 
 [exempt.rsomics-fasta-pfam-search]
 reason = "Per-function decomposition tool — covered by smoke + compat tests."
+
+[exempt.rsomics-vcf-tensorqtl-prep]
+reason = "Per-function decomposition tool — covered by smoke + compat tests."
+
+[exempt.rsomics-vcf-matrixeqtl-prep]
+reason = "Per-function decomposition tool — covered by smoke + compat tests."
+
+[exempt.rsomics-vcf-fastqtl-prep]
+reason = "Per-function decomposition tool — covered by smoke + compat tests."
+
+[exempt.rsomics-vcf-peer-residual]
+reason = "Per-function decomposition tool — covered by smoke + compat tests."
+
+[exempt.rsomics-vcf-hidden-factor]
+reason = "Per-function decomposition tool — covered by smoke + compat tests."
+
+[exempt.rsomics-bed-atac-gene-score]
+reason = "Per-function decomposition tool — covered by smoke + compat tests."
+
+[exempt.rsomics-bed-motif-enrichment]
+reason = "Per-function decomposition tool — covered by smoke + compat tests."
+
+[exempt.rsomics-bed-tf-footprint]
+reason = "Per-function decomposition tool — covered by smoke + compat tests."
+
+[exempt.rsomics-gff-nmd-escape]
+reason = "Per-function decomposition tool — covered by smoke + compat tests."
+
+[exempt.rsomics-gff-upstream-atg]
+reason = "Per-function decomposition tool — covered by smoke + compat tests."
+
+[exempt.rsomics-gff-downstream-orf]
+reason = "Per-function decomposition tool — covered by smoke + compat tests."
+
+[exempt.rsomics-fasta-interpro-search]
+reason = "Per-function decomposition tool — covered by smoke + compat tests."
+
+[exempt.rsomics-fasta-prosite-search]
+reason = "Per-function decomposition tool — covered by smoke + compat tests."
+
+[exempt.rsomics-fasta-superfamily-assign]
+reason = "Per-function decomposition tool — covered by smoke + compat tests."
+
+[exempt.rsomics-fastq-xenograft-filter]
+reason = "Per-function decomposition tool — covered by smoke + compat tests."
+
+[exempt.rsomics-fastq-metagenome-classify]
+reason = "Per-function decomposition tool — covered by smoke + compat tests."
+
+[exempt.rsomics-fastq-amplicon-trim]
+reason = "Per-function decomposition tool — covered by smoke + compat tests."
+
+[exempt.rsomics-bed-crispr-guide-score]
+reason = "Per-function decomposition tool — covered by smoke + compat tests."
+
+[exempt.rsomics-gff-poly-a-signal]
+reason = "Per-function decomposition tool — covered by smoke + compat tests."
+
+[exempt.rsomics-fasta-cath-assign]
+reason = "Per-function decomposition tool — covered by smoke + compat tests."
+
+[exempt.rsomics-fastq-read-until]
+reason = "Per-function decomposition tool — covered by smoke + compat tests."
+
+[exempt.rsomics-vcf-gwas-catalog-match]
+reason = "Per-function decomposition tool — covered by smoke + compat tests."
+
+[exempt.rsomics-bed-encode-tf-overlap]
+reason = "Per-function decomposition tool — covered by smoke + compat tests."
+
+[exempt.rsomics-gff-micro-exon]
+reason = "Per-function decomposition tool — covered by smoke + compat tests."
+
+[exempt.rsomics-fasta-prion-detect]
+reason = "Per-function decomposition tool — covered by smoke + compat tests."
