@@ -2308,3 +2308,36 @@ reason = "Per-function decomposition tool — covered by smoke + compat tests."
 
 [exempt.rsomics-vcf-eigensoft-convert]
 reason = "Per-function decomposition tool — covered by smoke + compat tests."
+
+[exempt.rsomics-vcf-treemix-convert]
+reason = "Per-function decomposition tool — covered by smoke + compat tests."
+
+[exempt.rsomics-vcf-admixture-convert]
+reason = "Per-function decomposition tool — covered by smoke + compat tests."
+
+[exempt.rsomics-vcf-hapmap-convert]
+reason = "Per-function decomposition tool — covered by smoke + compat tests."
+
+[exempt.rsomics-bed-encode-overlap]
+reason = "Per-function decomposition tool — covered by smoke + compat tests."
+
+[exempt.rsomics-bed-replication-timing]
+reason = "Per-function decomposition tool — covered by smoke + compat tests."
+
+[exempt.rsomics-gff-isoform-switch]
+reason = "Per-function decomposition tool — covered by smoke + compat tests."
+
+[exempt.rsomics-gff-fusion-detect]
+reason = "Per-function decomposition tool — covered by smoke + compat tests."
+
+[exempt.rsomics-fasta-cds-extract]
+reason = "Per-function decomposition tool — covered by smoke + compat tests."
+
+[exempt.rsomics-fasta-intron-extract]
+reason = "Per-function decomposition tool — covered by smoke + compat tests."
+
+[exempt.rsomics-fastq-optical-dup]
+reason = "Per-function decomposition tool — covered by smoke + compat tests."
+
+[exempt.rsomics-fastq-flowcell-stats]
+reason = "Per-function decomposition tool — covered by smoke + compat tests."
