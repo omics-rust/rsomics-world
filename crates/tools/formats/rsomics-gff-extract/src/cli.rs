@@ -49,12 +49,7 @@ impl Cli {
             Box::new(std::fs::File::create(&self.output).map_err(RsomicsError::Io)?)
         };
 
-        let count = extract_attributes(
-            &self.input,
-            &mut out,
-            &keys,
-            self.feature_type.as_deref(),
-        )?;
+        let count = extract_attributes(&self.input, &mut out, &keys, self.feature_type.as_deref())?;
 
         if !self.common.quiet {
             eprintln!("{count} records");
