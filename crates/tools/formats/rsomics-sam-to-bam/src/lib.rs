@@ -22,10 +22,10 @@ pub fn convert(input: &Path, output: &mut dyn Write) -> Result<u64> {
     writer.write_header(&header).map_err(RsomicsError::Io)?;
 
     let mut count: u64 = 0;
-    for result in sam_reader.records() {
+    for result in sam_reader.record_bufs(&header) {
         let record = result.map_err(RsomicsError::Io)?;
         writer
-            .write_record(&header, &record)
+            .write_alignment_record(&header, &record)
             .map_err(RsomicsError::Io)?;
         count += 1;
     }
