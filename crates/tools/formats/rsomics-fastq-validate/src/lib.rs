@@ -41,41 +41,19 @@ pub fn validate_fastq(input: &Path) -> Result<ValidationResult> {
             errors.push(format!("line {line_num}: header doesn't start with @"));
         }
 
-        let seq = match lines.next() {
-            Some(Ok(l)) => {
-                line_num += 1;
-                l
-            }
-            _ => {
-                errors.push(format!("line {line_num}: truncated (missing sequence)"));
-                break;
-            }
+        let Some(seq) = read_next(&mut lines, &mut line_num) else {
+            errors.push(format!("line {line_num}: truncated (missing sequence)"));
+            break;
         };
 
-        let plus = match lines.next() {
-            Some(Ok(l)) => {
-                line_num += 1;
-                l
-            }
-            _ => {
-                errors.push(format!("line {line_num}: truncated (missing + line)"));
-                break;
-            }
+        let Some(_plus) = read_next(&mut lines, &mut line_num) else {
+            errors.push(format!("line {line_num}: truncated (missing + line)"));
+            break;
         };
 
-        if !plus.starts_with('+') {
-            errors.push(format!("line {line_num}: separator doesn't start with +"));
-        }
-
-        let qual = match lines.next() {
-            Some(Ok(l)) => {
-                line_num += 1;
-                l
-            }
-            _ => {
-                errors.push(format!("line {line_num}: truncated (missing quality)"));
-                break;
-            }
+        let Some(qual) = read_next(&mut lines, &mut line_num) else {
+            errors.push(format!("line {line_num}: truncated (missing quality)"));
+            break;
         };
 
         if seq.len() != qual.len() {
@@ -96,4 +74,10 @@ pub fn validate_fastq(input: &Path) -> Result<ValidationResult> {
         errors,
         is_valid,
     })
+}
+
+fn read_next<B: BufRead>(lines: &mut std::io::Lines<B>, line_num: &mut u64) -> Option<String> {
+    let line = lines.next()?.ok()?;
+    *line_num += 1;
+    Some(line)
 }

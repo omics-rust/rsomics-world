@@ -35,7 +35,7 @@ pub fn dedup_fasta(input: &Path, output: &mut dyn Write, by_name: bool) -> Resul
 
         let id = std::str::from_utf8(record.id()).unwrap_or("?");
         writeln!(out, ">{id}").map_err(RsomicsError::Io)?;
-        out.write_all(record.seq()).map_err(RsomicsError::Io)?;
+        out.write_all(&record.seq()).map_err(RsomicsError::Io)?;
         writeln!(out).map_err(RsomicsError::Io)?;
         kept += 1;
     }

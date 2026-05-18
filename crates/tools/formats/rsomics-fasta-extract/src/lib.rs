@@ -37,7 +37,7 @@ pub fn extract_fasta(
             out.write_all(b">").map_err(RsomicsError::Io)?;
             out.write_all(record.id()).map_err(RsomicsError::Io)?;
             writeln!(out).map_err(RsomicsError::Io)?;
-            out.write_all(record.seq()).map_err(RsomicsError::Io)?;
+            out.write_all(&record.seq()).map_err(RsomicsError::Io)?;
             writeln!(out).map_err(RsomicsError::Io)?;
             count += 1;
         }
