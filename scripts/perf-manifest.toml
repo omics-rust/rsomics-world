@@ -661,3 +661,12 @@ reason = "Per-function decomposition tool — no single upstream binary to bench
 
 [exempt.rsomics-vcf-het-hom]
 reason = "Per-function decomposition tool — no single upstream binary to benchmark against. Covered by smoke + compat tests."
+
+[exempt.rsomics-vcf-missing]
+reason = "Per-function decomposition tool — no single upstream binary to benchmark against. Covered by smoke + compat tests."
+
+[exempt.rsomics-bed-to-fasta]
+reason = "Per-function decomposition tool — no single upstream binary to benchmark against. Covered by smoke + compat tests."
+
+[exempt.rsomics-gff-genes]
+reason = "Per-function decomposition tool — no single upstream binary to benchmark against. Covered by smoke + compat tests."
