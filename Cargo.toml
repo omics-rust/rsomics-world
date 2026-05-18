@@ -10,6 +10,9 @@ members = [
 exclude = [
     "crates/tools/formats/rsomics-bam-index",
     "crates/tools/formats/rsomics-sam-to-bam",
+    "crates/tools/formats/rsomics-bam-to-fastq",
+    "crates/tools/formats/rsomics-vcf-norm",
+    "crates/tools/formats/rsomics-vcf-query",
 ]
 
 [workspace.package]
