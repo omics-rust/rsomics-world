@@ -1,3 +1,4 @@
+#![allow(clippy::doc_markdown)]
 use clap::Parser;
 use rsomics_common::{CommonFlags, Result, ToolMeta};
 use rsomics_help::{Example, FlagSpec, HelpSpec, Origin, Section};
