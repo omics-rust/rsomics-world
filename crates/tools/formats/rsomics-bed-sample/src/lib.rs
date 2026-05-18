@@ -45,6 +45,8 @@ impl SimpleRng {
     }
 
     fn next_usize(&mut self, bound: usize) -> usize {
-        (self.next_u64() % bound as u64) as usize
+        #[allow(clippy::cast_possible_truncation)]
+        let idx = (self.next_u64() % (bound as u64)) as usize;
+        idx
     }
 }
