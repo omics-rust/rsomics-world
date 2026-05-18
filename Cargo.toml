@@ -7,7 +7,10 @@ members = [
     "crates/foundation/*",
     "crates/tools/formats/*",
 ]
-exclude = ["crates/tools/formats/rsomics-bam-index"]
+exclude = [
+    "crates/tools/formats/rsomics-bam-index",
+    "crates/tools/formats/rsomics-sam-to-bam",
+]
 
 [workspace.package]
 edition = "2024"
