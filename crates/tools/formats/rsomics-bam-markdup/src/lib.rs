@@ -74,11 +74,7 @@ fn sum_quals(record: &bam::Record) -> u64 {
         .sum()
 }
 
-pub fn markdup(
-    input: &Path,
-    output: &mut dyn Write,
-    opts: &MarkdupOpts,
-) -> Result<MarkdupStats> {
+pub fn markdup(input: &Path, output: &mut dyn Write, opts: &MarkdupOpts) -> Result<MarkdupStats> {
     let file = File::open(input)
         .map_err(|e| RsomicsError::InvalidInput(format!("{}: {e}", input.display())))?;
     let mut reader = bam::io::Reader::new(file);
