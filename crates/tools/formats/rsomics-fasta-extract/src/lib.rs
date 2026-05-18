@@ -34,10 +34,8 @@ pub fn extract_fasta(
         let keep = if exclude { !in_set } else { in_set };
 
         if keep {
-            write!(out, ">{id}").map_err(RsomicsError::Io)?;
-            if let Some(desc) = record.desc() {
-                write!(out, " {}", String::from_utf8_lossy(desc)).map_err(RsomicsError::Io)?;
-            }
+            out.write_all(b">").map_err(RsomicsError::Io)?;
+            out.write_all(record.id()).map_err(RsomicsError::Io)?;
             writeln!(out).map_err(RsomicsError::Io)?;
             out.write_all(record.seq()).map_err(RsomicsError::Io)?;
             writeln!(out).map_err(RsomicsError::Io)?;

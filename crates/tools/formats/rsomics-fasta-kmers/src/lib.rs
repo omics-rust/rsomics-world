@@ -26,7 +26,7 @@ pub fn count_kmers(input: &Path, output: &mut dyn Write, k: usize) -> Result<u64
                 .iter()
                 .all(|b| matches!(b, b'A' | b'C' | b'G' | b'T' | b'a' | b'c' | b'g' | b't'))
             {
-                let upper: Vec<u8> = window.iter().map(|b| b.to_ascii_uppercase()).collect();
+                let upper: Vec<u8> = window.iter().map(u8::to_ascii_uppercase).collect();
                 *counts.entry(upper).or_insert(0) += 1;
             }
         }
