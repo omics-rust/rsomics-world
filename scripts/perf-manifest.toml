@@ -430,3 +430,6 @@ reason = "Per-function decomposition tool — no single upstream binary to bench
 
 [exempt.rsomics-fasta-n50]
 reason = "Assembly metric tool — no single upstream binary to benchmark against. Covered by smoke + golden tests."
+
+[exempt.rsomics-fasta-translate]
+reason = "Per-function decomposition tool — no single upstream binary to benchmark against. Covered by smoke + compat tests."
