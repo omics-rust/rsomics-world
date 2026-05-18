@@ -105,11 +105,9 @@ fn find_nearest(
 
     for f in feats {
         let dist = if pos < f.start {
-            f.start - pos
-        } else if pos > f.end {
-            pos - f.end
+            f.start.saturating_sub(pos)
         } else {
-            0
+            pos.saturating_sub(f.end)
         };
         if dist < best_dist {
             best_dist = dist;
