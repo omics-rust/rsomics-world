@@ -5,11 +5,11 @@ bioinformatics toolchain with **modern Rust**: fearless parallelism, explicit
 SIMD, a sane installer (`cargo install rsomics-<name>`), no build-system
 ceremony.
 
-**Status**: 162 crates (143 active tool binaries) across
-FASTQ (30), BED (34), FASTA (32), VCF (22), GFF (16), BAM/SAM (13),
+**Status**: 179 crates (160 active tool binaries) across
+FASTQ (32), BED (38), FASTA (34), VCF (28), GFF (18), BAM/SAM (13),
 single-cell (inferCNV), transcriptomics (featureCounts), alignment
 (minimap2 FFI), and genomic utilities (bbduk). 85+ published on
-crates.io with 50+ more tagging. All tools pass CI: fmt, clippy
+crates.io with 70+ more tagging. All tools pass CI: fmt, clippy
 pedantic, tests on Linux (stable + MSRV 1.91) + macOS.
 
 Most upstream tools are single-threaded, memory-inefficient, and written in
