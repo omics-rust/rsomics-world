@@ -20,7 +20,7 @@ pub fn rename_gff(input: &Path, map_path: &Path, output: &mut dyn Write) -> Resu
             writeln!(out, "{line}").map_err(RsomicsError::Io)?;
             continue;
         }
-        let mut fields: Vec<&str> = line.split('\t').collect();
+        let fields: Vec<&str> = line.split('\t').collect();
         if fields.is_empty() {
             writeln!(out, "{line}").map_err(RsomicsError::Io)?;
             continue;

@@ -64,7 +64,6 @@ fn aggregate(vals: &[f64], op: &str) -> String {
         return ".".to_string();
     }
     match op {
-        "sum" => format!("{:.6}", vals.iter().sum::<f64>()),
         "mean" => {
             let s: f64 = vals.iter().sum();
             format!("{:.6}", s / vals.len() as f64)
