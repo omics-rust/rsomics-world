@@ -238,3 +238,18 @@ in [`integration.md`](integration.md). Multimodal joint analysis is in
   - Layer: `subcommand-of-rsomics-sc` (interop via extendr)
   - Consumes primitives: `extendr`-bridge
   - Notes: Better-performing than DoubletFinder in benchmarks. Use via `extendr`; rewrite is low priority.
+
+- [ ] **`inferCNV`** — infer copy-number variations from single-cell RNA-seq expression.
+  - Reference impl: `R` · [broadinstitute/infercnv](https://github.com/broadinstitute/infercnv) · `BSD-3-Clause`
+  - Existing Rust: none verified
+  - Existing Rust kind: `none`
+  - Existing non-C alternatives: `copykat` (R), `CaSpER` (R), `SCEVAN` (R) — all R-only
+  - Parallelism: R BiocParallel for the smoothing/denoising steps
+  - SIMD: none (R matrix ops, potential for ndarray SIMD in Rust)
+  - Quadrant: —
+  - GPU-amenable: maybe — the moving-average smoothing and HMM steps are parallelizable
+  - Upstream license: `BSD-3-Clause`
+  - Priority: `P1`
+  - Layer: `B` (tool — `rsomics-infercnv`)
+  - Consumes primitives: `anndata-rs` (count matrix IO), `rsomics-stats` (smoothing, HMM), `ndarray`
+  - Notes: Core algorithm: (1) normalize scRNA expression matrix, (2) order genes by genomic position, (3) smooth expression across genomic windows per cell, (4) subtract reference (normal cells) to reveal relative gains/losses, (5) optional HMM to call CNV states. The hot path is the per-cell sliding-window smoothing over the gene-position-ordered expression vector — O(cells × genes), embarrassingly parallel across cells. A Rust port with rayon would be a straightforward win over the R version. BSD-3-Clause allows source reading. Key challenge: gene-position annotation requires a GTF/GFF parser (use noodles-gff or rsomics-gff tools).
