@@ -2737,3 +2737,24 @@ reason = "Per-function decomposition tool — covered by smoke + compat tests."
 
 [exempt.rsomics-fastq-window-quality]
 reason = "Per-function decomposition tool — covered by smoke + compat tests."
+
+[exempt.rsomics-vcf-bgzip]
+reason = "Per-function decomposition tool — covered by smoke + compat tests."
+
+[exempt.rsomics-vcf-index]
+reason = "Per-function decomposition tool — covered by smoke + compat tests."
+
+[exempt.rsomics-bed-multiinter]
+reason = "Per-function decomposition tool — covered by smoke + compat tests."
+
+[exempt.rsomics-fasta-dict]
+reason = "Per-function decomposition tool — covered by smoke + compat tests."
+
+[exempt.rsomics-fastq-to-sam]
+reason = "Per-function decomposition tool — covered by smoke + compat tests."
+
+[exempt.rsomics-fastq-sort-qual]
+reason = "Per-function decomposition tool — covered by smoke + compat tests."
+
+[exempt.rsomics-fastq-sample-name]
+reason = "Per-function decomposition tool — covered by smoke + compat tests."
