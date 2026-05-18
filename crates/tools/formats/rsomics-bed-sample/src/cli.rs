@@ -25,8 +25,6 @@ pub struct Cli {
     count: usize,
     #[arg(short = 'o', long = "output", default_value = "-")]
     output: String,
-    #[arg(long = "seed", default_value_t = 42)]
-    seed: u64,
     #[command(flatten)]
     pub common: CommonFlags,
 }
@@ -38,7 +36,7 @@ impl Cli {
         } else {
             Box::new(std::fs::File::create(&self.output).map_err(RsomicsError::Io)?)
         };
-        let sampled = sample_bed(&self.input, &mut out, self.count, self.seed)?;
+        let sampled = sample_bed(&self.input, &mut out, self.count, self.common.seed_rng())?;
         if !self.common.quiet {
             eprintln!("{sampled} intervals sampled");
         }

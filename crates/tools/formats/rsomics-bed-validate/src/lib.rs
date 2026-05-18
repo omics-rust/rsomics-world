@@ -47,10 +47,10 @@ pub fn validate_bed(input: &Path) -> Result<BedValidation> {
         if end.is_err() {
             errors.push(format!("line {line_num}: end is not a valid integer"));
         }
-        if let (Ok(s), Ok(e)) = (start, end) {
-            if s > e {
-                errors.push(format!("line {line_num}: start ({s}) > end ({e})"));
-            }
+        if let (Ok(s), Ok(e)) = (start, end)
+            && s > e
+        {
+            errors.push(format!("line {line_num}: start ({s}) > end ({e})"));
         }
 
         records += 1;
