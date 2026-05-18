@@ -1,0 +1,6 @@
+##description: test gene annotation
+chr1	test	gene	1000	2000	.	+	.	gene_id "GENE_A"; gene_name "GENE_A";
+chr1	test	gene	3000	4000	.	+	.	gene_id "GENE_B"; gene_name "GENE_B";
+chr1	test	gene	5000	6000	.	+	.	gene_id "GENE_C"; gene_name "GENE_C";
+chr2	test	gene	1000	2000	.	+	.	gene_id "GENE_D"; gene_name "GENE_D";
+chr2	test	gene	3000	4000	.	+	.	gene_id "GENE_E"; gene_name "GENE_E";
