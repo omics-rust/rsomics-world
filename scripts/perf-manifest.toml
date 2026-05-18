@@ -409,3 +409,6 @@ reason = "GPL upstream (featureCounts/Subread) — clean-room reimplementation. 
 
 [exempt.rsomics-sam-to-bam]
 reason = "Per-function decomposition tool — no single upstream binary to benchmark against. Covered by smoke + compat tests."
+
+[exempt.rsomics-bam-to-fastq]
+reason = "Per-function decomposition tool — no single upstream binary to benchmark against. Covered by smoke + compat tests."
