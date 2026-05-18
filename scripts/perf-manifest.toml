@@ -382,3 +382,12 @@ reason = "Per-function decomposition tool — no single upstream binary to bench
 
 [exempt.rsomics-infercnv]
 reason = "R-only upstream (inferCNV) — no compiled binary to benchmark against. Perf comparison requires R installation; validated by smoke + golden tests."
+
+[exempt.rsomics-bam-view]
+reason = "Per-function decomposition tool — no single upstream binary to benchmark against. Covered by smoke + compat tests."
+
+[exempt.rsomics-bam-depth]
+reason = "Per-function decomposition tool — no single upstream binary to benchmark against. Covered by smoke + compat tests."
+
+[exempt.rsomics-bam-merge]
+reason = "Per-function decomposition tool — no single upstream binary to benchmark against. Covered by smoke + compat tests."
