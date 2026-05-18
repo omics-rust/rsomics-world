@@ -4,8 +4,6 @@ use std::io::Write;
 use std::path::Path;
 
 use noodles::bam;
-use noodles::sam;
-use noodles::sam::alignment::record::Flags;
 use rsomics_common::{Result, RsomicsError};
 use serde::Serialize;
 
@@ -17,15 +15,9 @@ pub struct MarkdupStats {
     pub optical_duplicates: u64,
 }
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Default)]
 pub struct MarkdupOpts {
     pub remove: bool,
-}
-
-impl Default for MarkdupOpts {
-    fn default() -> Self {
-        Self { remove: false }
-    }
 }
 
 #[derive(Hash, PartialEq, Eq)]
@@ -43,30 +35,11 @@ fn dup_key(record: &bam::Record) -> Option<DupKey> {
         return None;
     }
 
-    let tid = record
-        .reference_sequence_id()
-        .transpose()
-        .ok()
-        .flatten()?;
-    let pos = record
-        .alignment_start()
-        .transpose()
-        .ok()
-        .flatten()
-        .map(|p| p.get())?;
+    let tid = record.reference_sequence_id().transpose().ok().flatten()?;
+    let pos = record.alignment_start().transpose().ok().flatten().map(|p| p.get())?;
 
-    let mate_tid = record
-        .mate_reference_sequence_id()
-        .transpose()
-        .ok()
-        .flatten()
-        .unwrap_or(0);
-    let mate_pos = record
-        .mate_alignment_start()
-        .transpose()
-        .ok()
-        .flatten()
-        .map_or(0, |p| p.get());
+    let mate_tid = record.mate_reference_sequence_id().transpose().ok().flatten().unwrap_or(0);
+    let mate_pos = record.mate_alignment_start().transpose().ok().flatten().map_or(0, |p| p.get());
 
     Some(DupKey {
         tid,
