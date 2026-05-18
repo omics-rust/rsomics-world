@@ -5,11 +5,11 @@ bioinformatics toolchain with **modern Rust**: fearless parallelism, explicit
 SIMD, a sane installer (`cargo install rsomics-<name>`), no build-system
 ceremony.
 
-**Status**: 105 crates, 86 tool binaries across
-FASTQ (18), BED (19), FASTA (15), VCF (12), GFF (8), BAM (8),
-single-cell (inferCNV), and alignment (minimap2 FFI). 97% of tools
-have automated compat tests against upstream binaries (seqkit, bedtools,
-samtools, fastp, etc.).
+**Status**: 109 crates, 90 tool binaries across
+FASTQ (18), BED (19), FASTA (15), VCF (12), GFF (8), BAM (12),
+single-cell (inferCNV), and alignment (minimap2 FFI). All tools
+have automated smoke tests; format tools have compat tests against
+upstream binaries (seqkit, bedtools, samtools, fastp, etc.).
 
 Most upstream tools are single-threaded, memory-inefficient, and written in
 2005-era C or pure R. Modern multicore + SIMD + GPU resources sit idle. The
