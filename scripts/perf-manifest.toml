@@ -199,3 +199,6 @@ ours_args        = "-t 1 --literal AGATCGGAAGAGCACACGTCTGAACTCCAGTCAC -i FIX -o 
 upstream_bin     = "bbduk.sh"
 upstream_args    = "-Xmx1g in=FIX out=OUT literal=AGATCGGAAGAGCACACGTCTGAACTCCAGTCAC k=27 threads=1 overwrite=t"
 upstream_version = "bbduk.sh --version"
+
+[exempt.rsomics-minimap2]
+reason = "Quadrant ② FFI wrapper of libminimap2 — cannot outperform its own C upstream by definition. The perf contract targets Rust reimplementations, not FFI wrappers."
