@@ -51,8 +51,13 @@ impl Cli {
             Box::new(std::fs::File::create(&self.output).map_err(RsomicsError::Io)?)
         };
 
-        let count =
-            annotate_bed(&self.input, &self.gff, &mut out, &self.feature_type, &self.attribute)?;
+        let count = annotate_bed(
+            &self.input,
+            &self.gff,
+            &mut out,
+            &self.feature_type,
+            &self.attribute,
+        )?;
 
         if !self.common.quiet {
             eprintln!("{count} intervals annotated");

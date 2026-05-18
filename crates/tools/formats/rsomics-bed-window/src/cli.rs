@@ -42,19 +42,14 @@ pub struct Cli {
 
 impl Cli {
     pub fn execute(self) -> Result<()> {
-        let mut out: Box<dyn std::io::Write> =
-            if self.output == "-" {
-                Box::new(std::io::stdout().lock())
-            } else {
-                Box::new(
-                    std::fs::File::create(&self.output)
-                        .map_err(RsomicsError::Io)?,
-                )
-            };
+        let mut out: Box<dyn std::io::Write> = if self.output == "-" {
+            Box::new(std::io::stdout().lock())
+        } else {
+            Box::new(std::fs::File::create(&self.output).map_err(RsomicsError::Io)?)
+        };
 
-        let count = window_bed(
-            &self.a, &self.b, &mut out, self.window,
-        )?;
+        let count =
+            window_bed(&self.a, &self.b, &mut out, self.window)?;
 
         if !self.common.quiet {
             eprintln!("{count} overlapping pairs");
