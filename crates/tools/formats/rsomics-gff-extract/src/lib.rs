@@ -27,10 +27,8 @@ pub fn extract_attributes(
         if fields.len() < 9 {
             continue;
         }
-        if let Some(ft) = feature_type {
-            if fields[2] != ft {
-                continue;
-            }
+        if feature_type.is_some_and(|ft| fields[2] != ft) {
+            continue;
         }
 
         let attrs = fields[8];

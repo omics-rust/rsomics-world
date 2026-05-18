@@ -6,7 +6,6 @@ use std::path::Path;
 use rsomics_common::{Result, RsomicsError};
 
 struct Feature {
-    chrom: String,
     start: u64,
     end: u64,
     name: String,
@@ -39,7 +38,7 @@ pub fn annotate_bed(
         let chrom = fields[0];
         let start: u64 = fields[1].parse().unwrap_or(0);
         let end: u64 = fields[2].parse().unwrap_or(0);
-        let mid = (start + end) / 2;
+        let mid = start / 2 + end / 2 + (start % 2 + end % 2) / 2;
 
         let nearest = find_nearest(&features, chrom, mid);
 
@@ -82,8 +81,7 @@ fn load_features(
         if name.is_empty() {
             continue;
         }
-        by_chrom.entry(chrom.clone()).or_default().push(Feature {
-            chrom,
+        by_chrom.entry(chrom).or_default().push(Feature {
             start,
             end,
             name,
@@ -101,16 +99,16 @@ fn find_nearest(
     features: &BTreeMap<String, Vec<Feature>>,
     chrom: &str,
     pos: u64,
-) -> Option<(String, i64)> {
+) -> Option<(String, u64)> {
     let feats = features.get(chrom)?;
     let mut best_name = None;
-    let mut best_dist = i64::MAX;
+    let mut best_dist = u64::MAX;
 
     for f in feats {
         let dist = if pos < f.start {
-            (f.start - pos) as i64
+            f.start - pos
         } else if pos > f.end {
-            (pos - f.end) as i64
+            pos - f.end
         } else {
             0
         };
