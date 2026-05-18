@@ -13,12 +13,12 @@ Legend (4 values, see [`CONVENTIONS.md`](CONVENTIONS.md) for full definitions):
 
 Priorities: P0 must-have · P1 high value · P2 nice to have.
 
-## Status dashboard (post-Phase-1 reclassification, 2026-05-14)
+## Status dashboard (updated 2026-05-18)
 
-| Module | `[ ]` open | `[~]` partial | `[x]` adopt | `[A]` subprocess | Total |
+| Module | `[ ]` open | `[~]` partial | `[x]` done | `[A]` subprocess | Total |
 |---|---:|---:|---:|---:|---:|
 | [01 — Foundations](docs/01-foundations/) | 7 | 12 | 26 | 0 | 45 |
-| [02 — Genomics](docs/02-genomics/) | 55 | 5 | 8 | 0 | 68 |
+| [02 — Genomics](docs/02-genomics/) | 54 | 4 | 11 | 0 | 69 |
 | [03 — Transcriptomics](docs/03-transcriptomics/) | 28 | 2 | 2 | 0 | 32 |
 | [04 — Single-cell & spatial](docs/04-single-cell/) | 37 | 12 | 2 | 0 | 51 |
 | [05 — Epigenomics](docs/05-epigenomics/) | 37 | 1 | 1 | 0 | 39 |
@@ -26,7 +26,9 @@ Priorities: P0 must-have · P1 high value · P2 nice to have.
 | [07 — Proteomics & structure](docs/07-proteomics-structure/) | 36 | 0 | 3 | 1 | 40 |
 | [08 — Phylogenetics & popgen](docs/08-phylogenetics-popgen/) | 28 | 0 | 0 | 1 | 29 |
 | [09 — Workflow & utility](docs/09-workflow-utility/) | 28 | 0 | 3 | 0 | 31 |
-| **Total** | **293** | **32** | **47** | **2** | **374** |
+| **Total** | **292** | **31** | **50** | **2** | **375** |
+
+Additionally, 81 per-function tool crates (seqkit/bedtools/bcftools/samtools decomposition) are shipped but not individually tracked above — they implement operations within the TODO entries.
 
 47 tools already have production-grade pure-Rust implementations — we adopt those rather than rewrite. 32 have partial coverage (FFI wrappers like `rust-htslib`, partial ports like `ruzstd`, or rust-native research-grade tools like `rust-mdbg`). 2 we adopt via subprocess only (UShER, Foldseek). 293 are genuine open work.
 
