@@ -30,7 +30,10 @@ pub fn split_by_reference(input: &Path, output_prefix: &Path) -> Result<HashMap<
         let Some(tid) = record.reference_sequence_id().transpose().ok().flatten() else {
             continue;
         };
-        let name = ref_names.get(tid).cloned().unwrap_or_else(|| format!("tid{tid}"));
+        let name = ref_names
+            .get(tid)
+            .cloned()
+            .unwrap_or_else(|| format!("tid{tid}"));
 
         let (writer, count) = if let Some(entry) = writers.get_mut(&name) {
             entry

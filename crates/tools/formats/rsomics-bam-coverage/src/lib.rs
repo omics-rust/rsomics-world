@@ -27,7 +27,10 @@ pub fn compute_coverage(input: &Path) -> Result<Vec<RefCoverage>> {
 
     let ref_seqs = header.reference_sequences();
     let ref_names: Vec<String> = ref_seqs.keys().map(ToString::to_string).collect();
-    let ref_lens: Vec<u64> = ref_seqs.values().map(|rs| rs.length().get() as u64).collect();
+    let ref_lens: Vec<u64> = ref_seqs
+        .values()
+        .map(|rs| rs.length().get() as u64)
+        .collect();
 
     let mut per_ref_reads: BTreeMap<usize, u64> = BTreeMap::new();
     let mut per_ref_bases: BTreeMap<usize, u64> = BTreeMap::new();
