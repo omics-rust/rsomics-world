@@ -424,3 +424,6 @@ reason = "Per-function decomposition tool — no single upstream binary to bench
 
 [exempt.rsomics-bed-annotate]
 reason = "Per-function decomposition tool — no single upstream binary to benchmark against. Covered by smoke + compat tests."
+
+[exempt.rsomics-bed-window]
+reason = "Per-function decomposition tool — no single upstream binary to benchmark against. Covered by smoke + compat tests."
