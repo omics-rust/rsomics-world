@@ -523,3 +523,6 @@ reason = "Per-function decomposition tool — no single upstream binary to bench
 
 [exempt.rsomics-fastq-window]
 reason = "Per-function decomposition tool — no single upstream binary to benchmark against. Covered by smoke + compat tests."
+
+[exempt.rsomics-bed-head]
+reason = "Per-function decomposition tool — no single upstream binary to benchmark against. Covered by smoke + compat tests."
