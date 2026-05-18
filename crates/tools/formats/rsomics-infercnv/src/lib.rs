@@ -69,7 +69,9 @@ pub fn load_matrix(path: &Path) -> Result<(Vec<String>, Vec<String>, Vec<Vec<f64
     let reader = BufReader::new(file);
     let mut lines = reader.lines();
 
-    let header = lines.next().ok_or_else(|| RsomicsError::InvalidInput("empty matrix".into()))?
+    let header = lines
+        .next()
+        .ok_or_else(|| RsomicsError::InvalidInput("empty matrix".into()))?
         .map_err(RsomicsError::Io)?;
     let cells: Vec<String> = header.split('\t').skip(1).map(String::from).collect();
 
@@ -83,7 +85,10 @@ pub fn load_matrix(path: &Path) -> Result<(Vec<String>, Vec<String>, Vec<Vec<f64
             continue;
         }
         genes.push(fields[0].to_string());
-        let row: Vec<f64> = fields[1..].iter().map(|s| s.parse().unwrap_or(0.0)).collect();
+        let row: Vec<f64> = fields[1..]
+            .iter()
+            .map(|s| s.parse().unwrap_or(0.0))
+            .collect();
         data.push(row);
     }
 

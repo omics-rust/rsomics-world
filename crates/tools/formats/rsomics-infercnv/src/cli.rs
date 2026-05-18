@@ -66,15 +66,19 @@ impl Cli {
             Vec::new()
         };
 
-        let (ordered_genes, cnv) =
-            infer_cnv(&gene_names, &cell_names, &expr, &gene_order, &ref_indices, self.window)?;
+        let (ordered_genes, cnv) = infer_cnv(
+            &gene_names,
+            &cell_names,
+            &expr,
+            &gene_order,
+            &ref_indices,
+            self.window,
+        )?;
 
         let mut out: Box<dyn std::io::Write> = if self.output == "-" {
             Box::new(std::io::stdout().lock())
         } else {
-            Box::new(
-                std::fs::File::create(&self.output).map_err(RsomicsError::Io)?,
-            )
+            Box::new(std::fs::File::create(&self.output).map_err(RsomicsError::Io)?)
         };
         write_cnv(&ordered_genes, &cell_names, &cnv, &mut out)?;
 

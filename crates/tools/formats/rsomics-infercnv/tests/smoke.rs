@@ -51,7 +51,8 @@ fn basic_cnv_run() {
         let fields: Vec<&str> = line.split('\t').collect();
         assert_eq!(fields.len(), 6, "gene + 5 cells");
         for val in &fields[1..] {
-            val.parse::<f64>().unwrap_or_else(|_| panic!("not a float: {val}"));
+            val.parse::<f64>()
+                .unwrap_or_else(|_| panic!("not a float: {val}"));
         }
     }
 }
