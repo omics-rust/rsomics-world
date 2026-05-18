@@ -18,3 +18,13 @@ fn counts_three() {
     assert!(out.status.success());
     assert_eq!(String::from_utf8(out.stdout).unwrap().trim(), "3");
 }
+
+#[test]
+fn empty_file_returns_zero() {
+    let out = Command::new(bin())
+        .arg(fixture("empty.bed"))
+        .output()
+        .expect("spawn");
+    assert!(out.status.success());
+    assert_eq!(String::from_utf8(out.stdout).unwrap().trim(), "0");
+}
