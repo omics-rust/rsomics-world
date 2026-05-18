@@ -6,6 +6,9 @@ use regex::bytes::Regex;
 use rsomics_common::{Result, RsomicsError};
 
 pub fn grep(input: &Path, pattern: &str, invert: bool, output: &mut dyn Write) -> Result<u64> {
+    if std::fs::metadata(input).is_ok_and(|m| m.len() == 0) {
+        return Ok(0);
+    }
     let re =
         Regex::new(pattern).map_err(|e| RsomicsError::InvalidInput(format!("bad regex: {e}")))?;
     let mut reader = parse_fastx_file(input)
