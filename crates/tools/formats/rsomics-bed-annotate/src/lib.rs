@@ -56,7 +56,11 @@ pub fn annotate_bed(
     Ok(count)
 }
 
-fn load_features(path: &Path, feature_type: &str, attribute: &str) -> Result<BTreeMap<String, Vec<Feature>>> {
+fn load_features(
+    path: &Path,
+    feature_type: &str,
+    attribute: &str,
+) -> Result<BTreeMap<String, Vec<Feature>>> {
     let file = File::open(path)
         .map_err(|e| RsomicsError::InvalidInput(format!("{}: {e}", path.display())))?;
     let reader = BufReader::new(file);
@@ -93,7 +97,11 @@ fn load_features(path: &Path, feature_type: &str, attribute: &str) -> Result<BTr
     Ok(by_chrom)
 }
 
-fn find_nearest(features: &BTreeMap<String, Vec<Feature>>, chrom: &str, pos: u64) -> Option<(String, i64)> {
+fn find_nearest(
+    features: &BTreeMap<String, Vec<Feature>>,
+    chrom: &str,
+    pos: u64,
+) -> Option<(String, i64)> {
     let feats = features.get(chrom)?;
     let mut best_name = None;
     let mut best_dist = i64::MAX;
