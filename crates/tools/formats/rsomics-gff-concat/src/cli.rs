@@ -2,9 +2,9 @@ use std::path::PathBuf;
 
 use clap::Parser;
 use rsomics_common::{CommonFlags, Result, RsomicsError, ToolMeta};
-use rsomics_help::{Example, FlagSpec, HelpSpec, Origin, Section};
+use rsomics_help::{Example, HelpSpec, Origin, Section};
 
-use rsomics_vcf_rename::rename_vcf;
+use rsomics_gff_concat::concat_gff;
 
 pub const META: ToolMeta = ToolMeta {
     name: env!("CARGO_PKG_NAME"),
@@ -12,11 +12,16 @@ pub const META: ToolMeta = ToolMeta {
 };
 
 #[derive(Parser, Debug)]
-#[command(name = "rsomics-vcf-rename", version, about, long_about = None, disable_help_flag = true)]
+#[command(
+    name = "rsomics-gff-concat",
+    version,
+    about,
+    long_about = None,
+    disable_help_flag = true
+)]
 pub struct Cli {
-    pub input: PathBuf,
-    #[arg(short = 'm', long = "map")]
-    map: PathBuf,
+    #[arg(required = true)]
+    pub inputs: Vec<PathBuf>,
     #[arg(short = 'o', long = "output", default_value = "-")]
     output: String,
     #[command(flatten)]
@@ -25,14 +30,15 @@ pub struct Cli {
 
 impl Cli {
     pub fn execute(self) -> Result<()> {
+        let paths: Vec<&std::path::Path> = self.inputs.iter().map(PathBuf::as_path).collect();
         let mut out: Box<dyn std::io::Write> = if self.output == "-" {
             Box::new(std::io::stdout().lock())
         } else {
             Box::new(std::fs::File::create(&self.output).map_err(RsomicsError::Io)?)
         };
-        let count = rename_vcf(&self.input, &self.map, &mut out)?;
+        let bytes = concat_gff(&paths, &mut out)?;
         if !self.common.quiet {
-            eprintln!("{count} records renamed");
+            eprintln!("{} files, {} bytes", self.inputs.len(), bytes);
         }
         Ok(())
     }
@@ -41,31 +47,21 @@ impl Cli {
 pub static HELP: HelpSpec = HelpSpec {
     name: META.name,
     version: META.version,
-    tagline: "Rename chromosomes in VCF using a mapping file.",
+    tagline: "Concatenate multiple GFF files.",
     origin: Some(Origin {
-        upstream: "awk / sed on VCF column 1",
+        upstream: "cat",
         upstream_license: "N/A",
         our_license: "MIT OR Apache-2.0",
         paper_doi: None,
     }),
-    usage_lines: &["<input.vcf> -m chrom_map.tsv [-o renamed.vcf]"],
+    usage_lines: &["<file1.gff> <file2.gff> [...] [-o merged.gff]"],
     sections: &[Section {
         title: "OPTIONS",
-        flags: &[FlagSpec {
-            short: Some('m'),
-            long: "map",
-            aliases: &[],
-            value: Some("<path>"),
-            type_hint: Some("Path"),
-            required: true,
-            default: None,
-            description: "TSV mapping file (old_name → new_name).",
-            why_default: None,
-        }],
+        flags: &[],
     }],
     examples: &[Example {
-        description: "Rename UCSC to Ensembl chroms",
-        command: "rsomics-vcf-rename variants.vcf -m chrom_map.tsv",
+        description: "Concatenate GFF files",
+        command: "rsomics-gff-concat genes1.gff genes2.gff -o merged.gff",
     }],
     json_result_schema_doc: None,
 };

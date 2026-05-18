@@ -1,15 +1,15 @@
 [package]
-name = "rsomics-vcf-rename"
+name = "rsomics-gff-concat"
 version = "0.1.0"
 edition.workspace = true
 rust-version.workspace = true
 license.workspace = true
 repository.workspace = true
 authors.workspace = true
-description = "Rename chromosomes in VCF using a mapping file"
+description = "Concatenate multiple GFF files"
 
 [[bin]]
-name = "rsomics-vcf-rename"
+name = "rsomics-gff-concat"
 path = "src/main.rs"
 
 [dependencies]
