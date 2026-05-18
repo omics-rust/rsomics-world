@@ -93,7 +93,7 @@ pub static HELP: HelpSpec = HelpSpec {
         title: "OPTIONS",
         flags: &[
             FlagSpec {
-                short: Some("-f"),
+                short: Some('f'),
                 long: "require-flags",
                 aliases: &[],
                 value: Some("<INT>"),
@@ -104,7 +104,7 @@ pub static HELP: HelpSpec = HelpSpec {
                 why_default: None,
             },
             FlagSpec {
-                short: Some("-F"),
+                short: Some('F'),
                 long: "exclude-flags",
                 aliases: &[],
                 value: Some("<INT>"),
@@ -126,7 +126,7 @@ pub static HELP: HelpSpec = HelpSpec {
                 why_default: None,
             },
             FlagSpec {
-                short: Some("-c"),
+                short: Some('c'),
                 long: "count",
                 aliases: &[],
                 value: None,

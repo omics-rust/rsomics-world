@@ -72,7 +72,7 @@ pub static HELP: HelpSpec = HelpSpec {
     sections: &[Section {
         title: "OPTIONS",
         flags: &[FlagSpec {
-            short: Some("-o"),
+            short: Some('o'),
             long: "output",
             aliases: &[],
             value: Some("<path>"),

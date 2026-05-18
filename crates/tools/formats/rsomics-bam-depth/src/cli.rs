@@ -31,10 +31,6 @@ pub struct Cli {
     #[arg(long = "min-mapq", default_value_t = 0)]
     min_mapq: u8,
 
-    /// Minimum base quality.
-    #[arg(long = "min-baseq", default_value_t = 0)]
-    min_baseq: u8,
-
     /// Maximum depth to report per position.
     #[arg(long = "max-depth", default_value_t = 8000)]
     max_depth: u32,
@@ -47,7 +43,6 @@ impl Cli {
     pub fn execute(self) -> Result<()> {
         let opts = DepthOpts {
             min_mapq: self.min_mapq,
-            min_baseq: self.min_baseq,
             max_depth: self.max_depth,
             ..Default::default()
         };
@@ -92,17 +87,6 @@ pub static HELP: HelpSpec = HelpSpec {
                 required: false,
                 default: Some("0"),
                 description: "Minimum mapping quality.",
-                why_default: None,
-            },
-            FlagSpec {
-                short: None,
-                long: "min-baseq",
-                aliases: &[],
-                value: Some("<INT>"),
-                type_hint: Some("u8"),
-                required: false,
-                default: Some("0"),
-                description: "Minimum base quality.",
                 why_default: None,
             },
             FlagSpec {
