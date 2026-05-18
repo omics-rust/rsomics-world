@@ -30,7 +30,7 @@ impl Cli {
 pub static HELP: HelpSpec = HelpSpec {
     name: META.name,
     version: META.version,
-    tagline: "Per-sample concordance between VCFs",
+    tagline: "Sample concordance between VCF callsets",
     origin: Some(Origin {
         upstream: "custom",
         upstream_license: "N/A",

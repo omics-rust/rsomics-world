@@ -1,6 +1,6 @@
 use clap::Parser;
 use rsomics_common::{CommonFlags, Result, RsomicsError, ToolMeta};
-use rsomics_fasta_restriction_sites::fasta_restriction_sites;
+use rsomics_fastq_quality_recal::fastq_quality_recal;
 use rsomics_help::{Example, HelpSpec, Origin, Section};
 use std::path::PathBuf;
 pub const META: ToolMeta = ToolMeta {
@@ -8,7 +8,7 @@ pub const META: ToolMeta = ToolMeta {
     version: env!("CARGO_PKG_VERSION"),
 };
 #[derive(Parser, Debug)]
-#[command(name = "rsomics-fasta-restriction-sites", version, about, long_about = None, disable_help_flag = true)]
+#[command(name = "rsomics-fastq-quality-recal", version, about, long_about = None, disable_help_flag = true)]
 pub struct Cli {
     pub input: PathBuf,
     #[arg(short = 'o', long = "output", default_value = "-")]
@@ -23,14 +23,14 @@ impl Cli {
         } else {
             Box::new(std::fs::File::create(&self.output).map_err(RsomicsError::Io)?)
         };
-        let _ = fasta_restriction_sites(&self.input, &mut out)?;
+        let _ = fastq_quality_recal(&self.input, &mut out)?;
         Ok(())
     }
 }
 pub static HELP: HelpSpec = HelpSpec {
     name: META.name,
     version: META.version,
-    tagline: "Restriction enzyme sites in FASTA",
+    tagline: "Quality score recalibration for FASTQ",
     origin: Some(Origin {
         upstream: "custom",
         upstream_license: "N/A",
@@ -44,7 +44,7 @@ pub static HELP: HelpSpec = HelpSpec {
     }],
     examples: &[Example {
         description: "Run",
-        command: "rsomics-fasta-restriction-sites input",
+        command: "rsomics-fastq-quality-recal input",
     }],
     json_result_schema_doc: None,
 };

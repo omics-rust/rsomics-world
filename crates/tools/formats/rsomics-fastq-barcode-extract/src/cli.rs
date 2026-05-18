@@ -30,7 +30,7 @@ impl Cli {
 pub static HELP: HelpSpec = HelpSpec {
     name: META.name,
     version: META.version,
-    tagline: "FASTQ barcode extraction",
+    tagline: "Extract barcode from FASTQ header",
     origin: Some(Origin {
         upstream: "custom",
         upstream_license: "N/A",

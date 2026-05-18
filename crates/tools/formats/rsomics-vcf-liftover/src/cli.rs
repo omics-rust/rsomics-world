@@ -30,7 +30,7 @@ impl Cli {
 pub static HELP: HelpSpec = HelpSpec {
     name: META.name,
     version: META.version,
-    tagline: "Remap VCF positions via chain file",
+    tagline: "Lift VCF coordinates between assemblies",
     origin: Some(Origin {
         upstream: "custom",
         upstream_license: "N/A",

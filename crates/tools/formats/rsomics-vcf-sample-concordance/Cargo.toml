@@ -6,7 +6,7 @@ rust-version.workspace = true
 license.workspace = true
 repository.workspace = true
 authors.workspace = true
-description = "Per-sample concordance between VCFs"
+description = "Sample concordance between VCF callsets"
 [[bin]]
 name = "rsomics-vcf-sample-concordance"
 path = "src/main.rs"

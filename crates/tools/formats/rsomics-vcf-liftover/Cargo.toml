@@ -6,7 +6,7 @@ rust-version.workspace = true
 license.workspace = true
 repository.workspace = true
 authors.workspace = true
-description = "Remap VCF positions via chain file"
+description = "Lift VCF coordinates between assemblies"
 [[bin]]
 name = "rsomics-vcf-liftover"
 path = "src/main.rs"

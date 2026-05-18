@@ -6,7 +6,7 @@ rust-version.workspace = true
 license.workspace = true
 repository.workspace = true
 authors.workspace = true
-description = "Find restriction enzyme sites in FASTA"
+description = "Restriction enzyme sites in FASTA"
 [[bin]]
 name = "rsomics-fasta-restriction-sites"
 path = "src/main.rs"
