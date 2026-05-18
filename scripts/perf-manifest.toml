@@ -670,3 +670,12 @@ reason = "Per-function decomposition tool — no single upstream binary to bench
 
 [exempt.rsomics-gff-genes]
 reason = "Per-function decomposition tool — no single upstream binary to benchmark against. Covered by smoke + compat tests."
+
+[exempt.rsomics-vcf-ts-tv]
+reason = "Per-function decomposition tool — no single upstream binary to benchmark against. Covered by smoke + compat tests."
+
+[exempt.rsomics-bed-sizes]
+reason = "Per-function decomposition tool — no single upstream binary to benchmark against. Covered by smoke + compat tests."
+
+[exempt.rsomics-fasta-gc-content]
+reason = "Per-function decomposition tool — no single upstream binary to benchmark against. Covered by smoke + compat tests."
