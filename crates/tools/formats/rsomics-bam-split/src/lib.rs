@@ -17,7 +17,8 @@ pub fn split_by_reference(input: &Path, output_prefix: &Path) -> Result<HashMap<
         .map(ToString::to_string)
         .collect();
 
-    let mut writers: HashMap<String, (bam::io::Writer<File>, u64)> = HashMap::new();
+    let mut writers: HashMap<String, (bam::io::Writer<noodles::bgzf::io::Writer<File>>, u64)> =
+        HashMap::new();
 
     for result in reader.records() {
         let record = result.map_err(RsomicsError::Io)?;
