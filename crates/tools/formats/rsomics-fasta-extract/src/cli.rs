@@ -19,7 +19,7 @@ pub struct Cli {
     names: PathBuf,
     #[arg(short = 'o', long = "output", default_value = "-")]
     output: String,
-    #[arg(short = 'v', long = "exclude")]
+    #[arg(long = "exclude")]
     exclude: bool,
     #[command(flatten)]
     pub common: CommonFlags,
@@ -66,7 +66,7 @@ pub static HELP: HelpSpec = HelpSpec {
                 why_default: None,
             },
             FlagSpec {
-                short: Some('v'),
+                short: None,
                 long: "exclude",
                 aliases: &[],
                 value: None,
