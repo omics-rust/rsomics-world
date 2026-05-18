@@ -6,7 +6,6 @@ use std::path::Path;
 
 use noodles::bam;
 use noodles::sam;
-use noodles::sam::alignment::Record as _;
 use rsomics_common::{Result, RsomicsError};
 
 #[derive(Debug, Clone)]
@@ -32,11 +31,7 @@ impl Default for ViewFilter {
     }
 }
 
-fn passes_filter(
-    flags: sam::alignment::record::Flags,
-    mapq: Option<std::io::Result<sam::alignment::record::MappingQuality>>,
-    filter: &ViewFilter,
-) -> bool {
+fn passes_filter(flags: sam::alignment::record::Flags, mapq: Option<u8>, filter: &ViewFilter) -> bool {
     let bits = flags.bits();
     if filter.require_flags != 0 && (bits & filter.require_flags) != filter.require_flags {
         return false;
@@ -44,15 +39,14 @@ fn passes_filter(
     if filter.exclude_flags != 0 && (bits & filter.exclude_flags) != 0 {
         return false;
     }
-    if filter.min_mapq > 0 {
-        let mq = mapq
-            .and_then(|r| r.ok())
-            .map_or(0, |q| q.get());
-        if mq < filter.min_mapq {
-            return false;
-        }
+    if filter.min_mapq > 0 && mapq.unwrap_or(0) < filter.min_mapq {
+        return false;
     }
     true
+}
+
+fn record_mapq(record: &bam::Record) -> Option<u8> {
+    record.mapping_quality().map(|q| q.get())
 }
 
 pub fn view_bam(input: &Path, output: &mut dyn Write, filter: &ViewFilter) -> Result<u64> {
@@ -80,10 +74,8 @@ pub fn view_bam(input: &Path, output: &mut dyn Write, filter: &ViewFilter) -> Re
     let mut count: u64 = 0;
     for result in reader.records() {
         let record = result.map_err(RsomicsError::Io)?;
-        let flags = record
-            .flags()
-            .map_err(|e| RsomicsError::InvalidInput(format!("reading flags: {e}")))?;
-        let mapq = record.mapping_quality();
+        let flags = record.flags();
+        let mapq = record_mapq(&record);
 
         if !passes_filter(flags, mapq, filter) {
             continue;
@@ -116,10 +108,8 @@ fn view_bam_to_bam(
     let mut count: u64 = 0;
     for result in reader.records() {
         let record = result.map_err(RsomicsError::Io)?;
-        let flags = record
-            .flags()
-            .map_err(|e| RsomicsError::InvalidInput(format!("reading flags: {e}")))?;
-        let mapq = record.mapping_quality();
+        let flags = record.flags();
+        let mapq = record_mapq(&record);
 
         if !passes_filter(flags, mapq, filter) {
             continue;

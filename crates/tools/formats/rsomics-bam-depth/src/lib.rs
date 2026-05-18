@@ -6,7 +6,6 @@ use std::io::{BufWriter, Write};
 use std::path::Path;
 
 use noodles::bam;
-use noodles::sam::alignment::Record as _;
 use rsomics_common::{Result, RsomicsError};
 
 #[derive(Debug, Clone)]
@@ -65,18 +64,13 @@ pub fn compute_depth(input: &Path, output: &mut dyn Write, opts: &DepthOpts) -> 
 
     for result in reader.records() {
         let record = result.map_err(RsomicsError::Io)?;
-        let flags = record
-            .flags()
-            .map_err(|e| RsomicsError::InvalidInput(format!("reading flags: {e}")))?;
+        let flags = record.flags();
 
         if (flags.bits() & opts.skip_flags) != 0 {
             continue;
         }
 
-        let mq = record
-            .mapping_quality()
-            .and_then(|r| r.ok())
-            .map_or(0, |q| q.get());
+        let mq = record.mapping_quality().map_or(0, |q| q.get());
         if mq < opts.min_mapq {
             continue;
         }

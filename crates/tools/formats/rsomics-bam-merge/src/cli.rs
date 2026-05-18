@@ -39,10 +39,7 @@ impl Cli {
         let mut out: Box<dyn std::io::Write> = if self.output == "-" {
             Box::new(std::io::stdout().lock())
         } else {
-            Box::new(
-                std::fs::File::create(&self.output)
-                    .map_err(rsomics_common::RsomicsError::Io)?,
-            )
+            Box::new(std::fs::File::create(&self.output).map_err(rsomics_common::RsomicsError::Io)?)
         };
 
         let count = merge_bams(&paths, &mut out)?;
@@ -50,7 +47,10 @@ impl Cli {
         if !self.common.json {
             eprintln!("merged {count} records from {} files", self.inputs.len());
         } else {
-            let j = serde_json::json!({ "merged_records": count, "input_files": self.inputs.len() });
+            let j = serde_json::json!({
+                "merged_records": count,
+                "input_files": self.inputs.len()
+            });
             eprintln!("{j}");
         }
 
