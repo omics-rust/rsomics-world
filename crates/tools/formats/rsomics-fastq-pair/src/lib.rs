@@ -15,7 +15,7 @@ pub fn pair_fastq(
     r2_path: &Path,
     out1: &mut dyn Write,
     out2: &mut dyn Write,
-    singles: Option<&mut dyn Write>,
+    mut singles: Option<&mut dyn Write>,
 ) -> Result<PairStats> {
     let r2_index = index_fastq(r2_path)?;
 
