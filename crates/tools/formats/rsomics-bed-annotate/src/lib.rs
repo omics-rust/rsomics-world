@@ -38,7 +38,7 @@ pub fn annotate_bed(
         let chrom = fields[0];
         let start: u64 = fields[1].parse().unwrap_or(0);
         let end: u64 = fields[2].parse().unwrap_or(0);
-        let mid = start / 2 + end / 2 + (start % 2 + end % 2) / 2;
+        let mid = start.midpoint(end);
 
         let nearest = find_nearest(&features, chrom, mid);
 
