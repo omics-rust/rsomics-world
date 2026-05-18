@@ -1,0 +1,18 @@
+[package]
+name = "rsomics-fastq-q30-rate"
+version = "0.1.0"
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+authors.workspace = true
+description = "FASTQ Q30 rate"
+[[bin]]
+name = "rsomics-fastq-q30-rate"
+path = "src/main.rs"
+[dependencies]
+rsomics-common = { path = "../../../foundation/rsomics-common", version = "0.5" }
+rsomics-help = { path = "../../../foundation/rsomics-help", version = "0.3" }
+clap.workspace = true
+[lints]
+workspace = true
