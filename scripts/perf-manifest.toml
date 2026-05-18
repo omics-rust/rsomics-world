@@ -823,3 +823,12 @@ reason = "Per-function decomposition tool — no single upstream binary to bench
 
 [exempt.rsomics-gff-mrna]
 reason = "Per-function decomposition tool — no single upstream binary to benchmark against. Covered by smoke + compat tests."
+
+[exempt.rsomics-vcf-summary]
+reason = "Per-function decomposition tool — no single upstream binary to benchmark against. Covered by smoke + compat tests."
+
+[exempt.rsomics-bed-to-narrowpeak]
+reason = "Per-function decomposition tool — no single upstream binary to benchmark against. Covered by smoke + compat tests."
+
+[exempt.rsomics-gff-biotypes]
+reason = "Per-function decomposition tool — no single upstream binary to benchmark against. Covered by smoke + compat tests."
