@@ -31,7 +31,7 @@ in [`alignment-short-read.md`](alignment-short-read.md).
 
 ## TODO
 
-- [~] **`minimap2`** — versatile pairwise aligner, the *de-facto* long-read aligner.
+- [x] **`minimap2`** — versatile pairwise aligner, the *de-facto* long-read aligner. `rsomics-minimap2` 0.1.0 ships as FFI wrapper (Quadrant ②).
   - Reference impl: `C` · [lh3/minimap2](https://github.com/lh3/minimap2) · `MIT`
   - Existing Rust: [`minimap2`](https://crates.io/crates/minimap2) `0.1.31+minimap2.2.30` ([jguhlin/minimap2-rs](https://github.com/jguhlin/minimap2-rs)); paired [`minimap2-sys`](https://crates.io/crates/minimap2-sys) `0.1.30+minimap2.2.30` (raw FFI); [`minimap2-temp`](https://crates.io/crates/minimap2-temp) `0.1.33+minimap2.2.28` (transient pin variant)
   - Existing Rust kind: `FFI-wrapper`
