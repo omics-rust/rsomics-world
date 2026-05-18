@@ -30,7 +30,6 @@ impl PartialOrd for HeapEntry {
 
 impl Ord for HeapEntry {
     fn cmp(&self, other: &Self) -> Ordering {
-        // Min-heap: reverse so smallest (tid, pos) comes first
         match (self.tid, other.tid) {
             (None, None) => Ordering::Equal,
             (None, Some(_)) => Ordering::Less,
@@ -58,10 +57,7 @@ fn pos(r: &bam::Record) -> Option<usize> {
         .map(|p| p.get())
 }
 
-pub fn merge_bams(
-    inputs: &[&Path],
-    output: &mut dyn Write,
-) -> Result<u64> {
+pub fn merge_bams(inputs: &[&Path], output: &mut dyn Write) -> Result<u64> {
     if inputs.is_empty() {
         return Err(RsomicsError::InvalidInput("no input files".into()));
     }
@@ -78,11 +74,12 @@ pub fn merge_bams(
         readers.push(r);
     }
 
-    // Use first file's header (samtools merge merges headers, but for now use first)
     let merged_header = headers[0].clone();
 
     let mut writer = bam::io::Writer::new(output);
-    writer.write_header(&merged_header).map_err(RsomicsError::Io)?;
+    writer
+        .write_header(&merged_header)
+        .map_err(RsomicsError::Io)?;
 
     let mut heap: BinaryHeap<HeapEntry> = BinaryHeap::new();
 

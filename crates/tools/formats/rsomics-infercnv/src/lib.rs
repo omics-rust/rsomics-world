@@ -1,4 +1,4 @@
-#![allow(clippy::cast_precision_loss)]
+#![allow(clippy::cast_precision_loss, clippy::needless_range_loop)]
 
 use std::collections::BTreeMap;
 use std::fs::File;
@@ -7,7 +7,7 @@ use std::path::Path;
 
 use rsomics_common::{Result, RsomicsError};
 
-/// Gene position annotation: chr, start, end, gene_name
+/// Gene position annotation: chromosome, start, end, name.
 #[derive(Debug, Clone)]
 pub struct GenePos {
     pub chrom: String,
@@ -35,7 +35,7 @@ pub fn load_gene_order(gtf_path: &Path) -> Result<Vec<GenePos>> {
         let start: u64 = fields[3].parse().unwrap_or(0);
         let name = extract_attr(fields[8], "gene_name")
             .or_else(|| extract_attr(fields[8], "gene_id"))
-            .unwrap_or_else(|| format!("{}:{start}", chrom));
+            .unwrap_or_else(|| format!("{chrom}:{start}"));
         genes.push(GenePos { chrom, start, name });
     }
 
@@ -46,9 +46,7 @@ pub fn load_gene_order(gtf_path: &Path) -> Result<Vec<GenePos>> {
 fn extract_attr(attrs: &str, key: &str) -> Option<String> {
     for part in attrs.split(';') {
         let part = part.trim();
-        let rest = if let Some(r) = part.strip_prefix(key) {
-            r
-        } else {
+        let Some(rest) = part.strip_prefix(key) else {
             continue;
         };
         if rest.starts_with('=') || rest.starts_with(' ') {
@@ -61,9 +59,11 @@ fn extract_attr(attrs: &str, key: &str) -> Option<String> {
     None
 }
 
-/// Load a dense expression matrix (TSV: genes as rows, cells as columns)
-/// First column = gene name, first row = cell barcodes
-pub fn load_matrix(path: &Path) -> Result<(Vec<String>, Vec<String>, Vec<Vec<f64>>)> {
+type ExpressionMatrix = (Vec<String>, Vec<String>, Vec<Vec<f64>>);
+
+/// Load a dense expression matrix (TSV: genes as rows, cells as columns).
+/// First column = gene name, first row = cell barcodes.
+pub fn load_matrix(path: &Path) -> Result<ExpressionMatrix> {
     let file = File::open(path)
         .map_err(|e| RsomicsError::InvalidInput(format!("{}: {e}", path.display())))?;
     let reader = BufReader::new(file);

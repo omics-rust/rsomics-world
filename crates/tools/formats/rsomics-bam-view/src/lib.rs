@@ -1,12 +1,12 @@
 #![allow(clippy::cast_precision_loss)]
 
 use std::fs::File;
-use std::io::{self, BufWriter, Write};
+use std::io::{BufWriter, Write};
 use std::path::Path;
 
 use noodles::bam;
 use noodles::sam;
-use noodles::sam::alignment::record::Flags;
+use noodles::sam::alignment::Record as _;
 use rsomics_common::{Result, RsomicsError};
 
 #[derive(Debug, Clone)]
@@ -32,7 +32,11 @@ impl Default for ViewFilter {
     }
 }
 
-fn passes_filter(flags: Flags, mapq: Option<io::Result<sam::alignment::record::MappingQuality>>, filter: &ViewFilter) -> bool {
+fn passes_filter(
+    flags: sam::alignment::record::Flags,
+    mapq: Option<std::io::Result<sam::alignment::record::MappingQuality>>,
+    filter: &ViewFilter,
+) -> bool {
     let bits = flags.bits();
     if filter.require_flags != 0 && (bits & filter.require_flags) != filter.require_flags {
         return false;
@@ -65,13 +69,20 @@ pub fn view_bam(input: &Path, output: &mut dyn Write, filter: &ViewFilter) -> Re
     let mut out = BufWriter::with_capacity(256 * 1024, output);
 
     if filter.with_header && !filter.count_only {
-        write!(out, "{header}").map_err(RsomicsError::Io)?;
+        let mut header_writer = sam::io::Writer::new(Vec::new());
+        header_writer
+            .write_header(&header)
+            .map_err(RsomicsError::Io)?;
+        out.write_all(header_writer.get_ref())
+            .map_err(RsomicsError::Io)?;
     }
 
     let mut count: u64 = 0;
     for result in reader.records() {
         let record = result.map_err(RsomicsError::Io)?;
-        let flags = record.flags().map_err(RsomicsError::Io)?;
+        let flags = record
+            .flags()
+            .map_err(|e| RsomicsError::InvalidInput(format!("reading flags: {e}")))?;
         let mapq = record.mapping_quality();
 
         if !passes_filter(flags, mapq, filter) {
@@ -81,8 +92,9 @@ pub fn view_bam(input: &Path, output: &mut dyn Write, filter: &ViewFilter) -> Re
 
         if !filter.count_only {
             let mut buf = Vec::new();
-            sam::io::Writer::new(&mut buf)
-                .write_alignment_record(&header, &record)
+            let mut sam_writer = sam::io::Writer::new(&mut buf);
+            sam_writer
+                .write_record(&header, &record)
                 .map_err(RsomicsError::Io)?;
             out.write_all(&buf).map_err(RsomicsError::Io)?;
         }
@@ -104,7 +116,9 @@ fn view_bam_to_bam(
     let mut count: u64 = 0;
     for result in reader.records() {
         let record = result.map_err(RsomicsError::Io)?;
-        let flags = record.flags().map_err(RsomicsError::Io)?;
+        let flags = record
+            .flags()
+            .map_err(|e| RsomicsError::InvalidInput(format!("reading flags: {e}")))?;
         let mapq = record.mapping_quality();
 
         if !passes_filter(flags, mapq, filter) {
