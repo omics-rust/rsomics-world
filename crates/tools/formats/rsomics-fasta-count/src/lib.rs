@@ -3,7 +3,7 @@ use rsomics_common::{Result, RsomicsError};
 use std::path::Path;
 
 pub fn count(input: &Path) -> Result<u64> {
-    if std::fs::metadata(input).map_or(false, |m| m.len() == 0) {
+    if std::fs::metadata(input).is_ok_and(|m| m.len() == 0) {
         return Ok(0);
     }
     let mut reader = parse_fastx_file(input)
