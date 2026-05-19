@@ -2992,61 +2992,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "rsomics-vcf-af"
-version = "0.1.0"
-dependencies = [
- "clap",
- "rsomics-common",
- "rsomics-help",
-]
-
-[[package]]
 name = "rsomics-vcf-annotate"
-version = "0.1.0"
-dependencies = [
- "clap",
- "rsomics-common",
- "rsomics-help",
-]
-
-[[package]]
-name = "rsomics-vcf-biallelic"
-version = "0.1.0"
-dependencies = [
- "clap",
- "rsomics-common",
- "rsomics-help",
-]
-
-[[package]]
-name = "rsomics-vcf-chroms"
-version = "0.1.0"
-dependencies = [
- "clap",
- "rsomics-common",
- "rsomics-help",
-]
-
-[[package]]
-name = "rsomics-vcf-count"
-version = "0.1.0"
-dependencies = [
- "clap",
- "rsomics-common",
- "rsomics-help",
-]
-
-[[package]]
-name = "rsomics-vcf-density"
-version = "0.1.0"
-dependencies = [
- "clap",
- "rsomics-common",
- "rsomics-help",
-]
-
-[[package]]
-name = "rsomics-vcf-dp"
 version = "0.1.0"
 dependencies = [
  "clap",
@@ -3077,26 +3023,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "rsomics-vcf-grep"
-version = "0.1.0"
-dependencies = [
- "clap",
- "regex",
- "rsomics-common",
- "rsomics-help",
-]
-
-[[package]]
 name = "rsomics-vcf-het-hom"
-version = "0.1.0"
-dependencies = [
- "clap",
- "rsomics-common",
- "rsomics-help",
-]
-
-[[package]]
-name = "rsomics-vcf-indels"
 version = "0.1.0"
 dependencies = [
  "clap",
@@ -3150,97 +3077,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "rsomics-vcf-multiallelic"
-version = "0.1.0"
-dependencies = [
- "clap",
- "rsomics-common",
- "rsomics-help",
-]
-
-[[package]]
-name = "rsomics-vcf-pass"
-version = "0.1.0"
-dependencies = [
- "clap",
- "rsomics-common",
- "rsomics-help",
-]
-
-[[package]]
-name = "rsomics-vcf-per-chrom"
-version = "0.1.0"
-dependencies = [
- "clap",
- "rsomics-common",
- "rsomics-help",
-]
-
-[[package]]
-name = "rsomics-vcf-private"
-version = "0.1.0"
-dependencies = [
- "clap",
- "rsomics-common",
- "rsomics-help",
-]
-
-[[package]]
-name = "rsomics-vcf-qual-filter"
-version = "0.1.0"
-dependencies = [
- "clap",
- "rsomics-common",
- "rsomics-help",
-]
-
-[[package]]
-name = "rsomics-vcf-qual-stats"
-version = "0.1.0"
-dependencies = [
- "clap",
- "rsomics-common",
- "rsomics-help",
-]
-
-[[package]]
 name = "rsomics-vcf-rename"
-version = "0.1.0"
-dependencies = [
- "clap",
- "rsomics-common",
- "rsomics-help",
-]
-
-[[package]]
-name = "rsomics-vcf-samples"
-version = "0.1.0"
-dependencies = [
- "clap",
- "rsomics-common",
- "rsomics-help",
-]
-
-[[package]]
-name = "rsomics-vcf-singletons"
-version = "0.1.0"
-dependencies = [
- "clap",
- "rsomics-common",
- "rsomics-help",
-]
-
-[[package]]
-name = "rsomics-vcf-sites"
-version = "0.1.0"
-dependencies = [
- "clap",
- "rsomics-common",
- "rsomics-help",
-]
-
-[[package]]
-name = "rsomics-vcf-snps"
 version = "0.1.0"
 dependencies = [
  "clap",
@@ -3278,24 +3115,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "rsomics-vcf-tail"
-version = "0.1.0"
-dependencies = [
- "clap",
- "rsomics-common",
- "rsomics-help",
-]
-
-[[package]]
-name = "rsomics-vcf-to-tsv"
-version = "0.1.0"
-dependencies = [
- "clap",
- "rsomics-common",
- "rsomics-help",
-]
-
-[[package]]
 name = "rsomics-vcf-ts-tv"
 version = "0.1.0"
 dependencies = [
@@ -3311,6 +3130,15 @@ dependencies = [
  "clap",
  "rsomics-common",
  "rsomics-help",
+]
+
+[[package]]
+name = "rsomics-vcf-utils"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "regex",
+ "rsomics-common",
 ]
 
 [[package]]

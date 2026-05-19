@@ -1,0 +1,21 @@
+[package]
+name = "rsomics-vcf-utils"
+version = "0.1.0"
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+authors.workspace = true
+description = "VCF utility toolkit — view, filter, count, stats, and convert operations"
+
+[[bin]]
+name = "rsomics-vcf-utils"
+path = "src/main.rs"
+
+[dependencies]
+rsomics-common = { path = "../../../foundation/rsomics-common", version = "0.5" }
+clap = { workspace = true, features = ["derive"] }
+regex = "1"
+
+[lints]
+workspace = true
