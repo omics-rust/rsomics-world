@@ -16,6 +16,8 @@ path = "src/main.rs"
 rsomics-common = { path = "../../../foundation/rsomics-common", version = "0.5" }
 clap = { workspace = true, features = ["derive"] }
 needletail = "0.6"
+regex = "1"
+rand = "0.8"
 
 [lints]
 workspace = true

@@ -2,9 +2,14 @@ use std::path::PathBuf;
 use std::process::ExitCode;
 
 use clap::{Parser, Subcommand};
-use rsomics_common::{CommonFlags, Result, RsomicsError};
+use rsomics_common::{CommonFlags, Result, RsomicsError, ToolMeta};
 
 use rsomics_fasta_utils::ops;
+
+const META: ToolMeta = ToolMeta {
+    name: env!("CARGO_PKG_NAME"),
+    version: env!("CARGO_PKG_VERSION"),
+};
 
 #[derive(Parser)]
 #[command(name = "rsomics-fasta-utils", version, about = "FASTA utility toolkit")]
@@ -17,8 +22,6 @@ struct Cli {
 
 #[derive(Subcommand)]
 enum Command {
-    /// Count sequences
-    Count { input: PathBuf },
     /// List unique sequence names (chromosomes)
     Chroms {
         input: PathBuf,
@@ -27,9 +30,65 @@ enum Command {
     },
     /// Nucleotide composition
     Composition { input: PathBuf },
+    /// Count sequences
+    Count { input: PathBuf },
+    /// Deduplicate sequences (by sequence or name)
+    Dedup {
+        input: PathBuf,
+        #[arg(short = 'n', long)]
+        by_name: bool,
+        #[arg(short = 'o', long, default_value = "-")]
+        output: String,
+    },
+    /// Extract sequences by name list
+    Extract {
+        input: PathBuf,
+        #[arg(short = 'l', long)]
+        list: PathBuf,
+        #[arg(long)]
+        exclude: bool,
+        #[arg(short = 'o', long, default_value = "-")]
+        output: String,
+    },
+    /// Filter sequences by length
+    Filter {
+        input: PathBuf,
+        #[arg(short = 'm', long, default_value_t = 0)]
+        min_len: usize,
+        #[arg(short = 'M', long, default_value_t = 0)]
+        max_len: usize,
+        #[arg(short = 'o', long, default_value = "-")]
+        output: String,
+    },
     /// GC content per sequence
     GcContent {
         input: PathBuf,
+        #[arg(short = 'o', long, default_value = "-")]
+        output: String,
+    },
+    /// Filter records by name regex
+    Grep {
+        input: PathBuf,
+        #[arg(short = 'p', long)]
+        pattern: String,
+        #[arg(long)]
+        invert_match: bool,
+        #[arg(short = 'o', long, default_value = "-")]
+        output: String,
+    },
+    /// Output the first N sequences
+    Head {
+        input: PathBuf,
+        #[arg(short = 'n', long, default_value_t = 10)]
+        num: u64,
+        #[arg(short = 'o', long, default_value = "-")]
+        output: String,
+    },
+    /// Count k-mer frequencies
+    Kmers {
+        input: PathBuf,
+        #[arg(short = 'k', default_value_t = 21)]
+        k: usize,
         #[arg(short = 'o', long, default_value = "-")]
         output: String,
     },
@@ -55,6 +114,42 @@ enum Command {
         #[arg(short = 'o', long, default_value = "-")]
         output: String,
     },
+    /// Random subsample of sequences
+    Sample {
+        input: PathBuf,
+        #[arg(short = 'p', long, default_value_t = 0.1)]
+        proportion: f64,
+        #[arg(long, default_value_t = 42)]
+        seed: u64,
+        #[arg(short = 'o', long, default_value = "-")]
+        output: String,
+    },
+    /// Randomly shuffle sequence order
+    Shuffle {
+        input: PathBuf,
+        #[arg(long, default_value_t = 42)]
+        seed: u64,
+        #[arg(short = 'o', long, default_value = "-")]
+        output: String,
+    },
+    /// Sort sequences by name or length
+    Sort {
+        input: PathBuf,
+        #[arg(short = 'l', long)]
+        by_length: bool,
+        #[arg(short = 'L', long)]
+        by_length_desc: bool,
+        #[arg(short = 'o', long, default_value = "-")]
+        output: String,
+    },
+    /// Split into multiple files by sequence count
+    Split {
+        input: PathBuf,
+        #[arg(long, default_value_t = 1000)]
+        seqs_per_file: u64,
+        #[arg(long, default_value = "split_")]
+        prefix: String,
+    },
     /// Convert to tab-separated (name\tsequence)
     Tab {
         input: PathBuf,
@@ -75,7 +170,7 @@ enum Command {
         #[arg(short = 'o', long, default_value = "-")]
         output: String,
     },
-    /// Deduplicate sequences
+    /// Deduplicate sequences (keep unique only)
     Unique {
         input: PathBuf,
         #[arg(short = 'o', long, default_value = "-")]
@@ -84,6 +179,16 @@ enum Command {
     /// Convert to uppercase
     Upper {
         input: PathBuf,
+        #[arg(short = 'o', long, default_value = "-")]
+        output: String,
+    },
+    /// Sliding-window GC statistics
+    Window {
+        input: PathBuf,
+        #[arg(short = 'w', long, default_value_t = 10000)]
+        window: usize,
+        #[arg(short = 's', long, default_value_t = 5000)]
+        step: usize,
         #[arg(short = 'o', long, default_value = "-")]
         output: String,
     },
@@ -107,12 +212,9 @@ fn open_output(path: &str) -> Result<Box<dyn std::io::Write>> {
     }
 }
 
+#[allow(clippy::too_many_lines)]
 fn run(cli: Cli) -> Result<()> {
     match cli.command {
-        Command::Count { input } => {
-            let n = ops::count::count(&input)?;
-            println!("{n}");
-        }
         Command::Chroms { input, output } => {
             let mut out = open_output(&output)?;
             ops::chroms::fasta_chroms(&input, &mut out)?;
@@ -127,9 +229,56 @@ fn run(cli: Cli) -> Result<()> {
             println!("other\t{}", c.other);
             println!("total\t{}", c.total);
         }
+        Command::Count { input } => {
+            let n = ops::count::count(&input)?;
+            println!("{n}");
+        }
+        Command::Dedup {
+            input,
+            by_name,
+            output,
+        } => {
+            let mut out = open_output(&output)?;
+            ops::dedup::dedup_fasta(&input, &mut out, by_name)?;
+        }
+        Command::Extract {
+            input,
+            list,
+            exclude,
+            output,
+        } => {
+            let mut out = open_output(&output)?;
+            ops::extract::extract_fasta(&input, &list, &mut out, exclude)?;
+        }
+        Command::Filter {
+            input,
+            min_len,
+            max_len,
+            output,
+        } => {
+            let mut out = open_output(&output)?;
+            ops::filter::filter(&input, min_len, max_len, &mut out)?;
+        }
         Command::GcContent { input, output } => {
             let mut out = open_output(&output)?;
             ops::gc_content::fasta_gc_content(&input, &mut out)?;
+        }
+        Command::Grep {
+            input,
+            pattern,
+            invert_match,
+            output,
+        } => {
+            let mut out = open_output(&output)?;
+            ops::grep::grep(&input, &pattern, invert_match, &mut out)?;
+        }
+        Command::Head { input, num, output } => {
+            let mut out = open_output(&output)?;
+            ops::head::head(&input, num, &mut out)?;
+        }
+        Command::Kmers { input, k, output } => {
+            let mut out = open_output(&output)?;
+            ops::kmers::count_kmers(&input, &mut out, k)?;
         }
         Command::Len { input, tab, output } => {
             let mut out = open_output(&output)?;
@@ -146,6 +295,47 @@ fn run(cli: Cli) -> Result<()> {
         Command::Revcomp { input, output } => {
             let mut out = open_output(&output)?;
             ops::revcomp::revcomp(&input, &mut out)?;
+        }
+        Command::Sample {
+            input,
+            proportion,
+            seed,
+            output,
+        } => {
+            let mut out = open_output(&output)?;
+            ops::sample::sample(&input, proportion, seed, &mut out)?;
+        }
+        Command::Shuffle {
+            input,
+            seed,
+            output,
+        } => {
+            let mut out = open_output(&output)?;
+            ops::shuffle::shuffle_fasta(&input, &mut out, seed)?;
+        }
+        Command::Sort {
+            input,
+            by_length,
+            by_length_desc,
+            output,
+        } => {
+            let key = if by_length_desc {
+                ops::sort::SortKey::LengthDesc
+            } else if by_length {
+                ops::sort::SortKey::Length
+            } else {
+                ops::sort::SortKey::Name
+            };
+            let mut out = open_output(&output)?;
+            ops::sort::sort(&input, key, &mut out)?;
+        }
+        Command::Split {
+            input,
+            seqs_per_file,
+            prefix,
+        } => {
+            let n = ops::split::split_by_count(&input, seqs_per_file, &prefix)?;
+            eprintln!("{n} files written");
         }
         Command::Tab { input, output } => {
             let mut out = open_output(&output)?;
@@ -172,6 +362,15 @@ fn run(cli: Cli) -> Result<()> {
             let mut out = open_output(&output)?;
             ops::upper::uppercase(&input, &mut out)?;
         }
+        Command::Window {
+            input,
+            window,
+            step,
+            output,
+        } => {
+            let mut out = open_output(&output)?;
+            ops::window::window_stats(&input, &mut out, window, step)?;
+        }
         Command::Wrap {
             input,
             width,
@@ -187,14 +386,7 @@ fn run(cli: Cli) -> Result<()> {
 fn main() -> ExitCode {
     let cli = Cli::parse();
     let common = cli.common.clone();
-    rsomics_common::run(
-        &common,
-        rsomics_common::ToolMeta {
-            name: "rsomics-fasta-utils",
-            version: env!("CARGO_PKG_VERSION"),
-        },
-        || run(cli),
-    )
+    rsomics_common::run(&common, META, || run(cli))
 }
 
 #[cfg(test)]
