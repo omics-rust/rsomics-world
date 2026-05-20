@@ -1,0 +1,26 @@
+[package]
+name = "rsomics-bed-utils"
+version = "0.1.0"
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+authors.workspace = true
+description = "BED utility toolkit — sort, merge, intersect, subtract, complement, stats, convert, and 40+ more operations"
+
+[[bin]]
+name = "rsomics-bed-utils"
+path = "src/main.rs"
+
+[dependencies]
+rsomics-common = { path = "../../../foundation/rsomics-common", version = "0.5" }
+rsomics-intervals = { path = "../../../foundation/rsomics-intervals", version = "0.1" }
+rsomics-fasta-index = { path = "../rsomics-fasta-index" }
+clap = { workspace = true, features = ["derive"] }
+needletail = "0.6"
+rand = "0.8"
+serde = { workspace = true }
+serde_json = { workspace = true }
+
+[lints]
+workspace = true
