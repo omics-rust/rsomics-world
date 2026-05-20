@@ -29,8 +29,7 @@ pub fn extract_info(input: &Path, output: &mut dyn Write, key: &str) -> Result<u
         let value = info
             .split(';')
             .find(|s| s.starts_with(&prefix))
-            .map(|s| &s[prefix.len()..])
-            .unwrap_or(".");
+            .map_or(".", |s| &s[prefix.len()..]);
 
         writeln!(out, "{chrom}\t{pos}\t{value}").map_err(RsomicsError::Io)?;
         count += 1;

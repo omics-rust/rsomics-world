@@ -28,16 +28,14 @@ pub fn vcf_het_hom(input: &Path, output: &mut dyn Write) -> Result<u64> {
         for (i, gt_field) in fields.iter().skip(9).enumerate() {
             let gt = gt_field.split(':').next().unwrap_or(".");
             if gt.contains('/') || gt.contains('|') {
-                let alleles: Vec<&str> = gt.split(|c| c == '/' || c == '|').collect();
+                let alleles: Vec<&str> = gt.split(['/', '|']).collect();
                 if alleles.len() == 2 && alleles[0] != "." && alleles[1] != "." {
                     if alleles[0] != alleles[1] {
                         if i < het.len() {
                             het[i] += 1;
                         }
-                    } else if alleles[0] != "0" {
-                        if i < hom_alt.len() {
-                            hom_alt[i] += 1;
-                        }
+                    } else if alleles[0] != "0" && i < hom_alt.len() {
+                        hom_alt[i] += 1;
                     }
                 }
             }

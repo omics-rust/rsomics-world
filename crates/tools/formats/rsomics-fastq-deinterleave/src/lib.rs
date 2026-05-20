@@ -13,8 +13,7 @@ pub fn deinterleave(input: &Path, out1: &mut dyn Write, out2: &mut dyn Write) ->
     let mut lines = reader.lines();
     let mut pairs: u64 = 0;
 
-    loop {
-        let Some(h1) = lines.next() else { break };
+    while let Some(h1) = lines.next() {
         let h1 = h1.map_err(RsomicsError::Io)?;
         let s1 = next_line(&mut lines)?;
         let p1 = next_line(&mut lines)?;

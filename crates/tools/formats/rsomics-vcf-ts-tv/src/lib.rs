@@ -30,14 +30,7 @@ pub fn vcf_ts_tv(input: &Path) -> Result<TsTv> {
             }
             match (fields[3].as_bytes()[0], alt.as_bytes()[0]) {
                 (b'A', b'G') | (b'G', b'A') | (b'C', b'T') | (b'T', b'C') => ts += 1,
-                (b'A', b'C')
-                | (b'A', b'T')
-                | (b'G', b'C')
-                | (b'G', b'T')
-                | (b'C', b'A')
-                | (b'C', b'G')
-                | (b'T', b'A')
-                | (b'T', b'G') => tv += 1,
+                (b'A' | b'G', b'C' | b'T') | (b'C' | b'T', b'A' | b'G') => tv += 1,
                 _ => {}
             }
         }
