@@ -6,6 +6,10 @@ resolver = "3"
 members = [
     "crates/foundation/*",
     "crates/tools/formats/*",
+    "crates/tools/single-cell/*",
+    "crates/tools/transcriptomics/*",
+    "crates/tools/workflow-utility/*",
+    "crates/tools/sequence-search/*",
 ]
 exclude = [
     "crates/tools/formats/rsomics-bam-index",
@@ -19,7 +23,7 @@ exclude = [
 edition = "2024"
 rust-version = "1.91"
 license = "MIT OR Apache-2.0"
-repository = "https://github.com/Bengerthelorf/rsomics-world"
+repository = "https://github.com/omics-rust/rsomics-world"
 authors = ["Zane Leong <efd@live.com>"]
 
 [workspace.dependencies]

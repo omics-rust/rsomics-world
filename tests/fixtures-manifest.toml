@@ -23,7 +23,7 @@
 [[fixture]]
 name = "chr22_sub_r1.fastq.gz"
 tier = 2
-url = "https://github.com/Bengerthelorf/rsomics-world/releases/download/fixtures-v0.1/chr22_sub_r1.fastq.gz"
+url = "https://github.com/omics-rust/rsomics-world/releases/download/fixtures-v0.1/chr22_sub_r1.fastq.gz"
 sha256 = "d2352e5bf78797c2a1bd68c60316519678b9eb30b10d195b634b48ac70725ab9"
 size_mb = 4
 license = "CC0-1.0"
@@ -32,7 +32,7 @@ source = "wgsim-simulated PE reads from GRCh38 chr22 (UCSC); seed 42"
 [[fixture]]
 name = "chr22_sub_r2.fastq.gz"
 tier = 2
-url = "https://github.com/Bengerthelorf/rsomics-world/releases/download/fixtures-v0.1/chr22_sub_r2.fastq.gz"
+url = "https://github.com/omics-rust/rsomics-world/releases/download/fixtures-v0.1/chr22_sub_r2.fastq.gz"
 sha256 = "db31ed28466fda3b9e77a86b61217c508255b603f790ac65a048737cdb20a6ef"
 size_mb = 4
 license = "CC0-1.0"
@@ -41,7 +41,7 @@ source = "wgsim-simulated PE reads from GRCh38 chr22 (UCSC); seed 42"
 [[fixture]]
 name = "chr22_sub.bam"
 tier = 2
-url = "https://github.com/Bengerthelorf/rsomics-world/releases/download/fixtures-v0.1/chr22_sub.bam"
+url = "https://github.com/omics-rust/rsomics-world/releases/download/fixtures-v0.1/chr22_sub.bam"
 sha256 = "eed2feb377fc8a0d4a0ff4704f7ab4ad334a605cc657ce2c3653eff3984d33a2"
 size_mb = 8
 license = "CC0-1.0"
@@ -50,7 +50,7 @@ source = "minimap2-sr alignments of chr22_sub_r*.fastq.gz to GRCh38 chr22"
 [[fixture]]
 name = "chr22_sub.bam.bai"
 tier = 2
-url = "https://github.com/Bengerthelorf/rsomics-world/releases/download/fixtures-v0.1/chr22_sub.bam.bai"
+url = "https://github.com/omics-rust/rsomics-world/releases/download/fixtures-v0.1/chr22_sub.bam.bai"
 sha256 = "938b7bda2557640735946b6ab8ba4f894116262de4533aab8955a1312a973561"
 size_mb = 1
 license = "CC0-1.0"
