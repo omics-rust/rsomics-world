@@ -2,6 +2,7 @@ use rsomics_common::{Result, RsomicsError};
 use std::fs::File;
 use std::io::{BufRead, BufReader, BufWriter, Write};
 use std::path::Path;
+
 pub fn vcf_het_hom(input: &Path, output: &mut dyn Write) -> Result<u64> {
     let file = File::open(input)
         .map_err(|e| RsomicsError::InvalidInput(format!("{}: {e}", input.display())))?;

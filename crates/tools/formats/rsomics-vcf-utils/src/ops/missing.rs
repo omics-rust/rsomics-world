@@ -1,7 +1,9 @@
+#![allow(clippy::cast_precision_loss)]
 use rsomics_common::{Result, RsomicsError};
 use std::fs::File;
 use std::io::{BufRead, BufReader, BufWriter, Write};
 use std::path::Path;
+
 pub fn vcf_missing(input: &Path, output: &mut dyn Write) -> Result<u64> {
     let file = File::open(input)
         .map_err(|e| RsomicsError::InvalidInput(format!("{}: {e}", input.display())))?;
@@ -33,7 +35,6 @@ pub fn vcf_missing(input: &Path, output: &mut dyn Write) -> Result<u64> {
         }
     }
     writeln!(out, "sample\tmissing\ttotal\tpct").map_err(RsomicsError::Io)?;
-    #[allow(clippy::cast_precision_loss)]
     for (i, s) in samples.iter().enumerate() {
         let m = missing.get(i).copied().unwrap_or(0);
         let pct = if total > 0 {

@@ -4,14 +4,14 @@ use std::path::Path;
 
 use rsomics_common::{Result, RsomicsError};
 
-pub struct ViewOpts {
-    pub header_only: bool,
-    pub no_header: bool,
-    pub count_only: bool,
-    pub region: Option<String>,
-}
-
-pub fn view_vcf(input: &Path, output: &mut dyn Write, opts: &ViewOpts) -> Result<u64> {
+pub fn view_vcf(
+    input: &Path,
+    output: &mut dyn Write,
+    header_only: bool,
+    no_header: bool,
+    count_only: bool,
+    region: Option<&str>,
+) -> Result<u64> {
     let file = File::open(input)
         .map_err(|e| RsomicsError::InvalidInput(format!("{}: {e}", input.display())))?;
     let reader = BufReader::new(file);
@@ -22,17 +22,17 @@ pub fn view_vcf(input: &Path, output: &mut dyn Write, opts: &ViewOpts) -> Result
         let line = line.map_err(RsomicsError::Io)?;
 
         if line.starts_with('#') {
-            if !opts.no_header && !opts.count_only {
+            if !no_header && !count_only {
                 writeln!(out, "{line}").map_err(RsomicsError::Io)?;
             }
             continue;
         }
 
-        if opts.header_only {
+        if header_only {
             break;
         }
 
-        if let Some(ref region) = opts.region {
+        if let Some(region) = region {
             let chrom = line.split('\t').next().unwrap_or("");
             if chrom != region {
                 continue;
@@ -40,12 +40,12 @@ pub fn view_vcf(input: &Path, output: &mut dyn Write, opts: &ViewOpts) -> Result
         }
 
         count += 1;
-        if !opts.count_only {
+        if !count_only {
             writeln!(out, "{line}").map_err(RsomicsError::Io)?;
         }
     }
 
-    if opts.count_only {
+    if count_only {
         writeln!(out, "{count}").map_err(RsomicsError::Io)?;
     }
 

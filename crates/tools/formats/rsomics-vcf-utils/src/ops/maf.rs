@@ -3,24 +3,24 @@ use rsomics_common::{Result, RsomicsError};
 use std::fs::File;
 use std::io::{BufRead, BufReader, BufWriter, Write};
 use std::path::Path;
+
 pub fn vcf_maf(
     input: &Path,
     output: &mut dyn Write,
     min_maf: f64,
     max_maf: f64,
-) -> Result<(u64, u64)> {
+) -> Result<u64> {
     let file = File::open(input)
         .map_err(|e| RsomicsError::InvalidInput(format!("{}: {e}", input.display())))?;
     let reader = BufReader::new(file);
     let mut out = BufWriter::with_capacity(64 * 1024, output);
-    let (mut total, mut kept) = (0u64, 0u64);
+    let mut kept = 0u64;
     for line in reader.lines() {
         let line = line.map_err(RsomicsError::Io)?;
         if line.starts_with('#') {
             writeln!(out, "{line}").map_err(RsomicsError::Io)?;
             continue;
         }
-        total += 1;
         let af: f64 = line
             .split('\t')
             .nth(7)
@@ -37,5 +37,5 @@ pub fn vcf_maf(
         }
     }
     out.flush().map_err(RsomicsError::Io)?;
-    Ok((total, kept))
+    Ok(kept)
 }
