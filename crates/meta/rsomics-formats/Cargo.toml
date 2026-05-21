@@ -1,0 +1,116 @@
+[package]
+name = "rsomics-formats"
+version = "0.1.0"
+description = "Meta-crate re-exporting rsomics format-tool libraries by feature flag"
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+authors.workspace = true
+
+[features]
+default = []
+fasta = [
+    "dep:rsomics-fasta-utils",
+    "dep:rsomics-fasta-index",
+    "dep:rsomics-fasta-n50",
+    "dep:rsomics-fasta-stats",
+    "dep:rsomics-fasta-translate",
+    "dep:rsomics-fasta-validate",
+]
+fastq = [
+    "dep:rsomics-fastq-utils",
+    "dep:rsomics-fastq-correct",
+    "dep:rsomics-fastq-dedup",
+    "dep:rsomics-fastq-filter",
+    "dep:rsomics-fastq-merge",
+    "dep:rsomics-fastq-pair",
+    "dep:rsomics-fastq-split",
+    "dep:rsomics-fastq-stats",
+    "dep:rsomics-fastq-trim",
+    "dep:rsomics-fastq-umi",
+    "dep:rsomics-fastq-validate",
+    "dep:rsomics-fastqc",
+]
+vcf = [
+    "dep:rsomics-vcf-utils",
+    "dep:rsomics-vcf-annotate",
+    "dep:rsomics-vcf-filter",
+    "dep:rsomics-vcf-isec",
+    "dep:rsomics-vcf-merge",
+    "dep:rsomics-vcf-norm",
+    "dep:rsomics-vcf-query",
+    "dep:rsomics-vcf-split",
+    "dep:rsomics-vcf-stats",
+    "dep:rsomics-vcf-validate",
+]
+bam = [
+    "dep:rsomics-bam-coverage",
+    "dep:rsomics-bam-depth",
+    "dep:rsomics-bam-flagstat",
+    "dep:rsomics-bam-idxstats",
+    "dep:rsomics-bam-index",
+    "dep:rsomics-bam-markdup",
+    "dep:rsomics-bam-merge",
+    "dep:rsomics-bam-sort",
+    "dep:rsomics-bam-split",
+    "dep:rsomics-bam-stats",
+    "dep:rsomics-bam-to-fastq",
+    "dep:rsomics-bam-view",
+    "dep:rsomics-sam-to-bam",
+]
+bed = ["dep:rsomics-bed-utils"]
+gff = ["dep:rsomics-gff-utils"]
+all = ["fasta", "fastq", "vcf", "bam", "bed", "gff"]
+
+[dependencies]
+rsomics-fasta-utils = { path = "../../tools/formats/rsomics-fasta-utils", version = "0.1", optional = true }
+rsomics-fasta-index = { path = "../../tools/formats/rsomics-fasta-index", version = "0.1", optional = true }
+rsomics-fasta-n50 = { path = "../../tools/formats/rsomics-fasta-n50", version = "0.1", optional = true }
+rsomics-fasta-stats = { path = "../../tools/formats/rsomics-fasta-stats", version = "0.4", optional = true }
+rsomics-fasta-translate = { path = "../../tools/formats/rsomics-fasta-translate", version = "0.1", optional = true }
+rsomics-fasta-validate = { path = "../../tools/formats/rsomics-fasta-validate", version = "0.1", optional = true }
+
+rsomics-fastq-utils = { path = "../../tools/formats/rsomics-fastq-utils", version = "0.1", optional = true }
+rsomics-fastq-correct = { path = "../../tools/formats/rsomics-fastq-correct", version = "0.1", optional = true }
+rsomics-fastq-dedup = { path = "../../tools/formats/rsomics-fastq-dedup", version = "0.1", optional = true }
+rsomics-fastq-filter = { path = "../../tools/formats/rsomics-fastq-filter", version = "0.1", optional = true }
+rsomics-fastq-merge = { path = "../../tools/formats/rsomics-fastq-merge", version = "0.1", optional = true }
+rsomics-fastq-pair = { path = "../../tools/formats/rsomics-fastq-pair", version = "0.1", optional = true }
+rsomics-fastq-split = { path = "../../tools/formats/rsomics-fastq-split", version = "0.1", optional = true }
+rsomics-fastq-stats = { path = "../../tools/formats/rsomics-fastq-stats", version = "0.1", optional = true }
+rsomics-fastq-trim = { path = "../../tools/formats/rsomics-fastq-trim", version = "0.4", optional = true }
+rsomics-fastq-umi = { path = "../../tools/formats/rsomics-fastq-umi", version = "0.2", optional = true }
+rsomics-fastq-validate = { path = "../../tools/formats/rsomics-fastq-validate", version = "0.1", optional = true }
+rsomics-fastqc = { path = "../../tools/formats/rsomics-fastqc", version = "0.1", optional = true }
+
+rsomics-vcf-utils = { path = "../../tools/formats/rsomics-vcf-utils", version = "0.1", optional = true }
+rsomics-vcf-annotate = { path = "../../tools/formats/rsomics-vcf-annotate", version = "0.1", optional = true }
+rsomics-vcf-filter = { path = "../../tools/formats/rsomics-vcf-filter", version = "0.1", optional = true }
+rsomics-vcf-isec = { path = "../../tools/formats/rsomics-vcf-isec", version = "0.1", optional = true }
+rsomics-vcf-merge = { path = "../../tools/formats/rsomics-vcf-merge", version = "0.1", optional = true }
+rsomics-vcf-norm = { path = "../../tools/formats/rsomics-vcf-norm", version = "0.1", optional = true }
+rsomics-vcf-query = { path = "../../tools/formats/rsomics-vcf-query", version = "0.1", optional = true }
+rsomics-vcf-split = { path = "../../tools/formats/rsomics-vcf-split", version = "0.1", optional = true }
+rsomics-vcf-stats = { path = "../../tools/formats/rsomics-vcf-stats", version = "0.1", optional = true }
+rsomics-vcf-validate = { path = "../../tools/formats/rsomics-vcf-validate", version = "0.1", optional = true }
+
+rsomics-bam-coverage = { path = "../../tools/formats/rsomics-bam-coverage", version = "0.1", optional = true }
+rsomics-bam-depth = { path = "../../tools/formats/rsomics-bam-depth", version = "0.1", optional = true }
+rsomics-bam-flagstat = { path = "../../tools/formats/rsomics-bam-flagstat", version = "0.1", optional = true }
+rsomics-bam-idxstats = { path = "../../tools/formats/rsomics-bam-idxstats", version = "0.1", optional = true }
+rsomics-bam-index = { path = "../../tools/formats/rsomics-bam-index", version = "0.1", optional = true }
+rsomics-bam-markdup = { path = "../../tools/formats/rsomics-bam-markdup", version = "0.1", optional = true }
+rsomics-bam-merge = { path = "../../tools/formats/rsomics-bam-merge", version = "0.1", optional = true }
+rsomics-bam-sort = { path = "../../tools/formats/rsomics-bam-sort", version = "0.1", optional = true }
+rsomics-bam-split = { path = "../../tools/formats/rsomics-bam-split", version = "0.1", optional = true }
+rsomics-bam-stats = { path = "../../tools/formats/rsomics-bam-stats", version = "0.1", optional = true }
+rsomics-bam-to-fastq = { path = "../../tools/formats/rsomics-bam-to-fastq", version = "0.1", optional = true }
+rsomics-bam-view = { path = "../../tools/formats/rsomics-bam-view", version = "0.1", optional = true }
+rsomics-sam-to-bam = { path = "../../tools/formats/rsomics-sam-to-bam", version = "0.1", optional = true }
+
+rsomics-bed-utils = { path = "../../tools/formats/rsomics-bed-utils", version = "0.1", optional = true }
+rsomics-gff-utils = { path = "../../tools/formats/rsomics-gff-utils", version = "0.1", optional = true }
+
+[lints]
+workspace = true

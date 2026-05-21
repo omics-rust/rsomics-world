@@ -5,6 +5,7 @@ resolver = "3"
 # pre-list domains with no crates yet.
 members = [
     "crates/foundation/*",
+    "crates/meta/*",
     "crates/tools/formats/*",
     "crates/tools/single-cell/*",
     "crates/tools/transcriptomics/*",
