@@ -15,6 +15,7 @@ members = [
     "crates/tools/genomics/*",
     "crates/tools/metagenomics/*",
     "crates/tools/phylogenetics/*",
+    "crates/tools/epigenomics/*",
 ]
 exclude = [
 ]
