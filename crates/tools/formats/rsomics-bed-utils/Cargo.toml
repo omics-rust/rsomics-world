@@ -14,6 +14,7 @@ path = "src/main.rs"
 
 [dependencies]
 rsomics-common = { path = "../../../foundation/rsomics-common", version = "0.5" }
+rsomics-help = { path = "../../../foundation/rsomics-help", version = "0.3" }
 rsomics-intervals = { path = "../../../foundation/rsomics-intervals", version = "0.1" }
 rsomics-fasta-index = { path = "../rsomics-fasta-index" }
 clap = { workspace = true, features = ["derive"] }

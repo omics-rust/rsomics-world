@@ -1463,6 +1463,7 @@ dependencies = [
  "rand",
  "rsomics-common",
  "rsomics-fasta-index",
+ "rsomics-help",
  "rsomics-intervals",
  "serde",
  "serde_json",
@@ -1554,6 +1555,7 @@ dependencies = [
  "rand",
  "regex",
  "rsomics-common",
+ "rsomics-help",
 ]
 
 [[package]]
@@ -1724,6 +1726,7 @@ dependencies = [
  "rand",
  "regex",
  "rsomics-common",
+ "rsomics-help",
  "rsomics-seqio",
 ]
 
@@ -1791,6 +1794,7 @@ dependencies = [
  "clap",
  "regex",
  "rsomics-common",
+ "rsomics-help",
 ]
 
 [[package]]
@@ -2013,6 +2017,7 @@ dependencies = [
  "clap",
  "regex",
  "rsomics-common",
+ "rsomics-help",
 ]
 
 [[package]]
