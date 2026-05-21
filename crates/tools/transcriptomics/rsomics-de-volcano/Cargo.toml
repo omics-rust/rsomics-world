@@ -1,0 +1,21 @@
+[package]
+name = "rsomics-de-volcano"
+version = "0.1.0"
+description = "Annotate differential expression results with significance categories for volcano plots"
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+authors.workspace = true
+[[bin]]
+name = "rsomics-de-volcano"
+path = "src/main.rs"
+[lib]
+name = "rsomics_de_volcano"
+path = "src/lib.rs"
+[dependencies]
+rsomics-common = { path = "../../../foundation/rsomics-common", version = "0.6" }
+rsomics-help = { path = "../../../foundation/rsomics-help", version = "0.3" }
+clap.workspace = true
+[lints]
+workspace = true

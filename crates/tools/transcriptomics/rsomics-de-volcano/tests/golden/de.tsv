@@ -1,0 +1,4 @@
+gene	padj	log2FoldChange
+BRCA1	0.001	2.5
+TP53	0.01	-1.5
+EGFR	0.5	0.3
