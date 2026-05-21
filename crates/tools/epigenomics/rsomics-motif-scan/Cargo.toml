@@ -1,0 +1,27 @@
+[package]
+name = "rsomics-motif-scan"
+version = "0.1.0"
+description = "Scan FASTA sequences for IUPAC DNA motif occurrences — BED output of match positions"
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+authors.workspace = true
+
+[[bin]]
+name = "rsomics-motif-scan"
+path = "src/main.rs"
+
+[lib]
+name = "rsomics_motif_scan"
+path = "src/lib.rs"
+
+[dependencies]
+rsomics-common = { path = "../../../foundation/rsomics-common", version = "0.6" }
+rsomics-help = { path = "../../../foundation/rsomics-help", version = "0.3" }
+clap.workspace = true
+needletail = { version = "0.7", default-features = false }
+regex = "1"
+
+[lints]
+workspace = true

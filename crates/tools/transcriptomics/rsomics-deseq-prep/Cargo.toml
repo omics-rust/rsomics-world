@@ -1,0 +1,25 @@
+[package]
+name = "rsomics-deseq-prep"
+version = "0.1.0"
+description = "Filter low-count genes and normalize a count matrix for differential expression — pre-DESeq2 prep"
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+authors.workspace = true
+
+[[bin]]
+name = "rsomics-deseq-prep"
+path = "src/main.rs"
+
+[lib]
+name = "rsomics_deseq_prep"
+path = "src/lib.rs"
+
+[dependencies]
+rsomics-common = { path = "../../../foundation/rsomics-common", version = "0.6" }
+rsomics-help = { path = "../../../foundation/rsomics-help", version = "0.3" }
+clap.workspace = true
+
+[lints]
+workspace = true
