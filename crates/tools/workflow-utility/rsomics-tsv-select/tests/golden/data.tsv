@@ -1,0 +1,4 @@
+gene	pvalue	log2fc
+BRCA1	0.001	2.5
+TP53	0.05	-1.2
+EGFR	0.0001	3.1
