@@ -1,16 +1,15 @@
 #[cfg(feature = "fasta")]
 pub mod fasta {
-    pub use rsomics_fasta_utils as utils;
     pub use rsomics_fasta_index as index;
     pub use rsomics_fasta_n50 as n50;
     pub use rsomics_fasta_stats as stats;
     pub use rsomics_fasta_translate as translate;
+    pub use rsomics_fasta_utils as utils;
     pub use rsomics_fasta_validate as validate;
 }
 
 #[cfg(feature = "fastq")]
 pub mod fastq {
-    pub use rsomics_fastq_utils as utils;
     pub use rsomics_fastq_correct as correct;
     pub use rsomics_fastq_dedup as dedup;
     pub use rsomics_fastq_filter as filter;
@@ -20,13 +19,13 @@ pub mod fastq {
     pub use rsomics_fastq_stats as stats;
     pub use rsomics_fastq_trim as trim;
     pub use rsomics_fastq_umi as umi;
+    pub use rsomics_fastq_utils as utils;
     pub use rsomics_fastq_validate as validate;
     pub use rsomics_fastqc as qc;
 }
 
 #[cfg(feature = "vcf")]
 pub mod vcf {
-    pub use rsomics_vcf_utils as utils;
     pub use rsomics_vcf_annotate as annotate;
     pub use rsomics_vcf_filter as filter;
     pub use rsomics_vcf_isec as isec;
@@ -35,6 +34,7 @@ pub mod vcf {
     pub use rsomics_vcf_query as query;
     pub use rsomics_vcf_split as split;
     pub use rsomics_vcf_stats as stats;
+    pub use rsomics_vcf_utils as utils;
     pub use rsomics_vcf_validate as validate;
 }
 

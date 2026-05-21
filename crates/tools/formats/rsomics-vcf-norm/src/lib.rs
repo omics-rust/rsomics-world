@@ -46,23 +46,16 @@ pub fn normalize_vcf(
 
             if alts.len() > 1 {
                 let mut buf = vcf::variant::RecordBuf::try_from_variant_record(&header, &record)
-                    .map_err(|e| {
-                        RsomicsError::InvalidInput(format!("converting record: {e}"))
-                    })?;
+                    .map_err(|e| RsomicsError::InvalidInput(format!("converting record: {e}")))?;
 
-                let all_alts: Vec<String> = buf
-                    .alternate_bases()
-                    .as_ref()
-                    .to_vec();
+                let all_alts: Vec<String> = buf.alternate_bases().as_ref().to_vec();
 
                 for alt in &all_alts {
                     *buf.alternate_bases_mut() =
                         vcf::variant::record_buf::AlternateBases::from(vec![alt.clone()]);
                     writer
                         .write_variant_record(&header, &buf)
-                        .map_err(|e| {
-                            RsomicsError::InvalidInput(format!("writing record: {e}"))
-                        })?;
+                        .map_err(|e| RsomicsError::InvalidInput(format!("writing record: {e}")))?;
                     stats.split += 1;
                 }
                 continue;

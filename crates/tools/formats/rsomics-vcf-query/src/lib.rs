@@ -43,15 +43,9 @@ pub fn query_vcf(input: &Path, output: &mut dyn io::Write, fields: &[String]) ->
     Ok(count)
 }
 
-fn extract_field(
-    record: &vcf::Record,
-    _header: &vcf::Header,
-    field: &str,
-) -> String {
+fn extract_field(record: &vcf::Record, _header: &vcf::Header, field: &str) -> String {
     match field.to_uppercase().as_str() {
-        "CHROM" => record
-            .reference_sequence_name()
-            .to_string(),
+        "CHROM" => record.reference_sequence_name().to_string(),
         "POS" => record
             .variant_start()
             .and_then(|r| r.ok())

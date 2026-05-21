@@ -46,10 +46,7 @@ impl Cli {
         let stats = normalize_vcf(&self.input, &mut out, self.split_multiallelic)?;
 
         if !self.common.quiet {
-            eprintln!(
-                "{} records, {} split",
-                stats.total, stats.split
-            );
+            eprintln!("{} records, {} split", stats.total, stats.split);
         }
 
         Ok(())
