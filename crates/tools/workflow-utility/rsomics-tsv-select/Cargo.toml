@@ -1,0 +1,25 @@
+[package]
+name = "rsomics-tsv-select"
+version = "0.1.0"
+description = "Select, reorder, or rename columns from TSV files — cut + awk for bioinformatics pipelines"
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+authors.workspace = true
+
+[[bin]]
+name = "rsomics-tsv-select"
+path = "src/main.rs"
+
+[lib]
+name = "rsomics_tsv_select"
+path = "src/lib.rs"
+
+[dependencies]
+rsomics-common = { path = "../../../foundation/rsomics-common", version = "0.6" }
+rsomics-help = { path = "../../../foundation/rsomics-help", version = "0.3" }
+clap.workspace = true
+
+[lints]
+workspace = true
