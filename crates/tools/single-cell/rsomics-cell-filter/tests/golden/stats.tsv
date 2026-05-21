@@ -1,0 +1,4 @@
+barcode	genes	umis	mito_frac
+CELL1	500	1000	0.05
+CELL2	100	200	0.3
+CELL3	300	800	0.1

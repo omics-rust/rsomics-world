@@ -1,0 +1,4 @@
+Geneid	count
+BRCA1	80
+TP53	60
+EGFR	150
