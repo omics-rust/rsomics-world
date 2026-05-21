@@ -1,0 +1,25 @@
+[package]
+name = "rsomics-cell-filter"
+version = "0.1.0"
+description = "Filter cells by QC metrics — min genes, min UMIs, max mito fraction from a barcode stats TSV"
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+authors.workspace = true
+
+[[bin]]
+name = "rsomics-cell-filter"
+path = "src/main.rs"
+
+[lib]
+name = "rsomics_cell_filter"
+path = "src/lib.rs"
+
+[dependencies]
+rsomics-common = { path = "../../../foundation/rsomics-common", version = "0.6" }
+rsomics-help = { path = "../../../foundation/rsomics-help", version = "0.3" }
+clap.workspace = true
+
+[lints]
+workspace = true
