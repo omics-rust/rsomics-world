@@ -17,7 +17,7 @@ fn extract_each_listed_chain() {
     let chains: Vec<&str> = list_text
         .trim()
         .lines()
-        .map(|l| l.trim())
+        .map(str::trim)
         .filter(|l| !l.is_empty())
         .collect();
 

@@ -22,8 +22,8 @@ impl Default for ScoreParams {
         Self {
             match_score: 1,
             mismatch: -1,
-            gap_open: 5,
-            gap_extend: 1,
+            gap_open: -5,
+            gap_extend: -1,
         }
     }
 }

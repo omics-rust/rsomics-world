@@ -48,6 +48,7 @@ fn trimmed_columns_have_low_gap_fraction() {
             .iter()
             .filter(|(_, s)| s.as_bytes().get(col).copied() == Some(b'-'))
             .count();
+        #[allow(clippy::cast_precision_loss)]
         let frac = gaps as f64 / n as f64;
         assert!(
             frac <= 0.3 + 0.01,

@@ -7,7 +7,7 @@ fn golden(n: &str) -> String {
 }
 
 #[test]
-fn trypsin_cleaves_at_k_and_r() {
+fn trypsin_produces_multiple_peptides() {
     let out = Command::new(ours())
         .arg(golden("protein.fa"))
         .args(["-e", "trypsin", "--min-len", "1", "--max-len", "100"])
@@ -15,15 +15,6 @@ fn trypsin_cleaves_at_k_and_r() {
         .unwrap();
     assert!(out.status.success());
     let s = String::from_utf8(out.stdout).unwrap();
-    for line in s.lines() {
-        let peptide = line.split('\t').nth(3).unwrap_or("");
-        if peptide.len() > 1 && !line.contains("prot1\t") {
-            continue;
-        }
-        // Each peptide (except the last) should end with K or R
-        // (trypsin cleaves after K/R)
-    }
-    // At minimum, there should be multiple peptides
     let n_peptides = s.lines().count();
     assert!(
         n_peptides >= 2,
@@ -41,7 +32,7 @@ fn no_missed_cleavages_means_no_kr_internal() {
             "-m",
             "0",
             "--min-len",
-            "1",
+            "2",
             "--max-len",
             "100",
         ])
@@ -54,7 +45,6 @@ fn no_missed_cleavages_means_no_kr_internal() {
         if peptide.len() < 2 {
             continue;
         }
-        // Internal positions (not last char) should not have K or R
         let internal = &peptide[..peptide.len() - 1];
         let has_kr = internal.contains('K') || internal.contains('R');
         assert!(

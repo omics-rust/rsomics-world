@@ -45,7 +45,6 @@ fn preserves_row_count() {
         .unwrap();
     let wc_str = String::from_utf8(wc_out.stdout).unwrap();
     let original_lines: usize = wc_str
-        .trim()
         .split_whitespace()
         .next()
         .unwrap()
