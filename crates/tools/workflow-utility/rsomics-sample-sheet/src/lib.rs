@@ -49,7 +49,9 @@ pub fn validate_sample_sheet(input: &Path, output: &mut dyn Write) -> Result<Vec
         } else if !Path::new(&r1).exists() {
             errors.push(format!("R1 not found: {r1}"));
         }
-        if let Some(ref r2_path) = r2 && !Path::new(r2_path).exists() {
+        if let Some(ref r2_path) = r2
+            && !Path::new(r2_path).exists()
+        {
             errors.push(format!("R2 not found: {r2_path}"));
         }
 
