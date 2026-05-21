@@ -13,7 +13,7 @@ pub const META: ToolMeta = ToolMeta {
 #[command(name = "rsomics-wig-to-bed", version, about, long_about = None, disable_help_flag = true)]
 pub struct Cli {
     pub input: PathBuf,
-    #[arg(short = 't', long, default_value_t = 0.0)]
+    #[arg(long, default_value_t = 0.0)]
     threshold: f64,
     #[arg(short = 'o', long, default_value = "-")]
     output: String,
