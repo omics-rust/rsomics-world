@@ -148,7 +148,7 @@ fn sort_by_name() {
         .map(|l| &l[1..])
         .collect();
     let mut sorted = names.clone();
-    sorted.sort();
+    sorted.sort_unstable();
     assert_eq!(names, sorted);
 }
 
