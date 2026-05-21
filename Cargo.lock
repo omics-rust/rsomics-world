@@ -1388,6 +1388,17 @@ dependencies = [
 ]
 
 [[package]]
+name = "rsomics-align-score"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "needletail 0.7.3",
+ "rsomics-align-core",
+ "rsomics-common",
+ "rsomics-help",
+]
+
+[[package]]
 name = "rsomics-bam-coverage"
 version = "0.1.0"
 dependencies = [
