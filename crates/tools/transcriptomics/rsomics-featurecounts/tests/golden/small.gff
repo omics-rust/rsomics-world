@@ -1,0 +1,14 @@
+##gff-version 3
+chr1	ensembl	gene	1000	5000	.	+	.	ID=gene1;gene_name=BRCA1
+chr1	ensembl	mRNA	1000	5000	.	+	.	ID=mrna1;Parent=gene1
+chr1	ensembl	exon	1000	1200	.	+	.	ID=exon1;Parent=mrna1
+chr1	ensembl	exon	2000	2500	.	+	.	ID=exon2;Parent=mrna1
+chr1	ensembl	exon	4000	5000	.	+	.	ID=exon3;Parent=mrna1
+chr1	ensembl	CDS	1050	1200	.	+	0	ID=cds1;Parent=mrna1
+chr1	ensembl	CDS	2000	2400	.	+	1	ID=cds2;Parent=mrna1
+chr1	ensembl	five_prime_UTR	1000	1049	.	+	.	ID=utr1;Parent=mrna1
+chr2	refseq	gene	500	3000	.	-	.	ID=gene2;gene_name=TP53
+chr2	refseq	mRNA	500	3000	.	-	.	ID=mrna2;Parent=gene2
+chr2	refseq	exon	500	800	.	-	.	ID=exon4;Parent=mrna2
+chr2	refseq	exon	1500	2000	.	-	.	ID=exon5;Parent=mrna2
+chr2	refseq	CDS	550	800	.	-	0	ID=cds3;Parent=mrna2
