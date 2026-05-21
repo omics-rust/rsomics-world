@@ -13,6 +13,7 @@ members = [
     "crates/tools/sequence-search/*",
     "crates/tools/preprocessing/*",
     "crates/tools/genomics/*",
+    "crates/tools/metagenomics/*",
 ]
 exclude = [
 ]

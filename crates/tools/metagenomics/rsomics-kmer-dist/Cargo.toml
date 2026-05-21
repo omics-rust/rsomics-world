@@ -1,0 +1,27 @@
+[package]
+name = "rsomics-kmer-dist"
+version = "0.1.0"
+description = "Pairwise k-mer frequency distance between FASTA/FASTQ samples — Jaccard/Bray-Curtis/cosine"
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+authors.workspace = true
+
+[[bin]]
+name = "rsomics-kmer-dist"
+path = "src/main.rs"
+
+[lib]
+name = "rsomics_kmer_dist"
+path = "src/lib.rs"
+
+[dependencies]
+rsomics-common = { path = "../../../foundation/rsomics-common", version = "0.5" }
+rsomics-help = { path = "../../../foundation/rsomics-help", version = "0.3" }
+rsomics-kmer = { path = "../../../foundation/rsomics-kmer", version = "0.2" }
+clap.workspace = true
+needletail = { version = "0.7", default-features = false, features = ["compression"] }
+
+[lints]
+workspace = true

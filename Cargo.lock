@@ -1965,6 +1965,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "rsomics-gc-windows"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "needletail 0.7.3",
+ "rsomics-common",
+ "rsomics-help",
+]
+
+[[package]]
 name = "rsomics-gff-utils"
 version = "0.1.0"
 dependencies = [
@@ -2033,6 +2043,17 @@ dependencies = [
  "nthash",
  "rsomics-common",
  "thiserror 2.0.18",
+]
+
+[[package]]
+name = "rsomics-kmer-dist"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "needletail 0.7.3",
+ "rsomics-common",
+ "rsomics-help",
+ "rsomics-kmer",
 ]
 
 [[package]]

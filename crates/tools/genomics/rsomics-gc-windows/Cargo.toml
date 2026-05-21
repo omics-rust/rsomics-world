@@ -1,0 +1,26 @@
+[package]
+name = "rsomics-gc-windows"
+version = "0.1.0"
+description = "Compute per-window GC content across a FASTA reference — BED output for CNV/WGS normalization"
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+authors.workspace = true
+
+[[bin]]
+name = "rsomics-gc-windows"
+path = "src/main.rs"
+
+[lib]
+name = "rsomics_gc_windows"
+path = "src/lib.rs"
+
+[dependencies]
+rsomics-common = { path = "../../../foundation/rsomics-common", version = "0.5" }
+rsomics-help = { path = "../../../foundation/rsomics-help", version = "0.3" }
+clap.workspace = true
+needletail = { version = "0.7", default-features = false }
+
+[lints]
+workspace = true
