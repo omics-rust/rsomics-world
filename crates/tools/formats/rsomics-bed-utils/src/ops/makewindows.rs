@@ -14,6 +14,7 @@ pub fn makewindows(
         .map_err(|e| RsomicsError::InvalidInput(format!("{}: {e}", genome_path.display())))?;
     let reader = BufReader::new(file);
     let mut out = BufWriter::with_capacity(64 * 1024, output);
+    let step = if step == 0 { window_size } else { step };
     let mut count: u64 = 0;
 
     for line in reader.lines() {
