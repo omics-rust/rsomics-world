@@ -1,0 +1,26 @@
+[package]
+name = "rsomics-tajima-d"
+version = "0.1.0"
+description = "Compute Tajima's D from a site frequency spectrum (derived allele counts)"
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+authors.workspace = true
+
+[[bin]]
+name = "rsomics-tajima-d"
+path = "src/main.rs"
+
+[lib]
+name = "rsomics_tajima_d"
+path = "src/lib.rs"
+
+[dependencies]
+rsomics-common = { path = "../../../foundation/rsomics-common", version = "0.6" }
+rsomics-help = { path = "../../../foundation/rsomics-help", version = "0.3" }
+rsomics-popgen-core = { path = "../../../foundation/rsomics-popgen-core", version = "0.1" }
+clap.workspace = true
+
+[lints]
+workspace = true
