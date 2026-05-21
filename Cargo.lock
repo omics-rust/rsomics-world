@@ -1983,6 +1983,17 @@ dependencies = [
 ]
 
 [[package]]
+name = "rsomics-fm-search"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "needletail 0.7.3",
+ "rsomics-common",
+ "rsomics-fm-index",
+ "rsomics-help",
+]
+
+[[package]]
 name = "rsomics-formats"
 version = "0.1.0"
 dependencies = [
