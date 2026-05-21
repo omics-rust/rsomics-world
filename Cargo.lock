@@ -2091,6 +2091,17 @@ dependencies = [
 ]
 
 [[package]]
+name = "rsomics-hmm-decode"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "rsomics-common",
+ "rsomics-help",
+ "rsomics-hmm",
+ "serde_json",
+]
+
+[[package]]
 name = "rsomics-igzip"
 version = "0.1.0"
 dependencies = [
