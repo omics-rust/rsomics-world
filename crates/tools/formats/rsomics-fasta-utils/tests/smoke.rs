@@ -85,7 +85,10 @@ fn upper() {
     assert!(out.status.success());
     let s = String::from_utf8_lossy(&out.stdout);
     assert!(s.contains("ATCG"));
-    assert!(!s.lines().any(|l| !l.starts_with('>') && l.chars().any(|c| c.is_ascii_lowercase())));
+    assert!(
+        !s.lines()
+            .any(|l| !l.starts_with('>') && l.chars().any(|c| c.is_ascii_lowercase()))
+    );
 }
 
 #[test]
@@ -154,11 +157,7 @@ fn sort_by_name() {
 
 #[test]
 fn sort_by_length() {
-    let out = bin()
-        .args(["sort", "-l"])
-        .arg(fixture())
-        .output()
-        .unwrap();
+    let out = bin().args(["sort", "-l"]).arg(fixture()).output().unwrap();
     assert!(out.status.success());
 }
 

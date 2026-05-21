@@ -117,7 +117,11 @@ fn midpoint() {
 
 #[test]
 fn promoters() {
-    let s = run_ok(bin().args(["promoters", "-u", "100", "-d", "50"]).arg(bed()));
+    let s = run_ok(
+        bin()
+            .args(["promoters", "-u", "100", "-d", "50"])
+            .arg(bed()),
+    );
     let lines: Vec<&str> = s.trim().lines().collect();
     assert_eq!(lines.len(), 6);
 }
@@ -268,13 +272,7 @@ fn flank() {
 
 #[test]
 fn genomecov() {
-    let s = run_ok(
-        bin()
-            .arg("genomecov")
-            .arg(bed())
-            .arg("-g")
-            .arg(genome()),
-    );
+    let s = run_ok(bin().arg("genomecov").arg(bed()).arg("-g").arg(genome()));
     assert!(!s.is_empty());
 }
 
@@ -397,13 +395,14 @@ fn window() {
 
 #[test]
 fn map() {
-    let s = run_ok(
-        bin()
-            .arg("map")
-            .arg(bed())
-            .arg(bed_b())
-            .args(["--operation", "mean", "-c", "5"]),
-    );
+    let s =
+        run_ok(
+            bin()
+                .arg("map")
+                .arg(bed())
+                .arg(bed_b())
+                .args(["--operation", "mean", "-c", "5"]),
+        );
     assert!(!s.is_empty());
 }
 
@@ -442,13 +441,12 @@ fn to_fasta() {
 
 #[test]
 fn annotate() {
-    let s = run_ok(
-        bin()
-            .arg("annotate")
-            .arg(bed())
-            .arg(gff())
-            .args(["--type", "gene", "--attribute", "gene_name"]),
-    );
+    let s = run_ok(bin().arg("annotate").arg(bed()).arg(gff()).args([
+        "--type",
+        "gene",
+        "--attribute",
+        "gene_name",
+    ]));
     assert!(!s.is_empty());
 }
 

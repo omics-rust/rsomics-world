@@ -5,17 +5,11 @@ fn bin() -> Command {
 }
 
 fn gff() -> String {
-    format!(
-        "{}/tests/golden/small.gff",
-        env!("CARGO_MANIFEST_DIR")
-    )
+    format!("{}/tests/golden/small.gff", env!("CARGO_MANIFEST_DIR"))
 }
 
 fn chrom_map() -> String {
-    format!(
-        "{}/tests/golden/chrom_map.txt",
-        env!("CARGO_MANIFEST_DIR")
-    )
+    format!("{}/tests/golden/chrom_map.txt", env!("CARGO_MANIFEST_DIR"))
 }
 
 fn run_ok(cmd: &mut Command) -> String {
@@ -94,24 +88,14 @@ fn features() {
 
 #[test]
 fn filter_by_type() {
-    let s = run_ok(
-        bin()
-            .arg("filter")
-            .arg(gff())
-            .args(["--type", "gene"]),
-    );
+    let s = run_ok(bin().arg("filter").arg(gff()).args(["--type", "gene"]));
     let lines: Vec<&str> = s.trim().lines().filter(|l| !l.starts_with('#')).collect();
     assert_eq!(lines.len(), 2);
 }
 
 #[test]
 fn filter_by_pattern() {
-    let s = run_ok(
-        bin()
-            .arg("filter")
-            .arg(gff())
-            .args(["-e", "BRCA1"]),
-    );
+    let s = run_ok(bin().arg("filter").arg(gff()).args(["-e", "BRCA1"]));
     let lines: Vec<&str> = s.trim().lines().filter(|l| !l.starts_with('#')).collect();
     assert!(lines.len() >= 1);
 }
@@ -133,9 +117,7 @@ fn genes() {
 
 #[test]
 fn grep() {
-    let s = run_ok(
-        bin().arg("grep").arg(gff()).args(["-e", "BRCA1"]),
-    );
+    let s = run_ok(bin().arg("grep").arg(gff()).args(["-e", "BRCA1"]));
     let lines: Vec<&str> = s.trim().lines().filter(|l| !l.starts_with('#')).collect();
     assert!(lines.len() >= 1);
     assert!(s.contains("BRCA1"));
@@ -173,17 +155,15 @@ fn parents() {
 
 #[test]
 fn rename() {
-    let s = run_ok(
-        bin()
-            .arg("rename")
-            .arg(gff())
-            .arg("-m")
-            .arg(chrom_map()),
-    );
+    let s = run_ok(bin().arg("rename").arg(gff()).arg("-m").arg(chrom_map()));
     assert!(s.contains("chromosome1"));
     assert!(s.contains("chromosome2"));
     let data: Vec<&str> = s.lines().filter(|l| !l.starts_with('#')).collect();
-    assert!(!data.iter().any(|l| l.starts_with("chr1\t") || l.starts_with("chr2\t")));
+    assert!(
+        !data
+            .iter()
+            .any(|l| l.starts_with("chr1\t") || l.starts_with("chr2\t"))
+    );
 }
 
 #[test]
@@ -216,12 +196,7 @@ fn strand_stats() {
 
 #[test]
 fn subset() {
-    let s = run_ok(
-        bin()
-            .arg("subset")
-            .arg(gff())
-            .args(["--type", "exon"]),
-    );
+    let s = run_ok(bin().arg("subset").arg(gff()).args(["--type", "exon"]));
     let lines: Vec<&str> = s.trim().lines().filter(|l| !l.starts_with('#')).collect();
     assert_eq!(lines.len(), 5);
 }
