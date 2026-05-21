@@ -1,6 +1,6 @@
 [package]
 name = "rsomics-seqio"
-version = "0.1.0"
+version = "0.1.1"
 description = "Fast FASTQ reader for the rsomics-* tool family: decode-only producer thread + parallel parse, ISA-L igzip gz backend on Linux and a pure-Rust decoder elsewhere. Layer A primitive."
 edition.workspace = true
 rust-version.workspace = true
