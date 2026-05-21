@@ -56,8 +56,10 @@ pub fn mask_fasta(
             }
         }
 
-        out.write_all(&seq_out).map_err(RsomicsError::Io)?;
-        out.write_all(b"\n").map_err(RsomicsError::Io)?;
+        for chunk in seq_out.chunks(60) {
+            out.write_all(chunk).map_err(RsomicsError::Io)?;
+            out.write_all(b"\n").map_err(RsomicsError::Io)?;
+        }
     }
 
     out.flush().map_err(RsomicsError::Io)?;
