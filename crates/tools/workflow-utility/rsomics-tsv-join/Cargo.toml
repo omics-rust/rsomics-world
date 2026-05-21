@@ -1,0 +1,21 @@
+[package]
+name = "rsomics-tsv-join"
+version = "0.1.0"
+description = "Join two TSV files by a shared key column — inner/left/outer join"
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+authors.workspace = true
+[[bin]]
+name = "rsomics-tsv-join"
+path = "src/main.rs"
+[lib]
+name = "rsomics_tsv_join"
+path = "src/lib.rs"
+[dependencies]
+rsomics-common = { path = "../../../foundation/rsomics-common", version = "0.6" }
+rsomics-help = { path = "../../../foundation/rsomics-help", version = "0.3" }
+clap.workspace = true
+[lints]
+workspace = true
