@@ -1,0 +1,27 @@
+[package]
+name = "rsomics-fastq-downsample"
+version = "0.1.0"
+description = "Deterministic random downsampling of FASTQ to a target read count or fraction"
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+authors.workspace = true
+
+[[bin]]
+name = "rsomics-fastq-downsample"
+path = "src/main.rs"
+
+[lib]
+name = "rsomics_fastq_downsample"
+path = "src/lib.rs"
+
+[dependencies]
+rsomics-common = { path = "../../../foundation/rsomics-common", version = "0.6" }
+rsomics-help = { path = "../../../foundation/rsomics-help", version = "0.3" }
+clap.workspace = true
+needletail = { version = "0.7", default-features = false, features = ["compression"] }
+rand = "0.8"
+
+[lints]
+workspace = true
