@@ -1,0 +1,25 @@
+[package]
+name = "rsomics-barcode-rank"
+version = "0.1.0"
+description = "Barcode rank statistics from a counts-per-barcode file — knee plot data for single-cell QC"
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+authors.workspace = true
+
+[[bin]]
+name = "rsomics-barcode-rank"
+path = "src/main.rs"
+
+[lib]
+name = "rsomics_barcode_rank"
+path = "src/lib.rs"
+
+[dependencies]
+rsomics-common = { path = "../../../foundation/rsomics-common", version = "0.6" }
+rsomics-help = { path = "../../../foundation/rsomics-help", version = "0.3" }
+clap.workspace = true
+
+[lints]
+workspace = true
