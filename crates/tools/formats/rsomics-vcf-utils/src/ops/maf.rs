@@ -4,12 +4,7 @@ use std::fs::File;
 use std::io::{BufRead, BufReader, BufWriter, Write};
 use std::path::Path;
 
-pub fn vcf_maf(
-    input: &Path,
-    output: &mut dyn Write,
-    min_maf: f64,
-    max_maf: f64,
-) -> Result<u64> {
+pub fn vcf_maf(input: &Path, output: &mut dyn Write, min_maf: f64, max_maf: f64) -> Result<u64> {
     let file = File::open(input)
         .map_err(|e| RsomicsError::InvalidInput(format!("{}: {e}", input.display())))?;
     let reader = BufReader::new(file);

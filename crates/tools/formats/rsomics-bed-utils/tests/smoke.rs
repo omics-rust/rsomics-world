@@ -359,7 +359,7 @@ fn jaccard() {
 #[test]
 fn overlap() {
     let s = run_ok(bin().arg("overlap").arg(bed()).arg(bed_b()));
-    assert!(s.contains("overlap") || s.contains("intersection") || s.contains("{"));
+    assert!(s.contains("overlap") || s.contains("intersection") || s.contains('{'));
 }
 
 #[test]

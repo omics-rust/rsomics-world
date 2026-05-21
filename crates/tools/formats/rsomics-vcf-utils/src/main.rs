@@ -276,11 +276,7 @@ fn run(cli: Cli) -> Result<()> {
             let mut out = open_output(&output)?;
             ops::indels::vcf_indels(&input, &mut out)?;
         }
-        Command::Info {
-            input,
-            key,
-            output,
-        } => {
+        Command::Info { input, key, output } => {
             let mut out = open_output(&output)?;
             ops::info::extract_info(&input, &mut out, &key)?;
         }
@@ -325,11 +321,7 @@ fn run(cli: Cli) -> Result<()> {
             let mut out = open_output(&output)?;
             ops::qual_stats::vcf_qual_stats(&input, &mut out)?;
         }
-        Command::Rename {
-            input,
-            map,
-            output,
-        } => {
+        Command::Rename { input, map, output } => {
             let mut out = open_output(&output)?;
             ops::rename::rename_vcf(&input, &map, &mut out)?;
         }
