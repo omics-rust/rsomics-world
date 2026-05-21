@@ -1,0 +1,28 @@
+[package]
+name = "rsomics-tax-assign"
+version = "0.1.0"
+description = "Lightweight taxonomic assignment from k-mer LCA — classify reads against a reference taxonomy"
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+authors.workspace = true
+
+[[bin]]
+name = "rsomics-tax-assign"
+path = "src/main.rs"
+
+[lib]
+name = "rsomics_tax_assign"
+path = "src/lib.rs"
+
+[dependencies]
+rsomics-common = { path = "../../../foundation/rsomics-common", version = "0.6" }
+rsomics-help = { path = "../../../foundation/rsomics-help", version = "0.3" }
+rsomics-taxonomy = { path = "../../../foundation/rsomics-taxonomy", version = "0.1" }
+rsomics-kmer = { path = "../../../foundation/rsomics-kmer", version = "0.2" }
+clap.workspace = true
+needletail = { version = "0.7", default-features = false, features = ["compression"] }
+
+[lints]
+workspace = true
