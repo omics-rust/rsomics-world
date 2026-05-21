@@ -1,0 +1,6 @@
+chr1	10	30	geneA	100	+
+chr1	20	50	geneB	200	-
+chr1	80	100	geneC	300	+
+chr2	0	40	geneD	150	+
+chr2	60	90	geneE	250	-
+chr2	60	90	geneE	250	-

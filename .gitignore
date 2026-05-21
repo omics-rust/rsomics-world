@@ -1,4 +1,5 @@
 /target
+/.cargo/config.toml
 /.autopilot/
 /.claude/
 /tests/fixtures-cache/

@@ -1,0 +1,2 @@
+chr1	test	gene	15	35	.	+	.	gene_name=BRCA1
+chr2	test	gene	55	85	.	-	.	gene_name=TP53
