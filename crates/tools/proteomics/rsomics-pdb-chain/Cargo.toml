@@ -1,0 +1,25 @@
+[package]
+name = "rsomics-pdb-chain"
+version = "0.1.0"
+description = "Extract or split PDB chains — list, extract single chain, or split all into separate files"
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+authors.workspace = true
+
+[[bin]]
+name = "rsomics-pdb-chain"
+path = "src/main.rs"
+
+[lib]
+name = "rsomics_pdb_chain"
+path = "src/lib.rs"
+
+[dependencies]
+rsomics-common = { path = "../../../foundation/rsomics-common", version = "0.5" }
+rsomics-help = { path = "../../../foundation/rsomics-help", version = "0.3" }
+clap.workspace = true
+
+[lints]
+workspace = true
