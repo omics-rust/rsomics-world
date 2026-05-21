@@ -1,8 +1,18 @@
+use std::path::PathBuf;
+
 use clap::Parser;
 use rsomics_common::{CommonFlags, Result, Tool, ToolMeta};
 use rsomics_help::{Example, FlagSpec, HelpSpec, Origin, Section};
 use rsomics_tax_assign::{classify_reads, load_kmer_db};
-use std::path::PathBuf;
+
+#[allow(clippy::cast_precision_loss)]
+fn pct(num: u64, den: u64) -> f64 {
+    if den > 0 {
+        num as f64 / den as f64 * 100.0
+    } else {
+        0.0
+    }
+}
 
 pub const META: ToolMeta = ToolMeta {
     name: env!("CARGO_PKG_NAME"),
@@ -43,11 +53,7 @@ impl Tool for Cli {
                 "{} reads: {} classified ({:.1}%), {} unclassified",
                 result.total_reads,
                 result.classified,
-                if result.total_reads > 0 {
-                    result.classified as f64 / result.total_reads as f64 * 100.0
-                } else {
-                    0.0
-                },
+                pct(result.classified, result.total_reads),
                 result.unclassified
             );
         }

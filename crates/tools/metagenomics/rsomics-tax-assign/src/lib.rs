@@ -1,5 +1,5 @@
 use std::collections::HashMap;
-use std::io::{BufWriter, Write};
+use std::io::{BufRead, BufWriter, Write};
 use std::path::Path;
 
 use rsomics_common::{Result, RsomicsError};
@@ -10,6 +10,7 @@ pub struct ClassifyResult {
     pub unclassified: u64,
 }
 
+#[allow(clippy::implicit_hasher)]
 pub fn classify_reads(
     reads: &Path,
     db: &HashMap<u64, u32>,
@@ -63,7 +64,6 @@ pub fn load_kmer_db(path: &Path) -> Result<HashMap<u64, u32>> {
     let reader = std::io::BufReader::new(file);
     let mut db = HashMap::new();
 
-    use std::io::BufRead;
     for line in reader.lines() {
         let line = line.map_err(RsomicsError::Io)?;
         let parts: Vec<&str> = line.split('\t').collect();
