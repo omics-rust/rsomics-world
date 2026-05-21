@@ -23,6 +23,7 @@ pub fn consensus(input: &Path, threshold: f64, output: &mut dyn Write) -> Result
     let n = seqs.len();
     let mut cons = Vec::with_capacity(aln_len);
 
+    #[allow(clippy::cast_possible_truncation)]
     for col in 0..aln_len {
         let mut counts = [0u32; 256];
         for seq in &seqs {
@@ -37,10 +38,9 @@ pub fn consensus(input: &Path, threshold: f64, output: &mut dyn Write) -> Result
             .enumerate()
             .filter(|(i, _)| *i != b'-' as usize && *i != b'.' as usize)
             .max_by_key(|(_, c)| *c)
-            .map(|(i, c)| (i as u8, *c))
-            .unwrap_or((b'N', 0));
+            .map_or((b'N', 0), |(i, c)| (i as u8, *c));
 
-        if best.1 as f64 / n as f64 >= threshold {
+        if f64::from(best.1) / n as f64 >= threshold {
             cons.push(best.0);
         } else {
             cons.push(b'N');
