@@ -81,21 +81,21 @@ pub fn needleman_wunsch(a: &[u8], b: &[u8], p: &ScoreParams) -> Result<Alignment
 
     h[0] = 0;
     for j in 1..=m {
-        h[j] = -(p.gap_open + p.gap_extend * j as i32);
+        h[j] = p.gap_open + p.gap_extend * j as i32;
         f[j] = h[j];
     }
     for i in 1..=n {
-        h[i * stride] = -(p.gap_open + p.gap_extend * i as i32);
+        h[i * stride] = p.gap_open + p.gap_extend * i as i32;
         e[i * stride] = h[i * stride];
     }
 
     for i in 1..=n {
         for j in 1..=m {
-            let e_open = h[(i - 1) * stride + j] - p.gap_open - p.gap_extend;
-            let e_ext = e[(i - 1) * stride + j] - p.gap_extend;
+            let e_open = h[(i - 1) * stride + j] + p.gap_open + p.gap_extend;
+            let e_ext = e[(i - 1) * stride + j] + p.gap_extend;
             e[i * stride + j] = e_open.max(e_ext);
-            let f_open = h[i * stride + j - 1] - p.gap_open - p.gap_extend;
-            let f_ext = f[i * stride + j - 1] - p.gap_extend;
+            let f_open = h[i * stride + j - 1] + p.gap_open + p.gap_extend;
+            let f_ext = f[i * stride + j - 1] + p.gap_extend;
             f[i * stride + j] = f_open.max(f_ext);
             let diag = h[(i - 1) * stride + j - 1] + sub(a[i - 1], b[j - 1], p);
             h[i * stride + j] = diag.max(e[i * stride + j]).max(f[i * stride + j]);
@@ -153,11 +153,11 @@ pub fn smith_waterman(a: &[u8], b: &[u8], p: &ScoreParams) -> Result<Alignment> 
 
     for i in 1..=n {
         for j in 1..=m {
-            let e_open = h[(i - 1) * stride + j] - p.gap_open - p.gap_extend;
-            let e_ext = e[(i - 1) * stride + j] - p.gap_extend;
+            let e_open = h[(i - 1) * stride + j] + p.gap_open + p.gap_extend;
+            let e_ext = e[(i - 1) * stride + j] + p.gap_extend;
             e[i * stride + j] = e_open.max(e_ext);
-            let f_open = h[i * stride + j - 1] - p.gap_open - p.gap_extend;
-            let f_ext = f[i * stride + j - 1] - p.gap_extend;
+            let f_open = h[i * stride + j - 1] + p.gap_open + p.gap_extend;
+            let f_ext = f[i * stride + j - 1] + p.gap_extend;
             f[i * stride + j] = f_open.max(f_ext);
             let diag = h[(i - 1) * stride + j - 1] + sub(a[i - 1], b[j - 1], p);
             let val = diag.max(e[i * stride + j]).max(f[i * stride + j]).max(0);
