@@ -37,7 +37,7 @@ fn len() {
     let out = bin().arg("len").arg(fixture()).output().unwrap();
     assert!(out.status.success());
     let s = String::from_utf8_lossy(&out.stdout);
-    assert!(s.contains("8"));
+    assert!(s.contains('8'));
     assert!(s.contains("16"));
     assert!(s.contains("12"));
 }

@@ -97,7 +97,7 @@ fn filter_by_type() {
 fn filter_by_pattern() {
     let s = run_ok(bin().arg("filter").arg(gff()).args(["-e", "BRCA1"]));
     let lines: Vec<&str> = s.trim().lines().filter(|l| !l.starts_with('#')).collect();
-    assert!(lines.len() >= 1);
+    assert!(!lines.is_empty());
 }
 
 #[test]
@@ -119,7 +119,7 @@ fn genes() {
 fn grep() {
     let s = run_ok(bin().arg("grep").arg(gff()).args(["-e", "BRCA1"]));
     let lines: Vec<&str> = s.trim().lines().filter(|l| !l.starts_with('#')).collect();
-    assert!(lines.len() >= 1);
+    assert!(!lines.is_empty());
     assert!(s.contains("BRCA1"));
 }
 
