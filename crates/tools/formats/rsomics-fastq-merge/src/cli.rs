@@ -4,7 +4,7 @@ use std::path::PathBuf;
 
 use clap::Parser;
 use needletail::parse_fastx_file;
-use rsomics_common::{CommonFlags, Result, RsomicsError, ToolMeta};
+use rsomics_common::{CommonFlags, Result, RsomicsError, Tool, ToolMeta};
 use rsomics_help::{Example, FlagSpec, HelpSpec, Origin, Section};
 
 use rsomics_fastq_merge::{analyze, correct, merge};
@@ -151,6 +151,20 @@ fn write_record(w: &mut dyn Write, name: &str, seq: &[u8], qual: &[u8]) -> Resul
     w.write_all(b"\n+\n").map_err(RsomicsError::Io)?;
     w.write_all(qual).map_err(RsomicsError::Io)?;
     w.write_all(b"\n").map_err(RsomicsError::Io)
+}
+
+impl Tool for Cli {
+    fn meta() -> ToolMeta {
+        META
+    }
+
+    fn common(&self) -> &CommonFlags {
+        &self.common
+    }
+
+    fn execute(self) -> Result<()> {
+        Cli::execute(&self)
+    }
 }
 
 pub const HELP: HelpSpec = HelpSpec {

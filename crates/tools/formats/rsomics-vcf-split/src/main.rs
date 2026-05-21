@@ -3,10 +3,10 @@ mod cli;
 use std::process::ExitCode;
 
 use clap::Parser;
-use rsomics_common::run;
+use rsomics_common::Tool;
 use rsomics_help::{intercept_help, render as render_help};
 
-use cli::{Cli, HELP, META};
+use cli::{Cli, HELP};
 
 fn main() -> ExitCode {
     let raw_args: Vec<String> = std::env::args().collect();
@@ -15,6 +15,5 @@ fn main() -> ExitCode {
         return ExitCode::SUCCESS;
     }
     let args = Cli::parse();
-    let common = args.common.clone();
-    run(&common, META, || args.execute())
+    args.run()
 }

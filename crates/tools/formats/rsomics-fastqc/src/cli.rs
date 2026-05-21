@@ -3,7 +3,7 @@ use std::io::Write as _;
 use std::path::PathBuf;
 
 use clap::Parser;
-use rsomics_common::{CommonFlags, Context, Result, RsomicsError, ToolMeta};
+use rsomics_common::{CommonFlags, Context, Result, RsomicsError, Tool, ToolMeta};
 use rsomics_help::{Example, FlagSpec, HelpSpec, Origin, Section};
 
 use rsomics_fastqc::analyze;
@@ -66,6 +66,20 @@ impl Cli {
             }
         }
         Ok(())
+    }
+}
+
+impl Tool for Cli {
+    fn meta() -> ToolMeta {
+        META
+    }
+
+    fn common(&self) -> &CommonFlags {
+        &self.common
+    }
+
+    fn execute(self) -> Result<()> {
+        Cli::execute(&self)
     }
 }
 

@@ -1,7 +1,7 @@
 use std::path::PathBuf;
 
 use clap::Parser;
-use rsomics_common::{CommonFlags, Result, ToolMeta};
+use rsomics_common::{CommonFlags, Result, Tool, ToolMeta};
 use rsomics_help::{Example, HelpSpec, Origin, Section};
 
 use rsomics_vcf_validate::validate_vcf;
@@ -47,6 +47,20 @@ impl Cli {
             ));
         }
         Ok(())
+    }
+}
+
+impl Tool for Cli {
+    fn meta() -> ToolMeta {
+        META
+    }
+
+    fn common(&self) -> &CommonFlags {
+        &self.common
+    }
+
+    fn execute(self) -> Result<()> {
+        self.execute()
     }
 }
 

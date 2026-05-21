@@ -1,5 +1,5 @@
 use clap::Parser;
-use rsomics_common::{CommonFlags, Result, ToolMeta};
+use rsomics_common::{CommonFlags, Result, Tool, ToolMeta};
 use rsomics_help::{Example, FlagSpec, HelpSpec, Origin, Section};
 use rsomics_vcf_isec::isec;
 use std::path::PathBuf;
@@ -28,6 +28,20 @@ impl Cli {
         let n = isec(&self.file_a, &self.file_b, &mut out)?;
         eprintln!("{n} shared variants");
         Ok(())
+    }
+}
+
+impl Tool for Cli {
+    fn meta() -> ToolMeta {
+        META
+    }
+
+    fn common(&self) -> &CommonFlags {
+        &self.common
+    }
+
+    fn execute(self) -> Result<()> {
+        self.execute()
     }
 }
 

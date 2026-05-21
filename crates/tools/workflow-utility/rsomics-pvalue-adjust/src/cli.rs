@@ -2,7 +2,7 @@ use std::fs::File;
 use std::io::{self, BufRead, BufReader, BufWriter, Write};
 
 use clap::Parser;
-use rsomics_common::{CommonFlags, Result, RsomicsError, ToolMeta};
+use rsomics_common::{CommonFlags, Result, RsomicsError, Tool, ToolMeta};
 use rsomics_help::{Example, FlagSpec, HelpSpec, Origin, Section};
 use rsomics_stats::{
     bh_adjust, bonferroni_adjust, by_adjust, hochberg_adjust, holm_adjust, hommel_adjust,
@@ -108,6 +108,20 @@ fn write_out(path: &str, lines: &[String], pvals: &[f64], adjusted: &[f64]) -> R
         }
     }
     Ok(())
+}
+
+impl Tool for Cli {
+    fn meta() -> ToolMeta {
+        META
+    }
+
+    fn common(&self) -> &CommonFlags {
+        &self.common
+    }
+
+    fn execute(self) -> Result<()> {
+        Cli::execute(&self)
+    }
 }
 
 pub const HELP: HelpSpec = HelpSpec {

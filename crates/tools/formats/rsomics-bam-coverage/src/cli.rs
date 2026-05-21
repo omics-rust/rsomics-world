@@ -1,7 +1,7 @@
 use std::path::PathBuf;
 
 use clap::Parser;
-use rsomics_common::{CommonFlags, Result, RsomicsError, ToolMeta};
+use rsomics_common::{CommonFlags, Result, RsomicsError, Tool, ToolMeta};
 use rsomics_help::{Example, HelpSpec, Origin, Section};
 
 use rsomics_bam_coverage::{compute_coverage, write_coverage};
@@ -54,6 +54,20 @@ impl Cli {
 }
 
 use std::io::Write;
+
+impl Tool for Cli {
+    fn meta() -> ToolMeta {
+        META
+    }
+
+    fn common(&self) -> &CommonFlags {
+        &self.common
+    }
+
+    fn execute(self) -> Result<()> {
+        self.execute()
+    }
+}
 
 pub static HELP: HelpSpec = HelpSpec {
     name: META.name,

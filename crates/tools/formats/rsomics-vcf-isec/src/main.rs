@@ -1,7 +1,7 @@
 mod cli;
 use clap::Parser;
-use cli::{Cli, HELP, META};
-use rsomics_common::run;
+use cli::{Cli, HELP};
+use rsomics_common::Tool;
 use rsomics_help::{intercept_help, render as render_help};
 use std::process::ExitCode;
 fn main() -> ExitCode {
@@ -11,6 +11,5 @@ fn main() -> ExitCode {
         return ExitCode::SUCCESS;
     }
     let args = Cli::parse();
-    let common = args.common.clone();
-    run(&common, META, || args.execute())
+    args.run()
 }

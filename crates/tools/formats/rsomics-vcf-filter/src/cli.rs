@@ -2,7 +2,7 @@ use std::io::BufWriter;
 use std::path::PathBuf;
 
 use clap::Parser;
-use rsomics_common::{CommonFlags, Result, RsomicsError, ToolMeta};
+use rsomics_common::{CommonFlags, Result, RsomicsError, Tool, ToolMeta};
 use rsomics_help::{Example, FlagSpec, HelpSpec, Origin, Section};
 
 use rsomics_vcf_filter::{FilterConfig, filter_vcf};
@@ -58,6 +58,20 @@ impl Cli {
         }
 
         Ok(())
+    }
+}
+
+impl Tool for Cli {
+    fn meta() -> ToolMeta {
+        META
+    }
+
+    fn common(&self) -> &CommonFlags {
+        &self.common
+    }
+
+    fn execute(self) -> Result<()> {
+        self.execute()
     }
 }
 

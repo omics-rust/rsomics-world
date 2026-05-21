@@ -3,7 +3,7 @@ use std::path::PathBuf;
 use clap::Parser;
 use needletail::parse_fastx_file;
 use rayon::prelude::*;
-use rsomics_common::{CommonFlags, Result, RsomicsError, ToolMeta};
+use rsomics_common::{CommonFlags, Result, RsomicsError, Tool, ToolMeta};
 use rsomics_fqgz::ChunkedWriter;
 use rsomics_help::{Example, FlagSpec, HelpSpec, Origin, Section};
 use rsomics_seqio::{OwnedRecord, open_fastq};
@@ -408,6 +408,20 @@ impl Cli {
         w1.finalize()?;
         w2.finalize()?;
         Ok(())
+    }
+}
+
+impl Tool for Cli {
+    fn meta() -> ToolMeta {
+        META
+    }
+
+    fn common(&self) -> &CommonFlags {
+        &self.common
+    }
+
+    fn execute(self) -> Result<()> {
+        Cli::execute(&self)
     }
 }
 

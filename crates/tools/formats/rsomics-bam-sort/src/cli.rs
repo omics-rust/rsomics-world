@@ -1,7 +1,7 @@
 use std::path::PathBuf;
 
 use clap::Parser;
-use rsomics_common::{CommonFlags, Result, ToolMeta};
+use rsomics_common::{CommonFlags, Result, Tool, ToolMeta};
 use rsomics_help::{Example, FlagSpec, HelpSpec, Origin, Section};
 
 use rsomics_bam_sort::{SortOrder, sort_bam};
@@ -38,6 +38,20 @@ impl Cli {
             SortOrder::Coordinate
         };
         sort_bam(&self.input, &self.output, order)
+    }
+}
+
+impl Tool for Cli {
+    fn meta() -> ToolMeta {
+        META
+    }
+
+    fn common(&self) -> &CommonFlags {
+        &self.common
+    }
+
+    fn execute(self) -> Result<()> {
+        self.execute()
     }
 }
 

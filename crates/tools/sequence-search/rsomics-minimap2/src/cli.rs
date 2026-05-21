@@ -1,6 +1,6 @@
 #![allow(clippy::doc_markdown)]
 use clap::Parser;
-use rsomics_common::{CommonFlags, Result, ToolMeta};
+use rsomics_common::{CommonFlags, Result, Tool, ToolMeta};
 use rsomics_help::{Example, FlagSpec, HelpSpec, Origin, Section};
 use std::path::PathBuf;
 
@@ -30,6 +30,20 @@ impl Cli {
         let output = rsomics_minimap2::align(&self.reference, &self.query, &self.preset)?;
         print!("{output}");
         Ok(())
+    }
+}
+
+impl Tool for Cli {
+    fn meta() -> ToolMeta {
+        META
+    }
+
+    fn common(&self) -> &CommonFlags {
+        &self.common
+    }
+
+    fn execute(self) -> Result<()> {
+        self.execute()
     }
 }
 

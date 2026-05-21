@@ -1,7 +1,7 @@
 use std::path::PathBuf;
 
 use clap::Parser;
-use rsomics_common::{CommonFlags, Result, RsomicsError, ToolMeta};
+use rsomics_common::{CommonFlags, Result, RsomicsError, Tool, ToolMeta};
 use rsomics_fastq_split::{Pipeline, SplitConfig, SplitMode, SplitReport};
 use rsomics_help::{Example, FlagSpec, HelpSpec, Origin, Section};
 
@@ -101,6 +101,21 @@ impl Cli {
                 "--in2 and --out2 must be supplied together for PE mode".into(),
             )),
         }
+    }
+}
+
+impl Tool for Cli {
+    fn meta() -> ToolMeta {
+        META
+    }
+
+    fn common(&self) -> &CommonFlags {
+        &self.common
+    }
+
+    fn execute(self) -> Result<()> {
+        Cli::execute(&self)?;
+        Ok(())
     }
 }
 
