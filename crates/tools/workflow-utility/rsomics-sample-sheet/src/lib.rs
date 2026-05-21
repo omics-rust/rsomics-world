@@ -37,7 +37,7 @@ pub fn validate_sample_sheet(input: &Path, output: &mut dyn Write) -> Result<Vec
         let r1 = parts.get(1).unwrap_or(&"").to_string();
         let r2 = parts
             .get(2)
-            .map(|s| s.to_string())
+            .map(ToString::to_string)
             .filter(|s| !s.is_empty());
 
         let mut errors = Vec::new();
@@ -49,10 +49,8 @@ pub fn validate_sample_sheet(input: &Path, output: &mut dyn Write) -> Result<Vec
         } else if !Path::new(&r1).exists() {
             errors.push(format!("R1 not found: {r1}"));
         }
-        if let Some(ref r2_path) = r2 {
-            if !Path::new(r2_path).exists() {
-                errors.push(format!("R2 not found: {r2_path}"));
-            }
+        if let Some(ref r2_path) = r2 && !Path::new(r2_path).exists() {
+            errors.push(format!("R2 not found: {r2_path}"));
         }
 
         let valid = errors.is_empty();
