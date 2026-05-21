@@ -10,13 +10,9 @@ members = [
     "crates/tools/transcriptomics/*",
     "crates/tools/workflow-utility/*",
     "crates/tools/sequence-search/*",
+    "crates/tools/preprocessing/*",
 ]
 exclude = [
-    "crates/tools/formats/rsomics-bam-index",
-    "crates/tools/formats/rsomics-sam-to-bam",
-    "crates/tools/formats/rsomics-bam-to-fastq",
-    "crates/tools/formats/rsomics-vcf-norm",
-    "crates/tools/formats/rsomics-vcf-query",
 ]
 
 [workspace.package]

@@ -4,6 +4,7 @@ use std::path::Path;
 
 use noodles::bam;
 use noodles::sam;
+use noodles::sam::alignment::io::Write as AlnWrite;
 use rsomics_common::{Result, RsomicsError};
 
 pub fn convert(input: &Path, output: &mut dyn Write) -> Result<u64> {

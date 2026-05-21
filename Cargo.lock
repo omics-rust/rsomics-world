@@ -1357,6 +1357,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "rsomics-bam-index"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "noodles",
+ "rsomics-common",
+ "rsomics-help",
+]
+
+[[package]]
 name = "rsomics-bam-markdup"
 version = "0.1.0"
 dependencies = [
@@ -1411,6 +1421,19 @@ dependencies = [
 
 [[package]]
 name = "rsomics-bam-stats"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "noodles",
+ "rsomics-common",
+ "rsomics-help",
+ "serde",
+ "serde_json",
+ "tempfile",
+]
+
+[[package]]
+name = "rsomics-bam-to-fastq"
 version = "0.1.0"
 dependencies = [
  "clap",
@@ -1912,6 +1935,19 @@ dependencies = [
 ]
 
 [[package]]
+name = "rsomics-sam-to-bam"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "noodles",
+ "rsomics-common",
+ "rsomics-help",
+ "serde",
+ "serde_json",
+ "tempfile",
+]
+
+[[package]]
 name = "rsomics-seqio"
 version = "0.1.0"
 dependencies = [
@@ -1988,6 +2024,32 @@ dependencies = [
  "clap",
  "rsomics-common",
  "rsomics-help",
+]
+
+[[package]]
+name = "rsomics-vcf-norm"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "noodles",
+ "rsomics-common",
+ "rsomics-help",
+ "serde",
+ "serde_json",
+ "tempfile",
+]
+
+[[package]]
+name = "rsomics-vcf-query"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "noodles",
+ "rsomics-common",
+ "rsomics-help",
+ "serde",
+ "serde_json",
+ "tempfile",
 ]
 
 [[package]]
