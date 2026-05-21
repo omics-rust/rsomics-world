@@ -2,6 +2,8 @@ use std::io;
 use std::path::Path;
 
 use noodles::vcf;
+use noodles::vcf::variant::io::Write as VariantWrite;
+use noodles::vcf::variant::record::AlternateBases as _;
 use rsomics_common::{Result, RsomicsError};
 
 pub struct NormStats {
@@ -40,18 +42,24 @@ pub fn normalize_vcf(
         stats.total += 1;
 
         if split_multiallelic {
-            let alts: Vec<_> = record
-                .alternate_bases()
-                .iter()
-                .collect();
+            let alts = record.alternate_bases();
 
             if alts.len() > 1 {
-                for alt in &alts {
-                    let mut split_rec = record.clone();
-                    let new_alts = vcf::record::AlternateBases::from(vec![(*alt).clone()]);
-                    *split_rec.alternate_bases_mut() = new_alts;
+                let mut buf = vcf::variant::RecordBuf::try_from_variant_record(&header, &record)
+                    .map_err(|e| {
+                        RsomicsError::InvalidInput(format!("converting record: {e}"))
+                    })?;
+
+                let all_alts: Vec<String> = buf
+                    .alternate_bases()
+                    .as_ref()
+                    .to_vec();
+
+                for alt in &all_alts {
+                    *buf.alternate_bases_mut() =
+                        vcf::variant::record_buf::AlternateBases::from(vec![alt.clone()]);
                     writer
-                        .write_record(&header, &split_rec)
+                        .write_variant_record(&header, &buf)
                         .map_err(|e| {
                             RsomicsError::InvalidInput(format!("writing record: {e}"))
                         })?;

@@ -1,7 +1,12 @@
+#![allow(clippy::redundant_closure_for_method_calls)]
+
 use std::io::{self, BufWriter, Write};
 use std::path::Path;
 
 use noodles::vcf;
+use noodles::vcf::variant::record::AlternateBases as _;
+use noodles::vcf::variant::record::Filters as _;
+use noodles::vcf::variant::record::Ids as _;
 use rsomics_common::{Result, RsomicsError};
 
 pub fn query_vcf(input: &Path, output: &mut dyn io::Write, fields: &[String]) -> Result<u64> {
@@ -49,13 +54,14 @@ fn extract_field(
             .to_string(),
         "POS" => record
             .variant_start()
+            .and_then(|r| r.ok())
             .map_or(".".to_string(), |p| p.get().to_string()),
         "ID" => {
             let ids = record.ids();
             if ids.is_empty() {
                 ".".to_string()
             } else {
-                ids.to_string()
+                ids.as_ref().to_string()
             }
         }
         "REF" => record.reference_bases().to_string(),
@@ -64,18 +70,19 @@ fn extract_field(
             if alts.is_empty() {
                 ".".to_string()
             } else {
-                alts.to_string()
+                alts.as_ref().to_string()
             }
         }
         "QUAL" => record
             .quality_score()
+            .and_then(|r| r.ok())
             .map_or(".".to_string(), |q| format!("{q}")),
         "FILTER" => {
             let filters = record.filters();
             if filters.is_empty() {
                 ".".to_string()
             } else {
-                filters.to_string()
+                filters.as_ref().to_string()
             }
         }
         _ => ".".to_string(),

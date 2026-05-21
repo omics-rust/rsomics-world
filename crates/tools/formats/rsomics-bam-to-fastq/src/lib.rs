@@ -22,7 +22,7 @@ pub fn bam_to_fastq(input: &Path, output: &mut dyn Write, include_secondary: boo
             continue;
         }
 
-        let name = record.name().map(|n| n.as_bytes()).unwrap_or(b"*");
+        let name: &[u8] = record.name().map_or(&b"*"[..], AsRef::as_ref);
         let seq = record.sequence();
         let qual = record.quality_scores();
 
@@ -30,12 +30,7 @@ pub fn bam_to_fastq(input: &Path, output: &mut dyn Write, include_secondary: boo
         out.write_all(name).map_err(RsomicsError::Io)?;
         out.write_all(b"\n").map_err(RsomicsError::Io)?;
 
-        let seq_len = seq.len();
-        let mut bases = Vec::with_capacity(seq_len);
-        for i in 0..seq_len {
-            let base = seq.get(i).map_or(b'N', base_to_ascii);
-            bases.push(base);
-        }
+        let mut bases: Vec<u8> = seq.iter().collect();
 
         if flags.is_reverse_complemented() {
             bases.reverse();
@@ -46,7 +41,7 @@ pub fn bam_to_fastq(input: &Path, output: &mut dyn Write, include_secondary: boo
         out.write_all(&bases).map_err(RsomicsError::Io)?;
         out.write_all(b"\n+\n").map_err(RsomicsError::Io)?;
 
-        let qual_bytes = qual.as_ref();
+        let qual_bytes: &[u8] = qual.as_ref();
         if flags.is_reverse_complemented() {
             let rqual: Vec<u8> = qual_bytes.iter().rev().map(|&q| q + 33).collect();
             out.write_all(&rqual).map_err(RsomicsError::Io)?;
@@ -63,24 +58,21 @@ pub fn bam_to_fastq(input: &Path, output: &mut dyn Write, include_secondary: boo
     Ok(count)
 }
 
-fn base_to_ascii(base: noodles::sam::alignment::record::sequence::Base) -> u8 {
-    use noodles::sam::alignment::record::sequence::Base;
-    match base {
-        Base::A => b'A',
-        Base::C => b'C',
-        Base::G => b'G',
-        Base::T => b'T',
-        Base::N => b'N',
-        _ => b'N',
-    }
-}
-
 fn complement(base: u8) -> u8 {
     match base {
         b'A' => b'T',
-        b'T' => b'A',
+        b'T' | b'U' => b'A',
         b'C' => b'G',
         b'G' => b'C',
+        b'W' | b'S' => base,
+        b'M' => b'K',
+        b'K' => b'M',
+        b'R' => b'Y',
+        b'Y' => b'R',
+        b'B' => b'V',
+        b'D' => b'H',
+        b'H' => b'D',
+        b'V' => b'B',
         _ => b'N',
     }
 }
