@@ -44,12 +44,7 @@ fn preserves_row_count() {
         .output()
         .unwrap();
     let wc_str = String::from_utf8(wc_out.stdout).unwrap();
-    let original_lines: usize = wc_str
-        .split_whitespace()
-        .next()
-        .unwrap()
-        .parse()
-        .unwrap();
+    let original_lines: usize = wc_str.split_whitespace().next().unwrap().parse().unwrap();
 
     let our_lines = ours.lines().count();
     assert_eq!(our_lines, original_lines, "row count must be preserved");
