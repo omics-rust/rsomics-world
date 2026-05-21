@@ -12,7 +12,7 @@ keywords = ["fastq", "gzip", "libdeflate", "bioinformatics", "writer"]
 readme = "README.md"
 
 [dependencies]
-rsomics-common = { path = "../rsomics-common", version = "0.5" }
+rsomics-common = { path = "../rsomics-common", version = "0.6" }
 libdeflater = "1"
 rayon = { workspace = true }
 

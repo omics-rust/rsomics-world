@@ -11,7 +11,7 @@ categories = ["science"]
 keywords = ["ncbi", "taxonomy", "bioinformatics", "lca", "taxdump"]
 
 [dependencies]
-rsomics-common = { path = "../rsomics-common", version = "0.5" }
+rsomics-common = { path = "../rsomics-common", version = "0.6" }
 thiserror.workspace = true
 
 [dev-dependencies]

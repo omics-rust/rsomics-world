@@ -20,7 +20,7 @@ name = "rsomics_fastq_correct"
 path = "src/lib.rs"
 
 [dependencies]
-rsomics-common = { path = "../../../foundation/rsomics-common", version = "0.5" }
+rsomics-common = { path = "../../../foundation/rsomics-common", version = "0.6" }
 rsomics-seqio = { path = "../../../foundation/rsomics-seqio", version = "0.1" }
 rsomics-fqgz = { path = "../../../foundation/rsomics-fqgz", version = "0.1" }
 rsomics-kmer = { path = "../../../foundation/rsomics-kmer", version = "0.2" }
@@ -32,7 +32,7 @@ anyhow.workspace = true
 rayon.workspace = true
 
 [dev-dependencies]
-rsomics-common = { path = "../../../foundation/rsomics-common", version = "0.5", features = ["test-support", "rayon"] }
+rsomics-common = { path = "../../../foundation/rsomics-common", version = "0.6", features = ["test-support", "rayon"] }
 tempfile = "3"
 criterion.workspace = true
 

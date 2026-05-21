@@ -17,7 +17,7 @@ readme = "README.md"
 # Apple's assembler). No feature knob → `--all-features` cannot accidentally
 # disable the igzip path on Linux.
 [dependencies]
-rsomics-common = { path = "../rsomics-common", version = "0.5" }
+rsomics-common = { path = "../rsomics-common", version = "0.6" }
 # Non-Linux gz backend (Quadrant ①: pure Rust, zlib-rs); also the dev/bench
 # reference decoder.
 flate2 = { workspace = true }

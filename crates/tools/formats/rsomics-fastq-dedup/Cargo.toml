@@ -15,7 +15,7 @@ name = "rsomics-fastq-dedup"
 path = "src/main.rs"
 
 [dependencies]
-rsomics-common = { path = "../../../foundation/rsomics-common", version = "0.5" }
+rsomics-common = { path = "../../../foundation/rsomics-common", version = "0.6" }
 rsomics-help = { path = "../../../foundation/rsomics-help", version = "0.3" }
 rsomics-kmer = { path = "../../../foundation/rsomics-kmer", version = "0.2" }
 clap = { workspace = true, features = ["derive"] }
@@ -26,7 +26,7 @@ needletail = { version = "0.7", default-features = false, features = ["compressi
 flate2.workspace = true
 
 [dev-dependencies]
-rsomics-common = { path = "../../../foundation/rsomics-common", version = "0.5", features = ["test-support"] }
+rsomics-common = { path = "../../../foundation/rsomics-common", version = "0.6", features = ["test-support"] }
 tempfile = "3"
 
 [lints]

@@ -20,7 +20,7 @@ name = "rsomics_bbduk"
 path = "src/lib.rs"
 
 [dependencies]
-rsomics-common = { path = "../../../foundation/rsomics-common", version = "0.5" }
+rsomics-common = { path = "../../../foundation/rsomics-common", version = "0.6" }
 rsomics-help = { path = "../../../foundation/rsomics-help", version = "0.3" }
 rsomics-kmer = { path = "../../../foundation/rsomics-kmer", version = "0.2" }
 rsomics-seqio = { path = "../../../foundation/rsomics-seqio", version = "0.1" }
@@ -33,7 +33,7 @@ rayon.workspace = true
 needletail = { version = "0.7", default-features = false, features = ["compression"] }
 
 [dev-dependencies]
-rsomics-common = { path = "../../../foundation/rsomics-common", version = "0.5", features = ["test-support", "rayon"] }
+rsomics-common = { path = "../../../foundation/rsomics-common", version = "0.6", features = ["test-support", "rayon"] }
 tempfile = "3"
 criterion.workspace = true
 

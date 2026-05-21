@@ -11,7 +11,7 @@ categories = ["science"]
 keywords = ["bed", "intervals", "bioinformatics", "genomics", "bedtools"]
 
 [dependencies]
-rsomics-common = { path = "../rsomics-common", version = "0.5" }
+rsomics-common = { path = "../rsomics-common", version = "0.6" }
 coitrees = "0.4"
 serde = { workspace = true, features = ["derive"] }
 thiserror.workspace = true

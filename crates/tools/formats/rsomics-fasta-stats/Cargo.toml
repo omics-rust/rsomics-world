@@ -16,7 +16,7 @@ name = "rsomics-fasta-stats"
 path = "src/main.rs"
 
 [dependencies]
-rsomics-common = { path = "../../../foundation/rsomics-common", version = "0.5" }
+rsomics-common = { path = "../../../foundation/rsomics-common", version = "0.6" }
 rsomics-help = { path = "../../../foundation/rsomics-help", version = "0.3" }
 rsomics-seqstats = { path = "../../../foundation/rsomics-seqstats", version = "0.2" }
 clap = { workspace = true, features = ["derive"] }
@@ -27,7 +27,7 @@ needletail = { version = "0.7", default-features = false, features = ["compressi
 memchr = "2"
 
 [dev-dependencies]
-rsomics-common = { path = "../../../foundation/rsomics-common", version = "0.5", features = ["test-support", "rayon"] }
+rsomics-common = { path = "../../../foundation/rsomics-common", version = "0.6", features = ["test-support", "rayon"] }
 tempfile = "3"
 criterion.workspace = true
 

@@ -15,7 +15,7 @@ name = "rsomics-pvalue-adjust"
 path = "src/main.rs"
 
 [dependencies]
-rsomics-common = { path = "../../../foundation/rsomics-common", version = "0.5" }
+rsomics-common = { path = "../../../foundation/rsomics-common", version = "0.6" }
 rsomics-help = { path = "../../../foundation/rsomics-help", version = "0.3" }
 rsomics-stats = { path = "../../../foundation/rsomics-stats", version = "0.2" }
 clap = { workspace = true, features = ["derive"] }

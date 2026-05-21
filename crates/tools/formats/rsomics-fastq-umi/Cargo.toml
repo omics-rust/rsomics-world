@@ -20,7 +20,7 @@ name = "rsomics_fastq_umi"
 path = "src/lib.rs"
 
 [dependencies]
-rsomics-common = { path = "../../../foundation/rsomics-common", version = "0.5" }
+rsomics-common = { path = "../../../foundation/rsomics-common", version = "0.6" }
 rsomics-fqgz = { path = "../../../foundation/rsomics-fqgz", version = "0.1" }
 rsomics-seqio = { path = "../../../foundation/rsomics-seqio", version = "0.1" }
 rsomics-help = { path = "../../../foundation/rsomics-help", version = "0.3" }
@@ -33,7 +33,7 @@ flate2.workspace = true
 libdeflater = "1"
 
 [dev-dependencies]
-rsomics-common = { path = "../../../foundation/rsomics-common", version = "0.5", features = ["test-support", "rayon"] }
+rsomics-common = { path = "../../../foundation/rsomics-common", version = "0.6", features = ["test-support", "rayon"] }
 tempfile = "3"
 criterion.workspace = true
 

@@ -11,7 +11,7 @@ categories = ["science"]
 keywords = ["statistics", "bioinformatics", "fdr", "t-test", "mann-whitney"]
 
 [dependencies]
-rsomics-common = { path = "../rsomics-common", version = "0.5" }
+rsomics-common = { path = "../rsomics-common", version = "0.6" }
 statrs = "0.18"
 thiserror.workspace = true
 
