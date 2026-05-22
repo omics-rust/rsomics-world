@@ -5,7 +5,7 @@ use std::path::Path;
 
 use noodles::bam;
 use rsomics_common::{Result, RsomicsError};
-use rsomics_intervals::Interval;
+use rsomics_intervals::{Interval, IntervalIndex, IntervalSet};
 
 pub fn peak_counts(
     bam_path: &Path,
@@ -14,6 +14,13 @@ pub fn peak_counts(
     min_mapq: u8,
 ) -> Result<u64> {
     let peaks = load_bed(bed_path)?;
+
+    let mut set = IntervalSet::new();
+    for p in &peaks {
+        set.push(p.clone());
+    }
+    let index = IntervalIndex::build(&set);
+
     let mut counts: HashMap<(String, u64, u64), u64> = HashMap::new();
     for p in &peaks {
         counts.insert((p.chrom.clone(), p.start, p.end), 0);
@@ -41,7 +48,10 @@ pub fn peak_counts(
             continue;
         }
 
-        if record.mapping_quality().is_some_and(|q| q.get() < min_mapq) {
+        if record
+            .mapping_quality()
+            .is_some_and(|q| q.get() < min_mapq)
+        {
             continue;
         }
 
@@ -53,14 +63,14 @@ pub fn peak_counts(
         #[allow(clippy::cast_possible_truncation)]
         let start = match record.alignment_start() {
             Some(Ok(p)) => usize::from(p) as u64,
-            _ => 0,
+            _ => continue,
         };
 
-        for p in &peaks {
-            if p.chrom == *chrom && start >= p.start && start < p.end {
-                *counts.entry((p.chrom.clone(), p.start, p.end)).or_insert(0) += 1;
-            }
-        }
+        index.for_each_overlap(chrom, start, start + 1, |peak| {
+            *counts
+                .entry((peak.chrom.clone(), peak.start, peak.end))
+                .or_insert(0) += 1;
+        });
     }
 
     let mut out = BufWriter::new(output);
