@@ -13,3 +13,14 @@ perfgate-vs-named-upstream requirement does not apply.
 
 | tool | domain | why exempt | correctness verified by |
 |---|---|---|---|
+| bam-idxstats | formats | samtools idxstats reads the precomputed `.bai` index (htslib); structurally un-winnable on wall-clock | compat.rs diffs ours vs `samtools idxstats` (output byte-identical) |
+| de-volcano | transcriptomics | volcano categorisation (UP/DOWN/NS from padj+log2FC) has no canonical CLI (done inline in R/ggplot scripts) | compat.rs asserts every row's category obeys the padj≤0.05 / |lfc|≥1 thresholds |
+| deseq-prep | transcriptomics | count-matrix prep for DESeq2 has no canonical CLI (it's R library setup) | compat.rs golden/invariant self-test |
+| count-matrix | transcriptomics | merging per-sample count files into a matrix has no single canonical CLI (featureCounts/htseq emit, don't merge) | compat.rs golden self-test (2 tests) |
+| tpm | transcriptomics | TPM-from-a-count-matrix is a formula; canonical quantifiers (salmon/kallisto) do alignment+quant, not from-counts | compat.rs invariant self-test (columns sum to 1e6) |
+| cell-filter | single-cell | scRNA QC cell filtering is a scanpy/Seurat library step, no standalone CLI | compat.rs golden self-test (3 tests) |
+| fasta-digest | proteomics | in-silico protease digest has no canonical standalone CLI | compat.rs golden self-test (2 tests) |
+| pdb-chain | proteomics | PDB chain extraction is a pdb-tools library op, no canonical single CLI | compat.rs golden self-test |
+| fm-search | sequence-search | FM-index substring search has no canonical CLI | compat.rs golden self-test (2 tests) |
+| sample-sheet | workflow-utility | sample-sheet parsing/validation has no canonical CLI | compat.rs golden self-test |
+| kraken-report | metagenomics | report formatting of classifier output has no standalone canonical CLI (kraken2 --report is the classifier itself) | compat.rs golden self-test |
