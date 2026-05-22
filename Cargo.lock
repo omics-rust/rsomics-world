@@ -1716,10 +1716,11 @@ dependencies = [
 
 [[package]]
 name = "rsomics-fasta-index"
-version = "0.1.1"
+version = "0.1.2"
 dependencies = [
  "anyhow",
  "clap",
+ "memchr",
  "rsomics-common",
  "rsomics-help",
  "serde",
