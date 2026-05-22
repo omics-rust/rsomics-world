@@ -1418,6 +1418,7 @@ name = "rsomics-bam-depth"
 version = "0.1.0"
 dependencies = [
  "clap",
+ "itoa",
  "noodles",
  "rsomics-bamio",
  "rsomics-common",
@@ -2244,7 +2245,6 @@ version = "0.1.0"
 dependencies = [
  "clap",
  "needletail 0.7.3",
- "regex",
  "rsomics-common",
  "rsomics-help",
 ]
