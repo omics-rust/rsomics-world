@@ -1463,6 +1463,7 @@ dependencies = [
  "noodles",
  "rsomics-common",
  "rsomics-help",
+ "tempfile",
 ]
 
 [[package]]
