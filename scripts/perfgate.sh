@@ -51,7 +51,7 @@ command -v "$UP_BIN" >/dev/null || [ -x "$UP_BIN" ] \
 
 repo_root=$(git rev-parse --show-toplevel); cd "$repo_root"
 
-work=$(mktemp -d /tmp/perfgate.XXXXXX)
+work=$(mktemp -d "${TMPDIR:-/tmp}/perfgate.XXXXXX")
 trap 'rm -rf "$work"' EXIT
 # Preserve the full original extension in the symlink name. Upstreams
 # (fastp, samtools, bcftools) sniff compression by FILENAME EXTENSION,
