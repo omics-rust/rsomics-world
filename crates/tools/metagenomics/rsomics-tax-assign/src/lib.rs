@@ -3,6 +3,7 @@ use std::io::{BufRead, BufWriter, Write};
 use std::path::Path;
 
 use rsomics_common::{Result, RsomicsError};
+use rsomics_taxonomy::Taxonomy;
 
 pub struct ClassifyResult {
     pub total_reads: u64,
@@ -10,11 +11,17 @@ pub struct ClassifyResult {
     pub unclassified: u64,
 }
 
+/// Classify reads using k-mer LCA (Kraken2-style).
+///
+/// For each read: extract canonical k-mers, look up taxid in DB,
+/// collect all hit taxids, compute their LCA via the taxonomy tree.
+/// Falls back to majority-vote if no taxonomy provided.
 #[allow(clippy::implicit_hasher)]
 pub fn classify_reads(
     reads: &Path,
     db: &HashMap<u64, u32>,
     k: usize,
+    taxonomy: Option<&Taxonomy>,
     output: &mut dyn Write,
 ) -> Result<ClassifyResult> {
     let mut reader = needletail::parse_fastx_file(reads)
@@ -35,18 +42,24 @@ pub fn classify_reads(
         let iter = rsomics_kmer::KmerIter::new(&seq, k, true)
             .map_err(|e| RsomicsError::InvalidInput(format!("kmer: {e}")))?;
 
-        let mut tax_hits: HashMap<u32, u32> = HashMap::new();
+        let mut hit_taxids: Vec<u32> = Vec::new();
         for kmer in iter.flatten() {
             if let Some(&taxid) = db.get(&kmer) {
-                *tax_hits.entry(taxid).or_insert(0) += 1;
+                hit_taxids.push(taxid);
             }
         }
 
-        if let Some((best_tax, best_count)) = tax_hits.iter().max_by_key(|(_, v)| *v) {
-            writeln!(out, "C\t{name}\t{best_tax}\t{best_count}").map_err(RsomicsError::Io)?;
-            classified += 1;
-        } else {
+        if hit_taxids.is_empty() {
             writeln!(out, "U\t{name}\t0\t0").map_err(RsomicsError::Io)?;
+        } else {
+            let n_hits = hit_taxids.len();
+            let assigned = if let Some(tax) = taxonomy {
+                tax.lca(&hit_taxids).unwrap_or(0)
+            } else {
+                majority_vote(&hit_taxids)
+            };
+            writeln!(out, "C\t{name}\t{assigned}\t{n_hits}").map_err(RsomicsError::Io)?;
+            classified += 1;
         }
     }
 
@@ -56,6 +69,17 @@ pub fn classify_reads(
         classified,
         unclassified: total - classified,
     })
+}
+
+fn majority_vote(taxids: &[u32]) -> u32 {
+    let mut counts: HashMap<u32, u32> = HashMap::new();
+    for &t in taxids {
+        *counts.entry(t).or_insert(0) += 1;
+    }
+    counts
+        .into_iter()
+        .max_by_key(|(_, c)| *c)
+        .map_or(0, |(t, _)| t)
 }
 
 pub fn load_kmer_db(path: &Path) -> Result<HashMap<u64, u32>> {

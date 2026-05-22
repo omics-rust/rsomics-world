@@ -47,7 +47,7 @@ impl Tool for Cli {
         } else {
             Box::new(std::fs::File::create(&self.output).map_err(rsomics_common::RsomicsError::Io)?)
         };
-        let result = classify_reads(&self.reads, &db, self.kmer_size, &mut out)?;
+        let result = classify_reads(&self.reads, &db, self.kmer_size, None, &mut out)?;
         if !self.common.quiet {
             eprintln!(
                 "{} reads: {} classified ({:.1}%), {} unclassified",
