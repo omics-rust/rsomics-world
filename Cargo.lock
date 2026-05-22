@@ -2275,10 +2275,11 @@ dependencies = [
 
 [[package]]
 name = "rsomics-peak-count"
-version = "0.1.0"
+version = "0.1.1"
 dependencies = [
  "clap",
  "noodles",
+ "rsomics-bamio",
  "rsomics-common",
  "rsomics-help",
  "rsomics-intervals",
