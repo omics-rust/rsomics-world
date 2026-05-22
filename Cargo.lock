@@ -2443,11 +2443,12 @@ dependencies = [
 
 [[package]]
 name = "rsomics-vcf-annotate"
-version = "0.1.0"
+version = "0.1.1"
 dependencies = [
  "clap",
  "rsomics-common",
  "rsomics-help",
+ "rsomics-intervals",
 ]
 
 [[package]]
