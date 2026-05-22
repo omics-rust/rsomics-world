@@ -965,6 +965,7 @@ checksum = "4d22589ec50582fa0c3e629d27e5263fc5ff5d436955648ba601b7ac4155fbf2"
 dependencies = [
  "bytes",
  "crossbeam-channel",
+ "libdeflater",
  "zlib-rs",
 ]
 
@@ -1582,9 +1583,10 @@ dependencies = [
 
 [[package]]
 name = "rsomics-bamio"
-version = "0.1.1"
+version = "0.1.2"
 dependencies = [
  "noodles",
+ "noodles-bgzf",
  "rsomics-common",
  "tempfile",
 ]
