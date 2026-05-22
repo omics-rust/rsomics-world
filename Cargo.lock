@@ -1531,10 +1531,11 @@ dependencies = [
 
 [[package]]
 name = "rsomics-bam-stats"
-version = "0.1.0"
+version = "0.1.1"
 dependencies = [
  "clap",
  "noodles",
+ "rsomics-bamio",
  "rsomics-common",
  "rsomics-help",
  "serde",
