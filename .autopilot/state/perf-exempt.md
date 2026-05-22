@@ -24,3 +24,6 @@ perfgate-vs-named-upstream requirement does not apply.
 | fm-search | sequence-search | FM-index substring search has no canonical CLI | compat.rs golden self-test (2 tests) |
 | sample-sheet | workflow-utility | sample-sheet parsing/validation has no canonical CLI | compat.rs golden self-test |
 | kraken-report | metagenomics | report formatting of classifier output has no standalone canonical CLI (kraken2 --report is the classifier itself) | compat.rs golden self-test |
+| fasta-validate | formats | no agreeing FASTA-validator CLI (seqkit's alphabet checks disagree) | compat.rs: well-formed passes, malformed (seq-before-header) fails |
+| fastq-validate | formats | no agreeing FASTQ-validator CLI | compat.rs: well-formed passes, qual/seq length mismatch fails |
+| vcf-validate | formats | no agreeing VCF-validator CLI (bcftools view is a parser, not a structural validator) | compat.rs: well-formed passes, malformed fails |
