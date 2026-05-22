@@ -13,6 +13,10 @@ pub const META: ToolMeta = ToolMeta {
 #[command(name = "rsomics-ld-matrix", version, about, long_about = None, disable_help_flag = true)]
 pub struct Cli {
     pub input: PathBuf,
+    #[arg(short = 'w', long)]
+    window: Option<usize>,
+    #[arg(long, default_value_t = 0.0)]
+    min_r2: f64,
     #[arg(short = 'o', long, default_value = "-")]
     output: String,
     #[command(flatten)]
@@ -32,7 +36,7 @@ impl Tool for Cli {
         } else {
             Box::new(std::fs::File::create(&self.output).map_err(RsomicsError::Io)?)
         };
-        let n = ld_matrix(&self.input, &mut out)?;
+        let n = ld_matrix(&self.input, self.window, self.min_r2, &mut out)?;
         if !self.common.quiet {
             eprintln!("{n} pairs");
         }

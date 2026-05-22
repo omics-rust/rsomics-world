@@ -1,10 +1,16 @@
-use rsomics_common::{Result, RsomicsError};
 use std::fs::File;
 use std::io::{BufRead, BufReader, BufWriter, Write};
 use std::path::Path;
 
+use rsomics_common::{Result, RsomicsError};
+
 #[allow(clippy::cast_precision_loss)]
-pub fn ld_matrix(input: &Path, output: &mut dyn Write) -> Result<u64> {
+pub fn ld_matrix(
+    input: &Path,
+    window: Option<usize>,
+    min_r2: f64,
+    output: &mut dyn Write,
+) -> Result<u64> {
     let file = File::open(input)
         .map_err(|e| RsomicsError::InvalidInput(format!("{}: {e}", input.display())))?;
     let reader = BufReader::new(file);
@@ -24,16 +30,20 @@ pub fn ld_matrix(input: &Path, output: &mut dyn Write) -> Result<u64> {
     }
 
     let n_var = genotypes.len();
+    let max_dist = window.unwrap_or(n_var);
     let mut out = BufWriter::new(output);
     writeln!(out, "var1\tvar2\tr_squared").map_err(RsomicsError::Io)?;
 
     let mut count = 0u64;
     for i in 0..n_var {
-        for j in (i + 1)..n_var {
+        let j_end = (i + 1 + max_dist).min(n_var);
+        for j in (i + 1)..j_end {
             let r2 = compute_r2(&genotypes[i], &genotypes[j]);
-            writeln!(out, "{}\t{}\t{r2:.6}", variant_names[i], variant_names[j])
-                .map_err(RsomicsError::Io)?;
-            count += 1;
+            if r2 >= min_r2 {
+                writeln!(out, "{}\t{}\t{r2:.6}", variant_names[i], variant_names[j])
+                    .map_err(RsomicsError::Io)?;
+                count += 1;
+            }
         }
     }
 
