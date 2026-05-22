@@ -1,6 +1,6 @@
 [package]
 name = "rsomics-bamio"
-version = "0.1.0"
+version = "0.1.1"
 description = "Parallel-BGZF BAM reader shared by the rsomics-bam-* tool family. Layer A primitive."
 edition = "2024"
 rust-version = "1.91"

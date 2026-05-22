@@ -1507,6 +1507,7 @@ dependencies = [
  "clap",
  "noodles",
  "rayon",
+ "rsomics-bamio",
  "rsomics-common",
  "rsomics-help",
  "serde",
@@ -1581,7 +1582,7 @@ dependencies = [
 
 [[package]]
 name = "rsomics-bamio"
-version = "0.1.0"
+version = "0.1.1"
 dependencies = [
  "noodles",
  "rsomics-common",
