@@ -77,32 +77,42 @@ elif KIND == "genome":
         f.writelines(f"{c}\t300000000\n" for c in chroms)
 
 elif KIND == "bam":
-    # A = n_records, B = read_len. Generates a coordinate-sorted BAM via
-    # samtools (must be on PATH). Paired-end, 2 chroms, ~50% properly paired.
-    import subprocess, tempfile, os
+    # A = n_records, B = read_len. SAM is streamed straight into
+    # `samtools sort` stdin (no in-memory accumulation, no temp file), so
+    # multi-million-record fixtures stay flat in memory. Sequences use
+    # C-level random.choices; quality is a fixed Q40 string (content does
+    # not affect read/sort/depth/coverage throughput benches).
+    import subprocess
     n_chroms = 2
-    sam_lines = [
-        "@HD\tVN:1.6\tSO:coordinate",
-        *[f"@SQ\tSN:chr{c}\tLN:300000000" for c in range(1, n_chroms + 1)],
-    ]
+    qual = "I" * B
+    cigar = f"{B}M"
+    sort = subprocess.Popen(
+        ["samtools", "sort", "-O", "bam", "-o", OUT, "-"],
+        stdin=subprocess.PIPE,
+        stdout=subprocess.DEVNULL,
+        stderr=subprocess.DEVNULL,
+    )
+    w = sort.stdin
+    w.write(b"@HD\tVN:1.6\tSO:coordinate\n")
+    for c in range(1, n_chroms + 1):
+        w.write(f"@SQ\tSN:chr{c}\tLN:300000000\n".encode())
+    buf = []
     for i in range(A):
-        chrom = f"chr{random.randint(1, n_chroms)}"
+        chrom = random.randint(1, n_chroms)
         pos = random.randint(1, 299_000_000)
-        seq = "".join(chr(ACGT[random.getrandbits(2)]) for _ in range(B))
-        qual = "".join(chr(33 + min(40, 20 + random.randint(-8, 15))) for _ in range(B))
+        seq = "".join(random.choices("ACGT", k=B))
         flag = 99 if random.random() < 0.5 else 0
-        sam_lines.append(f"r{i}\t{flag}\t{chrom}\t{pos}\t60\t{B}M\t*\t0\t0\t{seq}\t{qual}")
-    sam_content = "\n".join(sam_lines) + "\n"
-    with tempfile.NamedTemporaryFile(suffix=".sam", mode="w", delete=False) as tmp:
-        tmp.write(sam_content)
-        tmp_name = tmp.name
-    subprocess.run(["samtools", "view", "-bS", tmp_name, "-o", OUT], check=True,
-                   stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-    subprocess.run(["samtools", "sort", OUT, "-o", OUT], check=True,
-                   stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        buf.append(f"r{i}\t{flag}\tchr{chrom}\t{pos}\t60\t{cigar}\t*\t0\t0\t{seq}\t{qual}\n")
+        if len(buf) >= 50000:
+            w.write("".join(buf).encode())
+            buf.clear()
+    if buf:
+        w.write("".join(buf).encode())
+    w.close()
+    if sort.wait() != 0:
+        sys.exit("samtools sort failed")
     subprocess.run(["samtools", "index", OUT], check=True,
                    stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-    os.unlink(tmp_name)
 
 elif KIND == "vcf":
     # A = n_variants, B = n_samples. Generates a minimal VCF with random SNPs.
