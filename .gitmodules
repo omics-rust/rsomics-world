@@ -307,3 +307,6 @@
 [submodule "crates/tools/formats/rsomics-vcf-reheader"]
 	path = crates/tools/formats/rsomics-vcf-reheader
 	url = git@github.com:omics-rust/rsomics-vcf-reheader.git
+[submodule "crates/tools/formats/rsomics-vcf-consensus"]
+	path = crates/tools/formats/rsomics-vcf-consensus
+	url = git@github.com:omics-rust/rsomics-vcf-consensus.git
