@@ -2447,10 +2447,10 @@ dependencies = [
 
 [[package]]
 name = "rsomics-vcf-filter"
-version = "0.1.0"
+version = "0.1.1"
 dependencies = [
  "clap",
- "noodles",
+ "flate2",
  "rsomics-common",
  "rsomics-help",
  "serde",
@@ -2478,10 +2478,10 @@ dependencies = [
 
 [[package]]
 name = "rsomics-vcf-norm"
-version = "0.1.0"
+version = "0.1.1"
 dependencies = [
  "clap",
- "noodles",
+ "flate2",
  "rsomics-common",
  "rsomics-help",
  "serde",
