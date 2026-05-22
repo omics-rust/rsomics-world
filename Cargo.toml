@@ -82,6 +82,7 @@ debug = 1
 
 [patch.crates-io]
 rsomics-align-core = { path = "crates/foundation/rsomics-align-core/" }
+rsomics-bamio = { path = "crates/foundation/rsomics-bamio/" }
 rsomics-common = { path = "crates/foundation/rsomics-common/" }
 rsomics-debruijn = { path = "crates/foundation/rsomics-debruijn/" }
 rsomics-fm-index = { path = "crates/foundation/rsomics-fm-index/" }
