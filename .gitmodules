@@ -289,3 +289,9 @@
 [submodule "crates/tools/workflow-utility/rsomics-tsv-select"]
 	path = crates/tools/workflow-utility/rsomics-tsv-select
 	url = git@github.com:omics-rust/rsomics-tsv-select.git
+[submodule "crates/tools/formats/rsomics-bam-index"]
+	path = crates/tools/formats/rsomics-bam-index
+	url = git@github.com:omics-rust/rsomics-bam-index.git
+[submodule "crates/foundation/rsomics-bamio"]
+	path = crates/foundation/rsomics-bamio
+	url = git@github.com:omics-rust/rsomics-bamio.git
