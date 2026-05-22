@@ -301,3 +301,6 @@
 [submodule "crates/tools/formats/rsomics-vcf-sort"]
 	path = crates/tools/formats/rsomics-vcf-sort
 	url = git@github.com:omics-rust/rsomics-vcf-sort.git
+[submodule "crates/tools/formats/rsomics-vcf-concat"]
+	path = crates/tools/formats/rsomics-vcf-concat
+	url = git@github.com:omics-rust/rsomics-vcf-concat.git
