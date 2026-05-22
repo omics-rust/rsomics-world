@@ -1,6 +1,6 @@
 [package]
 name = "rsomics-fqgz"
-version = "0.1.0"
+version = "0.1.1"
 description = "Chunked parallel-libdeflate gzip (or plain) FASTQ-record writer. Layer-A primitive shared by the rsomics-* fastq-* tools."
 edition.workspace = true
 rust-version.workspace = true
