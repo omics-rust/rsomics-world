@@ -331,3 +331,6 @@
 [submodule "crates/tools/formats/rsomics-bed-expand"]
 	path = crates/tools/formats/rsomics-bed-expand
 	url = git@github.com:omics-rust/rsomics-bed-expand.git
+[submodule "crates/tools/genomics/rsomics-bed-split"]
+	path = crates/tools/genomics/rsomics-bed-split
+	url = git@github.com:omics-rust/rsomics-bed-split.git
