@@ -13,7 +13,7 @@ keywords = ["bam", "pileup", "bioinformatics", "samtools", "mpileup"]
 
 [dependencies]
 rsomics-common = { version = "0.6" }
-rsomics-bamio = { version = "0.1.5" }
+rsomics-bamio = { version = "0.1.6" }
 noodles = { version = "0.110", features = ["sam", "bam"] }
 
 [dev-dependencies]
