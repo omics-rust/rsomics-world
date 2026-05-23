@@ -1,0 +1,29 @@
+[package]
+name = "rsomics-fragment-size"
+version = "0.1.0"
+description = "Paired-end insert-size distribution from a BAM: histogram TSV + summary with ATAC nucleosome fractions"
+edition = "2024"
+rust-version = "1.91"
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/omics-rust/rsomics-world"
+authors = ["Zane Leong <efd@live.com>"]
+
+[[bin]]
+name = "rsomics-fragment-size"
+path = "src/main.rs"
+
+[lib]
+name = "rsomics_fragment_size"
+path = "src/lib.rs"
+
+[dependencies]
+rsomics-common = { version = "0.6" }
+rsomics-help = { version = "0.3" }
+rsomics-bamio = { version = "0.1.7" }
+clap = { version = "4", features = ["derive"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+
+[dev-dependencies]
+tempfile = "3"
+serde_json = "1"
