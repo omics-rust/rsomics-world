@@ -350,3 +350,7 @@
 	path = crates/tools/formats/rsomics-bam-fixmate
 	url = git@github.com:omics-rust/rsomics-bam-fixmate.git
 	branch = main
+[submodule "crates/tools/formats/rsomics-bam-addreplacerg"]
+	url = git@github.com:omics-rust/rsomics-bam-addreplacerg.git
+	path = crates/tools/formats/rsomics-bam-addreplacerg
+	branch = main
