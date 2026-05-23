@@ -8,26 +8,28 @@
 //! stay byte-for-byte identical (matching aux ordering and integer subtype).
 //!
 //! Reading uses the shared [`rsomics_bamio`] reader (libdeflate BGZF, parallel
-//! at `workers >= 2`); records are decoded to a `RecordBuf` because calmd needs
-//! the read SEQ to compare against the reference, so the raw seq-skipping path
-//! does not apply here. Output goes through the bamio parallel BGZF writer.
+//! at `workers >= 2`); records are processed on the raw BAM byte level —
+//! seq/qual/cigar are never decoded into noodles types. MD/NM are written
+//! directly into the raw aux tail via `RawRecord::set_aux`. This avoids the
+//! full `RecordBuf` decode+re-encode round-trip (the former bottleneck at
+//! `-t4` and above, accounting for 67% of wall time). Output goes through the
+//! bamio parallel BGZF writer.
 //!
 //! The reference is read from an indexed FASTA (`.fai`); each contig is fetched
-//! once on first use and cached for the batch. Coordinate-sorted input therefore
-//! touches each contig once per batch and never re-reads it — the common calmd
-//! case. Out-of-order input re-fetches across batches, which is correct but
-//! slower; that mirrors samtools' own behaviour before its tid-cache kicks in.
+//! once on first use and cached for the run. Coordinate-sorted input therefore
+//! touches each contig once and never re-reads it — the common calmd case.
 //!
 //! At `workers >= 2` the MD/NM computation is parallelised with rayon: records
 //! are collected into a batch, the needed contigs are fetched serially into a
 //! shared read-only map (`Arc<Vec<u8>>` per contig), then `par_iter_mut` runs
-//! `compute_md_nm` on every record simultaneously. Output is written in original
-//! batch order so the byte stream is identical to the serial path.
+//! the raw MD/NM pass on every record simultaneously. Output is written in
+//! original batch order so the byte stream is identical to the serial path.
 
 use std::collections::HashMap;
 use std::num::NonZero;
 use std::path::Path;
 use std::sync::Arc;
+use std::time::Instant;
 
 use noodles::bam;
 use noodles::fasta;
@@ -37,20 +39,27 @@ use noodles::sam::alignment::record::cigar::op::Kind;
 use noodles::sam::alignment::record::data::field::Tag;
 use noodles::sam::alignment::record_buf::data::field::Value;
 use rayon::prelude::*;
+use rsomics_bamio::raw::{self, RawRecord};
 use rsomics_common::{Result, RsomicsError};
 use serde::Serialize;
 
 const TAG_NM: Tag = Tag::EDIT_DISTANCE;
 const TAG_MD: Tag = Tag::MISMATCHED_POSITIONS;
 
-/// Number of decoded records processed per rayon batch.
+/// BAM aux type codes for MD (Z string) and NM (i32).
+const AUX_TYPE_Z: u8 = b'Z';
+const AUX_TYPE_I: u8 = b'i';
+
+/// Tag bytes for the raw aux path.
+const NM_TAG: [u8; 2] = [b'N', b'M'];
+const MD_TAG: [u8; 2] = [b'M', b'D'];
+
+/// Number of raw records processed per rayon batch.
 ///
-/// At typical 150 bp reads a `RecordBuf` is ~350 bytes (sequence + qual +
-/// aux); 4096 records ≈ 1.4 MB per batch, fitting in L3. Larger batches
-/// amortise rayon's per-`install` dispatch overhead over more work units;
-/// smaller batches reduce tail-wait at stream end. 4096 is the empirically
-/// chosen balance: at 4 M records it produces ~976 batches, each giving
-/// rayon workers ~1-4 ms of compute — well above scheduler granularity.
+/// A `RawRecord` holds the on-disk payload bytes (~350 bytes for 150 bp).
+/// 4096 records ≈ 1.4 MB per batch, fitting in L3. 4096 gives rayon workers
+/// ~1-4 ms of compute per batch — well above scheduler granularity while
+/// keeping the serial read/write phase short enough to maintain pipelining.
 const BATCH_SIZE: usize = 4096;
 
 /// htslib `seq_nt16_table` (htslib `hts.c`): ASCII base → 4-bit nucleotide code.
@@ -92,24 +101,6 @@ pub struct CalmdStats {
     pub missing_ref: u64,
     /// Records skipped because they carry no stored sequence (`l_qseq == 0`).
     pub no_sequence: u64,
-}
-
-impl CalmdStats {
-    fn merge(&mut self, other: &BatchStats) {
-        self.records += other.records;
-        self.computed += other.computed;
-        self.missing_ref += other.missing_ref;
-        self.no_sequence += other.no_sequence;
-    }
-}
-
-/// Per-batch statistics accumulated by rayon workers and merged into `CalmdStats`.
-#[derive(Debug, Default)]
-struct BatchStats {
-    records: u64,
-    computed: u64,
-    missing_ref: u64,
-    no_sequence: u64,
 }
 
 /// Port of the MD/NM walk in `bam_fillmd1_core` (samtools `bam_md.c`).
@@ -209,6 +200,132 @@ fn compute_md_nm(
     nm
 }
 
+/// BAM CIGAR op-code to `noodles::sam::alignment::record::cigar::op::Kind`.
+/// The op codes in the BAM 4-bit encoding are: 0=M 1=I 2=D 3=N 4=S 5=H 6=P 7== 8=X.
+fn bam_op_to_kind(op: u8) -> Kind {
+    match op {
+        0 => Kind::Match,
+        1 => Kind::Insertion,
+        2 => Kind::Deletion,
+        3 => Kind::Skip,
+        4 => Kind::SoftClip,
+        5 => Kind::HardClip,
+        6 => Kind::Pad,
+        7 => Kind::SequenceMatch,
+        8 => Kind::SequenceMismatch,
+        _ => Kind::Match,
+    }
+}
+
+/// Port of the MD/NM walk operating directly on packed BAM nibble SEQ.
+///
+/// The BAM packed SEQ format stores two bases per byte: high nibble = even
+/// index, low nibble = odd index. Nibble codes are the `seq_nt16` values
+/// directly (`=`→0, A→1, C→2, G→4, T→8, N→15), so no table lookup is needed
+/// for the read side — the nibble IS the `c1` value in `bam_fillmd1_core`.
+///
+/// `seq_bytes` is the packed SEQ field (mutated in place when `use_equal` sets
+/// matched bases to 0). `seq_len` is the number of query bases (not byte count).
+/// `cigar` is the raw BAM CIGAR op list as `(op_code, len)` pairs. `ref_seq`
+/// and `pos` are the reference contig and 0-based start. `md` is cleared and
+/// filled with the MD string bytes; the return value is the recomputed NM.
+fn compute_md_nm_raw(
+    seq_bytes: &mut [u8],
+    seq_len: usize,
+    cigar: &[(u8, u32)],
+    ref_seq: &[u8],
+    pos: usize,
+    use_equal: bool,
+    md: &mut Vec<u8>,
+) -> i32 {
+    let ref_len = ref_seq.len();
+    let mut nm: i32 = 0;
+    let mut matched: i64 = 0;
+    let mut qpos: usize = 0;
+    let mut rpos: usize = pos;
+
+    'outer: for &(op, oplen_u32) in cigar {
+        let oplen = oplen_u32 as usize;
+        let kind = bam_op_to_kind(op);
+        match kind {
+            Kind::Match | Kind::SequenceMatch | Kind::SequenceMismatch => {
+                let mut j = 0;
+                while j < oplen {
+                    let z = qpos + j;
+                    let rp = rpos + j;
+                    if rp >= ref_len || z >= seq_len || ref_seq[rp] == 0 {
+                        break;
+                    }
+                    // BAM nibble codes are already seq_nt16 values: no table lookup.
+                    let byte_idx = z / 2;
+                    let c1 = if z.is_multiple_of(2) {
+                        seq_bytes[byte_idx] >> 4
+                    } else {
+                        seq_bytes[byte_idx] & 0x0f
+                    };
+                    let c2 = SEQ_NT16_TABLE[ref_seq[rp] as usize];
+                    let is_match = (c1 == c2 && c1 != 15 && c2 != 15) || c1 == 0;
+                    if is_match {
+                        if use_equal {
+                            // Set nibble to 0 (the `=` code in seq_nt16).
+                            if z.is_multiple_of(2) {
+                                seq_bytes[byte_idx] &= 0x0f;
+                            } else {
+                                seq_bytes[byte_idx] &= 0xf0;
+                            }
+                        }
+                        matched += 1;
+                    } else {
+                        append_int(md, matched);
+                        md.push(ref_seq[rp].to_ascii_uppercase());
+                        matched = 0;
+                        nm += 1;
+                    }
+                    j += 1;
+                }
+                if j < oplen {
+                    break 'outer;
+                }
+                rpos += oplen;
+                qpos += oplen;
+            }
+            Kind::Deletion => {
+                append_int(md, matched);
+                md.push(b'^');
+                let mut j = 0;
+                while j < oplen {
+                    let rp = rpos + j;
+                    if rp >= ref_len || ref_seq[rp] == 0 {
+                        break;
+                    }
+                    md.push(ref_seq[rp].to_ascii_uppercase());
+                    j += 1;
+                }
+                matched = 0;
+                rpos += j;
+                nm += j as i32;
+                if j < oplen {
+                    break 'outer;
+                }
+            }
+            Kind::Insertion => {
+                qpos += oplen;
+                nm += oplen as i32;
+            }
+            Kind::SoftClip => {
+                qpos += oplen;
+            }
+            Kind::Skip => {
+                rpos += oplen;
+            }
+            Kind::HardClip | Kind::Pad => {}
+        }
+    }
+    append_int(md, matched);
+
+    nm
+}
+
 /// `kputw`: append a base-10 match-run length as ASCII to the MD buffer. The run
 /// length is a non-negative count, so this writes digits straight into the Vec
 /// (most significant first) with no temporary allocation or formatter overhead.
@@ -251,6 +368,51 @@ fn apply_tags(record: &mut RecordBuf, nm: i32, md: &[u8]) {
     });
     if !md_same {
         replace_or_append(data, TAG_MD, Value::String(md.into()));
+    }
+}
+
+/// Apply MD/NM tags directly to a `RawRecord`'s aux tail, bypassing full
+/// decode+re-encode. This is the hot path for the raw parallel pipeline.
+///
+/// NM is written as BAM type `i` (signed 32-bit). MD is written as BAM type
+/// `Z` (NUL-terminated string). `set_aux` removes the old field (if any) and
+/// appends the new value at the end, matching samtools' `bam_aux_del` +
+/// `bam_aux_append` behaviour.
+fn apply_tags_raw(record: &mut RawRecord, nm: i32, md: &[u8]) {
+    let nm_same = record
+        .aux_value(NM_TAG)
+        .and_then(|v| {
+            if v.len() == 4 {
+                Some(i32::from_le_bytes(v.try_into().unwrap()))
+            } else {
+                None
+            }
+        })
+        .is_some_and(|old| old == nm);
+
+    if !nm_same {
+        record.set_aux(NM_TAG, AUX_TYPE_I, &nm.to_le_bytes());
+    }
+
+    let md_same = record
+        .aux_value(MD_TAG)
+        .and_then(|v| {
+            // The stored Z value includes a NUL terminator; strip it for comparison.
+            let stored = v.strip_suffix(&[0]).unwrap_or(v);
+            if stored.eq_ignore_ascii_case(md) {
+                Some(())
+            } else {
+                None
+            }
+        })
+        .is_some();
+
+    if !md_same {
+        // Z values are NUL-terminated on disk.
+        let mut md_z = Vec::with_capacity(md.len() + 1);
+        md_z.extend_from_slice(md);
+        md_z.push(0);
+        record.set_aux(MD_TAG, AUX_TYPE_Z, &md_z);
     }
 }
 
@@ -351,20 +513,75 @@ pub fn calmd(
         Some(path) => {
             let mut writer = rsomics_bamio::create_with_workers(path, workers)?;
             if workers.get() == 1 {
-                run_serial(&mut reader, &mut writer, &header, &mut refs, opts)
+                run_serial_raw(reader.get_mut(), &mut writer, &header, &mut refs, opts)
             } else {
-                run_parallel(&mut reader, &mut writer, &header, &mut refs, opts, workers)
+                run_parallel_raw(
+                    reader.get_mut(),
+                    &mut writer,
+                    &header,
+                    &mut refs,
+                    opts,
+                    workers,
+                )
             }
         }
         None => {
             let mut writer = bam::io::Writer::new(std::io::stdout().lock());
-            // stdout output is always serial (no parallel writer available for stdout)
-            run_serial(&mut reader, &mut writer, &header, &mut refs, opts)
+            run_serial_fallback(&mut reader, &mut writer, &header, &mut refs, opts)
         }
     }
 }
 
-fn run_serial<R, W, F>(
+/// Serial raw path: read raw BAM records, compute MD/NM from nibble SEQ, write
+/// raw bytes with aux tags patched in-place. No noodles codec round-trip.
+fn run_serial_raw<R, W, F>(
+    inner: &mut R,
+    writer: &mut bam::io::Writer<W>,
+    header: &noodles::sam::Header,
+    refs: &mut RefCache<F>,
+    opts: &CalmdOpts,
+) -> Result<CalmdStats>
+where
+    R: std::io::BufRead,
+    W: std::io::Write,
+    F: std::io::BufRead + std::io::Seek,
+{
+    use rsomics_bamio::raw::write_record;
+
+    writer.write_header(header).map_err(RsomicsError::Io)?;
+    let writer_inner = writer.get_mut();
+
+    let mut stats = CalmdStats::default();
+    let mut record = RawRecord::default();
+    // Per-record scratch reused across the whole stream — no allocation in the
+    // hot loop once warmed up.
+    let mut cigar_buf: Vec<(u8, u32)> = Vec::new();
+    let mut md: Vec<u8> = Vec::new();
+
+    loop {
+        let n = raw::read_record(inner, &mut record)?;
+        if n == 0 {
+            break;
+        }
+        stats.records += 1;
+        process_record_raw(
+            &mut record,
+            header,
+            refs,
+            opts,
+            &mut stats,
+            &mut cigar_buf,
+            &mut md,
+        )?;
+        write_record(writer_inner, &record)?;
+    }
+
+    Ok(stats)
+}
+
+/// Fallback serial path for stdout output using noodles RecordBuf (stdout has no
+/// parallel BGZF writer, so we use the original decoded path for correctness).
+fn run_serial_fallback<R, W, F>(
     reader: &mut bam::io::Reader<R>,
     writer: &mut bam::io::Writer<W>,
     header: &noodles::sam::Header,
@@ -380,9 +597,6 @@ where
 
     let mut stats = CalmdStats::default();
     let mut record = RecordBuf::default();
-    // Per-record scratch reused across the whole stream — no allocation in the
-    // hot loop. `cigar` holds the decoded op list; `md` accumulates the MD
-    // string. Both are cleared, never reallocated, once warmed up.
     let mut cigar: Vec<(Kind, usize)> = Vec::new();
     let mut md: Vec<u8> = Vec::new();
     while reader
@@ -408,15 +622,17 @@ where
     Ok(stats)
 }
 
-/// Parallel pipeline: read `BATCH_SIZE` records serially, prefetch all needed
-/// contigs into a shared map, rayon-compute MD/NM in parallel, write in order.
+/// Parallel raw path: read `BATCH_SIZE` raw records serially, prefetch contigs,
+/// rayon-compute MD/NM on packed nibble SEQ in parallel, write raw bytes in order.
 ///
-/// The indexed FASTA reader is not `Send`, so contig fetching stays on the main
-/// thread. The `Arc<Vec<u8>>` per contig is `Send + Sync`, so rayon workers can
-/// borrow the slice safely without copying. Order is preserved: rayon returns
-/// results in the same index order as the input slice.
-fn run_parallel<R, W, F>(
-    reader: &mut bam::io::Reader<R>,
+/// The raw path avoids the noodles RecordBuf decode+re-encode round-trip that
+/// was the bottleneck at `-t4` and above (67% of wall time at t4 in the old
+/// path). Raw records hold on-disk payload bytes (~350 bytes for 150 bp);
+/// `par_iter_mut` modifies them in place with zero per-record allocation beyond
+/// the MD string (~20 bytes). The BGZF writer deflates blocks asynchronously in
+/// its worker pool while the main thread continues the next batch.
+fn run_parallel_raw<R, W, F>(
+    inner: &mut R,
     writer: &mut bam::io::Writer<W>,
     header: &noodles::sam::Header,
     refs: &mut RefCache<F>,
@@ -424,154 +640,272 @@ fn run_parallel<R, W, F>(
     workers: NonZero<usize>,
 ) -> Result<CalmdStats>
 where
-    R: std::io::Read,
+    R: std::io::BufRead,
     W: std::io::Write,
     F: std::io::BufRead + std::io::Seek,
 {
-    writer.write_header(header).map_err(RsomicsError::Io)?;
+    use rsomics_bamio::raw::write_record;
 
-    // Configure rayon to use exactly `workers` threads for MD/NM computation.
-    // The BGZF reader uses `workers` inflate threads and the BGZF writer uses
-    // a separate worker pool for deflate; rayon compute runs between batches
-    // so the three pools are not simultaneously active on the same data.
+    writer.write_header(header).map_err(RsomicsError::Io)?;
+    let writer_inner = writer.get_mut();
+
+    let timing = std::env::var("CALMD_PHASE_TIMING").is_ok();
+
+    // Rayon pool sized to `workers`. The BGZF reader uses `workers` inflate
+    // threads and the writer uses `workers` deflate threads in separate pools;
+    // at any point only one batch's worth of records is being computed, so the
+    // three pools are not simultaneously contending for the same data.
     let pool = rayon::ThreadPoolBuilder::new()
         .num_threads(workers.get())
         .build()
         .map_err(|e| RsomicsError::InvalidInput(format!("rayon pool: {e}")))?;
 
     let mut stats = CalmdStats::default();
-    let mut batch: Vec<RecordBuf> = Vec::with_capacity(BATCH_SIZE);
-    // Persistent contig cache keyed by TID. Never cleared — once a contig is
-    // loaded it stays for the whole run. For coordinate-sorted input this means
-    // each contig is fetched exactly once. For out-of-order input, the RefCache
-    // re-fetches from FASTA on the first batch that sees a contig and then never
-    // re-fetches it again. Memory cost: ~3 GB for a complete human reference, but
-    // calmd is always run against an indexed reference so the FASTA is already
-    // in OS page cache; the loaded Vec is the only resident copy.
+    let mut batch: Vec<RawRecord> = Vec::with_capacity(BATCH_SIZE);
+    // Persistent contig cache keyed by TID. Coordinate-sorted input fetches
+    // each contig exactly once.
     let mut contig_map: HashMap<usize, Arc<Vec<u8>>> = HashMap::new();
 
+    let mut t_read = std::time::Duration::ZERO;
+    let mut t_compute = std::time::Duration::ZERO;
+    let mut t_write = std::time::Duration::ZERO;
+
     loop {
-        // --- Phase 1: fill the batch (serial) ---
+        // --- Phase 1: fill batch (serial raw read) ---
+        let t0 = Instant::now();
         batch.clear();
         for _ in 0..BATCH_SIZE {
-            let mut record = RecordBuf::default();
-            let n = reader
-                .read_record_buf(header, &mut record)
-                .map_err(RsomicsError::Io)?;
+            let mut record = RawRecord::default();
+            let n = raw::read_record(inner, &mut record)?;
             if n == 0 {
                 break;
             }
             batch.push(record);
         }
+        if timing {
+            t_read += t0.elapsed();
+        }
         if batch.is_empty() {
             break;
         }
 
-        // --- Phase 2: populate contig cache for any TID not yet fetched ---
+        // --- Phase 2: populate contig cache for any TID not yet seen ---
         for record in &batch {
-            if record.flags().is_unmapped() {
+            let flags = record.flags();
+            if flags & 0x4 != 0 {
                 continue;
             }
-            let Some(tid) = record.reference_sequence_id() else {
-                continue;
-            };
-            if contig_map.contains_key(&tid) {
+            let tid = record.reference_sequence_id();
+            if tid < 0 {
                 continue;
             }
-            let Some((name, _)) = header.reference_sequences().get_index(tid) else {
+            let tid_usize = tid as usize;
+            if contig_map.contains_key(&tid_usize) {
+                continue;
+            }
+            let Some((name, _)) = header.reference_sequences().get_index(tid_usize) else {
                 continue;
             };
-            if let Some(seq) = refs.get_arc(tid, name.as_ref())? {
-                contig_map.insert(tid, seq);
+            if let Some(seq) = refs.get_arc(tid_usize, name.as_ref())? {
+                contig_map.insert(tid_usize, seq);
             }
         }
 
         // --- Phase 3: compute MD/NM in parallel (rayon, in-place) ---
-        // `par_iter_mut` modifies each record in place — no clone, no extra
-        // allocation per record beyond the MD tag string. The batch Vec preserves
-        // insertion order, so Phase 4 writes records in the original stream order.
+        let t1 = Instant::now();
         let contig_map_ref = &contig_map;
         let opts_ref = opts;
+        let header_ref = header;
 
-        let batch_stats: Vec<BatchStats> = pool.install(|| {
-            batch
-                .par_iter_mut()
-                .map(|record| {
-                    let mut bstats = BatchStats {
-                        records: 1,
-                        ..BatchStats::default()
-                    };
-                    process_record_parallel(record, header, contig_map_ref, opts_ref, &mut bstats);
-                    bstats
-                })
-                .collect()
+        let batch_computed = std::sync::atomic::AtomicU64::new(0);
+        let batch_missing = std::sync::atomic::AtomicU64::new(0);
+        let batch_noseq = std::sync::atomic::AtomicU64::new(0);
+
+        pool.install(|| {
+            batch.par_iter_mut().for_each(|record| {
+                process_record_raw_parallel(
+                    record,
+                    header_ref,
+                    contig_map_ref,
+                    opts_ref,
+                    &batch_computed,
+                    &batch_missing,
+                    &batch_noseq,
+                );
+            });
         });
-
-        // --- Phase 4: write in original order, merge stats (serial) ---
-        for (record, bstats) in batch.iter().zip(batch_stats.iter()) {
-            stats.merge(bstats);
-            writer
-                .write_alignment_record(header, record)
-                .map_err(RsomicsError::Io)?;
+        if timing {
+            t_compute += t1.elapsed();
         }
+
+        // --- Phase 4: write in original order (serial raw write) ---
+        let t2 = Instant::now();
+        stats.records += batch.len() as u64;
+        stats.computed += batch_computed.load(std::sync::atomic::Ordering::Relaxed);
+        stats.missing_ref += batch_missing.load(std::sync::atomic::Ordering::Relaxed);
+        stats.no_sequence += batch_noseq.load(std::sync::atomic::Ordering::Relaxed);
+        for record in &batch {
+            write_record(writer_inner, record)?;
+        }
+        if timing {
+            t_write += t2.elapsed();
+        }
+    }
+
+    if timing {
+        eprintln!(
+            "PHASE TIMING: read={:.3}s compute={:.3}s write={:.3}s total_phase={:.3}s",
+            t_read.as_secs_f64(),
+            t_compute.as_secs_f64(),
+            t_write.as_secs_f64(),
+            (t_read + t_compute + t_write).as_secs_f64()
+        );
     }
 
     Ok(stats)
 }
 
-/// The per-record body of the MD/NM pass for the parallel path. Contigs are
-/// looked up from the pre-built `contig_map` (no I/O, no locks).
-fn process_record_parallel(
-    record: &mut RecordBuf,
+/// Per-record raw MD/NM pass for the parallel path. Reads nibble SEQ and raw
+/// CIGAR from `RawRecord`, updates MD/NM aux in-place. No noodles decode.
+fn process_record_raw_parallel(
+    record: &mut RawRecord,
     header: &noodles::sam::Header,
     contig_map: &HashMap<usize, Arc<Vec<u8>>>,
     opts: &CalmdOpts,
-    stats: &mut BatchStats,
+    computed: &std::sync::atomic::AtomicU64,
+    missing_ref: &std::sync::atomic::AtomicU64,
+    no_sequence: &std::sync::atomic::AtomicU64,
 ) {
-    if record.flags().is_unmapped() {
+    use std::sync::atomic::Ordering::Relaxed;
+
+    let flags = record.flags();
+    if flags & 0x4 != 0 {
         return;
     }
-    let Some(tid) = record.reference_sequence_id() else {
+    let tid = record.reference_sequence_id();
+    if tid < 0 {
         return;
-    };
-    let Some(start) = record.alignment_start() else {
+    }
+    let tid_usize = tid as usize;
+    let pos_raw = record.alignment_start();
+    if pos_raw < 0 {
         return;
-    };
-    // Ref name is needed only to verify the header entry exists; the contig data
-    // comes from the pre-fetched map.
-    if header.reference_sequences().get_index(tid).is_none() {
-        return;
-    };
-
-    let Some(ref_seq) = contig_map.get(&tid) else {
-        stats.missing_ref += 1;
-        return;
-    };
-
-    if record.sequence().is_empty() {
-        stats.no_sequence += 1;
+    }
+    if header.reference_sequences().get_index(tid_usize).is_none() {
         return;
     }
 
-    let pos = start.get() - 1;
-    let cigar: Vec<(Kind, usize)> = record
-        .cigar()
-        .as_ref()
-        .iter()
-        .map(|op| (op.kind(), op.len()))
-        .collect();
+    let Some(ref_seq) = contig_map.get(&tid_usize) else {
+        missing_ref.fetch_add(1, Relaxed);
+        return;
+    };
+
+    let seq_len = record.sequence_len();
+    if seq_len == 0 {
+        no_sequence.fetch_add(1, Relaxed);
+        return;
+    }
+
+    let pos = pos_raw as usize;
+
+    // Collect CIGAR ops from the raw payload into a small inline buffer.
+    let mut cigar: Vec<(u8, u32)> = record.cigar_ops().collect();
+
     let mut md: Vec<u8> = Vec::new();
 
-    let seq = record.sequence_mut().as_mut();
-    let nm = compute_md_nm(seq, &cigar, ref_seq, pos, opts.use_equal, &mut md);
+    // Compute MD/NM directly on the raw nibble SEQ, mutating the record's
+    // packed SEQ bytes in place for `use_equal`. `seq_bytes_mut()` accesses
+    // the packed [(l_seq+1)/2] bytes starting after name+cigar in the payload.
+    let nm = {
+        let seq_bytes = record.seq_bytes_mut();
+        compute_md_nm_raw(
+            seq_bytes,
+            seq_len,
+            &cigar,
+            ref_seq,
+            pos,
+            opts.use_equal,
+            &mut md,
+        )
+    };
 
-    apply_tags(record, nm, &md);
+    // Patch the raw aux tail: set NM and MD without decoding the rest of the record.
+    apply_tags_raw(record, nm, &md);
+    computed.fetch_add(1, Relaxed);
+    cigar.clear();
+}
+
+/// Per-record raw MD/NM pass for the serial path (reuses scratch buffers).
+fn process_record_raw<F>(
+    record: &mut RawRecord,
+    header: &noodles::sam::Header,
+    refs: &mut RefCache<F>,
+    opts: &CalmdOpts,
+    stats: &mut CalmdStats,
+    cigar_buf: &mut Vec<(u8, u32)>,
+    md: &mut Vec<u8>,
+) -> Result<()>
+where
+    F: std::io::BufRead + std::io::Seek,
+{
+    let flags = record.flags();
+    if flags & 0x4 != 0 {
+        return Ok(());
+    }
+    let tid = record.reference_sequence_id();
+    if tid < 0 {
+        return Ok(());
+    }
+    let tid_usize = tid as usize;
+    let pos_raw = record.alignment_start();
+    if pos_raw < 0 {
+        return Ok(());
+    }
+    let Some((name, _)) = header.reference_sequences().get_index(tid_usize) else {
+        return Ok(());
+    };
+
+    let ref_seq = match refs.get(tid_usize, name.as_ref())? {
+        Some(seq) => seq,
+        None => {
+            stats.missing_ref += 1;
+            return Ok(());
+        }
+    };
+
+    let seq_len = record.sequence_len();
+    if seq_len == 0 {
+        stats.no_sequence += 1;
+        return Ok(());
+    }
+
+    let pos = pos_raw as usize;
+
+    cigar_buf.clear();
+    cigar_buf.extend(record.cigar_ops());
+    md.clear();
+
+    let nm = {
+        let seq_bytes = record.seq_bytes_mut();
+        compute_md_nm_raw(
+            seq_bytes,
+            seq_len,
+            cigar_buf,
+            ref_seq,
+            pos,
+            opts.use_equal,
+            md,
+        )
+    };
+
+    apply_tags_raw(record, nm, md);
     stats.computed += 1;
+    Ok(())
 }
 
 /// The per-record body of samtools' `bam_fillmd` loop: skip unmapped/refless
 /// records, fetch the contig (held by reference — never copied), run the MD/NM
-/// walk in place, and apply the tag updates.
+/// walk in place, and apply the tag updates. Used by the stdout fallback path.
 fn process_record<F>(
     record: &mut RecordBuf,
     header: &noodles::sam::Header,
