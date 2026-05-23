@@ -13,13 +13,21 @@
 //! does not apply here. Output goes through the bamio parallel BGZF writer.
 //!
 //! The reference is read from an indexed FASTA (`.fai`); each contig is fetched
-//! once on first use and held until the next contig appears. Coordinate-sorted
-//! input therefore touches each contig once and never re-reads it — the common
-//! calmd case. Out-of-order input re-fetches, which is correct but slower; that
-//! mirrors samtools' own behaviour before its tid-cache kicks in.
+//! once on first use and cached for the batch. Coordinate-sorted input therefore
+//! touches each contig once per batch and never re-reads it — the common calmd
+//! case. Out-of-order input re-fetches across batches, which is correct but
+//! slower; that mirrors samtools' own behaviour before its tid-cache kicks in.
+//!
+//! At `workers >= 2` the MD/NM computation is parallelised with rayon: records
+//! are collected into a batch, the needed contigs are fetched serially into a
+//! shared read-only map (`Arc<Vec<u8>>` per contig), then `par_iter_mut` runs
+//! `compute_md_nm` on every record simultaneously. Output is written in original
+//! batch order so the byte stream is identical to the serial path.
 
+use std::collections::HashMap;
 use std::num::NonZero;
 use std::path::Path;
+use std::sync::Arc;
 
 use noodles::bam;
 use noodles::fasta;
@@ -28,11 +36,22 @@ use noodles::sam::alignment::io::Write as AlignmentWrite;
 use noodles::sam::alignment::record::cigar::op::Kind;
 use noodles::sam::alignment::record::data::field::Tag;
 use noodles::sam::alignment::record_buf::data::field::Value;
+use rayon::prelude::*;
 use rsomics_common::{Result, RsomicsError};
 use serde::Serialize;
 
 const TAG_NM: Tag = Tag::EDIT_DISTANCE;
 const TAG_MD: Tag = Tag::MISMATCHED_POSITIONS;
+
+/// Number of decoded records processed per rayon batch.
+///
+/// At typical 150 bp reads a `RecordBuf` is ~350 bytes (sequence + qual +
+/// aux); 4096 records ≈ 1.4 MB per batch, fitting in L3. Larger batches
+/// amortise rayon's per-`install` dispatch overhead over more work units;
+/// smaller batches reduce tail-wait at stream end. 4096 is the empirically
+/// chosen balance: at 4 M records it produces ~976 batches, each giving
+/// rayon workers ~1-4 ms of compute — well above scheduler granularity.
+const BATCH_SIZE: usize = 4096;
 
 /// htslib `seq_nt16_table` (htslib `hts.c`): ASCII base → 4-bit nucleotide code.
 /// `=`→0, A→1 … N→15, with the IUPAC ambiguity codes and the digit aliases
@@ -73,6 +92,24 @@ pub struct CalmdStats {
     pub missing_ref: u64,
     /// Records skipped because they carry no stored sequence (`l_qseq == 0`).
     pub no_sequence: u64,
+}
+
+impl CalmdStats {
+    fn merge(&mut self, other: &BatchStats) {
+        self.records += other.records;
+        self.computed += other.computed;
+        self.missing_ref += other.missing_ref;
+        self.no_sequence += other.no_sequence;
+    }
+}
+
+/// Per-batch statistics accumulated by rayon workers and merged into `CalmdStats`.
+#[derive(Debug, Default)]
+struct BatchStats {
+    records: u64,
+    computed: u64,
+    missing_ref: u64,
+    no_sequence: u64,
 }
 
 /// Port of the MD/NM walk in `bam_fillmd1_core` (samtools `bam_md.c`).
@@ -239,9 +276,13 @@ fn replace_or_append(data: &mut noodles::sam::alignment::record_buf::Data, tag: 
 }
 
 /// A reference contig loaded once and reused across consecutive records on it.
+///
+/// The sequence is stored as `Arc<Vec<u8>>` so that cloning for the parallel
+/// batch path is an atomic refcount bump (O(1), no copy), not a full chromosome
+/// memcpy. The `None` sentinel means the contig was not found in the reference.
 struct RefCache<R> {
     reader: fasta::io::IndexedReader<R>,
-    current: Option<(usize, Vec<u8>)>,
+    current: Option<(usize, Arc<Vec<u8>>)>,
 }
 
 impl<R> RefCache<R>
@@ -256,7 +297,7 @@ where
             let region = noodles::core::Region::new(name.to_vec(), ..);
             match self.reader.query(&region) {
                 Ok(record) => {
-                    self.current = Some((tid, record.sequence().as_ref().to_vec()));
+                    self.current = Some((tid, Arc::new(record.sequence().as_ref().to_vec())));
                 }
                 Err(_) => {
                     self.current = None;
@@ -265,6 +306,24 @@ where
             }
         }
         Ok(self.current.as_ref().map(|(_, seq)| seq.as_slice()))
+    }
+
+    /// Return an `Arc` handle to the contig for `tid`. On a cache hit this is
+    /// a single atomic refcount bump — no chromosome copy.
+    fn get_arc(&mut self, tid: usize, name: &[u8]) -> Result<Option<Arc<Vec<u8>>>> {
+        if self.current.as_ref().is_none_or(|(t, _)| *t != tid) {
+            let region = noodles::core::Region::new(name.to_vec(), ..);
+            match self.reader.query(&region) {
+                Ok(record) => {
+                    self.current = Some((tid, Arc::new(record.sequence().as_ref().to_vec())));
+                }
+                Err(_) => {
+                    self.current = None;
+                    return Ok(None);
+                }
+            }
+        }
+        Ok(self.current.as_ref().map(|(_, arc)| Arc::clone(arc)))
     }
 }
 
@@ -291,16 +350,21 @@ pub fn calmd(
     match output_path {
         Some(path) => {
             let mut writer = rsomics_bamio::create_with_workers(path, workers)?;
-            run(&mut reader, &mut writer, &header, &mut refs, opts)
+            if workers.get() == 1 {
+                run_serial(&mut reader, &mut writer, &header, &mut refs, opts)
+            } else {
+                run_parallel(&mut reader, &mut writer, &header, &mut refs, opts, workers)
+            }
         }
         None => {
             let mut writer = bam::io::Writer::new(std::io::stdout().lock());
-            run(&mut reader, &mut writer, &header, &mut refs, opts)
+            // stdout output is always serial (no parallel writer available for stdout)
+            run_serial(&mut reader, &mut writer, &header, &mut refs, opts)
         }
     }
 }
 
-fn run<R, W, F>(
+fn run_serial<R, W, F>(
     reader: &mut bam::io::Reader<R>,
     writer: &mut bam::io::Writer<W>,
     header: &noodles::sam::Header,
@@ -342,6 +406,167 @@ where
     }
 
     Ok(stats)
+}
+
+/// Parallel pipeline: read `BATCH_SIZE` records serially, prefetch all needed
+/// contigs into a shared map, rayon-compute MD/NM in parallel, write in order.
+///
+/// The indexed FASTA reader is not `Send`, so contig fetching stays on the main
+/// thread. The `Arc<Vec<u8>>` per contig is `Send + Sync`, so rayon workers can
+/// borrow the slice safely without copying. Order is preserved: rayon returns
+/// results in the same index order as the input slice.
+fn run_parallel<R, W, F>(
+    reader: &mut bam::io::Reader<R>,
+    writer: &mut bam::io::Writer<W>,
+    header: &noodles::sam::Header,
+    refs: &mut RefCache<F>,
+    opts: &CalmdOpts,
+    workers: NonZero<usize>,
+) -> Result<CalmdStats>
+where
+    R: std::io::Read,
+    W: std::io::Write,
+    F: std::io::BufRead + std::io::Seek,
+{
+    writer.write_header(header).map_err(RsomicsError::Io)?;
+
+    // Configure rayon to use exactly `workers` threads for MD/NM computation.
+    // The BGZF reader uses `workers` inflate threads and the BGZF writer uses
+    // a separate worker pool for deflate; rayon compute runs between batches
+    // so the three pools are not simultaneously active on the same data.
+    let pool = rayon::ThreadPoolBuilder::new()
+        .num_threads(workers.get())
+        .build()
+        .map_err(|e| RsomicsError::InvalidInput(format!("rayon pool: {e}")))?;
+
+    let mut stats = CalmdStats::default();
+    let mut batch: Vec<RecordBuf> = Vec::with_capacity(BATCH_SIZE);
+    // Persistent contig cache keyed by TID. Never cleared — once a contig is
+    // loaded it stays for the whole run. For coordinate-sorted input this means
+    // each contig is fetched exactly once. For out-of-order input, the RefCache
+    // re-fetches from FASTA on the first batch that sees a contig and then never
+    // re-fetches it again. Memory cost: ~3 GB for a complete human reference, but
+    // calmd is always run against an indexed reference so the FASTA is already
+    // in OS page cache; the loaded Vec is the only resident copy.
+    let mut contig_map: HashMap<usize, Arc<Vec<u8>>> = HashMap::new();
+
+    loop {
+        // --- Phase 1: fill the batch (serial) ---
+        batch.clear();
+        for _ in 0..BATCH_SIZE {
+            let mut record = RecordBuf::default();
+            let n = reader
+                .read_record_buf(header, &mut record)
+                .map_err(RsomicsError::Io)?;
+            if n == 0 {
+                break;
+            }
+            batch.push(record);
+        }
+        if batch.is_empty() {
+            break;
+        }
+
+        // --- Phase 2: populate contig cache for any TID not yet fetched ---
+        for record in &batch {
+            if record.flags().is_unmapped() {
+                continue;
+            }
+            let Some(tid) = record.reference_sequence_id() else {
+                continue;
+            };
+            if contig_map.contains_key(&tid) {
+                continue;
+            }
+            let Some((name, _)) = header.reference_sequences().get_index(tid) else {
+                continue;
+            };
+            if let Some(seq) = refs.get_arc(tid, name.as_ref())? {
+                contig_map.insert(tid, seq);
+            }
+        }
+
+        // --- Phase 3: compute MD/NM in parallel (rayon, in-place) ---
+        // `par_iter_mut` modifies each record in place — no clone, no extra
+        // allocation per record beyond the MD tag string. The batch Vec preserves
+        // insertion order, so Phase 4 writes records in the original stream order.
+        let contig_map_ref = &contig_map;
+        let opts_ref = opts;
+
+        let batch_stats: Vec<BatchStats> = pool.install(|| {
+            batch
+                .par_iter_mut()
+                .map(|record| {
+                    let mut bstats = BatchStats {
+                        records: 1,
+                        ..BatchStats::default()
+                    };
+                    process_record_parallel(record, header, contig_map_ref, opts_ref, &mut bstats);
+                    bstats
+                })
+                .collect()
+        });
+
+        // --- Phase 4: write in original order, merge stats (serial) ---
+        for (record, bstats) in batch.iter().zip(batch_stats.iter()) {
+            stats.merge(bstats);
+            writer
+                .write_alignment_record(header, record)
+                .map_err(RsomicsError::Io)?;
+        }
+    }
+
+    Ok(stats)
+}
+
+/// The per-record body of the MD/NM pass for the parallel path. Contigs are
+/// looked up from the pre-built `contig_map` (no I/O, no locks).
+fn process_record_parallel(
+    record: &mut RecordBuf,
+    header: &noodles::sam::Header,
+    contig_map: &HashMap<usize, Arc<Vec<u8>>>,
+    opts: &CalmdOpts,
+    stats: &mut BatchStats,
+) {
+    if record.flags().is_unmapped() {
+        return;
+    }
+    let Some(tid) = record.reference_sequence_id() else {
+        return;
+    };
+    let Some(start) = record.alignment_start() else {
+        return;
+    };
+    // Ref name is needed only to verify the header entry exists; the contig data
+    // comes from the pre-fetched map.
+    if header.reference_sequences().get_index(tid).is_none() {
+        return;
+    };
+
+    let Some(ref_seq) = contig_map.get(&tid) else {
+        stats.missing_ref += 1;
+        return;
+    };
+
+    if record.sequence().is_empty() {
+        stats.no_sequence += 1;
+        return;
+    }
+
+    let pos = start.get() - 1;
+    let cigar: Vec<(Kind, usize)> = record
+        .cigar()
+        .as_ref()
+        .iter()
+        .map(|op| (op.kind(), op.len()))
+        .collect();
+    let mut md: Vec<u8> = Vec::new();
+
+    let seq = record.sequence_mut().as_mut();
+    let nm = compute_md_nm(seq, &cigar, ref_seq, pos, opts.use_equal, &mut md);
+
+    apply_tags(record, nm, &md);
+    stats.computed += 1;
 }
 
 /// The per-record body of samtools' `bam_fillmd` loop: skip unmapped/refless
