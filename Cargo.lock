@@ -1450,6 +1450,7 @@ version = "0.1.0"
 dependencies = [
  "clap",
  "noodles",
+ "rayon",
  "rsomics-bamio",
  "rsomics-common",
  "rsomics-help",
@@ -1470,6 +1471,18 @@ dependencies = [
  "rsomics-help",
  "serde",
  "serde_json",
+ "tempfile",
+]
+
+[[package]]
+name = "rsomics-bam-checksum"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "crc32fast",
+ "rsomics-bamio",
+ "rsomics-common",
+ "rsomics-help",
  "tempfile",
 ]
 
@@ -1580,6 +1593,22 @@ dependencies = [
  "noodles",
  "rsomics-common",
  "rsomics-help",
+ "serde",
+ "serde_json",
+ "tempfile",
+]
+
+[[package]]
+name = "rsomics-bam-import"
+version = "0.1.0"
+dependencies = [
+ "bstr",
+ "clap",
+ "noodles",
+ "rsomics-bamio",
+ "rsomics-common",
+ "rsomics-help",
+ "rsomics-seqio",
  "serde",
  "serde_json",
  "tempfile",
@@ -2655,7 +2684,7 @@ dependencies = [
 
 [[package]]
 name = "rsomics-stats"
-version = "0.2.0"
+version = "0.2.1"
 dependencies = [
  "rsomics-common",
  "statrs",
@@ -2751,6 +2780,21 @@ dependencies = [
  "flate2",
  "rsomics-common",
  "rsomics-help",
+ "serde",
+ "serde_json",
+ "tempfile",
+]
+
+[[package]]
+name = "rsomics-vcf-fill-tags"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "flate2",
+ "rayon",
+ "rsomics-common",
+ "rsomics-help",
+ "rsomics-stats",
  "serde",
  "serde_json",
  "tempfile",
