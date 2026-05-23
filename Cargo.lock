@@ -1428,6 +1428,20 @@ dependencies = [
 ]
 
 [[package]]
+name = "rsomics-bam-collate"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "noodles",
+ "rsomics-bamio",
+ "rsomics-common",
+ "rsomics-help",
+ "serde",
+ "serde_json",
+ "tempfile",
+]
+
+[[package]]
 name = "rsomics-bam-coverage"
 version = "0.1.0"
 dependencies = [
