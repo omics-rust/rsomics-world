@@ -1,356 +1,356 @@
 [submodule "crates/foundation/rsomics-common"]
 	path = crates/foundation/rsomics-common
-	url = https://github.com/omics-rust/rsomics-common.git
+	url = git@github.com:omics-rust/rsomics-common.git
 [submodule "crates/foundation/rsomics-align-core"]
 	path = crates/foundation/rsomics-align-core
-	url = https://github.com/omics-rust/rsomics-align-core.git
+	url = git@github.com:omics-rust/rsomics-align-core.git
 [submodule "crates/foundation/rsomics-debruijn"]
 	path = crates/foundation/rsomics-debruijn
-	url = https://github.com/omics-rust/rsomics-debruijn.git
+	url = git@github.com:omics-rust/rsomics-debruijn.git
 [submodule "crates/foundation/rsomics-fm-index"]
 	path = crates/foundation/rsomics-fm-index
-	url = https://github.com/omics-rust/rsomics-fm-index.git
+	url = git@github.com:omics-rust/rsomics-fm-index.git
 [submodule "crates/foundation/rsomics-fqgz"]
 	path = crates/foundation/rsomics-fqgz
-	url = https://github.com/omics-rust/rsomics-fqgz.git
+	url = git@github.com:omics-rust/rsomics-fqgz.git
 [submodule "crates/foundation/rsomics-help"]
 	path = crates/foundation/rsomics-help
-	url = https://github.com/omics-rust/rsomics-help.git
+	url = git@github.com:omics-rust/rsomics-help.git
 [submodule "crates/foundation/rsomics-hmm"]
 	path = crates/foundation/rsomics-hmm
-	url = https://github.com/omics-rust/rsomics-hmm.git
+	url = git@github.com:omics-rust/rsomics-hmm.git
 [submodule "crates/foundation/rsomics-igzip"]
 	path = crates/foundation/rsomics-igzip
-	url = https://github.com/omics-rust/rsomics-igzip.git
+	url = git@github.com:omics-rust/rsomics-igzip.git
 [submodule "crates/foundation/rsomics-intervals"]
 	path = crates/foundation/rsomics-intervals
-	url = https://github.com/omics-rust/rsomics-intervals.git
+	url = git@github.com:omics-rust/rsomics-intervals.git
 [submodule "crates/foundation/rsomics-kmer"]
 	path = crates/foundation/rsomics-kmer
-	url = https://github.com/omics-rust/rsomics-kmer.git
+	url = git@github.com:omics-rust/rsomics-kmer.git
 [submodule "crates/foundation/rsomics-models"]
 	path = crates/foundation/rsomics-models
-	url = https://github.com/omics-rust/rsomics-models.git
+	url = git@github.com:omics-rust/rsomics-models.git
 [submodule "crates/foundation/rsomics-pgen"]
 	path = crates/foundation/rsomics-pgen
-	url = https://github.com/omics-rust/rsomics-pgen.git
+	url = git@github.com:omics-rust/rsomics-pgen.git
 [submodule "crates/foundation/rsomics-phylo-tree"]
 	path = crates/foundation/rsomics-phylo-tree
-	url = https://github.com/omics-rust/rsomics-phylo-tree.git
+	url = git@github.com:omics-rust/rsomics-phylo-tree.git
 [submodule "crates/foundation/rsomics-popgen-core"]
 	path = crates/foundation/rsomics-popgen-core
-	url = https://github.com/omics-rust/rsomics-popgen-core.git
+	url = git@github.com:omics-rust/rsomics-popgen-core.git
 [submodule "crates/foundation/rsomics-seqio"]
 	path = crates/foundation/rsomics-seqio
-	url = https://github.com/omics-rust/rsomics-seqio.git
+	url = git@github.com:omics-rust/rsomics-seqio.git
 [submodule "crates/foundation/rsomics-seqstats"]
 	path = crates/foundation/rsomics-seqstats
-	url = https://github.com/omics-rust/rsomics-seqstats.git
+	url = git@github.com:omics-rust/rsomics-seqstats.git
 [submodule "crates/foundation/rsomics-stats"]
 	path = crates/foundation/rsomics-stats
-	url = https://github.com/omics-rust/rsomics-stats.git
+	url = git@github.com:omics-rust/rsomics-stats.git
 [submodule "crates/foundation/rsomics-taxonomy"]
 	path = crates/foundation/rsomics-taxonomy
-	url = https://github.com/omics-rust/rsomics-taxonomy.git
+	url = git@github.com:omics-rust/rsomics-taxonomy.git
 [submodule "crates/tools/epigenomics/rsomics-motif-scan"]
 	path = crates/tools/epigenomics/rsomics-motif-scan
-	url = https://github.com/omics-rust/rsomics-motif-scan.git
+	url = git@github.com:omics-rust/rsomics-motif-scan.git
 [submodule "crates/tools/epigenomics/rsomics-peak-count"]
 	path = crates/tools/epigenomics/rsomics-peak-count
-	url = https://github.com/omics-rust/rsomics-peak-count.git
+	url = git@github.com:omics-rust/rsomics-peak-count.git
 [submodule "crates/tools/epigenomics/rsomics-wig-to-bed"]
 	path = crates/tools/epigenomics/rsomics-wig-to-bed
-	url = https://github.com/omics-rust/rsomics-wig-to-bed.git
+	url = git@github.com:omics-rust/rsomics-wig-to-bed.git
 [submodule "crates/tools/formats/rsomics-bam-coverage"]
 	path = crates/tools/formats/rsomics-bam-coverage
-	url = https://github.com/omics-rust/rsomics-bam-coverage.git
+	url = git@github.com:omics-rust/rsomics-bam-coverage.git
 [submodule "crates/tools/formats/rsomics-bam-depth"]
 	path = crates/tools/formats/rsomics-bam-depth
-	url = https://github.com/omics-rust/rsomics-bam-depth.git
+	url = git@github.com:omics-rust/rsomics-bam-depth.git
 [submodule "crates/tools/formats/rsomics-bam-flagstat"]
 	path = crates/tools/formats/rsomics-bam-flagstat
-	url = https://github.com/omics-rust/rsomics-bam-flagstat.git
+	url = git@github.com:omics-rust/rsomics-bam-flagstat.git
 [submodule "crates/tools/formats/rsomics-bam-idxstats"]
 	path = crates/tools/formats/rsomics-bam-idxstats
-	url = https://github.com/omics-rust/rsomics-bam-idxstats.git
+	url = git@github.com:omics-rust/rsomics-bam-idxstats.git
 [submodule "crates/tools/formats/rsomics-bam-markdup"]
 	path = crates/tools/formats/rsomics-bam-markdup
-	url = https://github.com/omics-rust/rsomics-bam-markdup.git
+	url = git@github.com:omics-rust/rsomics-bam-markdup.git
 [submodule "crates/tools/formats/rsomics-bam-merge"]
 	path = crates/tools/formats/rsomics-bam-merge
-	url = https://github.com/omics-rust/rsomics-bam-merge.git
+	url = git@github.com:omics-rust/rsomics-bam-merge.git
 [submodule "crates/tools/formats/rsomics-bam-sort"]
 	path = crates/tools/formats/rsomics-bam-sort
-	url = https://github.com/omics-rust/rsomics-bam-sort.git
+	url = git@github.com:omics-rust/rsomics-bam-sort.git
 [submodule "crates/tools/formats/rsomics-bam-split"]
 	path = crates/tools/formats/rsomics-bam-split
-	url = https://github.com/omics-rust/rsomics-bam-split.git
+	url = git@github.com:omics-rust/rsomics-bam-split.git
 [submodule "crates/tools/formats/rsomics-bam-stats"]
 	path = crates/tools/formats/rsomics-bam-stats
-	url = https://github.com/omics-rust/rsomics-bam-stats.git
+	url = git@github.com:omics-rust/rsomics-bam-stats.git
 [submodule "crates/tools/formats/rsomics-bam-to-fastq"]
 	path = crates/tools/formats/rsomics-bam-to-fastq
-	url = https://github.com/omics-rust/rsomics-bam-to-fastq.git
+	url = git@github.com:omics-rust/rsomics-bam-to-fastq.git
 [submodule "crates/tools/formats/rsomics-bam-view"]
 	path = crates/tools/formats/rsomics-bam-view
-	url = https://github.com/omics-rust/rsomics-bam-view.git
+	url = git@github.com:omics-rust/rsomics-bam-view.git
 [submodule "crates/tools/formats/rsomics-bed-utils"]
 	path = crates/tools/formats/rsomics-bed-utils
-	url = https://github.com/omics-rust/rsomics-bed-utils.git
+	url = git@github.com:omics-rust/rsomics-bed-utils.git
 [submodule "crates/tools/formats/rsomics-fasta-index"]
 	path = crates/tools/formats/rsomics-fasta-index
-	url = https://github.com/omics-rust/rsomics-fasta-index.git
+	url = git@github.com:omics-rust/rsomics-fasta-index.git
 [submodule "crates/tools/formats/rsomics-fasta-n50"]
 	path = crates/tools/formats/rsomics-fasta-n50
-	url = https://github.com/omics-rust/rsomics-fasta-n50.git
+	url = git@github.com:omics-rust/rsomics-fasta-n50.git
 [submodule "crates/tools/formats/rsomics-fasta-stats"]
 	path = crates/tools/formats/rsomics-fasta-stats
-	url = https://github.com/omics-rust/rsomics-fasta-stats.git
+	url = git@github.com:omics-rust/rsomics-fasta-stats.git
 [submodule "crates/tools/formats/rsomics-fasta-translate"]
 	path = crates/tools/formats/rsomics-fasta-translate
-	url = https://github.com/omics-rust/rsomics-fasta-translate.git
+	url = git@github.com:omics-rust/rsomics-fasta-translate.git
 [submodule "crates/tools/formats/rsomics-fasta-utils"]
 	path = crates/tools/formats/rsomics-fasta-utils
-	url = https://github.com/omics-rust/rsomics-fasta-utils.git
+	url = git@github.com:omics-rust/rsomics-fasta-utils.git
 [submodule "crates/tools/formats/rsomics-fasta-validate"]
 	path = crates/tools/formats/rsomics-fasta-validate
-	url = https://github.com/omics-rust/rsomics-fasta-validate.git
+	url = git@github.com:omics-rust/rsomics-fasta-validate.git
 [submodule "crates/tools/formats/rsomics-fastq-correct"]
 	path = crates/tools/formats/rsomics-fastq-correct
-	url = https://github.com/omics-rust/rsomics-fastq-correct.git
+	url = git@github.com:omics-rust/rsomics-fastq-correct.git
 [submodule "crates/tools/formats/rsomics-fastq-dedup"]
 	path = crates/tools/formats/rsomics-fastq-dedup
-	url = https://github.com/omics-rust/rsomics-fastq-dedup.git
+	url = git@github.com:omics-rust/rsomics-fastq-dedup.git
 [submodule "crates/tools/formats/rsomics-fastq-filter"]
 	path = crates/tools/formats/rsomics-fastq-filter
-	url = https://github.com/omics-rust/rsomics-fastq-filter.git
+	url = git@github.com:omics-rust/rsomics-fastq-filter.git
 [submodule "crates/tools/formats/rsomics-fastq-merge"]
 	path = crates/tools/formats/rsomics-fastq-merge
-	url = https://github.com/omics-rust/rsomics-fastq-merge.git
+	url = git@github.com:omics-rust/rsomics-fastq-merge.git
 [submodule "crates/tools/formats/rsomics-fastq-pair"]
 	path = crates/tools/formats/rsomics-fastq-pair
-	url = https://github.com/omics-rust/rsomics-fastq-pair.git
+	url = git@github.com:omics-rust/rsomics-fastq-pair.git
 [submodule "crates/tools/formats/rsomics-fastq-split"]
 	path = crates/tools/formats/rsomics-fastq-split
-	url = https://github.com/omics-rust/rsomics-fastq-split.git
+	url = git@github.com:omics-rust/rsomics-fastq-split.git
 [submodule "crates/tools/formats/rsomics-fastq-stats"]
 	path = crates/tools/formats/rsomics-fastq-stats
-	url = https://github.com/omics-rust/rsomics-fastq-stats.git
+	url = git@github.com:omics-rust/rsomics-fastq-stats.git
 [submodule "crates/tools/formats/rsomics-fastq-trim"]
 	path = crates/tools/formats/rsomics-fastq-trim
-	url = https://github.com/omics-rust/rsomics-fastq-trim.git
+	url = git@github.com:omics-rust/rsomics-fastq-trim.git
 [submodule "crates/tools/formats/rsomics-fastq-umi"]
 	path = crates/tools/formats/rsomics-fastq-umi
-	url = https://github.com/omics-rust/rsomics-fastq-umi.git
+	url = git@github.com:omics-rust/rsomics-fastq-umi.git
 [submodule "crates/tools/formats/rsomics-fastq-utils"]
 	path = crates/tools/formats/rsomics-fastq-utils
-	url = https://github.com/omics-rust/rsomics-fastq-utils.git
+	url = git@github.com:omics-rust/rsomics-fastq-utils.git
 [submodule "crates/tools/formats/rsomics-fastq-validate"]
 	path = crates/tools/formats/rsomics-fastq-validate
-	url = https://github.com/omics-rust/rsomics-fastq-validate.git
+	url = git@github.com:omics-rust/rsomics-fastq-validate.git
 [submodule "crates/tools/formats/rsomics-fastqc"]
 	path = crates/tools/formats/rsomics-fastqc
-	url = https://github.com/omics-rust/rsomics-fastqc.git
+	url = git@github.com:omics-rust/rsomics-fastqc.git
 [submodule "crates/tools/formats/rsomics-gff-utils"]
 	path = crates/tools/formats/rsomics-gff-utils
-	url = https://github.com/omics-rust/rsomics-gff-utils.git
+	url = git@github.com:omics-rust/rsomics-gff-utils.git
 [submodule "crates/tools/formats/rsomics-sam-to-bam"]
 	path = crates/tools/formats/rsomics-sam-to-bam
-	url = https://github.com/omics-rust/rsomics-sam-to-bam.git
+	url = git@github.com:omics-rust/rsomics-sam-to-bam.git
 [submodule "crates/tools/formats/rsomics-vcf-annotate"]
 	path = crates/tools/formats/rsomics-vcf-annotate
-	url = https://github.com/omics-rust/rsomics-vcf-annotate.git
+	url = git@github.com:omics-rust/rsomics-vcf-annotate.git
 [submodule "crates/tools/formats/rsomics-vcf-filter"]
 	path = crates/tools/formats/rsomics-vcf-filter
-	url = https://github.com/omics-rust/rsomics-vcf-filter.git
+	url = git@github.com:omics-rust/rsomics-vcf-filter.git
 [submodule "crates/tools/formats/rsomics-vcf-isec"]
 	path = crates/tools/formats/rsomics-vcf-isec
-	url = https://github.com/omics-rust/rsomics-vcf-isec.git
+	url = git@github.com:omics-rust/rsomics-vcf-isec.git
 [submodule "crates/tools/formats/rsomics-vcf-merge"]
 	path = crates/tools/formats/rsomics-vcf-merge
-	url = https://github.com/omics-rust/rsomics-vcf-merge.git
+	url = git@github.com:omics-rust/rsomics-vcf-merge.git
 [submodule "crates/tools/formats/rsomics-vcf-norm"]
 	path = crates/tools/formats/rsomics-vcf-norm
-	url = https://github.com/omics-rust/rsomics-vcf-norm.git
+	url = git@github.com:omics-rust/rsomics-vcf-norm.git
 [submodule "crates/tools/formats/rsomics-vcf-query"]
 	path = crates/tools/formats/rsomics-vcf-query
-	url = https://github.com/omics-rust/rsomics-vcf-query.git
+	url = git@github.com:omics-rust/rsomics-vcf-query.git
 [submodule "crates/tools/formats/rsomics-vcf-split"]
 	path = crates/tools/formats/rsomics-vcf-split
-	url = https://github.com/omics-rust/rsomics-vcf-split.git
+	url = git@github.com:omics-rust/rsomics-vcf-split.git
 [submodule "crates/tools/formats/rsomics-vcf-stats"]
 	path = crates/tools/formats/rsomics-vcf-stats
-	url = https://github.com/omics-rust/rsomics-vcf-stats.git
+	url = git@github.com:omics-rust/rsomics-vcf-stats.git
 [submodule "crates/tools/formats/rsomics-vcf-utils"]
 	path = crates/tools/formats/rsomics-vcf-utils
-	url = https://github.com/omics-rust/rsomics-vcf-utils.git
+	url = git@github.com:omics-rust/rsomics-vcf-utils.git
 [submodule "crates/tools/formats/rsomics-vcf-validate"]
 	path = crates/tools/formats/rsomics-vcf-validate
-	url = https://github.com/omics-rust/rsomics-vcf-validate.git
+	url = git@github.com:omics-rust/rsomics-vcf-validate.git
 [submodule "crates/tools/genomics/rsomics-bam-region"]
 	path = crates/tools/genomics/rsomics-bam-region
-	url = https://github.com/omics-rust/rsomics-bam-region.git
+	url = git@github.com:omics-rust/rsomics-bam-region.git
 [submodule "crates/tools/genomics/rsomics-bam-subsample"]
 	path = crates/tools/genomics/rsomics-bam-subsample
-	url = https://github.com/omics-rust/rsomics-bam-subsample.git
+	url = git@github.com:omics-rust/rsomics-bam-subsample.git
 [submodule "crates/tools/genomics/rsomics-fasta-mask"]
 	path = crates/tools/genomics/rsomics-fasta-mask
-	url = https://github.com/omics-rust/rsomics-fasta-mask.git
+	url = git@github.com:omics-rust/rsomics-fasta-mask.git
 [submodule "crates/tools/genomics/rsomics-gc-windows"]
 	path = crates/tools/genomics/rsomics-gc-windows
-	url = https://github.com/omics-rust/rsomics-gc-windows.git
+	url = git@github.com:omics-rust/rsomics-gc-windows.git
 [submodule "crates/tools/genomics/rsomics-hmm-decode"]
 	path = crates/tools/genomics/rsomics-hmm-decode
-	url = https://github.com/omics-rust/rsomics-hmm-decode.git
+	url = git@github.com:omics-rust/rsomics-hmm-decode.git
 [submodule "crates/tools/genomics/rsomics-ld-matrix"]
 	path = crates/tools/genomics/rsomics-ld-matrix
-	url = https://github.com/omics-rust/rsomics-ld-matrix.git
+	url = git@github.com:omics-rust/rsomics-ld-matrix.git
 [submodule "crates/tools/genomics/rsomics-tajima-d"]
 	path = crates/tools/genomics/rsomics-tajima-d
-	url = https://github.com/omics-rust/rsomics-tajima-d.git
+	url = git@github.com:omics-rust/rsomics-tajima-d.git
 [submodule "crates/tools/genomics/rsomics-vcf-to-bed"]
 	path = crates/tools/genomics/rsomics-vcf-to-bed
-	url = https://github.com/omics-rust/rsomics-vcf-to-bed.git
+	url = git@github.com:omics-rust/rsomics-vcf-to-bed.git
 [submodule "crates/tools/metagenomics/rsomics-kmer-dist"]
 	path = crates/tools/metagenomics/rsomics-kmer-dist
-	url = https://github.com/omics-rust/rsomics-kmer-dist.git
+	url = git@github.com:omics-rust/rsomics-kmer-dist.git
 [submodule "crates/tools/metagenomics/rsomics-kraken-report"]
 	path = crates/tools/metagenomics/rsomics-kraken-report
-	url = https://github.com/omics-rust/rsomics-kraken-report.git
+	url = git@github.com:omics-rust/rsomics-kraken-report.git
 [submodule "crates/tools/metagenomics/rsomics-tax-assign"]
 	path = crates/tools/metagenomics/rsomics-tax-assign
-	url = https://github.com/omics-rust/rsomics-tax-assign.git
+	url = git@github.com:omics-rust/rsomics-tax-assign.git
 [submodule "crates/tools/phylogenetics/rsomics-consensus"]
 	path = crates/tools/phylogenetics/rsomics-consensus
-	url = https://github.com/omics-rust/rsomics-consensus.git
+	url = git@github.com:omics-rust/rsomics-consensus.git
 [submodule "crates/tools/phylogenetics/rsomics-msa-trim"]
 	path = crates/tools/phylogenetics/rsomics-msa-trim
-	url = https://github.com/omics-rust/rsomics-msa-trim.git
+	url = git@github.com:omics-rust/rsomics-msa-trim.git
 [submodule "crates/tools/phylogenetics/rsomics-nj-tree"]
 	path = crates/tools/phylogenetics/rsomics-nj-tree
-	url = https://github.com/omics-rust/rsomics-nj-tree.git
+	url = git@github.com:omics-rust/rsomics-nj-tree.git
 [submodule "crates/tools/preprocessing/rsomics-bbduk"]
 	path = crates/tools/preprocessing/rsomics-bbduk
-	url = https://github.com/omics-rust/rsomics-bbduk.git
+	url = git@github.com:omics-rust/rsomics-bbduk.git
 [submodule "crates/tools/preprocessing/rsomics-fastq-downsample"]
 	path = crates/tools/preprocessing/rsomics-fastq-downsample
-	url = https://github.com/omics-rust/rsomics-fastq-downsample.git
+	url = git@github.com:omics-rust/rsomics-fastq-downsample.git
 [submodule "crates/tools/preprocessing/rsomics-seq-stats"]
 	path = crates/tools/preprocessing/rsomics-seq-stats
-	url = https://github.com/omics-rust/rsomics-seq-stats.git
+	url = git@github.com:omics-rust/rsomics-seq-stats.git
 [submodule "crates/tools/proteomics/rsomics-fasta-digest"]
 	path = crates/tools/proteomics/rsomics-fasta-digest
-	url = https://github.com/omics-rust/rsomics-fasta-digest.git
+	url = git@github.com:omics-rust/rsomics-fasta-digest.git
 [submodule "crates/tools/proteomics/rsomics-pdb-chain"]
 	path = crates/tools/proteomics/rsomics-pdb-chain
-	url = https://github.com/omics-rust/rsomics-pdb-chain.git
+	url = git@github.com:omics-rust/rsomics-pdb-chain.git
 [submodule "crates/tools/sequence-search/rsomics-align-score"]
 	path = crates/tools/sequence-search/rsomics-align-score
-	url = https://github.com/omics-rust/rsomics-align-score.git
+	url = git@github.com:omics-rust/rsomics-align-score.git
 [submodule "crates/tools/sequence-search/rsomics-fm-search"]
 	path = crates/tools/sequence-search/rsomics-fm-search
-	url = https://github.com/omics-rust/rsomics-fm-search.git
+	url = git@github.com:omics-rust/rsomics-fm-search.git
 [submodule "crates/tools/sequence-search/rsomics-minimap2"]
 	path = crates/tools/sequence-search/rsomics-minimap2
-	url = https://github.com/omics-rust/rsomics-minimap2.git
+	url = git@github.com:omics-rust/rsomics-minimap2.git
 [submodule "crates/tools/single-cell/rsomics-barcode-rank"]
 	path = crates/tools/single-cell/rsomics-barcode-rank
-	url = https://github.com/omics-rust/rsomics-barcode-rank.git
+	url = git@github.com:omics-rust/rsomics-barcode-rank.git
 [submodule "crates/tools/single-cell/rsomics-cell-filter"]
 	path = crates/tools/single-cell/rsomics-cell-filter
-	url = https://github.com/omics-rust/rsomics-cell-filter.git
+	url = git@github.com:omics-rust/rsomics-cell-filter.git
 [submodule "crates/tools/single-cell/rsomics-infercnv"]
 	path = crates/tools/single-cell/rsomics-infercnv
-	url = https://github.com/omics-rust/rsomics-infercnv.git
+	url = git@github.com:omics-rust/rsomics-infercnv.git
 [submodule "crates/tools/transcriptomics/rsomics-count-matrix"]
 	path = crates/tools/transcriptomics/rsomics-count-matrix
-	url = https://github.com/omics-rust/rsomics-count-matrix.git
+	url = git@github.com:omics-rust/rsomics-count-matrix.git
 [submodule "crates/tools/transcriptomics/rsomics-de-volcano"]
 	path = crates/tools/transcriptomics/rsomics-de-volcano
-	url = https://github.com/omics-rust/rsomics-de-volcano.git
+	url = git@github.com:omics-rust/rsomics-de-volcano.git
 [submodule "crates/tools/transcriptomics/rsomics-deseq-prep"]
 	path = crates/tools/transcriptomics/rsomics-deseq-prep
-	url = https://github.com/omics-rust/rsomics-deseq-prep.git
+	url = git@github.com:omics-rust/rsomics-deseq-prep.git
 [submodule "crates/tools/transcriptomics/rsomics-featurecounts"]
 	path = crates/tools/transcriptomics/rsomics-featurecounts
-	url = https://github.com/omics-rust/rsomics-featurecounts.git
+	url = git@github.com:omics-rust/rsomics-featurecounts.git
 [submodule "crates/tools/transcriptomics/rsomics-tpm"]
 	path = crates/tools/transcriptomics/rsomics-tpm
-	url = https://github.com/omics-rust/rsomics-tpm.git
+	url = git@github.com:omics-rust/rsomics-tpm.git
 [submodule "crates/tools/workflow-utility/rsomics-pvalue-adjust"]
 	path = crates/tools/workflow-utility/rsomics-pvalue-adjust
-	url = https://github.com/omics-rust/rsomics-pvalue-adjust.git
+	url = git@github.com:omics-rust/rsomics-pvalue-adjust.git
 [submodule "crates/tools/workflow-utility/rsomics-sample-sheet"]
 	path = crates/tools/workflow-utility/rsomics-sample-sheet
-	url = https://github.com/omics-rust/rsomics-sample-sheet.git
+	url = git@github.com:omics-rust/rsomics-sample-sheet.git
 [submodule "crates/tools/workflow-utility/rsomics-tsv-join"]
 	path = crates/tools/workflow-utility/rsomics-tsv-join
-	url = https://github.com/omics-rust/rsomics-tsv-join.git
+	url = git@github.com:omics-rust/rsomics-tsv-join.git
 [submodule "crates/tools/workflow-utility/rsomics-tsv-select"]
 	path = crates/tools/workflow-utility/rsomics-tsv-select
-	url = https://github.com/omics-rust/rsomics-tsv-select.git
+	url = git@github.com:omics-rust/rsomics-tsv-select.git
 [submodule "crates/tools/formats/rsomics-bam-index"]
 	path = crates/tools/formats/rsomics-bam-index
-	url = https://github.com/omics-rust/rsomics-bam-index.git
+	url = git@github.com:omics-rust/rsomics-bam-index.git
 [submodule "crates/foundation/rsomics-bamio"]
 	path = crates/foundation/rsomics-bamio
-	url = https://github.com/omics-rust/rsomics-bamio.git
+	url = git@github.com:omics-rust/rsomics-bamio.git
 [submodule "crates/tools/formats/rsomics-bam-fasta"]
 	path = crates/tools/formats/rsomics-bam-fasta
-	url = https://github.com/omics-rust/rsomics-bam-fasta.git
+	url = git@github.com:omics-rust/rsomics-bam-fasta.git
 [submodule "crates/tools/formats/rsomics-vcf-sort"]
 	path = crates/tools/formats/rsomics-vcf-sort
-	url = https://github.com/omics-rust/rsomics-vcf-sort.git
+	url = git@github.com:omics-rust/rsomics-vcf-sort.git
 [submodule "crates/tools/formats/rsomics-vcf-concat"]
 	path = crates/tools/formats/rsomics-vcf-concat
-	url = https://github.com/omics-rust/rsomics-vcf-concat.git
+	url = git@github.com:omics-rust/rsomics-vcf-concat.git
 [submodule "crates/tools/formats/rsomics-vcf-reheader"]
 	path = crates/tools/formats/rsomics-vcf-reheader
-	url = https://github.com/omics-rust/rsomics-vcf-reheader.git
+	url = git@github.com:omics-rust/rsomics-vcf-reheader.git
 [submodule "crates/tools/formats/rsomics-vcf-consensus"]
 	path = crates/tools/formats/rsomics-vcf-consensus
-	url = https://github.com/omics-rust/rsomics-vcf-consensus.git
+	url = git@github.com:omics-rust/rsomics-vcf-consensus.git
 [submodule "crates/tools/formats/rsomics-vcf-view"]
 	path = crates/tools/formats/rsomics-vcf-view
-	url = https://github.com/omics-rust/rsomics-vcf-view.git
+	url = git@github.com:omics-rust/rsomics-vcf-view.git
 [submodule "crates/tools/epigenomics/rsomics-bed-genomecov"]
 	path = crates/tools/epigenomics/rsomics-bed-genomecov
-	url = https://github.com/omics-rust/rsomics-bed-genomecov.git
+	url = git@github.com:omics-rust/rsomics-bed-genomecov.git
 [submodule "crates/tools/epigenomics/rsomics-bed-nuc"]
 	path = crates/tools/epigenomics/rsomics-bed-nuc
-	url = https://github.com/omics-rust/rsomics-bed-nuc.git
+	url = git@github.com:omics-rust/rsomics-bed-nuc.git
 [submodule "crates/tools/epigenomics/rsomics-bed-coverage"]
 	path = crates/tools/epigenomics/rsomics-bed-coverage
-	url = https://github.com/omics-rust/rsomics-bed-coverage.git
+	url = git@github.com:omics-rust/rsomics-bed-coverage.git
 [submodule "crates/tools/epigenomics/rsomics-bed-annotate"]
 	path = crates/tools/epigenomics/rsomics-bed-annotate
-	url = https://github.com/omics-rust/rsomics-bed-annotate.git
+	url = git@github.com:omics-rust/rsomics-bed-annotate.git
 [submodule "crates/tools/genomics/rsomics-bed-summary"]
 	path = crates/tools/genomics/rsomics-bed-summary
-	url = https://github.com/omics-rust/rsomics-bed-summary.git
+	url = git@github.com:omics-rust/rsomics-bed-summary.git
 [submodule "crates/tools/formats/rsomics-bed-expand"]
 	path = crates/tools/formats/rsomics-bed-expand
-	url = https://github.com/omics-rust/rsomics-bed-expand.git
+	url = git@github.com:omics-rust/rsomics-bed-expand.git
 [submodule "crates/tools/genomics/rsomics-bed-split"]
 	path = crates/tools/genomics/rsomics-bed-split
-	url = https://github.com/omics-rust/rsomics-bed-split.git
+	url = git@github.com:omics-rust/rsomics-bed-split.git
 [submodule "crates/tools/formats/rsomics-fasta-sliding"]
 	path = crates/tools/formats/rsomics-fasta-sliding
-	url = https://github.com/omics-rust/rsomics-fasta-sliding.git
+	url = git@github.com:omics-rust/rsomics-fasta-sliding.git
 [submodule "crates/tools/genomics/rsomics-bed12-to-bed6"]
 	path = crates/tools/genomics/rsomics-bed12-to-bed6
-	url = https://github.com/omics-rust/rsomics-bed12-to-bed6.git
+	url = git@github.com:omics-rust/rsomics-bed12-to-bed6.git
 [submodule "crates/tools/formats/rsomics-fasta-subseq"]
 	path = crates/tools/formats/rsomics-fasta-subseq
-	url = https://github.com/omics-rust/rsomics-fasta-subseq.git
+	url = git@github.com:omics-rust/rsomics-fasta-subseq.git
 [submodule "crates/tools/formats/rsomics-fasta-locate"]
 	path = crates/tools/formats/rsomics-fasta-locate
-	url = https://github.com/omics-rust/rsomics-fasta-locate.git
+	url = git@github.com:omics-rust/rsomics-fasta-locate.git
 [submodule "crates/tools/formats/rsomics-bam-fixmate"]
 	path = crates/tools/formats/rsomics-bam-fixmate
-	url = https://github.com/omics-rust/rsomics-bam-fixmate.git
+	url = git@github.com:omics-rust/rsomics-bam-fixmate.git
 	branch = main
 [submodule "crates/tools/formats/rsomics-bam-addreplacerg"]
-	url = https://github.com/omics-rust/rsomics-bam-addreplacerg.git
+	url = git@github.com:omics-rust/rsomics-bam-addreplacerg.git
 	path = crates/tools/formats/rsomics-bam-addreplacerg
 	branch = main
