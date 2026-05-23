@@ -319,3 +319,6 @@
 [submodule "crates/tools/epigenomics/rsomics-bed-nuc"]
 	path = crates/tools/epigenomics/rsomics-bed-nuc
 	url = git@github.com:omics-rust/rsomics-bed-nuc.git
+[submodule "crates/tools/epigenomics/rsomics-bed-coverage"]
+	path = crates/tools/epigenomics/rsomics-bed-coverage
+	url = git@github.com:omics-rust/rsomics-bed-coverage.git
