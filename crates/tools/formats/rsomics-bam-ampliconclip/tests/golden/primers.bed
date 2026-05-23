@@ -1,0 +1,4 @@
+chr1	100	120	primer_L1	60	+
+chr1	580	600	primer_R1	60	-
+chr1	680	700	primer_R2	60	-
+chr2	200	215	primer_L2	60	+
