@@ -13,7 +13,9 @@
 //! directly into the raw aux tail via `RawRecord::set_aux`. This avoids the
 //! full `RecordBuf` decode+re-encode round-trip (the former bottleneck at
 //! `-t4` and above, accounting for 67% of wall time). Output goes through the
-//! bamio parallel BGZF writer.
+//! bamio parallel BGZF writer — at `workers >= 2` via the batched
+//! [`BatchBamWriter`], which frames each batch on its own thread so the main
+//! thread's per-record write cost no longer caps multi-thread throughput.
 //!
 //! The reference is read from an indexed FASTA (`.fai`); each contig is fetched
 //! once on first use and cached for the run. Coordinate-sorted input therefore
@@ -40,6 +42,7 @@ use noodles::sam::alignment::record::data::field::Tag;
 use noodles::sam::alignment::record_buf::data::field::Value;
 use rayon::prelude::*;
 use rsomics_bamio::raw::{self, RawRecord};
+use rsomics_bamio::{BatchBamWriter, ParallelBamWriter};
 use rsomics_common::{Result, RsomicsError};
 use serde::Serialize;
 
@@ -511,18 +514,12 @@ pub fn calmd(
 
     match output_path {
         Some(path) => {
-            let mut writer = rsomics_bamio::create_with_workers(path, workers)?;
+            let writer = rsomics_bamio::create_with_workers(path, workers)?;
             if workers.get() == 1 {
+                let mut writer = writer;
                 run_serial_raw(reader.get_mut(), &mut writer, &header, &mut refs, opts)
             } else {
-                run_parallel_raw(
-                    reader.get_mut(),
-                    &mut writer,
-                    &header,
-                    &mut refs,
-                    opts,
-                    workers,
-                )
+                run_parallel_raw(reader.get_mut(), writer, &header, &mut refs, opts, workers)
             }
         }
         None => {
@@ -623,17 +620,25 @@ where
 }
 
 /// Parallel raw path: read `BATCH_SIZE` raw records serially, prefetch contigs,
-/// rayon-compute MD/NM on packed nibble SEQ in parallel, write raw bytes in order.
+/// rayon-compute MD/NM on packed nibble SEQ in parallel, hand each computed batch
+/// to the batched writer in order.
 ///
 /// The raw path avoids the noodles RecordBuf decode+re-encode round-trip that
 /// was the bottleneck at `-t4` and above (67% of wall time at t4 in the old
 /// path). Raw records hold on-disk payload bytes (~350 bytes for 150 bp);
 /// `par_iter_mut` modifies them in place with zero per-record allocation beyond
-/// the MD string (~20 bytes). The BGZF writer deflates blocks asynchronously in
-/// its worker pool while the main thread continues the next batch.
-fn run_parallel_raw<R, W, F>(
+/// the MD string (~20 bytes).
+///
+/// The write phase hands the whole computed batch to a [`BatchBamWriter`] in one
+/// channel send (moving the `Vec`, no copy) rather than framing each record on
+/// the main thread. The framing + the existing BGZF deflate pool then run off the
+/// main thread, so the main thread's per-batch write cost collapses to the
+/// enqueue. This is what lifts the `-t4`/`-t8` write ceiling that capped the old
+/// per-record `write_record` loop. The output is byte-identical: the framing
+/// thread emits the same records in the same order through the same BGZF writer.
+fn run_parallel_raw<R, F>(
     inner: &mut R,
-    writer: &mut bam::io::Writer<W>,
+    mut writer: ParallelBamWriter,
     header: &noodles::sam::Header,
     refs: &mut RefCache<F>,
     opts: &CalmdOpts,
@@ -641,13 +646,10 @@ fn run_parallel_raw<R, W, F>(
 ) -> Result<CalmdStats>
 where
     R: std::io::BufRead,
-    W: std::io::Write,
     F: std::io::BufRead + std::io::Seek,
 {
-    use rsomics_bamio::raw::write_record;
-
     writer.write_header(header).map_err(RsomicsError::Io)?;
-    let writer_inner = writer.get_mut();
+    let mut batch_writer = BatchBamWriter::new(writer);
 
     let timing = std::env::var("CALMD_PHASE_TIMING").is_ok();
 
@@ -661,7 +663,6 @@ where
         .map_err(|e| RsomicsError::InvalidInput(format!("rayon pool: {e}")))?;
 
     let mut stats = CalmdStats::default();
-    let mut batch: Vec<RawRecord> = Vec::with_capacity(BATCH_SIZE);
     // Persistent contig cache keyed by TID. Coordinate-sorted input fetches
     // each contig exactly once.
     let mut contig_map: HashMap<usize, Arc<Vec<u8>>> = HashMap::new();
@@ -672,8 +673,10 @@ where
 
     loop {
         // --- Phase 1: fill batch (serial raw read) ---
+        // The batch is handed off to the framing thread at the end of the loop
+        // (a `Vec` move), so each iteration starts with a fresh allocation.
         let t0 = Instant::now();
-        batch.clear();
+        let mut batch: Vec<RawRecord> = Vec::with_capacity(BATCH_SIZE);
         for _ in 0..BATCH_SIZE {
             let mut record = RawRecord::default();
             let n = raw::read_record(inner, &mut record)?;
@@ -738,19 +741,21 @@ where
             t_compute += t1.elapsed();
         }
 
-        // --- Phase 4: write in original order (serial raw write) ---
+        // --- Phase 4: hand the batch to the framing thread in original order ---
         let t2 = Instant::now();
         stats.records += batch.len() as u64;
         stats.computed += batch_computed.load(std::sync::atomic::Ordering::Relaxed);
         stats.missing_ref += batch_missing.load(std::sync::atomic::Ordering::Relaxed);
         stats.no_sequence += batch_noseq.load(std::sync::atomic::Ordering::Relaxed);
-        for record in &batch {
-            write_record(writer_inner, record)?;
-        }
+        batch_writer.write_records_batch(batch)?;
         if timing {
             t_write += t2.elapsed();
         }
     }
+
+    // Flush the framing thread, append the BGZF EOF block, and surface any write
+    // error that occurred off the main thread.
+    batch_writer.finish()?;
 
     if timing {
         eprintln!(

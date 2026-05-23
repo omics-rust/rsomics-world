@@ -1816,8 +1816,9 @@ dependencies = [
 
 [[package]]
 name = "rsomics-bamio"
-version = "0.1.8"
+version = "0.1.9"
 dependencies = [
+ "crossbeam-channel",
  "noodles",
  "noodles-bgzf",
  "rsomics-common",
@@ -2850,6 +2851,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "rsomics-vcf-expr"
+version = "0.1.0"
+
+[[package]]
 name = "rsomics-vcf-fill-tags"
 version = "0.1.0"
 dependencies = [
@@ -2866,12 +2871,13 @@ dependencies = [
 
 [[package]]
 name = "rsomics-vcf-filter"
-version = "0.1.1"
+version = "0.2.0"
 dependencies = [
  "clap",
  "flate2",
  "rsomics-common",
  "rsomics-help",
+ "rsomics-vcf-expr",
  "serde",
  "serde_json",
  "tempfile",
@@ -2964,12 +2970,13 @@ dependencies = [
 
 [[package]]
 name = "rsomics-vcf-setgt"
-version = "0.1.0"
+version = "0.2.0"
 dependencies = [
  "clap",
  "flate2",
  "rsomics-common",
  "rsomics-help",
+ "rsomics-vcf-expr",
  "serde",
  "serde_json",
  "tempfile",
