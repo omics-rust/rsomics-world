@@ -325,3 +325,6 @@
 [submodule "crates/tools/epigenomics/rsomics-bed-annotate"]
 	path = crates/tools/epigenomics/rsomics-bed-annotate
 	url = git@github.com:omics-rust/rsomics-bed-annotate.git
+[submodule "crates/tools/genomics/rsomics-bed-summary"]
+	path = crates/tools/genomics/rsomics-bed-summary
+	url = git@github.com:omics-rust/rsomics-bed-summary.git
