@@ -334,3 +334,6 @@
 [submodule "crates/tools/genomics/rsomics-bed-split"]
 	path = crates/tools/genomics/rsomics-bed-split
 	url = git@github.com:omics-rust/rsomics-bed-split.git
+[submodule "crates/tools/formats/rsomics-fasta-sliding"]
+	path = crates/tools/formats/rsomics-fasta-sliding
+	url = git@github.com:omics-rust/rsomics-fasta-sliding.git
