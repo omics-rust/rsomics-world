@@ -147,6 +147,7 @@ rsomics-vcf-query = { path = "crates/tools/formats/rsomics-vcf-query" }
 rsomics-vcf-split = { path = "crates/tools/formats/rsomics-vcf-split" }
 rsomics-vcf-stats = { path = "crates/tools/formats/rsomics-vcf-stats" }
 rsomics-vcf-utils = { path = "crates/tools/formats/rsomics-vcf-utils" }
+rsomics-vcf-fill-tags = { path = "crates/tools/formats/rsomics-vcf-fill-tags" }
 rsomics-vcf-validate = { path = "crates/tools/formats/rsomics-vcf-validate" }
 rsomics-bam-region = { path = "crates/tools/genomics/rsomics-bam-region" }
 rsomics-bam-subsample = { path = "crates/tools/genomics/rsomics-bam-subsample" }
