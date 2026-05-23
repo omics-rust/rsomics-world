@@ -100,9 +100,11 @@ rsomics-seqio = { path = "crates/foundation/rsomics-seqio/" }
 rsomics-seqstats = { path = "crates/foundation/rsomics-seqstats/" }
 rsomics-stats = { path = "crates/foundation/rsomics-stats/" }
 rsomics-taxonomy = { path = "crates/foundation/rsomics-taxonomy/" }
+rsomics-bed-nuc = { path = "crates/tools/epigenomics/rsomics-bed-nuc" }
 rsomics-motif-scan = { path = "crates/tools/epigenomics/rsomics-motif-scan" }
 rsomics-peak-count = { path = "crates/tools/epigenomics/rsomics-peak-count" }
 rsomics-wig-to-bed = { path = "crates/tools/epigenomics/rsomics-wig-to-bed" }
+rsomics-bam-addreplacerg = { path = "crates/tools/formats/rsomics-bam-addreplacerg" }
 rsomics-bam-coverage = { path = "crates/tools/formats/rsomics-bam-coverage" }
 rsomics-bam-depth = { path = "crates/tools/formats/rsomics-bam-depth" }
 rsomics-bam-flagstat = { path = "crates/tools/formats/rsomics-bam-flagstat" }

@@ -1,0 +1,34 @@
+[package]
+name = "rsomics-vcf-index"
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.91"
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/omics-rust/rsomics-world"
+authors = ["Zane Leong <efd@live.com>"]
+description = "Index a bgzipped VCF (.csi/.tbi) — Rust port of bcftools index"
+
+[[bin]]
+name = "rsomics-vcf-index"
+path = "src/main.rs"
+
+[dependencies]
+rsomics-common = { version = "0.6" }
+rsomics-help = { version = "0.3" }
+clap = { version = "4", features = ["derive"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+noodles = { version = "0.110", features = ["core", "vcf", "bgzf", "csi", "tabix"] }
+# Quadrant ② (FFI): bundled-C libdeflate via noodles-bgzf's `libdeflate` feature —
+# the inflate htslib/bcftools use. The noodles meta-crate doesn't pass the feature
+# through, so depend on noodles-bgzf directly; Cargo unifies it onto the same
+# noodles-bgzf the meta pulls in, switching every BGZF block off zlib-rs.
+noodles-bgzf = { version = "0.47", features = ["libdeflate"] }
+bstr = "1"
+memchr = "2"
+
+[dev-dependencies]
+tempfile = "3"
+
+[lints]
+workspace = true
