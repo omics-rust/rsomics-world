@@ -313,3 +313,6 @@
 [submodule "crates/tools/formats/rsomics-vcf-view"]
 	path = crates/tools/formats/rsomics-vcf-view
 	url = git@github.com:omics-rust/rsomics-vcf-view.git
+[submodule "crates/tools/epigenomics/rsomics-bed-genomecov"]
+	path = crates/tools/epigenomics/rsomics-bed-genomecov
+	url = git@github.com:omics-rust/rsomics-bed-genomecov.git
