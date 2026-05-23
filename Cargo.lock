@@ -1721,6 +1721,18 @@ dependencies = [
 ]
 
 [[package]]
+name = "rsomics-bam-reset"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "noodles",
+ "rsomics-bamio",
+ "rsomics-common",
+ "rsomics-help",
+ "tempfile",
+]
+
+[[package]]
 name = "rsomics-bam-signal"
 version = "0.1.0"
 dependencies = [
