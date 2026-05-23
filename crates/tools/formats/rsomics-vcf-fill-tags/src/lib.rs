@@ -6,7 +6,7 @@
     clippy::cast_possible_truncation,
 )]
 
-use std::io::{BufRead, BufReader, Read, Write};
+use std::io::{BufRead, BufReader, BufWriter, Read, Write};
 use std::path::Path;
 
 use rayon::prelude::*;
@@ -89,18 +89,39 @@ impl AltCounts {
     }
 }
 
-/// Parse a GT string into a list of allele indices; missing positions become `None`.
-fn parse_gt(gt: &str) -> Vec<Option<u32>> {
-    let sep = if gt.contains('|') { '|' } else { '/' };
-    gt.split(sep)
-        .map(|a| {
-            if a == "." {
-                None
-            } else {
-                a.parse::<u32>().ok()
-            }
-        })
-        .collect()
+/// Parse a diploid GT field byte-by-byte without allocation.
+///
+/// Returns `(a0, a1, phased, ploidy)` where `None` means missing (`.`).
+/// Only handles the common diploid case; falls back to `None, None` for
+/// unexpected ploidy (caller then falls through to generic path).
+#[inline]
+fn parse_diploid_gt(gt: &str) -> Option<(Option<u32>, Option<u32>)> {
+    // Fast path: diploid GTs are "A/B" or "A|B" where A,B ∈ {".", "0"-"9"+}
+    let bytes = gt.as_bytes();
+    // Find the separator position
+    let sep_pos = bytes.iter().position(|&b| b == b'/' || b == b'|')?;
+
+    // No second separator allowed (would be triploid or higher)
+    if bytes[sep_pos + 1..].iter().any(|&b| b == b'/' || b == b'|') {
+        return None;
+    }
+
+    let a0 = parse_allele_int(&bytes[..sep_pos]);
+    let a1 = parse_allele_int(&bytes[sep_pos + 1..]);
+    Some((a0, a1))
+}
+
+/// Parse a single allele field: "." → None, digit string → Some(u32).
+#[inline]
+fn parse_allele_int(s: &[u8]) -> Option<u32> {
+    if s == b"." {
+        return None;
+    }
+    let mut n: u32 = 0;
+    for &b in s {
+        n = n * 10 + u32::from(b - b'0');
+    }
+    Some(n)
 }
 
 struct SiteCounts {
@@ -113,49 +134,157 @@ struct SiteCounts {
     n_hom_ref: u32,
 }
 
+/// Count genotype statistics across all samples for one site.
+///
+/// The inner loop is optimised for the near-universal diploid case:
+/// biallelic diploid GTs are parsed and classified without any heap
+/// allocation. Multi-allelic or higher-ploidy GTs fall back to the
+/// generic path that uses a small stack-allocated buffer (up to 8
+/// alleles) before spilling to a heap Vec only for edge cases.
 fn count_site(n_alleles: usize, sample_gts: &[&str]) -> SiteCounts {
     let mut per_allele = vec![AltCounts::default(); n_alleles];
     let mut ns = 0u32;
     let mut an = 0u32;
 
     for gt_str in sample_gts {
-        let gt_field = gt_str.split(':').next().unwrap_or(".");
-        let alleles = parse_gt(gt_field);
+        // GT is always the first colon-delimited field.
+        let gt_field = match gt_str.find(':') {
+            Some(pos) => &gt_str[..pos],
+            None => gt_str,
+        };
 
-        let called: Vec<u32> = alleles.iter().filter_map(|a| *a).collect();
-        if called.is_empty() {
+        if gt_field == "." || gt_field == "./." || gt_field == ".|." {
+            continue;
+        }
+
+        // Fast path: diploid GT parsed without allocation.
+        if let Some((a0, a1)) = parse_diploid_gt(gt_field) {
+            match (a0, a1) {
+                (None, None) => continue,
+                (Some(i), None) | (None, Some(i)) => {
+                    // Hemizygous (half-missing).
+                    ns += 1;
+                    an += 1;
+                    let idx = i as usize;
+                    if idx < n_alleles {
+                        per_allele[idx].nhemi += 1;
+                    }
+                }
+                (Some(i), Some(j)) => {
+                    ns += 1;
+                    an += 2;
+                    if i == j {
+                        // Homozygous.
+                        let idx = i as usize;
+                        if idx < n_alleles {
+                            per_allele[idx].nhom += 1;
+                        }
+                    } else {
+                        // Heterozygous — each distinct allele gets one het credit.
+                        let idx_i = i as usize;
+                        let idx_j = j as usize;
+                        if idx_i < n_alleles {
+                            per_allele[idx_i].nhet += 1;
+                        }
+                        if idx_j < n_alleles {
+                            per_allele[idx_j].nhet += 1;
+                        }
+                    }
+                }
+            }
+            continue;
+        }
+
+        // Generic path: haploid or triploid+ GT, or failed fast-path parsing.
+        let sep = if gt_field.contains('|') { '|' } else { '/' };
+        // Use a small inline buffer; spill to heap only for exotic ploidy > 8.
+        let mut buf = [0u32; 8];
+        let mut buf_miss = [false; 8];
+        let mut ploidy = 0usize;
+        let mut n_called = 0usize;
+
+        let mut spill: Vec<(u32, bool)> = Vec::new();
+
+        for tok in gt_field.split(sep) {
+            let missing = tok == ".";
+            let val: u32 = if missing { 0 } else { tok.parse().unwrap_or(0) };
+            if ploidy < 8 {
+                buf[ploidy] = val;
+                buf_miss[ploidy] = missing;
+            } else {
+                spill.push((val, missing));
+            }
+            ploidy += 1;
+            if !missing {
+                n_called += 1;
+            }
+        }
+
+        if n_called == 0 {
             continue;
         }
         ns += 1;
+        an += n_called as u32;
 
-        let ploidy = alleles.len();
-        let n_called = called.len();
-        // bcftools default (drop_missing=false): half-missing → hemizygous.
         let is_hemi = n_called != ploidy;
 
-        let mut distinct = called.clone();
-        distinct.sort_unstable();
-        distinct.dedup();
-        let is_hom = distinct.len() == 1;
+        // Collect called alleles into a small stack buffer.
+        let total = ploidy.min(8);
+        let mut called_buf = [0u32; 8];
+        let mut n_c = 0usize;
+        for k in 0..total {
+            if !buf_miss[k] {
+                called_buf[n_c] = buf[k];
+                n_c += 1;
+            }
+        }
+        // Include spill if any.
+        let mut spill_called: Vec<u32> =
+            spill.iter().filter(|(_, m)| !m).map(|(v, _)| *v).collect();
 
-        an += u32::try_from(n_called).unwrap_or(u32::MAX);
+        let all_called: &[u32] = if spill.is_empty() {
+            &called_buf[..n_c]
+        } else {
+            spill_called.extend_from_slice(&called_buf[..n_c]);
+            &spill_called
+        };
 
         if is_hemi {
-            for &idx in &called {
-                if (idx as usize) < n_alleles {
-                    per_allele[idx as usize].nhemi += 1;
+            for &idx in all_called {
+                let i = idx as usize;
+                if i < n_alleles {
+                    per_allele[i].nhemi += 1;
                 }
             }
-        } else if is_hom {
-            let idx = called[0] as usize;
-            if idx < n_alleles {
-                per_allele[idx].nhom += 1;
-            }
         } else {
-            // Each distinct allele gets one het credit.
-            for &idx in &distinct {
-                if (idx as usize) < n_alleles {
-                    per_allele[idx as usize].nhet += 1;
+            // Determine hom vs het: check if all alleles are the same.
+            let first = all_called[0];
+            let is_hom = all_called.iter().all(|&v| v == first);
+            if is_hom {
+                let i = first as usize;
+                if i < n_alleles {
+                    per_allele[i].nhom += 1;
+                }
+            } else {
+                // Each distinct allele index gets one het credit.
+                // For typical ploidy ≤ 8, a bitset on the index space is faster than sort+dedup.
+                let mut seen = [false; 512];
+                let mut seen_large: Option<std::collections::HashSet<u32>> = None;
+                for &idx in all_called {
+                    let i = idx as usize;
+                    if i < 512 {
+                        if !seen[i] {
+                            seen[i] = true;
+                            if i < n_alleles {
+                                per_allele[i].nhet += 1;
+                            }
+                        }
+                    } else {
+                        let set = seen_large.get_or_insert_with(std::collections::HashSet::new);
+                        if set.insert(idx) && i < n_alleles {
+                            per_allele[i].nhet += 1;
+                        }
+                    }
                 }
             }
         }
@@ -340,8 +469,150 @@ pub struct FillTagsStats {
 /// Recompute INFO tags for every data record of `input`, writing plain VCF to `output`.
 ///
 /// The header is updated with `##INFO` lines for every tag in `tags`.
-/// Data records are processed in parallel (rayon) with output order preserved.
-pub fn fill_tags(input: &Path, output: &mut dyn Write, tags: Tags) -> Result<FillTagsStats> {
+/// With `threads == 1`, records are processed sequentially with streaming I/O
+/// (no file-read-to-memory; constant RSS). With `threads > 1`, the file is
+/// read into memory and records are processed in parallel via rayon.
+pub fn fill_tags(
+    input: &Path,
+    output: &mut dyn Write,
+    tags: Tags,
+    threads: usize,
+) -> Result<FillTagsStats> {
+    if threads == 1 {
+        fill_tags_streaming(input, output, tags)
+    } else {
+        fill_tags_parallel(input, output, tags)
+    }
+}
+
+/// Single-threaded streaming variant — processes records line-by-line without
+/// loading the entire file into memory. Avoids rayon thread-pool overhead.
+fn fill_tags_streaming(input: &Path, output: &mut dyn Write, tags: Tags) -> Result<FillTagsStats> {
+    let file = std::fs::File::open(input)
+        .map_err(|e| RsomicsError::InvalidInput(format!("{}: {e}", input.display())))?;
+
+    // Detect gz by magic bytes.
+    let is_gz = {
+        use std::io::Read as _;
+        let mut buf = [0u8; 2];
+        let mut peek = std::io::BufReader::new(&file);
+        let n = peek.read(&mut buf).map_err(RsomicsError::Io)?;
+        n >= 2 && buf[0] == 0x1f && buf[1] == 0x8b
+    };
+    // Re-open — file was moved into the BufReader above. We need a fresh handle.
+    let file2 = std::fs::File::open(input)
+        .map_err(|e| RsomicsError::InvalidInput(format!("{}: {e}", input.display())))?;
+
+    let mut writer = BufWriter::new(output);
+
+    let (total, processed) = if is_gz {
+        let decoder = flate2::read::MultiGzDecoder::new(file2);
+        stream_lines(BufReader::new(decoder), &mut writer, tags)?
+    } else {
+        stream_lines(BufReader::new(file2), &mut writer, tags)?
+    };
+
+    Ok(FillTagsStats { total, processed })
+}
+
+fn stream_lines<R: Read, W: Write>(
+    reader: BufReader<R>,
+    writer: &mut W,
+    tags: Tags,
+) -> Result<(u64, u64)> {
+    let mut header_lines: Vec<String> = Vec::new();
+    let mut header_done = false;
+    let mut total = 0u64;
+    let mut processed = 0u64;
+    let mut header_written = false;
+
+    // Reusable scratch buffer to avoid allocating a new String per line.
+    let mut line = String::with_capacity(4096);
+
+    for raw in reader.lines() {
+        let cur = raw.map_err(RsomicsError::Io)?;
+        if cur.starts_with('#') {
+            if !header_done {
+                header_lines.push(cur);
+            }
+            continue;
+        }
+
+        // First data record triggers header flush.
+        if !header_written {
+            flush_header(&header_lines, writer, tags)?;
+            header_done = true;
+            header_written = true;
+        }
+
+        if cur.is_empty() {
+            continue;
+        }
+        total += 1;
+
+        line.clear();
+        rewrite_record_into(&cur, tags, &mut line);
+        writer
+            .write_all(line.as_bytes())
+            .map_err(RsomicsError::Io)?;
+        writer.write_all(b"\n").map_err(RsomicsError::Io)?;
+        processed += 1;
+    }
+
+    // Handle VCF files that are header-only (no data records).
+    if !header_written && !header_lines.is_empty() {
+        flush_header(&header_lines, writer, tags)?;
+    }
+
+    Ok((total, processed))
+}
+
+fn flush_header<W: Write>(header_lines: &[String], writer: &mut W, tags: Tags) -> Result<()> {
+    // The last header line is the #CHROM line; insert tag ##INFO lines before it.
+    let (tag_headers_range, chrom_line) = if header_lines.is_empty() {
+        return Ok(());
+    } else {
+        (&header_lines[..header_lines.len() - 1], header_lines.last())
+    };
+
+    let tag_headers = build_tag_headers(tags);
+
+    for h in tag_headers_range {
+        let key = extract_info_id(h);
+        let is_ours = key.is_some_and(|k| {
+            matches!(
+                k,
+                "AN" | "AC"
+                    | "AF"
+                    | "MAF"
+                    | "NS"
+                    | "AC_Hom"
+                    | "AC_Het"
+                    | "AC_Hemi"
+                    | "HWE"
+                    | "ExcHet"
+            )
+        });
+        if !is_ours {
+            writer.write_all(h.as_bytes()).map_err(RsomicsError::Io)?;
+            writer.write_all(b"\n").map_err(RsomicsError::Io)?;
+        }
+    }
+    for th in &tag_headers {
+        writer.write_all(th.as_bytes()).map_err(RsomicsError::Io)?;
+        writer.write_all(b"\n").map_err(RsomicsError::Io)?;
+    }
+    if let Some(chrom) = chrom_line {
+        writer
+            .write_all(chrom.as_bytes())
+            .map_err(RsomicsError::Io)?;
+        writer.write_all(b"\n").map_err(RsomicsError::Io)?;
+    }
+    Ok(())
+}
+
+/// Multi-threaded variant — reads entire file into memory and uses rayon.
+fn fill_tags_parallel(input: &Path, output: &mut dyn Write, tags: Tags) -> Result<FillTagsStats> {
     let raw = std::fs::read(input)
         .map_err(|e| RsomicsError::InvalidInput(format!("{}: {e}", input.display())))?;
 
@@ -410,7 +681,11 @@ pub fn fill_tags(input: &Path, output: &mut dyn Write, tags: Tags) -> Result<Fil
 
     let processed_lines: Vec<String> = data_lines
         .par_iter()
-        .map(|line| rewrite_record(line, tags))
+        .map(|line| {
+            let mut out = String::with_capacity(line.len() + 64);
+            rewrite_record_into(line, tags, &mut out);
+            out
+        })
         .collect();
 
     let mut processed = 0u64;
@@ -425,12 +700,14 @@ pub fn fill_tags(input: &Path, output: &mut dyn Write, tags: Tags) -> Result<Fil
     Ok(FillTagsStats { total, processed })
 }
 
-fn rewrite_record(line: &str, tags: Tags) -> String {
+/// Rewrite one VCF data record in-place into `out`, replacing the INFO column.
+fn rewrite_record_into(line: &str, tags: Tags, out: &mut String) {
     // VCF: CHROM POS ID REF ALT QUAL FILTER INFO [FORMAT sample...]
     // splitn(9) keeps everything after the 8th tab as one field.
     let cols: Vec<&str> = line.splitn(9, '\t').collect();
     if cols.len() < 8 {
-        return line.to_owned();
+        out.push_str(line);
+        return;
     }
 
     let alts = cols[4];
@@ -448,7 +725,6 @@ fn rewrite_record(line: &str, tags: Tags) -> String {
 
     let new_info = compute_info(cols[7], n_alleles, &sample_gts, tags);
 
-    let mut out = String::with_capacity(line.len() + 32);
     for (i, col) in cols.iter().enumerate() {
         if i > 0 {
             out.push('\t');
@@ -459,7 +735,6 @@ fn rewrite_record(line: &str, tags: Tags) -> String {
             out.push_str(col);
         }
     }
-    out
 }
 
 fn build_tag_headers(tags: Tags) -> Vec<String> {

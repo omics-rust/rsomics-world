@@ -54,7 +54,8 @@ impl Cli {
             ))
         };
 
-        let FillTagsStats { total, processed } = fill_tags(&self.input, &mut out, tags)?;
+        let threads = self.common.threads.unwrap_or(1);
+        let FillTagsStats { total, processed } = fill_tags(&self.input, &mut out, tags, threads)?;
 
         if !self.common.quiet {
             eprintln!("{processed}/{total} records annotated");
