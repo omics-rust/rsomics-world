@@ -1420,6 +1420,8 @@ dependencies = [
  "clap",
  "itoa",
  "noodles",
+ "noodles-bgzf",
+ "rsomics-bamio",
  "rsomics-common",
  "rsomics-help",
  "serde",

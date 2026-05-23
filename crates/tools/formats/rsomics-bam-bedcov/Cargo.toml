@@ -7,6 +7,7 @@ license = "MIT OR Apache-2.0"
 repository = "https://github.com/omics-rust/rsomics-world"
 authors = ["Zane Leong <efd@live.com>"]
 description = "Per-BED-region read depth — Rust port of samtools bedcov"
+readme = "README.md"
 
 [[bin]]
 name = "rsomics-bam-bedcov"
@@ -16,10 +17,18 @@ path = "src/main.rs"
 itoa = "1"
 rsomics-common = { version = "0.6" }
 rsomics-help = { version = "0.3" }
+rsomics-bamio = { version = "0.1" }
 clap = { version = "4", features = ["derive"] }
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
 noodles = { version = "0.110", features = ["core", "sam", "bam"] }
+# Quadrant ② (FFI): bundled-C libdeflate via noodles-bgzf's `libdeflate`
+# feature — the inflate samtools uses. It switches every BGZF block (the
+# linear-sweep read path and the indexed-query path alike) off zlib-rs onto
+# libdeflate, which wins single-threaded. Declared directly (the noodles
+# meta-crate doesn't pass the feature through); Cargo unifies it onto the same
+# noodles-bgzf the meta and rsomics-bamio pull in. Portable bundled C.
+noodles-bgzf = { version = "0.47", features = ["libdeflate"] }
 
 [dev-dependencies]
 tempfile = "3"

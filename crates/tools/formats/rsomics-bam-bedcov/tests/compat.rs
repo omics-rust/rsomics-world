@@ -76,6 +76,79 @@ r5\t4\tchr1\t300\t0\t48M\t*\t0\t0\tAATTCCGGAATTCCGGAATTCCGGAATTCCGGAATTCCGGAATTC
     (bam, bed)
 }
 
+/// Build a larger fixture (sorted BAM + index + an unsorted BED with enough
+/// regions to trip the linear-sweep path) if not already present. The BAM is
+/// kept small (< 384 KiB) so the file-size term of the sweep crossover is < 1
+/// region, meaning any region count past the absolute floor (256) takes the
+/// sweep. Reads include deletions (D) and ref-skips (N) so the test exercises
+/// the default `samtools bedcov` semantics (D/N positions count as covered).
+fn ensure_sweep_golden(dir: &Path) -> (PathBuf, PathBuf) {
+    let bam = dir.join("sweep.bam");
+    let bed = dir.join("sweep_regions.bed");
+    if bam.exists() && bed.exists() && dir.join("sweep.bam.bai").exists() {
+        return (bam, bed);
+    }
+
+    // chr1 200_000 bp; ~2000 reads spread across it, every 100 bp. A spread of
+    // CIGARs (plain match, a deletion, a ref-skip) so the reference-span counting
+    // (M/D/N included) is exercised against samtools' pileup.
+    let mut sam = String::from("@HD\tVN:1.6\tSO:coordinate\n@SQ\tSN:chr1\tLN:200000\n");
+    let seq50: String = "ACGT".chars().cycle().take(50).collect();
+    let seq60: String = "ACGT".chars().cycle().take(60).collect();
+    for i in 0..2000u32 {
+        let pos = i * 100 + 1; // 1-based SAM POS
+        // Rotate through three CIGAR shapes; all 50/60 bases of sequence.
+        let (cigar, seq) = match i % 3 {
+            0 => ("50M", seq50.as_str()),
+            1 => ("20M5D30M", seq50.as_str()), // 55 bp reference span (D counts)
+            _ => ("20M10N40M", seq60.as_str()), // 70 bp reference span (N counts)
+        };
+        sam.push_str(&format!(
+            "r{i}\t0\tchr1\t{pos}\t60\t{cigar}\t*\t0\t0\t{seq}\t*\n"
+        ));
+    }
+
+    let sam_path = dir.join("sweep.sam");
+    std::fs::write(&sam_path, &sam).expect("write sweep SAM");
+
+    let sort_status = Command::new("samtools")
+        .args(["sort", "-o"])
+        .arg(&bam)
+        .arg(&sam_path)
+        .status()
+        .expect("samtools sort");
+    assert!(sort_status.success(), "samtools sort failed");
+
+    let index_status = Command::new("samtools")
+        .arg("index")
+        .arg(&bam)
+        .status()
+        .expect("samtools index");
+    assert!(index_status.success(), "samtools index failed");
+
+    // 300 regions (> the 256 floor → sweep), windows of varying width over
+    // chr1, deliberately emitted in NON-sorted order so the test also proves the
+    // sweep is correct on an unsorted BED and preserves input order. A simple
+    // shuffling step (stride that is coprime with the count) avoids any RNG dep.
+    let mut rows: Vec<(u64, String)> = Vec::new();
+    for i in 0..300u64 {
+        // Pseudo-shuffle index so successive BED lines are not coordinate-ordered.
+        let k = (i * 173) % 300;
+        let start = k * 600 + 25;
+        let end = start + 40 + (k % 7) * 30;
+        rows.push((i, format!("chr1\t{start}\t{end}\treg_{k}\t0\t.")));
+    }
+    let bed_content: String = rows
+        .iter()
+        .map(|(_, l)| l.as_str())
+        .collect::<Vec<_>>()
+        .join("\n")
+        + "\n";
+    std::fs::write(&bed, bed_content).expect("write sweep BED");
+
+    (bam, bed)
+}
+
 /// The coverage column(s) from samtools bedcov output (tab-separated, one per BAM).
 /// We compare only these appended columns, not any potential whitespace differences
 /// in the original BED columns (samtools passes the BED through verbatim).
@@ -152,6 +225,51 @@ fn matches_samtools_bedcov() {
     }
 
     eprintln!("compat OK: {ours_str}");
+}
+
+#[test]
+fn sweep_path_matches_samtools_bedcov() {
+    if !samtools_available() {
+        eprintln!("skipping: samtools not found");
+        return;
+    }
+    let dir = golden_dir();
+    let (bam, bed) = ensure_sweep_golden(&dir);
+
+    let ours = bin()
+        .arg(&bed)
+        .arg(&bam)
+        .output()
+        .expect("run rsomics-bam-bedcov");
+    assert!(
+        ours.status.success(),
+        "rsomics-bam-bedcov failed: {}",
+        String::from_utf8_lossy(&ours.stderr)
+    );
+
+    let theirs = Command::new("samtools")
+        .arg("bedcov")
+        .arg(&bed)
+        .arg(&bam)
+        .output()
+        .expect("run samtools bedcov");
+    assert!(
+        theirs.status.success(),
+        "samtools bedcov failed: {}",
+        String::from_utf8_lossy(&theirs.stderr)
+    );
+
+    // The sweep path's output must be byte-identical to samtools: same coverage
+    // counts (D/N positions included), same input BED order, same column
+    // passthrough. This is the gate the small-region indexed test cannot reach.
+    assert_eq!(
+        ours.stdout,
+        theirs.stdout,
+        "sweep-path output differs from samtools bedcov\n\
+         ours:\n{}\nsamtools:\n{}",
+        String::from_utf8_lossy(&ours.stdout),
+        String::from_utf8_lossy(&theirs.stdout)
+    );
 }
 
 #[test]
