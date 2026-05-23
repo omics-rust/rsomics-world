@@ -1403,6 +1403,19 @@ dependencies = [
 ]
 
 [[package]]
+name = "rsomics-atac-shift"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "rsomics-bamio",
+ "rsomics-common",
+ "rsomics-help",
+ "serde",
+ "serde_json",
+ "tempfile",
+]
+
+[[package]]
 name = "rsomics-bam-addreplacerg"
 version = "0.1.0"
 dependencies = [
@@ -2414,6 +2427,19 @@ dependencies = [
  "libdeflater",
  "rayon",
  "rsomics-common",
+ "tempfile",
+]
+
+[[package]]
+name = "rsomics-fragment-size"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "rsomics-bamio",
+ "rsomics-common",
+ "rsomics-help",
+ "serde",
+ "serde_json",
  "tempfile",
 ]
 
