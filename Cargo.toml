@@ -94,6 +94,7 @@ rsomics-intervals = { path = "crates/foundation/rsomics-intervals/" }
 rsomics-kmer = { path = "crates/foundation/rsomics-kmer/" }
 rsomics-models = { path = "crates/foundation/rsomics-models/" }
 rsomics-pgen = { path = "crates/foundation/rsomics-pgen/" }
+rsomics-pileup = { path = "crates/foundation/rsomics-pileup/" }
 rsomics-phylo-tree = { path = "crates/foundation/rsomics-phylo-tree/" }
 rsomics-popgen-core = { path = "crates/foundation/rsomics-popgen-core/" }
 rsomics-seqio = { path = "crates/foundation/rsomics-seqio/" }

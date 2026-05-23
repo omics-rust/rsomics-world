@@ -1,0 +1,20 @@
+[package]
+name = "rsomics-pileup"
+version = "0.1.0"
+description = "Coordinate-sorted BAM pileup engine (htslib bam_plp port): per-position read columns with CIGAR-resolved qpos/indel/head/tail and overlapping-mate quality removal. Layer A primitive shared by rsomics-bam-mpileup and rsomics-bam-consensus."
+edition = "2024"
+rust-version = "1.91"
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/omics-rust/rsomics-world"
+authors = ["Zane Leong <efd@live.com>"]
+readme = "README.md"
+categories = ["science"]
+keywords = ["bam", "pileup", "bioinformatics", "samtools", "mpileup"]
+
+[dependencies]
+rsomics-common = { version = "0.6" }
+rsomics-bamio = { version = "0.1.5" }
+noodles = { version = "0.110", features = ["sam", "bam"] }
+
+[dev-dependencies]
+tempfile = "3"
