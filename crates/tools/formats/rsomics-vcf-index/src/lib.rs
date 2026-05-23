@@ -7,10 +7,11 @@ use noodles::core::Position;
 use noodles::csi::{
     self as csi,
     binning_index::index::{
+        ReferenceSequence,
         header::{Builder as HeaderBuilder, ReferenceSequenceNames},
         reference_sequence::bin::Chunk,
     },
-    binning_index::{self, index::reference_sequence::index::BinnedIndex},
+    binning_index::{self, BinningIndex, index::reference_sequence::index::BinnedIndex},
 };
 use noodles::tabix;
 use noodles::vcf::{self, Header};
@@ -67,6 +68,19 @@ fn build_csi(src: &Path) -> io::Result<csi::Index> {
     let mut indexer =
         binning_index::Indexer::<BinnedIndex>::new(CSI_MIN_SHIFT, CSI_DEPTH).set_header(csi_header);
 
+    let contig_count = header.contigs().len();
+
+    // Per-reference linear index, mirroring htslib's `lidx`/`l.offset[]` (hts.c
+    // `insert_to_l`). noodles' BinnedIndex stores each bin's loffset from the
+    // record's own bin only; htslib derives every bin's loffset from this 16 kbp
+    // linear index, so a spanning structural-variant record (e.g. `<DEL>` with a
+    // far `END=`) lowers the loffset of every window it overlaps. Without that
+    // propagation a region query overlapping the SV's span but not its start would
+    // prune the SV's chunk on the `chunk.end <= loffset` test htslib applies.
+    let mut linear_indices: Vec<LinearIndexBuilder> = (0..contig_count)
+        .map(|_| LinearIndexBuilder::default())
+        .collect();
+
     let mut line = Vec::new();
     let mut start_pos = reader.virtual_position();
 
@@ -82,12 +96,139 @@ fn build_csi(src: &Path) -> io::Result<csi::Index> {
             )
         })?;
 
+        linear_indices[ref_id].insert(start, end, start_pos);
         indexer.add_record(Some((ref_id, start, end, true)), chunk)?;
         start_pos = end_pos;
     }
 
-    let contig_count = header.contigs().len();
-    Ok(indexer.build(contig_count))
+    let index = indexer.build(contig_count);
+    Ok(apply_linear_loffsets(&index, &mut linear_indices))
+}
+
+/// htslib's linear index for one reference: a 16 kbp-window array of the earliest
+/// (smallest) record start voffset reaching each window (hts.c `lidx_t`).
+#[derive(Default)]
+struct LinearIndexBuilder {
+    offsets: Vec<Option<bgzf::VirtualPosition>>,
+}
+
+impl LinearIndexBuilder {
+    /// Mirror of htslib `insert_to_l`: fill windows `beg>>min_shift ..=
+    /// (end-1)>>min_shift` with `offset`, but only where still unset. Records
+    /// arrive in start order, so the first record to reach a window carries the
+    /// minimum start voffset of any record overlapping it.
+    fn insert(&mut self, start: Position, end: Position, offset: bgzf::VirtualPosition) {
+        let shift = usize::from(CSI_MIN_SHIFT);
+        let beg = (usize::from(start) - 1) >> shift;
+        let end = (usize::from(end) - 1) >> shift;
+
+        if self.offsets.len() < end + 1 {
+            self.offsets.resize(end + 1, None);
+        }
+
+        for window in &mut self.offsets[beg..=end] {
+            window.get_or_insert(offset);
+        }
+    }
+
+    /// Mirror of the backfill loop in htslib `update_loff`: walk right→left and
+    /// give every still-unset window the value of its right neighbour, so each
+    /// window holds the smallest start voffset of any record at-or-after it.
+    fn finish(&mut self) {
+        for i in (0..self.offsets.len().saturating_sub(1)).rev() {
+            if self.offsets[i].is_none() {
+                self.offsets[i] = self.offsets[i + 1];
+            }
+        }
+    }
+
+    /// The loffset htslib assigns a bin: `lidx[hts_bin_bot(bin)]`, i.e. the linear
+    /// index entry for the bin's lowest-coordinate covered window. Out-of-range
+    /// (no record reached that window) yields the default (0), matching htslib's
+    /// `bot_bin < lidx->n ? lidx->offset[bot_bin] : 0`.
+    fn loffset(&self, bin_id: usize) -> bgzf::VirtualPosition {
+        let bot = hts_bin_bot(bin_id, CSI_DEPTH);
+        self.offsets.get(bot).copied().flatten().unwrap_or_default()
+    }
+}
+
+/// First bin id on level `l` of the binning tree (hts.h `hts_bin_first`).
+fn hts_bin_first(level: u32) -> usize {
+    ((1usize << (3 * level)) - 1) / 7
+}
+
+/// Level of a bin in the binning tree (hts.h `hts_bin_level`): parent walks to 0.
+fn hts_bin_level(mut bin: usize) -> u32 {
+    let mut level = 0;
+    while bin != 0 {
+        bin = (bin - 1) >> 3;
+        level += 1;
+    }
+    level
+}
+
+/// Lowest-coordinate linear-index window covered by `bin` (hts.h `hts_bin_bot`):
+/// `(bin - hts_bin_first(level)) << ((n_lvls - level) * 3)`.
+fn hts_bin_bot(bin: usize, depth: u8) -> usize {
+    let level = hts_bin_level(bin);
+    let n_lvls = u32::from(depth);
+    (bin - hts_bin_first(level)) << ((n_lvls - level) * 3)
+}
+
+/// Replace every bin's loffset with htslib's linear-index-derived value
+/// (`update_loff` in hts.c), closing the spanning-SV gap in noodles' per-bin
+/// loffset. The bin chunk lists, metadata, and binning parameters built by the
+/// indexer are preserved; only the `BinnedIndex` loffset map of each reference is
+/// rebuilt. O(bins) over an already-collected linear index — no hot-path cost.
+fn apply_linear_loffsets(
+    index: &csi::Index,
+    linear_indices: &mut [LinearIndexBuilder],
+) -> csi::Index {
+    let min_shift = index.min_shift();
+    let depth = index.depth();
+    let header = index.header().cloned();
+    let unplaced = index.unplaced_unmapped_record_count();
+
+    let reference_sequences: Vec<ReferenceSequence<BinnedIndex>> = index
+        .reference_sequences()
+        .iter()
+        .zip(linear_indices.iter_mut())
+        .map(|(reference_sequence, linear_index)| {
+            linear_index.finish();
+
+            let bins = reference_sequence.bins().clone();
+            let loffsets: BinnedIndex = bins
+                .keys()
+                .map(|&bin_id| (bin_id, linear_index.loffset(bin_id)))
+                .collect();
+            let metadata = csi_metadata(reference_sequence).cloned();
+
+            ReferenceSequence::new(bins, loffsets, metadata)
+        })
+        .collect();
+
+    let mut builder = csi::Index::builder()
+        .set_min_shift(min_shift)
+        .set_depth(depth)
+        .set_reference_sequences(reference_sequences);
+
+    if let Some(header) = header {
+        builder = builder.set_header(header);
+    }
+    if let Some(count) = unplaced {
+        builder = builder.set_unplaced_unmapped_record_count(count);
+    }
+
+    builder.build()
+}
+
+/// Read a reference sequence's metadata pseudo-bin through the trait the CSI
+/// reference-sequence type implements.
+fn csi_metadata(
+    reference_sequence: &ReferenceSequence<BinnedIndex>,
+) -> Option<&csi::binning_index::index::reference_sequence::Metadata> {
+    use csi::binning_index::ReferenceSequence as _;
+    reference_sequence.metadata()
 }
 
 // TBI: LinearIndex, tabix VCF preset.

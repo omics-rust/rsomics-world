@@ -11,6 +11,14 @@ fn fixture_gz() -> PathBuf {
     Path::new(env!("CARGO_MANIFEST_DIR")).join("tests/golden/small.vcf.gz")
 }
 
+/// A VCF carrying spanning structural variants (`<DEL>`/`<DUP>` with far `END=`,
+/// each crossing several 16 kbp linear-index windows) interleaved with SNVs. The
+/// SV regression lives here: a region query inside an SV's span but past its
+/// start must still surface the SV.
+fn sv_fixture_gz() -> PathBuf {
+    Path::new(env!("CARGO_MANIFEST_DIR")).join("tests/golden/sv.vcf.gz")
+}
+
 fn bcftools_path() -> Option<String> {
     let candidates = [
         "bcftools",
@@ -179,6 +187,108 @@ fn tbi_region_query_matches_bcftools() {
         eprintln!("TBI {region}: {} records, match OK", ours_records.len());
     }
 }
+
+/// CSI on the SV fixture: regions that overlap a spanning SV's span but not its
+/// start must return the SAME records (incl. the SV) whether queried through our
+/// .csi or bcftools' own .csi. This is the spanning-SV gap the linear-index
+/// loffset pass closes; before the fix, deep-in-span queries dropped the SV.
+#[test]
+fn csi_sv_region_query_matches_bcftools() {
+    let Some(bcftools) = bcftools_path() else {
+        eprintln!("skipping: bcftools not found");
+        return;
+    };
+
+    let tmp = TempDir::new().unwrap();
+    let our_vcf = tmp.path().join("ours.vcf.gz");
+    let ref_vcf = tmp.path().join("ref.vcf.gz");
+    std::fs::copy(sv_fixture_gz(), &our_vcf).unwrap();
+    std::fs::copy(sv_fixture_gz(), &ref_vcf).unwrap();
+
+    assert!(ours().arg(&our_vcf).status().unwrap().success());
+    assert!(
+        Command::new(&bcftools)
+            .args(["index", "-c"])
+            .arg(&ref_vcf)
+            .status()
+            .unwrap()
+            .success()
+    );
+
+    for region in SV_REGIONS {
+        let ours_records = query_records(&bcftools, &our_vcf, region);
+        let ref_records = query_records(&bcftools, &ref_vcf, region);
+        assert_eq!(
+            ours_records, ref_records,
+            "CSI SV region {region}: record mismatch (spanning-SV gap)"
+        );
+        eprintln!("CSI SV {region}: {} records, match OK", ours_records.len());
+    }
+}
+
+/// TBI on the SV fixture: same equivalence over spanning-SV regions, via the
+/// tabix linear index.
+#[test]
+fn tbi_sv_region_query_matches_bcftools() {
+    let Some(bcftools) = bcftools_path() else {
+        eprintln!("skipping: bcftools not found");
+        return;
+    };
+
+    let tmp = TempDir::new().unwrap();
+    let our_vcf = tmp.path().join("ours.vcf.gz");
+    let ref_vcf = tmp.path().join("ref.vcf.gz");
+    std::fs::copy(sv_fixture_gz(), &our_vcf).unwrap();
+    std::fs::copy(sv_fixture_gz(), &ref_vcf).unwrap();
+
+    assert!(
+        ours()
+            .args(["--tbi"])
+            .arg(&our_vcf)
+            .status()
+            .unwrap()
+            .success()
+    );
+    assert!(
+        Command::new(&bcftools)
+            .args(["index", "-t"])
+            .arg(&ref_vcf)
+            .status()
+            .unwrap()
+            .success()
+    );
+
+    for region in SV_REGIONS {
+        let ours_records = query_records(&bcftools, &our_vcf, region);
+        let ref_records = query_records(&bcftools, &ref_vcf, region);
+        assert_eq!(
+            ours_records, ref_records,
+            "TBI SV region {region}: record mismatch (spanning-SV gap)"
+        );
+        eprintln!("TBI SV {region}: {} records, match OK", ours_records.len());
+    }
+}
+
+/// Single-base regions sampling the spanning SVs in `sv.vcf`: starts, mid-span,
+/// and deep-in-span (where the pre-fix CSI dropped the SV), plus SV-free gaps.
+const SV_REGIONS: &[&str] = &[
+    "chr1:20000-20000",   // del1 start
+    "chr1:50000-50000",   // mid del1 span + snv3
+    "chr1:75000-75000",   // mid del1 span only
+    "chr1:80000-80000",   // del1 span end
+    "chr1:81000-81000",   // just past del1 (no SV)
+    "chr1:100000-100000", // dup1 start
+    "chr1:130000-130000", // mid dup1
+    "chr1:151000-151000", // deep dup1 (pre-fix dropped it)
+    "chr1:196000-196000", // deep dup1 (pre-fix dropped it)
+    "chr1:200000-200000", // dup1 span end
+    "chr1:205000-205000", // just past dup1 (no SV)
+    "chr2:15000-15000",   // del2 start
+    "chr2:60000-60000",   // mid del2
+    "chr2:100000-100000", // deep del2
+    "chr2:120000-120000", // del2 span end
+    "chr2:130000-130000", // just past del2 (no SV)
+];
 
 /// No-overwrite guard: running without --force on an existing index must fail.
 #[test]
