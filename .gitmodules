@@ -343,3 +343,6 @@
 [submodule "crates/tools/formats/rsomics-fasta-subseq"]
 	path = crates/tools/formats/rsomics-fasta-subseq
 	url = git@github.com:omics-rust/rsomics-fasta-subseq.git
+[submodule "crates/tools/formats/rsomics-fasta-locate"]
+	path = crates/tools/formats/rsomics-fasta-locate
+	url = git@github.com:omics-rust/rsomics-fasta-locate.git
