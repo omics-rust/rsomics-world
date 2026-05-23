@@ -109,7 +109,7 @@ rsomics-bam-to-fastq = { path = "../../tools/formats/rsomics-bam-to-fastq", vers
 rsomics-bam-view = { path = "../../tools/formats/rsomics-bam-view", version = "0.1", optional = true }
 rsomics-sam-to-bam = { path = "../../tools/formats/rsomics-sam-to-bam", version = "0.1", optional = true }
 
-rsomics-bed-utils = { path = "../../tools/formats/rsomics-bed-utils", version = "0.1", optional = true }
+rsomics-bed-utils = { path = "../../tools/formats/rsomics-bed-utils", version = "0.2", optional = true }
 rsomics-gff-utils = { path = "../../tools/formats/rsomics-gff-utils", version = "0.1", optional = true }
 
 [lints]

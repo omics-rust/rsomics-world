@@ -1400,6 +1400,20 @@ dependencies = [
 ]
 
 [[package]]
+name = "rsomics-bam-bedcov"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "itoa",
+ "noodles",
+ "rsomics-common",
+ "rsomics-help",
+ "serde",
+ "serde_json",
+ "tempfile",
+]
+
+[[package]]
 name = "rsomics-bam-coverage"
 version = "0.1.0"
 dependencies = [
@@ -1419,6 +1433,34 @@ version = "0.1.0"
 dependencies = [
  "clap",
  "itoa",
+ "noodles",
+ "rsomics-bamio",
+ "rsomics-common",
+ "rsomics-help",
+ "serde",
+ "serde_json",
+ "tempfile",
+]
+
+[[package]]
+name = "rsomics-bam-fasta"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "noodles",
+ "rsomics-bamio",
+ "rsomics-common",
+ "rsomics-help",
+ "serde",
+ "serde_json",
+ "tempfile",
+]
+
+[[package]]
+name = "rsomics-bam-fixmate"
+version = "0.1.0"
+dependencies = [
+ "clap",
  "noodles",
  "rsomics-bamio",
  "rsomics-common",
@@ -1628,7 +1670,7 @@ dependencies = [
 
 [[package]]
 name = "rsomics-bed-utils"
-version = "0.1.0"
+version = "0.2.0"
 dependencies = [
  "clap",
  "needletail 0.6.3",
@@ -2455,6 +2497,32 @@ dependencies = [
 ]
 
 [[package]]
+name = "rsomics-vcf-concat"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "flate2",
+ "rsomics-common",
+ "rsomics-help",
+ "serde",
+ "serde_json",
+ "tempfile",
+]
+
+[[package]]
+name = "rsomics-vcf-consensus"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "flate2",
+ "rsomics-common",
+ "rsomics-help",
+ "serde",
+ "serde_json",
+ "tempfile",
+]
+
+[[package]]
 name = "rsomics-vcf-filter"
 version = "0.1.1"
 dependencies = [
@@ -2512,6 +2580,31 @@ dependencies = [
 ]
 
 [[package]]
+name = "rsomics-vcf-reheader"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "rsomics-common",
+ "rsomics-help",
+ "serde",
+ "serde_json",
+ "tempfile",
+]
+
+[[package]]
+name = "rsomics-vcf-sort"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "flate2",
+ "rsomics-common",
+ "rsomics-help",
+ "serde",
+ "serde_json",
+ "tempfile",
+]
+
+[[package]]
 name = "rsomics-vcf-split"
 version = "0.1.0"
 dependencies = [
@@ -2558,6 +2651,19 @@ dependencies = [
  "clap",
  "rsomics-common",
  "rsomics-help",
+]
+
+[[package]]
+name = "rsomics-vcf-view"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "flate2",
+ "rsomics-common",
+ "rsomics-help",
+ "serde",
+ "serde_json",
+ "tempfile",
 ]
 
 [[package]]
