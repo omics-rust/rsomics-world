@@ -3,7 +3,7 @@ use std::fmt;
 use std::num::NonZero;
 use std::path::Path;
 
-use rsomics_bamio::raw::{RawRecord, read_record};
+use rsomics_bamio::raw::{RecordReader, RecordRef};
 use rsomics_common::{Result, RsomicsError};
 
 /// Finite-field prime for multiplicative hash combination, matching biobambam2.
@@ -177,7 +177,7 @@ const NT16_REV: &[u8; 16] = b"=TGKCYSBAWRDMHVN";
 /// Offset into the raw payload where the packed seq nibbles begin.
 ///
 /// Uses the same layout computation as `AuxIter::new` and BAM spec §4.2.
-fn seq_raw_offset(rec: &RawRecord) -> usize {
+fn seq_raw_offset(rec: RecordRef<'_>) -> usize {
     let b = rec.as_bytes();
     let l_read_name = usize::from(b[8]);
     let n_cigar = usize::from(u16::from_le_bytes([b[12], b[13]]));
@@ -191,7 +191,7 @@ fn seq_raw_offset(rec: &RawRecord) -> usize {
 /// `fill_seq_qual`. Qual is offset by +33 for biobambam2 compatibility.
 /// `BAM_FREVERSE = 0x10`.
 fn fill_seq_qual(
-    rec: &RawRecord,
+    rec: RecordRef<'_>,
     flags: u16,
     rev_comp: bool,
     seq_buf: &mut Vec<u8>,
@@ -292,8 +292,8 @@ struct AuxIter<'a> {
 }
 
 impl<'a> AuxIter<'a> {
-    fn new(rec: &'a RawRecord) -> Self {
-        let b = rec.as_bytes();
+    fn new(rec: RecordRef<'a>) -> Self {
+        let b = rec.payload();
         // Compute aux_start from SAMv1 §4.2 record layout.
         let l_read_name = usize::from(b[8]);
         let n_cigar = usize::from(u16::from_le_bytes([b[12], b[13]]));
@@ -351,7 +351,7 @@ const MAX_TAGS: usize = 16;
 /// Concatenates selected tags in the requested order (missing tags are skipped),
 /// then chains the CRC from `crc_seq`. Also extracts the RG:Z: value if present.
 fn hash_aux_tags(
-    rec: &RawRecord,
+    rec: RecordRef<'_>,
     tags: &[[u8; 2]],
     crc_seq: u32,
     rg_out: &mut Option<Vec<u8>>,
@@ -425,7 +425,7 @@ fn hash_aux_tags(
 ///
 /// Returns `None` for filtered records.
 fn record_crcs(
-    rec: &RawRecord,
+    rec: RecordRef<'_>,
     opts: &ChecksumOpts,
     seq_buf: &mut Vec<u8>,
     qual_buf: &mut Vec<u8>,
@@ -508,56 +508,26 @@ pub fn run_checksum(path: &Path, opts: &ChecksumOpts) -> Result<ChecksumResult> 
     let mut no_rg = Sums::new();
     let mut rg_map: HashMap<Vec<u8>, Sums> = HashMap::new();
 
-    if opts.workers.get() == 1 {
-        // Serial path: process each record inline without cloning.
-        // Eliminates the batch copy overhead that dominates at one thread.
-        let mut raw = RawRecord::default();
-        let mut seq_buf = Vec::new();
-        let mut qual_buf = Vec::new();
-        let mut aux_buf = Vec::new();
-        loop {
-            let n = reader.get_mut();
-            let bytes_read = read_record(n, &mut raw).map_err(|e| {
-                RsomicsError::InvalidInput(format!("reading record from {}: {e}", path.display()))
-            })?;
-            if bytes_read == 0 {
-                break;
-            }
-            if let Some((crcs, rg_key)) =
-                record_crcs(&raw, opts, &mut seq_buf, &mut qual_buf, &mut aux_buf)
-            {
-                all.update(&crcs);
-                match rg_key {
-                    Some(key) => rg_map.entry(key).or_insert_with(Sums::new).update(&crcs),
-                    None => no_rg.update(&crcs),
-                }
-            }
-        }
-    } else {
-        // Multi-worker path: BGZF decompression across multiple workers, CRCs
-        // computed serially. The BGZF worker pool already saturates IO bandwidth;
-        // adding a second rayon pool for CRC creates core contention and increases
-        // overall latency.
-        let mut raw = RawRecord::default();
-        let mut seq_buf = Vec::new();
-        let mut qual_buf = Vec::new();
-        let mut aux_buf = Vec::new();
-        loop {
-            let n = reader.get_mut();
-            let bytes_read = read_record(n, &mut raw).map_err(|e| {
-                RsomicsError::InvalidInput(format!("reading record from {}: {e}", path.display()))
-            })?;
-            if bytes_read == 0 {
-                break;
-            }
-            if let Some((crcs, rg_key)) =
-                record_crcs(&raw, opts, &mut seq_buf, &mut qual_buf, &mut aux_buf)
-            {
-                all.update(&crcs);
-                match rg_key {
-                    Some(key) => rg_map.entry(key).or_insert_with(Sums::new).update(&crcs),
-                    None => no_rg.update(&crcs),
-                }
+    // The CRC fold is order-independent (multiplication in GF(PRIME)) and pure
+    // read+hash, so it runs serially regardless of worker count: BGZF inflate is
+    // the only parallel axis worth spending here, and a second pool for the CRC
+    // would just contend for cores. `RecordReader` borrows each record straight
+    // out of the inflated block buffer (no per-record alloc or copy), which is
+    // what the hash-bound single-thread path was losing to before.
+    let mut seq_buf = Vec::new();
+    let mut qual_buf = Vec::new();
+    let mut aux_buf = Vec::new();
+    let mut scanner = RecordReader::new(reader.get_mut());
+    while let Some(rec) = scanner.next().map_err(|e| {
+        RsomicsError::InvalidInput(format!("reading record from {}: {e}", path.display()))
+    })? {
+        if let Some((crcs, rg_key)) =
+            record_crcs(rec, opts, &mut seq_buf, &mut qual_buf, &mut aux_buf)
+        {
+            all.update(&crcs);
+            match rg_key {
+                Some(key) => rg_map.entry(key).or_insert_with(Sums::new).update(&crcs),
+                None => no_rg.update(&crcs),
             }
         }
     }
