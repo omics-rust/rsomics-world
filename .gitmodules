@@ -340,3 +340,6 @@
 [submodule "crates/tools/genomics/rsomics-bed12-to-bed6"]
 	path = crates/tools/genomics/rsomics-bed12-to-bed6
 	url = git@github.com:omics-rust/rsomics-bed12-to-bed6.git
+[submodule "crates/tools/formats/rsomics-fasta-subseq"]
+	path = crates/tools/formats/rsomics-fasta-subseq
+	url = git@github.com:omics-rust/rsomics-fasta-subseq.git
