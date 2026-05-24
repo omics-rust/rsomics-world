@@ -375,3 +375,6 @@
 [submodule "crates/tools/transcriptomics/rsomics-bam-strandedness"]
 	path = crates/tools/transcriptomics/rsomics-bam-strandedness
 	url = git@github.com:omics-rust/rsomics-bam-strandedness.git
+[submodule "crates/tools/transcriptomics/rsomics-genebody-coverage"]
+	path = crates/tools/transcriptomics/rsomics-genebody-coverage
+	url = git@github.com:omics-rust/rsomics-genebody-coverage.git
