@@ -384,3 +384,6 @@
 [submodule "crates/tools/transcriptomics/rsomics-read-duplication"]
 	path = crates/tools/transcriptomics/rsomics-read-duplication
 	url = git@github.com:omics-rust/rsomics-read-duplication.git
+[submodule "crates/tools/transcriptomics/rsomics-read-gc"]
+	path = crates/tools/transcriptomics/rsomics-read-gc
+	url = git@github.com:omics-rust/rsomics-read-gc.git
