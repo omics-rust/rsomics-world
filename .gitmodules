@@ -420,3 +420,6 @@
 [submodule "crates/tools/formats/rsomics-bam-reset"]
 	path = crates/tools/formats/rsomics-bam-reset
 	url = git@github.com:omics-rust/rsomics-bam-reset.git
+[submodule "crates/tools/formats/rsomics-vcf-fill-tags"]
+	path = crates/tools/formats/rsomics-vcf-fill-tags
+	url = git@github.com:omics-rust/rsomics-vcf-fill-tags.git
