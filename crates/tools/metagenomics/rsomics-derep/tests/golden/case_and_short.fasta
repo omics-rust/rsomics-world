@@ -1,0 +1,14 @@
+>rep_lowercase
+acgtacgtacgtacgtacgtacgtacgtacgt
+>dup_uppercase
+ACGTACGTACGTACGTACGTACGTACGTACGT
+>short_below32
+acgtacgt
+>rna_first
+acguacguacguacguacguacguacguacgu
+>dna_dup
+ACGTACGTACGTACGTACGTACGTACGTACGT
+>tie_a
+CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+>tie_b_sizein
+GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG
