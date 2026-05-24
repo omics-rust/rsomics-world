@@ -432,3 +432,6 @@
 [submodule "crates/tools/formats/rsomics-vcf-fixref"]
 	path = crates/tools/formats/rsomics-vcf-fixref
 	url = git@github.com:omics-rust/rsomics-vcf-fixref.git
+[submodule "crates/tools/epigenomics/rsomics-atac-shift"]
+	path = crates/tools/epigenomics/rsomics-atac-shift
+	url = git@github.com:omics-rust/rsomics-atac-shift.git
