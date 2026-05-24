@@ -1852,9 +1852,10 @@ dependencies = [
 
 [[package]]
 name = "rsomics-bamio"
-version = "0.1.9"
+version = "0.1.10"
 dependencies = [
  "crossbeam-channel",
+ "libdeflater",
  "noodles",
  "noodles-bgzf",
  "rsomics-common",

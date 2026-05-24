@@ -13,9 +13,9 @@
 //! directly into the raw aux tail via `RawRecord::set_aux`. This avoids the
 //! full `RecordBuf` decode+re-encode round-trip (the former bottleneck at
 //! `-t4` and above, accounting for 67% of wall time). Output goes through the
-//! bamio parallel BGZF writer — at `workers >= 2` via the batched
-//! [`BatchBamWriter`], which frames each batch on its own thread so the main
-//! thread's per-record write cost no longer caps multi-thread throughput.
+//! bamio work-stealing BGZF writer — at `workers >= 2` via the
+//! [`WsBatchBamWriter`], which frames each batch on its own thread so the
+//! main thread's per-record write cost no longer caps multi-thread throughput.
 //!
 //! The reference is read from an indexed FASTA (`.fai`); each contig is fetched
 //! once on first use and cached for the run. Coordinate-sorted input therefore
@@ -42,7 +42,7 @@ use noodles::sam::alignment::record::data::field::Tag;
 use noodles::sam::alignment::record_buf::data::field::Value;
 use rayon::prelude::*;
 use rsomics_bamio::raw::{self, RawRecord};
-use rsomics_bamio::{BatchBamWriter, ParallelBamWriter};
+use rsomics_bamio::{WsBamWriter, WsBatchBamWriter};
 use rsomics_common::{Result, RsomicsError};
 use serde::Serialize;
 
@@ -514,12 +514,22 @@ pub fn calmd(
 
     match output_path {
         Some(path) => {
-            let writer = rsomics_bamio::create_with_workers(path, workers)?;
+            // All thread counts use the work-stealing BGZF writer so the
+            // compressed output is byte-identical across -t1/-t4/-t8. The WS
+            // writer runs libdeflate level 6 on a fixed ring with no per-block
+            // allocation regardless of worker count.
+            let ws_writer = rsomics_bamio::create_ws_with_workers(path, workers)?;
             if workers.get() == 1 {
-                let mut writer = writer;
-                run_serial_raw(reader.get_mut(), &mut writer, &header, &mut refs, opts)
+                run_serial_raw_ws(reader.get_mut(), ws_writer, &header, &mut refs, opts)
             } else {
-                run_parallel_raw(reader.get_mut(), writer, &header, &mut refs, opts, workers)
+                run_parallel_raw_ws(
+                    reader.get_mut(),
+                    ws_writer,
+                    &header,
+                    &mut refs,
+                    opts,
+                    workers,
+                )
             }
         }
         None => {
@@ -529,29 +539,27 @@ pub fn calmd(
     }
 }
 
-/// Serial raw path: read raw BAM records, compute MD/NM from nibble SEQ, write
-/// raw bytes with aux tags patched in-place. No noodles codec round-trip.
-fn run_serial_raw<R, W, F>(
+/// Serial raw path backed by the work-stealing BGZF writer, for `-t1` with file
+/// output. Uses the same WS writer as the parallel path so the compressed
+/// output is byte-identical to `-t4`/`-t8` runs on the same input.
+fn run_serial_raw_ws<R, F>(
     inner: &mut R,
-    writer: &mut bam::io::Writer<W>,
+    mut writer: WsBamWriter,
     header: &noodles::sam::Header,
     refs: &mut RefCache<F>,
     opts: &CalmdOpts,
 ) -> Result<CalmdStats>
 where
     R: std::io::BufRead,
-    W: std::io::Write,
     F: std::io::BufRead + std::io::Seek,
 {
+    use rsomics_bamio::finish_ws_bam_writer;
     use rsomics_bamio::raw::write_record;
 
     writer.write_header(header).map_err(RsomicsError::Io)?;
-    let writer_inner = writer.get_mut();
 
     let mut stats = CalmdStats::default();
     let mut record = RawRecord::default();
-    // Per-record scratch reused across the whole stream — no allocation in the
-    // hot loop once warmed up.
     let mut cigar_buf: Vec<(u8, u32)> = Vec::new();
     let mut md: Vec<u8> = Vec::new();
 
@@ -570,8 +578,13 @@ where
             &mut cigar_buf,
             &mut md,
         )?;
-        write_record(writer_inner, &record)?;
+        // Write directly to the WsBamWriter's inner stream (the WS BGZF
+        // writer), bypassing the noodles bam codec round-trip.
+        write_record(writer.get_mut(), &record)?;
     }
+
+    // Flush all pending BGZF blocks and append the EOF marker.
+    finish_ws_bam_writer(writer)?;
 
     Ok(stats)
 }
@@ -621,24 +634,15 @@ where
 
 /// Parallel raw path: read `BATCH_SIZE` raw records serially, prefetch contigs,
 /// rayon-compute MD/NM on packed nibble SEQ in parallel, hand each computed batch
-/// to the batched writer in order.
+/// to the work-stealing batched writer in order.
 ///
-/// The raw path avoids the noodles RecordBuf decode+re-encode round-trip that
-/// was the bottleneck at `-t4` and above (67% of wall time at t4 in the old
-/// path). Raw records hold on-disk payload bytes (~350 bytes for 150 bp);
-/// `par_iter_mut` modifies them in place with zero per-record allocation beyond
-/// the MD string (~20 bytes).
-///
-/// The write phase hands the whole computed batch to a [`BatchBamWriter`] in one
-/// channel send (moving the `Vec`, no copy) rather than framing each record on
-/// the main thread. The framing + the existing BGZF deflate pool then run off the
-/// main thread, so the main thread's per-batch write cost collapses to the
-/// enqueue. This is what lifts the `-t4`/`-t8` write ceiling that capped the old
-/// per-record `write_record` loop. The output is byte-identical: the framing
-/// thread emits the same records in the same order through the same BGZF writer.
-fn run_parallel_raw<R, F>(
+/// Uses [`WsBatchBamWriter`] over a [`WsBamWriter`]: the underlying BGZF
+/// compressor is the fixed-ring work-stealing writer (no per-block channel
+/// allocation), which removes the throughput ceiling at `-t4` and above that
+/// noodles' per-block-channel `MultithreadedWriter` imposed.
+fn run_parallel_raw_ws<R, F>(
     inner: &mut R,
-    mut writer: ParallelBamWriter,
+    mut writer: WsBamWriter,
     header: &noodles::sam::Header,
     refs: &mut RefCache<F>,
     opts: &CalmdOpts,
@@ -649,22 +653,16 @@ where
     F: std::io::BufRead + std::io::Seek,
 {
     writer.write_header(header).map_err(RsomicsError::Io)?;
-    let mut batch_writer = BatchBamWriter::new(writer);
+    let mut batch_writer = WsBatchBamWriter::new(writer);
 
     let timing = std::env::var("CALMD_PHASE_TIMING").is_ok();
 
-    // Rayon pool sized to `workers`. The BGZF reader uses `workers` inflate
-    // threads and the writer uses `workers` deflate threads in separate pools;
-    // at any point only one batch's worth of records is being computed, so the
-    // three pools are not simultaneously contending for the same data.
     let pool = rayon::ThreadPoolBuilder::new()
         .num_threads(workers.get())
         .build()
         .map_err(|e| RsomicsError::InvalidInput(format!("rayon pool: {e}")))?;
 
     let mut stats = CalmdStats::default();
-    // Persistent contig cache keyed by TID. Coordinate-sorted input fetches
-    // each contig exactly once.
     let mut contig_map: HashMap<usize, Arc<Vec<u8>>> = HashMap::new();
 
     let mut t_read = std::time::Duration::ZERO;
@@ -672,9 +670,6 @@ where
     let mut t_write = std::time::Duration::ZERO;
 
     loop {
-        // --- Phase 1: fill batch (serial raw read) ---
-        // The batch is handed off to the framing thread at the end of the loop
-        // (a `Vec` move), so each iteration starts with a fresh allocation.
         let t0 = Instant::now();
         let mut batch: Vec<RawRecord> = Vec::with_capacity(BATCH_SIZE);
         for _ in 0..BATCH_SIZE {
@@ -692,7 +687,6 @@ where
             break;
         }
 
-        // --- Phase 2: populate contig cache for any TID not yet seen ---
         for record in &batch {
             let flags = record.flags();
             if flags & 0x4 != 0 {
@@ -714,7 +708,6 @@ where
             }
         }
 
-        // --- Phase 3: compute MD/NM in parallel (rayon, in-place) ---
         let t1 = Instant::now();
         let contig_map_ref = &contig_map;
         let opts_ref = opts;
@@ -741,7 +734,6 @@ where
             t_compute += t1.elapsed();
         }
 
-        // --- Phase 4: hand the batch to the framing thread in original order ---
         let t2 = Instant::now();
         stats.records += batch.len() as u64;
         stats.computed += batch_computed.load(std::sync::atomic::Ordering::Relaxed);
@@ -753,8 +745,6 @@ where
         }
     }
 
-    // Flush the framing thread, append the BGZF EOF block, and surface any write
-    // error that occurred off the main thread.
     batch_writer.finish()?;
 
     if timing {
