@@ -438,3 +438,6 @@
 [submodule "crates/tools/epigenomics/rsomics-bam-compare"]
 	path = crates/tools/epigenomics/rsomics-bam-compare
 	url = git@github.com:omics-rust/rsomics-bam-compare.git
+[submodule "crates/tools/epigenomics/rsomics-bam-fingerprint"]
+	path = crates/tools/epigenomics/rsomics-bam-fingerprint
+	url = git@github.com:omics-rust/rsomics-bam-fingerprint.git
