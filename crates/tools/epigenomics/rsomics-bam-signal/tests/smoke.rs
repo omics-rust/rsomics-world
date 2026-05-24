@@ -13,6 +13,7 @@ fn basic_bedgraph_output() {
     let out = bin()
         .arg(golden("small.bam"))
         .args(["-o", "-"])
+        .args(["--out-file-format", "bedgraph"])
         .output()
         .unwrap();
     assert!(
@@ -39,12 +40,14 @@ fn bin_size_affects_output() {
     let out50 = bin()
         .arg(golden("small.bam"))
         .args(["-o", "-"])
+        .args(["--out-file-format", "bedgraph"])
         .args(["--bin-size", "50"])
         .output()
         .unwrap();
     let out100 = bin()
         .arg(golden("small.bam"))
         .args(["-o", "-"])
+        .args(["--out-file-format", "bedgraph"])
         .args(["--bin-size", "100"])
         .output()
         .unwrap();
@@ -70,6 +73,7 @@ fn cpm_normalisation_runs() {
     let out = bin()
         .arg(golden("small.bam"))
         .args(["-o", "-"])
+        .args(["--out-file-format", "bedgraph"])
         .args(["--normalize-using", "CPM"])
         .output()
         .unwrap();
@@ -87,6 +91,7 @@ fn rpgc_requires_effective_genome_size() {
     let out = bin()
         .arg(golden("small.bam"))
         .args(["-o", "-"])
+        .args(["--out-file-format", "bedgraph"])
         .args(["--normalize-using", "RPGC"])
         .output()
         .unwrap();
@@ -101,6 +106,7 @@ fn skip_flags_parsed() {
     let out = bin()
         .arg(golden("small.bam"))
         .args(["-o", "-"])
+        .args(["--out-file-format", "bedgraph"])
         .args(["--skip-flags", "0x400"])
         .output()
         .unwrap();
@@ -108,5 +114,51 @@ fn skip_flags_parsed() {
         out.status.success(),
         "hex skip-flags failed: {}",
         String::from_utf8_lossy(&out.stderr)
+    );
+}
+
+#[test]
+fn bigwig_output_writes_file() {
+    let dir = tempfile::tempdir().unwrap();
+    let bw_path = dir.path().join("out.bw");
+    let out = bin()
+        .arg(golden("small.bam"))
+        .args(["-o", bw_path.to_str().unwrap()])
+        .args(["--out-file-format", "bigwig"])
+        .output()
+        .unwrap();
+    assert!(
+        out.status.success(),
+        "bigwig failed: {}",
+        String::from_utf8_lossy(&out.stderr)
+    );
+    let meta = std::fs::metadata(&bw_path).expect("bigWig file not created");
+    assert!(
+        meta.len() > 64,
+        "bigWig file too small: {} bytes",
+        meta.len()
+    );
+    // Verify the bigWig magic at byte 0.
+    let bytes = std::fs::read(&bw_path).unwrap();
+    let magic = u32::from_le_bytes([bytes[0], bytes[1], bytes[2], bytes[3]]);
+    assert_eq!(magic, 0x888F_FC26, "wrong bigWig magic: 0x{magic:08X}");
+}
+
+#[test]
+fn bigwig_default_format() {
+    // Default format is bigwig — requires an output file, not stdout.
+    let out = bin()
+        .arg(golden("small.bam"))
+        .args(["-o", "-"])
+        .output()
+        .unwrap();
+    assert!(
+        !out.status.success(),
+        "default bigwig to stdout must fail with helpful error"
+    );
+    let stderr = String::from_utf8_lossy(&out.stderr);
+    assert!(
+        stderr.contains("bigWig"),
+        "error message must mention bigWig: {stderr}"
     );
 }

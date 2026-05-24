@@ -1,5 +1,11 @@
-//! Pure-Rust bigWig/BBI reader: header, chromosome B-tree, R-tree interval
-//! search, bedGraph/varStep/fixedStep section decode, and zoom-level statistics.
+//! Pure-Rust bigWig/BBI reader and writer.
+//!
+//! **Reader**: header, chromosome B-tree, R-tree interval search,
+//! bedGraph/varStep/fixedStep section decode, and zoom-level statistics.
+//!
+//! **Writer** ([`writer`] module): write a valid bigWig from a sequence of
+//! `(chrom, start, end, value)` intervals, including chromosome B-tree,
+//! bedGraph-style data sections, CIR-tree index, and zoom-level reductions.
 //!
 //! Two mean-signal paths are exposed:
 //!
@@ -35,6 +41,9 @@
 //! (`libdeflater = "1"`); two crates may not link the same native library.
 //! Block inflation here uses the workspace `flate2` zlib-rs backend (pure
 //! Rust), keeping this Quadrant ①.
+
+pub mod writer;
+pub use writer::{ChromInfo, Interval, write_bigwig};
 
 use std::collections::HashMap;
 use std::fs::File;

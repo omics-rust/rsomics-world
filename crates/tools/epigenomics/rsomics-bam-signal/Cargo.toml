@@ -1,7 +1,7 @@
 [package]
 name = "rsomics-bam-signal"
-version = "0.1.1"
-description = "Binned BAM → bedGraph signal track — Rust port of deeptools bamCoverage"
+version = "0.1.2"
+description = "Binned BAM → bedGraph/bigWig signal track — Rust port of deeptools bamCoverage"
 edition = "2024"
 rust-version = "1.91"
 license = "MIT OR Apache-2.0"
@@ -17,6 +17,7 @@ name = "rsomics_bam_signal"
 path = "src/lib.rs"
 
 [dependencies]
+rsomics-bbi = { version = "0.1.2" }
 rsomics-common = { version = "0.6" }
 rsomics-help = { version = "0.3" }
 rsomics-coverage-core = { version = "0.1" }

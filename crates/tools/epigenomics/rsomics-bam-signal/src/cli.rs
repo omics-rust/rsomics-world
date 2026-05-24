@@ -4,7 +4,9 @@ use clap::Parser;
 use rsomics_common::{CommonFlags, Result, RsomicsError, Tool, ToolMeta};
 use rsomics_help::{Example, FlagSpec, HelpSpec, Origin, Section};
 
-use rsomics_bam_signal::{CoverageOpts, Normalisation, bam_to_bedgraph};
+use rsomics_bam_signal::{
+    CoverageOpts, Normalisation, OutputFormat, bam_to_bedgraph, bam_to_bigwig,
+};
 
 pub const META: ToolMeta = ToolMeta {
     name: env!("CARGO_PKG_NAME"),
@@ -23,9 +25,13 @@ pub struct Cli {
     /// Input BAM file (must be sorted; index not required for whole-genome scan).
     pub bam: PathBuf,
 
-    /// Output bedGraph file (use `-` for stdout).
+    /// Output file (use `-` for stdout, only valid with --out-file-format bedgraph).
     #[arg(short = 'o', long, default_value = "-")]
     pub output: String,
+
+    /// Output format: bedgraph or bigwig. deeptools default is bigwig.
+    #[arg(long = "out-file-format", short = 'F', default_value = "bigwig")]
+    pub out_file_format: OutputFormat,
 
     /// Bin size in bases.
     #[arg(long = "bin-size", short = 'b', default_value_t = 50)]
@@ -71,19 +77,37 @@ impl Tool for Cli {
             effective_genome_size: self.effective_genome_size,
         };
 
-        let mut out: Box<dyn std::io::Write> = if self.output == "-" {
-            Box::new(std::io::stdout().lock())
-        } else {
-            Box::new(std::fs::File::create(&self.output).map_err(RsomicsError::Io)?)
-        };
-
         let workers = std::num::NonZero::new(self.common.thread_count())
             .unwrap_or(std::num::NonZero::<usize>::MIN);
 
-        let lines = bam_to_bedgraph(&self.bam, &mut out, &opts, workers)?;
-
-        if !self.common.quiet {
-            eprintln!("{lines} bedGraph lines written");
+        match self.out_file_format {
+            OutputFormat::BigWig => {
+                if self.output == "-" {
+                    return Err(RsomicsError::InvalidInput(
+                        "bigWig output requires a file path (-o <file.bw>); stdout is not supported".into(),
+                    ));
+                }
+                bam_to_bigwig(
+                    &self.bam,
+                    std::path::Path::new(&self.output),
+                    &opts,
+                    workers,
+                )?;
+                if !self.common.quiet {
+                    eprintln!("bigWig written to {}", self.output);
+                }
+            }
+            OutputFormat::BedGraph => {
+                let mut out: Box<dyn std::io::Write> = if self.output == "-" {
+                    Box::new(std::io::stdout().lock())
+                } else {
+                    Box::new(std::fs::File::create(&self.output).map_err(RsomicsError::Io)?)
+                };
+                let lines = bam_to_bedgraph(&self.bam, &mut out, &opts, workers)?;
+                if !self.common.quiet {
+                    eprintln!("{lines} bedGraph lines written");
+                }
+            }
         }
         Ok(())
     }
@@ -105,17 +129,28 @@ fn parse_flag_hex(s: &str) -> Result<u16> {
 pub static HELP: HelpSpec = HelpSpec {
     name: env!("CARGO_PKG_NAME"),
     version: env!("CARGO_PKG_VERSION"),
-    tagline: "Binned BAM → bedGraph signal track (deeptools bamCoverage port).",
+    tagline: "Binned BAM → bedGraph/bigWig signal track (deeptools bamCoverage port).",
     origin: Some(Origin {
         upstream: "deeptools bamCoverage",
         upstream_license: "MIT",
         our_license: "MIT OR Apache-2.0",
         paper_doi: Some("10.1093/nar/gkw257"),
     }),
-    usage_lines: &["<input.bam> [-o out.bedgraph] [--bin-size 50] [--normalize-using CPM]"],
+    usage_lines: &["<input.bam> [-o out.bw] [-F bigwig] [--bin-size 50] [--normalize-using CPM]"],
     sections: &[Section {
         title: "OPTIONS",
         flags: &[
+            FlagSpec {
+                short: Some('F'),
+                long: "out-file-format",
+                aliases: &[],
+                value: Some("<format>"),
+                type_hint: Some("str"),
+                required: false,
+                default: Some("bigwig"),
+                description: "Output format: bedgraph or bigwig (deeptools default: bigwig).",
+                why_default: None,
+            },
             FlagSpec {
                 short: Some('b'),
                 long: "bin-size",

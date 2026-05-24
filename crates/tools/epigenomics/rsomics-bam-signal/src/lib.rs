@@ -35,8 +35,30 @@ use std::io::{BufWriter, Write};
 use std::num::NonZero;
 use std::path::Path;
 
+use rsomics_bbi::{ChromInfo, Interval, write_bigwig};
 use rsomics_common::{Result, RsomicsError};
 use rsomics_coverage_core::{BinFilter, BinnedCoverage, ChromBins, compute_coverage};
+
+/// Output format for the signal track.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Default)]
+pub enum OutputFormat {
+    BedGraph,
+    #[default]
+    BigWig,
+}
+
+impl std::str::FromStr for OutputFormat {
+    type Err = String;
+    fn from_str(s: &str) -> std::result::Result<Self, Self::Err> {
+        match s {
+            "bedgraph" | "bedGraph" => Ok(Self::BedGraph),
+            "bigwig" | "bigWig" | "BigWig" => Ok(Self::BigWig),
+            _ => Err(format!(
+                "unknown output format '{s}'; choose bedgraph or bigwig"
+            )),
+        }
+    }
+}
 
 /// Which normalisation to apply to raw bin counts.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -124,6 +146,117 @@ pub fn bam_to_bedgraph(
 
     out.flush().map_err(RsomicsError::Io)?;
     Ok(lines)
+}
+
+/// Run the BAM scan and write a bigWig file to `output_path`.
+///
+/// Computes the same bin values as [`bam_to_bedgraph`] (same normalisation,
+/// same run-length merging semantics — adjacent equal bins are merged into
+/// one interval), then converts to `rsomics_bbi::Interval` sorted by
+/// `(chrom_id, start)` and calls [`write_bigwig`].
+pub fn bam_to_bigwig(
+    input: &Path,
+    output_path: &Path,
+    opts: &CoverageOpts,
+    workers: NonZero<usize>,
+) -> Result<()> {
+    if opts.normalisation == Normalisation::Rpgc && opts.effective_genome_size.is_none() {
+        return Err(RsomicsError::InvalidInput(
+            "RPGC normalisation requires --effective-genome-size".into(),
+        ));
+    }
+
+    let filter = BinFilter {
+        skip_flags: opts.skip_flags,
+        min_mapq: opts.min_mapq,
+    };
+    let coverage = compute_coverage(input, opts.bin_size, filter, workers)?;
+    let bin_size = u64::from(opts.bin_size);
+    let scale = scale_factor(opts, &coverage);
+
+    // Build sorted (chrom_id, start, end, value) intervals by merging adjacent
+    // equal-value bins (same logic as the bedGraph run-length emitter).
+    let mut chroms_info: Vec<ChromInfo> = Vec::new();
+    let mut intervals: Vec<Interval> = Vec::new();
+
+    for (chrom_idx, chrom) in coverage.chroms.iter().enumerate() {
+        if chrom.bins.is_empty() {
+            continue;
+        }
+        let chrom_id = u32::try_from(chrom_idx)
+            .map_err(|_| RsomicsError::InvalidInput("too many chromosomes".into()))?;
+        chroms_info.push(ChromInfo {
+            name: chrom.name.clone(),
+            id: chrom_id,
+            length: u32::try_from(chrom.chrom_len).unwrap_or(u32::MAX),
+        });
+        collect_chrom_intervals(chrom, chrom_id, bin_size, scale, &mut intervals);
+    }
+
+    let mut out = std::fs::File::create(output_path).map_err(RsomicsError::Io)?;
+    write_bigwig(&mut out, &chroms_info, &intervals, opts.bin_size)?;
+    Ok(())
+}
+
+/// Collect run-length-merged intervals for one chromosome into `out`.
+fn collect_chrom_intervals(
+    chrom: &ChromBins,
+    chrom_id: u32,
+    bin_size: u64,
+    scale: Option<f64>,
+    out: &mut Vec<Interval>,
+) {
+    let n = chrom.bins.len();
+    let mut write_start: u64 = 0;
+    let mut write_end: u64 = 0;
+    let mut prev_val: Option<f64> = None;
+
+    let flush = |start: u64, end: u64, val: f64, out: &mut Vec<Interval>| {
+        if start == end {
+            return;
+        }
+        // Convert f64 → f32: the bigWig format stores f32 values.
+        out.push(Interval {
+            chrom_id,
+            start: start as u32,
+            end: end as u32,
+            value: val as f32,
+        });
+    };
+
+    for (i, &raw_count) in chrom.bins.iter().enumerate() {
+        let bin_start = i as u64 * bin_size;
+        let bin_end = ((i as u64 + 1) * bin_size).min(chrom.chrom_len);
+
+        let value = match scale {
+            None => raw_count as f64,
+            Some(s) => raw_count as f64 * s,
+        };
+
+        match prev_val {
+            None => {
+                write_start = bin_start;
+                write_end = bin_end;
+                prev_val = Some(value);
+            }
+            Some(pv) if values_equal(pv, value, scale) => {
+                write_end = bin_end;
+            }
+            Some(pv) => {
+                flush(write_start, write_end, pv, out);
+                write_start = bin_start;
+                write_end = bin_end;
+                prev_val = Some(value);
+            }
+        }
+
+        if i + 1 == n
+            && let Some(pv) = prev_val
+            && write_start != write_end
+        {
+            flush(write_start, write_end, pv, out);
+        }
+    }
 }
 
 /// The post-pass normalisation scalar (None = raw integer mode). The denominator
