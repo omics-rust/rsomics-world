@@ -1569,6 +1569,17 @@ dependencies = [
 ]
 
 [[package]]
+name = "rsomics-bam-fingerprint"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "rsomics-bamio",
+ "rsomics-common",
+ "rsomics-help",
+ "tempfile",
+]
+
+[[package]]
 name = "rsomics-bam-fixmate"
 version = "0.1.0"
 dependencies = [

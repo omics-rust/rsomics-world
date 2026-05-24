@@ -101,6 +101,7 @@ rsomics-seqio = { path = "crates/foundation/rsomics-seqio/" }
 rsomics-seqstats = { path = "crates/foundation/rsomics-seqstats/" }
 rsomics-stats = { path = "crates/foundation/rsomics-stats/" }
 rsomics-taxonomy = { path = "crates/foundation/rsomics-taxonomy/" }
+rsomics-bam-fingerprint = { path = "crates/tools/epigenomics/rsomics-bam-fingerprint" }
 rsomics-bam-signal = { path = "crates/tools/epigenomics/rsomics-bam-signal" }
 rsomics-bed-nuc = { path = "crates/tools/epigenomics/rsomics-bed-nuc" }
 rsomics-motif-scan = { path = "crates/tools/epigenomics/rsomics-motif-scan" }

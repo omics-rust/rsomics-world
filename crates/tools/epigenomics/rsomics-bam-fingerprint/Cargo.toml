@@ -1,0 +1,26 @@
+[package]
+name = "rsomics-bam-fingerprint"
+version = "0.1.0"
+description = "ChIP-enrichment fingerprint (cumulative-coverage Lorenz curve) — Rust port of deeptools plotFingerprint"
+edition = "2024"
+rust-version = "1.91"
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/omics-rust/rsomics-world"
+authors = ["Zane Leong <efd@live.com>"]
+
+[[bin]]
+name = "rsomics-bam-fingerprint"
+path = "src/main.rs"
+
+[lib]
+name = "rsomics_bam_fingerprint"
+path = "src/lib.rs"
+
+[dependencies]
+rsomics-common = { version = "0.6" }
+rsomics-help = { version = "0.3" }
+rsomics-bamio = { version = "0.1.9" }
+clap = { version = "4", features = ["derive"] }
+
+[dev-dependencies]
+tempfile = "3"
