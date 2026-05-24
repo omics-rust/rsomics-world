@@ -1527,6 +1527,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "rsomics-bam-compare"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "rsomics-common",
+ "rsomics-coverage-core",
+ "rsomics-help",
+]
+
+[[package]]
 name = "rsomics-bam-coverage"
 version = "0.1.0"
 dependencies = [
@@ -1745,11 +1755,11 @@ dependencies = [
 
 [[package]]
 name = "rsomics-bam-signal"
-version = "0.1.0"
+version = "0.1.1"
 dependencies = [
  "clap",
- "rsomics-bamio",
  "rsomics-common",
+ "rsomics-coverage-core",
  "rsomics-help",
  "tempfile",
 ]
@@ -2005,6 +2015,14 @@ dependencies = [
  "clap",
  "rsomics-common",
  "rsomics-help",
+]
+
+[[package]]
+name = "rsomics-coverage-core"
+version = "0.1.0"
+dependencies = [
+ "rsomics-bamio",
+ "rsomics-common",
 ]
 
 [[package]]
@@ -2737,6 +2755,16 @@ dependencies = [
  "clap",
  "rsomics-common",
  "rsomics-help",
+]
+
+[[package]]
+name = "rsomics-seacr"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "rsomics-common",
+ "rsomics-help",
+ "tempfile",
 ]
 
 [[package]]

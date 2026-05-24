@@ -84,6 +84,7 @@ debug = 1
 rsomics-align-core = { path = "crates/foundation/rsomics-align-core/" }
 rsomics-bamio = { path = "crates/foundation/rsomics-bamio/" }
 rsomics-common = { path = "crates/foundation/rsomics-common/" }
+rsomics-coverage-core = { path = "crates/foundation/rsomics-coverage-core/" }
 rsomics-debruijn = { path = "crates/foundation/rsomics-debruijn/" }
 rsomics-fm-index = { path = "crates/foundation/rsomics-fm-index/" }
 rsomics-fqgz = { path = "crates/foundation/rsomics-fqgz/" }
@@ -101,6 +102,7 @@ rsomics-seqio = { path = "crates/foundation/rsomics-seqio/" }
 rsomics-seqstats = { path = "crates/foundation/rsomics-seqstats/" }
 rsomics-stats = { path = "crates/foundation/rsomics-stats/" }
 rsomics-taxonomy = { path = "crates/foundation/rsomics-taxonomy/" }
+rsomics-bam-compare = { path = "crates/tools/epigenomics/rsomics-bam-compare" }
 rsomics-bam-fingerprint = { path = "crates/tools/epigenomics/rsomics-bam-fingerprint" }
 rsomics-bam-signal = { path = "crates/tools/epigenomics/rsomics-bam-signal" }
 rsomics-bed-nuc = { path = "crates/tools/epigenomics/rsomics-bed-nuc" }

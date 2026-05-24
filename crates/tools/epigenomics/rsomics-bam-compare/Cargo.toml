@@ -1,19 +1,20 @@
 [package]
-name = "rsomics-bam-signal"
-version = "0.1.1"
-description = "Binned BAM → bedGraph signal track — Rust port of deeptools bamCoverage"
+name = "rsomics-bam-compare"
+version = "0.1.0"
+description = "Per-bin comparison of two BAMs as a bedGraph track — Rust port of deeptools bamCompare (log2/ratio/subtract/... of binned coverage with readCount scaling)"
 edition = "2024"
 rust-version = "1.91"
 license = "MIT OR Apache-2.0"
 repository = "https://github.com/omics-rust/rsomics-world"
 authors = ["Zane Leong <efd@live.com>"]
+readme = "README.md"
 
 [[bin]]
-name = "rsomics-bam-signal"
+name = "rsomics-bam-compare"
 path = "src/main.rs"
 
 [lib]
-name = "rsomics_bam_signal"
+name = "rsomics_bam_compare"
 path = "src/lib.rs"
 
 [dependencies]
@@ -22,5 +23,5 @@ rsomics-help = { version = "0.3" }
 rsomics-coverage-core = { version = "0.1" }
 clap = { version = "4", features = ["derive"] }
 
-[dev-dependencies]
-tempfile = "3"
+[lints]
+workspace = true

@@ -1,23 +1,19 @@
-//! BAM → binned bedGraph signal track, matching deeptools `bamCoverage` default semantics.
+//! BAM → binned bedGraph signal track, matching deeptools `bamCoverage` default
+//! semantics.
 //!
-//! ## Algorithm (deeptools source parity)
+//! The genome binning + per-bin read counting lives in
+//! [`rsomics_coverage_core`] (Layer A, shared with `rsomics-bam-compare`). This
+//! crate is the bamCoverage-specific layer on top: the post-pass normalisation
+//! scalar and the bedGraph run-length emit.
+//!
+//! ## Counting (see `rsomics-coverage-core`)
 //!
 //! Reads are filtered with: unmapped always skipped. By deeptools' defaults
 //! (`samFlag_exclude=None`, `ignoreDuplicates=False`) secondary and supplementary
 //! are **not** excluded. Pass `skip_flags = 0x900` to match samtools-style
-//! filtering, or `0x400` for duplicate-only exclusion.
-//!
-//! Fragment extent: with `extendReads=False` and `centerReads=False` (both
-//! deeptools defaults) the reference span is the alignment start plus all
-//! reference-consuming CIGAR ops (M/=/X/D/N), matching pysam `get_blocks()`.
-//!
-//! Bin counting: a read contributes +1 to every bin it overlaps.
-//! `sIdx = floor(fragStart / binSize)`, `eIdx = ceil(fragEnd / binSize)`.
-//! The partial last bin per chromosome is retained (`nRegBins += 1`).
-//!
-//! All bins (including zero-count) are written. Adjacent same-value bins
-//! are merged (deeptools `writeBedGraph_worker` run-length encoding). Values
-//! are formatted with Python's `{:g}` equivalent (trailing-zero-stripped float).
+//! filtering, or `0x400` for duplicate-only exclusion. A read contributes +1 to
+//! every bin its reference span overlaps; the partial last bin per chromosome is
+//! retained.
 //!
 //! ## Normalisation (post-pass scalar)
 //!
@@ -28,6 +24,10 @@
 //! - **BPM** — bins-per-million: `count / (total_signal / 1e6)`
 //! - **RPGC** — `count / (total_reads / effective_genome_size)`
 //!   = `count * effective_genome_size / total_reads`
+//!
+//! All bins (including zero-count) are written. Adjacent same-value bins are
+//! merged (deeptools `writeBedGraph_worker` run-length encoding). Values are
+//! formatted with Python's `{:g}` equivalent (trailing-zero-stripped float).
 
 #![allow(clippy::cast_precision_loss)]
 
@@ -35,15 +35,8 @@ use std::io::{BufWriter, Write};
 use std::num::NonZero;
 use std::path::Path;
 
-use rsomics_bamio::raw::{self, RawRecord};
 use rsomics_common::{Result, RsomicsError};
-
-// CIGAR op codes (BAM packed encoding, low nibble).
-const CIGAR_MATCH: u8 = 0;
-const CIGAR_DELETION: u8 = 2;
-const CIGAR_SKIP: u8 = 3;
-const CIGAR_SEQ_MATCH: u8 = 7;
-const CIGAR_SEQ_MISMATCH: u8 = 8;
+use rsomics_coverage_core::{BinFilter, BinnedCoverage, ChromBins, compute_coverage};
 
 /// Which normalisation to apply to raw bin counts.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -97,12 +90,6 @@ impl Default for CoverageOpts {
     }
 }
 
-struct ChromBins {
-    name: String,
-    chrom_len: u64,
-    bins: Vec<u32>,
-}
-
 /// Run the BAM scan and emit bedGraph to `output`. Returns line count.
 pub fn bam_to_bedgraph(
     input: &Path,
@@ -116,98 +103,19 @@ pub fn bam_to_bedgraph(
         ));
     }
 
-    let mut reader = rsomics_bamio::open_with_workers(input, workers)?;
-    let header = reader.read_header().map_err(RsomicsError::Io)?;
-
-    let mut chroms: Vec<ChromBins> = header
-        .reference_sequences()
-        .iter()
-        .map(|(name, seq)| {
-            let len = usize::from(seq.length()) as u64;
-            let n_bins = len.div_ceil(u64::from(opts.bin_size)) as usize;
-            ChromBins {
-                name: name.to_string(),
-                chrom_len: len,
-                bins: vec![0u32; n_bins],
-            }
-        })
-        .collect();
+    let filter = BinFilter {
+        skip_flags: opts.skip_flags,
+        min_mapq: opts.min_mapq,
+    };
+    let coverage = compute_coverage(input, opts.bin_size, filter, workers)?;
 
     let bin_size = u64::from(opts.bin_size);
-    let mut total_reads: u64 = 0;
-    let mut record = RawRecord::default();
-
-    while raw::read_record(reader.get_mut(), &mut record)? != 0 {
-        let flags = record.flags();
-        // Skip unmapped (FLAG 0x4).
-        if flags & 0x4 != 0 {
-            continue;
-        }
-        if record.reference_sequence_id() < 0 {
-            continue;
-        }
-        if opts.skip_flags != 0 && (flags & opts.skip_flags) != 0 {
-            continue;
-        }
-        if opts.min_mapq > 0 && record.mapping_quality() < opts.min_mapq {
-            continue;
-        }
-
-        let tid = record.reference_sequence_id() as usize;
-        let Some(chrom) = chroms.get_mut(tid) else {
-            continue;
-        };
-
-        // 0-based alignment start (BAM raw pos field is 0-based).
-        let start0 = record.alignment_start() as u64;
-        let ref_len: u64 = record
-            .cigar_ops()
-            .filter_map(|(kind, len)| match kind {
-                CIGAR_MATCH | CIGAR_DELETION | CIGAR_SKIP | CIGAR_SEQ_MATCH
-                | CIGAR_SEQ_MISMATCH => Some(u64::from(len)),
-                _ => None,
-            })
-            .sum();
-        if ref_len == 0 {
-            continue;
-        }
-        let frag_end = start0 + ref_len;
-
-        let s_idx = (start0 / bin_size) as usize;
-        let e_idx = (frag_end.div_ceil(bin_size) as usize).min(chrom.bins.len());
-        if s_idx >= chrom.bins.len() {
-            continue;
-        }
-        for b in &mut chrom.bins[s_idx..e_idx] {
-            *b = b.saturating_add(1);
-        }
-        total_reads += 1;
-    }
-
-    // Compute scale factor (None = raw integer mode).
-    let scale: Option<f64> = match opts.normalisation {
-        Normalisation::None => None,
-        Normalisation::Cpm => (total_reads > 0).then(|| 1e6 / total_reads as f64),
-        Normalisation::Rpkm => {
-            (total_reads > 0).then(|| 1e9 / (total_reads as f64 * bin_size as f64))
-        }
-        Normalisation::Bpm => {
-            let total_signal: u64 = chroms
-                .iter()
-                .map(|c| c.bins.iter().map(|&b| u64::from(b)).sum::<u64>())
-                .sum();
-            (total_signal > 0).then(|| 1e6 / total_signal as f64)
-        }
-        Normalisation::Rpgc => {
-            let eff = opts.effective_genome_size.unwrap() as f64;
-            (total_reads > 0).then(|| eff / total_reads as f64)
-        }
-    };
+    let scale = scale_factor(opts, &coverage);
 
     let mut out = BufWriter::with_capacity(256 * 1024, output);
     let mut lines: u64 = 0;
 
-    for chrom in &chroms {
+    for chrom in &coverage.chroms {
         if chrom.bins.is_empty() {
             continue;
         }
@@ -216,6 +124,28 @@ pub fn bam_to_bedgraph(
 
     out.flush().map_err(RsomicsError::Io)?;
     Ok(lines)
+}
+
+/// The post-pass normalisation scalar (None = raw integer mode). The denominator
+/// is `total_binned` — reads actually placed on the genome — matching deeptools
+/// `bamCoverage`'s CPM/RPKM/RPGC denominator.
+fn scale_factor(opts: &CoverageOpts, coverage: &BinnedCoverage) -> Option<f64> {
+    let total_reads = coverage.total_binned;
+    match opts.normalisation {
+        Normalisation::None => None,
+        Normalisation::Cpm => (total_reads > 0).then(|| 1e6 / total_reads as f64),
+        Normalisation::Rpkm => {
+            (total_reads > 0).then(|| 1e9 / (total_reads as f64 * opts.bin_size as f64))
+        }
+        Normalisation::Bpm => {
+            let total_signal = coverage.total_signal();
+            (total_signal > 0).then(|| 1e6 / total_signal as f64)
+        }
+        Normalisation::Rpgc => {
+            let eff = opts.effective_genome_size.unwrap() as f64;
+            (total_reads > 0).then(|| eff / total_reads as f64)
+        }
+    }
 }
 
 /// Write one chromosome's bins as merged bedGraph lines.
