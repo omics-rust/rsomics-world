@@ -157,7 +157,11 @@ fn write_output(bam_path: &std::path::Path, result: &[TinOutput]) -> Result<()> 
         writeln!(
             xls,
             "{}\t{}\t{}\t{}\t{}",
-            row.gene_id, row.chrom, row.tx_start, row.tx_end, py_float(row.tin)
+            row.gene_id,
+            row.chrom,
+            row.tx_start,
+            row.tx_end,
+            py_float(row.tin)
         )
         .map_err(RsomicsError::Io)?;
     }
