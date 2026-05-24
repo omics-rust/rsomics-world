@@ -366,3 +366,6 @@
 [submodule "crates/tools/transcriptomics/rsomics-rnaseq-metrics"]
 	path = crates/tools/transcriptomics/rsomics-rnaseq-metrics
 	url = git@github.com:omics-rust/rsomics-rnaseq-metrics.git
+[submodule "crates/tools/transcriptomics/rsomics-bam-junctions"]
+	path = crates/tools/transcriptomics/rsomics-bam-junctions
+	url = git@github.com:omics-rust/rsomics-bam-junctions.git
