@@ -411,3 +411,6 @@
 [submodule "crates/tools/formats/rsomics-bam-import"]
 	path = crates/tools/formats/rsomics-bam-import
 	url = git@github.com:omics-rust/rsomics-bam-import.git
+[submodule "crates/tools/formats/rsomics-bam-mpileup"]
+	path = crates/tools/formats/rsomics-bam-mpileup
+	url = git@github.com:omics-rust/rsomics-bam-mpileup.git
