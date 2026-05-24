@@ -402,3 +402,6 @@
 [submodule "crates/tools/formats/rsomics-bam-checksum"]
 	path = crates/tools/formats/rsomics-bam-checksum
 	url = git@github.com:omics-rust/rsomics-bam-checksum.git
+[submodule "crates/tools/formats/rsomics-bam-collate"]
+	path = crates/tools/formats/rsomics-bam-collate
+	url = git@github.com:omics-rust/rsomics-bam-collate.git
