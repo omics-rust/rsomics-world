@@ -1,0 +1,29 @@
+[package]
+name = "rsomics-rereplicate"
+version = "0.1.0"
+description = "Expand abundance-annotated FASTA back into individual reads — port of vsearch --rereplicate"
+edition = "2024"
+rust-version = "1.91"
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/omics-rust/rsomics-world"
+authors = ["Zane Leong <efd@live.com>"]
+
+[[bin]]
+name = "rsomics-rereplicate"
+path = "src/main.rs"
+
+[lib]
+name = "rsomics_rereplicate"
+path = "src/lib.rs"
+
+[dependencies]
+rsomics-common = { version = "0.6" }
+clap = { version = "4", features = ["derive"] }
+anyhow = "1"
+
+[dev-dependencies]
+rsomics-common = { version = "0.6", features = ["test-support"] }
+tempfile = "3"
+
+[lints]
+workspace = true

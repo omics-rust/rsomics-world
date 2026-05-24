@@ -1,0 +1,17 @@
+>seq_normal;size=3
+ACGTACGTACGT
+>seq_size1;size=1
+TTTTTTTTTTTT
+>seq_no_size
+GGGGGGGGGGGG
+>seq_mixed_case;size=2
+acgtACGTacgt
+>seq_with_u;size=2
+ACGUACGUacgu
+>seq_short;size=5
+ACGT
+>seq_middle_size;k=val;size=4;extra=more
+CCCCCCCCCCCC
+>seq_multiline;size=2
+ACGTACGTACGTACGTACGTACGTACGTACGTACGTACGTACGTACGTACGTACGTACGTACGTACGTACGTACGTACGT
+ACGTACGT
