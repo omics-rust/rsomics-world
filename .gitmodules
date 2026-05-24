@@ -459,3 +459,6 @@
 [submodule "crates/tools/epigenomics/rsomics-multibam-summary"]
 	path = crates/tools/epigenomics/rsomics-multibam-summary
 	url = git@github.com:omics-rust/rsomics-multibam-summary.git
+[submodule "crates/tools/epigenomics/rsomics-multibigwig-summary"]
+	path = crates/tools/epigenomics/rsomics-multibigwig-summary
+	url = git@github.com:omics-rust/rsomics-multibigwig-summary.git
