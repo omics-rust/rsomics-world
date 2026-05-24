@@ -357,3 +357,6 @@
 [submodule "crates/tools/transcriptomics/rsomics-tin"]
 	path = crates/tools/transcriptomics/rsomics-tin
 	url = git@github.com:omics-rust/rsomics-tin.git
+[submodule "crates/tools/transcriptomics/rsomics-read-nvc"]
+	path = crates/tools/transcriptomics/rsomics-read-nvc
+	url = git@github.com:omics-rust/rsomics-read-nvc.git
