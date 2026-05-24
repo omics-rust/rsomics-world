@@ -405,3 +405,6 @@
 [submodule "crates/tools/formats/rsomics-bam-collate"]
 	path = crates/tools/formats/rsomics-bam-collate
 	url = git@github.com:omics-rust/rsomics-bam-collate.git
+[submodule "crates/tools/formats/rsomics-bam-head"]
+	path = crates/tools/formats/rsomics-bam-head
+	url = git@github.com:omics-rust/rsomics-bam-head.git
