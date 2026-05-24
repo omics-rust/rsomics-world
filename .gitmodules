@@ -387,3 +387,6 @@
 [submodule "crates/tools/transcriptomics/rsomics-read-gc"]
 	path = crates/tools/transcriptomics/rsomics-read-gc
 	url = git@github.com:omics-rust/rsomics-read-gc.git
+[submodule "crates/tools/formats/rsomics-bam-ampliconclip"]
+	path = crates/tools/formats/rsomics-bam-ampliconclip
+	url = git@github.com:omics-rust/rsomics-bam-ampliconclip.git
