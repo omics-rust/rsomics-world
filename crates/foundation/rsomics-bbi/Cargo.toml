@@ -1,0 +1,19 @@
+[package]
+name = "rsomics-bbi"
+version = "0.1.0"
+description = "Pure-Rust bigWig/BBI reader: header, chromosome B-tree, R-tree interval search and bedGraph/varStep/fixedStep section decode for per-base value queries (pyBigWig-compatible NaN semantics). Shared by deeptools-port tools that read bigWig signal."
+edition = "2024"
+rust-version = "1.91"
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/omics-rust/rsomics-world"
+authors = ["Zane Leong <efd@live.com>"]
+readme = "README.md"
+categories = ["science", "parser-implementations"]
+keywords = ["bigwig", "bbi", "bioinformatics", "deeptools", "genomics"]
+
+[dependencies]
+rsomics-common = { version = "0.6" }
+flate2 = { version = "1", default-features = false, features = ["zlib-rs"] }
+
+[lints]
+workspace = true

@@ -83,6 +83,7 @@ debug = 1
 [patch.crates-io]
 rsomics-align-core = { path = "crates/foundation/rsomics-align-core/" }
 rsomics-bamio = { path = "crates/foundation/rsomics-bamio/" }
+rsomics-bbi = { path = "crates/foundation/rsomics-bbi/" }
 rsomics-common = { path = "crates/foundation/rsomics-common/" }
 rsomics-coverage-core = { path = "crates/foundation/rsomics-coverage-core/" }
 rsomics-debruijn = { path = "crates/foundation/rsomics-debruijn/" }
@@ -103,6 +104,7 @@ rsomics-seqstats = { path = "crates/foundation/rsomics-seqstats/" }
 rsomics-stats = { path = "crates/foundation/rsomics-stats/" }
 rsomics-taxonomy = { path = "crates/foundation/rsomics-taxonomy/" }
 rsomics-bam-compare = { path = "crates/tools/epigenomics/rsomics-bam-compare" }
+rsomics-bigwig-compare = { path = "crates/tools/epigenomics/rsomics-bigwig-compare" }
 rsomics-bam-fingerprint = { path = "crates/tools/epigenomics/rsomics-bam-fingerprint" }
 rsomics-bam-signal = { path = "crates/tools/epigenomics/rsomics-bam-signal" }
 rsomics-bed-nuc = { path = "crates/tools/epigenomics/rsomics-bed-nuc" }

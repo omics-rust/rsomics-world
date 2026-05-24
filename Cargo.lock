@@ -1887,6 +1887,14 @@ dependencies = [
 ]
 
 [[package]]
+name = "rsomics-bbi"
+version = "0.1.0"
+dependencies = [
+ "flate2",
+ "rsomics-common",
+]
+
+[[package]]
 name = "rsomics-bed-annotate"
 version = "0.1.0"
 dependencies = [
@@ -1974,6 +1982,18 @@ dependencies = [
 ]
 
 [[package]]
+name = "rsomics-bigwig-compare"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "rsomics-bbi",
+ "rsomics-common",
+ "rsomics-help",
+ "serde_json",
+ "tempfile",
+]
+
+[[package]]
 name = "rsomics-cell-filter"
 version = "0.1.0"
 dependencies = [
@@ -2000,10 +2020,11 @@ dependencies = [
 
 [[package]]
 name = "rsomics-compute-matrix"
-version = "0.1.0"
+version = "0.1.1"
 dependencies = [
  "clap",
  "flate2",
+ "rsomics-bbi",
  "rsomics-common",
  "rsomics-help",
  "serde_json",

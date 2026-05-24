@@ -1,6 +1,6 @@
-//! Minimal pure-Rust bigWig reader: just enough to answer per-base value
-//! queries the way pyBigWig's `values(chrom, start, end)` does (NaN where the
-//! file carries no data).
+//! Pure-Rust bigWig/BBI reader: just enough to answer per-base value queries
+//! the way pyBigWig's `values(chrom, start, end)` does (NaN where the file
+//! carries no data), plus chromosome enumeration for genome-wide tiling.
 //!
 //! ## Origin
 //!
@@ -52,6 +52,10 @@ pub struct BigWig {
     full_index_offset: u64,
     chroms: HashMap<String, Chrom>,
     chrom_lengths: HashMap<String, u32>,
+    /// `(name, length)` in the file's B-tree leaf order. pyBigWig's
+    /// `chroms()` dict iterates in this order, and deeptools sorts its
+    /// output by it, so a faithful port must preserve it.
+    chrom_order: Vec<(String, u32)>,
 }
 
 /// Byte-reading helpers that respect the file's endianness.
@@ -115,6 +119,14 @@ fn io<T, E: std::fmt::Display>(r: std::result::Result<T, E>, ctx: &str) -> Resul
     r.map_err(|e| RsomicsError::InvalidInput(format!("{ctx}: {e}")))
 }
 
+/// The chromosome table parsed from the B-tree: id lookup, length lookup, and
+/// the `(name, length)` list in on-disk leaf order.
+type ChromTable = (
+    HashMap<String, Chrom>,
+    HashMap<String, u32>,
+    Vec<(String, u32)>,
+);
+
 impl BigWig {
     pub fn open(path: &Path) -> Result<Self> {
         let file = io(File::open(path), "cannot open bigWig")?;
@@ -146,7 +158,7 @@ impl BigWig {
         let _total_summary_offset = c.u64();
         let uncompress_buf_size = c.u32();
 
-        let (chroms, chrom_lengths) =
+        let (chroms, chrom_lengths, chrom_order) =
             Self::read_chrom_tree(&mut reader, endian, chromosome_tree_offset)?;
 
         Ok(Self {
@@ -156,19 +168,27 @@ impl BigWig {
             full_index_offset,
             chroms,
             chrom_lengths,
+            chrom_order,
         })
     }
 
     /// Length of a chromosome, if present in this bigWig.
+    #[must_use]
     pub fn chrom_len(&self, name: &str) -> Option<u32> {
         self.chrom_lengths.get(name).copied()
+    }
+
+    /// Every `(chromosome name, length)` declared in the file, in B-tree leaf
+    /// order (the order pyBigWig's `chroms()` dict yields).
+    pub fn chroms(&self) -> impl Iterator<Item = (&str, u32)> {
+        self.chrom_order.iter().map(|(k, v)| (k.as_str(), *v))
     }
 
     fn read_chrom_tree(
         reader: &mut BufReader<File>,
         endian: Endian,
         offset: u64,
-    ) -> Result<(HashMap<String, Chrom>, HashMap<String, u32>)> {
+    ) -> Result<ChromTable> {
         io(reader.seek(SeekFrom::Start(offset)), "seek chrom tree")?;
         let mut hdr = [0u8; 32];
         io(reader.read_exact(&mut hdr), "reading chrom tree header")?;
@@ -183,8 +203,16 @@ impl BigWig {
 
         let mut chroms = HashMap::new();
         let mut lengths = HashMap::new();
-        Self::read_chrom_block(reader, endian, key_size, &mut chroms, &mut lengths)?;
-        Ok((chroms, lengths))
+        let mut order = Vec::new();
+        Self::read_chrom_block(
+            reader,
+            endian,
+            key_size,
+            &mut chroms,
+            &mut lengths,
+            &mut order,
+        )?;
+        Ok((chroms, lengths, order))
     }
 
     fn read_chrom_block(
@@ -193,6 +221,7 @@ impl BigWig {
         key_size: u32,
         chroms: &mut HashMap<String, Chrom>,
         lengths: &mut HashMap<String, u32>,
+        order: &mut Vec<(String, u32)>,
     ) -> Result<()> {
         let mut node = [0u8; 4];
         io(reader.read_exact(&mut node), "reading chrom node header")?;
@@ -217,7 +246,8 @@ impl BigWig {
                 let id = c.u32();
                 let length = c.u32();
                 chroms.insert(name.clone(), Chrom { id });
-                lengths.insert(name, length);
+                lengths.insert(name.clone(), length);
+                order.push((name, length));
             }
         } else {
             let mut children = Vec::with_capacity(count as usize);
@@ -228,7 +258,7 @@ impl BigWig {
             }
             for child in children {
                 io(reader.seek(SeekFrom::Start(child)), "seek chrom child")?;
-                Self::read_chrom_block(reader, endian, key_size, chroms, lengths)?;
+                Self::read_chrom_block(reader, endian, key_size, chroms, lengths, order)?;
             }
         }
         Ok(())
@@ -323,7 +353,9 @@ impl BigWig {
             self.reader.seek(SeekFrom::Start(block.offset)),
             "seek block",
         )?;
-        let mut raw = vec![0u8; block.size as usize];
+        let size = usize::try_from(block.size)
+            .map_err(|_| RsomicsError::InvalidInput("bigWig block size exceeds usize".into()))?;
+        let mut raw = vec![0u8; size];
         io(self.reader.read_exact(&mut raw), "reading block")?;
         if self.uncompress_buf_size > 0 {
             let mut dec = flate2::read::ZlibDecoder::new(&raw[..]);

@@ -51,10 +51,8 @@ use std::path::Path;
 
 use flate2::Compression;
 use flate2::write::GzEncoder;
+use rsomics_bbi::BigWig;
 use rsomics_common::{Result, RsomicsError};
-
-mod bigwig;
-use bigwig::BigWig;
 
 /// Which point of each region anchors the flanks (reference-point mode).
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
