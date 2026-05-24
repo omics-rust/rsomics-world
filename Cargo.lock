@@ -2906,6 +2906,19 @@ dependencies = [
 ]
 
 [[package]]
+name = "rsomics-read-duplication"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "clap",
+ "criterion",
+ "noodles",
+ "rsomics-bamio",
+ "rsomics-common",
+ "tempfile",
+]
+
+[[package]]
 name = "rsomics-rereplicate"
 version = "0.1.0"
 dependencies = [

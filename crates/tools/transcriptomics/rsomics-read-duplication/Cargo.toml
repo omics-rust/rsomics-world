@@ -1,0 +1,31 @@
+[package]
+name = "rsomics-read-duplication"
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.91"
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/omics-rust/rsomics-world"
+authors = ["Zane Leong <efd@live.com>"]
+description = "Sequence-based and position-based read duplication rate — Rust port of RSeQC read_duplication.py"
+
+[[bin]]
+name = "rsomics-read-duplication"
+path = "src/main.rs"
+
+[dependencies]
+rsomics-common = { version = "0.6" }
+rsomics-bamio = { version = "0.1" }
+clap = { version = "4", features = ["derive"] }
+noodles = { version = "0.110", features = ["sam", "bam"] }
+anyhow = "1"
+
+[dev-dependencies]
+tempfile = "3"
+criterion = { version = "0.7", default-features = false, features = ["cargo_bench_support"] }
+
+[[bench]]
+name = "read_duplication"
+harness = false
+
+[lints]
+workspace = true
