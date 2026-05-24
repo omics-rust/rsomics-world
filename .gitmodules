@@ -381,3 +381,6 @@
 [submodule "crates/tools/transcriptomics/rsomics-inner-distance"]
 	path = crates/tools/transcriptomics/rsomics-inner-distance
 	url = git@github.com:omics-rust/rsomics-inner-distance.git
+[submodule "crates/tools/transcriptomics/rsomics-read-duplication"]
+	path = crates/tools/transcriptomics/rsomics-read-duplication
+	url = git@github.com:omics-rust/rsomics-read-duplication.git
