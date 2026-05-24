@@ -2106,6 +2106,17 @@ dependencies = [
 ]
 
 [[package]]
+name = "rsomics-derep-prefix"
+version = "0.1.0"
+dependencies = [
+ "ahash",
+ "anyhow",
+ "clap",
+ "rsomics-common",
+ "tempfile",
+]
+
+[[package]]
 name = "rsomics-deseq-prep"
 version = "0.1.0"
 dependencies = [
