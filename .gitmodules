@@ -372,3 +372,6 @@
 [submodule "crates/tools/transcriptomics/rsomics-bam-read-dist"]
 	path = crates/tools/transcriptomics/rsomics-bam-read-dist
 	url = git@github.com:omics-rust/rsomics-bam-read-dist.git
+[submodule "crates/tools/transcriptomics/rsomics-bam-strandedness"]
+	path = crates/tools/transcriptomics/rsomics-bam-strandedness
+	url = git@github.com:omics-rust/rsomics-bam-strandedness.git
