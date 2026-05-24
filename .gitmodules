@@ -456,3 +456,6 @@
 [submodule "crates/tools/epigenomics/rsomics-methyldackel"]
 	path = crates/tools/epigenomics/rsomics-methyldackel
 	url = git@github.com:omics-rust/rsomics-methyldackel.git
+[submodule "crates/tools/epigenomics/rsomics-multibam-summary"]
+	path = crates/tools/epigenomics/rsomics-multibam-summary
+	url = git@github.com:omics-rust/rsomics-multibam-summary.git
