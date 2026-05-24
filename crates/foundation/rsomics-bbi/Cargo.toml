@@ -1,6 +1,6 @@
 [package]
 name = "rsomics-bbi"
-version = "0.1.0"
+version = "0.1.1"
 description = "Pure-Rust bigWig/BBI reader: header, chromosome B-tree, R-tree interval search and bedGraph/varStep/fixedStep section decode for per-base value queries (pyBigWig-compatible NaN semantics). Shared by deeptools-port tools that read bigWig signal."
 edition = "2024"
 rust-version = "1.91"

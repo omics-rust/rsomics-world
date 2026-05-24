@@ -1888,7 +1888,7 @@ dependencies = [
 
 [[package]]
 name = "rsomics-bbi"
-version = "0.1.0"
+version = "0.1.1"
 dependencies = [
  "flate2",
  "rsomics-common",
@@ -2701,6 +2701,19 @@ dependencies = [
  "rsomics-bamio",
  "rsomics-common",
  "rsomics-coverage-core",
+ "rsomics-help",
+ "rsomics-intervals",
+ "tempfile",
+]
+
+[[package]]
+name = "rsomics-multibigwig-summary"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "rayon",
+ "rsomics-bbi",
+ "rsomics-common",
  "rsomics-help",
  "rsomics-intervals",
  "tempfile",

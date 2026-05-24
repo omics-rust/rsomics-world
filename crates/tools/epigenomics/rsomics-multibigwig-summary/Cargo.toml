@@ -1,0 +1,34 @@
+[package]
+name = "rsomics-multibigwig-summary"
+version = "0.1.0"
+description = "Multi-bigWig per-bin / per-region mean-signal matrix — Rust port of deeptools multiBigwigSummary"
+edition = "2024"
+rust-version = "1.91"
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/omics-rust/rsomics-world"
+authors = ["Zane Leong <efd@live.com>"]
+readme = "README.md"
+categories = ["science", "command-line-utilities"]
+keywords = ["bigwig", "deeptools", "epigenomics", "bioinformatics", "genomics"]
+
+[[bin]]
+name = "rsomics-multibigwig-summary"
+path = "src/main.rs"
+
+[lib]
+name = "rsomics_multibigwig_summary"
+path = "src/lib.rs"
+
+[dependencies]
+rsomics-common = { version = "0.6" }
+rsomics-help = { version = "0.3" }
+rsomics-bbi = { version = "0.1" }
+rsomics-intervals = { version = "0.1" }
+clap = { version = "4", features = ["derive"] }
+rayon = "1"
+
+[dev-dependencies]
+tempfile = "3"
+
+[lints]
+workspace = true
