@@ -124,7 +124,10 @@ impl GeneIndex {
         };
         // Convert half-open [start, end) to coitrees' end-inclusive [start, end-1].
         tree.query(start, end - 1, |node| {
-            set.insert(self.strands[*node.metadata]);
+            // coitrees' query metadata resolves as `usize` or `&usize` depending
+            // on the toolchain; `Borrow` normalizes either to a `&usize`.
+            let idx: usize = *std::borrow::Borrow::<usize>::borrow(&node.metadata);
+            set.insert(self.strands[idx]);
         });
         set
     }
