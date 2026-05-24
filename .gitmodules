@@ -363,3 +363,6 @@
 [submodule "crates/tools/transcriptomics/rsomics-clipping-profile"]
 	path = crates/tools/transcriptomics/rsomics-clipping-profile
 	url = git@github.com:omics-rust/rsomics-clipping-profile.git
+[submodule "crates/tools/transcriptomics/rsomics-rnaseq-metrics"]
+	path = crates/tools/transcriptomics/rsomics-rnaseq-metrics
+	url = git@github.com:omics-rust/rsomics-rnaseq-metrics.git
