@@ -183,6 +183,7 @@ rsomics-infercnv = { path = "crates/tools/single-cell/rsomics-infercnv" }
 rsomics-bam-strandedness = { path = "crates/tools/transcriptomics/rsomics-bam-strandedness" }
 rsomics-count-matrix = { path = "crates/tools/transcriptomics/rsomics-count-matrix" }
 rsomics-read-duplication = { path = "crates/tools/transcriptomics/rsomics-read-duplication" }
+rsomics-read-gc = { path = "crates/tools/transcriptomics/rsomics-read-gc" }
 rsomics-de-volcano = { path = "crates/tools/transcriptomics/rsomics-de-volcano" }
 rsomics-deseq-prep = { path = "crates/tools/transcriptomics/rsomics-deseq-prep" }
 rsomics-featurecounts = { path = "crates/tools/transcriptomics/rsomics-featurecounts" }

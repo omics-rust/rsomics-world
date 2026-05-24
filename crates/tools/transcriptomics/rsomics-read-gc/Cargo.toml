@@ -1,0 +1,29 @@
+[package]
+name = "rsomics-read-gc"
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.91"
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/omics-rust/rsomics-world"
+authors = ["Zane Leong <efd@live.com>"]
+description = "Per-read GC% distribution from a BAM — Rust port of RSeQC read_GC.py"
+
+[[bin]]
+name = "rsomics-read-gc"
+path = "src/main.rs"
+
+[dependencies]
+rsomics-common = { version = "0.6" }
+rsomics-bamio = { version = "0.1" }
+clap = { version = "4", features = ["derive"] }
+
+[dev-dependencies]
+tempfile = "3"
+criterion = { version = "0.7", default-features = false, features = ["cargo_bench_support"] }
+
+[[bench]]
+name = "read_gc"
+harness = false
+
+[lints]
+workspace = true
