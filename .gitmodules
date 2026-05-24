@@ -426,3 +426,6 @@
 [submodule "crates/tools/formats/rsomics-vcf-index"]
 	path = crates/tools/formats/rsomics-vcf-index
 	url = git@github.com:omics-rust/rsomics-vcf-index.git
+[submodule "crates/tools/formats/rsomics-bam-ampliconstats"]
+	path = crates/tools/formats/rsomics-bam-ampliconstats
+	url = git@github.com:omics-rust/rsomics-bam-ampliconstats.git
