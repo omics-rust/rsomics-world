@@ -2443,6 +2443,17 @@ dependencies = [
 ]
 
 [[package]]
+name = "rsomics-fastx-sort"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "clap",
+ "rayon",
+ "rsomics-common",
+ "tempfile",
+]
+
+[[package]]
 name = "rsomics-featurecounts"
 version = "0.1.0"
 dependencies = [
