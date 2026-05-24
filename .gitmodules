@@ -399,3 +399,6 @@
 [submodule "crates/tools/formats/rsomics-bam-cat"]
 	path = crates/tools/formats/rsomics-bam-cat
 	url = git@github.com:omics-rust/rsomics-bam-cat.git
+[submodule "crates/tools/formats/rsomics-bam-checksum"]
+	path = crates/tools/formats/rsomics-bam-checksum
+	url = git@github.com:omics-rust/rsomics-bam-checksum.git
