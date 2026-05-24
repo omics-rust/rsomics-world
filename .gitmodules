@@ -378,3 +378,6 @@
 [submodule "crates/tools/transcriptomics/rsomics-genebody-coverage"]
 	path = crates/tools/transcriptomics/rsomics-genebody-coverage
 	url = git@github.com:omics-rust/rsomics-genebody-coverage.git
+[submodule "crates/tools/transcriptomics/rsomics-inner-distance"]
+	path = crates/tools/transcriptomics/rsomics-inner-distance
+	url = git@github.com:omics-rust/rsomics-inner-distance.git
