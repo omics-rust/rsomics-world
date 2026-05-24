@@ -423,3 +423,6 @@
 [submodule "crates/tools/formats/rsomics-vcf-fill-tags"]
 	path = crates/tools/formats/rsomics-vcf-fill-tags
 	url = git@github.com:omics-rust/rsomics-vcf-fill-tags.git
+[submodule "crates/tools/formats/rsomics-vcf-index"]
+	path = crates/tools/formats/rsomics-vcf-index
+	url = git@github.com:omics-rust/rsomics-vcf-index.git
