@@ -952,7 +952,6 @@ dependencies = [
  "noodles-cram",
  "noodles-csi",
  "noodles-fasta",
- "noodles-gff",
  "noodles-sam",
  "noodles-tabix",
  "noodles-vcf",
@@ -1037,21 +1036,6 @@ dependencies = [
  "memchr",
  "noodles-bgzf",
  "noodles-core",
-]
-
-[[package]]
-name = "noodles-gff"
-version = "0.57.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "1b724039f4d7cce1c47cfada85298f7fb195617a2d44cfd25dc376df886904ee"
-dependencies = [
- "bstr",
- "indexmap",
- "lexical-core",
- "noodles-bgzf",
- "noodles-core",
- "noodles-csi",
- "percent-encoding",
 ]
 
 [[package]]
@@ -2512,11 +2496,11 @@ dependencies = [
 
 [[package]]
 name = "rsomics-featurecounts"
-version = "0.1.0"
+version = "0.1.1"
 dependencies = [
  "clap",
+ "coitrees",
  "noodles",
- "rayon",
  "rsomics-common",
  "rsomics-help",
  "serde",
@@ -2950,6 +2934,18 @@ dependencies = [
  "anyhow",
  "clap",
  "rsomics-common",
+ "tempfile",
+]
+
+[[package]]
+name = "rsomics-rnaseq-metrics"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "noodles",
+ "rsomics-common",
+ "serde",
+ "serde_json",
  "tempfile",
 ]
 
