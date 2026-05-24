@@ -369,3 +369,6 @@
 [submodule "crates/tools/transcriptomics/rsomics-bam-junctions"]
 	path = crates/tools/transcriptomics/rsomics-bam-junctions
 	url = git@github.com:omics-rust/rsomics-bam-junctions.git
+[submodule "crates/tools/transcriptomics/rsomics-bam-read-dist"]
+	path = crates/tools/transcriptomics/rsomics-bam-read-dist
+	url = git@github.com:omics-rust/rsomics-bam-read-dist.git
