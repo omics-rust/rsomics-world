@@ -429,3 +429,6 @@
 [submodule "crates/tools/formats/rsomics-bam-ampliconstats"]
 	path = crates/tools/formats/rsomics-bam-ampliconstats
 	url = git@github.com:omics-rust/rsomics-bam-ampliconstats.git
+[submodule "crates/tools/formats/rsomics-vcf-fixref"]
+	path = crates/tools/formats/rsomics-vcf-fixref
+	url = git@github.com:omics-rust/rsomics-vcf-fixref.git
