@@ -447,3 +447,6 @@
 [submodule "crates/tools/epigenomics/rsomics-bigwig-compare"]
 	path = crates/tools/epigenomics/rsomics-bigwig-compare
 	url = git@github.com:omics-rust/rsomics-bigwig-compare.git
+[submodule "crates/tools/epigenomics/rsomics-compute-matrix"]
+	path = crates/tools/epigenomics/rsomics-compute-matrix
+	url = git@github.com:omics-rust/rsomics-compute-matrix.git
