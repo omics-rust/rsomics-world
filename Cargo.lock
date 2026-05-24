@@ -1824,6 +1824,22 @@ dependencies = [
 ]
 
 [[package]]
+name = "rsomics-bam-strandedness"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "clap",
+ "coitrees",
+ "criterion",
+ "noodles",
+ "rsomics-bamio",
+ "rsomics-common",
+ "serde",
+ "serde_json",
+ "tempfile",
+]
+
+[[package]]
 name = "rsomics-bam-subsample"
 version = "0.1.1"
 dependencies = [
