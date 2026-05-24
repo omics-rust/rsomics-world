@@ -450,3 +450,6 @@
 [submodule "crates/tools/epigenomics/rsomics-compute-matrix"]
 	path = crates/tools/epigenomics/rsomics-compute-matrix
 	url = git@github.com:omics-rust/rsomics-compute-matrix.git
+[submodule "crates/tools/epigenomics/rsomics-fragment-size"]
+	path = crates/tools/epigenomics/rsomics-fragment-size
+	url = git@github.com:omics-rust/rsomics-fragment-size.git
