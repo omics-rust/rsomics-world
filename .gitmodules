@@ -435,3 +435,6 @@
 [submodule "crates/tools/epigenomics/rsomics-atac-shift"]
 	path = crates/tools/epigenomics/rsomics-atac-shift
 	url = git@github.com:omics-rust/rsomics-atac-shift.git
+[submodule "crates/tools/epigenomics/rsomics-bam-compare"]
+	path = crates/tools/epigenomics/rsomics-bam-compare
+	url = git@github.com:omics-rust/rsomics-bam-compare.git
