@@ -1,10 +1,11 @@
-//! Per-bin comparison of two BAMs as a bedGraph track — deeptools `bamCompare`.
+//! Per-bin comparison of two BAMs as a bedGraph or bigWig track — deeptools
+//! `bamCompare`.
 //!
 //! Both BAMs are binned by the shared [`rsomics_coverage_core`] primitive (same
 //! tiling as `bamCoverage`), each scaled, then combined per bin by an
 //! [`Operation`] (deeptools default `log2`). The genome binning lives in Layer A;
 //! this crate is the bamCompare-specific layer: the readCount scale factors, the
-//! per-bin two-value combination, and the bedGraph run-length emit.
+//! per-bin two-value combination, and the bedGraph/bigWig emit.
 //!
 //! ## Scaling (deeptools `--scaleFactorsMethod readCount`, the default)
 //!
@@ -38,8 +39,30 @@ use std::io::{BufWriter, Write};
 use std::num::NonZero;
 use std::path::Path;
 
+use rsomics_bbi::{ChromInfo, Interval, write_bigwig};
 use rsomics_common::{Result, RsomicsError};
-use rsomics_coverage_core::{BinFilter, BinnedCoverage, compute_coverage};
+use rsomics_coverage_core::{BinFilter, BinnedCoverage, ChromBins, compute_coverage};
+
+/// Output format for the comparison track.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Default)]
+pub enum OutputFormat {
+    BedGraph,
+    #[default]
+    BigWig,
+}
+
+impl std::str::FromStr for OutputFormat {
+    type Err = String;
+    fn from_str(s: &str) -> std::result::Result<Self, Self::Err> {
+        match s {
+            "bedgraph" | "bedGraph" => Ok(Self::BedGraph),
+            "bigwig" | "bigWig" | "BigWig" => Ok(Self::BigWig),
+            _ => Err(format!(
+                "unknown output format '{s}'; choose bedgraph or bigwig"
+            )),
+        }
+    }
+}
 
 /// How two scaled per-bin coverage values are combined.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -132,6 +155,112 @@ pub fn bam_compare(
 
     out.flush().map_err(RsomicsError::Io)?;
     Ok(lines)
+}
+
+/// Bin both BAMs, combine per bin, write a bigWig file to `output_path`.
+///
+/// Computes the same per-bin combined values as [`bam_compare`] (same readCount
+/// scaling, same operation, same run-length merging), then converts to
+/// `rsomics_bbi::Interval` sorted by `(chrom_id, start)` and calls
+/// [`write_bigwig`].
+pub fn bam_compare_bigwig(
+    bam1: &Path,
+    bam2: &Path,
+    output_path: &Path,
+    opts: &CompareOpts,
+    workers: NonZero<usize>,
+) -> Result<()> {
+    let filter = BinFilter {
+        skip_flags: opts.skip_flags,
+        min_mapq: opts.min_mapq,
+    };
+    let cov1 = compute_coverage(bam1, opts.bin_size, filter, workers)?;
+    let cov2 = compute_coverage(bam2, opts.bin_size, filter, workers)?;
+
+    ensure_same_geometry(&cov1, &cov2)?;
+
+    let scale = read_count_scale_factors(cov1.total_mapped, cov2.total_mapped);
+    let bin_size = u64::from(opts.bin_size);
+
+    let mut chroms_info: Vec<ChromInfo> = Vec::new();
+    let mut intervals: Vec<Interval> = Vec::new();
+
+    for (chrom_idx, (c1, c2)) in cov1.chroms.iter().zip(&cov2.chroms).enumerate() {
+        if c1.bins.is_empty() {
+            continue;
+        }
+        let chrom_id = u32::try_from(chrom_idx)
+            .map_err(|_| RsomicsError::InvalidInput("too many chromosomes".into()))?;
+        chroms_info.push(ChromInfo {
+            name: c1.name.clone(),
+            id: chrom_id,
+            length: u32::try_from(c1.chrom_len).unwrap_or(u32::MAX),
+        });
+        collect_chrom_intervals(c1, c2, chrom_id, bin_size, scale, opts, &mut intervals);
+    }
+
+    let mut out = std::fs::File::create(output_path).map_err(RsomicsError::Io)?;
+    write_bigwig(&mut out, &chroms_info, &intervals, opts.bin_size)?;
+    Ok(())
+}
+
+/// Collect run-length-merged intervals for one chromosome into `out`.
+#[allow(clippy::cast_possible_truncation)] // genomic coords fit u32; f64→f32 is the bigWig format
+fn collect_chrom_intervals(
+    c1: &ChromBins,
+    c2: &ChromBins,
+    chrom_id: u32,
+    bin_size: u64,
+    scale: [f64; 2],
+    opts: &CompareOpts,
+    out: &mut Vec<Interval>,
+) {
+    let n = c1.bins.len();
+    let mut write_start: u64 = 0;
+    let mut write_end: u64 = 0;
+    let mut prev_val: Option<f64> = None;
+
+    let flush = |start: u64, end: u64, val: f64, out: &mut Vec<Interval>| {
+        if start == end {
+            return;
+        }
+        out.push(Interval {
+            chrom_id,
+            start: start as u32,
+            end: end as u32,
+            value: val as f32,
+        });
+    };
+
+    for i in 0..n {
+        let bin_start = i as u64 * bin_size;
+        let bin_end = ((i as u64 + 1) * bin_size).min(c1.chrom_len);
+        let value = combine(c1.bins[i], c2.bins[i], scale, opts);
+
+        match prev_val {
+            None => {
+                write_start = bin_start;
+                write_end = bin_end;
+                prev_val = Some(value);
+            }
+            Some(pv) if values_equal(pv, value) => {
+                write_end = bin_end;
+            }
+            Some(pv) => {
+                flush(write_start, write_end, pv, out);
+                write_start = bin_start;
+                write_end = bin_end;
+                prev_val = Some(value);
+            }
+        }
+
+        if i + 1 == n
+            && let Some(pv) = prev_val
+            && write_start != write_end
+        {
+            flush(write_start, write_end, pv, out);
+        }
+    }
 }
 
 /// The two BAMs must share an identical reference set (name + length + order):

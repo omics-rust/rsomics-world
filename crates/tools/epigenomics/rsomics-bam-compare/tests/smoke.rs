@@ -14,6 +14,7 @@ fn basic_log2_output() {
         .args(["--bam1", &golden("treat.bam")])
         .args(["--bam2", &golden("ctrl.bam")])
         .args(["-o", "-"])
+        .args(["--out-file-format", "bedgraph"])
         .output()
         .unwrap();
     assert!(
@@ -49,6 +50,7 @@ fn all_operations_run() {
             .args(["--bam1", &golden("treat.bam")])
             .args(["--bam2", &golden("ctrl.bam")])
             .args(["-o", "-"])
+            .args(["--out-file-format", "bedgraph"])
             .args(["--operation", op])
             .output()
             .unwrap();
@@ -70,6 +72,7 @@ fn unknown_operation_fails() {
         .args(["--bam1", &golden("treat.bam")])
         .args(["--bam2", &golden("ctrl.bam")])
         .args(["-o", "-"])
+        .args(["--out-file-format", "bedgraph"])
         .args(["--operation", "bogus"])
         .output()
         .unwrap();
@@ -82,6 +85,7 @@ fn two_value_pseudocount_runs() {
         .args(["--bam1", &golden("treat.bam")])
         .args(["--bam2", &golden("ctrl.bam")])
         .args(["-o", "-"])
+        .args(["--out-file-format", "bedgraph"])
         .args(["--pseudocount", "2", "3"])
         .output()
         .unwrap();
@@ -90,4 +94,61 @@ fn two_value_pseudocount_runs() {
         "two-value pseudocount failed: {}",
         String::from_utf8_lossy(&out.stderr)
     );
+}
+
+#[test]
+fn bigwig_stdout_rejected() {
+    let out = bin()
+        .args(["--bam1", &golden("treat.bam")])
+        .args(["--bam2", &golden("ctrl.bam")])
+        .args(["-o", "-"])
+        .args(["--out-file-format", "bigwig"])
+        .output()
+        .unwrap();
+    assert!(!out.status.success(), "bigwig stdout must be rejected");
+}
+
+#[test]
+fn bigwig_writes_file() {
+    let dir = tempfile::tempdir().unwrap();
+    let bw = dir.path().join("out.bw");
+    let out = bin()
+        .args(["--bam1", &golden("treat.bam")])
+        .args(["--bam2", &golden("ctrl.bam")])
+        .args(["-o", bw.to_str().unwrap()])
+        .args(["--out-file-format", "bigwig"])
+        .args(["-q"])
+        .output()
+        .unwrap();
+    assert!(
+        out.status.success(),
+        "bigwig write failed: {}",
+        String::from_utf8_lossy(&out.stderr)
+    );
+    // bigWig magic bytes: 0x888FFC26
+    let bytes = std::fs::read(&bw).unwrap();
+    assert!(bytes.len() >= 4, "bigwig file too small");
+    assert_eq!(
+        &bytes[..4],
+        &[0x26, 0xFC, 0x8F, 0x88],
+        "missing bigWig magic"
+    );
+}
+
+#[test]
+fn bedgraph_format_explicit() {
+    let out = bin()
+        .args(["--bam1", &golden("treat.bam")])
+        .args(["--bam2", &golden("ctrl.bam")])
+        .args(["-o", "-"])
+        .args(["--out-file-format", "bedgraph"])
+        .output()
+        .unwrap();
+    assert!(
+        out.status.success(),
+        "explicit bedgraph failed: {}",
+        String::from_utf8_lossy(&out.stderr)
+    );
+    let s = String::from_utf8_lossy(&out.stdout);
+    assert!(!s.trim().is_empty(), "no bedgraph output");
 }

@@ -60,6 +60,7 @@ fn run_ours(op: &str, bin_size: u32, pseudocount: &[&str]) -> String {
     cmd.args(["--bam1", &golden("treat.bam")])
         .args(["--bam2", &golden("ctrl.bam")])
         .args(["-o", "-"])
+        .args(["--out-file-format", "bedgraph"])
         .args(["--bin-size", &bin_size.to_string()])
         .args(["--operation", op]);
     if !pseudocount.is_empty() {
@@ -143,4 +144,102 @@ fn log2_custom_pseudocount() {
 #[test]
 fn ratio_single_pseudocount() {
     assert_matches("ratio", 50, &["5"]);
+}
+
+/// Compare our bigWig output vs deeptools bamCompare bigWig value-by-value using
+/// `multiBigwigSummary bins`. Both bigWigs are written at 50 bp bins and each
+/// bin's value must match within tolerance (f32 precision boundary).
+#[test]
+fn bigwig_values_match_deeptools() {
+    if !have("bamCompare") || !have("multiBigwigSummary") {
+        eprintln!("skipping: bamCompare or multiBigwigSummary not found");
+        return;
+    }
+
+    let ver = deeptools_version().unwrap_or_default();
+
+    let dir = std::env::temp_dir().join("rsomics-bam-compare-bw-compat");
+    let _ = std::fs::create_dir_all(&dir);
+
+    let ours_bw = dir.join("ours.bw");
+    let dt_bw = dir.join("dt.bw");
+    let summary_npz = dir.join("summary.npz");
+    let summary_tab = dir.join("summary.tab");
+
+    // Write our bigWig.
+    let status = Command::new(ours())
+        .args(["--bam1", &golden("treat.bam")])
+        .args(["--bam2", &golden("ctrl.bam")])
+        .args(["-o", ours_bw.to_str().unwrap()])
+        .args(["--out-file-format", "bigwig"])
+        .args(["--operation", "log2"])
+        .args(["--bin-size", "50"])
+        .args(["-q"])
+        .status()
+        .expect("rsomics-bam-compare failed to launch");
+    assert!(
+        status.success(),
+        "rsomics-bam-compare (bigwig) exited non-zero"
+    );
+
+    // Write deeptools bigWig.
+    let status = {
+        let _guard = DEEPTOOLS_LOCK
+            .lock()
+            .unwrap_or_else(std::sync::PoisonError::into_inner);
+        Command::new("bamCompare")
+            .args(["-b1", &golden("treat.bam")])
+            .args(["-b2", &golden("ctrl.bam")])
+            .args(["-o", dt_bw.to_str().unwrap()])
+            .args(["--outFileFormat", "bigwig"])
+            .args(["--operation", "log2"])
+            .args(["--binSize", "50"])
+            .args(["-p", "1"])
+            .stdout(Stdio::null())
+            .stderr(Stdio::null())
+            .status()
+            .expect("bamCompare failed to launch")
+    };
+    assert!(status.success(), "bamCompare (bigwig) exited non-zero");
+
+    // Compare using multiBigwigSummary bins at 50 bp resolution.
+    let status = Command::new("multiBigwigSummary")
+        .args(["bins"])
+        .args(["-b", ours_bw.to_str().unwrap(), dt_bw.to_str().unwrap()])
+        .args(["--binSize", "50"])
+        .args(["-o", summary_npz.to_str().unwrap()])
+        .args(["--outRawCounts", summary_tab.to_str().unwrap()])
+        .stdout(Stdio::null())
+        .stderr(Stdio::null())
+        .status()
+        .expect("multiBigwigSummary failed to launch");
+    assert!(
+        status.success(),
+        "multiBigwigSummary failed — ours.bw may be unreadable by deeptools"
+    );
+
+    // Parse the tab file and verify all values match.
+    let content = std::fs::read_to_string(&summary_tab).expect("reading summary.tab");
+    let mut mismatches = 0usize;
+    let mut compared = 0usize;
+    for line in content.lines().skip(1) {
+        let cols: Vec<&str> = line.split('\t').collect();
+        if cols.len() < 5 {
+            continue;
+        }
+        let v_ours: f64 = cols[3].parse().unwrap_or(f64::NAN);
+        let v_dt: f64 = cols[4].parse().unwrap_or(f64::NAN);
+        compared += 1;
+        if (v_ours - v_dt).abs() > 0.001 {
+            mismatches += 1;
+            eprintln!(
+                "mismatch at {}\t{}\t{}: ours={} dt={}",
+                cols[0], cols[1], cols[2], v_ours, v_dt
+            );
+        }
+    }
+    assert!(
+        mismatches == 0,
+        "bigWig values differ from deeptools in {mismatches}/{compared} bins ({ver})"
+    );
 }

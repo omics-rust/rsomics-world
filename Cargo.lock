@@ -1528,12 +1528,14 @@ dependencies = [
 
 [[package]]
 name = "rsomics-bam-compare"
-version = "0.1.0"
+version = "0.1.1"
 dependencies = [
  "clap",
+ "rsomics-bbi",
  "rsomics-common",
  "rsomics-coverage-core",
  "rsomics-help",
+ "tempfile",
 ]
 
 [[package]]
