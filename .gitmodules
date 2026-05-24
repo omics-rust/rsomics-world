@@ -453,3 +453,6 @@
 [submodule "crates/tools/epigenomics/rsomics-fragment-size"]
 	path = crates/tools/epigenomics/rsomics-fragment-size
 	url = git@github.com:omics-rust/rsomics-fragment-size.git
+[submodule "crates/tools/epigenomics/rsomics-methyldackel"]
+	path = crates/tools/epigenomics/rsomics-methyldackel
+	url = git@github.com:omics-rust/rsomics-methyldackel.git
