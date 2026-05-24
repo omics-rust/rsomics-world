@@ -444,3 +444,6 @@
 [submodule "crates/tools/epigenomics/rsomics-bam-signal"]
 	path = crates/tools/epigenomics/rsomics-bam-signal
 	url = git@github.com:omics-rust/rsomics-bam-signal.git
+[submodule "crates/tools/epigenomics/rsomics-bigwig-compare"]
+	path = crates/tools/epigenomics/rsomics-bigwig-compare
+	url = git@github.com:omics-rust/rsomics-bigwig-compare.git
