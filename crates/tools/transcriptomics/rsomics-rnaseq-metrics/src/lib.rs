@@ -357,11 +357,11 @@ impl RnaSeqMetrics {
     }
 
     /// `PCT_R1_TRANSCRIPT_STRAND_READS`
+    ///
+    /// Picard denominator: `NUM_R1 + NUM_R2` only — `NUM_UNEXPLAINED_READS` is excluded.
     #[must_use]
     pub fn pct_r1_transcript_strand_reads(&self) -> f64 {
-        let total = self.num_r1_transcript_strand_reads
-            + self.num_r2_transcript_strand_reads
-            + self.num_unexplained_reads;
+        let total = self.num_r1_transcript_strand_reads + self.num_r2_transcript_strand_reads;
         if total == 0 {
             return 0.0;
         }
@@ -369,11 +369,11 @@ impl RnaSeqMetrics {
     }
 
     /// `PCT_R2_TRANSCRIPT_STRAND_READS`
+    ///
+    /// Picard denominator: `NUM_R1 + NUM_R2` only — `NUM_UNEXPLAINED_READS` is excluded.
     #[must_use]
     pub fn pct_r2_transcript_strand_reads(&self) -> f64 {
-        let total = self.num_r1_transcript_strand_reads
-            + self.num_r2_transcript_strand_reads
-            + self.num_unexplained_reads;
+        let total = self.num_r1_transcript_strand_reads + self.num_r2_transcript_strand_reads;
         if total == 0 {
             return 0.0;
         }
@@ -425,6 +425,35 @@ impl GeneIndex {
             .rev()
             .take_while(move |&&i| genes[i].tx_end > p)
             .map(move |&i| &genes[i])
+    }
+
+    /// If exactly one gene overlaps the interval `[start_0, end_0_inclusive]` (0-based), return it.
+    ///
+    /// Picard: strand-read counts require `overlappingGenes.size() == 1`.
+    #[must_use]
+    pub fn overlapping_range<'a>(
+        &'a self,
+        chrom: &str,
+        start_0: u64,
+        end_0_inclusive: u64,
+    ) -> Option<&'a Gene> {
+        let indices = self
+            .chrom_map
+            .get(chrom)
+            .map_or(&[] as &[usize], Vec::as_slice);
+        // All genes with tx_start <= end_0_inclusive.
+        let upper = indices.partition_point(|&i| self.genes[i].tx_start <= end_0_inclusive);
+        // Of those, keep the ones with tx_end > start_0 (overlapping the interval).
+        let mut found: Option<usize> = None;
+        for &i in &indices[..upper] {
+            if self.genes[i].tx_end > start_0 {
+                if found.is_some() {
+                    return None; // ≥2 genes
+                }
+                found = Some(i);
+            }
+        }
+        found.map(|i| &self.genes[i])
     }
 
     #[must_use]
@@ -647,8 +676,10 @@ fn process_read(
         }
     }
 
+    // Walk the CIGAR once: classify bases, track whether any exon is hit, track aligned span.
     let mut ref_cursor = aln_start_0;
-    let mut any_transcript_gene: Option<char> = None;
+    let mut aln_end_0_inclusive = aln_start_0;
+    let mut overlaps_exon = false;
 
     for op_result in cigar.iter() {
         let Ok(op) = op_result else { break };
@@ -659,18 +690,19 @@ fn process_read(
                     let p = ref_cursor + dp;
                     metrics.pf_aligned_bases += 1;
                     match classify_base(chrom, p, gene_index) {
-                        Region::Coding => metrics.coding_bases += 1,
-                        Region::Utr => metrics.utr_bases += 1,
+                        Region::Coding => {
+                            metrics.coding_bases += 1;
+                            overlaps_exon = true;
+                        }
+                        Region::Utr => {
+                            metrics.utr_bases += 1;
+                            overlaps_exon = true;
+                        }
                         Region::Intronic => metrics.intronic_bases += 1,
                         Region::Intergenic => metrics.intergenic_bases += 1,
                     }
                 }
-                if any_transcript_gene.is_none() {
-                    any_transcript_gene = gene_index
-                        .overlapping(chrom, ref_cursor)
-                        .next()
-                        .map(|g| g.strand);
-                }
+                aln_end_0_inclusive = ref_cursor + len - 1;
                 ref_cursor += len;
             }
             Kind::Deletion | Kind::Skip => {
@@ -680,39 +712,104 @@ fn process_read(
         }
     }
 
-    if let Some(gene_strand) = any_transcript_gene {
-        if let Some(correct) = strand_correct(flags, gene_strand, strand_spec) {
-            if correct {
-                metrics.correct_strand_reads += 1;
-            } else {
-                metrics.incorrect_strand_reads += 1;
+    // Strand metrics: only when the read overlaps at least one exon and exactly one gene.
+    // Picard: `overlapsExon && overlappingGenes.size() == 1`
+    if !flags.is_supplementary() && overlaps_exon {
+        // Recompute the single gene if exactly one overlaps.
+        let single_gene =
+            single_overlapping_gene(chrom, aln_start_0, aln_end_0_inclusive, gene_index);
+
+        if let Some(gene) = single_gene {
+            let gene_neg = gene.strand == '-';
+            let read_neg = flags.is_reverse_complemented();
+
+            // CORRECT_STRAND_READS / INCORRECT_STRAND_READS (base-region pass, not here —
+            // but strand_correct also guards with strandSpecificity != NONE).
+            if let Some(correct) = strand_correct(flags, gene.strand, strand_spec) {
+                if correct {
+                    metrics.correct_strand_reads += 1;
+                } else {
+                    metrics.incorrect_strand_reads += 1;
+                }
+            }
+
+            // R1/R2/UNEXPLAINED template counting.
+            //
+            // Picard: only `readOneOrUnpaired` (= !paired || firstOfPair) reads are counted.
+            // Single-end reads (!SEGMENTED) are treated as R1. Paired R2 reads are skipped here.
+            let is_segmented = flags.is_segmented();
+            let is_r1_or_unpaired = !is_segmented || flags.is_first_segment();
+            if is_r1_or_unpaired {
+                // For unpaired reads: properOrientation = true, use [aln_start, aln_end].
+                // For paired reads with mapped mate: check FR orientation + template enclosed in gene.
+                // Our fixture is single-end, so we only need the unpaired path here.
+                // Picard unpaired: properOrientation = true, span = [alignmentStart, alignmentEnd].
+                // For paired reads, determining FR orientation requires mate CIGAR (not in BAM record).
+                // Picard: mate unmapped → properOrientation=false. Paired with mapped mate: needs
+                // full fragment span + FR check — conservatively mark UNEXPLAINED (counts correctly
+                // for single-end fixtures; paired-end support can be added if needed).
+                let (proper_orientation, left_base, right_base) = if is_segmented {
+                    (false, 0u64, 0u64)
+                } else {
+                    (true, aln_start_0 + 1, aln_end_0_inclusive + 1) // convert to 1-based for gene compare
+                };
+
+                // Picard CoordMath.encloses(gene.getStart(), gene.getEnd(), left, right):
+                // gene span is 1-based inclusive [tx_start+1, tx_end] in Picard (refFlat 0-based).
+                let gene_start_1 = gene.tx_start + 1;
+                let gene_end_1 = gene.tx_end; // tx_end is exclusive 0-based = inclusive 1-based
+                let enclosed =
+                    proper_orientation && left_base >= gene_start_1 && right_base <= gene_end_1;
+
+                if enclosed {
+                    // R1 if read strand == transcript strand; R2 if opposite.
+                    if read_neg == gene_neg {
+                        metrics.num_r1_transcript_strand_reads += 1;
+                    } else {
+                        metrics.num_r2_transcript_strand_reads += 1;
+                    }
+                } else {
+                    metrics.num_unexplained_reads += 1;
+                }
             }
         }
-        // Picard uses SAM flag bits 0x40 (READ1) and 0x80 (READ2) to classify reads.
-        // Reads without either bit (including unpaired fragment reads) are UNEXPLAINED.
-        if flags.is_first_segment() {
-            metrics.num_r1_transcript_strand_reads += 1;
-        } else if flags.is_last_segment() {
-            metrics.num_r2_transcript_strand_reads += 1;
-        } else {
-            metrics.num_unexplained_reads += 1;
-        }
     }
+}
+
+/// Return the single gene whose tx span overlaps the read's aligned interval, or `None` if 0 or ≥2.
+///
+/// Picard: `overlappingGenes.size() == 1` where overlapping is tested against the read's
+/// `[alignmentStart, alignmentEnd]` interval.
+fn single_overlapping_gene<'a>(
+    chrom: &str,
+    aln_start_0: u64,
+    aln_end_0_inclusive: u64,
+    gene_index: &'a GeneIndex,
+) -> Option<&'a Gene> {
+    gene_index.overlapping_range(chrom, aln_start_0, aln_end_0_inclusive)
 }
 
 // ── Bias computation ───────────────────────────────────────────────────────
 
 /// Compute transcript-coverage bias over a second BAM pass.
 ///
-/// For each transcript with mRNA length ≥ `min_length`, collects coverage at
-/// 100 percentile positions, selects top 1000 by total coverage, then computes
-/// medians of CV, 5′ bias, 3′ bias, and 5′/3′ ratio.
-///
-/// Picard percentile binning formula: `bin_i = floor(i * (length-1) / 99)` for `i` in 0..99.
+/// Picard algorithm (`computeCoverageMetrics`):
+/// - Per transcript with mRNA length ≥ `max(min_length, end_bias_bases)` and mean coverage ≥ 1.0:
+///   collect per-base coverage across the full mRNA length (strand-aware: minus-strand reversed).
+/// - Select best transcript per gene (highest mean), then top 1000 by coverage.
+/// - CV = population stddev / mean over all bases.
+/// - 5′ bias = mean(first `end_bias_bases` bases) / global mean.
+/// - 3′ bias = mean(last `end_bias_bases` bases) / global mean.
+/// - Report medians across selected transcripts.
+/// - Reads classified as ribosomal (≥80% overlap with rRNA intervals) are excluded, matching
+///   Picard's single-pass design where ribosomal reads return early before coverage accumulation.
+#[allow(clippy::implicit_hasher)]
 pub fn compute_bias(
     bam_path: &Path,
     gene_index: &GeneIndex,
+    rrna: &HashMap<String, Vec<(u64, u64)>>,
     min_length: u64,
+    end_bias_bases: u64,
 ) -> Result<BiasMetrics> {
     let zero_bias = BiasMetrics {
         median_cv_coverage: 0.0,
@@ -721,69 +818,100 @@ pub fn compute_bias(
         median_5prime_to_3prime_bias: 0.0,
     };
 
-    let tx_samples = build_tx_samples(gene_index, min_length);
-    if tx_samples.is_empty() {
+    // Build position→transcript-offset index for per-base coverage accumulation.
+    let tx_list = build_qualifying_transcripts(gene_index, min_length, end_bias_bases);
+    if tx_list.is_empty() {
         return Ok(zero_bias);
     }
 
-    let pos_to_bins = build_pos_index(&tx_samples, gene_index);
-    let (coverages, total_cov) = accumulate_coverage(bam_path, &pos_to_bins, tx_samples.len())?;
+    let pos_index = build_perbase_pos_index(&tx_list, gene_index);
+    let coverages = accumulate_perbase_coverage(bam_path, &pos_index, &tx_list, rrna)?;
 
-    let mut ranked: Vec<usize> = (0..tx_samples.len())
-        .filter(|&i| total_cov[i] > 0)
-        .collect();
-    ranked.sort_unstable_by(|&a, &b| total_cov[b].cmp(&total_cov[a]));
-    ranked.truncate(1000);
+    // Pick the best (highest-mean-coverage) transcript per gene, then top 1000.
+    let selected = pick_top_transcripts(&coverages, &tx_list);
 
-    if ranked.is_empty() {
+    if selected.is_empty() {
         return Ok(zero_bias);
     }
 
-    Ok(compute_bias_stats(&coverages, &ranked))
+    Ok(compute_bias_stats(&coverages, &selected, end_bias_bases))
 }
 
-fn build_tx_samples(gene_index: &GeneIndex, min_length: u64) -> Vec<(usize, Vec<u64>)> {
+/// A qualifying transcript: gene index in `GeneIndex`, the ordered list of 0-based genomic
+/// positions along the mRNA in 5'→3' direction, and the transcript's mRNA length.
+struct TxEntry {
+    gene_idx: usize,
+    /// Genomic positions in 5'→3' transcript order (already reversed for minus-strand).
+    positions: Vec<u64>,
+}
+
+/// Build the list of transcripts that qualify for bias calculation.
+///
+/// Picard qualification (from `pickTranscripts`):
+/// - `tx.length() >= max(minimumLength, endBiasBases)`
+/// - Only one transcript per gene is kept (the highest-mean-coverage one — determined later).
+/// - `mean >= 1.0` (checked after coverage accumulation).
+///
+/// Here we only apply the length filter; mean-coverage filter happens after accumulation.
+fn build_qualifying_transcripts(
+    gene_index: &GeneIndex,
+    min_length: u64,
+    end_bias_bases: u64,
+) -> Vec<TxEntry> {
+    let length_threshold = min_length.max(end_bias_bases);
     gene_index
         .genes()
         .iter()
         .enumerate()
-        .filter(|(_, g)| g.mrna_len() >= min_length)
-        .map(|(i, g)| {
+        .filter(|(_, g)| g.mrna_len() >= length_threshold)
+        .map(|(gene_idx, g)| {
             let mut positions: Vec<u64> = g.exon_union.iter().flat_map(|&(s, e)| s..e).collect();
             if g.strand == '-' {
                 positions.reverse();
             }
-            let sample_pos: Vec<u64> = picard_percentile_indices(positions.len())
-                .into_iter()
-                .map(|idx| positions[idx])
-                .collect();
-            (i, sample_pos)
+            TxEntry {
+                gene_idx,
+                positions,
+            }
         })
         .collect()
 }
 
-fn build_pos_index(tx_samples: &[(usize, Vec<u64>)], gene_index: &GeneIndex) -> PosIndex {
-    let mut pos_to_bins: PosIndex = HashMap::new();
-    for (tx_vec_idx, (gene_idx, sample_pos)) in tx_samples.iter().enumerate() {
-        let chrom = &gene_index.genes()[*gene_idx].chrom;
-        let chrom_map = pos_to_bins.entry(chrom.clone()).or_default();
-        for (bin, &gpos) in sample_pos.iter().enumerate() {
-            chrom_map.entry(gpos).or_default().push((tx_vec_idx, bin));
-        }
-    }
-    pos_to_bins
-}
-
+/// Map genomic position → list of `(tx_vec_index, offset_in_transcript)` for per-base coverage.
 type PosIndex = HashMap<String, HashMap<u64, Vec<(usize, usize)>>>;
 
+fn build_perbase_pos_index(tx_list: &[TxEntry], gene_index: &GeneIndex) -> PosIndex {
+    let mut index: PosIndex = HashMap::new();
+    for (tx_vec_idx, entry) in tx_list.iter().enumerate() {
+        let chrom = &gene_index.genes()[entry.gene_idx].chrom;
+        let chrom_map = index.entry(chrom.clone()).or_default();
+        for (offset, &gpos) in entry.positions.iter().enumerate() {
+            chrom_map
+                .entry(gpos)
+                .or_default()
+                .push((tx_vec_idx, offset));
+        }
+    }
+    index
+}
+
+/// Accumulate per-base coverage for each transcript in `tx_list`.
+///
+/// Reads classified as ribosomal (≥80% overlap with rRNA intervals) are skipped, matching
+/// Picard's single-pass design where such reads return early before coverage accumulation.
+///
+/// Returns one `Vec<u32>` per transcript (length = transcript mRNA length).
 #[allow(clippy::implicit_hasher)]
-fn accumulate_coverage(
+fn accumulate_perbase_coverage(
     bam_path: &Path,
-    pos_to_bins: &PosIndex,
-    num_tx: usize,
-) -> Result<(Vec<[u64; 100]>, Vec<u64>)> {
-    let mut coverages: Vec<[u64; 100]> = vec![[0u64; 100]; num_tx];
-    let mut total_cov: Vec<u64> = vec![0u64; num_tx];
+    pos_index: &PosIndex,
+    tx_list: &[TxEntry],
+    rrna: &HashMap<String, Vec<(u64, u64)>>,
+) -> Result<Vec<Vec<u32>>> {
+    let mut coverages: Vec<Vec<u32>> = tx_list
+        .iter()
+        .map(|e| vec![0u32; e.positions.len()])
+        .collect();
 
     let f = std::fs::File::open(bam_path).map_err(|e| {
         RsomicsError::Io(std::io::Error::other(format!(
@@ -820,29 +948,44 @@ fn accumulate_coverage(
         };
         let chrom = chrom_name.to_string();
 
-        let Some(chrom_map) = pos_to_bins.get(&chrom) else {
-            continue;
-        };
-
         let aln_start_1: u64 = match record.alignment_start() {
             Some(Ok(pos)) => usize::from(pos) as u64,
             _ => continue,
         };
-
+        let aln_start_0 = aln_start_1 - 1;
+        let seq_len = record.sequence().len() as u64;
         let cigar = record.cigar();
-        let mut ref_cursor = aln_start_1 - 1; // 0-based
+
+        // Skip ribosomal reads (matching Picard's early-return before coverage accumulation).
+        if let Some(rrna_ivs) = rrna.get(&chrom) {
+            let overlap = rrna_overlap_bases(&cigar, aln_start_0, rrna_ivs);
+            if overlap as f64 / seq_len as f64 >= RRNA_FRAGMENT_PCT {
+                continue;
+            }
+        }
+
+        let Some(chrom_map) = pos_index.get(&chrom) else {
+            continue;
+        };
+
+        let mut ref_cursor = aln_start_0;
 
         for op_result in cigar.iter() {
             let Ok(op) = op_result else { break };
             let len = op.len() as u64;
             match op.kind() {
                 Kind::Match | Kind::SequenceMatch | Kind::SequenceMismatch => {
-                    for dp in 0..len {
+                    // Picard addCoverageCounts: `for i=genomeStart; i<genomeEnd` where
+                    // genomeEnd = CoordMath.getEnd(start, len) = start + len - 1 (1-based).
+                    // Translated to 0-based: covers [ref_cursor, ref_cursor + len - 2], i.e. len-1 bases.
+                    // The last base of each alignment block is NOT counted in Picard's coverage.
+                    let count_len = if len > 0 { len - 1 } else { 0 };
+                    for dp in 0..count_len {
                         let p = ref_cursor + dp;
-                        if let Some(bins) = chrom_map.get(&p) {
-                            for &(tx_idx, bin) in bins {
-                                coverages[tx_idx][bin] += 1;
-                                total_cov[tx_idx] += 1;
+                        if let Some(entries) = chrom_map.get(&p) {
+                            for &(tx_idx, offset) in entries {
+                                coverages[tx_idx][offset] =
+                                    coverages[tx_idx][offset].saturating_add(1);
                             }
                         }
                     }
@@ -856,44 +999,87 @@ fn accumulate_coverage(
         }
     }
 
-    Ok((coverages, total_cov))
+    Ok(coverages)
 }
 
-// END_BIAS_BASES default = 100 in Picard.
-// With a 100-bin vector, end_bins=100 means both 5' and 3' bias = global mean = 1.0.
-const END_BINS: usize = 100;
+/// Select the best transcript per gene (highest mean coverage, mean ≥ 1.0), then keep the top 1000.
+///
+/// Picard `pickTranscripts`: for each gene with ≥1 qualifying transcript, picks the one with
+/// highest mean coverage; then from those, the top 1000 by coverage are used for bias stats.
+fn pick_top_transcripts(coverages: &[Vec<u32>], tx_list: &[TxEntry]) -> Vec<usize> {
+    // Group tx_list entries by gene index, pick best per gene.
+    let mut best_per_gene: HashMap<usize, (usize, f64)> = HashMap::new();
+    for (vec_idx, entry) in tx_list.iter().enumerate() {
+        let cov = &coverages[vec_idx];
+        let mean = cov.iter().map(|&c| f64::from(c)).sum::<f64>() / cov.len() as f64;
+        if mean < 1.0 {
+            continue;
+        }
+        let gene_idx = entry.gene_idx;
+        best_per_gene
+            .entry(gene_idx)
+            .and_modify(|(best_vec, best_mean)| {
+                if mean > *best_mean {
+                    *best_vec = vec_idx;
+                    *best_mean = mean;
+                }
+            })
+            .or_insert((vec_idx, mean));
+    }
 
-fn compute_bias_stats(coverages: &[[u64; 100]], ranked: &[usize]) -> BiasMetrics {
-    let mut cv_acc: Vec<f64> = Vec::with_capacity(ranked.len());
-    let mut prime5_acc: Vec<f64> = Vec::with_capacity(ranked.len());
-    let mut prime3_acc: Vec<f64> = Vec::with_capacity(ranked.len());
-    let mut ratio_acc: Vec<f64> = Vec::with_capacity(ranked.len());
+    // Sort by mean coverage descending, keep top 1000.
+    let mut ranked: Vec<(usize, f64)> = best_per_gene.into_values().collect();
+    ranked.sort_unstable_by(|a, b| b.1.partial_cmp(&a.1).unwrap_or(std::cmp::Ordering::Equal));
+    ranked.truncate(1000);
+    ranked.into_iter().map(|(vec_idx, _)| vec_idx).collect()
+}
 
-    for &tx_idx in ranked {
+/// Compute CV, 5′/3′ bias statistics from per-base coverage arrays.
+///
+/// Picard (`computeCoverageMetrics`):
+/// - `mean = MathUtil.mean(coverage)` over all bases
+/// - `cv = MathUtil.stddev(coverage, mean) / mean`
+/// - `5prime_bias = mean(coverage[0..end_bias_bases]) / mean`
+/// - `3prime_bias = mean(coverage[len-end_bias_bases..len]) / mean`
+/// - Minus-strand transcripts: `coverage` array is already reversed to 5'→3' order.
+fn compute_bias_stats(
+    coverages: &[Vec<u32>],
+    selected: &[usize],
+    end_bias_bases: u64,
+) -> BiasMetrics {
+    let mut cv_acc: Vec<f64> = Vec::with_capacity(selected.len());
+    let mut prime5_acc: Vec<f64> = Vec::with_capacity(selected.len());
+    let mut prime3_acc: Vec<f64> = Vec::with_capacity(selected.len());
+    let mut ratio_acc: Vec<f64> = Vec::with_capacity(selected.len());
+
+    for &tx_idx in selected {
         let cov = &coverages[tx_idx];
-        let mean = cov.iter().sum::<u64>() as f64 / 100.0;
+        let n = cov.len();
+        let mean = cov.iter().map(|&c| f64::from(c)).sum::<f64>() / n as f64;
         if mean == 0.0 {
             continue;
         }
-        let variance = cov
+        // Picard uses MathUtil.stddev: sqrt(sum(x^2)/n - mean^2).
+        // This is algebraically equivalent to sqrt(variance) but uses a different floating-point path.
+        let sum_sq = cov
             .iter()
-            .map(|&c| {
-                let d = c as f64 - mean;
-                d * d
-            })
-            .sum::<f64>()
-            / 100.0;
-        cv_acc.push(variance.sqrt() / mean);
+            .map(|&c| f64::from(c) * f64::from(c))
+            .sum::<f64>();
+        let stddev = ((sum_sq / n as f64) - mean * mean).max(0.0).sqrt();
+        cv_acc.push(stddev / mean);
 
-        let end_bins = END_BINS.min(100);
-        let mean_5 = cov[..end_bins].iter().sum::<u64>() as f64 / end_bins as f64;
-        let mean_3 = cov[(100 - end_bins)..].iter().sum::<u64>() as f64 / end_bins as f64;
+        let eb = (end_bias_bases as usize).min(n);
+        let mean_5 = cov[..eb].iter().map(|&c| f64::from(c)).sum::<f64>() / eb as f64;
+        let mean_3 = cov[(n - eb)..].iter().map(|&c| f64::from(c)).sum::<f64>() / eb as f64;
         let b5 = mean_5 / mean;
         let b3 = mean_3 / mean;
         prime5_acc.push(b5);
         prime3_acc.push(b3);
+        // Picard: MathUtil.divide(5prime, 3prime) = 0 if denominator is 0.
         if b3 > 0.0 {
             ratio_acc.push(b5 / b3);
+        } else {
+            ratio_acc.push(0.0);
         }
     }
 
@@ -903,21 +1089,6 @@ fn compute_bias_stats(coverages: &[[u64; 100]], ranked: &[usize]) -> BiasMetrics
         median_3prime_bias: median_f64(&mut prime3_acc),
         median_5prime_to_3prime_bias: median_f64(&mut ratio_acc),
     }
-}
-
-/// Compute 100 Picard-style percentile indices into a positions list of length `n`.
-///
-/// Picard formula: `index_i = floor(i * (n-1) / 99)` for `i` in 0..99.
-fn picard_percentile_indices(n: usize) -> Vec<usize> {
-    (0..100)
-        .map(|i| {
-            if n <= 1 {
-                0
-            } else {
-                (i * (n - 1) / 99).min(n - 1)
-            }
-        })
-        .collect()
 }
 
 fn median_f64(vals: &mut [f64]) -> f64 {

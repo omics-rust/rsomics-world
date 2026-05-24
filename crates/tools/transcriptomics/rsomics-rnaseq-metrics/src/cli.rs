@@ -53,6 +53,10 @@ pub struct Cli {
     #[arg(long = "minimum-length", default_value_t = 500)]
     pub minimum_length: u64,
 
+    /// Number of bases at each end of a transcript used for 5′/3′ bias calculation.
+    #[arg(long = "end-bias-bases", default_value_t = 100)]
+    pub end_bias_bases: u64,
+
     #[command(flatten)]
     pub common: CommonFlags,
 }
@@ -86,7 +90,13 @@ impl Cli {
 
         let metrics = collect_metrics(&self.input, &gene_index, &rrna, self.strand_specificity)?;
 
-        let bias = compute_bias(&self.input, &gene_index, self.minimum_length)?;
+        let bias = compute_bias(
+            &self.input,
+            &gene_index,
+            &rrna,
+            self.minimum_length,
+            self.end_bias_bases,
+        )?;
 
         let content = format_metrics(&metrics, &bias, has_rrna);
 

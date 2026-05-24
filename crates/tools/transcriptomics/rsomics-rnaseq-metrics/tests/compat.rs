@@ -1,13 +1,9 @@
 //! Compatibility test: run both rsomics-rnaseq-metrics and Picard `CollectRnaSeqMetrics`
-//! on the golden fixture and assert base-region counts + percentages are field-exact.
+//! on the golden fixture and assert all 27 metric fields are field-exact.
 //!
 //! Skipped if `picard` is not on PATH.
 //!
 //! The `## htsjdk` preamble lines differ by invocation and are excluded from comparison.
-//! The bias block (`MEDIAN_CV_COVERAGE`, `MEDIAN_5PRIME_BIAS`, etc.) is NOT asserted here
-//! because Picard's bias algorithm for small fixtures produces 0 (no qualifying reads above
-//! its internal coverage threshold), while our implementation returns non-zero. The
-//! base-region block is field-exact.
 
 use std::collections::HashMap;
 use std::path::Path;
@@ -90,8 +86,8 @@ fn assert_field_eq(field: &str, ours: &HashMap<String, String>, picard: &HashMap
     );
 }
 
-/// Fields in the base-region block that must be byte/field-exact vs Picard.
-const BASE_REGION_FIELDS: &[&str] = &[
+/// All 27 metric fields that must be field-exact vs Picard (floats compared with epsilon=1e-5).
+const ALL_FIELDS: &[&str] = &[
     "PF_BASES",
     "PF_ALIGNED_BASES",
     "CODING_BASES",
@@ -99,12 +95,24 @@ const BASE_REGION_FIELDS: &[&str] = &[
     "INTRONIC_BASES",
     "INTERGENIC_BASES",
     "IGNORED_READS",
+    "CORRECT_STRAND_READS",
+    "INCORRECT_STRAND_READS",
+    "NUM_R1_TRANSCRIPT_STRAND_READS",
+    "NUM_R2_TRANSCRIPT_STRAND_READS",
+    "NUM_UNEXPLAINED_READS",
+    "PCT_R1_TRANSCRIPT_STRAND_READS",
+    "PCT_R2_TRANSCRIPT_STRAND_READS",
     "PCT_CODING_BASES",
     "PCT_UTR_BASES",
     "PCT_INTRONIC_BASES",
     "PCT_INTERGENIC_BASES",
     "PCT_MRNA_BASES",
     "PCT_USABLE_BASES",
+    "PCT_CORRECT_STRAND_READS",
+    "MEDIAN_CV_COVERAGE",
+    "MEDIAN_5PRIME_BIAS",
+    "MEDIAN_3PRIME_BIAS",
+    "MEDIAN_5PRIME_TO_3PRIME_BIAS",
 ];
 
 const RRNA_FIELDS: &[&str] = &["RIBOSOMAL_BASES", "PCT_RIBOSOMAL_BASES"];
@@ -163,7 +171,7 @@ fn compat_no_rrna() {
     let picard_metrics = parse_metrics_row(picard_out.path());
     let our_metrics = parse_metrics_row(our_out.path());
 
-    for field in BASE_REGION_FIELDS {
+    for field in ALL_FIELDS {
         assert_field_eq(field, &our_metrics, &picard_metrics);
     }
 }
@@ -226,7 +234,7 @@ fn compat_with_rrna() {
     let picard_metrics = parse_metrics_row(picard_out.path());
     let our_metrics = parse_metrics_row(our_out.path());
 
-    for field in BASE_REGION_FIELDS {
+    for field in ALL_FIELDS {
         assert_field_eq(field, &our_metrics, &picard_metrics);
     }
     for field in RRNA_FIELDS {
