@@ -462,3 +462,6 @@
 [submodule "crates/tools/epigenomics/rsomics-multibigwig-summary"]
 	path = crates/tools/epigenomics/rsomics-multibigwig-summary
 	url = git@github.com:omics-rust/rsomics-multibigwig-summary.git
+[submodule "crates/tools/metagenomics/rsomics-fastx-sort"]
+	path = crates/tools/metagenomics/rsomics-fastx-sort
+	url = git@github.com:omics-rust/rsomics-fastx-sort.git
