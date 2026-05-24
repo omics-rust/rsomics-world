@@ -396,3 +396,6 @@
 [submodule "crates/tools/formats/rsomics-bam-calmd"]
 	path = crates/tools/formats/rsomics-bam-calmd
 	url = git@github.com:omics-rust/rsomics-bam-calmd.git
+[submodule "crates/tools/formats/rsomics-bam-cat"]
+	path = crates/tools/formats/rsomics-bam-cat
+	url = git@github.com:omics-rust/rsomics-bam-cat.git
