@@ -1,6 +1,0 @@
->seq1;size=5
-ACGTACGTACGTACGTACGTACGTACGTACGT
->seq2
-acgtacgtacgtacgtacgtacgtacgtacgt
->unique_seq
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
