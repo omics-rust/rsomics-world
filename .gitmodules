@@ -474,3 +474,6 @@
 [submodule "crates/tools/metagenomics/rsomics-derep"]
 	path = crates/tools/metagenomics/rsomics-derep
 	url = git@github.com:omics-rust/rsomics-derep.git
+[submodule "crates/tools/epigenomics/rsomics-seacr"]
+	path = crates/tools/epigenomics/rsomics-seacr
+	url = git@github.com:omics-rust/rsomics-seacr.git
