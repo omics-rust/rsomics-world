@@ -471,3 +471,6 @@
 [submodule "crates/tools/formats/rsomics-vcf-setgt"]
 	path = crates/tools/formats/rsomics-vcf-setgt
 	url = git@github.com:omics-rust/rsomics-vcf-setgt.git
+[submodule "crates/tools/metagenomics/rsomics-derep"]
+	path = crates/tools/metagenomics/rsomics-derep
+	url = git@github.com:omics-rust/rsomics-derep.git
