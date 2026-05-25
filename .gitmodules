@@ -468,3 +468,6 @@
 [submodule "crates/tools/metagenomics/rsomics-rereplicate"]
 	path = crates/tools/metagenomics/rsomics-rereplicate
 	url = git@github.com:omics-rust/rsomics-rereplicate.git
+[submodule "crates/tools/formats/rsomics-vcf-setgt"]
+	path = crates/tools/formats/rsomics-vcf-setgt
+	url = git@github.com:omics-rust/rsomics-vcf-setgt.git
