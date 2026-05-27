@@ -65,7 +65,7 @@ all = ["fasta", "fastq", "vcf", "bam", "bed", "gff"]
 
 [dependencies]
 rsomics-fasta-utils = { path = "../../tools/formats/rsomics-fasta-utils", version = "0.1", optional = true }
-rsomics-fasta-index = { path = "../../tools/formats/rsomics-fasta-index", version = "0.1", optional = true }
+rsomics-fasta-index = { path = "../../tools/formats/rsomics-fasta-index", version = "0.2", optional = true }
 rsomics-fasta-n50 = { path = "../../tools/formats/rsomics-fasta-n50", version = "0.1", optional = true }
 rsomics-fasta-stats = { path = "../../tools/formats/rsomics-fasta-stats", version = "0.4", optional = true }
 rsomics-fasta-translate = { path = "../../tools/formats/rsomics-fasta-translate", version = "0.1", optional = true }
