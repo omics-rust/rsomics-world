@@ -86,7 +86,7 @@ rsomics-fastqc = { path = "../../tools/formats/rsomics-fastqc", version = "0.1",
 
 rsomics-vcf-utils = { path = "../../tools/formats/rsomics-vcf-utils", version = "0.1", optional = true }
 rsomics-vcf-annotate = { path = "../../tools/formats/rsomics-vcf-annotate", version = "0.1", optional = true }
-rsomics-vcf-filter = { path = "../../tools/formats/rsomics-vcf-filter", version = "0.1", optional = true }
+rsomics-vcf-filter = { path = "../../tools/formats/rsomics-vcf-filter", version = "0.2", optional = true }
 rsomics-vcf-isec = { path = "../../tools/formats/rsomics-vcf-isec", version = "0.1", optional = true }
 rsomics-vcf-merge = { path = "../../tools/formats/rsomics-vcf-merge", version = "0.1", optional = true }
 rsomics-vcf-norm = { path = "../../tools/formats/rsomics-vcf-norm", version = "0.1", optional = true }

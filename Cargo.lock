@@ -840,6 +840,16 @@ dependencies = [
 
 [[package]]
 name = "md-5"
+version = "0.10.6"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "d89e7ee0cfbedfc4da3340218492196241d89eefb6dab27de5df917a6d2e78cf"
+dependencies = [
+ "cfg-if",
+ "digest 0.10.7",
+]
+
+[[package]]
+name = "md-5"
 version = "0.11.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "69b6441f590336821bb897fb28fc622898ccceb1d6cea3fde5ea86b090c4de98"
@@ -1006,7 +1016,7 @@ dependencies = [
  "indexmap",
  "lexical-core",
  "lzma-rust2",
- "md-5",
+ "md-5 0.11.0",
  "noodles-bam",
  "noodles-core",
  "noodles-fasta",
@@ -1550,6 +1560,20 @@ dependencies = [
 ]
 
 [[package]]
+name = "rsomics-bam-depad"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "noodles",
+ "rsomics-bamio",
+ "rsomics-common",
+ "rsomics-help",
+ "serde",
+ "serde_json",
+ "tempfile",
+]
+
+[[package]]
 name = "rsomics-bam-depth"
 version = "0.1.0"
 dependencies = [
@@ -1560,6 +1584,16 @@ dependencies = [
  "rsomics-help",
  "serde",
  "serde_json",
+ "tempfile",
+]
+
+[[package]]
+name = "rsomics-bam-dict"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "md-5 0.10.6",
+ "rsomics-common",
  "tempfile",
 ]
 
@@ -1731,6 +1765,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "rsomics-bam-quickcheck"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "flate2",
+ "rsomics-common",
+ "tempfile",
+]
+
+[[package]]
 name = "rsomics-bam-read-dist"
 version = "0.1.0"
 dependencies = [
@@ -1779,6 +1823,17 @@ dependencies = [
  "rsomics-bamio",
  "rsomics-common",
  "rsomics-help",
+ "tempfile",
+]
+
+[[package]]
+name = "rsomics-bam-samples"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "noodles",
+ "rsomics-bamio",
+ "rsomics-common",
  "tempfile",
 ]
 
@@ -1863,6 +1918,20 @@ dependencies = [
  "rsomics-bamio",
  "rsomics-common",
  "rsomics-help",
+]
+
+[[package]]
+name = "rsomics-bam-targetcut"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "noodles",
+ "rsomics-bamio",
+ "rsomics-common",
+ "rsomics-help",
+ "serde",
+ "serde_json",
+ "tempfile",
 ]
 
 [[package]]
@@ -2136,23 +2205,12 @@ dependencies = [
 
 [[package]]
 name = "rsomics-derep"
-version = "0.1.0"
+version = "0.2.0"
 dependencies = [
  "ahash",
  "anyhow",
  "clap",
  "rayon",
- "rsomics-common",
- "tempfile",
-]
-
-[[package]]
-name = "rsomics-derep-prefix"
-version = "0.1.0"
-dependencies = [
- "ahash",
- "anyhow",
- "clap",
  "rsomics-common",
  "tempfile",
 ]
@@ -2939,6 +2997,17 @@ dependencies = [
 ]
 
 [[package]]
+name = "rsomics-read-nvc"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "criterion",
+ "rsomics-bamio",
+ "rsomics-common",
+ "tempfile",
+]
+
+[[package]]
 name = "rsomics-rereplicate"
 version = "0.1.0"
 dependencies = [
@@ -3145,6 +3214,12 @@ name = "rsomics-vcf-expr"
 version = "0.1.0"
 
 [[package]]
+name = "rsomics-vcf-expr"
+version = "0.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "0203150b33489f560636d219d993aa9f427821213bfcdb6fe77eb7053298f57c"
+
+[[package]]
 name = "rsomics-vcf-fill-tags"
 version = "0.1.0"
 dependencies = [
@@ -3167,7 +3242,7 @@ dependencies = [
  "flate2",
  "rsomics-common",
  "rsomics-help",
- "rsomics-vcf-expr",
+ "rsomics-vcf-expr 0.1.0",
  "serde",
  "serde_json",
  "tempfile",
@@ -3183,6 +3258,27 @@ dependencies = [
  "rsomics-help",
  "serde",
  "serde_json",
+ "tempfile",
+]
+
+[[package]]
+name = "rsomics-vcf-gtcheck"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "flate2",
+ "rsomics-common",
+ "rsomics-help",
+ "tempfile",
+]
+
+[[package]]
+name = "rsomics-vcf-head"
+version = "0.1.1"
+dependencies = [
+ "clap",
+ "flate2",
+ "rsomics-common",
  "tempfile",
 ]
 
@@ -3266,7 +3362,7 @@ dependencies = [
  "flate2",
  "rsomics-common",
  "rsomics-help",
- "rsomics-vcf-expr",
+ "rsomics-vcf-expr 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "serde",
  "serde_json",
  "tempfile",
