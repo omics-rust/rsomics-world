@@ -178,16 +178,13 @@ fn compat_vs_rseqc() {
     }
 
     // Raw counts at 100% must match exactly.
-    for (i, ((ours_key, ours_vals), (_rseqc_key, rseqc_vals))) in ours_raw_rows
-        .iter()
-        .zip(rseqc_raw_rows.iter())
-        .enumerate()
+    for (i, ((ours_key, ours_vals), (_rseqc_key, rseqc_vals))) in
+        ours_raw_rows.iter().zip(rseqc_raw_rows.iter()).enumerate()
     {
         let ours_100 = ours_vals.get(last_frac_col).copied().unwrap_or(0.0);
         let rseqc_100 = rseqc_vals.get(last_frac_col).copied().unwrap_or(0.0);
         assert_eq!(
-            ours_100 as u64,
-            rseqc_100 as u64,
+            ours_100 as u64, rseqc_100 as u64,
             "rawCount@100% mismatch at row {i} ({ours_key}): ours={ours_100}, rseqc={rseqc_100}"
         );
     }

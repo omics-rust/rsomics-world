@@ -1550,11 +1550,9 @@ name = "rsomics-bam-consensus"
 version = "0.1.0"
 dependencies = [
  "clap",
- "noodles",
  "rsomics-bamio",
  "rsomics-common",
  "rsomics-help",
- "rsomics-pileup",
  "serde",
  "serde_json",
  "tempfile",
@@ -2230,6 +2228,17 @@ version = "0.1.0"
 dependencies = [
  "rsomics-kmer",
  "thiserror 2.0.18",
+]
+
+[[package]]
+name = "rsomics-deletion-profile"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "noodles",
+ "rsomics-bamio",
+ "rsomics-common",
+ "tempfile",
 ]
 
 [[package]]
@@ -3066,6 +3075,20 @@ dependencies = [
  "rsomics-common",
  "serde",
  "serde_json",
+ "tempfile",
+]
+
+[[package]]
+name = "rsomics-rpkm-saturation"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "noodles",
+ "rand 0.8.6",
+ "rand_chacha 0.3.1",
+ "rayon",
+ "rsomics-bamio",
+ "rsomics-common",
  "tempfile",
 ]
 

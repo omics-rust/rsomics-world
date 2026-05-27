@@ -242,7 +242,7 @@ impl ActiveRead {
         let cigar: Vec<(u8, i32)> = rec.cigar_ops().map(|(o, l)| (o, l as i32)).collect();
         // Advance past leading soft/hard clips and non-ref ops to find first ref op.
         let mut k = 0usize;
-        let mut x = beg;
+        let x = beg;
         let mut y = 0i32;
         while k < cigar.len() {
             let (op, l) = cigar[k];
@@ -261,7 +261,14 @@ impl ActiveRead {
             }
         }
         let end = ref_end(beg, &cigar);
-        ActiveRead { rec, cigar, end, k, x, y }
+        ActiveRead {
+            rec,
+            cigar,
+            end,
+            k,
+            x,
+            y,
+        }
     }
 
     /// Advance CIGAR walk to reference position `pos`.  Returns `(base4, qual, is_del, is_refskip)`.
@@ -385,7 +392,7 @@ pub fn consensus(
 
     // Read the first record.
     {
-        let n = rsomics_bamio::raw::read_record(reader_mut, &mut record).map_err(RsomicsError::Io)?;
+        let n = rsomics_bamio::raw::read_record(reader_mut, &mut record)?;
         if n > 0 {
             next_rec = Some(record.clone());
         }
@@ -398,26 +405,22 @@ pub fn consensus(
             let flag = nr.flags();
             if nr.reference_sequence_id() < 0 || flag & FLAG_UNMAP != 0 {
                 // Filtered — drop and advance.
-                let n = rsomics_bamio::raw::read_record(reader_mut, &mut record)
-                    .map_err(RsomicsError::Io)?;
+                let n = rsomics_bamio::raw::read_record(reader_mut, &mut record)?;
                 next_rec = if n > 0 { Some(record.clone()) } else { None };
                 continue;
             }
             if opts.excl_flags != 0 && flag & opts.excl_flags != 0 {
-                let n = rsomics_bamio::raw::read_record(reader_mut, &mut record)
-                    .map_err(RsomicsError::Io)?;
+                let n = rsomics_bamio::raw::read_record(reader_mut, &mut record)?;
                 next_rec = if n > 0 { Some(record.clone()) } else { None };
                 continue;
             }
             if opts.incl_flags != 0 && flag & opts.incl_flags == 0 {
-                let n = rsomics_bamio::raw::read_record(reader_mut, &mut record)
-                    .map_err(RsomicsError::Io)?;
+                let n = rsomics_bamio::raw::read_record(reader_mut, &mut record)?;
                 next_rec = if n > 0 { Some(record.clone()) } else { None };
                 continue;
             }
             if nr.mapping_quality() < opts.min_mapq {
-                let n = rsomics_bamio::raw::read_record(reader_mut, &mut record)
-                    .map_err(RsomicsError::Io)?;
+                let n = rsomics_bamio::raw::read_record(reader_mut, &mut record)?;
                 next_rec = if n > 0 { Some(record.clone()) } else { None };
                 continue;
             }
@@ -441,8 +444,7 @@ pub fn consensus(
             active.push(ActiveRead::new(cur_nr));
 
             // Read the next record.
-            let n = rsomics_bamio::raw::read_record(reader_mut, &mut record)
-                .map_err(RsomicsError::Io)?;
+            let n = rsomics_bamio::raw::read_record(reader_mut, &mut record)?;
             next_rec = if n > 0 { Some(record.clone()) } else { None };
         }
 
