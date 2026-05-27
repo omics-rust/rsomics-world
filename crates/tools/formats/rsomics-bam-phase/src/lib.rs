@@ -560,6 +560,23 @@ fn nibble_to_acgt(n: u8) -> u8 {
 
 /// Phase heterozygous SNPs from `input` BAM. Text output to `stdout_w`; BAM
 /// split files created if `opts.bam_prefix` is set.
+///
+/// Algorithm: two-pass over the BAM file.
+///
+/// Pass 1 — pileup only, no record storage:
+///   Stream every primary alignment; walk its CIGAR to fill a per-position allele
+///   accumulator. No records are cloned or buffered. After reading the whole file,
+///   convert the pileup into a per-contig het-site list using `call_het`.
+///
+/// Pass 2 — phasing:
+///   Re-open the BAM from the start. For each contig:
+///   - If it has no het sites: route records directly to split BAM output with a
+///     deterministic hash (no record storage, no clone).
+///   - If it has het sites: assign allele calls per fragment, store only records that
+///     have ≥1 allele call, then run the DP phaser and write output.
+///
+/// Two file reads avoids buffering the entire contig in memory, cutting peak RSS
+/// from O(contig records × record size) to O(het-site count + phased fragments).
 pub fn phase<W: Write>(
     input: &Path,
     stdout_w: &mut W,
@@ -574,9 +591,92 @@ pub fn phase<W: Write>(
     // platforms, so we always use a single-threaded reader here.
     let _ = workers;
     let st = NonZero::<usize>::new(1).unwrap();
-    let mut reader = rsomics_bamio::open_with_workers(input, st)?;
-    let header = reader.read_header().map_err(RsomicsError::Io)?;
+
+    // ── Pass 1: pileup — read every primary record, walk CIGAR, fill accumulator ──
+    let header = {
+        let mut r = rsomics_bamio::open_with_workers(input, st)?;
+        let h = r.read_header().map_err(RsomicsError::Io)?;
+        let n_refs = h.reference_sequences().len();
+        // Per-contig pileup: two-tier structure to minimise memory.
+        //
+        // Tier 1 (mono_pileups): position → (count, first_base).  Positions where
+        //   only one distinct base has been observed — the vast majority in a
+        //   diploid sample.  These can never be het sites.
+        //
+        // Tier 2 (pileups): position → (count_a, count_b, base_a, base_b).  Only
+        //   positions where a SECOND distinct base has been seen are promoted here.
+        //   This keeps the full-entry map small (proportional to variant density,
+        //   not coverage).
+        let mut mono_pileups: Vec<HashMap<i64, (u32, u8)>> = vec![HashMap::new(); n_refs];
+        let mut pileups: Vec<HashMap<i64, (u32, u32, u8, u8)>> = vec![HashMap::new(); n_refs];
+        let mut rec = RawRecord::default();
+        loop {
+            let nbytes = raw::read_record(r.get_mut(), &mut rec)?;
+            if nbytes == 0 {
+                break;
+            }
+            stats.records_in += 1;
+            let flags = rec.flags();
+            if flags
+                & (FLAG_UNMAPPED
+                    | FLAG_SECONDARY
+                    | FLAG_QCFAIL
+                    | FLAG_DUPLICATE
+                    | FLAG_SUPPLEMENTARY)
+                != 0
+            {
+                continue;
+            }
+            let tid = rec.reference_sequence_id();
+            if tid < 0 || tid as usize >= n_refs {
+                continue;
+            }
+            accumulate_pileup(
+                &rec,
+                opts.min_base_q,
+                &mut mono_pileups[tid as usize],
+                &mut pileups[tid as usize],
+            );
+        }
+        (h, pileups)
+    };
+    let (header, pileups) = header;
     let ref_seqs = header.reference_sequences();
+    let n_refs = ref_seqs.len();
+
+    // Identify het sites per contig from the pileup.
+    // sites_by_tid[i] = (vec of HetSite, pos→var_id index map) for contig i.
+    let mut sites_by_tid: Vec<(Vec<HetSite>, HashMap<i64, usize>)> = Vec::with_capacity(n_refs);
+    for (tid, pileup) in pileups.into_iter().enumerate() {
+        let mut sorted_pos: Vec<i64> = pileup.keys().copied().collect();
+        sorted_pos.sort_unstable();
+        let mut sites: Vec<HetSite> = Vec::new();
+        let mut site_pos_idx: HashMap<i64, usize> = HashMap::new();
+        for pos in sorted_pos {
+            let (ca, cb, base_a, base_b) = pileup[&pos];
+            let total = ca + cb;
+            if total as usize > opts.max_depth {
+                continue;
+            }
+            if base_a == b'N' || base_b == b'N' || base_a == base_b {
+                continue;
+            }
+            if let Some(_lod) = call_het(ca, cb, opts.min_var_lod) {
+                let var_id = sites.len();
+                site_pos_idx.insert(pos, var_id);
+                sites.push(HetSite {
+                    pos,
+                    base_a,
+                    base_b,
+                });
+                stats.het_sites += 1;
+            }
+        }
+        // Silently skip contigs with no sites — they still need pass-2 routing
+        // but we keep only a placeholder empty entry.
+        let _ = tid; // tid == sites_by_tid.len() at this point
+        sites_by_tid.push((sites, site_pos_idx));
+    }
 
     // Build BAM split writers if -b is specified.
     // bam::io::Writer::new(W) wraps W with a BGZF compressor internally,
@@ -592,7 +692,6 @@ pub fn phase<W: Write>(
             > {
                 let path = PathBuf::from(format!("{}.{suffix}.bam", prefix.display()));
                 let f = std::fs::File::create(&path).map_err(RsomicsError::Io)?;
-                // Pass BufWriter<File> directly; bam::io::Writer::new adds the BGZF layer.
                 Ok(bam::io::Writer::new(std::io::BufWriter::new(f)))
             };
             let mut w0 = open("0")?;
@@ -607,158 +706,126 @@ pub fn phase<W: Write>(
 
     write_cc_header(stdout_w).map_err(RsomicsError::Io)?;
 
-    let n_refs = ref_seqs.len();
     if n_refs == 0 {
         return Ok(stats);
     }
 
-    // Stream records contig by contig. Because the BAM is coordinate-sorted, all
-    // records for a given reference sequence appear consecutively. We accumulate
-    // one contig's records into `cur_recs`, flush when the ref_id changes. Peak
-    // RSS is proportional to the largest single contig rather than the whole file.
+    // ── Pass 2: phasing — re-read BAM, process contig by contig ─────────────────
+    //
+    // For contigs with no het sites: route each primary record directly to the
+    // split BAM bucket (deterministic hash of QNAME) without cloning or buffering.
+    //
+    // For contigs with het sites: assign allele calls per fragment; store only
+    // records that have ≥1 allele call (so we can tag them with YP/YF/YI/YO/YS
+    // after the DP). Records with no allele calls are routed immediately.
+    let mut reader2 = rsomics_bamio::open_with_workers(input, st)?;
+    reader2.read_header().map_err(RsomicsError::Io)?;
+
     let mut cur_tid: i32 = -1;
-    let mut cur_recs: Vec<RawRecord> = Vec::with_capacity(4096);
-    let mut rec = RawRecord::default(); // reused read buffer
+    let mut frags: HashMap<u64, Fragment> = HashMap::new();
+    let mut rec = RawRecord::default();
 
-    // Inner closure (via macro-style helper) is awkward with borrow-checker here;
-    // we use a labelled loop + inline flush instead.
-    macro_rules! flush_contig {
-        ($ref_id:expr, $records:expr) => {{
-            let ref_id: usize = $ref_id;
-            let records: Vec<RawRecord> = $records;
-            if !records.is_empty() {
-                let chrom = ref_seqs
-                    .get_index(ref_id)
-                    .map(|(name, _)| name.to_string())
-                    .unwrap_or_else(|| format!("ref{ref_id}"));
+    // Flush the accumulated fragment map for the contig that just ended.
+    macro_rules! flush_phased_contig {
+        ($tid:expr) => {{
+            let tid: usize = $tid;
+            let (sites, _site_pos_idx) = &sites_by_tid[tid];
+            let chrom = ref_seqs
+                .get_index(tid)
+                .map(|(name, _)| name.to_string())
+                .unwrap_or_else(|| format!("ref{tid}"));
 
-                // ── pileup + het-site calling ──────────────────────────────────────
-                let mut pileup: HashMap<i64, (u32, u32, u8, u8)> = HashMap::new();
-                for rec in &records {
-                    accumulate_pileup(rec, opts.min_base_q, &mut pileup);
+            if sites.is_empty() {
+                // No het sites: per-record fast path already routed all records
+                // directly; nothing buffered here to flush.
+            } else {
+                let n_sites = sites.len();
+                let mut frag_vec: Vec<Fragment> = frags.drain().map(|(_, f)| f).collect();
+
+                // Phase-block boundary detection.
+                let mut block_starts: Vec<usize> = vec![0];
+                if n_sites > 1 {
+                    let mut reach = vec![0usize; n_sites];
+                    for f in &frag_vec {
+                        let min_v = f.alleles.iter().map(|&(v, _)| v).min().unwrap_or(0);
+                        let max_v = f.alleles.iter().map(|&(v, _)| v).max().unwrap_or(0);
+                        if min_v < n_sites {
+                            reach[min_v] = reach[min_v].max(max_v);
+                        }
+                    }
+                    for i in 1..n_sites {
+                        reach[i] = reach[i].max(reach[i - 1]);
+                    }
+                    for i in 1..n_sites {
+                        if reach[i - 1] < i {
+                            block_starts.push(i);
+                        }
+                    }
                 }
-                let mut sorted_pos: Vec<i64> = pileup.keys().copied().collect();
-                sorted_pos.sort_unstable();
-                let mut sites: Vec<HetSite> = Vec::new();
-                let mut site_pos_idx: HashMap<i64, usize> = HashMap::new();
-                for pos in sorted_pos {
-                    let (ca, cb, base_a, base_b) = pileup[&pos];
-                    let total = ca + cb;
-                    if total as usize > opts.max_depth {
-                        continue;
-                    }
-                    if base_a == b'N' || base_b == b'N' || base_a == base_b {
-                        continue;
-                    }
-                    if let Some(_lod) = call_het(ca, cb, opts.min_var_lod) {
-                        let var_id = sites.len();
-                        site_pos_idx.insert(pos, var_id);
-                        sites.push(HetSite { pos, base_a, base_b });
-                        stats.het_sites += 1;
-                    }
-                }
-                drop(pileup);
+                block_starts.push(n_sites);
 
-                if sites.is_empty() {
-                    if let Some(writers) = bam_writers.as_mut() {
-                        for rec in records {
-                            let bucket = (fnv64(rec.name()) & 1) as usize;
-                            raw::write_record(writers[bucket].get_mut(), &rec)?;
+                for w in block_starts.windows(2) {
+                    let (blk_lo, blk_hi) = (w[0], w[1]);
+                    let blk_sites = &sites[blk_lo..blk_hi];
+                    let mut blk_frags: Vec<Fragment> = frag_vec
+                        .iter_mut()
+                        .filter_map(|f| {
+                            let blk_alleles: Vec<(usize, Allele)> = f
+                                .alleles
+                                .iter()
+                                .filter(|&&(v, _)| v >= blk_lo && v < blk_hi)
+                                .map(|&(v, a)| (v - blk_lo, a))
+                                .collect();
+                            if blk_alleles.len() < 2 {
+                                return None;
+                            }
+                            let records = std::mem::take(&mut f.records);
+                            Some(Fragment {
+                                alleles: blk_alleles,
+                                records,
+                                ..Default::default()
+                            })
+                        })
+                        .collect();
+                    phase_block(
+                        &chrom,
+                        blk_sites,
+                        &mut blk_frags,
+                        opts,
+                        stdout_w,
+                        &mut stats,
+                        &mut bam_writers,
+                        &header,
+                    )?;
+                }
+
+                // Fragments with <2 allele calls in every block → route unphased.
+                if let Some(writers) = bam_writers.as_mut() {
+                    for frag in &mut frag_vec {
+                        if frag.records.is_empty() {
+                            continue;
+                        }
+                        let bucket = frag.alleles.first().map_or(0, |&(v, _)| v & 1);
+                        for r in frag.records.drain(..) {
+                            raw::write_record(writers[bucket].get_mut(), &r)?;
                             match bucket {
                                 0 => stats.reads_hap0 += 1,
-                                _ => stats.reads_hap1 += 1,
-                            }
-                        }
-                    }
-                } else {
-                    // ── fragment assignment + phasing ──────────────────────────────
-                    let mut frags: HashMap<u64, Fragment> = HashMap::new();
-                    for rec in records {
-                        let qhash = fnv64(rec.name());
-                        let frag = frags.entry(qhash).or_default();
-                        assign_alleles(&rec, opts.min_base_q, &sites, &site_pos_idx, frag);
-                        frag.records.push(rec);
-                    }
-                    let mut frag_vec: Vec<Fragment> = frags.into_values().collect();
-
-                    let n_sites = sites.len();
-                    let mut block_starts: Vec<usize> = vec![0];
-                    if n_sites > 1 {
-                        let mut reach = vec![0usize; n_sites];
-                        for f in &frag_vec {
-                            let min_v = f.alleles.iter().map(|&(v, _)| v).min().unwrap_or(0);
-                            let max_v = f.alleles.iter().map(|&(v, _)| v).max().unwrap_or(0);
-                            if min_v < n_sites {
-                                reach[min_v] = reach[min_v].max(max_v);
-                            }
-                        }
-                        for i in 1..n_sites {
-                            reach[i] = reach[i].max(reach[i - 1]);
-                        }
-                        for i in 1..n_sites {
-                            if reach[i - 1] < i {
-                                block_starts.push(i);
-                            }
-                        }
-                    }
-                    block_starts.push(n_sites);
-
-                    for w in block_starts.windows(2) {
-                        let (blk_lo, blk_hi) = (w[0], w[1]);
-                        let blk_sites = &sites[blk_lo..blk_hi];
-                        let mut blk_frags: Vec<Fragment> = frag_vec
-                            .iter_mut()
-                            .filter_map(|f| {
-                                let blk_alleles: Vec<(usize, Allele)> = f
-                                    .alleles
-                                    .iter()
-                                    .filter(|&&(v, _)| v >= blk_lo && v < blk_hi)
-                                    .map(|&(v, a)| (v - blk_lo, a))
-                                    .collect();
-                                if blk_alleles.len() < 2 {
-                                    return None;
-                                }
-                                let records = std::mem::take(&mut f.records);
-                                Some(Fragment { alleles: blk_alleles, records, ..Default::default() })
-                            })
-                            .collect();
-                        phase_block(
-                            &chrom,
-                            blk_sites,
-                            &mut blk_frags,
-                            opts,
-                            stdout_w,
-                            &mut stats,
-                            &mut bam_writers,
-                            &header,
-                        )?;
-                    }
-
-                    if let Some(writers) = bam_writers.as_mut() {
-                        for frag in &mut frag_vec {
-                            if frag.records.is_empty() { continue; }
-                            let bucket = frag.alleles.first().map_or(0, |&(v, _)| v & 1);
-                            for rec in frag.records.drain(..) {
-                                raw::write_record(writers[bucket].get_mut(), &rec)?;
-                                match bucket {
-                                    0 => stats.reads_hap0 += 1,
-                                    1 => stats.reads_hap1 += 1,
-                                    _ => stats.reads_chimera += 1,
-                                }
+                                1 => stats.reads_hap1 += 1,
+                                _ => stats.reads_chimera += 1,
                             }
                         }
                     }
                 }
             }
+            frags.clear();
         }};
     }
 
     loop {
-        let nbytes = raw::read_record(reader.get_mut(), &mut rec)?;
+        let nbytes = raw::read_record(reader2.get_mut(), &mut rec)?;
         if nbytes == 0 {
             break;
         }
-        stats.records_in += 1;
 
         let flags = rec.flags();
         if flags
@@ -768,26 +835,53 @@ pub fn phase<W: Write>(
             continue;
         }
 
-        let ref_id = rec.reference_sequence_id();
-        if ref_id < 0 {
+        let tid = rec.reference_sequence_id();
+        if tid < 0 || tid as usize >= n_refs {
             continue;
         }
-        let ref_id_u = ref_id as usize;
-        if ref_id_u >= n_refs {
-            continue;
+        let tid_u = tid as usize;
+
+        if tid != cur_tid {
+            if cur_tid >= 0 {
+                flush_phased_contig!(cur_tid as usize);
+            }
+            cur_tid = tid;
         }
 
-        if ref_id != cur_tid {
-            if cur_tid >= 0 && !cur_recs.is_empty() {
-                flush_contig!(cur_tid as usize, std::mem::take(&mut cur_recs));
+        let (sites, site_pos_idx) = &sites_by_tid[tid_u];
+        if sites.is_empty() {
+            // No het sites on this contig: route directly without buffering.
+            if let Some(writers) = bam_writers.as_mut() {
+                let bucket = (fnv64(rec.name()) & 1) as usize;
+                raw::write_record(writers[bucket].get_mut(), &rec)?;
+                match bucket {
+                    0 => stats.reads_hap0 += 1,
+                    _ => stats.reads_hap1 += 1,
+                }
             }
-            cur_tid = ref_id;
+        } else {
+            let qhash = fnv64(rec.name());
+            let frag = frags.entry(qhash).or_default();
+            assign_alleles(&rec, opts.min_base_q, sites, site_pos_idx, frag);
+            if frag.alleles.is_empty() {
+                // No allele calls at any het site: route immediately without clone.
+                if let Some(writers) = bam_writers.as_mut() {
+                    let bucket = (fnv64(rec.name()) & 1) as usize;
+                    raw::write_record(writers[bucket].get_mut(), &rec)?;
+                    match bucket {
+                        0 => stats.reads_hap0 += 1,
+                        _ => stats.reads_hap1 += 1,
+                    }
+                }
+            } else {
+                // Has allele calls: buffer for phasing (clone required).
+                frag.records.push(rec.clone());
+            }
         }
-        cur_recs.push(rec.clone());
     }
-    // Flush the final contig.
-    if cur_tid >= 0 && !cur_recs.is_empty() {
-        flush_contig!(cur_tid as usize, cur_recs);
+
+    if cur_tid >= 0 {
+        flush_phased_contig!(cur_tid as usize);
     }
 
     // bam_writers drops here; bgzf::io::Writer::drop calls try_finish, writing the
@@ -798,8 +892,19 @@ pub fn phase<W: Write>(
 
 // ─── pileup accumulation helpers ─────────────────────────────────────────────
 
-/// Walk one record's CIGAR and accumulate per-position base counts into `pileup`.
-fn accumulate_pileup(rec: &RawRecord, min_bq: u8, pileup: &mut HashMap<i64, (u32, u32, u8, u8)>) {
+/// Walk one record's CIGAR and accumulate per-position base counts.
+///
+/// Two-tier pileup: `mono` tracks positions with exactly one distinct base
+/// (the common case); `multi` tracks only positions where a second distinct
+/// base has appeared (the candidate het sites).  Keeping only variant-density
+/// entries in the full-detail `multi` map cuts peak RSS and hash-table
+/// overhead proportional to coverage.
+fn accumulate_pileup(
+    rec: &RawRecord,
+    min_bq: u8,
+    mono: &mut HashMap<i64, (u32, u8)>,
+    multi: &mut HashMap<i64, (u32, u32, u8, u8)>,
+) {
     let start0 = rec.alignment_start() as i64;
     if start0 < 0 {
         return;
@@ -827,19 +932,32 @@ fn accumulate_pileup(rec: &RawRecord, min_bq: u8, pileup: &mut HashMap<i64, (u32
                         let nib = rec.seq_nibble(qpos + i);
                         let base = nibble_to_acgt(nib);
                         if base != b'N' {
-                            let entry = pileup
-                                .entry(ref_pos + i as i64)
-                                .or_insert((0, 0, base, base));
-                            if entry.2 == base {
-                                entry.0 += 1;
-                            } else if entry.3 == entry.2 {
-                                // Second distinct base seen at this position.
-                                entry.1 += 1;
-                                entry.3 = base;
-                            } else if entry.3 == base {
-                                entry.1 += 1;
+                            let rp = ref_pos + i as i64;
+                            if let Some(entry) = multi.get_mut(&rp) {
+                                // Already a multi-allele site.
+                                if entry.2 == base {
+                                    entry.0 += 1;
+                                } else if entry.3 == base {
+                                    entry.1 += 1;
+                                }
+                                // Third+ allele: ignore (multi-allelic).
+                            } else {
+                                match mono.entry(rp) {
+                                    std::collections::hash_map::Entry::Occupied(mut e) => {
+                                        let (cnt, b0) = *e.get();
+                                        if b0 == base {
+                                            e.get_mut().0 += 1;
+                                        } else {
+                                            // Second distinct base: promote to multi.
+                                            e.remove();
+                                            multi.insert(rp, (cnt, 1, b0, base));
+                                        }
+                                    }
+                                    std::collections::hash_map::Entry::Vacant(e) => {
+                                        e.insert((1, base));
+                                    }
+                                }
                             }
-                            // Third+ distinct base: multi-allelic, ignored.
                         }
                     }
                 }

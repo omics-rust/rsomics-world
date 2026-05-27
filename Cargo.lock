@@ -182,6 +182,12 @@ dependencies = [
 ]
 
 [[package]]
+name = "bumpalo"
+version = "3.20.3"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "72f5acc6cb2ba439de613abc23857ec3d78374d8ed5ac84e9d11336e87da8649"
+
+[[package]]
 name = "bytecount"
 version = "0.6.9"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -372,6 +378,32 @@ dependencies = [
 
 [[package]]
 name = "criterion"
+version = "0.5.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "f2b12d017a929603d80db1831cd3a24082f8137ce19c69e6447f54f5fc8d692f"
+dependencies = [
+ "anes",
+ "cast",
+ "ciborium",
+ "clap",
+ "criterion-plot 0.5.0",
+ "is-terminal",
+ "itertools 0.10.5",
+ "num-traits",
+ "once_cell",
+ "oorandom",
+ "plotters",
+ "rayon",
+ "regex",
+ "serde",
+ "serde_derive",
+ "serde_json",
+ "tinytemplate",
+ "walkdir",
+]
+
+[[package]]
+name = "criterion"
 version = "0.7.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "e1c047a62b0cc3e145fa84415a3191f628e980b194c2755aa12300a4e6cbd928"
@@ -380,8 +412,8 @@ dependencies = [
  "cast",
  "ciborium",
  "clap",
- "criterion-plot",
- "itertools",
+ "criterion-plot 0.6.0",
+ "itertools 0.13.0",
  "num-traits",
  "oorandom",
  "regex",
@@ -393,12 +425,22 @@ dependencies = [
 
 [[package]]
 name = "criterion-plot"
+version = "0.5.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "6b50826342786a51a89e2da3a28f1c32b06e387201bc2d19791f622c673706b1"
+dependencies = [
+ "cast",
+ "itertools 0.10.5",
+]
+
+[[package]]
+name = "criterion-plot"
 version = "0.6.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "9b1bcc0dc7dfae599d84ad0b1a55f80cde8af3725da8313b528da95ef783e338"
 dependencies = [
  "cast",
- "itertools",
+ "itertools 0.13.0",
 ]
 
 [[package]]
@@ -551,6 +593,30 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "3f9eec918d3f24069decb9af1554cad7c880e2da24a9afd88aca000531ab82c1"
 
 [[package]]
+name = "futures-core"
+version = "0.3.32"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "7e3450815272ef58cec6d564423f6e755e25379b217b0bc688e295ba24df6b1d"
+
+[[package]]
+name = "futures-task"
+version = "0.3.32"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "037711b3d59c33004d3856fbdc83b99d4ff37a24768fa1be9ce3538a1cde4393"
+
+[[package]]
+name = "futures-util"
+version = "0.3.32"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "389ca41296e6190b48053de0321d02a77f32f8a5d2461dd38762c0593805c6d6"
+dependencies = [
+ "futures-core",
+ "futures-task",
+ "pin-project-lite",
+ "slab",
+]
+
+[[package]]
 name = "generic-array"
 version = "0.14.7"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -607,6 +673,12 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "2304e00983f87ffb38b55b444b5e3b60a884b5d30c0fca7d82fe33449bbe55ea"
 
 [[package]]
+name = "hermit-abi"
+version = "0.5.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "fc0fef456e4baa96da950455cd02c081ca953b141298e41db3fc7e36b1da849c"
+
+[[package]]
 name = "http"
 version = "1.4.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -642,6 +714,17 @@ dependencies = [
 ]
 
 [[package]]
+name = "is-terminal"
+version = "0.4.17"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "3640c1c38b8e4e43584d8df18be5fc6b0aa314ce6ebf51b53313d4306cca8e46"
+dependencies = [
+ "hermit-abi",
+ "libc",
+ "windows-sys 0.61.2",
+]
+
+[[package]]
 name = "is_terminal_polyfill"
 version = "1.70.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -655,6 +738,15 @@ checksum = "aefc9239959a60eaba201ccdd99897b5270be98d01f561c2166f5e3343e5a29b"
 dependencies = [
  "cc",
  "copy_dir",
+]
+
+[[package]]
+name = "itertools"
+version = "0.10.5"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "b0fd2260e829bddf4cb6ea802289de2f86d6a7a690192fbe91b3f46e0f2c8473"
+dependencies = [
+ "either",
 ]
 
 [[package]]
@@ -680,6 +772,18 @@ checksum = "9afb3de4395d6b3e67a780b6de64b51c978ecf11cb9a462c66be7d4ca9039d33"
 dependencies = [
  "getrandom 0.3.4",
  "libc",
+]
+
+[[package]]
+name = "js-sys"
+version = "0.3.99"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "142bc4740e452c1e57ade0cbc129f139c9093e354346f0872ef985f4f5cf5f11"
+dependencies = [
+ "cfg-if",
+ "futures-util",
+ "once_cell",
+ "wasm-bindgen",
 ]
 
 [[package]]
@@ -1181,10 +1285,44 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "9b4f627cb1b25917193a259e49bdad08f671f8d9708acfd5fe0a8c1455d87220"
 
 [[package]]
+name = "pin-project-lite"
+version = "0.2.17"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "a89322df9ebe1c1578d689c92318e070967d1042b512afbe49518723f4e6d5cd"
+
+[[package]]
 name = "pkg-config"
 version = "0.3.33"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "19f132c84eca552bf34cab8ec81f1c1dcc229b811638f9d283dceabe58c5569e"
+
+[[package]]
+name = "plotters"
+version = "0.3.7"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "5aeb6f403d7a4911efb1e33402027fc44f29b5bf6def3effcc22d7bb75f2b747"
+dependencies = [
+ "num-traits",
+ "plotters-backend",
+ "plotters-svg",
+ "wasm-bindgen",
+ "web-sys",
+]
+
+[[package]]
+name = "plotters-backend"
+version = "0.3.7"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "df42e13c12958a16b3f7f4386b9ab1f3e7933914ecea48da7139435263a4172a"
+
+[[package]]
+name = "plotters-svg"
+version = "0.3.7"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "51bae2ac328883f7acdfea3d66a7c35751187f870bc81f94563733a154d7a670"
+dependencies = [
+ "plotters-backend",
+]
 
 [[package]]
 name = "ppv-lite86"
@@ -1724,7 +1862,7 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "clap",
- "criterion",
+ "criterion 0.7.0",
  "noodles",
  "rsomics-bamio",
  "rsomics-common",
@@ -1782,6 +1920,7 @@ name = "rsomics-bam-phase"
 version = "0.1.0"
 dependencies = [
  "clap",
+ "criterion 0.5.1",
  "noodles",
  "rsomics-bamio",
  "rsomics-common",
@@ -1808,7 +1947,7 @@ dependencies = [
  "anyhow",
  "clap",
  "coitrees",
- "criterion",
+ "criterion 0.7.0",
  "rsomics-bamio",
  "rsomics-common",
  "serde",
@@ -1926,7 +2065,7 @@ dependencies = [
  "anyhow",
  "clap",
  "coitrees",
- "criterion",
+ "criterion 0.7.0",
  "noodles",
  "rsomics-bamio",
  "rsomics-common",
@@ -2016,7 +2155,7 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "clap",
- "criterion",
+ "criterion 0.7.0",
  "needletail 0.7.3",
  "rayon",
  "rsomics-common",
@@ -2151,7 +2290,7 @@ name = "rsomics-clipping-profile"
 version = "0.1.0"
 dependencies = [
  "clap",
- "criterion",
+ "criterion 0.7.0",
  "rsomics-bamio",
  "rsomics-common",
  "tempfile",
@@ -2340,7 +2479,7 @@ version = "0.4.5"
 dependencies = [
  "anyhow",
  "clap",
- "criterion",
+ "criterion 0.7.0",
  "memchr",
  "needletail 0.7.3",
  "rsomics-common",
@@ -2398,7 +2537,7 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "clap",
- "criterion",
+ "criterion 0.7.0",
  "rayon",
  "rsomics-common",
  "rsomics-fqgz",
@@ -2443,7 +2582,7 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "clap",
- "criterion",
+ "criterion 0.7.0",
  "flate2",
  "libdeflater",
  "rayon",
@@ -2462,7 +2601,7 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "clap",
- "criterion",
+ "criterion 0.7.0",
  "needletail 0.7.3",
  "rsomics-common",
  "rsomics-help",
@@ -2486,7 +2625,7 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "clap",
- "criterion",
+ "criterion 0.7.0",
  "flate2",
  "libdeflater",
  "rayon",
@@ -2505,7 +2644,7 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "clap",
- "criterion",
+ "criterion 0.7.0",
  "needletail 0.7.3",
  "rsomics-common",
  "rsomics-help",
@@ -2521,7 +2660,7 @@ version = "0.4.5"
 dependencies = [
  "anyhow",
  "clap",
- "criterion",
+ "criterion 0.7.0",
  "flate2",
  "libdeflater",
  "memchr",
@@ -2541,7 +2680,7 @@ version = "0.2.0"
 dependencies = [
  "anyhow",
  "clap",
- "criterion",
+ "criterion 0.7.0",
  "flate2",
  "libdeflater",
  "rayon",
@@ -2581,7 +2720,7 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "clap",
- "criterion",
+ "criterion 0.7.0",
  "needletail 0.7.3",
  "rsomics-common",
  "rsomics-help",
@@ -2688,7 +2827,7 @@ name = "rsomics-fpkm-count"
 version = "0.1.0"
 dependencies = [
  "clap",
- "criterion",
+ "criterion 0.7.0",
  "noodles",
  "rsomics-common",
  "tempfile",
@@ -2733,7 +2872,7 @@ name = "rsomics-genebody-coverage"
 version = "0.1.0"
 dependencies = [
  "clap",
- "criterion",
+ "criterion 0.7.0",
  "noodles",
  "rsomics-bamio",
  "rsomics-common",
@@ -2807,7 +2946,7 @@ version = "0.1.0"
 dependencies = [
  "clap",
  "coitrees",
- "criterion",
+ "criterion 0.7.0",
  "rsomics-bamio",
  "rsomics-common",
  "serde",
@@ -2820,7 +2959,7 @@ name = "rsomics-insertion-profile"
 version = "0.1.0"
 dependencies = [
  "clap",
- "criterion",
+ "criterion 0.7.0",
  "rsomics-bamio",
  "rsomics-common",
  "tempfile",
@@ -3049,7 +3188,7 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "clap",
- "criterion",
+ "criterion 0.7.0",
  "noodles",
  "rsomics-bamio",
  "rsomics-common",
@@ -3061,7 +3200,7 @@ name = "rsomics-read-gc"
 version = "0.1.0"
 dependencies = [
  "clap",
- "criterion",
+ "criterion 0.7.0",
  "rsomics-bamio",
  "rsomics-common",
  "tempfile",
@@ -3072,7 +3211,7 @@ name = "rsomics-read-nvc"
 version = "0.1.0"
 dependencies = [
  "clap",
- "criterion",
+ "criterion 0.7.0",
  "rsomics-bamio",
  "rsomics-common",
  "tempfile",
@@ -3172,7 +3311,7 @@ dependencies = [
 name = "rsomics-seqio"
 version = "0.1.1"
 dependencies = [
- "criterion",
+ "criterion 0.7.0",
  "crossbeam-channel",
  "flate2",
  "rayon",
@@ -3234,7 +3373,7 @@ name = "rsomics-tin"
 version = "0.1.0"
 dependencies = [
  "clap",
- "criterion",
+ "criterion 0.7.0",
  "noodles",
  "rsomics-common",
  "serde",
@@ -3425,6 +3564,17 @@ dependencies = [
  "clap",
  "rsomics-common",
  "rsomics-help",
+]
+
+[[package]]
+name = "rsomics-vcf-mpileup"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "noodles",
+ "rsomics-bamio",
+ "rsomics-common",
+ "rsomics-pileup",
 ]
 
 [[package]]
@@ -3634,6 +3784,12 @@ dependencies = [
 ]
 
 [[package]]
+name = "rustversion"
+version = "1.0.22"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "b39cdef0fa800fc44525c84ccb54a029961a8215f9619753635a9c0d2538d46d"
+
+[[package]]
 name = "rusty-fork"
 version = "0.3.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -3759,6 +3915,12 @@ name = "simd-adler32"
 version = "0.3.9"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "703d5c7ef118737c72f1af64ad2f6f8c5e1921f818cdcb97b8fe6fc69bf66214"
+
+[[package]]
+name = "slab"
+version = "0.4.12"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "0c790de23124f9ab44544d7ac05d60440adc586479ce501c1d6d7da3cd8c9cf5"
 
 [[package]]
 name = "statrs"
@@ -4015,6 +4177,61 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "20064672db26d7cdc89c7798c48a0fdfac8213434a1186e5ef29fd560ae223d6"
 dependencies = [
  "wit-bindgen",
+]
+
+[[package]]
+name = "wasm-bindgen"
+version = "0.2.122"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "3ed04576f974d2b2fba0f38c51dbc5518011e38c36bf1143164be765528fd409"
+dependencies = [
+ "cfg-if",
+ "once_cell",
+ "rustversion",
+ "wasm-bindgen-macro",
+ "wasm-bindgen-shared",
+]
+
+[[package]]
+name = "wasm-bindgen-macro"
+version = "0.2.122"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "916151b09da36bd82f6615cbf3a419e2f0ba23a03c6160e8e92eb6bd4aa1dec6"
+dependencies = [
+ "quote",
+ "wasm-bindgen-macro-support",
+]
+
+[[package]]
+name = "wasm-bindgen-macro-support"
+version = "0.2.122"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "299047362ccbfce148b67ab7e73349f77748e00c8296f9542adfad2ad82c5c5e"
+dependencies = [
+ "bumpalo",
+ "proc-macro2",
+ "quote",
+ "syn",
+ "wasm-bindgen-shared",
+]
+
+[[package]]
+name = "wasm-bindgen-shared"
+version = "0.2.122"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "9a929b2c61f11ba3e9bc35b50c1f25cb38e0e892c0c231ae2b8cf78d5dad4437"
+dependencies = [
+ "unicode-ident",
+]
+
+[[package]]
+name = "web-sys"
+version = "0.3.99"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "6d621441cfc37b84979402712047321980c178f299193a3589d05b99e8763436"
+dependencies = [
+ "js-sys",
+ "wasm-bindgen",
 ]
 
 [[package]]
