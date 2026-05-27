@@ -178,6 +178,17 @@ jobs:
           samtools --version | head -1
           seqkit version
           bedtools --version
+      - name: Free disk space on Linux runners
+        if: runner.os == 'Linux'
+        run: |
+          # The workspace has 160+ crates; the debug artifact tree fills
+          # the Ubuntu runner's default 14 GB disk. Free pre-installed
+          # blobs that the build does not need.
+          sudo rm -rf /usr/local/lib/android /usr/local/share/chromium \
+                      /usr/local/share/powershell /opt/ghc /opt/hostedtoolcache/CodeQL \
+                      /usr/lib/jvm /usr/share/dotnet /usr/share/swift \
+                      /usr/local/share/vcpkg /usr/local/graalvm
+          df -h / | tail -1
       - name: Resolve toolchain cargo + rustc
         run: |
           # ~/.cargo/bin proxies on GH's macOS images intermittently

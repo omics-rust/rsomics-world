@@ -3,6 +3,7 @@
 /.autopilot/
 /.claude/
 /tests/fixtures-cache/
+/tests/golden/
 **/tests/fixtures/
 *.swp
 .DS_Store
