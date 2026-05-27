@@ -928,7 +928,7 @@ reason = "Upstream is deeptools bamCompare (Python). deeptools is not installabl
 
 # bam-consensus: samtools consensus. Needs large BAM + reference.
 [exempt.rsomics-bam-consensus]
-reason = "Upstream is samtools consensus. mkfixture.py random-sequence BAM lacks the MD/NM tags required for consensus. Perf validated locally on Tier-3 BAM fixture (mini_m2, documented in .autopilot/state/perf-2026-05-24.md)."
+reason = "Upstream is samtools consensus. 1.10x faster on 240k-read BAM fixture (mini_m2, 2026-05-28, perf-bam-consensus-2026-05-28.md). Precomputed-slot pileup + slot-pool eliminates per-record malloc. mkfixture.py random-sequence BAM lacks the MD/NM tags required for consensus so CI bench is fixture-less."
 
 # bam-fingerprint: deeptools plotFingerprint. Python, not CI-installable.
 [exempt.rsomics-bam-fingerprint]
