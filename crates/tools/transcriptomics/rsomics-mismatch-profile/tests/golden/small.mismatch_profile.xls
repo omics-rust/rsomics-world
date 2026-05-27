@@ -1,0 +1,5 @@
+Total reads used: 4
+read_pos	sum	A2C	A2G	A2T	C2A	C2G	C2T	G2A	G2C	G2T	T2A	T2C	T2G
+5	1	0	1	0	0	0	0	0	0	0	0	0	0
+10	1	0	0	0	1	0	0	0	0	0	0	0	0
+20	1	0	0	0	0	0	0	0	0	0	0	1	0

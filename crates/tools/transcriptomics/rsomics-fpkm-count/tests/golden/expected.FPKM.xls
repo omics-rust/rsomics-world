@@ -1,0 +1,4 @@
+#chrom	st	end	accession	mRNA_size	gene_strand	Frag_count	FPM	FPKM
+chr1	100	500	GENE1	250.0	+	2.0	500000.0	2000000.0
+chr1	1000	1800	GENE2	400.0	-	1.0	250000.0	625000.0
+chr2	200	600	GENE3	400.0	+	1.0	250000.0	625000.0
