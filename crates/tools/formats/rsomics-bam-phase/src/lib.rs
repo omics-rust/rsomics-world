@@ -28,11 +28,10 @@
 //! | DEFAULT_MIN_BQ | 13    | min base quality (`-Q`) |
 //! | DEFAULT_DEPTH  | 256   | max pileup depth (`-D`) |
 
+use std::collections::HashMap;
 use std::io::Write;
 use std::num::NonZero;
 use std::path::{Path, PathBuf};
-
-use ahash::AHashMap;
 
 use noodles::bam;
 use noodles::bgzf;
@@ -123,6 +122,13 @@ pub struct PhaseStats {
 /// Allele encoding: 0 = ambiguous/low-quality, 1 = allele A, 2 = allele B.
 type Allele = u8;
 
+/// Pileup entry for mono-allelic positions: (count, quality_sum, base).
+type MonoEntry = (u32, u32, u8);
+
+/// Pileup entry for bi-allelic (candidate het) positions:
+/// (count_a, count_b, qsum_a, qsum_b, base_a, base_b).
+type BiEntry = (u32, u32, u32, u32, u8, u8);
+
 /// One heterozygous variant site.
 struct HetSite {
     /// 0-based reference coordinate.
@@ -150,20 +156,21 @@ struct Fragment {
     in_phase: u32,
     /// Allele calls disagreeing with the DP path.
     out_phase: u32,
-    /// Count of records overlapping het sites, for stats when BAM output is off.
-    record_count: u64,
-    /// The raw record payloads for BAM split output (populated only when `-b` is given).
+    /// The raw record payloads for BAM split output.
     records: Vec<RawRecord>,
 }
 
 // ─── het-calling ─────────────────────────────────────────────────────────────
 
-/// Call a het variant from allele counts, returning the LOD score if the site
-/// passes (phase.c `gl2cns` analog).
+/// Call a het variant from quality-weighted allele evidence, returning the
+/// Phred-scaled LOD if the site passes (phase.c `gl2cns` analog).
+///
+/// LOD = floor(qsum_minor × log(2) / log(10)) ≈ floor(qsum_minor × 0.301).
+/// With Q40 bases and 4 minor-allele reads: qsum=160, LOD≈48 >> threshold 37.
+/// This matches samtools phase's GL-based sensitivity for typical WGS data.
 ///
 /// Requirements: both alleles observed; minor-allele rate ≥ 10%; LOD ≥ threshold.
-/// LOD ≈ 4 × minor_count (phred-like scaling matching phase.c's bit-shift formula).
-fn call_het(count_a: u32, count_b: u32, min_lod: u32) -> Option<u32> {
+fn call_het(qsum_a: u32, qsum_b: u32, count_a: u32, count_b: u32, min_lod: u32) -> Option<u32> {
     if count_a == 0 || count_b == 0 {
         return None;
     }
@@ -173,7 +180,9 @@ fn call_het(count_a: u32, count_b: u32, min_lod: u32) -> Option<u32> {
     if minor * 10 < n {
         return None;
     }
-    let lod = (4 * minor).min(u32::MAX / 2);
+    // Quality-weighted LOD: qsum_minor * log10(2) ≈ qsum_minor * 301 / 1000.
+    let qsum_minor = if count_a <= count_b { qsum_a } else { qsum_b };
+    let lod = (qsum_minor * 301 / 1000).min(u32::MAX / 2);
     if lod >= min_lod { Some(lod) } else { None }
 }
 
@@ -500,19 +509,13 @@ fn phase_block<W: Write>(
     // Distribute reads to BAM writers and accumulate stats.
     for frag in fragments.iter_mut() {
         let which = hap_bucket(frag, opts);
-        // When BAM output is off, records is empty; use record_count for stats.
-        let n = if frag.records.is_empty() {
-            frag.record_count
-        } else {
-            frag.records.len() as u64
-        };
         match which {
-            0 => stats.reads_hap0 += n,
-            1 => stats.reads_hap1 += n,
-            _ => stats.reads_chimera += n,
+            0 => stats.reads_hap0 += frag.records.len() as u64,
+            1 => stats.reads_hap1 += frag.records.len() as u64,
+            _ => stats.reads_chimera += frag.records.len() as u64,
         }
 
-        // Tag and write records (only populated when `-b` is given).
+        // Tag and write records.
         for rec in frag.records.iter_mut() {
             set_aux_i32(rec, *b"YP", frag.phase as i32);
             set_aux_i32(rec, *b"YF", frag.flipped as i32);
@@ -523,6 +526,7 @@ fn phase_block<W: Write>(
             }
 
             if let Some(writers) = bam_writers.as_mut() {
+                // Write raw record directly into the BGZF writer's inner I/O.
                 raw::write_record(writers[which].get_mut(), rec)?;
             }
         }
@@ -615,8 +619,8 @@ pub fn phase<W: Write>(
         //   positions where a SECOND distinct base has been seen are promoted here.
         //   This keeps the full-entry map small (proportional to variant density,
         //   not coverage).
-        let mut mono_pileups: Vec<AHashMap<i64, (u32, u8)>> = vec![AHashMap::new(); n_refs];
-        let mut pileups: Vec<AHashMap<i64, (u32, u32, u8, u8)>> = vec![AHashMap::new(); n_refs];
+        let mut mono_pileups: Vec<HashMap<i64, MonoEntry>> = vec![HashMap::new(); n_refs];
+        let mut pileups: Vec<HashMap<i64, BiEntry>> = vec![HashMap::new(); n_refs];
         let mut rec = RawRecord::default();
         loop {
             let nbytes = raw::read_record(r.get_mut(), &mut rec)?;
@@ -653,16 +657,15 @@ pub fn phase<W: Write>(
     let n_refs = ref_seqs.len();
 
     // Identify het sites per contig from the pileup.
-    // sites_by_tid[i] = vec of HetSite (sorted by pos) for contig i.
-    // Site lookup uses binary search on the sorted position field — faster than
-    // a HashMap for the typical 10^2–10^4 site counts per contig.
-    let mut sites_by_tid: Vec<Vec<HetSite>> = Vec::with_capacity(n_refs);
+    // sites_by_tid[i] = (vec of HetSite, pos→var_id index map) for contig i.
+    let mut sites_by_tid: Vec<(Vec<HetSite>, HashMap<i64, usize>)> = Vec::with_capacity(n_refs);
     for (tid, pileup) in pileups.into_iter().enumerate() {
         let mut sorted_pos: Vec<i64> = pileup.keys().copied().collect();
         sorted_pos.sort_unstable();
         let mut sites: Vec<HetSite> = Vec::new();
+        let mut site_pos_idx: HashMap<i64, usize> = HashMap::new();
         for pos in sorted_pos {
-            let (ca, cb, base_a, base_b) = pileup[&pos];
+            let (ca, cb, qa, qb, base_a, base_b) = pileup[&pos];
             let total = ca + cb;
             if total as usize > opts.max_depth {
                 continue;
@@ -670,7 +673,9 @@ pub fn phase<W: Write>(
             if base_a == b'N' || base_b == b'N' || base_a == base_b {
                 continue;
             }
-            if let Some(_lod) = call_het(ca, cb, opts.min_var_lod) {
+            if let Some(_lod) = call_het(qa, qb, ca, cb, opts.min_var_lod) {
+                let var_id = sites.len();
+                site_pos_idx.insert(pos, var_id);
                 sites.push(HetSite {
                     pos,
                     base_a,
@@ -679,8 +684,10 @@ pub fn phase<W: Write>(
                 stats.het_sites += 1;
             }
         }
+        // Silently skip contigs with no sites — they still need pass-2 routing
+        // but we keep only a placeholder empty entry.
         let _ = tid; // tid == sites_by_tid.len() at this point
-        sites_by_tid.push(sites);
+        sites_by_tid.push((sites, site_pos_idx));
     }
 
     // Build BAM split writers if -b is specified.
@@ -715,14 +722,6 @@ pub fn phase<W: Write>(
         return Ok(stats);
     }
 
-    // When no split BAM output is requested and there are no het sites anywhere,
-    // Pass 2 has nothing to do (no records to route, no text lines to emit).
-    // Skip the second file read entirely.
-    let any_het = sites_by_tid.iter().any(|s| !s.is_empty());
-    if bam_writers.is_none() && !any_het {
-        return Ok(stats);
-    }
-
     // ── Pass 2: phasing — re-read BAM, process contig by contig ─────────────────
     //
     // For contigs with no het sites: route each primary record directly to the
@@ -735,14 +734,14 @@ pub fn phase<W: Write>(
     reader2.read_header().map_err(RsomicsError::Io)?;
 
     let mut cur_tid: i32 = -1;
-    let mut frags: AHashMap<u64, Fragment> = AHashMap::new();
+    let mut frags: HashMap<u64, Fragment> = HashMap::new();
     let mut rec = RawRecord::default();
 
     // Flush the accumulated fragment map for the contig that just ended.
     macro_rules! flush_phased_contig {
         ($tid:expr) => {{
             let tid: usize = $tid;
-            let sites = &sites_by_tid[tid];
+            let (sites, _site_pos_idx) = &sites_by_tid[tid];
             let chrom = ref_seqs
                 .get_index(tid)
                 .map(|(name, _)| name.to_string())
@@ -793,11 +792,9 @@ pub fn phase<W: Write>(
                                 return None;
                             }
                             let records = std::mem::take(&mut f.records);
-                            let record_count = f.record_count;
                             Some(Fragment {
                                 alleles: blk_alleles,
                                 records,
-                                record_count,
                                 ..Default::default()
                             })
                         })
@@ -863,7 +860,7 @@ pub fn phase<W: Write>(
             cur_tid = tid;
         }
 
-        let sites = &sites_by_tid[tid_u];
+        let (sites, site_pos_idx) = &sites_by_tid[tid_u];
         if sites.is_empty() {
             // No het sites on this contig: route directly without buffering.
             if let Some(writers) = bam_writers.as_mut() {
@@ -877,7 +874,7 @@ pub fn phase<W: Write>(
         } else {
             let qhash = fnv64(rec.name());
             let frag = frags.entry(qhash).or_default();
-            assign_alleles(&rec, opts.min_base_q, sites, frag);
+            assign_alleles(&rec, opts.min_base_q, sites, site_pos_idx, frag);
             if frag.alleles.is_empty() {
                 // No allele calls at any het site: route immediately without clone.
                 if let Some(writers) = bam_writers.as_mut() {
@@ -889,12 +886,8 @@ pub fn phase<W: Write>(
                     }
                 }
             } else {
-                // Has allele calls at het sites.
-                frag.record_count += 1;
-                if bam_writers.is_some() {
-                    // Buffer record bytes only when BAM split output is requested.
-                    frag.records.push(rec.clone());
-                }
+                // Has allele calls: buffer for phasing (clone required).
+                frag.records.push(rec.clone());
             }
         }
     }
@@ -911,18 +904,19 @@ pub fn phase<W: Write>(
 
 // ─── pileup accumulation helpers ─────────────────────────────────────────────
 
-/// Walk one record's CIGAR and accumulate per-position base counts.
+/// Walk one record's CIGAR and accumulate per-position allele counts and
+/// quality sums.
 ///
-/// Two-tier pileup: `mono` tracks positions with exactly one distinct base
-/// (the common case); `multi` tracks only positions where a second distinct
-/// base has appeared (the candidate het sites).  Keeping only variant-density
-/// entries in the full-detail `multi` map cuts peak RSS and hash-table
-/// overhead proportional to coverage.
+/// Two-tier pileup: `mono` tracks positions with one distinct base (the
+/// common case, (count, qsum, base)); `multi` tracks only positions where a
+/// second base has appeared, storing (count_a, count_b, qsum_a, qsum_b,
+/// base_a, base_b). Keeping only bi-allelic candidate sites in `multi` keeps
+/// peak RSS proportional to variant density, not total coverage.
 fn accumulate_pileup(
     rec: &RawRecord,
     min_bq: u8,
-    mono: &mut AHashMap<i64, (u32, u8)>,
-    multi: &mut AHashMap<i64, (u32, u32, u8, u8)>,
+    mono: &mut HashMap<i64, MonoEntry>,
+    multi: &mut HashMap<i64, BiEntry>,
 ) {
     let start0 = rec.alignment_start() as i64;
     if start0 < 0 {
@@ -952,30 +946,33 @@ fn accumulate_pileup(
                         let base = nibble_to_acgt(nib);
                         if base != b'N' {
                             let rp = ref_pos + i as i64;
+                            let q = u32::from(bq);
                             if let Some(entry) = multi.get_mut(&rp) {
-                                // Already a multi-allele site.
-                                if entry.2 == base {
+                                // Already a bi-allelic site.
+                                if entry.4 == base {
                                     entry.0 += 1;
-                                } else if entry.3 == base {
+                                    entry.2 += q;
+                                } else if entry.5 == base {
                                     entry.1 += 1;
+                                    entry.3 += q;
                                 }
                                 // Third+ allele: ignore (multi-allelic).
                             } else {
-                                use ahash::HashMap as AHashMapAlias;
-                                let _ = AHashMapAlias::<i64, u8>::new();
                                 match mono.entry(rp) {
-                                    ahash::hash_map::Entry::Occupied(mut e) => {
-                                        let (cnt, b0) = *e.get();
+                                    std::collections::hash_map::Entry::Occupied(mut e) => {
+                                        let (cnt, qs, b0) = *e.get();
                                         if b0 == base {
-                                            e.get_mut().0 += 1;
+                                            let m = e.get_mut();
+                                            m.0 += 1;
+                                            m.1 += q;
                                         } else {
                                             // Second distinct base: promote to multi.
                                             e.remove();
-                                            multi.insert(rp, (cnt, 1, b0, base));
+                                            multi.insert(rp, (cnt, 1, qs, q, b0, base));
                                         }
                                     }
-                                    ahash::hash_map::Entry::Vacant(e) => {
-                                        e.insert((1, base));
+                                    std::collections::hash_map::Entry::Vacant(e) => {
+                                        e.insert((1, q, base));
                                     }
                                 }
                             }
@@ -997,11 +994,13 @@ fn accumulate_pileup(
 }
 
 /// Walk one record's CIGAR and fill in allele calls at het sites into `frag`.
-///
-/// Het-site lookup uses binary search on the sorted `sites` slice (by `pos`).
-/// For typical per-contig site counts (10^2–10^4), binary search beats
-/// HashMap on this narrow key range.
-fn assign_alleles(rec: &RawRecord, min_bq: u8, sites: &[HetSite], frag: &mut Fragment) {
+fn assign_alleles(
+    rec: &RawRecord,
+    min_bq: u8,
+    sites: &[HetSite],
+    site_pos_idx: &HashMap<i64, usize>,
+    frag: &mut Fragment,
+) {
     let start0 = rec.alignment_start() as i64;
     if start0 < 0 {
         return;
@@ -1021,7 +1020,7 @@ fn assign_alleles(rec: &RawRecord, min_bq: u8, sites: &[HetSite], frag: &mut Fra
                         break;
                     }
                     let rp = ref_pos + i as i64;
-                    if let Ok(var_id) = sites.binary_search_by_key(&rp, |s| s.pos) {
+                    if let Some(&var_id) = site_pos_idx.get(&rp) {
                         let bq = if qual.is_empty() {
                             0
                         } else {
