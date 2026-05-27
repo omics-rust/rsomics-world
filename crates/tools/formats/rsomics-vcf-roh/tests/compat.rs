@@ -222,7 +222,13 @@ fn compat_gt_only_mode_st_output() {
         assert_eq!(r.get(1), o.get(1), "sample mismatch in ST");
         assert_eq!(r.get(2), o.get(2), "chrom mismatch in ST");
         assert_eq!(r.get(3), o.get(3), "pos mismatch in ST");
-        assert_eq!(r.get(4), o.get(4), "state mismatch in ST: bcftools={:?} ours={:?}", r.get(4), o.get(4));
+        assert_eq!(
+            r.get(4),
+            o.get(4),
+            "state mismatch in ST: bcftools={:?} ours={:?}",
+            r.get(4),
+            o.get(4)
+        );
     }
 }
 
