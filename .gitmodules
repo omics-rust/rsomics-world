@@ -525,3 +525,6 @@
 [submodule "crates/tools/formats/rsomics-vcf-cnv"]
 	path = crates/tools/formats/rsomics-vcf-cnv
 	url = git@github.com:omics-rust/rsomics-vcf-cnv.git
+[submodule "crates/tools/transcriptomics/rsomics-junction-saturation"]
+	path = crates/tools/transcriptomics/rsomics-junction-saturation
+	url = git@github.com:omics-rust/rsomics-junction-saturation.git
