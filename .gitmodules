@@ -528,3 +528,6 @@
 [submodule "crates/tools/transcriptomics/rsomics-junction-saturation"]
 	path = crates/tools/transcriptomics/rsomics-junction-saturation
 	url = git@github.com:omics-rust/rsomics-junction-saturation.git
+[submodule "crates/tools/formats/rsomics-bam-phase"]
+	path = crates/tools/formats/rsomics-bam-phase
+	url = git@github.com:omics-rust/rsomics-bam-phase.git
