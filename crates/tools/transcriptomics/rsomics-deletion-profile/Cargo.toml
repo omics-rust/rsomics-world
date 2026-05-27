@@ -1,0 +1,22 @@
+[package]
+name = "rsomics-deletion-profile"
+version = "0.1.0"
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository = "https://github.com/omics-rust/rsomics-deletion-profile"
+authors.workspace = true
+description = "Per-base CIGAR-deletion rate along aligned reads — Rust port of RSeQC deletion_profile.py"
+
+[[bin]]
+name = "rsomics-deletion-profile"
+path = "src/main.rs"
+
+[dependencies]
+rsomics-common = { version = "0.6" }
+rsomics-bamio = "0.1"
+clap.workspace = true
+noodles = { workspace = true, features = ["sam", "bam"] }
+
+[dev-dependencies]
+tempfile = "3"
