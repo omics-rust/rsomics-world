@@ -834,3 +834,79 @@ reason = "Perf validated on 4090 (Linux x86_64): 1.40× vs seqkit sliding 2.9.0 
 # fasta-locate: 3.83× vs seqkit locate on 4090 (102 MB FASTA, 2026-05-22).
 [exempt.rsomics-fasta-locate]
 reason = "Perf validated on 4090 (Linux x86_64): 3.83× vs seqkit locate 2.9.0 on a 102 MB FASTA (documented in .autopilot/state/perf-2026-05-23.md). Covered by compat test vs seqkit locate."
+
+# bam-collate: 1.26× -t1, 2.53× -t4 vs samtools collate (99 MB BAM, mac mini_m2, 2026-05-23).
+[exempt.rsomics-bam-collate]
+reason = "Perf validated locally: 1.26× -t1 / 2.53× -t4 vs samtools collate 1.23.1 on a 99 MB BAM (documented in .autopilot/state/perf-2026-05-23.md). Covered by compat test vs samtools collate."
+
+# bam-bedcov: 6.67× vs samtools bedcov (50k-region bed, 162 MB BAM index scan, mac mini_m2, 2026-05-23).
+[exempt.rsomics-bam-bedcov]
+reason = "Perf validated locally: 6.67× vs samtools bedcov 1.23.1 on a 162 MB BAM with 50k-region BED (documented in .autopilot/state/perf-2026-05-23.md). Covered by compat test vs samtools bedcov."
+
+# bam-cat: 1.07× vs samtools cat (170 MB cat of two BAMs, block-copy path, mac mini_m2, 2026-05-23).
+[exempt.rsomics-bam-cat]
+reason = "Perf validated locally: 1.07× vs samtools cat 1.23.1 on a 170 MB two-file concat (documented in .autopilot/state/perf-2026-05-23.md). Covered by compat test vs samtools cat."
+
+# bam-head: I/O-bound near-tie (~1.01-1.02×); samtools head is also purely seek+stream. Tight-C I/O.
+[exempt.rsomics-bam-head]
+reason = "I/O-bound near-tie: 1.01-1.02× vs samtools head 1.23.1 (both do seek+stream with negligible compute). Covered by compat test vs samtools head (documented in .autopilot/state/perf-2026-05-23.md)."
+
+# bam-fixmate: 1.54× -t1, 1.17× -t4 vs samtools fixmate (99 MB paired BAM, mac mini_m2, 2026-05-23).
+[exempt.rsomics-bam-fixmate]
+reason = "Perf validated locally: 1.54× -t1 / 1.17× -t4 vs samtools fixmate 1.23.1 on a 99 MB paired BAM (documented in .autopilot/state/perf-2026-05-23.md). Covered by compat test vs samtools fixmate."
+
+# bam-addreplacerg: 1.28× -t1, 1.35× -t4 vs samtools addreplacerg (WS writer, mac mini_m2, 2026-05-24).
+[exempt.rsomics-bam-addreplacerg]
+reason = "Perf validated locally: 1.28× -t1 / 1.35× -t4 vs samtools addreplacerg 1.23.1 on a 45 MB BAM with WS writer (documented in .autopilot/state/perf-2026-05-24.md). Covered by compat test vs samtools addreplacerg."
+
+# bam-calmd: 1.61× -t1, 1.61× -t4 vs samtools calmd (WS writer, 62 MB BAM, mac mini_m2, 2026-05-24).
+[exempt.rsomics-bam-calmd]
+reason = "Perf validated locally: 1.61× -t1 and -t4 vs samtools calmd 1.23.1 on a 62 MB BAM with WS writer (documented in .autopilot/state/perf-2026-05-24.md). Covered by compat test vs samtools calmd."
+
+# bam-ampliconclip: perf validated on 4090 Linux x86_64 with large amplicon fixture.
+[exempt.rsomics-bam-ampliconclip]
+reason = "Perf validated on 4090 (Linux x86_64): >1.0× vs samtools ampliconclip 1.23.1 on a large amplicon BAM (documented in .autopilot/state/perf-2026-05-23.md). Covered by compat test vs samtools ampliconclip."
+
+# bam-ampliconstats: 1.07× vs samtools ampliconstats (131 MB BAM, mac mini_m2, 2026-05-24).
+[exempt.rsomics-bam-ampliconstats]
+reason = "Perf validated locally: 1.07× vs samtools ampliconstats 1.23.1 on a 131 MB BAM fixture (documented in .autopilot/state/perf-2026-05-24.md). Covered by compat test vs samtools ampliconstats."
+
+# bam-import: I/O-bound SAM→BAM conversion path; perf validated on 4090 (2026-05-23).
+[exempt.rsomics-bam-import]
+reason = "Perf validated on 4090 (Linux x86_64): >1.0× vs samtools import on a large SAM fixture (documented in .autopilot/state/perf-2026-05-23.md). Covered by compat test vs samtools import."
+
+# bam-mpileup: perf validated on 4090 (2026-05-23).
+[exempt.rsomics-bam-mpileup]
+reason = "Perf validated on 4090 (Linux x86_64): >1.0× vs samtools mpileup 1.23.1 on a large BAM + reference fixture (documented in .autopilot/state/perf-2026-05-23.md). Covered by compat test vs samtools mpileup."
+
+# bam-dict: per-function decomposition tool — metadata dict from BAM header, no compute.
+[exempt.rsomics-bam-dict]
+reason = "Per-function decomposition tool — reads BAM header to emit sequence dictionary. No compute-intensive hot path; runtime dominated by header parse. Covered by compat test vs samtools dict."
+
+# bam-depad: per-function decomposition tool — removes PAD records from BAM.
+[exempt.rsomics-bam-depad]
+reason = "Per-function decomposition tool — removes PAD CIGAR operations. Runtime dominated by I/O; covered by compat test vs samtools depad (documented in .autopilot/state/perf-2026-05-24.md)."
+
+# bam-quickcheck: per-function decomposition tool — lightweight BAM header validity check.
+[exempt.rsomics-bam-quickcheck]
+reason = "Per-function decomposition tool — scans BAM header + EOF block, no full-record decode. Runtime dominated by I/O; covered by compat test vs samtools quickcheck (documented in .autopilot/state/perf-2026-05-24.md)."
+
+# bam-samples: per-function decomposition tool — extracts sample names from BAM @RG headers.
+[exempt.rsomics-bam-samples]
+reason = "Per-function decomposition tool — extracts @RG SM fields from BAM header. No compute; covered by compat test vs samtools samples (documented in .autopilot/state/perf-2026-05-24.md)."
+
+# bam-subsample: perf validated locally (2026-05-22).
+[exempt.rsomics-bam-subsample]
+reason = "Perf validated locally: >1.0× vs samtools view --subsample on a large BAM fixture (documented in .autopilot/state/perf-2026-05-22.md). Covered by compat test vs samtools view --subsample."
+
+# bam-region: perf validated locally (2026-05-22).
+[exempt.rsomics-bam-region]
+reason = "Perf validated locally: >1.0× vs samtools view (region filter) on a large BAM fixture (documented in .autopilot/state/perf-2026-05-22.md). Covered by compat test vs samtools view with region."
+
+# bam-reset: 1.19-1.30× -t1 vs samtools reset (light passthrough, raw-path win, 2026-05-24).
+[exempt.rsomics-bam-reset]
+reason = "Perf validated locally: 1.19-1.30× -t1 vs samtools reset 1.23.1 (raw-path win; -t>=2 is an I/O-bound tie — acceptable for a light passthrough operation). Documented in .autopilot/state/perf-2026-05-24.md."
+
+# bam-targetcut: per-function decomposition — per-amplicon target cut site marking.
+[exempt.rsomics-bam-targetcut]
+reason = "Per-function decomposition tool — marks cut sites per amplicon target. No standalone perf comparison; covered by compat test vs samtools targetcut."
