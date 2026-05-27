@@ -486,3 +486,6 @@
 [submodule "crates/tools/formats/rsomics-bam-samples"]
 	path = crates/tools/formats/rsomics-bam-samples
 	url = git@github.com:omics-rust/rsomics-bam-samples.git
+[submodule "crates/tools/formats/rsomics-bam-depad"]
+	path = crates/tools/formats/rsomics-bam-depad
+	url = git@github.com:omics-rust/rsomics-bam-depad.git
