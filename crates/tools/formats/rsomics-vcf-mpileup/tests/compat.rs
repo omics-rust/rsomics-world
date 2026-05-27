@@ -148,8 +148,13 @@ fn compat_snp_basic() {
                     eprintln!("REF mismatch at {chrom}:{pos}: ours={our_ref} bcftools={their_ref}");
                     mismatches += 1;
                 }
-                if our_alt != their_alt {
-                    eprintln!("ALT mismatch at {chrom}:{pos}: ours={our_alt} bcftools={their_alt}");
+                // 0.1.0 scope: we emit one best ALT; bcftools may emit several.
+                // Our ALT must be a member of bcftools' comma-separated ALT list.
+                let their_set: std::collections::HashSet<&str> = their_alt.split(',').collect();
+                if !their_set.contains(our_alt.as_str()) {
+                    eprintln!(
+                        "ALT not in bcftools set at {chrom}:{pos}: ours={our_alt} bcftools={their_alt}"
+                    );
                     mismatches += 1;
                 }
             }
@@ -188,7 +193,11 @@ fn compat_region_filter() {
         );
         if let Some((their_ref, their_alt)) = theirs_vars.get(&(chrom.clone(), *pos)) {
             assert_eq!(our_ref, their_ref, "REF mismatch at {chrom}:{pos}");
-            assert_eq!(our_alt, their_alt, "ALT mismatch at {chrom}:{pos}");
+            let their_set: std::collections::HashSet<&str> = their_alt.split(',').collect();
+            assert!(
+                their_set.contains(our_alt.as_str()),
+                "ALT not in bcftools set at {chrom}:{pos}: ours={our_alt} bcftools={their_alt}"
+            );
         }
     }
 }
