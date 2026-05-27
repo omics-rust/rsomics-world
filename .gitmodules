@@ -513,3 +513,6 @@
 [submodule "crates/foundation/rsomics-pileup"]
 	path = crates/foundation/rsomics-pileup
 	url = git@github.com:omics-rust/rsomics-pileup.git
+[submodule "crates/foundation/rsomics-vcf-expr"]
+	path = crates/foundation/rsomics-vcf-expr
+	url = git@github.com:omics-rust/rsomics-vcf-expr.git
