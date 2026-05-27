@@ -136,6 +136,7 @@ rsomics-fastq-dedup = { path = "crates/tools/formats/rsomics-fastq-dedup" }
 rsomics-fastq-filter = { path = "crates/tools/formats/rsomics-fastq-filter" }
 rsomics-fastq-merge = { path = "crates/tools/formats/rsomics-fastq-merge" }
 rsomics-fastq-pair = { path = "crates/tools/formats/rsomics-fastq-pair" }
+rsomics-fastq-sample = { path = "crates/tools/formats/rsomics-fastq-sample" }
 rsomics-fastq-split = { path = "crates/tools/formats/rsomics-fastq-split" }
 rsomics-fastq-stats = { path = "crates/tools/formats/rsomics-fastq-stats" }
 rsomics-fastq-trim = { path = "crates/tools/formats/rsomics-fastq-trim" }

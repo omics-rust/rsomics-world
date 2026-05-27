@@ -2275,7 +2275,7 @@ dependencies = [
 
 [[package]]
 name = "rsomics-bed-genomecov"
-version = "0.1.0"
+version = "0.1.1"
 dependencies = [
  "clap",
  "rsomics-common",
@@ -2692,6 +2692,19 @@ dependencies = [
 ]
 
 [[package]]
+name = "rsomics-fastq-sample"
+version = "0.1.1"
+dependencies = [
+ "clap",
+ "flate2",
+ "needletail 0.6.3",
+ "rand 0.9.4",
+ "rsomics-common",
+ "rsomics-help",
+ "tempfile",
+]
+
+[[package]]
 name = "rsomics-fastq-split"
 version = "0.1.0"
 dependencies = [
@@ -2874,6 +2887,7 @@ dependencies = [
  "rsomics-fastq-filter",
  "rsomics-fastq-merge",
  "rsomics-fastq-pair",
+ "rsomics-fastq-sample",
  "rsomics-fastq-split",
  "rsomics-fastq-stats",
  "rsomics-fastq-trim",
@@ -3746,7 +3760,7 @@ dependencies = [
 
 [[package]]
 name = "rsomics-vcf-sort"
-version = "0.1.0"
+version = "0.1.1"
 dependencies = [
  "clap",
  "flate2",

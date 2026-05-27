@@ -25,6 +25,7 @@ fastq = [
     "dep:rsomics-fastq-filter",
     "dep:rsomics-fastq-merge",
     "dep:rsomics-fastq-pair",
+    "dep:rsomics-fastq-sample",
     "dep:rsomics-fastq-split",
     "dep:rsomics-fastq-stats",
     "dep:rsomics-fastq-trim",
@@ -77,6 +78,7 @@ rsomics-fastq-dedup = { path = "../../tools/formats/rsomics-fastq-dedup", versio
 rsomics-fastq-filter = { path = "../../tools/formats/rsomics-fastq-filter", version = "0.1", optional = true }
 rsomics-fastq-merge = { path = "../../tools/formats/rsomics-fastq-merge", version = "0.1", optional = true }
 rsomics-fastq-pair = { path = "../../tools/formats/rsomics-fastq-pair", version = "0.1", optional = true }
+rsomics-fastq-sample = { path = "../../tools/formats/rsomics-fastq-sample", version = "0.1", optional = true }
 rsomics-fastq-split = { path = "../../tools/formats/rsomics-fastq-split", version = "0.1", optional = true }
 rsomics-fastq-stats = { path = "../../tools/formats/rsomics-fastq-stats", version = "0.1", optional = true }
 rsomics-fastq-trim = { path = "../../tools/formats/rsomics-fastq-trim", version = "0.4", optional = true }

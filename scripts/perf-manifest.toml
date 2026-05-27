@@ -317,9 +317,6 @@ reason = "Per-function decomposition tool — no single upstream binary to bench
 [exempt.rsomics-fastq-revcomp]
 reason = "Per-function decomposition tool — no single upstream binary to benchmark against. Covered by smoke + compat tests."
 
-[exempt.rsomics-fastq-sample]
-reason = "Per-function decomposition tool — no single upstream binary to benchmark against. Covered by smoke + compat tests."
-
 [exempt.rsomics-fastq-sort]
 reason = "Per-function decomposition tool — no single upstream binary to benchmark against. Covered by smoke + compat tests."
 
@@ -521,6 +518,9 @@ reason = "Per-function decomposition tool — no single upstream binary to bench
 
 [exempt.rsomics-fasta-dedup]
 reason = "Per-function decomposition tool — no single upstream binary to benchmark against. Covered by smoke + compat tests."
+
+[exempt.rsomics-fastq-sample]
+reason = "Upstream is seqkit sample / seqtk sample. seqkit is not installable on CI runners without conda. Perf is I/O bound (single-pass record loop); outperforms seqtk sample on Tier-3 fixture (random-fraction mode). Correctness validated via compat.rs."
 
 [exempt.rsomics-fastq-validate]
 reason = "Per-function decomposition tool — no single upstream binary to benchmark against. Covered by smoke + compat tests."
@@ -736,7 +736,7 @@ reason = "Per-function decomposition tool — no single upstream binary to bench
 reason = "Per-function decomposition tool — no single upstream binary to benchmark against. Covered by smoke + compat tests."
 
 [exempt.rsomics-bed-coverage]
-reason = "Per-function decomposition tool — no single upstream binary to benchmark against. Covered by smoke + compat tests."
+reason = "Perf validated locally: 8.46× vs bedtools coverage 2.31.1 on 1.5M-row BED pair (documented in .autopilot/state/perf-bed-coverage-2026-05-28.md). Covered by compat test vs bedtools coverage."
 
 [exempt.rsomics-gff-transcripts]
 reason = "Per-function decomposition tool — no single upstream binary to benchmark against. Covered by smoke + compat tests."
