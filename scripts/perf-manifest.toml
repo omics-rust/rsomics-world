@@ -826,3 +826,11 @@ reason = "Perf validated on 4090 (Linux x86_64): 1.05× vs bcftools consensus 1.
 # vcf-view: 2.40× vs bcftools view on 4090 (31 MB VCF, --types snps filter path, 2026-05-22).
 [exempt.rsomics-vcf-view]
 reason = "Perf validated on 4090 (Linux x86_64): 2.40× vs bcftools view 1.23.1 on a 31 MB VCF (documented in .autopilot/state/perf-2026-05-23.md). Covered by compat test vs bcftools view."
+
+# fasta-sliding: 1.40× vs seqkit sliding on 4090 (30 MB FASTA, 2026-05-22).
+[exempt.rsomics-fasta-sliding]
+reason = "Perf validated on 4090 (Linux x86_64): 1.40× vs seqkit sliding 2.9.0 on a 30 MB FASTA (documented in .autopilot/state/perf-2026-05-23.md). Covered by compat test vs seqkit sliding."
+
+# fasta-locate: 3.83× vs seqkit locate on 4090 (102 MB FASTA, 2026-05-22).
+[exempt.rsomics-fasta-locate]
+reason = "Perf validated on 4090 (Linux x86_64): 3.83× vs seqkit locate 2.9.0 on a 102 MB FASTA (documented in .autopilot/state/perf-2026-05-23.md). Covered by compat test vs seqkit locate."
