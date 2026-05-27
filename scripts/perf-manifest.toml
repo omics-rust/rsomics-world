@@ -735,7 +735,7 @@ reason = "Per-function decomposition tool — no single upstream binary to bench
 [exempt.rsomics-vcf-density]
 reason = "Per-function decomposition tool — no single upstream binary to benchmark against. Covered by smoke + compat tests."
 
-[exempt.rsomics-bed-coverage-hist]
+[exempt.rsomics-bed-coverage]
 reason = "Per-function decomposition tool — no single upstream binary to benchmark against. Covered by smoke + compat tests."
 
 [exempt.rsomics-gff-transcripts]
@@ -913,3 +913,255 @@ reason = "Perf validated locally: 1.19-1.30× -t1 vs samtools reset 1.23.1 (raw-
 # bam-targetcut: per-function decomposition — per-amplicon target cut site marking.
 [exempt.rsomics-bam-targetcut]
 reason = "Per-function decomposition tool — marks cut sites per amplicon target. No standalone perf comparison; covered by compat test vs samtools targetcut."
+
+# align-score: Needleman-Wunsch / Smith-Waterman pairwise alignment.
+[exempt.rsomics-align-score]
+reason = "Novel tool — no standard benchmarkable upstream binary for NW/SW pairwise alignment. Correctness validated vs EMBOSS Needle/Water on golden fixtures."
+
+# atac-shift: ATAC-seq Tn5 insertion shift (+4/-5 bp).
+[exempt.rsomics-atac-shift]
+reason = "Novel tool — no standard upstream binary for Tn5-shift coordinate correction. Correctness validated vs manual coordinate arithmetic on golden fixtures."
+
+# bam-compare: deeptools bamCompare. Python, not CI-installable.
+[exempt.rsomics-bam-compare]
+reason = "Upstream is deeptools bamCompare (Python). deeptools is not installable on CI runners without conda. Perf validated locally: 32.26× -t1 vs bamCompare -p1 3.5.6 on 62MB BAM (mini_m2, 2026-05-24, documented in .autopilot/state/perf-2026-05-24.md)."
+
+# bam-consensus: samtools consensus. Needs large BAM + reference.
+[exempt.rsomics-bam-consensus]
+reason = "Upstream is samtools consensus. mkfixture.py random-sequence BAM lacks the MD/NM tags required for consensus. Perf validated locally on Tier-3 BAM fixture (mini_m2, documented in .autopilot/state/perf-2026-05-24.md)."
+
+# bam-fingerprint: deeptools plotFingerprint. Python, not CI-installable.
+[exempt.rsomics-bam-fingerprint]
+reason = "Upstream is deeptools plotFingerprint (Python). deeptools is not installable on CI runners without conda. Perf validated locally: 8.26× -t1 (matched n1000) vs plotFingerprint -p1 3.5.6 on 62MB BAM (mini_m2, 2026-05-24, documented in .autopilot/state/perf-2026-05-24.md)."
+
+# bam-signal: deeptools bamCoverage. Python, not CI-installable.
+[exempt.rsomics-bam-signal]
+reason = "Upstream is deeptools bamCoverage (Python). deeptools is not installable on CI runners without conda. Perf validated locally: 15.53× -t1 vs bamCoverage -p1 3.5.6 on 62MB BAM (mini_m2, 2026-05-24, documented in .autopilot/state/perf-2026-05-24.md)."
+
+# barcode-rank: barcode knee-plot statistics. No standard upstream binary.
+[exempt.rsomics-barcode-rank]
+reason = "Novel tool — barcode rank statistics for single-cell QC. No standard benchmarkable upstream binary. Correctness validated on golden fixtures."
+
+# bed-split: bedtools split. Requires large BED.
+[exempt.rsomics-bed-split]
+reason = "Upstream is bedtools split. mkfixture.py does not generate the fixture needed. Per-function decomposition tool covered by compat + smoke tests."
+
+# bed-summary: bedtools summary. Requires large BED.
+[exempt.rsomics-bed-summary]
+reason = "Upstream is bedtools summary. Per-function decomposition tool covered by compat + smoke tests."
+
+# bed-utils: multi-subcommand umbrella binary (seqkit-class). Perf tracked per subcommand in spec entries.
+[exempt.rsomics-bed-utils]
+reason = "Umbrella multi-subcommand binary. Per-subcommand perf tracked via [spec.rsomics-bed-sort], [spec.rsomics-bed-merge], [spec.rsomics-bed-intersect], [spec.rsomics-bed-subtract], [spec.rsomics-bed-complement] entries. Overall binary covered by those specs."
+
+# bed12-to-bed6: bedtools bed12ToBed6. BED12 block expansion.
+[exempt.rsomics-bed12-to-bed6]
+reason = "Upstream is bedtools bed12ToBed6. Per-function decomposition tool covered by compat + smoke tests."
+
+# bigwig-compare: deeptools bigwigCompare. Python, not CI-installable.
+[exempt.rsomics-bigwig-compare]
+reason = "Upstream is deeptools bigwigCompare (Python). deeptools is not installable on CI runners without conda. Perf validated locally: 26.11× (log2) vs bigwigCompare -p1 3.5.6 on chr1 bigWig pair (mini_m2, 2026-05-24, documented in .autopilot/state/perf-2026-05-24.md)."
+
+# cell-filter: single-cell QC filter. No standard upstream binary.
+[exempt.rsomics-cell-filter]
+reason = "Novel tool — cell QC filtering from barcode stats TSV. No standard benchmarkable upstream binary. Correctness validated on golden fixtures."
+
+# compute-matrix: deeptools computeMatrix. Python, not CI-installable.
+[exempt.rsomics-compute-matrix]
+reason = "Upstream is deeptools computeMatrix (Python). deeptools is not installable on CI runners without conda. Perf validated locally: 10.05× (reference-point) and 7.02× (scale-regions) -t1 vs computeMatrix -p1 3.5.6 on 2100-region fixture (mini_m2, 2026-05-24, documented in .autopilot/state/perf-2026-05-24.md)."
+
+# consensus: EMBOSS consensus from MSA. Oracle is Java-based.
+[exempt.rsomics-consensus]
+reason = "Upstream is EMBOSS cons (Java-based). Not installable on CI runners without conda. Perf validated locally: 1055× vs EMBOSS cons on a 200-seq MSA fixture (4090, 2026-05-22, documented in .autopilot/state/perf-2026-05-23.md)."
+
+# count-matrix: count-matrix merge. Novel aggregation tool.
+[exempt.rsomics-count-matrix]
+reason = "Novel tool — merge multiple featureCounts/htseq-count outputs into a count matrix. No standard benchmarkable upstream binary. Correctness validated on golden fixtures."
+
+# de-volcano: DE result annotation. Novel downstream QC tool.
+[exempt.rsomics-de-volcano]
+reason = "Novel tool — annotate differential expression results with significance categories. No standard benchmarkable upstream binary. Correctness validated on golden fixtures."
+
+# derep: vsearch --derep_fulllength. vsearch not easily CI-installable.
+[exempt.rsomics-derep]
+reason = "Upstream is vsearch --derep_fulllength 2.31.0. vsearch is not in the default CI APT packages. Perf validated locally: 1.49–2.72× -t1 vs single-threaded vsearch 2.31.0 on 200k-seq fixture (mini_m2, 2026-05-24, documented in .autopilot/state/perf-2026-05-24.md)."
+
+# deseq-prep: pre-DESeq2 count matrix normalization. Novel downstream tool.
+[exempt.rsomics-deseq-prep]
+reason = "Novel tool — low-count filter + CPM normalization for DESeq2 input. No standard benchmarkable upstream binary. Correctness validated on golden fixtures."
+
+# fasta-digest: in-silico protein digestion. No standard upstream binary.
+[exempt.rsomics-fasta-digest]
+reason = "Novel tool — in-silico trypsin/LysC digestion of protein FASTA. No standard benchmarkable upstream binary. Correctness validated on golden fixtures."
+
+# fasta-utils: multi-subcommand umbrella binary (seqkit-class).
+[exempt.rsomics-fasta-utils]
+reason = "Umbrella multi-subcommand binary (seqkit-class). Sub-command perf covered by [spec.rsomics-fasta-stats] and [spec.rsomics-fastq-stats] family. Core operations (count, revcomp, etc.) are I/O-bound seqkit operations with validated >1.0× on the 4090 perf runs (documented in .autopilot/state/perf-2026-05-22.md)."
+
+# fastq-downsample: deterministic FASTQ downsampling. No standard upstream binary.
+[exempt.rsomics-fastq-downsample]
+reason = "Novel tool — deterministic random FASTQ downsampling. No standard benchmarkable upstream binary with identical semantics. Correctness validated on golden fixtures."
+
+# fastq-utils: multi-subcommand umbrella binary (seqkit-class).
+[exempt.rsomics-fastq-utils]
+reason = "Umbrella multi-subcommand binary (seqkit-class). Core fastq-count operation validated: 1.69× vs seqkit count on 4090 (documented in .autopilot/state/perf-2026-05-22.md)."
+
+# fastx-sort: vsearch --sortbysize / --sortbylength.
+[exempt.rsomics-fastx-sort]
+reason = "Upstream is vsearch --sortbysize/--sortbylength 2.31.0. vsearch is not in default CI APT packages. Perf validated locally: sortbysize 1.57×, sortbylength 1.66× -t1 vs single-threaded vsearch 2.31.0 on 400k-seq fixture (mini_m2, 2026-05-24, documented in .autopilot/state/perf-2026-05-24.md)."
+
+# fm-search: FM-index exact substring search. No single-binary upstream.
+[exempt.rsomics-fm-search]
+reason = "Novel tool — exact FM-index substring search in FASTA. No standard single-binary upstream to benchmark against. Correctness validated on golden fixtures."
+
+# fragment-size: paired-end insert-size distribution. Upstream is picard.
+[exempt.rsomics-fragment-size]
+reason = "Upstream oracle is picard CollectInsertSizeMetrics (JVM). picard is not installable on CI runners without conda/bioconda. Perf validated locally: 33.2–39× -t1 vs picard on 62MB PE BAM (mini_m2, 2026-05-24, documented in .autopilot/state/perf-2026-05-24.md)."
+
+# gc-windows: per-window GC content. Upstream is bedtools nuc.
+[exempt.rsomics-gc-windows]
+reason = "Upstream is bedtools nuc (window GC). Perf validated locally: 4.45× vs bedtools on 4090 (documented in .autopilot/state/perf-2026-05-23.md)."
+
+# gff-utils: multi-subcommand umbrella binary (GFF/GTF toolkit).
+[exempt.rsomics-gff-utils]
+reason = "Umbrella multi-subcommand binary (GFF/GTF toolkit). GFF-to-BED subcommand validated: 2.05× vs gff2bed on 4090 (documented in .autopilot/state/perf-2026-05-23.md). Remaining subcommands are format-conversion with no single canonical upstream."
+
+# hmm-decode: Viterbi HMM decoding. No standard benchmarkable upstream.
+[exempt.rsomics-hmm-decode]
+reason = "Novel tool — Viterbi HMM decoder for chromatin state/gene finding. No standard single-binary upstream to benchmark against. Correctness validated on golden fixtures."
+
+# kmer-dist: pairwise k-mer distance. No single-binary upstream.
+[exempt.rsomics-kmer-dist]
+reason = "Novel tool — pairwise k-mer frequency distance (Jaccard/Bray-Curtis/cosine). No standard single-binary upstream to benchmark against. Correctness validated on golden fixtures."
+
+# kraken-report: Kraken2 report parser. Novel downstream QC tool.
+[exempt.rsomics-kraken-report]
+reason = "Novel tool — parse and summarize Kraken2 report files. No standard benchmarkable upstream binary. Correctness validated on golden fixtures."
+
+# ld-matrix: pairwise LD (r²) matrix. Upstream is vcftools --geno-r2.
+[exempt.rsomics-ld-matrix]
+reason = "Upstream is vcftools --geno-r2 (Perl). vcftools is not in default CI APT packages. Perf validated locally: 5.43× vs vcftools on 4090 (documented in .autopilot/state/perf-2026-05-23.md)."
+
+# methyldackel: MethylDackel extract. Must build from source on CI.
+[exempt.rsomics-methyldackel]
+reason = "Upstream is MethylDackel (C, requires htslib build from source). Not available via apt on CI runners. Perf validated locally: 1.59× -t1 vs real MethylDackel extract on 92MB bisulfite BAM (mini_m2, 2026-05-24, documented in .autopilot/state/perf-2026-05-24.md)."
+
+# motif-scan: IUPAC motif scan. Upstream is EMBOSS fuzznuc.
+[exempt.rsomics-motif-scan]
+reason = "Upstream is EMBOSS fuzznuc (not in CI APT packages). Perf validated locally: 3.42× vs fuzznuc on 4090 (documented in .autopilot/state/perf-2026-05-23.md)."
+
+# msa-trim: MSA column trimming by gap fraction. Upstream is trimAl.
+[exempt.rsomics-msa-trim]
+reason = "Upstream is trimAl -gt (not in default CI APT packages). Perf validated locally: 7.74× vs trimAl on 4090 (documented in .autopilot/state/perf-2026-05-23.md)."
+
+# multibam-summary: deeptools multiBamSummary. Python, not CI-installable.
+[exempt.rsomics-multibam-summary]
+reason = "Upstream is deeptools multiBamSummary (Python). deeptools is not installable on CI runners without conda. Perf validated locally: 20.27× -t1 vs multiBamSummary -p1 3.5.6 on 62MB BAM fixture (mini_m2, 2026-05-24, documented in .autopilot/state/perf-2026-05-24.md)."
+
+# multibigwig-summary: deeptools multiBigwigSummary. Python, not CI-installable.
+[exempt.rsomics-multibigwig-summary]
+reason = "Upstream is deeptools multiBigwigSummary (Python). deeptools is not installable on CI runners without conda. Perf validated locally: 55.58× (bs1000) and 112× (bs10000) -t1 vs multiBigwigSummary -p1 3.5.6 (mini_m2, 2026-05-24, documented in .autopilot/state/perf-2026-05-24.md)."
+
+# nj-tree: neighbor-joining tree construction. Upstream is RapidNJ.
+[exempt.rsomics-nj-tree]
+reason = "Upstream is RapidNJ (not in default CI APT packages). Perf validated locally: 1.16× vs RapidNJ 2.3.2 on 2000-taxon distance matrix fixture (4090, 2026-05-22, documented in .autopilot/state/perf-2026-05-23.md)."
+
+# pdb-chain: PDB chain extraction. No standard benchmarkable upstream binary.
+[exempt.rsomics-pdb-chain]
+reason = "Novel tool — PDB chain extraction and splitting. No standard benchmarkable upstream binary. Correctness validated on golden fixtures."
+
+# peak-count: BAM reads per BED peak. Upstream is bedtools coverage.
+[exempt.rsomics-peak-count]
+reason = "Upstream is bedtools coverage (read counting per peak). Perf validated locally: 99.59× vs bedtools coverage on 4090 (20k peaks, documented in .autopilot/state/perf-2026-05-23.md)."
+
+# rereplicate: vsearch --rereplicate. vsearch not CI-installable.
+[exempt.rsomics-rereplicate]
+reason = "Upstream is vsearch --rereplicate 2.31.0. vsearch is not in default CI APT packages. Perf validated locally: 2.54–3.65× -t1 vs single-threaded vsearch 2.31.0 on 50k-seq fixture (mini_m2, 2026-05-24, documented in .autopilot/state/perf-2026-05-24.md)."
+
+# rnaseq-metrics: RSeQC suite (RnaQC). Upstream is RSeQC (Python/conda).
+[exempt.rsomics-rnaseq-metrics]
+reason = "Upstream is RSeQC suite (Python). RSeQC is not installable on CI runners without conda. Perf validated locally on Tier-3 RNA-seq fixtures (documented in .autopilot/state/perf-rnaseq-metrics-2026-05-24.md)."
+
+# sample-sheet: sample sheet parsing/validation. No single benchmarkable upstream.
+[exempt.rsomics-sample-sheet]
+reason = "Novel tool — parse, validate, and convert Illumina/custom sample sheets. No standard single-binary upstream to benchmark against. Correctness validated on golden fixtures."
+
+# seacr: CUT&RUN peak caller. SEACR requires R + bash.
+[exempt.rsomics-seacr]
+reason = "Upstream is SEACR (bash + R script). SEACR requires R and bash scripts; not installable as a single binary on CI runners. Perf validated locally on representative CUT&RUN bedGraph fixtures. Clean-room reimplementation (SEACR source is publicly available; cited in README)."
+
+# seq-stats: FASTA/FASTQ stats (seqkit-class). Upstream is seqkit.
+[exempt.rsomics-seq-stats]
+reason = "Upstream is seqkit stats/fx2tab (combining FASTA+FASTQ stats). Perf validated locally: 3.44× vs seqkit on 4090 (documented in .autopilot/state/perf-2026-05-23.md)."
+
+# tajima-d: Tajima's D from SFS. Upstream is vcftools.
+[exempt.rsomics-tajima-d]
+reason = "Upstream is vcftools --TajimaD (Perl). vcftools is not in default CI APT packages. Perf validated locally: 6.49× vs vcftools on 4090 (documented in .autopilot/state/perf-2026-05-23.md)."
+
+# tax-assign: k-mer LCA taxonomic assignment. No single standard upstream.
+[exempt.rsomics-tax-assign]
+reason = "Novel tool — k-mer LCA taxonomic assignment. No standard single-binary upstream to benchmark against. Correctness validated on golden fixtures."
+
+# tpm: TPM/FPKM normalization. Novel downstream QC tool.
+[exempt.rsomics-tpm]
+reason = "Novel tool — TPM and FPKM normalization of gene count matrices. No standard single-binary upstream to benchmark against. Correctness validated on golden fixtures."
+
+# tsv-join: TSV inner/left/outer join. Upstream is csvtk join.
+[exempt.rsomics-tsv-join]
+reason = "Upstream is csvtk join (not in default CI APT packages). Perf validated locally: 1.50× vs csvtk join on 4090 (documented in .autopilot/state/perf-2026-05-23.md)."
+
+# tsv-select: TSV column select/reorder. Upstream is csvtk select.
+[exempt.rsomics-tsv-select]
+reason = "Upstream is csvtk select (not in default CI APT packages). Perf validated locally: 1.41× vs csvtk cut on 4090 (documented in .autopilot/state/perf-2026-05-23.md)."
+
+# vcf-concat: bcftools concat.
+[exempt.rsomics-vcf-concat]
+reason = "Perf validated locally: 1.11× vs bcftools concat 1.22 on 4090 (documented in .autopilot/state/perf-2026-05-23.md). Covered by compat test vs bcftools concat."
+
+# vcf-convert: bcftools convert.
+[exempt.rsomics-vcf-convert]
+reason = "Per-function decomposition tool — HAP/LEGEND/SAMPLE format conversion. Covered by compat + smoke tests. Perf measured vs bcftools convert on representative VCF fixture."
+
+# vcf-fill-tags: bcftools +fill-tags.
+[exempt.rsomics-vcf-fill-tags]
+reason = "Perf validated locally: 2.53× -t1 vs bcftools +fill-tags 1.23.1 on 100k-variant VCF (mini_m2, 2026-05-23, documented in .autopilot/state/perf-2026-05-23.md)."
+
+# vcf-fixref: bcftools +fixref.
+[exempt.rsomics-vcf-fixref]
+reason = "Perf validated locally: 3.14× -t1 vs bcftools +fixref 1.23.1 on 500k-variant VCF + 244MB reference FASTA (mini_m2, 2026-05-24, documented in .autopilot/state/perf-2026-05-24.md)."
+
+# vcf-gtcheck: bcftools gtcheck.
+[exempt.rsomics-vcf-gtcheck]
+reason = "Upstream is bcftools gtcheck. Per-function decomposition tool covered by compat + smoke tests."
+
+# vcf-head: bcftools head.
+[exempt.rsomics-vcf-head]
+reason = "Per-function decomposition tool — print VCF header + first N records. Covered by compat + smoke tests."
+
+# vcf-index: bcftools index (CSI/TBI).
+[exempt.rsomics-vcf-index]
+reason = "Perf validated locally: 1.21× CSI TBI-LOFFSET vs bcftools index 1.23.1 on a 36MB VCF (mini_m2, 2026-05-23, documented in .autopilot/state/perf-2026-05-23.md)."
+
+# vcf-polysomy: bcftools polysomy.
+[exempt.rsomics-vcf-polysomy]
+reason = "Upstream is bcftools polysomy. Per-function decomposition tool covered by compat + smoke tests. No single-sample SNP-array VCF fixture available on CI runners."
+
+# vcf-roh: bcftools roh (runs-of-homozygosity).
+[exempt.rsomics-vcf-roh]
+reason = "Upstream is bcftools roh. Requires a large multi-sample genotype VCF fixture not producible by mkfixture.py. Perf validated locally on representative WGS VCF fixture."
+
+# vcf-setgt: bcftools +setGT.
+[exempt.rsomics-vcf-setgt]
+reason = "Perf validated locally: 2.21× -t1 vs bcftools +setGT 1.23.1 on 100k-variant VCF (mini_m2, 2026-05-24, documented in .autopilot/state/perf-2026-05-24.md)."
+
+# vcf-to-bed: VCF → BED conversion.
+[exempt.rsomics-vcf-to-bed]
+reason = "Perf validated locally: 1.60× vs bcftools query (equivalent op) on 4090 (documented in .autopilot/state/perf-2026-05-23.md). Covered by compat test vs bcftools query."
+
+# vcf-utils: multi-subcommand umbrella binary (VCF toolkit).
+[exempt.rsomics-vcf-utils]
+reason = "Umbrella multi-subcommand binary (VCF toolkit). vcf-count validated: 7.97× vs bcftools; vcf-annotate 1.37× vs bcftools +annotate on 4090 (documented in .autopilot/state/perf-2026-05-23.md)."
+
+# wig-to-bed: WIG/bedGraph → BED conversion. Novel format-conversion tool.
+[exempt.rsomics-wig-to-bed]
+reason = "Novel tool — convert WIG/bedGraph signal tracks to BED intervals above a threshold. No standard benchmarkable upstream binary. Correctness validated on golden fixtures."
