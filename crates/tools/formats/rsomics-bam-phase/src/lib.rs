@@ -568,7 +568,13 @@ pub fn phase<W: Write>(
 ) -> Result<PhaseStats> {
     let mut stats = PhaseStats::default();
 
-    let mut reader = rsomics_bamio::open_with_workers(input, workers)?;
+    // raw::read_record bypasses the noodles record layer and reads directly from
+    // the inner BufRead via reader.get_mut(). bgzf::io::MultithreadedReader's
+    // BufRead impl interacts poorly with header-then-raw-read sequences across
+    // platforms, so we always use a single-threaded reader here.
+    let _ = workers;
+    let st = NonZero::<usize>::new(1).unwrap();
+    let mut reader = rsomics_bamio::open_with_workers(input, st)?;
     let header = reader.read_header().map_err(RsomicsError::Io)?;
     let ref_seqs = header.reference_sequences();
 
