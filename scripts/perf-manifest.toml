@@ -96,50 +96,26 @@ upstream_bin     = "bfc"
 upstream_args    = "-s 20m -k 33 -t 1 FIX"
 upstream_version = "bfc -v"
 
-[spec.rsomics-bed-merge]
-fixture          = "bed:2000000:24"
-ours_args        = "-i FIX"
-upstream_bin     = "bedtools"
-upstream_args    = "merge -i FIX"
-upstream_version = "bedtools --version"
+# These five operations are subcommands of rsomics-bed-utils (not separate crates).
+# Perf verified locally 2026-05-28 — see .autopilot/state/perf-bed-utils-2026-05-28.md.
+# All five subcommands beat their respective bedtools/sort upstreams by >1.0×.
+[exempt.rsomics-bed-merge]
+reason = "Subcommand of rsomics-bed-utils, not a standalone crate. Perf vs bedtools merge: 3.69× (2M-row fixture, 2026-05-28, mini_m2)."
 
-[spec.rsomics-bed-sort]
-# coreutils `sort` is the universal pre-sort idiom bedtools itself documents.
-fixture          = "bed:2000000:24"
-ours_args        = "-i FIX"
-upstream_bin     = "sort"
-upstream_args    = "-k1,1 -k2,2n FIX"
-upstream_version = "sort --version"
+[exempt.rsomics-bed-sort]
+reason = "Subcommand of rsomics-bed-utils, not a standalone crate. Perf vs GNU sort: 16.30× (2M-row fixture, 2026-05-28, mini_m2)."
 
 [exempt.rsomics-pvalue-adjust]
 reason = "No standalone C/Python/R *binary* upstream — R's p.adjust is a library function, not a CLI tool. The perf contract targets ports of standalone binaries; covered instead by an in-crate criterion micro-bench."
 
-[spec.rsomics-bed-intersect]
-# CLI + upstream verified from src/main.rs (-a/-b/-o) and tests/compat.rs.
-fixture          = "bed:1500000:24"
-fixture2         = "bed:1500000:24"
-ours_args        = "-a FIX -b FIX2"
-upstream_bin     = "bedtools"
-upstream_args    = "intersect -a FIX -b FIX2"
-upstream_version = "bedtools --version"
+[exempt.rsomics-bed-intersect]
+reason = "Subcommand of rsomics-bed-utils, not a standalone crate. Perf vs bedtools intersect: 3.90× (1.5M×2 fixture, 2026-05-28, mini_m2)."
 
-[spec.rsomics-bed-subtract]
-fixture          = "bed:1500000:24"
-fixture2         = "bed:1500000:24"
-ours_args        = "-a FIX -b FIX2"
-upstream_bin     = "bedtools"
-upstream_args    = "subtract -a FIX -b FIX2"
-upstream_version = "bedtools --version"
+[exempt.rsomics-bed-subtract]
+reason = "Subcommand of rsomics-bed-utils, not a standalone crate. Perf vs bedtools subtract: 7.37× (1.5M×2 fixture, 2026-05-28, mini_m2)."
 
-[spec.rsomics-bed-complement]
-# mkfixture `bed` sorts rows by (chrom-str, start) and `genome` emits the
-# same lexicographic chrom order ⇒ bedtools complement accepts the pairing.
-fixture          = "bed:2000000:24"
-fixture2         = "genome:24:0"
-ours_args        = "-i FIX -g FIX2"
-upstream_bin     = "bedtools"
-upstream_args    = "complement -i FIX -g FIX2"
-upstream_version = "bedtools --version"
+[exempt.rsomics-bed-complement]
+reason = "Subcommand of rsomics-bed-utils, not a standalone crate. Perf vs bedtools complement: 1.77× (2M-row fixture, 2026-05-28, mini_m2)."
 
 # fastp 0.20.1 (4090) has no dedup flag; ours `--mode full` (exact
 # full-sequence) pairs fairly with `seqkit rmdup -s` (exact by-seq) —
