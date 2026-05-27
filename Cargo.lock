@@ -2312,7 +2312,7 @@ dependencies = [
 
 [[package]]
 name = "rsomics-bed-utils"
-version = "0.2.2"
+version = "0.2.3"
 dependencies = [
  "clap",
  "needletail 0.6.3",
