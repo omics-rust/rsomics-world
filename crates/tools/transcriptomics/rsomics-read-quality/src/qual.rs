@@ -79,19 +79,18 @@ impl QualMatrix {
         let mut out = String::with_capacity(1024 * n_pos);
 
         // ── boxplot section ──────────────────────────────────────────────
+        // RSeQC only emits quality scores with non-zero count per position.
         out.push_str(&format!("pdf('{output_prefix}.qual.boxplot.pdf')\n"));
         for pos in 0..n_pos {
             let pos_counts = &self.counts[pos];
-            let scores_str: String = (min_q..=max_q)
-                .map(|q| q.to_string())
-                .collect::<Vec<_>>()
-                .join(",");
-            let times_str: String = (min_q..=max_q)
-                .map(|q| pos_counts[q].to_string())
-                .collect::<Vec<_>>()
-                .join(",");
+            let (scores_str, times_str): (Vec<String>, Vec<String>) = (min_q..=max_q)
+                .filter(|&q| pos_counts[q] > 0)
+                .map(|q| (q.to_string(), pos_counts[q].to_string()))
+                .unzip();
             out.push_str(&format!(
-                "p{pos}<-rep(c({scores_str}),times=c({times_str})/{reduce})\n"
+                "p{pos}<-rep(c({scores}),times=c({times})/{reduce})\n",
+                scores = scores_str.join(","),
+                times = times_str.join(","),
             ));
         }
 
