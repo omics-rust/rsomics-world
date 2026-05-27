@@ -1,0 +1,26 @@
+[package]
+name = "rsomics-insertion-profile"
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.91"
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/omics-rust/rsomics-insertion-profile"
+authors = ["Zane Leong <efd@live.com>"]
+description = "Per-position CIGAR-insertion rate along the read — Rust port of RSeQC insertion_profile.py"
+
+[[bin]]
+name = "rsomics-insertion-profile"
+path = "src/main.rs"
+
+[dependencies]
+rsomics-common = { version = "0.6" }
+rsomics-bamio = { version = "0.1" }
+clap = { version = "4", features = ["derive"] }
+
+[dev-dependencies]
+tempfile = "3"
+criterion = { version = "0.7", default-features = false, features = ["cargo_bench_support"] }
+
+[[bench]]
+name = "insertion_profile"
+harness = false
