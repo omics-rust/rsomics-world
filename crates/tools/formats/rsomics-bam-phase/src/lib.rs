@@ -614,9 +614,8 @@ pub fn phase<W: Write>(
 
     // Stream records contig by contig. Because the BAM is coordinate-sorted, all
     // records for a given reference sequence appear consecutively. We accumulate
-    // one contig's records into `cur_recs`, flush when the ref_id changes, then
-    // reclaim the allocation for the next contig. This keeps peak RSS proportional
-    // to the largest single contig rather than the whole file.
+    // one contig's records into `cur_recs`, flush when the ref_id changes. Peak
+    // RSS is proportional to the largest single contig rather than the whole file.
     let mut cur_tid: i32 = -1;
     let mut cur_recs: Vec<RawRecord> = Vec::with_capacity(4096);
     let mut rec = RawRecord::default(); // reused read buffer
@@ -751,9 +750,6 @@ pub fn phase<W: Write>(
                     }
                 }
             }
-            // Return an empty Vec with the same (potentially large) allocation,
-            // ready to be reused for the next contig rather than reallocated.
-            records
         }};
     }
 
@@ -783,10 +779,7 @@ pub fn phase<W: Write>(
 
         if ref_id != cur_tid {
             if cur_tid >= 0 && !cur_recs.is_empty() {
-                // Flush the completed contig; reclaim the allocation.
-                let flushed = flush_contig!(cur_tid as usize, std::mem::take(&mut cur_recs));
-                cur_recs = flushed;
-                cur_recs.clear();
+                flush_contig!(cur_tid as usize, std::mem::take(&mut cur_recs));
             }
             cur_tid = ref_id;
         }
@@ -795,181 +788,6 @@ pub fn phase<W: Write>(
     // Flush the final contig.
     if cur_tid >= 0 && !cur_recs.is_empty() {
         flush_contig!(cur_tid as usize, cur_recs);
-    }
-
-    // ── Legacy per-reference-sequence loop (replaced by streaming above) ──────
-    //
-    // The remainder of the old structure was inlined into the flush_contig! macro.
-    // This block retains only the variable declarations that the old loop depended on;
-    // they are now unused but kept to minimise diff noise. A follow-up can remove them.
-    let _unused_ref_seqs_loop = || -> Result<()> {
-        let chrom = String::new(); // placeholder — not reached
-
-        // Per-position pileup: map pos → [count_A, count_B, base_A, base_B].
-        // We use a two-allele model: the first distinct base seen is allele A,
-        // the second is allele B. Any further bases are ignored (multi-allelic sites).
-        // Stored as (count_a, count_b, base_a, base_b).
-        let mut pileup: HashMap<i64, (u32, u32, u8, u8)> = HashMap::new();
-
-        // First pass: accumulate pileup allele counts.
-        for rec in &records {
-            accumulate_pileup(rec, opts.min_base_q, &mut pileup);
-        }
-
-        // Call het sites from pileup.
-        let mut sorted_pos: Vec<i64> = pileup.keys().copied().collect();
-        sorted_pos.sort_unstable();
-
-        let mut sites: Vec<HetSite> = Vec::new();
-        let mut site_pos_idx: HashMap<i64, usize> = HashMap::new();
-
-        for pos in sorted_pos {
-            let (ca, cb, base_a, base_b) = pileup[&pos];
-            let total = ca + cb;
-            if total as usize > opts.max_depth {
-                continue;
-            }
-            if base_a == b'N' || base_b == b'N' || base_a == base_b {
-                continue;
-            }
-            if let Some(_lod) = call_het(ca, cb, opts.min_var_lod) {
-                let var_id = sites.len();
-                site_pos_idx.insert(pos, var_id);
-                sites.push(HetSite {
-                    pos,
-                    base_a,
-                    base_b,
-                });
-                stats.het_sites += 1;
-            }
-        }
-
-        if sites.is_empty() {
-            // No het sites: write all records for this contig to hap-0 BAM
-            // (deterministic per read name — same bucket logic as unphased reads).
-            if let Some(writers) = bam_writers.as_mut() {
-                for rec in records {
-                    let bucket = (fnv64(rec.name()) & 1) as usize;
-                    raw::write_record(writers[bucket].get_mut(), &rec)?;
-                    match bucket {
-                        0 => stats.reads_hap0 += 1,
-                        _ => stats.reads_hap1 += 1,
-                    }
-                }
-            }
-            continue;
-        }
-
-        // Second pass: assign allele calls to fragments at het sites.
-        let mut frags: HashMap<u64, Fragment> = HashMap::new();
-
-        for rec in records {
-            let qhash = fnv64(rec.name());
-            let frag = frags.entry(qhash).or_default();
-
-            assign_alleles(&rec, opts.min_base_q, &sites, &site_pos_idx, frag);
-            frag.records.push(rec);
-        }
-
-        // Keep all fragments: those with <2 allele calls can't be phased but their
-        // records still need to reach an output BAM bucket.
-        let mut frag_vec: Vec<Fragment> = frags.into_values().collect();
-
-        // Determine phase-block boundaries: a boundary exists at gap (i-1, i) when
-        // no fragment has allele calls in both the sites[..i] range and sites[i..] range
-        // (i.e., no fragment bridges across the gap). This mirrors phase.c's block-flush
-        // logic that emits a PS record whenever the active fragment pool is empty.
-        //
-        // Implementation: build a per-variant coverage bit — which variants does each
-        // fragment touch? A boundary exists at gap i when max(allele_idx) < i for all
-        // fragments whose allele indices are entirely in sites[..i].
-        let n_sites = sites.len();
-        let mut block_starts: Vec<usize> = vec![0];
-        if n_sites > 1 {
-            // Compute the maximum reachable variant index for every prefix of sites.
-            // `reach[i]` = max over all frags with min_var_id ≤ i of their max_var_id.
-            // A block boundary before site i exists iff reach[i-1] < i, meaning no
-            // fragment straddles the gap between site i-1 and site i.
-            // This is O(n_frags + n_sites) instead of the naive O(n_frags × n_sites).
-            let mut reach = vec![0usize; n_sites];
-            for f in &frag_vec {
-                let min_v = f.alleles.iter().map(|&(v, _)| v).min().unwrap_or(0);
-                let max_v = f.alleles.iter().map(|&(v, _)| v).max().unwrap_or(0);
-                if min_v < n_sites {
-                    reach[min_v] = reach[min_v].max(max_v);
-                }
-            }
-            // Propagate: reach[i] = max(reach[i], reach[i-1]).
-            for i in 1..n_sites {
-                reach[i] = reach[i].max(reach[i - 1]);
-            }
-            for i in 1..n_sites {
-                if reach[i - 1] < i {
-                    block_starts.push(i);
-                }
-            }
-        }
-        block_starts.push(n_sites); // sentinel
-
-        for w in block_starts.windows(2) {
-            let (blk_lo, blk_hi) = (w[0], w[1]);
-            let blk_sites = &sites[blk_lo..blk_hi];
-
-            // Build block-local fragments: remap variant IDs to [0, blk_hi-blk_lo)
-            // and take ownership of the BAM records. Fragments with <2 het calls in
-            // this block are skipped.
-            let mut blk_frags: Vec<Fragment> = frag_vec
-                .iter_mut()
-                .filter_map(|f| {
-                    let blk_alleles: Vec<(usize, Allele)> = f
-                        .alleles
-                        .iter()
-                        .filter(|&&(v, _)| v >= blk_lo && v < blk_hi)
-                        .map(|&(v, a)| (v - blk_lo, a))
-                        .collect();
-                    if blk_alleles.len() < 2 {
-                        return None;
-                    }
-                    let records = std::mem::take(&mut f.records);
-                    Some(Fragment {
-                        alleles: blk_alleles,
-                        records,
-                        ..Default::default()
-                    })
-                })
-                .collect();
-
-            phase_block(
-                &chrom,
-                blk_sites,
-                &mut blk_frags,
-                opts,
-                stdout_w,
-                &mut stats,
-                &mut bam_writers,
-                &header,
-            )?;
-        }
-
-        // Write records for fragments that had <2 allele calls in every block
-        // (unphased reads). Route to random haplotype bucket (deterministic per read).
-        if let Some(writers) = bam_writers.as_mut() {
-            for frag in &mut frag_vec {
-                if frag.records.is_empty() {
-                    continue;
-                }
-                // Records still present → fragment was not included in any phase block.
-                let bucket = frag.alleles.first().map_or(0, |&(v, _)| v & 1);
-                for rec in frag.records.drain(..) {
-                    raw::write_record(writers[bucket].get_mut(), &rec)?;
-                    match bucket {
-                        0 => stats.reads_hap0 += 1,
-                        1 => stats.reads_hap1 += 1,
-                        _ => stats.reads_chimera += 1,
-                    }
-                }
-            }
-        }
     }
 
     // bam_writers drops here; bgzf::io::Writer::drop calls try_finish, writing the
