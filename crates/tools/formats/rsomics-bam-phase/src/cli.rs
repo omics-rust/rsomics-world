@@ -32,7 +32,7 @@ pub struct Cli {
     pub bam_prefix: Option<PathBuf>,
 
     /// Minimum het phred-LOD threshold.
-    #[arg(short = 'q', long = "min-lod", default_value_t = 37)]
+    #[arg(long = "min-lod", default_value_t = 37)]
     pub min_lod: u32,
 
     /// Minimum base quality.
@@ -114,7 +114,7 @@ pub static HELP: HelpSpec = HelpSpec {
         our_license: "MIT OR Apache-2.0",
         paper_doi: None,
     }),
-    usage_lines: &["<input.bam> [-k 13] [-q 37] [-Q 13] [-D 256] [-b PREFIX] [-F] [-A]"],
+    usage_lines: &["<input.bam> [-k 13] [--min-lod 37] [-Q 13] [-D 256] [-b PREFIX] [-F] [-A]"],
     sections: &[Section {
         title: "OPTIONS",
         flags: &[
@@ -143,7 +143,7 @@ pub static HELP: HelpSpec = HelpSpec {
                 why_default: None,
             },
             FlagSpec {
-                short: Some('q'),
+                short: None,
                 long: "min-lod",
                 aliases: &[],
                 value: Some("INT"),
@@ -210,7 +210,7 @@ pub static HELP: HelpSpec = HelpSpec {
         },
         Example {
             description: "Lower LOD threshold for low-coverage data",
-            command: "rsomics-bam-phase sorted.bam -q 20",
+            command: "rsomics-bam-phase sorted.bam --min-lod 20",
         },
     ],
     json_result_schema_doc: None,

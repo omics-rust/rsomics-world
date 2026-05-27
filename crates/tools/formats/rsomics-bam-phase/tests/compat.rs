@@ -133,7 +133,7 @@ fn phase_compat_ps_count() {
     run_ok(
         ours()
             .arg(golden_bam())
-            .arg("-q")
+            .arg("--min-lod")
             .arg("13")
             .stdout(std::fs::File::create(&our_out).unwrap()),
     );
