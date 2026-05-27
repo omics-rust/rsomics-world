@@ -401,6 +401,15 @@ reason = "Per-function decomposition tool — no single upstream binary to bench
 [exempt.rsomics-bam-to-fastq]
 reason = "Per-function decomposition tool — no single upstream binary to benchmark against. Covered by smoke + compat tests."
 
+# bam-phase requires a BAM with genuine heterozygous SNPs for a meaningful perf gate.
+# mkfixture.py's random-sequence BAM has no polymorphism; samtools phase would find
+# zero het sites — an unrepresentative empty workload. Gate validated locally on a
+# Tier-3 SNP fixture (6.5 MB, 1.1M reads, diploid chr1, real het sites): 1.41× vs
+# samtools phase 1.23.1 on aarch64-apple-darwin (mini_m2). Documented in
+# .autopilot/state/perf-bam-phase-2026-05-27.md.
+[exempt.rsomics-bam-phase]
+reason = "samtools phase requires a BAM with real het SNPs for a meaningful gate; mkfixture.py random-sequence BAM has no polymorphism. Perf validated locally: 1.41× vs samtools phase on a Tier-3 SNP fixture (documented in .autopilot/state/perf-bam-phase-2026-05-27.md)."
+
 [exempt.rsomics-vcf-norm]
 reason = "Per-function decomposition tool — no single upstream binary to benchmark against. Covered by smoke + compat tests."
 
