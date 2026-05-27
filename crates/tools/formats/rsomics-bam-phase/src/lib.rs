@@ -28,11 +28,11 @@
 //! | DEFAULT_MIN_BQ | 13    | min base quality (`-Q`) |
 //! | DEFAULT_DEPTH  | 256   | max pileup depth (`-D`) |
 
-use std::collections::HashMap;
 use std::io::Write;
 use std::num::NonZero;
 use std::path::{Path, PathBuf};
 
+use ahash::AHashMap;
 use noodles::bam;
 use noodles::bgzf;
 use rsomics_bamio::raw::{self, RawRecord};
@@ -619,8 +619,8 @@ pub fn phase<W: Write>(
         //   positions where a SECOND distinct base has been seen are promoted here.
         //   This keeps the full-entry map small (proportional to variant density,
         //   not coverage).
-        let mut mono_pileups: Vec<HashMap<i64, MonoEntry>> = vec![HashMap::new(); n_refs];
-        let mut pileups: Vec<HashMap<i64, BiEntry>> = vec![HashMap::new(); n_refs];
+        let mut mono_pileups: Vec<AHashMap<i64, MonoEntry>> = vec![AHashMap::new(); n_refs];
+        let mut pileups: Vec<AHashMap<i64, BiEntry>> = vec![AHashMap::new(); n_refs];
         let mut rec = RawRecord::default();
         loop {
             let nbytes = raw::read_record(r.get_mut(), &mut rec)?;
@@ -658,12 +658,12 @@ pub fn phase<W: Write>(
 
     // Identify het sites per contig from the pileup.
     // sites_by_tid[i] = (vec of HetSite, pos→var_id index map) for contig i.
-    let mut sites_by_tid: Vec<(Vec<HetSite>, HashMap<i64, usize>)> = Vec::with_capacity(n_refs);
+    let mut sites_by_tid: Vec<(Vec<HetSite>, AHashMap<i64, usize>)> = Vec::with_capacity(n_refs);
     for (tid, pileup) in pileups.into_iter().enumerate() {
         let mut sorted_pos: Vec<i64> = pileup.keys().copied().collect();
         sorted_pos.sort_unstable();
         let mut sites: Vec<HetSite> = Vec::new();
-        let mut site_pos_idx: HashMap<i64, usize> = HashMap::new();
+        let mut site_pos_idx: AHashMap<i64, usize> = AHashMap::new();
         for pos in sorted_pos {
             let (ca, cb, qa, qb, base_a, base_b) = pileup[&pos];
             let total = ca + cb;
@@ -722,6 +722,13 @@ pub fn phase<W: Write>(
         return Ok(stats);
     }
 
+    // When no split BAM output is requested and there are no het sites anywhere,
+    // Pass 2 produces no output — skip the second file read entirely.
+    let any_het = sites_by_tid.iter().any(|(s, _)| !s.is_empty());
+    if bam_writers.is_none() && !any_het {
+        return Ok(stats);
+    }
+
     // ── Pass 2: phasing — re-read BAM, process contig by contig ─────────────────
     //
     // For contigs with no het sites: route each primary record directly to the
@@ -734,7 +741,7 @@ pub fn phase<W: Write>(
     reader2.read_header().map_err(RsomicsError::Io)?;
 
     let mut cur_tid: i32 = -1;
-    let mut frags: HashMap<u64, Fragment> = HashMap::new();
+    let mut frags: AHashMap<u64, Fragment> = AHashMap::new();
     let mut rec = RawRecord::default();
 
     // Flush the accumulated fragment map for the contig that just ended.
@@ -915,8 +922,8 @@ pub fn phase<W: Write>(
 fn accumulate_pileup(
     rec: &RawRecord,
     min_bq: u8,
-    mono: &mut HashMap<i64, MonoEntry>,
-    multi: &mut HashMap<i64, BiEntry>,
+    mono: &mut AHashMap<i64, MonoEntry>,
+    multi: &mut AHashMap<i64, BiEntry>,
 ) {
     let start0 = rec.alignment_start() as i64;
     if start0 < 0 {
@@ -958,8 +965,9 @@ fn accumulate_pileup(
                                 }
                                 // Third+ allele: ignore (multi-allelic).
                             } else {
+                                use std::collections::hash_map::Entry;
                                 match mono.entry(rp) {
-                                    std::collections::hash_map::Entry::Occupied(mut e) => {
+                                    Entry::Occupied(mut e) => {
                                         let (cnt, qs, b0) = *e.get();
                                         if b0 == base {
                                             let m = e.get_mut();
@@ -971,7 +979,7 @@ fn accumulate_pileup(
                                             multi.insert(rp, (cnt, 1, qs, q, b0, base));
                                         }
                                     }
-                                    std::collections::hash_map::Entry::Vacant(e) => {
+                                    Entry::Vacant(e) => {
                                         e.insert((1, q, base));
                                     }
                                 }
@@ -998,7 +1006,7 @@ fn assign_alleles(
     rec: &RawRecord,
     min_bq: u8,
     sites: &[HetSite],
-    site_pos_idx: &HashMap<i64, usize>,
+    site_pos_idx: &AHashMap<i64, usize>,
     frag: &mut Fragment,
 ) {
     let start0 = rec.alignment_start() as i64;

@@ -1688,6 +1688,7 @@ name = "rsomics-bam-consensus"
 version = "0.1.0"
 dependencies = [
  "clap",
+ "criterion 0.7.0",
  "rsomics-bamio",
  "rsomics-common",
  "rsomics-help",
@@ -1919,6 +1920,7 @@ dependencies = [
 name = "rsomics-bam-phase"
 version = "0.1.0"
 dependencies = [
+ "ahash",
  "clap",
  "criterion 0.5.1",
  "noodles",
@@ -2374,6 +2376,7 @@ name = "rsomics-deletion-profile"
 version = "0.1.0"
 dependencies = [
  "clap",
+ "criterion 0.7.0",
  "noodles",
  "rsomics-bamio",
  "rsomics-common",
@@ -2746,6 +2749,7 @@ version = "0.1.1"
 dependencies = [
  "clap",
  "coitrees",
+ "criterion 0.5.1",
  "noodles",
  "rsomics-common",
  "rsomics-help",
@@ -2979,6 +2983,21 @@ dependencies = [
 ]
 
 [[package]]
+name = "rsomics-junction-saturation"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "criterion 0.7.0",
+ "noodles",
+ "rand 0.8.6",
+ "rand_chacha 0.3.1",
+ "rayon",
+ "rsomics-bamio",
+ "rsomics-common",
+ "tempfile",
+]
+
+[[package]]
 name = "rsomics-kmer"
 version = "0.2.0"
 dependencies = [
@@ -3046,6 +3065,7 @@ name = "rsomics-mismatch-profile"
 version = "0.1.0"
 dependencies = [
  "clap",
+ "criterion 0.7.0",
  "noodles",
  "rsomics-bamio",
  "rsomics-common",
@@ -3222,6 +3242,7 @@ name = "rsomics-read-quality"
 version = "0.1.0"
 dependencies = [
  "clap",
+ "criterion 0.7.0",
  "rsomics-bamio",
  "rsomics-common",
  "rsomics-help",
@@ -3243,6 +3264,7 @@ name = "rsomics-rnaseq-metrics"
 version = "0.1.0"
 dependencies = [
  "clap",
+ "criterion 0.7.0",
  "noodles",
  "rsomics-common",
  "serde",
@@ -3255,6 +3277,7 @@ name = "rsomics-rpkm-saturation"
 version = "0.1.0"
 dependencies = [
  "clap",
+ "criterion 0.7.0",
  "noodles",
  "rand 0.8.6",
  "rand_chacha 0.3.1",
@@ -3571,6 +3594,7 @@ name = "rsomics-vcf-mpileup"
 version = "0.1.0"
 dependencies = [
  "clap",
+ "criterion 0.7.0",
  "noodles",
  "rsomics-bamio",
  "rsomics-common",
