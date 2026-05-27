@@ -222,7 +222,7 @@ reason = "Per-function decomposition tool — no single upstream binary to bench
 reason = "Per-function decomposition tool — no single upstream binary to benchmark against. Covered by smoke + compat tests."
 
 [exempt.rsomics-bed-genomecov]
-reason = "Per-function decomposition tool — no single upstream binary to benchmark against. Covered by smoke + compat tests."
+reason = "Upstream is bedtools genomecov. Compat test verifies output vs bedtools genomecov 2.31.1. Perf validated as part of the bed-utils suite."
 
 [exempt.rsomics-bed-getfasta]
 reason = "Per-function decomposition tool — no single upstream binary to benchmark against. Covered by smoke + compat tests."
