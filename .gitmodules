@@ -492,3 +492,6 @@
 [submodule "crates/tools/formats/rsomics-vcf-head"]
 	path = crates/tools/formats/rsomics-vcf-head
 	url = git@github.com:omics-rust/rsomics-vcf-head.git
+[submodule "crates/tools/formats/rsomics-bam-targetcut"]
+	path = crates/tools/formats/rsomics-bam-targetcut
+	url = git@github.com:omics-rust/rsomics-bam-targetcut.git
