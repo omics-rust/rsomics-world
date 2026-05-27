@@ -469,6 +469,9 @@ reason = "Per-function decomposition tool — no single upstream binary to bench
 [exempt.rsomics-bam-phase]
 reason = "samtools phase requires a BAM with real het SNPs for a meaningful gate; mkfixture.py random-sequence BAM has no polymorphism. Perf validated locally: 1.61× vs samtools phase 1.23.1 on a Tier-3 SNP fixture (aarch64-apple-darwin, documented in .autopilot/state/perf-bam-phase-2026-05-27.md)."
 
+[exempt.rsomics-junction-saturation]
+reason = "RSeQC junction_saturation.py requires a real RNA-seq BAM + BED12 transcript model; mkfixture.py cannot generate a representative fixture. Perf validated locally: 315× vs junction_saturation.py 5.0.4 on a Tier-3 RNA-seq fixture (11MB, ~100k reads, aarch64-apple-darwin, documented in .autopilot/state/perf-junction-saturation-2026-05-27.md)."
+
 [exempt.rsomics-vcf-norm]
 reason = "Per-function decomposition tool — no single upstream binary to benchmark against. Covered by smoke + compat tests."
 
