@@ -1,0 +1,26 @@
+[package]
+name = "rsomics-fpkm-count"
+version = "0.1.0"
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository = "https://github.com/omics-rust/rsomics-fpkm-count"
+authors.workspace = true
+description = "Compute per-gene FPKM from a BAM + BED12 model — Rust port of RSeQC FPKM_count"
+
+[[bin]]
+name = "rsomics-fpkm-count"
+path = "src/main.rs"
+
+[[bench]]
+name = "fpkm_count"
+harness = false
+
+[dependencies]
+rsomics-common = "0.6"
+noodles = { version = "0.110", features = ["bam", "sam"] }
+clap = { version = "4", features = ["derive"] }
+
+[dev-dependencies]
+tempfile = "3"
+criterion.workspace = true
