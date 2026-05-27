@@ -103,6 +103,7 @@ rsomics-seqio = { path = "crates/foundation/rsomics-seqio/" }
 rsomics-seqstats = { path = "crates/foundation/rsomics-seqstats/" }
 rsomics-stats = { path = "crates/foundation/rsomics-stats/" }
 rsomics-taxonomy = { path = "crates/foundation/rsomics-taxonomy/" }
+rsomics-vcf-expr = { path = "crates/foundation/rsomics-vcf-expr/" }
 rsomics-bam-compare = { path = "crates/tools/epigenomics/rsomics-bam-compare" }
 rsomics-bigwig-compare = { path = "crates/tools/epigenomics/rsomics-bigwig-compare" }
 rsomics-bam-fingerprint = { path = "crates/tools/epigenomics/rsomics-bam-fingerprint" }

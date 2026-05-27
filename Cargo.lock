@@ -3214,12 +3214,6 @@ name = "rsomics-vcf-expr"
 version = "0.1.0"
 
 [[package]]
-name = "rsomics-vcf-expr"
-version = "0.1.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "0203150b33489f560636d219d993aa9f427821213bfcdb6fe77eb7053298f57c"
-
-[[package]]
 name = "rsomics-vcf-fill-tags"
 version = "0.1.0"
 dependencies = [
@@ -3242,7 +3236,7 @@ dependencies = [
  "flate2",
  "rsomics-common",
  "rsomics-help",
- "rsomics-vcf-expr 0.1.0",
+ "rsomics-vcf-expr",
  "serde",
  "serde_json",
  "tempfile",
@@ -3362,7 +3356,7 @@ dependencies = [
  "flate2",
  "rsomics-common",
  "rsomics-help",
- "rsomics-vcf-expr 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "rsomics-vcf-expr",
  "serde",
  "serde_json",
  "tempfile",
