@@ -51,8 +51,6 @@ const CIGAR_INS: u8 = 1;
 const CIGAR_DEL: u8 = 2;
 const CIGAR_REF_SKIP: u8 = 3;
 const CIGAR_SOFT_CLIP: u8 = 4;
-const CIGAR_HARD_CLIP: u8 = 5;
-const CIGAR_PAD: u8 = 6;
 const CIGAR_EQUAL: u8 = 7;
 const CIGAR_DIFF: u8 = 8;
 
@@ -206,124 +204,109 @@ pub fn simple_call(reads: &[(u8, u8)], opts: &ConsensusOpts) -> (u8, u8) {
 // a reference cursor, and a CIGAR walk per read.
 // ---------------------------------------------------------------------------
 
-/// Compute the reference end position of a read given its start and cigar.
-/// Matches htslib `bam_endpos`: only CIGAR_MATCH/DEL/REF_SKIP/EQUAL/DIFF
-/// consume reference bases.
-fn ref_end(beg: i64, cigar: &[(u8, i32)]) -> i64 {
-    let mut pos = beg;
-    for &(op, len) in cigar {
-        match op {
-            CIGAR_MATCH | CIGAR_DEL | CIGAR_REF_SKIP | CIGAR_EQUAL | CIGAR_DIFF => {
-                pos += i64::from(len);
-            }
-            _ => {}
-        }
-    }
-    pos
+/// One active read in the pileup buffer.
+///
+/// At construction we flatten the CIGAR into a flat `slots` array indexed by
+/// reference offset from `beg`.  Each slot encodes `(base4, qual, flags)` in
+/// three bytes, making the per-column `at()` an O(1) array lookup with no
+/// pointer-chasing into the raw record bytes.
+///
+/// `base4` values: 0–15 = seq_nt16 base; 16 = deletion; 17 = ref-skip (intron).
+struct ActiveRead {
+    /// Reference start (inclusive, 0-based) of this read.
+    beg: i64,
+    /// Reference end (exclusive, 0-based).
+    end: i64,
+    /// tid of the read.
+    tid: i32,
+    /// Flattened per-reference-position data: (base4, qual).
+    /// Indexed by (ref_pos - beg) — length == (end - beg).
+    slots: Vec<(u8, u8)>,
 }
 
-/// One active read in the pileup buffer: raw record + cached CIGAR + walk state.
-struct ActiveRead {
-    rec: RawRecord,
-    cigar: Vec<(u8, i32)>,
-    /// Reference end (exclusive).
-    end: i64,
-    /// Current CIGAR op index.
-    k: usize,
-    /// Reference position at the start of cigar[k].
-    x: i64,
-    /// Query position at the start of cigar[k] (counts consumed query bases).
-    y: i32,
-}
+/// Sentinel slot values for deletions and ref-skips.
+const SLOT_DEL: (u8, u8) = (16, 0);
+const SLOT_SKIP: (u8, u8) = (17, 0);
 
 impl ActiveRead {
-    fn new(rec: RawRecord) -> Self {
+    /// Construct from a raw record, optionally reusing a recycled slot Vec from
+    /// the pool to avoid a malloc.
+    fn new(rec: RawRecord, mut slots: Vec<(u8, u8)>) -> Self {
         let beg = i64::from(rec.alignment_start());
-        let cigar: Vec<(u8, i32)> = rec.cigar_ops().map(|(o, l)| (o, l as i32)).collect();
-        // Advance past leading soft/hard clips and non-ref ops to find first ref op.
-        let mut k = 0usize;
-        let x = beg;
-        let mut y = 0i32;
-        while k < cigar.len() {
-            let (op, l) = cigar[k];
-            match op {
-                CIGAR_MATCH | CIGAR_DEL | CIGAR_REF_SKIP | CIGAR_EQUAL | CIGAR_DIFF => break,
-                CIGAR_INS | CIGAR_SOFT_CLIP => {
-                    y += l;
-                    k += 1;
-                }
-                CIGAR_HARD_CLIP | CIGAR_PAD => {
-                    k += 1;
-                }
-                _ => {
-                    k += 1;
-                }
-            }
-        }
-        let end = ref_end(beg, &cigar);
-        ActiveRead {
-            rec,
-            cigar,
-            end,
-            k,
-            x,
-            y,
-        }
-    }
+        let tid = rec.reference_sequence_id();
+        let qscores: &[u8] = rec.quality_scores();
 
-    /// Advance CIGAR walk to reference position `pos`.  Returns `(base4, qual, is_del, is_refskip)`.
-    /// `base4 == 16` for a deletion; `is_refskip` marks intron skips to exclude.
-    fn at(&mut self, pos: i64) -> (u8, u8, bool, bool) {
-        // Advance op if cursor has moved past current op's span.
-        loop {
-            if self.k >= self.cigar.len() {
-                return (0, 0, true, false); // past end — treat as del
+        // Compute reference span for pre-allocation hint.
+        let span = {
+            let mut s: i64 = 0;
+            for (op, l) in rec.cigar_ops() {
+                match op {
+                    CIGAR_MATCH | CIGAR_DEL | CIGAR_REF_SKIP | CIGAR_EQUAL | CIGAR_DIFF => {
+                        s += i64::from(l);
+                    }
+                    _ => {}
+                }
             }
-            let (op, l) = self.cigar[self.k];
-            let op_end = self.x + i64::from(l);
-            if pos < op_end {
-                break;
-            }
-            // Move to next op, skipping non-ref-consuming ops.
+            s as usize
+        };
+        slots.clear();
+        slots.reserve(span.saturating_sub(slots.capacity()));
+
+        // Walk CIGAR once and fill slots.
+        let mut qpos: usize = 0;
+        for (op, l) in rec.cigar_ops() {
+            let l = l as usize;
             match op {
                 CIGAR_MATCH | CIGAR_EQUAL | CIGAR_DIFF => {
-                    self.y += l;
-                    self.x = op_end;
+                    for i in 0..l {
+                        let qi = qpos + i;
+                        let b4 = rec.seq_nibble(qi);
+                        let q = if qi < qscores.len() { qscores[qi] } else { 0 };
+                        slots.push((b4, q));
+                    }
+                    qpos += l;
                 }
-                CIGAR_DEL | CIGAR_REF_SKIP => {
-                    self.x = op_end;
+                CIGAR_DEL => {
+                    slots.extend(std::iter::repeat_n(SLOT_DEL, l));
+                }
+                CIGAR_REF_SKIP => {
+                    slots.extend(std::iter::repeat_n(SLOT_SKIP, l));
+                }
+                CIGAR_INS | CIGAR_SOFT_CLIP => {
+                    qpos += l;
                 }
                 _ => {}
             }
-            self.k += 1;
-            // Skip leading non-ref-consuming ops of the next run.
-            while self.k < self.cigar.len() {
-                let (nop, nl) = self.cigar[self.k];
-                match nop {
-                    CIGAR_MATCH | CIGAR_DEL | CIGAR_REF_SKIP | CIGAR_EQUAL | CIGAR_DIFF => break,
-                    CIGAR_INS | CIGAR_SOFT_CLIP => {
-                        self.y += nl;
-                        self.k += 1;
-                    }
-                    _ => {
-                        self.k += 1;
-                    }
-                }
-            }
         }
 
-        let (op, _) = self.cigar[self.k];
-        match op {
-            CIGAR_MATCH | CIGAR_EQUAL | CIGAR_DIFF => {
-                let qpos = (self.y + (pos - self.x) as i32) as usize;
-                let b4 = self.rec.seq_nibble(qpos);
-                let qs = self.rec.quality_scores();
-                let q = if qpos < qs.len() { qs[qpos] } else { 0 };
-                (b4, q, false, false)
-            }
-            CIGAR_DEL => (16, 0, true, false),
-            CIGAR_REF_SKIP => (16, 0, true, true),
-            _ => (0, 0, true, false),
+        let end = beg + slots.len() as i64;
+        ActiveRead {
+            beg,
+            end,
+            tid,
+            slots,
+        }
+    }
+
+    /// Return the slot Vec to the pool for reuse.
+    fn retire(self, pool: &mut Vec<Vec<(u8, u8)>>) {
+        if pool.len() < 128 {
+            pool.push(self.slots);
+        }
+    }
+
+    /// O(1) lookup: returns `(base4, qual, is_del, is_refskip)` at reference `pos`.
+    #[inline]
+    fn at(&self, pos: i64) -> (u8, u8, bool, bool) {
+        let off = (pos - self.beg) as usize;
+        if off >= self.slots.len() {
+            return (0, 0, true, false);
+        }
+        let (b4, q) = self.slots[off];
+        match b4 {
+            16 => (16, 0, true, false), // deletion
+            17 => (16, 0, true, true),  // ref-skip
+            b => (b, q, false, false),
         }
     }
 }
@@ -371,12 +354,24 @@ pub fn consensus(
         .collect();
 
     let reader_mut = reader.get_mut();
-    let mut record = RawRecord::default();
+    // Two pre-allocated record buffers; we swap between them to avoid per-record
+    // heap allocation. `read_buf` is passed to read_record; `next_rec` holds the
+    // lookahead. When we consume next_rec into the active set, we std::mem::swap
+    // the two so read_buf reuses next_rec's allocation for the subsequent read.
+    let mut read_buf = RawRecord::default();
+    let mut next_rec: Option<RawRecord> = None;
 
     // Active read buffer: reads whose alignment span covers the current cursor.
     let mut active: Vec<ActiveRead> = Vec::with_capacity(512);
+    // Minimum end position among all active reads — used to skip retain() when
+    // cursor hasn't yet reached any read's end.  Recomputed after retain().
+    let mut active_min_end: i64 = i64::MAX;
     // Per-column base buffer: (base4, qual) pairs for simple_call.
     let mut col_buf: Vec<(u8, u8)> = Vec::with_capacity(512);
+    // Free list of recycled slot Vecs — avoids per-read malloc for the slot array.
+    // Pre-filled with 64 Vecs (capacity 300 = typical 150bp read × 2 for indels)
+    // so the initial burst of reads doesn't hit the global allocator.
+    let mut slot_pool: Vec<Vec<(u8, u8)>> = (0..64).map(|_| Vec::with_capacity(300)).collect();
 
     // Current contig state.
     let mut cur_tid: i32 = -1;
@@ -387,16 +382,27 @@ pub fn consensus(
     let mut cursor_tid: i32 = -1;
     let mut cursor_pos: i64 = 0;
 
-    // Next record (lookahead — we buffer one record to know when to flush).
-    let mut next_rec: Option<RawRecord> = None;
+    // Advance past filtered records: read into read_buf, swap into next_rec slot.
+    // Returns true if a record was successfully placed in next_rec.
+    macro_rules! read_next {
+        () => {{
+            let n = rsomics_bamio::raw::read_record(reader_mut, &mut read_buf)?;
+            if n > 0 {
+                // Swap: read_buf gets the old next_rec's Vec allocation (reuse),
+                // next_rec gets the freshly populated read_buf contents.
+                let mut tmp = next_rec.take().unwrap_or_default();
+                std::mem::swap(&mut read_buf, &mut tmp);
+                next_rec = Some(tmp);
+                true
+            } else {
+                next_rec = None;
+                false
+            }
+        }};
+    }
 
     // Read the first record.
-    {
-        let n = rsomics_bamio::raw::read_record(reader_mut, &mut record)?;
-        if n > 0 {
-            next_rec = Some(record.clone());
-        }
-    }
+    read_next!();
 
     loop {
         // Feed records that start at or before cursor_pos (or prime the cursor).
@@ -405,24 +411,19 @@ pub fn consensus(
             let Some(ref nr) = next_rec else { break };
             let flag = nr.flags();
             if nr.reference_sequence_id() < 0 || flag & FLAG_UNMAP != 0 {
-                // Filtered — drop and advance.
-                let n = rsomics_bamio::raw::read_record(reader_mut, &mut record)?;
-                next_rec = if n > 0 { Some(record.clone()) } else { None };
+                read_next!();
                 continue;
             }
             if opts.excl_flags != 0 && flag & opts.excl_flags != 0 {
-                let n = rsomics_bamio::raw::read_record(reader_mut, &mut record)?;
-                next_rec = if n > 0 { Some(record.clone()) } else { None };
+                read_next!();
                 continue;
             }
             if opts.incl_flags != 0 && flag & opts.incl_flags == 0 {
-                let n = rsomics_bamio::raw::read_record(reader_mut, &mut record)?;
-                next_rec = if n > 0 { Some(record.clone()) } else { None };
+                read_next!();
                 continue;
             }
             if nr.mapping_quality() < opts.min_mapq {
-                let n = rsomics_bamio::raw::read_record(reader_mut, &mut record)?;
-                next_rec = if n > 0 { Some(record.clone()) } else { None };
+                read_next!();
                 continue;
             }
 
@@ -440,19 +441,36 @@ pub fn consensus(
                 break;
             }
 
-            // Consume the lookahead record.
+            // Consume the lookahead record into the active set, then read next.
             let cur_nr = next_rec.take().unwrap();
-            active.push(ActiveRead::new(cur_nr));
+            let recycled = slot_pool.pop().unwrap_or_default();
+            let ar = ActiveRead::new(cur_nr, recycled);
+            if ar.end < active_min_end {
+                active_min_end = ar.end;
+            }
+            active.push(ar);
 
-            // Read the next record.
-            let n = rsomics_bamio::raw::read_record(reader_mut, &mut record)?;
-            next_rec = if n > 0 { Some(record.clone()) } else { None };
+            read_next!();
         }
 
-        // Prune reads that ended before cursor_pos.
-        active.retain(|r| r.rec.reference_sequence_id() == cursor_tid && r.end > cursor_pos);
+        // Prune reads that ended before cursor_pos.  Skip the O(n) retain when
+        // no read has ended yet (cursor hasn't reached the nearest end).
+        if cursor_pos >= active_min_end {
+            // Drain expired reads and return their slot Vecs to the pool.
+            let mut i = 0;
+            while i < active.len() {
+                if active[i].tid != cursor_tid || active[i].end <= cursor_pos {
+                    let retired = active.swap_remove(i);
+                    retired.retire(&mut slot_pool);
+                } else {
+                    i += 1;
+                }
+            }
+            active_min_end = active.iter().map(|r| r.end).fold(i64::MAX, i64::min);
+        }
 
         if active.is_empty() {
+            active_min_end = i64::MAX;
             // No active reads: either done or jump to next read's position.
             let Some(ref nr) = next_rec else {
                 // All input consumed — emit final contig.
