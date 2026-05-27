@@ -1,14 +1,15 @@
 name: CI
 
 on:
-  push:
-    branches: [main]
   pull_request:
   schedule:
-    # Weekly full-matrix sweep (incl. x86_64-apple-darwin) catches a
-    # regression that lands on main between release tags. Per-push CI runs
-    # a fast lane only; release.yml validates all four targets on every tag.
+    # Each submodule (omics-rust/<name>) runs its own CI as the authoritative
+    # gate. This monorepo CI is the cross-crate integration sweep only — it
+    # exists to catch a workspace-resolution drift between independently
+    # green submodules, not to re-test what each submodule already tests.
+    # Hence: scheduled weekly + manual; no per-push run.
     - cron: "0 6 * * 1"
+  workflow_dispatch:
 
 concurrency:
   # A newer push to the same ref supersedes an in-flight run. main is
