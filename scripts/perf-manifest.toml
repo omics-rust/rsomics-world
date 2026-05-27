@@ -395,6 +395,65 @@ reason = "Per-function decomposition tool — no single upstream binary to bench
 [exempt.rsomics-featurecounts]
 reason = "GPL upstream (featureCounts/Subread) — clean-room reimplementation. Perf comparison requires Subread installation; validated by smoke + golden tests."
 
+# RSeQC tools: upstream is Python — RSeQC is not available on CI runners.
+# All three gates were validated locally with Tier-3 BAM fixtures and documented
+# in .autopilot/state/perf-*-2026-05-27.md.
+[exempt.rsomics-read-quality]
+reason = "Upstream is RSeQC read_quality.py (Python). RSeQC is not installable on CI runners without conda. Perf validated locally: 523× vs read_quality.py 2.6.2 on Tier-3 rnaseq_perf_100k.bam (mini_m2, documented in .autopilot/state/perf-read-quality-2026-05-27.md)."
+
+[exempt.rsomics-rpkm-saturation]
+reason = "Upstream is RSeQC RPKM_saturation.py (Python). RSeQC is not installable on CI runners without conda. Perf validated locally: 175× vs RPKM_saturation.py 5.0.4 on Tier-3 rnaseq_perf_100k.bam (mini_m2, documented in .autopilot/state/perf-rpkm-saturation-2026-05-27.md)."
+
+[exempt.rsomics-fpkm-count]
+reason = "Upstream is RSeQC FPKM_count.py (Python). RSeQC is not installable on CI runners without conda. Perf validated locally: 5.24× vs FPKM_count.py 5.0.4 on Tier-3 rnaseq_perf_100k.bam (4090, x86_64, documented in .autopilot/state/perf-fpkm-count-2026-05-27.md)."
+
+[exempt.rsomics-vcf-cnv]
+reason = "Upstream bcftools cnv requires a tumor/normal paired VCF fixture not producible by mkfixture.py. Perf validated locally: 1.65× vs bcftools cnv 1.13 on a 5.8 MB SNP-array VCF (4090, x86_64, documented in .autopilot/state/perf-vcf-cnv-2026-05-27.md)."
+
+# vcf-mpileup requires a Tier-3 BAM + reference FASTA not available on CI runners.
+[exempt.rsomics-vcf-mpileup]
+reason = "Upstream bcftools mpileup requires a large BAM + reference FASTA not available on CI runners. Perf validated locally: 2.21-2.63× vs bcftools on a 115 MB Tier-3 BAM (mini_m2, documented in .autopilot/state/perf-vcf-mpileup-2026-05-27.md)."
+
+# RSeQC transcriptomics tools: all require conda RSeQC not installable on CI runners.
+[exempt.rsomics-bam-junctions]
+reason = "Upstream RSeQC junction_annotation.py requires conda; not installable on CI. Perf validated locally: 370× vs junction_annotation.py 5.0.4 on Tier-3 rnaseq BAM (documented in .autopilot/state/perf-bam-junctions-2026-05-27.md)."
+
+[exempt.rsomics-bam-read-dist]
+reason = "Upstream RSeQC read_distribution.py requires conda; not installable on CI. Perf validated locally: 199× vs read_distribution.py 5.0.4 on Tier-3 rnaseq BAM (documented in .autopilot/state/perf-bam-read-dist-2026-05-27.md)."
+
+[exempt.rsomics-bam-strandedness]
+reason = "Upstream RSeQC infer_experiment.py requires conda; not installable on CI. Perf validated locally: 447× vs infer_experiment.py 5.0.4 on Tier-3 rnaseq BAM (documented in .autopilot/state/perf-bam-strandedness-2026-05-27.md)."
+
+[exempt.rsomics-clipping-profile]
+reason = "Upstream RSeQC clipping_profile.py requires conda; not installable on CI. Perf validated locally: 256× vs clipping_profile.py 5.0.4 on Tier-3 rnaseq BAM (documented in .autopilot/state/perf-clipping-profile-2026-05-27.md)."
+
+[exempt.rsomics-deletion-profile]
+reason = "Upstream RSeQC deletion_profile.py requires conda; not installable on CI. Perf validated locally: 10.47× vs deletion_profile.py 5.0.4 on Tier-3 rnaseq BAM (documented in .autopilot/state/perf-deletion-profile-2026-05-27.md)."
+
+[exempt.rsomics-genebody-coverage]
+reason = "Upstream RSeQC geneBody_coverage.py requires conda; not installable on CI. Perf validated locally: 91× vs geneBody_coverage.py 5.0.4 on Tier-3 rnaseq BAM (documented in .autopilot/state/perf-genebody-coverage-2026-05-27.md)."
+
+[exempt.rsomics-inner-distance]
+reason = "Upstream RSeQC inner_distance.py requires conda; not installable on CI. Perf validated locally: 165× vs inner_distance.py 5.0.4 on Tier-3 rnaseq BAM (documented in .autopilot/state/perf-inner-distance-2026-05-27.md)."
+
+[exempt.rsomics-insertion-profile]
+reason = "Upstream RSeQC insertion_profile.py requires conda; not installable on CI. Perf validated locally: 339× vs insertion_profile.py 5.0.4 on Tier-3 rnaseq BAM (documented in .autopilot/state/perf-insertion-profile-2026-05-27.md)."
+
+[exempt.rsomics-mismatch-profile]
+reason = "Upstream RSeQC mismatch_profile.py requires conda; not installable on CI. Perf validated locally: 72.77× vs mismatch_profile.py 5.0.4 on Tier-3 rnaseq BAM (documented in .autopilot/state/perf-mismatch-profile-2026-05-27.md)."
+
+[exempt.rsomics-read-duplication]
+reason = "Upstream RSeQC read_duplication.py requires conda; not installable on CI. Perf validated locally: 139× vs read_duplication.py 5.0.4 on Tier-3 rnaseq BAM (documented in .autopilot/state/perf-read-duplication-2026-05-27.md)."
+
+[exempt.rsomics-read-gc]
+reason = "Upstream RSeQC read_gc.py requires conda; not installable on CI. Perf validated locally: 128× vs read_gc.py 5.0.4 on Tier-3 rnaseq BAM (documented in .autopilot/state/perf-read-gc-2026-05-27.md)."
+
+[exempt.rsomics-read-nvc]
+reason = "Upstream RSeQC read_NVC.py requires conda; not installable on CI. Perf validated locally: 249× vs read_NVC.py 5.0.4 on Tier-3 rnaseq BAM (documented in .autopilot/state/perf-read-nvc-2026-05-27.md)."
+
+[exempt.rsomics-tin]
+reason = "Upstream RSeQC tin.py requires conda; not installable on CI. Perf validated locally: 33.38× vs tin.py 5.0.4 on Tier-3 rnaseq BAM (documented in .autopilot/state/perf-tin-2026-05-27.md)."
+
 [exempt.rsomics-sam-to-bam]
 reason = "Per-function decomposition tool — no single upstream binary to benchmark against. Covered by smoke + compat tests."
 
