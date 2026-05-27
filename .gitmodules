@@ -504,3 +504,6 @@
 [submodule "crates/tools/formats/rsomics-vcf-roh"]
 	path = crates/tools/formats/rsomics-vcf-roh
 	url = git@github.com:omics-rust/rsomics-vcf-roh.git
+[submodule "crates/foundation/rsomics-bbi"]
+	path = crates/foundation/rsomics-bbi
+	url = git@github.com:omics-rust/rsomics-bbi.git
