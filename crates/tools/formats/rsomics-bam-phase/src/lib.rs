@@ -693,6 +693,18 @@ pub fn phase<W: Write>(
         }
 
         if sites.is_empty() {
+            // No het sites: write all records for this contig to hap-0 BAM
+            // (deterministic per read name — same bucket logic as unphased reads).
+            if let Some(writers) = bam_writers.as_mut() {
+                for rec in records {
+                    let bucket = (fnv64(rec.name()) & 1) as usize;
+                    raw::write_record(writers[bucket].get_mut(), &rec)?;
+                    match bucket {
+                        0 => stats.reads_hap0 += 1,
+                        _ => stats.reads_hap1 += 1,
+                    }
+                }
+            }
             continue;
         }
 

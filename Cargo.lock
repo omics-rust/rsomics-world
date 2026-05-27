@@ -9,6 +9,19 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "320119579fcad9c21884f5c4861d16174d0e06250625266f50fe6898340abefa"
 
 [[package]]
+name = "ahash"
+version = "0.8.12"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "5a15f179cd60c4584b8a8c596927aadc462e27f2ca70c04e0071964a73ba7a75"
+dependencies = [
+ "cfg-if",
+ "getrandom 0.3.4",
+ "once_cell",
+ "version_check",
+ "zerocopy",
+]
+
+[[package]]
 name = "aho-corasick"
 version = "1.1.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -950,6 +963,8 @@ dependencies = [
  "noodles-csi",
  "noodles-fasta",
  "noodles-sam",
+ "noodles-tabix",
+ "noodles-vcf",
 ]
 
 [[package]]
@@ -1047,6 +1062,34 @@ dependencies = [
  "noodles-bgzf",
  "noodles-core",
  "noodles-csi",
+]
+
+[[package]]
+name = "noodles-tabix"
+version = "0.62.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "f5dceef2f7228d2977133f7b1a707c00ce0fdcf7c171e60b1e0286df0d8886fe"
+dependencies = [
+ "bstr",
+ "indexmap",
+ "noodles-bgzf",
+ "noodles-core",
+ "noodles-csi",
+]
+
+[[package]]
+name = "noodles-vcf"
+version = "0.88.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "234b3ba31b05ffd6971d838a41ca5a94e902d424ab293cd3b520776293baa96c"
+dependencies = [
+ "indexmap",
+ "memchr",
+ "noodles-bgzf",
+ "noodles-core",
+ "noodles-csi",
+ "noodles-tabix",
+ "percent-encoding",
 ]
 
 [[package]]
@@ -1676,6 +1719,21 @@ dependencies = [
 ]
 
 [[package]]
+name = "rsomics-bam-junctions"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "clap",
+ "criterion",
+ "noodles",
+ "rsomics-bamio",
+ "rsomics-common",
+ "serde",
+ "serde_json",
+ "tempfile",
+]
+
+[[package]]
 name = "rsomics-bam-markdup"
 version = "0.1.1"
 dependencies = [
@@ -1741,6 +1799,31 @@ dependencies = [
  "flate2",
  "rsomics-common",
  "tempfile",
+]
+
+[[package]]
+name = "rsomics-bam-read-dist"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "clap",
+ "coitrees",
+ "criterion",
+ "rsomics-bamio",
+ "rsomics-common",
+ "serde",
+ "serde_json",
+ "tempfile",
+]
+
+[[package]]
+name = "rsomics-bam-region"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "noodles",
+ "rsomics-common",
+ "rsomics-help",
 ]
 
 [[package]]
@@ -1837,6 +1920,34 @@ dependencies = [
 ]
 
 [[package]]
+name = "rsomics-bam-strandedness"
+version = "0.1.1"
+dependencies = [
+ "anyhow",
+ "clap",
+ "coitrees",
+ "criterion",
+ "noodles",
+ "rsomics-bamio",
+ "rsomics-common",
+ "serde",
+ "serde_json",
+ "tempfile",
+]
+
+[[package]]
+name = "rsomics-bam-subsample"
+version = "0.1.1"
+dependencies = [
+ "clap",
+ "noodles",
+ "rand 0.8.6",
+ "rsomics-bamio",
+ "rsomics-common",
+ "rsomics-help",
+]
+
+[[package]]
 name = "rsomics-bam-targetcut"
 version = "0.1.0"
 dependencies = [
@@ -1887,6 +1998,34 @@ dependencies = [
  "noodles",
  "noodles-bgzf",
  "rsomics-common",
+ "tempfile",
+]
+
+[[package]]
+name = "rsomics-barcode-rank"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "rsomics-common",
+ "rsomics-help",
+]
+
+[[package]]
+name = "rsomics-bbduk"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "clap",
+ "criterion",
+ "needletail 0.7.3",
+ "rayon",
+ "rsomics-common",
+ "rsomics-fqgz",
+ "rsomics-help",
+ "rsomics-kmer",
+ "rsomics-seqio",
+ "serde",
+ "serde_json",
  "tempfile",
 ]
 
@@ -1945,6 +2084,25 @@ dependencies = [
 ]
 
 [[package]]
+name = "rsomics-bed-split"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "rsomics-common",
+ "rsomics-help",
+ "tempfile",
+]
+
+[[package]]
+name = "rsomics-bed-summary"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "rsomics-common",
+ "rsomics-help",
+]
+
+[[package]]
 name = "rsomics-bed-utils"
 version = "0.2.2"
 dependencies = [
@@ -1959,6 +2117,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "rsomics-bed12-to-bed6"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "rsomics-common",
+ "rsomics-help",
+]
+
+[[package]]
 name = "rsomics-bigwig-compare"
 version = "0.1.0"
 dependencies = [
@@ -1967,6 +2134,26 @@ dependencies = [
  "rsomics-common",
  "rsomics-help",
  "serde_json",
+ "tempfile",
+]
+
+[[package]]
+name = "rsomics-cell-filter"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "rsomics-common",
+ "rsomics-help",
+]
+
+[[package]]
+name = "rsomics-clipping-profile"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "criterion",
+ "rsomics-bamio",
+ "rsomics-common",
  "tempfile",
 ]
 
@@ -2000,11 +2187,39 @@ dependencies = [
 ]
 
 [[package]]
+name = "rsomics-consensus"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "needletail 0.7.3",
+ "rsomics-common",
+ "rsomics-help",
+]
+
+[[package]]
+name = "rsomics-count-matrix"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "rsomics-common",
+ "rsomics-help",
+]
+
+[[package]]
 name = "rsomics-coverage-core"
 version = "0.1.0"
 dependencies = [
  "rsomics-bamio",
  "rsomics-common",
+]
+
+[[package]]
+name = "rsomics-de-volcano"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "rsomics-common",
+ "rsomics-help",
 ]
 
 [[package]]
@@ -2024,6 +2239,37 @@ dependencies = [
  "rsomics-bamio",
  "rsomics-common",
  "tempfile",
+]
+
+[[package]]
+name = "rsomics-derep"
+version = "0.2.0"
+dependencies = [
+ "ahash",
+ "anyhow",
+ "clap",
+ "rayon",
+ "rsomics-common",
+ "tempfile",
+]
+
+[[package]]
+name = "rsomics-deseq-prep"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "rsomics-common",
+ "rsomics-help",
+]
+
+[[package]]
+name = "rsomics-fasta-digest"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "needletail 0.7.3",
+ "rsomics-common",
+ "rsomics-help",
 ]
 
 [[package]]
@@ -2052,6 +2298,17 @@ dependencies = [
  "regex",
  "rsomics-common",
  "rsomics-help",
+]
+
+[[package]]
+name = "rsomics-fasta-mask"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "needletail 0.7.3",
+ "rsomics-common",
+ "rsomics-help",
+ "rsomics-intervals",
 ]
 
 [[package]]
@@ -2115,6 +2372,45 @@ dependencies = [
 ]
 
 [[package]]
+name = "rsomics-fasta-utils"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "needletail 0.6.3",
+ "rand 0.8.6",
+ "regex",
+ "rsomics-common",
+ "rsomics-help",
+]
+
+[[package]]
+name = "rsomics-fasta-validate"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "rsomics-common",
+ "rsomics-help",
+]
+
+[[package]]
+name = "rsomics-fastq-correct"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "clap",
+ "criterion",
+ "rayon",
+ "rsomics-common",
+ "rsomics-fqgz",
+ "rsomics-help",
+ "rsomics-kmer",
+ "rsomics-seqio",
+ "serde",
+ "serde_json",
+ "tempfile",
+]
+
+[[package]]
 name = "rsomics-fastq-dedup"
 version = "0.1.0"
 dependencies = [
@@ -2125,6 +2421,195 @@ dependencies = [
  "rsomics-common",
  "rsomics-help",
  "rsomics-kmer",
+ "serde",
+ "serde_json",
+ "tempfile",
+]
+
+[[package]]
+name = "rsomics-fastq-downsample"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "needletail 0.7.3",
+ "rand 0.8.6",
+ "rsomics-common",
+ "rsomics-help",
+]
+
+[[package]]
+name = "rsomics-fastq-filter"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "clap",
+ "criterion",
+ "flate2",
+ "libdeflater",
+ "rayon",
+ "rsomics-common",
+ "rsomics-fqgz",
+ "rsomics-help",
+ "rsomics-seqio",
+ "serde",
+ "serde_json",
+ "tempfile",
+]
+
+[[package]]
+name = "rsomics-fastq-merge"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "clap",
+ "criterion",
+ "needletail 0.7.3",
+ "rsomics-common",
+ "rsomics-help",
+ "serde",
+ "serde_json",
+ "tempfile",
+]
+
+[[package]]
+name = "rsomics-fastq-pair"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "rsomics-common",
+ "rsomics-help",
+]
+
+[[package]]
+name = "rsomics-fastq-split"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "clap",
+ "criterion",
+ "flate2",
+ "libdeflater",
+ "rayon",
+ "rsomics-common",
+ "rsomics-fqgz",
+ "rsomics-help",
+ "rsomics-seqio",
+ "serde",
+ "serde_json",
+ "tempfile",
+]
+
+[[package]]
+name = "rsomics-fastq-stats"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "clap",
+ "criterion",
+ "needletail 0.7.3",
+ "rsomics-common",
+ "rsomics-help",
+ "rsomics-seqstats",
+ "serde",
+ "serde_json",
+ "tempfile",
+]
+
+[[package]]
+name = "rsomics-fastq-trim"
+version = "0.4.5"
+dependencies = [
+ "anyhow",
+ "clap",
+ "criterion",
+ "flate2",
+ "libdeflater",
+ "memchr",
+ "rayon",
+ "rsomics-common",
+ "rsomics-fqgz",
+ "rsomics-help",
+ "rsomics-seqio",
+ "serde",
+ "serde_json",
+ "tempfile",
+]
+
+[[package]]
+name = "rsomics-fastq-umi"
+version = "0.2.0"
+dependencies = [
+ "anyhow",
+ "clap",
+ "criterion",
+ "flate2",
+ "libdeflater",
+ "rayon",
+ "rsomics-common",
+ "rsomics-fqgz",
+ "rsomics-help",
+ "rsomics-seqio",
+ "serde",
+ "serde_json",
+ "tempfile",
+]
+
+[[package]]
+name = "rsomics-fastq-utils"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "rand 0.8.6",
+ "regex",
+ "rsomics-common",
+ "rsomics-help",
+ "rsomics-seqio",
+]
+
+[[package]]
+name = "rsomics-fastq-validate"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "rsomics-common",
+ "rsomics-help",
+]
+
+[[package]]
+name = "rsomics-fastqc"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "clap",
+ "criterion",
+ "needletail 0.7.3",
+ "rsomics-common",
+ "rsomics-help",
+ "serde",
+ "serde_json",
+ "tempfile",
+]
+
+[[package]]
+name = "rsomics-fastx-sort"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "clap",
+ "rayon",
+ "rsomics-common",
+ "tempfile",
+]
+
+[[package]]
+name = "rsomics-featurecounts"
+version = "0.1.1"
+dependencies = [
+ "clap",
+ "coitrees",
+ "noodles",
+ "rsomics-common",
+ "rsomics-help",
  "serde",
  "serde_json",
  "tempfile",
@@ -2147,6 +2632,55 @@ dependencies = [
  "rsomics-common",
  "rsomics-fm-index",
  "rsomics-help",
+]
+
+[[package]]
+name = "rsomics-formats"
+version = "0.1.0"
+dependencies = [
+ "rsomics-bam-coverage",
+ "rsomics-bam-depth",
+ "rsomics-bam-flagstat",
+ "rsomics-bam-idxstats",
+ "rsomics-bam-index",
+ "rsomics-bam-markdup",
+ "rsomics-bam-merge",
+ "rsomics-bam-sort",
+ "rsomics-bam-split",
+ "rsomics-bam-stats",
+ "rsomics-bam-to-fastq",
+ "rsomics-bam-view",
+ "rsomics-bed-utils",
+ "rsomics-fasta-index",
+ "rsomics-fasta-n50",
+ "rsomics-fasta-stats",
+ "rsomics-fasta-translate",
+ "rsomics-fasta-utils",
+ "rsomics-fasta-validate",
+ "rsomics-fastq-correct",
+ "rsomics-fastq-dedup",
+ "rsomics-fastq-filter",
+ "rsomics-fastq-merge",
+ "rsomics-fastq-pair",
+ "rsomics-fastq-split",
+ "rsomics-fastq-stats",
+ "rsomics-fastq-trim",
+ "rsomics-fastq-umi",
+ "rsomics-fastq-utils",
+ "rsomics-fastq-validate",
+ "rsomics-fastqc",
+ "rsomics-gff-utils",
+ "rsomics-sam-to-bam",
+ "rsomics-vcf-annotate",
+ "rsomics-vcf-filter",
+ "rsomics-vcf-isec",
+ "rsomics-vcf-merge",
+ "rsomics-vcf-norm",
+ "rsomics-vcf-query",
+ "rsomics-vcf-split",
+ "rsomics-vcf-stats",
+ "rsomics-vcf-utils",
+ "rsomics-vcf-validate",
 ]
 
 [[package]]
@@ -2185,6 +2719,40 @@ dependencies = [
 ]
 
 [[package]]
+name = "rsomics-gc-windows"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "needletail 0.7.3",
+ "rsomics-common",
+ "rsomics-help",
+]
+
+[[package]]
+name = "rsomics-genebody-coverage"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "criterion",
+ "noodles",
+ "rsomics-bamio",
+ "rsomics-common",
+ "serde",
+ "serde_json",
+ "tempfile",
+]
+
+[[package]]
+name = "rsomics-gff-utils"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "regex",
+ "rsomics-common",
+ "rsomics-help",
+]
+
+[[package]]
 name = "rsomics-help"
 version = "0.3.1"
 dependencies = [
@@ -2202,11 +2770,48 @@ dependencies = [
 ]
 
 [[package]]
+name = "rsomics-hmm-decode"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "rsomics-common",
+ "rsomics-help",
+ "rsomics-hmm",
+ "serde_json",
+]
+
+[[package]]
 name = "rsomics-igzip"
 version = "0.1.0"
 dependencies = [
  "flate2",
  "isal-sys",
+ "tempfile",
+]
+
+[[package]]
+name = "rsomics-infercnv"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "rsomics-common",
+ "rsomics-help",
+ "serde",
+ "serde_json",
+ "tempfile",
+]
+
+[[package]]
+name = "rsomics-inner-distance"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "coitrees",
+ "criterion",
+ "rsomics-bamio",
+ "rsomics-common",
+ "serde",
+ "serde_json",
  "tempfile",
 ]
 
@@ -2242,6 +2847,35 @@ dependencies = [
  "nthash",
  "rsomics-common",
  "thiserror 2.0.18",
+]
+
+[[package]]
+name = "rsomics-kmer-dist"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "needletail 0.7.3",
+ "rsomics-common",
+ "rsomics-help",
+ "rsomics-kmer",
+]
+
+[[package]]
+name = "rsomics-kraken-report"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "rsomics-common",
+ "rsomics-help",
+]
+
+[[package]]
+name = "rsomics-ld-matrix"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "rsomics-common",
+ "rsomics-help",
 ]
 
 [[package]]
@@ -2300,6 +2934,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "rsomics-msa-trim"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "needletail 0.7.3",
+ "rsomics-common",
+ "rsomics-help",
+]
+
+[[package]]
 name = "rsomics-multibam-summary"
 version = "0.1.0"
 dependencies = [
@@ -2323,6 +2967,24 @@ dependencies = [
  "rsomics-help",
  "rsomics-intervals",
  "tempfile",
+]
+
+[[package]]
+name = "rsomics-nj-tree"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "rsomics-common",
+ "rsomics-help",
+]
+
+[[package]]
+name = "rsomics-pdb-chain"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "rsomics-common",
+ "rsomics-help",
 ]
 
 [[package]]
@@ -2370,6 +3032,53 @@ dependencies = [
 ]
 
 [[package]]
+name = "rsomics-pvalue-adjust"
+version = "0.2.0"
+dependencies = [
+ "anyhow",
+ "clap",
+ "rsomics-common",
+ "rsomics-help",
+ "rsomics-stats",
+ "tempfile",
+]
+
+[[package]]
+name = "rsomics-read-duplication"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "clap",
+ "criterion",
+ "noodles",
+ "rsomics-bamio",
+ "rsomics-common",
+ "tempfile",
+]
+
+[[package]]
+name = "rsomics-read-gc"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "criterion",
+ "rsomics-bamio",
+ "rsomics-common",
+ "tempfile",
+]
+
+[[package]]
+name = "rsomics-read-nvc"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "criterion",
+ "rsomics-bamio",
+ "rsomics-common",
+ "tempfile",
+]
+
+[[package]]
 name = "rsomics-read-quality"
 version = "0.1.0"
 dependencies = [
@@ -2377,6 +3086,28 @@ dependencies = [
  "rsomics-bamio",
  "rsomics-common",
  "rsomics-help",
+ "tempfile",
+]
+
+[[package]]
+name = "rsomics-rereplicate"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "clap",
+ "rsomics-common",
+ "tempfile",
+]
+
+[[package]]
+name = "rsomics-rnaseq-metrics"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "noodles",
+ "rsomics-common",
+ "serde",
+ "serde_json",
  "tempfile",
 ]
 
@@ -2395,6 +3126,29 @@ dependencies = [
 ]
 
 [[package]]
+name = "rsomics-sam-to-bam"
+version = "0.1.1"
+dependencies = [
+ "clap",
+ "noodles",
+ "rsomics-bamio",
+ "rsomics-common",
+ "rsomics-help",
+ "serde",
+ "serde_json",
+ "tempfile",
+]
+
+[[package]]
+name = "rsomics-sample-sheet"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "rsomics-common",
+ "rsomics-help",
+]
+
+[[package]]
 name = "rsomics-seacr"
 version = "0.1.0"
 dependencies = [
@@ -2402,6 +3156,16 @@ dependencies = [
  "rsomics-common",
  "rsomics-help",
  "tempfile",
+]
+
+[[package]]
+name = "rsomics-seq-stats"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "needletail 0.7.3",
+ "rsomics-common",
+ "rsomics-help",
 ]
 
 [[package]]
@@ -2435,12 +3199,84 @@ dependencies = [
 ]
 
 [[package]]
+name = "rsomics-tajima-d"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "rsomics-common",
+ "rsomics-help",
+ "rsomics-popgen-core",
+]
+
+[[package]]
+name = "rsomics-tax-assign"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "needletail 0.7.3",
+ "rsomics-common",
+ "rsomics-help",
+ "rsomics-kmer",
+ "rsomics-taxonomy",
+]
+
+[[package]]
 name = "rsomics-taxonomy"
 version = "0.1.0"
 dependencies = [
  "rsomics-common",
  "tempfile",
  "thiserror 2.0.18",
+]
+
+[[package]]
+name = "rsomics-tin"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "criterion",
+ "noodles",
+ "rsomics-common",
+ "serde",
+ "serde_json",
+ "tempfile",
+]
+
+[[package]]
+name = "rsomics-tpm"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "rsomics-common",
+ "rsomics-help",
+]
+
+[[package]]
+name = "rsomics-tsv-join"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "rsomics-common",
+ "rsomics-help",
+]
+
+[[package]]
+name = "rsomics-tsv-select"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "rsomics-common",
+ "rsomics-help",
+]
+
+[[package]]
+name = "rsomics-vcf-annotate"
+version = "0.1.1"
+dependencies = [
+ "clap",
+ "rsomics-common",
+ "rsomics-help",
+ "rsomics-intervals",
 ]
 
 [[package]]
@@ -2451,6 +3287,32 @@ dependencies = [
  "flate2",
  "rsomics-common",
  "rsomics-help",
+ "tempfile",
+]
+
+[[package]]
+name = "rsomics-vcf-concat"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "flate2",
+ "rsomics-common",
+ "rsomics-help",
+ "serde",
+ "serde_json",
+ "tempfile",
+]
+
+[[package]]
+name = "rsomics-vcf-consensus"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "flate2",
+ "rsomics-common",
+ "rsomics-help",
+ "serde",
+ "serde_json",
  "tempfile",
 ]
 
@@ -2469,14 +3331,249 @@ name = "rsomics-vcf-expr"
 version = "0.1.0"
 
 [[package]]
-name = "rsomics-vcf-mpileup"
+name = "rsomics-vcf-fill-tags"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "flate2",
+ "rayon",
+ "rsomics-common",
+ "rsomics-help",
+ "rsomics-stats",
+ "serde",
+ "serde_json",
+ "tempfile",
+]
+
+[[package]]
+name = "rsomics-vcf-filter"
+version = "0.2.0"
+dependencies = [
+ "clap",
+ "flate2",
+ "rsomics-common",
+ "rsomics-help",
+ "rsomics-vcf-expr",
+ "serde",
+ "serde_json",
+ "tempfile",
+]
+
+[[package]]
+name = "rsomics-vcf-fixref"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "memchr",
+ "rsomics-common",
+ "rsomics-help",
+ "serde",
+ "serde_json",
+ "tempfile",
+]
+
+[[package]]
+name = "rsomics-vcf-gtcheck"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "flate2",
+ "rsomics-common",
+ "rsomics-help",
+ "tempfile",
+]
+
+[[package]]
+name = "rsomics-vcf-head"
+version = "0.1.1"
+dependencies = [
+ "clap",
+ "flate2",
+ "rsomics-common",
+ "tempfile",
+]
+
+[[package]]
+name = "rsomics-vcf-index"
+version = "0.1.0"
+dependencies = [
+ "bstr",
+ "clap",
+ "memchr",
+ "noodles",
+ "noodles-bgzf",
+ "rsomics-common",
+ "rsomics-help",
+ "serde",
+ "serde_json",
+ "tempfile",
+]
+
+[[package]]
+name = "rsomics-vcf-isec"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "rsomics-common",
+ "rsomics-help",
+]
+
+[[package]]
+name = "rsomics-vcf-merge"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "rsomics-common",
+ "rsomics-help",
+]
+
+[[package]]
+name = "rsomics-vcf-norm"
+version = "0.1.1"
+dependencies = [
+ "clap",
+ "flate2",
+ "rsomics-common",
+ "rsomics-help",
+ "serde",
+ "serde_json",
+ "tempfile",
+]
+
+[[package]]
+name = "rsomics-vcf-polysomy"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "flate2",
+ "rsomics-common",
+ "rsomics-help",
+ "tempfile",
+]
+
+[[package]]
+name = "rsomics-vcf-query"
+version = "0.1.1"
+dependencies = [
+ "clap",
+ "flate2",
+ "rsomics-common",
+ "rsomics-help",
+ "serde",
+ "serde_json",
+ "tempfile",
+]
+
+[[package]]
+name = "rsomics-vcf-reheader"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "rsomics-common",
+ "rsomics-help",
+ "serde",
+ "serde_json",
+ "tempfile",
+]
+
+[[package]]
+name = "rsomics-vcf-roh"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "flate2",
+ "rsomics-common",
+ "rsomics-help",
+ "tempfile",
+]
+
+[[package]]
+name = "rsomics-vcf-setgt"
+version = "0.2.0"
+dependencies = [
+ "clap",
+ "flate2",
+ "rsomics-common",
+ "rsomics-help",
+ "rsomics-vcf-expr",
+ "serde",
+ "serde_json",
+ "tempfile",
+]
+
+[[package]]
+name = "rsomics-vcf-sort"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "flate2",
+ "rsomics-common",
+ "rsomics-help",
+ "serde",
+ "serde_json",
+ "tempfile",
+]
+
+[[package]]
+name = "rsomics-vcf-split"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "rsomics-common",
+ "rsomics-help",
+]
+
+[[package]]
+name = "rsomics-vcf-stats"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "rsomics-common",
+ "rsomics-help",
+ "serde",
+ "serde_json",
+]
+
+[[package]]
+name = "rsomics-vcf-to-bed"
 version = "0.1.0"
 dependencies = [
  "clap",
  "noodles",
- "rsomics-bamio",
  "rsomics-common",
- "rsomics-pileup",
+ "rsomics-help",
+]
+
+[[package]]
+name = "rsomics-vcf-utils"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "regex",
+ "rsomics-common",
+ "rsomics-help",
+]
+
+[[package]]
+name = "rsomics-vcf-validate"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "rsomics-common",
+ "rsomics-help",
+]
+
+[[package]]
+name = "rsomics-vcf-view"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "flate2",
+ "rsomics-common",
+ "rsomics-help",
+ "serde",
+ "serde_json",
+ "tempfile",
 ]
 
 [[package]]
@@ -3131,243 +4228,3 @@ dependencies = [
  "cc",
  "pkg-config",
 ]
-
-[[patch.unused]]
-name = "rsomics-bam-region"
-version = "0.1.0"
-
-[[patch.unused]]
-name = "rsomics-bam-strandedness"
-version = "0.1.1"
-
-[[patch.unused]]
-name = "rsomics-bam-subsample"
-version = "0.1.1"
-
-[[patch.unused]]
-name = "rsomics-barcode-rank"
-version = "0.1.0"
-
-[[patch.unused]]
-name = "rsomics-bbduk"
-version = "0.1.0"
-
-[[patch.unused]]
-name = "rsomics-cell-filter"
-version = "0.1.0"
-
-[[patch.unused]]
-name = "rsomics-consensus"
-version = "0.1.0"
-
-[[patch.unused]]
-name = "rsomics-count-matrix"
-version = "0.1.0"
-
-[[patch.unused]]
-name = "rsomics-de-volcano"
-version = "0.1.0"
-
-[[patch.unused]]
-name = "rsomics-deseq-prep"
-version = "0.1.0"
-
-[[patch.unused]]
-name = "rsomics-fasta-digest"
-version = "0.1.0"
-
-[[patch.unused]]
-name = "rsomics-fasta-mask"
-version = "0.1.0"
-
-[[patch.unused]]
-name = "rsomics-fasta-utils"
-version = "0.1.0"
-
-[[patch.unused]]
-name = "rsomics-fasta-validate"
-version = "0.1.0"
-
-[[patch.unused]]
-name = "rsomics-fastq-correct"
-version = "0.1.0"
-
-[[patch.unused]]
-name = "rsomics-fastq-downsample"
-version = "0.1.0"
-
-[[patch.unused]]
-name = "rsomics-fastq-filter"
-version = "0.1.0"
-
-[[patch.unused]]
-name = "rsomics-fastq-merge"
-version = "0.1.0"
-
-[[patch.unused]]
-name = "rsomics-fastq-pair"
-version = "0.1.0"
-
-[[patch.unused]]
-name = "rsomics-fastq-split"
-version = "0.1.0"
-
-[[patch.unused]]
-name = "rsomics-fastq-stats"
-version = "0.1.0"
-
-[[patch.unused]]
-name = "rsomics-fastq-trim"
-version = "0.4.5"
-
-[[patch.unused]]
-name = "rsomics-fastq-umi"
-version = "0.2.0"
-
-[[patch.unused]]
-name = "rsomics-fastq-utils"
-version = "0.1.0"
-
-[[patch.unused]]
-name = "rsomics-fastq-validate"
-version = "0.1.0"
-
-[[patch.unused]]
-name = "rsomics-fastqc"
-version = "0.1.0"
-
-[[patch.unused]]
-name = "rsomics-featurecounts"
-version = "0.1.1"
-
-[[patch.unused]]
-name = "rsomics-gc-windows"
-version = "0.1.0"
-
-[[patch.unused]]
-name = "rsomics-gff-utils"
-version = "0.1.0"
-
-[[patch.unused]]
-name = "rsomics-hmm-decode"
-version = "0.1.0"
-
-[[patch.unused]]
-name = "rsomics-infercnv"
-version = "0.1.0"
-
-[[patch.unused]]
-name = "rsomics-kmer-dist"
-version = "0.1.0"
-
-[[patch.unused]]
-name = "rsomics-kraken-report"
-version = "0.1.0"
-
-[[patch.unused]]
-name = "rsomics-ld-matrix"
-version = "0.1.0"
-
-[[patch.unused]]
-name = "rsomics-msa-trim"
-version = "0.1.0"
-
-[[patch.unused]]
-name = "rsomics-nj-tree"
-version = "0.1.0"
-
-[[patch.unused]]
-name = "rsomics-pdb-chain"
-version = "0.1.0"
-
-[[patch.unused]]
-name = "rsomics-pvalue-adjust"
-version = "0.2.0"
-
-[[patch.unused]]
-name = "rsomics-read-duplication"
-version = "0.1.0"
-
-[[patch.unused]]
-name = "rsomics-read-gc"
-version = "0.1.0"
-
-[[patch.unused]]
-name = "rsomics-sam-to-bam"
-version = "0.1.1"
-
-[[patch.unused]]
-name = "rsomics-sample-sheet"
-version = "0.1.0"
-
-[[patch.unused]]
-name = "rsomics-seq-stats"
-version = "0.1.0"
-
-[[patch.unused]]
-name = "rsomics-tajima-d"
-version = "0.1.0"
-
-[[patch.unused]]
-name = "rsomics-tax-assign"
-version = "0.1.0"
-
-[[patch.unused]]
-name = "rsomics-tpm"
-version = "0.1.0"
-
-[[patch.unused]]
-name = "rsomics-tsv-join"
-version = "0.1.0"
-
-[[patch.unused]]
-name = "rsomics-tsv-select"
-version = "0.1.0"
-
-[[patch.unused]]
-name = "rsomics-vcf-annotate"
-version = "0.1.1"
-
-[[patch.unused]]
-name = "rsomics-vcf-fill-tags"
-version = "0.1.0"
-
-[[patch.unused]]
-name = "rsomics-vcf-filter"
-version = "0.2.0"
-
-[[patch.unused]]
-name = "rsomics-vcf-isec"
-version = "0.1.0"
-
-[[patch.unused]]
-name = "rsomics-vcf-merge"
-version = "0.1.0"
-
-[[patch.unused]]
-name = "rsomics-vcf-norm"
-version = "0.1.1"
-
-[[patch.unused]]
-name = "rsomics-vcf-query"
-version = "0.1.1"
-
-[[patch.unused]]
-name = "rsomics-vcf-split"
-version = "0.1.0"
-
-[[patch.unused]]
-name = "rsomics-vcf-stats"
-version = "0.1.0"
-
-[[patch.unused]]
-name = "rsomics-vcf-to-bed"
-version = "0.1.0"
-
-[[patch.unused]]
-name = "rsomics-vcf-utils"
-version = "0.1.0"
-
-[[patch.unused]]
-name = "rsomics-vcf-validate"
-version = "0.1.0"
