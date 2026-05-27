@@ -507,3 +507,6 @@
 [submodule "crates/foundation/rsomics-bbi"]
 	path = crates/foundation/rsomics-bbi
 	url = git@github.com:omics-rust/rsomics-bbi.git
+[submodule "crates/foundation/rsomics-coverage-core"]
+	path = crates/foundation/rsomics-coverage-core
+	url = git@github.com:omics-rust/rsomics-coverage-core.git
