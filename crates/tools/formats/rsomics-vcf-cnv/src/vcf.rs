@@ -355,7 +355,7 @@ fn flush_chrom(
         buf.emissions[i] = site_emission(baf_buf[i], lrr_buf[i], f_rr, f_ra, f_aa, params, peaks);
     }
 
-    let result = hmm::run(&buf.emissions, xy_prob);
+    let result = hmm::run(&buf.emissions, &buf.positions, xy_prob);
 
     // Count HETs per region: site is heterozygous if BAF is between 0.2 and 0.8
     // (bcftools smpl_nhet: baf in (0.1, 0.9) suggests a heterozygous SNP)

@@ -4,11 +4,17 @@
 //! Viterbi decoding finds the most likely CN state sequence.
 //! Forward-backward gives posterior probabilities used for region quality scores.
 //!
-//! The forward array has n+1 entries; index 0 holds the initial uniform prior (0.25 each).
-//! After the forward pass fwd[i+1] = scaled P(obs[0..=i], state_i=s).
-//! The backward pass multiplies fwd in-place so fwd[i+1] becomes the posterior.
-//! Per-region quality is computed from the mean posterior of the dominant state,
-//! converted to a Phred score as bcftools does: -4.343 * ln(1 - mean_posterior).
+//! Transition probabilities are distance-dependent: T^d where d is the number of
+//! intervening genomic positions between consecutive SNP sites.  For the symmetric
+//! 4-state matrix this has the closed-form:
+//!
+//!   T^d[i,i] = 1/N + (N-1)/N * λ^d       (diagonal)
+//!   T^d[i,j] = 1/N - 1/N      * λ^d       (off-diagonal)
+//!
+//! where λ = stay - jump = 1 - N*ij_prob and N = N_STATES.
+//!
+//! This matches bcftools HMM.c which pre-computes T^1 … T^10000 and
+//! applies them according to the gap between consecutive VCF sites.
 
 pub const N_STATES: usize = 4;
 
@@ -29,13 +35,40 @@ pub struct HmmResult {
     pub posterior: Vec<f64>,
 }
 
+/// Compute the distance-dependent transition probabilities for `pos_diff` skipped positions.
+///
+/// Returns `(diag, off)` = (T^d[i,i], T^d[i,j] for i≠j).
+/// When `pos_diff == 0` (consecutive sites), d=1, i.e. one transition step.
+#[inline]
+fn tprob(pos_diff: u32, ij_prob: f64) -> (f64, f64) {
+    // λ = eigenvalue of (T - 1/N * J) where J is the all-ones matrix.
+    // For symmetric N-state matrix: λ = 1 - N * ij_prob.
+    let n = N_STATES as f64;
+    let lambda = 1.0 - n * ij_prob;
+    // d = number of transition steps = 1 (consecutive) + number of skipped positions
+    let d = (pos_diff + 1) as f64;
+    let lambda_d = lambda.powf(d);
+    let diag = 1.0 / n + (n - 1.0) / n * lambda_d;
+    let off = 1.0 / n - 1.0 / n * lambda_d;
+    (diag, off)
+}
+
 /// Run Viterbi + forward-backward on a slice of per-site emissions.
 ///
-/// `ij_prob` is the off-diagonal transition probability P(j|i) for i≠j.
-/// Diagonal = 1 - ij_prob*(N_STATES-1).  Matches bcftools vcfcnv.c transition matrix.
-#[allow(clippy::needless_range_loop)] // index-based loops are load-bearing: state index ↔ transition-matrix diagonal
-pub fn run(emissions: &[Emission], ij_prob: f64) -> HmmResult {
+/// `positions` are 0-based genomic positions (one per site).  The number of
+/// skipped positions between sites[i] and sites[i+1] is `sites[i+1] - sites[i] - 1`,
+/// which determines the transition matrix power used for that step.
+///
+/// `ij_prob` is the base off-diagonal transition probability P(j|i, 1 step) for i≠j.
+/// Diagonal (1 step) = 1 - ij_prob*(N_STATES-1).  Matches bcftools vcfcnv.c defaults.
+#[allow(clippy::needless_range_loop)] // state index is load-bearing for diagonal/off-diagonal selection
+pub fn run(emissions: &[Emission], positions: &[u32], ij_prob: f64) -> HmmResult {
     let n = emissions.len();
+    assert_eq!(
+        n,
+        positions.len(),
+        "emissions and positions must have the same length"
+    );
     if n == 0 {
         return HmmResult {
             vpath: vec![],
@@ -43,18 +76,23 @@ pub fn run(emissions: &[Emission], ij_prob: f64) -> HmmResult {
         };
     }
 
-    let stay = 1.0 - ij_prob * (N_STATES as f64 - 1.0);
-    let log_stay = stay.max(f64::MIN_POSITIVE).ln();
-    let log_jump = ij_prob.max(f64::MIN_POSITIVE).ln();
+    let prior = 1.0 / N_STATES as f64;
 
-    // --- Viterbi (log-space) ---
-    let log_prior = (1.0 / N_STATES as f64).ln();
-
-    let mut v = [0f64; N_STATES];
+    // --- Viterbi (probability space, normalized at each step to prevent underflow) ---
+    // This matches bcftools hmm_run_viterbi() which also works in probability space.
+    let mut v = [prior; N_STATES];
     for s in 0..N_STATES {
-        v[s] = log_prior + emissions[0][s].max(f64::MIN_POSITIVE).ln();
+        v[s] *= emissions[0][s].max(f64::MIN_POSITIVE);
+    }
+    // Normalize initial step
+    let vsum: f64 = v.iter().sum();
+    if vsum > 0.0 {
+        for s in 0..N_STATES {
+            v[s] /= vsum;
+        }
     }
 
+    // traceback[i][dst] = best source state for arriving at dst at step i
     let mut traceback: Vec<[u8; N_STATES]> = Vec::with_capacity(n);
     {
         let mut init_tb = [0u8; N_STATES];
@@ -65,22 +103,34 @@ pub fn run(emissions: &[Emission], ij_prob: f64) -> HmmResult {
     }
 
     for i in 1..n {
+        let pos_diff = positions[i]
+            .saturating_sub(positions[i - 1])
+            .saturating_sub(1);
+        let (stay, jump) = tprob(pos_diff, ij_prob);
+
         let mut new_v = [0f64; N_STATES];
         let mut tb = [0u8; N_STATES];
         for dst in 0..N_STATES {
-            let e = emissions[i][dst].max(f64::MIN_POSITIVE).ln();
-            let mut best_val = f64::NEG_INFINITY;
+            let e = emissions[i][dst].max(f64::MIN_POSITIVE);
+            let mut best_val = 0.0_f64;
             let mut best_src = 0u8;
             for src in 0..N_STATES {
-                let trans = if src == dst { log_stay } else { log_jump };
-                let val = v[src] + trans;
+                let trans = if src == dst { stay } else { jump };
+                let val = v[src] * trans;
                 if val > best_val {
                     best_val = val;
                     best_src = src as u8;
                 }
             }
-            new_v[dst] = best_val + e;
+            new_v[dst] = best_val * e;
             tb[dst] = best_src;
+        }
+        // Normalize to prevent underflow
+        let vnorm: f64 = new_v.iter().sum();
+        if vnorm > 0.0 {
+            for s in 0..N_STATES {
+                new_v[s] /= vnorm;
+            }
         }
         v = new_v;
         traceback.push(tb);
@@ -100,19 +150,27 @@ pub fn run(emissions: &[Emission], ij_prob: f64) -> HmmResult {
 
     // --- Forward-backward (scaled, matching bcftools HMM.c layout) ---
     // fwd has n+1 entries; fwd[0] = uniform prior.
-    let prior = 1.0 / N_STATES as f64;
     let mut fwd = vec![[0f64; N_STATES]; n + 1];
     fwd[0] = [prior; N_STATES];
 
     // Forward pass
     for i in 0..n {
+        let pos_diff = if i == 0 {
+            0
+        } else {
+            positions[i]
+                .saturating_sub(positions[i - 1])
+                .saturating_sub(1)
+        };
+        let (stay, jump) = tprob(pos_diff, ij_prob);
+
         let f = fwd[i];
         let e = emissions[i];
         let mut sum = 0.0;
         for dst in 0..N_STATES {
             let mut acc = 0.0;
             for src in 0..N_STATES {
-                let trans = if src == dst { stay } else { ij_prob };
+                let trans = if src == dst { stay } else { jump };
                 acc += f[src] * trans;
             }
             fwd[i + 1][dst] = acc * e[dst];
@@ -143,15 +201,20 @@ pub fn run(emissions: &[Emission], ij_prob: f64) -> HmmResult {
             }
         }
 
-        // Propagate bwd one step left
+        // Propagate bwd one step left (using distance-adjusted transitions)
         if i < n - 1 {
+            let pos_diff = positions[site_idx - 1]
+                .saturating_sub(positions[site_idx - 2])
+                .saturating_sub(1);
+            let (stay, jump) = tprob(pos_diff, ij_prob);
+
             let e = emissions[site_idx - 1];
             let mut new_bwd = [0f64; N_STATES];
             let mut bwd_sum = 0.0;
             for src in 0..N_STATES {
                 let mut acc = 0.0;
                 for dst in 0..N_STATES {
-                    let trans = if src == dst { stay } else { ij_prob };
+                    let trans = if src == dst { stay } else { jump };
                     acc += bwd[dst] * e[dst] * trans;
                 }
                 new_bwd[src] = acc;
