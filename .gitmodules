@@ -501,3 +501,6 @@
 [submodule "crates/tools/formats/rsomics-vcf-polysomy"]
 	path = crates/tools/formats/rsomics-vcf-polysomy
 	url = git@github.com:omics-rust/rsomics-vcf-polysomy.git
+[submodule "crates/tools/formats/rsomics-vcf-roh"]
+	path = crates/tools/formats/rsomics-vcf-roh
+	url = git@github.com:omics-rust/rsomics-vcf-roh.git
