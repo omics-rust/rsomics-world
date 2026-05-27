@@ -489,3 +489,6 @@
 [submodule "crates/tools/formats/rsomics-bam-depad"]
 	path = crates/tools/formats/rsomics-bam-depad
 	url = git@github.com:omics-rust/rsomics-bam-depad.git
+[submodule "crates/tools/formats/rsomics-vcf-head"]
+	path = crates/tools/formats/rsomics-vcf-head
+	url = git@github.com:omics-rust/rsomics-vcf-head.git
