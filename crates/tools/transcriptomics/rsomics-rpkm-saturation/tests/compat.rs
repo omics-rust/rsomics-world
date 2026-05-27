@@ -11,7 +11,7 @@
 /// At sub-100% fractions we only check that the values are positive and
 /// finite (structural sanity), not their exact magnitude, because the two
 /// tools use different RNGs.
-use std::path::PathBuf;
+use std::path::{Path, PathBuf};
 use std::process::Command;
 
 fn ours() -> PathBuf {
@@ -31,7 +31,7 @@ fn rseqc_on_path() -> bool {
         .is_ok()
 }
 
-fn run_ours(bam: &PathBuf, bed: &PathBuf, prefix: &str) {
+fn run_ours(bam: &Path, bed: &Path, prefix: &str) {
     let out = Command::new(ours())
         .args([
             "-i",
@@ -56,7 +56,7 @@ fn run_ours(bam: &PathBuf, bed: &PathBuf, prefix: &str) {
     );
 }
 
-fn run_rseqc(bam: &PathBuf, bed: &PathBuf, prefix: &str) {
+fn run_rseqc(bam: &Path, bed: &Path, prefix: &str) {
     let out = Command::new("RPKM_saturation.py")
         .args([
             "-i",
