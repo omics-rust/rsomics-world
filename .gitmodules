@@ -498,3 +498,6 @@
 [submodule "crates/tools/formats/rsomics-vcf-gtcheck"]
 	path = crates/tools/formats/rsomics-vcf-gtcheck
 	url = git@github.com:omics-rust/rsomics-vcf-gtcheck.git
+[submodule "crates/tools/formats/rsomics-vcf-polysomy"]
+	path = crates/tools/formats/rsomics-vcf-polysomy
+	url = git@github.com:omics-rust/rsomics-vcf-polysomy.git
