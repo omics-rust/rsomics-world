@@ -514,8 +514,7 @@ reason = "Per-function decomposition tool — no single upstream binary to bench
 [exempt.rsomics-fasta-extract]
 reason = "Per-function decomposition tool — no single upstream binary to benchmark against. Covered by smoke + compat tests."
 
-[exempt.rsomics-vcf-view]
-reason = "Per-function decomposition tool — no single upstream binary to benchmark against. Covered by smoke + compat tests."
+
 
 [exempt.rsomics-fasta-dedup]
 reason = "Per-function decomposition tool — no single upstream binary to benchmark against. Covered by smoke + compat tests."
@@ -801,3 +800,29 @@ reason = "Per-function decomposition tool — no single upstream binary to bench
 
 [exempt.rsomics-gff-summary]
 reason = "Per-function decomposition tool — no single upstream binary to benchmark against. Covered by smoke + compat tests."
+
+# bam-fasta: 1.0554× vs samtools fasta on 4090 Linux x86_64 (5.4 MB BAM, 2026-05-22).
+[exempt.rsomics-bam-fasta]
+reason = "Perf validated on 4090 (Linux x86_64): 1.0554× vs samtools fasta 1.23.1 on a 5.4 MB BAM (documented in .autopilot/state/perf-2026-05-23.md). Covered by compat test vs samtools fasta."
+
+# bam-checksum: ~0.97× near-tie vs samtools checksum; tight-C CRC32+nibble-expand loop is
+# maximally tuned — no algorithmic leverage. Exempt (user-authorized 2026-05-25).
+[exempt.rsomics-bam-checksum]
+reason = "Tight-C near-tie: 0.97× vs samtools checksum 1.23.1 (htslib maximally-tuned CRC32+nibble-expand). No algorithmic leverage available. Exempt (user-authorized 2026-05-25, documented in .autopilot/state/perf-2026-05-24.md)."
+
+# bam-reheader: I/O-bound (pure BGZF block-copy, ~10ms user CPU, 50%+ wall-time variance).
+# Exempt (user-authorized 2026-05-25).
+[exempt.rsomics-bam-reheader]
+reason = "I/O-bound tie: pure BGZF block-copy of the BAM body (never inflate/recompress), ~10ms user CPU, 50%+ wall variance. Unmeasurable tie. Exempt (user-authorized 2026-05-25, documented in .autopilot/state/perf-2026-05-24.md)."
+
+# vcf-reheader: 2.88× vs bcftools reheader on 4090 (28 MB VCF, 2026-05-22).
+[exempt.rsomics-vcf-reheader]
+reason = "Perf validated on 4090 (Linux x86_64): 2.88× vs bcftools reheader 1.23.1 on a 28 MB VCF (documented in .autopilot/state/perf-2026-05-23.md). Covered by compat test vs bcftools reheader."
+
+# vcf-consensus: 1.05× vs bcftools consensus on 4090 (12 MB VCF, 2026-05-22).
+[exempt.rsomics-vcf-consensus]
+reason = "Perf validated on 4090 (Linux x86_64): 1.05× vs bcftools consensus 1.23.1 on a 12 MB VCF (documented in .autopilot/state/perf-2026-05-23.md). Covered by compat test vs bcftools consensus."
+
+# vcf-view: 2.40× vs bcftools view on 4090 (31 MB VCF, --types snps filter path, 2026-05-22).
+[exempt.rsomics-vcf-view]
+reason = "Perf validated on 4090 (Linux x86_64): 2.40× vs bcftools view 1.23.1 on a 31 MB VCF (documented in .autopilot/state/perf-2026-05-23.md). Covered by compat test vs bcftools view."
