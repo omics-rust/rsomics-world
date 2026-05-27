@@ -480,3 +480,6 @@
 [submodule "crates/tools/formats/rsomics-bam-dict"]
 	path = crates/tools/formats/rsomics-bam-dict
 	url = git@github.com:omics-rust/rsomics-bam-dict.git
+[submodule "crates/tools/formats/rsomics-bam-quickcheck"]
+	path = crates/tools/formats/rsomics-bam-quickcheck
+	url = git@github.com:omics-rust/rsomics-bam-quickcheck.git
