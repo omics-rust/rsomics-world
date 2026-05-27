@@ -163,14 +163,14 @@ pub fn simple_call(reads: &[(u8, u8)], opts: &ConsensusOpts) -> (u8, u8) {
     let mut score1: u64 = 0;
     let mut score2: u64 = 0;
 
-    for i in 0..N_BASES {
-        if score[i] > score1 {
+    for (i, &s) in score.iter().enumerate() {
+        if s > score1 {
             score2 = score1;
             call2 = call1;
-            score1 = score[i];
+            score1 = s;
             call1 = 1 << i;
-        } else if score[i] > score2 {
-            score2 = score[i];
+        } else if s > score2 {
+            score2 = s;
             call2 = 1 << i;
         }
     }
@@ -400,6 +400,7 @@ pub fn consensus(
 
     loop {
         // Feed records that start at or before cursor_pos (or prime the cursor).
+        #[allow(clippy::while_let_loop)]
         loop {
             let Some(ref nr) = next_rec else { break };
             let flag = nr.flags();
