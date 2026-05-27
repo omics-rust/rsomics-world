@@ -6,8 +6,7 @@
 //! 3. For each fraction F in [lower..upper] step S:
 //!    a. Randomly sample ⌊F% × total_reads⌋ read indices (without replacement).
 //!    b. For each sampled read, find all BED12 genes it overlaps (any exon).
-//!    c. Per gene: count reads overlapping any exon, compute
-//!       RPKM = count / (exon_kb * mapped_millions).
+//!    c. Per gene: compute RPKM = count / (exon_kb * mapped_millions).
 //! 4. Write two TSV files:
 //!    - `<prefix>.eRPKM.xls`: RPKM per gene per fraction (BED6 + fraction columns)
 //!    - `<prefix>.rawCount.xls`: raw counts per gene per fraction
