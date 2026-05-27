@@ -6,7 +6,6 @@ use std::time::Duration;
 fn bench_ours(c: &mut Criterion) {
     let bam = std::env::var("BCMR_BENCH_BAM")
         .unwrap_or_else(|_| "/Volumes/Zane's HDD/rsomics-fixtures/rnaseq_perf_100k.bam".into());
-    // Our binary accepts BED12; the RSeQC oracle uses refFlat.
     let bed = std::env::var("BCMR_BENCH_BED")
         .unwrap_or_else(|_| "/Volumes/Zane's HDD/rsomics-fixtures/rnaseq_perf.bed12".into());
 
@@ -41,7 +40,7 @@ fn bench_rseqc(c: &mut Criterion) {
     let bam = std::env::var("BCMR_BENCH_BAM")
         .unwrap_or_else(|_| "/Volumes/Zane's HDD/rsomics-fixtures/rnaseq_perf_100k.bam".into());
     let bed = std::env::var("BCMR_BENCH_BED")
-        .unwrap_or_else(|_| "/Volumes/Zane's HDD/rsomics-fixtures/rnaseq_perf.refFlat".into());
+        .unwrap_or_else(|_| "/Volumes/Zane's HDD/rsomics-fixtures/rnaseq_perf.bed12".into());
 
     if !Path::new(&bam).exists() || !Path::new(&bed).exists() {
         eprintln!("SKIP bench: fixtures not found");
