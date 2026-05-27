@@ -48,7 +48,9 @@ fn bench_bcftools(c: &mut Criterion) {
     c.bench_function("bcftools-mpileup", |b| {
         b.iter(|| {
             let status = Command::new("bcftools")
-                .args(["mpileup", "-Ov", "-a", "AD,DP", "-f", &fasta, "-q", "0", "-Q", "1", &bam])
+                .args([
+                    "mpileup", "-Ov", "-a", "AD,DP", "-f", &fasta, "-q", "0", "-Q", "1", &bam,
+                ])
                 .stdout(std::process::Stdio::null())
                 .status()
                 .expect("failed to run bcftools mpileup");

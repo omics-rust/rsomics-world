@@ -26,14 +26,7 @@ fn bench_ours(c: &mut Criterion) {
         b.iter(|| {
             let prefix = tmp.path().join("out");
             let status = Command::new(&binary)
-                .args([
-                    "-i",
-                    &bam,
-                    "-l",
-                    "100",
-                    "-o",
-                    prefix.to_str().unwrap(),
-                ])
+                .args(["-i", &bam, "-l", "100", "-o", prefix.to_str().unwrap()])
                 .status()
                 .expect("failed to run rsomics-deletion-profile");
             assert!(status.success());
@@ -50,8 +43,9 @@ fn bench_rseqc(c: &mut Criterion) {
         return;
     }
 
-    let oracle = std::env::var("RSEQC_DELETION_PROFILE")
-        .unwrap_or_else(|_| "/opt/homebrew/Caskroom/miniforge/base/envs/rs-up/bin/deletion_profile.py".into());
+    let oracle = std::env::var("RSEQC_DELETION_PROFILE").unwrap_or_else(|_| {
+        "/opt/homebrew/Caskroom/miniforge/base/envs/rs-up/bin/deletion_profile.py".into()
+    });
     if !Path::new(&oracle).exists() {
         eprintln!("SKIP bench: deletion_profile.py not found at {oracle}");
         return;

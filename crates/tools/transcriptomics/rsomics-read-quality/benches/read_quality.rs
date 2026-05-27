@@ -43,8 +43,9 @@ fn bench_rseqc(c: &mut Criterion) {
         return;
     }
 
-    let oracle = std::env::var("RSEQC_READ_QUALITY")
-        .unwrap_or_else(|_| "/opt/homebrew/Caskroom/miniforge/base/envs/rs-up/bin/read_quality.py".into());
+    let oracle = std::env::var("RSEQC_READ_QUALITY").unwrap_or_else(|_| {
+        "/opt/homebrew/Caskroom/miniforge/base/envs/rs-up/bin/read_quality.py".into()
+    });
     if !Path::new(&oracle).exists() {
         eprintln!("SKIP bench: read_quality.py not found at {oracle}");
         return;
