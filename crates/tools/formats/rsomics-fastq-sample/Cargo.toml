@@ -14,6 +14,11 @@ keywords = ["fastq", "subsample", "bioinformatics", "seqkit", "sequencing"]
 name = "rsomics-fastq-sample"
 path = "src/main.rs"
 
+[lib]
+name = "rsomics_fastq_sample"
+path = "src/lib.rs"
+doctest = false
+
 [dependencies]
 rsomics-common = { version = "0.6" }
 rsomics-help = { version = "0.3" }
