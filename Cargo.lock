@@ -2283,6 +2283,28 @@ dependencies = [
 ]
 
 [[package]]
+name = "rsomics-bed-intersect"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "rsomics-common",
+ "rsomics-help",
+ "rsomics-intervals",
+ "tempfile",
+]
+
+[[package]]
+name = "rsomics-bed-merge"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "rsomics-common",
+ "rsomics-help",
+ "rsomics-intervals",
+ "tempfile",
+]
+
+[[package]]
 name = "rsomics-bed-nuc"
 version = "0.1.0"
 dependencies = [
@@ -2292,12 +2314,34 @@ dependencies = [
 ]
 
 [[package]]
+name = "rsomics-bed-sort"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "rsomics-common",
+ "rsomics-help",
+ "rsomics-intervals",
+ "tempfile",
+]
+
+[[package]]
 name = "rsomics-bed-split"
 version = "0.1.0"
 dependencies = [
  "clap",
  "rsomics-common",
  "rsomics-help",
+ "tempfile",
+]
+
+[[package]]
+name = "rsomics-bed-subtract"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "rsomics-common",
+ "rsomics-help",
+ "rsomics-intervals",
  "tempfile",
 ]
 
@@ -2601,6 +2645,20 @@ dependencies = [
  "clap",
  "rsomics-common",
  "rsomics-help",
+]
+
+[[package]]
+name = "rsomics-fastp"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "flate2",
+ "needletail 0.6.3",
+ "rsomics-common",
+ "rsomics-help",
+ "serde",
+ "serde_json",
+ "tempfile",
 ]
 
 [[package]]

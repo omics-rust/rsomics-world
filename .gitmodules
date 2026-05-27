@@ -531,3 +531,6 @@
 [submodule "crates/tools/formats/rsomics-bam-phase"]
 	path = crates/tools/formats/rsomics-bam-phase
 	url = git@github.com:omics-rust/rsomics-bam-phase.git
+[submodule "crates/tools/formats/rsomics-bed-intersect"]
+	path = crates/tools/formats/rsomics-bed-intersect
+	url = git@github.com:omics-rust/rsomics-bed-intersect.git
