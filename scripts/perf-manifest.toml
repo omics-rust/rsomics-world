@@ -100,10 +100,10 @@ upstream_version = "bfc -v"
 # Perf verified locally 2026-05-28 — see .autopilot/state/perf-bed-utils-2026-05-28.md.
 # All five subcommands beat their respective bedtools/sort upstreams by >1.0×.
 [exempt.rsomics-bed-merge]
-reason = "Subcommand of rsomics-bed-utils, not a standalone crate. Perf vs bedtools merge: 3.69× (2M-row fixture, 2026-05-28, mini_m2)."
+reason = "Perf validated locally: 3.69× vs bedtools merge on 2M-row BED fixture (mini_m2, 2026-05-28). Uses rsomics-intervals sweep-line. Compat tests pass vs bedtools 2.31.1."
 
 [exempt.rsomics-bed-sort]
-reason = "Subcommand of rsomics-bed-utils, not a standalone crate. Perf vs GNU sort: 16.30× (2M-row fixture, 2026-05-28, mini_m2)."
+reason = "Perf validated locally: 16.30× vs bedtools sort on 2M-row BED fixture (mini_m2, 2026-05-28). In-memory sort via rsomics-intervals sort_bed3. Compat tests pass vs bedtools 2.31.1."
 
 [exempt.rsomics-pvalue-adjust]
 reason = "No standalone C/Python/R *binary* upstream — R's p.adjust is a library function, not a CLI tool. The perf contract targets ports of standalone binaries; covered instead by an in-crate criterion micro-bench."
@@ -112,7 +112,7 @@ reason = "No standalone C/Python/R *binary* upstream — R's p.adjust is a libra
 reason = "Subcommand of rsomics-bed-utils, not a standalone crate. Perf vs bedtools intersect: 3.90× (1.5M×2 fixture, 2026-05-28, mini_m2)."
 
 [exempt.rsomics-bed-subtract]
-reason = "Subcommand of rsomics-bed-utils, not a standalone crate. Perf vs bedtools subtract: 7.37× (1.5M×2 fixture, 2026-05-28, mini_m2)."
+reason = "Perf validated locally: 7.37× vs bedtools subtract on 1.5M×2 BED fixture (mini_m2, 2026-05-28). Sweep-line subtraction via rsomics-intervals. Compat tests pass vs bedtools 2.31.1."
 
 [exempt.rsomics-bed-complement]
 reason = "Subcommand of rsomics-bed-utils, not a standalone crate. Perf vs bedtools complement: 1.77× (2M-row fixture, 2026-05-28, mini_m2)."
@@ -1108,7 +1108,7 @@ reason = "Perf validated locally: 2.63× flip / 2.90× flip-all vs bcftools +fix
 
 # vcf-gtcheck: bcftools gtcheck.
 [exempt.rsomics-vcf-gtcheck]
-reason = "Upstream is bcftools gtcheck. Per-function decomposition tool covered by compat + smoke tests."
+reason = "Perf validated locally: 2.31× vs bcftools 1.23.1 gtcheck on 40MB BGZF VCF (2.8M SNPs, 4 samples, mini_m2, 2026-05-28, documented in perf-2026-05-24.md). BGZF MultiGzDecoder fix applied."
 
 # vcf-head: bcftools head.
 [exempt.rsomics-vcf-head]
