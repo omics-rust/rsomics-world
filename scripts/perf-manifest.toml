@@ -1128,7 +1128,7 @@ reason = "Perf validated locally: 2.53× -t1 vs bcftools +fill-tags 1.23.1 on 10
 
 # vcf-fixref: bcftools +fixref.
 [exempt.rsomics-vcf-fixref]
-reason = "Perf validated locally: 3.14× -t1 vs bcftools +fixref 1.23.1 on 500k-variant VCF + 244MB reference FASTA (mini_m2, 2026-05-24, documented in .autopilot/state/perf-2026-05-24.md)."
+reason = "Perf validated locally: 2.63× flip / 2.90× flip-all vs bcftools +fixref 1.23.1 on 1M-variant 34.2MB VCF, aarch64-apple-darwin mini_m2, 2026-05-28, documented in .autopilot/state/perf-vcf-fixref-2026-05-28.md."
 
 # vcf-gtcheck: bcftools gtcheck.
 [exempt.rsomics-vcf-gtcheck]
