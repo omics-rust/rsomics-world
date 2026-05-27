@@ -307,7 +307,7 @@ mod tests {
     fn accumulate_md_single_mismatch() {
         // MD:Z:36C62 — mismatch at aligned read position 36, ref=C, read=A → C2A index 3
         let md = b"36C62";
-        let mut seq = vec![b'A'; 99];
+        let seq = vec![b'A'; 99];
         let mut counts = vec![[0u32; 12]; 100];
         accumulate_md(md, &seq, 0, 100, &mut counts);
         assert_eq!(counts[36][3], 1, "C2A at pos 36");
