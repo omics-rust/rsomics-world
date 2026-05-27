@@ -516,3 +516,6 @@
 [submodule "crates/foundation/rsomics-vcf-expr"]
 	path = crates/foundation/rsomics-vcf-expr
 	url = git@github.com:omics-rust/rsomics-vcf-expr.git
+[submodule "crates/tools/transcriptomics/rsomics-insertion-profile"]
+	path = crates/tools/transcriptomics/rsomics-insertion-profile
+	url = git@github.com:omics-rust/rsomics-insertion-profile.git
