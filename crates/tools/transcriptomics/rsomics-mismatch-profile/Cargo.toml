@@ -18,5 +18,10 @@ rsomics-bamio = "0.1"
 clap.workspace = true
 noodles = { workspace = true, features = ["sam", "bam"] }
 
+[[bench]]
+name = "mismatch_profile"
+harness = false
+
 [dev-dependencies]
 tempfile = "3"
+criterion.workspace = true

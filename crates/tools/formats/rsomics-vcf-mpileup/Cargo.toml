@@ -11,6 +11,10 @@ readme = "README.md"
 categories = ["science"]
 keywords = ["bam", "vcf", "mpileup", "genotype-likelihoods", "bioinformatics"]
 
+[[bench]]
+name = "vcf_mpileup"
+harness = false
+
 [lib]
 name = "rsomics_vcf_mpileup"
 path = "src/lib.rs"
@@ -25,3 +29,6 @@ rsomics-bamio = { version = "0.1" }
 rsomics-pileup = { version = "0.1" }
 clap.workspace = true
 noodles = { version = "0.110", features = ["fasta", "sam", "bam", "bgzf"] }
+
+[dev-dependencies]
+criterion.workspace = true
