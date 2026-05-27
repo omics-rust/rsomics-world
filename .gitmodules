@@ -522,3 +522,6 @@
 [submodule "crates/tools/formats/rsomics-vcf-convert"]
 	path = crates/tools/formats/rsomics-vcf-convert
 	url = git@github.com:omics-rust/rsomics-vcf-convert.git
+[submodule "crates/tools/formats/rsomics-vcf-cnv"]
+	path = crates/tools/formats/rsomics-vcf-cnv
+	url = git@github.com:omics-rust/rsomics-vcf-cnv.git
