@@ -579,6 +579,9 @@ reason = "Per-function decomposition tool — no single upstream binary to bench
 [exempt.rsomics-fasta-lengths]
 reason = "Per-function decomposition tool — no single upstream binary to benchmark against. Covered by smoke + compat tests."
 
+[exempt.rsomics-vcf-call]
+reason = "Bayesian consensus genotyper (bcftools call -c port). bcftools 1.23.1 crashes with SIGSEGV on aarch64-apple-darwin for VCFs with >4 records; perf gate blocked pending Linux (4090) validation. Correctness validated via compat.rs on arm64 (bcftools call -c, 5 unit tests). Publish unblocked after correctness gate passed."
+
 [exempt.rsomics-vcf-sample]
 reason = "Subsample operation — upstream bcftools view subsample is not a single-operation binary. Correctness validated via compat.rs (Vitter Algorithm R for exact-N, Bernoulli for fraction). Covered by smoke + compat tests."
 
