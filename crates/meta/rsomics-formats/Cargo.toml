@@ -1,6 +1,6 @@
 [package]
 name = "rsomics-formats"
-version = "0.10.0"
+version = "0.11.0"
 description = "Meta-crate re-exporting rsomics format-tool libraries by feature flag"
 edition.workspace = true
 rust-version.workspace = true
@@ -109,12 +109,14 @@ bed = [
     "dep:rsomics-bed-utils",
     "dep:rsomics-bed-closest",
     "dep:rsomics-bed-complement",
+    "dep:rsomics-bed-count",
     "dep:rsomics-bed-expand",
     "dep:rsomics-bed-flank",
     "dep:rsomics-bed-getfasta",
     "dep:rsomics-bed-intersect",
     "dep:rsomics-bed-jaccard",
     "dep:rsomics-bed-len",
+    "dep:rsomics-bed-makewindows",
     "dep:rsomics-bed-map",
     "dep:rsomics-bed-merge",
     "dep:rsomics-bed-midpoint",
@@ -122,6 +124,7 @@ bed = [
     "dep:rsomics-bed-slop",
     "dep:rsomics-bed-sort",
     "dep:rsomics-bed-spacing",
+    "dep:rsomics-bed-stats",
     "dep:rsomics-bed-subtract",
     "dep:rsomics-bed-total-bp",
     "dep:rsomics-bed-window",
@@ -224,12 +227,14 @@ rsomics-sam-to-bam = { path = "../../tools/formats/rsomics-sam-to-bam", version 
 rsomics-bed-utils = { path = "../../tools/formats/rsomics-bed-utils", version = "0.2", optional = true }
 rsomics-bed-closest = { path = "../../tools/formats/rsomics-bed-closest", version = "0.1", optional = true }
 rsomics-bed-complement = { path = "../../tools/formats/rsomics-bed-complement", version = "0.1", optional = true }
+rsomics-bed-count = { path = "../../tools/formats/rsomics-bed-count", version = "0.1", optional = true }
 rsomics-bed-expand = { path = "../../tools/formats/rsomics-bed-expand", version = "0.1", optional = true }
 rsomics-bed-flank = { path = "../../tools/formats/rsomics-bed-flank", version = "0.1", optional = true }
 rsomics-bed-getfasta = { path = "../../tools/formats/rsomics-bed-getfasta", version = "0.1", optional = true }
 rsomics-bed-intersect = { path = "../../tools/formats/rsomics-bed-intersect", version = "0.1", optional = true }
 rsomics-bed-jaccard = { path = "../../tools/formats/rsomics-bed-jaccard", version = "0.1", optional = true }
 rsomics-bed-len = { path = "../../tools/formats/rsomics-bed-len", version = "0.1", optional = true }
+rsomics-bed-makewindows = { path = "../../tools/formats/rsomics-bed-makewindows", version = "0.1", optional = true }
 rsomics-bed-map = { path = "../../tools/formats/rsomics-bed-map", version = "0.1", optional = true }
 rsomics-bed-merge = { path = "../../tools/formats/rsomics-bed-merge", version = "0.2", optional = true }
 rsomics-bed-midpoint = { path = "../../tools/formats/rsomics-bed-midpoint", version = "0.1", optional = true }
@@ -237,6 +242,7 @@ rsomics-bed-shift = { path = "../../tools/formats/rsomics-bed-shift", version = 
 rsomics-bed-slop = { path = "../../tools/formats/rsomics-bed-slop", version = "0.1", optional = true }
 rsomics-bed-sort = { path = "../../tools/formats/rsomics-bed-sort", version = "0.1", optional = true }
 rsomics-bed-spacing = { path = "../../tools/formats/rsomics-bed-spacing", version = "0.1", optional = true }
+rsomics-bed-stats = { path = "../../tools/formats/rsomics-bed-stats", version = "0.1", optional = true }
 rsomics-bed-subtract = { path = "../../tools/formats/rsomics-bed-subtract", version = "0.1", optional = true }
 rsomics-bed-total-bp = { path = "../../tools/formats/rsomics-bed-total-bp", version = "0.1", optional = true }
 rsomics-bed-window = { path = "../../tools/formats/rsomics-bed-window", version = "0.1", optional = true }
