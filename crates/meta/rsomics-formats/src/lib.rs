@@ -134,12 +134,12 @@ pub mod bed {
     pub use rsomics_bed_subtract as subtract;
     pub use rsomics_bed_to_gff as to_gff;
     pub use rsomics_bed_total_bp as total_bp;
-    pub use rsomics_bed12tobed6 as bed12tobed6;
     pub use rsomics_bed_unionbedg as unionbedg;
     pub use rsomics_bed_unique as unique;
     pub use rsomics_bed_utils as utils;
     pub use rsomics_bed_validate as validate_bed;
     pub use rsomics_bed_window as window;
+    pub use rsomics_bed12tobed6 as bed12tobed6;
 }
 
 #[cfg(feature = "gff")]
