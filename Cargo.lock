@@ -2260,6 +2260,7 @@ name = "rsomics-bed-closest"
 version = "0.1.0"
 dependencies = [
  "clap",
+ "criterion 0.7.0",
  "rsomics-common",
  "rsomics-help",
  "tempfile",
@@ -2270,6 +2271,7 @@ name = "rsomics-bed-complement"
 version = "0.1.0"
 dependencies = [
  "clap",
+ "criterion 0.7.0",
  "rsomics-common",
  "rsomics-help",
  "tempfile",
@@ -2298,6 +2300,7 @@ name = "rsomics-bed-flank"
 version = "0.1.0"
 dependencies = [
  "clap",
+ "criterion 0.7.0",
  "rsomics-common",
  "rsomics-help",
  "tempfile",
@@ -2317,6 +2320,7 @@ name = "rsomics-bed-getfasta"
 version = "0.1.0"
 dependencies = [
  "clap",
+ "criterion 0.7.0",
  "needletail 0.6.3",
  "rsomics-common",
  "rsomics-help",
@@ -2339,6 +2343,7 @@ name = "rsomics-bed-jaccard"
 version = "0.1.0"
 dependencies = [
  "clap",
+ "criterion 0.7.0",
  "rsomics-common",
  "rsomics-help",
  "rsomics-intervals",
@@ -2370,6 +2375,7 @@ name = "rsomics-bed-slop"
 version = "0.1.0"
 dependencies = [
  "clap",
+ "criterion 0.7.0",
  "rsomics-common",
  "rsomics-help",
  "tempfile",
@@ -3883,6 +3889,7 @@ name = "rsomics-vcf-sample"
 version = "0.1.0"
 dependencies = [
  "clap",
+ "criterion 0.7.0",
  "rand 0.9.4",
  "rsomics-common",
  "rsomics-help",
