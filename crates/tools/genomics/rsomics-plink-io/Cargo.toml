@@ -1,0 +1,42 @@
+[package]
+name = "rsomics-plink-io"
+version = "0.1.0"
+description = "PLINK1 binary .bed/.bim/.fam reader: allele-freq, missingness, HWE, VCF/012 export"
+edition = "2024"
+rust-version = "1.91"
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/omics-rust/rsomics-plink-io"
+authors = ["Zane Leong <efd@live.com>"]
+
+## Origin
+##
+## Independent Rust implementation of PLINK1 binary format I/O operations based on:
+## - Chang et al. 2015 (PLINK 1.9, doi:10.1186/s13742-015-0047-8)
+## - PLINK 1.9 binary fileset specification (https://www.cog-genomics.org/plink/1.9/formats)
+## - Black-box behaviour testing against plink 1.9 binary
+##
+## License: MIT OR Apache-2.0
+## Upstream credit: PLINK 1.9 (Christopher Chang et al., GPLv3)
+
+[[bin]]
+name = "rsomics-plink-io"
+path = "src/main.rs"
+
+[lib]
+name = "rsomics_plink_io"
+path = "src/lib.rs"
+doctest = false
+
+[[bench]]
+name = "bench"
+harness = false
+
+[dependencies]
+rsomics-common = { version = "0.6" }
+rsomics-pgen = { version = "0.1" }
+clap = { version = "4", features = ["derive"] }
+anyhow = "1"
+
+[dev-dependencies]
+criterion = { version = "0.7", default-features = false, features = ["cargo_bench_support"] }
+tempfile = "3"
