@@ -1157,4 +1157,4 @@ reason = "Novel tool — convert WIG/bedGraph signal tracks to BED intervals abo
 
 # fastq-complexity: low-complexity filter matching fastp -y/-Y algorithm.
 [exempt.rsomics-fastq-complexity]
-reason = "Low-complexity filter. Upstream is fastp -y/-Y. fastp 0.20.1 CI compat test validates correctness. Perf gate pending 4090 validation with representative fixture."
+reason = "Low-complexity filter. Upstream is fastp -y/-Y. Perf 6.17x vs fastp 1.3.3 on 31.6 MB / 100k reads fixture (mini_m2, 2026-05-28, see perf-fastq-complexity-2026-05-28.md). 4090 compat validated with fastp 0.20.1."
