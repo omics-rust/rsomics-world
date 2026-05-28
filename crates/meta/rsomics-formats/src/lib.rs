@@ -118,7 +118,6 @@ pub mod bed {
     pub use rsomics_bed_map as map;
     pub use rsomics_bed_merge as merge;
     pub use rsomics_bed_midpoint as midpoint;
-    pub use rsomics_bed_nuc as nuc;
     pub use rsomics_bed_random as random;
     pub use rsomics_bed_sample as sample;
     pub use rsomics_bed_shift as shift;

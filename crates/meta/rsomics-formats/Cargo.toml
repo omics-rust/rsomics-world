@@ -122,7 +122,6 @@ bed = [
     "dep:rsomics-bed-map",
     "dep:rsomics-bed-merge",
     "dep:rsomics-bed-midpoint",
-    "dep:rsomics-bed-nuc",
     "dep:rsomics-bed-random",
     "dep:rsomics-bed-sample",
     "dep:rsomics-bed-shift",
@@ -239,7 +238,6 @@ rsomics-bed-complement = { path = "../../tools/formats/rsomics-bed-complement", 
 rsomics-bed-count = { path = "../../tools/formats/rsomics-bed-count", version = "0.1", optional = true }
 rsomics-bed-expand = { path = "../../tools/formats/rsomics-bed-expand", version = "0.1", optional = true }
 rsomics-bed-flank = { path = "../../tools/formats/rsomics-bed-flank", version = "0.1", optional = true }
-rsomics-bed-nuc = { path = "../../tools/epigenomics/rsomics-bed-nuc", version = "0.1", optional = true }
 rsomics-bed-random = { path = "../../tools/formats/rsomics-bed-random", version = "0.1", optional = true }
 rsomics-bed-sample = { path = "../../tools/formats/rsomics-bed-sample", version = "0.1", optional = true }
 rsomics-bed-getfasta = { path = "../../tools/formats/rsomics-bed-getfasta", version = "0.1", optional = true }
