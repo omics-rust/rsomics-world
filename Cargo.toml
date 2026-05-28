@@ -208,6 +208,7 @@ rsomics-vcf-fill-tags = { path = "crates/tools/formats/rsomics-vcf-fill-tags" }
 rsomics-vcf-validate = { path = "crates/tools/formats/rsomics-vcf-validate" }
 rsomics-vcf-popgen = { path = "crates/tools/formats/rsomics-vcf-popgen" }
 rsomics-plink-io = { path = "crates/tools/genomics/rsomics-plink-io" }
+rsomics-plink-assoc = { path = "crates/tools/genomics/rsomics-plink-assoc" }
 rsomics-bam-region = { path = "crates/tools/genomics/rsomics-bam-region" }
 rsomics-bam-subsample = { path = "crates/tools/genomics/rsomics-bam-subsample" }
 rsomics-fasta-mask = { path = "crates/tools/genomics/rsomics-fasta-mask" }
