@@ -1,6 +1,6 @@
 [package]
 name = "rsomics-formats"
-version = "0.24.0"
+version = "0.25.0"
 description = "Meta-crate re-exporting rsomics format-tool libraries by feature flag"
 edition.workspace = true
 rust-version.workspace = true
@@ -49,6 +49,7 @@ vcf = [
     "dep:rsomics-vcf-concat",
     "dep:rsomics-vcf-consensus",
     "dep:rsomics-vcf-convert",
+    "dep:rsomics-vcf-csq",
     "dep:rsomics-vcf-fill-tags",
     "dep:rsomics-vcf-filter",
     "dep:rsomics-vcf-fixref",
@@ -60,6 +61,7 @@ vcf = [
     "dep:rsomics-vcf-mpileup",
     "dep:rsomics-vcf-norm",
     "dep:rsomics-vcf-polysomy",
+    "dep:rsomics-vcf-popgen",
     "dep:rsomics-vcf-query",
     "dep:rsomics-vcf-reheader",
     "dep:rsomics-vcf-roh",
@@ -225,6 +227,8 @@ rsomics-vcf-stats = { path = "../../tools/formats/rsomics-vcf-stats", version = 
 rsomics-vcf-to-bed = { path = "../../tools/genomics/rsomics-vcf-to-bed", version = "0.1", optional = true }
 rsomics-vcf-validate = { path = "../../tools/formats/rsomics-vcf-validate", version = "0.1", optional = true }
 rsomics-vcf-view = { path = "../../tools/formats/rsomics-vcf-view", version = "0.2", optional = true }
+rsomics-vcf-csq = { path = "../../tools/formats/rsomics-vcf-csq", version = "0.1", optional = true }
+rsomics-vcf-popgen = { path = "../../tools/formats/rsomics-vcf-popgen", version = "0.1", optional = true }
 
 rsomics-bam-addreplacerg = { path = "../../tools/formats/rsomics-bam-addreplacerg", version = "0.1", optional = true }
 rsomics-bam-ampliconclip = { path = "../../tools/formats/rsomics-bam-ampliconclip", version = "0.1", optional = true }
