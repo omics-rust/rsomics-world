@@ -2256,6 +2256,26 @@ dependencies = [
 ]
 
 [[package]]
+name = "rsomics-bed-closest"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "rsomics-common",
+ "rsomics-help",
+ "tempfile",
+]
+
+[[package]]
+name = "rsomics-bed-complement"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "rsomics-common",
+ "rsomics-help",
+ "tempfile",
+]
+
+[[package]]
 name = "rsomics-bed-coverage"
 version = "0.1.0"
 dependencies = [
@@ -2274,6 +2294,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "rsomics-bed-flank"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "rsomics-common",
+ "rsomics-help",
+ "tempfile",
+]
+
+[[package]]
 name = "rsomics-bed-genomecov"
 version = "0.1.1"
 dependencies = [
@@ -2283,7 +2313,29 @@ dependencies = [
 ]
 
 [[package]]
+name = "rsomics-bed-getfasta"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "needletail 0.6.3",
+ "rsomics-common",
+ "rsomics-help",
+ "tempfile",
+]
+
+[[package]]
 name = "rsomics-bed-intersect"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "rsomics-common",
+ "rsomics-help",
+ "rsomics-intervals",
+ "tempfile",
+]
+
+[[package]]
+name = "rsomics-bed-jaccard"
 version = "0.1.0"
 dependencies = [
  "clap",
@@ -2311,6 +2363,16 @@ dependencies = [
  "clap",
  "rsomics-common",
  "rsomics-help",
+]
+
+[[package]]
+name = "rsomics-bed-slop"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "rsomics-common",
+ "rsomics-help",
+ "tempfile",
 ]
 
 [[package]]
@@ -2905,7 +2967,7 @@ dependencies = [
 
 [[package]]
 name = "rsomics-formats"
-version = "0.1.0"
+version = "0.3.0"
 dependencies = [
  "rsomics-bam-coverage",
  "rsomics-bam-depth",
@@ -2919,6 +2981,16 @@ dependencies = [
  "rsomics-bam-stats",
  "rsomics-bam-to-fastq",
  "rsomics-bam-view",
+ "rsomics-bed-closest",
+ "rsomics-bed-complement",
+ "rsomics-bed-flank",
+ "rsomics-bed-getfasta",
+ "rsomics-bed-intersect",
+ "rsomics-bed-jaccard",
+ "rsomics-bed-merge",
+ "rsomics-bed-slop",
+ "rsomics-bed-sort",
+ "rsomics-bed-subtract",
  "rsomics-bed-utils",
  "rsomics-fasta-index",
  "rsomics-fasta-n50",
@@ -2942,11 +3014,17 @@ dependencies = [
  "rsomics-gff-utils",
  "rsomics-sam-to-bam",
  "rsomics-vcf-annotate",
+ "rsomics-vcf-call",
+ "rsomics-vcf-cnv",
  "rsomics-vcf-filter",
+ "rsomics-vcf-gtcheck",
  "rsomics-vcf-isec",
  "rsomics-vcf-merge",
  "rsomics-vcf-norm",
+ "rsomics-vcf-polysomy",
  "rsomics-vcf-query",
+ "rsomics-vcf-roh",
+ "rsomics-vcf-sample",
  "rsomics-vcf-split",
  "rsomics-vcf-stats",
  "rsomics-vcf-utils",
@@ -3569,6 +3647,18 @@ dependencies = [
 ]
 
 [[package]]
+name = "rsomics-vcf-call"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "criterion 0.7.0",
+ "noodles",
+ "rsomics-common",
+ "rsomics-help",
+ "tempfile",
+]
+
+[[package]]
 name = "rsomics-vcf-cnv"
 version = "0.1.0"
 dependencies = [
@@ -3783,6 +3873,17 @@ version = "0.1.0"
 dependencies = [
  "clap",
  "flate2",
+ "rsomics-common",
+ "rsomics-help",
+ "tempfile",
+]
+
+[[package]]
+name = "rsomics-vcf-sample"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "rand 0.9.4",
  "rsomics-common",
  "rsomics-help",
  "tempfile",
