@@ -1,0 +1,137 @@
+name: Release binaries
+on:
+  push:
+    tags:
+      - 'rsomics-*-v[0-9]+.[0-9]+.[0-9]+'
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Existing tag to re-build binaries for (e.g. rsomics-fasta-stats-v0.1.0)"
+        required: true
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        target:
+          - { runner: ubuntu-latest,     triple: x86_64-unknown-linux-gnu  }
+          - { runner: ubuntu-24.04-arm,  triple: aarch64-unknown-linux-gnu }
+          - { runner: macos-latest,      triple: aarch64-apple-darwin      }
+    runs-on: ${{ matrix.target.runner }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          ref: ${{ github.event.inputs.tag || github.ref }}
+
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+
+      - name: Parse tag → crate + version
+        id: parse
+        shell: bash
+        run: |
+          TAG="${{ github.event.inputs.tag || github.ref_name }}"
+          VERSION="${TAG##*-v}"
+          CRATE="${TAG%-v*}"
+          echo "crate=$CRATE" >> "$GITHUB_OUTPUT"
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+
+      - name: Detect binary target
+        id: hasbin
+        shell: bash
+        run: |
+          CRATE=${{ steps.parse.outputs.crate }}
+          MANIFEST=$(find crates -mindepth 3 -maxdepth 5 -path "*/${CRATE}/Cargo.toml" | head -n 1)
+          if [ -z "$MANIFEST" ]; then
+            echo "::error::no Cargo.toml found for $CRATE"
+            exit 1
+          fi
+          if grep -q '^\[\[bin\]\]' "$MANIFEST"; then
+            echo "has_bin=yes" >> "$GITHUB_OUTPUT"
+          else
+            echo "has_bin=no" >> "$GITHUB_OUTPUT"
+            echo "::notice::$CRATE is library-only — skipping binary build + package."
+          fi
+
+      - name: ISA-L build toolchain (isal-sys → rsomics-igzip, Linux only)
+        if: steps.hasbin.outputs.has_bin == 'yes' && runner.os == 'Linux'
+        shell: bash
+        run: |
+          # FASTQ tool crates pull rsomics-seqio, whose Linux gz backend is
+          # isal-sys (ISA-L from C+asm via autotools+nasm). Off Linux seqio
+          # uses its pure-Rust decoder, so no toolchain is needed there.
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends nasm autoconf automake libtool
+
+      - name: Build release binary
+        if: steps.hasbin.outputs.has_bin == 'yes'
+        shell: bash
+        # Native build only — each runner's host triple equals the target
+        # triple, so `--target` would trigger redundant component installs
+        # (rust-src in particular) that the runner image can't always
+        # satisfy reliably.
+        run: cargo build --release -p ${{ steps.parse.outputs.crate }}
+
+      - name: Package archive
+        if: steps.hasbin.outputs.has_bin == 'yes'
+        id: pack
+        shell: bash
+        run: |
+          CRATE=${{ steps.parse.outputs.crate }}
+          VERSION=${{ steps.parse.outputs.version }}
+          TRIPLE=${{ matrix.target.triple }}
+          STAGE=$(mktemp -d)
+          NAME="${CRATE}-v${VERSION}-${TRIPLE}"
+          mkdir "$STAGE/$NAME"
+          cp "target/release/${CRATE}" "$STAGE/$NAME/"
+          MANIFEST=$(find crates -mindepth 3 -maxdepth 5 -path "*/${CRATE}/Cargo.toml" | head -n 1)
+          CRATE_DIR=$(dirname "$MANIFEST")
+          [ -f "$CRATE_DIR/README.md" ]      && cp "$CRATE_DIR/README.md"      "$STAGE/$NAME/"
+          [ -f "$CRATE_DIR/LICENSE-MIT" ]    && cp "$CRATE_DIR/LICENSE-MIT"    "$STAGE/$NAME/"
+          [ -f "$CRATE_DIR/LICENSE-APACHE-2.0" ] && cp "$CRATE_DIR/LICENSE-APACHE-2.0" "$STAGE/$NAME/"
+          ARCHIVE="${NAME}.tar.gz"
+          ( cd "$STAGE" && tar -czf "$ARCHIVE" "$NAME" )
+          mv "$STAGE/$ARCHIVE" .
+          shasum -a 256 "$ARCHIVE" > "${ARCHIVE}.sha256"
+          echo "archive=$ARCHIVE" >> "$GITHUB_OUTPUT"
+
+      - name: Upload artefact (for release step)
+        if: steps.hasbin.outputs.has_bin == 'yes'
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ steps.pack.outputs.archive }}
+          path: |
+            ${{ steps.pack.outputs.archive }}
+            ${{ steps.pack.outputs.archive }}.sha256
+          if-no-files-found: error
+
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          ref: ${{ github.event.inputs.tag || github.ref }}
+      - uses: actions/download-artifact@v4
+        with:
+          path: artefacts
+          merge-multiple: true
+      - name: Upload to GitHub Release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        shell: bash
+        run: |
+          TAG="${{ github.event.inputs.tag || github.ref_name }}"
+          # Skip cleanly when no binaries were produced (library-only crate).
+          if [ -z "$(ls -A artefacts 2>/dev/null)" ]; then
+            echo "::notice::No artefacts to upload for $TAG (library-only crate?)."
+            exit 0
+          fi
+          gh release view "$TAG" >/dev/null 2>&1 || gh release create "$TAG" --title "$TAG" --notes "Auto-built binaries for $TAG"
+          gh release upload "$TAG" artefacts/*.tar.gz artefacts/*.sha256 --clobber
