@@ -59,6 +59,11 @@ pub enum Cmd {
 }
 
 #[cfg(test)]
-pub fn debug_assert_cli() {
-    <Cli as clap::CommandFactory>::command().debug_assert();
+mod tests {
+    use super::*;
+
+    #[test]
+    fn cli_definition_is_valid() {
+        <Cli as clap::CommandFactory>::command().debug_assert();
+    }
 }
