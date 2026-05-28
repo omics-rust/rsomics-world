@@ -104,6 +104,7 @@ pub mod bam {
 #[cfg(feature = "bed")]
 pub mod bed {
     pub use rsomics_bed_closest as closest;
+    pub use rsomics_bed_cluster as cluster;
     pub use rsomics_bed_complement as complement;
     pub use rsomics_bed_count as count;
     pub use rsomics_bed_expand as expand;
@@ -117,7 +118,9 @@ pub mod bed {
     pub use rsomics_bed_map as map;
     pub use rsomics_bed_merge as merge;
     pub use rsomics_bed_midpoint as midpoint;
+    pub use rsomics_bed_nuc as nuc;
     pub use rsomics_bed_random as random;
+    pub use rsomics_bed_sample as sample;
     pub use rsomics_bed_shift as shift;
     pub use rsomics_bed_slop as slop;
     pub use rsomics_bed_sort as sort;

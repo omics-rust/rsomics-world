@@ -1,6 +1,6 @@
 [package]
 name = "rsomics-formats"
-version = "0.14.0"
+version = "0.15.0"
 description = "Meta-crate re-exporting rsomics format-tool libraries by feature flag"
 edition.workspace = true
 rust-version.workspace = true
@@ -108,10 +108,10 @@ bam = [
 bed = [
     "dep:rsomics-bed-utils",
     "dep:rsomics-bed-closest",
+    "dep:rsomics-bed-cluster",
     "dep:rsomics-bed-complement",
     "dep:rsomics-bed-count",
     "dep:rsomics-bed-expand",
-    "dep:rsomics-bed-random",
     "dep:rsomics-bed-flank",
     "dep:rsomics-bed-getfasta",
     "dep:rsomics-bed-groupby",
@@ -122,6 +122,9 @@ bed = [
     "dep:rsomics-bed-map",
     "dep:rsomics-bed-merge",
     "dep:rsomics-bed-midpoint",
+    "dep:rsomics-bed-nuc",
+    "dep:rsomics-bed-random",
+    "dep:rsomics-bed-sample",
     "dep:rsomics-bed-shift",
     "dep:rsomics-bed-slop",
     "dep:rsomics-bed-sort",
@@ -231,11 +234,14 @@ rsomics-sam-to-bam = { path = "../../tools/formats/rsomics-sam-to-bam", version 
 
 rsomics-bed-utils = { path = "../../tools/formats/rsomics-bed-utils", version = "0.2", optional = true }
 rsomics-bed-closest = { path = "../../tools/formats/rsomics-bed-closest", version = "0.1", optional = true }
+rsomics-bed-cluster = { path = "../../tools/formats/rsomics-bed-cluster", version = "0.1", optional = true }
 rsomics-bed-complement = { path = "../../tools/formats/rsomics-bed-complement", version = "0.1", optional = true }
 rsomics-bed-count = { path = "../../tools/formats/rsomics-bed-count", version = "0.1", optional = true }
 rsomics-bed-expand = { path = "../../tools/formats/rsomics-bed-expand", version = "0.1", optional = true }
-rsomics-bed-random = { path = "../../tools/formats/rsomics-bed-random", version = "0.1", optional = true }
 rsomics-bed-flank = { path = "../../tools/formats/rsomics-bed-flank", version = "0.1", optional = true }
+rsomics-bed-nuc = { path = "../../tools/formats/rsomics-bed-nuc", version = "0.1", optional = true }
+rsomics-bed-random = { path = "../../tools/formats/rsomics-bed-random", version = "0.1", optional = true }
+rsomics-bed-sample = { path = "../../tools/formats/rsomics-bed-sample", version = "0.1", optional = true }
 rsomics-bed-getfasta = { path = "../../tools/formats/rsomics-bed-getfasta", version = "0.1", optional = true }
 rsomics-bed-groupby = { path = "../../tools/formats/rsomics-bed-groupby", version = "0.1", optional = true }
 rsomics-bed-intersect = { path = "../../tools/formats/rsomics-bed-intersect", version = "0.1", optional = true }

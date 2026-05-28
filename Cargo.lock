@@ -3242,7 +3242,7 @@ dependencies = [
 
 [[package]]
 name = "rsomics-formats"
-version = "0.14.0"
+version = "0.15.0"
 dependencies = [
  "rsomics-bam-addreplacerg",
  "rsomics-bam-ampliconclip",
@@ -3278,11 +3278,15 @@ dependencies = [
  "rsomics-bam-targetcut",
  "rsomics-bam-to-fastq",
  "rsomics-bam-view",
+ "rsomics-bed-annotate",
  "rsomics-bed-closest",
+ "rsomics-bed-cluster",
  "rsomics-bed-complement",
  "rsomics-bed-count",
+ "rsomics-bed-coverage",
  "rsomics-bed-expand",
  "rsomics-bed-flank",
+ "rsomics-bed-genomecov",
  "rsomics-bed-getfasta",
  "rsomics-bed-groupby",
  "rsomics-bed-intersect",
@@ -3292,7 +3296,9 @@ dependencies = [
  "rsomics-bed-map",
  "rsomics-bed-merge",
  "rsomics-bed-midpoint",
+ "rsomics-bed-nuc",
  "rsomics-bed-random",
+ "rsomics-bed-sample",
  "rsomics-bed-shift",
  "rsomics-bed-slop",
  "rsomics-bed-sort",
