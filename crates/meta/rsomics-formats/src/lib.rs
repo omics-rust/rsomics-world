@@ -1,8 +1,11 @@
 #[cfg(feature = "fasta")]
 pub mod fasta {
     pub use rsomics_fasta_index as index;
+    pub use rsomics_fasta_locate as locate;
     pub use rsomics_fasta_n50 as n50;
+    pub use rsomics_fasta_sliding as sliding;
     pub use rsomics_fasta_stats as stats;
+    pub use rsomics_fasta_subseq as subseq;
     pub use rsomics_fasta_translate as translate;
     pub use rsomics_fasta_utils as utils;
     pub use rsomics_fasta_validate as validate;
@@ -16,6 +19,7 @@ pub mod fastq {
     pub use rsomics_fastq_filter as filter;
     pub use rsomics_fastq_merge as merge;
     pub use rsomics_fastq_pair as pair;
+    pub use rsomics_fastq_quality as quality;
     pub use rsomics_fastq_split as split;
     pub use rsomics_fastq_stats as stats;
     pub use rsomics_fastq_trim as trim;
@@ -41,16 +45,38 @@ pub mod vcf {
 
 #[cfg(feature = "bam")]
 pub mod bam {
+    pub use rsomics_bam_addreplacerg as addreplacerg;
+    pub use rsomics_bam_ampliconclip as ampliconclip;
+    pub use rsomics_bam_ampliconstats as ampliconstats;
+    pub use rsomics_bam_bedcov as bedcov;
+    pub use rsomics_bam_calmd as calmd;
+    pub use rsomics_bam_cat as cat;
+    pub use rsomics_bam_checksum as checksum;
+    pub use rsomics_bam_collate as collate;
+    pub use rsomics_bam_consensus as consensus;
     pub use rsomics_bam_coverage as coverage;
+    pub use rsomics_bam_depad as depad;
     pub use rsomics_bam_depth as depth;
+    pub use rsomics_bam_dict as dict;
+    pub use rsomics_bam_fasta as fasta;
+    pub use rsomics_bam_fixmate as fixmate;
     pub use rsomics_bam_flagstat as flagstat;
+    pub use rsomics_bam_head as head;
     pub use rsomics_bam_idxstats as idxstats;
+    pub use rsomics_bam_import as import;
     pub use rsomics_bam_index as index;
     pub use rsomics_bam_markdup as markdup;
     pub use rsomics_bam_merge as merge;
+    pub use rsomics_bam_mpileup as mpileup;
+    pub use rsomics_bam_phase as phase;
+    pub use rsomics_bam_quickcheck as quickcheck;
+    pub use rsomics_bam_reheader as reheader;
+    pub use rsomics_bam_reset as reset;
+    pub use rsomics_bam_samples as samples;
     pub use rsomics_bam_sort as sort;
     pub use rsomics_bam_split as split;
     pub use rsomics_bam_stats as stats;
+    pub use rsomics_bam_targetcut as targetcut;
     pub use rsomics_bam_to_fastq as to_fastq;
     pub use rsomics_bam_view as view;
     pub use rsomics_sam_to_bam as sam_to_bam;

@@ -1,6 +1,6 @@
 [package]
 name = "rsomics-formats"
-version = "0.6.0"
+version = "0.7.0"
 description = "Meta-crate re-exporting rsomics format-tool libraries by feature flag"
 edition.workspace = true
 rust-version.workspace = true
@@ -13,8 +13,11 @@ default = []
 fasta = [
     "dep:rsomics-fasta-utils",
     "dep:rsomics-fasta-index",
+    "dep:rsomics-fasta-locate",
     "dep:rsomics-fasta-n50",
+    "dep:rsomics-fasta-sliding",
     "dep:rsomics-fasta-stats",
+    "dep:rsomics-fasta-subseq",
     "dep:rsomics-fasta-translate",
     "dep:rsomics-fasta-validate",
 ]
@@ -26,6 +29,7 @@ fastq = [
     "dep:rsomics-fastq-filter",
     "dep:rsomics-fastq-merge",
     "dep:rsomics-fastq-pair",
+    "dep:rsomics-fastq-quality",
     "dep:rsomics-fastq-sample",
     "dep:rsomics-fastq-split",
     "dep:rsomics-fastq-stats",
@@ -53,16 +57,38 @@ vcf = [
     "dep:rsomics-vcf-validate",
 ]
 bam = [
+    "dep:rsomics-bam-addreplacerg",
+    "dep:rsomics-bam-ampliconclip",
+    "dep:rsomics-bam-ampliconstats",
+    "dep:rsomics-bam-bedcov",
+    "dep:rsomics-bam-calmd",
+    "dep:rsomics-bam-cat",
+    "dep:rsomics-bam-checksum",
+    "dep:rsomics-bam-collate",
+    "dep:rsomics-bam-consensus",
     "dep:rsomics-bam-coverage",
+    "dep:rsomics-bam-depad",
     "dep:rsomics-bam-depth",
+    "dep:rsomics-bam-dict",
+    "dep:rsomics-bam-fasta",
+    "dep:rsomics-bam-fixmate",
     "dep:rsomics-bam-flagstat",
+    "dep:rsomics-bam-head",
     "dep:rsomics-bam-idxstats",
+    "dep:rsomics-bam-import",
     "dep:rsomics-bam-index",
     "dep:rsomics-bam-markdup",
     "dep:rsomics-bam-merge",
+    "dep:rsomics-bam-mpileup",
+    "dep:rsomics-bam-phase",
+    "dep:rsomics-bam-quickcheck",
+    "dep:rsomics-bam-reheader",
+    "dep:rsomics-bam-reset",
+    "dep:rsomics-bam-samples",
     "dep:rsomics-bam-sort",
     "dep:rsomics-bam-split",
     "dep:rsomics-bam-stats",
+    "dep:rsomics-bam-targetcut",
     "dep:rsomics-bam-to-fastq",
     "dep:rsomics-bam-view",
     "dep:rsomics-sam-to-bam",
@@ -89,8 +115,11 @@ all = ["fasta", "fastq", "vcf", "bam", "bed", "gff"]
 [dependencies]
 rsomics-fasta-utils = { path = "../../tools/formats/rsomics-fasta-utils", version = "0.1", optional = true }
 rsomics-fasta-index = { path = "../../tools/formats/rsomics-fasta-index", version = "0.2", optional = true }
+rsomics-fasta-locate = { path = "../../tools/formats/rsomics-fasta-locate", version = "0.1", optional = true }
 rsomics-fasta-n50 = { path = "../../tools/formats/rsomics-fasta-n50", version = "0.1", optional = true }
+rsomics-fasta-sliding = { path = "../../tools/formats/rsomics-fasta-sliding", version = "0.1", optional = true }
 rsomics-fasta-stats = { path = "../../tools/formats/rsomics-fasta-stats", version = "0.4", optional = true }
+rsomics-fasta-subseq = { path = "../../tools/formats/rsomics-fasta-subseq", version = "0.1", optional = true }
 rsomics-fasta-translate = { path = "../../tools/formats/rsomics-fasta-translate", version = "0.1", optional = true }
 rsomics-fasta-validate = { path = "../../tools/formats/rsomics-fasta-validate", version = "0.1", optional = true }
 
@@ -101,6 +130,7 @@ rsomics-fastq-dedup = { path = "../../tools/formats/rsomics-fastq-dedup", versio
 rsomics-fastq-filter = { path = "../../tools/formats/rsomics-fastq-filter", version = "0.1", optional = true }
 rsomics-fastq-merge = { path = "../../tools/formats/rsomics-fastq-merge", version = "0.1", optional = true }
 rsomics-fastq-pair = { path = "../../tools/formats/rsomics-fastq-pair", version = "0.1", optional = true }
+rsomics-fastq-quality = { path = "../../tools/formats/rsomics-fastq-quality", version = "0.1", optional = true }
 rsomics-fastq-sample = { path = "../../tools/formats/rsomics-fastq-sample", version = "0.1", optional = true }
 rsomics-fastq-split = { path = "../../tools/formats/rsomics-fastq-split", version = "0.1", optional = true }
 rsomics-fastq-stats = { path = "../../tools/formats/rsomics-fastq-stats", version = "0.1", optional = true }
@@ -125,16 +155,38 @@ rsomics-vcf-split = { path = "../../tools/formats/rsomics-vcf-split", version = 
 rsomics-vcf-stats = { path = "../../tools/formats/rsomics-vcf-stats", version = "0.1", optional = true }
 rsomics-vcf-validate = { path = "../../tools/formats/rsomics-vcf-validate", version = "0.1", optional = true }
 
+rsomics-bam-addreplacerg = { path = "../../tools/formats/rsomics-bam-addreplacerg", version = "0.1", optional = true }
+rsomics-bam-ampliconclip = { path = "../../tools/formats/rsomics-bam-ampliconclip", version = "0.1", optional = true }
+rsomics-bam-ampliconstats = { path = "../../tools/formats/rsomics-bam-ampliconstats", version = "0.1", optional = true }
+rsomics-bam-bedcov = { path = "../../tools/formats/rsomics-bam-bedcov", version = "0.1", optional = true }
+rsomics-bam-calmd = { path = "../../tools/formats/rsomics-bam-calmd", version = "0.1", optional = true }
+rsomics-bam-cat = { path = "../../tools/formats/rsomics-bam-cat", version = "0.1", optional = true }
+rsomics-bam-checksum = { path = "../../tools/formats/rsomics-bam-checksum", version = "0.1", optional = true }
+rsomics-bam-collate = { path = "../../tools/formats/rsomics-bam-collate", version = "0.1", optional = true }
+rsomics-bam-consensus = { path = "../../tools/formats/rsomics-bam-consensus", version = "0.1", optional = true }
 rsomics-bam-coverage = { path = "../../tools/formats/rsomics-bam-coverage", version = "0.1", optional = true }
+rsomics-bam-depad = { path = "../../tools/formats/rsomics-bam-depad", version = "0.1", optional = true }
 rsomics-bam-depth = { path = "../../tools/formats/rsomics-bam-depth", version = "0.1", optional = true }
+rsomics-bam-dict = { path = "../../tools/formats/rsomics-bam-dict", version = "0.1", optional = true }
+rsomics-bam-fasta = { path = "../../tools/formats/rsomics-bam-fasta", version = "0.1", optional = true }
+rsomics-bam-fixmate = { path = "../../tools/formats/rsomics-bam-fixmate", version = "0.1", optional = true }
 rsomics-bam-flagstat = { path = "../../tools/formats/rsomics-bam-flagstat", version = "0.1", optional = true }
+rsomics-bam-head = { path = "../../tools/formats/rsomics-bam-head", version = "0.1", optional = true }
 rsomics-bam-idxstats = { path = "../../tools/formats/rsomics-bam-idxstats", version = "0.1", optional = true }
+rsomics-bam-import = { path = "../../tools/formats/rsomics-bam-import", version = "0.1", optional = true }
 rsomics-bam-index = { path = "../../tools/formats/rsomics-bam-index", version = "0.1", optional = true }
 rsomics-bam-markdup = { path = "../../tools/formats/rsomics-bam-markdup", version = "0.1", optional = true }
 rsomics-bam-merge = { path = "../../tools/formats/rsomics-bam-merge", version = "0.1", optional = true }
+rsomics-bam-mpileup = { path = "../../tools/formats/rsomics-bam-mpileup", version = "0.1", optional = true }
+rsomics-bam-phase = { path = "../../tools/formats/rsomics-bam-phase", version = "0.1", optional = true }
+rsomics-bam-quickcheck = { path = "../../tools/formats/rsomics-bam-quickcheck", version = "0.1", optional = true }
+rsomics-bam-reheader = { path = "../../tools/formats/rsomics-bam-reheader", version = "0.1", optional = true }
+rsomics-bam-reset = { path = "../../tools/formats/rsomics-bam-reset", version = "0.1", optional = true }
+rsomics-bam-samples = { path = "../../tools/formats/rsomics-bam-samples", version = "0.1", optional = true }
 rsomics-bam-sort = { path = "../../tools/formats/rsomics-bam-sort", version = "0.1", optional = true }
 rsomics-bam-split = { path = "../../tools/formats/rsomics-bam-split", version = "0.1", optional = true }
 rsomics-bam-stats = { path = "../../tools/formats/rsomics-bam-stats", version = "0.1", optional = true }
+rsomics-bam-targetcut = { path = "../../tools/formats/rsomics-bam-targetcut", version = "0.1", optional = true }
 rsomics-bam-to-fastq = { path = "../../tools/formats/rsomics-bam-to-fastq", version = "0.1", optional = true }
 rsomics-bam-view = { path = "../../tools/formats/rsomics-bam-view", version = "0.1", optional = true }
 rsomics-sam-to-bam = { path = "../../tools/formats/rsomics-sam-to-bam", version = "0.1", optional = true }
