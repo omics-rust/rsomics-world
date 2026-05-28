@@ -35,19 +35,31 @@ pub mod vcf {
     pub use rsomics_vcf_annotate as annotate;
     pub use rsomics_vcf_call as call;
     pub use rsomics_vcf_cnv as cnv;
+    pub use rsomics_vcf_concat as concat;
+    pub use rsomics_vcf_consensus as consensus;
+    pub use rsomics_vcf_convert as convert;
+    pub use rsomics_vcf_fill_tags as fill_tags;
     pub use rsomics_vcf_filter as filter;
+    pub use rsomics_vcf_fixref as fixref;
     pub use rsomics_vcf_gtcheck as gtcheck;
+    pub use rsomics_vcf_head as head;
+    pub use rsomics_vcf_index as index;
     pub use rsomics_vcf_isec as isec;
     pub use rsomics_vcf_merge as merge;
+    pub use rsomics_vcf_mpileup as mpileup;
     pub use rsomics_vcf_norm as norm;
     pub use rsomics_vcf_polysomy as polysomy;
     pub use rsomics_vcf_query as query;
+    pub use rsomics_vcf_reheader as reheader;
     pub use rsomics_vcf_roh as roh;
     pub use rsomics_vcf_sample as sample;
+    pub use rsomics_vcf_setgt as setgt;
+    pub use rsomics_vcf_sort as sort;
     pub use rsomics_vcf_split as split;
     pub use rsomics_vcf_stats as stats;
     pub use rsomics_vcf_utils as utils;
     pub use rsomics_vcf_validate as validate;
+    pub use rsomics_vcf_view as view;
 }
 
 #[cfg(feature = "bam")]

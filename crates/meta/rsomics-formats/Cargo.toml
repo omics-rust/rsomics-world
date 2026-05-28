@@ -1,6 +1,6 @@
 [package]
 name = "rsomics-formats"
-version = "0.8.0"
+version = "0.9.0"
 description = "Meta-crate re-exporting rsomics format-tool libraries by feature flag"
 edition.workspace = true
 rust-version.workspace = true
@@ -43,18 +43,30 @@ vcf = [
     "dep:rsomics-vcf-annotate",
     "dep:rsomics-vcf-call",
     "dep:rsomics-vcf-cnv",
+    "dep:rsomics-vcf-concat",
+    "dep:rsomics-vcf-consensus",
+    "dep:rsomics-vcf-convert",
+    "dep:rsomics-vcf-fill-tags",
     "dep:rsomics-vcf-filter",
+    "dep:rsomics-vcf-fixref",
     "dep:rsomics-vcf-gtcheck",
+    "dep:rsomics-vcf-head",
+    "dep:rsomics-vcf-index",
     "dep:rsomics-vcf-isec",
     "dep:rsomics-vcf-merge",
+    "dep:rsomics-vcf-mpileup",
     "dep:rsomics-vcf-norm",
     "dep:rsomics-vcf-polysomy",
     "dep:rsomics-vcf-query",
+    "dep:rsomics-vcf-reheader",
     "dep:rsomics-vcf-roh",
     "dep:rsomics-vcf-sample",
+    "dep:rsomics-vcf-setgt",
+    "dep:rsomics-vcf-sort",
     "dep:rsomics-vcf-split",
     "dep:rsomics-vcf-stats",
     "dep:rsomics-vcf-validate",
+    "dep:rsomics-vcf-view",
 ]
 bam = [
     "dep:rsomics-bam-addreplacerg",
@@ -143,17 +155,30 @@ rsomics-vcf-utils = { path = "../../tools/formats/rsomics-vcf-utils", version = 
 rsomics-vcf-annotate = { path = "../../tools/formats/rsomics-vcf-annotate", version = "0.1", optional = true }
 rsomics-vcf-call = { path = "../../tools/formats/rsomics-vcf-call", version = "0.1", optional = true }
 rsomics-vcf-cnv = { path = "../../tools/formats/rsomics-vcf-cnv", version = "0.1", optional = true }
+rsomics-vcf-concat = { path = "../../tools/formats/rsomics-vcf-concat", version = "0.1", optional = true }
+rsomics-vcf-consensus = { path = "../../tools/formats/rsomics-vcf-consensus", version = "0.1", optional = true }
+rsomics-vcf-convert = { path = "../../tools/formats/rsomics-vcf-convert", version = "0.1", optional = true }
+rsomics-vcf-fill-tags = { path = "../../tools/formats/rsomics-vcf-fill-tags", version = "0.1", optional = true }
 rsomics-vcf-filter = { path = "../../tools/formats/rsomics-vcf-filter", version = "0.2", optional = true }
+rsomics-vcf-fixref = { path = "../../tools/formats/rsomics-vcf-fixref", version = "0.1", optional = true }
 rsomics-vcf-gtcheck = { path = "../../tools/formats/rsomics-vcf-gtcheck", version = "0.1", optional = true }
+rsomics-vcf-head = { path = "../../tools/formats/rsomics-vcf-head", version = "0.1", optional = true }
+rsomics-vcf-index = { path = "../../tools/formats/rsomics-vcf-index", version = "0.1", optional = true }
 rsomics-vcf-isec = { path = "../../tools/formats/rsomics-vcf-isec", version = "0.1", optional = true }
 rsomics-vcf-merge = { path = "../../tools/formats/rsomics-vcf-merge", version = "0.1", optional = true }
+rsomics-vcf-mpileup = { path = "../../tools/formats/rsomics-vcf-mpileup", version = "0.1", optional = true }
 rsomics-vcf-norm = { path = "../../tools/formats/rsomics-vcf-norm", version = "0.1", optional = true }
 rsomics-vcf-polysomy = { path = "../../tools/formats/rsomics-vcf-polysomy", version = "0.1", optional = true }
 rsomics-vcf-query = { path = "../../tools/formats/rsomics-vcf-query", version = "0.1", optional = true }
+rsomics-vcf-reheader = { path = "../../tools/formats/rsomics-vcf-reheader", version = "0.1", optional = true }
 rsomics-vcf-roh = { path = "../../tools/formats/rsomics-vcf-roh", version = "0.1", optional = true }
+rsomics-vcf-sample = { path = "../../tools/formats/rsomics-vcf-sample", version = "0.1", optional = true }
+rsomics-vcf-setgt = { path = "../../tools/formats/rsomics-vcf-setgt", version = "0.2", optional = true }
+rsomics-vcf-sort = { path = "../../tools/formats/rsomics-vcf-sort", version = "0.1", optional = true }
 rsomics-vcf-split = { path = "../../tools/formats/rsomics-vcf-split", version = "0.1", optional = true }
 rsomics-vcf-stats = { path = "../../tools/formats/rsomics-vcf-stats", version = "0.1", optional = true }
 rsomics-vcf-validate = { path = "../../tools/formats/rsomics-vcf-validate", version = "0.1", optional = true }
+rsomics-vcf-view = { path = "../../tools/formats/rsomics-vcf-view", version = "0.2", optional = true }
 
 rsomics-bam-addreplacerg = { path = "../../tools/formats/rsomics-bam-addreplacerg", version = "0.1", optional = true }
 rsomics-bam-ampliconclip = { path = "../../tools/formats/rsomics-bam-ampliconclip", version = "0.1", optional = true }
@@ -205,7 +230,6 @@ rsomics-bed-slop = { path = "../../tools/formats/rsomics-bed-slop", version = "0
 rsomics-bed-map = { path = "../../tools/formats/rsomics-bed-map", version = "0.1", optional = true }
 rsomics-bed-shift = { path = "../../tools/formats/rsomics-bed-shift", version = "0.1", optional = true }
 rsomics-bed-window = { path = "../../tools/formats/rsomics-bed-window", version = "0.1", optional = true }
-rsomics-vcf-sample = { path = "../../tools/formats/rsomics-vcf-sample", version = "0.1", optional = true }
 rsomics-gff-utils = { path = "../../tools/formats/rsomics-gff-utils", version = "0.1", optional = true }
 
 [lints]
