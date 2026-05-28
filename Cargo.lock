@@ -3098,7 +3098,7 @@ dependencies = [
 
 [[package]]
 name = "rsomics-formats"
-version = "0.5.0"
+version = "0.6.0"
 dependencies = [
  "rsomics-bam-coverage",
  "rsomics-bam-depth",
@@ -3120,6 +3120,7 @@ dependencies = [
  "rsomics-bed-jaccard",
  "rsomics-bed-map",
  "rsomics-bed-merge",
+ "rsomics-bed-shift",
  "rsomics-bed-slop",
  "rsomics-bed-sort",
  "rsomics-bed-subtract",
@@ -3131,6 +3132,7 @@ dependencies = [
  "rsomics-fasta-translate",
  "rsomics-fasta-utils",
  "rsomics-fasta-validate",
+ "rsomics-fastq-complexity",
  "rsomics-fastq-correct",
  "rsomics-fastq-dedup",
  "rsomics-fastq-filter",

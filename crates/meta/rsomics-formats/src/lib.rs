@@ -10,6 +10,7 @@ pub mod fasta {
 
 #[cfg(feature = "fastq")]
 pub mod fastq {
+    pub use rsomics_fastq_complexity as complexity;
     pub use rsomics_fastq_correct as correct;
     pub use rsomics_fastq_dedup as dedup;
     pub use rsomics_fastq_filter as filter;
@@ -65,6 +66,7 @@ pub mod bed {
     pub use rsomics_bed_jaccard as jaccard;
     pub use rsomics_bed_map as map;
     pub use rsomics_bed_merge as merge;
+    pub use rsomics_bed_shift as shift;
     pub use rsomics_bed_slop as slop;
     pub use rsomics_bed_sort as sort;
     pub use rsomics_bed_subtract as subtract;

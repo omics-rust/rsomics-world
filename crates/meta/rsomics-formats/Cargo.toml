@@ -1,6 +1,6 @@
 [package]
 name = "rsomics-formats"
-version = "0.5.0"
+version = "0.6.0"
 description = "Meta-crate re-exporting rsomics format-tool libraries by feature flag"
 edition.workspace = true
 rust-version.workspace = true
@@ -20,6 +20,7 @@ fasta = [
 ]
 fastq = [
     "dep:rsomics-fastq-utils",
+    "dep:rsomics-fastq-complexity",
     "dep:rsomics-fastq-correct",
     "dep:rsomics-fastq-dedup",
     "dep:rsomics-fastq-filter",
@@ -71,6 +72,7 @@ bed = [
     "dep:rsomics-bed-intersect",
     "dep:rsomics-bed-map",
     "dep:rsomics-bed-merge",
+    "dep:rsomics-bed-shift",
     "dep:rsomics-bed-sort",
     "dep:rsomics-bed-subtract",
     "dep:rsomics-bed-closest",
@@ -93,6 +95,7 @@ rsomics-fasta-translate = { path = "../../tools/formats/rsomics-fasta-translate"
 rsomics-fasta-validate = { path = "../../tools/formats/rsomics-fasta-validate", version = "0.1", optional = true }
 
 rsomics-fastq-utils = { path = "../../tools/formats/rsomics-fastq-utils", version = "0.1", optional = true }
+rsomics-fastq-complexity = { path = "../../tools/formats/rsomics-fastq-complexity", version = "0.1", optional = true }
 rsomics-fastq-correct = { path = "../../tools/formats/rsomics-fastq-correct", version = "0.1", optional = true }
 rsomics-fastq-dedup = { path = "../../tools/formats/rsomics-fastq-dedup", version = "0.1", optional = true }
 rsomics-fastq-filter = { path = "../../tools/formats/rsomics-fastq-filter", version = "0.1", optional = true }
@@ -148,6 +151,7 @@ rsomics-bed-getfasta = { path = "../../tools/formats/rsomics-bed-getfasta", vers
 rsomics-bed-jaccard = { path = "../../tools/formats/rsomics-bed-jaccard", version = "0.1", optional = true }
 rsomics-bed-slop = { path = "../../tools/formats/rsomics-bed-slop", version = "0.1", optional = true }
 rsomics-bed-map = { path = "../../tools/formats/rsomics-bed-map", version = "0.1", optional = true }
+rsomics-bed-shift = { path = "../../tools/formats/rsomics-bed-shift", version = "0.1", optional = true }
 rsomics-bed-window = { path = "../../tools/formats/rsomics-bed-window", version = "0.1", optional = true }
 rsomics-vcf-sample = { path = "../../tools/formats/rsomics-vcf-sample", version = "0.1", optional = true }
 rsomics-gff-utils = { path = "../../tools/formats/rsomics-gff-utils", version = "0.1", optional = true }
