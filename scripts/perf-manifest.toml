@@ -225,6 +225,16 @@ upstream_bin     = "bedtools"
 upstream_args    = "shift -i FIX -s 100 -g FIX2"
 upstream_version = "bedtools --version"
 
+[spec.rsomics-bed-spacing]
+# 1M BED3 records (23 MB), report gap lengths. Bench: streaming line parser, single-pass.
+# aarch64-apple-darwin (mini_m2): 121.5 ms vs bedtools 467.8 ms = 3.85× PASS
+# Machine: mini_m2, bedtools 2.31.1, rsomics-bed-spacing 0.1.0, 2026-05-28
+fixture          = "bed:1000000:0"
+ours_args        = "FIX -o OUT"
+upstream_bin     = "bedtools"
+upstream_args    = "spacing -i FIX"
+upstream_version = "bedtools --version"
+
 [exempt.rsomics-bed-slop]
 reason = "Per-function decomposition tool — no single upstream binary to benchmark against. Covered by smoke + compat tests."
 
