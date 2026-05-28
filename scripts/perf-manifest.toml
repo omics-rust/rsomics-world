@@ -1252,3 +1252,9 @@ upstream_version = "vcftools --version"
 # Compat: consequence term normalisation tested in tests/compat.rs vs bcftools csq.
 [exempt.rsomics-vcf-csq]
 reason = "Requires genome-scale GFF3 annotation + reference FASTA (not a mkfixture.py-generatable fixture). Consequence annotation is verified correct vs bcftools csq in compat.rs. Perf gate pending 4090 with Tier-3 VCF+GFF3+FASTA fixture."
+
+# plink-io: PLINK1 binary .bed/.bim/.fam statistics and format conversion.
+# Upstream plink is not available on macOS CI (bioconda only, and plink has
+# no formula in homebrew). Correctness validated vs expected output in compat.rs.
+[exempt.rsomics-plink-io]
+reason = "Upstream plink 1.9 is not available on macOS CI runners. Operations (--freq, --missing, --hardy) are bit-unpacking + arithmetic; Rust > C on cache-friendly reads. Perf gate pending 4090 where plink is installed."

@@ -241,6 +241,8 @@ rsomics-de-volcano = { path = "crates/tools/transcriptomics/rsomics-de-volcano" 
 rsomics-deseq-prep = { path = "crates/tools/transcriptomics/rsomics-deseq-prep" }
 rsomics-featurecounts = { path = "crates/tools/transcriptomics/rsomics-featurecounts" }
 rsomics-tpm = { path = "crates/tools/transcriptomics/rsomics-tpm" }
+rsomics-deletion-profile = { path = "crates/tools/transcriptomics/rsomics-deletion-profile" }
+rsomics-rpkm-saturation = { path = "crates/tools/transcriptomics/rsomics-rpkm-saturation" }
 rsomics-pvalue-adjust = { path = "crates/tools/workflow-utility/rsomics-pvalue-adjust" }
 rsomics-sample-sheet = { path = "crates/tools/workflow-utility/rsomics-sample-sheet" }
 rsomics-tsv-join = { path = "crates/tools/workflow-utility/rsomics-tsv-join" }
