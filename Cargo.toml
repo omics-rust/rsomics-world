@@ -192,6 +192,7 @@ rsomics-sam-to-bam = { path = "crates/tools/formats/rsomics-sam-to-bam" }
 rsomics-vcf-annotate = { path = "crates/tools/formats/rsomics-vcf-annotate" }
 rsomics-vcf-call = { path = "crates/tools/formats/rsomics-vcf-call" }
 rsomics-vcf-cnv = { path = "crates/tools/formats/rsomics-vcf-cnv" }
+rsomics-vcf-csq = { path = "crates/tools/formats/rsomics-vcf-csq" }
 rsomics-vcf-filter = { path = "crates/tools/formats/rsomics-vcf-filter" }
 rsomics-vcf-gtcheck = { path = "crates/tools/formats/rsomics-vcf-gtcheck" }
 rsomics-vcf-isec = { path = "crates/tools/formats/rsomics-vcf-isec" }
