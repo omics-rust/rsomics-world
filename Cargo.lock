@@ -2404,6 +2404,17 @@ dependencies = [
 ]
 
 [[package]]
+name = "rsomics-bed-groupby"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "criterion 0.7.0",
+ "rsomics-common",
+ "rsomics-help",
+ "tempfile",
+]
+
+[[package]]
 name = "rsomics-bed-intersect"
 version = "0.1.0"
 dependencies = [
@@ -2490,6 +2501,17 @@ dependencies = [
 ]
 
 [[package]]
+name = "rsomics-bed-random"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "criterion 0.7.0",
+ "rand 0.8.6",
+ "rsomics-common",
+ "rsomics-help",
+]
+
+[[package]]
 name = "rsomics-bed-shift"
 version = "0.1.1"
 dependencies = [
@@ -2569,6 +2591,16 @@ name = "rsomics-bed-summary"
 version = "0.1.0"
 dependencies = [
  "clap",
+ "rsomics-common",
+ "rsomics-help",
+]
+
+[[package]]
+name = "rsomics-bed-to-gff"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "criterion 0.7.0",
  "rsomics-common",
  "rsomics-help",
 ]
@@ -3169,7 +3201,7 @@ dependencies = [
 
 [[package]]
 name = "rsomics-formats"
-version = "0.11.0"
+version = "0.13.0"
 dependencies = [
  "rsomics-bam-addreplacerg",
  "rsomics-bam-ampliconclip",
@@ -3211,6 +3243,7 @@ dependencies = [
  "rsomics-bed-expand",
  "rsomics-bed-flank",
  "rsomics-bed-getfasta",
+ "rsomics-bed-groupby",
  "rsomics-bed-intersect",
  "rsomics-bed-jaccard",
  "rsomics-bed-len",
@@ -3218,12 +3251,14 @@ dependencies = [
  "rsomics-bed-map",
  "rsomics-bed-merge",
  "rsomics-bed-midpoint",
+ "rsomics-bed-random",
  "rsomics-bed-shift",
  "rsomics-bed-slop",
  "rsomics-bed-sort",
  "rsomics-bed-spacing",
  "rsomics-bed-stats",
  "rsomics-bed-subtract",
+ "rsomics-bed-to-gff",
  "rsomics-bed-total-bp",
  "rsomics-bed-utils",
  "rsomics-bed-window",
