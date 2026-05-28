@@ -1,6 +1,6 @@
 [package]
 name = "rsomics-formats"
-version = "0.3.0"
+version = "0.4.0"
 description = "Meta-crate re-exporting rsomics format-tool libraries by feature flag"
 edition.workspace = true
 rust-version.workspace = true
@@ -78,6 +78,7 @@ bed = [
     "dep:rsomics-bed-getfasta",
     "dep:rsomics-bed-jaccard",
     "dep:rsomics-bed-slop",
+    "dep:rsomics-bed-window",
 ]
 gff = ["dep:rsomics-gff-utils"]
 all = ["fasta", "fastq", "vcf", "bam", "bed", "gff"]
@@ -145,6 +146,7 @@ rsomics-bed-flank = { path = "../../tools/formats/rsomics-bed-flank", version = 
 rsomics-bed-getfasta = { path = "../../tools/formats/rsomics-bed-getfasta", version = "0.1", optional = true }
 rsomics-bed-jaccard = { path = "../../tools/formats/rsomics-bed-jaccard", version = "0.1", optional = true }
 rsomics-bed-slop = { path = "../../tools/formats/rsomics-bed-slop", version = "0.1", optional = true }
+rsomics-bed-window = { path = "../../tools/formats/rsomics-bed-window", version = "0.1", optional = true }
 rsomics-vcf-sample = { path = "../../tools/formats/rsomics-vcf-sample", version = "0.1", optional = true }
 rsomics-gff-utils = { path = "../../tools/formats/rsomics-gff-utils", version = "0.1", optional = true }
 
