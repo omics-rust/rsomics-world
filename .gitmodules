@@ -630,3 +630,9 @@
 [submodule "crates/tools/formats/rsomics-bed-makewindows"]
 	path = crates/tools/formats/rsomics-bed-makewindows
 	url = git@github.com:omics-rust/rsomics-bed-makewindows.git
+[submodule "crates/tools/formats/rsomics-bed-to-gff"]
+	path = crates/tools/formats/rsomics-bed-to-gff
+	url = git@github.com:omics-rust/rsomics-bed-to-gff.git
+[submodule "crates/tools/formats/rsomics-bed-random"]
+	path = crates/tools/formats/rsomics-bed-random
+	url = git@github.com:omics-rust/rsomics-bed-random.git
