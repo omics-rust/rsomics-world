@@ -476,7 +476,7 @@ reason = "Per-function decomposition tool — no single upstream binary to bench
 reason = "Per-function decomposition tool — no single upstream binary to benchmark against. Covered by smoke + compat tests."
 
 [exempt.rsomics-bed-map]
-reason = "Per-function decomposition tool — no single upstream binary to benchmark against. Covered by smoke + compat tests."
+reason = "bedtools map equivalent. Perf gate pending 4090 validation (bedtools as upstream). Correctness validated via compat.rs (bedtools_compat test) on arm64. Publish unblocked after correctness gate passed."
 
 [exempt.rsomics-fasta-kmers]
 reason = "Per-function decomposition tool — no single upstream binary to benchmark against. Covered by smoke + compat tests."
