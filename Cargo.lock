@@ -2245,8 +2245,6 @@ dependencies = [
  "rsomics-bamio",
  "rsomics-common",
  "rsomics-help",
- "serde",
- "serde_json",
  "tempfile",
 ]
 
@@ -3308,7 +3306,7 @@ dependencies = [
 
 [[package]]
 name = "rsomics-formats"
-version = "0.19.0"
+version = "0.20.0"
 dependencies = [
  "rsomics-bam-addreplacerg",
  "rsomics-bam-ampliconclip",
@@ -3342,6 +3340,7 @@ dependencies = [
  "rsomics-bam-split",
  "rsomics-bam-stats",
  "rsomics-bam-targetcut",
+ "rsomics-bam-to-bed",
  "rsomics-bam-to-fastq",
  "rsomics-bam-view",
  "rsomics-bed-closest",
