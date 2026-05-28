@@ -2383,6 +2383,17 @@ dependencies = [
 ]
 
 [[package]]
+name = "rsomics-bed-fisher"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "criterion 0.7.0",
+ "rsomics-common",
+ "rsomics-help",
+ "rsomics-stats",
+]
+
+[[package]]
 name = "rsomics-bed-flank"
 version = "0.1.1"
 dependencies = [
@@ -3303,6 +3314,7 @@ dependencies = [
  "rsomics-bed-complement",
  "rsomics-bed-count",
  "rsomics-bed-expand",
+ "rsomics-bed-fisher",
  "rsomics-bed-flank",
  "rsomics-bed-getfasta",
  "rsomics-bed-groupby",
@@ -3912,7 +3924,7 @@ dependencies = [
 
 [[package]]
 name = "rsomics-stats"
-version = "0.2.1"
+version = "0.2.2"
 dependencies = [
  "rsomics-common",
  "statrs",

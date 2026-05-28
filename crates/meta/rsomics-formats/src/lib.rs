@@ -108,6 +108,7 @@ pub mod bed {
     pub use rsomics_bed_complement as complement;
     pub use rsomics_bed_count as count;
     pub use rsomics_bed_expand as expand;
+    pub use rsomics_bed_fisher as fisher;
     pub use rsomics_bed_flank as flank;
     pub use rsomics_bed_getfasta as getfasta;
     pub use rsomics_bed_groupby as groupby;
