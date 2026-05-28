@@ -4204,7 +4204,7 @@ dependencies = [
 
 [[package]]
 name = "rsomics-vcf-csq"
-version = "0.1.0"
+version = "0.1.1"
 dependencies = [
  "anyhow",
  "bstr",
