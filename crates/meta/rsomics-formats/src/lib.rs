@@ -120,8 +120,8 @@ pub mod bed {
     pub use rsomics_bed_midpoint as midpoint;
     pub use rsomics_bed_random as random;
     pub use rsomics_bed_sample as sample;
-    pub use rsomics_bed_shuffle as shuffle;
     pub use rsomics_bed_shift as shift;
+    pub use rsomics_bed_shuffle as shuffle;
     pub use rsomics_bed_slop as slop;
     pub use rsomics_bed_sort as sort;
     pub use rsomics_bed_spacing as spacing;

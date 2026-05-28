@@ -2523,6 +2523,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "rsomics-bed-reldist"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "criterion 0.7.0",
+ "rsomics-common",
+ "rsomics-help",
+]
+
+[[package]]
 name = "rsomics-bed-sample"
 version = "0.1.0"
 dependencies = [
@@ -3252,7 +3262,7 @@ dependencies = [
 
 [[package]]
 name = "rsomics-formats"
-version = "0.15.0"
+version = "0.16.0"
 dependencies = [
  "rsomics-bam-addreplacerg",
  "rsomics-bam-ampliconclip",
