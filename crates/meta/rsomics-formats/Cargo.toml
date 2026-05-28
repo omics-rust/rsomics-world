@@ -1,6 +1,6 @@
 [package]
 name = "rsomics-formats"
-version = "0.11.0"
+version = "0.12.0"
 description = "Meta-crate re-exporting rsomics format-tool libraries by feature flag"
 edition.workspace = true
 rust-version.workspace = true
@@ -111,6 +111,7 @@ bed = [
     "dep:rsomics-bed-complement",
     "dep:rsomics-bed-count",
     "dep:rsomics-bed-expand",
+    "dep:rsomics-bed-random",
     "dep:rsomics-bed-flank",
     "dep:rsomics-bed-getfasta",
     "dep:rsomics-bed-intersect",
@@ -126,6 +127,7 @@ bed = [
     "dep:rsomics-bed-spacing",
     "dep:rsomics-bed-stats",
     "dep:rsomics-bed-subtract",
+    "dep:rsomics-bed-to-gff",
     "dep:rsomics-bed-total-bp",
     "dep:rsomics-bed-window",
 ]
@@ -229,6 +231,7 @@ rsomics-bed-closest = { path = "../../tools/formats/rsomics-bed-closest", versio
 rsomics-bed-complement = { path = "../../tools/formats/rsomics-bed-complement", version = "0.1", optional = true }
 rsomics-bed-count = { path = "../../tools/formats/rsomics-bed-count", version = "0.1", optional = true }
 rsomics-bed-expand = { path = "../../tools/formats/rsomics-bed-expand", version = "0.1", optional = true }
+rsomics-bed-random = { path = "../../tools/formats/rsomics-bed-random", version = "0.1", optional = true }
 rsomics-bed-flank = { path = "../../tools/formats/rsomics-bed-flank", version = "0.1", optional = true }
 rsomics-bed-getfasta = { path = "../../tools/formats/rsomics-bed-getfasta", version = "0.1", optional = true }
 rsomics-bed-intersect = { path = "../../tools/formats/rsomics-bed-intersect", version = "0.1", optional = true }
@@ -244,6 +247,7 @@ rsomics-bed-sort = { path = "../../tools/formats/rsomics-bed-sort", version = "0
 rsomics-bed-spacing = { path = "../../tools/formats/rsomics-bed-spacing", version = "0.1", optional = true }
 rsomics-bed-stats = { path = "../../tools/formats/rsomics-bed-stats", version = "0.1", optional = true }
 rsomics-bed-subtract = { path = "../../tools/formats/rsomics-bed-subtract", version = "0.1", optional = true }
+rsomics-bed-to-gff = { path = "../../tools/formats/rsomics-bed-to-gff", version = "0.1", optional = true }
 rsomics-bed-total-bp = { path = "../../tools/formats/rsomics-bed-total-bp", version = "0.1", optional = true }
 rsomics-bed-window = { path = "../../tools/formats/rsomics-bed-window", version = "0.1", optional = true }
 rsomics-gff-utils = { path = "../../tools/formats/rsomics-gff-utils", version = "0.1", optional = true }
