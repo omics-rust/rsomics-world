@@ -2527,6 +2527,21 @@ dependencies = [
 ]
 
 [[package]]
+name = "rsomics-bed-multicov"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "criterion 0.7.0",
+ "itoa",
+ "noodles",
+ "noodles-bgzf",
+ "rsomics-bamio",
+ "rsomics-common",
+ "rsomics-help",
+ "tempfile",
+]
+
+[[package]]
 name = "rsomics-bed-multiinter"
 version = "0.1.1"
 dependencies = [
@@ -2541,6 +2556,7 @@ name = "rsomics-bed-nuc"
 version = "0.1.0"
 dependencies = [
  "clap",
+ "criterion 0.7.0",
  "rsomics-common",
  "rsomics-help",
 ]
@@ -2968,7 +2984,7 @@ dependencies = [
 
 [[package]]
 name = "rsomics-fasta-n50"
-version = "0.1.0"
+version = "0.1.1"
 dependencies = [
  "clap",
  "needletail 0.6.3",
@@ -3327,7 +3343,7 @@ dependencies = [
 
 [[package]]
 name = "rsomics-formats"
-version = "0.22.0"
+version = "0.23.0"
 dependencies = [
  "rsomics-bam-addreplacerg",
  "rsomics-bam-ampliconclip",
@@ -3380,6 +3396,7 @@ dependencies = [
  "rsomics-bed-map",
  "rsomics-bed-merge",
  "rsomics-bed-midpoint",
+ "rsomics-bed-multicov",
  "rsomics-bed-multiinter",
  "rsomics-bed-overlap",
  "rsomics-bed-random",
