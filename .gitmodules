@@ -657,3 +657,6 @@
 [submodule "crates/tools/formats/rsomics-bed-reldist"]
 	path = crates/tools/formats/rsomics-bed-reldist
 	url = git@github.com:omics-rust/rsomics-bed-reldist.git
+[submodule "crates/tools/formats/rsomics-bed-fisher"]
+	path = crates/tools/formats/rsomics-bed-fisher
+	url = git@github.com:omics-rust/rsomics-bed-fisher.git
