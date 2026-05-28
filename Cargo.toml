@@ -18,6 +18,11 @@ members = [
     "crates/tools/epigenomics/*",
     "crates/tools/proteomics/*",
 ]
+exclude = [
+    # rsomics-fastp wraps one upstream binary (a Swiss-Army-knife) — excluded
+    # per the per-function partition rule. Individual ops land as separate crates.
+    "crates/tools/preprocessing/rsomics-fastp",
+]
 
 [workspace.package]
 edition = "2024"
