@@ -1,6 +1,6 @@
 [package]
 name = "rsomics-formats"
-version = "0.1.0"
+version = "0.2.0"
 description = "Meta-crate re-exporting rsomics format-tool libraries by feature flag"
 edition.workspace = true
 rust-version.workspace = true
@@ -36,11 +36,16 @@ fastq = [
 vcf = [
     "dep:rsomics-vcf-utils",
     "dep:rsomics-vcf-annotate",
+    "dep:rsomics-vcf-call",
+    "dep:rsomics-vcf-cnv",
     "dep:rsomics-vcf-filter",
+    "dep:rsomics-vcf-gtcheck",
     "dep:rsomics-vcf-isec",
     "dep:rsomics-vcf-merge",
     "dep:rsomics-vcf-norm",
+    "dep:rsomics-vcf-polysomy",
     "dep:rsomics-vcf-query",
+    "dep:rsomics-vcf-roh",
     "dep:rsomics-vcf-split",
     "dep:rsomics-vcf-stats",
     "dep:rsomics-vcf-validate",
@@ -60,7 +65,13 @@ bam = [
     "dep:rsomics-bam-view",
     "dep:rsomics-sam-to-bam",
 ]
-bed = ["dep:rsomics-bed-utils"]
+bed = [
+    "dep:rsomics-bed-utils",
+    "dep:rsomics-bed-intersect",
+    "dep:rsomics-bed-merge",
+    "dep:rsomics-bed-sort",
+    "dep:rsomics-bed-subtract",
+]
 gff = ["dep:rsomics-gff-utils"]
 all = ["fasta", "fastq", "vcf", "bam", "bed", "gff"]
 
@@ -88,11 +99,16 @@ rsomics-fastqc = { path = "../../tools/formats/rsomics-fastqc", version = "0.1",
 
 rsomics-vcf-utils = { path = "../../tools/formats/rsomics-vcf-utils", version = "0.1", optional = true }
 rsomics-vcf-annotate = { path = "../../tools/formats/rsomics-vcf-annotate", version = "0.1", optional = true }
+rsomics-vcf-call = { path = "../../tools/formats/rsomics-vcf-call", version = "0.1", optional = true }
+rsomics-vcf-cnv = { path = "../../tools/formats/rsomics-vcf-cnv", version = "0.1", optional = true }
 rsomics-vcf-filter = { path = "../../tools/formats/rsomics-vcf-filter", version = "0.2", optional = true }
+rsomics-vcf-gtcheck = { path = "../../tools/formats/rsomics-vcf-gtcheck", version = "0.1", optional = true }
 rsomics-vcf-isec = { path = "../../tools/formats/rsomics-vcf-isec", version = "0.1", optional = true }
 rsomics-vcf-merge = { path = "../../tools/formats/rsomics-vcf-merge", version = "0.1", optional = true }
 rsomics-vcf-norm = { path = "../../tools/formats/rsomics-vcf-norm", version = "0.1", optional = true }
+rsomics-vcf-polysomy = { path = "../../tools/formats/rsomics-vcf-polysomy", version = "0.1", optional = true }
 rsomics-vcf-query = { path = "../../tools/formats/rsomics-vcf-query", version = "0.1", optional = true }
+rsomics-vcf-roh = { path = "../../tools/formats/rsomics-vcf-roh", version = "0.1", optional = true }
 rsomics-vcf-split = { path = "../../tools/formats/rsomics-vcf-split", version = "0.1", optional = true }
 rsomics-vcf-stats = { path = "../../tools/formats/rsomics-vcf-stats", version = "0.1", optional = true }
 rsomics-vcf-validate = { path = "../../tools/formats/rsomics-vcf-validate", version = "0.1", optional = true }
@@ -112,6 +128,10 @@ rsomics-bam-view = { path = "../../tools/formats/rsomics-bam-view", version = "0
 rsomics-sam-to-bam = { path = "../../tools/formats/rsomics-sam-to-bam", version = "0.1", optional = true }
 
 rsomics-bed-utils = { path = "../../tools/formats/rsomics-bed-utils", version = "0.2", optional = true }
+rsomics-bed-intersect = { path = "../../tools/formats/rsomics-bed-intersect", version = "0.1", optional = true }
+rsomics-bed-merge = { path = "../../tools/formats/rsomics-bed-merge", version = "0.1", optional = true }
+rsomics-bed-sort = { path = "../../tools/formats/rsomics-bed-sort", version = "0.1", optional = true }
+rsomics-bed-subtract = { path = "../../tools/formats/rsomics-bed-subtract", version = "0.1", optional = true }
 rsomics-gff-utils = { path = "../../tools/formats/rsomics-gff-utils", version = "0.1", optional = true }
 
 [lints]
