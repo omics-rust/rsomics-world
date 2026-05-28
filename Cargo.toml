@@ -19,6 +19,7 @@ members = [
     "crates/tools/proteomics/*",
 ]
 exclude = [
+    "crates/tools/preprocessing/rsomics-fastp",
 ]
 
 [workspace.package]
