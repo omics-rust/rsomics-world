@@ -1,6 +1,6 @@
 [package]
 name = "rsomics-formats"
-version = "0.15.0"
+version = "0.16.0"
 description = "Meta-crate re-exporting rsomics format-tool libraries by feature flag"
 edition.workspace = true
 rust-version.workspace = true
@@ -124,6 +124,7 @@ bed = [
     "dep:rsomics-bed-midpoint",
     "dep:rsomics-bed-random",
     "dep:rsomics-bed-sample",
+    "dep:rsomics-bed-shuffle",
     "dep:rsomics-bed-shift",
     "dep:rsomics-bed-slop",
     "dep:rsomics-bed-sort",
@@ -240,6 +241,7 @@ rsomics-bed-expand = { path = "../../tools/formats/rsomics-bed-expand", version 
 rsomics-bed-flank = { path = "../../tools/formats/rsomics-bed-flank", version = "0.1", optional = true }
 rsomics-bed-random = { path = "../../tools/formats/rsomics-bed-random", version = "0.1", optional = true }
 rsomics-bed-sample = { path = "../../tools/formats/rsomics-bed-sample", version = "0.1", optional = true }
+rsomics-bed-shuffle = { path = "../../tools/formats/rsomics-bed-shuffle", version = "0.1", optional = true }
 rsomics-bed-getfasta = { path = "../../tools/formats/rsomics-bed-getfasta", version = "0.1", optional = true }
 rsomics-bed-groupby = { path = "../../tools/formats/rsomics-bed-groupby", version = "0.1", optional = true }
 rsomics-bed-intersect = { path = "../../tools/formats/rsomics-bed-intersect", version = "0.1", optional = true }

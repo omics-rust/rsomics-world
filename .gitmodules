@@ -651,3 +651,6 @@
 [submodule "crates/tools/formats/rsomics-bed-sample"]
 	path = crates/tools/formats/rsomics-bed-sample
 	url = git@github.com:omics-rust/rsomics-bed-sample.git
+[submodule "crates/tools/formats/rsomics-bed-shuffle"]
+	path = crates/tools/formats/rsomics-bed-shuffle
+	url = git@github.com:omics-rust/rsomics-bed-shuffle.git
