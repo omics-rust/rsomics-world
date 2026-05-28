@@ -660,3 +660,6 @@
 [submodule "crates/tools/formats/rsomics-bed-fisher"]
 	path = crates/tools/formats/rsomics-bed-fisher
 	url = git@github.com:omics-rust/rsomics-bed-fisher.git
+[submodule "crates/tools/formats/rsomics-bed-multiinter"]
+	path = crates/tools/formats/rsomics-bed-multiinter
+	url = git@github.com:omics-rust/rsomics-bed-multiinter.git

@@ -3283,7 +3283,7 @@ dependencies = [
 
 [[package]]
 name = "rsomics-formats"
-version = "0.17.0"
+version = "0.18.0"
 dependencies = [
  "rsomics-bam-addreplacerg",
  "rsomics-bam-ampliconclip",
@@ -3335,6 +3335,7 @@ dependencies = [
  "rsomics-bed-map",
  "rsomics-bed-merge",
  "rsomics-bed-midpoint",
+ "rsomics-bed-multiinter",
  "rsomics-bed-random",
  "rsomics-bed-reldist",
  "rsomics-bed-sample",
@@ -3934,7 +3935,7 @@ dependencies = [
 
 [[package]]
 name = "rsomics-stats"
-version = "0.2.2"
+version = "0.2.3"
 dependencies = [
  "rsomics-common",
  "statrs",
