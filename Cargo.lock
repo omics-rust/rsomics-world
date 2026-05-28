@@ -3169,7 +3169,7 @@ dependencies = [
 
 [[package]]
 name = "rsomics-formats"
-version = "0.10.0"
+version = "0.11.0"
 dependencies = [
  "rsomics-bam-addreplacerg",
  "rsomics-bam-ampliconclip",
@@ -3207,12 +3207,14 @@ dependencies = [
  "rsomics-bam-view",
  "rsomics-bed-closest",
  "rsomics-bed-complement",
+ "rsomics-bed-count",
  "rsomics-bed-expand",
  "rsomics-bed-flank",
  "rsomics-bed-getfasta",
  "rsomics-bed-intersect",
  "rsomics-bed-jaccard",
  "rsomics-bed-len",
+ "rsomics-bed-makewindows",
  "rsomics-bed-map",
  "rsomics-bed-merge",
  "rsomics-bed-midpoint",
@@ -3220,6 +3222,7 @@ dependencies = [
  "rsomics-bed-slop",
  "rsomics-bed-sort",
  "rsomics-bed-spacing",
+ "rsomics-bed-stats",
  "rsomics-bed-subtract",
  "rsomics-bed-total-bp",
  "rsomics-bed-utils",
