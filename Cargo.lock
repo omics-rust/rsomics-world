@@ -2417,6 +2417,19 @@ dependencies = [
 ]
 
 [[package]]
+name = "rsomics-bed-map"
+version = "0.1.0"
+dependencies = [
+ "assert_cmd",
+ "clap",
+ "criterion 0.7.0",
+ "predicates",
+ "rsomics-common",
+ "rsomics-help",
+ "tempfile",
+]
+
+[[package]]
 name = "rsomics-bed-merge"
 version = "0.1.0"
 dependencies = [
@@ -3052,7 +3065,7 @@ dependencies = [
 
 [[package]]
 name = "rsomics-formats"
-version = "0.3.0"
+version = "0.4.0"
 dependencies = [
  "rsomics-bam-coverage",
  "rsomics-bam-depth",
@@ -3077,6 +3090,7 @@ dependencies = [
  "rsomics-bed-sort",
  "rsomics-bed-subtract",
  "rsomics-bed-utils",
+ "rsomics-bed-window",
  "rsomics-fasta-index",
  "rsomics-fasta-n50",
  "rsomics-fasta-stats",
