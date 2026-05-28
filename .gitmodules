@@ -570,3 +570,6 @@
 [submodule "crates/tools/formats/rsomics-vcf-call"]
 	path = crates/tools/formats/rsomics-vcf-call
 	url = git@github.com:omics-rust/rsomics-vcf-call.git
+[submodule "crates/tools/preprocessing/rsomics-fastp"]
+	path = crates/tools/preprocessing/rsomics-fastp
+	url = git@github.com:omics-rust/rsomics-fastp.git
