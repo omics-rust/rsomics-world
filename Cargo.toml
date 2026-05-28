@@ -18,9 +18,6 @@ members = [
     "crates/tools/epigenomics/*",
     "crates/tools/proteomics/*",
 ]
-exclude = [
-    "crates/tools/preprocessing/rsomics-fastp",
-]
 
 [workspace.package]
 edition = "2024"
