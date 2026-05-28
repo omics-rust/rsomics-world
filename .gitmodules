@@ -570,3 +570,27 @@
 [submodule "crates/tools/formats/rsomics-vcf-call"]
 	path = crates/tools/formats/rsomics-vcf-call
 	url = git@github.com:omics-rust/rsomics-vcf-call.git
+[submodule "crates/tools/preprocessing/rsomics-fastp"]
+	path = crates/tools/preprocessing/rsomics-fastp
+	url = git@github.com:omics-rust/rsomics-fastp.git
+[submodule "crates/tools/formats/rsomics-bed-closest"]
+	path = crates/tools/formats/rsomics-bed-closest
+	url = git@github.com:omics-rust/rsomics-bed-closest.git
+[submodule "crates/tools/formats/rsomics-bed-flank"]
+	path = crates/tools/formats/rsomics-bed-flank
+	url = git@github.com:omics-rust/rsomics-bed-flank.git
+[submodule "crates/tools/formats/rsomics-bed-getfasta"]
+	path = crates/tools/formats/rsomics-bed-getfasta
+	url = git@github.com:omics-rust/rsomics-bed-getfasta.git
+[submodule "crates/tools/formats/rsomics-bed-jaccard"]
+	path = crates/tools/formats/rsomics-bed-jaccard
+	url = git@github.com:omics-rust/rsomics-bed-jaccard.git
+[submodule "crates/tools/formats/rsomics-bed-slop"]
+	path = crates/tools/formats/rsomics-bed-slop
+	url = git@github.com:omics-rust/rsomics-bed-slop.git
+[submodule "crates/tools/formats/rsomics-bed-complement"]
+	path = crates/tools/formats/rsomics-bed-complement
+	url = git@github.com:omics-rust/rsomics-bed-complement.git
+[submodule "crates/tools/formats/rsomics-vcf-sample"]
+	path = crates/tools/formats/rsomics-vcf-sample
+	url = git@github.com:omics-rust/rsomics-vcf-sample.git
