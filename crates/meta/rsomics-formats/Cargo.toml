@@ -1,6 +1,6 @@
 [package]
 name = "rsomics-formats"
-version = "0.4.0"
+version = "0.5.0"
 description = "Meta-crate re-exporting rsomics format-tool libraries by feature flag"
 edition.workspace = true
 rust-version.workspace = true
@@ -69,6 +69,7 @@ bam = [
 bed = [
     "dep:rsomics-bed-utils",
     "dep:rsomics-bed-intersect",
+    "dep:rsomics-bed-map",
     "dep:rsomics-bed-merge",
     "dep:rsomics-bed-sort",
     "dep:rsomics-bed-subtract",
@@ -137,7 +138,7 @@ rsomics-sam-to-bam = { path = "../../tools/formats/rsomics-sam-to-bam", version 
 
 rsomics-bed-utils = { path = "../../tools/formats/rsomics-bed-utils", version = "0.2", optional = true }
 rsomics-bed-intersect = { path = "../../tools/formats/rsomics-bed-intersect", version = "0.1", optional = true }
-rsomics-bed-merge = { path = "../../tools/formats/rsomics-bed-merge", version = "0.1", optional = true }
+rsomics-bed-merge = { path = "../../tools/formats/rsomics-bed-merge", version = "0.2", optional = true }
 rsomics-bed-sort = { path = "../../tools/formats/rsomics-bed-sort", version = "0.1", optional = true }
 rsomics-bed-subtract = { path = "../../tools/formats/rsomics-bed-subtract", version = "0.1", optional = true }
 rsomics-bed-closest = { path = "../../tools/formats/rsomics-bed-closest", version = "0.1", optional = true }
@@ -146,6 +147,7 @@ rsomics-bed-flank = { path = "../../tools/formats/rsomics-bed-flank", version = 
 rsomics-bed-getfasta = { path = "../../tools/formats/rsomics-bed-getfasta", version = "0.1", optional = true }
 rsomics-bed-jaccard = { path = "../../tools/formats/rsomics-bed-jaccard", version = "0.1", optional = true }
 rsomics-bed-slop = { path = "../../tools/formats/rsomics-bed-slop", version = "0.1", optional = true }
+rsomics-bed-map = { path = "../../tools/formats/rsomics-bed-map", version = "0.1", optional = true }
 rsomics-bed-window = { path = "../../tools/formats/rsomics-bed-window", version = "0.1", optional = true }
 rsomics-vcf-sample = { path = "../../tools/formats/rsomics-vcf-sample", version = "0.1", optional = true }
 rsomics-gff-utils = { path = "../../tools/formats/rsomics-gff-utils", version = "0.1", optional = true }

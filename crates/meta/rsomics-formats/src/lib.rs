@@ -63,6 +63,7 @@ pub mod bed {
     pub use rsomics_bed_getfasta as getfasta;
     pub use rsomics_bed_intersect as intersect;
     pub use rsomics_bed_jaccard as jaccard;
+    pub use rsomics_bed_map as map;
     pub use rsomics_bed_merge as merge;
     pub use rsomics_bed_slop as slop;
     pub use rsomics_bed_sort as sort;
