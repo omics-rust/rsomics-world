@@ -2417,6 +2417,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "rsomics-bed-len"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "criterion 0.7.0",
+ "rsomics-common",
+ "rsomics-help",
+]
+
+[[package]]
 name = "rsomics-bed-map"
 version = "0.1.1"
 dependencies = [
@@ -2438,6 +2448,16 @@ dependencies = [
  "rsomics-help",
  "rsomics-intervals",
  "tempfile",
+]
+
+[[package]]
+name = "rsomics-bed-midpoint"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "criterion 0.7.0",
+ "rsomics-common",
+ "rsomics-help",
 ]
 
 [[package]]
@@ -2483,6 +2503,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "rsomics-bed-spacing"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "rsomics-common",
+ "rsomics-help",
+ "tempfile",
+]
+
+[[package]]
 name = "rsomics-bed-split"
 version = "0.1.0"
 dependencies = [
@@ -2508,6 +2538,16 @@ name = "rsomics-bed-summary"
 version = "0.1.0"
 dependencies = [
  "clap",
+ "rsomics-common",
+ "rsomics-help",
+]
+
+[[package]]
+name = "rsomics-bed-total-bp"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "criterion 0.7.0",
  "rsomics-common",
  "rsomics-help",
 ]
@@ -3098,7 +3138,7 @@ dependencies = [
 
 [[package]]
 name = "rsomics-formats"
-version = "0.7.0"
+version = "0.9.0"
 dependencies = [
  "rsomics-bam-addreplacerg",
  "rsomics-bam-ampliconclip",
@@ -3177,19 +3217,31 @@ dependencies = [
  "rsomics-vcf-annotate",
  "rsomics-vcf-call",
  "rsomics-vcf-cnv",
+ "rsomics-vcf-concat",
+ "rsomics-vcf-consensus",
+ "rsomics-vcf-convert",
+ "rsomics-vcf-fill-tags",
  "rsomics-vcf-filter",
+ "rsomics-vcf-fixref",
  "rsomics-vcf-gtcheck",
+ "rsomics-vcf-head",
+ "rsomics-vcf-index",
  "rsomics-vcf-isec",
  "rsomics-vcf-merge",
+ "rsomics-vcf-mpileup",
  "rsomics-vcf-norm",
  "rsomics-vcf-polysomy",
  "rsomics-vcf-query",
+ "rsomics-vcf-reheader",
  "rsomics-vcf-roh",
  "rsomics-vcf-sample",
+ "rsomics-vcf-setgt",
+ "rsomics-vcf-sort",
  "rsomics-vcf-split",
  "rsomics-vcf-stats",
  "rsomics-vcf-utils",
  "rsomics-vcf-validate",
+ "rsomics-vcf-view",
 ]
 
 [[package]]
