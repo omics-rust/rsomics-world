@@ -57,7 +57,18 @@ pub mod bam {
 
 #[cfg(feature = "bed")]
 pub mod bed {
+    pub use rsomics_bed_closest as closest;
+    pub use rsomics_bed_complement as complement;
+    pub use rsomics_bed_flank as flank;
+    pub use rsomics_bed_getfasta as getfasta;
+    pub use rsomics_bed_intersect as intersect;
+    pub use rsomics_bed_jaccard as jaccard;
+    pub use rsomics_bed_merge as merge;
+    pub use rsomics_bed_slop as slop;
+    pub use rsomics_bed_sort as sort;
+    pub use rsomics_bed_subtract as subtract;
     pub use rsomics_bed_utils as utils;
+    pub use rsomics_bed_window as window;
 }
 
 #[cfg(feature = "gff")]
