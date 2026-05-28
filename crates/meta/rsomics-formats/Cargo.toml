@@ -1,6 +1,6 @@
 [package]
 name = "rsomics-formats"
-version = "0.18.0"
+version = "0.19.0"
 description = "Meta-crate re-exporting rsomics format-tool libraries by feature flag"
 edition.workspace = true
 rust-version.workspace = true
@@ -124,6 +124,7 @@ bed = [
     "dep:rsomics-bed-midpoint",
     "dep:rsomics-bed-fisher",
     "dep:rsomics-bed-multiinter",
+    "dep:rsomics-bed-overlap",
     "dep:rsomics-bed-random",
     "dep:rsomics-bed-reldist",
     "dep:rsomics-bed-sample",
@@ -244,6 +245,7 @@ rsomics-bed-expand = { path = "../../tools/formats/rsomics-bed-expand", version 
 rsomics-bed-flank = { path = "../../tools/formats/rsomics-bed-flank", version = "0.1", optional = true }
 rsomics-bed-fisher = { path = "../../tools/formats/rsomics-bed-fisher", version = "0.1", optional = true }
 rsomics-bed-multiinter = { path = "../../tools/formats/rsomics-bed-multiinter", version = "0.1", optional = true }
+rsomics-bed-overlap = { path = "../../tools/formats/rsomics-bed-overlap", version = "0.1", optional = true }
 rsomics-bed-random = { path = "../../tools/formats/rsomics-bed-random", version = "0.1", optional = true }
 rsomics-bed-reldist = { path = "../../tools/formats/rsomics-bed-reldist", version = "0.1", optional = true }
 rsomics-bed-sample = { path = "../../tools/formats/rsomics-bed-sample", version = "0.1", optional = true }

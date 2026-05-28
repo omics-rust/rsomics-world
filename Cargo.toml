@@ -152,6 +152,7 @@ rsomics-bam-view = { path = "crates/tools/formats/rsomics-bam-view" }
 rsomics-bed-intersect = { path = "crates/tools/formats/rsomics-bed-intersect" }
 rsomics-bed-fisher = { path = "crates/tools/formats/rsomics-bed-fisher" }
 rsomics-bed-multiinter = { path = "crates/tools/formats/rsomics-bed-multiinter" }
+rsomics-bed-overlap = { path = "crates/tools/formats/rsomics-bed-overlap" }
 rsomics-bed-reldist = { path = "crates/tools/formats/rsomics-bed-reldist" }
 rsomics-bed-shuffle = { path = "crates/tools/formats/rsomics-bed-shuffle" }
 rsomics-bed-merge = { path = "crates/tools/formats/rsomics-bed-merge" }
