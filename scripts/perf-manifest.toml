@@ -203,6 +203,16 @@ reason = "Upstream is bedtools genomecov. Compat test verifies output vs bedtool
 [exempt.rsomics-bed-getfasta]
 reason = "Per-function decomposition tool — no single upstream binary to benchmark against. Covered by smoke + compat tests."
 
+[spec.rsomics-bed-groupby]
+# 1M BED5 records (32 MB), group by col 1,2,3 and sum col 5. Streaming line parser.
+# aarch64-apple-darwin (mini_m2): 615.4 ms vs bedtools 1.123 s = 1.82× PASS
+# Machine: mini_m2, bedtools 2.31.1, rsomics-bed-groupby 0.1.0, 2026-05-28
+fixture          = "bed:1000000:0"
+ours_args        = "FIX -g 1,2,3 -c 4 --ops sum"
+upstream_bin     = "bedtools"
+upstream_args    = "groupby -i FIX -g 1,2,3 -c 4 -o sum"
+upstream_version = "bedtools --version"
+
 [exempt.rsomics-bed-jaccard]
 reason = "Per-function decomposition tool — no single upstream binary to benchmark against. Covered by smoke + compat tests."
 

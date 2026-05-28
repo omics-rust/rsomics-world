@@ -2616,6 +2616,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "rsomics-bed-unique"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "criterion 0.7.0",
+ "rsomics-common",
+ "rsomics-help",
+]
+
+[[package]]
 name = "rsomics-bed-utils"
 version = "0.2.3"
 dependencies = [
@@ -2627,6 +2637,16 @@ dependencies = [
  "rsomics-intervals",
  "serde",
  "serde_json",
+]
+
+[[package]]
+name = "rsomics-bed-validate"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "criterion 0.7.0",
+ "rsomics-common",
+ "rsomics-help",
 ]
 
 [[package]]
@@ -3201,7 +3221,7 @@ dependencies = [
 
 [[package]]
 name = "rsomics-formats"
-version = "0.13.0"
+version = "0.14.0"
 dependencies = [
  "rsomics-bam-addreplacerg",
  "rsomics-bam-ampliconclip",
@@ -3260,7 +3280,9 @@ dependencies = [
  "rsomics-bed-subtract",
  "rsomics-bed-to-gff",
  "rsomics-bed-total-bp",
+ "rsomics-bed-unique",
  "rsomics-bed-utils",
+ "rsomics-bed-validate",
  "rsomics-bed-window",
  "rsomics-fasta-index",
  "rsomics-fasta-locate",

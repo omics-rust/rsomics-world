@@ -107,7 +107,6 @@ pub mod bed {
     pub use rsomics_bed_complement as complement;
     pub use rsomics_bed_count as count;
     pub use rsomics_bed_expand as expand;
-    pub use rsomics_bed_random as random;
     pub use rsomics_bed_flank as flank;
     pub use rsomics_bed_getfasta as getfasta;
     pub use rsomics_bed_groupby as groupby;
@@ -118,6 +117,7 @@ pub mod bed {
     pub use rsomics_bed_map as map;
     pub use rsomics_bed_merge as merge;
     pub use rsomics_bed_midpoint as midpoint;
+    pub use rsomics_bed_random as random;
     pub use rsomics_bed_shift as shift;
     pub use rsomics_bed_slop as slop;
     pub use rsomics_bed_sort as sort;
@@ -126,7 +126,9 @@ pub mod bed {
     pub use rsomics_bed_subtract as subtract;
     pub use rsomics_bed_to_gff as to_gff;
     pub use rsomics_bed_total_bp as total_bp;
+    pub use rsomics_bed_unique as unique;
     pub use rsomics_bed_utils as utils;
+    pub use rsomics_bed_validate as validate_bed;
     pub use rsomics_bed_window as window;
 }
 
