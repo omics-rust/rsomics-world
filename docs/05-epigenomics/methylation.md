@@ -98,20 +98,20 @@ methylation lives in module 04.
   - Consumes primitives: `noodles-bam`, future `rsomics-stats`
   - Notes: Niche; mostly used in Ecker-lab pipelines. Wrap via PyO3 if needed; rewrite is low priority.
 
-- [ ] **`MethylDackel`** — universal methylation extractor for bisulfite BAMs.
+- [~] **`MethylDackel`** — universal methylation extractor for bisulfite BAMs.
   - Reference impl: `C` · [dpryan79/MethylDackel](https://github.com/dpryan79/MethylDackel) · `MIT`
-  - Existing Rust: none verified
-  - Existing Rust kind: `none`
+  - Existing Rust: [`rsomics-methyldackel`](https://github.com/omics-rust/rsomics-methyldackel) 0.1.0 — production, 4.43× vs MethylDackel 0.6.1
+  - Existing Rust kind: `rust-native (①)`
   - Existing non-C alternatives: —
-  - Parallelism: upstream pthreads
-  - SIMD: limited
-  - Quadrant: —
+  - Parallelism: upstream pthreads; ours single-threaded (sufficient)
+  - SIMD: n/a — per-position binomial counting is memory-latency-bound
+  - Quadrant: ①
   - GPU-amenable: no — per-position binomial counting, memory-latency-bound
   - Upstream license: `MIT`
   - Priority: `P0`
-  - Layer: `subcommand-of-rsomics-bisulfite` (extraction mode — primary user-facing subcommand)
-  - Consumes primitives: `noodles-bam`, `noodles-bed`, `statrs` (binomial)
-  - Notes: Small (< 5 kLoC), focused, MIT-licensed, and called by every nf-core methylseq pipeline. Excellent Rust port target — `noodles-bam` covers IO, the per-position binomial logic is tiny. Output format (CpG bedGraph + methylKit) is well-specified.
+  - Layer: `B`
+  - Consumes primitives: `rsomics-bamio`, `noodles-fasta`
+  - Notes: DONE. rsomics-methyldackel 0.1.0 ships as its own binary, not as a subcommand. 4.43× faster than MethylDackel 0.6.1 on a 50k-read bisulfite BAM (mini_m2, 2026-05-29). Output: CpG bedGraph (same format as upstream `extract` command). Compat test passes vs MethylDackel 0.6.1.
 
 - [x] **`modkit`** — Oxford Nanopore modified-base toolkit (modBAM-based).
   - Reference impl: `Rust` · [nanoporetech/modkit](https://github.com/nanoporetech/modkit) · `MPL-2.0`
