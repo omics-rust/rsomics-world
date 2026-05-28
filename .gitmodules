@@ -567,3 +567,6 @@
 [submodule "crates/tools/transcriptomics/rsomics-mismatch-profile"]
 	path = crates/tools/transcriptomics/rsomics-mismatch-profile
 	url = git@github.com:omics-rust/rsomics-mismatch-profile.git
+[submodule "crates/tools/formats/rsomics-vcf-call"]
+	path = crates/tools/formats/rsomics-vcf-call
+	url = git@github.com:omics-rust/rsomics-vcf-call.git
