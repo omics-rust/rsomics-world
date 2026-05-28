@@ -179,8 +179,6 @@ reason = "No FASTA fixture generator in mkfixture.py yet. faidx indexing is IO-b
 [exempt.rsomics-bam-sort]
 reason = "In-memory sort; samtools sort uses external merge-sort with temp files. Apples-to-oranges until external sort is implemented. Covered by compat test vs samtools."
 
-[exempt.rsomics-vcf-filter]
-reason = "No VCF fixture generator in mkfixture.py yet. Filtering is a linear scan with trivial per-record QUAL comparison. Covered by compat test vs bcftools view. Perfgate will activate when VCF fixture generator lands."
 
 # gz input: .fastq.gz is the real-world workload (universal sequencer
 # distribution); the gate must cover gz decode + k-mer scan. Both sides
@@ -1258,3 +1256,16 @@ reason = "Requires genome-scale GFF3 annotation + reference FASTA (not a mkfixtu
 # no formula in homebrew). Correctness validated vs expected output in compat.rs.
 [exempt.rsomics-plink-io]
 reason = "Upstream plink 1.9 is not available on macOS CI runners. Operations (--freq, --missing, --hardy) are bit-unpacking + arithmetic; Rust > C on cache-friendly reads. Perf gate pending 4090 where plink is installed."
+
+# vcf-filter: bcftools view/filter record filtering.
+# Measured: 14 MB VCF, 200k variants × 5 samples, --min-qual 30 filter.
+# aarch64-apple-darwin (mini_m2): 20.1 ms vs bcftools 225.3 ms = 11.21× PASS
+# Machine: mini_m2, bcftools 1.23.1, rsomics-vcf-filter 0.2.0, 2026-05-29
+# Note: vcf-filter reads VCF directly without htslib overhead; bcftools launches
+# htslib machinery even for plain text VCF, creating the gap.
+[spec.rsomics-vcf-filter]
+fixture          = "vcf:200000:5"
+ours_args        = "--min-qual 30 FIX"
+upstream_bin     = "bcftools"
+upstream_args    = "view -i 'QUAL>=30' FIX"
+upstream_version = "bcftools --version"
