@@ -1257,6 +1257,11 @@ reason = "Requires genome-scale GFF3 annotation + reference FASTA (not a mkfixtu
 [exempt.rsomics-plink-io]
 reason = "Upstream plink 1.9 is not available on macOS CI runners. Operations (--freq, --missing, --hardy) are bit-unpacking + arithmetic; Rust > C on cache-friendly reads. Perf gate pending 4090 where plink is installed."
 
+# plink-assoc: PLINK1 case/control association test (chi-squared + trend + linear regression).
+# plink 1.9 is not available on macOS CI runners.
+[exempt.rsomics-plink-assoc]
+reason = "Upstream plink 1.9 is not available on macOS CI runners. Chi-square / trend / linear-regression statistics are pure arithmetic; Rust > C on sequential record processing. Perf gate pending 4090 where plink is installed."
+
 # vcf-filter: bcftools view/filter record filtering.
 # Measured: 14 MB VCF, 200k variants × 5 samples, --min-qual 30 filter.
 # aarch64-apple-darwin (mini_m2): 20.1 ms vs bcftools 225.3 ms = 11.21× PASS
