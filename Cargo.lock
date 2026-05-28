@@ -3317,7 +3317,7 @@ dependencies = [
 
 [[package]]
 name = "rsomics-formats"
-version = "0.20.0"
+version = "0.21.0"
 dependencies = [
  "rsomics-bam-addreplacerg",
  "rsomics-bam-ampliconclip",
@@ -3384,6 +3384,7 @@ dependencies = [
  "rsomics-bed-subtract",
  "rsomics-bed-to-gff",
  "rsomics-bed-total-bp",
+ "rsomics-bed-unionbedg",
  "rsomics-bed-unique",
  "rsomics-bed-utils",
  "rsomics-bed-validate",
