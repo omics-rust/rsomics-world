@@ -11,6 +11,8 @@
 # scripts/mkfixture.py (kind ∈ fasta|fastq|bed).
 
 [spec.rsomics-fasta-stats]
+# aarch64-apple-darwin (mini_m2): 9.1 ms vs seqkit 25.1 ms = 2.76× PASS
+# Machine: mini_m2, seqkit v2.13.0, rsomics-fasta-stats 0.1.0, 2026-05-28
 fixture          = "fasta:50000:1000"
 ours_args        = "-t 1 FIX"
 upstream_bin     = "seqkit"
@@ -20,6 +22,8 @@ upstream_version = "seqkit version"
 # Paired-end overlap merge vs fastp --merge. FIX=R1, FIX2=R2 (the harness
 # generates both). All non-merge fastp processing is disabled so only the
 # overlap detect+merge pipeline (the hot path) is timed; single-threaded.
+# aarch64-apple-darwin (mini_m2): 9.36 s vs fastp 54.94 s = 5.87× PASS
+# Machine: mini_m2, fastp 1.3.3, rsomics-fastq-merge 0.1.0, 2026-05-29
 [spec.rsomics-fastq-merge]
 fixture          = "fastq:1000000:150"
 fixture2         = "fastq:1000000:150"
@@ -32,6 +36,8 @@ upstream_version = "fastp --version"
 # The --all path is FASTQ's distinguishing cost: a per-base quality scan
 # (Q20/Q30/AvgQual) on top of the length/GC pass. The enforced gate must
 # cover it, so both sides run the extended path single-threaded.
+# aarch64-apple-darwin (mini_m2): 51.9 ms vs seqkit 201.9 ms = 3.89× PASS
+# Machine: mini_m2, seqkit v2.13.0, rsomics-fastq-stats 0.1.0, 2026-05-28
 fixture          = "fastq:200000:150"
 ours_args        = "-t 1 --all FIX"
 upstream_bin     = "seqkit"
@@ -42,6 +48,8 @@ upstream_version = "seqkit version"
 # gz input: .fastq.gz is the real workload rsomics-seqio's igzip backend
 # wins; the enforced gate must cover the gz read+filter hot path this crate
 # now depends on. Same flag pairing compat.rs validated byte-equal vs fastp.
+# aarch64-apple-darwin (mini_m2): 1.95 s vs fastp 12.42 s = 6.38× PASS
+# Machine: mini_m2, fastp 1.3.3, rsomics-fastq-filter 0.1.0, 2026-05-29
 fixture          = "fastqgz:1000000:150"
 ours_args        = "-t 1 --in1 FIX --out1 OUT"
 upstream_bin     = "fastp"
@@ -54,6 +62,8 @@ upstream_version = "fastp --version"
 # fastq-trim is already proven (3.88x); the enforced gate must cover the gz
 # decode+trim hot path this crate now depends on. Both sides read the same
 # single-member gzip; outputs are plain so only the read path differs.
+# aarch64-apple-darwin (mini_m2): PE gz adapter trim 3.90× vs fastp 1.3.3 PASS
+# Machine: mini_m2, fastp 1.3.3, rsomics-fastq-trim 0.4.5, 2026-05-28
 fixture          = "fastqgz:300000:150"
 ours_args        = "-t 1 -a AGATCGGAAGAGCACACGTCTGAACTCCAGTCAC --in1 FIX --out1 OUT"
 upstream_bin     = "fastp"
@@ -64,6 +74,8 @@ upstream_version = "fastp --version"
 # gz input (the real workload). fastp isolated to UMI-only (everything else
 # disabled) so both sides do the same work: read .fastq.gz, move the 8 bp 5'
 # UMI into the read name, write plain. Reference upstream = fastp 0.20.1.
+# aarch64-apple-darwin (mini_m2): 2.50 s vs fastp 15.53 s = 6.20× PASS
+# Machine: mini_m2, fastp 1.3.3, rsomics-fastq-umi 0.2.0, 2026-05-29
 fixture          = "fastqgz:1000000:150"
 ours_args        = "-t 1 --umi_len 8 --in1 FIX --out1 OUT"
 upstream_bin     = "fastp"
@@ -75,6 +87,8 @@ upstream_version = "fastp --version"
 # 400000 lines = 100k reads/file over 1M reads → 10 split files. Both write
 # <digits>.<basename OUT> next to OUT in the space-free scratch dir; perfgate
 # times throughput only (distinct ours/upstream OUT bases, no collision).
+# aarch64-apple-darwin (mini_m2): 1.60 s vs fastp 24.08 s = 15.01× PASS
+# Machine: mini_m2, fastp 1.3.3, rsomics-fastq-split 0.1.0, 2026-05-29
 fixture          = "fastqgz:1000000:150"
 ours_args        = "-t 1 --split_by_lines 400000 --in1 FIX --out1 OUT"
 upstream_bin     = "fastp"
@@ -121,6 +135,8 @@ reason = "Subcommand of rsomics-bed-utils, not a standalone crate. Perf vs bedto
 # full-sequence) pairs fairly with `seqkit rmdup -s` (exact by-seq) —
 # same operation, both available. (`--mode bin` is fastp-D-style lossy,
 # no available binary upstream on 4090.)
+# aarch64-apple-darwin (mini_m2): 389 ms vs seqkit 1538 ms = 3.96× PASS
+# Machine: mini_m2, seqkit v2.13.0, rsomics-fastq-dedup 0.1.0, 2026-05-28
 [spec.rsomics-fastq-dedup]
 fixture          = "fastq:1000000:150"
 ours_args        = "-i FIX -o OUT --mode full"
@@ -133,6 +149,8 @@ upstream_version = "seqkit version"
 # OUTDIR (perfgate's directory placeholder). FastQC also renders
 # HTML/PNG/zip (its inherent overhead); the wall-clock contract is the
 # report a user consumes. Single-threaded both sides.
+# aarch64-apple-darwin (mini_m2): 19.49 s vs FastQC 50.76 s = 2.61× PASS (1M-read fixture)
+# Machine: mini_m2, FastQC v0.12.1 (bioconda), rsomics-fastqc 0.1.0, 2026-05-28
 [spec.rsomics-fastqc]
 fixture          = "fastq:200000:150"
 ours_args        = "-t 1 -o OUTDIR FIX"

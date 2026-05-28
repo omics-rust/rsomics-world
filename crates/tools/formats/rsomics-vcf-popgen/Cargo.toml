@@ -1,0 +1,41 @@
+[package]
+name = "rsomics-vcf-popgen"
+version = "0.1.0"
+description = "Population-genetics statistics from VCF: allele-freq, pi, Tajima-D, Fst, het, HWE, missingness, singletons (vcftools-compatible)"
+edition = "2024"
+rust-version = "1.91"
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/omics-rust/rsomics-vcf-popgen"
+authors = ["Zane Leong <efd@live.com>"]
+
+## Origin
+##
+## Independent Rust reimplementation of vcftools population-genetics statistics based on:
+## - Danecek et al. 2011 (vcftools paper, doi:10.1093/bioinformatics/btr330)
+## - VCF format spec v4.3 (samtools/hts-specs)
+## - Black-box behaviour testing against vcftools binary
+##
+## License: MIT OR Apache-2.0
+## Upstream credit: vcftools (Danecek et al., GNU LGPL v3)
+
+[[bin]]
+name = "rsomics-vcf-popgen"
+path = "src/main.rs"
+
+[lib]
+name = "rsomics_vcf_popgen"
+path = "src/lib.rs"
+doctest = false
+
+[[bench]]
+name = "bench"
+harness = false
+
+[dependencies]
+rsomics-common = { version = "0.6" }
+clap = { version = "4", features = ["derive"] }
+anyhow = "1"
+
+[dev-dependencies]
+criterion = { version = "0.7", default-features = false, features = ["cargo_bench_support"] }
+tempfile = "3"

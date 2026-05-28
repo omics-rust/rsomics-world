@@ -2114,9 +2114,11 @@ name = "rsomics-bam-region"
 version = "0.1.0"
 dependencies = [
  "clap",
+ "criterion 0.7.0",
  "noodles",
  "rsomics-common",
  "rsomics-help",
+ "tempfile",
 ]
 
 [[package]]
@@ -2234,11 +2236,13 @@ name = "rsomics-bam-subsample"
 version = "0.1.1"
 dependencies = [
  "clap",
+ "criterion 0.7.0",
  "noodles",
  "rand 0.8.6",
  "rsomics-bamio",
  "rsomics-common",
  "rsomics-help",
+ "tempfile",
 ]
 
 [[package]]
@@ -2687,6 +2691,7 @@ name = "rsomics-bed-split"
 version = "0.1.0"
 dependencies = [
  "clap",
+ "criterion 0.7.0",
  "rsomics-common",
  "rsomics-help",
  "tempfile",
@@ -2718,8 +2723,10 @@ name = "rsomics-bed-summary"
 version = "0.1.0"
 dependencies = [
  "clap",
+ "criterion 0.7.0",
  "rsomics-common",
  "rsomics-help",
+ "tempfile",
 ]
 
 [[package]]
@@ -2805,8 +2812,10 @@ name = "rsomics-bed12-to-bed6"
 version = "0.1.0"
 dependencies = [
  "clap",
+ "criterion 0.7.0",
  "rsomics-common",
  "rsomics-help",
+ "tempfile",
 ]
 
 [[package]]
@@ -2897,6 +2906,7 @@ name = "rsomics-count-matrix"
 version = "0.1.0"
 dependencies = [
  "clap",
+ "criterion 0.7.0",
  "rsomics-common",
  "rsomics-help",
 ]
@@ -2914,6 +2924,7 @@ name = "rsomics-de-volcano"
 version = "0.1.0"
 dependencies = [
  "clap",
+ "criterion 0.7.0",
  "rsomics-common",
  "rsomics-help",
 ]
@@ -2955,6 +2966,7 @@ name = "rsomics-deseq-prep"
 version = "0.1.0"
 dependencies = [
  "clap",
+ "criterion 0.7.0",
  "rsomics-common",
  "rsomics-help",
 ]
@@ -3004,10 +3016,12 @@ name = "rsomics-fasta-mask"
 version = "0.1.0"
 dependencies = [
  "clap",
+ "criterion 0.7.0",
  "needletail 0.7.3",
  "rsomics-common",
  "rsomics-help",
  "rsomics-intervals",
+ "tempfile",
 ]
 
 [[package]]
@@ -3140,6 +3154,7 @@ name = "rsomics-fastq-downsample"
 version = "0.1.0"
 dependencies = [
  "clap",
+ "criterion 0.7.0",
  "needletail 0.7.3",
  "rand 0.8.6",
  "rsomics-common",
@@ -3371,7 +3386,7 @@ dependencies = [
 
 [[package]]
 name = "rsomics-formats"
-version = "0.24.0"
+version = "0.25.0"
 dependencies = [
  "rsomics-bam-addreplacerg",
  "rsomics-bam-ampliconclip",
@@ -3494,6 +3509,7 @@ dependencies = [
  "rsomics-vcf-concat",
  "rsomics-vcf-consensus",
  "rsomics-vcf-convert",
+ "rsomics-vcf-csq",
  "rsomics-vcf-fill-tags",
  "rsomics-vcf-filter",
  "rsomics-vcf-fixref",
@@ -3505,6 +3521,7 @@ dependencies = [
  "rsomics-vcf-mpileup",
  "rsomics-vcf-norm",
  "rsomics-vcf-polysomy",
+ "rsomics-vcf-popgen",
  "rsomics-vcf-query",
  "rsomics-vcf-reheader",
  "rsomics-vcf-roh",
@@ -3560,9 +3577,11 @@ name = "rsomics-gc-windows"
 version = "0.1.0"
 dependencies = [
  "clap",
+ "criterion 0.7.0",
  "needletail 0.7.3",
  "rsomics-common",
  "rsomics-help",
+ "tempfile",
 ]
 
 [[package]]
@@ -3611,10 +3630,12 @@ name = "rsomics-hmm-decode"
 version = "0.1.0"
 dependencies = [
  "clap",
+ "criterion 0.7.0",
  "rsomics-common",
  "rsomics-help",
  "rsomics-hmm",
  "serde_json",
+ "tempfile",
 ]
 
 [[package]]
@@ -3726,8 +3747,10 @@ name = "rsomics-ld-matrix"
 version = "0.1.0"
 dependencies = [
  "clap",
+ "criterion 0.7.0",
  "rsomics-common",
  "rsomics-help",
+ "tempfile",
 ]
 
 [[package]]
@@ -4027,6 +4050,7 @@ name = "rsomics-seq-stats"
 version = "0.1.0"
 dependencies = [
  "clap",
+ "criterion 0.7.0",
  "needletail 0.7.3",
  "rsomics-common",
  "rsomics-help",
@@ -4067,9 +4091,11 @@ name = "rsomics-tajima-d"
 version = "0.1.0"
 dependencies = [
  "clap",
+ "criterion 0.7.0",
  "rsomics-common",
  "rsomics-help",
  "rsomics-popgen-core",
+ "tempfile",
 ]
 
 [[package]]
@@ -4111,6 +4137,7 @@ name = "rsomics-tpm"
 version = "0.1.0"
 dependencies = [
  "clap",
+ "criterion 0.7.0",
  "rsomics-common",
  "rsomics-help",
 ]
@@ -4353,6 +4380,17 @@ dependencies = [
 ]
 
 [[package]]
+name = "rsomics-vcf-popgen"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "clap",
+ "criterion 0.7.0",
+ "rsomics-common",
+ "tempfile",
+]
+
+[[package]]
 name = "rsomics-vcf-query"
 version = "0.1.1"
 dependencies = [
@@ -4452,9 +4490,11 @@ name = "rsomics-vcf-to-bed"
 version = "0.1.0"
 dependencies = [
  "clap",
+ "criterion 0.7.0",
  "noodles",
  "rsomics-common",
  "rsomics-help",
+ "tempfile",
 ]
 
 [[package]]
