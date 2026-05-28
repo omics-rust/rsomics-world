@@ -645,3 +645,6 @@
 [submodule "crates/tools/formats/rsomics-bed-validate"]
 	path = crates/tools/formats/rsomics-bed-validate
 	url = git@github.com:omics-rust/rsomics-bed-validate.git
+[submodule "crates/tools/formats/rsomics-bed-cluster"]
+	path = crates/tools/formats/rsomics-bed-cluster
+	url = git@github.com:omics-rust/rsomics-bed-cluster.git
