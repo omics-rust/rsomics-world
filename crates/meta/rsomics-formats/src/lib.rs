@@ -119,6 +119,7 @@ pub mod bed {
     pub use rsomics_bed_merge as merge;
     pub use rsomics_bed_midpoint as midpoint;
     pub use rsomics_bed_random as random;
+    pub use rsomics_bed_reldist as reldist;
     pub use rsomics_bed_sample as sample;
     pub use rsomics_bed_shift as shift;
     pub use rsomics_bed_shuffle as shuffle;

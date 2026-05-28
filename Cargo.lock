@@ -3262,7 +3262,7 @@ dependencies = [
 
 [[package]]
 name = "rsomics-formats"
-version = "0.16.0"
+version = "0.17.0"
 dependencies = [
  "rsomics-bam-addreplacerg",
  "rsomics-bam-ampliconclip",
@@ -3314,6 +3314,7 @@ dependencies = [
  "rsomics-bed-merge",
  "rsomics-bed-midpoint",
  "rsomics-bed-random",
+ "rsomics-bed-reldist",
  "rsomics-bed-sample",
  "rsomics-bed-shift",
  "rsomics-bed-shuffle",

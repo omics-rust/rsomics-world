@@ -1,6 +1,6 @@
 [package]
 name = "rsomics-formats"
-version = "0.16.0"
+version = "0.17.0"
 description = "Meta-crate re-exporting rsomics format-tool libraries by feature flag"
 edition.workspace = true
 rust-version.workspace = true
@@ -123,9 +123,10 @@ bed = [
     "dep:rsomics-bed-merge",
     "dep:rsomics-bed-midpoint",
     "dep:rsomics-bed-random",
+    "dep:rsomics-bed-reldist",
     "dep:rsomics-bed-sample",
-    "dep:rsomics-bed-shuffle",
     "dep:rsomics-bed-shift",
+    "dep:rsomics-bed-shuffle",
     "dep:rsomics-bed-slop",
     "dep:rsomics-bed-sort",
     "dep:rsomics-bed-spacing",
@@ -240,6 +241,7 @@ rsomics-bed-count = { path = "../../tools/formats/rsomics-bed-count", version = 
 rsomics-bed-expand = { path = "../../tools/formats/rsomics-bed-expand", version = "0.1", optional = true }
 rsomics-bed-flank = { path = "../../tools/formats/rsomics-bed-flank", version = "0.1", optional = true }
 rsomics-bed-random = { path = "../../tools/formats/rsomics-bed-random", version = "0.1", optional = true }
+rsomics-bed-reldist = { path = "../../tools/formats/rsomics-bed-reldist", version = "0.1", optional = true }
 rsomics-bed-sample = { path = "../../tools/formats/rsomics-bed-sample", version = "0.1", optional = true }
 rsomics-bed-shuffle = { path = "../../tools/formats/rsomics-bed-shuffle", version = "0.1", optional = true }
 rsomics-bed-getfasta = { path = "../../tools/formats/rsomics-bed-getfasta", version = "0.1", optional = true }
