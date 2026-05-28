@@ -158,4 +158,3 @@ fn compat_plink_freq() {
         );
     }
 }
-
