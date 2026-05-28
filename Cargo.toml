@@ -147,6 +147,10 @@ rsomics-bam-stats = { path = "crates/tools/formats/rsomics-bam-stats" }
 rsomics-bam-targetcut = { path = "crates/tools/formats/rsomics-bam-targetcut" }
 rsomics-bam-to-fastq = { path = "crates/tools/formats/rsomics-bam-to-fastq" }
 rsomics-bam-view = { path = "crates/tools/formats/rsomics-bam-view" }
+rsomics-bed-intersect = { path = "crates/tools/formats/rsomics-bed-intersect" }
+rsomics-bed-merge = { path = "crates/tools/formats/rsomics-bed-merge" }
+rsomics-bed-sort = { path = "crates/tools/formats/rsomics-bed-sort" }
+rsomics-bed-subtract = { path = "crates/tools/formats/rsomics-bed-subtract" }
 rsomics-bed-utils = { path = "crates/tools/formats/rsomics-bed-utils" }
 rsomics-fasta-index = { path = "crates/tools/formats/rsomics-fasta-index" }
 rsomics-fasta-n50 = { path = "crates/tools/formats/rsomics-fasta-n50" }
@@ -170,11 +174,16 @@ rsomics-fastqc = { path = "crates/tools/formats/rsomics-fastqc" }
 rsomics-gff-utils = { path = "crates/tools/formats/rsomics-gff-utils" }
 rsomics-sam-to-bam = { path = "crates/tools/formats/rsomics-sam-to-bam" }
 rsomics-vcf-annotate = { path = "crates/tools/formats/rsomics-vcf-annotate" }
+rsomics-vcf-call = { path = "crates/tools/formats/rsomics-vcf-call" }
+rsomics-vcf-cnv = { path = "crates/tools/formats/rsomics-vcf-cnv" }
 rsomics-vcf-filter = { path = "crates/tools/formats/rsomics-vcf-filter" }
+rsomics-vcf-gtcheck = { path = "crates/tools/formats/rsomics-vcf-gtcheck" }
 rsomics-vcf-isec = { path = "crates/tools/formats/rsomics-vcf-isec" }
 rsomics-vcf-merge = { path = "crates/tools/formats/rsomics-vcf-merge" }
 rsomics-vcf-norm = { path = "crates/tools/formats/rsomics-vcf-norm" }
+rsomics-vcf-polysomy = { path = "crates/tools/formats/rsomics-vcf-polysomy" }
 rsomics-vcf-query = { path = "crates/tools/formats/rsomics-vcf-query" }
+rsomics-vcf-roh = { path = "crates/tools/formats/rsomics-vcf-roh" }
 rsomics-vcf-split = { path = "crates/tools/formats/rsomics-vcf-split" }
 rsomics-vcf-stats = { path = "crates/tools/formats/rsomics-vcf-stats" }
 rsomics-vcf-utils = { path = "crates/tools/formats/rsomics-vcf-utils" }
