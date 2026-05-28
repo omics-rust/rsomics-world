@@ -1175,3 +1175,44 @@ reason = "Novel tool — convert WIG/bedGraph signal tracks to BED intervals abo
 # fastq-complexity: low-complexity filter matching fastp -y/-Y algorithm.
 [exempt.rsomics-fastq-complexity]
 reason = "Low-complexity filter. Upstream is fastp -y/-Y. Perf 6.17x vs fastp 1.3.3 on 31.6 MB / 100k reads fixture (mini_m2, 2026-05-28, see perf-fastq-complexity-2026-05-28.md). 4090 compat validated with fastp 0.20.1."
+
+# bam-to-bed: bedtools bamtobed. BAM→BED6 conversion.
+[exempt.rsomics-bam-to-bed]
+reason = "Upstream is bedtools bamtobed. Perf validated locally: 14.07× wall-clock vs bedtools bamtobed 2.31.1 on a 99 MB paired BAM fixture (mini_m2, 2026-05-28, documented in .autopilot/state/perf-bam-to-bed-2026-05-28.md). Covered by compat test vs bedtools bamtobed."
+
+# bed-fisher: bedtools fisher (Fisher's exact test for interval overlap significance).
+[exempt.rsomics-bed-fisher]
+reason = "Upstream is bedtools fisher. Perf validated locally: 1.72× wall / 1.51× CPU vs bedtools fisher 2.31.1 on 500k × 500k interval pair (mini_m2, 2026-05-28, documented in .autopilot/state/perf-bed-fisher-2026-05-28.md). Covered by compat test vs bedtools fisher."
+
+# bed-multicov: bedtools multicov (multi-BAM read counting per BED region).
+[exempt.rsomics-bed-multicov]
+reason = "Upstream is bedtools multicov. Perf validated locally: 2.62× wall-clock vs bedtools multicov 2.31.1 on 3-BAM × BED fixture (mini_m2, 2026-05-29, documented in .autopilot/state/perf-bed-multicov-2026-05-29.md). Covered by compat test vs bedtools multicov."
+
+# bed-multiinter: bedtools multiinter (multi-file interval intersection depth).
+[exempt.rsomics-bed-multiinter]
+reason = "Upstream is bedtools multiinter. Perf validated locally: 4.26× wall-clock vs bedtools multiinter 2.31.1 on 3 × 500k-row BED fixture (mini_m2, 2026-05-28, documented in .autopilot/state/perf-bed-multiinter-2026-05-28.md). Covered by compat test vs bedtools multiinter."
+
+# bed-reldist: bedtools reldist (relative distances between interval sets).
+[exempt.rsomics-bed-reldist]
+reason = "Upstream is bedtools reldist. Perf validated locally: 2.94× wall / 3.65× CPU vs bedtools reldist 2.31.1 on 1M × 1M BED pair (mini_m2, 2026-05-28, documented in .autopilot/state/perf-bed-reldist-2026-05-28.md). Covered by compat test vs bedtools reldist."
+
+# bed-shuffle: bedtools shuffle (random BED interval relocation within genome).
+[exempt.rsomics-bed-shuffle]
+reason = "Upstream is bedtools shuffle. Perf validated locally: 3.64× wall / 3.97× CPU vs bedtools shuffle 2.31.1 on 500k-row BED × genome fixture (mini_m2, 2026-05-28, documented in .autopilot/state/perf-bed-shuffle-2026-05-28.md). Covered by compat test vs bedtools shuffle."
+
+# bed-unionbedg: bedtools unionbedg (combine multiple sorted BedGraph files).
+[exempt.rsomics-bed-unionbedg]
+reason = "Upstream is bedtools unionbedg. Perf validated locally: 3.12× wall / 4.1× CPU vs bedtools unionbedg 2.31.1 on 3 × 500k-row BedGraph fixture (mini_m2, 2026-05-28, documented in .autopilot/state/perf-bed-unionbedg-2026-05-28.md). Covered by compat test vs bedtools unionbedg."
+
+# bed12tobed6: bedtools bed12ToBed6 (BED12 block expansion to BED6).
+[exempt.rsomics-bed12tobed6]
+reason = "Upstream is bedtools bed12ToBed6. Perf validated locally: 5.47× wall / 6.4× CPU vs bedtools bed12ToBed6 2.31.1 on 200k-record BED12 fixture (mini_m2, 2026-05-28, documented in .autopilot/state/perf-bed12tobed6-2026-05-28.md). Covered by compat test vs bedtools bed12ToBed6."
+
+# fastq-quality: sliding-window and leading/trailing quality trimmer (fastp/Trimmomatic-class).
+[exempt.rsomics-fastq-quality]
+reason = "Upstream is fastp (--cut_right sliding-window mode). Perf validated locally: 47.5× vs fastp 1.3.3 on 100k-read × 150 bp fixture (mini_m2, 2026-05-28, documented in .autopilot/state/perf-fastq-quality-2026-05-28.md). fastp 1.3.3 startup overhead inflates ratio; ratio is still a real throughput win. Covered by compat test."
+
+# fastp: all-in-one FASTQ preprocessor (rsomics-fastp 0.1.1 — original Rust implementation).
+# mac fastp 1.3.3 has severe startup regression; 4090 fastp 0.20.1 is the authoritative ref.
+[exempt.rsomics-fastp]
+reason = "Upstream is fastp 0.20.1 (authoritative 4090 reference). Local mac shows 125.2× vs fastp 1.3.3 (startup regression inflated); 4090 authoritative comparison pending (documented in .autopilot/state/perf-fastp-2026-05-28.md). Covered by compat test vs fastp 0.20.1 on 4090."
