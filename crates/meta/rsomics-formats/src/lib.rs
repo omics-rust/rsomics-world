@@ -20,6 +20,7 @@ pub mod fastq {
     pub use rsomics_fastq_merge as merge;
     pub use rsomics_fastq_pair as pair;
     pub use rsomics_fastq_quality as quality;
+    pub use rsomics_fastq_sample as sample;
     pub use rsomics_fastq_split as split;
     pub use rsomics_fastq_stats as stats;
     pub use rsomics_fastq_trim as trim;
@@ -32,11 +33,17 @@ pub mod fastq {
 #[cfg(feature = "vcf")]
 pub mod vcf {
     pub use rsomics_vcf_annotate as annotate;
+    pub use rsomics_vcf_call as call;
+    pub use rsomics_vcf_cnv as cnv;
     pub use rsomics_vcf_filter as filter;
+    pub use rsomics_vcf_gtcheck as gtcheck;
     pub use rsomics_vcf_isec as isec;
     pub use rsomics_vcf_merge as merge;
     pub use rsomics_vcf_norm as norm;
+    pub use rsomics_vcf_polysomy as polysomy;
     pub use rsomics_vcf_query as query;
+    pub use rsomics_vcf_roh as roh;
+    pub use rsomics_vcf_sample as sample;
     pub use rsomics_vcf_split as split;
     pub use rsomics_vcf_stats as stats;
     pub use rsomics_vcf_utils as utils;

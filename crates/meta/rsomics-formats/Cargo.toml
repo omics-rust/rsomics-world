@@ -1,6 +1,6 @@
 [package]
 name = "rsomics-formats"
-version = "0.7.0"
+version = "0.8.0"
 description = "Meta-crate re-exporting rsomics format-tool libraries by feature flag"
 edition.workspace = true
 rust-version.workspace = true
