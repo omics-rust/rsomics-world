@@ -1,6 +1,6 @@
 [package]
 name = "rsomics-formats"
-version = "0.22.0"
+version = "0.23.0"
 description = "Meta-crate re-exporting rsomics format-tool libraries by feature flag"
 edition.workspace = true
 rust-version.workspace = true
@@ -142,6 +142,7 @@ bed = [
     "dep:rsomics-bed-validate",
     "dep:rsomics-bed-unionbedg",
     "dep:rsomics-bed-window",
+    "dep:rsomics-bed-multicov",
     "dep:rsomics-bed12tobed6",
 ]
 gff = ["dep:rsomics-gff-utils"]
@@ -272,6 +273,7 @@ rsomics-bed-subtract = { path = "../../tools/formats/rsomics-bed-subtract", vers
 rsomics-bed-to-gff = { path = "../../tools/formats/rsomics-bed-to-gff", version = "0.1", optional = true }
 rsomics-bed-total-bp = { path = "../../tools/formats/rsomics-bed-total-bp", version = "0.1", optional = true }
 rsomics-bed-unionbedg = { path = "../../tools/formats/rsomics-bed-unionbedg", version = "0.1", optional = true }
+rsomics-bed-multicov = { path = "../../tools/formats/rsomics-bed-multicov", version = "0.1", optional = true }
 rsomics-bed-unique = { path = "../../tools/formats/rsomics-bed-unique", version = "0.1", optional = true }
 rsomics-bed-validate = { path = "../../tools/formats/rsomics-bed-validate", version = "0.1", optional = true }
 rsomics-bed-window = { path = "../../tools/formats/rsomics-bed-window", version = "0.1", optional = true }
