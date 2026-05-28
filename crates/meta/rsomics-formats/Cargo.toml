@@ -1,6 +1,6 @@
 [package]
 name = "rsomics-formats"
-version = "0.21.0"
+version = "0.22.0"
 description = "Meta-crate re-exporting rsomics format-tool libraries by feature flag"
 edition.workspace = true
 rust-version.workspace = true
@@ -142,6 +142,7 @@ bed = [
     "dep:rsomics-bed-validate",
     "dep:rsomics-bed-unionbedg",
     "dep:rsomics-bed-window",
+    "dep:rsomics-bed12tobed6",
 ]
 gff = ["dep:rsomics-gff-utils"]
 all = ["fasta", "fastq", "vcf", "bam", "bed", "gff"]
@@ -274,6 +275,7 @@ rsomics-bed-unionbedg = { path = "../../tools/formats/rsomics-bed-unionbedg", ve
 rsomics-bed-unique = { path = "../../tools/formats/rsomics-bed-unique", version = "0.1", optional = true }
 rsomics-bed-validate = { path = "../../tools/formats/rsomics-bed-validate", version = "0.1", optional = true }
 rsomics-bed-window = { path = "../../tools/formats/rsomics-bed-window", version = "0.1", optional = true }
+rsomics-bed12tobed6 = { path = "../../tools/formats/rsomics-bed12tobed6", version = "0.1", optional = true }
 rsomics-gff-utils = { path = "../../tools/formats/rsomics-gff-utils", version = "0.1", optional = true }
 
 [lints]
