@@ -2450,6 +2450,17 @@ dependencies = [
 ]
 
 [[package]]
+name = "rsomics-bed-shift"
+version = "0.1.1"
+dependencies = [
+ "clap",
+ "criterion 0.7.0",
+ "rsomics-common",
+ "rsomics-help",
+ "tempfile",
+]
+
+[[package]]
 name = "rsomics-bed-slop"
 version = "0.1.1"
 dependencies = [
@@ -2805,6 +2816,16 @@ dependencies = [
  "clap",
  "rsomics-common",
  "rsomics-help",
+]
+
+[[package]]
+name = "rsomics-fastq-complexity"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "clap",
+ "criterion 0.7.0",
+ "tempfile",
 ]
 
 [[package]]
