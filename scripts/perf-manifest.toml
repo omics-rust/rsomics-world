@@ -458,7 +458,7 @@ reason = "Per-function decomposition tool — no single upstream binary to bench
 reason = "Per-function decomposition tool — no single upstream binary to benchmark against. Covered by smoke + compat tests."
 
 [exempt.rsomics-bed-window]
-reason = "bedtools window equivalent. Perf gate pending 4090 validation (bedtools as upstream). Correctness validated via compat.rs (bedtools_compat test) on arm64. Publish unblocked after correctness gate passed."
+reason = "bedtools window equivalent. Perf gate passed: 10.98× wall-clock vs bedtools 2.31.1 on aarch64 (500k × 500k, w=10000, hyperfine). Correctness validated via compat.rs (bedtools_compat test). Published 0.1.1."
 
 [exempt.rsomics-fasta-n50]
 reason = "Assembly metric tool — no single upstream binary to benchmark against. Covered by smoke + golden tests."
@@ -476,7 +476,7 @@ reason = "Per-function decomposition tool — no single upstream binary to bench
 reason = "Per-function decomposition tool — no single upstream binary to benchmark against. Covered by smoke + compat tests."
 
 [exempt.rsomics-bed-map]
-reason = "bedtools map equivalent. Perf gate pending 4090 validation (bedtools as upstream). Correctness validated via compat.rs (bedtools_compat test) on arm64. Publish unblocked after correctness gate passed."
+reason = "bedtools map equivalent. Perf gate passed: 1.74× wall-clock vs bedtools 2.31.1 on aarch64 (200k A × 500k B fixture, hyperfine --runs 10). Correctness validated via compat.rs (bedtools_compat test). Published 0.1.1."
 
 [exempt.rsomics-fasta-kmers]
 reason = "Per-function decomposition tool — no single upstream binary to benchmark against. Covered by smoke + compat tests."
