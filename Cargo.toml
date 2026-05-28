@@ -23,6 +23,10 @@ exclude = [
     # standalone [lints] — it cannot inherit workspace.lints from this root, so
     # it lives outside the top-level workspace members.
     "crates/tools/preprocessing/rsomics-fastp",
+    # rsomics-bed-nuc lives under epigenomics/; this path is an occasional
+    # ghost left by submodule operations and must stay excluded so the
+    # formats/* glob does not create a duplicate-package conflict.
+    "crates/tools/formats/rsomics-bed-nuc",
 ]
 
 [workspace.package]
