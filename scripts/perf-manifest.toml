@@ -215,8 +215,15 @@ reason = "Per-function decomposition tool — no single upstream binary to bench
 [exempt.rsomics-bed-random]
 reason = "Per-function decomposition tool — no single upstream binary to benchmark against. Covered by smoke + compat tests."
 
-[exempt.rsomics-bed-shift]
-reason = "Per-function decomposition tool — no single upstream binary to benchmark against. Covered by smoke + compat tests."
+[spec.rsomics-bed-shift]
+# 100k BED6 records, shift +100 with genome clamping. Bench in benches/bed_shift.rs.
+# aarch64-apple-darwin (mini_m2): 99.4 ms vs bedtools 291.7 ms = 2.93× PASS
+# Machine: mini_m2, bedtools 2.31.0, rsomics-bed-shift 0.1.1, 2026-05-28
+fixture          = "bed:100000:0"
+ours_args        = "-s 100 -g FIX2 FIX --out OUT"
+upstream_bin     = "bedtools"
+upstream_args    = "shift -i FIX -s 100 -g FIX2"
+upstream_version = "bedtools --version"
 
 [exempt.rsomics-bed-slop]
 reason = "Per-function decomposition tool — no single upstream binary to benchmark against. Covered by smoke + compat tests."
@@ -1147,3 +1154,7 @@ reason = "Umbrella multi-subcommand binary (VCF toolkit). vcf-count validated: 7
 # wig-to-bed: WIG/bedGraph → BED conversion. Novel format-conversion tool.
 [exempt.rsomics-wig-to-bed]
 reason = "Novel tool — convert WIG/bedGraph signal tracks to BED intervals above a threshold. No standard benchmarkable upstream binary. Correctness validated on golden fixtures."
+
+# fastq-complexity: low-complexity filter matching fastp -y/-Y algorithm.
+[exempt.rsomics-fastq-complexity]
+reason = "Low-complexity filter. Upstream is fastp -y/-Y. fastp 0.20.1 CI compat test validates correctness. Perf gate pending 4090 validation with representative fixture."
