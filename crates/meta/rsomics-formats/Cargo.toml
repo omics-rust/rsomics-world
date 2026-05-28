@@ -1,6 +1,6 @@
 [package]
 name = "rsomics-formats"
-version = "0.19.0"
+version = "0.20.0"
 description = "Meta-crate re-exporting rsomics format-tool libraries by feature flag"
 edition.workspace = true
 rust-version.workspace = true
@@ -101,6 +101,7 @@ bam = [
     "dep:rsomics-bam-split",
     "dep:rsomics-bam-stats",
     "dep:rsomics-bam-targetcut",
+    "dep:rsomics-bam-to-bed",
     "dep:rsomics-bam-to-fastq",
     "dep:rsomics-bam-view",
     "dep:rsomics-sam-to-bam",
@@ -232,6 +233,7 @@ rsomics-bam-sort = { path = "../../tools/formats/rsomics-bam-sort", version = "0
 rsomics-bam-split = { path = "../../tools/formats/rsomics-bam-split", version = "0.1", optional = true }
 rsomics-bam-stats = { path = "../../tools/formats/rsomics-bam-stats", version = "0.1", optional = true }
 rsomics-bam-targetcut = { path = "../../tools/formats/rsomics-bam-targetcut", version = "0.1", optional = true }
+rsomics-bam-to-bed = { path = "../../tools/formats/rsomics-bam-to-bed", version = "0.1", optional = true }
 rsomics-bam-to-fastq = { path = "../../tools/formats/rsomics-bam-to-fastq", version = "0.1", optional = true }
 rsomics-bam-view = { path = "../../tools/formats/rsomics-bam-view", version = "0.1", optional = true }
 rsomics-sam-to-bam = { path = "../../tools/formats/rsomics-sam-to-bam", version = "0.1", optional = true }

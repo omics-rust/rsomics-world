@@ -96,6 +96,7 @@ pub mod bam {
     pub use rsomics_bam_split as split;
     pub use rsomics_bam_stats as stats;
     pub use rsomics_bam_targetcut as targetcut;
+    pub use rsomics_bam_to_bed as to_bed;
     pub use rsomics_bam_to_fastq as to_fastq;
     pub use rsomics_bam_view as view;
     pub use rsomics_sam_to_bam as sam_to_bam;
