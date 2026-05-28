@@ -110,6 +110,7 @@ pub mod bed {
     pub use rsomics_bed_random as random;
     pub use rsomics_bed_flank as flank;
     pub use rsomics_bed_getfasta as getfasta;
+    pub use rsomics_bed_groupby as groupby;
     pub use rsomics_bed_intersect as intersect;
     pub use rsomics_bed_jaccard as jaccard;
     pub use rsomics_bed_len as len;

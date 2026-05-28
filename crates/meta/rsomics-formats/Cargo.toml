@@ -1,6 +1,6 @@
 [package]
 name = "rsomics-formats"
-version = "0.12.0"
+version = "0.13.0"
 description = "Meta-crate re-exporting rsomics format-tool libraries by feature flag"
 edition.workspace = true
 rust-version.workspace = true
@@ -114,6 +114,7 @@ bed = [
     "dep:rsomics-bed-random",
     "dep:rsomics-bed-flank",
     "dep:rsomics-bed-getfasta",
+    "dep:rsomics-bed-groupby",
     "dep:rsomics-bed-intersect",
     "dep:rsomics-bed-jaccard",
     "dep:rsomics-bed-len",
@@ -234,6 +235,7 @@ rsomics-bed-expand = { path = "../../tools/formats/rsomics-bed-expand", version 
 rsomics-bed-random = { path = "../../tools/formats/rsomics-bed-random", version = "0.1", optional = true }
 rsomics-bed-flank = { path = "../../tools/formats/rsomics-bed-flank", version = "0.1", optional = true }
 rsomics-bed-getfasta = { path = "../../tools/formats/rsomics-bed-getfasta", version = "0.1", optional = true }
+rsomics-bed-groupby = { path = "../../tools/formats/rsomics-bed-groupby", version = "0.1", optional = true }
 rsomics-bed-intersect = { path = "../../tools/formats/rsomics-bed-intersect", version = "0.1", optional = true }
 rsomics-bed-jaccard = { path = "../../tools/formats/rsomics-bed-jaccard", version = "0.1", optional = true }
 rsomics-bed-len = { path = "../../tools/formats/rsomics-bed-len", version = "0.1", optional = true }
