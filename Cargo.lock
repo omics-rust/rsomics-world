@@ -2333,6 +2333,17 @@ dependencies = [
 ]
 
 [[package]]
+name = "rsomics-bed-cluster"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "criterion 0.7.0",
+ "rsomics-common",
+ "rsomics-help",
+ "tempfile",
+]
+
+[[package]]
 name = "rsomics-bed-complement"
 version = "0.1.1"
 dependencies = [
@@ -2507,6 +2518,16 @@ dependencies = [
  "clap",
  "criterion 0.7.0",
  "rand 0.8.6",
+ "rsomics-common",
+ "rsomics-help",
+]
+
+[[package]]
+name = "rsomics-bed-sample"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "criterion 0.7.0",
  "rsomics-common",
  "rsomics-help",
 ]
