@@ -690,3 +690,6 @@
 [submodule "crates/tools/genomics/rsomics-plink-prune"]
 	path = crates/tools/genomics/rsomics-plink-prune
 	url = git@github.com:omics-rust/rsomics-plink-prune.git
+[submodule "crates/tools/formats/rsomics-bam-to-bed"]
+	path = crates/tools/formats/rsomics-bam-to-bed
+	url = git@github.com:omics-rust/rsomics-bam-to-bed.git
