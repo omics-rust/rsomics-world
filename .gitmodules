@@ -690,3 +690,6 @@
 [submodule "crates/tools/formats/rsomics-bed-sort"]
 	path = crates/tools/formats/rsomics-bed-sort
 	url = git@github.com:omics-rust/rsomics-bed-sort.git
+[submodule "crates/tools/formats/rsomics-bed-spacing"]
+	path = crates/tools/formats/rsomics-bed-spacing
+	url = git@github.com:omics-rust/rsomics-bed-spacing.git
