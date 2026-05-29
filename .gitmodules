@@ -690,3 +690,6 @@
 [submodule "crates/tools/formats/rsomics-bed-fisher"]
 	path = crates/tools/formats/rsomics-bed-fisher
 	url = git@github.com:omics-rust/rsomics-bed-fisher.git
+[submodule "crates/tools/formats/rsomics-bed-flank"]
+	path = crates/tools/formats/rsomics-bed-flank
+	url = git@github.com:omics-rust/rsomics-bed-flank.git
