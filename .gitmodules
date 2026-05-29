@@ -621,9 +621,6 @@
 [submodule "crates/tools/preprocessing/rsomics-fastp"]
 	path = crates/tools/preprocessing/rsomics-fastp
 	url = git@github.com:omics-rust/rsomics-fastp.git
-[submodule "crates/tools/formats/rsomics-bed-groupby"]
-	path = crates/tools/formats/rsomics-bed-groupby
-	url = git@github.com:omics-rust/rsomics-bed-groupby.git
 [submodule "crates/tools/formats/rsomics-bed-unique"]
 	path = crates/tools/formats/rsomics-bed-unique
 	url = git@github.com:omics-rust/rsomics-bed-unique.git
