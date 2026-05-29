@@ -540,9 +540,6 @@
 [submodule "crates/tools/transcriptomics/rsomics-fpkm-count"]
 	path = crates/tools/transcriptomics/rsomics-fpkm-count
 	url = git@github.com:omics-rust/rsomics-fpkm-count.git
-[submodule "crates/tools/formats/rsomics-bed-sort"]
-	path = crates/tools/formats/rsomics-bed-sort
-	url = git@github.com:omics-rust/rsomics-bed-sort.git
 [submodule "crates/tools/formats/rsomics-bed-subtract"]
 	path = crates/tools/formats/rsomics-bed-subtract
 	url = git@github.com:omics-rust/rsomics-bed-subtract.git
