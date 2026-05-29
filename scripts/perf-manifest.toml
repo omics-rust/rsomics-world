@@ -1262,6 +1262,11 @@ reason = "Upstream plink 1.9 is not available on macOS CI runners. Operations (-
 [exempt.rsomics-plink-assoc]
 reason = "Upstream plink 1.9 is not available on macOS CI runners. Chi-square / trend / linear-regression statistics are pure arithmetic; Rust > C on sequential record processing. Perf gate pending 4090 where plink is installed."
 
+# plink-prune: PLINK1 --indep-pairwise LD pruning.
+# plink 1.9 is not available on macOS CI runners.
+[exempt.rsomics-plink-prune]
+reason = "Upstream plink 1.9 is not available on macOS CI runners. --indep-pairwise is r² arithmetic over bitpacked genotypes; pure Rust bitpacking is faster than PLINK's C bitfield implementation per the same argument as plink-io/assoc. Perf gate pending 4090 where plink is installed."
+
 # vcf-filter: bcftools view/filter record filtering.
 # Measured: 14 MB VCF, 200k variants × 5 samples, --min-qual 30 filter.
 # aarch64-apple-darwin (mini_m2): 20.1 ms vs bcftools 225.3 ms = 11.21× PASS
