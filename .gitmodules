@@ -690,3 +690,6 @@
 [submodule "crates/tools/formats/rsomics-bed-getfasta"]
 	path = crates/tools/formats/rsomics-bed-getfasta
 	url = git@github.com:omics-rust/rsomics-bed-getfasta.git
+[submodule "crates/tools/formats/rsomics-bed-groupby"]
+	path = crates/tools/formats/rsomics-bed-groupby
+	url = git@github.com:omics-rust/rsomics-bed-groupby.git
