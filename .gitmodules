@@ -690,3 +690,6 @@
 [submodule "crates/tools/formats/rsomics-bed-subtract"]
 	path = crates/tools/formats/rsomics-bed-subtract
 	url = git@github.com:omics-rust/rsomics-bed-subtract.git
+[submodule "crates/tools/formats/rsomics-bed-to-gff"]
+	path = crates/tools/formats/rsomics-bed-to-gff
+	url = git@github.com:omics-rust/rsomics-bed-to-gff.git
