@@ -555,9 +555,6 @@
 [submodule "crates/tools/preprocessing/rsomics-fastp"]
 	path = crates/tools/preprocessing/rsomics-fastp
 	url = git@github.com:omics-rust/rsomics-fastp.git
-[submodule "crates/tools/genomics/rsomics-plink-io"]
-	path = crates/tools/genomics/rsomics-plink-io
-	url = git@github.com:omics-rust/rsomics-plink-io.git
 [submodule "crates/tools/genomics/rsomics-plink-prune"]
 	path = crates/tools/genomics/rsomics-plink-prune
 	url = git@github.com:omics-rust/rsomics-plink-prune.git
