@@ -690,3 +690,6 @@
 [submodule "crates/tools/formats/rsomics-bed-random"]
 	path = crates/tools/formats/rsomics-bed-random
 	url = git@github.com:omics-rust/rsomics-bed-random.git
+[submodule "crates/tools/formats/rsomics-bed-reldist"]
+	path = crates/tools/formats/rsomics-bed-reldist
+	url = git@github.com:omics-rust/rsomics-bed-reldist.git
