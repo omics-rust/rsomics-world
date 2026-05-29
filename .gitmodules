@@ -579,9 +579,6 @@
 [submodule "crates/tools/formats/rsomics-bed-validate"]
 	path = crates/tools/formats/rsomics-bed-validate
 	url = git@github.com:omics-rust/rsomics-bed-validate.git
-[submodule "crates/tools/formats/rsomics-bed-unionbedg"]
-	path = crates/tools/formats/rsomics-bed-unionbedg
-	url = git@github.com:omics-rust/rsomics-bed-unionbedg.git
 [submodule "crates/tools/formats/rsomics-bed12tobed6"]
 	path = crates/tools/formats/rsomics-bed12tobed6
 	url = git@github.com:omics-rust/rsomics-bed12tobed6.git
