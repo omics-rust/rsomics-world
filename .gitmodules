@@ -570,9 +570,6 @@
 [submodule "crates/tools/formats/rsomics-vcf-call"]
 	path = crates/tools/formats/rsomics-vcf-call
 	url = git@github.com:omics-rust/rsomics-vcf-call.git
-[submodule "crates/tools/formats/rsomics-bed-getfasta"]
-	path = crates/tools/formats/rsomics-bed-getfasta
-	url = git@github.com:omics-rust/rsomics-bed-getfasta.git
 [submodule "crates/tools/formats/rsomics-bed-jaccard"]
 	path = crates/tools/formats/rsomics-bed-jaccard
 	url = git@github.com:omics-rust/rsomics-bed-jaccard.git
