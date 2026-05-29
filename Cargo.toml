@@ -50,6 +50,7 @@ flate2 = { version = "1", default-features = false, features = ["zlib-rs"] }
 
 needletail = "0.6"
 noodles = "0.110"
+faer = { version = "0.24", default-features = false, features = ["std", "rayon"] }
 criterion = { version = "0.7", default-features = false, features = ["cargo_bench_support"] }
 
 # Shared lint posture across every crate in the workspace. Crates inherit
@@ -213,6 +214,7 @@ rsomics-plink-io = { path = "crates/tools/genomics/rsomics-plink-io" }
 rsomics-plink-assoc = { path = "crates/tools/genomics/rsomics-plink-assoc" }
 rsomics-plink-prune = { path = "crates/tools/genomics/rsomics-plink-prune" }
 rsomics-plink-ld = { path = "crates/tools/genomics/rsomics-plink-ld" }
+rsomics-plink-pca = { path = "crates/tools/genomics/rsomics-plink-pca" }
 rsomics-bam-region = { path = "crates/tools/genomics/rsomics-bam-region" }
 rsomics-bam-subsample = { path = "crates/tools/genomics/rsomics-bam-subsample" }
 rsomics-fasta-mask = { path = "crates/tools/genomics/rsomics-fasta-mask" }

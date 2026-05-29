@@ -1,0 +1,41 @@
+[package]
+name = "rsomics-plink-pca"
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.91"
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/omics-rust/rsomics-plink-pca"
+authors = ["Zane Leong <efd@live.com>"]
+description = "PCA and GRM computation from PLINK1 binary filesets using faer EVD"
+
+[[bin]]
+name = "rsomics-plink-pca"
+path = "src/main.rs"
+
+[lib]
+name = "rsomics_plink_pca"
+path = "src/lib.rs"
+doctest = false
+
+[[bench]]
+name = "bench"
+harness = false
+
+[lints.rust]
+unsafe_code = "forbid"
+
+[lints.clippy]
+pedantic = { level = "warn", priority = -1 }
+missing_errors_doc = "allow"
+missing_panics_doc = "allow"
+
+[dependencies]
+rsomics-common = { version = "0.6" }
+rsomics-pgen = { version = "0.2" }
+clap = { version = "4", features = ["derive"] }
+anyhow = "1"
+faer = { version = "0.24", default-features = false, features = ["std", "rayon"] }
+
+[dev-dependencies]
+criterion = { version = "0.7", default-features = false, features = ["cargo_bench_support"] }
+tempfile = "3"
