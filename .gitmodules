@@ -690,3 +690,6 @@
 [submodule "crates/tools/formats/rsomics-bed-merge"]
 	path = crates/tools/formats/rsomics-bed-merge
 	url = git@github.com:omics-rust/rsomics-bed-merge.git
+[submodule "crates/tools/formats/rsomics-bed-midpoint"]
+	path = crates/tools/formats/rsomics-bed-midpoint
+	url = git@github.com:omics-rust/rsomics-bed-midpoint.git
