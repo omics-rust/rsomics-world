@@ -564,9 +564,6 @@
 [submodule "crates/tools/formats/rsomics-vcf-call"]
 	path = crates/tools/formats/rsomics-vcf-call
 	url = git@github.com:omics-rust/rsomics-vcf-call.git
-[submodule "crates/tools/formats/rsomics-bed-slop"]
-	path = crates/tools/formats/rsomics-bed-slop
-	url = git@github.com:omics-rust/rsomics-bed-slop.git
 [submodule "crates/tools/formats/rsomics-vcf-sample"]
 	path = crates/tools/formats/rsomics-vcf-sample
 	url = git@github.com:omics-rust/rsomics-vcf-sample.git
