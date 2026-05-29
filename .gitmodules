@@ -570,9 +570,6 @@
 [submodule "crates/tools/preprocessing/rsomics-fastp"]
 	path = crates/tools/preprocessing/rsomics-fastp
 	url = git@github.com:omics-rust/rsomics-fastp.git
-[submodule "crates/tools/formats/rsomics-bed12tobed6"]
-	path = crates/tools/formats/rsomics-bed12tobed6
-	url = git@github.com:omics-rust/rsomics-bed12tobed6.git
 [submodule "crates/tools/formats/rsomics-vcf-csq"]
 	path = crates/tools/formats/rsomics-vcf-csq
 	url = git@github.com:omics-rust/rsomics-vcf-csq.git
