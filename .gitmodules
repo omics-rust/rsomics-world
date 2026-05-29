@@ -576,9 +576,6 @@
 [submodule "crates/tools/formats/rsomics-bed-total-bp"]
 	path = crates/tools/formats/rsomics-bed-total-bp
 	url = git@github.com:omics-rust/rsomics-bed-total-bp.git
-[submodule "crates/tools/formats/rsomics-bed-stats"]
-	path = crates/tools/formats/rsomics-bed-stats
-	url = git@github.com:omics-rust/rsomics-bed-stats.git
 [submodule "crates/tools/formats/rsomics-bed-to-gff"]
 	path = crates/tools/formats/rsomics-bed-to-gff
 	url = git@github.com:omics-rust/rsomics-bed-to-gff.git
