@@ -615,9 +615,6 @@
 [submodule "crates/tools/formats/rsomics-bed-reldist"]
 	path = crates/tools/formats/rsomics-bed-reldist
 	url = git@github.com:omics-rust/rsomics-bed-reldist.git
-[submodule "crates/tools/formats/rsomics-bed-overlap"]
-	path = crates/tools/formats/rsomics-bed-overlap
-	url = git@github.com:omics-rust/rsomics-bed-overlap.git
 [submodule "crates/tools/formats/rsomics-bed-unionbedg"]
 	path = crates/tools/formats/rsomics-bed-unionbedg
 	url = git@github.com:omics-rust/rsomics-bed-unionbedg.git
