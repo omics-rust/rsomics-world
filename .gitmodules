@@ -690,3 +690,6 @@
 [submodule "crates/tools/formats/rsomics-bed-closest"]
 	path = crates/tools/formats/rsomics-bed-closest
 	url = git@github.com:omics-rust/rsomics-bed-closest.git
+[submodule "crates/tools/formats/rsomics-bed-cluster"]
+	path = crates/tools/formats/rsomics-bed-cluster
+	url = git@github.com:omics-rust/rsomics-bed-cluster.git
