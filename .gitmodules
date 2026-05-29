@@ -690,3 +690,6 @@
 [submodule "crates/tools/genomics/rsomics-plink-assoc"]
 	path = crates/tools/genomics/rsomics-plink-assoc
 	url = git@github.com:omics-rust/rsomics-plink-assoc.git
+[submodule "crates/tools/genomics/rsomics-plink-io"]
+	path = crates/tools/genomics/rsomics-plink-io
+	url = git@github.com:omics-rust/rsomics-plink-io.git
