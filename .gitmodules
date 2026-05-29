@@ -690,3 +690,6 @@
 [submodule "crates/tools/formats/rsomics-bed-jaccard"]
 	path = crates/tools/formats/rsomics-bed-jaccard
 	url = git@github.com:omics-rust/rsomics-bed-jaccard.git
+[submodule "crates/tools/formats/rsomics-bed-len"]
+	path = crates/tools/formats/rsomics-bed-len
+	url = git@github.com:omics-rust/rsomics-bed-len.git
