@@ -543,9 +543,6 @@
 [submodule "crates/tools/formats/rsomics-bam-consensus"]
 	path = crates/tools/formats/rsomics-bam-consensus
 	url = git@github.com:omics-rust/rsomics-bam-consensus.git
-[submodule "crates/tools/formats/rsomics-fastq-sample"]
-	path = crates/tools/formats/rsomics-fastq-sample
-	url = git@github.com:omics-rust/rsomics-fastq-sample.git
 [submodule "crates/tools/formats/rsomics-vcf-mpileup"]
 	path = crates/tools/formats/rsomics-vcf-mpileup
 	url = git@github.com:omics-rust/rsomics-vcf-mpileup.git
