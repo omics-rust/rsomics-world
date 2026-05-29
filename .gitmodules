@@ -600,9 +600,6 @@
 [submodule "crates/tools/formats/rsomics-bed-stats"]
 	path = crates/tools/formats/rsomics-bed-stats
 	url = git@github.com:omics-rust/rsomics-bed-stats.git
-[submodule "crates/tools/formats/rsomics-bed-makewindows"]
-	path = crates/tools/formats/rsomics-bed-makewindows
-	url = git@github.com:omics-rust/rsomics-bed-makewindows.git
 [submodule "crates/tools/formats/rsomics-bed-to-gff"]
 	path = crates/tools/formats/rsomics-bed-to-gff
 	url = git@github.com:omics-rust/rsomics-bed-to-gff.git
