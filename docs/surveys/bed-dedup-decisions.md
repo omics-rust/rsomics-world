@@ -31,10 +31,14 @@ len · total-bp · stats · to-gff.
    by `%.2f`). Reimplemented as midpoint-straddle + skip-boundary + integer 0.01 bins →
    **byte-identical to bedtools 2.31.1**; real bedtools differential test replaces the
    invariant-only one that hid it; CI green.
-2. **`rsomics-bed-closest`** — appends a 7th distance column bedtools' default doesn't emit;
-   bed-utils matches bedtools. → drop/gate the extra column to bedtools default.
-3. **`rsomics-bed-getfasta`** — wraps sequence at 60 chars/line; bedtools (and bed-utils)
-   emit one line per sequence. → default to one-line-per-seq.
+2. ~~**`rsomics-bed-closest`**~~ ✅ **DONE 2026-05-30.** Found 3 divergences (extra distance
+   column always on; tie ordering/completeness via a buggy early-exit scan; raw-gap distance
+   instead of bedtools' gap+1 → book-ended spuriously tied overlaps). Rewrote: default 6-col,
+   `-d` opts in distance, two-pass tie collection in B-order, overlap=0/book-ended=1.
+   Byte-identical to bedtools 2.31.1 (default, -d, no-B edge); CI green.
+3. ~~**`rsomics-bed-getfasta`**~~ ✅ **DONE 2026-05-30.** Dropped the 60bp line-wrap (bedtools
+   emits one line per sequence); the compat test had rejoined wrapped lines, hiding it. Now
+   byte-exact; CI green.
 
 (Each fix: reproduce the divergence first — agent findings are external advice, sanity-check
 vs bedtools directly before changing code; cf. the seqkit-GC false-positive lesson.)
