@@ -43,21 +43,38 @@ len · total-bp · stats · to-gff.
 (Each fix: reproduce the divergence first — agent findings are external advice, sanity-check
 vs bedtools directly before changing code; cf. the seqkit-GC false-positive lesson.)
 
-## C. bed-utils-unique ops → spin out a standalone before deleting bed-utils
-Genuinely distinct, no standalone today → create `rsomics-bed-<op>`:
-**maskfasta** (bedtools maskfasta) · promoters · resize · rename · chroms · total-span ·
-to-igv · to-wig · union.
-Skip / fold (trivial variants, not distinct ops): to-fasta (= getfasta), to-gff3 (= to-gff
-GFF3 mode), sort-name/sort-size (flags on bed-sort), merge-by-name/merge-overlaps (flags on
-bed-merge), flank-bp (flag on bed-flank), tail (trivial), chroms-sizes (flag on chroms),
-coverage-hist (flag on bed-coverage). validate already has a standalone.
+## C. bed-utils-unique ops — preserve only what maps to a REAL surveyed upstream
+Refined judgment 2026-05-30 (granularity rule: a crate = one operation of the *displaced*
+C/Python/R toolchain, not a bed-utils invention; don't over-split tiny awk-class ops):
 
-## D. Execution order
-1. Fix B1 (reldist bug — correctness), B2 (closest), B3 (getfasta); compat-verify each vs
-   bedtools 2.31.1; commit per crate.
-2. Spin out the C ops as standalone crates (own repo + CI), each compat + perfgate.
-3. Delete `rsomics-bed-utils` (local dir + its GitHub repo) once A+B+C confirm every operation
-   has a correct standalone home. Record in REGISTRY.md.
+**Spun out (grounded in bedtools):**
+- ✅ `rsomics-bed-maskfasta` ← `bedtools maskfasta`. **DONE 2026-05-30** — byte-identical to
+  bedtools 2.31.1 (hard/soft/mc differentials), own repo, CI green.
+- ~~`rsomics-bed-igv`~~ **SKIP.** bed-utils `to-igv` is NOT `bedtools igv`: bedtools igv emits
+  an IGV *snapshot batch script* (`goto`/`snapshot`), bed-utils invented an IGV data-table.
+  bedtools igv is niche GUI screenshot-automation, not a data op; nothing depends on it
+  (unpublished). Rebuild as real snapshot-script semantics only if demand appears.
 
-Granularity verdict stands: the per-op crates are the right shape; bed-utils was the lone
-structural dup. The work is correctness-preserving consolidation, not a rename.
+**Retire with bed-utils (bed-utils inventions, not in any surveyed upstream → YAGNI; rebuild
+grounded in a spec if real demand ever appears):** promoters · resize · rename · union ·
+to-wig · chroms · total-span — all tiny (27–68 LOC) bed-utils originals with no upstream to
+match. Preserving each as its own crate is exactly the over-splitting the granularity rule
+forbids; bundling them back into a "bed-utils-lite" reintroduces the multitool we're retiring.
+
+**Already covered / fold (no action):** to-fasta (= getfasta), to-gff3 (= to-gff GFF3 mode),
+sort-name/size (flags on bed-sort), merge-by-name/overlaps (flags on bed-merge), flank-bp
+(flag on bed-flank), tail, chroms-sizes, coverage-hist (flag on bed-coverage), validate
+(standalone exists).
+
+## D. ✅ bed-utils retired (2026-05-30)
+Verified first: no crate depends on bed-utils (leaf binary), it is unpublished, and every
+real surveyed-upstream op has a correct standalone crate (A list + B fixes + maskfasta).
+Then **archived** the GitHub repo (reversible; history preserved), removed the KIOXIA clone,
+and dropped it from REGISTRY.md (added bed-maskfasta). The bed-utils inventions (chroms,
+chroms-sizes, promoters, rename, resize, tail, to-wig, total-span, union) retired with it —
+not grounded in any surveyed upstream; rebuild from a real spec if demand ever appears.
+
+**#89 DONE.** The per-op crates are the canonical shape; bed-utils was the lone structural
+dup. Correctness-preserving consolidation — every retained op is byte/field-verified vs
+bedtools 2.31.1, and the 3 latent bugs bed-utils' existence had masked (reldist binning,
+closest ties/distance, getfasta wrapping) are now fixed with real bedtools differential tests.

@@ -73,6 +73,7 @@ _Generated 2026-05-30 — 231 crates._
 | [rsomics-bed-len](https://github.com/omics-rust/rsomics-bed-len) | Append interval length (end - start) as a new column to BED records |
 | [rsomics-bed-makewindows](https://github.com/omics-rust/rsomics-bed-makewindows) | Tile a genome into fixed-size BED windows — bedtools makewindows equivalent |
 | [rsomics-bed-map](https://github.com/omics-rust/rsomics-bed-map) | Aggregate column values from B intervals overlapping each A interval — bedtools map equiva |
+| [rsomics-bed-maskfasta](https://github.com/omics-rust/rsomics-bed-maskfasta) | Mask FASTA bases overlapping BED intervals — bedtools maskfasta equivalent |
 | [rsomics-bed-merge](https://github.com/omics-rust/rsomics-bed-merge) | Merge overlapping BED intervals — bedtools merge equivalent |
 | [rsomics-bed-midpoint](https://github.com/omics-rust/rsomics-bed-midpoint) | Collapse BED intervals to their midpoints — outputs a 1-bp BED record at floor((start+end) |
 | [rsomics-bed-multicov](https://github.com/omics-rust/rsomics-bed-multicov) | Count reads from multiple BAM files overlapping BED intervals — bedtools multicov equivale |
@@ -95,7 +96,6 @@ _Generated 2026-05-30 — 231 crates._
 | [rsomics-bed-total-bp](https://github.com/omics-rust/rsomics-bed-total-bp) | Count total base-pairs covered by BED intervals (sum of end - start) |
 | [rsomics-bed-unionbedg](https://github.com/omics-rust/rsomics-bed-unionbedg) | Combine multiple sorted BedGraph files into one — bedtools unionbedg equivalent |
 | [rsomics-bed-unique](https://github.com/omics-rust/rsomics-bed-unique) | Remove duplicate BED intervals (same chrom, start, end) |
-| [rsomics-bed-utils](https://github.com/omics-rust/rsomics-bed-utils) | BED utility toolkit — sort, merge, intersect, subtract, complement, stats, convert, and 40 |
 | [rsomics-bed-validate](https://github.com/omics-rust/rsomics-bed-validate) | Validate BED file format: check field counts, coordinate ordering, and integer parsing |
 | [rsomics-bed-window](https://github.com/omics-rust/rsomics-bed-window) | Find BED features within a window of A intervals — bedtools window equivalent |
 | [rsomics-bed12-to-bed6](https://github.com/omics-rust/rsomics-bed12-to-bed6) | Break BED12 block annotations into discrete BED6 intervals — Rust port of bedtools bed12to |
