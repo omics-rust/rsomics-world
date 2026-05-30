@@ -27,40 +27,38 @@ for the universal correctness halts or a genuine only-user decision —
 and those are raised out-of-band via Telegram (see
 `feedback-telegram-alerts` memory), not by stopping and waiting in chat.
 
-## Architecture (2 layers, monorepo)
+## Architecture (flat independent repos, 2 layers)
+
+No monorepo, no workspace, no submodules. Every crate is its **own** GitHub
+repo under `omics-rust/` and publishes independently to crates.io; foundation
+libraries are consumed by version from crates.io, never by path. `rsomics-world`
+is the **control plane**, not code.
 
 ```
-rsomics-world/
-├── Cargo.toml              ← workspace manifest
-├── CLAUDE.md               ← this file
-├── CONVENTIONS.md          ← repo rules (autopilot may evolve, with care)
-├── ROADMAP.md / TODO.md    ← planning catalog (kept current)
-├── README.md               ← user-facing project intro
-├── docs/                   ← planning per module (00-overview … 09-workflow-utility)
-├── crates/
-│   ├── foundation/         ← Layer A: library-only, depended on by 2+ tools
-│   │   ├── rsomics-common/     (errors, CLI scaffold, runner, json/progress/exit)
-│   │   ├── rsomics-intervals/  (BED algebra)
-│   │   ├── rsomics-kmer/       (hashing, counting, sketches)
-│   │   ├── rsomics-fm-index/   (BWT, suffix array, locate)
-│   │   ├── rsomics-align-core/ (SW/NW/WFA/banded)
-│   │   └── rsomics-stats/      (GLM, FDR, p-values)
-│   └── tools/              ← Layer B: each is one installable binary,
-│       │                     ONE FUNCTION per crate — not one upstream binary
-│       │                     per crate.
-│       ├── rsomics-fastq-trim/      (3' adapter trim across fastp / cutadapt / trimmomatic)
-│       ├── rsomics-fastq-quality/   (quality + length + sliding-window filter)
-│       ├── rsomics-fastq-umi/       (UMI extract / stamp)
-│       ├── rsomics-bam-view/        (display + region/flag filter + SAM↔BAM)
-│       ├── rsomics-bam-sort/
-│       ├── rsomics-bam-index/
-│       └── ...
-└── .autopilot/             ← persistence (gitignored)
-    ├── sessions/           ← per-session log
-    ├── gates/              ← gate status reports awaiting review
-    ├── needs-review/       ← external claims that failed verification gates
-    └── state/              ← long-running cache (classified entries, etc.)
+omics-rust/                              ← the GitHub org
+├── rsomics-world/                       ← THIS repo: control plane (no code)
+│   ├── CLAUDE.md  CONVENTIONS.md  ROADMAP.md  TODO.md  README.md
+│   ├── REGISTRY.md                      ← index of every rsomics-* crate repo
+│   ├── docs/                            ← per-domain planning (00-overview … 09-…)
+│   ├── scripts/                         ← perfgate.sh, mkfixture.py, perf-manifest.toml
+│   └── .autopilot/                      ← persistence (sessions/gates/needs-review/state)
+├── rsomics-common/                      ← Layer A (library-only): errors, CLI scaffold
+├── rsomics-intervals/  rsomics-kmer/  rsomics-fm-index/  rsomics-align-core/
+├── rsomics-stats/  rsomics-bamio/  rsomics-pileup/  rsomics-coverage-core/ … ← more Layer A
+├── rsomics-fastq-trim/  rsomics-bam-sort/  rsomics-vcf-view/  … ← Layer B: one tool = one repo,
+└── …                                       ONE FUNCTION per crate, own CI, own crates.io release.
 ```
+
+Local working layout:
+
+| | Path | Volume |
+|---|---|---|
+| Control plane (this repo) | `/Volumes/Zane's HDD/Documents/rsomics-world` | HDD — text only, no compile |
+| Crate clones (flat siblings) | `/Volumes/KIOXIA/Documents/omics-rust/rsomics-<name>` | KIOXIA SSD — compile here |
+| cargo-home / cargo-target | `/Volumes/KIOXIA/Developments/{cargo-home,cargo-target}` | KIOXIA SSD |
+
+To work on a crate: `cd /Volumes/KIOXIA/Documents/omics-rust/rsomics-<name>`,
+build/test/commit/push there. Its code never touches any other repo.
 
 ### Dependency rules (one-way, enforced)
 
@@ -171,8 +169,8 @@ watchdog. Operating rules:
   - `chore:` for housekeeping
   - `ci:` for `.github/workflows/`
 - **No `Co-Authored-By` trailer. Ever.**
-- **One concern per commit. Fine-grained, push every 3-5 commits.** After every push: `gh run list --branch main --limit 3` and wait for green before tagging.
-- **Tag at the natural release moment** — when a crate's `Cargo.toml` version is bumped, CI is green, and the code is publish-ready, push the matching `rsomics-<crate>-v<version>` tag. `publish.yml` + `release.yml` handle the rest. Tag/push/yank/archive-delete are all pre-authorised in this repo (commit history is backup).
+- **One concern per commit. Fine-grained.** Work happens in the crate's own repo at `/Volumes/KIOXIA/Documents/omics-rust/rsomics-<name>`; commit + push there. After each push: `gh run watch --exit-status` in that repo, wait green.
+- **Release is per crate, manual.** When a crate's CI is green and a perfgate record proves `> 1.0×`, `cargo publish` from its repo (`CARGO_REGISTRY_TOKEN=$(cat /Volumes/Zane's HDD/Developers/crates-token)`). No tag→workflow publishing — there is no monorepo release pipeline anymore. publish / yank are pre-authorised (crates.io history is the backup).
 
 ## Phase log (record-only, no halt)
 
@@ -318,25 +316,29 @@ For **FFI-wrapper adopt** (rust-htslib, minimap2-rs etc.): record in entry as **
 
 ## CI policy (GitHub Actions)
 
-Workflows in `.github/workflows/`:
+CI lives **per crate**, in each `omics-rust/rsomics-<name>` repo — not here.
+This control-plane repo has no code and no build CI. Each crate's `ci.yml`
+runs `cargo fmt --check` + `cargo clippy -D warnings` + `cargo test` (compat
+tests included) on push/PR; that green is the authoritative gate before its
+`cargo publish`.
 
-- `ci.yml`: fmt + clippy + test. Per-push runs a **minimal fast lane** — Linux x86_64 stable (the truth: runs compat tests), Linux x86_64 MSRV `1.91` (rustc-version gate, OS-independent), and one `macos-latest` stable (macOS is the only platform that has ever broken this repo — GH-image rustup poisoning). aarch64-Linux and x86_64-apple-darwin are **not** on the per-push lane; GitHub's Intel-macOS pool is being retired/queue-starved and Actions minutes are finite even on a public repo, so those targets ride the authoritative gate (release.yml on every tag) plus a **weekly `schedule`** that runs the full 4-target × {stable, MSRV} matrix. macOS uses the moving `*-latest` alias, never a pinned version, to avoid label rot. `concurrency: cancel-in-progress` supersedes mid-stack pushes. The all-four-targets coverage invariant holds at release.yml + the weekly sweep, not on every commit.
-- `bench.yml`: criterion benches on Linux x86_64 + aarch64, manual trigger. Regression detection.
-- `release.yml`: triggered by tag push; builds **all four** first-class-target binaries (incl. x86_64-apple-darwin), uploads to GitHub Release. This is the authoritative pre-publish target gate.
-
-**CI is the truth.** Local Mac smoke is supplementary. After every push, `gh run list --branch main --limit 3` and wait for green before any tag. The tag → release.yml run (not the per-push fast lane) is the gate that must be green before `cargo publish`.
+**CI is the truth.** Local Mac smoke is supplementary. After pushing a crate,
+`gh run watch --exit-status` (in that crate's repo) and wait for green before
+`cargo publish`. Because each crate is independent, a change to one never
+triggers or risks another's CI — the recursive-checkout rate-limiting and
+"could not read Username" failures of the old submodule monorepo are gone.
 
 ## Disk + environment hygiene (mini_m2 + autopilot)
 
-- **mini_m2's boot disk is small.** All cargo target, all build artifacts, all caches → HDD at `/Volumes/Zane's HDD/`.
-- **Session bootstrap (every shell)**:
+- **mini_m2's boot disk (Macintosh, 228 G) is never used for compilation.** Two crashes in 2026-05 from filling it. All build artifacts live on KIOXIA SSD.
+- **Canonical paths** (persisted in `~/.zshenv` + `.cargo/config.toml`, no manual export needed):
   ```bash
-  export CARGO_TARGET_DIR="/Volumes/Zane's HDD/cargo-target/rsomics-world"
-  export CARGO_HOME="/Volumes/Zane's HDD/cargo-home"
-  cd "/Volumes/Zane's HDD/Documents/rsomics-world"
+  CARGO_HOME=/Volumes/KIOXIA/Developments/cargo-home
+  CARGO_TARGET_DIR=/Volumes/KIOXIA/Developments/cargo-target
+  TMPDIR=/Volumes/KIOXIA/tmp        # scratch; fixtures → /Volumes/KIOXIA/Developments/rsomics-fixtures
   ```
-- Run this before every `cargo` invocation. If `df -h /` shows boot disk filling, **halt** and surface.
-- `.gitignore`: `/target`, `.autopilot/`, `Cargo.lock` only for binary crates (workspace root keeps the lockfile).
+- **Keep the KIOXIA root clean.** Crate clones go under `/Volumes/KIOXIA/Documents/omics-rust/`; cargo + fixtures under `/Volumes/KIOXIA/Developments/`; nothing project-related dropped at the KIOXIA root. Subagents do not read this file — when dispatching one, pass the cargo + tmp paths verbatim (see the subagent-strict-boundaries memory) or it litters the root.
+- If `df -h /` shows the boot disk filling, **halt** and surface.
 
 ## Test data tiers (CPU/disk-aware)
 
