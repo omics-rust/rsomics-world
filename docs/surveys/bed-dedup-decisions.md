@@ -25,10 +25,12 @@ Our extensions with no bedtools equivalent (standalone canonical): count · uniq
 len · total-bp · stats · to-gff.
 
 ## B. Standalone must be FIXED before bed-utils retires (bed-utils more correct here)
-1. **`rsomics-bed-reldist` — real binning BUG.** Produces 101 rows vs bedtools 51 (duplicate
-   per-0.01-bin entries; interval count 600 vs 598). bed-utils `reldist` is IDENTICAL to
-   bedtools. → **verify the divergence myself, then port the correct binning.** Highest
-   priority (wrong output).
+1. ~~**`rsomics-bed-reldist` — real binning BUG.**~~ ✅ **DONE 2026-05-30.** Verified the
+   divergence (worse than reported: 0.00 bin 93 vs 8 from a start/midpoint-mixing +
+   `.max(0)` clamp; boundary queries fabricated instead of skipped; 100 sub-bins collapsed
+   by `%.2f`). Reimplemented as midpoint-straddle + skip-boundary + integer 0.01 bins →
+   **byte-identical to bedtools 2.31.1**; real bedtools differential test replaces the
+   invariant-only one that hid it; CI green.
 2. **`rsomics-bed-closest`** — appends a 7th distance column bedtools' default doesn't emit;
    bed-utils matches bedtools. → drop/gate the extra column to bedtools default.
 3. **`rsomics-bed-getfasta`** — wraps sequence at 60 chars/line; bedtools (and bed-utils)
