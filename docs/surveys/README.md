@@ -5,6 +5,26 @@ a verified inventory of **every upstream tool we reimplement**, its complete
 function set, and where functions overlap across tools. Without this, "one op
 one crate" and "dedup duplicates" are guesswork.
 
+## Scope is the whole field, not just CLI binaries
+
+The reimplementation target is what bioinformaticians **actually use**, across:
+
+- **CLI software** — samtools, bedtools, bcftools, seqkit, fastp, deeptools,
+  kraken2, plink, … (the obvious set).
+- **R / Bioconductor packages** — *the priority*. Much of the field's analysis
+  layer (DESeq2, edgeR, limma, DEXSeq, Seurat, GenomicRanges, GenomicFeatures,
+  Rsubread, ChIPseeker, DiffBind, phyloseq, …) is decade-old R, single-threaded,
+  memory-hungry — exactly what a modern Rust rewrite is for. Survey these as
+  first-class targets (function set, why dated, what a Rust port would deliver).
+  *(Calling/integrating from R comes LATER, after the crates exist.)*
+- **Python packages** — pysam, Biopython, scanpy/anndata, pyranges, MACS,
+  CrossMap, multiqc, … note adopt-vs-rebuild per the 4-quadrant rule.
+
+To find "what's actually used," don't rely on memory: consult the current
+`docs/` catalog, tool review papers / benchmarking articles, Bioconductor
+download stats, awesome-bioinformatics lists, and method-section surveys. A tool
+earns a survey row by real-world usage, not by being easy to port.
+
 ## Method (reliability is the point)
 
 For each tool, the operation list is captured from the **most authoritative
