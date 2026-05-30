@@ -48,19 +48,53 @@ status | notes`. The cross-tool view (an operation provided by 2+ tools) is the
 reimplement the same operation twice (see the `cross-tool-functional-dedup`
 principle).
 
-## Domains (mirrors docs/01..09)
+## Domains (all 10 + R landscape verified 2026-05-30)
 
-- `01-formats-alignment.md` — samtools, bcftools, bedtools, seqkit, fastp,
-  cutadapt, trimmomatic, fastqc, bbduk, vcftools
+- `01-formats-alignment.md` — samtools, bcftools, bedtools, seqkit, fastp, vcftools
 - `02-genomics.md` — bwa, bowtie2, minimap2, plink/plink2, gatk, sv callers
-- `03-transcriptomics.md` — STAR, HISAT2, salmon, kallisto, featureCounts/Subread,
-  RSeQC, Picard
-- `04-single-cell.md`
-- `05-epigenomics.md` — deeptools, MACS, SEACR, MethylDackel, Bismark
-- `06-metagenomics.md` — kraken2, bracken, metabat2, dada2, vsearch, mmseqs2
-- `07-proteomics-structure.md`
-- `08-phylogenetics-popgen.md` — iqtree, raxml, mafft, muscle, vcftools popgen
-- `09-workflow-utility.md`
+- `03-transcriptomics.md` — STAR, HISAT2, salmon, kallisto, featureCounts, RSeQC, Picard
+- `04-single-cell.md` — cellranger/STARsolo/alevin-fry, scanpy, Seurat, scran/scuttle
+- `05-epigenomics.md` — deeptools, MACS3, SEACR, MethylDackel, Bismark, HOMER
+- `06-metagenomics.md` — kraken2, bracken, metabat2, dada2, vsearch, mmseqs2, vegan/phyloseq
+- `07-proteomics-structure.md` — (thin: pdb/DSSP/SASA/TM-align; mass-spec out of scope)
+- `08-phylogenetics-popgen.md` — iqtree, raxml, mafft, vcftools/plink popgen, ADMIXTURE
+- `09-workflow-utility.md` — bgzip/tabix, csvtk, datamash, seqtk, multiqc
+- `10-r-bioconductor.md` — cross-cutting R/CRAN landscape (DESeq2/edgeR/limma, Seurat,
+  GenomicRanges/Features, fgsea, vegan, …) ranked by Bioconductor download stats
 
 Status legend: ✓ canonical crate · ⊃ covered by a multitool (dedup target) ·
 gap (no crate yet) · adopt (use upstream Rust crate, don't rebuild).
+
+## Cross-domain synthesis (the granularity verdict)
+
+The survey answers the question it was built for — *is our per-operation granularity right,
+and where is the real cross-tool duplication?*
+
+1. **Granularity is already mostly correct.** Formats (samtools/bcftools ≈1:1) and
+   transcriptomics (RSeQC ≈1:1, perfgated) validate the one-op-one-crate partition. The lone
+   structural duplication is `bed-utils` (a 54-op bedtools-clone shadowing 36 per-op `bed-*`
+   crates) — #89, and the fix is per-op canonical selection, NOT mechanical merge (bed-utils
+   `sort` ≠ bed-sort, proven).
+
+2. **"Same op name" ≠ "same code" cuts both ways.** Sometimes a shared *user intent* hides
+   **distinct algorithms** that each deserve a crate (taxonomy: kraken kmer-LCA vs mmseqs
+   aln-LCA vs dada2 Bayes vs sintax — keep all four). Sometimes it's genuinely one op across
+   N tools → one canonical (dereplication; popgen stats split only by input format VCF/PLINK;
+   the scanpy↔Seurat analysis op set). Judgement per case, not a rule.
+
+3. **The biggest *coverage* gaps (not granularity):** single-cell analysis (≈16 sc-* crates,
+   emptyDrops P0), metagenomics (kraken/bracken/metabat/dada2/diversity — mostly greenfield),
+   GATK germline+somatic calling, PLINK genotype-stats battery + FST + kinship, MSA + ML-tree
+   inference, R DE primitives (glm-nb kernels for DESeq2/edgeR/limma), bgzip/tabix CLIs.
+
+4. **Cross-ecosystem dedup is the high-leverage idea.** PCA / Leiden / UMAP / Wilcoxon recur
+   across PLINK, ATAC, bulk-RNA, single-cell — build them as **domain-agnostic Layer-A
+   primitives**, not per-domain copies. Same for popgen-core (FST/HWE/Tajima) and a future
+   glm-nb stats kernel feeding both our DE pipeline and R via FFI.
+
+5. **Integrity flags surfaced (not halts — build-out backlog):** all ~15 epigenomics crates
+   are unpublished with no perf gate; `rsomics-vcf-popgen` advertises FST in Cargo.toml but
+   ships no FST module; `rsomics-count-matrix` is misnamed for single-cell; scran is upstream-
+   deprecated (cite scuttle/scrapper); DoubletFinder is license-blocked (CC BY-NC).
+
+Per-domain tables carry the operation-level detail + source provenance + verification confidence.
