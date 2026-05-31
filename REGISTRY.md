@@ -187,6 +187,7 @@ _Generated 2026-05-30 — 231 crates._
 | [rsomics-plink-prune](https://github.com/omics-rust/rsomics-plink-prune) | LD pruning from PLINK1 binary filesets (--indep-pairwise) |
 | [rsomics-popgen-core](https://github.com/omics-rust/rsomics-popgen-core) | Population-genetics primitives: π, Watterson's θ, Tajima's D, Hardy-Weinberg exact, LD r². |
 | [rsomics-pvalue-adjust](https://github.com/omics-rust/rsomics-pvalue-adjust) | Multiple-testing correction for a column of p-values — the full R p.adjust method set (hol |
+| [rsomics-read-distribution](https://github.com/omics-rust/rsomics-read-distribution) | Distribution of reads over genomic features (CDS/UTR/intron/TSS/TES) — Rust port of RSeQC read_distribution.py |
 | [rsomics-read-duplication](https://github.com/omics-rust/rsomics-read-duplication) | Sequence-based and position-based read duplication rate — Rust port of RSeQC read_duplicat |
 | [rsomics-read-gc](https://github.com/omics-rust/rsomics-read-gc) | Per-read GC% distribution from a BAM — Rust port of RSeQC read_GC.py |
 | [rsomics-read-nvc](https://github.com/omics-rust/rsomics-read-nvc) | Per-cycle nucleotide composition (NVC) from a BAM — Rust port of RSeQC read_NVC.py |
