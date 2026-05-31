@@ -170,6 +170,7 @@ _Generated 2026-05-30 — 231 crates._
 | [rsomics-kmer-dist](https://github.com/omics-rust/rsomics-kmer-dist) | Pairwise k-mer frequency distance between FASTA/FASTQ samples — Jaccard/Bray-Curtis/cosine |
 | [rsomics-kraken-report](https://github.com/omics-rust/rsomics-kraken-report) | Parse and summarize Kraken2 report files — top taxa, diversity stats |
 | [rsomics-ld-matrix](https://github.com/omics-rust/rsomics-ld-matrix) | Compute pairwise linkage disequilibrium (r²) from a genotype matrix |
+| [rsomics-liftover](https://github.com/omics-rust/rsomics-liftover) | Lift BED interval coordinates between assemblies via a UCSC chain file — Rust port of UCSC liftOver |
 | [rsomics-methyldackel](https://github.com/omics-rust/rsomics-methyldackel) | Per-CpG methylation extraction from bisulfite-aligned BAM — Rust port of MethylDackel extr |
 | [rsomics-minimap2](https://github.com/omics-rust/rsomics-minimap2) | Long/short-read aligner — CLI wrapper of minimap2 FFI bindings (Quadrant ②) |
 | [rsomics-mismatch-profile](https://github.com/omics-rust/rsomics-mismatch-profile) | Per-base mismatch-rate profile from BAM MD tags — Rust port of RSeQC mismatch_profile.py |
