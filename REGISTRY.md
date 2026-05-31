@@ -47,6 +47,7 @@ _Generated 2026-05-30 — 231 crates._
 | [rsomics-bam-signal](https://github.com/omics-rust/rsomics-bam-signal) | Binned BAM → bedGraph/bigWig signal track — Rust port of deeptools bamCoverage |
 | [rsomics-bam-sort](https://github.com/omics-rust/rsomics-bam-sort) | BAM sorting by coordinate or read name — Rust port of samtools sort |
 | [rsomics-bam-split](https://github.com/omics-rust/rsomics-bam-split) | Split BAM by read group — Rust port of samtools split |
+| [rsomics-bam-split-pe](https://github.com/omics-rust/rsomics-bam-split-pe) | Split a paired-end BAM into read-1/read-2/unmapped BAMs — Rust port of RSeQC split_paired_bam.py |
 | [rsomics-bam-stats](https://github.com/omics-rust/rsomics-bam-stats) | Comprehensive alignment statistics from BAM — Rust port of samtools stats |
 | [rsomics-bam-strandedness](https://github.com/omics-rust/rsomics-bam-strandedness) | Infer RNA-seq library strand protocol from BAM + BED12 gene model — Rust port of RSeQC inf |
 | [rsomics-bam-subsample](https://github.com/omics-rust/rsomics-bam-subsample) | Random downsampling of BAM/SAM records by fraction or target count |
