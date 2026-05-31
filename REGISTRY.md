@@ -193,6 +193,7 @@ _Generated 2026-05-30 — 231 crates._
 | [rsomics-read-nvc](https://github.com/omics-rust/rsomics-read-nvc) | Per-cycle nucleotide composition (NVC) from a BAM — Rust port of RSeQC read_NVC.py |
 | [rsomics-read-quality](https://github.com/omics-rust/rsomics-read-quality) | Per-base read-quality heatmap and boxplot from BAM — Rust port of RSeQC read_quality.py |
 | [rsomics-rereplicate](https://github.com/omics-rust/rsomics-rereplicate) | Expand abundance-annotated FASTA back into individual reads — port of vsearch --rereplicat |
+| [rsomics-rna-fragment-size](https://github.com/omics-rust/rsomics-rna-fragment-size) | Per-transcript mRNA fragment-size distribution for paired RNA-seq — Rust port of RSeQC RNA_fragment_size.py |
 | [rsomics-rnaseq-metrics](https://github.com/omics-rust/rsomics-rnaseq-metrics) | RNA-seq QC metrics (region coverage fractions, strand bias, transcript-coverage bias) — Ru |
 | [rsomics-rpkm-saturation](https://github.com/omics-rust/rsomics-rpkm-saturation) | Subsample-based RPKM saturation analysis — Rust reimplementation of RSeQC RPKM_saturation. |
 | [rsomics-sam-to-bam](https://github.com/omics-rust/rsomics-sam-to-bam) | Convert SAM to BAM — Rust equivalent of samtools view -bS |
