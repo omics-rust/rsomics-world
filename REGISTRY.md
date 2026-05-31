@@ -26,6 +26,7 @@ _Generated 2026-05-30 — 231 crates._
 | [rsomics-bam-fasta](https://github.com/omics-rust/rsomics-bam-fasta) | Convert BAM to FASTA — Rust port of samtools fasta |
 | [rsomics-bam-fingerprint](https://github.com/omics-rust/rsomics-bam-fingerprint) | ChIP-enrichment fingerprint (cumulative-coverage Lorenz curve) — Rust port of deeptools pl |
 | [rsomics-bam-fixmate](https://github.com/omics-rust/rsomics-bam-fixmate) | Fill in mate coordinate, ISIZE and mate-related flags — Rust port of samtools fixmate |
+| [rsomics-bam-flags](https://github.com/omics-rust/rsomics-bam-flags) | Convert between numeric and textual SAM FLAG representations — Rust port of samtools flags |
 | [rsomics-bam-flagstat](https://github.com/omics-rust/rsomics-bam-flagstat) | SAM/BAM/CRAM flag statistics — Rust port of samtools flagstat |
 | [rsomics-bam-head](https://github.com/omics-rust/rsomics-bam-head) | Print the header and the first N alignment records of a BAM as SAM — Rust port of samtools |
 | [rsomics-bam-idxstats](https://github.com/omics-rust/rsomics-bam-idxstats) | Per-reference read counts from a BAM index — Rust port of samtools idxstats |
@@ -230,6 +231,7 @@ _Generated 2026-05-30 — 231 crates._
 | [rsomics-vcf-setgt](https://github.com/omics-rust/rsomics-vcf-setgt) | Conditionally rewrite VCF genotypes — Rust port of bcftools +setGT |
 | [rsomics-vcf-sort](https://github.com/omics-rust/rsomics-vcf-sort) | Sort a VCF by chromosome and position — Rust port of bcftools sort |
 | [rsomics-vcf-split](https://github.com/omics-rust/rsomics-vcf-split) | Split VCF by chromosome into per-chromosome files |
+| [rsomics-vcf-split-vep](https://github.com/omics-rust/rsomics-vcf-split-vep) | Query and extract VEP/bcftools-csq CSQ/BCSQ annotations — Rust port of bcftools +split-vep |
 | [rsomics-vcf-stats](https://github.com/omics-rust/rsomics-vcf-stats) | Basic VCF variant statistics — SNP/indel counts, Ti/Tv ratio |
 | [rsomics-vcf-to-bed](https://github.com/omics-rust/rsomics-vcf-to-bed) | Convert VCF variant positions to BED intervals |
 | [rsomics-vcf-utils](https://github.com/omics-rust/rsomics-vcf-utils) | VCF utility toolkit — view, filter, count, stats, and convert operations |
