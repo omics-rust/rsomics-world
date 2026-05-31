@@ -8,6 +8,7 @@ _Generated 2026-05-30 — 231 crates._
 |---|---|
 | [rsomics-align-core](https://github.com/omics-rust/rsomics-align-core) | Pairwise sequence alignment kernels (Smith-Waterman + Needleman-Wunsch, affine gap) for th |
 | [rsomics-align-score](https://github.com/omics-rust/rsomics-align-score) | Pairwise sequence alignment — Needleman-Wunsch (global) or Smith-Waterman (local) |
+| [rsomics-alignment-sieve](https://github.com/omics-rust/rsomics-alignment-sieve) | Filter a BAM by mapq / fragment length / SAM flags / blacklist / duplicates — Rust port of deepTools alignmentSieve |
 | [rsomics-atac-shift](https://github.com/omics-rust/rsomics-atac-shift) | ATAC-seq Tn5 insertion-bias shift: +4/-5 bp coordinate correction and insertion-site BED o |
 | [rsomics-bam-addreplacerg](https://github.com/omics-rust/rsomics-bam-addreplacerg) | Add or replace @RG header lines and RG:Z aux tags on BAM records — Rust port of samtools a |
 | [rsomics-bam-ampliconclip](https://github.com/omics-rust/rsomics-bam-ampliconclip) | Clip amplicon primer regions off aligned reads given a BED — Rust port of samtools amplico |
