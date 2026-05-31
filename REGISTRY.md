@@ -23,6 +23,7 @@ _Generated 2026-05-30 — 231 crates._
 | [rsomics-bam-depad](https://github.com/omics-rust/rsomics-bam-depad) | Convert padded to unpadded BAM coordinates — Rust port of samtools depad |
 | [rsomics-bam-depth](https://github.com/omics-rust/rsomics-bam-depth) | Per-base or per-region depth from BAM — Rust port of samtools depth |
 | [rsomics-bam-dict](https://github.com/omics-rust/rsomics-bam-dict) | Generate SAM-format sequence dictionary from FASTA — Rust port of samtools dict |
+| [rsomics-bam-divide](https://github.com/omics-rust/rsomics-bam-divide) | Randomly divide a BAM into N roughly-equal parts — Rust port of RSeQC divide_bam.py |
 | [rsomics-bam-fasta](https://github.com/omics-rust/rsomics-bam-fasta) | Convert BAM to FASTA — Rust port of samtools fasta |
 | [rsomics-bam-fingerprint](https://github.com/omics-rust/rsomics-bam-fingerprint) | ChIP-enrichment fingerprint (cumulative-coverage Lorenz curve) — Rust port of deeptools pl |
 | [rsomics-bam-fixmate](https://github.com/omics-rust/rsomics-bam-fixmate) | Fill in mate coordinate, ISIZE and mate-related flags — Rust port of samtools fixmate |
