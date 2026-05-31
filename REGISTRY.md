@@ -33,6 +33,7 @@ _Generated 2026-05-30 — 231 crates._
 | [rsomics-bam-import](https://github.com/omics-rust/rsomics-bam-import) | Convert FASTQ to unaligned BAM — Rust port of samtools import |
 | [rsomics-bam-index](https://github.com/omics-rust/rsomics-bam-index) | Create BAI index for a coordinate-sorted BAM — Rust port of samtools index |
 | [rsomics-bam-junctions](https://github.com/omics-rust/rsomics-bam-junctions) | Annotate splice junctions from spliced BAM reads vs BED12 gene model — Rust port of RSeQC  |
+| [rsomics-bam-mapstat](https://github.com/omics-rust/rsomics-bam-mapstat) | BAM mapping-statistics summary (splice / unique / proper-pair categories) — Rust port of RSeQC bam_stat.py |
 | [rsomics-bam-markdup](https://github.com/omics-rust/rsomics-bam-markdup) | Mark or remove PCR/optical duplicates in sorted BAM — Rust port of samtools markdup |
 | [rsomics-bam-merge](https://github.com/omics-rust/rsomics-bam-merge) | Merge multiple sorted BAM files — Rust port of samtools merge |
 | [rsomics-bam-mpileup](https://github.com/omics-rust/rsomics-bam-mpileup) | Per-position text pileup of read bases, qualities and map qualities — Rust port of samtool |
