@@ -106,6 +106,7 @@ _Generated 2026-05-30 — 231 crates._
 | [rsomics-bed-validate](https://github.com/omics-rust/rsomics-bed-validate) | Validate BED file format: check field counts, coordinate ordering, and integer parsing |
 | [rsomics-bed-window](https://github.com/omics-rust/rsomics-bed-window) | Find BED features within a window of A intervals — bedtools window equivalent |
 | [rsomics-bed12-to-bed6](https://github.com/omics-rust/rsomics-bed12-to-bed6) | Break BED12 block annotations into discrete BED6 intervals — Rust port of bedtools bed12to |
+| [rsomics-beta-diversity](https://github.com/omics-rust/rsomics-beta-diversity) | Pairwise between-sample beta-diversity distance matrix (braycurtis/jaccard/euclidean/canberra/cityblock) — scikit-bio-compatible, byte-exact |
 | [rsomics-bgzip](https://github.com/omics-rust/rsomics-bgzip) | Block-compress or decompress a file in BGZF — Rust port of htslib bgzip (2.07× compress vs libdeflate bgzip) |
 | [rsomics-bigwig-average](https://github.com/omics-rust/rsomics-bigwig-average) | Per-bin average of N bigWig files as a bedGraph track — Rust port of deepTools bigwigAverage |
 | [rsomics-bigwig-compare](https://github.com/omics-rust/rsomics-bigwig-compare) | Per-bin comparison of two bigWig files as a bedGraph track — Rust port of deeptools bigwig |
@@ -200,6 +201,7 @@ _Generated 2026-05-30 — 231 crates._
 | [rsomics-plink-pca](https://github.com/omics-rust/rsomics-plink-pca) | PCA and GRM computation from PLINK1 binary filesets using faer EVD |
 | [rsomics-plink-prune](https://github.com/omics-rust/rsomics-plink-prune) | LD pruning from PLINK1 binary filesets (--indep-pairwise) |
 | [rsomics-plink-score](https://github.com/omics-rust/rsomics-plink-score) | Polygenic score from a weights file (.profile) — Rust port of PLINK --score (1.37× -t1) |
+| [rsomics-plink-tdt](https://github.com/omics-rust/rsomics-plink-tdt) | Transmission disequilibrium test for trios (.tdt) — Rust port of PLINK --tdt (1.44× -t1) |
 | [rsomics-popgen-core](https://github.com/omics-rust/rsomics-popgen-core) | Population-genetics primitives: π, Watterson's θ, Tajima's D, Hardy-Weinberg exact, LD r². |
 | [rsomics-pvalue-adjust](https://github.com/omics-rust/rsomics-pvalue-adjust) | Multiple-testing correction for a column of p-values — the full R p.adjust method set (hol |
 | [rsomics-read-distribution](https://github.com/omics-rust/rsomics-read-distribution) | Distribution of reads over genomic features (CDS/UTR/intron/TSS/TES) — Rust port of RSeQC read_distribution.py |
