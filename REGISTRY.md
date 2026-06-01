@@ -122,6 +122,7 @@ _Generated 2026-05-30 — 231 crates._
 | [rsomics-compute-gc-bias](https://github.com/omics-rust/rsomics-compute-gc-bias) | deeptools computeGCBias: observed-vs-expected read counts per GC bin over a 2bit genome (pure-Rust 2bit reader + scipy-exact poisson outlier cap) — Rust port of deeptools 3.5.6 (byte-identical, 19.04× -t1) |
 | [rsomics-compute-matrix](https://github.com/omics-rust/rsomics-compute-matrix) | bigWig signal → score matrix over BED regions — Rust port of deeptools computeMatrix |
 | [rsomics-consensus](https://github.com/omics-rust/rsomics-consensus) | Compute consensus sequence from a multiple sequence alignment — majority-rule or threshold |
+| [rsomics-cophenet](https://github.com/omics-rust/rsomics-cophenet) | Cophenetic distances + cophenetic correlation coefficient from a hierarchical linkage matrix — scipy cophenet port (byte-exact, 5.13× -t1, companion to rsomics-upgma) |
 | [rsomics-correct-gc-bias](https://github.com/omics-rust/rsomics-correct-gc-bias) | deeptools correctGCBias GC-bias correction (deterministic bedGraph path: per-fragment 1/R_gc binned coverage + binom outlier cap) — Rust port of deeptools 3.5.6 (byte-identical, 37.5× -t1) |
 | [rsomics-correspondence-analysis](https://github.com/omics-rust/rsomics-correspondence-analysis) | Correspondence Analysis of a feature table (chi-square transform + SVD → eigenvalues + sample/feature scores) — Rust port of scikit-bio ca via faer (eigenvalues to ~14 digits, 3.31× -t1) |
 | [rsomics-count-matrix](https://github.com/omics-rust/rsomics-count-matrix) | Merge multiple featureCounts/htseq-count outputs into a single gene × sample count matrix |
@@ -149,6 +150,7 @@ _Generated 2026-05-30 — 231 crates._
 | [rsomics-edger-glm-lrt](https://github.com/omics-rust/rsomics-edger-glm-lrt) | edgeR NB-GLM fit + likelihood-ratio test of a coefficient/contrast (glmFit + glmLRT) — clean-room Rust port of edgeR (value-exact, 1.24× -t1 / 3.8× -t8) |
 | [rsomics-edger-glm-qlf](https://github.com/omics-rust/rsomics-edger-glm-qlf) | edgeR quasi-likelihood F-test for DE (glmQLFit legacy + glmQLFTest) — clean-room Rust port of edgeR (value-exact, 1.47× -t1, 3.8× lower RSS) |
 | [rsomics-faith-pd](https://github.com/omics-rust/rsomics-faith-pd) | Per-sample Faith's phylogenetic diversity (PD) from a feature count table + a rooted Newick tree — scikit-bio faith_pd equivalent (value-exact, 16.83× -t1) |
+| [rsomics-fasta-amplicon](https://github.com/omics-rust/rsomics-fasta-amplicon) | Extract amplicon regions from FASTA/FASTQ by primer pair (IUPAC-aware, mismatches, region/flanking, BED) — byte-exact Rust port of seqkit amplicon (1.55–2.12× -t1) |
 | [rsomics-fasta-digest](https://github.com/omics-rust/rsomics-fasta-digest) | In-silico protein digestion — trypsin/LysC/other enzymes, missed cleavages, peptide mass f |
 | [rsomics-fasta-index](https://github.com/omics-rust/rsomics-fasta-index) | FASTA index (.fai) creation, random-access fetch, and sequence dictionary — Rust port of s |
 | [rsomics-fasta-locate](https://github.com/omics-rust/rsomics-fasta-locate) | Locate subsequences/motifs in FASTA files — seqkit locate port |
@@ -178,6 +180,7 @@ _Generated 2026-05-30 — 231 crates._
 | [rsomics-fastq-validate](https://github.com/omics-rust/rsomics-fastq-validate) | Validate FASTQ format integrity (line counts, quality encoding) |
 | [rsomics-fastqc](https://github.com/omics-rust/rsomics-fastqc) | Per-file FASTQ quality-control report (FastQC-equivalent: per-base quality, GC, N, length, |
 | [rsomics-fastx-sort](https://github.com/omics-rust/rsomics-fastx-sort) | Deterministic FASTA sorting by abundance or length — port of vsearch --sortbysize / --sort |
+| [rsomics-fcluster](https://github.com/omics-rust/rsomics-fcluster) | Form flat clusters from a hierarchical linkage matrix (distance/maxclust/inconsistent/monocrit) — scipy fcluster port, cluster labels byte-identical (companion to rsomics-upgma) |
 | [rsomics-featurecounts](https://github.com/omics-rust/rsomics-featurecounts) | Count reads over genomic features (BAM + GFF) — Rust port of featureCounts (Subread) |
 | [rsomics-filter-by-expr](https://github.com/omics-rust/rsomics-filter-by-expr) | Boolean per-gene low-expression filter (CPM-cutoff + total-count keep rules, group-aware) — Rust port of edgeR filterByExpr (byte-exact, 8.51× -t1) |
 | [rsomics-fm-index](https://github.com/omics-rust/rsomics-fm-index) | FM-index over BWT + suffix array, with backward search / count / locate. Layer A primitive |
