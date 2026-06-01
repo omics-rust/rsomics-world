@@ -240,6 +240,7 @@ _Generated 2026-05-30 — 231 crates._
 | [rsomics-plink-recode](https://github.com/omics-rust/rsomics-plink-recode) | Additive 0/1/2 genotype-dosage matrix (.raw) — Rust port of PLINK --recode A (byte-exact, 1.36× -t1) |
 | [rsomics-plink-score](https://github.com/omics-rust/rsomics-plink-score) | Polygenic score from a weights file (.profile) — Rust port of PLINK --score (1.37× -t1) |
 | [rsomics-plink-tdt](https://github.com/omics-rust/rsomics-plink-tdt) | Transmission disequilibrium test for trios (.tdt) — Rust port of PLINK --tdt (1.44× -t1) |
+| [rsomics-plot-coverage](https://github.com/omics-rust/rsomics-plot-coverage) | deeptools plotCoverage coverage distribution (deterministic strided sampling, per-bin raw counts + per-sample summary) — Rust port of deeptools 3.5.6 (byte-identical, 79.5× -t1, 8× lower RSS) |
 | [rsomics-popgen-core](https://github.com/omics-rust/rsomics-popgen-core) | Population-genetics primitives: π, Watterson's θ, Tajima's D, Hardy-Weinberg exact, LD r². |
 | [rsomics-pvalue-adjust](https://github.com/omics-rust/rsomics-pvalue-adjust) | Multiple-testing correction for a column of p-values — the full R p.adjust method set (hol |
 | [rsomics-quantile-norm](https://github.com/omics-rust/rsomics-quantile-norm) | Quantile normalization of a gene × sample matrix — Rust port of limma normalizeQuantiles (8.92× -t1) |
@@ -270,6 +271,7 @@ _Generated 2026-05-30 — 231 crates._
 | [rsomics-seqio](https://github.com/omics-rust/rsomics-seqio) | Fast FASTQ reader for the rsomics-* tool family: decode-only producer thread + parallel pa |
 | [rsomics-seqstats](https://github.com/omics-rust/rsomics-seqstats) | Format-agnostic sequence statistics primitives (length distribution: N50/L50/Nx + quartile |
 | [rsomics-stats](https://github.com/omics-rust/rsomics-stats) | Statistical tests, FDR control, p-value combination for the rsomics-* tool family. Layer A |
+| [rsomics-subsample-counts](https://github.com/omics-rust/rsomics-subsample-counts) | scikit-bio subsample_counts without-replacement rarefaction draw (numpy default_rng/PCG64 reproduced bit-exact) — Rust port of scikit-bio 0.7.2 (integer-exact, 1.35× algo / 9.76× end-to-end) |
 | [rsomics-tabix](https://github.com/omics-rust/rsomics-tabix) | Coordinate index (.tbi/.csi) for bgzipped position-sorted files + region query — Rust port of htslib tabix (byte-identical index, 1.10× build / 1.49× query) |
 | [rsomics-tajima-d](https://github.com/omics-rust/rsomics-tajima-d) | Compute Tajima's D from a site frequency spectrum (derived allele counts) |
 | [rsomics-tax-assign](https://github.com/omics-rust/rsomics-tax-assign) | Lightweight taxonomic assignment from k-mer LCA — classify reads against a reference taxon |
