@@ -125,6 +125,7 @@ _Generated 2026-05-30 — 231 crates._
 | [rsomics-derep](https://github.com/omics-rust/rsomics-derep) | FASTA dereplication — port of vsearch --derep_fulllength / --derep_prefix |
 | [rsomics-deseq-lfc-shrink](https://github.com/omics-rust/rsomics-deseq-lfc-shrink) | DESeq2 lfcShrink(type=normal) zero-centered normal-prior log2FC shrinkage on a Wald fit — Rust port of DESeq2 (value-exact, 26.75× -t1) |
 | [rsomics-deseq-lrt](https://github.com/omics-rust/rsomics-deseq-lrt) | DESeq2 likelihood-ratio test (full vs nested reduced design): median-of-ratios norm, MAP dispersion, NB-GLM fits, χ² LRT + BH — Rust port of DESeq2 (value-exact, 4.13× -t1) |
+| [rsomics-deseq-norm-transform](https://github.com/omics-rust/rsomics-deseq-norm-transform) | DESeq2 normTransform: median-of-ratios size factors then log2(count/sf + 1) — Rust port of DESeq2 (byte-identical, 132× end-to-end / 54× compute) |
 | [rsomics-deseq-prep](https://github.com/omics-rust/rsomics-deseq-prep) | Filter low-count genes and normalize a count matrix for differential expression — pre-DESe |
 | [rsomics-deseq-results](https://github.com/omics-rust/rsomics-deseq-results) | DESeq2 nbinomWaldTest + results(): median-of-ratios norm, MAP dispersion, NB-GLM Wald test of a two-group contrast + Cook's outlier removal + independent filtering + BH — Rust port of DESeq2 (value-exact, 23.92× -t1) |
 | [rsomics-deseq-sizefactors](https://github.com/omics-rust/rsomics-deseq-sizefactors) | DESeq2 median-of-ratios size factors per sample from a count matrix — Rust port of DESeq2 estimateSizeFactors (10.93× -t1) |
@@ -183,11 +184,13 @@ _Generated 2026-05-30 — 231 crates._
 | [rsomics-insertion-profile](https://github.com/omics-rust/rsomics-insertion-profile) | Per-position CIGAR-insertion rate along the read — Rust port of RSeQC insertion_profile.py |
 | [rsomics-intervals](https://github.com/omics-rust/rsomics-intervals) | BED algebra + interval index + GFF/GTF interval extraction for the rsomics-* tool family.  |
 | [rsomics-junction-saturation](https://github.com/omics-rust/rsomics-junction-saturation) | Subsample-based splice-junction saturation analysis — Rust reimplementation of RSeQC junct |
+| [rsomics-kinship](https://github.com/omics-rust/rsomics-kinship) | KING-robust pairwise kinship coefficients from PLINK genotypes — clean-room Rust port of plink2 --make-king-table (Manichaikul 2010), bitplane transpose + runtime AVX2 popcount (byte-identical .kin0, 1.13× -t1) |
 | [rsomics-kmer](https://github.com/omics-rust/rsomics-kmer) | K-mer encoding, canonicalisation, ntHash rolling hash, MurmurHash3, k-mer counting for the |
 | [rsomics-kmer-dist](https://github.com/omics-rust/rsomics-kmer-dist) | Pairwise k-mer frequency distance between FASTA/FASTQ samples — Jaccard/Bray-Curtis/cosine |
 | [rsomics-kraken-report](https://github.com/omics-rust/rsomics-kraken-report) | Parse and summarize Kraken2 report files — top taxa, diversity stats |
 | [rsomics-ld-matrix](https://github.com/omics-rust/rsomics-ld-matrix) | Compute pairwise linkage disequilibrium (r²) from a genotype matrix |
 | [rsomics-liftover](https://github.com/omics-rust/rsomics-liftover) | Lift BED interval coordinates between assemblies via a UCSC chain file — Rust port of UCSC liftOver |
+| [rsomics-limma-array-weights](https://github.com/omics-rust/rsomics-limma-array-weights) | limma arrayWeights: REML per-sample quality weights from a log-expression matrix + design — clean-room Rust port of limma (matches to ~0.1%, REML prior.n residual documented; 9.35× -t1) |
 | [rsomics-limma-decide-tests](https://github.com/omics-rust/rsomics-limma-decide-tests) | limma decideTests up/down/notsig classification (separate/global BH/holm/… adjust + p-cutoff + lfc filter) — clean-room Rust port of limma (integer-exact, 21.2× -t1) |
 | [rsomics-limma-ebayes](https://github.com/omics-rust/rsomics-limma-ebayes) | Per-gene linear-model fit + empirical-Bayes moderated t-statistics (lmFit+eBayes+topTable) for a log-expression matrix — clean-room Rust port of limma (value-exact, 49.5× -t1, 10× lower RSS) |
 | [rsomics-limma-treat](https://github.com/omics-rust/rsomics-limma-treat) | Moderated t-test against a log-fold-change threshold (limma treat + topTreat) for a log-expression matrix — clean-room Rust port of limma (value-exact, 48× -t1) |
@@ -299,4 +302,5 @@ _Generated 2026-05-30 — 231 crates._
 | [rsomics-vcf-validate](https://github.com/omics-rust/rsomics-vcf-validate) | Validate VCF format integrity |
 | [rsomics-vcf-view](https://github.com/omics-rust/rsomics-vcf-view) | Subset and filter VCF records — Rust port of bcftools view |
 | [rsomics-voom](https://github.com/omics-rust/rsomics-voom) | voom log2-CPM transform + mean-variance precision weights for RNA-seq — Rust reimplementation of limma voom (field-exact, 2.86× -t1) |
+| [rsomics-voom-quality-weights](https://github.com/omics-rust/rsomics-voom-quality-weights) | limma voomWithQualityWeights: voom precision weights composed with arrayWeights sample-quality weights — clean-room Rust port of limma (value-exact, 13.55× -t1) |
 | [rsomics-wig-to-bed](https://github.com/omics-rust/rsomics-wig-to-bed) | Convert WIG/bedGraph signal tracks to BED intervals above a threshold |
