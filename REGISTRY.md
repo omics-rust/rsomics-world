@@ -155,6 +155,7 @@ _Generated 2026-05-30 — 231 crates._
 | [rsomics-fpkm-count](https://github.com/omics-rust/rsomics-fpkm-count) | Compute per-gene FPKM from a BAM + BED12 model — Rust port of RSeQC FPKM_count |
 | [rsomics-fqgz](https://github.com/omics-rust/rsomics-fqgz) | Chunked parallel-libdeflate gzip (or plain) FASTQ-record writer. Layer-A primitive shared  |
 | [rsomics-fragment-size](https://github.com/omics-rust/rsomics-fragment-size) | Paired-end insert-size distribution from a BAM: histogram TSV + summary with ATAC nucleoso |
+| [rsomics-freesasa](https://github.com/omics-rust/rsomics-freesasa) | Solvent-accessible surface area from a PDB via the Lee-Richards algorithm (ProtOr radii, 1.4 Å probe) — freesasa-compatible Rust rewrite |
 | [rsomics-gc-windows](https://github.com/omics-rust/rsomics-gc-windows) | Compute per-window GC content across a FASTA reference — BED output for CNV/WGS normalizat |
 | [rsomics-genebody-coverage](https://github.com/omics-rust/rsomics-genebody-coverage) | Gene-body coverage profile (5'→3') for RNA-seq bias QC — Rust port of RSeQC geneBody_cover |
 | [rsomics-gff-utils](https://github.com/omics-rust/rsomics-gff-utils) | GFF/GTF utility toolkit — count, filter, extract, sort, convert, and stats operations |
