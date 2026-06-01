@@ -236,6 +236,7 @@ _Generated 2026-05-30 — 231 crates._
 | [rsomics-tsv-join](https://github.com/omics-rust/rsomics-tsv-join) | Join two TSV files by a shared key column — inner/left/outer join |
 | [rsomics-tsv-select](https://github.com/omics-rust/rsomics-tsv-select) | Select, reorder, or rename columns from TSV files — cut + awk for bioinformatics pipelines |
 | [rsomics-tsv-stats](https://github.com/omics-rust/rsomics-tsv-stats) | Per-column and grouped summary statistics of delimited files — GNU datamash-compatible (1.48-2.10× -t1) |
+| [rsomics-tsv-transpose](https://github.com/omics-rust/rsomics-tsv-transpose) | Transpose a TSV (rows↔columns) — GNU datamash transpose-compatible (byte-exact, 3.42× -t1) |
 | [rsomics-vcf-annotate](https://github.com/omics-rust/rsomics-vcf-annotate) | Annotate VCF variants with labels from a BED/TSV file |
 | [rsomics-vcf-call](https://github.com/omics-rust/rsomics-vcf-call) | Bayesian SNP/indel calling from mpileup likelihoods — Rust port of bcftools call -c |
 | [rsomics-vcf-cnv](https://github.com/omics-rust/rsomics-vcf-cnv) | HMM-based CNV caller from BAF + LRR in a single-sample VCF — Rust port of bcftools cnv |
