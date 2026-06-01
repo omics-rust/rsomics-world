@@ -130,6 +130,7 @@ _Generated 2026-05-30 — 231 crates._
 | [rsomics-debruijn](https://github.com/omics-rust/rsomics-debruijn) | de Bruijn graph types + linear-path collapse + unitig extraction for the rsomics-* tool fa |
 | [rsomics-deletion-profile](https://github.com/omics-rust/rsomics-deletion-profile) | Per-base CIGAR-deletion rate along aligned reads — Rust port of RSeQC deletion_profile.py |
 | [rsomics-derep](https://github.com/omics-rust/rsomics-derep) | FASTA dereplication — port of vsearch --derep_fulllength / --derep_prefix |
+| [rsomics-deseq-fpkm](https://github.com/omics-rust/rsomics-deseq-fpkm) | DESeq2 fpkm(robust=TRUE): median-of-ratios robust-normalized FPKM of a gene count matrix given per-gene basepairs — Rust port of DESeq2 (byte-exact, 80.4× -t1) |
 | [rsomics-deseq-lfc-shrink](https://github.com/omics-rust/rsomics-deseq-lfc-shrink) | DESeq2 lfcShrink(type=normal) zero-centered normal-prior log2FC shrinkage on a Wald fit — Rust port of DESeq2 (value-exact, 26.75× -t1) |
 | [rsomics-deseq-lrt](https://github.com/omics-rust/rsomics-deseq-lrt) | DESeq2 likelihood-ratio test (full vs nested reduced design): median-of-ratios norm, MAP dispersion, NB-GLM fits, χ² LRT + BH — Rust port of DESeq2 (value-exact, 4.13× -t1) |
 | [rsomics-deseq-norm-transform](https://github.com/omics-rust/rsomics-deseq-norm-transform) | DESeq2 normTransform: median-of-ratios size factors then log2(count/sf + 1) — Rust port of DESeq2 (byte-identical, 132× end-to-end / 54× compute) |
@@ -144,6 +145,7 @@ _Generated 2026-05-30 — 231 crates._
 | [rsomics-edger-exact-test](https://github.com/omics-rust/rsomics-edger-exact-test) | Two-group negative-binomial exact test for differential expression (logFC/logCPM/PValue/FDR) — clean-room Rust port of edgeR exactTest (logFC/logCPM byte-exact, 2.08× -t1, 15.8× lower RSS) |
 | [rsomics-edger-glm-lrt](https://github.com/omics-rust/rsomics-edger-glm-lrt) | edgeR NB-GLM fit + likelihood-ratio test of a coefficient/contrast (glmFit + glmLRT) — clean-room Rust port of edgeR (value-exact, 1.24× -t1 / 3.8× -t8) |
 | [rsomics-edger-glm-qlf](https://github.com/omics-rust/rsomics-edger-glm-qlf) | edgeR quasi-likelihood F-test for DE (glmQLFit legacy + glmQLFTest) — clean-room Rust port of edgeR (value-exact, 1.47× -t1, 3.8× lower RSS) |
+| [rsomics-faith-pd](https://github.com/omics-rust/rsomics-faith-pd) | Per-sample Faith's phylogenetic diversity (PD) from a feature count table + a rooted Newick tree — scikit-bio faith_pd equivalent (value-exact, 16.83× -t1) |
 | [rsomics-fasta-digest](https://github.com/omics-rust/rsomics-fasta-digest) | In-silico protein digestion — trypsin/LysC/other enzymes, missed cleavages, peptide mass f |
 | [rsomics-fasta-index](https://github.com/omics-rust/rsomics-fasta-index) | FASTA index (.fai) creation, random-access fetch, and sequence dictionary — Rust port of s |
 | [rsomics-fasta-locate](https://github.com/omics-rust/rsomics-fasta-locate) | Locate subsequences/motifs in FASTA files — seqkit locate port |
