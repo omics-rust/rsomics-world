@@ -114,6 +114,7 @@ _Generated 2026-05-30 — 231 crates._
 | [rsomics-bigwig-average](https://github.com/omics-rust/rsomics-bigwig-average) | Per-bin average of N bigWig files as a bedGraph track — Rust port of deepTools bigwigAverage |
 | [rsomics-bigwig-compare](https://github.com/omics-rust/rsomics-bigwig-compare) | Per-bin comparison of two bigWig files as a bedGraph track — Rust port of deeptools bigwig |
 | [rsomics-bioenv](https://github.com/omics-rust/rsomics-bioenv) | BIO-ENV/BEST: best environmental-variable subset maximizing Spearman correlation with a community distance matrix — Rust port of scikit-bio bioenv (value-exact, 3.82× -t1, 36× lower RSS) |
+| [rsomics-cca](https://github.com/omics-rust/rsomics-cca) | Canonical Correspondence Analysis (CCA): constrained unimodal ordination of a community count matrix on environmental constraints — scikit-bio cca port (faer, eigenvalues value-exact ~1e-9, 3.98× -t1) |
 | [rsomics-cell-filter](https://github.com/omics-rust/rsomics-cell-filter) | Filter cells by QC metrics — min genes, min UMIs, max mito fraction from a barcode stats T |
 | [rsomics-clipping-profile](https://github.com/omics-rust/rsomics-clipping-profile) | Per-position soft-clipping profile from a BAM — Rust port of RSeQC clipping_profile.py |
 | [rsomics-clr](https://github.com/omics-rust/rsomics-clr) | Centered log-ratio (CLR) compositional transform of a feature table — Rust port of scikit-bio clr (value-exact 2.7e-15, 12.3× -t1) |
@@ -247,6 +248,7 @@ _Generated 2026-05-30 — 231 crates._
 | [rsomics-popgen-core](https://github.com/omics-rust/rsomics-popgen-core) | Population-genetics primitives: π, Watterson's θ, Tajima's D, Hardy-Weinberg exact, LD r². |
 | [rsomics-pvalue-adjust](https://github.com/omics-rust/rsomics-pvalue-adjust) | Multiple-testing correction for a column of p-values — the full R p.adjust method set (hol |
 | [rsomics-quantile-norm](https://github.com/omics-rust/rsomics-quantile-norm) | Quantile normalization of a gene × sample matrix — Rust port of limma normalizeQuantiles (8.92× -t1) |
+| [rsomics-rda](https://github.com/omics-rust/rsomics-rda) | Redundancy Analysis (RDA): constrained linear ordination of a response matrix on environmental constraints — scikit-bio rda port (faer SVD, eigenvalues value-exact ~1e-9, 7.36× -t1) |
 | [rsomics-read-distribution](https://github.com/omics-rust/rsomics-read-distribution) | Distribution of reads over genomic features (CDS/UTR/intron/TSS/TES) — Rust port of RSeQC read_distribution.py |
 | [rsomics-read-duplication](https://github.com/omics-rust/rsomics-read-duplication) | Sequence-based and position-based read duplication rate — Rust port of RSeQC read_duplicat |
 | [rsomics-read-gc](https://github.com/omics-rust/rsomics-read-gc) | Per-read GC% distribution from a BAM — Rust port of RSeQC read_GC.py |
@@ -288,6 +290,7 @@ _Generated 2026-05-30 — 231 crates._
 | [rsomics-tsv-select](https://github.com/omics-rust/rsomics-tsv-select) | Select, reorder, or rename columns from TSV files — cut + awk for bioinformatics pipelines |
 | [rsomics-tsv-stats](https://github.com/omics-rust/rsomics-tsv-stats) | Per-column and grouped summary statistics of delimited files — GNU datamash-compatible (1.48-2.10× -t1) |
 | [rsomics-tsv-transpose](https://github.com/omics-rust/rsomics-tsv-transpose) | Transpose a TSV (rows↔columns) — GNU datamash transpose-compatible (byte-exact, 3.42× -t1) |
+| [rsomics-unifrac](https://github.com/omics-rust/rsomics-unifrac) | UniFrac phylogenetic beta-diversity distance matrix (unweighted / weighted / weighted-normalized) from a feature count table + rooted Newick tree — scikit-bio-compatible Rust port (value-exact ~1e-14, 3.5×/13.6×/8.4× -t1) |
 | [rsomics-uq-norm](https://github.com/omics-rust/rsomics-uq-norm) | Upper-quartile per-sample normalization factors — Rust port of edgeR calcNormFactors(method=upperquartile) (byte-exact, 4.55× -t1) |
 | [rsomics-vcf-annotate](https://github.com/omics-rust/rsomics-vcf-annotate) | Annotate VCF variants with labels from a BED/TSV file |
 | [rsomics-vcf-call](https://github.com/omics-rust/rsomics-vcf-call) | Bayesian SNP/indel calling from mpileup likelihoods — Rust port of bcftools call -c |
