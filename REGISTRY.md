@@ -125,6 +125,7 @@ _Generated 2026-05-30 — 231 crates._
 | [rsomics-derep](https://github.com/omics-rust/rsomics-derep) | FASTA dereplication — port of vsearch --derep_fulllength / --derep_prefix |
 | [rsomics-deseq-prep](https://github.com/omics-rust/rsomics-deseq-prep) | Filter low-count genes and normalize a count matrix for differential expression — pre-DESe |
 | [rsomics-deseq-sizefactors](https://github.com/omics-rust/rsomics-deseq-sizefactors) | DESeq2 median-of-ratios size factors per sample from a count matrix — Rust port of DESeq2 estimateSizeFactors (10.93× -t1) |
+| [rsomics-deseq-vst](https://github.com/omics-rust/rsomics-deseq-vst) | DESeq2 blind variance-stabilizing transform of a count matrix (median-of-ratios size factors → Cox-Reid parametric dispersion → closed-form VST) — Rust port of DESeq2 varianceStabilizingTransformation (value-exact, 5.81× -t1) |
 | [rsomics-dssp](https://github.com/omics-rust/rsomics-dssp) | Per-residue protein secondary-structure assignment from a PDB — Kabsch-Sander/DSSP-4 (99.96% vs mkdssp 4.5, 22× perf) |
 | [rsomics-fasta-digest](https://github.com/omics-rust/rsomics-fasta-digest) | In-silico protein digestion — trypsin/LysC/other enzymes, missed cleavages, peptide mass f |
 | [rsomics-fasta-index](https://github.com/omics-rust/rsomics-fasta-index) | FASTA index (.fai) creation, random-access fetch, and sequence dictionary — Rust port of s |
@@ -218,6 +219,7 @@ _Generated 2026-05-30 — 231 crates._
 | [rsomics-read-gc](https://github.com/omics-rust/rsomics-read-gc) | Per-read GC% distribution from a BAM — Rust port of RSeQC read_GC.py |
 | [rsomics-read-nvc](https://github.com/omics-rust/rsomics-read-nvc) | Per-cycle nucleotide composition (NVC) from a BAM — Rust port of RSeQC read_NVC.py |
 | [rsomics-read-quality](https://github.com/omics-rust/rsomics-read-quality) | Per-base read-quality heatmap and boxplot from BAM — Rust port of RSeQC read_quality.py |
+| [rsomics-remove-batch-effect](https://github.com/omics-rust/rsomics-remove-batch-effect) | Regress out a batch factor from a log-expression gene × sample matrix — Rust reimplementation of limma removeBatchEffect (field-exact, 7.20× -t1) |
 | [rsomics-rereplicate](https://github.com/omics-rust/rsomics-rereplicate) | Expand abundance-annotated FASTA back into individual reads — port of vsearch --rereplicat |
 | [rsomics-rna-fragment-size](https://github.com/omics-rust/rsomics-rna-fragment-size) | Per-transcript mRNA fragment-size distribution for paired RNA-seq — Rust port of RSeQC RNA_fragment_size.py |
 | [rsomics-rnaseq-metrics](https://github.com/omics-rust/rsomics-rnaseq-metrics) | RNA-seq QC metrics (region coverage fractions, strand bias, transcript-coverage bias) — Ru |
@@ -229,6 +231,9 @@ _Generated 2026-05-30 — 231 crates._
 | [rsomics-sc-normalize](https://github.com/omics-rust/rsomics-sc-normalize) | Library-size normalization + log1p of a 10x single-cell matrix — scanpy normalize_total/log1p-compatible (3.06× -t1, 4× less memory) |
 | [rsomics-sc-pseudobulk](https://github.com/omics-rust/rsomics-sc-pseudobulk) | Pseudobulk aggregation (sum/mean counts per group) of a 10x matrix — scanpy get.aggregate-compatible (2.41× -t1) |
 | [rsomics-sc-qc-metrics](https://github.com/omics-rust/rsomics-sc-qc-metrics) | Per-cell & per-gene QC metrics from a 10x matrix — scanpy calculate_qc_metrics-compatible (2.28× -t1) |
+| [rsomics-sc-rank-genes](https://github.com/omics-rust/rsomics-sc-rank-genes) | Per-group marker-gene ranking by Welch t-test from a single-cell matrix — Rust port of scanpy rank_genes_groups (value-exact, 13.37× -t1) |
+| [rsomics-sc-regress-out](https://github.com/omics-rust/rsomics-sc-regress-out) | Regress out per-cell covariates from a single-cell matrix via per-gene OLS residuals — Rust port of scanpy pp.regress_out (value-exact, 18.34× -t1) |
+| [rsomics-sc-scale](https://github.com/omics-rust/rsomics-sc-scale) | Per-gene z-score scaling of a single-cell matrix (zero-center, ddof=1 std, symmetric clip) — Rust port of scanpy pp.scale (value-exact, 15.78× -t1) |
 | [rsomics-seacr](https://github.com/omics-rust/rsomics-seacr) | CUT&RUN peak caller (bedGraph → BED peaks) — clean-room Rust port of SEACR |
 | [rsomics-seq-stats](https://github.com/omics-rust/rsomics-seq-stats) | Quick stats for any FASTA/FASTQ — count, total bp, N50, GC%, min/max/mean length |
 | [rsomics-seqio](https://github.com/omics-rust/rsomics-seqio) | Fast FASTQ reader for the rsomics-* tool family: decode-only producer thread + parallel pa |
