@@ -199,6 +199,7 @@ _Generated 2026-05-30 — 231 crates._
 | [rsomics-plink-missing](https://github.com/omics-rust/rsomics-plink-missing) | Per-sample (.imiss) and per-variant (.lmiss) genotype missingness — Rust port of PLINK --missing (1.28× CPU -t1 / 2.13× -t8) |
 | [rsomics-plink-pca](https://github.com/omics-rust/rsomics-plink-pca) | PCA and GRM computation from PLINK1 binary filesets using faer EVD |
 | [rsomics-plink-prune](https://github.com/omics-rust/rsomics-plink-prune) | LD pruning from PLINK1 binary filesets (--indep-pairwise) |
+| [rsomics-plink-score](https://github.com/omics-rust/rsomics-plink-score) | Polygenic score from a weights file (.profile) — Rust port of PLINK --score (1.37× -t1) |
 | [rsomics-popgen-core](https://github.com/omics-rust/rsomics-popgen-core) | Population-genetics primitives: π, Watterson's θ, Tajima's D, Hardy-Weinberg exact, LD r². |
 | [rsomics-pvalue-adjust](https://github.com/omics-rust/rsomics-pvalue-adjust) | Multiple-testing correction for a column of p-values — the full R p.adjust method set (hol |
 | [rsomics-read-distribution](https://github.com/omics-rust/rsomics-read-distribution) | Distribution of reads over genomic features (CDS/UTR/intron/TSS/TES) — Rust port of RSeQC read_distribution.py |
