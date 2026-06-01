@@ -123,12 +123,15 @@ _Generated 2026-05-30 — 231 crates._
 | [rsomics-debruijn](https://github.com/omics-rust/rsomics-debruijn) | de Bruijn graph types + linear-path collapse + unitig extraction for the rsomics-* tool fa |
 | [rsomics-deletion-profile](https://github.com/omics-rust/rsomics-deletion-profile) | Per-base CIGAR-deletion rate along aligned reads — Rust port of RSeQC deletion_profile.py |
 | [rsomics-derep](https://github.com/omics-rust/rsomics-derep) | FASTA dereplication — port of vsearch --derep_fulllength / --derep_prefix |
+| [rsomics-deseq-lrt](https://github.com/omics-rust/rsomics-deseq-lrt) | DESeq2 likelihood-ratio test (full vs nested reduced design): median-of-ratios norm, MAP dispersion, NB-GLM fits, χ² LRT + BH — Rust port of DESeq2 (value-exact, 4.13× -t1) |
 | [rsomics-deseq-prep](https://github.com/omics-rust/rsomics-deseq-prep) | Filter low-count genes and normalize a count matrix for differential expression — pre-DESe |
 | [rsomics-deseq-results](https://github.com/omics-rust/rsomics-deseq-results) | DESeq2 nbinomWaldTest + results(): median-of-ratios norm, MAP dispersion, NB-GLM Wald test of a two-group contrast + Cook's outlier removal + independent filtering + BH — Rust port of DESeq2 (value-exact, 23.92× -t1) |
 | [rsomics-deseq-sizefactors](https://github.com/omics-rust/rsomics-deseq-sizefactors) | DESeq2 median-of-ratios size factors per sample from a count matrix — Rust port of DESeq2 estimateSizeFactors (10.93× -t1) |
 | [rsomics-deseq-vst](https://github.com/omics-rust/rsomics-deseq-vst) | DESeq2 blind variance-stabilizing transform of a count matrix (median-of-ratios size factors → Cox-Reid parametric dispersion → closed-form VST) — Rust port of DESeq2 varianceStabilizingTransformation (value-exact, 5.81× -t1) |
 | [rsomics-dssp](https://github.com/omics-rust/rsomics-dssp) | Per-residue protein secondary-structure assignment from a PDB — Kabsch-Sander/DSSP-4 (99.96% vs mkdssp 4.5, 22× perf) |
 | [rsomics-edger-exact-test](https://github.com/omics-rust/rsomics-edger-exact-test) | Two-group negative-binomial exact test for differential expression (logFC/logCPM/PValue/FDR) — clean-room Rust port of edgeR exactTest (logFC/logCPM byte-exact, 2.08× -t1, 15.8× lower RSS) |
+| [rsomics-edger-glm-lrt](https://github.com/omics-rust/rsomics-edger-glm-lrt) | edgeR NB-GLM fit + likelihood-ratio test of a coefficient/contrast (glmFit + glmLRT) — clean-room Rust port of edgeR (value-exact, 1.24× -t1 / 3.8× -t8) |
+| [rsomics-edger-glm-qlf](https://github.com/omics-rust/rsomics-edger-glm-qlf) | edgeR quasi-likelihood F-test for DE (glmQLFit legacy + glmQLFTest) — clean-room Rust port of edgeR (value-exact, 1.47× -t1, 3.8× lower RSS) |
 | [rsomics-fasta-digest](https://github.com/omics-rust/rsomics-fasta-digest) | In-silico protein digestion — trypsin/LysC/other enzymes, missed cleavages, peptide mass f |
 | [rsomics-fasta-index](https://github.com/omics-rust/rsomics-fasta-index) | FASTA index (.fai) creation, random-access fetch, and sequence dictionary — Rust port of s |
 | [rsomics-fasta-locate](https://github.com/omics-rust/rsomics-fasta-locate) | Locate subsequences/motifs in FASTA files — seqkit locate port |
@@ -184,6 +187,7 @@ _Generated 2026-05-30 — 231 crates._
 | [rsomics-ld-matrix](https://github.com/omics-rust/rsomics-ld-matrix) | Compute pairwise linkage disequilibrium (r²) from a genotype matrix |
 | [rsomics-liftover](https://github.com/omics-rust/rsomics-liftover) | Lift BED interval coordinates between assemblies via a UCSC chain file — Rust port of UCSC liftOver |
 | [rsomics-limma-ebayes](https://github.com/omics-rust/rsomics-limma-ebayes) | Per-gene linear-model fit + empirical-Bayes moderated t-statistics (lmFit+eBayes+topTable) for a log-expression matrix — clean-room Rust port of limma (value-exact, 49.5× -t1, 10× lower RSS) |
+| [rsomics-limma-treat](https://github.com/omics-rust/rsomics-limma-treat) | Moderated t-test against a log-fold-change threshold (limma treat + topTreat) for a log-expression matrix — clean-room Rust port of limma (value-exact, 48× -t1) |
 | [rsomics-methyldackel](https://github.com/omics-rust/rsomics-methyldackel) | Per-CpG methylation extraction from bisulfite-aligned BAM — Rust port of MethylDackel extr |
 | [rsomics-minimap2](https://github.com/omics-rust/rsomics-minimap2) | Long/short-read aligner — CLI wrapper of minimap2 FFI bindings (Quadrant ②) |
 | [rsomics-mismatch-profile](https://github.com/omics-rust/rsomics-mismatch-profile) | Per-base mismatch-rate profile from BAM MD tags — Rust port of RSeQC mismatch_profile.py |
