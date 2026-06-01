@@ -197,6 +197,7 @@ _Generated 2026-05-30 — 231 crates._
 | [rsomics-help](https://github.com/omics-rust/rsomics-help) | Family-wide `--help` renderer for rsomics-* CLIs: figlet banner with gradient, section hel |
 | [rsomics-hmm](https://github.com/omics-rust/rsomics-hmm) | Hidden Markov Model inference (Viterbi / forward / backward) for the rsomics-* tool family |
 | [rsomics-hmm-decode](https://github.com/omics-rust/rsomics-hmm-decode) | Viterbi-decode observation sequences with a discrete HMM — chromatin state, gene finding,  |
+| [rsomics-hommola](https://github.com/omics-rust/rsomics-hommola) | Hommola et al. host–parasite cospeciation test (correlation of host vs parasite distances over interactions + permutation p) — scikit-bio port (statistic value-exact, 7.51× -t1) |
 | [rsomics-igzip](https://github.com/omics-rust/rsomics-igzip) | Minimal Quadrant-② FFI wrapper over Intel ISA-L igzip for fast gzip decompression. Isolate |
 | [rsomics-ilr](https://github.com/omics-rust/rsomics-ilr) | Isometric log-ratio (ILR) compositional transform via the default Gram-Schmidt SBP basis (O(D) prefix-sum) — Rust port of scikit-bio ilr (value-exact 1e-9, 12.2× -t1) |
 | [rsomics-infercnv](https://github.com/omics-rust/rsomics-infercnv) | Infer copy-number variations from single-cell RNA-seq expression — Rust port of inferCNV |
@@ -337,6 +338,7 @@ _Generated 2026-05-30 — 231 crates._
 | [rsomics-vcf-utils](https://github.com/omics-rust/rsomics-vcf-utils) | VCF utility toolkit — view, filter, count, stats, and convert operations |
 | [rsomics-vcf-validate](https://github.com/omics-rust/rsomics-vcf-validate) | Validate VCF format integrity |
 | [rsomics-vcf-view](https://github.com/omics-rust/rsomics-vcf-view) | Subset and filter VCF records — Rust port of bcftools view |
+| [rsomics-vlr](https://github.com/omics-rust/rsomics-vlr) | Variation log-ratio proportionality matrix (and single-pair) of a compositional feature table — scikit-bio vlr/pairwise_vlr port (value-exact ~4e-15, 8.40× -t1, faer triangular GEMM) |
 | [rsomics-voom](https://github.com/omics-rust/rsomics-voom) | voom log2-CPM transform + mean-variance precision weights for RNA-seq — Rust reimplementation of limma voom (field-exact, 2.86× -t1) |
 | [rsomics-voom-quality-weights](https://github.com/omics-rust/rsomics-voom-quality-weights) | limma voomWithQualityWeights: voom precision weights composed with arrayWeights sample-quality weights — clean-room Rust port of limma (value-exact, 13.55× -t1) |
 | [rsomics-wig-to-bed](https://github.com/omics-rust/rsomics-wig-to-bed) | Convert WIG/bedGraph signal tracks to BED intervals above a threshold |
