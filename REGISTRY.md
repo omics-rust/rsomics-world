@@ -137,6 +137,7 @@ _Generated 2026-05-30 — 231 crates._
 | [rsomics-deseq-norm-transform](https://github.com/omics-rust/rsomics-deseq-norm-transform) | DESeq2 normTransform: median-of-ratios size factors then log2(count/sf + 1) — Rust port of DESeq2 (byte-identical, 132× end-to-end / 54× compute) |
 | [rsomics-deseq-prep](https://github.com/omics-rust/rsomics-deseq-prep) | Filter low-count genes and normalize a count matrix for differential expression — pre-DESe |
 | [rsomics-deseq-results](https://github.com/omics-rust/rsomics-deseq-results) | DESeq2 nbinomWaldTest + results(): median-of-ratios norm, MAP dispersion, NB-GLM Wald test of a two-group contrast + Cook's outlier removal + independent filtering + BH — Rust port of DESeq2 (value-exact, 23.92× -t1) |
+| [rsomics-deseq-rlog](https://github.com/omics-rust/rsomics-deseq-rlog) | DESeq2 rlog regularized-log transform (ridge-penalized NB-GLM, variance-stabilizing) of a count matrix — Rust port of DESeq2 (value-exact 1e-6, 20.1× -t1, 32× lower RSS) |
 | [rsomics-deseq-sizefactors](https://github.com/omics-rust/rsomics-deseq-sizefactors) | DESeq2 median-of-ratios size factors per sample from a count matrix — Rust port of DESeq2 estimateSizeFactors (10.93× -t1) |
 | [rsomics-deseq-vst](https://github.com/omics-rust/rsomics-deseq-vst) | DESeq2 blind variance-stabilizing transform of a count matrix (median-of-ratios size factors → Cox-Reid parametric dispersion → closed-form VST) — Rust port of DESeq2 varianceStabilizingTransformation (value-exact, 5.81× -t1) |
 | [rsomics-dssp](https://github.com/omics-rust/rsomics-dssp) | Per-residue protein secondary-structure assignment from a PDB — Kabsch-Sander/DSSP-4 (99.96% vs mkdssp 4.5, 22× perf) |
@@ -262,6 +263,7 @@ _Generated 2026-05-30 — 231 crates._
 | [rsomics-sam-to-bam](https://github.com/omics-rust/rsomics-sam-to-bam) | Convert SAM to BAM — Rust equivalent of samtools view -bS |
 | [rsomics-sample-sheet](https://github.com/omics-rust/rsomics-sample-sheet) | Parse, validate, and convert sample sheets (Illumina/custom TSV) — check FASTQ paths, dete |
 | [rsomics-sc-combat](https://github.com/omics-rust/rsomics-sc-combat) | Per-gene ComBat empirical-Bayes batch-effect correction of a single-cell matrix — Rust port of scanpy pp.combat (value-exact, 8.09× -t1, 5.4× lower RSS) |
+| [rsomics-sc-downsample](https://github.com/omics-rust/rsomics-sc-downsample) | Downsample a single-cell count matrix so each cell has at most N counts (without replacement) — scanpy pp.downsample_counts-compatible, integer-exact via bit-exact numba MT19937 RNG (2.45× -t1, 5.6× less memory) |
 | [rsomics-sc-filter](https://github.com/omics-rust/rsomics-sc-filter) | Filter cells & genes of a 10x matrix (min/max genes/counts/cells) — scanpy filter_cells/filter_genes-compatible (2.48× -t1) |
 | [rsomics-sc-hvg](https://github.com/omics-rust/rsomics-sc-hvg) | Highly-variable-gene selection (seurat flavor) from a 10x matrix — scanpy highly_variable_genes-compatible (1.78× -t1) |
 | [rsomics-sc-normalize](https://github.com/omics-rust/rsomics-sc-normalize) | Library-size normalization + log1p of a 10x single-cell matrix — scanpy normalize_total/log1p-compatible (3.06× -t1, 4× less memory) |
@@ -291,6 +293,7 @@ _Generated 2026-05-30 — 231 crates._
 | [rsomics-tsv-stats](https://github.com/omics-rust/rsomics-tsv-stats) | Per-column and grouped summary statistics of delimited files — GNU datamash-compatible (1.48-2.10× -t1) |
 | [rsomics-tsv-transpose](https://github.com/omics-rust/rsomics-tsv-transpose) | Transpose a TSV (rows↔columns) — GNU datamash transpose-compatible (byte-exact, 3.42× -t1) |
 | [rsomics-unifrac](https://github.com/omics-rust/rsomics-unifrac) | UniFrac phylogenetic beta-diversity distance matrix (unweighted / weighted / weighted-normalized) from a feature count table + rooted Newick tree — scikit-bio-compatible Rust port (value-exact ~1e-14, 3.5×/13.6×/8.4× -t1) |
+| [rsomics-upgma](https://github.com/omics-rust/rsomics-upgma) | UPGMA average-linkage hierarchical-clustering tree from a distance matrix → Newick — value-exact vs scipy linkage(average) (cophenetic 7e-18; 3.90× end-to-end / 1.05× pure-core -t1) |
 | [rsomics-uq-norm](https://github.com/omics-rust/rsomics-uq-norm) | Upper-quartile per-sample normalization factors — Rust port of edgeR calcNormFactors(method=upperquartile) (byte-exact, 4.55× -t1) |
 | [rsomics-vcf-annotate](https://github.com/omics-rust/rsomics-vcf-annotate) | Annotate VCF variants with labels from a BED/TSV file |
 | [rsomics-vcf-call](https://github.com/omics-rust/rsomics-vcf-call) | Bayesian SNP/indel calling from mpileup likelihoods — Rust port of bcftools call -c |
