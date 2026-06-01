@@ -185,6 +185,7 @@ _Generated 2026-05-30 — 231 crates._
 | [rsomics-multibam-summary](https://github.com/omics-rust/rsomics-multibam-summary) | Multi-BAM per-bin / per-region read-count matrix — Rust port of deeptools multiBamSummary |
 | [rsomics-multibigwig-summary](https://github.com/omics-rust/rsomics-multibigwig-summary) | Multi-bigWig per-bin / per-region mean-signal matrix — Rust port of deeptools multiBigwigS |
 | [rsomics-nj-tree](https://github.com/omics-rust/rsomics-nj-tree) | Neighbor-joining tree construction from a distance matrix — outputs Newick |
+| [rsomics-pcoa](https://github.com/omics-rust/rsomics-pcoa) | Principal Coordinates Analysis (PCoA) of a distance matrix — scikit-bio-compatible Rust port (2.75× -t1, faer eigh) |
 | [rsomics-pdb-chain](https://github.com/omics-rust/rsomics-pdb-chain) | Extract or split PDB chains — list, extract single chain, or split all into separate files |
 | [rsomics-peak-count](https://github.com/omics-rust/rsomics-peak-count) | Count BAM reads per BED peak region — ChIP-seq/ATAC-seq QC and quantification |
 | [rsomics-pgen](https://github.com/omics-rust/rsomics-pgen) | PLINK1 .bed / .bim / .fam genotype-matrix reader + writer for the rsomics-* tool family. L |
