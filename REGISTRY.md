@@ -10,6 +10,7 @@ _Generated 2026-05-30 — 231 crates._
 | [rsomics-align-score](https://github.com/omics-rust/rsomics-align-score) | Pairwise sequence alignment — Needleman-Wunsch (global) or Smith-Waterman (local) |
 | [rsomics-alignment-sieve](https://github.com/omics-rust/rsomics-alignment-sieve) | Filter a BAM by mapq / fragment length / SAM flags / blacklist / duplicates — Rust port of deepTools alignmentSieve |
 | [rsomics-alpha-diversity](https://github.com/omics-rust/rsomics-alpha-diversity) | Per-sample alpha-diversity metrics (Shannon/Simpson/Chao1/ACE/Pielou…) from a feature count table — Rust port of scikit-bio diversity.alpha |
+| [rsomics-anosim](https://github.com/omics-rust/rsomics-anosim) | ANOSIM R-statistic test on a distance matrix (tie-averaged ranks + permutation p) — Rust port of scikit-bio anosim (R value-exact, 9.58× -t1) |
 | [rsomics-atac-shift](https://github.com/omics-rust/rsomics-atac-shift) | ATAC-seq Tn5 insertion-bias shift: +4/-5 bp coordinate correction and insertion-site BED o |
 | [rsomics-avelogcpm](https://github.com/omics-rust/rsomics-avelogcpm) | Per-gene average log2-CPM via edgeR's one-group negative-binomial fit — Rust port of edgeR aveLogCPM (byte-exact, 7.60× -t1) |
 | [rsomics-bam-addreplacerg](https://github.com/omics-rust/rsomics-bam-addreplacerg) | Add or replace @RG header lines and RG:Z aux tags on BAM records — Rust port of samtools a |
@@ -194,6 +195,7 @@ _Generated 2026-05-30 — 231 crates._
 | [rsomics-limma-decide-tests](https://github.com/omics-rust/rsomics-limma-decide-tests) | limma decideTests up/down/notsig classification (separate/global BH/holm/… adjust + p-cutoff + lfc filter) — clean-room Rust port of limma (integer-exact, 21.2× -t1) |
 | [rsomics-limma-ebayes](https://github.com/omics-rust/rsomics-limma-ebayes) | Per-gene linear-model fit + empirical-Bayes moderated t-statistics (lmFit+eBayes+topTable) for a log-expression matrix — clean-room Rust port of limma (value-exact, 49.5× -t1, 10× lower RSS) |
 | [rsomics-limma-treat](https://github.com/omics-rust/rsomics-limma-treat) | Moderated t-test against a log-fold-change threshold (limma treat + topTreat) for a log-expression matrix — clean-room Rust port of limma (value-exact, 48× -t1) |
+| [rsomics-mantel](https://github.com/omics-rust/rsomics-mantel) | Mantel test (pearson/spearman) between two distance matrices + permutation p — Rust port of scikit-bio mantel (r value-exact, 1.24× -t1) |
 | [rsomics-methyldackel](https://github.com/omics-rust/rsomics-methyldackel) | Per-CpG methylation extraction from bisulfite-aligned BAM — Rust port of MethylDackel extr |
 | [rsomics-minimap2](https://github.com/omics-rust/rsomics-minimap2) | Long/short-read aligner — CLI wrapper of minimap2 FFI bindings (Quadrant ②) |
 | [rsomics-mismatch-profile](https://github.com/omics-rust/rsomics-mismatch-profile) | Per-base mismatch-rate profile from BAM MD tags — Rust port of RSeQC mismatch_profile.py |
@@ -206,6 +208,7 @@ _Generated 2026-05-30 — 231 crates._
 | [rsomics-pcoa](https://github.com/omics-rust/rsomics-pcoa) | Principal Coordinates Analysis (PCoA) of a distance matrix — scikit-bio-compatible Rust port (2.75× -t1, faer eigh) |
 | [rsomics-pdb-chain](https://github.com/omics-rust/rsomics-pdb-chain) | Extract or split PDB chains — list, extract single chain, or split all into separate files |
 | [rsomics-peak-count](https://github.com/omics-rust/rsomics-peak-count) | Count BAM reads per BED peak region — ChIP-seq/ATAC-seq QC and quantification |
+| [rsomics-permanova](https://github.com/omics-rust/rsomics-permanova) | PERMANOVA pseudo-F test on a distance matrix + permutation p — Rust port of scikit-bio permanova (pseudo-F value-exact, 2.05× -t1) |
 | [rsomics-pgen](https://github.com/omics-rust/rsomics-pgen) | PLINK1 .bed / .bim / .fam genotype-matrix reader + writer for the rsomics-* tool family. L |
 | [rsomics-phylo-tree](https://github.com/omics-rust/rsomics-phylo-tree) | Phylogenetic tree type + Newick parser/emitter for the rsomics-* tool family. Layer A prim |
 | [rsomics-pileup](https://github.com/omics-rust/rsomics-pileup) | Coordinate-sorted BAM pileup engine (htslib bam_plp port): per-position read columns with  |
