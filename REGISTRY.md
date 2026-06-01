@@ -11,6 +11,7 @@ _Generated 2026-05-30 — 231 crates._
 | [rsomics-alignment-sieve](https://github.com/omics-rust/rsomics-alignment-sieve) | Filter a BAM by mapq / fragment length / SAM flags / blacklist / duplicates — Rust port of deepTools alignmentSieve |
 | [rsomics-alpha-diversity](https://github.com/omics-rust/rsomics-alpha-diversity) | Per-sample alpha-diversity metrics (Shannon/Simpson/Chao1/ACE/Pielou…) from a feature count table — Rust port of scikit-bio diversity.alpha |
 | [rsomics-atac-shift](https://github.com/omics-rust/rsomics-atac-shift) | ATAC-seq Tn5 insertion-bias shift: +4/-5 bp coordinate correction and insertion-site BED o |
+| [rsomics-avelogcpm](https://github.com/omics-rust/rsomics-avelogcpm) | Per-gene average log2-CPM via edgeR's one-group negative-binomial fit — Rust port of edgeR aveLogCPM (byte-exact, 7.60× -t1) |
 | [rsomics-bam-addreplacerg](https://github.com/omics-rust/rsomics-bam-addreplacerg) | Add or replace @RG header lines and RG:Z aux tags on BAM records — Rust port of samtools a |
 | [rsomics-bam-ampliconclip](https://github.com/omics-rust/rsomics-bam-ampliconclip) | Clip amplicon primer regions off aligned reads given a BED — Rust port of samtools amplico |
 | [rsomics-bam-ampliconstats](https://github.com/omics-rust/rsomics-bam-ampliconstats) | Amplicon sequencing statistics from primer BED + BAM — Rust port of samtools ampliconstats |
@@ -117,11 +118,13 @@ _Generated 2026-05-30 — 231 crates._
 | [rsomics-consensus](https://github.com/omics-rust/rsomics-consensus) | Compute consensus sequence from a multiple sequence alignment — majority-rule or threshold |
 | [rsomics-count-matrix](https://github.com/omics-rust/rsomics-count-matrix) | Merge multiple featureCounts/htseq-count outputs into a single gene × sample count matrix |
 | [rsomics-coverage-core](https://github.com/omics-rust/rsomics-coverage-core) | Genome-binned BAM read-coverage primitive (deeptools countReadsPerBin port): per-bin read  |
+| [rsomics-cpm](https://github.com/omics-rust/rsomics-cpm) | Counts-per-million / log2-CPM normalization of a gene count matrix — edgeR cpm-compatible (5.01× -t1) |
 | [rsomics-de-volcano](https://github.com/omics-rust/rsomics-de-volcano) | Annotate differential expression results with significance categories for volcano plots |
 | [rsomics-debruijn](https://github.com/omics-rust/rsomics-debruijn) | de Bruijn graph types + linear-path collapse + unitig extraction for the rsomics-* tool fa |
 | [rsomics-deletion-profile](https://github.com/omics-rust/rsomics-deletion-profile) | Per-base CIGAR-deletion rate along aligned reads — Rust port of RSeQC deletion_profile.py |
 | [rsomics-derep](https://github.com/omics-rust/rsomics-derep) | FASTA dereplication — port of vsearch --derep_fulllength / --derep_prefix |
 | [rsomics-deseq-prep](https://github.com/omics-rust/rsomics-deseq-prep) | Filter low-count genes and normalize a count matrix for differential expression — pre-DESe |
+| [rsomics-deseq-sizefactors](https://github.com/omics-rust/rsomics-deseq-sizefactors) | DESeq2 median-of-ratios size factors per sample from a count matrix — Rust port of DESeq2 estimateSizeFactors (10.93× -t1) |
 | [rsomics-dssp](https://github.com/omics-rust/rsomics-dssp) | Per-residue protein secondary-structure assignment from a PDB — Kabsch-Sander/DSSP-4 (99.96% vs mkdssp 4.5, 22× perf) |
 | [rsomics-fasta-digest](https://github.com/omics-rust/rsomics-fasta-digest) | In-silico protein digestion — trypsin/LysC/other enzymes, missed cleavages, peptide mass f |
 | [rsomics-fasta-index](https://github.com/omics-rust/rsomics-fasta-index) | FASTA index (.fai) creation, random-access fetch, and sequence dictionary — Rust port of s |
@@ -153,6 +156,7 @@ _Generated 2026-05-30 — 231 crates._
 | [rsomics-fastqc](https://github.com/omics-rust/rsomics-fastqc) | Per-file FASTQ quality-control report (FastQC-equivalent: per-base quality, GC, N, length, |
 | [rsomics-fastx-sort](https://github.com/omics-rust/rsomics-fastx-sort) | Deterministic FASTA sorting by abundance or length — port of vsearch --sortbysize / --sort |
 | [rsomics-featurecounts](https://github.com/omics-rust/rsomics-featurecounts) | Count reads over genomic features (BAM + GFF) — Rust port of featureCounts (Subread) |
+| [rsomics-filter-by-expr](https://github.com/omics-rust/rsomics-filter-by-expr) | Boolean per-gene low-expression filter (CPM-cutoff + total-count keep rules, group-aware) — Rust port of edgeR filterByExpr (byte-exact, 8.51× -t1) |
 | [rsomics-fm-index](https://github.com/omics-rust/rsomics-fm-index) | FM-index over BWT + suffix array, with backward search / count / locate. Layer A primitive |
 | [rsomics-fm-search](https://github.com/omics-rust/rsomics-fm-search) | Exact substring search in FASTA using FM-index — count or locate pattern occurrences |
 | [rsomics-fpkm-count](https://github.com/omics-rust/rsomics-fpkm-count) | Compute per-gene FPKM from a BAM + BED12 model — Rust port of RSeQC FPKM_count |
@@ -208,6 +212,7 @@ _Generated 2026-05-30 — 231 crates._
 | [rsomics-plink-tdt](https://github.com/omics-rust/rsomics-plink-tdt) | Transmission disequilibrium test for trios (.tdt) — Rust port of PLINK --tdt (1.44× -t1) |
 | [rsomics-popgen-core](https://github.com/omics-rust/rsomics-popgen-core) | Population-genetics primitives: π, Watterson's θ, Tajima's D, Hardy-Weinberg exact, LD r². |
 | [rsomics-pvalue-adjust](https://github.com/omics-rust/rsomics-pvalue-adjust) | Multiple-testing correction for a column of p-values — the full R p.adjust method set (hol |
+| [rsomics-quantile-norm](https://github.com/omics-rust/rsomics-quantile-norm) | Quantile normalization of a gene × sample matrix — Rust port of limma normalizeQuantiles (8.92× -t1) |
 | [rsomics-read-distribution](https://github.com/omics-rust/rsomics-read-distribution) | Distribution of reads over genomic features (CDS/UTR/intron/TSS/TES) — Rust port of RSeQC read_distribution.py |
 | [rsomics-read-duplication](https://github.com/omics-rust/rsomics-read-duplication) | Sequence-based and position-based read duplication rate — Rust port of RSeQC read_duplicat |
 | [rsomics-read-gc](https://github.com/omics-rust/rsomics-read-gc) | Per-read GC% distribution from a BAM — Rust port of RSeQC read_GC.py |
@@ -235,12 +240,14 @@ _Generated 2026-05-30 — 231 crates._
 | [rsomics-taxonomy](https://github.com/omics-rust/rsomics-taxonomy) | NCBI taxdump parser + LCA + lineage helpers for the rsomics-* tool family. Layer A primiti |
 | [rsomics-tin](https://github.com/omics-rust/rsomics-tin) | Transcript Integrity Number (TIN) for RNA-seq QC — Rust port of RSeQC tin.py |
 | [rsomics-tm-align](https://github.com/omics-rust/rsomics-tm-align) | Pairwise protein structural alignment + TM-score — clean-room Rust impl of TM-align (10.7× -t1) |
+| [rsomics-tmm-norm](https://github.com/omics-rust/rsomics-tmm-norm) | TMM (trimmed mean of M-values) per-sample normalization factors — Rust port of edgeR calcNormFactors(method=TMM) (6.04× -t1) |
 | [rsomics-tpm](https://github.com/omics-rust/rsomics-tpm) | TPM, FPKM, and upper-quartile (FPKM-UQ) normalization of gene count matrices given gene lengths |
 | [rsomics-tsv-crosstab](https://github.com/omics-rust/rsomics-tsv-crosstab) | Cross-tabulation (long→wide pivot) of a TSV — GNU datamash crosstab-compatible (byte-exact, 1.81× -t1) |
 | [rsomics-tsv-join](https://github.com/omics-rust/rsomics-tsv-join) | Join two TSV files by a shared key column — inner/left/outer join |
 | [rsomics-tsv-select](https://github.com/omics-rust/rsomics-tsv-select) | Select, reorder, or rename columns from TSV files — cut + awk for bioinformatics pipelines |
 | [rsomics-tsv-stats](https://github.com/omics-rust/rsomics-tsv-stats) | Per-column and grouped summary statistics of delimited files — GNU datamash-compatible (1.48-2.10× -t1) |
 | [rsomics-tsv-transpose](https://github.com/omics-rust/rsomics-tsv-transpose) | Transpose a TSV (rows↔columns) — GNU datamash transpose-compatible (byte-exact, 3.42× -t1) |
+| [rsomics-uq-norm](https://github.com/omics-rust/rsomics-uq-norm) | Upper-quartile per-sample normalization factors — Rust port of edgeR calcNormFactors(method=upperquartile) (byte-exact, 4.55× -t1) |
 | [rsomics-vcf-annotate](https://github.com/omics-rust/rsomics-vcf-annotate) | Annotate VCF variants with labels from a BED/TSV file |
 | [rsomics-vcf-call](https://github.com/omics-rust/rsomics-vcf-call) | Bayesian SNP/indel calling from mpileup likelihoods — Rust port of bcftools call -c |
 | [rsomics-vcf-cnv](https://github.com/omics-rust/rsomics-vcf-cnv) | HMM-based CNV caller from BAF + LRR in a single-sample VCF — Rust port of bcftools cnv |
@@ -274,4 +281,5 @@ _Generated 2026-05-30 — 231 crates._
 | [rsomics-vcf-utils](https://github.com/omics-rust/rsomics-vcf-utils) | VCF utility toolkit — view, filter, count, stats, and convert operations |
 | [rsomics-vcf-validate](https://github.com/omics-rust/rsomics-vcf-validate) | Validate VCF format integrity |
 | [rsomics-vcf-view](https://github.com/omics-rust/rsomics-vcf-view) | Subset and filter VCF records — Rust port of bcftools view |
+| [rsomics-voom](https://github.com/omics-rust/rsomics-voom) | voom log2-CPM transform + mean-variance precision weights for RNA-seq — Rust reimplementation of limma voom (field-exact, 2.86× -t1) |
 | [rsomics-wig-to-bed](https://github.com/omics-rust/rsomics-wig-to-bed) | Convert WIG/bedGraph signal tracks to BED intervals above a threshold |
