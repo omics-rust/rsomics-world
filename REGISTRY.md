@@ -220,6 +220,7 @@ _Generated 2026-05-30 — 231 crates._
 | [rsomics-sc-filter](https://github.com/omics-rust/rsomics-sc-filter) | Filter cells & genes of a 10x matrix (min/max genes/counts/cells) — scanpy filter_cells/filter_genes-compatible (2.48× -t1) |
 | [rsomics-sc-hvg](https://github.com/omics-rust/rsomics-sc-hvg) | Highly-variable-gene selection (seurat flavor) from a 10x matrix — scanpy highly_variable_genes-compatible (1.78× -t1) |
 | [rsomics-sc-normalize](https://github.com/omics-rust/rsomics-sc-normalize) | Library-size normalization + log1p of a 10x single-cell matrix — scanpy normalize_total/log1p-compatible (3.06× -t1, 4× less memory) |
+| [rsomics-sc-pseudobulk](https://github.com/omics-rust/rsomics-sc-pseudobulk) | Pseudobulk aggregation (sum/mean counts per group) of a 10x matrix — scanpy get.aggregate-compatible (2.41× -t1) |
 | [rsomics-sc-qc-metrics](https://github.com/omics-rust/rsomics-sc-qc-metrics) | Per-cell & per-gene QC metrics from a 10x matrix — scanpy calculate_qc_metrics-compatible (2.28× -t1) |
 | [rsomics-seacr](https://github.com/omics-rust/rsomics-seacr) | CUT&RUN peak caller (bedGraph → BED peaks) — clean-room Rust port of SEACR |
 | [rsomics-seq-stats](https://github.com/omics-rust/rsomics-seq-stats) | Quick stats for any FASTA/FASTQ — count, total bp, N50, GC%, min/max/mean length |
