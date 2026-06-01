@@ -106,6 +106,7 @@ _Generated 2026-05-30 — 231 crates._
 | [rsomics-bed-validate](https://github.com/omics-rust/rsomics-bed-validate) | Validate BED file format: check field counts, coordinate ordering, and integer parsing |
 | [rsomics-bed-window](https://github.com/omics-rust/rsomics-bed-window) | Find BED features within a window of A intervals — bedtools window equivalent |
 | [rsomics-bed12-to-bed6](https://github.com/omics-rust/rsomics-bed12-to-bed6) | Break BED12 block annotations into discrete BED6 intervals — Rust port of bedtools bed12to |
+| [rsomics-bgzip](https://github.com/omics-rust/rsomics-bgzip) | Block-compress or decompress a file in BGZF — Rust port of htslib bgzip (2.07× compress vs libdeflate bgzip) |
 | [rsomics-bigwig-average](https://github.com/omics-rust/rsomics-bigwig-average) | Per-bin average of N bigWig files as a bedGraph track — Rust port of deepTools bigwigAverage |
 | [rsomics-bigwig-compare](https://github.com/omics-rust/rsomics-bigwig-compare) | Per-bin comparison of two bigWig files as a bedGraph track — Rust port of deeptools bigwig |
 | [rsomics-cell-filter](https://github.com/omics-rust/rsomics-cell-filter) | Filter cells by QC metrics — min genes, min UMIs, max mito fraction from a barcode stats T |
@@ -188,6 +189,7 @@ _Generated 2026-05-30 — 231 crates._
 | [rsomics-phylo-tree](https://github.com/omics-rust/rsomics-phylo-tree) | Phylogenetic tree type + Newick parser/emitter for the rsomics-* tool family. Layer A prim |
 | [rsomics-pileup](https://github.com/omics-rust/rsomics-pileup) | Coordinate-sorted BAM pileup engine (htslib bam_plp port): per-position read columns with  |
 | [rsomics-plink-assoc](https://github.com/omics-rust/rsomics-plink-assoc) | PLINK1 case/control association test (chi-squared + trend + linear regression) |
+| [rsomics-plink-het](https://github.com/omics-rust/rsomics-plink-het) | Per-sample inbreeding coefficient F (autosomes) — Rust port of PLINK --het (1.14× -t1) |
 | [rsomics-plink-io](https://github.com/omics-rust/rsomics-plink-io) | PLINK1 binary .bed/.bim/.fam reader: allele-freq, missingness, HWE, VCF/012 export |
 | [rsomics-plink-prune](https://github.com/omics-rust/rsomics-plink-prune) | LD pruning from PLINK1 binary filesets (--indep-pairwise) |
 | [rsomics-popgen-core](https://github.com/omics-rust/rsomics-popgen-core) | Population-genetics primitives: π, Watterson's θ, Tajima's D, Hardy-Weinberg exact, LD r². |
