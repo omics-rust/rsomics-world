@@ -116,6 +116,7 @@ _Generated 2026-05-30 — 231 crates._
 | [rsomics-bioenv](https://github.com/omics-rust/rsomics-bioenv) | BIO-ENV/BEST: best environmental-variable subset maximizing Spearman correlation with a community distance matrix — Rust port of scikit-bio bioenv (value-exact, 3.82× -t1, 36× lower RSS) |
 | [rsomics-cell-filter](https://github.com/omics-rust/rsomics-cell-filter) | Filter cells by QC metrics — min genes, min UMIs, max mito fraction from a barcode stats T |
 | [rsomics-clipping-profile](https://github.com/omics-rust/rsomics-clipping-profile) | Per-position soft-clipping profile from a BAM — Rust port of RSeQC clipping_profile.py |
+| [rsomics-clr](https://github.com/omics-rust/rsomics-clr) | Centered log-ratio (CLR) compositional transform of a feature table — Rust port of scikit-bio clr (value-exact 2.7e-15, 12.3× -t1) |
 | [rsomics-common](https://github.com/omics-rust/rsomics-common) | Shared primitives for every rsomics-* crate (errors, CLI scaffold, runner, progress, exit  |
 | [rsomics-compute-matrix](https://github.com/omics-rust/rsomics-compute-matrix) | bigWig signal → score matrix over BED regions — Rust port of deeptools computeMatrix |
 | [rsomics-consensus](https://github.com/omics-rust/rsomics-consensus) | Compute consensus sequence from a multiple sequence alignment — majority-rule or threshold |
@@ -218,6 +219,7 @@ _Generated 2026-05-30 — 231 crates._
 | [rsomics-phylo-tree](https://github.com/omics-rust/rsomics-phylo-tree) | Phylogenetic tree type + Newick parser/emitter for the rsomics-* tool family. Layer A prim |
 | [rsomics-pileup](https://github.com/omics-rust/rsomics-pileup) | Coordinate-sorted BAM pileup engine (htslib bam_plp port): per-position read columns with  |
 | [rsomics-plink-assoc](https://github.com/omics-rust/rsomics-plink-assoc) | PLINK1 case/control association test (chi-squared + trend + linear regression) |
+| [rsomics-plink-epistasis](https://github.com/omics-rust/rsomics-plink-epistasis) | PLINK --epistasis SNP×SNP logistic-regression interaction scan (9-cell grouped-binomial IRLS → OR_INT/STAT/P) — clean-room Rust port of PLINK 1.9 (value-exact, 3.74× -t1) |
 | [rsomics-plink-freq](https://github.com/omics-rust/rsomics-plink-freq) | Per-variant allele frequencies (.frq) — Rust port of PLINK --freq (1.63× -t1, mmap+popcount) |
 | [rsomics-plink-freqx](https://github.com/omics-rust/rsomics-plink-freqx) | Per-variant genotype-class counts (.frqx) — Rust port of PLINK --freqx (1.14× -t1, byte-exact, SWAR popcount) |
 | [rsomics-plink-grm](https://github.com/omics-rust/rsomics-plink-grm) | GCTA standardized-genotype Genetic Relationship Matrix from PLINK genotypes (blocked faer GEMM + AND-popcount denom) — Rust port of plink2 --make-rel (byte-identical, 1.38× -t1) |
