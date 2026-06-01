@@ -118,6 +118,7 @@ _Generated 2026-05-30 — 231 crates._
 | [rsomics-clipping-profile](https://github.com/omics-rust/rsomics-clipping-profile) | Per-position soft-clipping profile from a BAM — Rust port of RSeQC clipping_profile.py |
 | [rsomics-clr](https://github.com/omics-rust/rsomics-clr) | Centered log-ratio (CLR) compositional transform of a feature table — Rust port of scikit-bio clr (value-exact 2.7e-15, 12.3× -t1) |
 | [rsomics-common](https://github.com/omics-rust/rsomics-common) | Shared primitives for every rsomics-* crate (errors, CLI scaffold, runner, progress, exit  |
+| [rsomics-compute-gc-bias](https://github.com/omics-rust/rsomics-compute-gc-bias) | deeptools computeGCBias: observed-vs-expected read counts per GC bin over a 2bit genome (pure-Rust 2bit reader + scipy-exact poisson outlier cap) — Rust port of deeptools 3.5.6 (byte-identical, 19.04× -t1) |
 | [rsomics-compute-matrix](https://github.com/omics-rust/rsomics-compute-matrix) | bigWig signal → score matrix over BED regions — Rust port of deeptools computeMatrix |
 | [rsomics-consensus](https://github.com/omics-rust/rsomics-consensus) | Compute consensus sequence from a multiple sequence alignment — majority-rule or threshold |
 | [rsomics-correspondence-analysis](https://github.com/omics-rust/rsomics-correspondence-analysis) | Correspondence Analysis of a feature table (chi-square transform + SVD → eigenvalues + sample/feature scores) — Rust port of scikit-bio ca via faer (eigenvalues to ~14 digits, 3.31× -t1) |
@@ -185,6 +186,7 @@ _Generated 2026-05-30 — 231 crates._
 | [rsomics-hmm](https://github.com/omics-rust/rsomics-hmm) | Hidden Markov Model inference (Viterbi / forward / backward) for the rsomics-* tool family |
 | [rsomics-hmm-decode](https://github.com/omics-rust/rsomics-hmm-decode) | Viterbi-decode observation sequences with a discrete HMM — chromatin state, gene finding,  |
 | [rsomics-igzip](https://github.com/omics-rust/rsomics-igzip) | Minimal Quadrant-② FFI wrapper over Intel ISA-L igzip for fast gzip decompression. Isolate |
+| [rsomics-ilr](https://github.com/omics-rust/rsomics-ilr) | Isometric log-ratio (ILR) compositional transform via the default Gram-Schmidt SBP basis (O(D) prefix-sum) — Rust port of scikit-bio ilr (value-exact 1e-9, 12.2× -t1) |
 | [rsomics-infercnv](https://github.com/omics-rust/rsomics-infercnv) | Infer copy-number variations from single-cell RNA-seq expression — Rust port of inferCNV |
 | [rsomics-inner-distance](https://github.com/omics-rust/rsomics-inner-distance) | mRNA-aware inner-distance distribution for paired-end RNA-seq — Rust port of RSeQC inner_d |
 | [rsomics-insertion-profile](https://github.com/omics-rust/rsomics-insertion-profile) | Per-position CIGAR-insertion rate along the read — Rust port of RSeQC insertion_profile.py |
