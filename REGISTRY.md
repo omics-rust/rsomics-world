@@ -237,6 +237,7 @@ _Generated 2026-05-30 — 231 crates._
 | [rsomics-phylo-tree](https://github.com/omics-rust/rsomics-phylo-tree) | Phylogenetic tree type + Newick parser/emitter for the rsomics-* tool family. Layer A prim |
 | [rsomics-pileup](https://github.com/omics-rust/rsomics-pileup) | Coordinate-sorted BAM pileup engine (htslib bam_plp port): per-position read columns with  |
 | [rsomics-plink-assoc](https://github.com/omics-rust/rsomics-plink-assoc) | PLINK1 case/control association test (chi-squared + trend + linear regression) |
+| [rsomics-plink-check-sex](https://github.com/omics-rust/rsomics-plink-check-sex) | PLINK1 --check-sex: per-sample X-chromosome inbreeding F + sex imputation/discrepancy on non-PAR X markers — clean-room Rust port of PLINK 1.9 (byte-identical .sexcheck, 11.4× CPU / 21.25× wall -t1) |
 | [rsomics-plink-epistasis](https://github.com/omics-rust/rsomics-plink-epistasis) | PLINK --epistasis SNP×SNP logistic-regression interaction scan (9-cell grouped-binomial IRLS → OR_INT/STAT/P) — clean-room Rust port of PLINK 1.9 (value-exact, 3.74× -t1) |
 | [rsomics-plink-flip-scan](https://github.com/omics-rust/rsomics-plink-flip-scan) | PLINK1 --flip-scan: LD-sign strand-inconsistency QC scan (per-SNP positive/negative correlation matches between cases and controls) — clean-room Rust port of PLINK 1.9 (field-exact, 1.07× SNP-heavy / 1.48× sample-heavy -t1) |
 | [rsomics-plink-freq](https://github.com/omics-rust/rsomics-plink-freq) | Per-variant allele frequencies (.frq) — Rust port of PLINK --freq (1.63× -t1, mmap+popcount) |
