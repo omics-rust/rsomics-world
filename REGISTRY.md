@@ -190,6 +190,7 @@ _Generated 2026-05-30 — 231 crates._
 | [rsomics-phylo-tree](https://github.com/omics-rust/rsomics-phylo-tree) | Phylogenetic tree type + Newick parser/emitter for the rsomics-* tool family. Layer A prim |
 | [rsomics-pileup](https://github.com/omics-rust/rsomics-pileup) | Coordinate-sorted BAM pileup engine (htslib bam_plp port): per-position read columns with  |
 | [rsomics-plink-assoc](https://github.com/omics-rust/rsomics-plink-assoc) | PLINK1 case/control association test (chi-squared + trend + linear regression) |
+| [rsomics-plink-freq](https://github.com/omics-rust/rsomics-plink-freq) | Per-variant allele frequencies (.frq) — Rust port of PLINK --freq (1.63× -t1, mmap+popcount) |
 | [rsomics-plink-het](https://github.com/omics-rust/rsomics-plink-het) | Per-sample inbreeding coefficient F (autosomes) — Rust port of PLINK --het (1.14× -t1) |
 | [rsomics-plink-io](https://github.com/omics-rust/rsomics-plink-io) | PLINK1 binary .bed/.bim/.fam reader: allele-freq, missingness, HWE, VCF/012 export |
 | [rsomics-plink-ld](https://github.com/omics-rust/rsomics-plink-ld) | Pairwise LD (r²) computation and LD matrix export from PLINK1 binary filesets |
@@ -219,6 +220,7 @@ _Generated 2026-05-30 — 231 crates._
 | [rsomics-tax-assign](https://github.com/omics-rust/rsomics-tax-assign) | Lightweight taxonomic assignment from k-mer LCA — classify reads against a reference taxon |
 | [rsomics-taxonomy](https://github.com/omics-rust/rsomics-taxonomy) | NCBI taxdump parser + LCA + lineage helpers for the rsomics-* tool family. Layer A primiti |
 | [rsomics-tin](https://github.com/omics-rust/rsomics-tin) | Transcript Integrity Number (TIN) for RNA-seq QC — Rust port of RSeQC tin.py |
+| [rsomics-tm-align](https://github.com/omics-rust/rsomics-tm-align) | Pairwise protein structural alignment + TM-score — clean-room Rust impl of TM-align (10.7× -t1) |
 | [rsomics-tpm](https://github.com/omics-rust/rsomics-tpm) | TPM, FPKM, and upper-quartile (FPKM-UQ) normalization of gene count matrices given gene lengths |
 | [rsomics-tsv-join](https://github.com/omics-rust/rsomics-tsv-join) | Join two TSV files by a shared key column — inner/left/outer join |
 | [rsomics-tsv-select](https://github.com/omics-rust/rsomics-tsv-select) | Select, reorder, or rename columns from TSV files — cut + awk for bioinformatics pipelines |
