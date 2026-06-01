@@ -226,6 +226,7 @@ _Generated 2026-05-30 — 231 crates._
 | [rsomics-rpkm-saturation](https://github.com/omics-rust/rsomics-rpkm-saturation) | Subsample-based RPKM saturation analysis — Rust reimplementation of RSeQC RPKM_saturation. |
 | [rsomics-sam-to-bam](https://github.com/omics-rust/rsomics-sam-to-bam) | Convert SAM to BAM — Rust equivalent of samtools view -bS |
 | [rsomics-sample-sheet](https://github.com/omics-rust/rsomics-sample-sheet) | Parse, validate, and convert sample sheets (Illumina/custom TSV) — check FASTQ paths, dete |
+| [rsomics-sc-combat](https://github.com/omics-rust/rsomics-sc-combat) | Per-gene ComBat empirical-Bayes batch-effect correction of a single-cell matrix — Rust port of scanpy pp.combat (value-exact, 8.09× -t1, 5.4× lower RSS) |
 | [rsomics-sc-filter](https://github.com/omics-rust/rsomics-sc-filter) | Filter cells & genes of a 10x matrix (min/max genes/counts/cells) — scanpy filter_cells/filter_genes-compatible (2.48× -t1) |
 | [rsomics-sc-hvg](https://github.com/omics-rust/rsomics-sc-hvg) | Highly-variable-gene selection (seurat flavor) from a 10x matrix — scanpy highly_variable_genes-compatible (1.78× -t1) |
 | [rsomics-sc-normalize](https://github.com/omics-rust/rsomics-sc-normalize) | Library-size normalization + log1p of a 10x single-cell matrix — scanpy normalize_total/log1p-compatible (3.06× -t1, 4× less memory) |
@@ -234,6 +235,7 @@ _Generated 2026-05-30 — 231 crates._
 | [rsomics-sc-rank-genes](https://github.com/omics-rust/rsomics-sc-rank-genes) | Per-group marker-gene ranking by Welch t-test from a single-cell matrix — Rust port of scanpy rank_genes_groups (value-exact, 13.37× -t1) |
 | [rsomics-sc-regress-out](https://github.com/omics-rust/rsomics-sc-regress-out) | Regress out per-cell covariates from a single-cell matrix via per-gene OLS residuals — Rust port of scanpy pp.regress_out (value-exact, 18.34× -t1) |
 | [rsomics-sc-scale](https://github.com/omics-rust/rsomics-sc-scale) | Per-gene z-score scaling of a single-cell matrix (zero-center, ddof=1 std, symmetric clip) — Rust port of scanpy pp.scale (value-exact, 15.78× -t1) |
+| [rsomics-sc-score-genes](https://github.com/omics-rust/rsomics-sc-score-genes) | Per-cell gene-set score (set mean − bin-matched control mean) from a single-cell matrix — Rust port of scanpy tl.score_genes, bit-exact numpy-RNG control sampling (value-exact, 3.73× -t1) |
 | [rsomics-seacr](https://github.com/omics-rust/rsomics-seacr) | CUT&RUN peak caller (bedGraph → BED peaks) — clean-room Rust port of SEACR |
 | [rsomics-seq-stats](https://github.com/omics-rust/rsomics-seq-stats) | Quick stats for any FASTA/FASTQ — count, total bp, N50, GC%, min/max/mean length |
 | [rsomics-seqio](https://github.com/omics-rust/rsomics-seqio) | Fast FASTQ reader for the rsomics-* tool family: decode-only producer thread + parallel pa |
