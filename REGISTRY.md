@@ -132,6 +132,7 @@ _Generated 2026-05-30 — 231 crates._
 | [rsomics-debruijn](https://github.com/omics-rust/rsomics-debruijn) | de Bruijn graph types + linear-path collapse + unitig extraction for the rsomics-* tool fa |
 | [rsomics-deletion-profile](https://github.com/omics-rust/rsomics-deletion-profile) | Per-base CIGAR-deletion rate along aligned reads — Rust port of RSeQC deletion_profile.py |
 | [rsomics-derep](https://github.com/omics-rust/rsomics-derep) | FASTA dereplication — port of vsearch --derep_fulllength / --derep_prefix |
+| [rsomics-deseq-estimate-dispersions](https://github.com/omics-rust/rsomics-deseq-estimate-dispersions) | DESeq2 estimateDispersions: per-gene Cox-Reid MLE → parametric trend fit → empirical-Bayes MAP shrinkage (dispGeneEst/dispFit/dispMAP) — Rust port of DESeq2 (dispMAP value-exact ~2.6e-6, 19.4× -t1, 63× lower RSS) |
 | [rsomics-deseq-fpkm](https://github.com/omics-rust/rsomics-deseq-fpkm) | DESeq2 fpkm(robust=TRUE): median-of-ratios robust-normalized FPKM of a gene count matrix given per-gene basepairs — Rust port of DESeq2 (byte-exact, 80.4× -t1) |
 | [rsomics-deseq-lfc-shrink](https://github.com/omics-rust/rsomics-deseq-lfc-shrink) | DESeq2 lfcShrink(type=normal) zero-centered normal-prior log2FC shrinkage on a Wald fit — Rust port of DESeq2 (value-exact, 26.75× -t1) |
 | [rsomics-deseq-lrt](https://github.com/omics-rust/rsomics-deseq-lrt) | DESeq2 likelihood-ratio test (full vs nested reduced design): median-of-ratios norm, MAP dispersion, NB-GLM fits, χ² LRT + BH — Rust port of DESeq2 (value-exact, 4.13× -t1) |
@@ -149,6 +150,7 @@ _Generated 2026-05-30 — 231 crates._
 | [rsomics-edger-exact-test](https://github.com/omics-rust/rsomics-edger-exact-test) | Two-group negative-binomial exact test for differential expression (logFC/logCPM/PValue/FDR) — clean-room Rust port of edgeR exactTest (logFC/logCPM byte-exact, 2.08× -t1, 15.8× lower RSS) |
 | [rsomics-edger-glm-lrt](https://github.com/omics-rust/rsomics-edger-glm-lrt) | edgeR NB-GLM fit + likelihood-ratio test of a coefficient/contrast (glmFit + glmLRT) — clean-room Rust port of edgeR (value-exact, 1.24× -t1 / 3.8× -t8) |
 | [rsomics-edger-glm-qlf](https://github.com/omics-rust/rsomics-edger-glm-qlf) | edgeR quasi-likelihood F-test for DE (glmQLFit legacy + glmQLFTest) — clean-room Rust port of edgeR (value-exact, 1.47× -t1, 3.8× lower RSS) |
+| [rsomics-edger-glm-treat](https://github.com/omics-rust/rsomics-edger-glm-treat) | edgeR glmTreat: NB-GLM test of whether log2-fold-change exceeds a threshold (count analog of limma treat) — clean-room Rust port of edgeR (value-exact among callable genes, 1.88× -t1, 24× lower RSS) |
 | [rsomics-faith-pd](https://github.com/omics-rust/rsomics-faith-pd) | Per-sample Faith's phylogenetic diversity (PD) from a feature count table + a rooted Newick tree — scikit-bio faith_pd equivalent (value-exact, 16.83× -t1) |
 | [rsomics-fasta-amplicon](https://github.com/omics-rust/rsomics-fasta-amplicon) | Extract amplicon regions from FASTA/FASTQ by primer pair (IUPAC-aware, mismatches, region/flanking, BED) — byte-exact Rust port of seqkit amplicon (1.55–2.12× -t1) |
 | [rsomics-fasta-digest](https://github.com/omics-rust/rsomics-fasta-digest) | In-silico protein digestion — trypsin/LysC/other enzymes, missed cleavages, peptide mass f |
@@ -229,6 +231,7 @@ _Generated 2026-05-30 — 231 crates._
 | [rsomics-pdb-chain](https://github.com/omics-rust/rsomics-pdb-chain) | Extract or split PDB chains — list, extract single chain, or split all into separate files |
 | [rsomics-peak-count](https://github.com/omics-rust/rsomics-peak-count) | Count BAM reads per BED peak region — ChIP-seq/ATAC-seq QC and quantification |
 | [rsomics-permanova](https://github.com/omics-rust/rsomics-permanova) | PERMANOVA pseudo-F test on a distance matrix + permutation p — Rust port of scikit-bio permanova (pseudo-F value-exact, 2.05× -t1) |
+| [rsomics-permdisp](https://github.com/omics-rust/rsomics-permdisp) | PERMDISP test of homogeneity of multivariate dispersions (centroid/spatial-median, faer PCoA + permutation p) — scikit-bio permdisp port (F value-exact ~1e-9, 2.16× median / 10.46× centroid -t1) |
 | [rsomics-pgen](https://github.com/omics-rust/rsomics-pgen) | PLINK1 .bed / .bim / .fam genotype-matrix reader + writer for the rsomics-* tool family. L |
 | [rsomics-phylo-tree](https://github.com/omics-rust/rsomics-phylo-tree) | Phylogenetic tree type + Newick parser/emitter for the rsomics-* tool family. Layer A prim |
 | [rsomics-pileup](https://github.com/omics-rust/rsomics-pileup) | Coordinate-sorted BAM pileup engine (htslib bam_plp port): per-position read columns with  |
