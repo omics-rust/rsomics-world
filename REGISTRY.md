@@ -112,11 +112,13 @@ _Generated 2026-05-30 — 231 crates._
 | [rsomics-bgzip](https://github.com/omics-rust/rsomics-bgzip) | Block-compress or decompress a file in BGZF — Rust port of htslib bgzip (2.07× compress vs libdeflate bgzip) |
 | [rsomics-bigwig-average](https://github.com/omics-rust/rsomics-bigwig-average) | Per-bin average of N bigWig files as a bedGraph track — Rust port of deepTools bigwigAverage |
 | [rsomics-bigwig-compare](https://github.com/omics-rust/rsomics-bigwig-compare) | Per-bin comparison of two bigWig files as a bedGraph track — Rust port of deeptools bigwig |
+| [rsomics-bioenv](https://github.com/omics-rust/rsomics-bioenv) | BIO-ENV/BEST: best environmental-variable subset maximizing Spearman correlation with a community distance matrix — Rust port of scikit-bio bioenv (value-exact, 3.82× -t1, 36× lower RSS) |
 | [rsomics-cell-filter](https://github.com/omics-rust/rsomics-cell-filter) | Filter cells by QC metrics — min genes, min UMIs, max mito fraction from a barcode stats T |
 | [rsomics-clipping-profile](https://github.com/omics-rust/rsomics-clipping-profile) | Per-position soft-clipping profile from a BAM — Rust port of RSeQC clipping_profile.py |
 | [rsomics-common](https://github.com/omics-rust/rsomics-common) | Shared primitives for every rsomics-* crate (errors, CLI scaffold, runner, progress, exit  |
 | [rsomics-compute-matrix](https://github.com/omics-rust/rsomics-compute-matrix) | bigWig signal → score matrix over BED regions — Rust port of deeptools computeMatrix |
 | [rsomics-consensus](https://github.com/omics-rust/rsomics-consensus) | Compute consensus sequence from a multiple sequence alignment — majority-rule or threshold |
+| [rsomics-correspondence-analysis](https://github.com/omics-rust/rsomics-correspondence-analysis) | Correspondence Analysis of a feature table (chi-square transform + SVD → eigenvalues + sample/feature scores) — Rust port of scikit-bio ca via faer (eigenvalues to ~14 digits, 3.31× -t1) |
 | [rsomics-count-matrix](https://github.com/omics-rust/rsomics-count-matrix) | Merge multiple featureCounts/htseq-count outputs into a single gene × sample count matrix |
 | [rsomics-coverage-core](https://github.com/omics-rust/rsomics-coverage-core) | Genome-binned BAM read-coverage primitive (deeptools countReadsPerBin port): per-bin read  |
 | [rsomics-cpm](https://github.com/omics-rust/rsomics-cpm) | Counts-per-million / log2-CPM normalization of a gene count matrix — edgeR cpm-compatible (5.01× -t1) |
@@ -132,6 +134,7 @@ _Generated 2026-05-30 — 231 crates._
 | [rsomics-deseq-sizefactors](https://github.com/omics-rust/rsomics-deseq-sizefactors) | DESeq2 median-of-ratios size factors per sample from a count matrix — Rust port of DESeq2 estimateSizeFactors (10.93× -t1) |
 | [rsomics-deseq-vst](https://github.com/omics-rust/rsomics-deseq-vst) | DESeq2 blind variance-stabilizing transform of a count matrix (median-of-ratios size factors → Cox-Reid parametric dispersion → closed-form VST) — Rust port of DESeq2 varianceStabilizingTransformation (value-exact, 5.81× -t1) |
 | [rsomics-dssp](https://github.com/omics-rust/rsomics-dssp) | Per-residue protein secondary-structure assignment from a PDB — Kabsch-Sander/DSSP-4 (99.96% vs mkdssp 4.5, 22× perf) |
+| [rsomics-edger-camera](https://github.com/omics-rust/rsomics-edger-camera) | limma camera competitive gene-set test with inter-gene-correlation VIF (fixed or estimated) — clean-room Rust port of limma (value-exact both modes, 22.64× -t1, 5× lower RSS) |
 | [rsomics-edger-estimate-disp](https://github.com/omics-rust/rsomics-edger-estimate-disp) | edgeR NB dispersion estimation (common/trended/tagwise) via Cox-Reid APL + weighted-likelihood empirical Bayes — clean-room Rust port of edgeR estimateDisp (value-exact, 1.77× -t1) |
 | [rsomics-edger-exact-test](https://github.com/omics-rust/rsomics-edger-exact-test) | Two-group negative-binomial exact test for differential expression (logFC/logCPM/PValue/FDR) — clean-room Rust port of edgeR exactTest (logFC/logCPM byte-exact, 2.08× -t1, 15.8× lower RSS) |
 | [rsomics-edger-glm-lrt](https://github.com/omics-rust/rsomics-edger-glm-lrt) | edgeR NB-GLM fit + likelihood-ratio test of a coefficient/contrast (glmFit + glmLRT) — clean-room Rust port of edgeR (value-exact, 1.24× -t1 / 3.8× -t8) |
