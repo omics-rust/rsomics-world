@@ -10,6 +10,7 @@ _Generated 2026-05-30 — 231 crates._
 | [rsomics-align-score](https://github.com/omics-rust/rsomics-align-score) | Pairwise sequence alignment — Needleman-Wunsch (global) or Smith-Waterman (local) |
 | [rsomics-alignment-sieve](https://github.com/omics-rust/rsomics-alignment-sieve) | Filter a BAM by mapq / fragment length / SAM flags / blacklist / duplicates — Rust port of deepTools alignmentSieve |
 | [rsomics-alpha-diversity](https://github.com/omics-rust/rsomics-alpha-diversity) | Per-sample alpha-diversity metrics (Shannon/Simpson/Chao1/ACE/Pielou…) from a feature count table — Rust port of scikit-bio diversity.alpha |
+| [rsomics-ancom](https://github.com/omics-rust/rsomics-ancom) | ANCOM differential-abundance test: per-feature W = significant log-ratio test count + percentile detection — Rust port of scikit-bio ancom (W integer-exact + decisions, 129× -t1, 49× lower RSS) |
 | [rsomics-anosim](https://github.com/omics-rust/rsomics-anosim) | ANOSIM R-statistic test on a distance matrix (tie-averaged ranks + permutation p) — Rust port of scikit-bio anosim (R value-exact, 9.58× -t1) |
 | [rsomics-atac-shift](https://github.com/omics-rust/rsomics-atac-shift) | ATAC-seq Tn5 insertion-bias shift: +4/-5 bp coordinate correction and insertion-site BED o |
 | [rsomics-avelogcpm](https://github.com/omics-rust/rsomics-avelogcpm) | Per-gene average log2-CPM via edgeR's one-group negative-binomial fit — Rust port of edgeR aveLogCPM (byte-exact, 7.60× -t1) |
@@ -196,6 +197,7 @@ _Generated 2026-05-30 — 231 crates._
 | [rsomics-liftover](https://github.com/omics-rust/rsomics-liftover) | Lift BED interval coordinates between assemblies via a UCSC chain file — Rust port of UCSC liftOver |
 | [rsomics-limma-array-weights](https://github.com/omics-rust/rsomics-limma-array-weights) | limma arrayWeights: REML per-sample quality weights from a log-expression matrix + design — clean-room Rust port of limma (matches to ~0.1%, REML prior.n residual documented; 9.35× -t1) |
 | [rsomics-limma-decide-tests](https://github.com/omics-rust/rsomics-limma-decide-tests) | limma decideTests up/down/notsig classification (separate/global BH/holm/… adjust + p-cutoff + lfc filter) — clean-room Rust port of limma (integer-exact, 21.2× -t1) |
+| [rsomics-limma-duplicate-correlation](https://github.com/omics-rust/rsomics-limma-duplicate-correlation) | limma duplicateCorrelation: REML consensus intra-block (technical-replicate) correlation — clean-room Rust port of limma (consensus value-exact, 114× -t1) |
 | [rsomics-limma-ebayes](https://github.com/omics-rust/rsomics-limma-ebayes) | Per-gene linear-model fit + empirical-Bayes moderated t-statistics (lmFit+eBayes+topTable) for a log-expression matrix — clean-room Rust port of limma (value-exact, 49.5× -t1, 10× lower RSS) |
 | [rsomics-limma-treat](https://github.com/omics-rust/rsomics-limma-treat) | Moderated t-test against a log-fold-change threshold (limma treat + topTreat) for a log-expression matrix — clean-room Rust port of limma (value-exact, 48× -t1) |
 | [rsomics-mantel](https://github.com/omics-rust/rsomics-mantel) | Mantel test (pearson/spearman) between two distance matrices + permutation p — Rust port of scikit-bio mantel (r value-exact, 1.24× -t1) |
@@ -218,6 +220,7 @@ _Generated 2026-05-30 — 231 crates._
 | [rsomics-plink-assoc](https://github.com/omics-rust/rsomics-plink-assoc) | PLINK1 case/control association test (chi-squared + trend + linear regression) |
 | [rsomics-plink-freq](https://github.com/omics-rust/rsomics-plink-freq) | Per-variant allele frequencies (.frq) — Rust port of PLINK --freq (1.63× -t1, mmap+popcount) |
 | [rsomics-plink-freqx](https://github.com/omics-rust/rsomics-plink-freqx) | Per-variant genotype-class counts (.frqx) — Rust port of PLINK --freqx (1.14× -t1, byte-exact, SWAR popcount) |
+| [rsomics-plink-grm](https://github.com/omics-rust/rsomics-plink-grm) | GCTA standardized-genotype Genetic Relationship Matrix from PLINK genotypes (blocked faer GEMM + AND-popcount denom) — Rust port of plink2 --make-rel (byte-identical, 1.38× -t1) |
 | [rsomics-plink-het](https://github.com/omics-rust/rsomics-plink-het) | Per-sample inbreeding coefficient F (autosomes) — Rust port of PLINK --het (1.14× -t1) |
 | [rsomics-plink-homozyg](https://github.com/omics-rust/rsomics-plink-homozyg) | Runs of homozygosity (.hom) — Rust port of PLINK --homozyg (field-exact, 1.26× -t1) |
 | [rsomics-plink-ibc](https://github.com/omics-rust/rsomics-plink-ibc) | Per-sample inbreeding F-hat estimators (Fhat1/2/3) — Rust port of PLINK --ibc (2.09× -t1) |
