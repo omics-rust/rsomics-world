@@ -191,6 +191,7 @@ _Generated 2026-05-30 — 231 crates._
 | [rsomics-pileup](https://github.com/omics-rust/rsomics-pileup) | Coordinate-sorted BAM pileup engine (htslib bam_plp port): per-position read columns with  |
 | [rsomics-plink-assoc](https://github.com/omics-rust/rsomics-plink-assoc) | PLINK1 case/control association test (chi-squared + trend + linear regression) |
 | [rsomics-plink-freq](https://github.com/omics-rust/rsomics-plink-freq) | Per-variant allele frequencies (.frq) — Rust port of PLINK --freq (1.63× -t1, mmap+popcount) |
+| [rsomics-plink-freqx](https://github.com/omics-rust/rsomics-plink-freqx) | Per-variant genotype-class counts (.frqx) — Rust port of PLINK --freqx (1.14× -t1, byte-exact, SWAR popcount) |
 | [rsomics-plink-het](https://github.com/omics-rust/rsomics-plink-het) | Per-sample inbreeding coefficient F (autosomes) — Rust port of PLINK --het (1.14× -t1) |
 | [rsomics-plink-ibc](https://github.com/omics-rust/rsomics-plink-ibc) | Per-sample inbreeding F-hat estimators (Fhat1/2/3) — Rust port of PLINK --ibc (2.09× -t1) |
 | [rsomics-plink-io](https://github.com/omics-rust/rsomics-plink-io) | PLINK1 binary .bed/.bim/.fam reader: allele-freq, missingness, HWE, VCF/012 export |
