@@ -121,6 +121,7 @@ _Generated 2026-05-30 — 231 crates._
 | [rsomics-deletion-profile](https://github.com/omics-rust/rsomics-deletion-profile) | Per-base CIGAR-deletion rate along aligned reads — Rust port of RSeQC deletion_profile.py |
 | [rsomics-derep](https://github.com/omics-rust/rsomics-derep) | FASTA dereplication — port of vsearch --derep_fulllength / --derep_prefix |
 | [rsomics-deseq-prep](https://github.com/omics-rust/rsomics-deseq-prep) | Filter low-count genes and normalize a count matrix for differential expression — pre-DESe |
+| [rsomics-dssp](https://github.com/omics-rust/rsomics-dssp) | Per-residue protein secondary-structure assignment from a PDB — Kabsch-Sander/DSSP-4 (99.96% vs mkdssp 4.5, 22× perf) |
 | [rsomics-fasta-digest](https://github.com/omics-rust/rsomics-fasta-digest) | In-silico protein digestion — trypsin/LysC/other enzymes, missed cleavages, peptide mass f |
 | [rsomics-fasta-index](https://github.com/omics-rust/rsomics-fasta-index) | FASTA index (.fai) creation, random-access fetch, and sequence dictionary — Rust port of s |
 | [rsomics-fasta-locate](https://github.com/omics-rust/rsomics-fasta-locate) | Locate subsequences/motifs in FASTA files — seqkit locate port |
@@ -210,6 +211,7 @@ _Generated 2026-05-30 — 231 crates._
 | [rsomics-seqio](https://github.com/omics-rust/rsomics-seqio) | Fast FASTQ reader for the rsomics-* tool family: decode-only producer thread + parallel pa |
 | [rsomics-seqstats](https://github.com/omics-rust/rsomics-seqstats) | Format-agnostic sequence statistics primitives (length distribution: N50/L50/Nx + quartile |
 | [rsomics-stats](https://github.com/omics-rust/rsomics-stats) | Statistical tests, FDR control, p-value combination for the rsomics-* tool family. Layer A |
+| [rsomics-tabix](https://github.com/omics-rust/rsomics-tabix) | Coordinate index (.tbi/.csi) for bgzipped position-sorted files + region query — Rust port of htslib tabix (byte-identical index, 1.10× build / 1.49× query) |
 | [rsomics-tajima-d](https://github.com/omics-rust/rsomics-tajima-d) | Compute Tajima's D from a site frequency spectrum (derived allele counts) |
 | [rsomics-tax-assign](https://github.com/omics-rust/rsomics-tax-assign) | Lightweight taxonomic assignment from k-mer LCA — classify reads against a reference taxon |
 | [rsomics-taxonomy](https://github.com/omics-rust/rsomics-taxonomy) | NCBI taxdump parser + LCA + lineage helpers for the rsomics-* tool family. Layer A primiti |
@@ -217,6 +219,7 @@ _Generated 2026-05-30 — 231 crates._
 | [rsomics-tpm](https://github.com/omics-rust/rsomics-tpm) | TPM and FPKM normalization of gene count matrices given gene lengths |
 | [rsomics-tsv-join](https://github.com/omics-rust/rsomics-tsv-join) | Join two TSV files by a shared key column — inner/left/outer join |
 | [rsomics-tsv-select](https://github.com/omics-rust/rsomics-tsv-select) | Select, reorder, or rename columns from TSV files — cut + awk for bioinformatics pipelines |
+| [rsomics-tsv-stats](https://github.com/omics-rust/rsomics-tsv-stats) | Per-column and grouped summary statistics of delimited files — GNU datamash-compatible (1.48-2.10× -t1) |
 | [rsomics-vcf-annotate](https://github.com/omics-rust/rsomics-vcf-annotate) | Annotate VCF variants with labels from a BED/TSV file |
 | [rsomics-vcf-call](https://github.com/omics-rust/rsomics-vcf-call) | Bayesian SNP/indel calling from mpileup likelihoods — Rust port of bcftools call -c |
 | [rsomics-vcf-cnv](https://github.com/omics-rust/rsomics-vcf-cnv) | HMM-based CNV caller from BAF + LRR in a single-sample VCF — Rust port of bcftools cnv |
