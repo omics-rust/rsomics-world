@@ -249,7 +249,7 @@ _Generated 2026-05-30 — 231 crates._
 | [rsomics-plink-io](https://github.com/omics-rust/rsomics-plink-io) | PLINK1 binary .bed/.bim/.fam reader: allele-freq, missingness, HWE, VCF/012 export |
 | [rsomics-plink-ld](https://github.com/omics-rust/rsomics-plink-ld) | Pairwise LD (r²) computation and LD matrix export from PLINK1 binary filesets |
 | [rsomics-plink-missing](https://github.com/omics-rust/rsomics-plink-missing) | Per-sample (.imiss) and per-variant (.lmiss) genotype missingness — Rust port of PLINK --missing (1.28× CPU -t1 / 2.13× -t8) |
-| [rsomics-plink-model](https://github.com/omics-rust/rsomics-plink-model) | Per-variant genotypic association — GENO/ALLELIC/DOM/REC/TREND — Rust port of PLINK --model (byte-exact, 1.05× -t1) |
+| [rsomics-plink-model](https://github.com/omics-rust/rsomics-plink-model) | Per-variant genotypic association — GENO/ALLELIC/DOM/REC/TREND — Rust port of PLINK --model (byte-identical; perf 0.96× -t1, output-bound near-miss, optimization pending #142) |
 | [rsomics-plink-pca](https://github.com/omics-rust/rsomics-plink-pca) | PCA and GRM computation from PLINK1 binary filesets using faer EVD |
 | [rsomics-plink-prune](https://github.com/omics-rust/rsomics-plink-prune) | LD pruning from PLINK1 binary filesets (--indep-pairwise) |
 | [rsomics-plink-recode](https://github.com/omics-rust/rsomics-plink-recode) | Additive 0/1/2 genotype-dosage matrix (.raw) — Rust port of PLINK --recode A (byte-exact, 1.36× -t1) |
