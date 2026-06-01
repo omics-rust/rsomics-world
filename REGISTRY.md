@@ -192,6 +192,7 @@ _Generated 2026-05-30 — 231 crates._
 | [rsomics-plink-assoc](https://github.com/omics-rust/rsomics-plink-assoc) | PLINK1 case/control association test (chi-squared + trend + linear regression) |
 | [rsomics-plink-freq](https://github.com/omics-rust/rsomics-plink-freq) | Per-variant allele frequencies (.frq) — Rust port of PLINK --freq (1.63× -t1, mmap+popcount) |
 | [rsomics-plink-het](https://github.com/omics-rust/rsomics-plink-het) | Per-sample inbreeding coefficient F (autosomes) — Rust port of PLINK --het (1.14× -t1) |
+| [rsomics-plink-ibc](https://github.com/omics-rust/rsomics-plink-ibc) | Per-sample inbreeding F-hat estimators (Fhat1/2/3) — Rust port of PLINK --ibc (2.09× -t1) |
 | [rsomics-plink-io](https://github.com/omics-rust/rsomics-plink-io) | PLINK1 binary .bed/.bim/.fam reader: allele-freq, missingness, HWE, VCF/012 export |
 | [rsomics-plink-ld](https://github.com/omics-rust/rsomics-plink-ld) | Pairwise LD (r²) computation and LD matrix export from PLINK1 binary filesets |
 | [rsomics-plink-missing](https://github.com/omics-rust/rsomics-plink-missing) | Per-sample (.imiss) and per-variant (.lmiss) genotype missingness — Rust port of PLINK --missing (1.28× CPU -t1 / 2.13× -t8) |
