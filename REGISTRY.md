@@ -230,6 +230,7 @@ _Generated 2026-05-30 — 231 crates._
 | [rsomics-models](https://github.com/omics-rust/rsomics-models) | Pinned DL-model registry + per-OS cache + sha256-verify for the rsomics-* tool family. Lay |
 | [rsomics-motif-scan](https://github.com/omics-rust/rsomics-motif-scan) | Scan FASTA sequences for IUPAC DNA motif occurrences — BED output of match positions |
 | [rsomics-msa-trim](https://github.com/omics-rust/rsomics-msa-trim) | Trim MSA columns by gap fraction — Rust replacement for trimAl -gt |
+| [rsomics-multi-replace](https://github.com/omics-rust/rsomics-multi-replace) | Multiplicative zero-replacement of a compositional table (small δ for zeros, rest rescaled to preserve closure) — scikit-bio multiplicative_replacement port (value-exact, 5.95× -t1) |
 | [rsomics-multibam-summary](https://github.com/omics-rust/rsomics-multibam-summary) | Multi-BAM per-bin / per-region read-count matrix — Rust port of deeptools multiBamSummary |
 | [rsomics-multibigwig-summary](https://github.com/omics-rust/rsomics-multibigwig-summary) | Multi-bigWig per-bin / per-region mean-signal matrix — Rust port of deeptools multiBigwigS |
 | [rsomics-nj-tree](https://github.com/omics-rust/rsomics-nj-tree) | Neighbor-joining tree construction from a distance matrix — outputs Newick |
