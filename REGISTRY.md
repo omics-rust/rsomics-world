@@ -136,6 +136,7 @@ _Generated 2026-05-30 — 231 crates._
 | [rsomics-derep](https://github.com/omics-rust/rsomics-derep) | FASTA dereplication — port of vsearch --derep_fulllength / --derep_prefix |
 | [rsomics-deseq-estimate-dispersions](https://github.com/omics-rust/rsomics-deseq-estimate-dispersions) | DESeq2 estimateDispersions: per-gene Cox-Reid MLE → parametric trend fit → empirical-Bayes MAP shrinkage (dispGeneEst/dispFit/dispMAP) — Rust port of DESeq2 (dispMAP value-exact ~2.6e-6, 19.4× -t1, 63× lower RSS) |
 | [rsomics-deseq-fpkm](https://github.com/omics-rust/rsomics-deseq-fpkm) | DESeq2 fpkm(robust=TRUE): median-of-ratios robust-normalized FPKM of a gene count matrix given per-gene basepairs — Rust port of DESeq2 (byte-exact, 80.4× -t1) |
+| [rsomics-deseq-fpm](https://github.com/omics-rust/rsomics-deseq-fpm) | DESeq2 fpm(): median-of-ratios fragments-per-million normalization of a count matrix — Rust port of DESeq2 (value-exact, 112× -t1 incl. R-load floor) |
 | [rsomics-deseq-lfc-shrink](https://github.com/omics-rust/rsomics-deseq-lfc-shrink) | DESeq2 lfcShrink(type=normal) zero-centered normal-prior log2FC shrinkage on a Wald fit — Rust port of DESeq2 (value-exact, 26.75× -t1) |
 | [rsomics-deseq-lrt](https://github.com/omics-rust/rsomics-deseq-lrt) | DESeq2 likelihood-ratio test (full vs nested reduced design): median-of-ratios norm, MAP dispersion, NB-GLM fits, χ² LRT + BH — Rust port of DESeq2 (value-exact, 4.13× -t1) |
 | [rsomics-deseq-norm-transform](https://github.com/omics-rust/rsomics-deseq-norm-transform) | DESeq2 normTransform: median-of-ratios size factors then log2(count/sf + 1) — Rust port of DESeq2 (byte-identical, 132× end-to-end / 54× compute) |
@@ -234,6 +235,7 @@ _Generated 2026-05-30 — 231 crates._
 | [rsomics-multibam-summary](https://github.com/omics-rust/rsomics-multibam-summary) | Multi-BAM per-bin / per-region read-count matrix — Rust port of deeptools multiBamSummary |
 | [rsomics-multibigwig-summary](https://github.com/omics-rust/rsomics-multibigwig-summary) | Multi-bigWig per-bin / per-region mean-signal matrix — Rust port of deeptools multiBigwigS |
 | [rsomics-nj-tree](https://github.com/omics-rust/rsomics-nj-tree) | Neighbor-joining tree construction from a distance matrix — outputs Newick |
+| [rsomics-pca](https://github.com/omics-rust/rsomics-pca) | Principal Component Analysis ordination of a sample×feature matrix (covariance eigendecomposition, OrdinationResults) — scikit-bio pca port (eigenvalues value-exact, scores sign-aligned, 3.45× -t1, faer) |
 | [rsomics-pcoa](https://github.com/omics-rust/rsomics-pcoa) | Principal Coordinates Analysis (PCoA) of a distance matrix — scikit-bio-compatible Rust port (2.75× -t1, faer eigh) |
 | [rsomics-pdb-chain](https://github.com/omics-rust/rsomics-pdb-chain) | Extract or split PDB chains — list, extract single chain, or split all into separate files |
 | [rsomics-peak-count](https://github.com/omics-rust/rsomics-peak-count) | Count BAM reads per BED peak region — ChIP-seq/ATAC-seq QC and quantification |
@@ -282,9 +284,12 @@ _Generated 2026-05-30 — 231 crates._
 | [rsomics-sample-sheet](https://github.com/omics-rust/rsomics-sample-sheet) | Parse, validate, and convert sample sheets (Illumina/custom TSV) — check FASTQ paths, dete |
 | [rsomics-sc-cell-cycle](https://github.com/omics-rust/rsomics-sc-cell-cycle) | Cell-cycle phase scoring (S/G2M scores + phase call) of a single-cell matrix — scanpy score_genes_cell_cycle-compatible, bit-identical (2.97× CPU -t1) |
 | [rsomics-sc-combat](https://github.com/omics-rust/rsomics-sc-combat) | Per-gene ComBat empirical-Bayes batch-effect correction of a single-cell matrix — Rust port of scanpy pp.combat (value-exact, 8.09× -t1, 5.4× lower RSS) |
+| [rsomics-sc-dendrogram](https://github.com/omics-rust/rsomics-sc-dendrogram) | Hierarchical clustering dendrogram of single-cell groups (group-mean correlation → linkage) — scanpy tl.dendrogram-compatible (value-exact, 5.09× -t1) |
 | [rsomics-sc-downsample](https://github.com/omics-rust/rsomics-sc-downsample) | Downsample a single-cell count matrix so each cell has at most N counts (without replacement) — scanpy pp.downsample_counts-compatible, integer-exact via bit-exact numba MT19937 RNG (2.45× -t1, 5.6× less memory) |
 | [rsomics-sc-filter](https://github.com/omics-rust/rsomics-sc-filter) | Filter cells & genes of a 10x matrix (min/max genes/counts/cells) — scanpy filter_cells/filter_genes-compatible (2.48× -t1) |
+| [rsomics-sc-filter-rank-genes](https://github.com/omics-rust/rsomics-sc-filter-rank-genes) | Filter ranked marker genes by fold-change / fraction / expression thresholds — scanpy filter_rank_genes_groups-compatible (byte-identical, 2.46× -t1) |
 | [rsomics-sc-hvg](https://github.com/omics-rust/rsomics-sc-hvg) | Highly-variable-gene selection (seurat flavor) from a 10x matrix — scanpy highly_variable_genes-compatible (1.78× -t1) |
+| [rsomics-sc-hvg-cellranger](https://github.com/omics-rust/rsomics-sc-hvg-cellranger) | Highly-variable-gene selection (cell_ranger flavor: dispersion-binned z-score) from a 10x matrix — scanpy highly_variable_genes-compatible (value-exact, 1.78× -t1) |
 | [rsomics-sc-marker-overlap](https://github.com/omics-rust/rsomics-sc-marker-overlap) | Overlap of per-cluster ranked marker genes against a reference marker-set panel → reference×cluster matrix — scanpy marker-genes-compatible |
 | [rsomics-sc-normalize](https://github.com/omics-rust/rsomics-sc-normalize) | Library-size normalization + log1p of a 10x single-cell matrix — scanpy normalize_total/log1p-compatible (3.06× -t1, 4× less memory) |
 | [rsomics-sc-pseudobulk](https://github.com/omics-rust/rsomics-sc-pseudobulk) | Pseudobulk aggregation (sum/mean counts per group) of a 10x matrix — scanpy get.aggregate-compatible (2.41× -t1) |
@@ -307,6 +312,9 @@ _Generated 2026-05-30 — 231 crates._
 | [rsomics-tm-align](https://github.com/omics-rust/rsomics-tm-align) | Pairwise protein structural alignment + TM-score — clean-room Rust impl of TM-align (10.7× -t1) |
 | [rsomics-tmm-norm](https://github.com/omics-rust/rsomics-tmm-norm) | TMM (trimmed mean of M-values) per-sample normalization factors — Rust port of edgeR calcNormFactors(method=TMM) (6.04× -t1) |
 | [rsomics-tpm](https://github.com/omics-rust/rsomics-tpm) | TPM, FPKM, and upper-quartile (FPKM-UQ) normalization of gene count matrices given gene lengths |
+| [rsomics-tree-rfd](https://github.com/omics-rust/rsomics-tree-rfd) | Robinson-Foulds topological distance between two phylogenetic trees (symmetric bipartition difference) — scikit-bio TreeNode.compare_rfd port (value-exact, 8.22× -t1, 3.9× lower RSS) |
+| [rsomics-tree-tipdist](https://github.com/omics-rust/rsomics-tree-tipdist) | Patristic tip-to-tip distance matrix (summed branch lengths) from a phylogenetic tree — scikit-bio TreeNode.tip_tip_distances port (value-exact, 5.57× -t1) |
+| [rsomics-tree-wrfd](https://github.com/omics-rust/rsomics-tree-wrfd) | Weighted Robinson-Foulds + bipartition/subset comparison between two phylogenetic trees — scikit-bio TreeNode port (value-exact, 42.85× -t1) |
 | [rsomics-tsv-crosstab](https://github.com/omics-rust/rsomics-tsv-crosstab) | Cross-tabulation (long→wide pivot) of a TSV — GNU datamash crosstab-compatible (byte-exact, 1.81× -t1) |
 | [rsomics-tsv-join](https://github.com/omics-rust/rsomics-tsv-join) | Join two TSV files by a shared key column — inner/left/outer join |
 | [rsomics-tsv-select](https://github.com/omics-rust/rsomics-tsv-select) | Select, reorder, or rename columns from TSV files — cut + awk for bioinformatics pipelines |
