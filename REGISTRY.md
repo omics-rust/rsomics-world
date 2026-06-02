@@ -6,10 +6,12 @@ _Generated 2026-05-30 — 231 crates._
 
 | crate | description |
 |---|---|
+| [rsomics-aitchison-ops](https://github.com/omics-rust/rsomics-aitchison-ops) | Aitchison-simplex algebra (closure / centralize / perturb / power) on compositional data — scikit-bio CoDA port (value-exact, 7.08× -t1) |
 | [rsomics-align-core](https://github.com/omics-rust/rsomics-align-core) | Pairwise sequence alignment kernels (Smith-Waterman + Needleman-Wunsch, affine gap) for th |
 | [rsomics-align-score](https://github.com/omics-rust/rsomics-align-score) | Pairwise sequence alignment — Needleman-Wunsch (global) or Smith-Waterman (local) |
 | [rsomics-alignment-sieve](https://github.com/omics-rust/rsomics-alignment-sieve) | Filter a BAM by mapq / fragment length / SAM flags / blacklist / duplicates — Rust port of deepTools alignmentSieve |
 | [rsomics-alpha-diversity](https://github.com/omics-rust/rsomics-alpha-diversity) | Per-sample alpha-diversity metrics (Shannon/Simpson/Chao1/ACE/Pielou…) from a feature count table — Rust port of scikit-bio diversity.alpha |
+| [rsomics-alr](https://github.com/omics-rust/rsomics-alr) | Additive log-ratio (ALR) transform of a compositional table — scikit-bio alr port (byte-exact, 5.3× CPU / 7.5× wall) |
 | [rsomics-ancom](https://github.com/omics-rust/rsomics-ancom) | ANCOM differential-abundance test: per-feature W = significant log-ratio test count + percentile detection — Rust port of scikit-bio ancom (W integer-exact + decisions, 129× -t1, 49× lower RSS) |
 | [rsomics-anosim](https://github.com/omics-rust/rsomics-anosim) | ANOSIM R-statistic test on a distance matrix (tie-averaged ranks + permutation p) — Rust port of scikit-bio anosim (R value-exact, 9.58× -t1) |
 | [rsomics-atac-shift](https://github.com/omics-rust/rsomics-atac-shift) | ATAC-seq Tn5 insertion-bias shift: +4/-5 bp coordinate correction and insertion-site BED o |
@@ -151,6 +153,7 @@ _Generated 2026-05-30 — 231 crates._
 | [rsomics-edger-glm-lrt](https://github.com/omics-rust/rsomics-edger-glm-lrt) | edgeR NB-GLM fit + likelihood-ratio test of a coefficient/contrast (glmFit + glmLRT) — clean-room Rust port of edgeR (value-exact, 1.24× -t1 / 3.8× -t8) |
 | [rsomics-edger-glm-qlf](https://github.com/omics-rust/rsomics-edger-glm-qlf) | edgeR quasi-likelihood F-test for DE (glmQLFit legacy + glmQLFTest) — clean-room Rust port of edgeR (value-exact, 1.47× -t1, 3.8× lower RSS) |
 | [rsomics-edger-glm-treat](https://github.com/omics-rust/rsomics-edger-glm-treat) | edgeR glmTreat: NB-GLM test of whether log2-fold-change exceeds a threshold (count analog of limma treat) — clean-room Rust port of edgeR (value-exact among callable genes, 1.88× -t1, 24× lower RSS) |
+| [rsomics-edger-goodturing](https://github.com/omics-rust/rsomics-edger-goodturing) | Good-Turing proportion estimation per library (edgeR goodTuringProportions) — clean-room Rust port of edgeR (value-exact ~5e-11, 5.34× -t1) |
 | [rsomics-faith-pd](https://github.com/omics-rust/rsomics-faith-pd) | Per-sample Faith's phylogenetic diversity (PD) from a feature count table + a rooted Newick tree — scikit-bio faith_pd equivalent (value-exact, 16.83× -t1) |
 | [rsomics-fasta-amplicon](https://github.com/omics-rust/rsomics-fasta-amplicon) | Extract amplicon regions from FASTA/FASTQ by primer pair (IUPAC-aware, mismatches, region/flanking, BED) — byte-exact Rust port of seqkit amplicon (1.55–2.12× -t1) |
 | [rsomics-fasta-digest](https://github.com/omics-rust/rsomics-fasta-digest) | In-silico protein digestion — trypsin/LysC/other enzymes, missed cleavages, peptide mass f |
@@ -200,6 +203,7 @@ _Generated 2026-05-30 — 231 crates._
 | [rsomics-hommola](https://github.com/omics-rust/rsomics-hommola) | Hommola et al. host–parasite cospeciation test (correlation of host vs parasite distances over interactions + permutation p) — scikit-bio port (statistic value-exact, 7.51× -t1) |
 | [rsomics-igzip](https://github.com/omics-rust/rsomics-igzip) | Minimal Quadrant-② FFI wrapper over Intel ISA-L igzip for fast gzip decompression. Isolate |
 | [rsomics-ilr](https://github.com/omics-rust/rsomics-ilr) | Isometric log-ratio (ILR) compositional transform via the default Gram-Schmidt SBP basis (O(D) prefix-sum) — Rust port of scikit-bio ilr (value-exact 1e-9, 12.2× -t1) |
+| [rsomics-ilr-basis](https://github.com/omics-rust/rsomics-ilr-basis) | Isometric log-ratio (ILR) transform with a user-supplied SBP/tree contrast basis — scikit-bio ilr(basis=) port (value-exact, 5.20× -t1) |
 | [rsomics-infercnv](https://github.com/omics-rust/rsomics-infercnv) | Infer copy-number variations from single-cell RNA-seq expression — Rust port of inferCNV |
 | [rsomics-inner-distance](https://github.com/omics-rust/rsomics-inner-distance) | mRNA-aware inner-distance distribution for paired-end RNA-seq — Rust port of RSeQC inner_d |
 | [rsomics-insertion-profile](https://github.com/omics-rust/rsomics-insertion-profile) | Per-position CIGAR-insertion rate along the read — Rust port of RSeQC insertion_profile.py |
@@ -216,6 +220,7 @@ _Generated 2026-05-30 — 231 crates._
 | [rsomics-limma-diff-splice](https://github.com/omics-rust/rsomics-limma-diff-splice) | limma diffSplice/topSplice differential exon usage (per-exon moderated-t + gene-level Simes/F) — clean-room Rust port of limma legacy=TRUE (value-exact 1e-9, 11.06× -t1) |
 | [rsomics-limma-duplicate-correlation](https://github.com/omics-rust/rsomics-limma-duplicate-correlation) | limma duplicateCorrelation: REML consensus intra-block (technical-replicate) correlation — clean-room Rust port of limma (consensus value-exact, 114× -t1) |
 | [rsomics-limma-ebayes](https://github.com/omics-rust/rsomics-limma-ebayes) | Per-gene linear-model fit + empirical-Bayes moderated t-statistics (lmFit+eBayes+topTable) for a log-expression matrix — clean-room Rust port of limma (value-exact, 49.5× -t1, 10× lower RSS) |
+| [rsomics-limma-proptruenull](https://github.com/omics-rust/rsomics-limma-proptruenull) | Proportion of true null hypotheses from a p-value vector (limma propTrueNull/convest) — clean-room Rust port of limma (value-exact, 20.3× -t1) |
 | [rsomics-limma-treat](https://github.com/omics-rust/rsomics-limma-treat) | Moderated t-test against a log-fold-change threshold (limma treat + topTreat) for a log-expression matrix — clean-room Rust port of limma (value-exact, 48× -t1) |
 | [rsomics-limma-vooma](https://github.com/omics-rust/rsomics-limma-vooma) | limma vooma mean-variance precision weights for log-expression (lowess trend → 1/SD^4) — clean-room Rust port of limma (value-exact 4e-10, 18.97× -t1) |
 | [rsomics-mantel](https://github.com/omics-rust/rsomics-mantel) | Mantel test (pearson/spearman) between two distance matrices + permutation p — Rust port of scikit-bio mantel (r value-exact, 1.24× -t1) |
