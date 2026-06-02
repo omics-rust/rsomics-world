@@ -157,6 +157,7 @@ _Generated 2026-05-30 — 231 crates._
 | [rsomics-edger-glm-treat](https://github.com/omics-rust/rsomics-edger-glm-treat) | edgeR glmTreat: NB-GLM test of whether log2-fold-change exceeds a threshold (count analog of limma treat) — clean-room Rust port of edgeR (value-exact among callable genes, 1.88× -t1, 24× lower RSS) |
 | [rsomics-edger-goodturing](https://github.com/omics-rust/rsomics-edger-goodturing) | Good-Turing proportion estimation per library (edgeR goodTuringProportions) — clean-room Rust port of edgeR (value-exact ~5e-11, 5.34× -t1) |
 | [rsomics-edger-predfc](https://github.com/omics-rust/rsomics-edger-predfc) | edgeR predFC predictive log-fold-changes with prior counts (NB-GLM with damped offset) — clean-room Rust port of edgeR (value-exact 5e-7, 2.63× -t1) |
+| [rsomics-edger-rpkm](https://github.com/omics-rust/rsomics-edger-rpkm) | edgeR rpkm() + rpkmByGroup() — RPKM (reads per kilobase per million) from a counts matrix + gene lengths — clean-room Rust port of edgeR (value-exact, 41.6× -t1 CPU, 12.7× lower RSS) |
 | [rsomics-faith-pd](https://github.com/omics-rust/rsomics-faith-pd) | Per-sample Faith's phylogenetic diversity (PD) from a feature count table + a rooted Newick tree — scikit-bio faith_pd equivalent (value-exact, 16.83× -t1) |
 | [rsomics-fasta-amplicon](https://github.com/omics-rust/rsomics-fasta-amplicon) | Extract amplicon regions from FASTA/FASTQ by primer pair (IUPAC-aware, mismatches, region/flanking, BED) — byte-exact Rust port of seqkit amplicon (1.55–2.12× -t1) |
 | [rsomics-fasta-digest](https://github.com/omics-rust/rsomics-fasta-digest) | In-silico protein digestion — trypsin/LysC/other enzymes, missed cleavages, peptide mass f |
@@ -200,6 +201,7 @@ _Generated 2026-05-30 — 231 crates._
 | [rsomics-gc-windows](https://github.com/omics-rust/rsomics-gc-windows) | Compute per-window GC content across a FASTA reference — BED output for CNV/WGS normalizat |
 | [rsomics-genebody-coverage](https://github.com/omics-rust/rsomics-genebody-coverage) | Gene-body coverage profile (5'→3') for RNA-seq bias QC — Rust port of RSeQC geneBody_cover |
 | [rsomics-gff-utils](https://github.com/omics-rust/rsomics-gff-utils) | GFF/GTF utility toolkit — count, filter, extract, sort, convert, and stats operations |
+| [rsomics-gradient-trajectory](https://github.com/omics-rust/rsomics-gradient-trajectory) | scikit-bio gradient analysis (GradientANOVA / Trajectory over an ordination + categorical gradient) — Rust port of scikit-bio (value-exact, 12.47× -t1 CPU, 6.4× lower RSS) |
 | [rsomics-help](https://github.com/omics-rust/rsomics-help) | Family-wide `--help` renderer for rsomics-* CLIs: figlet banner with gradient, section hel |
 | [rsomics-hmm](https://github.com/omics-rust/rsomics-hmm) | Hidden Markov Model inference (Viterbi / forward / backward) for the rsomics-* tool family |
 | [rsomics-hmm-decode](https://github.com/omics-rust/rsomics-hmm-decode) | Viterbi-decode observation sequences with a discrete HMM — chromatin state, gene finding,  |
@@ -241,6 +243,7 @@ _Generated 2026-05-30 — 231 crates._
 | [rsomics-pca](https://github.com/omics-rust/rsomics-pca) | Principal Component Analysis ordination of a sample×feature matrix (covariance eigendecomposition, OrdinationResults) — scikit-bio pca port (eigenvalues value-exact, scores sign-aligned, 3.45× -t1, faer) |
 | [rsomics-pcoa](https://github.com/omics-rust/rsomics-pcoa) | Principal Coordinates Analysis (PCoA) of a distance matrix — scikit-bio-compatible Rust port (2.75× -t1, faer eigh) |
 | [rsomics-pdb-chain](https://github.com/omics-rust/rsomics-pdb-chain) | Extract or split PDB chains — list, extract single chain, or split all into separate files |
+| [rsomics-pdb-dihedrals](https://github.com/omics-rust/rsomics-pdb-dihedrals) | Per-residue protein backbone (φ/ψ/ω) + sidechain (χ1–χ5) torsion angles from a PDB — biopython-compatible (value-exact 2e-4°, 49.9× -t1 CPU, 6.4× lower RSS) |
 | [rsomics-peak-count](https://github.com/omics-rust/rsomics-peak-count) | Count BAM reads per BED peak region — ChIP-seq/ATAC-seq QC and quantification |
 | [rsomics-permanova](https://github.com/omics-rust/rsomics-permanova) | PERMANOVA pseudo-F test on a distance matrix + permutation p — Rust port of scikit-bio permanova (pseudo-F value-exact, 2.05× -t1) |
 | [rsomics-permdisp](https://github.com/omics-rust/rsomics-permdisp) | PERMDISP test of homogeneity of multivariate dispersions (centroid/spatial-median, faer PCoA + permutation p) — scikit-bio permdisp port (F value-exact ~1e-9, 2.16× median / 10.46× centroid -t1) |
@@ -290,6 +293,7 @@ _Generated 2026-05-30 — 231 crates._
 | [rsomics-sc-combat](https://github.com/omics-rust/rsomics-sc-combat) | Per-gene ComBat empirical-Bayes batch-effect correction of a single-cell matrix — Rust port of scanpy pp.combat (value-exact, 8.09× -t1, 5.4× lower RSS) |
 | [rsomics-sc-dendrogram](https://github.com/omics-rust/rsomics-sc-dendrogram) | Hierarchical clustering dendrogram of single-cell groups (group-mean correlation → linkage) — scanpy tl.dendrogram-compatible (value-exact, 5.09× -t1) |
 | [rsomics-sc-downsample](https://github.com/omics-rust/rsomics-sc-downsample) | Downsample a single-cell count matrix so each cell has at most N counts (without replacement) — scanpy pp.downsample_counts-compatible, integer-exact via bit-exact numba MT19937 RNG (2.45× -t1, 5.6× less memory) |
+| [rsomics-sc-embedding-density](https://github.com/omics-rust/rsomics-sc-embedding-density) | Per-cell Gaussian-KDE density over a 2-D embedding (per group) — scanpy tl.embedding_density-compatible (value-exact, 12.4–20× -t1 CPU, 91× lower RSS) |
 | [rsomics-sc-filter](https://github.com/omics-rust/rsomics-sc-filter) | Filter cells & genes of a 10x matrix (min/max genes/counts/cells) — scanpy filter_cells/filter_genes-compatible (2.48× -t1) |
 | [rsomics-sc-filter-rank-genes](https://github.com/omics-rust/rsomics-sc-filter-rank-genes) | Filter ranked marker genes by fold-change / fraction / expression thresholds — scanpy filter_rank_genes_groups-compatible (byte-identical, 2.46× -t1) |
 | [rsomics-sc-hvg](https://github.com/omics-rust/rsomics-sc-hvg) | Highly-variable-gene selection (seurat flavor) from a 10x matrix — scanpy highly_variable_genes-compatible (1.78× -t1) |
@@ -308,6 +312,7 @@ _Generated 2026-05-30 — 231 crates._
 | [rsomics-seqio](https://github.com/omics-rust/rsomics-seqio) | Fast FASTQ reader for the rsomics-* tool family: decode-only producer thread + parallel pa |
 | [rsomics-seqstats](https://github.com/omics-rust/rsomics-seqstats) | Format-agnostic sequence statistics primitives (length distribution: N50/L50/Nx + quartile |
 | [rsomics-stats](https://github.com/omics-rust/rsomics-stats) | Statistical tests, FDR control, p-value combination for the rsomics-* tool family. Layer A |
+| [rsomics-struc-zero](https://github.com/omics-rust/rsomics-struc-zero) | scikit-bio composition structural-zero detection (per-feature × per-group boolean grid) — Rust port of scikit-bio (byte-identical, 20.1× -t1 CPU, 11× lower RSS) |
 | [rsomics-subsample-counts](https://github.com/omics-rust/rsomics-subsample-counts) | scikit-bio subsample_counts without-replacement rarefaction draw (numpy default_rng/PCG64 reproduced bit-exact) — Rust port of scikit-bio 0.7.2 (integer-exact, 1.35× algo / 9.76× end-to-end) |
 | [rsomics-tabix](https://github.com/omics-rust/rsomics-tabix) | Coordinate index (.tbi/.csi) for bgzipped position-sorted files + region query — Rust port of htslib tabix (byte-identical index, 1.10× build / 1.49× query) |
 | [rsomics-tajima-d](https://github.com/omics-rust/rsomics-tajima-d) | Compute Tajima's D from a site frequency spectrum (derived allele counts) |
