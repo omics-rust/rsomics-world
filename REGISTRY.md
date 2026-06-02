@@ -280,10 +280,12 @@ _Generated 2026-05-30 — 231 crates._
 | [rsomics-rpkm-saturation](https://github.com/omics-rust/rsomics-rpkm-saturation) | Subsample-based RPKM saturation analysis — Rust reimplementation of RSeQC RPKM_saturation. |
 | [rsomics-sam-to-bam](https://github.com/omics-rust/rsomics-sam-to-bam) | Convert SAM to BAM — Rust equivalent of samtools view -bS |
 | [rsomics-sample-sheet](https://github.com/omics-rust/rsomics-sample-sheet) | Parse, validate, and convert sample sheets (Illumina/custom TSV) — check FASTQ paths, dete |
+| [rsomics-sc-cell-cycle](https://github.com/omics-rust/rsomics-sc-cell-cycle) | Cell-cycle phase scoring (S/G2M scores + phase call) of a single-cell matrix — scanpy score_genes_cell_cycle-compatible, bit-identical (2.97× CPU -t1) |
 | [rsomics-sc-combat](https://github.com/omics-rust/rsomics-sc-combat) | Per-gene ComBat empirical-Bayes batch-effect correction of a single-cell matrix — Rust port of scanpy pp.combat (value-exact, 8.09× -t1, 5.4× lower RSS) |
 | [rsomics-sc-downsample](https://github.com/omics-rust/rsomics-sc-downsample) | Downsample a single-cell count matrix so each cell has at most N counts (without replacement) — scanpy pp.downsample_counts-compatible, integer-exact via bit-exact numba MT19937 RNG (2.45× -t1, 5.6× less memory) |
 | [rsomics-sc-filter](https://github.com/omics-rust/rsomics-sc-filter) | Filter cells & genes of a 10x matrix (min/max genes/counts/cells) — scanpy filter_cells/filter_genes-compatible (2.48× -t1) |
 | [rsomics-sc-hvg](https://github.com/omics-rust/rsomics-sc-hvg) | Highly-variable-gene selection (seurat flavor) from a 10x matrix — scanpy highly_variable_genes-compatible (1.78× -t1) |
+| [rsomics-sc-marker-overlap](https://github.com/omics-rust/rsomics-sc-marker-overlap) | Overlap of per-cluster ranked marker genes against a reference marker-set panel → reference×cluster matrix — scanpy marker-genes-compatible |
 | [rsomics-sc-normalize](https://github.com/omics-rust/rsomics-sc-normalize) | Library-size normalization + log1p of a 10x single-cell matrix — scanpy normalize_total/log1p-compatible (3.06× -t1, 4× less memory) |
 | [rsomics-sc-pseudobulk](https://github.com/omics-rust/rsomics-sc-pseudobulk) | Pseudobulk aggregation (sum/mean counts per group) of a 10x matrix — scanpy get.aggregate-compatible (2.41× -t1) |
 | [rsomics-sc-qc-metrics](https://github.com/omics-rust/rsomics-sc-qc-metrics) | Per-cell & per-gene QC metrics from a 10x matrix — scanpy calculate_qc_metrics-compatible (2.28× -t1) |
