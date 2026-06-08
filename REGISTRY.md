@@ -262,6 +262,7 @@ _Generated 2026-05-30 — 231 crates._
 | [rsomics-plink-ibc](https://github.com/omics-rust/rsomics-plink-ibc) | Per-sample inbreeding F-hat estimators (Fhat1/2/3) — Rust port of PLINK --ibc (2.09× -t1) |
 | [rsomics-plink-io](https://github.com/omics-rust/rsomics-plink-io) | PLINK1 binary .bed/.bim/.fam reader: allele-freq, missingness, HWE, VCF/012 export |
 | [rsomics-plink-ld](https://github.com/omics-rust/rsomics-plink-ld) | Pairwise LD (r²) computation and LD matrix export from PLINK1 binary filesets |
+| [rsomics-plink-mendel](https://github.com/omics-rust/rsomics-plink-mendel) | PLINK1 --mendel Mendel-error reports (per-variant/family/individual/trio) — clean-room Rust port of plink (byte-identical all 4 reports, 1.16× -t1 CPU vs plink 1.9) |
 | [rsomics-plink-missing](https://github.com/omics-rust/rsomics-plink-missing) | Per-sample (.imiss) and per-variant (.lmiss) genotype missingness — Rust port of PLINK --missing (1.28× CPU -t1 / 2.13× -t8) |
 | [rsomics-plink-model](https://github.com/omics-rust/rsomics-plink-model) | Per-variant genotypic association — GENO/ALLELIC/DOM/REC/TREND — Rust port of PLINK --model (byte-identical; perf 0.96× -t1, output-bound near-miss, optimization pending #142) |
 | [rsomics-plink-pca](https://github.com/omics-rust/rsomics-plink-pca) | PCA and GRM computation from PLINK1 binary filesets using faer EVD |
@@ -298,6 +299,7 @@ _Generated 2026-05-30 — 231 crates._
 | [rsomics-sc-hvg-cellranger](https://github.com/omics-rust/rsomics-sc-hvg-cellranger) | Highly-variable-gene selection (cell_ranger flavor: dispersion-binned z-score) from a 10x matrix — scanpy highly_variable_genes-compatible (value-exact, 1.78× -t1) |
 | [rsomics-sc-marker-overlap](https://github.com/omics-rust/rsomics-sc-marker-overlap) | Overlap of per-cluster ranked marker genes against a reference marker-set panel → reference×cluster matrix — scanpy marker-genes-compatible |
 | [rsomics-sc-normalize](https://github.com/omics-rust/rsomics-sc-normalize) | Library-size normalization + log1p of a 10x single-cell matrix — scanpy normalize_total/log1p-compatible (3.06× -t1, 4× less memory) |
+| [rsomics-sc-pca](https://github.com/omics-rust/rsomics-sc-pca) | PCA cell embeddings of a single-cell matrix (arpack SVD, sign-canonicalized) — scanpy sc.pp.pca-compatible (value-exact, 1.18× -t1 / 2.17× -t4, 5.4× lower RSS) |
 | [rsomics-sc-pseudobulk](https://github.com/omics-rust/rsomics-sc-pseudobulk) | Pseudobulk aggregation (sum/mean counts per group) of a 10x matrix — scanpy get.aggregate-compatible (2.41× -t1) |
 | [rsomics-sc-qc-metrics](https://github.com/omics-rust/rsomics-sc-qc-metrics) | Per-cell & per-gene QC metrics from a 10x matrix — scanpy calculate_qc_metrics-compatible (2.28× -t1) |
 | [rsomics-sc-rank-genes](https://github.com/omics-rust/rsomics-sc-rank-genes) | Per-group marker-gene ranking from a single-cell matrix — `--method` Welch t-test (default) or Wilcoxon rank-sum (tie-corrected) — Rust port of scanpy rank_genes_groups (value-exact both, 2.05× t-test / 3.04× wilcoxon CPU) |
