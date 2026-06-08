@@ -178,6 +178,7 @@ _Generated 2026-05-30 — 231 crates._
 | [rsomics-fastq-downsample](https://github.com/omics-rust/rsomics-fastq-downsample) | Deterministic random downsampling of FASTQ to a target read count or fraction |
 | [rsomics-fastq-filter](https://github.com/omics-rust/rsomics-fastq-filter) | FASTQ per-read quality + length filter. Rust port of fastp's quality/length filter (pass/f |
 | [rsomics-fastq-merge](https://github.com/omics-rust/rsomics-fastq-merge) | Merge overlapping paired-end FASTQ reads into consensus reads — Rust port of fastp's overl |
+| [rsomics-fastq-pair](https://github.com/omics-rust/rsomics-fastq-pair) | Re-pair FASTQ R1/R2 by read name (streaming offset-index, no slurp) — seqkit pair-compatible (byte-exact, 1.42× -t1 CPU, 6.7× lower RSS than seqkit) |
 | [rsomics-fastq-quality](https://github.com/omics-rust/rsomics-fastq-quality) | FASTQ sliding-window and leading/trailing quality trimmer — Rust port of fastp/Trimmomatic |
 | [rsomics-fastq-sample](https://github.com/omics-rust/rsomics-fastq-sample) | Random subsample FASTQ records by fraction or exact count — seqkit sample / seqtk sample e |
 | [rsomics-fastq-split](https://github.com/omics-rust/rsomics-fastq-split) | Split a FASTQ into N files or by line count. Rust port of fastp's split (deterministic --s |
@@ -217,6 +218,7 @@ _Generated 2026-05-30 — 231 crates._
 | [rsomics-kmer](https://github.com/omics-rust/rsomics-kmer) | K-mer encoding, canonicalisation, ntHash rolling hash, MurmurHash3, k-mer counting for the |
 | [rsomics-kmer-dist](https://github.com/omics-rust/rsomics-kmer-dist) | Pairwise k-mer frequency distance between FASTA/FASTQ samples — Jaccard/Bray-Curtis/cosine |
 | [rsomics-kraken-report](https://github.com/omics-rust/rsomics-kraken-report) | Parse and summarize Kraken2 report files — top taxa, diversity stats |
+| [rsomics-ld-matrix](https://github.com/omics-rust/rsomics-ld-matrix) | Pairwise LD r² matrix from genotypes (2-bit bit-plane popcount kernel) — plink --r2-compatible (value-exact 5e-7, 1.76× -t1 CPU, 3.5× lower RSS) |
 | [rsomics-liftover](https://github.com/omics-rust/rsomics-liftover) | Lift BED interval coordinates between assemblies via a UCSC chain file — Rust port of UCSC liftOver |
 | [rsomics-limma-array-weights](https://github.com/omics-rust/rsomics-limma-array-weights) | limma arrayWeights: REML per-sample quality weights from a log-expression matrix + design — clean-room Rust port of limma (matches to ~0.1%, REML prior.n residual documented; 9.35× -t1) |
 | [rsomics-limma-decide-tests](https://github.com/omics-rust/rsomics-limma-decide-tests) | limma decideTests up/down/notsig classification (separate/global BH/holm/… adjust + p-cutoff + lfc filter) — clean-room Rust port of limma (integer-exact, 21.2× -t1) |
