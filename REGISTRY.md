@@ -161,6 +161,7 @@ _Generated 2026-05-30 — 231 crates._
 | [rsomics-faith-pd](https://github.com/omics-rust/rsomics-faith-pd) | Per-sample Faith's phylogenetic diversity (PD) from a feature count table + a rooted Newick tree — scikit-bio faith_pd equivalent (value-exact, 16.83× -t1) |
 | [rsomics-fasta-amplicon](https://github.com/omics-rust/rsomics-fasta-amplicon) | Extract amplicon regions from FASTA/FASTQ by primer pair (IUPAC-aware, mismatches, region/flanking, BED) — byte-exact Rust port of seqkit amplicon (1.55–2.12× -t1) |
 | [rsomics-fasta-digest](https://github.com/omics-rust/rsomics-fasta-digest) | In-silico protein digestion — trypsin/LysC/other enzymes, missed cleavages, peptide mass f |
+| [rsomics-fasta-fx2tab](https://github.com/omics-rust/rsomics-fasta-fx2tab) | Convert FASTA/Q to tabular form with computed per-record columns (length, GC, GC-skew, avg-qual, base content/count, alphabet, MD5) — byte-identical to seqkit 2.9.0 fx2tab (1.54×/1.73× CPU) |
 | [rsomics-fasta-index](https://github.com/omics-rust/rsomics-fasta-index) | FASTA index (.fai) creation, random-access fetch, and sequence dictionary — Rust port of s |
 | [rsomics-fasta-locate](https://github.com/omics-rust/rsomics-fasta-locate) | Locate subsequences/motifs in FASTA files — seqkit locate port |
 | [rsomics-fasta-mask](https://github.com/omics-rust/rsomics-fasta-mask) | Mask FASTA sequences by BED regions — soft-mask (lowercase) or hard-mask (N) |
