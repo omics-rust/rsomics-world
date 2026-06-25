@@ -323,6 +323,7 @@ _Generated 2026-05-30 — 231 crates._
 | [rsomics-sc-spatial-autocorr](https://github.com/omics-rust/rsomics-sc-spatial-autocorr) | Spatial autocorrelation (Moran's I / Geary's C) of single-cell features over a spatial graph — scanpy sc.metrics-compatible (value-exact, 1.75× -t1) |
 | [rsomics-sc-subsample](https://github.com/omics-rust/rsomics-sc-subsample) | Subsample single-cell matrix cells without replacement (--fraction/--n-obs) — scanpy pp.subsample-compatible, bit-exact legacy numpy MT19937 selected indices (5.78× -t1, 3.27× lower RSS) |
 | [rsomics-seacr](https://github.com/omics-rust/rsomics-seacr) | CUT&RUN peak caller (bedGraph → BED peaks) — clean-room Rust port of SEACR |
+| [rsomics-seq-dist](https://github.com/omics-rust/rsomics-seq-dist) | Pairwise nucleotide-sequence distances (Hamming, JC69, K2P) from an aligned FASTA — value-exact to scikit-bio, emits a distance-matrix TSV |
 | [rsomics-seq-stats](https://github.com/omics-rust/rsomics-seq-stats) | Quick stats for any FASTA/FASTQ — count, total bp, N50, GC%, min/max/mean length |
 | [rsomics-seqio](https://github.com/omics-rust/rsomics-seqio) | Fast FASTQ reader for the rsomics-* tool family: decode-only producer thread + parallel pa |
 | [rsomics-seqstats](https://github.com/omics-rust/rsomics-seqstats) | Format-agnostic sequence statistics primitives (length distribution: N50/L50/Nx + quartile |
