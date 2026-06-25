@@ -245,6 +245,7 @@ _Generated 2026-05-30 — 231 crates._
 | [rsomics-pcoa](https://github.com/omics-rust/rsomics-pcoa) | Principal Coordinates Analysis (PCoA) of a distance matrix — scikit-bio-compatible Rust port (2.75× -t1, faer eigh) |
 | [rsomics-pdb-chain](https://github.com/omics-rust/rsomics-pdb-chain) | Extract or split PDB chains — list, extract single chain, or split all into separate files |
 | [rsomics-pdb-dihedrals](https://github.com/omics-rust/rsomics-pdb-dihedrals) | Per-residue protein backbone (φ/ψ/ω) + sidechain (χ1–χ5) torsion angles from a PDB — biopython-compatible (value-exact 2e-4°, 49.9× -t1 CPU, 6.4× lower RSS) |
+| [rsomics-peak-annotate](https://github.com/omics-rust/rsomics-peak-annotate) | Annotate ChIP/ATAC peaks with nearest-transcript gene, signed TSS distance, and genomic-feature category — value-exact Rust port of ChIPseeker annotatePeak (~160× CPU / ~88× lower RSS vs 1.46.1) |
 | [rsomics-peak-count](https://github.com/omics-rust/rsomics-peak-count) | Count BAM reads per BED peak region — ChIP-seq/ATAC-seq QC and quantification |
 | [rsomics-permanova](https://github.com/omics-rust/rsomics-permanova) | PERMANOVA pseudo-F test on a distance matrix + permutation p — Rust port of scikit-bio permanova (pseudo-F value-exact, 2.05× -t1) |
 | [rsomics-permdisp](https://github.com/omics-rust/rsomics-permdisp) | PERMDISP test of homogeneity of multivariate dispersions (centroid/spatial-median, faer PCoA + permutation p) — scikit-bio permdisp port (F value-exact ~1e-9, 2.16× median / 10.46× centroid -t1) |
