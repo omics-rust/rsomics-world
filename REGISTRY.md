@@ -281,6 +281,7 @@ _Generated 2026-05-30 — 231 crates._
 | [rsomics-read-distribution](https://github.com/omics-rust/rsomics-read-distribution) | Distribution of reads over genomic features (CDS/UTR/intron/TSS/TES) — Rust port of RSeQC read_distribution.py |
 | [rsomics-read-duplication](https://github.com/omics-rust/rsomics-read-duplication) | Sequence-based and position-based read duplication rate — Rust port of RSeQC read_duplicat |
 | [rsomics-read-gc](https://github.com/omics-rust/rsomics-read-gc) | Per-read GC% distribution from a BAM — Rust port of RSeQC read_GC.py |
+| [rsomics-read-hexamer](https://github.com/omics-rust/rsomics-read-hexamer) | Hexamer (6-mer) frequency table from FASTA/FASTQ reads — Rust port of RSeQC read_hexamer.py (value-exact, 19.4× CPU / 11.4× lower RSS vs 5.0.4) |
 | [rsomics-read-nvc](https://github.com/omics-rust/rsomics-read-nvc) | Per-cycle nucleotide composition (NVC) from a BAM — Rust port of RSeQC read_NVC.py |
 | [rsomics-read-quality](https://github.com/omics-rust/rsomics-read-quality) | Per-base read-quality heatmap and boxplot from BAM — Rust port of RSeQC read_quality.py |
 | [rsomics-remove-batch-effect](https://github.com/omics-rust/rsomics-remove-batch-effect) | Regress out a batch factor from a log-expression gene × sample matrix — Rust reimplementation of limma removeBatchEffect (field-exact, 7.20× -t1) |
