@@ -372,7 +372,7 @@ _Generated 2026-05-30 — 231 crates._
 | [rsomics-vcf-mpileup](https://github.com/omics-rust/rsomics-vcf-mpileup) | VCF-emitting pileup (genotype likelihoods) from BAM — Rust port of bcftools mpileup single |
 | [rsomics-vcf-norm](https://github.com/omics-rust/rsomics-vcf-norm) | Left-align and normalize VCF indels — Rust port of bcftools norm |
 | [rsomics-vcf-polysomy](https://github.com/omics-rust/rsomics-vcf-polysomy) | Estimate per-chromosome copy number from BAF distributions — Rust port of bcftools polysom |
-| [rsomics-vcf-popgen](https://github.com/omics-rust/rsomics-vcf-popgen) | Population-genetics statistics from VCF: allele-freq, pi, Tajima-D, Fst (Weir-Cockerham + Hudson), Lewontin D'/r2, het, HWE, missingness, singletons — vcftools + scikit-allel value-exact |
+| [rsomics-vcf-popgen](https://github.com/omics-rust/rsomics-vcf-popgen) | Population-genetics statistics from VCF: allele-freq, pi, Dxy divergence, Tajima-D, Fst (Weir-Cockerham + Hudson), Lewontin D'/r2, het, HWE, missingness, singletons — vcftools + scikit-allel value-exact |
 | [rsomics-vcf-query](https://github.com/omics-rust/rsomics-vcf-query) | Extract fields from VCF records — Rust port of bcftools query |
 | [rsomics-vcf-reheader](https://github.com/omics-rust/rsomics-vcf-reheader) | Replace a VCF header or rename samples — Rust port of bcftools reheader |
 | [rsomics-vcf-roh](https://github.com/omics-rust/rsomics-vcf-roh) | Runs-of-homozygosity detector — Rust port of bcftools roh |
