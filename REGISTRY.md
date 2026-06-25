@@ -189,6 +189,7 @@ _Generated 2026-05-30 — 231 crates._
 | [rsomics-fastq-utils](https://github.com/omics-rust/rsomics-fastq-utils) | FASTQ utility toolkit — lightweight subcommands for counting, filtering, converting, and i |
 | [rsomics-fastq-validate](https://github.com/omics-rust/rsomics-fastq-validate) | Validate FASTQ format integrity (line counts, quality encoding) |
 | [rsomics-fastqc](https://github.com/omics-rust/rsomics-fastqc) | Per-file FASTQ quality-control report (FastQC-equivalent: per-base quality, GC, N, length, |
+| [rsomics-fastx-convert](https://github.com/omics-rust/rsomics-fastx-convert) | FASTA/FASTQ format interconversion family — fq2fa, fa2fq, fx2tab/tab2fx lossless round-trip, Phred+33↔+64 recode (2.76× vs seqkit). For seqkit-style tabulation with computed columns use rsomics-fasta-fx2tab |
 | [rsomics-fastx-sort](https://github.com/omics-rust/rsomics-fastx-sort) | Deterministic FASTA sorting by abundance or length — port of vsearch --sortbysize / --sort |
 | [rsomics-fcluster](https://github.com/omics-rust/rsomics-fcluster) | Form flat clusters from a hierarchical linkage matrix (distance/maxclust/inconsistent/monocrit) — scipy fcluster port, cluster labels byte-identical (companion to rsomics-upgma) |
 | [rsomics-featurecounts](https://github.com/omics-rust/rsomics-featurecounts) | Count reads over genomic features (BAM + GFF) — Rust port of featureCounts (Subread) |
