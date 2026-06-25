@@ -283,6 +283,7 @@ _Generated 2026-05-30 — 231 crates._
 | [rsomics-plink-tdt](https://github.com/omics-rust/rsomics-plink-tdt) | Transmission disequilibrium test for trios (.tdt) — Rust port of PLINK --tdt (1.44× -t1) |
 | [rsomics-plot-coverage](https://github.com/omics-rust/rsomics-plot-coverage) | deeptools plotCoverage coverage distribution (deterministic strided sampling, per-bin raw counts + per-sample summary) — Rust port of deeptools 3.5.6 (byte-identical, 79.5× -t1, 8× lower RSS) |
 | [rsomics-popgen-core](https://github.com/omics-rust/rsomics-popgen-core) | Population-genetics primitives: π, Watterson's θ, Tajima's D, Hardy-Weinberg exact, LD r². |
+| [rsomics-popgen-fstats](https://github.com/omics-rust/rsomics-popgen-fstats) | Patterson's admixture f-statistics — D (ABBA-BABA), f2, f3, f4 with block-jackknife SE/Z, from a VCF + population assignments — value-exact to scikit-allel (1.6e-14), 3.32× single-thread |
 | [rsomics-pvalue-adjust](https://github.com/omics-rust/rsomics-pvalue-adjust) | Multiple-testing correction for a column of p-values — the full R p.adjust method set (hol |
 | [rsomics-pwmantel](https://github.com/omics-rust/rsomics-pwmantel) | Pairwise Mantel test across N distance matrices (pearson/spearman r + permutation p, results table) — scikit-bio pwmantel port (statistic value-exact ~5e-13, 1.32–1.37× -t1) |
 | [rsomics-quantile-norm](https://github.com/omics-rust/rsomics-quantile-norm) | Quantile normalization of a gene × sample matrix — Rust port of limma normalizeQuantiles (8.92× -t1) |
