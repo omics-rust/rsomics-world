@@ -208,7 +208,7 @@ _Generated 2026-05-30 — 231 crates._
 | [rsomics-hommola](https://github.com/omics-rust/rsomics-hommola) | Hommola et al. host–parasite cospeciation test (correlation of host vs parasite distances over interactions + permutation p) — scikit-bio port (statistic value-exact, 7.51× -t1) |
 | [rsomics-igzip](https://github.com/omics-rust/rsomics-igzip) | Minimal Quadrant-② FFI wrapper over Intel ISA-L igzip for fast gzip decompression. Isolate |
 | [rsomics-ilr](https://github.com/omics-rust/rsomics-ilr) | Isometric log-ratio (ILR) compositional transform via the default Gram-Schmidt SBP basis + its inverse (--inverse / ilr_inv) — Rust port of scikit-bio ilr / ilr_inv (value-exact 3.3e-16; fwd 12.2× / inv 14× -t1) |
-| [rsomics-ilr-basis](https://github.com/omics-rust/rsomics-ilr-basis) | Isometric log-ratio (ILR) transform with a user-supplied SBP/tree contrast basis — scikit-bio ilr(basis=) port (value-exact, 5.20× -t1) |
+| [rsomics-ilr-basis](https://github.com/omics-rust/rsomics-ilr-basis) | Isometric log-ratio (ILR) transform with a user-supplied SBP/tree contrast basis, or emit the orthonormal basis itself (--emit-basis) — scikit-bio ilr(basis=) / sbp_basis / tree_basis port (value-exact 0.0 diff, 5.20× / tree-basis ~130× full-CLI) |
 | [rsomics-infercnv](https://github.com/omics-rust/rsomics-infercnv) | Infer copy-number variations from single-cell RNA-seq expression — Rust port of inferCNV |
 | [rsomics-inner-distance](https://github.com/omics-rust/rsomics-inner-distance) | mRNA-aware inner-distance distribution for paired-end RNA-seq — Rust port of RSeQC inner_d |
 | [rsomics-insertion-profile](https://github.com/omics-rust/rsomics-insertion-profile) | Per-position CIGAR-insertion rate along the read — Rust port of RSeQC insertion_profile.py |
