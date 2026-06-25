@@ -10,7 +10,7 @@ _Generated 2026-05-30 — 231 crates._
 | [rsomics-align-core](https://github.com/omics-rust/rsomics-align-core) | Pairwise sequence alignment kernels (Smith-Waterman + Needleman-Wunsch, affine gap) for th |
 | [rsomics-align-score](https://github.com/omics-rust/rsomics-align-score) | Pairwise sequence alignment — Needleman-Wunsch (global) or Smith-Waterman (local) |
 | [rsomics-alignment-sieve](https://github.com/omics-rust/rsomics-alignment-sieve) | Filter a BAM by mapq / fragment length / SAM flags / blacklist / duplicates — Rust port of deepTools alignmentSieve |
-| [rsomics-alpha-diversity](https://github.com/omics-rust/rsomics-alpha-diversity) | Per-sample alpha-diversity metrics (Shannon/Simpson/Chao1/ACE/Pielou…) from a feature count table — Rust port of scikit-bio diversity.alpha |
+| [rsomics-alpha-diversity](https://github.com/omics-rust/rsomics-alpha-diversity) | Per-sample alpha-diversity metrics (29: Shannon/Simpson/Chao1/ACE/Pielou/Gini/Fisher α…) from a feature count table — Rust port of scikit-bio diversity.alpha (value-exact; gini machine-exact, fisher 6dp) |
 | [rsomics-alr](https://github.com/omics-rust/rsomics-alr) | Additive log-ratio (ALR) transform of a compositional table — scikit-bio alr port (byte-exact, 5.3× CPU / 7.5× wall) |
 | [rsomics-ancom](https://github.com/omics-rust/rsomics-ancom) | ANCOM differential-abundance test: per-feature W = significant log-ratio test count + percentile detection — Rust port of scikit-bio ancom (W integer-exact + decisions, 129× -t1, 49× lower RSS) |
 | [rsomics-anosim](https://github.com/omics-rust/rsomics-anosim) | ANOSIM R-statistic test on a distance matrix (tie-averaged ranks + permutation p) — Rust port of scikit-bio anosim (R value-exact, 9.58× -t1) |
@@ -119,7 +119,7 @@ _Generated 2026-05-30 — 231 crates._
 | [rsomics-cca](https://github.com/omics-rust/rsomics-cca) | Canonical Correspondence Analysis (CCA): constrained unimodal ordination of a community count matrix on environmental constraints — scikit-bio cca port (faer, eigenvalues value-exact ~1e-9, 3.98× -t1) |
 | [rsomics-cell-filter](https://github.com/omics-rust/rsomics-cell-filter) | Filter cells by QC metrics — min genes, min UMIs, max mito fraction from a barcode stats T |
 | [rsomics-clipping-profile](https://github.com/omics-rust/rsomics-clipping-profile) | Per-position soft-clipping profile from a BAM — Rust port of RSeQC clipping_profile.py |
-| [rsomics-clr](https://github.com/omics-rust/rsomics-clr) | Centered log-ratio (CLR) compositional transform of a feature table — Rust port of scikit-bio clr (value-exact 2.7e-15, 12.3× -t1) |
+| [rsomics-clr](https://github.com/omics-rust/rsomics-clr) | Centered log-ratio (CLR) compositional transform of a feature table + its inverse (--inverse / clr_inv) — Rust port of scikit-bio clr / clr_inv (value-exact 3.3e-16; fwd 12.3× / inv 17.7× -t1) |
 | [rsomics-common](https://github.com/omics-rust/rsomics-common) | Shared primitives for every rsomics-* crate (errors, CLI scaffold, runner, progress, exit  |
 | [rsomics-compute-gc-bias](https://github.com/omics-rust/rsomics-compute-gc-bias) | deeptools computeGCBias: observed-vs-expected read counts per GC bin over a 2bit genome (pure-Rust 2bit reader + scipy-exact poisson outlier cap) — Rust port of deeptools 3.5.6 (byte-identical, 19.04× -t1) |
 | [rsomics-compute-matrix](https://github.com/omics-rust/rsomics-compute-matrix) | bigWig signal → score matrix over BED regions — Rust port of deeptools computeMatrix |
@@ -207,7 +207,7 @@ _Generated 2026-05-30 — 231 crates._
 | [rsomics-hmm-decode](https://github.com/omics-rust/rsomics-hmm-decode) | Viterbi-decode observation sequences with a discrete HMM — chromatin state, gene finding,  |
 | [rsomics-hommola](https://github.com/omics-rust/rsomics-hommola) | Hommola et al. host–parasite cospeciation test (correlation of host vs parasite distances over interactions + permutation p) — scikit-bio port (statistic value-exact, 7.51× -t1) |
 | [rsomics-igzip](https://github.com/omics-rust/rsomics-igzip) | Minimal Quadrant-② FFI wrapper over Intel ISA-L igzip for fast gzip decompression. Isolate |
-| [rsomics-ilr](https://github.com/omics-rust/rsomics-ilr) | Isometric log-ratio (ILR) compositional transform via the default Gram-Schmidt SBP basis (O(D) prefix-sum) — Rust port of scikit-bio ilr (value-exact 1e-9, 12.2× -t1) |
+| [rsomics-ilr](https://github.com/omics-rust/rsomics-ilr) | Isometric log-ratio (ILR) compositional transform via the default Gram-Schmidt SBP basis + its inverse (--inverse / ilr_inv) — Rust port of scikit-bio ilr / ilr_inv (value-exact 3.3e-16; fwd 12.2× / inv 14× -t1) |
 | [rsomics-ilr-basis](https://github.com/omics-rust/rsomics-ilr-basis) | Isometric log-ratio (ILR) transform with a user-supplied SBP/tree contrast basis — scikit-bio ilr(basis=) port (value-exact, 5.20× -t1) |
 | [rsomics-infercnv](https://github.com/omics-rust/rsomics-infercnv) | Infer copy-number variations from single-cell RNA-seq expression — Rust port of inferCNV |
 | [rsomics-inner-distance](https://github.com/omics-rust/rsomics-inner-distance) | mRNA-aware inner-distance distribution for paired-end RNA-seq — Rust port of RSeQC inner_d |
