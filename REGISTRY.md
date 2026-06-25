@@ -243,6 +243,7 @@ _Generated 2026-05-30 — 231 crates._
 | [rsomics-nj-tree](https://github.com/omics-rust/rsomics-nj-tree) | Neighbor-joining tree construction from a distance matrix — outputs Newick |
 | [rsomics-pca](https://github.com/omics-rust/rsomics-pca) | Principal Component Analysis ordination of a sample×feature matrix (covariance eigendecomposition, OrdinationResults) — scikit-bio pca port (eigenvalues value-exact, scores sign-aligned, 3.45× -t1, faer) |
 | [rsomics-pcoa](https://github.com/omics-rust/rsomics-pcoa) | Principal Coordinates Analysis (PCoA) of a distance matrix — scikit-bio-compatible Rust port (2.75× -t1, faer eigh) |
+| [rsomics-pcoa-biplot](https://github.com/omics-rust/rsomics-pcoa-biplot) | Project features onto a PCoA ordination (descriptor biplot) — value-exact scikit-bio pcoa_biplot port (≤2e-14 up to axis sign; ~2.0× MT hot-path / ~68× full-CLI) |
 | [rsomics-pdb-chain](https://github.com/omics-rust/rsomics-pdb-chain) | Extract or split PDB chains — list, extract single chain, or split all into separate files |
 | [rsomics-pdb-dihedrals](https://github.com/omics-rust/rsomics-pdb-dihedrals) | Per-residue protein backbone (φ/ψ/ω) + sidechain (χ1–χ5) torsion angles from a PDB — biopython-compatible (value-exact 2e-4°, 49.9× -t1 CPU, 6.4× lower RSS) |
 | [rsomics-peak-annotate](https://github.com/omics-rust/rsomics-peak-annotate) | Annotate ChIP/ATAC peaks with nearest-transcript gene, signed TSS distance, and genomic-feature category — value-exact Rust port of ChIPseeker annotatePeak (~160× CPU / ~88× lower RSS vs 1.46.1) |
