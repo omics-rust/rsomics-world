@@ -280,6 +280,7 @@ _Generated 2026-05-30 — 231 crates._
 | [rsomics-pvalue-adjust](https://github.com/omics-rust/rsomics-pvalue-adjust) | Multiple-testing correction for a column of p-values — the full R p.adjust method set (hol |
 | [rsomics-pwmantel](https://github.com/omics-rust/rsomics-pwmantel) | Pairwise Mantel test across N distance matrices (pearson/spearman r + permutation p, results table) — scikit-bio pwmantel port (statistic value-exact ~5e-13, 1.32–1.37× -t1) |
 | [rsomics-quantile-norm](https://github.com/omics-rust/rsomics-quantile-norm) | Quantile normalization of a gene × sample matrix — Rust port of limma normalizeQuantiles (8.92× -t1) |
+| [rsomics-rclr](https://github.com/omics-rust/rsomics-rclr) | Robust centered log-ratio (rCLR) of a sparse composition table (zeros → NaN, no pseudocount) — value-exact scikit-bio rclr port (0.0 diff, ~72× full-process / ~3.8× in-memory) |
 | [rsomics-rda](https://github.com/omics-rust/rsomics-rda) | Redundancy Analysis (RDA): constrained linear ordination of a response matrix on environmental constraints — scikit-bio rda port (faer SVD, eigenvalues value-exact ~1e-9, 7.36× -t1) |
 | [rsomics-read-distribution](https://github.com/omics-rust/rsomics-read-distribution) | Distribution of reads over genomic features (CDS/UTR/intron/TSS/TES) — Rust port of RSeQC read_distribution.py |
 | [rsomics-read-duplication](https://github.com/omics-rust/rsomics-read-duplication) | Sequence-based and position-based read duplication rate — Rust port of RSeQC read_duplicat |
