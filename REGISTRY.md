@@ -226,6 +226,7 @@ _Generated 2026-05-30 — 231 crates._
 | [rsomics-kmer-dist](https://github.com/omics-rust/rsomics-kmer-dist) | Pairwise k-mer frequency distance between FASTA/FASTQ samples — Jaccard/Bray-Curtis/cosine |
 | [rsomics-kraken-report](https://github.com/omics-rust/rsomics-kraken-report) | Parse and summarize Kraken2 report files — top taxa, diversity stats |
 | [rsomics-kruskal-wallis](https://github.com/omics-rust/rsomics-kruskal-wallis) | Kruskal-Wallis H-test (non-parametric multi-group) with tie correction — bit-identical to scipy.stats.kruskal (H + p via Cephes igamc), 7.17× single-thread |
+| [rsomics-ks-test](https://github.com/omics-rust/rsomics-ks-test) | Kolmogorov-Smirnov test (two-sample + one-sample vs uniform/normal; asymptotic + exact) — bit-identical to scipy.stats.ks_2samp (finite-n kstwo/_kolmogn + double-double smirnov), 2.62× single-thread |
 | [rsomics-ld-matrix](https://github.com/omics-rust/rsomics-ld-matrix) | Pairwise LD r² matrix from genotypes (2-bit bit-plane popcount kernel) — plink --r2-compatible (value-exact 5e-7, 1.76× -t1 CPU, 3.5× lower RSS) |
 | [rsomics-liftover](https://github.com/omics-rust/rsomics-liftover) | Lift BED interval coordinates between assemblies via a UCSC chain file — Rust port of UCSC liftOver |
 | [rsomics-limma-array-weights](https://github.com/omics-rust/rsomics-limma-array-weights) | limma arrayWeights: REML per-sample quality weights from a log-expression matrix + design — clean-room Rust port of limma (matches to ~0.1%, REML prior.n residual documented; 9.35× -t1) |
