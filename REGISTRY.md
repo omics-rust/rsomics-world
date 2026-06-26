@@ -199,6 +199,7 @@ _Generated 2026-05-30 — 231 crates._
 | [rsomics-fcluster](https://github.com/omics-rust/rsomics-fcluster) | Form flat clusters from a hierarchical linkage matrix (distance/maxclust/inconsistent/monocrit) — scipy fcluster port, cluster labels byte-identical (companion to rsomics-upgma) |
 | [rsomics-featurecounts](https://github.com/omics-rust/rsomics-featurecounts) | Count reads over genomic features (BAM + GFF) — Rust port of featureCounts (Subread) |
 | [rsomics-filter-by-expr](https://github.com/omics-rust/rsomics-filter-by-expr) | Boolean per-gene low-expression filter (CPM-cutoff + total-count keep rules, group-aware) — Rust port of edgeR filterByExpr (byte-exact, 8.51× -t1) |
+| [rsomics-fligner](https://github.com/omics-rust/rsomics-fligner) | Fligner-Killeen non-parametric equal-variance test (center median/mean/trimmed) — value-exact to scipy.stats.fligner (statistic bit-identical, p via cephes ndtri + igamc), 2.45× compute / 6.55× full single-thread |
 | [rsomics-fm-index](https://github.com/omics-rust/rsomics-fm-index) | FM-index over BWT + suffix array, with backward search / count / locate. Layer A primitive |
 | [rsomics-fm-search](https://github.com/omics-rust/rsomics-fm-search) | Exact substring search in FASTA using FM-index — count or locate pattern occurrences |
 | [rsomics-fpkm-count](https://github.com/omics-rust/rsomics-fpkm-count) | Compute per-gene FPKM from a BAM + BED12 model — Rust port of RSeQC FPKM_count |
@@ -257,6 +258,7 @@ _Generated 2026-05-30 — 231 crates._
 | [rsomics-multibam-summary](https://github.com/omics-rust/rsomics-multibam-summary) | Multi-BAM per-bin / per-region read-count matrix — Rust port of deeptools multiBamSummary |
 | [rsomics-multibigwig-summary](https://github.com/omics-rust/rsomics-multibigwig-summary) | Multi-bigWig per-bin / per-region mean-signal matrix — Rust port of deeptools multiBigwigS |
 | [rsomics-nj-tree](https://github.com/omics-rust/rsomics-nj-tree) | Neighbor-joining tree construction from a distance matrix — outputs Newick |
+| [rsomics-normaltest](https://github.com/omics-rust/rsomics-normaltest) | D'Agostino-Pearson normality battery (normaltest K² + skewtest + kurtosistest via --test) — bit-identical to scipy.stats (statistic + p exact via cephes ndtr/igamc), 5.2× compute / 6.62× full single-thread |
 | [rsomics-pbs](https://github.com/omics-rust/rsomics-pbs) | Population Branch Statistic PBS/PBSn1 — 3-population sweep scan (windowed Hudson FST → T=−log(1−FST) → (T_AB+T_AC−T_BC)/2) from a VCF — value-exact to scikit-allel pbs (3.2e-15), 3.90× single-thread / 39.7× compute-only |
 | [rsomics-pca](https://github.com/omics-rust/rsomics-pca) | Principal Component Analysis ordination of a sample×feature matrix (covariance eigendecomposition, OrdinationResults) — scikit-bio pca port (eigenvalues value-exact, scores sign-aligned, 3.45× -t1, faer) |
 | [rsomics-pcoa](https://github.com/omics-rust/rsomics-pcoa) | Principal Coordinates Analysis (PCoA) of a distance matrix — scikit-bio-compatible Rust port (2.75× -t1, faer eigh) |
