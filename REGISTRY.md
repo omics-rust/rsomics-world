@@ -340,6 +340,7 @@ _Generated 2026-05-30 — 231 crates._
 | [rsomics-seq-stats](https://github.com/omics-rust/rsomics-seq-stats) | Quick stats for any FASTA/FASTQ — count, total bp, N50, GC%, min/max/mean length |
 | [rsomics-seqio](https://github.com/omics-rust/rsomics-seqio) | Fast FASTQ reader for the rsomics-* tool family: decode-only producer thread + parallel pa |
 | [rsomics-seqstats](https://github.com/omics-rust/rsomics-seqstats) | Format-agnostic sequence statistics primitives (length distribution: N50/L50/Nx + quartile |
+| [rsomics-spearman-corr](https://github.com/omics-rust/rsomics-spearman-corr) | Spearman (and Pearson via --method) correlation between two numeric vectors with the t/beta p-value — value-exact to scipy.stats.spearmanr/pearsonr (cephes incbet, p bit-identical), 4.90× single-thread |
 | [rsomics-stats](https://github.com/omics-rust/rsomics-stats) | Statistical tests, FDR control, p-value combination for the rsomics-* tool family. Layer A |
 | [rsomics-struc-zero](https://github.com/omics-rust/rsomics-struc-zero) | scikit-bio composition structural-zero detection (per-feature × per-group boolean grid) — Rust port of scikit-bio (byte-identical, 20.1× -t1 CPU, 11× lower RSS) |
 | [rsomics-subsample-counts](https://github.com/omics-rust/rsomics-subsample-counts) | scikit-bio subsample_counts without-replacement rarefaction draw (numpy default_rng/PCG64 reproduced bit-exact) — Rust port of scikit-bio 0.7.2 (integer-exact, 1.35× algo / 9.76× end-to-end) |
