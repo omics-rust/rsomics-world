@@ -399,6 +399,7 @@ _Generated 2026-05-30 — 231 crates._
 | [rsomics-vcf-split-vep](https://github.com/omics-rust/rsomics-vcf-split-vep) | Query and extract VEP/bcftools-csq CSQ/BCSQ annotations — Rust port of bcftools +split-vep |
 | [rsomics-vcf-stats](https://github.com/omics-rust/rsomics-vcf-stats) | Basic VCF variant statistics — SNP/indel counts, Ti/Tv ratio |
 | [rsomics-vcf-to-bed](https://github.com/omics-rust/rsomics-vcf-to-bed) | Convert VCF variant positions to BED intervals |
+| [rsomics-vcf-trio-stats](https://github.com/omics-rust/rsomics-vcf-trio-stats) | Per-trio transmission/de-novo statistics (Mendelian errors, DNM, recurrent/hom DNM, transmitted/untransmitted, Ts/Tv) from a VCF + PED — value-exact to bcftools +trio-stats (0-diff), 1.68× single-thread / 2× lower RSS |
 | [rsomics-vcf-utils](https://github.com/omics-rust/rsomics-vcf-utils) | VCF utility toolkit — view, filter, count, stats, and convert operations |
 | [rsomics-vcf-validate](https://github.com/omics-rust/rsomics-vcf-validate) | Validate VCF format integrity |
 | [rsomics-vcf-view](https://github.com/omics-rust/rsomics-vcf-view) | Subset and filter VCF records — Rust port of bcftools view |
