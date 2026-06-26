@@ -246,6 +246,7 @@ _Generated 2026-05-30 — 231 crates._
 | [rsomics-multibam-summary](https://github.com/omics-rust/rsomics-multibam-summary) | Multi-BAM per-bin / per-region read-count matrix — Rust port of deeptools multiBamSummary |
 | [rsomics-multibigwig-summary](https://github.com/omics-rust/rsomics-multibigwig-summary) | Multi-bigWig per-bin / per-region mean-signal matrix — Rust port of deeptools multiBigwigS |
 | [rsomics-nj-tree](https://github.com/omics-rust/rsomics-nj-tree) | Neighbor-joining tree construction from a distance matrix — outputs Newick |
+| [rsomics-pbs](https://github.com/omics-rust/rsomics-pbs) | Population Branch Statistic PBS/PBSn1 — 3-population sweep scan (windowed Hudson FST → T=−log(1−FST) → (T_AB+T_AC−T_BC)/2) from a VCF — value-exact to scikit-allel pbs (3.2e-15), 3.90× single-thread / 39.7× compute-only |
 | [rsomics-pca](https://github.com/omics-rust/rsomics-pca) | Principal Component Analysis ordination of a sample×feature matrix (covariance eigendecomposition, OrdinationResults) — scikit-bio pca port (eigenvalues value-exact, scores sign-aligned, 3.45× -t1, faer) |
 | [rsomics-pcoa](https://github.com/omics-rust/rsomics-pcoa) | Principal Coordinates Analysis (PCoA) of a distance matrix — scikit-bio-compatible Rust port (2.75× -t1, faer eigh) |
 | [rsomics-pcoa-biplot](https://github.com/omics-rust/rsomics-pcoa-biplot) | Project features onto a PCoA ordination (descriptor biplot) — value-exact scikit-bio pcoa_biplot port (≤2e-14 up to axis sign; ~2.0× MT hot-path / ~68× full-CLI) |
@@ -359,11 +360,13 @@ _Generated 2026-05-30 — 231 crates._
 | [rsomics-unifrac](https://github.com/omics-rust/rsomics-unifrac) | UniFrac phylogenetic beta-diversity distance matrix (unweighted / weighted / weighted-normalized) from a feature count table + rooted Newick tree — scikit-bio-compatible Rust port (value-exact ~1e-14, 3.5×/13.6×/8.4× -t1) |
 | [rsomics-upgma](https://github.com/omics-rust/rsomics-upgma) | UPGMA average-linkage hierarchical-clustering tree from a distance matrix → Newick — value-exact vs scipy linkage(average) (cophenetic 7e-18; 3.90× end-to-end / 1.05× pure-core -t1) |
 | [rsomics-uq-norm](https://github.com/omics-rust/rsomics-uq-norm) | Upper-quartile per-sample normalization factors — Rust port of edgeR calcNormFactors(method=upperquartile) (byte-exact, 4.55× -t1) |
+| [rsomics-vcf-af-dist](https://github.com/omics-rust/rsomics-vcf-af-dist) | Allele-frequency-binned genotype-probability distribution under HWE (PROB_DIST) from a VCF — byte-identical to bcftools +af-dist, 1.44× single-thread |
 | [rsomics-vcf-annotate](https://github.com/omics-rust/rsomics-vcf-annotate) | Annotate VCF variants with labels from a BED/TSV file |
 | [rsomics-vcf-call](https://github.com/omics-rust/rsomics-vcf-call) | Bayesian SNP/indel calling from mpileup likelihoods — Rust port of bcftools call -c |
 | [rsomics-vcf-cnv](https://github.com/omics-rust/rsomics-vcf-cnv) | HMM-based CNV caller from BAF + LRR in a single-sample VCF — Rust port of bcftools cnv |
 | [rsomics-vcf-concat](https://github.com/omics-rust/rsomics-vcf-concat) | Concatenate VCFs (same samples) — Rust port of bcftools concat |
 | [rsomics-vcf-consensus](https://github.com/omics-rust/rsomics-vcf-consensus) | Apply VCF variants to a reference FASTA — Rust port of bcftools consensus |
+| [rsomics-vcf-contrast](https://github.com/omics-rust/rsomics-vcf-contrast) | Per-variant case/control allelic contrast (NASSOC counts + PASSOC Fisher-exact + FASSOC + novel allele/genotype) — value-exact to bcftools +contrast (0-diff/150k), 1.20× single-thread / 3.52× MT |
 | [rsomics-vcf-convert](https://github.com/omics-rust/rsomics-vcf-convert) | Convert between VCF text, bgzipped VCF, and HAP/LEGEND/SAMPLE — Rust port of bcftools conv |
 | [rsomics-vcf-csq](https://github.com/omics-rust/rsomics-vcf-csq) | Annotate VCF variants with functional consequences (missense, frameshift, splice, …) using |
 | [rsomics-vcf-expr](https://github.com/omics-rust/rsomics-vcf-expr) | bcftools-style VCF filter-expression parser and per-sample evaluator |
@@ -374,6 +377,7 @@ _Generated 2026-05-30 — 231 crates._
 | [rsomics-vcf-head](https://github.com/omics-rust/rsomics-vcf-head) | Print the VCF header and the first N records — Rust port of bcftools head |
 | [rsomics-vcf-index](https://github.com/omics-rust/rsomics-vcf-index) | Index a bgzipped VCF (.csi/.tbi) — Rust port of bcftools index |
 | [rsomics-vcf-isec](https://github.com/omics-rust/rsomics-vcf-isec) | VCF intersection — find shared variants between two VCFs (bcftools isec) |
+| [rsomics-vcf-ld-prune](https://github.com/omics-rust/rsomics-vcf-ld-prune) | VCF-native LD pruning — greedy r²-threshold sliding-window removal (locate_unlinked, Rogers-Huff r, multi-round) — value-exact to scikit-allel (EXACT mask), 2.78× single-thread |
 | [rsomics-vcf-merge](https://github.com/omics-rust/rsomics-vcf-merge) | Merge multi-sample VCFs by position — bcftools merge equivalent |
 | [rsomics-vcf-mpileup](https://github.com/omics-rust/rsomics-vcf-mpileup) | VCF-emitting pileup (genotype likelihoods) from BAM — Rust port of bcftools mpileup single |
 | [rsomics-vcf-norm](https://github.com/omics-rust/rsomics-vcf-norm) | Left-align and normalize VCF indels — Rust port of bcftools norm |
@@ -397,3 +401,4 @@ _Generated 2026-05-30 — 231 crates._
 | [rsomics-voom](https://github.com/omics-rust/rsomics-voom) | voom log2-CPM transform + mean-variance precision weights for RNA-seq — Rust reimplementation of limma voom (field-exact, 2.86× -t1) |
 | [rsomics-voom-quality-weights](https://github.com/omics-rust/rsomics-voom-quality-weights) | limma voomWithQualityWeights: voom precision weights composed with arrayWeights sample-quality weights — clean-room Rust port of limma (value-exact, 13.55× -t1) |
 | [rsomics-wig-to-bed](https://github.com/omics-rust/rsomics-wig-to-bed) | Convert WIG/bedGraph signal tracks to BED intervals above a threshold |
+| [rsomics-windowed-ld](https://github.com/omics-rust/rsomics-windowed-ld) | Windowed LD summary scan — per-bp-window percentile (default median) of pairwise Rogers-Huff r² from a VCF — value-exact to scikit-allel windowed_r_squared (f32 floor; structural bit-exact), 2.48× single-thread |
