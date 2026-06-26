@@ -380,6 +380,7 @@ _Generated 2026-05-30 — 231 crates._
 | [rsomics-vcf-fixref](https://github.com/omics-rust/rsomics-vcf-fixref) | Check/fix VCF REF allele and strand against a reference FASTA — Rust port of bcftools +fix |
 | [rsomics-vcf-gtcheck](https://github.com/omics-rust/rsomics-vcf-gtcheck) | Sample concordance / discordance estimator — Rust port of bcftools gtcheck |
 | [rsomics-vcf-head](https://github.com/omics-rust/rsomics-vcf-head) | Print the VCF header and the first N records — Rust port of bcftools head |
+| [rsomics-vcf-indel-stats](https://github.com/omics-rust/rsomics-vcf-indel-stats) | Per-site indel length (DLEN) + VAF (DVAF) distribution + ins/del/frameshift/inframe counts — byte-identical to bcftools +indel-stats, 1.70× single-thread / 2× lower RSS |
 | [rsomics-vcf-index](https://github.com/omics-rust/rsomics-vcf-index) | Index a bgzipped VCF (.csi/.tbi) — Rust port of bcftools index |
 | [rsomics-vcf-isec](https://github.com/omics-rust/rsomics-vcf-isec) | VCF intersection — find shared variants between two VCFs (bcftools isec) |
 | [rsomics-vcf-ld-prune](https://github.com/omics-rust/rsomics-vcf-ld-prune) | VCF-native LD pruning — greedy r²-threshold sliding-window removal (locate_unlinked, Rogers-Huff r, multi-round) — value-exact to scikit-allel (EXACT mask), 2.78× single-thread |
