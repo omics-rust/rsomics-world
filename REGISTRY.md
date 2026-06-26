@@ -134,6 +134,7 @@ _Generated 2026-05-30 — 231 crates._
 | [rsomics-count-matrix](https://github.com/omics-rust/rsomics-count-matrix) | Merge multiple featureCounts/htseq-count outputs into a single gene × sample count matrix |
 | [rsomics-coverage-core](https://github.com/omics-rust/rsomics-coverage-core) | Genome-binned BAM read-coverage primitive (deeptools countReadsPerBin port): per-bin read  |
 | [rsomics-cpm](https://github.com/omics-rust/rsomics-cpm) | Counts-per-million / log2-CPM normalization of a gene count matrix — edgeR cpm-compatible (5.01× -t1) |
+| [rsomics-cramervonmises](https://github.com/omics-rust/rsomics-cramervonmises) | Cramér-von Mises goodness-of-fit (one-sample vs norm/uniform + two-sample exact/asymptotic) — value-exact to scipy.stats.cramervonmises (statistic bit-identical, 2-samp exact p bit-identical, 1-samp p via Csörgő-Faraway series), 2.73× single-thread |
 | [rsomics-de-volcano](https://github.com/omics-rust/rsomics-de-volcano) | Annotate differential expression results with significance categories for volcano plots |
 | [rsomics-debruijn](https://github.com/omics-rust/rsomics-debruijn) | de Bruijn graph types + linear-path collapse + unitig extraction for the rsomics-* tool fa |
 | [rsomics-deletion-profile](https://github.com/omics-rust/rsomics-deletion-profile) | Per-base CIGAR-deletion rate along aligned reads — Rust port of RSeQC deletion_profile.py |
