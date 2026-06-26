@@ -219,6 +219,7 @@ _Generated 2026-05-30 — 231 crates._
 | [rsomics-inner-distance](https://github.com/omics-rust/rsomics-inner-distance) | mRNA-aware inner-distance distribution for paired-end RNA-seq — Rust port of RSeQC inner_d |
 | [rsomics-insertion-profile](https://github.com/omics-rust/rsomics-insertion-profile) | Per-position CIGAR-insertion rate along the read — Rust port of RSeQC insertion_profile.py |
 | [rsomics-intervals](https://github.com/omics-rust/rsomics-intervals) | BED algebra + interval index + GFF/GTF interval extraction for the rsomics-* tool family.  |
+| [rsomics-jarque-bera](https://github.com/omics-rust/rsomics-jarque-bera) | Jarque-Bera normality test (skewness + kurtosis → chi-square) — bit-identical to scipy.stats.jarque_bera (cephes igamc), 5.44× single-thread |
 | [rsomics-junction-saturation](https://github.com/omics-rust/rsomics-junction-saturation) | Subsample-based splice-junction saturation analysis — Rust reimplementation of RSeQC junct |
 | [rsomics-kinship](https://github.com/omics-rust/rsomics-kinship) | KING-robust pairwise kinship coefficients from PLINK genotypes — clean-room Rust port of plink2 --make-king-table (Manichaikul 2010), bitplane transpose + runtime AVX2 popcount (byte-identical .kin0, 1.13× -t1) |
 | [rsomics-kmer](https://github.com/omics-rust/rsomics-kmer) | K-mer encoding, canonicalisation, ntHash rolling hash, MurmurHash3, k-mer counting for the |
