@@ -390,6 +390,7 @@ _Generated 2026-05-30 — 231 crates._
 | [rsomics-vcf-sample](https://github.com/omics-rust/rsomics-vcf-sample) | Random subsample VCF variants by fraction or exact count — bcftools view subsample equival |
 | [rsomics-vcf-setgt](https://github.com/omics-rust/rsomics-vcf-setgt) | Conditionally rewrite VCF genotypes — Rust port of bcftools +setGT |
 | [rsomics-vcf-sfs](https://github.com/omics-rust/rsomics-vcf-sfs) | Site frequency spectrum (SFS) of a VCF — 1D and 2D joint (two-population), unfolded/folded, neutral scaling, AA-polarized — value-exact to scikit-allel (allel.sfs/joint_sfs), ~5.6× (1D) / 4.83× (joint) single-thread, 2× lower RSS via parse-fusion |
+| [rsomics-vcf-smpl-stats](https://github.com/omics-rust/rsomics-vcf-smpl-stats) | Per-sample VCF genotype statistics (nNonRef/nHet/nHom/nSNV/nIndel/nSingleton/nMissing/Ts/Tv …) — byte-identical to bcftools +smpl-stats (diploid), 1.34× single-thread |
 | [rsomics-vcf-sort](https://github.com/omics-rust/rsomics-vcf-sort) | Sort a VCF by chromosome and position — Rust port of bcftools sort |
 | [rsomics-vcf-split](https://github.com/omics-rust/rsomics-vcf-split) | Split VCF by chromosome into per-chromosome files |
 | [rsomics-vcf-split-vep](https://github.com/omics-rust/rsomics-vcf-split-vep) | Query and extract VEP/bcftools-csq CSQ/BCSQ annotations — Rust port of bcftools +split-vep |
