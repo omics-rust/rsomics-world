@@ -252,6 +252,7 @@ _Generated 2026-05-30 — 231 crates._
 | [rsomics-minimap2](https://github.com/omics-rust/rsomics-minimap2) | Long/short-read aligner — CLI wrapper of minimap2 FFI bindings (Quadrant ②) |
 | [rsomics-mismatch-profile](https://github.com/omics-rust/rsomics-mismatch-profile) | Per-base mismatch-rate profile from BAM MD tags — Rust port of RSeQC mismatch_profile.py |
 | [rsomics-models](https://github.com/omics-rust/rsomics-models) | Pinned DL-model registry + per-OS cache + sha256-verify for the rsomics-* tool family. Lay |
+| [rsomics-mood-test](https://github.com/omics-rust/rsomics-mood-test) | Mood's two-sample test for equal scale parameters (tie-corrected, two-sided/less/greater) — value-exact to scipy.stats.mood (z bit-identical, p via cephes ndtr), 5.3× compute single-thread |
 | [rsomics-motif-scan](https://github.com/omics-rust/rsomics-motif-scan) | Scan FASTA sequences for IUPAC DNA motif occurrences — BED output of match positions |
 | [rsomics-msa-trim](https://github.com/omics-rust/rsomics-msa-trim) | Trim MSA columns by gap fraction — Rust replacement for trimAl -gt |
 | [rsomics-multi-replace](https://github.com/omics-rust/rsomics-multi-replace) | Multiplicative zero-replacement of a compositional table (small δ for zeros, rest rescaled to preserve closure) — scikit-bio multiplicative_replacement port (value-exact, 5.95× -t1) |
