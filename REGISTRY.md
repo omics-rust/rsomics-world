@@ -350,6 +350,7 @@ _Generated 2026-05-30 — 231 crates._
 | [rsomics-taxonomy](https://github.com/omics-rust/rsomics-taxonomy) | NCBI taxdump parser + LCA + lineage helpers for the rsomics-* tool family. Layer A primiti |
 | [rsomics-tin](https://github.com/omics-rust/rsomics-tin) | Transcript Integrity Number (TIN) for RNA-seq QC — Rust port of RSeQC tin.py |
 | [rsomics-tm-align](https://github.com/omics-rust/rsomics-tm-align) | Pairwise protein structural alignment + TM-score — clean-room Rust impl of TM-align (10.7× -t1) |
+| [rsomics-tm-nn](https://github.com/omics-rust/rsomics-tm-nn) | Oligo melting temperature (nearest-neighbor Tm_NN / empirical Tm_GC) + molecular weight (DNA/RNA/protein) — bit-identical to biopython Bio.SeqUtils, 7.36× (Tm_NN) / 16.22× (Tm_GC) single-thread |
 | [rsomics-tmm-norm](https://github.com/omics-rust/rsomics-tmm-norm) | TMM (trimmed mean of M-values) per-sample normalization factors — Rust port of edgeR calcNormFactors(method=TMM) (6.04× -t1) |
 | [rsomics-tpm](https://github.com/omics-rust/rsomics-tpm) | TPM, FPKM, and upper-quartile (FPKM-UQ) normalization of gene count matrices given gene lengths |
 | [rsomics-tree-rfd](https://github.com/omics-rust/rsomics-tree-rfd) | Robinson-Foulds topological distance between two phylogenetic trees (symmetric bipartition difference) — scikit-bio TreeNode.compare_rfd port (value-exact, 8.22× -t1, 3.9× lower RSS) |
