@@ -68,6 +68,7 @@ _Generated 2026-05-30 — 231 crates._
 | [rsomics-bam-view](https://github.com/omics-rust/rsomics-bam-view) | View, filter, and convert SAM/BAM/CRAM alignments — Rust port of samtools view |
 | [rsomics-bamio](https://github.com/omics-rust/rsomics-bamio) | Parallel-BGZF BAM reader/writer + raw-record edit shared by the rsomics-bam-* tool family. |
 | [rsomics-barcode-rank](https://github.com/omics-rust/rsomics-barcode-rank) | Barcode rank statistics from a counts-per-barcode file — knee plot data for single-cell QC |
+| [rsomics-barnard-exact](https://github.com/omics-rust/rsomics-barnard-exact) | Barnard's 2×2 unconditional exact test (more powerful than Fisher) + batch mode — value-exact to the true Barnard maximum (statistic bit-identical; p = true global nuisance max, which scipy's default n=32 under-converges by up to ~9%; ours verified vs scipy n=512 + 200k-grid), 1.84× single-thread batch |
 | [rsomics-bartlett-test](https://github.com/omics-rust/rsomics-bartlett-test) | Bartlett's test for equal variances (homoscedasticity) — bit-identical to scipy.stats.bartlett (T bit-identical, p via cephes igamc), 3.10× single-thread |
 | [rsomics-bbduk](https://github.com/omics-rust/rsomics-bbduk) | K-mer-based contaminant removal + adapter/quality trimming for FASTQ — independent clean-r |
 | [rsomics-bbi](https://github.com/omics-rust/rsomics-bbi) | Pure-Rust bigWig/BBI reader and writer: header, chromosome B-tree, R-tree interval search, |
