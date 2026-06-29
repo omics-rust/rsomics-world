@@ -362,6 +362,7 @@ _Generated 2026-05-30 — 231 crates._
 | [rsomics-rereplicate](https://github.com/omics-rust/rsomics-rereplicate) | Expand abundance-annotated FASTA back into individual reads — port of vsearch --rereplicat |
 | [rsomics-rna-fragment-size](https://github.com/omics-rust/rsomics-rna-fragment-size) | Per-transcript mRNA fragment-size distribution for paired RNA-seq — Rust port of RSeQC RNA_fragment_size.py |
 | [rsomics-rnaseq-metrics](https://github.com/omics-rust/rsomics-rnaseq-metrics) | RNA-seq QC metrics (region coverage fractions, strand bias, transcript-coverage bias) — Ru |
+| [rsomics-robust-regression](https://github.com/omics-rust/rsomics-robust-regression) | Median-based robust linear regression — Theil-Sen (slope/intercept + Kendall-tau CI) + Siegel repeated-median — value-exact to scipy.stats.theilslopes/siegelslopes (bit-identical 0 ULP; cephes ndtri CI), ~2.7–38× single-thread |
 | [rsomics-rpkm-saturation](https://github.com/omics-rust/rsomics-rpkm-saturation) | Subsample-based RPKM saturation analysis — Rust reimplementation of RSeQC RPKM_saturation. |
 | [rsomics-sam-to-bam](https://github.com/omics-rust/rsomics-sam-to-bam) | Convert SAM to BAM — Rust equivalent of samtools view -bS |
 | [rsomics-sample-sheet](https://github.com/omics-rust/rsomics-sample-sheet) | Parse, validate, and convert sample sheets (Illumina/custom TSV) — check FASTQ paths, dete |
