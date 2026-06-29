@@ -223,6 +223,7 @@ _Generated 2026-05-30 — 231 crates._
 | [rsomics-fqgz](https://github.com/omics-rust/rsomics-fqgz) | Chunked parallel-libdeflate gzip (or plain) FASTQ-record writer. Layer-A primitive shared  |
 | [rsomics-fragment-size](https://github.com/omics-rust/rsomics-fragment-size) | Paired-end insert-size distribution from a BAM: histogram TSV + summary with ATAC nucleoso |
 | [rsomics-freesasa](https://github.com/omics-rust/rsomics-freesasa) | Solvent-accessible surface area from a PDB via the Lee-Richards algorithm (ProtOr radii, 1.4 Å probe), with absolute + relative SASA (--rsa, Ala-X-Ala reference) — freesasa-compatible Rust rewrite (REL value-exact to print precision) |
+| [rsomics-freq-hist](https://github.com/omics-rust/rsomics-freq-hist) | Cumulative and relative frequency histograms (cumfreq / relfreq) of a sample — value-exact to scipy.stats (counts + lowerlimit/binsize/extrapoints bit-identical 0 ULP), 6.6–16.9× end-to-end single-thread |
 | [rsomics-friedman-test](https://github.com/omics-rust/rsomics-friedman-test) | Friedman chi-square test (non-parametric repeated-measures) with tie correction — bit-identical to scipy.stats.friedmanchisquare (Q + p via cephes igamc), 11.34× single-thread |
 | [rsomics-gc-windows](https://github.com/omics-rust/rsomics-gc-windows) | Compute per-window GC content across a FASTA reference — BED output for CNV/WGS normalizat |
 | [rsomics-genebody-coverage](https://github.com/omics-rust/rsomics-genebody-coverage) | Gene-body coverage profile (5'→3') for RNA-seq bias QC — Rust port of RSeQC geneBody_cover |
