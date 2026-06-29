@@ -401,6 +401,7 @@ _Generated 2026-05-30 — 231 crates._
 | [rsomics-tree-rfd](https://github.com/omics-rust/rsomics-tree-rfd) | Robinson-Foulds topological distance between two phylogenetic trees (symmetric bipartition difference) — scikit-bio TreeNode.compare_rfd port (value-exact, 8.22× -t1, 3.9× lower RSS) |
 | [rsomics-tree-tipdist](https://github.com/omics-rust/rsomics-tree-tipdist) | Patristic tip-to-tip distance matrix (summed branch lengths) from a phylogenetic tree — scikit-bio TreeNode.tip_tip_distances port (value-exact, 5.57× -t1) |
 | [rsomics-tree-wrfd](https://github.com/omics-rust/rsomics-tree-wrfd) | Weighted Robinson-Foulds + bipartition/subset comparison between two phylogenetic trees — scikit-bio TreeNode port (value-exact, 42.85× -t1) |
+| [rsomics-trimmed-stats](https://github.com/omics-rust/rsomics-trimmed-stats) | Trimmed sample statistics — tmean/tvar/tstd/tsem (limit-masked) + trim_mean (proportion-cut) — value-exact to scipy.stats (bit-identical 0 ULP; trim_mean via a faithful numpy-introselect port), 4–14× end-to-end single-thread |
 | [rsomics-tsv-crosstab](https://github.com/omics-rust/rsomics-tsv-crosstab) | Cross-tabulation (long→wide pivot) of a TSV — GNU datamash crosstab-compatible (byte-exact, 1.81× -t1) |
 | [rsomics-tsv-join](https://github.com/omics-rust/rsomics-tsv-join) | Join two TSV files by a shared key column — inner/left/outer join |
 | [rsomics-tsv-select](https://github.com/omics-rust/rsomics-tsv-select) | Select, reorder, or rename columns from TSV files — cut + awk for bioinformatics pipelines |
