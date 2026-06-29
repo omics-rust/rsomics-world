@@ -7,6 +7,7 @@ _Generated 2026-05-30 — 231 crates._
 | crate | description |
 |---|---|
 | [rsomics-aitchison-ops](https://github.com/omics-rust/rsomics-aitchison-ops) | Aitchison-simplex algebra (closure / centralize / perturb / power) on compositional data — scikit-bio CoDA port (value-exact, 7.08× -t1) |
+| [rsomics-alexandergovern](https://github.com/omics-rust/rsomics-alexandergovern) | Alexander-Govern robust one-way ANOVA for k groups with unequal variances (variance-weighted + Hill normalizing transform → chi²) — value-exact to scipy.stats.alexandergovern (statistic ≤2e-16, p via cephes igamc), ~5.5–20× single-thread |
 | [rsomics-align-core](https://github.com/omics-rust/rsomics-align-core) | Pairwise sequence alignment kernels (Smith-Waterman + Needleman-Wunsch, affine gap) for th |
 | [rsomics-align-score](https://github.com/omics-rust/rsomics-align-score) | Pairwise sequence alignment — Needleman-Wunsch (global) or Smith-Waterman (local) |
 | [rsomics-alignment-sieve](https://github.com/omics-rust/rsomics-alignment-sieve) | Filter a BAM by mapq / fragment length / SAM flags / blacklist / duplicates — Rust port of deepTools alignmentSieve |
