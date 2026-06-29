@@ -270,6 +270,7 @@ _Generated 2026-05-30 — 231 crates._
 | [rsomics-minimap2](https://github.com/omics-rust/rsomics-minimap2) | Long/short-read aligner — CLI wrapper of minimap2 FFI bindings (Quadrant ②) |
 | [rsomics-mismatch-profile](https://github.com/omics-rust/rsomics-mismatch-profile) | Per-base mismatch-rate profile from BAM MD tags — Rust port of RSeQC mismatch_profile.py |
 | [rsomics-models](https://github.com/omics-rust/rsomics-models) | Pinned DL-model registry + per-OS cache + sha256-verify for the rsomics-* tool family. Lay |
+| [rsomics-moments](https://github.com/omics-rust/rsomics-moments) | Sample central moments — skewness, kurtosis (Fisher/Pearson, bias-corrected), and k-th moment — value-exact to scipy.stats.skew/kurtosis/moment (bit-identical 0 ULP via numpy pairwise summation), 3.2× compute / 5.2× end-to-end single-thread |
 | [rsomics-mood-test](https://github.com/omics-rust/rsomics-mood-test) | Mood's two-sample test for equal scale parameters (tie-corrected, two-sided/less/greater) — value-exact to scipy.stats.mood (z bit-identical, p via cephes ndtr), 5.3× compute single-thread |
 | [rsomics-motif-scan](https://github.com/omics-rust/rsomics-motif-scan) | Scan FASTA sequences for IUPAC DNA motif occurrences — BED output of match positions |
 | [rsomics-msa-trim](https://github.com/omics-rust/rsomics-msa-trim) | Trim MSA columns by gap fraction — Rust replacement for trimAl -gt |
