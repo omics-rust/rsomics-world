@@ -120,6 +120,7 @@ _Generated 2026-05-30 — 231 crates._
 | [rsomics-bed-window](https://github.com/omics-rust/rsomics-bed-window) | Find BED features within a window of A intervals — bedtools window equivalent |
 | [rsomics-bed12-to-bed6](https://github.com/omics-rust/rsomics-bed12-to-bed6) | Break BED12 block annotations into discrete BED6 intervals — Rust port of bedtools bed12to |
 | [rsomics-beta-diversity](https://github.com/omics-rust/rsomics-beta-diversity) | Pairwise between-sample beta-diversity distance matrix (braycurtis/jaccard/euclidean/canberra/cityblock) — scikit-bio-compatible, byte-exact |
+| [rsomics-betweenness-centrality](https://github.com/omics-rust/rsomics-betweenness-centrality) | Per-node betweenness centrality (Brandes) for an undirected graph from an edge list — networkx-compatible (bit-identical, ≤5 ULP gnm worst-case FMA boundary; 27–51× -t1 vs pure-Python). Complements rsomics-graph-centrality |
 | [rsomics-bgzip](https://github.com/omics-rust/rsomics-bgzip) | Block-compress or decompress a file in BGZF — Rust port of htslib bgzip (2.07× compress vs libdeflate bgzip) |
 | [rsomics-bigwig-average](https://github.com/omics-rust/rsomics-bigwig-average) | Per-bin average of N bigWig files as a bedGraph track — Rust port of deepTools bigwigAverage |
 | [rsomics-bigwig-compare](https://github.com/omics-rust/rsomics-bigwig-compare) | Per-bin comparison of two bigWig files as a bedGraph track — Rust port of deeptools bigwig |
