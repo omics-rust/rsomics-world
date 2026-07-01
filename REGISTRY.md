@@ -529,6 +529,7 @@ _Generated 2026-05-30 — 231 crates._
 | [rsomics-vcf-expr](https://github.com/omics-rust/rsomics-vcf-expr) | bcftools-style VCF filter-expression parser and per-sample evaluator |
 | [rsomics-vcf-fill-tags](https://github.com/omics-rust/rsomics-vcf-fill-tags) | Recompute VCF INFO tags (AN, AC, AF, MAF, NS, AC_Hom, AC_Het, AC_Hemi, HWE, ExcHet) from F |
 | [rsomics-vcf-filter](https://github.com/omics-rust/rsomics-vcf-filter) | VCF/BCF record filtering by region, quality, INFO/FORMAT fields — Rust port of bcftools vi |
+| [rsomics-vcf-filter-summary](https://github.com/omics-rust/rsomics-vcf-filter-summary) | Per-FILTER-value QC summary of a VCF — N_VARIANTS / N_Ts / N_Tv / Ts/Tv grouped by (alpha-sorted) FILTER set — byte-identical to vcftools 0.1.17 --FILTER-summary (Ts/Tv on 1-base SNPs only; nan/inf handling; rows by N_VARIANTS desc then filter-string desc), verified on independent VCFs incl. tie/inf/nan/dot cases + 200k-variant file, ~3.5× vs vcftools |
 | [rsomics-vcf-fixref](https://github.com/omics-rust/rsomics-vcf-fixref) | Check/fix VCF REF allele and strand against a reference FASTA — Rust port of bcftools +fix |
 | [rsomics-vcf-gtcheck](https://github.com/omics-rust/rsomics-vcf-gtcheck) | Sample concordance / discordance estimator — Rust port of bcftools gtcheck |
 | [rsomics-vcf-head](https://github.com/omics-rust/rsomics-vcf-head) | Print the VCF header and the first N records — Rust port of bcftools head |
