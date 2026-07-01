@@ -556,6 +556,7 @@ _Generated 2026-05-30 — 231 crates._
 | [rsomics-vcf-stats](https://github.com/omics-rust/rsomics-vcf-stats) | Basic VCF variant statistics — SNP/indel counts, Ti/Tv ratio |
 | [rsomics-vcf-to-bed](https://github.com/omics-rust/rsomics-vcf-to-bed) | Convert VCF variant positions to BED intervals |
 | [rsomics-vcf-trio-stats](https://github.com/omics-rust/rsomics-vcf-trio-stats) | Per-trio transmission/de-novo statistics (Mendelian errors, DNM, recurrent/hom DNM, transmitted/untransmitted, Ts/Tv) from a VCF + PED — value-exact to bcftools +trio-stats (0-diff), 1.68× single-thread / 2× lower RSS |
+| [rsomics-vcf-tstv-strat](https://github.com/omics-rust/rsomics-vcf-tstv-strat) | Stratified transition/transversion statistics of a VCF (`--by count\|qual`) — Ts/Tv per ALT-allele-count bin or cumulative by QUAL threshold — value-exact to vcftools 0.1.17 --TsTv-by-count / --TsTv-by-qual (by-count BYTE-IDENTICAL; by-qual byte-identical except the last row's N_Tv_GT where vcftools has a nondeterministic uninitialized-memory bug → ours emits the correct 0/nan, documented), ~2.7× / ~2.6× vs vcftools |
 | [rsomics-vcf-utils](https://github.com/omics-rust/rsomics-vcf-utils) | VCF utility toolkit — view, filter, count, stats, and convert operations |
 | [rsomics-vcf-validate](https://github.com/omics-rust/rsomics-vcf-validate) | Validate VCF format integrity |
 | [rsomics-vcf-view](https://github.com/omics-rust/rsomics-vcf-view) | Subset and filter VCF records — Rust port of bcftools view |
