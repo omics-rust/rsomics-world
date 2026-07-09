@@ -6,6 +6,7 @@ _Generated 2026-05-30 — 231 crates._
 
 | crate | description |
 |---|---|
+| [rsomics-aa-code](https://github.com/omics-rust/rsomics-aa-code) | Amino-acid one-letter ↔ three-letter code conversion (`--to three`/`one`; literal or FASTA) — `seq3` (1→3, case-sensitive, unknown→Xaa) and `seq1` (3→1, case-insensitive, reads len/3 whole triples, unknown→X); `*`↔Ter + B/J/X/Z/U/O ambiguity round-trip — value-exact (BYTE-EXACT, 15M chars 0 diff on 5M aa) to Bio.SeqUtils.seq3/seq1, 22.8× end-to-end / ~16–25× compute vs pure-Python Biopython |
 | [rsomics-adf-test](https://github.com/omics-rust/rsomics-adf-test) | Augmented Dickey-Fuller unit-root test — value-exact to statsmodels.tsa.stattools.adfuller 0.14.6 (all regression types c/ct/ctt/n, all autolag methods AIC/BIC/t-stat/none, MacKinnon 1994 p-value + 2010 critical values), 6.7× compute / 216× end-to-end vs Python |
 | [rsomics-aitchison-ops](https://github.com/omics-rust/rsomics-aitchison-ops) | Aitchison-simplex algebra (closure / centralize / perturb / power) on compositional data — scikit-bio CoDA port (value-exact, 7.08× -t1) |
 | [rsomics-alexandergovern](https://github.com/omics-rust/rsomics-alexandergovern) | Alexander-Govern robust one-way ANOVA for k groups with unequal variances (variance-weighted + Hill normalizing transform → chi²) — value-exact to scipy.stats.alexandergovern (statistic ≤2e-16, p via cephes igamc), ~5.5–20× single-thread |
