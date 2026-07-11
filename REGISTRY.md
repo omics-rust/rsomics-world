@@ -224,6 +224,7 @@ _Generated 2026-05-30 — 231 crates._
 | [rsomics-fasta-locate](https://github.com/omics-rust/rsomics-fasta-locate) | Locate subsequences/motifs in FASTA files — seqkit locate port |
 | [rsomics-fasta-mask](https://github.com/omics-rust/rsomics-fasta-mask) | Mask FASTA sequences by BED regions — soft-mask (lowercase) or hard-mask (N) |
 | [rsomics-fasta-n50](https://github.com/omics-rust/rsomics-fasta-n50) | Compute N50, L50, and assembly statistics from FASTA |
+| [rsomics-fasta-orf](https://github.com/omics-rust/rsomics-fasta-orf) | Find and extract open reading frames from nucleotide FASTA — all seven `-find` modes, every NCBI genetic-code table, min/maxsize filters, methionine forcing, six-frame search — byte-identical Rust port of EMBOSS getorf 6.6.0.0 on the A/C/G/T/N alphabet of real assemblies (4.4–5.4× single-thread; extended IUPAC ambiguity codes and `-circular` fail loud / deferred as clean-room-unreproducible) |
 | [rsomics-fasta-sliding](https://github.com/omics-rust/rsomics-fasta-sliding) | Sliding-window subsequence extraction from FASTA — seqkit sliding port |
 | [rsomics-fasta-stats](https://github.com/omics-rust/rsomics-fasta-stats) | Per-record statistics for FASTA files (num_seqs, sum_len, GC%, N50, …) — Rust port of `seq |
 | [rsomics-fasta-subseq](https://github.com/omics-rust/rsomics-fasta-subseq) | Extract FASTA subsequences by 1-based region — seqkit subseq port |
