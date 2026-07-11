@@ -546,7 +546,7 @@ _Generated 2026-05-30 — 231 crates._
 | [rsomics-vcf-freq-table](https://github.com/omics-rust/rsomics-vcf-freq-table) | Allele frequency and count tables from VCF — byte-identical to vcftools 0.1.17 --freq/--freq2/--counts/--counts2 (REF-first allele order, N_CHR=called diploid alleles×2, %g formatting), 1.85× vs vcftools on 100k-variant VCF |
 | [rsomics-vcf-fixref](https://github.com/omics-rust/rsomics-vcf-fixref) | Check/fix VCF REF allele and strand against a reference FASTA — Rust port of bcftools +fix |
 | [rsomics-vcf-gtcheck](https://github.com/omics-rust/rsomics-vcf-gtcheck) | Sample concordance / discordance estimator — Rust port of bcftools gtcheck |
-| [rsomics-vcf-head](https://github.com/omics-rust/rsomics-vcf-head) | Print the VCF header and the first N records — Rust port of bcftools head |
+| [rsomics-vcf-head](https://github.com/omics-rust/rsomics-vcf-head) | Print the VCF header and first N records — byte-exact reparse port of bcftools head (canonical ##FILTER=PASS + htslib value re-rendering via rsomics-vcf-valfmt), 1.16× |
 | [rsomics-vcf-indel-stats](https://github.com/omics-rust/rsomics-vcf-indel-stats) | Per-site indel length (DLEN) + VAF (DVAF) distribution + ins/del/frameshift/inframe counts — byte-identical to bcftools +indel-stats, 1.70× single-thread / 2× lower RSS |
 | [rsomics-vcf-indv-stats](https://github.com/omics-rust/rsomics-vcf-indv-stats) | Per-individual VCF statistics — byte-identical to vcftools 0.1.17 --TsTv-summary (2.23×) / --singletons (1.79×) / --depth (2.18×) |
 | [rsomics-vcf-index](https://github.com/omics-rust/rsomics-vcf-index) | Index a bgzipped VCF (.csi/.tbi) — Rust port of bcftools index |
