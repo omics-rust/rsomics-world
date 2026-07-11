@@ -485,6 +485,7 @@ _Generated 2026-05-30 — 231 crates._
 | [rsomics-scalers](https://github.com/omics-rust/rsomics-scalers) | Per-feature ML preprocessing — RobustScaler (median/IQR), MinMaxScaler, MaxAbsScaler of a matrix — scikit-learn preprocessing-compatible (value-exact bit-identical, 1.57–2.53× compute / 7–8× both-serialize -t1) |
 | [rsomics-seacr](https://github.com/omics-rust/rsomics-seacr) | CUT&RUN peak caller (bedGraph → BED peaks) — clean-room Rust port of SEACR |
 | [rsomics-seq-dist](https://github.com/omics-rust/rsomics-seq-dist) | Pairwise nucleotide-sequence distances (Hamming, JC69, K2P) from an aligned FASTA — value-exact to scikit-bio, emits a distance-matrix TSV |
+| [rsomics-seq-grep](https://github.com/omics-rust/rsomics-seq-grep) | Filter FASTA/FASTQ records by ID / header / regexp / sequence-motif / IUPAC — byte-identical Rust port of seqkit grep, 2.5–7.8× faster |
 | [rsomics-seq-stats](https://github.com/omics-rust/rsomics-seq-stats) | Quick stats for any FASTA/FASTQ — count, total bp, N50, GC%, min/max/mean length |
 | [rsomics-seqio](https://github.com/omics-rust/rsomics-seqio) | Fast FASTQ reader for the rsomics-* tool family: decode-only producer thread + parallel pa |
 | [rsomics-seqstats](https://github.com/omics-rust/rsomics-seqstats) | Format-agnostic sequence statistics primitives (length distribution: N50/L50/Nx + quartile |
