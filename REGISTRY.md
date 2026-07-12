@@ -529,6 +529,7 @@ _Generated 2026-05-30 — 231 crates._
 | [rsomics-tsv-join](https://github.com/omics-rust/rsomics-tsv-join) | Join two TSV files by a shared key column — inner/left/outer join |
 | [rsomics-tsv-json](https://github.com/omics-rust/rsomics-tsv-json) | Convert CSV/TSV to JSON (array of objects, `-k` keyed object, `-n` number parsing, null/bool tokens) — value-exact port of csvtk csv2json |
 | [rsomics-tsv-md](https://github.com/omics-rust/rsomics-tsv-md) | Convert CSV/TSV to a GitHub-flavored Markdown table (per-column `-a` alignments, `-w` min-width, go-runewidth display-width padding) — value-exact port of csvtk csv2md |
+| [rsomics-tsv-pretty](https://github.com/omics-rust/rsomics-tsv-pretty) | Render CSV/TSV as a readable aligned table — 10 box styles, per-column alignment/min-max width, word-wrap & clip — value-exact port of csvtk pretty (reimplements the shenwei356/stable table library) |
 | [rsomics-tsv-rst](https://github.com/omics-rust/rsomics-tsv-rst) | Convert CSV/TSV to a reStructuredText grid table (customizable `-k`/`-s`/`-b`/`-p`/`-B` border glyphs, display-width column sizing) — value-exact port of csvtk csv2rst |
 | [rsomics-tsv-select](https://github.com/omics-rust/rsomics-tsv-select) | Select, reorder, or rename columns from TSV files — cut + awk for bioinformatics pipelines |
 | [rsomics-tsv-sort](https://github.com/omics-rust/rsomics-tsv-sort) | Sort CSV/TSV rows by selected fields (string/number/natural/reverse) — value-exact port of csvtk sort (Go strings.ToLower folding, unstable-quicksort parity, fail-loud on malformed rows) |
