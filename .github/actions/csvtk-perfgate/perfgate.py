@@ -82,6 +82,9 @@ def main() -> None:
             *csvtk_args,
             "<fixture>",
         ],
+        "upstream_version": subprocess.check_output(
+            ["csvtk", "version"], text=True
+        ).splitlines()[0],
         "ours_seconds": ours,
         "upstream_seconds": upstream,
         "ours_mean": statistics.fmean(ours),

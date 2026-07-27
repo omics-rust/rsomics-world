@@ -25,7 +25,21 @@ inputs:
 runs:
   using: composite
   steps:
-    - shell: bash
+    - name: Install pinned csvtk oracle
+      shell: bash
+      run: |
+        archive="${RUNNER_TEMP}/csvtk_linux_amd64.tar.gz"
+        curl -fsSL \
+          "https://github.com/shenwei356/csvtk/releases/download/v0.37.0/csvtk_linux_amd64.tar.gz" \
+          -o "${archive}"
+        printf '%s  %s\n' \
+          f6d09493b7ad1ba8c5ee79e6904de9499f7411ca97fcfcd8cf6b816e9c967411 \
+          "${archive}" | sha256sum -c -
+        mkdir -p "${RUNNER_TEMP}/csvtk-perfgate"
+        tar -xzf "${archive}" -C "${RUNNER_TEMP}/csvtk-perfgate"
+        printf '%s\n' "${RUNNER_TEMP}/csvtk-perfgate" >> "${GITHUB_PATH}"
+    - name: Enforce performance baseline
+      shell: bash
       env:
         PERF_BINARY: ${{ inputs.binary }}
         PERF_OURS_ARGS: ${{ inputs.ours-args }}
