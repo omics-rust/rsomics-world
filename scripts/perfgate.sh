@@ -123,7 +123,7 @@ mkdir -p "$(dirname "$out")"
   echo "- machine: $(uname -sm) | $(cpu_id) | $(ncores) cores"
   echo "- fixture: $FIXTURE — ${fix_size} bytes — sha256 ${fix_sha}"
   [ -n "$FIXTURE2" ] && echo "- fixture2: $FIXTURE2 — $(wc -c < "$FIXTURE2" | tr -d ' ') bytes — sha256 $(sha256 "$FIXTURE2")"
-  echo "- hyperfine: warmup ${WARMUP}, min-runs ${MINRUNS}, shell=none"
+  echo "- hyperfine: warmup ${WARMUP}, min-runs ${MINRUNS}, shell=sh"
   echo
   printf '| side | mean (s) | σ | min | max |\n|---|---|---|---|---|\n'
   printf '| ours | %.4f | %.4f | %.4f | %.4f |\n' "$o_mean" "$o_sd" "$o_min" "$o_max"
