@@ -27,7 +27,8 @@
 # signal that an optimisation pass is owed before any tag.
 set -euo pipefail
 
-NAME=  FIXTURE=  FIXTURE2=  OURS_BIN=  OURS_ARGS=  UP_BIN=  UP_ARGS=  UP_VER=  WARMUP=3  MINRUNS=10
+NAME=  FIXTURE=  FIXTURE2=  OURS_BIN=  OURS_ARGS=  UP_BIN=  UP_ARGS=  UP_VER=  WARMUP=3  RUNS=10
+THREADS=  OUTPUT_MODE=
 while [ $# -gt 0 ]; do
   case "$1" in
     --name)             NAME=$2; shift 2 ;;
@@ -39,7 +40,10 @@ while [ $# -gt 0 ]; do
     --upstream-args)    UP_ARGS=$2; shift 2 ;;
     --upstream-version) UP_VER=$2; shift 2 ;;
     --warmup)           WARMUP=$2; shift 2 ;;
-    --min-runs)         MINRUNS=$2; shift 2 ;;
+    --runs)             RUNS=$2; shift 2 ;;
+    --min-runs)         RUNS=$2; shift 2 ;;
+    --threads)          THREADS=$2; shift 2 ;;
+    --output-mode)      OUTPUT_MODE=$2; shift 2 ;;
     *) echo "perfgate: unknown arg $1" >&2; exit 2 ;;
   esac
 done
@@ -93,41 +97,60 @@ ours_args=$(subst "$OURS_ARGS" out.ours)
 up_args=$(subst "$UP_ARGS" out.up)
 mkdir -p "$work/out.ours.d" "$work/out.up.d"
 
-tmp_json=$(mktemp); trap 'rm -rf "$work" "$tmp_json"' EXIT
-hyperfine --warmup "$WARMUP" --min-runs "$MINRUNS" --shell=sh \
+tmp_json=$(mktemp "${TMPDIR:-/tmp}/perfgate-json.XXXXXX")
+trap 'rm -rf "$work" "$tmp_json"' EXIT
+hyperfine --warmup "$WARMUP" --runs "$RUNS" --shell=sh \
   --export-json "$tmp_json" \
   -n ours     "$work/ours $ours_args > $work/ours.stdout" \
   -n upstream "$work/upstream $up_args > $work/upstream.stdout" >/dev/null
 
-read -r o_mean o_sd o_min o_max u_mean u_sd u_min u_max ratio verdict <<EOF
+read -r o_mean o_sd o_min o_max o_n o_raw u_mean u_sd u_min u_max u_n u_raw ratio verdict <<EOF
 $(python3 - "$tmp_json" <<'PY'
 import json, sys
 r = json.load(open(sys.argv[1]))["results"]
 o = next(x for x in r if x["command"] == "ours")
 u = next(x for x in r if x["command"] == "upstream")
 ratio = u["mean"] / o["mean"]
-print(o["mean"], o["stddev"], o["min"], o["max"],
-      u["mean"], u["stddev"], u["min"], u["max"],
+print(o["mean"], o["stddev"], o["min"], o["max"], len(o["times"]),
+      ",".join(f"{x:.9f}" for x in o["times"]),
+      u["mean"], u["stddev"], u["min"], u["max"], len(u["times"]),
+      ",".join(f"{x:.9f}" for x in u["times"]),
       f"{ratio:.4f}", "PASS" if ratio > 1.0 else "FAIL")
 PY
 )
 EOF
+
+display_args() {
+  local s=$1
+  s=${s//FIX2/<fixture2>}
+  s=${s//FIX/<fixture>}
+  s=${s//OUTDIR/<scratch-output-dir>}
+  s=${s//OUT/<scratch-output>}
+  echo "$s"
+}
+ours_display=$(display_args "$OURS_ARGS")
+up_display=$(display_args "$UP_ARGS")
 
 out=".autopilot/state/perf-$(date +%Y-%m-%d).md"
 mkdir -p "$(dirname "$out")"
 {
   echo "## $NAME — $(date -u +%Y-%m-%dT%H:%M:%SZ)"
   echo
-  echo "- ours: \`$(basename "$OURS_BIN") $OURS_ARGS <fixture>\` @ ${commit}${dirty}"
-  echo "- upstream: \`$UP_BIN $UP_ARGS <fixture>\` — version: ${up_ver_str}"
+  echo "- ours: \`$(basename "$OURS_BIN") $ours_display > <ours-stdout>\` @ ${commit}${dirty}"
+  echo "- upstream: \`$UP_BIN $up_display > <upstream-stdout>\` — version: ${up_ver_str}"
   echo "- machine: $(uname -sm) | $(cpu_id) | $(ncores) cores"
   echo "- fixture: $FIXTURE — ${fix_size} bytes — sha256 ${fix_sha}"
   [ -n "$FIXTURE2" ] && echo "- fixture2: $FIXTURE2 — $(wc -c < "$FIXTURE2" | tr -d ' ') bytes — sha256 $(sha256 "$FIXTURE2")"
-  echo "- hyperfine: warmup ${WARMUP}, min-runs ${MINRUNS}, shell=sh"
+  echo "- hyperfine: warmup ${WARMUP}, runs ${RUNS}, shell=sh"
+  [ -n "$THREADS" ] && echo "- effective threads: $THREADS"
+  [ -n "$OUTPUT_MODE" ] && echo "- output: $OUTPUT_MODE"
   echo
-  printf '| side | mean (s) | σ | min | max |\n|---|---|---|---|---|\n'
-  printf '| ours | %.4f | %.4f | %.4f | %.4f |\n' "$o_mean" "$o_sd" "$o_min" "$o_max"
-  printf '| upstream | %.4f | %.4f | %.4f | %.4f |\n' "$u_mean" "$u_sd" "$u_min" "$u_max"
+  printf '| side | n | mean (s) | σ | min | max |\n|---|---:|---:|---:|---:|---:|\n'
+  printf '| ours | %d | %.4f | %.4f | %.4f | %.4f |\n' "$o_n" "$o_mean" "$o_sd" "$o_min" "$o_max"
+  printf '| upstream | %d | %.4f | %.4f | %.4f | %.4f |\n' "$u_n" "$u_mean" "$u_sd" "$u_min" "$u_max"
+  echo
+  echo "- ours raw times (s): \`$o_raw\`"
+  echo "- upstream raw times (s): \`$u_raw\`"
   echo
   echo "**ratio (upstream/ours): ${ratio}× → ${verdict}** (contract: strictly > 1.0×)"
   echo
