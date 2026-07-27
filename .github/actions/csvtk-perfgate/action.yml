@@ -1,0 +1,38 @@
+name: csvtk performance gate
+description: Fail when an rsomics CSV tool regresses by more than 10% from its reviewed ratio
+
+inputs:
+  binary:
+    description: Path to the release binary
+    required: true
+  ours-args:
+    description: Arguments before the generated CSV fixture
+    required: true
+  csvtk-operation:
+    description: csvtk subcommand
+    required: true
+  csvtk-args:
+    description: csvtk arguments before the generated CSV fixture
+    required: true
+  baseline-ratio:
+    description: Reviewed upstream/rsomics mean-time ratio
+    required: true
+  runs:
+    description: Timed samples per side
+    required: false
+    default: "10"
+
+runs:
+  using: composite
+  steps:
+    - shell: bash
+      env:
+        PERF_BINARY: ${{ inputs.binary }}
+        PERF_OURS_ARGS: ${{ inputs.ours-args }}
+        PERF_CSVTK_OPERATION: ${{ inputs.csvtk-operation }}
+        PERF_CSVTK_ARGS: ${{ inputs.csvtk-args }}
+        PERF_BASELINE_RATIO: ${{ inputs.baseline-ratio }}
+        PERF_RUNS: ${{ inputs.runs }}
+      run: >-
+        python3
+        "${{ github.action_path }}/perfgate.py"
