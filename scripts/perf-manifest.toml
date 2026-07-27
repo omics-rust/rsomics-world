@@ -8,7 +8,7 @@
 #
 # Placeholders in *_args: FIX = input fixture, FIX2 = second input,
 # OUT = scratch output. fixture/fixture2 = "<kind>:<a>:<b>" for
-# scripts/mkfixture.py (kind ∈ fasta|fastq|bed).
+# scripts/mkfixture.py (kind ∈ fasta|fastq|fastqgz|bed|csv|bam|vcf).
 
 [spec.rsomics-fasta-stats]
 # aarch64-apple-darwin (mini_m2): 9.1 ms vs seqkit 25.1 ms = 2.76× PASS
@@ -1279,3 +1279,26 @@ ours_args        = "--min-qual 30 FIX"
 upstream_bin     = "bcftools"
 upstream_args    = "view -i 'QUAL>=30' FIX"
 upstream_version = "bcftools --version"
+
+# csvtk ports share the deterministic 1M-row, 100k-cardinality CSV fixture.
+# Both sides use their single-threaded paths and emit uncompressed stdout.
+[spec.rsomics-tsv-freq]
+fixture          = "csv:1000000:100000"
+ours_args        = "-f group FIX"
+upstream_bin     = "csvtk"
+upstream_args    = "freq -f group FIX"
+upstream_version = "csvtk version"
+
+[spec.rsomics-tsv-uniq]
+fixture          = "csv:1000000:100000"
+ours_args        = "-f group FIX"
+upstream_bin     = "csvtk"
+upstream_args    = "uniq -f group FIX"
+upstream_version = "csvtk version"
+
+[spec.rsomics-tsv-json]
+fixture          = "csv:1000000:100000"
+ours_args        = "-i '' FIX"
+upstream_bin     = "csvtk"
+upstream_args    = "csv2json -i '' FIX"
+upstream_version = "csvtk version"
