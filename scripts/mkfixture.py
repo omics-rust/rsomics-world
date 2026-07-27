@@ -5,6 +5,7 @@
     mkfixture.py fastq   OUT n_reads read_len     # 3' TruSeq adapter on ~60%
     mkfixture.py fastqgz OUT n_reads read_len     # same bytes, gzip (mtime=0)
     mkfixture.py bed     OUT n_intervals n_chroms  # sorted, overlapping
+    mkfixture.py csv     OUT n_records cardinality # repeated categorical keys
 
 Fixed seed → byte-identical across runs, so a fixture's sha256 is a
 stable identity recorded by perfgate.
@@ -67,6 +68,15 @@ elif KIND == "bed":
     rows.sort(key=lambda r: (r[0], r[1]))
     with open(OUT, "w") as f:
         f.writelines(f"{c}\t{s}\t{e}\n" for c, s, e in rows)
+
+elif KIND == "csv":
+    with open(OUT, "w") as f:
+        f.write("id,group,value,sample\n")
+        for i in range(A):
+            group = i % B
+            value = (i * 2_654_435_761) % 1_000_003
+            sample = (i * 17) % B
+            f.write(f"{i},group_{group},{value},sample_{sample}\n")
 
 elif KIND == "genome":
     # A = n_chroms. Lexicographic chrom order matches the `bed` kind's
