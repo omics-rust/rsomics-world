@@ -1302,3 +1302,24 @@ ours_args        = "-i '' FIX"
 upstream_bin     = "csvtk"
 upstream_args    = "csv2json -i '' FIX"
 upstream_version = "csvtk version"
+
+[spec.rsomics-tsv-md]
+fixture          = "csv:1000000:100000"
+ours_args        = "FIX"
+upstream_bin     = "csvtk"
+upstream_args    = "csv2md FIX"
+upstream_version = "csvtk version"
+
+[spec.rsomics-tsv-rst]
+fixture          = "csv:1000000:100000"
+ours_args        = "FIX"
+upstream_bin     = "csvtk"
+upstream_args    = "csv2rst FIX"
+upstream_version = "csvtk version"
+
+[spec.rsomics-tsv-pretty]
+fixture          = "csv:1000000:100000"
+ours_args        = "FIX"
+upstream_bin     = "csvtk"
+upstream_args    = "pretty FIX"
+upstream_version = "csvtk version"
