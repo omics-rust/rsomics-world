@@ -17,8 +17,8 @@ phase.
 | `rsomics-seqio` | keep; redesign around FASTA/FASTQ stream contracts | `seq`, `fastq-preprocess`, `fastq-qc` |
 | `rsomics-kmer` | keep; repair boundaries and expose only general primitives | `seq`; later `metagenomics`, `sketch` |
 | `rsomics-intervals` | keep; repair coordinate safety and remove BED policy | `bed`, `annotation` |
-| `rsomics-bamio` | keep; narrow concrete backend types | `bam`, `vcf`, `count` |
-| `rsomics-pileup` | keep; add sortedness and real compatibility gates | `bam`, `vcf` |
+| `rsomics-bamio` | keep; narrow concrete backend types | `bam`, `vcf`, `count`, `methyl` |
+| `rsomics-pileup` | keep; add sortedness and real compatibility gates | `bam`, `vcf`, `methyl` |
 | `rsomics-stats` | keep; migrate only primitives used by two workflows | DE workflows, `sc`, `ecology`, `popgen`, `plink` |
 | `rsomics-phylo-tree` | keep; re-establish topology and Newick invariants | `phylo`, `ecology` |
 | `rsomics-igzip` | temporary; internalize into sequence I/O | `seqio` is the only current consumer |
@@ -197,11 +197,15 @@ or another real product demonstrates the same policy-free query contract.
 `rsomics-bamio` exposes validated records and stable reader/writer contracts,
 not every current batch or work-stealing implementation type. `rsomics-count`
 adds a concrete sequential and parallel record-reader consumer without moving
-feature assignment or annotation policy into the foundation.
+feature assignment or annotation policy into the foundation. `rsomics-methyl`
+adds BAM/CRAM records, indexed regions, and bisulfite-specific aux-tag
+consumption while keeping methylation policy product-private.
 
 `rsomics-pileup` adds input-order validation, low-allocation column views,
 complex CIGAR and overlap tests, filter-combination tests, and real oracle
-comparison before product use.
+comparison before product use. Methyl extraction provides the third consumer
+for checked columns and generic mate-overlap evidence; cytosine context and
+bisulfite calling do not enter the foundation.
 
 ### Analysis wave
 

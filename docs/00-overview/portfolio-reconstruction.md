@@ -163,13 +163,13 @@ named products, not those raw counts, justify the boundary:
 |---|---:|---|
 | `rsomics-common` | 560 | all 30 accepted products |
 | `rsomics-help` | 317 | all 30 accepted CLI products |
-| `rsomics-bamio` | 70 | `bam`, `vcf`, `count`, `rnaseq-qc`, `signal` |
+| `rsomics-bamio` | 70 | `bam`, `vcf`, `count`, `methyl`, `rnaseq-qc`, `signal` |
 | `rsomics-intervals` | 11 | `bed`, `annotation`, `peak`, `signal` |
 | `rsomics-kmer` | 6 | `seq`, `fastq-preprocess`, `metagenomics`, `sketch` |
 | `rsomics-seqio` | 8 | `seq`, `fastq-preprocess`, `fastq-qc` |
 | `rsomics-stats` | 3 | `deseq`, `edger`, `limma`, `sc`, `ecology`, `popgen`, `plink` |
 | `rsomics-phylo-tree` | 9 | `phylo`, `ecology` |
-| `rsomics-pileup` | 2 | `bam`, `vcf` |
+| `rsomics-pileup` | 2 | `bam`, `vcf`, `methyl` |
 
 The following current libraries have zero or one target-family consumer and
 should default to internalization unless a second concrete product is found:
@@ -190,6 +190,8 @@ flowchart LR
     common["common"] --> products["nearly all target products"]
     help["help"] --> cli["30 CLI families"]
     bamio["bamio"] --> bam["bam"]
+    bamio --> count["count"]
+    bamio --> methyl["methyl"]
     bamio --> signal["signal"]
     bamio --> rnaqc["rnaseq-qc"]
     bamio --> vcf["vcf"]
@@ -206,6 +208,7 @@ flowchart LR
     tree["phylo-tree"] --> phylo["phylo"]
     tree --> ecology["ecology"]
     pileup["pileup"] --> bam
+    pileup --> methyl
     pileup --> vcf
 ```
 

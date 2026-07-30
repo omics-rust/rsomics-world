@@ -33,7 +33,7 @@ operation will ship. It records:
 | `rsomics-liftover` | 1 | [audited](liftover.md) |
 | `rsomics-limma` | 16 | queued |
 | `rsomics-metagenomics` | 5 | boundary review required with sketch |
-| `rsomics-methyl` | 1 | queued |
+| `rsomics-methyl` | 1 | [audited](methyl.md) |
 | `rsomics-minimap2` | 1 | live FFI-backed product; dossier refresh queued |
 | `rsomics-peak` | 5 | queued |
 | `rsomics-phylo` | 11 | queued |

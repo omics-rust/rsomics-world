@@ -37,7 +37,7 @@ exclusions.
 - [x] `rsomics-liftover`
 - [ ] `rsomics-limma`
 - [ ] `rsomics-metagenomics`
-- [ ] `rsomics-methyl`
+- [x] `rsomics-methyl`
 - [ ] `rsomics-minimap2`
 - [ ] `rsomics-peak`
 - [ ] `rsomics-phylo`
