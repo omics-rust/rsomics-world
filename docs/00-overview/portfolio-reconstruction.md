@@ -230,14 +230,14 @@ The reset is a namespace cleanup, not source-code destruction:
   now retains the existing allowlisted repositories, `rsomics-world`,
   organization metadata, and the temporary compatibility dependency
   `rsomics-igzip`.
-- crates.io deletion follows the historical dependency graph in reverse
-  topological order. `rsomics-igzip` is temporarily protected because published
-  `rsomics-seqio` versions depend on it.
+- 594 crates.io reset candidates were deleted in reverse topological order and
+  verified through exact success responses. `rsomics-igzip` is temporarily
+  protected because published `rsomics-seqio` versions depend on it.
 
-The intended steady state is therefore 12 currently published crates: the 11
-allowlisted names that already exist plus temporary `rsomics-igzip`. The other
-28 product-family names in the allowlist are product boundaries to reconstruct,
-not empty packages to publish immediately.
+The completed reset leaves 12 published crates: the 11 allowlisted names that
+already existed plus temporary `rsomics-igzip`. The other 28 product-family
+names in the allowlist are product boundaries to reconstruct, not empty
+packages to publish immediately.
 
 Machine-readable progress and failure journals live under `.autopilot/state/`.
 Only an exact success response is recorded as a deletion; rate-limited or
