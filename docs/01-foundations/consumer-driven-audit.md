@@ -54,7 +54,7 @@ APIs:
 |---|---|---|---|
 | `rsomics-intervals` | `c13cb75c318` | checked the coordinate range accepted by the COITrees backend and added fallible index/query entry points | exact-head CI green; consumer contracts, four-native-target CI, and performance evidence remain |
 | `rsomics-kmer` | `e937817e629` | made `k = 32` well-defined, added checked encode/decode/canonical operations, and preserved the published constructor shape | exact-head CI green; two product contracts, four-native-target CI, and comparative performance remain |
-| `rsomics-seqio` | `2aff79854e9` | replaced the ambiguous record model with strict allocation-reusing FASTA/FASTQ streams, removed direct `rsomics-igzip` use, and made gzip/BGZF failures loud | four-native-target exact-head CI green; adversarial regression fixtures and comparative throughput/RSS remain |
+| `rsomics-seqio` | `0c20b6af566` | replaced the ambiguous record model with strict allocation-reusing FASTA/FASTQ streams, removed direct `rsomics-igzip` use, and made gzip/BGZF failures loud | four-native-target exact-head CI and compressed-stream adversarial regressions green; comparative throughput/RSS remains |
 
 None of these revisions has been published. A green foundation CI establishes
 the implementation baseline; it does not replace the two-consumer completion

@@ -1,2 +1,3 @@
 # New product repositories excluded from the historical implementation pool.
 rsomics-bed
+rsomics-seq
