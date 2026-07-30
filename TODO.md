@@ -40,7 +40,7 @@ exclusions.
 - [x] `rsomics-methyl`
 - [x] `rsomics-minimap2`
 - [x] `rsomics-peak`
-- [ ] `rsomics-phylo`
+- [x] `rsomics-phylo`
 - [ ] `rsomics-plink`
 - [ ] `rsomics-popgen`
 - [ ] `rsomics-rnaseq-qc`

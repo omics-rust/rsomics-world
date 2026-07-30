@@ -32,7 +32,7 @@ Status meanings are defined in [CONVENTIONS.md](CONVENTIONS.md).
 | `rsomics-methyl` | planned | methylation extraction and analysis |
 | `rsomics-minimap2` | live | published legacy FFI wrapper; reconstruction required |
 | `rsomics-peak` | planned | chromatin peak calling, annotation, and quantification |
-| `rsomics-phylo` | planned | tree construction, distance, and comparison |
+| `rsomics-phylo` | planned | alignment trimming, evolutionary distance, tree inference, comparison, measures, and later likelihood/species-tree/placement workflows |
 | `rsomics-plink` | planned | PLINK-style genotype analysis |
 | `rsomics-popgen` | planned | population-genetic statistics outside the PLINK workflow |
 | `rsomics-rnaseq-qc` | planned | RSeQC/Picard-like RNA-seq quality control |

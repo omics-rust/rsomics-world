@@ -106,7 +106,7 @@ The current implementation pool maps to 30 product families:
 | `rsomics-table` | 16 | csvtk/datamash-style tabular suite |
 | `rsomics-fastq-preprocess` | 12 | trimming, correction, UMI, deduplication |
 | `rsomics-deseq` | 12 | DESeq2 workflow |
-| `rsomics-phylo` | 11 | tree construction, distances, comparison |
+| `rsomics-phylo` | 11 | alignment trimming, evolutionary distance, tree inference, comparison, and measures |
 | `rsomics-structure` | 9 | PDB and protein-structure analysis |
 | `rsomics-composition` | 10 | compositional transforms, zero handling, and inference |
 | `rsomics-index` | 4 | bgzip/tabix and sequence index utilities |
@@ -207,7 +207,8 @@ flowchart LR
     seqio --> fastq
     seqio --> fastqqc["fastq-qc"]
     seqio --> minimap2
-    tree["phylo-tree"] --> phylo["phylo"]
+    tree["phylo-tree"] --> composition["composition"]
+    tree --> phylo["phylo"]
     tree --> ecology["ecology"]
     pileup["pileup"] --> bam
     pileup --> methyl

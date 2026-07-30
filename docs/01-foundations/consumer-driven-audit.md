@@ -222,6 +222,13 @@ declared Newick grammar before `composition`, `phylo`, and `ecology` depend on
 it. Composition consumes only validated topology and tip identities for
 tree-derived ILR bases.
 
+The `rsomics-phylo` dossier supplies the second concrete contract: checked
+construction, immutable topology, traversal, root interpretation, tip identity,
+and Newick parsing/emission. Inference, split-distance policy, tree measures,
+and result schemas stay in the product. The current foundation's public mutable
+nodes, invalid `Default` tree, incomplete label grammar, and unchecked
+non-finite branch lengths block its next release.
+
 ## Completion gate per wave
 
 A foundation wave is complete when:

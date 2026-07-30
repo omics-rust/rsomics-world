@@ -36,7 +36,7 @@ operation will ship. It records:
 | `rsomics-methyl` | 1 | [audited](methyl.md) |
 | `rsomics-minimap2` | 1 | [audited](minimap2.md); legacy release requires reconstruction |
 | `rsomics-peak` | 5 | [audited](peak.md); four workflow assets and one discarded generic candidate |
-| `rsomics-phylo` | 11 | queued |
+| `rsomics-phylo` | 11 | [audited](phylo.md) |
 | `rsomics-plink` | 28 | queued |
 | `rsomics-popgen` | 16 | queued |
 | `rsomics-rnaseq-qc` | 26 | queued |
