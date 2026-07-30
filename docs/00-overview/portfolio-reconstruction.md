@@ -98,7 +98,7 @@ The current implementation pool maps to 30 product families:
 | `rsomics-sc` | 29 | stateful single-cell analysis workflow |
 | `rsomics-plink` | 28 | PLINK-style genotype analysis |
 | `rsomics-rnaseq-qc` | 26 | RSeQC/Picard RNA-seq QC |
-| `rsomics-ecology` | 23 | diversity, ordination, permutation analyses |
+| `rsomics-ecology` | 19 | diversity, ordination, permutation analyses |
 | `rsomics-edger` | 17 | edgeR workflow |
 | `rsomics-popgen` | 16 | non-PLINK population genetics |
 | `rsomics-limma` | 16 | limma workflow |
@@ -108,7 +108,7 @@ The current implementation pool maps to 30 product families:
 | `rsomics-deseq` | 12 | DESeq2 workflow |
 | `rsomics-phylo` | 11 | tree construction, distances, comparison |
 | `rsomics-structure` | 9 | PDB and protein-structure analysis |
-| `rsomics-composition` | 6 | compositional transforms and inference |
+| `rsomics-composition` | 10 | compositional transforms, zero handling, and inference |
 | `rsomics-index` | 4 | bgzip/tabix and sequence index utilities |
 | `rsomics-metagenomics` | 5 | current taxonomy/amplicon utilities |
 | `rsomics-peak` | 5 | chromatin peak calling, annotation, and quantification |

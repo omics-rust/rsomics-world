@@ -112,6 +112,20 @@ def contains_any(name: str, words: set[str]) -> bool:
     return bool(tokens & words)
 
 
+COMPOSITION_CRATES = {
+    "rsomics-aitchison-ops",
+    "rsomics-alr",
+    "rsomics-ancom",
+    "rsomics-clr",
+    "rsomics-ilr",
+    "rsomics-ilr-basis",
+    "rsomics-multi-replace",
+    "rsomics-rclr",
+    "rsomics-struc-zero",
+    "rsomics-vlr",
+}
+
+
 def route(name: str, upstreams: list[str], layer: str) -> tuple[str, str, str]:
     if layer == "A":
         return "foundation", name, "high"
@@ -204,9 +218,7 @@ def route(name: str, upstreams: list[str], layer: str) -> tuple[str, str, str]:
     if "limma" in upstream_set:
         return "bulk-expression", "rsomics-limma", "high"
     if "scikit-bio" in upstream_set:
-        if contains_any(
-            name, {"alr", "clr", "ilr", "aitchison", "ancom", "composition"}
-        ):
+        if name in COMPOSITION_CRATES:
             return "compositional", "rsomics-composition", "high"
         if contains_any(name, {"tree", "phylo", "unifrac", "faith", "tipdist"}):
             return "phylogenetics", "rsomics-phylo", "high"
@@ -272,9 +284,7 @@ def route(name: str, upstreams: list[str], layer: str) -> tuple[str, str, str]:
     if primary == "scikit-image":
         return "bioimage-review", "rsomics-image", "medium"
     if primary == "scikit-bio":
-        if contains_any(
-            name, {"alr", "clr", "ilr", "aitchison", "ancom", "composition"}
-        ):
+        if name in COMPOSITION_CRATES:
             return "compositional", "rsomics-composition", "medium"
         if contains_any(name, {"tree", "phylo", "unifrac", "faith", "tipdist"}):
             return "phylogenetics", "rsomics-phylo", "medium"

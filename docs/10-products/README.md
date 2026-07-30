@@ -21,10 +21,10 @@ operation will ship. It records:
 | `rsomics-annotation` | 2 | [audited](interval-annotation-index.md#rsomics-annotation) |
 | `rsomics-bam` | 39 | queued after the low-state pilots |
 | `rsomics-bed` | 42 | [audited](interval-annotation-index.md#rsomics-bed) |
-| `rsomics-composition` | 6 | queued |
+| `rsomics-composition` | 10 | queued |
 | `rsomics-count` | 1 | [audited](count.md) |
 | `rsomics-deseq` | 12 | queued |
-| `rsomics-ecology` | 23 | queued |
+| `rsomics-ecology` | 19 | queued |
 | `rsomics-edger` | 17 | queued |
 | `rsomics-expression` | 2 | boundary review required with DE products |
 | `rsomics-fastq-preprocess` | 12 | [audited](sequence-fastq.md#rsomics-fastq-preprocess) |
