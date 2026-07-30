@@ -1,7 +1,7 @@
 # Sequence and FASTQ product dossier
 
-Status: source audit complete; first release slices selected; the initial
-`rsomics-seq` consumer slice is in a verified public repository.
+Status: source audit complete; first release slices selected; `rsomics-seq`
+and `rsomics-fastq-preprocess` have verified public repositories.
 
 The source pool contains 47 relevant historical crates after routing
 corrections: 34 for `rsomics-seq`, 12 for preprocessing, and one for QC. The
@@ -9,9 +9,10 @@ reuse unit is an algorithm module plus its evidence, not the old CLI shell.
 
 ## Shared design
 
-The three products share `rsomics-seqio` for strict FASTA/FASTQ I/O and use
-`rsomics-common` and `rsomics-help` for a product/subcommand command tree.
-`rsomics-kmer` serves sequence k-mer operations and preprocessing algorithms.
+The three products share `rsomics-seqio` for strict FASTA/FASTQ I/O.
+`rsomics-common` supplies the execution and output contract used by the first
+two implemented products. `rsomics-kmer` currently serves sequence k-mer
+operations; it is not a preprocessing dependency.
 
 The first end-to-end gate is:
 
@@ -65,14 +66,13 @@ skips ambiguity-bearing windows, constrains `k` to the foundation's checked
 `1..=32` representation, and adds an explicit canonical mode. This does not
 promote a new public crate or make k-mer counting product-independent policy.
 
-The initial `stats + kmers` consumer slice is implemented at
-`omics-rust/rsomics-seq` revision
-`a24b0936b52cd29e044c8208cafc6e7a39e5e010`. Its exact-head CI passes on
-native Linux and macOS for both `x86_64` and `aarch64`, including strict
-Clippy, 26 tests, live SeqKit 2.13.0 differentials, an independent ordered
-k-mer oracle, and benchmark smoke tests. `grep`, `convert`, and `validate`
-remain part of the selected first release scope, so the repository is not
-publish-ready.
+The complete first slice is implemented at `omics-rust/rsomics-seq` revision
+`f2c14d4e877b`. Its exact-head CI passes on native Linux and macOS for both
+`x86_64` and `aarch64`, including strict Clippy, 43 tests, six live SeqKit
+2.13.0 differentials, an independent ordered k-mer oracle, and five benchmark
+smoke tests. It is not publish-ready until formal same-machine timing and
+peak-RSS evidence pass, including the Jellyfish comparison for `kmers`, and
+its unpublished foundation revisions are released.
 
 ### Later operation groups
 
@@ -147,6 +147,16 @@ contracts.
 Correction and BBDuk-style filtering ship only after adversarial
 compatibility and representative hot-path benchmarks. Existing small
 subprocess benches are not release evidence.
+
+The initial `run`, `trim`, and `filter` slice is implemented at
+`omics-rust/rsomics-fastq-preprocess` revision `5f2eab1d5939`. It combines
+fixed, poly-G/poly-X, quality, N-content, length, and complexity transforms
+over one ordered chunk engine for single-end and paired-end reads. Its
+exact-head CI passes on native Linux and macOS for both `x86_64` and
+`aarch64`, including strict Clippy, 37 tests, four live fastp 1.3.6
+differentials, and a benchmark smoke test. This is an implementation and CI
+baseline, not release evidence: formal same-machine timing, peak RSS, and
+representative-fixture provenance remain required.
 
 ## `rsomics-fastq-qc`
 

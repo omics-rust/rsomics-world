@@ -81,8 +81,9 @@ exclusions.
 - [x] Consolidate golden and compatibility tests for the implemented operations.
 - [ ] Add end-to-end tests composing multiple subcommands.
 - [ ] Benchmark against the real upstream tools.
-- [ ] Review `common/help/seqio/kmer` public API changes through product
-      consumers.
+- [x] Review `common` and `seqio` public API changes through the `seq` and
+      `fastq-preprocess` consumers.
+- [ ] Review `help` and `kmer` through their required second product consumers.
 
 ## P1 — interval pilot
 
