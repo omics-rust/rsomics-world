@@ -1,7 +1,8 @@
 # Interval, annotation, and index product dossier
 
-Status: source audit complete; the BED first slice is in a verified public
-repository; annotation and index implementation has not started.
+Status: the BED first slice is verified. Annotation source assets and upstream
+boundaries have been audited; annotation and index implementation has not
+started.
 
 Routing corrections move table aggregation to `rsomics-table`, SEACR to
 `rsomics-peak`, FASTA masking to `rsomics-bed`, and FASTA indexing to
@@ -83,14 +84,50 @@ performance inputs.
 GFF/GTF parsing, validation, selection, transformation, and annotation-aware
 sequence extraction.
 
-The source assets are `rsomics-gff-utils` and
-`rsomics-transcript-fasta`. The first release slice is:
+The primary behavior sources are:
 
-- parse and validate;
-- inspect/head;
-- extract attributes;
-- convert to BED;
-- transcript FASTA after coordinate semantics are proven.
+- [GFF3 1.26](https://github.com/The-Sequence-Ontology/Specifications/blob/master/gff3.md)
+  for nine-column syntax, directives, percent encoding, feature coordinates,
+  phase, and graph attributes;
+- [Ensembl GFF/GTF format](https://www.ensembl.org/info/website/upload/gff.html?redirect=no)
+  for the supported GTF2 dialect and its inclusive coordinates;
+- [gffread 0.12.9](https://github.com/gpertea/gffread/tree/v0.12.9) for
+  transcript selection, conversion, region filtering, and sequence extraction;
+- [AGAT](https://github.com/NBISweden/AGAT) for the broader operation
+  inventory and malformed real-world dialects, not as a byte-for-byte oracle.
+
+The source assets are `rsomics-gff-utils` and `rsomics-transcript-fasta`.
+`rsomics-gff-utils` contains 27 small commands but reparses the same record in
+most modules and has no shared typed record model. Its useful algorithms and
+fixtures are assets, not the target structure. `rsomics-transcript-fasta` has
+stronger gffread sequence goldens and a reusable transcript assembly path, but
+its parser silently skips short records and swaps inverted coordinates.
+
+The first implementation slice is:
+
+- `validate`, with explicit GFF3 or GTF dialect selection and record-level
+  failures carrying line numbers;
+- `view`, preserving valid records while combining type, attribute, region,
+  containment, and head limits;
+- `to-bed`, converting 1-based inclusive features to 0-based half-open
+  intervals at one checked boundary.
+
+Transcript, CDS, and protein FASTA extraction follows on the same record and
+hierarchy model. It is not advertised until the retained gffread goldens pass
+through that model.
+
+The old command inventory is consolidated as follows:
+
+- count, head, feature/source/chromosome/strand summaries, and attribute
+  inspection belong to `inspect`;
+- feature extraction, grep, subset, and region selection belong to `view`;
+- chromosome rename, sort, and split remain transformations inside this
+  product, considered after the first slice;
+- intron/UTR synthesis requires a validated transcript graph and is not copied
+  from the old line-oriented modules;
+- sequence extraction is refactored then merged from
+  `rsomics-transcript-fasta`;
+- duplicate count-only commands and permissive line splitters are discarded.
 
 Current source behavior is not safe to merge unchanged:
 
@@ -101,8 +138,14 @@ Current source behavior is not safe to merge unchanged:
 - transcript extraction silently swaps reversed coordinates and skips short
   lines.
 
-The target parser must make coordinate systems explicit in types and fail loud
-on malformed records. Conversion to BED occurs at one tested boundary.
+The target parser uses an explicit one-based inclusive feature span and fails
+loud on malformed records. Conversion to `rsomics-intervals::Interval` occurs
+only at the checked BED/region boundary. A one-base feature `1..=1` must become
+`[0, 1)`, and coordinate zero or an inverted span is invalid.
+
+`rsomics-annotation view --region` is a streaming predicate for ordinary
+single-range selection. It must not build an annotation-wide interval tree
+solely to create a second `IntervalIndex` consumer.
 
 ## `rsomics-index`
 
@@ -139,21 +182,23 @@ provides checked index construction and queries around its `i32` backend. The
 product manifest targets 0.3 and CI patches that exact unpublished revision.
 `intersect` consumes the fallible boundary directly.
 
-The checked API is a justified foundation change, but it is not published from
-one consumer alone. `rsomics-bed` supplies the first concrete contract;
-`rsomics-annotation` must supply the second consumer-side contract before the
-foundation release.
+The coordinate model is justified by `rsomics-bed` and the planned
+`rsomics-annotation` conversion boundary. That does not automatically justify
+every public item in the crate. The checked `IntervalIndex` still has only one
+natural product consumer, `rsomics-bed`; it remains unpublished until another
+product such as `rsomics-peak` or `rsomics-signal` demonstrates the same
+policy-free query contract.
 
 BED-specific sort, merge, and write helpers move into `rsomics-bed`.
 The shared foundation retains:
 
 - explicit half-open interval types;
 - strand where geometrically relevant;
-- checked interval indexing with generic payloads;
-- reusable overlap and interval-algebra primitives.
+- reusable overlap primitives demonstrated by BED and annotation;
+- checked interval indexing only after a second index consumer is concrete.
 
-Consumer-contract tests in both `rsomics-bed` and `rsomics-annotation` define
-the public API.
+Consumer-contract tests define the public API item by item. An annotation
+coordinate-conversion test does not count as an index-contract test.
 
 ## Recovery and provenance
 

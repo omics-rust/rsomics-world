@@ -112,7 +112,7 @@ live one level down. Random-access indexes (fai/bai/csi) live in
 
 - [x] **`GFF/GTF`** — feature annotation formats.
   - Reference impl: `C++` · [The Sequence Ontology / Ensembl](http://gmod.org/wiki/GFF3) · spec is public domain; reference parsers in `gffread` (`MIT`)
-  - Existing Rust: [`noodles-gff`](https://crates.io/crates/noodles-gff) `0.57.0`, [`noodles-gtf`](https://crates.io/crates/noodles-gtf) `0.52.0`
+  - Existing Rust: [`noodles-gff`](https://crates.io/crates/noodles-gff) `0.57.0`, [`noodles-gtf`](https://crates.io/crates/noodles-gtf) `0.50.0`
   - Existing Rust kind: `pure-port`
   - Existing non-C alternatives: `gffutils` (Python), `rtracklayer` (R)
   - Parallelism: streaming-iterator

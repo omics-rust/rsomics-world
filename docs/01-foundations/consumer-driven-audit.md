@@ -163,11 +163,12 @@ evidence.
 
 ### Interval wave
 
-The release target for `rsomics-intervals` is coordinate-safe geometry,
-overlap indexing, and generic payloads. Version 0.3 still exposes BED parsing,
-sorting, merging, and writing; those items are not release-approved foundation
-API until two products demonstrate the same policy-free contract. Otherwise
-they move into `rsomics-bed`.
+The release target for `rsomics-intervals` is the smallest coordinate-safe
+geometry API demonstrated item by item. Version 0.3 still exposes a
+non-generic overlap index plus BED parsing, sorting, merging, and writing.
+Those items are not release-approved foundation API until two products
+demonstrate the same policy-free contract. Otherwise they move into the
+consuming product.
 
 `rsomics-bed` revision `9f4ba8ee945c` is the first concrete checked-index
 consumer. Intersect uses the foundation's fallible build/query boundary
@@ -177,9 +178,13 @@ instance without a committed path dependency. The earlier representative
 million-record gate matches bedtools output and passes throughput on all five
 operations without adding another shared crate; the revised subtract hot path
 still requires representative remeasurement before publication.
-`rsomics-annotation` must still provide the second consumer-side contract, and
-the BED parsing/sorting functions currently exposed by the foundation require
-a fresh policy review before intervals 0.3 is published.
+`rsomics-annotation` must still provide the second coordinate-model contract,
+and the BED parsing/sorting functions currently exposed by the foundation
+require a fresh policy review before intervals 0.3 is published. Annotation
+does not naturally need the checked tree for its first streaming slice, so it
+must not be counted as a second `IntervalIndex` consumer. That item remains
+unpublished until `peak`, `signal`, or another real product demonstrates the
+same policy-free query contract.
 
 ### Alignment wave
 
