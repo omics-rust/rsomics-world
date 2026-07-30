@@ -34,7 +34,7 @@ exclusions.
 - [x] `rsomics-fastq-preprocess`
 - [x] `rsomics-fastq-qc`
 - [x] `rsomics-index`
-- [ ] `rsomics-liftover`
+- [x] `rsomics-liftover`
 - [ ] `rsomics-limma`
 - [ ] `rsomics-metagenomics`
 - [ ] `rsomics-methyl`

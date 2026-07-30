@@ -30,7 +30,7 @@ operation will ship. It records:
 | `rsomics-fastq-preprocess` | 12 | [audited](sequence-fastq.md#rsomics-fastq-preprocess) |
 | `rsomics-fastq-qc` | 1 | [audited](sequence-fastq.md#rsomics-fastq-qc) |
 | `rsomics-index` | 4 | [audited](interval-annotation-index.md#rsomics-index) |
-| `rsomics-liftover` | 1 | queued; public repo already exists |
+| `rsomics-liftover` | 1 | [audited](liftover.md) |
 | `rsomics-limma` | 16 | queued |
 | `rsomics-metagenomics` | 5 | boundary review required with sketch |
 | `rsomics-methyl` | 1 | queued |
