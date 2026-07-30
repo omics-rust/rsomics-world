@@ -3,6 +3,10 @@
 > Per-sample ASV/OTU inference, clustering, taxonomy assignment, and
 > downstream community analysis from amplicon (16S rRNA, ITS, 18S) data.
 
+Status: upstream operation survey. Proposed names below are not public crate
+boundaries; current routing is in the
+[metagenomics/sketch dossier](../10-products/metagenomics-sketch.md).
+
 ## Scope
 
 Includes: end-to-end amplicon pipelines (QIIME2, mothur), denoisers

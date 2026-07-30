@@ -4,6 +4,10 @@
 > covering exact-match k-mer classifiers, FM-index / BWT classifiers,
 > protein-space classifiers, marker-gene tools, and sketch-based methods.
 
+Status: upstream operation survey. Proposed names below are not public crate
+boundaries; the accepted classifier and sketch routing is in the
+[metagenomics/sketch dossier](../10-products/metagenomics-sketch.md).
+
 ## Scope
 
 Includes: per-read or per-contig taxonomic label assignment, both nucleotide

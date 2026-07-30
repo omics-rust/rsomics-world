@@ -3,6 +3,10 @@
 > Quantitative taxonomic and functional profiling: abundance re-estimation,
 > pathway and gene-family inference, and microbial-load normalization.
 
+Status: upstream operation survey. Proposed names below are not public crate
+boundaries. Taxonomic reports route to `rsomics-metagenomics`; broader
+functional profiling remains a portfolio gap pending a separate review.
+
 ## Scope
 
 Includes: Bayesian/EM re-estimation of read assignments (Bracken),

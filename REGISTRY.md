@@ -28,7 +28,7 @@ Status meanings are defined in [CONVENTIONS.md](CONVENTIONS.md).
 | `rsomics-index` | planned | bgzip/tabix and reusable sequence-index workflows |
 | `rsomics-liftover` | repo-only | UCSC chain coordinate liftOver |
 | `rsomics-limma` | planned | limma/voom workflow |
-| `rsomics-metagenomics` | planned | taxonomy, amplicon, and community sequence workflows |
+| `rsomics-metagenomics` | planned | abundance-aware amplicon processing, taxonomic databases, read classification, and reports |
 | `rsomics-methyl` | planned | methylation extraction and analysis |
 | `rsomics-minimap2` | live | published legacy FFI wrapper; reconstruction required |
 | `rsomics-peak` | planned | chromatin peak calling, annotation, and quantification |
@@ -39,7 +39,7 @@ Status meanings are defined in [CONVENTIONS.md](CONVENTIONS.md).
 | `rsomics-sc` | planned | stateful single-cell and spatial analysis workflow |
 | `rsomics-seq` | repo-only | coherent FASTA/FASTQ sequence utility suite |
 | `rsomics-signal` | planned | deepTools/bigWig signal workflows |
-| `rsomics-sketch` | planned | sequence sketching and similarity |
+| `rsomics-sketch` | planned | persistent sequence sketches, comparison, search, indexing, and mixture decomposition |
 | `rsomics-structure` | planned | protein structure and PDB analysis |
 | `rsomics-table` | planned | bioinformatics-oriented table manipulation |
 | `rsomics-vcf` | planned | VCF/BCF operations and bcftools-like suite |

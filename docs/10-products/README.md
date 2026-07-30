@@ -32,7 +32,7 @@ operation will ship. It records:
 | `rsomics-index` | 4 | [audited](interval-annotation-index.md#rsomics-index) |
 | `rsomics-liftover` | 1 | [audited](liftover.md) |
 | `rsomics-limma` | 16 | queued |
-| `rsomics-metagenomics` | 5 | boundary review required with sketch |
+| `rsomics-metagenomics` | 5 | [audited](metagenomics-sketch.md#rsomics-metagenomics) |
 | `rsomics-methyl` | 1 | [audited](methyl.md) |
 | `rsomics-minimap2` | 1 | [audited](minimap2.md); legacy release requires reconstruction |
 | `rsomics-peak` | 5 | [audited](peak.md); four workflow assets and one discarded generic candidate |
@@ -43,7 +43,7 @@ operation will ship. It records:
 | `rsomics-sc` | 29 | queued |
 | `rsomics-seq` | 34 | [audited](sequence-fastq.md#rsomics-seq) |
 | `rsomics-signal` | 15 | queued |
-| `rsomics-sketch` | 1 | boundary review required with metagenomics |
+| `rsomics-sketch` | 1 | [audited](metagenomics-sketch.md#rsomics-sketch) |
 | `rsomics-structure` | 9 | queued |
 | `rsomics-table` | 16 | [audited](table.md) |
 | `rsomics-vcf` | 48 | queued after the low-state pilots |

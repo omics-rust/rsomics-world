@@ -1,90 +1,105 @@
-# Survey: metagenomics / amplicon domain
+# Survey: metagenomics and sequence sketches
 
-Verified 2026-05-30 against kraken2 wiki, Bracken/MetaBAT2/CONCOCT/SemiBin READMEs,
-vsearch.1 man page, MMseqs2 wiki, DADA2 (rdrr.io), vegan/phyloseq reference pages.
+Status: refreshed 2026-07-31. This is an upstream landscape and routing
+summary. The implementation contract is the
+[metagenomics/sketch product dossier](../10-products/metagenomics-sketch.md).
 
-> **Domain status: largely GREENFIELD.** Only 5 partial crates exist (rsomics-kraken-report,
-> rsomics-tax-assign, rsomics-taxonomy, rsomics-derep, rsomics-phylo-tree); none is a complete
-> perfgated Layer-B tool. This is the biggest build-out opportunity after the gaps in genomics.
+## Accepted public boundaries
 
-## Kraken2 family (MIT) → all gap
-
-kraken2 classify (--paired/--confidence/--quick/--minimum-hit-groups/--use-mpa-style/
---report-minimizer-data/--memory-mapping) → `rsomics-kraken` (P0). kraken2-build (--standard/
---download-{taxonomy,library}/--add-to-library/--build/--protein/--special{greengenes,rdp,
-silva,gtdb}) → `rsomics-kraken-build` (P0). kraken2-inspect → `rsomics-kraken-report` (partial;
-note: report-*parsing* ≠ DB-*inspect* reading .k2d — two distinct tools).
-
-## Bracken (GPL → clean-room) → all gap
-bracken-build / bracken / est_abundance / generate_kmer_distribution / kmer2read_distr /
-kreport2mpa → `rsomics-bracken` (P0, as `--mode bracken` subcommand of rsomics-kraken).
-
-## Binning (MetaBAT2 BSD / MaxBin2 / CONCOCT / SemiBin) → all gap
-metabat2 + jgi_summarize_bam_contig_depths → `rsomics-metabat` (P0). MaxBin2 (LOW confidence,
-SourceForge 404), CONCOCT (cut_up_fasta/coverage_table/concoct/merge/extract), SemiBin
-(single/multi_easy_bin, bin_long, feature-gen — PyTorch siamese, inference-only Rust via
-candle/burn) → subcommands-of rsomics-metabat (P2).
-
-## VSEARCH (BSD-2/GPL-3) — exhaustive man page
-
-Chimera (uchime_denovo/2/3, uchime_ref) → `rsomics-chimera`. Clustering (cluster_size/fast/
-smallmem/unoise) → `rsomics-otu-cluster`. Derep (derep_fulllength/prefix/fastx_uniques/id/
-smallmem) → `rsomics-derep` (partial: full-length+prefix done; FASTQ/smallmem/id gap; add --uc
-output for compat). Search (usearch_global/allpairs_global/search_exact, makeudb*) →
-`rsomics-seq-search`. **Overlaps with existing fastx crates** (fastq_filter→fastq-filter,
-fastq_mergepairs→fastq-merge, fastx_revcomp→fasta-utils, fastx_subsample→fastq-sample,
-sortbysize/length→fastx-sort, fastx_mask→fasta-mask, sintax→tax-assign, fasta2fastq/
-fastq_convert→fastx-convert) — these are *same-op*, route to the existing crate (verify
-size= annotation + EE-metric modes supported).
-
-## MMseqs2 (GPL → clean-room) → all gap
-easy-cluster/linclust + cluster/linclust/clust/clusterupdate → `rsomics-mmseqs-cluster`.
-easy-search/rbh + search/prefilter/align/convertalis/map/extractorfs/translatenucs →
-`rsomics-mmseqs-search`. easy-taxonomy + taxonomy/taxonomyreport/addtaxonomy →
-`rsomics-mmseqs-taxonomy`. createdb/createindex/createtaxdb/createtsv → `rsomics-mmseqs-build`.
-
-## DADA2 (LGPL; clean-room from Callahan 2016 paper) → `rsomics-dada2` (P0)
-filterAndTrim, derepFastq, learnErrors (Poisson EM), dada (ASV inference), mergePairs,
-makeSequenceTable, removeBimeraDenovo, assignTaxonomy (kmer-bootstrap-Bayes), addSpecies +
-~30 utility fns. Keep as ONE crate (error model tightly coupled to quality encoding;
-derepFastq feeds dada()). Deblur (BSD) = `--mode deblur` subcommand. UNOISE3 lives in
-`rsomics-otu-cluster` (vsearch --cluster_unoise), not separate.
-
-## R packages (GPL → clean-room; deep-dive in 10-r-bioconductor.md)
-
-- **phyloseq**: phyloseq()/otu_table/tax_table/sample_data containers; import_{biom,qiime,mothur};
-  estimate_richness; distance() (44 methods inc. UniFrac); ordinate(); prune/filter/transform.
-- **vegan** (HIGH conf, full reference): diversity/renyi/fisher.alpha/rarefy/specaccum/
-  estimateR (Chao1/ACE) → `rsomics-diversity`; vegdist/designdist/betadiver/raupcrick →
-  `rsomics-diversity`; rda/cca/capscale/metaMDS/decorana/procrustes/varpart → `rsomics-ordinate`;
-  adonis2(PERMANOVA)/anosim/mrpp/mantel/simper/betadisper → `rsomics-permanova`;
-  decostand/wisconsin (transforms).
-- **microbiome** (LOW conf): core/prevalence, DMM typing, DOC, bimodality — lower priority.
-
-## Cross-tool dedup signals (metagenomics)
-
-| op | upstreams | decision |
+| Product | User-recognizable workflow | Primary upstream anchors |
 |---|---|---|
-| dereplication | vsearch derep + seqkit rmdup + DADA2 derepFastq | **same op** → `rsomics-derep` canonical (+ --uc) |
-| clustering | vsearch (greedy) + mmseqs2 (cascaded) + DADA2 dada (denoise) | **distinct algorithms** → 3 crates: otu-cluster / mmseqs-cluster / dada2 (do NOT merge) |
-| chimera | vsearch UCHIME + DADA2 bimera | related but distinct (pre- vs post-denoise) → `rsomics-chimera` + dada2-integrated |
-| taxonomy | kraken2(kmer-LCA) + mmseqs2(aln-LCA) + DADA2(Bayes-kmer) + vsearch sintax + QIIME2 | **distinct algorithms** → kraken / mmseqs-taxonomy / dada2 / tax-assign(sintax) — do NOT merge |
-| fastq filter / merge / sort | vsearch ≈ DADA2 ≈ existing fastq-* crates | same op → route to existing fastq-filter/merge/fastx-sort |
+| `rsomics-metagenomics` | abundance-aware amplicon processing, taxonomic database construction, read classification, taxonomy, and reports | VSEARCH 2.31.0, Kraken 2 2.17.1, NCBI Taxonomy |
+| `rsomics-sketch` | persistent sketches, comparison, similarity/containment search, indexing, and mixture decomposition | sourmash 4.9.4, Mash 2.3 |
 
-The dedup lesson here: a shared *user intent* (e.g. "assign taxonomy") often hides **distinct
-algorithms** that legitimately warrant separate crates — the opposite of the bed-utils case.
-Merge only when the algorithm is the same (dereplication, fastq filtering), not when only the
-goal is shared.
+These products remain separate. A bounded persistent sketch and searchable
+signature collection are a different durable model and installation identity
+from exact amplicon abundance records or a taxonomy-labelled read-classifier
+database.
 
-## Gap summary (new crates needed)
-P0: kraken, kraken-build, bracken, metabat, dada2, megahit, checkm, gtdbtk.
-P1: chimera, otu-cluster, seq-search, mmseqs-{cluster,search,taxonomy,build}, diversity,
-ordinate, permanova, drep, annotate, metaphlan, ganon, humann.
-Complete partials: derep (FASTQ/smallmem/uc), kraken-report (compat+perfgate), tax-assign
-(sintax), taxonomy (LCA vs NCBI taxdump).
+The historical five metagenomics candidates and one sketch candidate are
+implementation inputs, not the planned number of operations. No operation-sized
+repository is revived.
 
-## Verification notes
-HIGH: kraken2/build/inspect wiki, Bracken README, MetaBAT2 (Bitbucket), CONCOCT, SemiBin,
-vsearch.1 (most exhaustive), MMseqs2 wiki, DADA2 rdrr.io (41 fns), vegan reference (complete).
-MODERATE: Deblur (only `workflow` documented), phyloseq (import HIGH, full fn list incomplete).
-LOW: MaxBin2 (mirrors 404 — from literature), microbiome R (tutorial summary only).
+## Operation routing
+
+| User operation | Target owner | Decision |
+|---|---|---|
+| exact full/prefix dereplication with `;size=N` | `rsomics-metagenomics` | one `dereplicate` subcommand with named VSEARCH profiles |
+| abundance sorting and rereplication | `rsomics-metagenomics` | amplicon abundance lifecycle |
+| generic length sort, sampling, shuffle, conversion, validation | `rsomics-seq` | generic FASTA/FASTQ utilities |
+| generic trimming, quality filtering, merging, correction, UMI, read deduplication | `rsomics-fastq-preprocess` | shared read-preprocessing pipeline |
+| OTU/ASV clustering, chimera detection, amplicon reference search | `rsomics-metagenomics` | later complete amplicon slices |
+| Kraken-style database build, inspect, classify, and report | `rsomics-metagenomics` | one tested database/classifier/report slice |
+| NCBI taxonomy parsing, lineage, and LCA for classification | internal to `rsomics-metagenomics` | no one-consumer public foundation |
+| FracMinHash/MinHash sketch, compare, search, index, gather | `rsomics-sketch` | persistent sketch workflow |
+| taxonomic aggregation of versioned gather results | `rsomics-metagenomics` | file interoperability, no Layer B dependency |
+| community diversity, dissimilarity, ordination, and permutation tests | `rsomics-ecology` | community-table analysis, not classification |
+
+Shared user intent does not imply a shared algorithm. Kraken minimizer LCA,
+alignment-based LCA, marker-gene profiling, Bayesian amplicon assignment, and
+sketch containment require separate behavior profiles even when they all emit
+taxonomic names. They remain modules or release slices inside a coherent
+product unless a later portfolio review finds a genuinely distinct
+installation identity.
+
+## Current historical evidence
+
+- `rsomics-derep`, the abundance half of `rsomics-fastx-sort`, and
+  `rsomics-rereplicate` are meaningful VSEARCH migration assets, but they
+  duplicate FASTA, header, output, CLI, and error handling.
+- `rsomics-kraken-report` is a small parser seed. It does not yet model the
+  standard hierarchy or the eight-column minimizer report.
+- `rsomics-taxonomy` contains useful taxdump, lineage, and LCA seeds but exposes
+  mutable invalid state and silently caps cycles. It is refactored and
+  internalized.
+- `rsomics-tax-assign` is discarded as a production classifier. It uses an
+  unversioned exact-k-mer TSV, never performs taxonomy LCA, silently drops
+  invalid windows, and emits a non-Kraken four-column format.
+- `rsomics-kmer-dist` is an exact full k-mer profile, not a bounded sketch. It
+  is retained only for formula fixtures and memory-baseline evidence.
+
+The current code pool therefore supports a credible first amplicon slice but
+does not support publishing a classifier or sketch placeholder.
+
+## Broader domain survey
+
+The metagenomics domain also contains:
+
+- DADA2, Deblur, UNOISE, mothur, and QIIME 2 amplicon workflows;
+- Centrifuge, Kaiju, MMseqs2, MetaPhlAn, mOTUs, ganon, and long-read
+  classifiers;
+- Bracken and other abundance re-estimation methods;
+- HUMAnN and gene/pathway functional profiling;
+- MEGAHIT/metaSPAdes assembly, MetaBAT/CONCOCT/SemiBin/VAMB binning,
+  DAS Tool refinement, CheckM quality control, GTDB-Tk taxonomy, and dRep
+  genome dereplication.
+
+These are real upstream areas, but this survey does not mint one public crate
+per upstream binary or algorithm. Each enters the accepted portfolio only
+after an operation map answers:
+
+1. whether it extends an existing metagenomics workflow or has a distinct
+   installation identity;
+2. what durable data model it shares with neighboring operations;
+3. which historical or new implementation assets exist;
+4. which oracle, database, license, fixture, and performance evidence is
+   feasible;
+5. whether a public foundation has two concrete product consumers.
+
+Assembly/MAG recovery and functional profiling remain notable portfolio gaps,
+not hidden promises in the first `rsomics-metagenomics` release.
+
+## Compatibility and performance priorities
+
+- Required VSEARCH, Kraken 2, sourmash, and Mash jobs install the pinned oracle
+  and fail when it is unavailable.
+- Classifier evidence covers database construction, integrity, taxonomy,
+  single/paired output, confidence boundaries, reports, throughput, database
+  bytes, and peak RSS together.
+- Sketch evidence proves retained hashes, persistent-format interoperability,
+  comparison/search results, deterministic platform behavior, and memory
+  bounded by sketch parameters.
+- Established-tool replacements require a strict throughput or material
+  resource-use advantage on the relevant hot path.
+- Database and reference-content licenses are reviewed independently from the
+  upstream software license.

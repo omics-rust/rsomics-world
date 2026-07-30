@@ -144,6 +144,15 @@ for the current common, help, and sequence-I/O APIs. The BED pilot is the third
 help/common consumer. This does not freeze `rsomics-kmer`, which still requires
 its own second product consumer.
 
+The metagenomics/sketch dossier now supplies two concrete next call sites for
+that review: canonical rolling hashes in the DNA FracMinHash builder and
+checked minimizer generation in the taxonomy-labelled database builder.
+Neither historical `rsomics-kmer-dist` nor `rsomics-tax-assign` demonstrates
+the contract. The former keeps every exact k-mer and the latter silently drops
+invalid windows and does not perform taxonomy LCA assignment. No k-mer API is
+added or published until the new consumer tests and representative memory
+measurements exist.
+
 The consumers exposed and resolved a real difference in the old common runtime
 contract: preprocessing uses `--threads` to size its Rayon work, while
 `rsomics-seq` and `rsomics-bed` did not use the shared thread, seed, quiet, or

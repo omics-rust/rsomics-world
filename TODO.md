@@ -36,7 +36,7 @@ exclusions.
 - [x] `rsomics-index`
 - [x] `rsomics-liftover`
 - [ ] `rsomics-limma`
-- [ ] `rsomics-metagenomics`
+- [x] `rsomics-metagenomics`
 - [x] `rsomics-methyl`
 - [x] `rsomics-minimap2`
 - [x] `rsomics-peak`
@@ -47,7 +47,7 @@ exclusions.
 - [ ] `rsomics-sc`
 - [x] `rsomics-seq`
 - [ ] `rsomics-signal`
-- [ ] `rsomics-sketch`
+- [x] `rsomics-sketch`
 - [ ] `rsomics-structure`
 - [x] `rsomics-table`
 - [ ] `rsomics-vcf`

@@ -110,15 +110,17 @@ The current implementation pool maps to 30 product families:
 | `rsomics-structure` | 9 | PDB and protein-structure analysis |
 | `rsomics-composition` | 10 | compositional transforms, zero handling, and inference |
 | `rsomics-index` | 4 | bgzip/tabix and sequence index utilities |
-| `rsomics-metagenomics` | 5 | current taxonomy/amplicon utilities |
+| `rsomics-metagenomics` | 5 | abundance-aware amplicon processing, taxonomic classification, and reports |
 | `rsomics-peak` | 5 | chromatin peak calling, annotation, and quantification |
 | `rsomics-expression` | 2 | count-matrix and result utilities |
 | `rsomics-annotation` | 2 | GFF/GTF and transcript utilities |
-| Seven single-implementation products | 7 | FastQC, count, sketch, liftOver, methylation, minimap2, workflow utilities |
+| Seven single-implementation products | 7 | FastQC, count, persistent sequence sketches, liftOver, methylation, minimap2, workflow utilities |
 
 This table is a routing result, not a declaration that every proposed family
-must remain separate. In particular, `expression` may join the three DE
-products, and `sketch` may join metagenomics after interface review.
+must remain separate. `Expression` still requires a joint review with the
+three differential-expression products. The metagenomics/sketch review is
+complete: persistent sketch artifacts, collections, and search remain a
+separate product from exact amplicon and read-classification workflows.
 
 The official suite shapes support these boundaries:
 
@@ -165,7 +167,7 @@ named products, not those raw counts, justify the boundary:
 | `rsomics-help` | 317 | all 30 accepted CLI products |
 | `rsomics-bamio` | 70 | `bam`, `vcf`, `count`, `methyl`, `minimap2`, `rnaseq-qc`, `signal` |
 | `rsomics-intervals` | 11 | `bed`, `annotation`, `peak`, `signal` |
-| `rsomics-kmer` | 6 | `seq`, `fastq-preprocess`, `metagenomics`, `sketch` |
+| `rsomics-kmer` | 6 | current: `seq`; concrete next reviews: `metagenomics`, `sketch` |
 | `rsomics-seqio` | 8 | `seq`, `fastq-preprocess`, `fastq-qc`, `minimap2` |
 | `rsomics-stats` | 3 | `composition`, `deseq`, `edger`, `limma`, `sc`, `ecology`, `popgen`, `plink` |
 | `rsomics-phylo-tree` | 9 | `composition`, `phylo`, `ecology` |
@@ -200,11 +202,11 @@ flowchart LR
     intervals --> signal
     intervals --> peak["peak"]
     intervals --> annotation["annotation"]
-    kmer["kmer"] --> fastq["fastq-preprocess"]
+    kmer["kmer"] --> seq["seq"]
     kmer --> meta["metagenomics"]
     kmer --> sketch["sketch"]
-    seqio["seqio"] --> seq["seq"]
-    seqio --> fastq
+    seqio["seqio"] --> seq
+    seqio --> fastq["fastq-preprocess"]
     seqio --> fastqqc["fastq-qc"]
     seqio --> minimap2
     tree["phylo-tree"] --> composition["composition"]

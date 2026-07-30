@@ -459,7 +459,7 @@ resource advantage on its relevant hot path.
   `rsomics-phylo`; ecology consumes a tree but does not infer one in the first
   release.
 - Taxonomic classification and abundance profiling remain in
-  `rsomics-taxonomy` and `rsomics-metagenomics`.
+  `rsomics-metagenomics`, including its internal taxonomy model.
 - Robust Aitchison transforms and compositional zero handling remain in
   `rsomics-composition`; ecology may consume their resulting distances through
   a declared matrix profile.

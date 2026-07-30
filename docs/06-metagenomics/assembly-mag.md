@@ -3,6 +3,10 @@
 > Assembly, binning, bin refinement, dereplication, quality control, and
 > taxonomic assignment of metagenome-assembled genomes (MAGs).
 
+Status: upstream operation survey. Proposed names below are not public crate
+boundaries. Assembly/MAG recovery remains a portfolio gap pending a separate
+product-boundary review.
+
 ## Scope
 
 Includes: short-read and hybrid de novo metagenome assemblers (MEGAHIT,

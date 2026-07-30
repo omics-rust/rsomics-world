@@ -3,6 +3,11 @@
 > Classification, profiling, MAG-resolved assembly, and amplicon analysis of
 > shotgun and 16S/ITS sequencing data from microbial communities.
 
+Status: upstream landscape survey. Public product boundaries and implementation
+decisions are authoritative in the
+[metagenomics/sketch dossier](../10-products/metagenomics-sketch.md). Names in
+the sub-area surveys are research labels, not approved crates or repositories.
+
 ## Sub-areas
 
 | File | Scope |
