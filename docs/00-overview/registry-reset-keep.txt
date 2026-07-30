@@ -28,7 +28,6 @@ rsomics-sketch
 rsomics-structure
 rsomics-table
 rsomics-vcf
-rsomics-workflow
 
 # Public foundations with two or more product-family consumers
 rsomics-bamio

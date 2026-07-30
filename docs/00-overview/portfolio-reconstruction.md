@@ -62,11 +62,11 @@ The 622 local candidates break down as follows after description-first routing:
 
 | Intended container | Current candidates |
 |---|---:|
-| Coherent product families | 424 |
-| Generic capability pools, not presumed products | 170 |
+| Coherent product families | 423 |
+| Generic capability pools, not presumed products | 171 |
 | Existing foundation libraries | 28 |
 
-The routing confidence is high for 589 rows and medium for 33. High means the
+The routing confidence is high for 590 rows and medium for 32. High means the
 package description names the upstream or the crate name has an unambiguous
 format/workflow prefix. Medium rows remain explicit review targets.
 
@@ -87,7 +87,9 @@ before selecting a source revision.
 
 ## Provisional product families
 
-The current implementation pool maps to 30 product families:
+The current implementation pool maps to 29 accepted product families. The
+sample-sheet candidate is retained in a rejected workflow-metadata capability
+pool:
 
 | Product family | Candidates | Intended boundary |
 |---|---:|---|
@@ -114,13 +116,16 @@ The current implementation pool maps to 30 product families:
 | `rsomics-peak` | 5 | chromatin peak calling, annotation, and quantification |
 | `rsomics-expression` | 2 | count-matrix and result utilities |
 | `rsomics-annotation` | 2 | GFF/GTF and transcript utilities |
-| Seven single-implementation products | 7 | FastQC, count, persistent sequence sketches, liftOver, methylation, minimap2, workflow utilities |
+| Six single-implementation products | 6 | FastQC, count, persistent sequence sketches, liftOver, methylation, and minimap2 |
 
 This table is a routing result, not a declaration that every proposed family
 must remain separate. `Expression` still requires a joint review with the
 three differential-expression products. The metagenomics/sketch review is
 complete: persistent sketch artifacts, collections, and search remain a
 separate product from exact amplicon and read-classification workflows.
+The workflow review rejected `rsomics-workflow`: a private three-column sample
+manifest is consumer policy, while a real workflow engine would be a new
+product with no supporting implementation in the source pool.
 
 The official suite shapes support these boundaries:
 
@@ -163,8 +168,8 @@ named products, not those raw counts, justify the boundary:
 
 | Foundation | Historical crate consumers | Named initial product consumers |
 |---|---:|---|
-| `rsomics-common` | 560 | all 30 accepted products |
-| `rsomics-help` | 317 | all 30 accepted CLI products |
+| `rsomics-common` | 560 | all 29 accepted products |
+| `rsomics-help` | 317 | all 29 accepted CLI products |
 | `rsomics-bamio` | 70 | `bam`, `vcf`, `count`, `methyl`, `minimap2`, `rnaseq-qc`, `signal` |
 | `rsomics-intervals` | 11 | `bed`, `annotation`, `peak`, `signal` |
 | `rsomics-kmer` | 6 | current: `seq`; concrete next reviews: `metagenomics`, `sketch` |
@@ -190,7 +195,7 @@ The observed dependency relationships are:
 ```mermaid
 flowchart LR
     common["common"] --> products["nearly all target products"]
-    help["help"] --> cli["30 CLI families"]
+    help["help"] --> cli["29 CLI families"]
     bamio["bamio"] --> bam["bam"]
     bamio --> count["count"]
     bamio --> methyl["methyl"]
@@ -222,20 +227,20 @@ flowchart LR
 The product-level dependency calculation makes the earlier Layer A estimate too
 generous.
 
-- Current implementation pool: about 28–30 coherent products.
+- Current implementation pool: 29 coherent products.
 - Clearly justified shared foundations: 9.
 - Strategic foundation candidates with concrete near-term second consumers:
   approximately 3–6.
-- Rationalized current portfolio: approximately 40–45 crates.
+- Rationalized current portfolio: approximately 39–44 crates.
 - After adding genuinely missing anchors such as short-read/spliced alignment,
-  quantification, classification, and assembly: approximately 55–75 crates.
+  quantification, classification, and assembly: approximately 54–74 crates.
 
-The number may change after the 33 medium-confidence rows and missing-anchor
+The number may change after the 32 medium-confidence rows and missing-anchor
 priorities are reviewed, but the evidence does not support hundreds of public
 crates.
 
 The aggressive registry-reset allowlist is
-[`registry-reset-keep.txt`](registry-reset-keep.txt). It contains the 30
+[`registry-reset-keep.txt`](registry-reset-keep.txt). It contains the 29
 provisional product-family names and nine foundations with demonstrated
 cross-product reuse. Names not yet published reserve an intended boundary;
 their absence does not justify retaining operation-sized predecessors.
@@ -265,8 +270,8 @@ The reset is a namespace cleanup, not source-code destruction:
   dependency.
 
 The completed reset leaves 11 published crates: ten allowlisted names with
-non-yanked releases plus temporary `rsomics-igzip`. The other 29 allowlisted
-names are product boundaries to reconstruct, not empty packages to publish
+non-yanked releases plus temporary `rsomics-igzip`. The other 28 accepted
+product names are boundaries to reconstruct, not empty packages to publish
 immediately.
 
 Machine-readable progress and failure journals live under `.autopilot/state/`.

@@ -47,11 +47,16 @@ operation will ship. It records:
 | `rsomics-structure` | 9 | queued |
 | `rsomics-table` | 16 | [audited](table.md) |
 | `rsomics-vcf` | 48 | queued after the low-state pilots |
-| `rsomics-workflow` | 1 | standalone-product justification required |
 
 Counts are generated from
 [`portfolio-inventory.tsv`](../00-overview/portfolio-inventory.tsv). They
 describe recoverable inputs, not planned subcommand counts.
+
+## Rejected public boundary
+
+| Former candidate | Source candidates | Decision |
+|---|---:|---|
+| `rsomics-workflow` | 1 | [rejected](workflow.md); the sample-sheet asset is consumer-specific metadata validation, not a workflow product |
 
 ## Relationship map
 

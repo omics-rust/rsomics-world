@@ -159,11 +159,12 @@ def route(name: str, upstreams: list[str], layer: str) -> tuple[str, str, str]:
         "rsomics-kmer-dist": ("metagenomics", "rsomics-sketch"),
         "rsomics-nj-tree": ("phylogenetics", "rsomics-phylo"),
         "rsomics-pvalue-adjust": ("statistics", "rsomics-stats"),
-        "rsomics-sample-sheet": ("workflow-utilities", "rsomics-workflow"),
         "rsomics-seacr": ("epigenomics", "rsomics-peak"),
         "rsomics-upgma": ("phylogenetics", "rsomics-phylo"),
         "rsomics-windowed-ld": ("population-genetics", "rsomics-popgen"),
     }
+    if name == "rsomics-sample-sheet":
+        return "workflow-metadata", "", "high"
     if name in explicit_routes:
         area, target = explicit_routes[name]
         return area, target, "medium"
@@ -404,6 +405,8 @@ def suggested_action(
 ) -> str:
     if layer == "A":
         return "keep-core-candidate" if inbound >= 2 else "internalize-or-merge-review"
+    if name == "rsomics-sample-sheet":
+        return "rejected-product-boundary"
     if not target:
         return "quarantine-review"
     if name == target:
@@ -568,6 +571,7 @@ def main() -> None:
                 "machine-learning",
                 "bioimage-review",
                 "sequence-models",
+                "workflow-metadata",
             }:
                 target_kind = "capability-pool"
             else:

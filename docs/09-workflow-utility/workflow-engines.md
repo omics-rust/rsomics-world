@@ -4,6 +4,10 @@
 > dependency resolution, retry, and reproducibility across HPC, cloud, and
 > local execution.
 
+Status: upstream landscape survey. No current engine below is a planned
+`rsomics-workflow` subcommand. See the
+[rejected product-boundary review](../10-products/workflow.md).
+
 ## Scope
 
 Includes: rule-based engines (Snakemake), dataflow engines (Nextflow),
@@ -70,7 +74,7 @@ environment management (see [containers](containers.md)).
   - GPU-amenable: no — orchestration
   - Upstream license: `BSD-3-Clause`
   - Priority: `P2`
-  - Layer: `subcommand-of-rsomics-workflow` (if a Rust workflow engine ships, WDL parsing mode lives here)
+  - Layer: external integration or future boundary review
   - Consumes primitives: future `rsomics-wdl-parser`
   - Notes: WDL is mostly used inside Broad / GATK workflows. The stjude-rust-labs WDL parser is now archived; would need fresh effort. Focus on parsing + validation, not execution.
 
@@ -100,8 +104,8 @@ environment management (see [containers](containers.md)).
   - GPU-amenable: no — orchestration
   - Upstream license: `Apache-2.0`
   - Priority: `P2`
-  - Layer: `subcommand-of-rsomics-workflow` (CWL parsing + execution mode)
-  - Consumes primitives: future `rsomics-cwl-parser`, future `rsomics-workflow`
+  - Layer: external integration or future boundary review
+  - Consumes primitives: none in the accepted portfolio
   - Notes: The Rust CWL object-model crate is archived; would need fresh effort. A pure-Rust CWL runner would be useful for static-binary deployment in pharma/clinical settings. Phase 5+.
 
 - [ ] **`Toil`** — Python implementation of CWL/WDL + Python workflows.
@@ -175,6 +179,6 @@ environment management (see [containers](containers.md)).
   - GPU-amenable: no — orchestration
   - Upstream license: mixed
   - Priority: `P2`
-  - Layer: `B` (future tool — `rsomics-workflow`)
-  - Consumes primitives: `tokio`, `petgraph` (DAG), `polars` (provenance), future `rsomics-wdl-parser` / `rsomics-cwl-parser`
-  - Notes: No Rust workflow engine has bioinformatics adoption as of 2026-05. A Rust-native lightweight engine is interesting once `rsomics-*` CLIs stabilize, but Phase 5+. Track but don't commit yet.
+  - Layer: no accepted boundary
+  - Consumes primitives: none
+  - Notes: No Rust workflow engine has demonstrated an unmet rsomics user need or a complete execution contract. Track the ecosystem; do not reserve a product.

@@ -15,7 +15,7 @@ The current rule is:
 
 ## Current portfolio
 
-- 30 planned product-family boundaries.
+- 29 planned product-family boundaries.
 - Nine long-term public foundations.
 - `rsomics-igzip` temporarily retained because a published `rsomics-seqio`
   version depends on it.
@@ -45,7 +45,7 @@ Existing implementations are reused rather than discarded. The generated
 [portfolio inventory](docs/00-overview/portfolio-inventory.tsv) maps the local
 source pool to provisional target products. The
 [portfolio reconstruction](docs/00-overview/portfolio-reconstruction.md)
-explains the 30-family model and shared-foundation evidence.
+explains the 29-family model and shared-foundation evidence.
 The [product dossier index](docs/10-products/README.md) tracks the mapping from
 historical implementations to target products, and the
 [consumer-driven foundation audit](docs/01-foundations/consumer-driven-audit.md)

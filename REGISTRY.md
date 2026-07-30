@@ -43,7 +43,6 @@ Status meanings are defined in [CONVENTIONS.md](CONVENTIONS.md).
 | `rsomics-structure` | planned | protein structure and PDB analysis |
 | `rsomics-table` | planned | bioinformatics-oriented table manipulation |
 | `rsomics-vcf` | planned | VCF/BCF operations and bcftools-like suite |
-| `rsomics-workflow` | planned | pipeline composition and execution utilities |
 
 Product status summary:
 
@@ -52,8 +51,8 @@ Product status summary:
 | live | 1 |
 | repo-only | 5 |
 | pilot | 1 |
-| planned | 23 |
-| **Total** | **30** |
+| planned | 22 |
+| **Total** | **29** |
 
 `pilot` means the boundary and source audit are active. It does not imply that
 a public repository or installable release exists. `repo-only` likewise does
@@ -63,8 +62,8 @@ not imply that the crate has passed its publication gate.
 
 | Foundation | crates.io | GitHub | Pilot drivers and later consumers |
 |---|---|---|---|
-| `rsomics-common` | live | live | all 30 accepted products |
-| `rsomics-help` | live | live | all 30 accepted CLI products |
+| `rsomics-common` | live | live | all 29 accepted products |
+| `rsomics-help` | live | live | all 29 accepted CLI products |
 | `rsomics-bamio` | live | live | BAM, VCF, RNA-seq QC, signal |
 | `rsomics-intervals` | live | live | BED, annotation, peak, signal |
 | `rsomics-kmer` | live | live | pilot: sequence; later: metagenomics and sketch |

@@ -16,7 +16,7 @@ The `omics-rust` organization contains 17 `rsomics-*` repositories:
 - `rsomics-world`.
 
 The organization metadata repository `.github` is outside the prefix count.
-Twenty-four allowlisted product names intentionally have no repository yet.
+Twenty-three accepted product names intentionally have no repository yet.
 
 ## Live crates.io state
 
@@ -26,9 +26,17 @@ The registry contains 11 `rsomics-*` packages:
 - the existing `rsomics-minimap2` product;
 - temporary `rsomics-igzip`.
 
-Every published version of those 11 packages is non-yanked. The other 29
-allowlisted names are absent from crates.io and remain planning boundaries,
-not empty reservations.
+Every published version of those 11 packages is non-yanked. The other 28
+accepted product names are absent from crates.io and remain planning
+boundaries, not empty reservations.
+
+## Post-reset boundary refinement
+
+The source audit subsequently rejected the planning-only `rsomics-workflow`
+boundary. Its sole historical candidate was a private sample-path TSV checker,
+not a workflow engine or coherent utility family. The name was absent from
+both GitHub and crates.io, so narrowing the allowlist from 30 to 29 products
+changed no live repository, package, or user dependency.
 
 ## Source recovery state
 

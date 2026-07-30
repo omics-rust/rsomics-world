@@ -5,7 +5,8 @@ maps belong in their dossiers under `docs/`.
 
 ## P0.1 — finish the architecture reset
 
-- [x] Freeze the 30-product and nine-foundation allowlist.
+- [x] Freeze the 29-product and nine-foundation allowlist after rejecting the
+      planning-only workflow boundary.
 - [x] Back up all crates.io and GitHub retirement candidates.
 - [x] Delete 594 dependency-ordered crates.io reset candidates.
 - [x] Delete 596 GitHub reset candidates.
@@ -51,7 +52,11 @@ exclusions.
 - [ ] `rsomics-structure`
 - [x] `rsomics-table`
 - [ ] `rsomics-vcf`
-- [ ] `rsomics-workflow`
+
+Rejected public boundary:
+
+- [x] `rsomics-workflow`: the only candidate is a product-specific sample-sheet
+      checker, not a workflow engine or coherent utility product.
 
 ## P0.3 — public-foundation audit
 

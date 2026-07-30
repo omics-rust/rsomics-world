@@ -65,12 +65,16 @@ def dossier_counts() -> dict[str, int]:
     }
 
 
-def inventory() -> tuple[set[str], Counter[str]]:
+def inventory() -> tuple[set[str], Counter[str], dict[str, dict[str, str]]]:
     path = ROOT / "docs/00-overview/portfolio-inventory.tsv"
     with path.open(newline="") as handle:
         rows = list(csv.DictReader(handle, delimiter="\t"))
     names = {row["crate"] for row in rows}
-    return names, Counter(row["target_kind_provisional"] for row in rows)
+    return (
+        names,
+        Counter(row["target_kind_provisional"] for row in rows),
+        {row["crate"]: row for row in rows},
+    )
 
 
 def consolidation_outputs() -> set[str]:
@@ -91,19 +95,28 @@ def main() -> None:
     products, foundations = allowlist()
     registry_products, registry_foundations, registry_summary = registry()
     dossiers = dossier_counts()
-    inventory_names, inventory_kinds = inventory()
+    inventory_names, inventory_kinds, inventory_rows = inventory()
     outputs = consolidation_outputs()
 
-    require(len(products) == 30, f"expected 30 products, found {len(products)}")
+    require(len(products) == 29, f"expected 29 products, found {len(products)}")
     require(len(foundations) == 9, f"expected 9 foundations, found {len(foundations)}")
     require(registry_products.keys() == products, "registry product set differs")
     require(registry_foundations == foundations, "registry foundation set differs")
     require(dossiers.keys() == products, "dossier product set differs")
-    require(sum(dossiers.values()) == 424, "dossier candidate counts do not sum to 424")
+    require(sum(dossiers.values()) == 423, "dossier candidate counts do not sum to 423")
     require(len(inventory_names) == 622, "historical inventory must contain 622 crates")
-    require(inventory_kinds["product"] == 424, "inventory must contain 424 product candidates")
-    require(inventory_kinds["capability-pool"] == 170, "inventory must contain 170 capability candidates")
+    require(inventory_kinds["product"] == 423, "inventory must contain 423 product candidates")
+    require(inventory_kinds["capability-pool"] == 171, "inventory must contain 171 capability candidates")
     require(inventory_kinds["foundation"] == 28, "inventory must contain 28 foundation candidates")
+    sample_sheet = inventory_rows["rsomics-sample-sheet"]
+    require(
+        sample_sheet["area_provisional"] == "workflow-metadata"
+        and sample_sheet["target_family_provisional"] == ""
+        and sample_sheet["target_kind_provisional"] == "capability-pool"
+        and sample_sheet["suggested_action_provisional"]
+        == "rejected-product-boundary",
+        "sample-sheet must remain outside the accepted product portfolio",
+    )
     require(outputs.isdisjoint(inventory_names), "consolidation output leaked into inventory")
     require(
         Counter(registry_products.values()) == registry_summary,

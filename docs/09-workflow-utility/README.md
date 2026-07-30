@@ -3,6 +3,11 @@
 > Cross-cutting concerns: workflow / pipeline orchestration, reproducible
 > environments and containers, and data visualization.
 
+Status: upstream landscape survey. It is not a public crate plan.
+`rsomics-workflow` was rejected by the
+[product-boundary review](../10-products/workflow.md); current work favors
+integration with established engines and coherent domain products.
+
 ## Sub-areas
 
 | File | Scope |
