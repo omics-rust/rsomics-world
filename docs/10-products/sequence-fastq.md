@@ -67,12 +67,14 @@ skips ambiguity-bearing windows, constrains `k` to the foundation's checked
 promote a new public crate or make k-mer counting product-independent policy.
 
 The complete first slice is implemented at `omics-rust/rsomics-seq` revision
-`f2c14d4e877b`. Its exact-head CI passes on native Linux and macOS for both
+`d1369a5fe8cb`. Its exact-head CI passes on native Linux and macOS for both
 `x86_64` and `aarch64`, including strict Clippy, 43 tests, six live SeqKit
 2.13.0 differentials, an independent ordered k-mer oracle, and five benchmark
-smoke tests. It is not publish-ready until formal same-machine timing and
-peak-RSS evidence pass, including the Jellyfish comparison for `kmers`, and
-its unpublished foundation revisions are released.
+smoke tests. On SRR341550 R1, `stats` is byte-identical to SeqKit and measures
+0.771 ± 0.001 s with 7.2 MB peak RSS versus SeqKit's 1.793 ± 0.022 s and
+27.5 MB. It is not publish-ready until the other operations, including the
+Jellyfish comparison for `kmers`, have equivalent evidence on the required
+platforms and its unpublished foundation revisions are released.
 
 ### Later operation groups
 
@@ -149,14 +151,18 @@ compatibility and representative hot-path benchmarks. Existing small
 subprocess benches are not release evidence.
 
 The initial `run`, `trim`, and `filter` slice is implemented at
-`omics-rust/rsomics-fastq-preprocess` revision `5f2eab1d5939`. It combines
+`omics-rust/rsomics-fastq-preprocess` revision `680292fe9e4c`. It combines
 fixed, poly-G/poly-X, quality, N-content, length, and complexity transforms
 over one ordered chunk engine for single-end and paired-end reads. Its
 exact-head CI passes on native Linux and macOS for both `x86_64` and
-`aarch64`, including strict Clippy, 37 tests, four live fastp 1.3.6
-differentials, and a benchmark smoke test. This is an implementation and CI
-baseline, not release evidence: formal same-machine timing, peak RSS, and
-representative-fixture provenance remain required.
+`aarch64`, including strict Clippy, 39 tests, four live fastp 1.3.6
+differentials, and a benchmark smoke test. The provenance-checked SRR341550 R1
+checkpoint is byte-identical to the aligned fastp slice at one and four
+threads. On Apple M2 it measures 2.452 ± 0.115 s and 21.0 MB at one thread
+versus fastp's 3.775 ± 0.033 s and 44.0 MB; at four threads it measures
+2.275 ± 0.105 s and 18.4 MB versus fastp's 2.353 ± 0.052 s and 61.1 MB.
+This is a strong product checkpoint, not release evidence: paired fixtures,
+the later operations, and required Linux measurements remain.
 
 ## `rsomics-fastq-qc`
 

@@ -55,7 +55,7 @@ APIs:
 | `rsomics-common` | `1c51f7d0b356` | added fallible JSON emitters and propagated serialization, write, newline, and flush failures through the existing error and exit-code contract | exact-head four-native-target CI green; exercised by both `rsomics-seq` and `rsomics-fastq-preprocess`; comparative overhead remains |
 | `rsomics-intervals` | `c13cb75c318` | checked the coordinate range accepted by the COITrees backend and added fallible index/query entry points | exact-head CI green; consumer contracts, four-native-target CI, and performance evidence remain |
 | `rsomics-kmer` | `4258ac881119` | made `k = 32` well-defined, added checked encode/decode/canonical operations and a fallible count-accumulator boundary, and removed its unused `rsomics-common` dependency | exact-head CI green; `rsomics-seq` is the first real product consumer; a second product contract and comparative performance remain |
-| `rsomics-seqio` | `c42f4212b785` | replaced the ambiguous record model with strict allocation-reusing FASTA/FASTQ streams, added wrapped FASTQ and tab-bearing header support, removed direct `rsomics-igzip` use, and made gzip/BGZF failures loud | exact-head four-native-target CI and compressed-stream adversarial regressions green; exercised by both `rsomics-seq` and `rsomics-fastq-preprocess`; comparative throughput/RSS remains |
+| `rsomics-seqio` | `ce9c5514c235` | replaced the ambiguous record model with strict allocation-reusing FASTA/FASTQ streams, bounded gzip decode buffering, added wrapped FASTQ and tab-bearing header support, removed direct `rsomics-igzip` use, made gzip/BGZF failures loud, and accelerated printable-byte validation without changing its public contract | exact-head four-native-target CI and compressed-stream adversarial regressions green; exercised by both `rsomics-seq` and `rsomics-fastq-preprocess`; real-fixture throughput and RSS pass on macOS arm64, while Linux and full operation coverage remain |
 
 None of these revisions has been published. A green foundation CI establishes
 the implementation baseline; it does not replace the two-consumer completion
@@ -110,18 +110,22 @@ threading, slab, and compression backends remain private.
 iteration, and general hashes. Product-specific correction tables and QC bins
 remain internal.
 
-`rsomics-seq` revision `f2c14d4e877b` consumes the checked accumulator and the
+`rsomics-seq` revision `d1369a5fe8cb` consumes the checked accumulator and the
 strict `rsomics-seqio` stream API directly. Its complete five-command first
 slice passes exact-head CI on all four native targets with live SeqKit
 differentials and an independent ordered k-mer oracle.
 
-`rsomics-fastq-preprocess` revision `5f2eab1d5939` consumes
+`rsomics-fastq-preprocess` revision `680292fe9e4c` consumes
 `rsomics-common` and `rsomics-seqio` without depending on `rsomics-kmer`.
 Its initial trim/filter pipeline passes exact-head CI on all four native
-targets with live fastp differentials. Together these two products establish
-the second concrete consumer contract for the current common and sequence-I/O
-APIs. They do not freeze `rsomics-help` or `rsomics-kmer`, which still require
-their own second product consumers.
+targets with live fastp differentials. On the provenance-checked SRR341550 R1
+fixture, the shared accelerated validator preserves byte-identical output
+while lowering both products' wall time and peak RSS; four-thread preprocessing
+is slightly faster than the aligned fastp slice on the measured Apple M2.
+Together these two products establish the second concrete consumer contract
+for the current common and sequence-I/O APIs. They do not freeze
+`rsomics-help` or `rsomics-kmer`, which still require their own second product
+consumers.
 
 `rsomics-igzip` accepts no new consumers. Its native backend is integrated
 privately or replaced after equivalent compatibility, throughput, and memory
