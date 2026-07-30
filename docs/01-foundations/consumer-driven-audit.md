@@ -110,10 +110,11 @@ threading, slab, and compression backends remain private.
 iteration, and general hashes. Product-specific correction tables and QC bins
 remain internal.
 
-`rsomics-seq` revision `d1369a5fe8cb` consumes the checked accumulator and the
+`rsomics-seq` revision `02f8268931b0` consumes the checked accumulator and the
 strict `rsomics-seqio` stream API directly. Its complete five-command first
 slice passes exact-head CI on all four native targets with live SeqKit
-differentials and an independent ordered k-mer oracle.
+differentials and an independent ordered k-mer oracle. Its representative
+Linux gate also matches Jellyfish for 104,521 canonical count rows.
 
 `rsomics-fastq-preprocess` revision `8e483fc95556` consumes
 `rsomics-common` and `rsomics-seqio` without depending on `rsomics-kmer`.
@@ -130,6 +131,14 @@ Together these two products establish the second concrete consumer contract
 for the current common and sequence-I/O APIs. They do not freeze
 `rsomics-help` or `rsomics-kmer`, which still require their own second product
 consumers.
+
+The two consumers expose a real difference in the current common runtime
+contract: preprocessing uses `--threads` to size its Rayon work, while
+`rsomics-seq` currently initializes the same shared pool without using it.
+One- and four-thread controls show no sequence-product scaling. Before freezing
+the common CLI API, a product must not advertise an inapplicable shared flag;
+the resolution needs consumer-side command-tree tests and must preserve
+preprocessing's concrete thread control. No common API change is selected yet.
 
 Parallel gzip remains product-private because only preprocessing currently
 needs the thread-controlled contract. If `rsomics-seq` demonstrates the same

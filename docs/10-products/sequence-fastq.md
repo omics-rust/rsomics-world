@@ -67,14 +67,34 @@ skips ambiguity-bearing windows, constrains `k` to the foundation's checked
 promote a new public crate or make k-mer counting product-independent policy.
 
 The complete first slice is implemented at `omics-rust/rsomics-seq` revision
-`d1369a5fe8cb`. Its exact-head CI passes on native Linux and macOS for both
+`02f8268931b0`. Its exact-head CI passes on native Linux and macOS for both
 `x86_64` and `aarch64`, including strict Clippy, 43 tests, six live SeqKit
 2.13.0 differentials, an independent ordered k-mer oracle, and five benchmark
-smoke tests. On SRR341550 R1, `stats` is byte-identical to SeqKit and measures
-0.771 ± 0.001 s with 7.2 MB peak RSS versus SeqKit's 1.793 ± 0.022 s and
-27.5 MB. It is not publish-ready until the other operations, including the
-Jellyfish comparison for `kmers`, have equivalent evidence on the required
-platforms and its unpublished foundation revisions are released.
+smoke tests.
+
+The representative Linux `x86_64` gate covers all five commands. On 6,282,141
+compressed SRR341550 reads, `stats`, ID grep, double-strand sequence grep,
+FASTQ-to-FASTA, and FASTQ normalization are byte-identical to SeqKit 2.13.0.
+A 100,000-read subset contributes 8.1 million candidate 21-mer windows; all
+104,521 emitted canonical count rows are byte-identical to Jellyfish 2.3.1.
+Strict validation rejects truncated quality after a valid prefix and does not
+commit its named output.
+
+`stats` and double-strand sequence grep are respectively 1.32 and 1.82 times
+faster than SeqKit on the measured host. Conversion is throughput-neutral or
+12% slower but uses 68–91% less peak RSS. Exact k-mer counting is 1.52 times
+slower than the matched Jellyfish count/dump/sort pipeline but uses 63% less
+peak RSS. These are operation-specific throughput/resource decisions, not a
+blanket replacement claim.
+
+The shared `--threads` flag does not scale the current streaming sequence
+operations; compressed input uses a fixed decompressor/consumer pipeline.
+That misleading CLI surface is a release API gate and is not being hidden with
+speculative parallel code. Exact distributions, RSS, commands, checksums, and
+remaining gates are in the
+[representative product gate](seq-gate-2026-07-30.md). Publication remains
+blocked on that CLI decision, unpublished foundation revisions, final API and
+hot-path review, and unavailable native Linux `aarch64` performance evidence.
 
 ### Later operation groups
 
