@@ -1,0 +1,17 @@
+name: Control plane
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - name: Validate architecture ledgers
+        run: python3 scripts/validate_control_plane.py
