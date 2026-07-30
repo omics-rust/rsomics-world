@@ -115,17 +115,27 @@ strict `rsomics-seqio` stream API directly. Its complete five-command first
 slice passes exact-head CI on all four native targets with live SeqKit
 differentials and an independent ordered k-mer oracle.
 
-`rsomics-fastq-preprocess` revision `680292fe9e4c` consumes
+`rsomics-fastq-preprocess` revision `8e483fc95556` consumes
 `rsomics-common` and `rsomics-seqio` without depending on `rsomics-kmer`.
 Its initial trim/filter pipeline passes exact-head CI on all four native
-targets with live fastp differentials. On the provenance-checked SRR341550 R1
-fixture, the shared accelerated validator preserves byte-identical output
-while lowering both products' wall time and peak RSS; four-thread preprocessing
-is slightly faster than the aligned fastp slice on the measured Apple M2.
+targets with live fastp differentials. The product internalizes the historical
+`rsomics-fqgz` chunked-libdeflate algorithm behind its transactional writer;
+it does not add a public foundation or bypass `rsomics-seqio` validation and
+serialization. On provenance-checked SRR341550 paired input, the four-thread
+Linux `x86_64` path is byte-identical, 1.28 times faster, and uses about 69%
+less peak RSS than the aligned fastp slice. The single-end path is slower but
+uses about 63% less peak RSS, so it is recorded as a resource advantage rather
+than a throughput claim.
 Together these two products establish the second concrete consumer contract
 for the current common and sequence-I/O APIs. They do not freeze
 `rsomics-help` or `rsomics-kmer`, which still require their own second product
 consumers.
+
+Parallel gzip remains product-private because only preprocessing currently
+needs the thread-controlled contract. If `rsomics-seq` demonstrates the same
+need with consumer tests and representative measurements, the backend can move
+behind the existing `rsomics-seqio` writer contract without exposing
+product-specific policy.
 
 `rsomics-igzip` accepts no new consumers. Its native backend is integrated
 privately or replaced after equivalent compatibility, throughput, and memory

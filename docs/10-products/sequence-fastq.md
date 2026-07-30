@@ -151,18 +151,34 @@ compatibility and representative hot-path benchmarks. Existing small
 subprocess benches are not release evidence.
 
 The initial `run`, `trim`, and `filter` slice is implemented at
-`omics-rust/rsomics-fastq-preprocess` revision `680292fe9e4c`. It combines
+`omics-rust/rsomics-fastq-preprocess` revision `8e483fc95556`. It combines
 fixed, poly-G/poly-X, quality, N-content, length, and complexity transforms
 over one ordered chunk engine for single-end and paired-end reads. Its
 exact-head CI passes on native Linux and macOS for both `x86_64` and
-`aarch64`, including strict Clippy, 39 tests, four live fastp 1.3.6
-differentials, and a benchmark smoke test. The provenance-checked SRR341550 R1
-checkpoint is byte-identical to the aligned fastp slice at one and four
-threads. On Apple M2 it measures 2.452 ± 0.115 s and 21.0 MB at one thread
-versus fastp's 3.775 ± 0.033 s and 44.0 MB; at four threads it measures
-2.275 ± 0.105 s and 18.4 MB versus fastp's 2.353 ± 0.052 s and 61.1 MB.
-This is a strong product checkpoint, not release evidence: paired fixtures,
-the later operations, and required Linux measurements remain.
+`aarch64`, including strict Clippy, 42 internal/CLI tests, four live fastp
+1.3.6 differentials, and a benchmark smoke test.
+
+The product privately internalizes the useful `rsomics-fqgz` algorithm instead
+of reviving that historical micro-foundation. `rsomics-seqio` still validates
+and serializes every record; ordered 256 KiB gzip members are compressed by
+libdeflate through the existing Rayon pool and committed by the existing
+two-output transaction.
+
+On provenance-checked SRR341550 paired input, decompressed output is
+byte-identical to the aligned fastp slice. On Ubuntu 22.04 / Linux 6.8
+`x86_64`, four-thread paired output measures `10.863 ± 0.298 s` and 31.5 MiB
+peak RSS versus fastp's `13.891 ± 0.447 s` and 101.9 MiB. One-thread paired
+output measures `22.308 ± 0.610 s` and 31.5 MiB versus `39.091 ± 0.894 s`
+and 88.7 MiB. Single-end output is not a throughput win on that host:
+four-thread time is `5.360 ± 0.075 s` versus fastp's `4.937 ± 0.721 s`, but
+peak RSS is 19.6 MiB versus 52.9 MiB. The compressed files are about 0.07%
+larger than fastp's, pass `gzip -t`, and are consumed by SeqKit and fastp.
+
+This is a strong product checkpoint, not publication approval: the
+unpublished foundation revisions, end-to-end QC handoff, final API review, and
+release-level performance decision remain. Exact machine, fixture, causal
+control, interoperability, and raw-result checksums are recorded in the
+[parallel-gzip product gate](fastq-preprocess-gate-2026-07-30.md).
 
 ## `rsomics-fastq-qc`
 
