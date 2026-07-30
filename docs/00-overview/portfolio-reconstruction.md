@@ -111,7 +111,7 @@ The current implementation pool maps to 30 product families:
 | `rsomics-composition` | 6 | compositional transforms and inference |
 | `rsomics-index` | 4 | bgzip/tabix and sequence index utilities |
 | `rsomics-metagenomics` | 5 | current taxonomy/amplicon utilities |
-| `rsomics-peak` | 5 | peak calling and annotation |
+| `rsomics-peak` | 5 | chromatin peak calling, annotation, and quantification |
 | `rsomics-expression` | 2 | count-matrix and result utilities |
 | `rsomics-annotation` | 2 | GFF/GTF and transcript utilities |
 | Seven single-implementation products | 7 | FastQC, count, sketch, liftOver, methylation, minimap2, workflow utilities |

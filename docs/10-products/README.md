@@ -35,7 +35,7 @@ operation will ship. It records:
 | `rsomics-metagenomics` | 5 | boundary review required with sketch |
 | `rsomics-methyl` | 1 | [audited](methyl.md) |
 | `rsomics-minimap2` | 1 | [audited](minimap2.md); legacy release requires reconstruction |
-| `rsomics-peak` | 5 | queued |
+| `rsomics-peak` | 5 | [audited](peak.md); four workflow assets and one discarded generic candidate |
 | `rsomics-phylo` | 11 | queued |
 | `rsomics-plink` | 28 | queued |
 | `rsomics-popgen` | 16 | queued |

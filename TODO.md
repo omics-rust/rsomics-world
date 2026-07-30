@@ -39,7 +39,7 @@ exclusions.
 - [ ] `rsomics-metagenomics`
 - [x] `rsomics-methyl`
 - [x] `rsomics-minimap2`
-- [ ] `rsomics-peak`
+- [x] `rsomics-peak`
 - [ ] `rsomics-phylo`
 - [ ] `rsomics-plink`
 - [ ] `rsomics-popgen`
