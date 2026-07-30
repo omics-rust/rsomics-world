@@ -51,12 +51,19 @@ protein-specific commands remain explicit subcommands.
 | Subcommand | Canonical historical assets | Initial compatibility oracle |
 |---|---|---|
 | `stats` | `fasta-stats`, `fastq-stats`, N50 edge fixtures | SeqKit |
+| `kmers` | `fasta-utils` k-mer operation | independent byte-window oracle; Jellyfish comparison before release |
 | `grep` | `seq-grep`, selected utils fixtures | SeqKit |
 | `convert` | `fastx-convert`, `fasta-fx2tab` | SeqKit and format goldens |
 | `validate` | `fasta-validate`, `fastq-validate` tests | strict format behavior |
 
 This slice deliberately exercises FASTA/FASTQ, compression, stdin/stdout,
 multi-subcommand help, JSON, and error propagation before broader migration.
+`kmers` moves forward from the later generic-analysis assets because it is the
+smallest user-recognizable operation that makes the pilot a real joint
+consumer of `rsomics-seqio` and `rsomics-kmer`. It retains exact counting,
+skips ambiguity-bearing windows, constrains `k` to the foundation's checked
+`1..=32` representation, and adds an explicit canonical mode. This does not
+promote a new public crate or make k-mer counting product-independent policy.
 
 ### Later operation groups
 

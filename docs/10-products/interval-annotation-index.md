@@ -1,7 +1,7 @@
 # Interval, annotation, and index product dossier
 
-Status: source audit complete; first release slices selected; implementation
-not yet merged.
+Status: source audit complete; the BED first slice is in a verified public
+repository; annotation and index implementation has not started.
 
 Routing corrections move table aggregation to `rsomics-table`, SEACR to
 `rsomics-peak`, FASTA masking to `rsomics-bed`, and FASTA indexing to
@@ -36,6 +36,14 @@ Region variants remain flags inside an operation.
 These operations provide a narrow but complete test of coordinate semantics,
 streaming records, interval indexing, multi-file behavior, and bedtools
 compatibility.
+
+The first slice is implemented at `omics-rust/rsomics-bed` revision
+`ed415eeebd9d6a3bcb34cc9cf15bcfc5f7c587cd`. Its exact-head CI runs the
+pinned bedtools 2.31.1 oracle on native Linux and macOS for both `x86_64` and
+`aarch64`. Local compatibility includes 3,855 targeted differential cases,
+469 exhaustive zero-length coverage combinations, 400 deterministic random
+seeds across all five operations, and dense-overlap scaling. The repository
+remains unpublished.
 
 ### Asset dispositions
 

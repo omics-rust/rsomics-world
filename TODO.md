@@ -92,8 +92,8 @@ exclusions.
 - [x] Separate indexing/compression concerns from BED operations.
 - [ ] Recover `rsomics-bed-utils`, `rsomics-gff-head`, and `rsomics-gff-merge`
       from verified Git bundles where local clones are absent.
-- [ ] Merge the first release slice.
-- [ ] Consolidate compatibility fixtures and benchmarks.
+- [x] Merge the first release slice.
+- [x] Consolidate compatibility fixtures and benchmarks.
 - [ ] Review `common/help/intervals/seqio` changes through product consumers.
 
 ## P2 — alignment and variation

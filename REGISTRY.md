@@ -16,7 +16,7 @@ Status meanings are defined in [CONVENTIONS.md](CONVENTIONS.md).
 |---|---|---|
 | `rsomics-annotation` | planned | GFF/GTF inspection, selection, transformation, sequence extraction |
 | `rsomics-bam` | planned | SAM/BAM/CRAM format operations; archived orphan releases are source assets |
-| `rsomics-bed` | pilot | BED/interval algebra and bedtools-like operations |
+| `rsomics-bed` | repo-only | BED/interval algebra and bedtools-like operations |
 | `rsomics-composition` | planned | compositional transforms and inference |
 | `rsomics-count` | planned | feature and read counting workflows |
 | `rsomics-deseq` | planned | DESeq2-style differential-expression workflow |
@@ -50,13 +50,14 @@ Product status summary:
 | Status | Count |
 |---|---:|
 | live | 1 |
-| repo-only | 1 |
-| pilot | 4 |
+| repo-only | 2 |
+| pilot | 3 |
 | planned | 24 |
 | **Total** | **30** |
 
 `pilot` means the boundary and source audit are active. It does not imply that
-a public repository or installable release exists.
+a public repository or installable release exists. `repo-only` likewise does
+not imply that the crate has passed its publication gate.
 
 ## Public foundations
 
