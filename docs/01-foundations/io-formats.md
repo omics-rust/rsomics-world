@@ -124,6 +124,10 @@ live one level down. Random-access indexes (fai/bai/csi) live in
   - Layer: `adopt`
   - Consumes primitives: —
   - Notes: Used by every quantifier and annotation tool downstream.
+    `rsomics-annotation` currently pairs `noodles-gff` 0.55 with
+    `noodles-gtf` 0.50 because that GTF release uses the same GFF record
+    version internally; selecting GFF 0.57 independently would duplicate the
+    parser type graph. Upgrade the pair together.
 
 - [x] **`BED`** — interval format.
   - Reference impl: `C++` · [arq5x/bedtools2](https://github.com/arq5x/bedtools2) · `MIT`

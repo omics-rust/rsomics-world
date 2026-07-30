@@ -54,7 +54,7 @@ APIs:
 |---|---|---|---|
 | `rsomics-common` | `9f11f37c0fa4` | narrowed the public runtime to demonstrated error, exit-code, output-mode, JSON-envelope, and runner contracts; removed speculative thread, RNG, logging, file, fixture, and tool abstractions; added fail-loud JSON emission fallback | exact-head four-native-target CI, strict Clippy, 26 tests, and package verification green; unpublished; local coordinated graph verified with `seq`, `fastq-preprocess`, `bed`, `seqio`, and `intervals` |
 | `rsomics-help` | `c615aa8b8522` | replaced the duplicate `HelpSpec` renderer and argv interception with recursive styling and parsing of the authoritative Clap command tree | exact-head four-native-target CI, strict Clippy, six tests, and package verification green; unpublished; all three pilot product suites pass in local patched worktrees |
-| `rsomics-intervals` | `491b14c0d43b` | checked the COITrees coordinate boundary; aligned version 0.3 with common 0.7; repaired package metadata and four-native-target CI; removed narrative comments without changing behavior | exact-head four-native-target CI, strict Clippy, 48 unit tests, six property tests, and package verification green; unpublished; the second consumer contract, BED-policy review, and performance evidence remain |
+| `rsomics-intervals` | `491b14c0d43b` | checked the COITrees coordinate boundary; aligned version 0.3 with common 0.7; repaired package metadata and four-native-target CI; removed narrative comments without changing behavior | exact-head four-native-target CI, strict Clippy, 48 unit tests, six property tests, and package verification green; unpublished; `bed` and `annotation` now exercise the coordinate model, while the index still lacks a second consumer and its BED-policy and performance gates remain |
 | `rsomics-kmer` | `4258ac881119` | made `k = 32` well-defined, added checked encode/decode/canonical operations and a fallible count-accumulator boundary, and removed its unused `rsomics-common` dependency | exact-head CI green; `rsomics-seq` is the first real product consumer; a second product contract and comparative performance remain |
 | `rsomics-seqio` | `b23cf8ad29fd` | replaced the ambiguous record model with strict allocation-reusing FASTA/FASTQ streams, bounded gzip decode buffering, wrapped FASTQ support, and fail-loud gzip/BGZF handling; aligned version 0.3 with common 0.7 | exact-head four-native-target CI, strict Clippy, 45 unit tests, five compatibility tests, benchmark smoke, and package verification green; exercised by both `rsomics-seq` and `rsomics-fastq-preprocess`; unpublished |
 
@@ -178,13 +178,16 @@ instance without a committed path dependency. The earlier representative
 million-record gate matches bedtools output and passes throughput on all five
 operations without adding another shared crate; the revised subtract hot path
 still requires representative remeasurement before publication.
-`rsomics-annotation` must still provide the second coordinate-model contract,
-and the BED parsing/sorting functions currently exposed by the foundation
-require a fresh policy review before intervals 0.3 is published. Annotation
-does not naturally need the checked tree for its first streaming slice, so it
-must not be counted as a second `IntervalIndex` consumer. That item remains
-unpublished until `peak`, `signal`, or another real product demonstrates the
-same policy-free query contract.
+`rsomics-annotation` revision `b8ad1eee7865` now provides the second
+coordinate-model contract through one checked conversion from inclusive
+GFF/GTF features to the shared half-open interval type. Exact-head CI run
+`30572705103` passes the product on all four native targets and includes live
+gffread differentials. The BED parsing and sorting functions currently exposed
+by the foundation still require a fresh policy review before intervals 0.3 is
+published. Annotation does not naturally need the checked tree for its first
+streaming slice, so it is not a second `IntervalIndex` consumer. That item
+remains unpublished until `peak`, `signal`, or another real product
+demonstrates the same policy-free query contract.
 
 ### Alignment wave
 

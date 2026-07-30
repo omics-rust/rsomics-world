@@ -1,8 +1,7 @@
 # Interval, annotation, and index product dossier
 
-Status: the BED first slice is verified. Annotation source assets and upstream
-boundaries have been audited; annotation and index implementation has not
-started.
+Status: the BED and annotation first slices are verified. Index implementation
+has not started.
 
 Routing corrections move table aggregation to `rsomics-table`, SEACR to
 `rsomics-peak`, FASTA masking to `rsomics-bed`, and FASTA indexing to
@@ -112,6 +111,23 @@ The first implementation slice is:
 - `to-bed`, converting 1-based inclusive features to 0-based half-open
   intervals at one checked boundary.
 
+This slice is implemented at `omics-rust/rsomics-annotation` revision
+`b8ad1eee786586fd1375e883c608e1feae0417d2`. Exact-head CI run
+`30572705103` passes on native Linux and macOS for both `x86_64` and
+`aarch64`. The gate runs strict Clippy, debug and release suites, package
+verification, and 26 tests. Two of those tests build and invoke pinned
+gffread 0.12.9 to compare inclusive region-edge selection and transcript BED
+coordinates.
+
+The implementation has one typed record stream for both dialects, explicit
+dialect selection, transactional named outputs, line-numbered failures, and
+the shared `rsomics-help` command presentation. Validation rejects inverted
+coordinates, non-finite scores, invalid CDS phase use, unresolved GFF3
+parents, incompatible repeated IDs, missing GTF hierarchy identifiers, and a
+GFF3 version directive that is absent, repeated, non-version-3, or not the
+first non-empty line. No product benchmark claim has been made yet, and the
+crate remains unpublished.
+
 Transcript, CDS, and protein FASTA extraction follows on the same record and
 hierarchy model. It is not advertised until the retained gffread goldens pass
 through that model.
@@ -182,9 +198,10 @@ provides checked index construction and queries around its `i32` backend. The
 product manifest targets 0.3 and CI patches that exact unpublished revision.
 `intersect` consumes the fallible boundary directly.
 
-The coordinate model is justified by `rsomics-bed` and the planned
-`rsomics-annotation` conversion boundary. That does not automatically justify
-every public item in the crate. The checked `IntervalIndex` still has only one
+The coordinate model is now exercised by both `rsomics-bed` and
+`rsomics-annotation`: annotation constructs the shared half-open interval at
+its checked BED conversion boundary. That does not automatically justify every
+public item in the crate. The checked `IntervalIndex` still has only one
 natural product consumer, `rsomics-bed`; it remains unpublished until another
 product such as `rsomics-peak` or `rsomics-signal` demonstrates the same
 policy-free query contract.
