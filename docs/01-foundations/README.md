@@ -7,6 +7,10 @@ everything in modules 02–09 depends on this layer working well.
 
 ## Sub-docs
 
+- [`consumer-driven-audit.md`](consumer-driven-audit.md) — retained public
+  foundations, concrete product drivers, and completion gates.
+- [`common-consumer-contract.md`](common-consumer-contract.md) — live
+  `rsomics-common` call-site matrix and proposed narrow 0.7 boundary.
 - [`io-formats.md`](io-formats.md) — FASTA/FASTQ, SAM/BAM/CRAM, VCF/BCF,
   GFF/GTF, BED, MAF, PAF, h5ad. Centred on `noodles` + `needletail`.
 - [`compression.md`](compression.md) — gzip/bgzf/zstd/lz4/xz codecs and the

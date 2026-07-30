@@ -12,8 +12,8 @@ phase.
 
 | Foundation | Decision | Initial product drivers |
 |---|---|---|
-| `rsomics-common` | keep; refactor command/error/output contract | `seq`, `bed` |
-| `rsomics-help` | keep; derive nested help from the command tree | `seq`, `bed` |
+| `rsomics-common` | keep; refactor command/error/output contract | `seq`, `fastq-preprocess`, `bed` |
+| `rsomics-help` | keep the name under review; current API fails the two-consumer gate | legacy `minimap2` only; `seq` and `bed` use Clap directly |
 | `rsomics-seqio` | keep; redesign around FASTA/FASTQ stream contracts | `seq`, `fastq-preprocess`, `fastq-qc` |
 | `rsomics-kmer` | keep; repair boundaries and expose only general primitives | `seq`; later `metagenomics`, `sketch` |
 | `rsomics-intervals` | keep; repair coordinate safety and remove BED policy | `bed`, `annotation` |
@@ -89,16 +89,21 @@ first.
 
 ### CLI wave
 
-`rsomics-common` and `rsomics-help` are driven by the `seq` and `bed` command
+`rsomics-common` is driven by the `seq`, `fastq-preprocess`, and `bed` command
 trees.
 
 - Represent product and subcommand identity in error and JSON output.
-- Derive help from one Clap command tree instead of duplicating `HelpSpec`.
 - Preserve rich, plain, and JSON representations.
 - Remove hard-coded old-workspace fixture paths and boot-disk cache fallbacks.
 - Propagate serialization and output failures.
 
-The API freezes only after both products exercise it.
+The current `rsomics-help` API duplicates a second `HelpSpec` tree and is used
+only by the unreconstructed `rsomics-minimap2`. The verified `seq` and `bed`
+products intentionally let Clap render nested help from the authoritative
+command tree. Do not force them to consume a decorative renderer to satisfy a
+foundation count. The name remains under review; a replacement public API
+requires two products to demonstrate a help representation that Clap cannot
+already provide.
 
 ### Sequence wave
 
@@ -132,13 +137,16 @@ for the current common and sequence-I/O APIs. They do not freeze
 `rsomics-help` or `rsomics-kmer`, which still require their own second product
 consumers.
 
-The two consumers expose a real difference in the current common runtime
-contract: preprocessing uses `--threads` to size its Rayon work, while
-`rsomics-seq` currently initializes the same shared pool without using it.
-One- and four-thread controls show no sequence-product scaling. Before freezing
-the common CLI API, a product must not advertise an inapplicable shared flag;
-the resolution needs consumer-side command-tree tests and must preserve
-preprocessing's concrete thread control. No common API change is selected yet.
+The consumers expose a real difference in the current common runtime contract:
+preprocessing uses `--threads` to size its Rayon work, while `rsomics-seq`
+initializes the same shared pool without using it. `rsomics-bed` also accepts
+`--threads` and `--seed`; none of its five current operations uses either
+value, and its published intervals dependency re-enables common's default
+Rayon feature. One- and four-thread controls show no sequence-product scaling.
+Before freezing the common CLI API, a product must not advertise an
+inapplicable shared flag. The resolution needs capability-selective
+consumer-side command-tree tests while preserving preprocessing's concrete
+thread control. No common API change is selected yet.
 
 Parallel gzip remains product-private because only preprocessing currently
 needs the thread-controlled contract. If `rsomics-seq` demonstrates the same
@@ -155,6 +163,15 @@ evidence.
 `rsomics-intervals` exposes coordinate-safe geometry, overlap indexing, and
 generic payloads. BED parsing, header behavior, sorting policy, and writing
 remain in `rsomics-bed`.
+
+`rsomics-bed` revision `97f5fe31662e` is the first concrete checked-index
+consumer. Because the fallible API at `c13cb75c318` is not published, the
+product pins 0.2.0 and validates the same backend range before every infallible
+build or query. The representative million-record gate matches bedtools output
+and passes throughput on all five operations without adding another shared
+crate. `rsomics-annotation` must provide the second consumer-side contract
+before the checked foundation API is released; until then the product guard is
+deliberate temporary duplication rather than a frozen alternative abstraction.
 
 ### Alignment wave
 
