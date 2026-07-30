@@ -14,7 +14,7 @@ maps belong in their dossiers under `docs/`.
 - [x] Regenerate `REGISTRY.md` from live GitHub, crates.io, and the allowlist.
 - [ ] Convert stale domain documents from crate queues into product-operation
       surveys.
-- [ ] Record the final reset gate and exact live counts.
+- [x] Record the final reset gate and exact live counts.
 
 ## P0.2 — product dossiers
 
@@ -55,18 +55,19 @@ exclusions.
 
 ## P0.3 — public-foundation audit
 
-- [x] `rsomics-common`: separate universal execution primitives from old
-      micro-crate convenience APIs.
-- [x] `rsomics-help`: define the stable family/subcommand help model.
-- [x] `rsomics-seqio`: derive its API from sequence and FASTQ consumers.
-- [x] `rsomics-kmer`: validate consumers in sequence, metagenomics, and sketch.
-- [x] `rsomics-intervals`: derive its API from BED, annotation, peak, and signal.
-- [x] `rsomics-bamio`: derive its API from BAM, VCF, RNA-seq QC, and signal.
-- [x] `rsomics-pileup`: derive its API from BAM and VCF operations.
-- [x] `rsomics-stats`: retain numerical primitives with at least two workflow
-      consumers; do not recreate one CLI per test.
-- [x] `rsomics-phylo-tree`: validate shared tree model requirements across
-      phylogenetics and ecology.
+- [x] Complete the initial source and API audit for all nine retained
+      foundations.
+- [x] `rsomics-common`: narrow the runtime through real product consumers.
+- [x] `rsomics-help`: replace duplicate CLI models with the shared Clap layer.
+- [x] `rsomics-seqio`: derive strict stream contracts from sequence and
+      preprocessing.
+- [ ] `rsomics-kmer`: add a second product consumer and four-native-target
+      release gate.
+- [ ] `rsomics-intervals`: review public items individually and demonstrate a
+      second consumer for the checked index contract.
+- [ ] Reconstruct `rsomics-bamio` and `rsomics-pileup` through BAM and VCF.
+- [ ] Reconstruct `rsomics-stats` through at least two stateful workflows.
+- [ ] Reconstruct `rsomics-phylo-tree` through phylogenetics and ecology.
 - [ ] Internalize or replace `rsomics-igzip`, then remove its public registry
       boundary when immutable dependencies allow.
 - [ ] Correct repository metadata in future foundation releases.
@@ -80,10 +81,11 @@ exclusions.
 - [x] Merge the first consumer slice without reviving micro-crate dependencies.
 - [x] Consolidate golden and compatibility tests for the implemented operations.
 - [ ] Add end-to-end tests composing multiple subcommands.
-- [ ] Benchmark against the real upstream tools.
+- [x] Benchmark implemented slices against the real upstream tools.
 - [x] Review `common` and `seqio` public API changes through the `seq` and
       `fastq-preprocess` consumers.
-- [ ] Review `help` and `kmer` through their required second product consumers.
+- [x] Review `help` through sequence, preprocessing, BED, and annotation.
+- [ ] Review `kmer` through its required second product consumer.
 
 ## P1 — interval pilot
 
@@ -95,7 +97,9 @@ exclusions.
       from verified Git bundles where local clones are absent.
 - [x] Merge the first release slice.
 - [x] Consolidate compatibility fixtures and benchmarks.
-- [ ] Review `common/help/intervals/seqio` changes through product consumers.
+- [x] Review `common`, `help`, and the interval coordinate model through BED
+      and annotation.
+- [ ] Review sequence-index I/O through the `rsomics-index` consumer.
 
 ## P2 — alignment and variation
 

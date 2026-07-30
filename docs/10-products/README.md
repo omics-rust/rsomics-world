@@ -71,25 +71,25 @@ flowchart TB
 
     common["rsomics-common"] --> seq
     common --> prep
-    common --> qc
     common --> bed
     common --> annotation
-    common --> index
+    common -. planned .-> qc
+    common -. planned .-> index
     help["rsomics-help"] --> seq
     help --> prep
-    help --> qc
     help --> bed
     help --> annotation
-    help --> index
+    help -. planned .-> qc
+    help -. planned .-> index
     seqio["rsomics-seqio"] --> seq
     seqio --> prep
-    seqio --> qc
-    seqio -. later transcript extraction .-> annotation
+    seqio -. planned .-> qc
+    seqio -. planned .-> index
     kmer["rsomics-kmer"] --> seq
-    kmer --> prep
     intervals["rsomics-intervals"] --> bed
     intervals --> annotation
 ```
 
-Solid arrows are pilot consumer contracts. The dotted arrow is a later planned
-consumer. None implies that a foundation API is already stable.
+Solid arrows are current consumer contracts. Dotted arrows are planned
+consumers and do not justify a public API by themselves. None implies that a
+foundation API is already stable.

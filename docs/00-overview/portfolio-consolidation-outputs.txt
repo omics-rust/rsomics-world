@@ -1,3 +1,5 @@
 # New product repositories excluded from the historical implementation pool.
+rsomics-annotation
 rsomics-bed
+rsomics-fastq-preprocess
 rsomics-seq

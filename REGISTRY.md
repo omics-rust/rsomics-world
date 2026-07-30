@@ -14,7 +14,7 @@ Status meanings are defined in [CONVENTIONS.md](CONVENTIONS.md).
 
 | Product | Status | Initial scope / upstream anchors |
 |---|---|---|
-| `rsomics-annotation` | planned | GFF/GTF inspection, selection, transformation, sequence extraction |
+| `rsomics-annotation` | repo-only | GFF/GTF inspection, selection, transformation, sequence extraction |
 | `rsomics-bam` | planned | SAM/BAM/CRAM format operations; archived orphan releases are source assets |
 | `rsomics-bed` | repo-only | BED/interval algebra and bedtools-like operations |
 | `rsomics-composition` | planned | compositional transforms and inference |
@@ -50,9 +50,9 @@ Product status summary:
 | Status | Count |
 |---|---:|
 | live | 1 |
-| repo-only | 4 |
+| repo-only | 5 |
 | pilot | 1 |
-| planned | 24 |
+| planned | 23 |
 | **Total** | **30** |
 
 `pilot` means the boundary and source audit are active. It does not imply that
@@ -68,7 +68,7 @@ not imply that the crate has passed its publication gate.
 | `rsomics-bamio` | live | live | BAM, VCF, RNA-seq QC, signal |
 | `rsomics-intervals` | live | live | BED, annotation, peak, signal |
 | `rsomics-kmer` | live | live | pilot: sequence; later: metagenomics and sketch |
-| `rsomics-seqio` | live | live | pilot: sequence and both FASTQ products; later: annotation |
+| `rsomics-seqio` | live | live | current: sequence and preprocessing; planned: FASTQ QC and indexing |
 | `rsomics-stats` | live | live | expression workflows, single-cell, ecology, population genetics |
 | `rsomics-phylo-tree` | live | live | phylogenetics, ecology |
 | `rsomics-pileup` | live | live | BAM, VCF |

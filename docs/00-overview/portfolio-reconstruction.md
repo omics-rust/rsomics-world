@@ -4,6 +4,9 @@ Status: active architecture ledger and registry-reset record. Routing remains
 provisional until each product family is reconstructed, but the 2026-07-30
 registry reset was explicitly authorized and is tracked below.
 
+The final live namespace and recovery check is recorded in
+[`registry-reset-gate-2026-07-31.md`](registry-reset-gate-2026-07-31.md).
+
 The generated crate-level ledger is
 [`portfolio-inventory.tsv`](portfolio-inventory.tsv). Regenerate it with:
 
