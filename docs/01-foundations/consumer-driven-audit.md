@@ -54,9 +54,9 @@ APIs:
 |---|---|---|---|
 | `rsomics-common` | `9f11f37c0fa4` | narrowed the public runtime to demonstrated error, exit-code, output-mode, JSON-envelope, and runner contracts; removed speculative thread, RNG, logging, file, fixture, and tool abstractions; added fail-loud JSON emission fallback | exact-head four-native-target CI, strict Clippy, 26 tests, and package verification green; unpublished; local coordinated graph verified with `seq`, `fastq-preprocess`, `bed`, `seqio`, and `intervals` |
 | `rsomics-help` | `c615aa8b8522` | replaced the duplicate `HelpSpec` renderer and argv interception with recursive styling and parsing of the authoritative Clap command tree | exact-head four-native-target CI, strict Clippy, six tests, and package verification green; unpublished; all three pilot product suites pass in local patched worktrees |
-| `rsomics-intervals` | `c13cb75c318` | checked the coordinate range accepted by the COITrees backend and added fallible index/query entry points | exact-head CI green; consumer contracts, four-native-target CI, and performance evidence remain |
+| `rsomics-intervals` | `491b14c0d43b` | checked the COITrees coordinate boundary; aligned version 0.3 with common 0.7; repaired package metadata and four-native-target CI; removed narrative comments without changing behavior | exact-head four-native-target CI, strict Clippy, 48 unit tests, six property tests, and package verification green; unpublished; the second consumer contract, BED-policy review, and performance evidence remain |
 | `rsomics-kmer` | `4258ac881119` | made `k = 32` well-defined, added checked encode/decode/canonical operations and a fallible count-accumulator boundary, and removed its unused `rsomics-common` dependency | exact-head CI green; `rsomics-seq` is the first real product consumer; a second product contract and comparative performance remain |
-| `rsomics-seqio` | `ce9c5514c235` | replaced the ambiguous record model with strict allocation-reusing FASTA/FASTQ streams, bounded gzip decode buffering, added wrapped FASTQ and tab-bearing header support, removed direct `rsomics-igzip` use, made gzip/BGZF failures loud, and accelerated printable-byte validation without changing its public contract | exact-head four-native-target CI and compressed-stream adversarial regressions green; exercised by both `rsomics-seq` and `rsomics-fastq-preprocess`; real-fixture throughput and RSS pass on macOS arm64, while Linux and full operation coverage remain |
+| `rsomics-seqio` | `b23cf8ad29fd` | replaced the ambiguous record model with strict allocation-reusing FASTA/FASTQ streams, bounded gzip decode buffering, wrapped FASTQ support, and fail-loud gzip/BGZF handling; aligned version 0.3 with common 0.7 | exact-head four-native-target CI, strict Clippy, 45 unit tests, five compatibility tests, benchmark smoke, and package verification green; exercised by both `rsomics-seq` and `rsomics-fastq-preprocess`; unpublished |
 
 None of these revisions has been published. A green foundation CI establishes
 the implementation baseline; it does not replace the two-consumer completion
@@ -75,8 +75,8 @@ produce wrong biological results:
    accumulator constructor exercised by `rsomics-seq`.
 3. `rsomics-pileup` documents coordinate-sorted input but does not validate it.
 4. `rsomics-common` previously ignored JSON serialization and output write
-   errors; `1c51f7d0b356` closes this blocker without expanding its public
-   error or exit-code vocabulary.
+   errors; `9f11f37c0fa4` closes this blocker and supplies a plain-diagnostic
+   fallback when the JSON output path itself fails.
 5. `rsomics-bamio::RawRecord::from(Vec<u8>)` permits unchecked bytes while
    accessors assume a valid structure.
 6. `rsomics-phylo-tree::Tree::default()` does not establish a valid root and
@@ -101,12 +101,12 @@ first.
 - Semantic argument groups remain on the product's existing Clap types.
 - Serialization and output failures propagate rather than being swallowed.
 
-The 0.3 `rsomics-help` API duplicates a second `HelpSpec` tree and is used only
-by the unreconstructed `rsomics-minimap2`. The 0.4 prototype removes that
-model, recursively decorates the authoritative Clap tree, and reduces the
-normal consumer call to `rsomics_help::parse::<Cli>()`. It has passed the
-existing command, compatibility, and benchmark test suites of all three pilot
-products. See
+The published 0.3 `rsomics-help` API duplicates a second `HelpSpec` tree and is
+used only by the unreconstructed `rsomics-minimap2`. The committed 0.4
+implementation removes that model, recursively decorates the authoritative
+Clap tree, and reduces the normal consumer call to
+`rsomics_help::parse::<Cli>()`. It has passed the existing command,
+compatibility, and benchmark test suites of all three pilot products. See
 [`help-consumer-contract.md`](help-consumer-contract.md).
 
 ### Sequence wave
@@ -141,16 +141,12 @@ for the current common, help, and sequence-I/O APIs. The BED pilot is the third
 help/common consumer. This does not freeze `rsomics-kmer`, which still requires
 its own second product consumer.
 
-The consumers expose a real difference in the current common runtime contract:
-preprocessing uses `--threads` to size its Rayon work, while `rsomics-seq`
-initializes the same shared pool without using it. `rsomics-bed` also accepts
-`--threads` and `--seed`; none of its five current operations uses either
-value, and its published intervals dependency re-enables common's default
-Rayon feature. One- and four-thread controls show no sequence-product scaling.
-Before freezing the common CLI API, a product must not advertise an
-inapplicable shared flag. The resolution needs capability-selective
-consumer-side command-tree tests while preserving preprocessing's concrete
-thread control. No common API change is selected yet.
+The consumers exposed a real difference in the old common runtime contract:
+preprocessing uses `--threads` to size its Rayon work, while `rsomics-seq` and
+`rsomics-bed` did not use the shared thread, seed, quiet, or verbose flags.
+Common 0.7 removes those speculative controls. The local product migrations
+keep thread ownership inside preprocessing and remove inapplicable flags from
+the other command trees.
 
 Parallel gzip remains product-private because only preprocessing currently
 needs the thread-controlled contract. If `rsomics-seq` demonstrates the same
@@ -164,18 +160,20 @@ evidence.
 
 ### Interval wave
 
-`rsomics-intervals` exposes coordinate-safe geometry, overlap indexing, and
-generic payloads. BED parsing, header behavior, sorting policy, and writing
-remain in `rsomics-bed`.
+The release target for `rsomics-intervals` is coordinate-safe geometry,
+overlap indexing, and generic payloads. Version 0.3 still exposes BED parsing,
+sorting, merging, and writing; those items are not release-approved foundation
+API until two products demonstrate the same policy-free contract. Otherwise
+they move into `rsomics-bed`.
 
 `rsomics-bed` revision `97f5fe31662e` is the first concrete checked-index
-consumer. Because the fallible API at `c13cb75c318` is not published, the
-product pins 0.2.0 and validates the same backend range before every infallible
-build or query. The representative million-record gate matches bedtools output
-and passes throughput on all five operations without adding another shared
-crate. `rsomics-annotation` must provide the second consumer-side contract
-before the checked foundation API is released; until then the product guard is
-deliberate temporary duplication rather than a frozen alternative abstraction.
+consumer. The local coordinated graph now uses intervals 0.3 and one common
+0.7 instance, but the product remains on published 0.2 until a registry release
+exists. The representative million-record gate matches bedtools output and
+passes throughput on all five operations without adding another shared crate.
+`rsomics-annotation` must still provide the second consumer-side contract, and
+the BED parsing/sorting functions currently exposed by the foundation require
+a fresh policy review before intervals 0.3 is published.
 
 ### Alignment wave
 

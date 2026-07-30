@@ -1,7 +1,8 @@
 # `rsomics-help` consumer contract
 
-Status: 0.4 foundation implementation committed and exact-head CI verified;
-three-product migration remains local-only and nothing has been published.
+Status: help 0.4, common 0.7, seqio 0.3, and intervals 0.3 are committed and
+exact-head CI verified; three-product migration remains local-only and nothing
+has been published.
 
 ## Role
 
@@ -91,19 +92,20 @@ bed -> help 0.4
 bed -> common 0.7 <- intervals
 ```
 
-`rsomics-seqio` passed strict Clippy, 45 unit tests, five compatibility tests,
-and its benchmark smoke after a dependency-only common version change.
-`rsomics-intervals` passed strict Clippy, 48 unit tests, and six property tests
-after the same change.
+`rsomics-seqio` commit `b23cf8ad29fd` passes strict Clippy, 45 unit tests, five
+compatibility tests, benchmark smoke, package verification, and exact-head CI
+on all four native targets. `rsomics-intervals` commit `491b14c0d43b` passes
+strict Clippy, 48 unit tests, six property tests, package verification, and the
+same four native targets.
 
 ## Release order
 
-1. Review and commit the `rsomics-help` 0.4 API and `rsomics-common` 0.7 API as
-   separate concerns.
-2. Align `rsomics-seqio` and `rsomics-intervals` with common 0.7 and verify
-   their exact-head four-native-target CI.
-3. Publish the foundations only after package review and registry credentials
-   are explicitly available.
+1. Help 0.4 and common 0.7 are reviewed, committed, and exact-head verified.
+2. Seqio 0.3 and intervals 0.3 are aligned with common 0.7 and exact-head
+   verified on all four native targets.
+3. Publish common, help, and seqio only after registry credentials are
+   explicitly available. Intervals additionally requires its second
+   consumer-side contract and BED-policy review.
 4. Migrate `seq`, `fastq-preprocess`, and `bed` without committed path patches;
    keep their command-tree, help, error, compatibility, and benchmark tests.
 5. Use these consumer contracts as the default CLI baseline for later product

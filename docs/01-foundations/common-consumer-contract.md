@@ -1,8 +1,8 @@
 # `rsomics-common` consumer contract
 
-Status: 0.7 foundation implementation committed and exact-head CI verified;
-coordinated foundation and product migrations remain local-only and nothing
-has been published.
+Status: common 0.7 and its seqio 0.3 and intervals 0.3 foundation consumers are
+committed and exact-head CI verified; product migrations remain local-only and
+nothing has been published.
 
 ## Why this audit exists
 
@@ -23,8 +23,8 @@ The table is based on live source at these revisions:
 - `rsomics-seq` `02f8268931b0`;
 - `rsomics-fastq-preprocess` `8e483fc95556`;
 - `rsomics-bed` `97f5fe31662e`;
-- `rsomics-seqio` `ce9c5514c235`;
-- `rsomics-intervals` `c13cb75c318`.
+- `rsomics-seqio` `b23cf8ad29fd`;
+- `rsomics-intervals` `491b14c0d43b`.
 
 | Current item | Concrete retained consumers | Finding |
 |---|---|---|
@@ -100,22 +100,24 @@ the same explicit runner contract. Historical micro-crates are not updated.
 
 ## Current unpublished-foundation workaround
 
-`rsomics-seq` and `rsomics-fastq-preprocess` currently make their CI check out
-exact common/seqio/kmer revisions and generate a `[patch.crates-io]` path table
-inside the job. This proved the coordinated implementations, but it is not the
-target flat-repository dependency model and must not become permanent
-infrastructure. The product manifests remain version dependencies; once the
-reviewed foundations are published, the CI checkout/patch steps are removed
-and clean registry resolution is tested.
+The two product repositories and the unpublished seqio/intervals foundation
+releases make CI check out exact foundation revisions and generate a
+`[patch.crates-io]` path table inside the job. This proves the coordinated
+implementations without committing path dependencies, but it is temporary.
+Once the reviewed foundations are published, the checkout/patch steps are
+removed, lockfiles are regenerated against registry sources, and clean
+registry resolution is tested.
 
 ## Verification and release sequence
 
 1. Keep common `9f11f37c0fa4` and help `c615aa8b8522` as the reviewed
    exact-head baselines.
-2. Align `seqio` and `intervals` so every tested product graph contains one
-   common version, then obtain their exact-head four-native-target CI.
-3. Publish the foundations only after final package review and an explicit new
-   credential path; the previous crates.io token was revoked.
+2. Keep seqio `b23cf8ad29fd` and intervals `491b14c0d43b` as the aligned
+   common-0.7 baselines; both have exact-head four-native-target CI.
+3. Publish common, help, and seqio only after final package review and an
+   explicit new credential path; the previous crates.io token was revoked.
+   Intervals additionally remains behind its second-consumer and BED-policy
+   gates.
 4. Update and gate each product independently against published versions;
    never commit a path dependency.
 
