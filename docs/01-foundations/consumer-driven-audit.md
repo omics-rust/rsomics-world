@@ -13,7 +13,7 @@ phase.
 | Foundation | Decision | Initial product drivers |
 |---|---|---|
 | `rsomics-common` | keep; refactor command/error/output contract | `seq`, `fastq-preprocess`, `bed` |
-| `rsomics-help` | keep the name under review; current API fails the two-consumer gate | legacy `minimap2` only; `seq` and `bed` use Clap directly |
+| `rsomics-help` | keep; replace the duplicate renderer with the family CLI UX adapter | `seq`, `fastq-preprocess`, `bed` |
 | `rsomics-seqio` | keep; redesign around FASTA/FASTQ stream contracts | `seq`, `fastq-preprocess`, `fastq-qc` |
 | `rsomics-kmer` | keep; repair boundaries and expose only general primitives | `seq`; later `metagenomics`, `sketch` |
 | `rsomics-intervals` | keep; repair coordinate safety and remove BED policy | `bed`, `annotation` |
@@ -52,7 +52,8 @@ APIs:
 
 | Foundation | Current revision | Verified change | Release state |
 |---|---|---|---|
-| `rsomics-common` | `1c51f7d0b356` | added fallible JSON emitters and propagated serialization, write, newline, and flush failures through the existing error and exit-code contract | exact-head four-native-target CI green; exercised by both `rsomics-seq` and `rsomics-fastq-preprocess`; comparative overhead remains |
+| `rsomics-common` | `9f11f37c0fa4` | narrowed the public runtime to demonstrated error, exit-code, output-mode, JSON-envelope, and runner contracts; removed speculative thread, RNG, logging, file, fixture, and tool abstractions; added fail-loud JSON emission fallback | exact-head four-native-target CI, strict Clippy, 26 tests, and package verification green; unpublished; local coordinated graph verified with `seq`, `fastq-preprocess`, `bed`, `seqio`, and `intervals` |
+| `rsomics-help` | `c615aa8b8522` | replaced the duplicate `HelpSpec` renderer and argv interception with recursive styling and parsing of the authoritative Clap command tree | exact-head four-native-target CI, strict Clippy, six tests, and package verification green; unpublished; all three pilot product suites pass in local patched worktrees |
 | `rsomics-intervals` | `c13cb75c318` | checked the coordinate range accepted by the COITrees backend and added fallible index/query entry points | exact-head CI green; consumer contracts, four-native-target CI, and performance evidence remain |
 | `rsomics-kmer` | `4258ac881119` | made `k = 32` well-defined, added checked encode/decode/canonical operations and a fallible count-accumulator boundary, and removed its unused `rsomics-common` dependency | exact-head CI green; `rsomics-seq` is the first real product consumer; a second product contract and comparative performance remain |
 | `rsomics-seqio` | `ce9c5514c235` | replaced the ambiguous record model with strict allocation-reusing FASTA/FASTQ streams, bounded gzip decode buffering, added wrapped FASTQ and tab-bearing header support, removed direct `rsomics-igzip` use, made gzip/BGZF failures loud, and accelerated printable-byte validation without changing its public contract | exact-head four-native-target CI and compressed-stream adversarial regressions green; exercised by both `rsomics-seq` and `rsomics-fastq-preprocess`; real-fixture throughput and RSS pass on macOS arm64, while Linux and full operation coverage remain |
@@ -89,21 +90,24 @@ first.
 
 ### CLI wave
 
-`rsomics-common` is driven by the `seq`, `fastq-preprocess`, and `bed` command
-trees.
+`rsomics-common` and `rsomics-help` are driven together by the `seq`,
+`fastq-preprocess`, and `bed` command trees.
 
-- Represent product and subcommand identity in error and JSON output.
-- Preserve rich, plain, and JSON representations.
-- Remove hard-coded old-workspace fixture paths and boot-disk cache fallbacks.
-- Propagate serialization and output failures.
+- `rsomics-help` owns help, version, terminal/color policy, Clap errors,
+  suggestions, and command navigation.
+- `rsomics-common` owns typed runtime errors, exit codes, JSON result envelopes,
+  and result-to-process mapping.
+- The real Clap command tree is the only argument and help model.
+- Semantic argument groups remain on the product's existing Clap types.
+- Serialization and output failures propagate rather than being swallowed.
 
-The current `rsomics-help` API duplicates a second `HelpSpec` tree and is used
-only by the unreconstructed `rsomics-minimap2`. The verified `seq` and `bed`
-products intentionally let Clap render nested help from the authoritative
-command tree. Do not force them to consume a decorative renderer to satisfy a
-foundation count. The name remains under review; a replacement public API
-requires two products to demonstrate a help representation that Clap cannot
-already provide.
+The 0.3 `rsomics-help` API duplicates a second `HelpSpec` tree and is used only
+by the unreconstructed `rsomics-minimap2`. The 0.4 prototype removes that
+model, recursively decorates the authoritative Clap tree, and reduces the
+normal consumer call to `rsomics_help::parse::<Cli>()`. It has passed the
+existing command, compatibility, and benchmark test suites of all three pilot
+products. See
+[`help-consumer-contract.md`](help-consumer-contract.md).
 
 ### Sequence wave
 
@@ -133,9 +137,9 @@ less peak RSS than the aligned fastp slice. The single-end path is slower but
 uses about 63% less peak RSS, so it is recorded as a resource advantage rather
 than a throughput claim.
 Together these two products establish the second concrete consumer contract
-for the current common and sequence-I/O APIs. They do not freeze
-`rsomics-help` or `rsomics-kmer`, which still require their own second product
-consumers.
+for the current common, help, and sequence-I/O APIs. The BED pilot is the third
+help/common consumer. This does not freeze `rsomics-kmer`, which still requires
+its own second product consumer.
 
 The consumers expose a real difference in the current common runtime contract:
 preprocessing uses `--threads` to size its Rayon work, while `rsomics-seq`

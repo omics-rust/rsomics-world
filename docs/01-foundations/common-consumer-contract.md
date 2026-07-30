@@ -1,7 +1,8 @@
 # `rsomics-common` consumer contract
 
-Status: live-consumer audit complete; 0.7 boundary proposed; no API change or
-publication performed.
+Status: 0.7 foundation implementation committed and exact-head CI verified;
+coordinated foundation and product migrations remain local-only and nothing
+has been published.
 
 ## Why this audit exists
 
@@ -18,7 +19,7 @@ them.
 
 The table is based on live source at these revisions:
 
-- `rsomics-common` `1c51f7d0b356`;
+- `rsomics-common` `9f11f37c0fa4`;
 - `rsomics-seq` `02f8268931b0`;
 - `rsomics-fastq-preprocess` `8e483fc95556`;
 - `rsomics-bed` `97f5fe31662e`;
@@ -44,9 +45,9 @@ The 562 historical micro-crate manifests that mention `rsomics-common` are
 implementation assets, not public-API consumers. Counting them would recreate
 the topology being retired.
 
-## Proposed 0.7 boundary
+## Implemented 0.7 boundary
 
-The next common release should contain:
+The 0.7 implementation contains:
 
 - the typed error categories and contextual I/O conversion;
 - stable process exit-code mapping;
@@ -55,6 +56,10 @@ The next common release should contain:
 - a minimal shared JSON/output-mode flag;
 - a runner that maps the body result to JSON/plain diagnostics and an exit
   code without initializing unrelated global state.
+
+`rsomics-help` is the companion presentation layer. It decorates and parses
+the authoritative Clap tree; common does not render help, style argument
+errors, or maintain command metadata.
 
 It should not contain thread pools, RNG policy, progress/log verbosity, generic
 file truncation, bioinformatics format I/O, numeric rendering copied from one
@@ -105,18 +110,13 @@ and clean registry resolution is tested.
 
 ## Verification and release sequence
 
-1. Implement the narrow common boundary with unit tests for plain, JSON,
-   serialization-failure, write-failure, and exit-code behavior.
-2. Use temporary local Cargo patches to compile and test `seq`,
-   `fastq-preprocess`, and `bed` without adding path dependencies to their
-   manifests.
-3. Review the three resulting command trees and consumer tests together.
-4. Commit common as one API concern and obtain exact-head native CI on Linux
-   and macOS for `x86_64` and `aarch64`.
-5. Publish only after the common package metadata and public API pass final
-   review. The previous crates.io token was revoked, so publication requires a
-   new explicit credential path.
-6. Update and gate each product independently against the published version;
+1. Keep common `9f11f37c0fa4` and help `c615aa8b8522` as the reviewed
+   exact-head baselines.
+2. Align `seqio` and `intervals` so every tested product graph contains one
+   common version, then obtain their exact-head four-native-target CI.
+3. Publish the foundations only after final package review and an explicit new
+   credential path; the previous crates.io token was revoked.
+4. Update and gate each product independently against published versions;
    never commit a path dependency.
 
 Until this sequence is complete, products keep their current published common
