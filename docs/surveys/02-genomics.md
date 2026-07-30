@@ -1,8 +1,8 @@
 # Survey: genomics domain (alignment, variants, popgen-on-genotypes)
 
-Verified 2026-05-30. Source provenance per tool in the verification notes at the
-end. Status legend: ✓ canonical crate · partial (op exists, flags/inputs missing)
-· gap (no crate) · adopt (FFI/Rust upstream, don't rebuild).
+Initial survey verified 2026-05-30; the PLINK and cross-tool routing sections
+were reverified 2026-07-31. Source provenance per tool is in the verification
+notes at the end.
 
 ## Aligners — bwa / bowtie2 / minimap2
 
@@ -37,26 +37,26 @@ BAM-manipulation tools are covered. BQSR + HaplotypeCaller + Mutect2 are the hig
 gaps. (GATK docs return 403; tool existence cross-checked vs GitHub javadoc + NIH-HPC
 + bioinformatics-workbook — see notes.)
 
-## PLINK 1.9 / 2.0 — genotype-level stats
+## PLINK 1.9 / 2.0 — genotype-analysis product
 
-Covered: `--r/--r2` → `rsomics-plink-ld` ✓; `--indep-pairwise` → `rsomics-plink-prune` ✓;
-`--pca` (+ GRM) → `rsomics-plink-pca` ✓; `--assoc/--fisher` → `rsomics-plink-assoc` ✓;
-`.bed/.pgen` read → `rsomics-pgen`/`rsomics-plink-io` ✓ (read only).
+The 2026-07-31 joint dossier maps 31 historical implementations into one
+`rsomics-plink` product. The source pool covers BED parsing, counts, missingness,
+HWE, heterozygosity, sex and Mendel QC, LD/pruning/blocks, relationship
+matrices, KING, PCA, PLINK 1 association modes, TDT, ROH, scoring, and selected
+legacy reports.
 
-Large gap set (all `gap` unless noted): **data mgmt** — make-bed/pgen, recode/export
-(15+ formats), merge/bmerge/pmerge, flip, update-{ids,map,alleles}, split-x, normalize,
-set-var-ids, rm-dup. **filtering** — keep/remove, extract/exclude, chr/from-bp/to-bp,
-geno, mind, maf/mac, hwe, thin, snps-only, king-cutoff. **stats/QC** — freq, missing,
-het, ibc, hardy, mendel, check-sex, geno-counts, sample-counts. **LD** — indep,
-indep-pairphase, blocks, show-tags, r-phased, ld, r2-phased. **popgen/distance** —
-fst, cluster, mds-plot, distance, make-grm(sparse), make-king(-table), genome (IBD),
-rel-cutoff, homozyg (ROH). **assoc** — model, logistic, linear, glm, mh/cmh, gxe,
-tdt/qfam/dfam, adjust. **scoring** — score(-list), q-score-range, vscore, clump.
+This is implementation coverage, not product readiness. The historical crate
+named `rsomics-pgen` reads PLINK 1 `.bed/.bim/.fam`; it does not read or write
+PLINK 2 `.pgen/.pvar/.psam`. Readers, formatters, CLI policy, and numerical
+helpers are repeated across the micro-crates, and most operations implement a
+small PLINK 1 subset.
 
-The genotype-stats layer is *one tool deep* today (LD, prune, PCA, assoc); the bulk of
-PLINK is unbuilt. Highest-value next crates: `--glm` (GWAS), `--score` (PRS),
-`--make-king` (kinship), `--freq/--missing/--hardy/--het` (QC battery), `--make-bed/pgen`
-+ `--export vcf` (format bridge).
+The default target is current PLINK 2, with explicitly named PLINK 1 profiles.
+The first complete slice is PGEN/BED/VCF input, shared filters, core QC,
+unphased LD, and LD pruning. General `--glm`, relationship/PCA, pedigree,
+scoring, broad conversion, and legacy analyses follow only as complete
+feature-gated slices. See
+[`genotype-popgen.md`](../10-products/genotype-popgen.md#rsomics-plink).
 
 ## Structural-variant callers — zero coverage
 
@@ -66,25 +66,22 @@ Partition is **by caller algorithm**, not by SV type. Entirely greenfield.
 
 ## Cross-tool dedup signals (genomics)
 
-Same op across PLINK1 / PLINK2 / vcftools — one canonical implementation, others
-depend or are input-format variants:
+The input format does not own an analysis. PLINK, vcftools, and scikit-allel
+overlaps route to one product:
 
 | op | upstreams | canonical / note |
 |---|---|---|
-| LD r² | plink1 --r2, plink2 --r2-unphased, vcftools --geno-r2 | `rsomics-plink-ld` (PLINK in); VCF-native r² = gap |
-| LD prune | plink1+plink2 --indep-pairwise | `rsomics-plink-prune` (PLINK in); .pgen in = gap |
-| allele freq / missing / het / hardy / fst | plink1+plink2+vcftools | `rsomics-vcf-popgen` (VCF in); PLINK-native in = gap |
-| PCA | plink1+plink2 --pca | `rsomics-plink-pca` (PLINK in); VCF/matrix PCA = gap |
-| Tajima's D | vcftools --TajimaD | `rsomics-tajima-d` (SFS) + `vcf-popgen` (VCF) — complementary inputs, not dup |
-| ROH | plink1 --homozyg, vcftools --LROH, bcftools roh | `rsomics-vcf-roh` (bcftools algo, VCF); PLINK .bed in = gap |
+| LD r² and pruning | PLINK 1/2, vcftools, scikit-allel | `rsomics-plink ld`; VCF and matrix are input adapters |
+| allele/genotype counts, missingness, HWE, heterozygosity | PLINK 1/2, vcftools | `rsomics-plink stats` |
+| PCA, relationship and genotype association | PLINK 1/2 | `rsomics-plink` product modules |
+| FST | PLINK 2, vcftools, scikit-allel | `rsomics-popgen fst`; PLINK-compatible report consumes a shared kernel only after two consumer tests |
+| π, Dxy, SFS, Tajima's D | vcftools, scikit-allel | `rsomics-popgen diversity` and `sfs` |
+| ROH | PLINK 1, vcftools, bcftools | genotype workflow in `rsomics-plink`; the HMM/source assets are reviewed before choosing the retained method |
 | MarkDuplicates | gatk = picard = samtools markdup | `rsomics-bam-markdup` ✓ no gap |
-| PRS score | plink1+plink2 --score | `rsomics-plink-score` = gap |
-| clump | plink1+plink2 --clump | `rsomics-plink-clump` = gap |
+| PRS score and clump | PLINK 1/2 | later `rsomics-plink score` / association postprocessing slices |
 
-The recurring pattern: we cover the **VCF-input** flavor of popgen stats via
-`rsomics-vcf-popgen`, and the **PLINK-input** flavor only for LD/prune/PCA/assoc. A
-PLINK-native stats battery (freq/missing/het/hardy/fst on .bed/.pgen) is the cleanest
-high-leverage gap — same algorithms, different reader.
+`rsomics-vcf-popgen`, `rsomics-vcf-hardy`, `rsomics-vcf-ld-prune`, and the
+PLINK micro-crates remain source assets. Their repositories are not revived.
 
 ## Verification notes
 - **VERY HIGH** (primary man page / docs read directly): PLINK1.9 (cog-genomics

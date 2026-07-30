@@ -93,16 +93,16 @@ remain in capability pools:
 
 | Product family | Candidates | Intended boundary |
 |---|---:|---|
-| `rsomics-vcf` | 48 | VCF/BCF operations and bcftools-like suite |
+| `rsomics-vcf` | 47 | VCF/BCF operations and bcftools-like suite |
 | `rsomics-bed` | 42 | BED/interval suite |
 | `rsomics-bam` | 39 | SAM/BAM/CRAM format operations |
 | `rsomics-seq` | 34 | FASTA/FASTQ sequence utilities |
 | `rsomics-sc` | 29 | stateful single-cell analysis workflow |
-| `rsomics-plink` | 28 | PLINK-style genotype analysis |
+| `rsomics-plink` | 31 | PLINK-style genotype analysis |
 | `rsomics-rnaseq-qc` | 26 | RSeQC/Picard RNA-seq QC |
 | `rsomics-ecology` | 19 | community diversity, dissimilarity, ordination, association, and permutation analysis |
 | `rsomics-edger` | 17 | edgeR workflow |
-| `rsomics-popgen` | 16 | non-PLINK population genetics |
+| `rsomics-popgen` | 14 | population variation, differentiation, admixture statistics, and selection scans |
 | `rsomics-limma` | 16 | limma workflow |
 | `rsomics-signal` | 15 | deepTools/bigWig signal workflows |
 | `rsomics-table` | 16 | csvtk/datamash-style tabular suite |

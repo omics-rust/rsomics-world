@@ -1,73 +1,66 @@
-# Survey: phylogenetics / population genetics domain
+# Survey: phylogenetics and population genetics
 
-Verified 2026-05-30 against tool docs + repo `docs/08-*` planning + live crate sources.
+Verified 2026-07-31 against current upstream documentation, the generated
+portfolio inventory, and the historical source trees. Product contracts live
+in [`phylo.md`](../10-products/phylo.md) and
+[`genotype-popgen.md`](../10-products/genotype-popgen.md).
 
-## Tree inference (IQ-TREE2 GPL / RAxML-NG AGPL / FastTree — clean-room)
+## Retained products
 
-| op | crate | status |
-|---|---|---|
-| Newick/NEXUS parse+emit | `rsomics-phylo-tree` (Layer A) | ✓ pure-Rust |
-| NJ from distance matrix | `rsomics-nj-tree` | ✓ (TSV → Newick) |
-| IQ-TREE2 ML + ModelFinder(-m MFP) + UFBoot(-B) + concordance(--gcf/scf) + topology tests | `rsomics-iqtree` (planned) | gap (canonical ML target — dominant tool) |
-| RAxML-NG ML search + bootstrap | `rsomics-raxml` (planned) | gap (HPC-scale; separate crate from iqtree) |
-| FastTree2 | — | skip (superseded by iqtree --fast) |
-| ASTRAL/ASTER species tree | `rsomics-aster` (planned) | gap |
-| UShER placement | adopt subprocess | adopt (MIT, too specialized) |
-| MrBayes/BEAST2 MCMC | — | out of scope |
+| Product | Upstream behavior families | Historical assets | State |
+|---|---|---:|---|
+| `rsomics-phylo` | trimAl, distance/tree inference, comparison, and measures | 11 | dossier complete |
+| `rsomics-plink` | PLINK 2 default plus named PLINK 1 legacy profiles | 31 | dossier complete |
+| `rsomics-popgen` | scikit-allel 1.3.13, vcftools profiles, and published estimators | 14 | dossier complete |
 
-## MSA (MAFFT BSD / MUSCLE GPL / KAlign BSD / FAMSA GPL / trimAl)
+The old source pool had split input-format variants into separate binaries.
+The corrected ownership is:
 
-| op | crate | status |
-|---|---|---|
-| trimAl -gt (gap-fraction trim) | `rsomics-msa-trim` | ✓ (only -gt mode) |
-| trimAl -automated1/-strict/similarity; Gblocks | — | gap (other trim modes) |
-| KAlign3 (LCS linear-time) | `rsomics-kalign` (planned P0) | gap (best pure-Rust target, ~6k LOC BSD-2) |
-| MAFFT (FFT-NS / G-INS-i / L-INS-i) | `rsomics-mafft` (planned) | gap (multi-month) |
-| MUSCLE5 / FAMSA (SIMD ultra-scale) | `rsomics-famsa` (planned) | gap |
-| Clustal Omega | — | skip (MAFFT/FAMSA cover better) |
+| Operation | Canonical product |
+|---|---|
+| genotype counts, missingness, HWE, heterozygosity, sex and pedigree QC | `rsomics-plink` |
+| LD pairs/matrix/pruning, blocks, GRM/KING, PCA, GWAS, scores | `rsomics-plink` |
+| π, theta, Tajima's D, Dxy, fixed differences, and SFS | `rsomics-popgen` |
+| FST, PBS, Patterson statistics, EHH/iHS/XP-EHH, Garud statistics | `rsomics-popgen` |
+| VCF view/filter/norm/query/index | `rsomics-vcf` |
 
-## Popgen stats — vcftools / bcftools / PLINK (input-format split)
+`rsomics-vcf-popgen` is split during migration: its FST and Dxy code goes to
+`rsomics-popgen`, while its heterozygosity and haplotype-LD assets inform
+`rsomics-plink`. The repository is not revived.
 
-VCF-input via `rsomics-vcf-popgen`: ✓ pi (--window-pi), het, hardy, missing-site/indv, freq,
-singleton. PLINK-input via `rsomics-plink-io`: ✓ freq, missing, hardy. Tajima's D →
-`rsomics-tajima-d` (SFS) + `rsomics-popgen-core` (Layer A `tajimas_d`/`hwe_exact`). PLINK
-genotype tools: `rsomics-plink-pca` (--pca+GRM) ✓, `rsomics-plink-prune` (--indep-pairwise) ✓,
-`rsomics-plink-ld` (--r2) ✓, `rsomics-plink-assoc` (--assoc chi-sq + --glm linear) ✓.
-`rsomics-vcf-roh` (--LROH/bcftools roh, HMM) ✓. `rsomics-ld-matrix` (generic dosage-TSV r²) ✓.
+## Foundation consequences
 
-> **⚠ Finding: FST gap + Cargo.toml mismatch.** `rsomics-vcf-popgen`'s Cargo.toml description
-> mentions "Fst" but **no fst module exists in source**. FST is in vcftools (--weir-fst-pop),
-> bcftools, and PLINK2 (--fst) but unimplemented anywhere in rsomics. → add `weir_cockerham_fst`
-> to `rsomics-popgen-core`, surface as a vcf-popgen subcommand + a plink-fst path. (Doc/code
-> mismatch, not a wrong-output bug — fix during build-out, not a halt.)
+- `rsomics-pgen` only implements PLINK 1 BED and has one product consumer. It
+  is internalized in `rsomics-plink`.
+- `rsomics-popgen-core` has one product consumer. It is internalized in
+  `rsomics-popgen`.
+- A policy-free FST kernel may enter `rsomics-stats` only after both retained
+  products have concrete consumer tests.
+- HWE and LD remain product-local until PLINK and scikit-allel policy
+  differences are separated from a truly shared numerical contract.
+- Both products use `rsomics-common` and the required `rsomics-help` layer.
 
-Other popgen gaps: **relatedness/kinship missing entirely** (vcftools --relatedness, PLINK2
---make-king, PLINK --genome IBD) → `rsomics-plink-king` would cover all three. PLINK het
-(per-sample), --ibc, logistic --glm, PLINK2 .pgen input all gap. VCF-native LD r² gap.
+## Evidence quality
 
-## ADMIXTURE / STRUCTURE → all gap
-ADMIXTURE (block-relaxation EM, clean-room) + fastSTRUCTURE (VB) → `rsomics-admixture` (planned).
-STRUCTURE (MCMC) out of scope (ADMIXTURE supersedes).
+The strongest historical population-genetics assets have committed
+scikit-allel 1.3.13 or vcftools 0.1.17 goldens. The strongest PLINK assets have
+committed PLINK outputs and some live differentials. They are not release
+proof:
 
-## R packages (clean-room; deep-dive 10-r-bioconductor.md)
-ape (read/write.tree, dist.dna, nj/bionj, ace) — Newick IO + NJ covered; ace/comparative gap.
-phangorn (pml ML, parsimony) — overlaps rsomics-iqtree. pegas (tajima.test, Fu.Li.D, Fs,
-nucdiv) — overlaps tajima-d/vcf-popgen. adegenet (dapc, find.clusters, pca) — pca overlaps
-plink-pca; dapc gap.
+- several live tests return success when the oracle binary is absent;
+- some PLINK comparisons check only IDs or tiny reports;
+- PGEN is not implemented;
+- window, accessibility, ploidy, multiallelic, founder, and chromosome
+  policies are fragmented;
+- most benches use tiny fixtures or skip when a private path is unset;
+- every historical product lacks the four-native-platform CI gate.
 
-## Cross-tool dedup summary
-| stat | vcftools | bcftools | PLINK | canonical |
-|---|---|---|---|---|
-| FST | --weir-fst-pop | stats | --fst | **GAP everywhere** → add to popgen-core |
-| pi / Tajima D | --window-pi / --TajimaD | — | — | vcf-popgen / tajima-d ✓ |
-| HWE / het | --hardy / --het | +HWE | --hardy / --het | split by input fmt (PLINK het gap) |
-| LD r² / prune / PCA | — | — | --r2 / --indep-pairwise / --pca | plink-ld / -prune / -pca ✓ (VCF LD gap) |
-| ROH | --LROH | roh | --homozyg | vcf-roh ✓ |
-| relatedness | --relatedness | — | --make-king/--genome | **GAP everywhere** → plink-king |
-| NJ tree | — | — | — | nj-tree ✓ (ape::nj is R-only) |
+These assets are classified as direct merge, refactor then merge,
+test/fixture/benchmark only, or discard in the product dossiers.
 
-## Verification notes
-crate inventory from live FS + REGISTRY.md. Upstream ops from maintained docs +
-verified `docs/08-*` planning files. FST-absence confirmed by direct source inspection of
-vcf-popgen and all plink crates. Tree-inference / MSA / ADMIXTURE marked planned-gap per
-`docs/08` — multi-month efforts, not started.
+## Broader landscape
+
+ADMIXTURE/fastSTRUCTURE, ANGSD, RFMix, IBD segment callers, EIGENSOFT
+qp-statistics, sgkit, and Hail remain survey references. They are not public
+rsomics products until a separate boundary and source/evidence dossier
+supports them. No name is published to reserve it.

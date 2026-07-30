@@ -167,6 +167,10 @@ def route(name: str, upstreams: list[str], layer: str) -> tuple[str, str, str]:
         return "de-reporting", "", "high"
     if name == "rsomics-count-matrix":
         return "bulk-expression", "rsomics-count", "high"
+    if name in {"rsomics-ld-matrix", "rsomics-vcf-hardy", "rsomics-vcf-ld-prune"}:
+        return "population-genetics", "rsomics-plink", "high"
+    if name == "rsomics-vcf-popgen":
+        return "population-genetics", "rsomics-popgen", "high"
     if name in explicit_routes:
         area, target = explicit_routes[name]
         return area, target, "medium"

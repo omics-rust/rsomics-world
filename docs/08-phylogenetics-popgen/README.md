@@ -10,7 +10,7 @@
 |------|-------|
 | [`alignment-msa.md`](alignment-msa.md) | Multiple-sequence alignment: MAFFT, MUSCLE5, Clustal Omega, T-Coffee, KAlign3, FAMSA, UPP, PASTA. |
 | [`trees.md`](trees.md) | Tree inference and manipulation: RAxML-NG, IQ-TREE2/3, MrBayes, BEAST2, FastTree2, MEGA, PhyML, UShER, TreeShrink, ASTRAL. |
-| [`population-genetics.md`](population-genetics.md) | PCA / admixture / GWAS / scalable popgen: PLINK2, ADMIXTURE, EIGENSOFT, vcftools, sgkit, Hail, ANGSD, RFMix, IBDseq, fastSTRUCTURE. |
+| [`population-genetics.md`](population-genetics.md) | Retained PLINK-style genotype analysis and population-genetics products, plus excluded future upstream families. |
 
 ## Design notes
 
@@ -27,11 +27,10 @@
   RAxML-NG is its closest peer. Both have rich model selection + bootstrap
   + concordance-factor machinery. A Rust ML inference tool would need
   feature parity in model coverage to be adopted.
-- For population genetics: PLINK2 is the bedrock. A Rust PLINK is doable
-  but the user demand for it is unclear — PLINK2 is fast enough; the win
-  would be embedding GWAS primitives into Rust pipelines for downstream
-  programmatic use. `sgkit` shows the trend toward array-native (Zarr,
-  Xarray) popgen; Rust + `polars`/`arrow` could ride the same wave.
+- For population genetics, PLINK2 is the genotype-analysis behavior anchor
+  and scikit-allel is the array-level statistics anchor. The retained products
+  need a measured throughput or resource advantage on declared hot paths;
+  packaging or a language rewrite alone is not enough.
 - License watch: MAFFT **BSD-3** + Clustal Omega **GPL-2**, MUSCLE5
   **GPL-3**, RAxML-NG **AGPL-3**, IQ-TREE **GPL-2**, MrBayes **GPL-3**,
   BEAST2 **LGPL-2.1**, FastTree2 **GPL-2**, PhyML **CeCILL/GPL**, UShER

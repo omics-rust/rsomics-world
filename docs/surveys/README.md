@@ -67,34 +67,20 @@ gap (no crate yet) · adopt (use upstream Rust crate, don't rebuild).
 
 ## Cross-domain synthesis (the granularity verdict)
 
-The survey answers the question it was built for — *is our per-operation granularity right,
-and where is the real cross-tool duplication?*
+The initial surveys exposed the upstream tools and repeated operations, but
+their one-operation-per-crate conclusion has been superseded by the portfolio
+reconstruction.
 
-1. **Granularity is already mostly correct.** Formats (samtools/bcftools ≈1:1) and
-   transcriptomics (RSeQC ≈1:1, perfgated) validate the one-op-one-crate partition. The lone
-   structural duplication is `bed-utils` (a 54-op bedtools-clone shadowing 36 per-op `bed-*`
-   crates) — #89, and the fix is per-op canonical selection, NOT mechanical merge (bed-utils
-   `sort` ≠ bed-sort, proven).
-
-2. **"Same op name" ≠ "same code" cuts both ways.** Sometimes a shared *user intent* hides
-   **distinct algorithms** that each deserve a crate (taxonomy: kraken kmer-LCA vs mmseqs
-   aln-LCA vs dada2 Bayes vs sintax — keep all four). Sometimes it's genuinely one op across
-   N tools → one canonical (dereplication; popgen stats split only by input format VCF/PLINK;
-   the scanpy↔Seurat analysis op set). Judgement per case, not a rule.
-
-3. **The biggest *coverage* gaps (not granularity):** single-cell analysis (≈16 sc-* crates,
-   emptyDrops P0), metagenomics (kraken/bracken/metabat/dada2/diversity — mostly greenfield),
-   GATK germline+somatic calling, PLINK genotype-stats battery + FST + kinship, MSA + ML-tree
-   inference, R DE primitives (glm-nb kernels for DESeq2/edgeR/limma), bgzip/tabix CLIs.
-
-4. **Cross-ecosystem dedup is the high-leverage idea.** PCA / Leiden / UMAP / Wilcoxon recur
-   across PLINK, ATAC, bulk-RNA, single-cell — build them as **domain-agnostic Layer-A
-   primitives**, not per-domain copies. Same for popgen-core (FST/HWE/Tajima) and a future
-   glm-nb stats kernel feeding both our DE pipeline and R via FFI.
-
-5. **Integrity flags surfaced (not halts — build-out backlog):** all ~15 epigenomics crates
-   are unpublished with no perf gate; `rsomics-vcf-popgen` advertises FST in Cargo.toml but
-   ships no FST module; `rsomics-count-matrix` is misnamed for single-cell; scran is upstream-
-   deprecated (cite scuttle/scrapper); DoubletFinder is license-blocked (CC BY-NC).
-
-Per-domain tables carry the operation-level detail + source provenance + verification confidence.
+1. The public unit is a recognizable product or workflow family. Upstream
+   operations become modules and subcommands, not independent crates.
+2. Input formats do not create separate products for the same analysis. VCF
+   HWE and LD pruning belong to `rsomics-plink`; VCF diversity and selection
+   statistics belong to `rsomics-popgen`.
+3. Shared public foundations require two named product consumers and
+   consumer-side tests. Similar formulas alone do not justify a public
+   `*-core` crate.
+4. Historical implementations remain code, test, fixture, and benchmark
+   assets. Their existence does not make an operation complete or releasable.
+5. The canonical boundary and disposition records are the product dossiers in
+   [`docs/10-products`](../10-products/README.md). Per-domain surveys provide
+   upstream context and must defer to those dossiers when they disagree.
