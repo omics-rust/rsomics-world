@@ -11,8 +11,9 @@ reuse unit is an algorithm module plus its evidence, not the old CLI shell.
 
 The three products share `rsomics-seqio` for strict FASTA/FASTQ I/O.
 `rsomics-common` supplies the execution and output contract used by the first
-two implemented products. `rsomics-kmer` currently serves sequence k-mer
-operations; it is not a preprocessing dependency.
+two implemented products, and `rsomics-help` supplies their shared CLI
+presentation layer. `rsomics-kmer` currently serves sequence k-mer operations;
+it is not a preprocessing dependency.
 
 The first end-to-end gate is:
 
@@ -67,8 +68,8 @@ skips ambiguity-bearing windows, constrains `k` to the foundation's checked
 promote a new public crate or make k-mer counting product-independent policy.
 
 The complete first slice is implemented at `omics-rust/rsomics-seq` revision
-`02f8268931b0`. Its exact-head CI passes on native Linux and macOS for both
-`x86_64` and `aarch64`, including strict Clippy, 43 tests, six live SeqKit
+`2727daa3bf4f`. Exact-head CI run `30568955799` passes on native Linux and
+macOS for both `x86_64` and `aarch64`, including strict Clippy, 44 tests, six live SeqKit
 2.13.0 differentials, an independent ordered k-mer oracle, and five benchmark
 smoke tests.
 
@@ -87,14 +88,13 @@ slower than the matched Jellyfish count/dump/sort pipeline but uses 63% less
 peak RSS. These are operation-specific throughput/resource decisions, not a
 blanket replacement claim.
 
-The shared `--threads` flag does not scale the current streaming sequence
-operations; compressed input uses a fixed decompressor/consumer pipeline.
-That misleading CLI surface is a release API gate and is not being hidden with
-speculative parallel code. Exact distributions, RSS, commands, checksums, and
-remaining gates are in the
+The former shared `--threads` flag did not scale the current streaming
+sequence operations and has been removed rather than justified with
+speculative parallel code. The command tree now exposes only the shared JSON
+output option. Exact distributions, RSS, commands, checksums, and remaining gates are in the
 [representative product gate](seq-gate-2026-07-30.md). Publication remains
-blocked on that CLI decision, unpublished foundation revisions, final API and
-hot-path review, and unavailable native Linux `aarch64` performance evidence.
+blocked on unpublished foundation revisions, final API and hot-path review,
+and unavailable native Linux `aarch64` performance evidence.
 
 ### Later operation groups
 
@@ -171,17 +171,17 @@ compatibility and representative hot-path benchmarks. Existing small
 subprocess benches are not release evidence.
 
 The initial `run`, `trim`, and `filter` slice is implemented at
-`omics-rust/rsomics-fastq-preprocess` revision `8e483fc95556`. It combines
+`omics-rust/rsomics-fastq-preprocess` revision `f217fc4902b2`. It combines
 fixed, poly-G/poly-X, quality, N-content, length, and complexity transforms
 over one ordered chunk engine for single-end and paired-end reads. Its
 exact-head CI passes on native Linux and macOS for both `x86_64` and
-`aarch64`, including strict Clippy, 42 internal/CLI tests, four live fastp
-1.3.6 differentials, and a benchmark smoke test.
+`aarch64` in run `30569428189`, including strict Clippy, 43 internal/CLI tests,
+four live fastp 1.3.6 differentials, and a benchmark smoke test.
 
 The product privately internalizes the useful `rsomics-fqgz` algorithm instead
 of reviving that historical micro-foundation. `rsomics-seqio` still validates
 and serializes every record; ordered 256 KiB gzip members are compressed by
-libdeflate through the existing Rayon pool and committed by the existing
+libdeflate through the command's local Rayon pool and committed by the existing
 two-output transaction.
 
 On provenance-checked SRR341550 paired input, decompressed output is

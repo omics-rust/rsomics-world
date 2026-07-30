@@ -40,11 +40,12 @@ compatibility.
 The first slice is implemented at `omics-rust/rsomics-bed`; implementation
 revision `ed415eeebd9d6a3bcb34cc9cf15bcfc5f7c587cd` is followed by evidence
 revision `76d02dbc9c0fd549782f1e68e2b0ef5e64f13d45` and documentation revision
-`97f5fe31662eb66aa7fad42dc4f62f3007783280`. Exact-head CI run `30557379937`
-builds the pinned bedtools 2.31.1 oracle and passes on native Linux and macOS
-for both `x86_64` and `aarch64`. In addition to targeted and exhaustive
-boundary fixtures, seeded differential testing passed 500 macOS and 1,000
-Linux `x86_64` trials across all five operations.
+`97f5fe31662eb66aa7fad42dc4f62f3007783280`. The current boundary-refactor
+head is `9f4ba8ee945c487b4157bf38eba7a6577fca5dfd`; exact-head CI run
+`30570159631` builds the pinned bedtools 2.31.1 oracle and passes on native
+Linux and macOS for both `x86_64` and `aarch64`. In addition to targeted and
+exhaustive boundary fixtures, seeded differential testing passed 500 macOS and
+1,000 Linux `x86_64` trials across all five operations.
 
 The representative Linux gate uses one million primary records on ten
 chromosomes, real intersect hits, repeated B intervals, emitted subtract
@@ -52,6 +53,8 @@ fragments, merge groups, and complement gaps. Complete outputs match bedtools
 byte for byte before timing. All five operations retain strict throughput
 advantages; see `bed-gate-2026-07-30.md`. The old empty-output intersect and
 subtract figures are superseded rather than retained as release claims. The
+current subtract implementation no longer builds an unused overlap tree and
+must be remeasured on the representative fixture before publication. The
 repository remains unpublished.
 
 ### Asset dispositions
@@ -131,15 +134,15 @@ index foundation only after both `rsomics-index` and a second product such as
 
 ## Foundation corrections before product use
 
-`rsomics-intervals` revision `c13cb75c31806b7af0a787eda919d534896af328`
-adds checked index construction and queries around its `i32` backend. That
-revision is not published, so the current product pins published 0.2.0 and
-enforces the identical representable range before every build or query.
+`rsomics-intervals` revision `491b14c0d43b58371723488dd8a9482d55a16678`
+provides checked index construction and queries around its `i32` backend. The
+product manifest targets 0.3 and CI patches that exact unpublished revision.
+`intersect` consumes the fallible boundary directly.
 
 The checked API is a justified foundation change, but it is not published from
 one consumer alone. `rsomics-bed` supplies the first concrete contract;
 `rsomics-annotation` must supply the second consumer-side contract before the
-foundation release. The product-side guard remains explicit until then.
+foundation release.
 
 BED-specific sort, merge, and write helpers move into `rsomics-bed`.
 The shared foundation retains:

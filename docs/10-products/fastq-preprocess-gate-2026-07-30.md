@@ -19,16 +19,21 @@ internalized in the product. The deleted micro-crate is not revived.
   `de07879d1d5ddaab9c5534e50d161ca660ba44e9`;
 - product documentation head:
   `8e483fc9555627f0eee931063de9d94752a83520`;
+- shared-contract alignment head:
+  `f217fc4902b28b36f8d40eb96f894c459c9bcc43`;
 - `rsomics-common`:
-  `1c51f7d0b356683697942d9c6a0f60585e0dc8a9`;
+  `9f11f37c0fa48a24cae12549769f3395d9d0f19f`;
+- `rsomics-help`:
+  `c615aa8b85224055faad57c86abd068aded89d06`;
 - `rsomics-seqio`:
-  `ce9c5514c23573a64406e1ff9ad02edfa4d02d31`;
+  `b23cf8ad29fd06c84aaaa0c480ba1da8cff01e7d`;
 - Rust: 1.91.0;
 - fastp: 1.3.6, source
   `23d6211d4f05d61f561899f1b7702435a4b5d408`;
 - libdeflater: 1.25.2;
 - CI implementation run: `30551968781`;
-- CI documentation-head run: `30552485149`.
+- CI documentation-head run: `30552485149`;
+- CI alignment-head run: `30569428189`.
 
 Both CI runs passed native Ubuntu and macOS on `x86_64` and `aarch64`, with
 formatting, strict Clippy, live fastp differentials, full tests, and benchmark
@@ -69,16 +74,17 @@ The product retains `rsomics-seqio::Writer` for validation and FASTQ
 serialization. A private `ParallelGzipWriter`:
 
 - buffers 256 KiB chunks;
-- compresses at most 16 pending chunks through the existing Rayon pool;
+- compresses at most 16 pending chunks through the command's local Rayon pool;
 - collects indexed parallel results in source order;
 - emits standards-compliant concatenated gzip members;
 - produces a valid gzip stream for zero surviving reads;
 - propagates compression, downstream write, flush, and finish errors;
 - remains inside the transactional no-clobber output path.
 
-This uses the configured product pool instead of adding hidden background
-workers. A public `rsomics-seqio` item was rejected because there is only one
-current consumer of the thread-controlled contract.
+This uses the command's local product pool instead of adding hidden background
+workers or mutating Rayon's process-global pool. A public `rsomics-seqio` item
+was rejected because there is only one current consumer of the
+thread-controlled contract.
 
 ## Correctness and interoperability
 

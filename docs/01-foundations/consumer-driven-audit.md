@@ -119,16 +119,19 @@ threading, slab, and compression backends remain private.
 iteration, and general hashes. Product-specific correction tables and QC bins
 remain internal.
 
-`rsomics-seq` revision `02f8268931b0` consumes the checked accumulator and the
+`rsomics-seq` revision `2727daa3bf4f` consumes the checked accumulator and the
 strict `rsomics-seqio` stream API directly. Its complete five-command first
 slice passes exact-head CI on all four native targets with live SeqKit
-differentials and an independent ordered k-mer oracle. Its representative
-Linux gate also matches Jellyfish for 104,521 canonical count rows.
+differentials, an independent ordered k-mer oracle, the unified help layer, and
+only the shared JSON output option. Its representative Linux gate also matches
+Jellyfish for 104,521 canonical count rows.
 
-`rsomics-fastq-preprocess` revision `8e483fc95556` consumes
+`rsomics-fastq-preprocess` revision `f217fc4902b2` consumes
 `rsomics-common` and `rsomics-seqio` without depending on `rsomics-kmer`.
 Its initial trim/filter pipeline passes exact-head CI on all four native
-targets with live fastp differentials. The product internalizes the historical
+targets with live fastp differentials. Its private `--threads` control builds a
+local Rayon pool for each execution instead of mutating process-global state.
+The product internalizes the historical
 `rsomics-fqgz` chunked-libdeflate algorithm behind its transactional writer;
 it does not add a public foundation or bypass `rsomics-seqio` validation and
 serialization. On provenance-checked SRR341550 paired input, the four-thread
@@ -141,12 +144,12 @@ for the current common, help, and sequence-I/O APIs. The BED pilot is the third
 help/common consumer. This does not freeze `rsomics-kmer`, which still requires
 its own second product consumer.
 
-The consumers exposed a real difference in the old common runtime contract:
-preprocessing uses `--threads` to size its Rayon work, while `rsomics-seq` and
-`rsomics-bed` did not use the shared thread, seed, quiet, or verbose flags.
-Common 0.7 removes those speculative controls. The local product migrations
-keep thread ownership inside preprocessing and remove inapplicable flags from
-the other command trees.
+The consumers exposed and resolved a real difference in the old common runtime
+contract: preprocessing uses `--threads` to size its Rayon work, while
+`rsomics-seq` and `rsomics-bed` did not use the shared thread, seed, quiet, or
+verbose flags. Common 0.7 removes those speculative controls. The committed
+product migrations keep thread ownership inside preprocessing and remove
+inapplicable flags from the other command trees.
 
 Parallel gzip remains product-private because only preprocessing currently
 needs the thread-controlled contract. If `rsomics-seq` demonstrates the same
@@ -166,11 +169,14 @@ sorting, merging, and writing; those items are not release-approved foundation
 API until two products demonstrate the same policy-free contract. Otherwise
 they move into `rsomics-bed`.
 
-`rsomics-bed` revision `97f5fe31662e` is the first concrete checked-index
-consumer. The local coordinated graph now uses intervals 0.3 and one common
-0.7 instance, but the product remains on published 0.2 until a registry release
-exists. The representative million-record gate matches bedtools output and
-passes throughput on all five operations without adding another shared crate.
+`rsomics-bed` revision `9f4ba8ee945c` is the first concrete checked-index
+consumer. Intersect uses the foundation's fallible build/query boundary
+directly; subtract uses a separate merged `u64` coverage map and no longer
+constructs an unused overlap tree. CI patches intervals 0.3 and one common 0.7
+instance without a committed path dependency. The earlier representative
+million-record gate matches bedtools output and passes throughput on all five
+operations without adding another shared crate; the revised subtract hot path
+still requires representative remeasurement before publication.
 `rsomics-annotation` must still provide the second consumer-side contract, and
 the BED parsing/sorting functions currently exposed by the foundation require
 a fresh policy review before intervals 0.3 is published.

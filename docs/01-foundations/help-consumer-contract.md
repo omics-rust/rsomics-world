@@ -1,8 +1,8 @@
 # `rsomics-help` consumer contract
 
-Status: help 0.4, common 0.7, seqio 0.3, and intervals 0.3 are committed and
-exact-head CI verified; three-product migration remains local-only and nothing
-has been published.
+Status: help 0.4, common 0.7, seqio 0.3, intervals 0.3, and all three pilot
+product migrations are committed and exact-head CI verified. Nothing has been
+published.
 
 ## Role
 
@@ -60,15 +60,16 @@ Examples and longer explanations use Clap `long_about` and `after_help`.
 Structured command export is deferred until a concrete consumer needs it; any
 future representation must be derived from the same `Command` tree.
 
-## Prototype evidence
+## Product evidence
 
-The prototype was tested on 2026-07-30 with local Cargo patches only:
+Each product keeps registry-compatible manifests while CI patches exact
+unpublished foundation revisions:
 
 | Product | Command shape | Verified evidence |
 |---|---|---|
-| `rsomics-seq` | five sequence subcommands | strict Clippy; 7 library, 4 binary, 25 CLI, one independent k-mer oracle, and six live SeqKit tests; five benchmark smokes |
-| `rsomics-fastq-preprocess` | three subcommands with nested input, trim, filter, length, thread, and output groups | strict Clippy; 18 library, three binary, 21 CLI, and four live fastp tests; benchmark smoke |
-| `rsomics-bed` | five interval subcommands with positional and required named inputs | strict Clippy; 38 library, 12 CLI, and three live bedtools/golden tests; full benchmark smoke |
+| `rsomics-seq` `2727daa3bf4f` | five sequence subcommands | strict Clippy; 7 library, 4 binary, 26 CLI, one independent k-mer oracle, and six live SeqKit tests; five benchmark smokes; CI `30568955799` |
+| `rsomics-fastq-preprocess` `f217fc4902b2` | three subcommands with nested input, trim, filter, length, thread, and output groups | strict Clippy; 18 library, 4 binary, 21 CLI, and four live fastp tests; benchmark smoke; CI `30569428189` |
+| `rsomics-bed` `9f4ba8ee945c` | five interval subcommands with positional and required named inputs | strict Clippy; 40 library, 12 CLI, and three live bedtools/golden tests; full benchmark smoke; CI `30570159631` |
 
 The foundation itself passes strict Clippy, package verification, and six unit
 tests covering nested help, generated help navigation, suggestions, normal
@@ -106,7 +107,8 @@ same four native targets.
 3. Publish common, help, and seqio only after registry credentials are
    explicitly available. Intervals additionally requires its second
    consumer-side contract and BED-policy review.
-4. Migrate `seq`, `fastq-preprocess`, and `bed` without committed path patches;
-   keep their command-tree, help, error, compatibility, and benchmark tests.
+4. The `seq`, `fastq-preprocess`, and `bed` migrations are committed without
+   path dependencies and retain their command-tree, help, error,
+   compatibility, and benchmark tests.
 5. Use these consumer contracts as the default CLI baseline for later product
    reconstruction.
