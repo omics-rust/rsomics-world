@@ -1,0 +1,279 @@
+# rsomics portfolio reconstruction
+
+Status: active architecture ledger and registry-reset record. Routing remains
+provisional until each product family is reconstructed, but the 2026-07-30
+registry reset was explicitly authorized and is tracked below.
+
+The generated crate-level ledger is
+[`portfolio-inventory.tsv`](portfolio-inventory.tsv). Regenerate it with:
+
+```bash
+python3 scripts/portfolio_inventory.py
+```
+
+## Why this reconstruction exists
+
+The previous partition rule treated one callable operation as one independently
+published crate. That produced technically testable units, but confused a Rust
+module boundary with a user-facing product, repository, CI, version, and
+installation boundary.
+
+The replacement rule is:
+
+1. A Layer B crate is a coherent product or workflow family recognizable to a
+   bioinformatics user.
+2. Operations within one product are subcommands or modules.
+3. Code used by only one target product remains internal to that product.
+4. A Layer A crate exists only when at least two target products consume the
+   primitive, or when an explicitly documented near-term product makes the
+   second consumer concrete.
+5. Correct implementations, compatibility goldens, and performance evidence are
+   migration assets even when their current package boundary is rejected.
+
+## Reconciled baseline
+
+The inventories disagree:
+
+| Surface | Count |
+|---|---:|
+| Local directories with `Cargo.toml` | 622 |
+| Local Git repositories | 608 |
+| GitHub `rsomics-*` repositories excluding `rsomics-world` | 608 |
+| crates.io packages with the prefix | 606 |
+| Rows in `REGISTRY.md` | 603 |
+
+Fourteen local candidates are not Git repositories. `rsomics-kstat` has a
+manifest but no Rust source file. The registry header still says 231 crates.
+These facts make the current registry unsuitable as the source of truth.
+
+These counts are the pre-reset evidence snapshot. Local clones remain in place,
+so the generated implementation ledger continues to describe the recoverable
+code pool even after remote repositories and crates.io packages are removed.
+
+The 622 local candidates break down as follows after description-first routing:
+
+| Intended container | Current candidates |
+|---|---:|
+| Coherent product families | 424 |
+| Generic capability pools, not presumed products | 170 |
+| Existing foundation libraries | 28 |
+
+The routing confidence is high for 596 rows and medium for 26. High means the
+package description names the upstream or the crate name has an unambiguous
+format/workflow prefix. Medium rows remain explicit review targets.
+
+`upstream_families` in the ledger is derived from the package description when
+possible. `upstream_mentions` is broader and includes README/test mentions.
+Keeping the columns separate prevents incidental text such as “networkx was run
+inside a scanpy conda environment” from misclassifying a graph algorithm as a
+Scanpy operation.
+
+## Provisional product families
+
+The current implementation pool maps to 30 product families:
+
+| Product family | Candidates | Intended boundary |
+|---|---:|---|
+| `rsomics-vcf` | 48 | VCF/BCF operations and bcftools-like suite |
+| `rsomics-bed` | 46 | BED/interval suite |
+| `rsomics-bam` | 40 | SAM/BAM/CRAM format operations |
+| `rsomics-seq` | 33 | FASTA/FASTQ sequence utilities |
+| `rsomics-sc` | 29 | stateful single-cell analysis workflow |
+| `rsomics-plink` | 28 | PLINK-style genotype analysis |
+| `rsomics-rnaseq-qc` | 26 | RSeQC/Picard RNA-seq QC |
+| `rsomics-ecology` | 23 | diversity, ordination, permutation analyses |
+| `rsomics-edger` | 17 | edgeR workflow |
+| `rsomics-popgen` | 16 | non-PLINK population genetics |
+| `rsomics-limma` | 16 | limma workflow |
+| `rsomics-signal` | 15 | deepTools/bigWig signal workflows |
+| `rsomics-table` | 14 | csvtk/datamash-style tabular suite |
+| `rsomics-fastq-preprocess` | 12 | trimming, correction, UMI, deduplication |
+| `rsomics-deseq` | 12 | DESeq2 workflow |
+| `rsomics-phylo` | 11 | tree construction, distances, comparison |
+| `rsomics-structure` | 9 | PDB and protein-structure analysis |
+| `rsomics-composition` | 6 | compositional transforms and inference |
+| `rsomics-index` | 3 | bgzip/tabix and sequence index utilities |
+| `rsomics-metagenomics` | 5 | current taxonomy/amplicon utilities |
+| `rsomics-peak` | 4 | peak calling and annotation |
+| `rsomics-expression` | 2 | count-matrix and result utilities |
+| `rsomics-annotation` | 2 | GFF/GTF and transcript utilities |
+| Seven single-implementation products | 7 | FastQC, count, sketch, liftOver, methylation, minimap2, workflow utilities |
+
+This table is a routing result, not a declaration that every proposed family
+must remain separate. In particular, `expression` may join the three DE
+products, and `sketch` may join metagenomics after interface review.
+
+The official suite shapes support these boundaries:
+
+- [samtools](https://www.htslib.org/doc/samtools.html),
+  [bcftools](https://samtools.github.io/bcftools/bcftools), and
+  [bedtools](https://bedtools.readthedocs.io/en/latest/content/bedtools-suite.html)
+  expose coherent command families over shared formats.
+- [SeqKit](https://bioinf.shenwei.me/seqkit/usage/) groups FASTA/Q utilities
+  behind one installation.
+- [PLINK](https://www.cog-genomics.org/plink/2.0/general_usage) composes
+  operations through flags in one workflow.
+- [Scanpy](https://scanpy.readthedocs.io/en/stable/index.html) operates over a
+  shared AnnData state rather than independent function-sized products.
+
+## Capability pools
+
+The following 170 Layer B candidates are not accepted as products merely
+because they currently ship binaries:
+
+| Capability pool | Candidates | Default disposition |
+|---|---:|---|
+| Statistical functions | 91 | Move reusable APIs into `rsomics-stats`; expose a CLI only for a coherent user workflow |
+| Graph algorithms | 59 | Consolidate reusable graph representation/algorithms; do not publish one binary per NetworkX function |
+| Generic ML transforms | 11 | Keep only consumers required by real omics products |
+| Generic image functions | 8 | Quarantine until bioimage scope and real workflows are approved |
+| Generic HMM decoder | 1 | Internalize with a concrete sequence-model product |
+
+This distinction prevents a correct SciPy or NetworkX reimplementation from
+automatically becoming an rsomics product.
+
+## Foundation decision after product-level collapse
+
+Raw dependent-crate counts exaggerate public reuse. A foundation used by 22
+PLINK micro-crates still has only one target-product consumer after those crates
+merge.
+
+Observed product-level reuse currently supports these public foundations:
+
+| Foundation | Current crate consumers | Target-family consumers | Direction |
+|---|---:|---:|---|
+| `rsomics-common` | 560 | 48 | keep public |
+| `rsomics-help` | 317 | 30 | keep public |
+| `rsomics-bamio` | 70 | 9 | keep public |
+| `rsomics-intervals` | 11 | 4 | keep public |
+| `rsomics-kmer` | 6 | 4 | keep public |
+| `rsomics-seqio` | 8 | 3 | keep public |
+| `rsomics-stats` | 3 | 3 | expand from the capability pool |
+| `rsomics-phylo-tree` | 9 | 2 | keep public |
+| `rsomics-pileup` | 2 | 2 | keep public |
+
+The following current libraries have zero or one target-family consumer and
+should default to internalization unless a second concrete product is found:
+
+- `align-core`, `bbi`, `coverage-core`, `csvio`, `debruijn`, `distance`,
+  `ebayes-core`, `fm-index`, `fqgz`, `hmm`, `igzip`, `models`, `pdb-core`,
+  `pgen`, `popgen-core`, `seqstats`, `taxonomy`, `vcf-expr`, and `vcf-valfmt`.
+
+This does not mean their APIs or tests are discarded. It means their code moves
+under the sole consuming product instead of retaining a separately versioned
+public package. `bbi`, `fm-index`, and similar primitives may remain provisional
+public candidates when a named near-term second product is added to the map.
+
+The observed dependency relationships are:
+
+```mermaid
+flowchart LR
+    common["common"] --> products["nearly all target products"]
+    help["help"] --> cli["30 CLI families"]
+    bamio["bamio"] --> bam["bam"]
+    bamio --> signal["signal"]
+    bamio --> rnaqc["rnaseq-qc"]
+    bamio --> vcf["vcf"]
+    intervals["intervals"] --> bed["bed"]
+    intervals --> signal
+    intervals --> peak["peak"]
+    intervals --> index["index"]
+    kmer["kmer"] --> fastq["fastq-preprocess"]
+    kmer --> meta["metagenomics"]
+    kmer --> sketch["sketch"]
+    seqio["seqio"] --> seq["seq"]
+    seqio --> fastq
+    seqio --> bam
+    tree["phylo-tree"] --> phylo["phylo"]
+    tree --> ecology["ecology"]
+    pileup["pileup"] --> bam
+    pileup --> vcf
+```
+
+## Revised size estimate
+
+The product-level dependency calculation makes the earlier Layer A estimate too
+generous.
+
+- Current implementation pool: about 28–30 coherent products.
+- Clearly justified shared foundations: 9.
+- Strategic foundation candidates with concrete near-term second consumers:
+  approximately 3–6.
+- Rationalized current portfolio: approximately 40–45 crates.
+- After adding genuinely missing anchors such as short-read/spliced alignment,
+  quantification, classification, and assembly: approximately 55–75 crates.
+
+The number may change after the 26 medium-confidence rows and missing-anchor
+priorities are reviewed, but the evidence does not support hundreds of public
+crates.
+
+The aggressive registry-reset allowlist is
+[`registry-reset-keep.txt`](registry-reset-keep.txt). It contains the 30
+provisional product-family names and nine foundations with demonstrated
+cross-product reuse. Names not yet published reserve an intended boundary;
+their absence does not justify retaining operation-sized predecessors.
+
+## Registry reset
+
+The reset is a namespace cleanup, not source-code destruction:
+
+- All 595 crates.io candidates were archived with every published version,
+  checksum, and archive validation before deletion began.
+- All 597 GitHub retirement candidates were archived as complete Git bundles.
+  Dirty local worktrees additionally have status records, binary patches, and
+  untracked-file archives.
+- The backups live under
+  `/Volumes/KIOXIA/Documents/omics-rust/_retired/registry-reset-2026-07-30/`.
+- Local clones under `/Volumes/KIOXIA/Documents/omics-rust/` are intentionally
+  retained as the reconstruction source pool.
+- 596 GitHub repositories were deleted and verified absent. The organization
+  now retains the existing allowlisted repositories, `rsomics-world`,
+  organization metadata, and the temporary compatibility dependency
+  `rsomics-igzip`.
+- crates.io deletion follows the historical dependency graph in reverse
+  topological order. `rsomics-igzip` is temporarily protected because published
+  `rsomics-seqio` versions depend on it.
+
+The intended steady state is therefore 12 currently published crates: the 11
+allowlisted names that already exist plus temporary `rsomics-igzip`. The other
+28 product-family names in the allowlist are product boundaries to reconstruct,
+not empty packages to publish immediately.
+
+Machine-readable progress and failure journals live under `.autopilot/state/`.
+Only an exact success response is recorded as a deletion; rate-limited or
+ambiguous requests stop the batch and remain pending.
+
+## Reconstruction order
+
+Remote cleanup does not determine implementation order. Reconstruction uses the
+retained local clones and validated archives:
+
+1. **Freeze partition growth.** Do not create another operation-sized crate or
+   expand a foundation for the sake of the current micro-crate layout.
+2. **Recover consolidation seeds from the source pool.** Treat `fasta-utils`,
+   `fastq-utils`, `vcf-utils`, `gff-utils`, and `bed-utils` as implementation
+   inputs, not as package boundaries that must be republished.
+3. **Consolidate low-state format suites.** `table`, `seq`, `bed`, `vcf`, and
+   `annotation`, preserving compat goldens and per-operation benchmarks.
+4. **Separate format from workflow.** Keep samtools-like operations in `bam`;
+   route RSeQC/Picard to `rnaseq-qc` and deepTools to `signal`.
+5. **Consolidate stateful statistical workflows.** DESeq2, edgeR, limma, and
+   Scanpy families move as complete data-model workflows.
+6. **Consolidate domain analysis.** PLINK, population genetics, ecology,
+   composition, phylogenetics, metagenomics, and structure.
+7. **Resolve capability pools.** Promote only APIs with two target-product
+   consumers; quarantine or remove product status from the rest.
+8. **Publish only complete products.** A family is republished after its
+   operation map, compatibility suite, public API boundary, and performance
+   evidence pass review. Recreating an old micro-crate name is not a goal.
+
+## Review gates
+
+Before a provisional route becomes final:
+
+- Confirm a real upstream tool/package or a documented rsomics-native workflow.
+- Confirm the operation belongs to the target product's shared data model.
+- Preserve every verified compatibility fixture and performance record.
+- Recount dependencies at the target-product level.
+- Require two target-product consumers before retaining a public foundation.
+- Treat crates.io retirement as a separate, explicitly reviewed action.
