@@ -53,7 +53,7 @@ APIs:
 | Foundation | Current revision | Verified change | Release state |
 |---|---|---|---|
 | `rsomics-intervals` | `c13cb75c318` | checked the coordinate range accepted by the COITrees backend and added fallible index/query entry points | exact-head CI green; consumer contracts, four-native-target CI, and performance evidence remain |
-| `rsomics-kmer` | `e937817e629` | made `k = 32` well-defined, added checked encode/decode/canonical operations, and preserved the published constructor shape | exact-head CI green; two product contracts, four-native-target CI, and comparative performance remain |
+| `rsomics-kmer` | `4258ac881119` | made `k = 32` well-defined, added checked encode/decode/canonical operations and a fallible count-accumulator boundary, and removed its unused `rsomics-common` dependency | exact-head CI green; `rsomics-seq` is the first real product consumer; a second product contract and comparative performance remain |
 | `rsomics-seqio` | `0c20b6af566` | replaced the ambiguous record model with strict allocation-reusing FASTA/FASTQ streams, removed direct `rsomics-igzip` use, and made gzip/BGZF failures loud | four-native-target exact-head CI and compressed-stream adversarial regressions green; comparative throughput/RSS remains |
 
 None of these revisions has been published. A green foundation CI establishes
@@ -69,7 +69,8 @@ produce wrong biological results:
    `i32` without a checked boundary; `c13cb75c318` closes this blocker.
 2. `rsomics-kmer/src/encode.rs` previously shifted by 64 bits for the valid
    `k = 32` reverse-complement case and trusted a debug-only constructor
-   assertion; `e937817e629` closes both blockers.
+   assertion; `4258ac881119` closes both blockers and supplies the fallible
+   accumulator constructor exercised by `rsomics-seq`.
 3. `rsomics-pileup` documents coordinate-sorted input but does not validate it.
 4. `rsomics-common` ignores JSON serialization and output write errors.
 5. `rsomics-bamio::RawRecord::from(Vec<u8>)` permits unchecked bytes while
@@ -105,6 +106,12 @@ threading, slab, and compression backends remain private.
 `rsomics-kmer` retains checked 2-bit encode/decode, canonicalization, rolling
 iteration, and general hashes. Product-specific correction tables and QC bins
 remain internal.
+
+`rsomics-seq` revision `a24b0936b52c` consumes the checked accumulator and the
+strict `rsomics-seqio` stream API directly. Its exact-head CI is green on all
+four native targets with live SeqKit differentials and an independent ordered
+k-mer oracle. This establishes one product contract, not the two-consumer API
+freeze.
 
 `rsomics-igzip` accepts no new consumers. Its native backend is integrated
 privately or replaced after equivalent compatibility, throughput, and memory

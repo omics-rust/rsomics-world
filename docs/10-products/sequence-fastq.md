@@ -1,7 +1,7 @@
 # Sequence and FASTQ product dossier
 
-Status: source audit complete; first release slices selected; implementation
-not yet merged.
+Status: source audit complete; first release slices selected; the initial
+`rsomics-seq` consumer slice is in a verified public repository.
 
 The source pool contains 47 relevant historical crates after routing
 corrections: 34 for `rsomics-seq`, 12 for preprocessing, and one for QC. The
@@ -64,6 +64,15 @@ consumer of `rsomics-seqio` and `rsomics-kmer`. It retains exact counting,
 skips ambiguity-bearing windows, constrains `k` to the foundation's checked
 `1..=32` representation, and adds an explicit canonical mode. This does not
 promote a new public crate or make k-mer counting product-independent policy.
+
+The initial `stats + kmers` consumer slice is implemented at
+`omics-rust/rsomics-seq` revision
+`a24b0936b52cd29e044c8208cafc6e7a39e5e010`. Its exact-head CI passes on
+native Linux and macOS for both `x86_64` and `aarch64`, including strict
+Clippy, 26 tests, live SeqKit 2.13.0 differentials, an independent ordered
+k-mer oracle, and benchmark smoke tests. `grep`, `convert`, and `validate`
+remain part of the selected first release scope, so the repository is not
+publish-ready.
 
 ### Later operation groups
 

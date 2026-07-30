@@ -76,9 +76,9 @@ exclusions.
 - [x] Complete the `seq/fastq` historical asset classification.
 - [x] Define the `rsomics-seq` subcommand surface.
 - [x] Define preprocessing versus QC boundaries for FASTQ.
-- [ ] Create or recover target product repositories on KIOXIA.
-- [ ] Merge the first release slice without reviving micro-crate dependencies.
-- [ ] Consolidate golden and compatibility tests by operation.
+- [x] Create or recover target product repositories on KIOXIA.
+- [x] Merge the first consumer slice without reviving micro-crate dependencies.
+- [x] Consolidate golden and compatibility tests for the implemented operations.
 - [ ] Add end-to-end tests composing multiple subcommands.
 - [ ] Benchmark against the real upstream tools.
 - [ ] Review `common/help/seqio/kmer` public API changes through product
