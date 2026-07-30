@@ -11,6 +11,7 @@ from __future__ import annotations
 import argparse
 import csv
 import re
+import subprocess
 import tomllib
 from collections import Counter, defaultdict
 from pathlib import Path
@@ -18,6 +19,7 @@ from pathlib import Path
 
 DEFAULT_CLONES = Path("/Volumes/KIOXIA/Documents/omics-rust")
 DEFAULT_OUTPUT = Path("docs/00-overview/portfolio-inventory.tsv")
+DEFAULT_EXCLUSIONS = Path("docs/00-overview/portfolio-consolidation-outputs.txt")
 
 
 UPSTREAM_PATTERNS: list[tuple[str, str]] = [
@@ -401,6 +403,29 @@ def source_facts(crate_dir: Path) -> tuple[int, int]:
     return len(files), lines
 
 
+def git_facts(crate_dir: Path) -> tuple[str, str]:
+    if not (crate_dir / ".git").exists():
+        return "-", "not-git"
+    try:
+        head = subprocess.run(
+            ["git", "rev-parse", "HEAD"],
+            cwd=crate_dir,
+            check=True,
+            capture_output=True,
+            text=True,
+        ).stdout.strip()
+        status = subprocess.run(
+            ["git", "status", "--porcelain=v1"],
+            cwd=crate_dir,
+            check=True,
+            capture_output=True,
+            text=True,
+        ).stdout
+    except subprocess.CalledProcessError:
+        return "-", "git-error"
+    return head, "dirty" if status else "clean"
+
+
 def has_origin(crate_dir: Path) -> bool:
     readme = crate_dir / "README.md"
     return (
@@ -418,13 +443,21 @@ def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--clones", type=Path, default=DEFAULT_CLONES)
     parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT)
+    parser.add_argument("--exclude", type=Path, default=DEFAULT_EXCLUSIONS)
     args = parser.parse_args()
 
     manifests: dict[str, tuple[Path, dict, str]] = {}
     dependency_index: Counter[str] = Counter()
     dependents: dict[str, set[str]] = defaultdict(set)
+    exclusions = {
+        line
+        for raw in args.exclude.read_text().splitlines()
+        if (line := raw.strip()) and not line.startswith("#")
+    }
 
     for crate_dir in sorted(args.clones.glob("rsomics-*")):
+        if crate_dir.name in exclusions:
+            continue
         manifest_path = crate_dir / "Cargo.toml"
         if not manifest_path.is_file():
             continue
@@ -455,6 +488,8 @@ def main() -> None:
         "version",
         "layer",
         "git_repo",
+        "git_head",
+        "worktree_state",
         "source_files",
         "source_loc",
         "inbound_rsomics_dependents",
@@ -513,11 +548,14 @@ def main() -> None:
                 confidence,
             )
             source_files, source_loc = source_facts(crate_dir)
+            git_head, worktree_state = git_facts(crate_dir)
             row = {
                 "crate": name,
                 "version": package.get("version", ""),
                 "layer": layer,
                 "git_repo": (crate_dir / ".git").exists(),
+                "git_head": git_head,
+                "worktree_state": worktree_state,
                 "source_files": source_files,
                 "source_loc": source_loc,
                 "inbound_rsomics_dependents": dependency_index[name],

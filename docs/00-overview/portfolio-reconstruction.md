@@ -11,6 +11,11 @@ The generated crate-level ledger is
 python3 scripts/portfolio_inventory.py
 ```
 
+New consolidation outputs listed in
+[`portfolio-consolidation-outputs.txt`](portfolio-consolidation-outputs.txt)
+are excluded so creating `rsomics-bed` or another target repository does not
+inflate the historical source-pool counts.
+
 ## Why this reconstruction exists
 
 The previous partition rule treated one callable operation as one independently
@@ -67,6 +72,15 @@ possible. `upstream_mentions` is broader and includes README/test mentions.
 Keeping the columns separate prevents incidental text such as “networkx was run
 inside a scanpy conda environment” from misclassifying a graph algorithm as a
 Scanpy operation.
+
+`git_head` and `worktree_state` record the exact local source snapshot used by
+the routing pass. A dirty repository is never copied blindly: its ownership and
+diff are resolved when that asset enters a product migration.
+
+At the 2026-07-30 generated snapshot, 553 source repositories were clean, 55
+were dirty, and 14 candidates were not Git repositories. Dirty does not mean
+discardable: it means the migration must inspect and attribute the local diff
+before selecting a source revision.
 
 ## Provisional product families
 
