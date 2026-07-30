@@ -1,5 +1,9 @@
 # Survey: R / Bioconductor + CRAN package landscape (cross-cutting)
 
+Status: ecosystem survey. Current product boundaries and source decisions
+supersede the original crate suggestions; see
+[`../10-products/bulk-expression.md`](../10-products/bulk-expression.md).
+
 Verified 2026-05-30 from Bioconductor package pages + download stats (bioconductor.org/
 packages/stats/bioc/<name>, as of 2026-05-29) + CRAN pages. **This is the priority
 rewrite frontier** — much of the field's analysis layer is decade-old, single-threaded,
@@ -30,18 +34,20 @@ equivalents rather than FFI-wrap.
 
 | pkg | 2025 dl | core | strategy | our crate |
 |---|---|---|---|---|
-| limma | 1.27M (#18) | lmFit/eBayes/voom (empirical Bayes) | primitives (GPL-2 clean-room) | gap |
-| DESeq2 | 1.05M (#21) | DESeq/results/lfcShrink (NB-GLM) | primitives (LGPL-3) | `rsomics-deseq-prep` (count-filter only) |
-| edgeR | 0.85M (#26) | estimateDisp/glmQLFit (NB QL-F) | primitives (GPL-2 clean-room) | gap |
+| limma | 1.27M (#18) | lmFit/eBayes/voom (empirical Bayes) | stateful product reconstruction | 16 historical assets → `rsomics-limma` |
+| DESeq2 | 1.05M (#21) | DESeq/results/lfcShrink (NB-GLM) | stateful product reconstruction | 12 historical assets → `rsomics-deseq` |
+| edgeR | 0.85M (#26) | estimateDisp/glmQLFit (NB QL-F) | stateful product reconstruction | 17 historical assets → `rsomics-edger` |
 | fgsea | 0.78M (#24) | fast GSEA permutation | **REBUILD (MIT, Tier-1 target)** | gap |
 | clusterProfiler | 0.64M (#31) | enrichGO/GSEA (hypergeometric ORA) | primitives + adopt data layer | gap |
 | apeglm | 0.15M | Bayesian LFC shrinkage | primitives | gap |
 | tximport | 0.14M | transcript→gene aggregation | **REBUILD (LGPL, I/O+aggregation)** | `rsomics-tpm` (partial) |
 | DEXSeq | 0.08M | per-exon differential usage (NB-GLM) | primitives (GPL-3) | gap |
 
-**DESeq2/edgeR/limma are NOT feasible 1:1 ports** (LAPACK-dependent IRLS, convergence-checked
-solvers). Build Layer-A kernels (`rsomics-glm-nb` NB log-likelihood + dispersion scoring + IRLS;
-`rsomics-stats` already has BH/qvalue/fisher) that our own DE pipeline uses and R can FFI-call.
+DESeq2, edgeR, and limma are not scalar-kernel ports. Each reconstruction must
+preserve its fitted state, design and contrast semantics, convergence,
+diagnostics, and versioned results. Policy-free numerical kernels move to
+`rsomics-stats` only after two product consumers prove the same contract; no
+new `rsomics-glm-nb` package is planned.
 
 ## Single-cell — scanpy(Py) ↔ Seurat(R), the clearest cross-ecosystem dedup
 
@@ -87,8 +93,9 @@ qvalue (Bioc #36, 0.57M) Storey FDR π₀ → add π₀ to `rsomics-pvalue-adjus
 5. **GenomicFeatures/TxDb** — no crate; GTF→transcript-model DB; every DE pipeline needs it.
 6. **methylKit differential methylation** — per-CpG logistic regression, parallelisable.
 
-**Tier-2 (build the compute primitives, not 1:1):**
-7. DESeq2/edgeR/limma → `rsomics-glm-nb` + dispersion + IRLS kernels (GPL clean-room for edgeR/limma).
+**Tier-2 (stateful product reconstruction):**
+7. DESeq2/edgeR/limma → complete `rsomics-deseq`, `rsomics-edger`, and
+   `rsomics-limma` workflows, with shared kernels only after consumer evidence.
 8. clusterProfiler → hypergeometric ORA CLI (needs GO/KEGG DB access — the hard part).
 9. scran computeSumFactors → pooling-deconvolution linear solve (needs SCE container first).
 10. phangorn ML → Felsenstein pruning + BFGS kernel (under rsomics-phylo).

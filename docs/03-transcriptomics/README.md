@@ -24,11 +24,10 @@ focus here.
 
 ## Cross-cutting design notes
 
-- The transcriptomics stack is bimodal: **alignment / quantification** is
-  C / C++ and a clean port target for Rust; **DE and splicing** is firmly
-  R-and-Python and only realistically reachable through
-  PyO3 / `extendr` interop plus a stronger numeric core
-  (`ndarray-stats`, `polars`, `linfa`).
+- The transcriptomics stack spans format-heavy alignment/quantification and
+  stateful statistical workflows. DESeq2, edgeR, and limma already have
+  substantial historical Rust kernels, but only a complete fitted workflow
+  with current upstream differentials can establish compatibility.
 - COMBINE-lab has produced the most mature Rust output in this space:
   `alevin-fry`, `simpleaf`, `piscem` (Rust wrapper over a C++ index core),
   and `oarfish` (long-read transcript quantification). These define the
@@ -36,10 +35,10 @@ focus here.
 - Splice-aware alignment is the single biggest open hole. No pure-Rust port
   of STAR or HISAT2 exists; both are large engineering projects with
   decade-old C / C++ codebases.
-- Statistical packages (DESeq2's GLM machinery, limma's empirical Bayes)
-  are decades of careful R work. Rewriting them is a research project,
-  not a port. Wrap-with-extendr first, port the kernels only where Rust's
-  parallelism is the bottleneck.
+- Statistical-package reconstruction is consumer-driven: keep method policy in
+  the product, promote only demonstrated policy-free kernels to
+  `rsomics-stats`, and use R as a versioned behavior oracle rather than
+  assuming either an FFI wrapper or an old Rust port is sufficient.
 - We deliberately list legacy tools (TopHat2, Cufflinks) for reference
   even though their authors recommend successors — pipelines still
   invoke them, and benchmark suites compare against them.

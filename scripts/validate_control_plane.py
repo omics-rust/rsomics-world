@@ -98,15 +98,15 @@ def main() -> None:
     inventory_names, inventory_kinds, inventory_rows = inventory()
     outputs = consolidation_outputs()
 
-    require(len(products) == 29, f"expected 29 products, found {len(products)}")
+    require(len(products) == 28, f"expected 28 products, found {len(products)}")
     require(len(foundations) == 9, f"expected 9 foundations, found {len(foundations)}")
     require(registry_products.keys() == products, "registry product set differs")
     require(registry_foundations == foundations, "registry foundation set differs")
     require(dossiers.keys() == products, "dossier product set differs")
-    require(sum(dossiers.values()) == 423, "dossier candidate counts do not sum to 423")
+    require(sum(dossiers.values()) == 422, "dossier candidate counts do not sum to 422")
     require(len(inventory_names) == 622, "historical inventory must contain 622 crates")
-    require(inventory_kinds["product"] == 423, "inventory must contain 423 product candidates")
-    require(inventory_kinds["capability-pool"] == 171, "inventory must contain 171 capability candidates")
+    require(inventory_kinds["product"] == 422, "inventory must contain 422 product candidates")
+    require(inventory_kinds["capability-pool"] == 172, "inventory must contain 172 capability candidates")
     require(inventory_kinds["foundation"] == 28, "inventory must contain 28 foundation candidates")
     sample_sheet = inventory_rows["rsomics-sample-sheet"]
     require(
@@ -116,6 +116,24 @@ def main() -> None:
         and sample_sheet["suggested_action_provisional"]
         == "rejected-product-boundary",
         "sample-sheet must remain outside the accepted product portfolio",
+    )
+    count_matrix = inventory_rows["rsomics-count-matrix"]
+    require(
+        count_matrix["area_provisional"] == "bulk-expression"
+        and count_matrix["target_family_provisional"] == "rsomics-count"
+        and count_matrix["target_kind_provisional"] == "product"
+        and count_matrix["suggested_action_provisional"]
+        == "merge-into:rsomics-count",
+        "count-matrix must remain an rsomics-count source asset",
+    )
+    de_volcano = inventory_rows["rsomics-de-volcano"]
+    require(
+        de_volcano["area_provisional"] == "de-reporting"
+        and de_volcano["target_family_provisional"] == ""
+        and de_volcano["target_kind_provisional"] == "capability-pool"
+        and de_volcano["suggested_action_provisional"]
+        == "internalize-or-discard-with-de-consumer",
+        "de-volcano must remain outside the accepted product portfolio",
     )
     require(outputs.isdisjoint(inventory_names), "consolidation output leaked into inventory")
     require(

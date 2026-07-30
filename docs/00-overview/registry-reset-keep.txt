@@ -7,7 +7,6 @@ rsomics-count
 rsomics-deseq
 rsomics-ecology
 rsomics-edger
-rsomics-expression
 rsomics-fastq-preprocess
 rsomics-fastq-qc
 rsomics-index

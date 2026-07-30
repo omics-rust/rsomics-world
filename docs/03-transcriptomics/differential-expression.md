@@ -1,127 +1,59 @@
-# Differential expression analysis
+# Differential-expression survey
 
-> Statistical testing of count / abundance changes between conditions for
-> bulk RNA-seq.
+Status: upstream survey. The authoritative portfolio and implementation
+decisions are in
+[`../10-products/bulk-expression.md`](../10-products/bulk-expression.md).
 
 ## Scope
 
-Methods that take a count matrix (or transcript abundance + bootstraps,
-in the case of sleuth) and a sample-condition design matrix and emit a
-table of per-gene / per-transcript log fold changes, statistics, and
-adjusted p-values.
+Bulk differential-expression methods combine a count or log-expression matrix,
+sample metadata, a design, fitted mean/variance state, hypothesis tests,
+multiple-testing policy, diagnostics, and result tables.
 
-Single-cell DE belongs in [`../04-single-cell/analysis-core.md`](../04-single-cell/analysis-core.md).
-Splicing-level DE is in [`splicing.md`](splicing.md). The actual matrix
-construction is in [`quantification.md`](quantification.md).
+Matrix construction from alignments belongs to
+[`rsomics-count`](../10-products/count.md). Transcript abundance and
+length-aware aggregation remain quantification concerns. Single-cell marker
+testing and pseudobulk policy belong to the single-cell product review.
 
-## Design notes
+## Current product anchors
 
-- This area is firmly R / Bioconductor (DESeq2, edgeR, limma) plus a
-  handful of Python ports (pyDESeq2). The methods are decades of careful
-  empirical-Bayes / GLM work; reimplementing them is a research project,
-  not a port.
-- **Interop first.** Any rsomics-DE crate should plumb a Rust count
-  matrix → `extendr` / `rextendr` bridge → DESeq2 / edgeR in R, with
-  optional PyO3 path to pyDESeq2. Polars or Arrow IPC for the matrix
-  layer keeps the boundary cheap.
-- The kernels that are bottlenecks in pure-R / pure-Python — IRLS for the
-  GLM, dispersion estimation, voom precision-weight calculation — are
-  amenable to rewriting in Rust with `ndarray-linalg` + `rayon`. Wrap
-  them behind the R / Python facade so users don't switch packages.
-- `polars` is the right home for the result tables (gene × stats) and
-  for the design-matrix construction utilities.
-- Tools that ship their own quantifier upstream (sleuth + kallisto) need
-  the bootstrap-aware variance model — that is genuinely novel work, not
-  a port of an existing Rust kernel.
+| Upstream | Accepted product | Core identity |
+|---|---|---|
+| [DESeq2](https://bioconductor.org/packages/release/bioc/html/DESeq2.html) | `rsomics-deseq` | negative-binomial GLM, size factors, dispersion shrinkage, Wald/LRT inference, effect shrinkage, and stabilized transforms |
+| [edgeR](https://bioconductor.org/packages/release/bioc/html/edgeR.html) | `rsomics-edger` | DGE library state, expression filtering, normalization factors, NB and current quasi-likelihood inference |
+| [limma](https://bioconductor.org/packages/release/bioc/html/limma.html) | `rsomics-limma` | linear models, empirical-Bayes moderation, voom precision weights, threshold tests, correlation, and gene-set workflows |
 
-## TODO
+These are separate stateful products. They share possible policy-free
+numerical kernels but do not become one umbrella binary with a method switch.
+The rejected `rsomics-expression` name had no coherent statistical or
+installation identity.
 
-- [ ] **`DESeq2`** — negative binomial GLM with shrinkage, the most-cited bulk RNA-seq DE method.
-  - Reference impl: `R / C++` · [Bioconductor DESeq2](https://bioconductor.org/packages/release/bioc/html/DESeq2.html) · `LGPL-3+`
-  - Existing Rust: none verified. Python port `pydeseq2` exists from owkin (not Rust)
-  - Existing Rust kind: `none`
-  - Existing non-C alternatives: `pydeseq2` (Python)
-  - Parallelism: R BiocParallel + C++ inner loops
-  - SIMD: limited
-  - Quadrant: —
-  - GPU-amenable: maybe — IRLS for the GLM is dense linear algebra and SIMT-friendly
-  - Upstream license: `LGPL-3+`
-  - Priority: `P1`
-  - Layer: `B` (tool — `rsomics-de` as the umbrella; DESeq2 path is an interop bridge first, kernel-level rewrite later)
-  - Consumes primitives: `polars`, `extendr`-bridge, future `rsomics-stats` (IRLS + dispersion), `ndarray-linalg`
-  - Notes: A from-scratch Rust port is a research project. Realistic rsomics deliverable: a `rsomics-de` crate that produces DESeq2's input format (counts + colData), invokes DESeq2 via `extendr`, returns results as `polars` frames. Kernel-level rewrite of the `nbinomWaldTest` IRLS is a Phase-3 stretch goal.
+## Other method families
 
-- [ ] **`edgeR`** — empirical Bayes negative binomial GLM, original bulk RNA-seq DE method.
-  - Reference impl: `R / C++` · [Bioconductor edgeR](https://bioconductor.org/packages/release/bioc/html/edgeR.html) · `GPL-2+`
-  - Existing Rust: none verified
-  - Existing Rust kind: `none`
-  - Existing non-C alternatives: none widely-used
-  - Parallelism: R BiocParallel
-  - SIMD: limited
-  - Quadrant: —
-  - GPU-amenable: maybe — same dense-linear-algebra rationale as DESeq2
-  - Upstream license: `GPL-2+`
-  - Priority: `P1`
-  - Layer: `subcommand-of-rsomics-de` (one umbrella binary with `--method deseq2` / `--method edger` / etc.)
-  - Consumes primitives: `polars`, `extendr`-bridge, future `rsomics-stats`, `ndarray-linalg`
-  - Notes: Same interop strategy as DESeq2. `edgeR-v4`'s quasi-likelihood F-test is the current default; ensure any wrapper exposes it.
+| Family | Distinct contract | Portfolio decision |
+|---|---|---|
+| sleuth and fishpond/Swish | inferential replicate or bootstrap-aware transcript analysis | outside the current allowlist; reconsider with a real quantification consumer |
+| NOISeq | non-parametric noise modeling | excluded from the initial three products |
+| EBSeq | hierarchical empirical-Bayes gene/isoform inference | excluded; do not hide it as a DESeq mode |
+| DEXSeq | exon-usage NB models | review with transcript/splicing workflows |
+| apeglm and ashr | adaptive effect-size shrinkage | method-specific dependencies or implementations under `rsomics-deseq`, not generic result formatting |
+| tximport and tximeta | transcript-to-gene aggregation and provenance | quantification/input integration, not differential-expression fitting |
 
-- [ ] **`limma-voom`** — precision-weighted linear models for RNA-seq.
-  - Reference impl: `R` · [Bioconductor limma](https://bioconductor.org/packages/release/bioc/html/limma.html) · `GPL-2+`
-  - Existing Rust: none verified
-  - Existing Rust kind: `none`
-  - Existing non-C alternatives: —
-  - Parallelism: R BiocParallel
-  - SIMD: none
-  - Quadrant: —
-  - GPU-amenable: maybe — voom weights are per-gene independent
-  - Upstream license: `GPL-2+`
-  - Priority: `P1`
-  - Layer: `subcommand-of-rsomics-de`
-  - Consumes primitives: `polars`, `extendr`-bridge, future `rsomics-stats`, `ndarray-linalg`
-  - Notes: limma's empirical Bayes moderation is decades of careful statistics. The `voom` weight calculation itself is small and a plausible Rust kernel target; the moderated t-test machinery is not.
+## Reconstruction principles
 
-- [ ] **`sleuth`** — bootstrap-aware DE for kallisto / Salmon abundances.
-  - Reference impl: `R` · [pachterlab/sleuth](https://github.com/pachterlab/sleuth) · `GPL-3.0`
-  - Existing Rust: none verified
-  - Existing Rust kind: `none`
-  - Existing non-C alternatives: `swish` (in `fishpond`) is the spiritual successor for Salmon
-  - Parallelism: R BiocParallel
-  - SIMD: none
-  - Quadrant: —
-  - GPU-amenable: maybe — bootstrap variance decomposition parallelises trivially
-  - Upstream license: `GPL-3.0`
-  - Priority: `P2`
-  - Layer: `subcommand-of-rsomics-de` (a `--bootstrap-aware` mode)
-  - Consumes primitives: `polars`, `extendr`-bridge, future `rsomics-stats`, `rsomics-kallisto` (for the bootstrap-emitting quantifier upstream)
-  - Notes: Pairs naturally with a Rust kallisto port (see `quantification.md`). The technical-variance / biological-variance decomposition is the novel piece; would be a clean Rust crate if we have a bootstrap-emitting quantifier upstream.
+- Preserve a complete fitted analysis rather than flattening every upstream
+  function into an independent CLI.
+- Join count columns, sample metadata, and model terms by stable identity.
+- Treat designs, contrasts, rank, filtering, convergence, and missing values as
+  part of the public behavior.
+- Compare against exact current upstream versions with field-specific
+  tolerances and discrete-decision checks.
+- Share numerical APIs only after two product consumers demonstrate the same
+  contract.
+- Require an end-to-end throughput or resource advantage for any declared
+  replacement slice.
 
-- [ ] **`NOISeq`** — non-parametric DE for low-replicate experiments.
-  - Reference impl: `R` · [Bioconductor NOISeq](https://www.bioconductor.org/packages/release/bioc/html/NOISeq.html) · `Artistic-2.0`
-  - Existing Rust: none verified
-  - Existing Rust kind: `none`
-  - Existing non-C alternatives: —
-  - Parallelism: R BiocParallel
-  - SIMD: none
-  - Quadrant: —
-  - GPU-amenable: no — ranking + percentile work
-  - Upstream license: `Artistic-2.0`
-  - Priority: `P2`
-  - Layer: `subcommand-of-rsomics-de`
-  - Consumes primitives: `polars`, `extendr`-bridge
-  - Notes: Niche. Pure-R, small codebase. Could be rewritten in Rust via `polars` + ranking utilities but low pipeline impact.
-
-- [ ] **`EBSeq`** — empirical-Bayes hierarchical model for isoform DE.
-  - Reference impl: `R` · [Bioconductor EBSeq](https://bioconductor.org/packages/release/bioc/html/EBSeq.html) · `Artistic-2.0`
-  - Existing Rust: none verified
-  - Existing Rust kind: `none`
-  - Existing non-C alternatives: —
-  - Parallelism: R BiocParallel
-  - SIMD: none
-  - Quadrant: —
-  - GPU-amenable: maybe — hierarchical EM is dense
-  - Upstream license: `Artistic-2.0`
-  - Priority: `P2`
-  - Layer: `subcommand-of-rsomics-de`
-  - Consumes primitives: `polars`, `extendr`-bridge, RSEM-style input
-  - Notes: Often paired with RSEM output. Niche. Wrapping via `extendr` is sufficient.
+The historical source pool contains substantial Rust kernels and R goldens for
+all three retained products. They are implementation and test assets, not proof
+that the previous operation-sized package boundaries or compatibility claims
+were correct.

@@ -22,7 +22,6 @@ Status meanings are defined in [CONVENTIONS.md](CONVENTIONS.md).
 | `rsomics-deseq` | planned | DESeq2-style differential-expression workflow |
 | `rsomics-ecology` | planned | community-table diversity, ecological dissimilarity, ordination, metadata association, and permutation analysis |
 | `rsomics-edger` | planned | edgeR-style differential-expression workflow |
-| `rsomics-expression` | planned | expression matrices, normalization, and result utilities |
 | `rsomics-fastq-preprocess` | repo-only | trimming and filtering (initial fastp-compatible subset); later correction, UMI, merge, deduplication |
 | `rsomics-fastq-qc` | pilot | FASTQ quality metrics and reports |
 | `rsomics-index` | planned | bgzip/tabix and reusable sequence-index workflows |
@@ -51,8 +50,8 @@ Product status summary:
 | live | 1 |
 | repo-only | 5 |
 | pilot | 1 |
-| planned | 22 |
-| **Total** | **29** |
+| planned | 21 |
+| **Total** | **28** |
 
 `pilot` means the boundary and source audit are active. It does not imply that
 a public repository or installable release exists. `repo-only` likewise does
@@ -62,8 +61,8 @@ not imply that the crate has passed its publication gate.
 
 | Foundation | crates.io | GitHub | Pilot drivers and later consumers |
 |---|---|---|---|
-| `rsomics-common` | live | live | all 29 accepted products |
-| `rsomics-help` | live | live | all 29 accepted CLI products |
+| `rsomics-common` | live | live | all 28 accepted products |
+| `rsomics-help` | live | live | all 28 accepted CLI products |
 | `rsomics-bamio` | live | live | BAM, VCF, RNA-seq QC, signal |
 | `rsomics-intervals` | live | live | BED, annotation, peak, signal |
 | `rsomics-kmer` | live | live | pilot: sequence; later: metagenomics and sketch |

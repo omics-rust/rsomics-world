@@ -120,8 +120,10 @@ parser without creating another public rsomics foundation.
 
 ## Historical asset disposition
 
-The one routed source candidate is the clean `rsomics-featurecounts`
-repository at `5571384b250761eaf7368a124dca6a5d05962f64`.
+The two routed source candidates are the clean `rsomics-featurecounts`
+repository at `5571384b250761eaf7368a124dca6a5d05962f64` and the clean
+`rsomics-count-matrix` repository at
+`9a92e84f4470baa5d62a6ebcde81d56e452ee86d`.
 
 | Asset | Disposition |
 |---|---|
@@ -133,11 +135,11 @@ repository at `5571384b250761eaf7368a124dca6a5d05962f64`.
 | duplicated `HelpSpec` and inherited `Tool` runtime | discard; migrate to current `rsomics-help` and `rsomics-common` |
 | small and adversarial BAM/annotation fixtures | retain and expand |
 | Criterion harness | benchmark recipe only; replace tiny cases with direct end-to-end comparisons |
+| `rsomics-count-matrix::merge_counts` | test, fixture, and fallback implementation asset; accept a public collation mode only if separate htseq-count or legacy featureCounts files remain a demonstrated workflow after the main multi-input writer is complete |
 
-`rsomics-count-matrix` is currently routed to the `rsomics-expression`
-boundary review. Its code is not an input to this dossier. The count product
-already emits a multi-input matrix, so a separate merge operation must
-demonstrate a remaining workflow before either product accepts it.
+The count product already emits a multi-input matrix, so the historical
+collator does not automatically become another subcommand. It remains inside
+this product's source pool rather than creating an expression utility product.
 
 ## Existing implementation gaps
 

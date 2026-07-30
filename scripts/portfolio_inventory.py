@@ -149,8 +149,6 @@ def route(name: str, upstreams: list[str], layer: str) -> tuple[str, str, str]:
         "rsomics-bed-groupby": ("tabular", "rsomics-table"),
         "rsomics-bed-maskfasta": ("intervals", "rsomics-bed"),
         "rsomics-cell-filter": ("single-cell", "rsomics-sc"),
-        "rsomics-count-matrix": ("bulk-expression", "rsomics-expression"),
-        "rsomics-de-volcano": ("bulk-expression", "rsomics-expression"),
         "rsomics-fasta-index": ("sequence-indexing", "rsomics-index"),
         "rsomics-fasta-mask": ("intervals", "rsomics-bed"),
         "rsomics-fm-search": ("sequence-indexing", "rsomics-index"),
@@ -165,6 +163,10 @@ def route(name: str, upstreams: list[str], layer: str) -> tuple[str, str, str]:
     }
     if name == "rsomics-sample-sheet":
         return "workflow-metadata", "", "high"
+    if name == "rsomics-de-volcano":
+        return "de-reporting", "", "high"
+    if name == "rsomics-count-matrix":
+        return "bulk-expression", "rsomics-count", "high"
     if name in explicit_routes:
         area, target = explicit_routes[name]
         return area, target, "medium"
@@ -407,6 +409,8 @@ def suggested_action(
         return "keep-core-candidate" if inbound >= 2 else "internalize-or-merge-review"
     if name == "rsomics-sample-sheet":
         return "rejected-product-boundary"
+    if name == "rsomics-de-volcano":
+        return "internalize-or-discard-with-de-consumer"
     if not target:
         return "quarantine-review"
     if name == target:
@@ -572,6 +576,7 @@ def main() -> None:
                 "bioimage-review",
                 "sequence-models",
                 "workflow-metadata",
+                "de-reporting",
             }:
                 target_kind = "capability-pool"
             else:

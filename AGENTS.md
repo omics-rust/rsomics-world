@@ -103,10 +103,12 @@ other Layer B products.
 ## Product-family allowlist
 
 The current namespace allowlist is
-`docs/00-overview/registry-reset-keep.txt`: 29 product-family names and nine
+`docs/00-overview/registry-reset-keep.txt`: 28 product-family names and nine
 public foundations. It is a planning baseline, not an instruction to publish
 empty crates. `rsomics-workflow` was removed after its only historical
 candidate proved to be a sample-path checker rather than a workflow product.
+`rsomics-expression` was removed after its two candidates routed to counting
+and product-local differential-expression reporting.
 
 Do not create a new public crate merely because a source module is reusable or
 an upstream exposes another operation. First place the code inside the
@@ -283,7 +285,7 @@ another product remains. Record the gate and continue with an unblocked task.
 ## Current order of work
 
 1. Align the control-plane documents with this product-family architecture.
-2. Complete upstream-operation and source-asset dossiers for all 29 products.
+2. Complete upstream-operation and source-asset dossiers for all 28 products.
 3. Consolidate `rsomics-seq` and `rsomics-bed` as pilot products.
 4. Evolve `common`, `help`, `seqio`, `kmer`, and `intervals` through those
    concrete consumers.

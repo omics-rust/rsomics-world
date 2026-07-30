@@ -22,16 +22,15 @@ operation will ship. It records:
 | `rsomics-bam` | 39 | queued after the low-state pilots |
 | `rsomics-bed` | 42 | [audited](interval-annotation-index.md#rsomics-bed) |
 | `rsomics-composition` | 10 | [audited](composition.md) |
-| `rsomics-count` | 1 | [audited](count.md) |
-| `rsomics-deseq` | 12 | queued |
+| `rsomics-count` | 2 | [audited](count.md) |
+| `rsomics-deseq` | 12 | [audited](bulk-expression.md#rsomics-deseq) |
 | `rsomics-ecology` | 19 | [audited](ecology.md) |
-| `rsomics-edger` | 17 | queued |
-| `rsomics-expression` | 2 | boundary review required with DE products |
+| `rsomics-edger` | 17 | [audited](bulk-expression.md#rsomics-edger) |
 | `rsomics-fastq-preprocess` | 12 | [audited](sequence-fastq.md#rsomics-fastq-preprocess) |
 | `rsomics-fastq-qc` | 1 | [audited](sequence-fastq.md#rsomics-fastq-qc) |
 | `rsomics-index` | 4 | [audited](interval-annotation-index.md#rsomics-index) |
 | `rsomics-liftover` | 1 | [audited](liftover.md) |
-| `rsomics-limma` | 16 | queued |
+| `rsomics-limma` | 16 | [audited](bulk-expression.md#rsomics-limma) |
 | `rsomics-metagenomics` | 5 | [audited](metagenomics-sketch.md#rsomics-metagenomics) |
 | `rsomics-methyl` | 1 | [audited](methyl.md) |
 | `rsomics-minimap2` | 1 | [audited](minimap2.md); legacy release requires reconstruction |
@@ -57,6 +56,7 @@ describe recoverable inputs, not planned subcommand counts.
 | Former candidate | Source candidates | Decision |
 |---|---:|---|
 | `rsomics-workflow` | 1 | [rejected](workflow.md); the sample-sheet asset is consumer-specific metadata validation, not a workflow product |
+| `rsomics-expression` | 2 | [rejected](bulk-expression.md#rejected-rsomics-expression-boundary); count-matrix collation belongs to `rsomics-count`, and significance labels are product-local reporting |
 
 ## Relationship map
 
