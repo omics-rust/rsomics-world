@@ -25,7 +25,7 @@ exclusions.
 - [x] `rsomics-annotation`
 - [ ] `rsomics-bam`
 - [x] `rsomics-bed`
-- [ ] `rsomics-composition`
+- [x] `rsomics-composition`
 - [x] `rsomics-count`
 - [ ] `rsomics-deseq`
 - [ ] `rsomics-ecology`

@@ -17,7 +17,7 @@ Status meanings are defined in [CONVENTIONS.md](CONVENTIONS.md).
 | `rsomics-annotation` | repo-only | GFF/GTF inspection, selection, transformation, sequence extraction |
 | `rsomics-bam` | planned | SAM/BAM/CRAM format operations; archived orphan releases are source assets |
 | `rsomics-bed` | repo-only | BED/interval algebra and bedtools-like operations |
-| `rsomics-composition` | planned | compositional transforms and inference |
+| `rsomics-composition` | planned | Aitchison geometry, log-ratio transforms, zero handling, proportionality, and composition-native inference |
 | `rsomics-count` | planned | feature and read counting workflows |
 | `rsomics-deseq` | planned | DESeq2-style differential-expression workflow |
 | `rsomics-ecology` | planned | diversity, ordination, and permutation analysis |
@@ -69,8 +69,8 @@ not imply that the crate has passed its publication gate.
 | `rsomics-intervals` | live | live | BED, annotation, peak, signal |
 | `rsomics-kmer` | live | live | pilot: sequence; later: metagenomics and sketch |
 | `rsomics-seqio` | live | live | current: sequence and preprocessing; planned: FASTQ QC and indexing |
-| `rsomics-stats` | live | live | expression workflows, single-cell, ecology, population genetics |
-| `rsomics-phylo-tree` | live | live | phylogenetics, ecology |
+| `rsomics-stats` | live | live | composition, expression workflows, single-cell, ecology, population genetics |
+| `rsomics-phylo-tree` | live | live | composition balance bases, phylogenetics, ecology |
 | `rsomics-pileup` | live | live | BAM, VCF |
 
 ## Temporary public dependency

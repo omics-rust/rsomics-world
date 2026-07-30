@@ -167,8 +167,8 @@ named products, not those raw counts, justify the boundary:
 | `rsomics-intervals` | 11 | `bed`, `annotation`, `peak`, `signal` |
 | `rsomics-kmer` | 6 | `seq`, `fastq-preprocess`, `metagenomics`, `sketch` |
 | `rsomics-seqio` | 8 | `seq`, `fastq-preprocess`, `fastq-qc`, `minimap2` |
-| `rsomics-stats` | 3 | `deseq`, `edger`, `limma`, `sc`, `ecology`, `popgen`, `plink` |
-| `rsomics-phylo-tree` | 9 | `phylo`, `ecology` |
+| `rsomics-stats` | 3 | `composition`, `deseq`, `edger`, `limma`, `sc`, `ecology`, `popgen`, `plink` |
+| `rsomics-phylo-tree` | 9 | `composition`, `phylo`, `ecology` |
 | `rsomics-pileup` | 2 | `bam`, `vcf`, `methyl` |
 
 The following current libraries have zero or one target-family consumer and

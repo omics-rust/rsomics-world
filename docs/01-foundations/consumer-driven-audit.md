@@ -19,8 +19,8 @@ phase.
 | `rsomics-intervals` | keep; repair coordinate safety and remove BED policy | `bed`, `annotation`, `peak` |
 | `rsomics-bamio` | keep; narrow concrete backend types | `bam`, `vcf`, `count`, `methyl`, `minimap2`, `peak` |
 | `rsomics-pileup` | keep; add sortedness and real compatibility gates | `bam`, `vcf`, `methyl` |
-| `rsomics-stats` | keep; migrate only primitives used by two workflows | DE workflows, `sc`, `ecology`, `popgen`, `plink` |
-| `rsomics-phylo-tree` | keep; re-establish topology and Newick invariants | `phylo`, `ecology` |
+| `rsomics-stats` | keep; migrate only primitives used by two workflows | `composition`, DE workflows, `sc`, `ecology`, `popgen`, `plink` |
+| `rsomics-phylo-tree` | keep; re-establish topology and Newick invariants | `composition`, `phylo`, `ecology` |
 | `rsomics-igzip` | temporary; internalize into sequence I/O | `seqio` is the only current consumer |
 
 ## Audited source snapshot
@@ -213,8 +213,14 @@ bisulfite calling do not enter the foundation.
 same typed semantics. It does not become a container for all 91 historical
 statistics binaries.
 
+`rsomics-composition` supplies concrete contracts for p-value adjustment and
+selected statistical tests. ANCOM-specific orchestration and cutoff policy
+remain in the product.
+
 `rsomics-phylo-tree` closes node mutation and root invariants and supports the
-declared Newick grammar before `phylo` and `ecology` depend on it.
+declared Newick grammar before `composition`, `phylo`, and `ecology` depend on
+it. Composition consumes only validated topology and tip identities for
+tree-derived ILR bases.
 
 ## Completion gate per wave
 
