@@ -125,6 +125,17 @@ COMPOSITION_CRATES = {
     "rsomics-vlr",
 }
 
+ECOLOGY_CRATES = {
+    "rsomics-faith-pd",
+    "rsomics-phydiv",
+    "rsomics-unifrac",
+}
+
+PHYLO_CRATES = {
+    "rsomics-hommola",
+    "rsomics-seq-dist",
+}
+
 
 def route(name: str, upstreams: list[str], layer: str) -> tuple[str, str, str]:
     if layer == "A":
@@ -220,7 +231,13 @@ def route(name: str, upstreams: list[str], layer: str) -> tuple[str, str, str]:
     if "scikit-bio" in upstream_set:
         if name in COMPOSITION_CRATES:
             return "compositional", "rsomics-composition", "high"
-        if contains_any(name, {"tree", "phylo", "unifrac", "faith", "tipdist"}):
+        if name in ECOLOGY_CRATES or contains_any(
+            name, {"faith", "phydiv", "unifrac"}
+        ):
+            return "ecology", "rsomics-ecology", "high"
+        if name in PHYLO_CRATES:
+            return "phylogenetics", "rsomics-phylo", "high"
+        if contains_any(name, {"tree", "phylo", "tipdist"}):
             return "phylogenetics", "rsomics-phylo", "high"
         return "ecology", "rsomics-ecology", "high"
     if "vcftools" in upstream_set:
@@ -286,7 +303,13 @@ def route(name: str, upstreams: list[str], layer: str) -> tuple[str, str, str]:
     if primary == "scikit-bio":
         if name in COMPOSITION_CRATES:
             return "compositional", "rsomics-composition", "medium"
-        if contains_any(name, {"tree", "phylo", "unifrac", "faith", "tipdist"}):
+        if name in ECOLOGY_CRATES or contains_any(
+            name, {"faith", "phydiv", "unifrac"}
+        ):
+            return "ecology", "rsomics-ecology", "medium"
+        if name in PHYLO_CRATES:
+            return "phylogenetics", "rsomics-phylo", "medium"
+        if contains_any(name, {"tree", "phylo", "tipdist"}):
             return "phylogenetics", "rsomics-phylo", "medium"
         return "ecology", "rsomics-ecology", "medium"
     if primary == "vcftools":

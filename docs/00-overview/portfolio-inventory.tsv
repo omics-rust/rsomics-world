@@ -216,7 +216,7 @@ rsomics-entropy	0.1.1	B	True	0701665c854e8741098461bd3f07bbaea29b8ebd	clean	5	45
 rsomics-epps-singleton	0.1.2	B	True	a60c7f239cfd5258ddebdf53b8e40228c2b03fee	clean	8	888	0	0		True	True	True	True	scipy	scipy	statistics	rsomics-stats	capability-pool	high	merge-or-core-review	-
 rsomics-equalize-hist	0.1.2	B	True	5d58ae1d703971cf457f2cf8eda9b1aa0aceca90	clean	2	559	0	0		True	True	False	True	scikit-image	scikit-image	bioimage-review	rsomics-image	capability-pool	high	merge-or-core-review	-
 rsomics-f-oneway	0.1.0	B	True	707d4d8febd58fd68d5bc001f3d31ac4479d1ab3	clean	6	770	0	0		True	True	True	True	scipy	scipy	statistics	rsomics-stats	capability-pool	high	merge-or-core-review	-
-rsomics-faith-pd	0.1.2	B	True	45641adf130ae241733aee06bbd44d8ea48a9759	clean	3	484	0	0		True	True	True	True	scikit-bio	scikit-bio|biopython	phylogenetics	rsomics-phylo	product	high	merge-into:rsomics-phylo	-
+rsomics-faith-pd	0.1.2	B	True	45641adf130ae241733aee06bbd44d8ea48a9759	clean	3	484	0	0		True	True	True	True	scikit-bio	scikit-bio|biopython	ecology	rsomics-ecology	product	high	merge-into:rsomics-ecology	-
 rsomics-fasta-amplicon	0.1.4	B	True	6497126935997a0fe626ccb815b36d3865288cf2	clean	6	1130	0	0		True	True	True	True	seqkit	seqkit	sequence-utilities	rsomics-seq	product	high	merge-into:rsomics-seq	-
 rsomics-fasta-digest	0.1.2	B	True	7ab3c0750a8c15b9e55aca3b151270a013494437	clean	3	209	0	0		True	True	True	True			sequence-utilities	rsomics-seq	product	medium	merge-into:rsomics-seq	-
 rsomics-fasta-fx2tab	0.1.4	B	True	40031f6915b2a54c4cf82d3011aec8a66d064b39	clean	3	469	0	0		True	True	True	True	seqkit	seqkit	sequence-utilities	rsomics-seq	product	high	merge-into:rsomics-seq	-
@@ -291,7 +291,7 @@ rsomics-het-tests	0.1.1	B	True	f9cdc7aa4375f616031c32b4f2b0f82581c11b48	clean	10
 rsomics-hits	0.1.1	B	True	35758ff3dec41eeea572e87766c5207e256e2dd0	dirty	2	329	0	0		True	True	True	True	networkx	networkx	graph-algorithms	rsomics-graph	capability-pool	high	merge-or-core-review	-
 rsomics-hmm	0.1.0	A	True	6bac6d996612ae636d73c720688d272cc0edaefd	clean	1	251	1	1	rsomics-model	False	False	False	False			foundation	rsomics-hmm	foundation	high	internalize-or-merge-review	-
 rsomics-hmm-decode	0.1.1	B	True	cc870858dcc8205797c90e65c67b84b99208bd42	clean	3	168	0	0		True	True	True	False			sequence-models	rsomics-model	capability-pool	medium	merge-or-core-review	-
-rsomics-hommola	0.1.1	B	True	9af268ffe34a8add00edef5849844e1d6e391ae4	clean	6	743	0	0		True	True	True	True	scikit-bio	scikit-bio|biopython	ecology	rsomics-ecology	product	high	merge-into:rsomics-ecology	-
+rsomics-hommola	0.1.1	B	True	9af268ffe34a8add00edef5849844e1d6e391ae4	clean	6	743	0	0		True	True	True	True	scikit-bio	scikit-bio|biopython	phylogenetics	rsomics-phylo	product	high	merge-into:rsomics-phylo	-
 rsomics-icc	0.1.0	B	True	031cc33cbc7dcad2510b5fba8b0f3d6be12c4e20	clean	6	950	0	0		True	True	True	True	scipy|statsmodels	scipy|statsmodels	statistics	rsomics-stats	capability-pool	high	merge-or-core-review	-
 rsomics-igzip	0.1.0	A	True	4c92ddfb3cd68f9510b611c4f63338e674ef2ccd	clean	2	465	0	0		False	False	False	True	fastp	fastp	foundation	rsomics-igzip	foundation	high	internalize-or-merge-review	-
 rsomics-ilr	0.2.1	B	True	799ab17a5d0f30a2d5c76db61803da4af27f3cae	clean	4	660	0	0		True	True	True	True	scikit-bio	scikit-bio|biopython	compositional	rsomics-composition	product	high	merge-into:rsomics-composition	-
@@ -498,7 +498,7 @@ rsomics-sc-spatial-autocorr	0.1.1	B	True	58081d2bcb566afd9b7588b73fdc70947cc16ba
 rsomics-sc-subsample	0.1.0	B	True	2287feb8588fa2b1ae0c9d43ea167e2843de4846	clean	4	584	0	0		True	True	True	True	scanpy	scanpy	single-cell	rsomics-sc	product	high	merge-into:rsomics-sc	-
 rsomics-scalers	0.1.0	B	True	19c1303c0d9712d42d9b156f083c9beba28642f5	clean	6	842	0	0		True	True	True	True	scikit-learn	scikit-learn	machine-learning	rsomics-ml	capability-pool	high	merge-or-core-review	-
 rsomics-seacr	0.1.1	B	True	d6ed2f0890989fa2de2007a1763bed3d51e365b2	clean	8	1353	0	0		True	True	True	True	bedtools	bedtools	epigenomics	rsomics-peak	product	medium	merge-into:rsomics-peak	-
-rsomics-seq-dist	0.1.1	B	True	798e8d2be02e91842bd045338f05bb59065332ba	clean	7	852	0	0		True	True	True	True	scikit-bio	scikit-bio|biopython	ecology	rsomics-ecology	product	high	merge-into:rsomics-ecology	-
+rsomics-seq-dist	0.1.1	B	True	798e8d2be02e91842bd045338f05bb59065332ba	clean	7	852	0	0		True	True	True	True	scikit-bio	scikit-bio|biopython	phylogenetics	rsomics-phylo	product	high	merge-into:rsomics-phylo	-
 rsomics-seq-grep	0.1.1	B	True	5bef2f6f9009b47c188262f96b0b6a5976bc3a84	clean	8	1306	0	0		True	True	True	True	seqkit	seqkit	sequence-utilities	rsomics-seq	product	high	merge-into:rsomics-seq	-
 rsomics-seq-stats	0.1.1	B	True	895a28e50f4cab0df247921afced966a15bbd0a5	clean	3	169	0	0		True	True	True	False	seqkit	seqkit	sequence-utilities	rsomics-seq	product	high	merge-into:rsomics-seq	-
 rsomics-seqio	0.3.0	A	True	b23cf8ad29fd06c84aaaa0c480ba1da8cff01e7d	clean	6	1717	8	3	rsomics-bam|rsomics-fastq-preprocess|rsomics-seq	True	False	True	True	fastp	fastp	foundation	rsomics-seqio	foundation	high	keep-core-candidate	-
@@ -549,7 +549,7 @@ rsomics-tsv-transpose	0.1.1	B	True	c46be5779685c65d9a4345aab64d92fa18c68653	clea
 rsomics-tsv-uniq	0.1.8	B	True	85bec590cf2802a6e71822e124a14865f97d0730	clean	3	531	0	0		True	True	True	True	csvtk	csvtk	tabular	rsomics-table	product	high	merge-into:rsomics-table	-
 rsomics-ttest	0.1.0	B	True	f0c54717be9aabe8258c7e4236924499fb72843d	clean	5	799	0	0		True	True	True	True	scipy	scipy	statistics	rsomics-stats	capability-pool	high	merge-or-core-review	-
 rsomics-uniform-filter	0.1.0	B	True	fe321bb1dea96f1f505530b20244011b389010c7	clean	2	637	0	0		True	True	True	True	scipy	scipy	statistics	rsomics-stats	capability-pool	high	merge-or-core-review	-
-rsomics-unifrac	0.1.2	B	True	a631051290342991f411b68d7c10735493162a25	clean	4	801	0	0		True	True	True	True	scikit-bio	scikit-bio|biopython	phylogenetics	rsomics-phylo	product	high	merge-into:rsomics-phylo	-
+rsomics-unifrac	0.1.2	B	True	a631051290342991f411b68d7c10735493162a25	clean	4	801	0	0		True	True	True	True	scikit-bio	scikit-bio|biopython	ecology	rsomics-ecology	product	high	merge-into:rsomics-ecology	-
 rsomics-upgma	0.1.2	B	True	41fefd4b401ca60fe1dfe71b4066c96dee9e89bc	clean	4	438	0	0		True	True	True	True	scanpy|scipy|scikit-bio	scanpy|scipy|scikit-bio	phylogenetics	rsomics-phylo	product	medium	merge-into:rsomics-phylo	-
 rsomics-uq-norm	0.1.2	B	True	9f53b4c7af2717ccca8d90a48762c957465cc837	clean	3	382	0	0		True	True	True	True	edger	edger	bulk-expression	rsomics-edger	product	high	merge-into:rsomics-edger	-
 rsomics-variation	0.1.0	B	True	02d105bb5aa22c40df210005f901f903773a1e35	clean	5	354	0	0		True	True	True	True	scipy	scipy	statistics	rsomics-stats	capability-pool	high	merge-or-core-review	-
