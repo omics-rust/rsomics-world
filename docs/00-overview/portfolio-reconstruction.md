@@ -98,7 +98,7 @@ The current implementation pool maps to 30 product families:
 | `rsomics-sc` | 29 | stateful single-cell analysis workflow |
 | `rsomics-plink` | 28 | PLINK-style genotype analysis |
 | `rsomics-rnaseq-qc` | 26 | RSeQC/Picard RNA-seq QC |
-| `rsomics-ecology` | 19 | diversity, ordination, permutation analyses |
+| `rsomics-ecology` | 19 | community diversity, dissimilarity, ordination, association, and permutation analysis |
 | `rsomics-edger` | 17 | edgeR workflow |
 | `rsomics-popgen` | 16 | non-PLINK population genetics |
 | `rsomics-limma` | 16 | limma workflow |

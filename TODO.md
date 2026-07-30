@@ -28,7 +28,7 @@ exclusions.
 - [x] `rsomics-composition`
 - [x] `rsomics-count`
 - [ ] `rsomics-deseq`
-- [ ] `rsomics-ecology`
+- [x] `rsomics-ecology`
 - [ ] `rsomics-edger`
 - [ ] `rsomics-expression`
 - [x] `rsomics-fastq-preprocess`

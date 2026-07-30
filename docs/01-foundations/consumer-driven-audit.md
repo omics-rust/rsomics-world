@@ -229,6 +229,17 @@ and result schemas stay in the product. The current foundation's public mutable
 nodes, invalid `Default` tree, incomplete label grammar, and unchecked
 non-finite branch lengths block its next release.
 
+The `rsomics-ecology` dossier supplies the community-diversity contract:
+validated topology, postorder traversal, finite branch views, and checked tip
+identity for Faith PD, generalized PD, and UniFrac. Abundance accumulation,
+diversity formulas, distance matrices, ordination, and permutation policy stay
+in the product. The historical `rsomics-distance` consumers all collapse into
+ecology, so that crate is internalized rather than added to the foundation set.
+
+Ecology's initial diversity slice requires no new `rsomics-stats` API. Later
+inference work promotes a numerical item only when composition or another
+named product demonstrates the same finite-value and result contract.
+
 ## Completion gate per wave
 
 A foundation wave is complete when:

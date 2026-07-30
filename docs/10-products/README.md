@@ -24,7 +24,7 @@ operation will ship. It records:
 | `rsomics-composition` | 10 | [audited](composition.md) |
 | `rsomics-count` | 1 | [audited](count.md) |
 | `rsomics-deseq` | 12 | queued |
-| `rsomics-ecology` | 19 | queued |
+| `rsomics-ecology` | 19 | [audited](ecology.md) |
 | `rsomics-edger` | 17 | queued |
 | `rsomics-expression` | 2 | boundary review required with DE products |
 | `rsomics-fastq-preprocess` | 12 | [audited](sequence-fastq.md#rsomics-fastq-preprocess) |

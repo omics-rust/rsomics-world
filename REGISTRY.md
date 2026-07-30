@@ -20,7 +20,7 @@ Status meanings are defined in [CONVENTIONS.md](CONVENTIONS.md).
 | `rsomics-composition` | planned | Aitchison geometry, log-ratio transforms, zero handling, proportionality, and composition-native inference |
 | `rsomics-count` | planned | feature and read counting workflows |
 | `rsomics-deseq` | planned | DESeq2-style differential-expression workflow |
-| `rsomics-ecology` | planned | diversity, ordination, and permutation analysis |
+| `rsomics-ecology` | planned | community-table diversity, ecological dissimilarity, ordination, metadata association, and permutation analysis |
 | `rsomics-edger` | planned | edgeR-style differential-expression workflow |
 | `rsomics-expression` | planned | expression matrices, normalization, and result utilities |
 | `rsomics-fastq-preprocess` | repo-only | trimming and filtering (initial fastp-compatible subset); later correction, UMI, merge, deduplication |
