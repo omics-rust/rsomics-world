@@ -45,7 +45,7 @@ operation will ship. It records:
 | `rsomics-signal` | 15 | queued |
 | `rsomics-sketch` | 1 | boundary review required with metagenomics |
 | `rsomics-structure` | 9 | queued |
-| `rsomics-table` | 16 | queued |
+| `rsomics-table` | 16 | [audited](table.md) |
 | `rsomics-vcf` | 48 | queued after the low-state pilots |
 | `rsomics-workflow` | 1 | standalone-product justification required |
 

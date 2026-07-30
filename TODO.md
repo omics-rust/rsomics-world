@@ -49,7 +49,7 @@ exclusions.
 - [ ] `rsomics-signal`
 - [ ] `rsomics-sketch`
 - [ ] `rsomics-structure`
-- [ ] `rsomics-table`
+- [x] `rsomics-table`
 - [ ] `rsomics-vcf`
 - [ ] `rsomics-workflow`
 
