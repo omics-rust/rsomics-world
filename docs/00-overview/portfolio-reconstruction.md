@@ -163,10 +163,10 @@ named products, not those raw counts, justify the boundary:
 |---|---:|---|
 | `rsomics-common` | 560 | all 30 accepted products |
 | `rsomics-help` | 317 | all 30 accepted CLI products |
-| `rsomics-bamio` | 70 | `bam`, `vcf`, `count`, `methyl`, `rnaseq-qc`, `signal` |
+| `rsomics-bamio` | 70 | `bam`, `vcf`, `count`, `methyl`, `minimap2`, `rnaseq-qc`, `signal` |
 | `rsomics-intervals` | 11 | `bed`, `annotation`, `peak`, `signal` |
 | `rsomics-kmer` | 6 | `seq`, `fastq-preprocess`, `metagenomics`, `sketch` |
-| `rsomics-seqio` | 8 | `seq`, `fastq-preprocess`, `fastq-qc` |
+| `rsomics-seqio` | 8 | `seq`, `fastq-preprocess`, `fastq-qc`, `minimap2` |
 | `rsomics-stats` | 3 | `deseq`, `edger`, `limma`, `sc`, `ecology`, `popgen`, `plink` |
 | `rsomics-phylo-tree` | 9 | `phylo`, `ecology` |
 | `rsomics-pileup` | 2 | `bam`, `vcf`, `methyl` |
@@ -192,6 +192,7 @@ flowchart LR
     bamio["bamio"] --> bam["bam"]
     bamio --> count["count"]
     bamio --> methyl["methyl"]
+    bamio --> minimap2["minimap2"]
     bamio --> signal["signal"]
     bamio --> rnaqc["rnaseq-qc"]
     bamio --> vcf["vcf"]
@@ -205,6 +206,7 @@ flowchart LR
     seqio["seqio"] --> seq["seq"]
     seqio --> fastq
     seqio --> fastqqc["fastq-qc"]
+    seqio --> minimap2
     tree["phylo-tree"] --> phylo["phylo"]
     tree --> ecology["ecology"]
     pileup["pileup"] --> bam

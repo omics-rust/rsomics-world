@@ -30,7 +30,7 @@ Status meanings are defined in [CONVENTIONS.md](CONVENTIONS.md).
 | `rsomics-limma` | planned | limma/voom workflow |
 | `rsomics-metagenomics` | planned | taxonomy, amplicon, and community sequence workflows |
 | `rsomics-methyl` | planned | methylation extraction and analysis |
-| `rsomics-minimap2` | live | documented FFI-backed minimap2 product |
+| `rsomics-minimap2` | live | published legacy FFI wrapper; reconstruction required |
 | `rsomics-peak` | planned | peak calling and annotation |
 | `rsomics-phylo` | planned | tree construction, distance, and comparison |
 | `rsomics-plink` | planned | PLINK-style genotype analysis |

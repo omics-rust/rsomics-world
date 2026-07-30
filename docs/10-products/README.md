@@ -34,7 +34,7 @@ operation will ship. It records:
 | `rsomics-limma` | 16 | queued |
 | `rsomics-metagenomics` | 5 | boundary review required with sketch |
 | `rsomics-methyl` | 1 | [audited](methyl.md) |
-| `rsomics-minimap2` | 1 | live FFI-backed product; dossier refresh queued |
+| `rsomics-minimap2` | 1 | [audited](minimap2.md); legacy release requires reconstruction |
 | `rsomics-peak` | 5 | queued |
 | `rsomics-phylo` | 11 | queued |
 | `rsomics-plink` | 28 | queued |

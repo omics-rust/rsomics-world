@@ -14,10 +14,10 @@ phase.
 |---|---|---|
 | `rsomics-common` | keep; refactor command/error/output contract | `seq`, `fastq-preprocess`, `bed` |
 | `rsomics-help` | keep; replace the duplicate renderer with the family CLI UX adapter | `seq`, `fastq-preprocess`, `bed` |
-| `rsomics-seqio` | keep; redesign around FASTA/FASTQ stream contracts | `seq`, `fastq-preprocess`, `fastq-qc` |
+| `rsomics-seqio` | keep; redesign around FASTA/FASTQ stream contracts | `seq`, `fastq-preprocess`, `fastq-qc`, `minimap2` |
 | `rsomics-kmer` | keep; repair boundaries and expose only general primitives | `seq`; later `metagenomics`, `sketch` |
 | `rsomics-intervals` | keep; repair coordinate safety and remove BED policy | `bed`, `annotation` |
-| `rsomics-bamio` | keep; narrow concrete backend types | `bam`, `vcf`, `count`, `methyl` |
+| `rsomics-bamio` | keep; narrow concrete backend types | `bam`, `vcf`, `count`, `methyl`, `minimap2` |
 | `rsomics-pileup` | keep; add sortedness and real compatibility gates | `bam`, `vcf`, `methyl` |
 | `rsomics-stats` | keep; migrate only primitives used by two workflows | DE workflows, `sc`, `ecology`, `popgen`, `plink` |
 | `rsomics-phylo-tree` | keep; re-establish topology and Newick invariants | `phylo`, `ecology` |
