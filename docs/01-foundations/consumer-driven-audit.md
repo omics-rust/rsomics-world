@@ -178,16 +178,19 @@ instance without a committed path dependency. The earlier representative
 million-record gate matches bedtools output and passes throughput on all five
 operations without adding another shared crate; the revised subtract hot path
 still requires representative remeasurement before publication.
-`rsomics-annotation` revision `b8ad1eee7865` now provides the second
+`rsomics-annotation` revision `80920fb9e72b` provides the second
 coordinate-model contract through one checked conversion from inclusive
-GFF/GTF features to the shared half-open interval type. Exact-head CI run
-`30572705103` passes the product on all four native targets and includes live
-gffread differentials. The BED parsing and sorting functions currently exposed
-by the foundation still require a fresh policy review before intervals 0.3 is
-published. Annotation does not naturally need the checked tree for its first
-streaming slice, so it is not a second `IntervalIndex` consumer. That item
-remains unpublished until `peak`, `signal`, or another real product
-demonstrates the same policy-free query contract.
+GFF/GTF features to the shared half-open interval type. Final-head CI run
+`30574846937` passes all 40 product tests on four native targets, including
+live gffread differentials for selection, conversion, and sequence extraction.
+Extraction adds no speculative public foundation: annotation-specific
+hierarchy and splicing stay inside the product, while FASTA random access uses
+the aligned external noodles format graph. The BED parsing and sorting
+functions currently exposed by the foundation still require a fresh policy
+review before intervals 0.3 is published. Annotation does not naturally need
+the checked tree for its streaming operations, so it is not a second
+`IntervalIndex` consumer. That item remains unpublished until `peak`, `signal`,
+or another real product demonstrates the same policy-free query contract.
 
 ### Alignment wave
 

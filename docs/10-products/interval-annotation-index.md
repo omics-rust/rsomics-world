@@ -1,7 +1,7 @@
 # Interval, annotation, and index product dossier
 
-Status: the BED and annotation first slices are verified. Index implementation
-has not started.
+Status: the BED slice and the annotation core plus sequence-extraction slice
+are verified. Index implementation has not started.
 
 Routing corrections move table aggregation to `rsomics-table`, SEACR to
 `rsomics-peak`, FASTA masking to `rsomics-bed`, and FASTA indexing to
@@ -102,7 +102,7 @@ fixtures are assets, not the target structure. `rsomics-transcript-fasta` has
 stronger gffread sequence goldens and a reusable transcript assembly path, but
 its parser silently skips short records and swaps inverted coordinates.
 
-The first implementation slice is:
+The initial implementation slice is:
 
 - `validate`, with explicit GFF3 or GTF dialect selection and record-level
   failures carrying line numbers;
@@ -111,13 +111,16 @@ The first implementation slice is:
 - `to-bed`, converting 1-based inclusive features to 0-based half-open
   intervals at one checked boundary.
 
-This slice is implemented at `omics-rust/rsomics-annotation` revision
-`b8ad1eee786586fd1375e883c608e1feae0417d2`. Exact-head CI run
-`30572705103` passes on native Linux and macOS for both `x86_64` and
+The initial slice is implemented at `omics-rust/rsomics-annotation` revision
+`b8ad1eee786586fd1375e883c608e1feae0417d2`. Transcript, CDS, and protein
+FASTA extraction follows at revision
+`80920fb9e72b6d05c34de41eaa88bb971b1c48fe`; performance evidence is recorded
+at `f089ec6a54bb985639828d367bb7d5ec25486d72`. Exact-head CI run `30574846937`
+passes the final evidence head on native Linux and macOS for both `x86_64` and
 `aarch64`. The gate runs strict Clippy, debug and release suites, package
-verification, and 26 tests. Two of those tests build and invoke pinned
-gffread 0.12.9 to compare inclusive region-edge selection and transcript BED
-coordinates.
+verification, and 40 tests. Three live-oracle cases build pinned gffread
+0.12.9 and compare region selection, BED conversion, and all three sequence
+outputs.
 
 The implementation has one typed record stream for both dialects, explicit
 dialect selection, transactional named outputs, line-numbered failures, and
@@ -125,12 +128,28 @@ the shared `rsomics-help` command presentation. Validation rejects inverted
 coordinates, non-finite scores, invalid CDS phase use, unresolved GFF3
 parents, incompatible repeated IDs, missing GTF hierarchy identifiers, and a
 GFF3 version directive that is absent, repeated, non-version-3, or not the
-first non-empty line. No product benchmark claim has been made yet, and the
-crate remains unpublished.
+first non-empty line.
 
-Transcript, CDS, and protein FASTA extraction follows on the same record and
-hierarchy model. It is not advertised until the retained gffread goldens pass
-through that model.
+Extraction reuses the same validated record stream and hierarchy model. It
+supports both strands, multiple exons and transcripts, GFF3 and GTF, CDS
+phase offsets, split GTF stop codons, multi-parent features, partial codons,
+and internal stops. Plain FASTA can be indexed in memory without modifying the
+input directory; compressed input requires its persistent random-access
+indexes. Named outputs are staged together and become visible only after the
+complete extraction succeeds.
+
+All valid retained `rsomics-transcript-fasta` goldens remain byte-identical.
+The old permissive parser is discarded: inverted coordinates, short records,
+and GFF3 CDS records without a required phase now fail rather than being
+repaired or skipped implicitly.
+
+On the documented Apple M2 fixture of 80,000 three-exon transcripts,
+`rsomics-annotation` and gffread produce byte-identical transcript, CDS, and
+protein FASTA. Five alternating warm-cache trials have medians of 1.84 and
+3.25 seconds respectively, a 1.77-times throughput advantage. Peak RSS medians
+are 266,207,232 and 146,210,816 bytes, so the implementation uses 1.82 times
+the memory. This passes the throughput gate with an explicit memory tradeoff;
+it is not a universal performance claim. The crate remains unpublished.
 
 The old command inventory is consolidated as follows:
 
@@ -141,18 +160,20 @@ The old command inventory is consolidated as follows:
   product, considered after the first slice;
 - intron/UTR synthesis requires a validated transcript graph and is not copied
   from the old line-oriented modules;
-- sequence extraction is refactored then merged from
-  `rsomics-transcript-fasta`;
+- sequence extraction was refactored then merged from
+  `rsomics-transcript-fasta`; its algorithms and valid goldens were retained,
+  while the permissive parser and invalid missing-phase fixture were
+  discarded;
 - duplicate count-only commands and permissive line splitters are discarded.
 
-Current source behavior is not safe to merge unchanged:
+Historical source behavior was not safe to merge unchanged:
 
 - intron generation mixes 1-based inclusive annotation coordinates with
   0-based half-open BED coordinates;
 - annotation length uses `end - start` where inclusive GFF/GTF length is
   `end - start + 1`;
-- transcript extraction silently swaps reversed coordinates and skips short
-  lines.
+- the retired transcript parser silently swaps reversed coordinates and skips
+  short lines; the merged implementation does neither.
 
 The target parser uses an explicit one-based inclusive feature span and fails
 loud on malformed records. Conversion to `rsomics-intervals::Interval` occurs
