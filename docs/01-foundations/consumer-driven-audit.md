@@ -17,7 +17,7 @@ phase.
 | `rsomics-seqio` | keep; redesign around FASTA/FASTQ stream contracts | `seq`, `fastq-preprocess`, `fastq-qc` |
 | `rsomics-kmer` | keep; repair boundaries and expose only general primitives | `seq`; later `metagenomics`, `sketch` |
 | `rsomics-intervals` | keep; repair coordinate safety and remove BED policy | `bed`, `annotation` |
-| `rsomics-bamio` | keep; narrow concrete backend types | `bam`, `vcf` |
+| `rsomics-bamio` | keep; narrow concrete backend types | `bam`, `vcf`, `count` |
 | `rsomics-pileup` | keep; add sortedness and real compatibility gates | `bam`, `vcf` |
 | `rsomics-stats` | keep; migrate only primitives used by two workflows | DE workflows, `sc`, `ecology`, `popgen`, `plink` |
 | `rsomics-phylo-tree` | keep; re-establish topology and Newick invariants | `phylo`, `ecology` |
@@ -195,7 +195,9 @@ or another real product demonstrates the same policy-free query contract.
 ### Alignment wave
 
 `rsomics-bamio` exposes validated records and stable reader/writer contracts,
-not every current batch or work-stealing implementation type.
+not every current batch or work-stealing implementation type. `rsomics-count`
+adds a concrete sequential and parallel record-reader consumer without moving
+feature assignment or annotation policy into the foundation.
 
 `rsomics-pileup` adds input-order validation, low-allocation column views,
 complex CIGAR and overlap tests, filter-combination tests, and real oracle

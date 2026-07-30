@@ -22,7 +22,7 @@ operation will ship. It records:
 | `rsomics-bam` | 39 | queued after the low-state pilots |
 | `rsomics-bed` | 42 | [audited](interval-annotation-index.md#rsomics-bed) |
 | `rsomics-composition` | 6 | queued |
-| `rsomics-count` | 1 | queued |
+| `rsomics-count` | 1 | [audited](count.md) |
 | `rsomics-deseq` | 12 | queued |
 | `rsomics-ecology` | 23 | queued |
 | `rsomics-edger` | 17 | queued |

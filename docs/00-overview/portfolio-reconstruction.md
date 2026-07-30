@@ -163,7 +163,7 @@ named products, not those raw counts, justify the boundary:
 |---|---:|---|
 | `rsomics-common` | 560 | all 30 accepted products |
 | `rsomics-help` | 317 | all 30 accepted CLI products |
-| `rsomics-bamio` | 70 | `bam`, `vcf`, `rnaseq-qc`, `signal` |
+| `rsomics-bamio` | 70 | `bam`, `vcf`, `count`, `rnaseq-qc`, `signal` |
 | `rsomics-intervals` | 11 | `bed`, `annotation`, `peak`, `signal` |
 | `rsomics-kmer` | 6 | `seq`, `fastq-preprocess`, `metagenomics`, `sketch` |
 | `rsomics-seqio` | 8 | `seq`, `fastq-preprocess`, `fastq-qc` |
