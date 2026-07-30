@@ -44,16 +44,32 @@ The audit did not treat lockfile-only changes as source evidence and did not
 modify or discard them. Each implementation wave rechecks the live revision
 and worktree ownership before editing.
 
+## Reconstruction advances
+
+The initial audit snapshot above remains the provenance baseline. These later
+commits close specific correctness blockers without freezing the foundation
+APIs:
+
+| Foundation | Current revision | Verified change | Release state |
+|---|---|---|---|
+| `rsomics-intervals` | `c13cb75c318` | checked the coordinate range accepted by the COITrees backend and added fallible index/query entry points | exact-head CI green; consumer contracts, four-native-target CI, and performance evidence remain |
+| `rsomics-kmer` | `e937817e629` | made `k = 32` well-defined, added checked encode/decode/canonical operations, and preserved the published constructor shape | exact-head CI green; two product contracts, four-native-target CI, and comparative performance remain |
+| `rsomics-seqio` | `2aff79854e9` | replaced the ambiguous record model with strict allocation-reusing FASTA/FASTQ streams, removed direct `rsomics-igzip` use, and made gzip/BGZF failures loud | four-native-target exact-head CI green; adversarial regression fixtures and comparative throughput/RSS remain |
+
+None of these revisions has been published. A green foundation CI establishes
+the implementation baseline; it does not replace the two-consumer completion
+gate below.
+
 ## Correctness blockers
 
 These are migration blockers because they can panic internally or silently
 produce wrong biological results:
 
-1. `rsomics-intervals/src/index.rs` casts public `u64` coordinates to `i32`
-   without a checked boundary.
-2. `rsomics-kmer/src/encode.rs` shifts by 64 bits for the valid `k = 32`
-   reverse-complement case; `RollingKmers::new` uses only a debug assertion for
-   a public invariant.
+1. `rsomics-intervals/src/index.rs` previously cast public `u64` coordinates to
+   `i32` without a checked boundary; `c13cb75c318` closes this blocker.
+2. `rsomics-kmer/src/encode.rs` previously shifted by 64 bits for the valid
+   `k = 32` reverse-complement case and trusted a debug-only constructor
+   assertion; `e937817e629` closes both blockers.
 3. `rsomics-pileup` documents coordinate-sorted input but does not validate it.
 4. `rsomics-common` ignores JSON serialization and output write errors.
 5. `rsomics-bamio::RawRecord::from(Vec<u8>)` permits unchecked bytes while
