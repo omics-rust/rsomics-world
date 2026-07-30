@@ -164,8 +164,11 @@ operations from memory.
 - Keep operation logic in modules with narrow typed interfaces.
 - Share parsers, record types, and execution plumbing inside the product before
   considering a public foundation.
+- Prefer names, types, and narrow functions over comments. Keep source comments
+  rare and consistent.
 - Comments explain stable invariants and non-obvious reasons, not phases,
-  audits, or code narration.
+  audits, history, or code narration. Public API docs and CLI help describe
+  user contracts rather than implementation steps.
 - Production `unwrap()` is allowed only for statically obvious invariants.
 - Tests may unwrap freely.
 - Use Mermaid or D2 for diagrams.
