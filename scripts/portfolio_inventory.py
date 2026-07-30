@@ -118,15 +118,22 @@ def route(name: str, upstreams: list[str], layer: str) -> tuple[str, str, str]:
     suffix = name.removeprefix("rsomics-")
 
     explicit_routes = {
+        "rsomics-bed-expand": ("tabular", "rsomics-table"),
+        "rsomics-bed-groupby": ("tabular", "rsomics-table"),
+        "rsomics-bed-maskfasta": ("intervals", "rsomics-bed"),
         "rsomics-cell-filter": ("single-cell", "rsomics-sc"),
         "rsomics-count-matrix": ("bulk-expression", "rsomics-expression"),
         "rsomics-de-volcano": ("bulk-expression", "rsomics-expression"),
+        "rsomics-fasta-index": ("sequence-indexing", "rsomics-index"),
+        "rsomics-fasta-mask": ("intervals", "rsomics-bed"),
         "rsomics-fm-search": ("sequence-indexing", "rsomics-index"),
+        "rsomics-gc-windows": ("sequence-utilities", "rsomics-seq"),
         "rsomics-hmm-decode": ("sequence-models", "rsomics-model"),
         "rsomics-kmer-dist": ("metagenomics", "rsomics-sketch"),
         "rsomics-nj-tree": ("phylogenetics", "rsomics-phylo"),
         "rsomics-pvalue-adjust": ("statistics", "rsomics-stats"),
         "rsomics-sample-sheet": ("workflow-utilities", "rsomics-workflow"),
+        "rsomics-seacr": ("epigenomics", "rsomics-peak"),
         "rsomics-upgma": ("phylogenetics", "rsomics-phylo"),
         "rsomics-windowed-ld": ("population-genetics", "rsomics-popgen"),
     }

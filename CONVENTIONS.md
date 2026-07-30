@@ -1,322 +1,255 @@
-# Conventions
+# rsomics conventions
 
-> ‼️ Operating discipline (highest priority): **never stop / never end a turn**
-> except when a decision only the user can make is required, or a universal
-> correctness halt fires. CI / 4090 / background agents running, "clean
-> boundary", "unverified base", or context filling up are **not** reasons to
-> stop — context auto-compacts; switch to other non-blocked campaign work and
-> keep going. (See memory `feedback-never-stop`.)
+## Public boundary
 
-Rules for contributing to this repo and for the Rust crates it ships.
+An rsomics product is a coherent bioinformatics tool or workflow family. A
+crate is not created for every function, flag, statistical primitive, or
+upstream subcommand.
 
-## Repository shape
+Use these tests when deciding whether operations belong together:
 
-This is a single Cargo workspace, **not** a multi-repo setup.
+1. Do they share a primary data model or file format?
+2. Would users expect one installation and one documentation surface?
+3. Do they share parsing, filtering, execution, and output policy?
+4. Are they commonly composed in one workflow?
+5. Can their names remain clear as subcommands?
 
-```
-rsomics-world/
-├── Cargo.toml              workspace manifest
-├── crates/
-│   ├── foundation/         Layer A — library-only crates depended on by 2+ tools
-│   │   └── rsomics-*/
-│   └── tools/              Layer B — each is one installable binary
-│       └── rsomics-*/
-└── docs/                   per-domain planning, TODO checklists
-```
+If most answers are yes, they belong in one product crate.
 
-- One git repo, one Cargo workspace, **independent semver per crate**.
-- B → A → external. A never depends on B. B never depends on B; share via A.
-- A is library-only (no `[[bin]]`). A crate with a binary is by definition B.
-- Promote an internal module to A only when ≥ 2 B crates need it.
+## Repository model
 
-## Doc format
+Every public crate has its own flat GitHub repository under `omics-rust`.
+`rsomics-world` is documentation and planning only.
 
-Every module sub-doc (the topic files under `docs/0X-*/`) follows this skeleton:
+There is no cross-repository Cargo workspace, submodule tree, or path
+dependency. Published crates depend on versioned crates.io releases.
 
-```markdown
-# <Topic title>
+## Layers
 
-> One-sentence elevator description.
+### Layer A
 
-## Scope
+Layer A is a library-only public foundation. It has no product binary and must
+serve at least two named Layer B products.
 
-What this topic covers; what it does *not* cover (point to the neighboring
-topic).
+Names describe a stable technical domain:
 
-## Design notes
+- `rsomics-common`
+- `rsomics-intervals`
+- `rsomics-seqio`
+- `rsomics-bamio`
 
-Algorithmic considerations, where Rust helps, where it doesn't. Brief — this
-is not a research paper. 3–6 bullets is typical.
+### Layer B
 
-## TODO
+Layer B is an installable product family. It normally contains:
 
-A flat checklist. Each entry uses the schema below.
-```
-
-### TODO entry schema
-
-```markdown
-- [ ] **<canonical tool name>** — <one-line purpose>
-  - Reference impl: <language> · <repo URL or "—"> · <license>
-  - Existing Rust: <crate name + URL, or "none">
-  - Existing Rust kind: pure-port | FFI-wrapper | partial-port | rust-native | none ( · slash-separated if multi-backend, dominant first, e.g. `pure-port/FFI-wrapper`)
-  - Existing non-C alternatives: <Zig / Go / C++ rewrites, or "—">
-  - Parallelism: rayon | std::thread | tokio | async-runtime | single-threaded
-  - SIMD: explicit (std::simd / packed_simd) | auto-vectorize | none
-  - Quadrant: ① | ② | ③ | ④
-  - GPU-amenable: yes | maybe | no — <one-sentence judgment basis>
-  - Upstream license: <SPDX>
-  - Priority: P0 / P1 / P2
-  - Layer: A (foundation) | B (tool) | adopt | subcommand-of-<crate>
-  - Consumes primitives: <list of Layer A crates, or "—" for A entries>
-  - Notes: <supplementary commentary; never the canonical answer for fields above>
+```text
+src/
+├── lib.rs
+├── main.rs
+├── cli.rs
+├── operations/
+│   ├── mod.rs
+│   ├── view.rs
+│   ├── sort.rs
+│   └── stats.rs
+├── model/
+└── io/
 ```
 
-Every tool gets an entry, *even if a mature Rust implementation already
-exists*. Mark such entries with `[x]` and explain in the notes whether we
-plan to (a) adopt as-is, (b) extend, or (c) leave alone.
+The binary and package use the same name, such as `rsomics-bed`. Operations
+appear as subcommands, such as `rsomics-bed intersect`.
 
-#### `Existing Rust kind` — five values
+## Dependency direction
 
-- **`pure-port`** — Rust faithfully reimplements a specific C/C++ upstream (noodles ↔ htslib, needletail ↔ readfq, divsufsort ↔ libdivsufsort, lz4_flex ↔ lz4 C). Cross-validation against the upstream binary is the acceptance test.
-- **`FFI-wrapper`** — Rust API over an existing C/C++ library (rust-htslib, libdeflater, hts-sys, cudarc, hdf5-metno-sys). Upstream C library stays the perf reference; license obligations follow the upstream's linking model on a per-crate basis.
-- **`partial-port`** — Pure-Rust port covers a subset of the upstream's behavior (ruzstd decoder vs. zstd's full codec; rust-bio FM-index without FMD variant; AnnData crates missing `.uns`). Also covers **rust-native research-grade** Rust crates whose scope is partial relative to the canonical tool (the sub-case is disambiguated in `Notes`, not in the field value).
-- **`rust-native`** — Rust-native concept with no specific upstream to port. Reference-impl field may cite an ecosystem analogue ("PyTorch", "Go runtime", "Intel TBB", "Mash") for orientation, but the Rust crate is not a code port. Examples: `rayon`, `tokio`, `candle`, `niffler`, `std::simd`, `fastbloom`, MinHash and HyperLogLog implementations of academic algorithms.
-- **`none`** — no Rust implementation exists yet.
-
-**Multi-backend convention.** When a single tool entry spans multiple backends with different kinds (e.g. flate2 with the default `miniz_oxide` is `pure-port`; with the `zlib-ng` feature is `FFI-wrapper`), write the field as a slash-separated list with the **dominant / default** backend first:
-
-```
-Existing Rust kind: pure-port/FFI-wrapper
+```text
+Layer B → Layer A → external crates
 ```
 
-The `Notes` line must state which backend is the default and which is feature-gated, so the reader can map slash-positions to backends.
+- Layer A must not depend on Layer B.
+- Layer B must not depend directly on another Layer B product.
+- Product-specific policy stays in the product.
+- Code starts internal and is promoted only after a second product consumer is
+  implemented or concretely scheduled.
 
-#### `Quadrant` — canonical field, four values
+## Naming
 
-- **①** — Pure-Rust with explicit parallelism (`rayon` / `std::simd` / `target_feature`) or pure-Rust orchestration over a perf-tuned codec. The goal state.
-- **②** — FFI wrapper over C/C++ (`cc`, `bindgen`, `*-sys`, hand-FFI). C upstream stays the perf reference; adopt for speed but tag clearly as not a Rust rewrite.
-- **③** — Pure-Rust but single-threaded in the hot path. **Avoid** in hot paths — inherits the disease we're curing. Surfaces opportunities for a Layer A replacement.
-- **④** — Pure-Rust, non-hot, edge utility. Adoption decision doesn't move the needle on perf; pick on API/ergonomics. Examples: `clap`, `serde`, `anyhow`, `regex`, `niffler`-style format sniffers, small-format parsers.
+Package and repository:
 
-A single entry may compose multiple quadrants across backends (e.g. `flate2` is ① with `miniz_oxide`, ② with `zlib-ng`). When that happens, write `Quadrant: ①+②` and let the Notes explain the split.
-
-#### `GPU-amenable` — three values, strict definitions
-
-- **`yes`** — clear GPU win; algorithm maps directly to SIMT (DL inference, large embarrassingly-parallel kernels, dense linear algebra). Speedup expected on relevant input sizes.
-- **`maybe`** — requires algorithmic restructure to exploit GPU, OR only a portion of the work is GPU-amenable, OR the win is only at very large inputs. Engineering cost is non-trivial.
-- **`no`** — inherently serial, I/O-bound, latency-dominated, or trivially small such that GPU offers no win (parsing, indexing, small lookups).
-
-The trailing sentence on the line must state the judgment basis in one sentence ("dense matmul"; "irregular graph traversal"; "I/O-bound, parsing-only").
-
-### TODO.md legend — four values
-
-| Mark | Meaning |
-|---|---|
-| `[ ]` | Open — no Rust implementation, on our queue |
-| `[~]` | A Rust crate exists, but is **incomplete in some dimension**: FFI-wrapper (wraps C/C++ via FFI), partial-port (covers a subset of upstream), OR rust-native but research-grade / partial-scope. The sub-case is named in the `Existing Rust kind` field and explained in `Notes`. |
-| `[x]` | Production-grade pure-Rust implementation exists — **adopt the Rust crate** as a direct dependency. |
-| `[A]` | **Adopt via subprocess** — the upstream is fine as-is (GPL-3 forbids linking; or hand-tuned SIMD that's not worth porting; or a stable Java binary that ships everywhere). We invoke it as a process from our pipelines but don't link or rewrite. Examples: Foldseek (GPL-3, hand-AVX), UShER (MIT but actively-maintained C++ at the scale we'd never match cheaply). |
-
-The four marks are **mutually exclusive**. The `[A]` marker pairs with `Existing Rust kind: none` (we deliberately don't have a Rust crate; we adopt the upstream binary).
-
-## External-dependency quadrants — detection cues
-
-The `Quadrant` field is canonical (see the schema definitions above). This table gives the detection cues that drive the field value:
-
-| Quadrant | Detection cue | Examples | Stance |
-|---|---|---|---|
-| ① pure-rust + explicit parallelism | `rayon::par_iter`, `std::simd`, `target_feature`, `crossbeam` channels for parallel pipelines | `noodles`, `rayon`, `polars`, `needletail`, `fastbloom`, `zarrs` | The goal state — adopt freely |
-| ② FFI wrapper over C | `[build-dependencies] cc` or `bindgen`, `*-sys` crate, `build.rs` compiling C | `rust-htslib`, `libdeflater`, `cudarc`, `xz2`, `anndata-hdf5` | Adopt for speed; tag clearly. License obligations follow upstream's linking model per crate, not blanket |
-| ③ pure-rust but single-threaded hot path | pure-Rust crate, no rayon / SIMD in its perf-critical modules | dated `rust-bio` FM-index path; some single-threaded parsers | Avoid in hot paths — opportunity for a Layer A replacement |
-| ④ pure-rust edge utility | small, non-hot, edge-of-program | `clap`, `serde`, `anyhow`, `niffler` (orchestration), small parsers | Decision is API/ergonomics, not perf |
-
-Detection cues:
-- Quadrant ②: `[build-dependencies] cc`/`bindgen`, `*-sys` crate name, presence of `build.rs`
-- Quadrant ①: `rayon::`, `par_iter`, `std::simd::`, `packed_simd`, `target_feature`
-- Quadrant ③: pure Rust with none of the above on the hot path
-- Quadrant ④: small, edge-of-program crate
-
-## License + clean-room
-
-- This planning repo's docs: **CC BY 4.0**.
-- All crates: dual **MIT OR Apache-2.0**.
-- Crates derived from GPL upstream may stay MIT/Apache-2.0 only if a
-  **clean-room methodology** is documented in that crate's README Origin
-  section. The methodology must rely on the published paper, the public file
-  format spec, and black-box behavior testing — never on reading the GPL
-  source.
-
-### Origin section template (GPL upstream)
-
-Each crate that ports a GPL tool ships a README section like:
-
-```markdown
-## Origin
-
-This crate is an independent Rust reimplementation of `<upstream>` based on:
-- The published method (cite paper + DOI)
-- The public file-format spec
-- Black-box behavior testing against the upstream binary
-
-No source code from the GPL upstream was read during implementation. Test
-fixtures are independently generated or sourced from public benchmark
-datasets (HG002 / 1000 Genomes / etc.).
-
-License: MIT OR Apache-2.0.
-Upstream credit: <upstream> <link> (<their license>).
+```text
+rsomics-<product>
 ```
 
-FFI wrappers inherit whatever license obligations the upstream's linking
-model imposes — that is `htslib` (MIT/BSD-3) for `rust-htslib`, GPL-3.0 for
-a hypothetical `bowtie2-sys`, etc. Document the case-by-case license note
-in the wrapping crate's `## Origin` section. Never apply a blanket
-inheritance assumption.
+Rust library:
 
-## Cross-platform target
+```text
+rsomics_<product>
+```
 
-First-class — every CI commit runs on these four:
+CLI:
 
-- `x86_64-unknown-linux-gnu`
-- `aarch64-unknown-linux-gnu`
-- `x86_64-apple-darwin`
-- `aarch64-apple-darwin`
+```text
+rsomics-<product> <subcommand>
+```
 
-**Not supported**: Windows, other operating systems. Tools whose algorithm
-hinges on Linux-only syscalls (e.g. `splice`) gate that path behind
-`#[cfg(target_os = "linux")]` with a portable fallback.
+Prefer established user vocabulary over internal algorithm names. Avoid names
+that expose implementation details unless that algorithm is itself the
+recognized product.
 
-## Test data tiers
+## CLI behavior
 
-Bench and integration tests draw from four tiers, sized for the environment
-they run in:
+- `--help` succeeds without requiring input files.
+- Errors go to stderr and return non-zero.
+- Data output goes to stdout unless an explicit output path is supplied.
+- Diagnostics never corrupt machine-readable stdout.
+- Thread count, output compression, region syntax, and format selection are
+  consistent within a product.
+- JSON output is a stable documented contract where provided.
+- Defaults are deterministic unless the operation is explicitly stochastic.
+- Stochastic operations expose and report a seed.
 
-| Tier | Location | Size budget | Use |
-|---|---|---|---|
-| 1 | inside git (`tests/golden/`) | < 100 MB total | Small synthetic FASTQ/BAM/VCF for unit tests |
-| 2 | GHA runner (downloaded) | < 5 GB ephemeral | chr20/22 HG002 subsets, 1000 Genomes subsets — integration tests |
-| 3 | local HDD (`/Volumes/Zane's HDD/rsomics-fixtures/`) | 50–200 GB | One real WGS sample, RNA-seq runs, smoke benchmarks |
-| 4 | `ssh 4090:/data3/rsomics-fixtures/` | up to ~1 TB | Multi-sample cohort benches, large-scale perf validation |
+Use `rsomics-common` for shared execution and output primitives and
+`rsomics-help` for family-wide help rendering. Do not duplicate their behavior
+inside every product.
 
-Tier 1 lives in git. Tier 2 is downloaded on demand per
-[`tests/fixtures-manifest.toml`](tests/fixtures-manifest.toml) (URL + SHA-256
-+ size + license per fixture). Tier 3 and 4 are provisioned manually; tests
-that need them read `BCMR_BENCH_DATA` and skip if unset.
+## Error handling
 
-### Committed vs. generated Tier-1 fixtures
+- Return structured errors from libraries.
+- Add context at I/O and command boundaries.
+- Do not replace invalid biological data with defaults.
+- Do not silently skip malformed records unless the user selected an explicit
+  permissive mode.
+- Validate user input once at the boundary.
+- Preserve the first useful cause in the displayed error chain.
 
-Both patterns are acceptable; choose per fixture format:
+## Module design
 
-- **Committed** — small text fixtures (FASTQ, BED, VCF/text-mode SAM) whose
-  byte content is reviewable in a PR diff. Living in `tests/golden/<name>.fastq`
-  alongside other text. rsomics-fastp's fixtures are the reference. Prefer this
-  for any file < ~5 KB where a human review of the bytes adds value.
-- **Generated** — binary formats (BAM, BCF, indexed BWA, compressed BGZF
-  archives) where (a) the bytes aren't readable in a PR diff, (b) tests
-  benefit from parameter variation (record count, sort order, MD tags
-  present-or-not). Build the fixture at test setup via the crate's own
-  writer or a domain helper in `tests/synth.rs`. rsomics-bam's pattern is
-  the reference.
+- One module may implement one operation without becoming a crate.
+- Shared record types live under `model`.
+- Shared format adapters live under `io`.
+- Product-wide filters and options use typed structures.
+- Hot loops avoid trait objects, per-record allocation, and repeated parsing
+  unless measurement justifies them.
+- Public APIs expose biological and format concepts, not CLI parser types.
 
-The choice is not a license to skip Tier 1 — every Layer B crate needs at
-least one Tier-1 fixture, committed or generated. The compat test reads it,
-diffs against upstream, fails loud.
+## Historical code migration
 
-## Layer A vs Layer B — the classification test
+Old operation-sized repositories are source assets.
 
-One operation = one crate is the partition rule, but the *layer* it lands in
-is decided by one question:
+For every migrated operation record:
 
-> In real bioinformatics practice, does someone invoke this as a standalone
-> shell command / pipeline stage — or is it only ever a function call inside
-> another tool, script, or notebook?
+- source repository and commit;
+- target product/module/subcommand;
+- retained tests, fixtures, and benchmarks;
+- behavior changes;
+- removed duplication;
+- public-foundation calls introduced.
 
-- **Standalone command / pipeline stage** (`samtools sort`, `bedtools merge`,
-  fastp's split / trim / filter / umi, an aligner, a variant caller) →
-  **Layer B**, one installable binary per operation. The anti-Swiss-Army-knife
-  explosion applies here: these are genuinely invoked separately.
-- **Only ever a compositional primitive** (p-value adjustment / FDR, a GLM
-  fit, a distance metric, a codec, an index kernel) → **Layer A**, a function
-  in a coherent foundation crate (`rsomics-stats`, `rsomics-align-core`, …).
-  **No standalone binary crate.** These are the "library-only, depended on by
-  2+ tools" crates the architecture already defines.
+Direct code reuse is allowed because the user confirms the historical
+implementations are team-owned. Refactor names, ownership, and error flow to fit
+the target product instead of preserving obsolete crate boundaries.
 
-This *lowers* user cost: a pipeline depends on a few foundation libraries plus
-the handful of standalone tools it actually shells out to — not `cargo install`
-of hundreds of micro-binaries for library math. Tell: if a crate's
-`perf-manifest` exemption reason is "not a CLI tool / library function", it was
-mis-classified into Layer B and its capability belongs in a Layer-A crate.
+## Tests
 
-## Standard crate skeleton
+Products use four levels:
 
-Every tool crate has the same shape — no ad-hoc layout:
+1. unit tests for parsers, models, and algorithms;
+2. golden tests for CLI and format output;
+3. compatibility tests against upstream behavior;
+4. integration tests composing multiple subcommands.
 
-- `src/main.rs` — thin: clap dispatch + `run(...)`, nothing else.
-- `src/cli.rs` — the `Cli` struct and the `rsomics_help` `HelpSpec`.
-  It MUST carry a `#[cfg(test)] fn cli_definition_is_valid()` calling
-  `<Cli as clap::CommandFactory>::command().debug_assert()`. clap's
-  CLI-graph validation (unique shorts incl. the flattened `CommonFlags`,
-  no id clashes) only fires when the binary parses, so without this test
-  a broken CLI is invisible to `cargo test` and lib unit tests. `-q`
-  (`--quiet`), `-t` (`--threads`) and `--json` are reserved by
-  `CommonFlags` — an upstream's clashing short maps to a long-only flag.
-- `src/lib.rs` — the operation API. When the operation is algorithmically
-  large or spans several distinct concerns (e.g. k-mer machinery + a count
-  table + the algorithm core + IO orchestration), `lib.rs` is a thin
-  `pub use` facade (+ the top-level config / `Pipeline`) over topical
-  submodules — it is **not** left as one multi-hundred-line file.
-  `rsomics-fastq-trim` (`adapter.rs`/`fixed.rs`/`overlap.rs`/`polyx.rs`/
-  `pipeline.rs`, `lib.rs` = 11-line facade) and the foundation crates
-  (`rsomics-kmer` = `count/encode/hash/iter.rs`, `rsomics-stats` =
-  `fdr/combine/hypothesis.rs`) are the pattern. For a port, draw module
-  boundaries along the **upstream source files** so the port stays
-  diff-able file-by-file against the reference. Don't split for its own
-  sake — a small `lib.rs` for a simple operation stays one file (YAGNI;
-  the trigger is size + multiple concerns, not a line count alone).
-- Shared machinery (parallel gzip writer, FASTQ reader, …) is a Layer-A
-  foundation dependency, never copied between crates. A module needed by 2+
-  tool crates is promoted to Layer A before the second copy exists.
+Each migrated operation must preserve its strongest prior evidence. Tests from
+multiple old repositories may be consolidated into one operation-oriented test
+module.
 
-A tool crate is feature-complete for its operation: the full upstream
-flag/option surface for that one operation is implemented and compat-tested,
-established by reading the pinned upstream source. "Deferred / YAGNI" applies
-only to whether a *separate* operation deserves its own crate — never to
-omitting flags of the operation a crate already owns.
+Foundations require consumer-contract tests. A foundation API is not complete
+merely because its own unit tests pass.
 
-## Comment bar
+## Compatibility
 
-Near-zero. A comment exists only if it is one of: a `SAFETY:` justification on
-an `unsafe` block; a `# Errors` / `# Panics` / `# Safety` line the toolchain
-lints force on a `pub` item; a paper/spec citation or license note; or a
-genuinely non-derivable invariant a competent reader cannot get from the code
-or simple reasoning. Everything else — what-comments, restating code,
-control-flow narration, "obvious" rationale, section separators — is deleted.
+Compatibility is defined per operation, not per old crate:
 
-Architecture, algorithm, platform, and origin narrative does **not** live in
-the code. Its home is the crate `README.md` and the per-crate docs. `//!`
-module prose is reduced to at most a one-line crate summary, or removed.
+- byte exact when output is canonically defined;
+- field exact when ordering or formatting is intentionally flexible;
+- tolerance based only for documented floating-point behavior;
+- explicit divergence where rsomics deliberately fixes an upstream bug or
+  changes a default.
 
-## Crate naming
+Record the upstream version and command used as the oracle.
 
-- Foundation crates: `rsomics-<primitive>` (e.g. `rsomics-common`,
-  `rsomics-intervals`, `rsomics-kmer`, `rsomics-fm-index`, `rsomics-align-core`,
-  `rsomics-stats`).
-- Tool crates: `rsomics-<format>-<op>`, one operation per crate
-  (e.g. `rsomics-bam-view`, `rsomics-bam-sort`, `rsomics-fastq-trim`).
-  Upstream Swiss-army binaries (`samtools`, `fastp`, `picard`) are exploded
-  into one crate per operation a user/pipeline invokes on its own — never
-  wrapped 1:1 as subcommands. This is the per-function partition rule in
-  `CLAUDE.md`; it governs.
+## Performance
 
-## Linking between docs
+Benchmarks must report:
 
-Use relative paths: `[topic](../02-genomics/alignment-short-read.md)`.
-Cross-module references are encouraged — many tools straddle categories.
+- rsomics commit;
+- upstream version;
+- machine and operating system;
+- thread count;
+- fixture identity and checksum;
+- compression and output mode;
+- timing distribution;
+- peak memory where material.
 
-## Adding a new topic
+Profile before optimizing. Evaluate allocation, cache behavior, syscalls,
+parallel scaling, and output cost in addition to CPU time.
 
-1. Pick the module it belongs in. If it does not fit, raise an issue rather
-   than inventing a 10th top-level module.
-2. Add the file using the doc-format skeleton above.
-3. Update the module's `README.md` index.
-4. Add the entries to `TODO.md`.
+An operation intended to replace an established implementation must provide a
+strict throughput or resource-use advantage on its relevant hot path. Equal
+performance is not a release pass merely because the binary is easier to
+install. Performance claims without provenance are not release evidence.
+
+## External dependency classification
+
+Record hot-path dependencies as:
+
+1. pure Rust with explicit parallelism or vectorization;
+2. FFI wrapper over native code;
+3. pure Rust but single-threaded in a hot path;
+4. non-hot utility.
+
+FFI is permitted when documented. It does not count as a pure-Rust rewrite.
+Product documentation must state the boundary clearly.
+
+## Documentation
+
+Every product README includes:
+
+- purpose and upstream scope;
+- subcommand list;
+- install and usage examples;
+- format and compatibility notes;
+- threading and memory behavior;
+- origin and attribution;
+- current limitations.
+
+Do not describe phase history or deleted micro-crate topology as current
+architecture.
+
+## Release
+
+Before publishing:
+
+```bash
+cargo fmt --check
+cargo clippy --all-targets --all-features -- -D warnings
+cargo test --all-features
+```
+
+Then run the product's compatibility and performance gates, push, and verify
+exact-head CI on Linux and macOS for both `x86_64` and `aarch64`.
+
+Versioning is independent per repository. A product release may add
+subcommands without creating additional packages. Breaking shared-library APIs
+require a semver-major change and coordinated consumer updates.
+
+## Status vocabulary
+
+Control-plane registry states:
+
+- `planned` — accepted boundary, no public repository or release;
+- `source-pool` — historical implementations exist for consolidation;
+- `pilot` — active consolidation with an unpublished interface;
+- `live` — public repository and at least one non-yanked release;
+- `repo-only` — public repository exists but no release;
+- `temporary` — public only because migration or immutable registry history
+  prevents immediate removal;
+- `retired` — removed from live GitHub and crates.io surfaces.

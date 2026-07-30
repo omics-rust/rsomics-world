@@ -79,18 +79,18 @@ rsomics-bed-cluster	0.1.1	B	True	3	445	0	0		True	True	True	True	bedtools	bedtool
 rsomics-bed-complement	0.1.3	B	True	3	345	0	0		True	True	True	False	bedtools	bedtools	intervals	rsomics-bed	product	high	merge-into:rsomics-bed	-
 rsomics-bed-count	0.1.0	B	True	3	144	0	0		True	True	True	True			intervals	rsomics-bed	product	high	merge-into:rsomics-bed	-
 rsomics-bed-coverage	0.1.2	B	True	3	463	0	0		True	True	True	False	bedtools	bedtools	intervals	rsomics-bed	product	high	merge-into:rsomics-bed	-
-rsomics-bed-expand	0.1.2	B	True	3	286	0	0		True	True	True	False	bedtools	bedtools	intervals	rsomics-bed	product	high	merge-into:rsomics-bed	-
+rsomics-bed-expand	0.1.2	B	True	3	286	0	0		True	True	True	False	bedtools	bedtools	tabular	rsomics-table	product	medium	merge-into:rsomics-table	-
 rsomics-bed-fisher	0.1.0	B	True	3	597	0	0		True	True	True	True	bedtools	bedtools	intervals	rsomics-bed	product	high	merge-into:rsomics-bed	-
 rsomics-bed-flank	0.1.3	B	True	3	423	0	0		True	True	True	False	bedtools	bedtools	intervals	rsomics-bed	product	high	merge-into:rsomics-bed	-
 rsomics-bed-genomecov	0.1.3	B	True	3	587	0	0		True	True	True	False	bedtools	bedtools	intervals	rsomics-bed	product	high	merge-into:rsomics-bed	-
 rsomics-bed-getfasta	0.1.2	B	True	3	327	0	0		True	True	True	False	bedtools	bedtools	intervals	rsomics-bed	product	high	merge-into:rsomics-bed	-
-rsomics-bed-groupby	0.1.2	B	True	6	743	0	0		True	True	True	True	bedtools	bedtools	intervals	rsomics-bed	product	high	merge-into:rsomics-bed	-
+rsomics-bed-groupby	0.1.2	B	True	6	743	0	0		True	True	True	True	bedtools	bedtools	tabular	rsomics-table	product	medium	merge-into:rsomics-table	-
 rsomics-bed-intersect	0.1.3	B	True	3	410	0	0		True	True	True	False	bedtools	bedtools	intervals	rsomics-bed	product	high	merge-into:rsomics-bed	-
 rsomics-bed-jaccard	0.1.4	B	True	3	308	0	0		True	True	True	False	bedtools	bedtools	intervals	rsomics-bed	product	high	merge-into:rsomics-bed	-
 rsomics-bed-len	0.1.0	B	True	3	197	0	0		True	True	True	True			intervals	rsomics-bed	product	high	merge-into:rsomics-bed	-
 rsomics-bed-makewindows	0.1.1	B	True	3	266	0	0		True	True	True	True	bedtools	bedtools	intervals	rsomics-bed	product	high	merge-into:rsomics-bed	-
 rsomics-bed-map	0.1.3	B	True	6	768	0	0		True	True	True	False	bedtools	bedtools	intervals	rsomics-bed	product	high	merge-into:rsomics-bed	-
-rsomics-bed-maskfasta	0.1.0	B	True	3	349	0	0		True	True	True	False	bedtools	bedtools	intervals	rsomics-bed	product	high	merge-into:rsomics-bed	-
+rsomics-bed-maskfasta	0.1.0	B	True	3	349	0	0		True	True	True	False	bedtools	bedtools	intervals	rsomics-bed	product	medium	merge-into:rsomics-bed	-
 rsomics-bed-merge	0.2.2	B	True	3	311	0	0		True	True	True	False	bedtools	bedtools	intervals	rsomics-bed	product	high	merge-into:rsomics-bed	-
 rsomics-bed-midpoint	0.1.1	B	True	3	227	0	0		True	True	True	True			intervals	rsomics-bed	product	high	merge-into:rsomics-bed	-
 rsomics-bed-multicov	0.1.1	B	True	3	710	0	0		True	True	True	True	bedtools	bedtools	intervals	rsomics-bed	product	high	merge-into:rsomics-bed	-
@@ -220,9 +220,9 @@ rsomics-faith-pd	0.1.2	B	True	3	484	0	0		True	True	True	True	scikit-bio	scikit-b
 rsomics-fasta-amplicon	0.1.4	B	True	6	1130	0	0		True	True	True	True	seqkit	seqkit	sequence-utilities	rsomics-seq	product	high	merge-into:rsomics-seq	-
 rsomics-fasta-digest	0.1.2	B	True	3	209	0	0		True	True	True	True			sequence-utilities	rsomics-seq	product	medium	merge-into:rsomics-seq	-
 rsomics-fasta-fx2tab	0.1.4	B	True	3	469	0	0		True	True	True	True	seqkit	seqkit	sequence-utilities	rsomics-seq	product	high	merge-into:rsomics-seq	-
-rsomics-fasta-index	0.2.1	B	True	6	662	0	0		True	True	True	True	samtools	samtools	alignment-formats	rsomics-bam	product	high	merge-into:rsomics-bam	-
+rsomics-fasta-index	0.2.1	B	True	6	662	0	0		True	True	True	True	samtools	samtools	sequence-indexing	rsomics-index	product	medium	merge-into:rsomics-index	-
 rsomics-fasta-locate	0.1.6	B	True	3	1030	0	0		True	True	True	True	seqkit	seqkit	sequence-utilities	rsomics-seq	product	high	merge-into:rsomics-seq	-
-rsomics-fasta-mask	0.1.2	B	True	3	203	0	0		True	True	True	True	bedtools	bedtools	intervals	rsomics-bed	product	high	merge-into:rsomics-bed	-
+rsomics-fasta-mask	0.1.2	B	True	3	203	0	0		True	True	True	True	bedtools	bedtools	intervals	rsomics-bed	product	medium	merge-into:rsomics-bed	-
 rsomics-fasta-n50	0.1.4	B	True	3	248	0	0		True	True	True	True	seqkit	seqkit	sequence-utilities	rsomics-seq	product	high	merge-into:rsomics-seq	-
 rsomics-fasta-orf	0.1.0	B	True	8	1479	0	0		True	True	True	True	emboss	emboss	sequence-utilities	rsomics-seq	product	high	merge-into:rsomics-seq	-
 rsomics-fasta-sliding	0.1.4	B	True	3	298	0	0		True	True	True	True	seqkit	seqkit	sequence-utilities	rsomics-seq	product	high	merge-into:rsomics-seq	-
@@ -265,7 +265,7 @@ rsomics-freq-hist	0.1.0	B	True	5	550	0	0		True	True	True	True	scipy	scipy	statis
 rsomics-friedman-test	0.1.1	B	True	6	609	0	0		True	True	True	True	scipy	scipy	statistics	rsomics-stats	capability-pool	high	merge-or-core-review	-
 rsomics-gaussian-filter	0.1.1	B	True	2	541	0	0		True	True	True	True	scipy|scikit-image	scipy|scikit-image	bioimage-review	rsomics-image	capability-pool	high	merge-or-core-review	-
 rsomics-gc-skew	0.1.0	B	True	3	217	0	0		True	True	False	True	biopython	biopython	sequence-utilities	rsomics-seq	product	high	merge-into:rsomics-seq	-
-rsomics-gc-windows	0.1.1	B	True	3	172	0	0		True	True	True	False	bedtools	bedtools	intervals	rsomics-bed	product	high	merge-into:rsomics-bed	-
+rsomics-gc-windows	0.1.1	B	True	3	172	0	0		True	True	True	False	bedtools	bedtools	sequence-utilities	rsomics-seq	product	medium	merge-into:rsomics-seq	-
 rsomics-gc123	0.1.0	B	True	3	246	0	0		True	True	True	True	biopython	biopython	sequence-utilities	rsomics-seq	product	high	merge-into:rsomics-seq	-
 rsomics-genebody-coverage	0.1.0	B	True	3	495	0	0		True	True	True	True	rseqc	rseqc	transcriptomics-qc	rsomics-rnaseq-qc	product	high	merge-into:rsomics-rnaseq-qc	-
 rsomics-generalized-degree	0.1.2	B	True	3	328	0	0		True	True	True	True	networkx	networkx	graph-algorithms	rsomics-graph	capability-pool	high	merge-or-core-review	-
@@ -497,7 +497,7 @@ rsomics-sc-score-genes	0.1.1	B	True	4	847	1	1	rsomics-sc	True	True	True	True	sca
 rsomics-sc-spatial-autocorr	0.1.1	B	True	5	630	0	0		True	True	True	True	scanpy	scanpy|scipy	single-cell	rsomics-sc	product	high	merge-into:rsomics-sc	-
 rsomics-sc-subsample	0.1.0	B	True	4	584	0	0		True	True	True	True	scanpy	scanpy	single-cell	rsomics-sc	product	high	merge-into:rsomics-sc	-
 rsomics-scalers	0.1.0	B	True	6	842	0	0		True	True	True	True	scikit-learn	scikit-learn	machine-learning	rsomics-ml	capability-pool	high	merge-or-core-review	-
-rsomics-seacr	0.1.1	B	True	8	1353	0	0		True	True	True	True	bedtools	bedtools	intervals	rsomics-bed	product	high	merge-into:rsomics-bed	-
+rsomics-seacr	0.1.1	B	True	8	1353	0	0		True	True	True	True	bedtools	bedtools	epigenomics	rsomics-peak	product	medium	merge-into:rsomics-peak	-
 rsomics-seq-dist	0.1.1	B	True	7	852	0	0		True	True	True	True	scikit-bio	scikit-bio|biopython	ecology	rsomics-ecology	product	high	merge-into:rsomics-ecology	-
 rsomics-seq-grep	0.1.1	B	True	8	1306	0	0		True	True	True	True	seqkit	seqkit	sequence-utilities	rsomics-seq	product	high	merge-into:rsomics-seq	-
 rsomics-seq-stats	0.1.1	B	True	3	169	0	0		True	True	True	False	seqkit	seqkit	sequence-utilities	rsomics-seq	product	high	merge-into:rsomics-seq	-

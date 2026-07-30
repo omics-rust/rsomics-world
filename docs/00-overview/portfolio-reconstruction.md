@@ -32,7 +32,7 @@ The replacement rule is:
 
 ## Reconciled baseline
 
-The inventories disagree:
+At the pre-reset snapshot, the inventories disagreed:
 
 | Surface | Count |
 |---|---:|
@@ -42,9 +42,9 @@ The inventories disagree:
 | crates.io packages with the prefix | 606 |
 | Rows in `REGISTRY.md` | 603 |
 
-Fourteen local candidates are not Git repositories. `rsomics-kstat` has a
-manifest but no Rust source file. The registry header still says 231 crates.
-These facts make the current registry unsuitable as the source of truth.
+Fourteen local candidates were not Git repositories. `rsomics-kstat` had a
+manifest but no Rust source file. The old registry header still said 231
+crates. These facts made that registry unsuitable as the source of truth.
 
 These counts are the pre-reset evidence snapshot. Local clones remain in place,
 so the generated implementation ledger continues to describe the recoverable
@@ -58,7 +58,7 @@ The 622 local candidates break down as follows after description-first routing:
 | Generic capability pools, not presumed products | 170 |
 | Existing foundation libraries | 28 |
 
-The routing confidence is high for 596 rows and medium for 26. High means the
+The routing confidence is high for 589 rows and medium for 33. High means the
 package description names the upstream or the crate name has an unambiguous
 format/workflow prefix. Medium rows remain explicit review targets.
 
@@ -75,9 +75,9 @@ The current implementation pool maps to 30 product families:
 | Product family | Candidates | Intended boundary |
 |---|---:|---|
 | `rsomics-vcf` | 48 | VCF/BCF operations and bcftools-like suite |
-| `rsomics-bed` | 46 | BED/interval suite |
-| `rsomics-bam` | 40 | SAM/BAM/CRAM format operations |
-| `rsomics-seq` | 33 | FASTA/FASTQ sequence utilities |
+| `rsomics-bed` | 42 | BED/interval suite |
+| `rsomics-bam` | 39 | SAM/BAM/CRAM format operations |
+| `rsomics-seq` | 34 | FASTA/FASTQ sequence utilities |
 | `rsomics-sc` | 29 | stateful single-cell analysis workflow |
 | `rsomics-plink` | 28 | PLINK-style genotype analysis |
 | `rsomics-rnaseq-qc` | 26 | RSeQC/Picard RNA-seq QC |
@@ -86,15 +86,15 @@ The current implementation pool maps to 30 product families:
 | `rsomics-popgen` | 16 | non-PLINK population genetics |
 | `rsomics-limma` | 16 | limma workflow |
 | `rsomics-signal` | 15 | deepTools/bigWig signal workflows |
-| `rsomics-table` | 14 | csvtk/datamash-style tabular suite |
+| `rsomics-table` | 16 | csvtk/datamash-style tabular suite |
 | `rsomics-fastq-preprocess` | 12 | trimming, correction, UMI, deduplication |
 | `rsomics-deseq` | 12 | DESeq2 workflow |
 | `rsomics-phylo` | 11 | tree construction, distances, comparison |
 | `rsomics-structure` | 9 | PDB and protein-structure analysis |
 | `rsomics-composition` | 6 | compositional transforms and inference |
-| `rsomics-index` | 3 | bgzip/tabix and sequence index utilities |
+| `rsomics-index` | 4 | bgzip/tabix and sequence index utilities |
 | `rsomics-metagenomics` | 5 | current taxonomy/amplicon utilities |
-| `rsomics-peak` | 4 | peak calling and annotation |
+| `rsomics-peak` | 5 | peak calling and annotation |
 | `rsomics-expression` | 2 | count-matrix and result utilities |
 | `rsomics-annotation` | 2 | GFF/GTF and transcript utilities |
 | Seven single-implementation products | 7 | FastQC, count, sketch, liftOver, methylation, minimap2, workflow utilities |
@@ -138,19 +138,21 @@ Raw dependent-crate counts exaggerate public reuse. A foundation used by 22
 PLINK micro-crates still has only one target-product consumer after those crates
 merge.
 
-Observed product-level reuse currently supports these public foundations:
+Observed product-level reuse currently supports these public foundations.
+Historical dependent counts are retained only as source-pool evidence; the
+named products, not those raw counts, justify the boundary:
 
-| Foundation | Current crate consumers | Target-family consumers | Direction |
-|---|---:|---:|---|
-| `rsomics-common` | 560 | 48 | keep public |
-| `rsomics-help` | 317 | 30 | keep public |
-| `rsomics-bamio` | 70 | 9 | keep public |
-| `rsomics-intervals` | 11 | 4 | keep public |
-| `rsomics-kmer` | 6 | 4 | keep public |
-| `rsomics-seqio` | 8 | 3 | keep public |
-| `rsomics-stats` | 3 | 3 | expand from the capability pool |
-| `rsomics-phylo-tree` | 9 | 2 | keep public |
-| `rsomics-pileup` | 2 | 2 | keep public |
+| Foundation | Historical crate consumers | Named initial product consumers |
+|---|---:|---|
+| `rsomics-common` | 560 | all 30 accepted products |
+| `rsomics-help` | 317 | all 30 accepted CLI products |
+| `rsomics-bamio` | 70 | `bam`, `vcf`, `rnaseq-qc`, `signal` |
+| `rsomics-intervals` | 11 | `bed`, `annotation`, `peak`, `signal` |
+| `rsomics-kmer` | 6 | `seq`, `fastq-preprocess`, `metagenomics`, `sketch` |
+| `rsomics-seqio` | 8 | `seq`, `fastq-preprocess`, `fastq-qc` |
+| `rsomics-stats` | 3 | `deseq`, `edger`, `limma`, `sc`, `ecology`, `popgen`, `plink` |
+| `rsomics-phylo-tree` | 9 | `phylo`, `ecology` |
+| `rsomics-pileup` | 2 | `bam`, `vcf` |
 
 The following current libraries have zero or one target-family consumer and
 should default to internalization unless a second concrete product is found:
@@ -177,13 +179,13 @@ flowchart LR
     intervals["intervals"] --> bed["bed"]
     intervals --> signal
     intervals --> peak["peak"]
-    intervals --> index["index"]
+    intervals --> annotation["annotation"]
     kmer["kmer"] --> fastq["fastq-preprocess"]
     kmer --> meta["metagenomics"]
     kmer --> sketch["sketch"]
     seqio["seqio"] --> seq["seq"]
     seqio --> fastq
-    seqio --> bam
+    seqio --> fastqqc["fastq-qc"]
     tree["phylo-tree"] --> phylo["phylo"]
     tree --> ecology["ecology"]
     pileup["pileup"] --> bam
@@ -203,7 +205,7 @@ generous.
 - After adding genuinely missing anchors such as short-read/spliced alignment,
   quantification, classification, and assembly: approximately 55–75 crates.
 
-The number may change after the 26 medium-confidence rows and missing-anchor
+The number may change after the 33 medium-confidence rows and missing-anchor
 priorities are reviewed, but the evidence does not support hundreds of public
 crates.
 
@@ -233,11 +235,14 @@ The reset is a namespace cleanup, not source-code destruction:
 - 594 crates.io reset candidates were deleted in reverse topological order and
   verified through exact success responses. `rsomics-igzip` is temporarily
   protected because published `rsomics-seqio` versions depend on it.
+- The all-yanked orphan `rsomics-bam` was archived and deleted separately after
+  the reset. It had no live version, repository, local clone, or reverse
+  dependency.
 
-The completed reset leaves 12 published crates: the 11 allowlisted names that
-already existed plus temporary `rsomics-igzip`. The other 28 product-family
-names in the allowlist are product boundaries to reconstruct, not empty
-packages to publish immediately.
+The completed reset leaves 11 published crates: ten allowlisted names with
+non-yanked releases plus temporary `rsomics-igzip`. The other 29 allowlisted
+names are product boundaries to reconstruct, not empty packages to publish
+immediately.
 
 Machine-readable progress and failure journals live under `.autopilot/state/`.
 Only an exact success response is recorded as a deletion; rate-limited or

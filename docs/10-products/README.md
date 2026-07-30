@@ -1,0 +1,95 @@
+# Product reconstruction dossiers
+
+This directory is the product-level map between the retained historical source
+pool and the public rsomics portfolio.
+
+A dossier is an implementation contract, not a promise that every historical
+operation will ship. It records:
+
+- upstream scope and user-recognizable operations;
+- overlapping implementations and the selected canonical operation;
+- historical code, test, fixture, and benchmark assets;
+- target subcommands and internal modules;
+- public-foundation consumers;
+- compatibility and performance gates;
+- explicit exclusions and staged release slices.
+
+## Portfolio map
+
+| Product | Source candidates | Dossier state |
+|---|---:|---|
+| `rsomics-annotation` | 2 | [audited](interval-annotation-index.md#rsomics-annotation) |
+| `rsomics-bam` | 39 | queued after the low-state pilots |
+| `rsomics-bed` | 42 | [audited](interval-annotation-index.md#rsomics-bed) |
+| `rsomics-composition` | 6 | queued |
+| `rsomics-count` | 1 | queued |
+| `rsomics-deseq` | 12 | queued |
+| `rsomics-ecology` | 23 | queued |
+| `rsomics-edger` | 17 | queued |
+| `rsomics-expression` | 2 | boundary review required with DE products |
+| `rsomics-fastq-preprocess` | 12 | [audited](sequence-fastq.md#rsomics-fastq-preprocess) |
+| `rsomics-fastq-qc` | 1 | [audited](sequence-fastq.md#rsomics-fastq-qc) |
+| `rsomics-index` | 4 | [audited](interval-annotation-index.md#rsomics-index) |
+| `rsomics-liftover` | 1 | queued; public repo already exists |
+| `rsomics-limma` | 16 | queued |
+| `rsomics-metagenomics` | 5 | boundary review required with sketch |
+| `rsomics-methyl` | 1 | queued |
+| `rsomics-minimap2` | 1 | live FFI-backed product; dossier refresh queued |
+| `rsomics-peak` | 5 | queued |
+| `rsomics-phylo` | 11 | queued |
+| `rsomics-plink` | 28 | queued |
+| `rsomics-popgen` | 16 | queued |
+| `rsomics-rnaseq-qc` | 26 | queued |
+| `rsomics-sc` | 29 | queued |
+| `rsomics-seq` | 34 | [audited](sequence-fastq.md#rsomics-seq) |
+| `rsomics-signal` | 15 | queued |
+| `rsomics-sketch` | 1 | boundary review required with metagenomics |
+| `rsomics-structure` | 9 | queued |
+| `rsomics-table` | 16 | queued |
+| `rsomics-vcf` | 48 | queued after the low-state pilots |
+| `rsomics-workflow` | 1 | standalone-product justification required |
+
+Counts are generated from
+[`portfolio-inventory.tsv`](../00-overview/portfolio-inventory.tsv). They
+describe recoverable inputs, not planned subcommand counts.
+
+## Relationship map
+
+```mermaid
+flowchart TB
+    subgraph sequence["Sequence and FASTQ pilot"]
+        seq["rsomics-seq"]
+        prep["rsomics-fastq-preprocess"]
+        qc["rsomics-fastq-qc"]
+    end
+
+    subgraph interval["Interval and annotation pilot"]
+        bed["rsomics-bed"]
+        annotation["rsomics-annotation"]
+        index["rsomics-index"]
+    end
+
+    common["rsomics-common"] --> seq
+    common --> prep
+    common --> qc
+    common --> bed
+    common --> annotation
+    common --> index
+    help["rsomics-help"] --> seq
+    help --> prep
+    help --> qc
+    help --> bed
+    help --> annotation
+    help --> index
+    seqio["rsomics-seqio"] --> seq
+    seqio --> prep
+    seqio --> qc
+    seqio -. later transcript extraction .-> annotation
+    kmer["rsomics-kmer"] --> seq
+    kmer --> prep
+    intervals["rsomics-intervals"] --> bed
+    intervals --> annotation
+```
+
+Solid arrows are pilot consumer contracts. The dotted arrow is a later planned
+consumer. None implies that a foundation API is already stable.
