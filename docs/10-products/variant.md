@@ -128,6 +128,40 @@ historical subset of type, FILTER, and sample predicates is insufficient.
 Region selection must use a compatible index when required and must not
 pretend that a full streaming scan is equivalent.
 
+### Current implementation
+
+`rsomics-vcf` revision
+`8a097c25db4d2e22c896d245c371a1fe2db30791` implements the complete `head`
+operation without advertising the other first-slice commands. It consolidates
+the historical `rsomics-vcf-head` and `rsomics-vcf-valfmt` assets into private
+product modules and uses `rsomics-help` and `rsomics-common` for the shared CLI,
+diagnostic, JSON-conflict, and exit contracts.
+
+The command:
+
+- accepts plain VCF, gzip or BGZF VCF, uncompressed BCF 2.2, compressed BCF
+  2.2, named files, and standard input;
+- preserves ordered header lines, installs the canonical PASS definition,
+  removes BCF-internal `IDX` fields, and renders typed records as VCF text;
+- implements header limits, record limits, and output beginning at `#CHROM`;
+- matches bcftools 1.24 byte-for-byte on the declared valid VCF, compressed VCF,
+  BCF, stdin, and option-combination oracle matrix;
+- fails non-zero on invalid numeric arguments, malformed headers, invalid POS,
+  QUAL, typed INFO or FORMAT values, record/sample cardinality, truncated
+  compression, and invalid BCF structure.
+
+The rsomics spelling is `-H, --headers`, retaining `-h` for unified help.
+`--records` and `--samples` are mutually exclusive rather than inheriting
+bcftools's last-option-wins behavior. The bcftools behaviors where an invalid
+number becomes zero, `-1` becomes an effectively unbounded count, or a
+malformed record prints a diagnostic but exits zero are compatibility defects,
+not contracts.
+
+Exact-head CI run `30619149446` passes native Linux and macOS on `x86_64` and
+`aarch64`. Its Linux `x86_64` job builds bcftools 1.24 from the official
+SHA-256-pinned archive and passes the VCF, compressed VCF, BCF, and stdin
+oracle groups.
+
 ### Later slices
 
 1. `filter`, `norm`, `annotate`, `reheader`, and `setgt`, with complete
@@ -286,11 +320,41 @@ Historical results are promising but not current release claims:
 They require current 1.24 output, repeated timing, RSS, and exact source
 revision evidence.
 
+The implemented `head` path has a current local gate on an Apple M2
+(`Mac14,3`), macOS 26.6, Rust 1.91.0, bcftools/HTSlib 1.24, and hyperfine
+1.20.0. The fixture has 1,000,000 records and 33,889,047 bytes. Seven measured
+runs after two warm-ups produced:
+
+| Input | rsomics mean | bcftools mean | Decision |
+|---|---:|---:|---|
+| plain VCF | 191.8 ms | 474.2 ms | rsomics 2.47 times faster |
+| BGZF VCF | 194.0 ms | 449.1 ms | rsomics 2.31 times faster |
+| BCF | 1,378.0 ms | 203.5 ms | typed fallback is 6.77 times slower |
+
+The plain fixture SHA-256 is
+`e828855a7ba1975624a9123d0d9b6bb37debadec79f7d2ae1a57d935a7803130`;
+the BGZF fixture is
+`72ad19cdda99612f294936df37b4d93daa4111b780f394dee20161b0b956b991`;
+the BCF fixture is
+`e8c1a675d911aef115d4121cb50f98e56c73bb165f01c7d3861788d6dfe022c1`.
+One plain-VCF resource run observed approximately 3.2 MiB peak RSS for rsomics
+and 6.3 MiB for bcftools. The retained hyperfine JSON is on external scratch;
+the repository benchmark independently reports approximately 174.9 MiB/s for
+the 100,000-record VCF path.
+
+The VCF and BGZF hot paths pass the throughput and memory decision. BCF is a
+correct typed fallback, not a performance claim. Its deficit remains explicit
+and must be revisited while `view` and `query` establish the shared BCF
+projection path; it is not hidden behind the faster text result.
+
 ### Publication decision
 
-Do not publish `rsomics-vcf`. The target repository and shared internal format
-model are absent, the first slice is not implemented, and no current
-four-native-platform or 1.24 performance gate exists.
+Do not publish `rsomics-vcf` yet. The target repository and the complete
+`head` operation now exist with a current bcftools 1.24 oracle and performance
+record, but `view`, `query`, `validate`, and `index` remain absent. No
+placeholder command is exposed. Publication waits for the complete first
+slice, a repeat exact-head four-native-platform CI over that slice, the
+representative multi-sample gate, and a fresh public API review.
 
 ## `rsomics-call`
 
