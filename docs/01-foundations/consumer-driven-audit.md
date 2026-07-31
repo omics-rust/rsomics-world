@@ -211,7 +211,7 @@ matches, insertions, deletions, skips, padding, clipping, strand, head/tail
 markers, ordinary or indel-bearing overlapping mates, and independent input
 depth policy.
 
-`rsomics-call` revision `7ab24195f3c8` supplies the first product-side
+`rsomics-call` revision `7cc3dcfff15a` supplies the first product-side
 integration: it validates and coordinate-merges plain or BGZF SAM, raw or BGZF
 BAM, and CRAM sources; resolves source and read-group metadata into samples;
 streams columns into typed multisample SNP likelihood sites; and applies the
@@ -219,14 +219,17 @@ bcftools-compatible depth and deterministic deep-evidence policies. Its
 reference-only, two-sample, per-input-depth, and consecutive deep-coverage
 oracles match bcftools/HTSlib 1.24. Its product-owned multiallelic caller adds
 bcftools-matched ploidy, grouping, allele-selection, genotype, and quality
-contracts without promoting those policies into the foundation. Exact-head
-four-native-target CI `30644344781` passes. This is a verified integration
-baseline, not a release:
-`rsomics-bam` must still add the second product-side contract, BAQ must be
-driven by the calling and consensus operations that need it, and representative
-performance and memory must be measured before publication. Methyl extraction
-later provides the third consumer for checked columns and generic mate-overlap
-evidence; cytosine context and bisulfite calling do not enter the foundation.
+contracts without promoting those policies into the foundation. Its fused
+typed path matches the materialized pipeline, and its product-private format
+layer streams likelihood and called records through plain VCF, BGZF VCF, raw
+BCF, and BGZF BCF with checked schemas, record-local input errors, and fallible
+output finalization. Exact-head four-native-target CI `30646850401` passes.
+This is a verified integration baseline, not a release: `rsomics-bam` must
+still add the second product-side contract, BAQ must be driven by the calling
+and consensus operations that need it, and representative performance and
+memory must be measured before publication. Methyl extraction later provides
+the third consumer for checked columns and generic mate-overlap evidence;
+cytosine context and bisulfite calling do not enter the foundation.
 
 ### Analysis wave
 
