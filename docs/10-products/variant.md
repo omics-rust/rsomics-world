@@ -730,7 +730,7 @@ benchmarks, exact-head four-native-target CI `30659084469`, and publish run
 `30659248849` pass. The resulting pileup 0.3.0 archive checksum is
 `def4cc70d0cd250f8b9ebb1d1e0280c1a890cffb66504a832cb1819cff9f8581`.
 
-`rsomics-call` revision `5eaf1c5fa88b` owns the typed allele, ploidy,
+`rsomics-call` revision `4758ced5a863` owns the typed allele, ploidy,
 likelihood-site, called-site, and per-sample evidence models. It validates and
 coordinate-merges plain or BGZF SAM, raw or BGZF BAM, and CRAM inputs, checks
 their reference dictionaries, builds samples from source and read-group
@@ -756,10 +756,19 @@ Revision `5eaf1c5fa88b` adds indexed single-region likelihoods, k-way merges
 records across inputs, and clips emitted SNP and indel sites to the requested
 interval. Its typed output matches a live bcftools 1.24 multi-input region
 oracle, all 62 debug and release tests pass, and exact-head four-native-target
-CI `30659762334` passes. Complete annotations, normalized multi-region and
-streaming-target selection, gVCF behavior, complete three-command
-orchestration, performance evidence, and the `rsomics-help` CLI remain. No
-command-line binary is exposed and the repository remains unpublished.
+CI `30659762334` passes. Revision `4758ced5a863` accepts normalized
+multi-region selections: it sorts by alignment-header order, merges
+overlapping or adjacent intervals, removes duplicates, resets pileup state
+between disjoint intervals, and rejects an empty selection. Region clipping
+now precedes BAQ and likelihood calculation so excluded columns do not advance
+the deterministic sampling stream. The live typed oracle matches bcftools 1.24
+for two disjoint normalized regions over two indexed BAMs; all 65 debug and
+release tests, strict Clippy, rustdoc, and package verification pass locally.
+Exact-head CI `30660633513` passes all four native targets. Complete
+annotations, streaming-target selection, gVCF behavior, complete
+three-command orchestration, performance evidence, and the `rsomics-help` CLI
+remain. No command-line binary is exposed and the repository remains
+unpublished.
 
 Calling likelihoods, allele selection, ploidy policy, priors, annotations, and
 VCF output remain in the product. `rsomics-stats` receives a numerical kernel
