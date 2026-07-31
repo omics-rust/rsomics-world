@@ -129,9 +129,26 @@ samtools 1.24 across overlapping regions, appended and replacement index
 names, BAI, CSI, and CRAI. Exact-head CI run `30606532049` passes all four
 native targets.
 
+Revision `fd3c65ccd682` adds fast and uncompressed BAM modes backed by BGZF
+compression levels 1 and 0. Both modes produce the same decoded header and
+records as samtools 1.24, explicitly finalize the BGZF stream, and retain
+transactional file output. Exact-head CI run `30607097547` passes all four
+native targets.
+
+The samtools 1.24 subsampling audit found two unresolved compatibility
+boundaries. Its documentation defines a retained fraction from zero through
+one, but `--subsample 0` retains every record and `NaN` is accepted; invalid
+negative, greater-than-one, and infinite fractions print an error while the
+process still exits zero. `rsomics-bam` must retain its non-zero failure
+contract, and the zero-fraction behavior requires an explicit compatibility
+decision. Samtools also scrambles non-zero seeds through platform libc
+`rand()`: seed 1 becomes 16807 on macOS and 1804289383 on glibc Linux. The
+implementation must not accidentally claim cross-platform-identical selection
+while matching this platform-dependent step.
+
 The crate stays unpublished until samtools 1.24-compatible subsampling,
-remaining output and header semantics, compression and worker controls, and
-the performance gates are complete.
+remaining output and header semantics, worker controls, and the performance
+gates are complete.
 
 ### Slice 2: file lifecycle
 
