@@ -221,6 +221,14 @@ and `-n` restores the expected count. The option stays unimplemented until
 the compatibility decision explicitly chooses the consistent record-filter
 contract or the 1.24 count bug.
 
+Read-group file exclusion is also unresolved. Samtools 1.24 correctly applies
+`view -R ^FILE` as a record-level exclusion, but its unconditional
+[`sam_hdr_remove_lines` call](https://github.com/samtools/samtools/blob/1.24/sam_view.c#L1355-L1359)
+retains only the excluded `@RG` IDs. The resulting output can contain records
+tagged with `rg2` while declaring only `rg1` in the header. `-R` stays
+unimplemented until the compatibility decision chooses this contradictory
+header or a consistent complement projection.
+
 The samtools 1.24 subsampling audit found two unresolved compatibility
 boundaries. Its documentation defines a retained fraction from zero through
 one, but `--subsample 0` retains every record and `NaN` is accepted; invalid
