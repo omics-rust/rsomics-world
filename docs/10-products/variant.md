@@ -586,22 +586,110 @@ consumes compatible likelihood records. `run` fuses both stages without a
 materialized intermediate while preserving equivalent output and provenance.
 The product does not own generic VCF editing or BAM inspection.
 
+### Upstream operation map
+
+The behavior oracle is bcftools 1.24. Its two relevant upstream commands form
+one workflow but expose distinct contracts:
+
+| Stage | User-recognizable behavior retained in `rsomics-call` |
+|---|---|
+| `bcftools mpileup` | one or more SAM/BAM/CRAM inputs; read-group-to-sample mapping; flag, mapping-quality, base-quality, overlap, and depth policy; BAQ; indexed regions versus streaming targets; SNP and indel genotype likelihoods; per-sample and site annotations; VCF/BCF likelihood output |
+| `bcftools call` | consensus and multiallelic models; sample selection and ploidy; reference, variant-only, and gVCF-compatible output; regions and targets; likelihood, genotype, and bias annotations; VCF/BCF call output |
+| composed pipeline | header and sample propagation, deterministic stage equivalence, failure propagation, and no hidden temporary file |
+
+`pileup` is the clearer product verb; the upstream `mpileup` spelling is not a
+separate public operation. `run` is an rsomics workflow operation justified by
+avoiding serialization and compression between the two stages.
+
 ### First release slice
 
-All three commands ship together with:
+All three commands ship together. The stable `pileup` contract includes:
 
-- multiple alignment inputs and samples;
-- SNP, indel, and multiallelic likelihoods;
-- BAQ, overlap handling, mapping/base quality policy, depth caps, strand
-  evidence, and current annotations including `FORMAT/QM`;
-- indexed regions and target files;
-- reference-only and gVCF-compatible positions where declared;
-- explicit ploidy and sample metadata;
-- consensus and multiallelic calling modes that are individually named and
-  oracle-tested;
-- VCF, BGZF VCF, and BCF output with transactional named files.
+- one or more SAM, BAM, or CRAM inputs, plus an alignment-list file;
+- reference-backed and explicitly reference-free modes;
+- read-group sample discovery, explicit sample selection, and one-input-one-
+  sample behavior when read groups are ignored;
+- the four distinct all/any set/unset FLAG predicates, anomalous-pair policy,
+  overlap adjustment, mapping/base-quality thresholds and caps, and bounded
+  per-input depth with an explicit sampling seed;
+- default partial BAQ, full BAQ, forced BAQ recalculation, and disabled BAQ;
+- SNP and established indel likelihoods with explicit gap, support, fraction,
+  platform, and ambiguous-read policy;
+- indexed regions and streaming targets, each accepting inline and file forms;
+- the bcftools 1.24 default annotation set plus `FORMAT/DP`, `FORMAT/ADF`,
+  `FORMAT/ADR`, `FORMAT/QM`, `FORMAT/QS`, `FORMAT/SP`, `FORMAT/SCR`,
+  `INFO/AD`, `INFO/ADF`, `INFO/ADR`, `INFO/FS`, `INFO/NMBZ`, `INFO/NM`, and
+  `INFO/SCR`;
+- uncompressed or BGZF VCF and uncompressed or compressed BCF.
+
+The stable `call` contract accepts rsomics or bcftools-compatible likelihood
+VCF/BCF and includes:
+
+- explicitly selected consensus or multiallelic calling models;
+- sample selection, diploid or haploid defaults, GRCh37/GRCh38 sex-aware
+  presets, and checked custom ploidy files;
+- mutation priors, prior allele-frequency tags, alternate-allele retention,
+  masked-reference policy, SNP/indel skipping, and variant-only output;
+- reference records and threshold-grouped gVCF blocks;
+- indexed regions and streaming targets;
+- `FORMAT/GQ`, `FORMAT/GP`, and `INFO/PV4` where supported by the selected
+  model;
+- the same four output encodings and transactional named output behavior.
+
+`run` accepts the union of these stage options, streams a typed likelihood
+site directly from pileup into the selected caller, and must be record-
+equivalent to `pileup | call` after normalizing provenance header lines.
 
 A single-sample SNP-only command is not a publishable slice.
+
+### Internal boundary
+
+The serialized likelihood record and the fused path share one typed model:
+
+```text
+alignment record
+  -> validated pileup column
+  -> allele candidates and per-sample likelihood evidence
+  -> LikelihoodSite
+  -> consensus or multiallelic caller
+  -> called variant record
+```
+
+`LikelihoodSite` owns contig identity, zero-based position, reference and
+alternate alleles, per-sample genotype likelihoods and depth evidence, and
+site annotations. `pileup` serializes it to VCF/BCF; `call` reconstructs it
+from compatible VCF/BCF; `run` passes it directly. No command parses VCF as
+tab-separated text.
+
+The target modules are:
+
+| Module | Responsibility |
+|---|---|
+| `cli` | one Clap tree parsed and styled through `rsomics-help` |
+| `alignment` | input opening, headers, samples/read groups, references, regions, and targets |
+| `pileup` | BAQ, candidate alleles, SNP/indel likelihoods, annotations, depth sampling, and `LikelihoodSite` production |
+| `calling` | ploidy, priors, consensus model, multiallelic model, genotype fields, and gVCF blocking |
+| `format` | typed likelihood VCF/BCF input and transactional VCF/BCF output |
+| `run` | bounded stage composition without an intermediate file |
+
+The product may expose a library for these typed stages, but it exposes one
+binary. Product policy stays out of the Layer A foundations.
+
+### Explicit first-release exclusions
+
+The first release does not advertise:
+
+- the experimental bcftools 1.24 `--indels-2.0` or `--indels-cns` models and
+  platform profiles that require them;
+- trio constraints, target-allele constraints, or insertion of sites omitted
+  by pileup;
+- output auto-indexing;
+- deprecated Illumina 1.3 quality recoding or deprecated caller aliases;
+- plugin behavior, somatic calling, structural variants, copy-number calling,
+  annotation, or generic VCF transformations.
+
+These exclusions keep unstable or separate workflows out of the initial
+contract without reducing it to a toy caller.
 
 ### Historical assets
 
@@ -618,19 +706,23 @@ the older consensus diploid model over PL records.
 ### Foundations and gates
 
 `rsomics-bamio` supplies validated SAM/BAM/CRAM streams and indexed access.
-`rsomics-pileup` supplies a fallible sorted projection kernel, overlap
-handling, BAQ, and bounded column state. `rsomics-call` is the second concrete
-pileup consumer beside `rsomics-bam`; its consumer tests justify public API
-items one by one.
+`rsomics-pileup` revision `2b2cb7071381` supplies a fallible sorted projection
+kernel, checked CIGAR and long-CIGAR projection, overlap handling, retry-safe
+borrowed columns, and bounded column state. BAQ remains the next shared item
+and is implemented only through the calling and BAM consensus consumers that
+need it. `rsomics-call` is the second concrete pileup consumer beside
+`rsomics-bam`; its consumer tests justify public API items one by one.
 
 Calling likelihoods, allele selection, ploidy policy, priors, annotations, and
 VCF output remain in the product. `rsomics-stats` receives a numerical kernel
 only if another product demonstrates the same contract.
 
 Compatibility uses pinned bcftools 1.24 `mpileup`, `call`, and their composed
-pipeline, plus adversarial BAM/CRAM and reference fixtures. Performance
-compares both individual stages and the fused `run`; the fused path should
-provide a material I/O or memory advantage without changing calls.
+pipeline, plus adversarial BAM/CRAM and reference fixtures. The audited
+bcftools 1.24 source archive has SHA-256
+`8caddc22610ee2851666047c859bb91da0c1e32d0c2ec553db6f153ad130e46f`.
+Performance compares both individual stages and the fused `run`; the fused
+path should provide a material I/O or memory advantage without changing calls.
 
 Do not publish `rsomics-call` until the complete slice, consumer-driven
 foundation APIs, four native exact-head CI classes, and current oracle and

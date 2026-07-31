@@ -57,6 +57,7 @@ APIs:
 | `rsomics-intervals` | `6783f67614ae` | reduced the public crate to a validated generic zero-based half-open interval value; moved BED parsing, collections, algebra, merge policy, and COITrees indexing into products | 0.3.0 published; exact-head four-native-target CI `30597681539`; downloaded archive checksum `40cf072a5fb5900d8e4049cb9b03f28ce5ddc51e51ef2b3fed7c5c89bfa88ccd`; `bed` and `annotation` pass consumer tests against the registry release |
 | `rsomics-kmer` | `4258ac881119` | made `k = 32` well-defined, added checked encode/decode/canonical operations and a fallible count-accumulator boundary, and removed its unused `rsomics-common` dependency | exact-head CI green; `rsomics-seq` is the first real product consumer; a second product contract and comparative performance remain |
 | `rsomics-seqio` | `d7e1c33bb600` | retained strict allocation-reusing FASTA/FASTQ streams, bounded gzip decode buffering, wrapped FASTQ support, and fail-loud gzip/BGZF handling while removing unconsumed legacy, forced-format, and compression-policy APIs | 0.3.0 published; exact-head four-native-target CI `30599703477`; downloaded archive checksum `d2dcd0fab1a5320834a9b0f9cba7bbdd9bfe6b26c9c4740650ac88d939fcfcc5`; `seq` and `fastq-preprocess` pass consumer tests against the registry release |
+| `rsomics-pileup` | `2b2cb7071381` | replaced infallible ingestion with checked reference, coordinate, CIGAR, sequence-span, long-CIGAR, and sorted-stream validation; removed the synthetic one-base span for zero-reference-span records; reused borrowed column buffers; made output callback failure retry the same pending column; and verified overlap adjustment through ordinary and indel-bearing mates | 0.2 API remains unpublished while consumers integrate; exact-head four-native-target CI `30635856887` passes, including a pinned live samtools 1.24 column oracle on Linux `x86_64`; BAQ, representative deep-coverage evidence, and two product-side contract tests remain |
 
 Publication does not freeze these APIs. Every later public item still requires
 two named product consumers and consumer-side tests.
@@ -72,7 +73,9 @@ produce wrong biological results:
    `k = 32` reverse-complement case and trusted a debug-only constructor
    assertion; `4258ac881119` closes both blockers and supplies the fallible
    accumulator constructor exercised by `rsomics-seq`.
-3. `rsomics-pileup` documents coordinate-sorted input but does not validate it.
+3. `rsomics-pileup` previously documented coordinate-sorted input without
+   enforcing it; `2b2cb7071381` closes the ingestion, coordinate, CIGAR, and
+   sorted-watermark blocker before consumer integration.
 4. `rsomics-common` previously ignored JSON serialization and output write
    errors; `9f11f37c0fa4` closes this blocker and supplies a plain-diagnostic
    fallback when the JSON output path itself fails.
@@ -199,11 +202,20 @@ feature assignment or annotation policy into the foundation. `rsomics-methyl`
 adds BAM/CRAM records, indexed regions, and bisulfite-specific aux-tag
 consumption while keeping methylation policy product-private.
 
-`rsomics-pileup` adds input-order validation, low-allocation column views,
-complex CIGAR and overlap tests, filter-combination tests, and real oracle
-comparison before product use. Methyl extraction provides the third consumer
-for checked columns and generic mate-overlap evidence; cytosine context and
-bisulfite calling do not enter the foundation.
+`rsomics-pileup` revision `2b2cb7071381` now supplies fallible ingestion,
+low-allocation borrowed column views, retry-safe output callbacks, checked
+header and projection bounds, BAM long-CIGAR replacement, exact flag-filter
+semantics, and raw-reference-span behavior. Its live samtools 1.24 oracle
+covers matches, insertions, deletions, skips, padding, clipping, strand,
+head/tail markers, and ordinary or indel-bearing overlapping mates.
+
+This is a verified integration baseline, not a release. `rsomics-bam` and
+`rsomics-call` must each add consumer-side contract tests, BAQ must be driven
+by the calling and consensus operations that need it, and ordinary/deep
+coverage performance and memory must be measured before publication. Methyl
+extraction later provides the third consumer for checked columns and generic
+mate-overlap evidence; cytosine context and bisulfite calling do not enter the
+foundation.
 
 ### Analysis wave
 

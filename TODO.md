@@ -118,6 +118,9 @@ Rejected public boundary:
 - [x] Define BAM/VCF format-operation boundaries versus RNA-seq QC and signal.
 - [x] Review `bamio` through the first BAM consumer and keep the provisional
       reader backend product-private until a second consumer exists.
+- [x] Harden the provisional `pileup` ingestion and projection contract with
+      checked sorted input, long-CIGAR coverage, overlap differentials, and
+      four-native-target CI before product integration.
 - [ ] Review `pileup` through BAM, calling, and methylation consumers.
 - [ ] Review `intervals` through BAM region selection without moving
       alignment-index policy into the foundation.

@@ -511,10 +511,11 @@ implements and tests the same policy-free contract.
 
 ### `rsomics-pileup`
 
-The audited foundation is revision
-`5bd34dde15c5bc94e44d27a1ede2e9f9bf3e5fc2`, version 0.1.0. It currently
-accepts a raw record through an infallible `feed` method and does not enforce
-coordinate order at the boundary.
+The provenance baseline is revision
+`5bd34dde15c5bc94e44d27a1ede2e9f9bf3e5fc2`, version 0.1.0. Revision
+`2b2cb7071381bb4c86e8a7068f76c96b7035e1dd` replaces its infallible `feed`
+boundary with a fallible validated stream and passes exact-head four-native
+CI run `30635856887`.
 
 The shared contract needed by `rsomics-bam`, `rsomics-call`, and
 `rsomics-methyl` is:
@@ -531,6 +532,14 @@ Unsorted input, coordinate overflow, malformed CIGAR, and inconsistent
 sequence or quality lengths must fail rather than silently alter a pileup.
 Peak-calling signal accumulation is product-private unless it later proves the
 same contract.
+
+The current 0.2 integration API already checks header reference IDs and
+lengths, coordinates, CIGAR kinds and spans, BAM `CG:B,I` long CIGAR,
+zero-reference-span behavior, every mapped record's sorted watermark, and
+overlap adjustment. Its live samtools 1.24 oracle includes indel-bearing
+overlapping mates. It remains unpublished until BAM and calling provide two
+product-side contract tests, BAQ is implemented, and ordinary/deep-coverage
+performance and memory are recorded.
 
 ### Other foundations
 
