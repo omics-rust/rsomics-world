@@ -211,14 +211,17 @@ matches, insertions, deletions, skips, padding, clipping, strand, head/tail
 markers, ordinary or indel-bearing overlapping mates, and independent input
 depth policy.
 
-`rsomics-call` revision `5da214d446a1` supplies the first product-side
+`rsomics-call` revision `7ab24195f3c8` supplies the first product-side
 integration: it validates and coordinate-merges plain or BGZF SAM, raw or BGZF
 BAM, and CRAM sources; resolves source and read-group metadata into samples;
 streams columns into typed multisample SNP likelihood sites; and applies the
 bcftools-compatible depth and deterministic deep-evidence policies. Its
 reference-only, two-sample, per-input-depth, and consecutive deep-coverage
-oracles match bcftools/HTSlib 1.24. Exact-head four-native-target CI
-`30641073393` passes. This is a verified integration baseline, not a release:
+oracles match bcftools/HTSlib 1.24. Its product-owned multiallelic caller adds
+bcftools-matched ploidy, grouping, allele-selection, genotype, and quality
+contracts without promoting those policies into the foundation. Exact-head
+four-native-target CI `30644344781` passes. This is a verified integration
+baseline, not a release:
 `rsomics-bam` must still add the second product-side contract, BAQ must be
 driven by the calling and consensus operations that need it, and representative
 performance and memory must be measured before publication. Methyl extraction

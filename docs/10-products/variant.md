@@ -717,17 +717,20 @@ and is implemented only through the calling and BAM consensus consumers that
 need it. `rsomics-call` is the first implemented pileup consumer;
 `rsomics-bam` remains the second named consumer required before publication.
 
-`rsomics-call` revision `5da214d446a1` owns the typed allele, ploidy,
-likelihood-site, and per-sample evidence model. It validates and
+`rsomics-call` revision `7ab24195f3c8` owns the typed allele, ploidy,
+likelihood-site, called-site, and per-sample evidence models. It validates and
 coordinate-merges plain or BGZF SAM, raw or BGZF BAM, and CRAM inputs, checks
 their reference dictionaries, builds samples from source and read-group
 metadata, and streams records through `rsomics-pileup` into multisample SNP
 likelihood sites. Its MAQ error model and deterministic deep-evidence sampling
 match HTSlib 1.24; reference-only, two-sample, and per-input-depth records match
-bcftools 1.24. Exact-head four-native-target CI `30641073393` passes. BAQ,
-indel likelihoods, caller models, likelihood VCF/BCF, and the `rsomics-help`
-CLI remain, so no command-line binary is exposed and the repository remains
-unpublished.
+bcftools 1.24. Its multiallelic caller matches bcftools 1.24 for reference,
+biallelic, triallelic, alternate-only, haploid, diploid, mixed/absent-ploidy,
+and independently grouped samples while keeping callable and emitted alleles
+distinct. Exact-head four-native-target CI `30644344781` passes. The fused
+called-site run, BAQ, indel likelihoods, consensus caller, likelihood and call
+VCF/BCF, and the `rsomics-help` CLI remain, so no command-line binary is exposed
+and the repository remains unpublished.
 
 Calling likelihoods, allele selection, ploidy policy, priors, annotations, and
 VCF output remain in the product. `rsomics-stats` receives a numerical kernel
