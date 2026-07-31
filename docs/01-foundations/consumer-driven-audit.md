@@ -56,7 +56,7 @@ APIs:
 | `rsomics-help` | `61dd6f2ce0ce` | replaced the duplicate `HelpSpec` renderer and argv interception with recursive styling and parsing of the authoritative Clap command tree | 0.4.0 published; exact-head four-native-target CI `30596121607`; downloaded archive checksum `5922ec5a261660869fc36aa05f731c0adb059c43344eb78c2393f05611797fe1`; registry-package tests green |
 | `rsomics-intervals` | `6783f67614ae` | reduced the public crate to a validated generic zero-based half-open interval value; moved BED parsing, collections, algebra, merge policy, and COITrees indexing into products | 0.3.0 published; exact-head four-native-target CI `30597681539`; downloaded archive checksum `40cf072a5fb5900d8e4049cb9b03f28ce5ddc51e51ef2b3fed7c5c89bfa88ccd`; `bed` and `annotation` pass consumer tests against the registry release |
 | `rsomics-kmer` | `4258ac881119` | made `k = 32` well-defined, added checked encode/decode/canonical operations and a fallible count-accumulator boundary, and removed its unused `rsomics-common` dependency | exact-head CI green; `rsomics-seq` is the first real product consumer; a second product contract and comparative performance remain |
-| `rsomics-seqio` | `7b5b1c68f52e` | replaced the ambiguous record model with strict allocation-reusing FASTA/FASTQ streams, bounded gzip decode buffering, wrapped FASTQ support, and fail-loud gzip/BGZF handling; resolves common 0.7 from crates.io | exact-head four-native-target CI `30598214929`, strict Clippy, 45 unit tests, five compatibility tests, benchmark smoke, and package verification green; exercised by both `rsomics-seq` and `rsomics-fastq-preprocess`; unpublished pending its representative performance decision |
+| `rsomics-seqio` | `d7e1c33bb600` | retained strict allocation-reusing FASTA/FASTQ streams, bounded gzip decode buffering, wrapped FASTQ support, and fail-loud gzip/BGZF handling while removing unconsumed legacy, forced-format, and compression-policy APIs | 0.3.0 published; exact-head four-native-target CI `30599703477`; downloaded archive checksum `d2dcd0fab1a5320834a9b0f9cba7bbdd9bfe6b26c9c4740650ac88d939fcfcc5`; `seq` and `fastq-preprocess` pass consumer tests against the registry release |
 
 Publication does not freeze these APIs. Every later public item still requires
 two named product consumers and consumer-side tests.
@@ -118,14 +118,14 @@ threading, slab, and compression backends remain private.
 iteration, and general hashes. Product-specific correction tables and QC bins
 remain internal.
 
-`rsomics-seq` revision `bf00b71477b8` consumes the checked accumulator and the
+`rsomics-seq` revision `d4c840be2e37` consumes the checked accumulator and the
 strict `rsomics-seqio` stream API directly. Its complete five-command first
 slice passes exact-head CI on all four native targets with live SeqKit
 differentials, an independent ordered k-mer oracle, the unified help layer, and
 only the shared JSON output option. Its representative Linux gate also matches
 Jellyfish for 104,521 canonical count rows.
 
-`rsomics-fastq-preprocess` revision `a56519d9d6c0` consumes
+`rsomics-fastq-preprocess` revision `442c202908d1` consumes
 `rsomics-common` and `rsomics-seqio` without depending on `rsomics-kmer`.
 Its initial trim/filter pipeline passes exact-head CI on all four native
 targets with live fastp differentials. Its private `--threads` control builds a

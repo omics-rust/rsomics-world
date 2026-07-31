@@ -13,6 +13,9 @@ everything in modules 02–09 depends on this layer working well.
   `rsomics-common` call-site matrix and published narrow 0.7 boundary.
 - [`help-consumer-contract.md`](help-consumer-contract.md) — unified CLI UX,
   Clap single-source contract, and three-product prototype evidence.
+- [`seqio-release-gate-2026-07-31.md`](seqio-release-gate-2026-07-31.md) —
+  narrowed sequence-I/O API, two-consumer evidence, representative reader
+  performance, and verified registry release.
 - [`io-formats.md`](io-formats.md) — FASTA/FASTQ, SAM/BAM/CRAM, VCF/BCF,
   GFF/GTF, BED, MAF, PAF, h5ad. Centred on `noodles` + `needletail`.
 - [`compression.md`](compression.md) — gzip/bgzf/zstd/lz4/xz codecs and the
