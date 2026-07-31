@@ -169,6 +169,12 @@ as a count target so alignment and JSON streams cannot be mixed. Exact-head CI
 run `30612644701` passes all four native targets; the Linux `x86_64`
 differential builds samtools 1.24 and exercises all 12 oracle groups.
 
+Revision `20963baca3ab` adds `view -m/--min-qlen`. Query length is the sum of
+CIGAR operations that consume the read: `M`, `I`, `S`, `=`, and `X`. The raw
+BAM and decoded SAM/CRAM paths share the same threshold contract, and a zero
+threshold leaves the raw hot path without CIGAR traversal. Exact-head CI run
+`30613196557` passes all four native targets and 13 samtools 1.24 oracle groups.
+
 The samtools 1.24 subsampling audit found two unresolved compatibility
 boundaries. Its documentation defines a retained fraction from zero through
 one, but `--subsample 0` retains every record and `NaN` is accepted; invalid
