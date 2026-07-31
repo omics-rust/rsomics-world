@@ -730,7 +730,7 @@ benchmarks, exact-head four-native-target CI `30659084469`, and publish run
 `30659248849` pass. The resulting pileup 0.3.0 archive checksum is
 `def4cc70d0cd250f8b9ebb1d1e0280c1a890cffb66504a832cb1819cff9f8581`.
 
-`rsomics-call` revision `4758ced5a863` owns the typed allele, ploidy,
+`rsomics-call` revision `edd1d7ac5b5c` owns the typed allele, ploidy,
 likelihood-site, called-site, and per-sample evidence models. It validates and
 coordinate-merges plain or BGZF SAM, raw or BGZF BAM, and CRAM inputs, checks
 their reference dictionaries, builds samples from source and read-group
@@ -764,11 +764,28 @@ now precedes BAQ and likelihood calculation so excluded columns do not advance
 the deterministic sampling stream. The live typed oracle matches bcftools 1.24
 for two disjoint normalized regions over two indexed BAMs; all 65 debug and
 release tests, strict Clippy, rustdoc, and package verification pass locally.
-Exact-head CI `30660633513` passes all four native targets. Complete
-annotations, streaming-target selection, gVCF behavior, complete
-three-command orchestration, performance evidence, and the `rsomics-help` CLI
-remain. No command-line binary is exposed and the repository remains
-unpublished.
+Exact-head CI `30660633513` passes all four native targets. Revision
+`edd1d7ac5b5c` adds normalized streaming inclusion targets without requiring
+an alignment index and intersects them with indexed regions when both are
+present. Unknown references and intervals beyond the reference yield no
+selected sites, overlapping or adjacent targets merge, an empty target set
+yields no output, and alignment-header order is preserved. A no-index SAM
+oracle and a combined region-plus-target oracle both match bcftools 1.24 typed
+likelihood records. All 66 debug and release tests, three live oracle groups,
+strict Clippy, rustdoc, and package verification pass locally; exact-head CI
+`30661640916` passes all four native targets.
+
+Target exclusion remains deliberately absent. The bcftools 1.24 manual defines
+`^targets` as the logical complement, but `mpileup.c` filters out records with
+no target overlap before it inverts the site-level predicate. The installed
+1.24 binary consequently emits no records for complement selections that
+should retain reads wholly outside the excluded interval. This contradicts
+the documented contract, so neither that defect nor a corrected behavior is
+being frozen into the public interface without an explicit compatibility
+decision. Complete annotations, target-file parsing and exclusion behavior,
+gVCF behavior, complete three-command orchestration, performance evidence, and
+the `rsomics-help` CLI remain. No command-line binary is exposed and the
+repository remains unpublished.
 
 Calling likelihoods, allele selection, ploidy policy, priors, annotations, and
 VCF output remain in the product. `rsomics-stats` receives a numerical kernel
