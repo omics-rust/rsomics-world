@@ -116,7 +116,11 @@ Rejected public boundary:
       as test and benchmark assets.
 - [x] Classify all BAM and VCF historical implementations.
 - [x] Define BAM/VCF format-operation boundaries versus RNA-seq QC and signal.
-- [ ] Review `bamio`, `pileup`, and `intervals` APIs.
+- [x] Review `bamio` through the first BAM consumer and keep the provisional
+      reader backend product-private until a second consumer exists.
+- [ ] Review `pileup` through BAM, calling, and methylation consumers.
+- [ ] Review `intervals` through BAM region selection without moving
+      alignment-index policy into the foundation.
 - [ ] Reconstruct coherent `rsomics-bam` and `rsomics-vcf` products.
 
 ## Durable evidence

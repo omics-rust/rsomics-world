@@ -1,7 +1,7 @@
 # BAM product dossier
 
-Status: boundary and source-asset audit complete. The target repository does
-not yet exist, and no release has been published.
+Status: boundary and source-asset audit complete. The target repository exists,
+the first release slice is in progress, and no release has been published.
 
 ## Boundary
 
@@ -96,6 +96,18 @@ The slice is not complete if it only accepts BAM. It must prove:
 - non-zero exit on malformed records, missing references, invalid filters,
   truncated streams, and output failures.
 
+At revision `acb8b3a5a150`, `flags`, `flagstat`, `head`, `quickcheck`, and
+`samples` are implemented. They use `rsomics-help` and `rsomics-common`, accept
+the declared alignment formats where applicable, and pass seven samtools 1.24
+oracle groups. `head` covers file and standard-input SAM, BAM, and CRAM,
+including reference-backed CRAM MD/NM reconstruction for mismatches, insertions,
+deletions, skips, ambiguous bases, and `=` sequence symbols. Exact-head CI run
+`30604810443` passes native Linux and macOS on `x86_64` and `aarch64`.
+
+`view` remains the missing first-slice operation. The crate stays unpublished
+until its streaming, indexed-region, filtering, subsampling, format-output, and
+performance gates are complete.
+
 ### Slice 2: file lifecycle
 
 - `sort`, with bounded memory, external runs, merge fan-in, temporary-path
@@ -140,6 +152,8 @@ src/
 ├── lib.rs
 ├── main.rs
 ├── cli.rs
+├── input.rs
+├── md.rs
 ├── commands/
 │   ├── flags.rs
 │   ├── flagstat.rs
@@ -150,8 +164,10 @@ src/
 └── filter.rs
 ```
 
-Format detection, alignment headers, record decoding, indexed access, and raw
-BAM fast paths belong in `rsomics-bamio`. Product modules own command policy,
+Format detection, alignment headers, record decoding, and the current
+libdeflate-backed BAM path remain private product modules while BAM is the only
+implemented consumer. They move to `rsomics-bamio` only after a second product
+exercises the same policy-free contract. Product modules own command policy,
 filter composition, user-facing output, and samtools compatibility choices.
 Later slices add command modules only when their implementation is real.
 
@@ -274,7 +290,7 @@ inventory.
 Its current public raw-record constructors accept arbitrary bytes, and several
 accessors rely on indexing or `unwrap`. Reading a declared BAM block length
 does not prove that the record's variable fields are internally consistent.
-The first product slice therefore evolves the foundation around:
+The eventual multi-product foundation contract is:
 
 - auto-detected SAM, BAM, and CRAM readers with explicit input-format metadata;
 - typed headers, decoded records, references, and structured errors;
@@ -292,6 +308,12 @@ Named consumers are `rsomics-bam`, `rsomics-count`, `rsomics-methyl`,
 and `rsomics-call`. An API item becomes public
 only after two product repositories exercise the same policy-free contract.
 The first BAM slice alone does not justify publishing a redesigned API.
+Revision `acb8b3a5a150` therefore removes `rust-htslib` from `rsomics-bam` and
+implements the first consumer contract privately with noodles 0.110,
+noodles-util 0.79, and libdeflate-backed noodles-bgzf 0.47. It does not depend
+on or release a speculative `rsomics-bamio` revision. Promotion waits for a
+second implemented consumer such as `rsomics-count` or `rsomics-methyl`, with
+consumer-side tests.
 
 ### `rsomics-pileup`
 
@@ -369,6 +391,29 @@ The historical `checksum` result reports approximately 0.92 to 0.97 times
 samtools throughput. That is a failed replacement-performance gate unless a
 fresh implementation demonstrates a material correctness, resource, or
 workflow benefit.
+
+A provisional backend comparison on 2026-07-31 used a 13,712,741-byte BAM with
+200,000 records and SHA-256
+`bed20ddc9b79ebc952fe7ef555b683a8016a0d2a56c5f27185c226da9845b98b`.
+The machine was an Apple M2 with 8 GiB RAM, macOS arm64, Rust 1.91.0, samtools
+and HTSlib 1.24, and hyperfine 1.20.0. After five warm-ups, 30 single-thread
+trials measured:
+
+| Implementation | Mean | Standard deviation | Range |
+|---|---:|---:|---:|
+| `rsomics-bam acb8b3a flagstat` | 159.9 ms | 14.4 ms | 146.0–182.7 ms |
+| `rsomics-bam 900b9c8 flagstat` | 260.8 ms | 22.6 ms | 230.7–289.2 ms |
+| `samtools 1.24 flagstat` | 135.7 ms | 9.4 ms | 116.1–146.9 ms |
+
+Both current tools produced output SHA-256
+`ebe0882d0575383215efe688bb770202102ab9895f89f779d9ed8c518c8f152a`.
+The private noodles backend is about 1.63 times faster than the replaced
+rust-htslib product implementation, but samtools remains about 1.18 times
+faster. With four additional decoder threads, rsomics averaged 119.6 ms and
+samtools 65.6 ms. This supports the backend migration but fails the product
+release-performance gate. It is not the final release benchmark because it
+does not yet include `view`, peak RSS, alternating trial order, or
+representative SAM and CRAM inputs.
 
 ## Explicit exclusions
 
