@@ -191,6 +191,17 @@ BAM-copy path and decodes the record before writing. SAM, BAM, and CRAM input
 to SAM output plus BAM output match samtools 1.24. Exact-head CI run
 `30614602607` passes all four native targets and 15 oracle groups.
 
+Revision `f9c8bf0789ee` adds repeatable `view -N/--qname-file [^]FILE`.
+Read-name files are parsed as bytewise whitespace-delimited sets and repeated
+files form a union. A leading `^` selects the complement, while mixing include
+and exclude files fails before alignment processing. Missing QNAME values match
+the SAM `*` spelling, file open and read errors propagate, and unchanged BAM
+output retains the borrowed-record path. SAM, BAM, and CRAM count and record
+output plus BAM output match
+[samtools 1.24](https://github.com/samtools/samtools/blob/1.24/sam_view.c#L284-L358).
+Exact-head CI run `30615295251` passes all four native targets and 16 oracle
+groups.
+
 Standalone `view -n` remains unresolved. Samtools 1.24 emits the two tagged
 records from the current CRAM fixture with `view -n` but reports zero for
 `view -c -n`. In the
