@@ -160,6 +160,15 @@ library callers must construct validated program fields explicitly. Exact-head
 CI run `30611945848` passes all four native targets and the samtools 1.24
 differential.
 
+Revision `904f0e3e6b9d` adds `view --save-counts FILE`. The JSON records
+processed, filter-accepted, and filter-rejected counts with the samtools 1.24
+field contract across SAM, BAM, and CRAM input. A named count target cannot
+alias the alignment input or primary output, and an existing count file is
+replaced only after alignment processing succeeds. Standard output is rejected
+as a count target so alignment and JSON streams cannot be mixed. Exact-head CI
+run `30612644701` passes all four native targets; the Linux `x86_64`
+differential builds samtools 1.24 and exercises all 12 oracle groups.
+
 The samtools 1.24 subsampling audit found two unresolved compatibility
 boundaries. Its documentation defines a retained fraction from zero through
 one, but `--subsample 0` retains every record and `NaN` is accepted; invalid
