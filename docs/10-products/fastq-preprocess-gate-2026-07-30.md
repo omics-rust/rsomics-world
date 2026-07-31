@@ -33,7 +33,9 @@ internalized in the product. The deleted micro-crate is not revived.
 - libdeflater: 1.25.2;
 - CI implementation run: `30551968781`;
 - CI documentation-head run: `30552485149`;
-- CI alignment-head run: `30569428189`.
+- CI alignment-head run: `30569428189`;
+- registry-foundation head:
+  `442c202908d196f6e2fabf6283f6b6c87c1adfda`, CI `30599999790`.
 
 Both CI runs passed native Ubuntu and macOS on `x86_64` and `aarch64`, with
 formatting, strict Clippy, live fastp differentials, full tests, and benchmark
@@ -127,8 +129,8 @@ Decision:
 - single-end passes a material resource-use gate through 63% lower measured
   peak RSS at four threads;
 - the implementation is retained, but publication remains blocked on the
-  unpublished foundation revisions, end-to-end QC handoff, final API review,
-  and release-level performance decision.
+  end-to-end QC handoff, final product API review, and release-level
+  performance decision.
 
 ## Raw evidence
 

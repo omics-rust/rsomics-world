@@ -93,8 +93,10 @@ sequence operations and has been removed rather than justified with
 speculative parallel code. The command tree now exposes only the shared JSON
 output option. Exact distributions, RSS, commands, checksums, and remaining gates are in the
 [representative product gate](seq-gate-2026-07-30.md). Publication remains
-blocked on unpublished foundation revisions, final API and hot-path review,
-and unavailable native Linux `aarch64` performance evidence.
+blocked on final product API and hot-path review, the second real
+`rsomics-kmer` consumer. Common, help, and seqio resolve from their published
+registry releases. Linux `aarch64` has native correctness CI but no
+representative performance host.
 
 ### Later operation groups
 
@@ -194,9 +196,10 @@ four-thread time is `5.360 ± 0.075 s` versus fastp's `4.937 ± 0.721 s`, but
 peak RSS is 19.6 MiB versus 52.9 MiB. The compressed files are about 0.07%
 larger than fastp's, pass `gzip -t`, and are consumed by SeqKit and fastp.
 
-This is a strong product checkpoint, not publication approval: the
-unpublished foundation revisions, end-to-end QC handoff, final API review, and
-release-level performance decision remain. Exact machine, fixture, causal
+This is a strong product checkpoint, not publication approval: end-to-end QC
+handoff, final API review, and the release-level performance decision remain.
+Common, help, and seqio resolve from their published registry releases. Exact
+machine, fixture, causal
 control, interoperability, and raw-result checksums are recorded in the
 [parallel-gzip product gate](fastq-preprocess-gate-2026-07-30.md).
 
