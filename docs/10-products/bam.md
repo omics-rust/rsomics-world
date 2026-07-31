@@ -122,9 +122,16 @@ The same conversion logic is present at upstream revision
 The product will not expose known-corrupting CRAM output while that contract is
 unresolved.
 
-The crate stays unpublished until indexed regions, samtools 1.24-compatible
-subsampling, remaining output and header semantics, compression and worker
-controls, and the performance gates are complete.
+Revision `b4322a5ee03d` adds BAI, CSI, and CRAI-backed region queries for BAM
+and CRAM, alternative index-name discovery, ordered multi-region behavior, and
+the unmapped `*` selector. Region-query records from BAM and CRAM inputs match
+samtools 1.24 across overlapping regions, appended and replacement index
+names, BAI, CSI, and CRAI. Exact-head CI run `30606532049` passes all four
+native targets.
+
+The crate stays unpublished until samtools 1.24-compatible subsampling,
+remaining output and header semantics, compression and worker controls, and
+the performance gates are complete.
 
 ### Slice 2: file lifecycle
 
@@ -455,9 +462,9 @@ representative SAM and CRAM inputs.
 Do not publish `rsomics-bam` yet. The product repository exists and its
 streaming inspection commands, filters, and SAM/BAM output now have
 four-native-platform exact-head CI plus samtools 1.24 oracle evidence. The
-first slice remains incomplete: indexed regions, compatible subsampling,
-complete header and output controls, and a strict performance or resource-use
-advantage are not yet demonstrated. CRAM output is blocked by the verified
-duplicate-read-group behavior above, and the shared `rsomics-bamio` contract
-still lacks a second implemented consumer. Historical micro-crate versions do
-not reduce these gates.
+first slice remains incomplete: compatible subsampling, complete header and
+output controls, and a strict performance or resource-use advantage are not
+yet demonstrated. CRAM output is blocked by the verified duplicate-read-group
+behavior above, and the shared `rsomics-bamio` contract still lacks a second
+implemented consumer. Historical micro-crate versions do not reduce these
+gates.
