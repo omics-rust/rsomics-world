@@ -19,12 +19,12 @@ operation will ship. It records:
 | Product | Source candidates | Dossier state |
 |---|---:|---|
 | `rsomics-annotation` | 4 | [audited](interval-annotation-index.md#rsomics-annotation) |
-| `rsomics-bam` | 38 | [audited](bam.md) |
+| `rsomics-bam` | 41 | [audited](bam.md) |
 | `rsomics-bed` | 42 | [audited](interval-annotation-index.md#rsomics-bed) |
 | `rsomics-call` | 2 | [audited](variant.md#rsomics-call) |
 | `rsomics-cnv` | 2 | [audited](variant.md#rsomics-cnv) |
 | `rsomics-composition` | 10 | [audited](composition.md) |
-| `rsomics-count` | 2 | [audited](count.md) |
+| `rsomics-count` | 4 | [audited](count.md) |
 | `rsomics-deseq` | 12 | [audited](bulk-expression.md#rsomics-deseq) |
 | `rsomics-ecology` | 19 | [audited](ecology.md) |
 | `rsomics-edger` | 17 | [audited](bulk-expression.md#rsomics-edger) |
@@ -40,10 +40,10 @@ operation will ship. It records:
 | `rsomics-phylo` | 11 | [audited](phylo.md) |
 | `rsomics-plink` | 42 | [audited](genotype-popgen.md#rsomics-plink) |
 | `rsomics-popgen` | 14 | [audited](genotype-popgen.md#rsomics-popgen) |
-| `rsomics-rnaseq-qc` | 26 | queued |
+| `rsomics-rnaseq-qc` | 21 | [audited](rnaseq-qc-signal.md#rsomics-rnaseq-qc) |
 | `rsomics-sc` | 29 | queued |
 | `rsomics-seq` | 34 | [audited](sequence-fastq.md#rsomics-seq) |
-| `rsomics-signal` | 15 | queued |
+| `rsomics-signal` | 15 | [audited](rnaseq-qc-signal.md#rsomics-signal) |
 | `rsomics-sketch` | 1 | [audited](metagenomics-sketch.md#rsomics-sketch) |
 | `rsomics-structure` | 9 | [audited](structure.md) |
 | `rsomics-table` | 16 | [audited](table.md) |

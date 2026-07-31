@@ -5,11 +5,12 @@ not been created.
 
 ## Boundary
 
-`rsomics-count` is one alignment-based genomic feature-counting product. It
-assigns reads or fragments from SAM/BAM inputs to annotated features and
-meta-features, then emits a multi-sample count matrix and assignment summary.
-This is a complete user workflow comparable to featureCounts, not an
-operation-sized wrapper.
+`rsomics-count` is one genomic feature-counting and count-normalization
+product. Its primary path assigns reads or fragments from SAM/BAM inputs to
+annotated features and meta-features, then emits a multi-sample count matrix
+and assignment summary. A secondary `normalize` path derives TPM, FPKM, or
+FPKM-UQ from an existing gene-count matrix and validated lengths. These are
+one count-table workflow, not operation-sized wrappers.
 
 The primary behavior sources are:
 
@@ -20,9 +21,10 @@ The primary behavior sources are:
 - the [featureCounts method](https://doi.org/10.1093/bioinformatics/btt656);
 - the public SAM, BAM, GTF, GFF3, and SAF format contracts.
 
-The initial product is not transcript-abundance estimation. Salmon, kallisto,
-RSEM, transcript compatibility classes, effective length correction, TPM, and
-differential expression belong to other workflows.
+The product is not transcript-abundance estimation. Salmon, kallisto, RSEM,
+transcript compatibility classes, and effective-length correction belong to
+other workflows. `normalize` performs declared arithmetic on supplied gene
+counts and lengths; it does not infer transcript abundance from reads.
 
 ## Operation and option map
 
@@ -48,6 +50,13 @@ future operations.
 featureCounts accepts multiple alignment inputs and emits one column per input.
 `rsomics-count` preserves that model. It does not run the same single-input
 writer repeatedly or require a separate matrix-merging command.
+
+`rsomics-count normalize <counts> --lengths <lengths>` accepts a strict
+gene-by-sample count matrix and emits TPM, FPKM, or FPKM-UQ. Missing lengths,
+duplicate genes, negative or non-finite counts, zero denominators, the
+FPKM-UQ biotype population, and percentile interpolation are explicit
+contracts. A fused counting run may request the same derived units only after
+the raw counts and effective feature lengths are fixed.
 
 ## Data and assignment model
 
@@ -95,6 +104,7 @@ src/
 │   ├── candidate.rs
 │   └── summary.rs
 ├── count.rs
+├── normalize.rs
 └── output/
     ├── matrix.rs
     ├── summary.rs
@@ -120,10 +130,16 @@ parser without creating another public rsomics foundation.
 
 ## Historical asset disposition
 
-The two routed source candidates are the clean `rsomics-featurecounts`
-repository at `5571384b250761eaf7368a124dca6a5d05962f64` and the clean
-`rsomics-count-matrix` repository at
-`9a92e84f4470baa5d62a6ebcde81d56e452ee86d`.
+The four routed source candidates are clean repositories:
+
+- `rsomics-featurecounts` at
+  `5571384b250761eaf7368a124dca6a5d05962f64`;
+- `rsomics-count-matrix` at
+  `9a92e84f4470baa5d62a6ebcde81d56e452ee86d`;
+- `rsomics-fpkm-count` at
+  `370954dae656dce4d1f5a60fdd121bca57b0baa8`;
+- `rsomics-tpm` at
+  `f97156b8af6201d5923c6faef556168ca5ed4d12`.
 
 | Asset | Disposition |
 |---|---|
@@ -136,6 +152,8 @@ repository at `5571384b250761eaf7368a124dca6a5d05962f64` and the clean
 | small and adversarial BAM/annotation fixtures | retain and expand |
 | Criterion harness | benchmark recipe only; replace tiny cases with direct end-to-end comparisons |
 | `rsomics-count-matrix::merge_counts` | test, fixture, and fallback implementation asset; accept a public collation mode only if separate htseq-count or legacy featureCounts files remain a demonstrated workflow after the main multi-input writer is complete |
+| `rsomics-fpkm-count` | assignment, strandedness, BED12, and RSeQC output fixtures; use the common counting engine rather than retaining a second gene counter |
+| `rsomics-tpm` | refactor normalization arithmetic and oracle tests into `normalize`; remove the silent 1000 bp missing-length default and permissive row skipping |
 
 The count product already emits a multi-input matrix, so the historical
 collator does not automatically become another subcommand. It remains inside
@@ -262,8 +280,8 @@ remain in product attribution.
 - No option that is parsed but not enforced.
 - No silent malformed annotation, CIGAR, BAM, or pair skipping.
 - No one-output-per-loop overwrite for multiple inputs.
-- No transcript-abundance, TPM, differential expression, or count
-  normalization.
+- No transcript-abundance inference, effective-length correction, or
+  differential expression.
 - No speculative public annotation, assignment, or interval-index crate.
 - No direct dependency on another Layer B product.
 - No CRAM, junction, read-group, detailed assignment, or long-read claim in the

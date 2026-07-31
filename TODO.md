@@ -5,8 +5,9 @@ maps belong in their dossiers under `docs/`.
 
 ## P0.1 — finish the architecture reset
 
-- [x] Freeze the 28-product and nine-foundation allowlist after rejecting the
-      planning-only workflow and expression-utility boundaries.
+- [x] Freeze the 30-product and nine-foundation allowlist after rejecting the
+      planning-only workflow and expression-utility boundaries and separating
+      variant calling and copy-number analysis from VCF format operations.
 - [x] Back up all crates.io and GitHub retirement candidates.
 - [x] Delete 594 dependency-ordered crates.io reset candidates.
 - [x] Delete 596 GitHub reset candidates.
@@ -24,8 +25,10 @@ assets, target modules, shared consumers, compatibility, performance, and
 exclusions.
 
 - [x] `rsomics-annotation`
-- [ ] `rsomics-bam`
+- [x] `rsomics-bam`
 - [x] `rsomics-bed`
+- [x] `rsomics-call`
+- [x] `rsomics-cnv`
 - [x] `rsomics-composition`
 - [x] `rsomics-count`
 - [x] `rsomics-deseq`
@@ -41,16 +44,16 @@ exclusions.
 - [x] `rsomics-minimap2`
 - [x] `rsomics-peak`
 - [x] `rsomics-phylo`
-- [ ] `rsomics-plink`
-- [ ] `rsomics-popgen`
-- [ ] `rsomics-rnaseq-qc`
+- [x] `rsomics-plink`
+- [x] `rsomics-popgen`
+- [x] `rsomics-rnaseq-qc`
 - [ ] `rsomics-sc`
 - [x] `rsomics-seq`
-- [ ] `rsomics-signal`
+- [x] `rsomics-signal`
 - [x] `rsomics-sketch`
-- [ ] `rsomics-structure`
+- [x] `rsomics-structure`
 - [x] `rsomics-table`
-- [ ] `rsomics-vcf`
+- [x] `rsomics-vcf`
 
 Rejected public boundary:
 
@@ -110,8 +113,8 @@ Rejected public boundary:
 ## P2 — alignment and variation
 
 - [ ] Recover the archived `rsomics-bam 0.1.0/0.2.0` packages as source assets.
-- [ ] Classify all BAM and VCF historical implementations.
-- [ ] Define BAM/VCF format-operation boundaries versus RNA-seq QC and signal.
+- [x] Classify all BAM and VCF historical implementations.
+- [x] Define BAM/VCF format-operation boundaries versus RNA-seq QC and signal.
 - [ ] Review `bamio`, `pileup`, and `intervals` APIs.
 - [ ] Reconstruct coherent `rsomics-bam` and `rsomics-vcf` products.
 

@@ -52,6 +52,8 @@ Historical convenience boundaries collapse as follows:
 
 - `region`, `subsample`, and `sam-to-bam` become `view` options or format
   selections;
+- RSeQC `divide_bam`, `split_bam`, and `split_paired_bam` become `split`
+  partition, annotation, and mate modes;
 - `to-fastq` becomes `fastq`;
 - `to-bed` remains a conversion subcommand because its input model and
   filtering policy are alignment-specific;
@@ -161,7 +163,7 @@ the first slice rather than designed independently.
 
 ## Historical source assets
 
-The 38 routed repositories are implementation and evidence inputs, not target
+The 41 routed repositories are implementation and evidence inputs, not target
 crate boundaries. Exact revisions below are the audited source snapshots.
 
 | Asset and revision | Disposition | Target |
@@ -178,6 +180,7 @@ crate boundaries. Exact revisions below are the audited source snapshots.
 | `rsomics-bam-coverage` `e115cd0bceb0735e584d75125e7a6940e896d4fe` | Refactor then merge | `coverage`; summary output only |
 | `rsomics-bam-depad` `de243fd7ccb7e0c313742b4e529fe95bad3833d4` | Refactor then merge | `depad`; retain padded-reference fixtures |
 | `rsomics-bam-depth` `cdc0a4ff70119edc193cd6bdfadaba6b6e190b61` | Refactor then merge | `depth`; share pileup kernel |
+| `rsomics-bam-divide` `71504b275797ec30df2399ef2fbe03d1c9b1e6b5` | Refactor then merge | `split --parts`; preserve disjoint-cover and seeded-partition fixtures |
 | `rsomics-bam-fasta` `ba661eddd57b45f725751f02a288546442acd3e7` | Refactor then merge | `fasta` |
 | `rsomics-bam-fixmate` `645e4e3c31f3e689e854c2de63e726b877d770ea` | Refactor then merge | `fixmate`; include supplementary mate behavior from 1.24 |
 | `rsomics-bam-flags` `921a428ba5e11f47fca875e1b9ae1335b3b5cb8f` | Refactor then merge after dirty-diff attribution | `flags` |
@@ -197,6 +200,8 @@ crate boundaries. Exact revisions below are the audited source snapshots.
 | `rsomics-bam-samples` `40b39137a2f03333a7b9af0505b43ccffc311bc9` | Refactor then merge | First-slice multi-input `samples` |
 | `rsomics-bam-sort` `99144c7ba8d9abe78add7301cb300e74b5c11fe0` | Test asset only | Discard the whole-file `Vec` sorter |
 | `rsomics-bam-split` `0393f01120602b785c30538954389d5742e9d7e7` | Refactor then merge | `split`; add tag and transactional multi-output policy |
+| `rsomics-bam-split-gene` `e401744815fc1630f5c44d3f7cdf298d39f5b909` | Test and routing asset | `split --genes`; replace permissive BED12 row skipping |
+| `rsomics-bam-split-pe` `8962f619d341cd18ea06d1cdf315efbfb4e2fa85` | Refactor then merge | `split --mates`; retain pairing-flag and mate-field fixtures |
 | `rsomics-bam-stats` `25c3689b1267431fc0428bdfc873d81cf23c8d7c` | Refactor then merge | `stats`; re-audit 1.24 output and customized-index behavior |
 | `rsomics-bam-subsample` `93052bf1e726f95022d6a6b8a549b9646c1e358a` | Merge algorithm after semantic update | First-slice `view --subsample` |
 | `rsomics-bam-targetcut` `9d7fa02f6557cca7b52dfaf8ca73f837ee55e400` | Refactor then merge | Later `targetcut`; preserve fosmid-specific scope |

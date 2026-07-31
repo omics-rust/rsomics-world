@@ -26,7 +26,7 @@ equivalents rather than FFI-wrap.
 | GenomicRanges | 2.08M (#10) | GRanges (interval+strand+meta) | gap (intervals covers primitives) |
 | AnnotationDbi | 1.67M (#16) | SQLite gene-ID/GO/pathway lookup | gap (value = the prebuilt org.* DBs, not the query layer) |
 | GenomicAlignments | 0.93M (#35) | BAM read counting / summarizeOverlaps | `rsomics-bamio`+`featurecounts`+`peak-count` (partial) |
-| rtracklayer | 0.87M (#40) | BED/GFF/bigWig/WIG/2bit IO | `rsomics-bed-*`+`rsomics-bbi` (GFF gap) |
+| rtracklayer | 0.87M (#40) | BED/GFF/bigWig/WIG/2bit IO | `rsomics-bed`, `rsomics-annotation`, and private `rsomics-signal` BBI modules |
 | GenomicFeatures | 0.65M (#47) | TxDb (GTF/GFF→transcript model) | **gap — prime target** (every DE pipeline uses it) |
 | BSgenome | 0.49M (#57) | reference-genome 2bit infra | gap (getfasta covers main use) |
 
@@ -40,7 +40,7 @@ equivalents rather than FFI-wrap.
 | fgsea | 0.78M (#24) | fast GSEA permutation | **REBUILD (MIT, Tier-1 target)** | gap |
 | clusterProfiler | 0.64M (#31) | enrichGO/GSEA (hypergeometric ORA) | primitives + adopt data layer | gap |
 | apeglm | 0.15M | Bayesian LFC shrinkage | primitives | gap |
-| tximport | 0.14M | transcript→gene aggregation | **REBUILD (LGPL, I/O+aggregation)** | `rsomics-tpm` (partial) |
+| tximport | 0.14M | transcript→gene aggregation | **REBUILD (LGPL, I/O+aggregation)** | gap; `rsomics-count normalize` covers only declared gene-count arithmetic |
 | DEXSeq | 0.08M | per-exon differential usage (NB-GLM) | primitives (GPL-3) | gap |
 
 DESeq2, edgeR, and limma are not scalar-kernel ports. Each reconstruction must
@@ -87,7 +87,7 @@ qvalue (Bioc #36, 0.57M) Storey FDR π₀ → add π₀ to `rsomics-pvalue-adjus
 
 **Tier-1 (direct rebuild, high impact, feasible now):**
 1. **fgsea** — MIT, permutation GSEA, SIMD ranked-sum; no crate.
-2. **tximport/tximeta** — LGPL, TSV-parse + length-weighted aggregation; extend `rsomics-tpm`.
+2. **tximport/tximeta** — LGPL, TSV parsing plus length-weighted transcript-to-gene aggregation; keep separate from simple count-matrix normalization until a coherent consumer exists.
 3. **bsseq::BSmooth** — Artistic-2.0, parallel sliding-window methylation smoothing.
 4. **ChIPseeker peak annotation** — `rsomics-bed-annotate` close; add TxDb + dist-to-TSS.
 5. **GenomicFeatures/TxDb** — no crate; GTF→transcript-model DB; every DE pipeline needs it.

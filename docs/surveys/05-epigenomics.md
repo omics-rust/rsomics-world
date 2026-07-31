@@ -1,94 +1,107 @@
-# Survey: epigenomics domain (ChIP/ATAC/CUT&RUN/methylation)
+# Survey: epigenomics and genome signal
 
-Verified 2026-05-30 against deeptools.readthedocs.io, MACS3 source+docs, MethylDackel main.c,
-SEACR README, Bismark/HOMER docs, Bioconductor pages, pyBigWig/CrossMap. Status from live FS.
+Verified 2026-07-31 against deepTools 3.5.6, MACS3 documentation, SEACR 1.3,
+MethylDackel, Bismark, HOMER, pyBigWig/bigtools, and the relevant Bioconductor
+package documentation.
 
-> **⚠ Build-out integrity flag:** none of the ~15 epigenomics crates is published to crates.io
-> and **none has a `perf-*.md` record** — all are pre-release on KIOXIA, most are *partial*
-> implementations. Per the DONE gate (perfgate >1.0× + compat + CI + publish), this whole
-> domain is NOT DONE despite the crates existing. This is the #24 build-out backlog, surfaced.
+This survey records upstream workflows rather than proposing one crate per
+command. Exact product contracts and historical revisions are in the
+[signal](../10-products/rnaseq-qc-signal.md#rsomics-signal),
+[peak](../10-products/peak.md), [methyl](../10-products/methyl.md), and
+[liftover](../10-products/liftover.md) dossiers.
 
-## deepTools (20 tools) → 8 crates, all partial
+## deepTools 3.5.6
 
-| tool | crate | status |
+deepTools exposes 20 user tools. They form one coherent `rsomics-signal`
+product:
+
+| Workflow | Upstream tools | Target operations |
 |---|---|---|
-| bamCoverage | rsomics-bam-signal | partial — bedGraph only (no bigWig); missing extendReads/smoothLength/region/blacklist/filterRNAstrand |
-| bamCompare | rsomics-bam-compare | partial — bedGraph only; no SES scaling/normalizeUsing |
-| bamPEFragmentSize | rsomics-fragment-size | partial — full-scan (matches samtools/picard, NOT deeptools sampling) |
-| alignmentSieve | rsomics-atac-shift | partial — only --ATACshift mode; general MAPQ/flag/fraglen/BEDPE filtering = gap |
-| plotFingerprint | rsomics-bam-fingerprint | partial — no Jensen-Shannon/CHANCE/JSDsample |
-| multiBamSummary | rsomics-multibam-summary | largely complete (bins+BED) |
-| multiBigwigSummary | rsomics-multibigwig-summary | largely complete (bins+BED) |
-| bigwigCompare | rsomics-bigwig-compare | partial — bedGraph out only |
-| computeMatrix | rsomics-compute-matrix | partial — single-bigWig/single-BED only |
-| computeGCBias / correctGCBias | — | gap |
-| estimateReadFiltering / plotEnrichment / plotCoverage | — | gap |
-| bigwigAverage | — | gap |
-| computeMatrixOperations | — | gap |
-| plotHeatmap/Profile/Correlation/PCA | — | gap (visualization; numerical export could be a flag) |
+| track generation and arithmetic | `bamCoverage`, `bamCompare`, `bigwigCompare`, `bigwigAverage` | `track`, `compare`, `average` |
+| summaries and matrices | `multiBamSummary`, `multiBigwigSummary`, `computeMatrix`, `computeMatrixOperations` | `summarize`, `matrix`, `matrix-ops` |
+| alignment preparation | `alignmentSieve`, `correctGCBias` | `filter`, `gc-bias correct` |
+| alignment QC | `plotFingerprint`, `bamPEFragmentSize`, `computeGCBias`, `plotCoverage`, `estimateReadFiltering`, `plotEnrichment` | named QC operations |
+| matrix analysis and views | `plotCorrelation`, `plotPCA`, `plotHeatmap`, `plotProfile` | `correlate`, `pca`, `heatmap`, `profile` |
 
-## MACS3 (14 subcommands) → 0 implemented; `rsomics-macs` is P0
+Fifteen historical Layer B candidates cover parts of this surface. They are
+implementation and evidence assets, not 15 planned binaries. Important gaps
+remain:
 
-callpeak·hmmratac·bdgpeakcall·bdgbroadcall·refinepeak (peak calling); pileup·bdgcmp·bdgopt·
-bdgdiff·cmbreps (bedGraph ops); filterdup·predictd·randsample·callvar (pre/post). All gap.
-MACS3 pileup is a distinct "raw, no-normalization, BED-input" coverage niche vs bam-signal.
+- several track operations are bedGraph-only where bigWig is the normal
+  contract;
+- filters, fragments, smoothing, blacklists, regions, strand, scaling, SES,
+  missing data, and normalization are incomplete;
+- the matrix implementation is single-sample and single-region-group;
+- correlation, PCA, heatmap, profile, enrichment, matrix operations, and
+  filtering estimates have no consolidated implementation;
+- source-level tests and microbenchmarks do not establish a product release
+  gate.
 
-## SEACR → ✓ COMPLETE
+The historical `rsomics-bbi` and `rsomics-coverage-core` libraries each have
+only one target product consumer after consolidation. They are internalized
+into `rsomics-signal`; multiple subcommands inside one binary do not satisfy
+the two-product public-foundation rule.
 
-`rsomics-seacr` v0.1.0 — all 6 mode combos (stringent/relaxed × norm/non) byte-identical to
-SEACR_1.3.sh, compat verified. (Still needs perfgate+publish to be fully DONE.)
+## Peak calling
 
-## MethylDackel (4 subcommands) → 1 partial
+`rsomics-peak` owns peak calling, refinement, annotation, and peak
+quantification. It uses MACS3, SEACR, ChIPseeker-style annotation, and
+bedtools/DiffBind-style counting as behavior sources.
 
-extract → `rsomics-methyldackel` (CpG bedGraph only; CHG/CHH, bigWig, --MBias, --perRead,
-strand filtering OT/OB/CTOT/CTOB, --mergeContext, --methylKit all gap). mbias/mergeContext/
-perRead = gap.
+MACS3 helper operations route by user workflow:
 
-## Bismark (GPL — clean-room) → all gap
+| MACS3 operation | Target |
+|---|---|
+| `callpeak`, `hmmratac`, `bdgpeakcall`, `bdgbroadcall`, `refinepeak`, `predictd` | `rsomics-peak` |
+| `pileup`, `bdgcmp`, `bdgdiff`, `bdgopt`, `cmbreps` | public track forms in `rsomics-signal`; peak-model-private forms stay private |
+| `filterdup`, `randsample` | `rsomics-bam` for public alignment transformations |
+| `callvar` | variant workflow, not peak calling |
 
-genome_preparation·bismark(aligner)·methylation_extractor·deduplicate·bismark2bedGraph·
-coverage2cytosine·bismark2report. The **extraction** step overlaps `rsomics-methyldackel`
-(any bisulfite BAM → CpG); the **alignment** step (bismark proper, needs rsomics-align) is the
-missing piece.
+`rsomics-seacr` is a strong compatibility asset but does not make the whole
+peak product complete. MACS statistical models, input formats, transactional
+output sets, annotation, count matrices, and representative performance remain
+required.
 
-## HOMER → all gap (MEDIUM confidence, SSL errors on docs)
+## Methylation
 
-findMotifsGenome (motif enrichment — NOT the same as `rsomics-motif-scan` IUPAC scanning),
-annotatePeaks (gene/context annotation — NOT `rsomics-bed-annotate` which is bedtools-annotate
-overlap-fractions), makeTagDirectory, findPeaks, hicFindPeaks.
+`rsomics-methyl` owns bisulfite-alignment methylation extraction and its
+user-visible reports. The historical MethylDackel-like implementation is a
+partial seed: non-CpG contexts, M-bias, per-read output, strand policies,
+context merging, methylKit output, and bigWig interoperability remain gated.
 
-## R targets (deep-dive in 10-r-bioconductor.md)
+Bismark alignment, genome preparation, deduplication, extraction, and report
+generation are not represented by thin commands. Alignment remains a separate
+large workflow decision; extraction overlap is deduplicated into
+`rsomics-methyl`.
 
-ChIPseeker (annotatePeak), DiffBind (dba.count/contrast/analyze → DESeq2/edgeR backend),
-csaw (windowCounts sliding-window), methylKit (calculateDiffMeth DMR), bsseq (BSmooth
-smoothing), minfi (Illumina array — array-specific, lower priority than bsseq/methylKit).
+## Annotation, liftover, and differential analysis
 
-## Python: pyBigWig (read = `rsomics-bbi` ✓ / write = gap, blocked) · CrossMap (liftover = gap → future `rsomics-liftover`, domain-agnostic).
+- HOMER/ChIPseeker peak annotation belongs to `rsomics-peak annotate`, not
+  generic interval annotation.
+- Chain-based genome-coordinate conversion belongs to `rsomics-liftover`.
+- DiffBind/csaw comparison belongs to an evidence-backed differential
+  chromatin workflow if one is admitted later; it is not hidden in signal
+  plotting.
+- methylKit, bsseq, and minfi represent statistical or assay-specific
+  workflows beyond the initial methylation extraction product.
 
-## Cross-tool dedup signals (epigenomics)
+## Cross-product overlap decisions
 
-- **coverage/signal** (NOT duplicates — distinct outputs): deeptools bamCoverage
-  (`bam-signal`, normalized binned) vs MACS3 pileup (raw, gap) vs bedtools genomecov
-  (`bed-genomecov`) vs samtools depth (`bam-depth`, per-base).
-- **fragment size**: deeptools bamPEFragmentSize (sampling) vs samtools/picard (full-scan).
-  `rsomics-fragment-size` matches the full-scan oracle — a deliberate compat divergence from
-  deeptools.
-- **peak annotation**: HOMER annotatePeaks (CLI, gap) vs ChIPseeker (R, gap) — equivalent,
-  different ecosystem; a `rsomics-peak-annotate` would cover the CLI side. ≠ `rsomics-bed-annotate`.
-- **dedup**: MACS3 filterdup (BAM→BED/BEDPE, distinct output) vs samtools/picard markdup
-  (BAM→BAM, `rsomics-bam-markdup`) — not true duplicates.
-- **methylation extraction**: MethylDackel extract (`rsomics-methyldackel`) vs Bismark
-  extractor (gap) vs methylKit processBismarkAln (R) — equivalent purpose, different output
-  formats; pipelines pin one.
+| Capability | Decision |
+|---|---|
+| normalized BAM coverage track | `rsomics-signal track` |
+| raw peak-model pileup | private to `rsomics-peak call` unless exported as a general signal contract |
+| per-base BAM depth and coverage summary | `rsomics-bam` |
+| ATAC coordinate shift | `rsomics-signal filter --atac-shift` |
+| peak calling and refinement | `rsomics-peak` |
+| bigWig read/write and matrix access | private `rsomics-signal` modules |
+| peak annotation and count matrix | `rsomics-peak` |
+| methylation extraction | `rsomics-methyl` |
 
-## High-value new crates (prioritized)
-`rsomics-macs` (P0, all 14 subcommands — pure algorithm) · `rsomics-compute-gc-bias` ·
-`rsomics-bigwig-average` · `rsomics-peak-annotate` (HOMER/ChIPseeker CLI) ·
-`rsomics-liftover` (CrossMap) · `rsomics-alignment-sieve` (extend atac-shift).
-Plus: complete the 4 partial crates (bam-signal, methyldackel, compute-matrix, fingerprint).
+## Evidence state
 
-## Verification notes
-HIGH: deeptools (all 20, live per-tool docs), MACS3 (subcommands from source), SEACR/MethylDackel
-(source-level), Bioconductor pages, pyBigWig, CrossMap. MEDIUM: Bismark (docs nav, GPL no-source),
-HOMER (SSL errors — cached+partial), MACS3 bdgcmp exact mode names, deeptools computeMatrixOperations
-sub-op behaviour. Unconfirmed: rsomics-bbi bigBed read scope (only bigWig verified).
+The operation survey and product routing are complete. No epigenomics product
+is declared release-ready here. Each stable slice still requires pinned-oracle
+compatibility, representative CPU/memory/I/O measurements, a strict hot-path
+advantage, exact-head CI on the four native platform classes, and public API
+review.

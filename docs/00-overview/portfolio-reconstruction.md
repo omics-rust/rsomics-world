@@ -96,11 +96,11 @@ remain in capability pools:
 |---|---:|---|
 | `rsomics-bed` | 42 | BED/interval suite |
 | `rsomics-plink` | 42 | PLINK-style genotype analysis and genotype QC |
-| `rsomics-bam` | 38 | SAM/BAM/CRAM format operations |
+| `rsomics-bam` | 41 | SAM/BAM/CRAM format operations |
 | `rsomics-seq` | 34 | FASTA/FASTQ sequence utilities |
 | `rsomics-vcf` | 30 | VCF/BCF inspection, transformation, filtering, indexing, and format statistics |
 | `rsomics-sc` | 29 | stateful single-cell analysis workflow |
-| `rsomics-rnaseq-qc` | 26 | RSeQC/Picard RNA-seq QC |
+| `rsomics-rnaseq-qc` | 21 | RSeQC/Picard RNA-seq QC |
 | `rsomics-ecology` | 19 | community diversity, dissimilarity, ordination, association, and permutation analysis |
 | `rsomics-edger` | 17 | edgeR workflow |
 | `rsomics-popgen` | 14 | population variation, differentiation, admixture statistics, and selection scans |
@@ -115,7 +115,7 @@ remain in capability pools:
 | `rsomics-index` | 5 | bgzip/tabix and sequence index utilities |
 | `rsomics-metagenomics` | 5 | abundance-aware amplicon processing, taxonomic classification, and reports |
 | `rsomics-peak` | 5 | chromatin peak calling, annotation, and quantification |
-| `rsomics-count` | 2 | feature and read counting, including count-matrix collation |
+| `rsomics-count` | 4 | feature/read counting and length-aware count-matrix normalization |
 | `rsomics-annotation` | 4 | GFF/GTF, transcript, and functional-consequence annotation |
 | `rsomics-call` | 2 | alignment pileup, genotype likelihoods, and lightweight small-variant calling |
 | `rsomics-cnv` | 2 | BAF/LRR copy-number and chromosome-level polysomy analysis |

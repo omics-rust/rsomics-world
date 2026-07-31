@@ -126,6 +126,18 @@ def main() -> None:
         == "merge-into:rsomics-count",
         "count-matrix must remain an rsomics-count source asset",
     )
+    corrected_routes = {
+        "rsomics-bam-divide": "rsomics-bam",
+        "rsomics-bam-split-gene": "rsomics-bam",
+        "rsomics-bam-split-pe": "rsomics-bam",
+        "rsomics-fpkm-count": "rsomics-count",
+        "rsomics-tpm": "rsomics-count",
+    }
+    for name, target in corrected_routes.items():
+        require(
+            inventory_rows[name]["target_family_provisional"] == target,
+            f"{name} must remain routed to {target}",
+        )
     de_volcano = inventory_rows["rsomics-de-volcano"]
     require(
         de_volcano["area_provisional"] == "de-reporting"
