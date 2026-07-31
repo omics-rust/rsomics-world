@@ -212,6 +212,18 @@ output read-group header. SAM, BAM, and CRAM count and record output plus BAM
 output match the oracle. Exact-head CI run `30615973249` passes all four native
 targets and 17 oracle groups.
 
+Revision `3b4896ac19bd` adds repeatable `view -x/--remove-tag` and
+`--keep-tag`, including the samtools `-x ^TAG` keep shorthand. Values are
+unions of comma-separated two-byte tags. Filtering and counts inspect the
+original record; selected output preserves field order while removing the
+chosen tags or the complement. Keep and remove modes are mutually exclusive
+and fail non-zero when mixed, rather than copying
+[samtools 1.24's silent keep precedence](https://github.com/samtools/samtools/blob/1.24/sam_view.c#L232-L272).
+Tag-changing BAM output deliberately leaves the borrowed raw-copy path and
+uses typed records. SAM, BAM, and CRAM output plus BAM output match the oracle
+for each valid mode. Exact-head CI run `30616604980` passes all four native
+targets and 18 oracle groups.
+
 Standalone `view -n` remains unresolved. Samtools 1.24 emits the two tagged
 records from the current CRAM fixture with `view -n` but reports zero for
 `view -c -n`. In the
