@@ -2,8 +2,9 @@
 
 Status: boundary, upstream-operation, and historical-source audit complete.
 `rsomics-vcf` 0.1.0 is published with the complete first-release `head`,
-`query`, `validate`, `index`, and `view` slice. `rsomics-call` and
-`rsomics-cnv` do not yet exist and are not published.
+`query`, `validate`, `index`, and `view` slice. `rsomics-call` exists and is
+under implementation but remains unpublished. `rsomics-cnv` does not yet
+exist and is not published.
 
 ## Portfolio decision
 
@@ -706,12 +707,21 @@ the older consensus diploid model over PL records.
 ### Foundations and gates
 
 `rsomics-bamio` supplies validated SAM/BAM/CRAM streams and indexed access.
-`rsomics-pileup` revision `2b2cb7071381` supplies a fallible sorted projection
+`rsomics-pileup` revision `0d4414364d59` supplies a fallible sorted projection
 kernel, checked CIGAR and long-CIGAR projection, overlap handling, retry-safe
-borrowed columns, and bounded column state. BAQ remains the next shared item
-and is implemented only through the calling and BAM consensus consumers that
-need it. `rsomics-call` is the second concrete pileup consumer beside
-`rsomics-bam`; its consumer tests justify public API items one by one.
+borrowed columns, bounded column state, and source-isolated overlap state.
+BAQ remains the next shared item and is implemented only through the calling
+and BAM consensus consumers that need it. `rsomics-call` is the first
+implemented pileup consumer; `rsomics-bam` remains the second named consumer
+required before publication.
+
+`rsomics-call` revision `c3f6107bfe5b` owns the typed allele, ploidy,
+likelihood-site, and per-sample evidence model. It ports the MAQ error model
+with lazy depth tables, constructs multisample SNP sites from source-aware
+pileup columns, and matches HTSlib 1.24 error matrices plus bcftools 1.24
+reference-only and two-sample PL records. Exact-head CI `30638298190` passes
+native Linux and macOS on `x86_64` and `aarch64`. No command-line binary is
+exposed yet, and the repository remains unpublished.
 
 Calling likelihoods, allele selection, ploidy policy, priors, annotations, and
 VCF output remain in the product. `rsomics-stats` receives a numerical kernel

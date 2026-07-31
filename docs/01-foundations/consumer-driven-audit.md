@@ -57,7 +57,7 @@ APIs:
 | `rsomics-intervals` | `6783f67614ae` | reduced the public crate to a validated generic zero-based half-open interval value; moved BED parsing, collections, algebra, merge policy, and COITrees indexing into products | 0.3.0 published; exact-head four-native-target CI `30597681539`; downloaded archive checksum `40cf072a5fb5900d8e4049cb9b03f28ce5ddc51e51ef2b3fed7c5c89bfa88ccd`; `bed` and `annotation` pass consumer tests against the registry release |
 | `rsomics-kmer` | `4258ac881119` | made `k = 32` well-defined, added checked encode/decode/canonical operations and a fallible count-accumulator boundary, and removed its unused `rsomics-common` dependency | exact-head CI green; `rsomics-seq` is the first real product consumer; a second product contract and comparative performance remain |
 | `rsomics-seqio` | `d7e1c33bb600` | retained strict allocation-reusing FASTA/FASTQ streams, bounded gzip decode buffering, wrapped FASTQ support, and fail-loud gzip/BGZF handling while removing unconsumed legacy, forced-format, and compression-policy APIs | 0.3.0 published; exact-head four-native-target CI `30599703477`; downloaded archive checksum `d2dcd0fab1a5320834a9b0f9cba7bbdd9bfe6b26c9c4740650ac88d939fcfcc5`; `seq` and `fastq-preprocess` pass consumer tests against the registry release |
-| `rsomics-pileup` | `2b2cb7071381` | replaced infallible ingestion with checked reference, coordinate, CIGAR, sequence-span, long-CIGAR, and sorted-stream validation; removed the synthetic one-base span for zero-reference-span records; reused borrowed column buffers; made output callback failure retry the same pending column; and verified overlap adjustment through ordinary and indel-bearing mates | 0.2 API remains unpublished while consumers integrate; exact-head four-native-target CI `30635856887` passes, including a pinned live samtools 1.24 column oracle on Linux `x86_64`; BAQ, representative deep-coverage evidence, and two product-side contract tests remain |
+| `rsomics-pileup` | `0d4414364d59` | retains the checked projection and retry-safe borrowed-column contract, adds an opaque input-stream identity, and isolates mate-overlap state so equal read names from different inputs cannot be paired; `rsomics-call` consumes the source identity for multisample SNP likelihood construction | 0.2 API remains unpublished while consumers integrate; exact-head four-native-target CI `30637879412` passes, including the pinned live samtools 1.24 column oracle on Linux `x86_64`; the BAM consumer, BAQ, and representative ordinary/deep-coverage evidence remain |
 
 Publication does not freeze these APIs. Every later public item still requires
 two named product consumers and consumer-side tests.
@@ -202,20 +202,24 @@ feature assignment or annotation policy into the foundation. `rsomics-methyl`
 adds BAM/CRAM records, indexed regions, and bisulfite-specific aux-tag
 consumption while keeping methylation policy product-private.
 
-`rsomics-pileup` revision `2b2cb7071381` now supplies fallible ingestion,
+`rsomics-pileup` revision `0d4414364d59` now supplies fallible ingestion,
 low-allocation borrowed column views, retry-safe output callbacks, checked
 header and projection bounds, BAM long-CIGAR replacement, exact flag-filter
-semantics, and raw-reference-span behavior. Its live samtools 1.24 oracle
+semantics, raw-reference-span behavior, and source-isolated overlap state. Its
+live samtools 1.24 oracle
 covers matches, insertions, deletions, skips, padding, clipping, strand,
 head/tail markers, and ordinary or indel-bearing overlapping mates.
 
-This is a verified integration baseline, not a release. `rsomics-bam` and
-`rsomics-call` must each add consumer-side contract tests, BAQ must be driven
-by the calling and consensus operations that need it, and ordinary/deep
-coverage performance and memory must be measured before publication. Methyl
-extraction later provides the third consumer for checked columns and generic
-mate-overlap evidence; cytosine context and bisulfite calling do not enter the
-foundation.
+`rsomics-call` revision `c3f6107bfe5b` supplies the first product-side
+contract test: source and record metadata resolve samples, reference-only and
+two-sample SNP columns match bcftools/HTSlib 1.24 PL ordering and values, and
+missing BAM qualities fail neither silently nor by bounds panic. This is a
+verified integration baseline, not a release. `rsomics-bam` must still add the
+second product-side contract, BAQ must be driven by the calling and consensus
+operations that need it, and ordinary/deep coverage performance and memory
+must be measured before publication. Methyl extraction later provides the
+third consumer for checked columns and generic mate-overlap evidence;
+cytosine context and bisulfite calling do not enter the foundation.
 
 ### Analysis wave
 
