@@ -148,6 +148,7 @@ def route(name: str, upstreams: list[str], layer: str) -> tuple[str, str, str]:
         "rsomics-bed-expand": ("tabular", "rsomics-table"),
         "rsomics-bed-groupby": ("tabular", "rsomics-table"),
         "rsomics-bed-maskfasta": ("intervals", "rsomics-bed"),
+        "rsomics-bam-dict": ("sequence-indexing", "rsomics-index"),
         "rsomics-cell-filter": ("single-cell", "rsomics-sc"),
         "rsomics-fasta-index": ("sequence-indexing", "rsomics-index"),
         "rsomics-fasta-mask": ("intervals", "rsomics-bed"),

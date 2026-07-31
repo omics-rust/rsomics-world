@@ -31,7 +31,7 @@ rsomics-bam-consensus	0.1.0	B	True	f202e114caa95ef38cd80dc40df8ee6a3f8ceae7	clea
 rsomics-bam-coverage	0.1.1	B	True	e115cd0bceb0735e584d75125e7a6940e896d4fe	clean	3	276	0	0		True	True	True	False	samtools	samtools	alignment-formats	rsomics-bam	product	high	merge-into:rsomics-bam	-
 rsomics-bam-depad	0.1.0	B	True	de243fd7ccb7e0c313742b4e529fe95bad3833d4	clean	7	1131	0	0		True	True	True	True	samtools	samtools	alignment-formats	rsomics-bam	product	high	merge-into:rsomics-bam	-
 rsomics-bam-depth	0.1.2	B	True	cdc0a4ff70119edc193cd6bdfadaba6b6e190b61	clean	3	361	0	0		True	True	True	False	samtools	samtools	alignment-formats	rsomics-bam	product	high	merge-into:rsomics-bam	-
-rsomics-bam-dict	0.1.0	B	True	e3dd9a007965f9dd741882690d973b9e51044bf3	dirty	3	203	0	0		True	True	True	True	samtools	samtools	alignment-formats	rsomics-bam	product	high	merge-into:rsomics-bam	-
+rsomics-bam-dict	0.1.0	B	True	e3dd9a007965f9dd741882690d973b9e51044bf3	dirty	3	203	0	0		True	True	True	True	samtools	samtools	sequence-indexing	rsomics-index	product	medium	merge-into:rsomics-index	-
 rsomics-bam-divide	0.1.0	B	True	71504b275797ec30df2399ef2fbe03d1c9b1e6b5	clean	3	161	0	0		True	True	True	True	rseqc	samtools|rseqc	transcriptomics-qc	rsomics-rnaseq-qc	product	high	merge-into:rsomics-rnaseq-qc	-
 rsomics-bam-fasta	0.1.1	B	True	ba661eddd57b45f725751f02a288546442acd3e7	clean	3	221	0	0		True	True	True	False	samtools	samtools	alignment-formats	rsomics-bam	product	high	merge-into:rsomics-bam	-
 rsomics-bam-fingerprint	0.1.1	B	True	f771ac80fe0b5a12a637839d6cd4f0f1605001aa	clean	7	1006	0	0		True	True	True	True	deeptools	deeptools|scipy	epigenomic-signal	rsomics-signal	product	high	merge-into:rsomics-signal	-

@@ -19,7 +19,7 @@ operation will ship. It records:
 | Product | Source candidates | Dossier state |
 |---|---:|---|
 | `rsomics-annotation` | 2 | [audited](interval-annotation-index.md#rsomics-annotation) |
-| `rsomics-bam` | 39 | queued after the low-state pilots |
+| `rsomics-bam` | 38 | [audited](bam.md) |
 | `rsomics-bed` | 42 | [audited](interval-annotation-index.md#rsomics-bed) |
 | `rsomics-composition` | 10 | [audited](composition.md) |
 | `rsomics-count` | 2 | [audited](count.md) |
@@ -28,7 +28,7 @@ operation will ship. It records:
 | `rsomics-edger` | 17 | [audited](bulk-expression.md#rsomics-edger) |
 | `rsomics-fastq-preprocess` | 12 | [audited](sequence-fastq.md#rsomics-fastq-preprocess) |
 | `rsomics-fastq-qc` | 1 | [audited](sequence-fastq.md#rsomics-fastq-qc) |
-| `rsomics-index` | 4 | [audited](interval-annotation-index.md#rsomics-index) |
+| `rsomics-index` | 5 | [audited](interval-annotation-index.md#rsomics-index) |
 | `rsomics-liftover` | 1 | [audited](liftover.md) |
 | `rsomics-limma` | 16 | [audited](bulk-expression.md#rsomics-limma) |
 | `rsomics-metagenomics` | 5 | [audited](metagenomics-sketch.md#rsomics-metagenomics) |

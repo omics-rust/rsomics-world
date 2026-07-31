@@ -55,9 +55,10 @@ ticks the boxes:
 
 ## What success looks like
 
-A user runs `cargo install rsomics-bwa rsomics-samtools rsomics-bcftools`,
-gets statically-linked binaries that match or beat the C originals on a
-standard benchmark, and writes a pipeline in 30 lines of Rust that previously
-required Snakemake plus six Conda envs.
+A user installs coherent products such as `rsomics-minimap2`, `rsomics-bam`,
+and `rsomics-vcf`, gets binaries that match the relevant upstream behavior and
+beat it on a representative performance or resource gate, and writes a
+pipeline in 30 lines of Rust that previously required Snakemake plus six Conda
+environments.
 
 We are not there. This repo is the plan to get there.

@@ -1,16 +1,17 @@
-# bed-* dedup: per-op canonical decisions (#89)
+# Historical bed-* behavioral dedup evidence (#89)
 
 Evidence: 3-way behavioral diff (bedtools 2.31.1 vs `bed-utils` subcmd vs standalone
 `rsomics-bed-<op>`) on a representative fixture, 2026-05-30. **Nothing in the bed family
 is published**, so retiring a duplicate is a clean local `rm`, no crates.io yank.
 
-**Canonical form = the standalone per-op crate** (project principle: one op = one binary,
-not a multitool). `bed-utils` is the bedtools-clone anti-pattern to retire. BUT the evidence
-shows bed-utils is *more correct* than the standalone for 3 ops — those standalones must be
-**fixed first** so retiring bed-utils loses no correct code. Both directions of divergence
-confirm the user's rule: never yank by op-name alone.
+This document records which historical implementation supplied the stronger
+operation-level behavior. Its former one-operation-one-crate boundary is
+superseded by the coherent [`rsomics-bed`
+product](../10-products/interval-annotation-index.md#rsomics-bed). Standalone
+repositories and `bed-utils` are both source assets; selected code, fixtures,
+and benchmarks move into modules of that product.
 
-## A. Standalone already canonical — retire bed-utils' copy (no fix needed)
+## A. Standalone supplied the stronger behavior
 sort · merge · subtract · complement · flank · slop · cluster · map · makewindows ·
 genomecov · fisher · multiinter · unionbedg · shift · window · intersect · groupby ·
 **coverage** (standalone is the *only* correct one — bed-utils `coverage-hist` is a different
@@ -21,8 +22,8 @@ op) · **nuc** (standalone exact; bed-utils has last-digit float errors) · **sp
 **summary** (standalone only; bed-utils lacks it) · jaccard (both truncate float vs bedtools;
 standalone closer).
 
-Our extensions with no bedtools equivalent (standalone canonical): count · unique · midpoint ·
-len · total-bp · stats · to-gff.
+Extensions with no bedtools equivalent in the standalone source: count ·
+unique · midpoint · len · total-bp · stats · to-gff.
 
 ## B. Standalone must be FIXED before bed-utils retires (bed-utils more correct here)
 1. ~~**`rsomics-bed-reldist` — real binning BUG.**~~ ✅ **DONE 2026-05-30.** Verified the
@@ -74,7 +75,8 @@ and dropped it from REGISTRY.md (added bed-maskfasta). The bed-utils inventions 
 chroms-sizes, promoters, rename, resize, tail, to-wig, total-span, union) retired with it —
 not grounded in any surveyed upstream; rebuild from a real spec if demand ever appears.
 
-**#89 DONE.** The per-op crates are the canonical shape; bed-utils was the lone structural
-dup. Correctness-preserving consolidation — every retained op is byte/field-verified vs
-bedtools 2.31.1, and the 3 latent bugs bed-utils' existence had masked (reldist binning,
-closest ties/distance, getfasta wrapping) are now fixed with real bedtools differential tests.
+**#89 historical dedup pass complete.** It established the stronger source
+asset for each compared operation and exposed three latent bugs: reldist
+binning, closest ties/distance, and getfasta wrapping. Those fixes and
+differential fixtures remain useful migration evidence; the per-operation
+repositories are not revived as public products.

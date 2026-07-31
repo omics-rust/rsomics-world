@@ -95,7 +95,7 @@ remain in capability pools:
 |---|---:|---|
 | `rsomics-vcf` | 47 | VCF/BCF operations and bcftools-like suite |
 | `rsomics-bed` | 42 | BED/interval suite |
-| `rsomics-bam` | 39 | SAM/BAM/CRAM format operations |
+| `rsomics-bam` | 38 | SAM/BAM/CRAM format operations |
 | `rsomics-seq` | 34 | FASTA/FASTQ sequence utilities |
 | `rsomics-sc` | 29 | stateful single-cell analysis workflow |
 | `rsomics-plink` | 31 | PLINK-style genotype analysis |
@@ -111,7 +111,7 @@ remain in capability pools:
 | `rsomics-phylo` | 11 | alignment trimming, evolutionary distance, tree inference, comparison, and measures |
 | `rsomics-structure` | 9 | PDB and protein-structure analysis |
 | `rsomics-composition` | 10 | compositional transforms, zero handling, and inference |
-| `rsomics-index` | 4 | bgzip/tabix and sequence index utilities |
+| `rsomics-index` | 5 | bgzip/tabix and sequence index utilities |
 | `rsomics-metagenomics` | 5 | abundance-aware amplicon processing, taxonomic classification, and reports |
 | `rsomics-peak` | 5 | chromatin peak calling, annotation, and quantification |
 | `rsomics-count` | 2 | feature and read counting, including count-matrix collation |

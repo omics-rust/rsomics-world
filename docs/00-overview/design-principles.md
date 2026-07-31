@@ -55,10 +55,12 @@ against (a) the C original via FFI or subprocess and (b) a reference
 dataset (1000 Genomes chr22, PBMC 10k, etc.). PRs that change perf-critical
 code show the delta.
 
-## 9. CLI and library are the same crate, or sibling crates
+## 9. One installable product per workflow family
 
-`rsomics-vcf` is the library. `rsomics-bcftools` is the CLI built on top
-(if needed). The library never `println!`s or `std::process::exit`s.
+A Layer B crate may expose a library and one binary with many subcommands.
+The public boundary follows the shared data model, workflow, and installation
+identity rather than the upstream executable name. Libraries never `println!`
+or terminate the process.
 
 ## 10. Document for the biologist, not the compiler
 

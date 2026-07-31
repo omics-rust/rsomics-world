@@ -4,9 +4,9 @@ Status: the BED slice and the annotation core plus sequence-extraction slice
 are verified. Index implementation has not started.
 
 Routing corrections move table aggregation to `rsomics-table`, SEACR to
-`rsomics-peak`, FASTA masking to `rsomics-bed`, and FASTA indexing to
-`rsomics-index`. The resulting source pool has 42 BED, two annotation, and four
-index candidates.
+`rsomics-peak`, FASTA masking to `rsomics-bed`, and FASTA indexing plus
+sequence-dictionary creation to `rsomics-index`. The resulting source pool has
+42 BED, two annotation, and five index candidates.
 
 ## Shared design
 
@@ -195,14 +195,18 @@ User-facing compression and indexing workflows:
 - `tabix query`
 - `tabix list`
 - `fasta-index`
+- `dict`
 
 The source assets are `rsomics-bgzip`, `rsomics-tabix`,
-`rsomics-fasta-index`, and `rsomics-fm-search`.
+`rsomics-fasta-index`, `rsomics-fm-search`, and `rsomics-bam-dict`.
 
 The first release slice is BGZF compression plus tabix build/query/list.
 `fasta-index` follows the FASTA reader and random-access contract in
 `rsomics-seqio`. FM search remains deferred until its product fit and second
-consumer are concrete.
+consumer are concrete. `dict` creates a Picard/samtools-compatible sequence
+dictionary from FASTA and belongs beside the other reference indexing
+operations; the historical crate name reflected its source binary rather than
+its user workflow.
 
 The current bgzip/tabix path uses bundled native libdeflate and is therefore an
 FFI-backed dependency boundary. Product documentation and performance evidence
