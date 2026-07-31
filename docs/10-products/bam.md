@@ -166,6 +166,21 @@ the first slice rather than designed independently.
 The 41 routed repositories are implementation and evidence inputs, not target
 crate boundaries. Exact revisions below are the audited source snapshots.
 
+The retired top-level packages were also recovered and checksum-verified:
+
+- `rsomics-bam 0.1.0`, source revision
+  `80f6186da312ccca7a5d2c6930628a7d77bb55e0`, archive SHA-256
+  `0de37d0acc3dfdd2b2824b72ef285972ceabb37e1445b3d0a7cacb371f4cca89`;
+- `rsomics-bam 0.2.0`, source revision
+  `bff7af027e7bbe7a6d77c240a574dd8b859de556`, archive SHA-256
+  `bf9a41381eeda74ca12ee1ed0d244d7e4e815ecc35518f53202d6f709b794239`.
+
+Both packages implement only `view -c` over rust-htslib plus synthetic count
+tests and a benchmark seed. The 0.2 compatibility suite skips when samtools or
+the network fixture is unavailable. Preserve the fixtures and count benchmark;
+discard the incomplete command shell, inherited common flags, and claims of
+SAM/CRAM support.
+
 | Asset and revision | Disposition | Target |
 |---|---|---|
 | `rsomics-bam-addreplacerg` `26354a3724f7f2e32bdb4d686b3ac13b59eeb6b4` | Refactor then merge | `addreplacerg`; retain tag and header fixtures |

@@ -112,7 +112,8 @@ Rejected public boundary:
 
 ## P2 — alignment and variation
 
-- [ ] Recover the archived `rsomics-bam 0.1.0/0.2.0` packages as source assets.
+- [x] Recover and classify the archived `rsomics-bam 0.1.0/0.2.0` packages
+      as test and benchmark assets.
 - [x] Classify all BAM and VCF historical implementations.
 - [x] Define BAM/VCF format-operation boundaries versus RNA-seq QC and signal.
 - [ ] Review `bamio`, `pileup`, and `intervals` APIs.
