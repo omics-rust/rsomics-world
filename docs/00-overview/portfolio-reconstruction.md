@@ -129,6 +129,9 @@ manifest is consumer policy, while a real workflow engine would be a new
 product with no supporting implementation in the source pool.
 The expression review moved count-matrix collation into `rsomics-count` and
 kept simple significance-category annotation product-local.
+The structure review consolidated nine coordinate-analysis binaries into
+`rsomics-structure` and internalized `rsomics-pdb-core`: eight historical
+dependents become one target-product consumer after consolidation.
 
 The official suite shapes support these boundaries:
 

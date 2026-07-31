@@ -72,7 +72,7 @@ rsomics-barnard-exact	0.1.0	B	True	192fdee9d07bae97c113b02e4a3ed8d03b16e646	clea
 rsomics-bartlett-test	0.1.1	B	True	37ea08baba8c8024e15745aa387cc17a2235328e	clean	5	617	0	0		True	True	True	True	scipy	scipy	statistics	rsomics-stats	capability-pool	high	merge-or-core-review	-
 rsomics-bayes-mvs	0.1.1	B	True	882866dbae5d4517d4c88e304cfeb9eac13a1818	clean	8	2631	0	0		True	True	True	True	scipy	scipy	statistics	rsomics-stats	capability-pool	high	merge-or-core-review	-
 rsomics-bbduk	0.1.1	B	True	01ca438ac21dd38edcaf0c8b01f0092652640cf8	clean	6	1324	0	0		True	True	True	True	bbduk	bbduk	read-preprocessing	rsomics-fastq-preprocess	product	high	merge-into:rsomics-fastq-preprocess	-
-rsomics-bbi	0.1.2	A	True	3d85c7f0892b249277849b90961fa43ff82fa866	clean	8	1893	6	1	rsomics-signal	True	False	False	True	deeptools	deeptools	foundation	rsomics-bbi	foundation	high	keep-core-candidate	-
+rsomics-bbi	0.1.2	A	True	3d85c7f0892b249277849b90961fa43ff82fa866	clean	8	1893	6	1	rsomics-signal	True	False	False	True	deeptools	deeptools	foundation	rsomics-bbi	foundation	high	internalize-or-merge-review	-
 rsomics-bed-annotate	0.1.2	B	True	551632db1dceaa4918f9f5e7ea79527af6f979d5	clean	3	693	0	0		True	True	True	False	bedtools	bedtools	intervals	rsomics-bed	product	high	merge-into:rsomics-bed	-
 rsomics-bed-closest	0.1.3	B	True	e85ed1339165d2552f86223190975175cbe4318a	clean	3	353	0	0		True	True	True	False	bedtools	bedtools	intervals	rsomics-bed	product	high	merge-into:rsomics-bed	-
 rsomics-bed-cluster	0.1.1	B	True	b63b75567ba729c016a4baabbbc3bb28bad0718e	clean	3	445	0	0		True	True	True	True	bedtools	bedtools	intervals	rsomics-bed	product	high	merge-into:rsomics-bed	-
@@ -161,7 +161,7 @@ rsomics-count-matrix	0.1.1	B	True	9a92e84f4470baa5d62a6ebcde81d56e452ee86d	clean
 rsomics-coverage-core	0.1.0	A	True	2dd61704c330fb53267a55b8bec9216559e04d9c	clean	1	183	1	1	rsomics-signal	True	False	False	True	deeptools	deeptools	foundation	rsomics-coverage-core	foundation	high	internalize-or-merge-review	-
 rsomics-cpm	0.1.2	B	True	128e1f0e61070c7844b1fb74e2292280aff21216	clean	3	394	0	0		True	True	True	True	edger	edger	bulk-expression	rsomics-edger	product	high	merge-into:rsomics-edger	-
 rsomics-cramervonmises	0.1.1	B	True	9b526716531c36c1f9f3438ac4b5fff49116210f	clean	6	795	0	0		True	True	True	True	scipy	scipy	statistics	rsomics-stats	capability-pool	high	merge-or-core-review	-
-rsomics-csvio	0.4.5	A	True	0fccfb8cc2085a117ae88dc4b993c8b71b9c693b	clean	9	1348	9	1	rsomics-table	True	False	False	True	csvtk	csvtk	foundation	rsomics-csvio	foundation	high	keep-core-candidate	-
+rsomics-csvio	0.4.5	A	True	0fccfb8cc2085a117ae88dc4b993c8b71b9c693b	clean	9	1348	9	1	rsomics-table	True	False	False	True	csvtk	csvtk	foundation	rsomics-csvio	foundation	high	internalize-or-merge-review	-
 rsomics-cusp	0.1.0	B	True	7bc259333196d35b6a8eb287efde7854cf8011d8	clean	7	668	0	0		True	True	True	True	emboss	emboss	sequence-utilities	rsomics-seq	product	high	merge-into:rsomics-seq	-
 rsomics-cut-tree	0.1.2	B	True	373bf1ff1fec80cca0cd7b27ec694254f3fd3ee9	clean	4	416	0	0		True	True	True	True	scipy	scipy	statistics	rsomics-stats	capability-pool	high	merge-or-core-review	-
 rsomics-dag	0.1.1	B	True	45499c43e358d02b66bccab7bb4acd31da728293	dirty	2	319	0	0		True	True	True	True	networkx	networkx	graph-algorithms	rsomics-graph	capability-pool	high	merge-or-core-review	-
@@ -187,11 +187,11 @@ rsomics-digraph-metrics	0.1.2	B	True	8baa13866710f99f0549bb4f678bc354a4db4bea	di
 rsomics-digraph-properties	0.1.2	B	True	1a4079c5349c8f05d7a5d79e8becba87575532eb	dirty	3	501	0	0		True	True	True	True	networkx	networkx	graph-algorithms	rsomics-graph	capability-pool	high	merge-or-core-review	-
 rsomics-directed-components	0.1.1	B	True	60bd1323bbe5503a154592efcf7280d5de50f772	clean	6	454	0	0		True	True	True	True	networkx	networkx	graph-algorithms	rsomics-graph	capability-pool	high	merge-or-core-review	-
 rsomics-dispersion	0.1.1	B	True	7b006c05b55e4fe70c0fb0985ca012ae9b1d967d	clean	2	259	0	0		True	True	True	True	networkx	networkx	graph-algorithms	rsomics-graph	capability-pool	high	merge-or-core-review	-
-rsomics-distance	0.1.0	A	True	eb66c45999cbefc3b227c383cc1eb1639c48cdba	clean	1	284	5	1	rsomics-ecology	False	False	False	False	scikit-bio	scikit-bio	foundation	rsomics-distance	foundation	high	keep-core-candidate	-
+rsomics-distance	0.1.0	A	True	eb66c45999cbefc3b227c383cc1eb1639c48cdba	clean	1	284	5	1	rsomics-ecology	False	False	False	False	scikit-bio	scikit-bio	foundation	rsomics-distance	foundation	high	internalize-or-merge-review	-
 rsomics-dominance	0.1.1	B	True	004fa4351c82bbc7d4f22ffd49bdd008a83bdd19	clean	3	432	0	0		True	True	True	True	networkx	networkx	graph-algorithms	rsomics-graph	capability-pool	high	merge-or-core-review	-
 rsomics-dssp	0.1.2	B	True	723668553d88c0605fd6fc6bfb8371e5bb170aba	clean	6	1024	0	0		True	True	True	True			protein-structure	rsomics-structure	product	medium	merge-into:rsomics-structure	-
 rsomics-durbin-watson	0.1.0	B	True	95a5866381de1e95d131fedde07469d6fc269ac6	clean	8	489	0	0		True	True	True	True	statsmodels	statsmodels	statistics	rsomics-stats	capability-pool	high	merge-or-core-review	-
-rsomics-ebayes-core	0.1.0	A	True	4b45b4244646f7ca5ef281656f12d1e953c205fb	clean	1	201	3	1	rsomics-limma	False	False	False	False	limma	limma	foundation	rsomics-ebayes-core	foundation	high	keep-core-candidate	-
+rsomics-ebayes-core	0.1.0	A	True	4b45b4244646f7ca5ef281656f12d1e953c205fb	clean	1	201	3	1	rsomics-limma	False	False	False	False	limma	limma	foundation	rsomics-ebayes-core	foundation	high	internalize-or-merge-review	-
 rsomics-ecdf	0.1.0	B	True	37b603a9a64bcf06354d4fa70efd447a09ce0903	clean	7	808	0	0		True	True	True	True	scipy	scipy	statistics	rsomics-stats	capability-pool	high	merge-or-core-review	-
 rsomics-edge-betweenness	0.1.2	B	True	89ad2ba4e304953fba95eb66afa3dafc0a5354b0	dirty	5	423	0	0		True	True	True	True	networkx	networkx	graph-algorithms	rsomics-graph	capability-pool	high	merge-or-core-review	-
 rsomics-edge-filter	0.1.1	B	True	01bf5d03bd96a532f7b85fa9a888053f500b6a5a	clean	2	624	0	0		True	True	False	True	scikit-image	scipy|scikit-image	bioimage-review	rsomics-image	capability-pool	high	merge-or-core-review	-
@@ -258,7 +258,7 @@ rsomics-fligner	0.1.1	B	True	2eb9f43e357f56c035f46f7c7a3ff7ee12512021	clean	7	93
 rsomics-fm-index	0.1.0	A	True	3f81d6b52fa870f48ae88742b4f21b24015be807	dirty	1	192	1	1	rsomics-index	False	False	False	False			foundation	rsomics-fm-index	foundation	high	internalize-or-merge-review	-
 rsomics-fm-search	0.1.1	B	True	6daef14ea73d9510f9d5060bd604ed0795686605	clean	3	166	0	0		True	True	True	False			sequence-indexing	rsomics-index	product	medium	merge-into:rsomics-index	-
 rsomics-fpkm-count	0.1.0	B	True	370954dae656dce4d1f5a60fdd121bca57b0baa8	clean	7	570	0	0		True	True	True	True	rseqc	rseqc	transcriptomics-qc	rsomics-rnaseq-qc	product	high	merge-into:rsomics-rnaseq-qc	-
-rsomics-fqgz	0.1.0	A	True	c5e7de12d21e72cdcc3b62f84302653c34b5dc54	dirty	1	171	6	1	rsomics-fastq-preprocess	False	False	False	True	seqkit|fastp	seqkit|fastp	foundation	rsomics-fqgz	foundation	high	keep-core-candidate	-
+rsomics-fqgz	0.1.0	A	True	c5e7de12d21e72cdcc3b62f84302653c34b5dc54	dirty	1	171	6	1	rsomics-fastq-preprocess	False	False	False	True	seqkit|fastp	seqkit|fastp	foundation	rsomics-fqgz	foundation	high	internalize-or-merge-review	-
 rsomics-fragment-size	0.1.1	B	True	cb208d2c427d19c0e5c7cb4b4388adb629d81d7b	clean	3	394	0	0		True	True	True	True	samtools|deeptools|picard	samtools|deeptools|picard	epigenomic-signal	rsomics-signal	product	high	merge-into:rsomics-signal	-
 rsomics-freesasa	0.2.1	B	True	53fe8beaa06de9c7124342adc67e415b5c7425dc	clean	12	1864	0	0		True	True	True	True	freesasa	freesasa	protein-structure	rsomics-structure	product	high	merge-into:rsomics-structure	-
 rsomics-freq-hist	0.1.0	B	True	e4ab957cab104f709fa33b22e86622c98c64bc5e	clean	5	550	0	0		True	True	True	True	scipy	scipy	statistics	rsomics-stats	capability-pool	high	merge-or-core-review	-
@@ -383,7 +383,7 @@ rsomics-pcoa	0.1.2	B	True	39e707636e94449edbbbc10e4ed5984699962ddd	clean	4	539	0
 rsomics-pcoa-biplot	0.1.1	B	True	b37b387592f5c66276cc8f7a6de2083b3d7e3d6e	clean	4	773	0	0		True	True	False	True	scikit-bio	scipy|scikit-bio	ecology	rsomics-ecology	product	high	merge-into:rsomics-ecology	-
 rsomics-pdb-chain	0.1.1	B	True	91ee3115f9467ef215962e44d4d232e329d2cb3d	clean	3	224	0	0		True	True	True	False			protein-structure	rsomics-structure	product	medium	merge-into:rsomics-structure	-
 rsomics-pdb-contacts	0.1.2	B	True	e79e2ae68bf5b7439228573deefdb4e6bc6bd5eb	clean	7	805	0	0		True	True	True	True	biopython	biopython	protein-structure	rsomics-structure	product	high	merge-into:rsomics-structure	-
-rsomics-pdb-core	0.1.0	A	True	7452a78326384fc9307e5234f40cc2362d9fb2be	clean	1	552	8	1	rsomics-structure	False	False	False	False	biopython	biopython	foundation	rsomics-pdb-core	foundation	high	keep-core-candidate	-
+rsomics-pdb-core	0.1.0	A	True	7452a78326384fc9307e5234f40cc2362d9fb2be	clean	1	552	8	1	rsomics-structure	False	False	False	False	biopython	biopython	foundation	rsomics-pdb-core	foundation	high	internalize-or-merge-review	-
 rsomics-pdb-dihedrals	0.1.2	B	True	91b1d7c6cc8182261d3466dfa227c277be715e95	clean	6	435	0	0		True	True	False	True	biopython	biopython	protein-structure	rsomics-structure	product	high	merge-into:rsomics-structure	-
 rsomics-pdb-geometry	0.1.1	B	True	efc99601e1f9e6b5c449d491134c262309310441	clean	6	813	0	0		True	True	False	True	biopython	biopython	protein-structure	rsomics-structure	product	high	merge-into:rsomics-structure	-
 rsomics-pdb-hsexposure	0.1.2	B	True	2f52a2e42df262ea713190664d5cec0573169076	clean	5	543	0	0		True	True	True	True	biopython	biopython	protein-structure	rsomics-structure	product	high	merge-into:rsomics-structure	-
@@ -393,7 +393,7 @@ rsomics-peak-count	0.1.2	B	True	147ed9b4a3d2d58210d28b8be268ac25bd537b07	clean	3
 rsomics-percentile	0.1.1	B	True	d606bc415d8240d27bba55154aff3ea5dd58ea12	clean	5	558	0	0		True	True	True	True	scipy	scipy	statistics	rsomics-stats	capability-pool	high	merge-or-core-review	-
 rsomics-permanova	0.1.3	B	True	c5f243cee07587afb02ad4b726aa51a673775eff	clean	5	603	0	0		True	True	True	True	scikit-bio	scikit-bio|biopython	ecology	rsomics-ecology	product	high	merge-into:rsomics-ecology	-
 rsomics-permdisp	0.1.3	B	True	bd2479cb86fcf5e85c86f14c0742b946c6ba2fcc	clean	7	851	0	0		True	True	True	True	scikit-bio	scipy|scikit-bio|biopython	ecology	rsomics-ecology	product	high	merge-into:rsomics-ecology	-
-rsomics-pgen	0.3.1	A	True	5ae83bddf674836553018308dc5d499a9997b26b	clean	6	554	22	1	rsomics-plink	False	False	False	False	plink	plink	foundation	rsomics-pgen	foundation	high	keep-core-candidate	-
+rsomics-pgen	0.3.1	A	True	5ae83bddf674836553018308dc5d499a9997b26b	clean	6	554	22	1	rsomics-plink	False	False	False	False	plink	plink	foundation	rsomics-pgen	foundation	high	internalize-or-merge-review	-
 rsomics-phydiv	0.1.2	B	True	46cdf30219f394d353c417604247bd4ab3abba10	clean	3	675	0	0		True	True	True	True	scikit-bio	scikit-bio	ecology	rsomics-ecology	product	high	merge-into:rsomics-ecology	-
 rsomics-phylo-tree	0.1.0	A	True	25a10b1eac045ebb9220fa50630544e1f4c40591	clean	1	259	9	2	rsomics-ecology|rsomics-phylo	False	False	False	False			foundation	rsomics-phylo-tree	foundation	high	keep-core-candidate	-
 rsomics-pileup	0.1.0	A	True	5bd34dde15c5bc94e44d27a1ede2e9f9bf3e5fc2	dirty	5	1026	2	2	rsomics-bam|rsomics-vcf	False	False	False	True	samtools	samtools	foundation	rsomics-pileup	foundation	high	keep-core-candidate	-
@@ -502,7 +502,7 @@ rsomics-seq-dist	0.1.1	B	True	798e8d2be02e91842bd045338f05bb59065332ba	clean	7	8
 rsomics-seq-grep	0.1.1	B	True	5bef2f6f9009b47c188262f96b0b6a5976bc3a84	clean	8	1306	0	0		True	True	True	True	seqkit	seqkit	sequence-utilities	rsomics-seq	product	high	merge-into:rsomics-seq	-
 rsomics-seq-stats	0.1.1	B	True	895a28e50f4cab0df247921afced966a15bbd0a5	clean	3	169	0	0		True	True	True	False	seqkit	seqkit	sequence-utilities	rsomics-seq	product	high	merge-into:rsomics-seq	-
 rsomics-seqio	0.3.0	A	True	b23cf8ad29fd06c84aaaa0c480ba1da8cff01e7d	clean	6	1717	8	3	rsomics-bam|rsomics-fastq-preprocess|rsomics-seq	True	False	True	True	fastp	fastp	foundation	rsomics-seqio	foundation	high	keep-core-candidate	-
-rsomics-seqstats	0.2.0	A	True	722adcaa4e7be4370267aea75b29d46339c9b0a0	clean	1	280	2	1	rsomics-seq	False	False	False	True	seqkit	seqkit	foundation	rsomics-seqstats	foundation	high	keep-core-candidate	-
+rsomics-seqstats	0.2.0	A	True	722adcaa4e7be4370267aea75b29d46339c9b0a0	clean	1	280	2	1	rsomics-seq	False	False	False	True	seqkit	seqkit	foundation	rsomics-seqstats	foundation	high	internalize-or-merge-review	-
 rsomics-shapiro	0.1.1	B	True	8f10bb350680a25b5f367e5c2a5ba855a5599fb4	clean	6	640	0	0		True	True	True	True	scipy	scipy	statistics	rsomics-stats	capability-pool	high	merge-or-core-review	-
 rsomics-sigmaclip	0.1.0	B	True	3b1dae69307529f1a03d72a60b78404ec1e1cd1d	clean	6	399	0	0		True	True	True	True	scipy	scipy	statistics	rsomics-stats	capability-pool	high	merge-or-core-review	-
 rsomics-silhouette	0.1.1	B	True	4ef1af55e0bb98345ce90f5f8a3c4a1f56503b75	clean	7	803	0	0		True	True	True	True	scikit-learn	scipy|scikit-learn	machine-learning	rsomics-ml	capability-pool	high	merge-or-core-review	-
@@ -563,7 +563,7 @@ rsomics-vcf-consensus	0.1.1	B	True	bb016cf71d28ffa12562e875e0c5db7a431d148c	clea
 rsomics-vcf-contrast	0.1.1	B	True	c029a24cf4792dd4640247c031973f1eaafc2874	clean	5	1210	0	0		True	True	True	True	bcftools	samtools|bcftools	variation	rsomics-vcf	product	high	merge-into:rsomics-vcf	-
 rsomics-vcf-convert	0.1.1	B	True	0322987e3f53b2d4099bede46d6b5df3f4f5efe0	clean	3	526	0	0		True	True	True	True	bcftools	samtools|bcftools	variation	rsomics-vcf	product	high	merge-into:rsomics-vcf	-
 rsomics-vcf-csq	0.1.1	B	True	0cbbba412ee08b48ff83ff172e5aadb4b85555d4	clean	6	1119	0	0		True	True	True	True	tabix|samtools|bcftools	tabix|samtools|bcftools	variation	rsomics-vcf	product	high	merge-into:rsomics-vcf	-
-rsomics-vcf-expr	0.1.1	A	True	94722777e8e1851182cb4c5ccf0b3ae9127eca2f	clean	3	1296	2	1	rsomics-vcf	False	False	False	True	bcftools	bcftools	foundation	rsomics-vcf-expr	foundation	high	keep-core-candidate	-
+rsomics-vcf-expr	0.1.1	A	True	94722777e8e1851182cb4c5ccf0b3ae9127eca2f	clean	3	1296	2	1	rsomics-vcf	False	False	False	True	bcftools	bcftools	foundation	rsomics-vcf-expr	foundation	high	internalize-or-merge-review	-
 rsomics-vcf-extract	0.1.2	B	True	3bca5d5a6d2dbec187a00a29620c8c04b2fabe0d	clean	3	466	0	0		True	True	True	True	vcftools	bcftools|vcftools	variation	rsomics-vcf	product	high	merge-into:rsomics-vcf	-
 rsomics-vcf-fill-tags	0.1.2	B	True	a28b803cebc218468fd53280f5166ea76198f03a	clean	8	1097	0	0		True	True	True	True	bcftools	samtools|bcftools	variation	rsomics-vcf	product	high	merge-into:rsomics-vcf	-
 rsomics-vcf-filter	0.2.1	B	True	93d91c114d2ce0fc31a6b1c7176280f558c06f3c	clean	3	380	0	0		True	True	True	False	bcftools	bcftools	variation	rsomics-vcf	product	high	merge-into:rsomics-vcf	-
@@ -603,7 +603,7 @@ rsomics-vcf-to-bed	0.1.1	B	True	50e87e5821cdc498e950f6e412d6b25fb016c944	clean	3
 rsomics-vcf-trio-stats	0.1.1	B	True	88a1dd5304482203734beae25588084dafe881f3	clean	6	1332	0	0		True	True	True	True	bcftools	samtools|bcftools	variation	rsomics-vcf	product	high	merge-into:rsomics-vcf	-
 rsomics-vcf-tstv-strat	0.1.2	B	True	f1697b722b7a1d99c6393a82ca924f69773e4c38	clean	3	537	0	0		True	True	True	True	vcftools	bcftools|vcftools	variation	rsomics-vcf	product	high	merge-into:rsomics-vcf	-
 rsomics-vcf-utils	0.1.1	B	True	61287add0d662df97a4808ae05c473791b922ec4	clean	34	1560	0	0		True	True	True	False	bcftools	bcftools	variation	rsomics-vcf	product	high	keep-as-consolidation-seed	-
-rsomics-vcf-valfmt	0.1.1	A	True	90c50e3713342c4925a45c1fbad33354efeb9e54	clean	2	317	2	1	rsomics-vcf	False	False	False	True	samtools|bcftools	samtools|bcftools	foundation	rsomics-vcf-valfmt	foundation	high	keep-core-candidate	-
+rsomics-vcf-valfmt	0.1.1	A	True	90c50e3713342c4925a45c1fbad33354efeb9e54	clean	2	317	2	1	rsomics-vcf	False	False	False	True	samtools|bcftools	samtools|bcftools	foundation	rsomics-vcf-valfmt	foundation	high	internalize-or-merge-review	-
 rsomics-vcf-validate	0.1.0	B	True	e6fef96f3cdfde5d5740d57cb8c5185cfc5285ff	dirty	3	199	0	0		True	True	True	False	bcftools	bcftools	variation	rsomics-vcf	product	high	merge-into:rsomics-vcf	-
 rsomics-vcf-variant-distance	0.1.1	B	True	b9a86dd089539bd9d3147acae72f3b19bfe8015a	clean	3	658	0	0		True	True	True	True	bcftools	samtools|bcftools	variation	rsomics-vcf	product	high	merge-into:rsomics-vcf	-
 rsomics-vcf-view	0.2.1	B	True	d0c187ec2c85033f721ac135be874cf0aa48eb02	clean	3	764	0	0		True	True	True	False	bcftools	bcftools	variation	rsomics-vcf	product	high	merge-into:rsomics-vcf	-

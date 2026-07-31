@@ -43,7 +43,7 @@ operation will ship. It records:
 | `rsomics-seq` | 34 | [audited](sequence-fastq.md#rsomics-seq) |
 | `rsomics-signal` | 15 | queued |
 | `rsomics-sketch` | 1 | [audited](metagenomics-sketch.md#rsomics-sketch) |
-| `rsomics-structure` | 9 | queued |
+| `rsomics-structure` | 9 | [audited](structure.md) |
 | `rsomics-table` | 16 | [audited](table.md) |
 | `rsomics-vcf` | 47 | queued after the low-state pilots |
 

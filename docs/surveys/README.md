@@ -56,7 +56,7 @@ principle).
 - `04-single-cell.md` — cellranger/STARsolo/alevin-fry, scanpy, Seurat, scran/scuttle
 - `05-epigenomics.md` — deeptools, MACS3, SEACR, MethylDackel, Bismark, HOMER
 - `06-metagenomics.md` — kraken2, bracken, metabat2, dada2, vsearch, mmseqs2, vegan/phyloseq
-- `07-proteomics-structure.md` — (thin: pdb/DSSP/SASA/TM-align; mass-spec out of scope)
+- `07-proteomics-structure.md` — PDB/mmCIF, Bio.PDB analyses, DSSP, FreeSASA, and TM/US-align
 - `08-phylogenetics-popgen.md` — iqtree, raxml, mafft, vcftools/plink popgen, ADMIXTURE
 - `09-workflow-utility.md` — bgzip/tabix, csvtk, datamash, seqtk, multiqc
 - `10-r-bioconductor.md` — cross-cutting R/CRAN landscape (DESeq2/edgeR/limma, Seurat,

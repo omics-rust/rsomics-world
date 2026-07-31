@@ -404,13 +404,17 @@ def route(name: str, upstreams: list[str], layer: str) -> tuple[str, str, str]:
 def suggested_action(
     name: str,
     layer: str,
-    inbound: int,
+    target_consumers: int,
     upstreams: list[str],
     target: str,
     confidence: str,
 ) -> str:
     if layer == "A":
-        return "keep-core-candidate" if inbound >= 2 else "internalize-or-merge-review"
+        return (
+            "keep-core-candidate"
+            if target_consumers >= 2
+            else "internalize-or-merge-review"
+        )
     if name == "rsomics-sample-sheet":
         return "rejected-product-boundary"
     if name == "rsomics-de-volcano":
@@ -588,7 +592,7 @@ def main() -> None:
             action = suggested_action(
                 name,
                 layer,
-                dependency_index[name],
+                len(consumer_families),
                 upstreams,
                 target,
                 confidence,

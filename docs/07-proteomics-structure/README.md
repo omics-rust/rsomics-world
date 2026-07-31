@@ -14,11 +14,10 @@
 
 ## Design notes
 
-- This is by far the **least Rust-mature** of all the domains. Mass spec
-  tooling is dominated by closed-source Java/C# (MaxQuant, Skyline) and
-  vendor binaries; structure prediction is Python+PyTorch with multi-GB
-  weights; docking is C++. We will be doing more wrapping and less
-  rewriting here than in any other module.
+- Mass spectrometry, prediction, docking, visualization, trajectories, and
+  coordinate analysis have distinct data models and product boundaries.
+  `rsomics-structure` is limited to coordinate-file inspection and analysis;
+  its nine historical operation crates consolidate into one product.
 - The ML tools (AlphaFold family, ESMFold, RoseTTAFold, DiffDock) all live
   on PyTorch. Pure-Rust inference is feasible via `candle` or `burn` — the
   Rust core team and HuggingFace already ship `candle-transformers` with
@@ -28,9 +27,9 @@
   processing utilities.
 - mzML/mzXML/MGF parsing is the equivalent of "noodles" for proteomics.
   `mzdata` (Rust) exists and is the obvious foundation. Build on top of it.
-- Foldseek is already a hand-tuned C++/SIMD tool by Steineggerlab; it's a
-  category leader for structural homology. Adopt via FFI; only rewrite if
-  embedding it as a library becomes important.
+- Foldseek is already a hand-tuned C++/SIMD structural-search product. Use it
+  externally; do not bundle an FFI or subprocess mode into
+  `rsomics-structure`.
 - Docking is mostly empirical scoring + search. AutoDock Vina is BSD-3,
   small, and a reasonable Rust port target. GNINA and DiffDock are CNN-based;
   same calculus as the structure-prediction tools.
