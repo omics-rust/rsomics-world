@@ -202,6 +202,16 @@ output plus BAM output match
 Exact-head CI run `30615295251` passes all four native targets and 16 oracle
 groups.
 
+Revision `7b46246d0a5a` adds `view -l/--library`. The filter resolves library
+membership through the input header's `@RG ID` to `LB` mapping, following the
+[samtools 1.24 lookup](https://github.com/samtools/samtools/blob/1.24/bam.c#L35-L52).
+Records without `RG`, with an unknown group, or whose group has no matching
+`LB` are rejected. Decoded and borrowed BAM paths share one typed `RG` accessor,
+and non-string tags fail non-zero. Library filtering does not project the
+output read-group header. SAM, BAM, and CRAM count and record output plus BAM
+output match the oracle. Exact-head CI run `30615973249` passes all four native
+targets and 17 oracle groups.
+
 Standalone `view -n` remains unresolved. Samtools 1.24 emits the two tagged
 records from the current CRAM fixture with `view -n` but reports zero for
 `view -c -n`. In the
