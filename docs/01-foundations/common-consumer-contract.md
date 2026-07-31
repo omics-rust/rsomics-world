@@ -1,8 +1,8 @@
 # `rsomics-common` consumer contract
 
-Status: common 0.7, help 0.4, seqio 0.3, intervals 0.3, and all three pilot
-product migrations are committed and exact-head CI verified. Nothing has been
-published.
+Status: common 0.7.0, help 0.4.0, and intervals 0.3.0 are published and
+verified from downloaded crates.io archives. Pilot products resolve those
+versions from the registry. Seqio 0.3 remains unpublished.
 
 ## Why this audit exists
 
@@ -19,16 +19,16 @@ them.
 
 The table is based on live source at these revisions:
 
-- `rsomics-common` `9f11f37c0fa4`;
-- `rsomics-seq` `2727daa3bf4f`;
-- `rsomics-fastq-preprocess` `f217fc4902b2`;
-- `rsomics-bed` `9f4ba8ee945c`;
-- `rsomics-seqio` `b23cf8ad29fd`;
-- `rsomics-intervals` `491b14c0d43b`.
+- `rsomics-common` `5a46f8ee5888`;
+- `rsomics-seq` `bf00b71477b8`;
+- `rsomics-fastq-preprocess` `a56519d9d6c0`;
+- `rsomics-bed` `e8898dbcb0db`;
+- `rsomics-seqio` `7b5b1c68f52e`;
+- `rsomics-intervals` `6783f67614ae`.
 
 | Current item | Concrete retained consumers | Finding |
 |---|---|---|
-| `RsomicsError`, `Result`, `Context` | `seq`, `fastq-preprocess`, `bed`, `seqio`, `intervals` | keep; multiple real call sites and stable error categories |
+| `RsomicsError`, `Result`, `Context` | `seq`, `fastq-preprocess`, `bed`, `annotation`, `seqio` | keep; multiple real call sites and stable error categories |
 | `ExitCode`, JSON envelopes, `ToolMeta`, `run()` | `seq`, `fastq-preprocess`, `bed` | keep after removing unrelated capability initialization |
 | `OutputArgs::json` | `seq`, `fastq-preprocess`, `bed` | retained as the one demonstrated shared CLI control |
 | former `CommonFlags::threads` and global Rayon setup | effective only in `fastq-preprocess` | removed from common; preprocessing owns a local Rayon pool |
@@ -97,29 +97,21 @@ of this migration.
 gate. They remain on the published 0.6 API until reconstructed, then migrate to
 the same explicit runner contract. Historical micro-crates are not updated.
 
-## Current unpublished-foundation workaround
+## Remaining unpublished-foundation workaround
 
-The three product repositories and the unpublished foundation
-releases make CI check out exact foundation revisions and generate a
-`[patch.crates-io]` path table inside the job. This proves the coordinated
-implementations without committing path dependencies, but it is temporary.
-Once the reviewed foundations are published, the checkout/patch steps are
-removed, lockfiles are regenerated against registry sources, and clean
-registry resolution is tested.
+Common, help, and intervals no longer use a CI path patch. Their consumers
+lock the published crates.io checksums and pass on four native targets.
+`rsomics-seq` and `rsomics-fastq-preprocess` still patch exact seqio 0.3
+revisions inside CI because that foundation has not yet passed its
+representative performance decision. `rsomics-seq` likewise patches kmer
+0.2.1 until a second product consumer exists.
 
 ## Verification and release sequence
 
-1. Keep common `9f11f37c0fa4` and help `c615aa8b8522` as the reviewed
-   exact-head baselines.
-2. Keep seqio `b23cf8ad29fd` and intervals `491b14c0d43b` as the aligned
-   common-0.7 baselines; both have exact-head four-native-target CI.
-3. Publish common, help, and seqio only after final package review and an
-   explicit new credential path; the previous crates.io token was revoked.
-   Intervals additionally remains behind its second-consumer and BED-policy
-   gates.
-4. Update and gate each product independently against published versions;
-   never commit a path dependency.
-
-Until publication, product CI checks out and verifies the exact unpublished
-revisions. The irrelevant flags are already absent from all three command
-trees.
+1. Common 0.7.0, help 0.4.0, and intervals 0.3.0 are published, archive
+   checksum verified, and consumed from crates.io.
+2. Every migrated product regenerates its lockfile and passes exact-head CI
+   without a path dependency for those releases.
+3. Seqio 0.3 is published only after its representative compatibility,
+   throughput, memory, public-API, and exact-head gates are complete.
+4. Kmer remains unpublished until a second product demonstrates its contract.

@@ -10,7 +10,7 @@ everything in modules 02–09 depends on this layer working well.
 - [`consumer-driven-audit.md`](consumer-driven-audit.md) — retained public
   foundations, concrete product drivers, and completion gates.
 - [`common-consumer-contract.md`](common-consumer-contract.md) — live
-  `rsomics-common` call-site matrix and proposed narrow 0.7 boundary.
+  `rsomics-common` call-site matrix and published narrow 0.7 boundary.
 - [`help-consumer-contract.md`](help-consumer-contract.md) — unified CLI UX,
   Clap single-source contract, and three-product prototype evidence.
 - [`io-formats.md`](io-formats.md) — FASTA/FASTQ, SAM/BAM/CRAM, VCF/BCF,
@@ -34,5 +34,6 @@ everything in modules 02–09 depends on this layer working well.
 - Where Rust *must* still ship a new crate (e.g. a pure-Rust bgzf writer
   that matches `libdeflate` throughput; an h5ad reader that does not depend
   on Python), the topic doc says so explicitly.
-- All higher modules are forbidden from re-implementing format parsing.
-  They consume the crates listed here.
+- Higher modules use mature shared parsers when those contracts fit. A parser
+  that carries one product's compatibility or output policy stays inside that
+  product until a second consumer demonstrates the same policy-free contract.

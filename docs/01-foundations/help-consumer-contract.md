@@ -1,8 +1,8 @@
 # `rsomics-help` consumer contract
 
-Status: help 0.4, common 0.7, seqio 0.3, intervals 0.3, and all three pilot
-product migrations are committed and exact-head CI verified. Nothing has been
-published.
+Status: help 0.4.0, common 0.7.0, and intervals 0.3.0 are published and
+verified from downloaded crates.io archives. The pilot command trees consume
+the registry releases. Seqio 0.3 remains unpublished.
 
 ## Role
 
@@ -62,25 +62,27 @@ future representation must be derived from the same `Command` tree.
 
 ## Product evidence
 
-Each product keeps registry-compatible manifests while CI patches exact
-unpublished foundation revisions:
+Each product keeps registry-compatible manifests. Common and help resolve from
+crates.io; only still-unpublished domain foundations use exact CI patches:
 
 | Product | Command shape | Verified evidence |
 |---|---|---|
-| `rsomics-seq` `2727daa3bf4f` | five sequence subcommands | strict Clippy; 7 library, 4 binary, 26 CLI, one independent k-mer oracle, and six live SeqKit tests; five benchmark smokes; CI `30568955799` |
-| `rsomics-fastq-preprocess` `f217fc4902b2` | three subcommands with nested input, trim, filter, length, thread, and output groups | strict Clippy; 18 library, 4 binary, 21 CLI, and four live fastp tests; benchmark smoke; CI `30569428189` |
-| `rsomics-bed` `9f4ba8ee945c` | five interval subcommands with positional and required named inputs | strict Clippy; 40 library, 12 CLI, and three live bedtools/golden tests; full benchmark smoke; CI `30570159631` |
+| `rsomics-seq` `bf00b71477b8` | five sequence subcommands | strict Clippy; 7 library, 4 binary, 26 CLI, one independent k-mer oracle, and six live SeqKit tests; five benchmark smokes; CI `30598213179` |
+| `rsomics-fastq-preprocess` `a56519d9d6c0` | three subcommands with nested input, trim, filter, length, thread, and output groups | strict Clippy; 18 library, 4 binary, 21 CLI, and four live fastp tests; benchmark smoke; CI `30598213737` |
+| `rsomics-bed` `e8898dbcb0db` | five interval subcommands with positional and required named inputs | strict Clippy; 40 library, 12 CLI, and three live bedtools/golden tests; full benchmark smoke and representative million-record gate; CI `30598213193` |
 
 The foundation itself passes strict Clippy, package verification, and six unit
 tests covering nested help, generated help navigation, suggestions, normal
-positional `help`, and derived-type construction. Commit `c615aa8b8522` passes
-exact-head CI on native Linux and macOS for both `x86_64` and `aarch64`.
+positional `help`, and derived-type construction. Commit `61dd6f2ce0ce` passes
+exact-head CI `30596121607` on native Linux and macOS for both `x86_64` and
+`aarch64`. The downloaded 0.4.0 archive passes the same six tests.
 
 ## Coordinated dependency boundary
 
-The prototype also demonstrated that `rsomics-common` cannot be upgraded only
-at a Layer-B leaf when another foundation exposes its error types. Temporary
-0.7 alignment produced one common version in each tested graph:
+The prototype demonstrated that `rsomics-common` cannot be upgraded only at a
+Layer-B leaf when another foundation exposes its error types. Seqio therefore
+uses the same common 0.7 release as its products. Intervals now exposes its own
+narrow construction error and does not depend on common:
 
 ```text
 seq -> help 0.4
@@ -90,25 +92,22 @@ fastq-preprocess -> help 0.4
 fastq-preprocess -> common 0.7 <- seqio
 
 bed -> help 0.4
-bed -> common 0.7 <- intervals
+bed -> common 0.7
+bed -> intervals 0.3
 ```
 
-`rsomics-seqio` commit `b23cf8ad29fd` passes strict Clippy, 45 unit tests, five
+`rsomics-seqio` commit `7b5b1c68f52e` passes strict Clippy, 45 unit tests, five
 compatibility tests, benchmark smoke, package verification, and exact-head CI
-on all four native targets. `rsomics-intervals` commit `491b14c0d43b` passes
-strict Clippy, 48 unit tests, six property tests, package verification, and the
-same four native targets.
+`30598214929` on all four native targets. Published `rsomics-intervals 0.3.0`
+contains only the validated generic coordinate model and passes eight unit
+tests plus exact-head CI `30597681539`.
 
 ## Release order
 
-1. Help 0.4 and common 0.7 are reviewed, committed, and exact-head verified.
-2. Seqio 0.3 and intervals 0.3 are aligned with common 0.7 and exact-head
-   verified on all four native targets.
-3. Publish common, help, and seqio only after registry credentials are
-   explicitly available. Intervals additionally requires its second
-   consumer-side contract and BED-policy review.
-4. The `seq`, `fastq-preprocess`, and `bed` migrations are committed without
-   path dependencies and retain their command-tree, help, error,
-   compatibility, and benchmark tests.
-5. Use these consumer contracts as the default CLI baseline for later product
+1. Help 0.4.0, common 0.7.0, and intervals 0.3.0 are published and verified.
+2. The `seq`, `fastq-preprocess`, `bed`, and `annotation` lockfiles resolve
+   those releases from crates.io and retain their exact-head gates.
+3. Seqio 0.3 remains behind its representative performance decision; kmer
+   remains behind a second product consumer.
+4. Use these consumer contracts as the default CLI baseline for later product
    reconstruction.

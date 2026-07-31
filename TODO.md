@@ -72,8 +72,8 @@ Rejected public boundary:
       preprocessing.
 - [ ] `rsomics-kmer`: add a second product consumer and four-native-target
       release gate.
-- [ ] `rsomics-intervals`: review public items individually and demonstrate a
-      second consumer for the checked index contract.
+- [x] `rsomics-intervals`: retain only the two-consumer coordinate model and
+      move checked indexing and BED policy into `rsomics-bed`.
 - [ ] Reconstruct `rsomics-bamio` and `rsomics-pileup` through BAM and VCF.
 - [ ] Reconstruct `rsomics-stats` through at least two stateful workflows.
 - [ ] Reconstruct `rsomics-phylo-tree` through phylogenetics and ecology.

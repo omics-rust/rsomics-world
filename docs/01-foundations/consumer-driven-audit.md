@@ -52,15 +52,14 @@ APIs:
 
 | Foundation | Current revision | Verified change | Release state |
 |---|---|---|---|
-| `rsomics-common` | `9f11f37c0fa4` | narrowed the public runtime to demonstrated error, exit-code, output-mode, JSON-envelope, and runner contracts; removed speculative thread, RNG, logging, file, fixture, and tool abstractions; added fail-loud JSON emission fallback | exact-head four-native-target CI, strict Clippy, 26 tests, and package verification green; unpublished; local coordinated graph verified with `seq`, `fastq-preprocess`, `bed`, `seqio`, and `intervals` |
-| `rsomics-help` | `c615aa8b8522` | replaced the duplicate `HelpSpec` renderer and argv interception with recursive styling and parsing of the authoritative Clap command tree | exact-head four-native-target CI, strict Clippy, six tests, and package verification green; unpublished; all three pilot product suites pass in local patched worktrees |
-| `rsomics-intervals` | `491b14c0d43b` | checked the COITrees coordinate boundary; aligned version 0.3 with common 0.7; repaired package metadata and four-native-target CI; removed narrative comments without changing behavior | exact-head four-native-target CI, strict Clippy, 48 unit tests, six property tests, and package verification green; unpublished; `bed` and `annotation` now exercise the coordinate model, while the index still lacks a second consumer and its BED-policy and performance gates remain |
+| `rsomics-common` | `5a46f8ee5888` | narrowed the public runtime to demonstrated error, exit-code, output-mode, JSON-envelope, and runner contracts; removed speculative thread, RNG, logging, file, fixture, and tool abstractions; added fail-loud JSON emission fallback | 0.7.0 published; exact-head four-native-target CI `30596117982`; downloaded archive checksum `a2f9dd66f602bc9b61b53157652afb7e954b5658f2cfa545496cc2a16d8fff4a`; registry-package tests green |
+| `rsomics-help` | `61dd6f2ce0ce` | replaced the duplicate `HelpSpec` renderer and argv interception with recursive styling and parsing of the authoritative Clap command tree | 0.4.0 published; exact-head four-native-target CI `30596121607`; downloaded archive checksum `5922ec5a261660869fc36aa05f731c0adb059c43344eb78c2393f05611797fe1`; registry-package tests green |
+| `rsomics-intervals` | `6783f67614ae` | reduced the public crate to a validated generic zero-based half-open interval value; moved BED parsing, collections, algebra, merge policy, and COITrees indexing into products | 0.3.0 published; exact-head four-native-target CI `30597681539`; downloaded archive checksum `40cf072a5fb5900d8e4049cb9b03f28ce5ddc51e51ef2b3fed7c5c89bfa88ccd`; `bed` and `annotation` pass consumer tests against the registry release |
 | `rsomics-kmer` | `4258ac881119` | made `k = 32` well-defined, added checked encode/decode/canonical operations and a fallible count-accumulator boundary, and removed its unused `rsomics-common` dependency | exact-head CI green; `rsomics-seq` is the first real product consumer; a second product contract and comparative performance remain |
-| `rsomics-seqio` | `b23cf8ad29fd` | replaced the ambiguous record model with strict allocation-reusing FASTA/FASTQ streams, bounded gzip decode buffering, wrapped FASTQ support, and fail-loud gzip/BGZF handling; aligned version 0.3 with common 0.7 | exact-head four-native-target CI, strict Clippy, 45 unit tests, five compatibility tests, benchmark smoke, and package verification green; exercised by both `rsomics-seq` and `rsomics-fastq-preprocess`; unpublished |
+| `rsomics-seqio` | `7b5b1c68f52e` | replaced the ambiguous record model with strict allocation-reusing FASTA/FASTQ streams, bounded gzip decode buffering, wrapped FASTQ support, and fail-loud gzip/BGZF handling; resolves common 0.7 from crates.io | exact-head four-native-target CI `30598214929`, strict Clippy, 45 unit tests, five compatibility tests, benchmark smoke, and package verification green; exercised by both `rsomics-seq` and `rsomics-fastq-preprocess`; unpublished pending its representative performance decision |
 
-None of these revisions has been published. A green foundation CI establishes
-the implementation baseline; it does not replace the two-consumer completion
-gate below.
+Publication does not freeze these APIs. Every later public item still requires
+two named product consumers and consumer-side tests.
 
 ## Correctness blockers
 
@@ -101,8 +100,8 @@ first.
 - Semantic argument groups remain on the product's existing Clap types.
 - Serialization and output failures propagate rather than being swallowed.
 
-The published 0.3 `rsomics-help` API duplicates a second `HelpSpec` tree and is
-used only by the unreconstructed `rsomics-minimap2`. The committed 0.4
+The superseded 0.3 `rsomics-help` API duplicated a second `HelpSpec` tree and
+was used only by the unreconstructed `rsomics-minimap2`. The published 0.4
 implementation removes that model, recursively decorates the authoritative
 Clap tree, and reduces the normal consumer call to
 `rsomics_help::parse::<Cli>()`. It has passed the existing command,
@@ -119,14 +118,14 @@ threading, slab, and compression backends remain private.
 iteration, and general hashes. Product-specific correction tables and QC bins
 remain internal.
 
-`rsomics-seq` revision `2727daa3bf4f` consumes the checked accumulator and the
+`rsomics-seq` revision `bf00b71477b8` consumes the checked accumulator and the
 strict `rsomics-seqio` stream API directly. Its complete five-command first
 slice passes exact-head CI on all four native targets with live SeqKit
 differentials, an independent ordered k-mer oracle, the unified help layer, and
 only the shared JSON output option. Its representative Linux gate also matches
 Jellyfish for 104,521 canonical count rows.
 
-`rsomics-fastq-preprocess` revision `f217fc4902b2` consumes
+`rsomics-fastq-preprocess` revision `a56519d9d6c0` consumes
 `rsomics-common` and `rsomics-seqio` without depending on `rsomics-kmer`.
 Its initial trim/filter pipeline passes exact-head CI on all four native
 targets with live fastp differentials. Its private `--threads` control builds a
@@ -172,34 +171,24 @@ evidence.
 
 ### Interval wave
 
-The release target for `rsomics-intervals` is the smallest coordinate-safe
-geometry API demonstrated item by item. Version 0.3 still exposes a
-non-generic overlap index plus BED parsing, sorting, merging, and writing.
-Those items are not release-approved foundation API until two products
-demonstrate the same policy-free contract. Otherwise they move into the
-consuming product.
+`rsomics-intervals 0.3.0` is the smallest coordinate-safe geometry API
+demonstrated by two products. `Interval<C>` validates `start <= end`, keeps its
+fields private, permits borrowed or owned chromosome identifiers, and exposes
+only accessors and basic half-open geometry.
 
-`rsomics-bed` revision `9f4ba8ee945c` is the first concrete checked-index
-consumer. Intersect uses the foundation's fallible build/query boundary
-directly; subtract uses a separate merged `u64` coverage map and no longer
-constructs an unused overlap tree. CI patches intervals 0.3 and one common 0.7
-instance without a committed path dependency. The earlier representative
-million-record gate matches bedtools output and passes throughput on all five
-operations without adding another shared crate; the revised subtract hot path
-still requires representative remeasurement before publication.
-`rsomics-annotation` revision `80920fb9e72b` provides the second
-coordinate-model contract through one checked conversion from inclusive
-GFF/GTF features to the shared half-open interval type. Final-head CI run
-`30574846937` passes all 40 product tests on four native targets, including
-live gffread differentials for selection, conversion, and sequence extraction.
-Extraction adds no speculative public foundation: annotation-specific
-hierarchy and splicing stay inside the product, while FASTA random access uses
-the aligned external noodles format graph. The BED parsing and sorting
-functions currently exposed by the foundation still require a fresh policy
-review before intervals 0.3 is published. Annotation does not naturally need
-the checked tree for its streaming operations, so it is not a second
-`IntervalIndex` consumer. That item remains unpublished until `peak`, `signal`,
-or another real product demonstrates the same policy-free query contract.
+`rsomics-bed` revision `e8898dbcb0db` embeds the shared value in its retained
+and streaming BED records. BED parsing, zero-length behavior, merge policy,
+coverage maps, and the checked COITrees adapter remain product-private. Its
+million-record Linux gate matches bedtools byte for byte for all five
+operations; intersect is 3.99 times faster with roughly one third the peak RSS,
+and subtract is 5.09 times faster with about one eighteenth the peak RSS.
+
+`rsomics-annotation` revision `0e2d4c94e990` converts inclusive GFF/GTF
+features once into the shared half-open value. Annotation hierarchy, splicing,
+and FASTA access remain inside the product. Both consumers resolve the
+published registry archive rather than a path patch. No public overlap index
+remains to justify speculatively; another product may propose one only after a
+second concrete consumer exists.
 
 ### Alignment wave
 
