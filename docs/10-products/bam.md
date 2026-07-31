@@ -533,14 +533,15 @@ sequence or quality lengths must fail rather than silently alter a pileup.
 Peak-calling signal accumulation is product-private unless it later proves the
 same contract.
 
-Revision `353e5625199e` checks header reference IDs and lengths, coordinates,
+Revision `b253b74bd0b1` checks header reference IDs and lengths, coordinates,
 CIGAR kinds and spans, BAM `CG:B,I` long CIGAR, zero-reference-span behavior,
 every mapped record's sorted watermark, and overlap adjustment. It adds
 HTSlib-compatible standard and extended BAQ plus full and bcftools-compatible
 partial column preparation. Exact-head four-native-target CI `30651430890`
 passes; the Linux x86_64 job also runs the pinned samtools 1.24 column oracle.
-The foundation remains unpublished until BAM supplies the second product-side
-contract and ordinary/deep-coverage performance and memory are recorded.
+The ordinary and 250× engine benchmark records bounded RSS and sustained
+streaming with and without the partial trigger scan. The foundation remains
+unpublished until BAM supplies the second product-side contract.
 
 ### Other foundations
 

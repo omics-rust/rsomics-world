@@ -707,7 +707,7 @@ the older consensus diploid model over PL records.
 ### Foundations and gates
 
 `rsomics-bamio` supplies validated SAM/BAM/CRAM streams and indexed access.
-`rsomics-pileup` revision `353e5625199e` supplies a fallible sorted projection
+`rsomics-pileup` revision `b253b74bd0b1` supplies a fallible sorted projection
 kernel, checked CIGAR and long-CIGAR projection, overlap handling, retry-safe
 borrowed columns, bounded column state, source-isolated overlap state, an
 optional per-source active-depth limit, and standard or extended BAQ. Column
