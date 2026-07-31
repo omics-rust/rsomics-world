@@ -706,8 +706,15 @@ the older consensus diploid model over PL records.
 
 ### Foundations and gates
 
-`rsomics-bamio 0.2.1` supplies validated SAM/BAM/CRAM streams, indexed access,
-and the shared fallible raw-record encoder used by both BAM and call.
+`rsomics-bamio 0.3.0` supplies validated SAM/BAM/CRAM streams, indexed access,
+and the shared fallible raw-record encoder used by both BAM and call. Revision
+`94641eff97d7` moves appended and alternative BAI/CSI/CRAI discovery plus
+indexed-reference setup into the foundation after consumer-side BAM and call
+tests established the same policy-free contract. Exact-head four-native-target
+CI `30658611800` and publish run `30658840221` pass. The downloaded archive
+checksum is
+`6ac17eb096cd976f6000ff813430236df0b723eb360c926427d7928e46702a93`.
+
 `rsomics-pileup` revision `2680f6c328be` supplies a fallible sorted projection
 kernel, checked CIGAR and long-CIGAR projection, overlap handling, retry-safe
 borrowed columns, bounded column state, source-isolated overlap state, an
@@ -717,11 +724,13 @@ current active records have entered overlap handling. The call product owns
 the 250-read and 500-base defaults instead of freezing those policies into the
 foundation. Exact-head four-native-target CI `30654312487` passes.
 `rsomics-call` and `rsomics-bam mpileup` provide the two implemented consumers.
-The resulting pileup 0.2.0 release was published by run `30654567905`; the
-downloaded archive checksum is
-`0a2d901c6854470dbebae190ef30d3535333768c4c18c6cc47c03eeb33872684`.
+Revision `a69743a8097f` aligns the public raw-record type with bamio 0.3 without
+changing the projection hot path. Its samtools 1.24 oracle, ordinary and 250×
+benchmarks, exact-head four-native-target CI `30659084469`, and publish run
+`30659248849` pass. The resulting pileup 0.3.0 archive checksum is
+`def4cc70d0cd250f8b9ebb1d1e0280c1a890cffb66504a832cb1819cff9f8581`.
 
-`rsomics-call` revision `bfa08d58df95` owns the typed allele, ploidy,
+`rsomics-call` revision `5eaf1c5fa88b` owns the typed allele, ploidy,
 likelihood-site, called-site, and per-sample evidence models. It validates and
 coordinate-merges plain or BGZF SAM, raw or BGZF BAM, and CRAM inputs, checks
 their reference dictionaries, builds samples from source and read-group
@@ -739,17 +748,18 @@ materialized counterpart. A strict schema decodes likelihood records and
 encodes called records, while content-detected streaming supports plain VCF,
 BGZF VCF, raw BCF, and BGZF BCF with record context on input or call failures
 and explicit output finalization. The format oracle includes a real bcftools
-1.24 multiallelic likelihood record and matching call. Exact-head
-four-native-target CI `30648436539` established the typed baseline. The current
-head integrates full, overlap-ordered, and default partial BAQ likelihood paths
-matching bcftools 1.24, and replaces the duplicate raw encoder with the bamio
-0.2.1 contract. Formatting, strict Clippy, all 54 debug and release tests,
-rustdoc, and clean registry-based package verification pass locally. Indel
-likelihoods, complete annotations, indexed regions and streaming targets, gVCF
-behavior, complete three-command orchestration, performance evidence, and the
-`rsomics-help` CLI remain. Exact-head four-native-target CI `30654933140`
-passes, but no command-line binary is exposed and the repository remains
-unpublished.
+1.24 multiallelic likelihood record and matching call. Revision
+`b009e95faf1f` adds the established bcftools 1.24 indel model with
+sample-specific reference consensus, glocal realignment, STR penalties, and
+typed annotations; exact-head four-native-target CI `30657419390` passes.
+Revision `5eaf1c5fa88b` adds indexed single-region likelihoods, k-way merges
+records across inputs, and clips emitted SNP and indel sites to the requested
+interval. Its typed output matches a live bcftools 1.24 multi-input region
+oracle, all 62 debug and release tests pass, and exact-head four-native-target
+CI `30659762334` passes. Complete annotations, normalized multi-region and
+streaming-target selection, gVCF behavior, complete three-command
+orchestration, performance evidence, and the `rsomics-help` CLI remain. No
+command-line binary is exposed and the repository remains unpublished.
 
 Calling likelihoods, allele selection, ploidy policy, priors, annotations, and
 VCF output remain in the product. `rsomics-stats` receives a numerical kernel

@@ -226,8 +226,8 @@ targets and 18 oracle groups.
 
 Revision `d3be2001212a` adds the first `mpileup` slice as a real subcommand,
 not a wrapper around the deleted micro-crate. Coordinate-sorted SAM, BAM, and
-CRAM records feed `rsomics-pileup 0.2.0`; the raw BAM path validates and copies
-record bodies while SAM and CRAM use `rsomics-bamio 0.2.1` to produce the same
+CRAM records feed `rsomics-pileup 0.3.0`; the raw BAM path validates and copies
+record bodies while SAM and CRAM use `rsomics-bamio 0.3.0` to produce the same
 checked representation. The implementation includes samtools-compatible
 quality and flag filters, per-input depth, anomalous-pair policy, overlapping
 mate adjustment, covered/used/all-reference position modes, indexed rolling
@@ -240,6 +240,10 @@ CRAM, BAQ, overlap, and indel matrix. Exact-head four-native-target CI
 `30654810659` passes; its Linux x86_64 job rebuilds and runs the pinned
 samtools 1.24 oracle. This closes the second concrete consumer gate for the
 pileup foundation, but does not make the incomplete BAM product publishable.
+Revision `ae1c1561f941` then replaces the product-private BAI/CSI/CRAI
+discovery and indexed-reference setup with the shared bamio 0.3 contract,
+removing 101 duplicate lines. All 19 samtools 1.24 oracle groups pass locally
+and exact-head four-native-target CI `30659400959` passes.
 
 Standalone `view -n` remains unresolved. Samtools 1.24 emits the two tagged
 records from the current CRAM fixture with `view -n` but reports zero for
@@ -507,9 +511,15 @@ passed exact-head four-native-target CI `30653883521`, publish run
 Both consumers pass malformed-record, encoding, filtering, and round-trip
 tests against the registry release.
 
-This release deliberately does not expose the larger speculative
-auto-detection and indexing layer. The eventual multi-product foundation
-contract remains:
+Revision `94641eff97d7` adds the consumer-proven indexed reader without moving
+product filtering or region policy into the foundation. It accepts BGZF SAM,
+BAM, and CRAM, appended or common alternative BAI/CSI/CRAI names, and an
+optional indexed reference. BAM and call both exercise the contract. Version
+0.3.0 passed exact-head four-native-target CI `30658611800`, publish run
+`30658840221`, and downloaded-archive verification with checksum
+`6ac17eb096cd976f6000ff813430236df0b723eb360c926427d7928e46702a93`.
+
+The remaining multi-product foundation contract is:
 
 - auto-detected SAM, BAM, and CRAM readers with explicit input-format metadata;
 - typed headers, decoded records, references, and structured errors;
@@ -524,7 +534,7 @@ Product-specific filtering, CLI policy, and samtools defaults remain in
 
 Named consumers are `rsomics-bam`, `rsomics-count`, `rsomics-methyl`,
 `rsomics-minimap2`, `rsomics-peak`, `rsomics-rnaseq-qc`, `rsomics-signal`,
-and `rsomics-call`. BAM and call are the implemented 0.2.1 consumers.
+and `rsomics-call`. BAM and call are the implemented 0.3.0 consumers.
 `rsomics-methyl` and `rsomics-peak` have concrete dossier plans for validated
 alignment readers; their product-specific methylation, fragment, filter, and
 CLI policy remains outside the foundation. No additional public reader,
@@ -566,6 +576,11 @@ streaming with and without the partial trigger scan. Call and BAM now supply
 the two concrete consumers. Version 0.2.0 was published by run `30654567905`;
 the downloaded archive checksum is
 `0a2d901c6854470dbebae190ef30d3535333768c4c18c6cc47c03eeb33872684`.
+Revision `a69743a8097f` updates the shared raw-record dependency to bamio 0.3
+without changing the hot path. Local samtools 1.24 compatibility and ordinary
+and 250× benchmarks pass. Exact-head four-native-target CI `30659084469` and
+publish run `30659248849` pass; the pileup 0.3.0 archive checksum is
+`def4cc70d0cd250f8b9ebb1d1e0280c1a890cffb66504a832cb1819cff9f8581`.
 
 ### Other foundations
 
@@ -720,8 +735,8 @@ Do not publish `rsomics-bam` yet. The product repository exists and its
 streaming inspection commands, filters, and SAM/BAM output now have
 four-native-platform exact-head CI plus samtools 1.24 oracle evidence. The
 principal four-thread BAM streaming path now demonstrates a strict throughput
-advantage, and the validated raw/BGZF foundation slice is published as
-`rsomics-bamio 0.2.0`. The first product slice remains incomplete: subsampling
+advantage, and the validated raw/BGZF/indexed foundation slice is published as
+`rsomics-bamio 0.3.0`. The first product slice remains incomplete: subsampling
 requires the explicit zero/NaN/platform-seed decision above, header and output
 controls are not complete, CRAM decoding has no worker control, and the final
 benchmark set lacks peak RSS and representative SAM/CRAM coverage. CRAM output
