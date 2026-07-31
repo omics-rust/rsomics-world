@@ -135,6 +135,12 @@ records as samtools 1.24, explicitly finalize the BGZF stream, and retain
 transactional file output. Exact-head CI run `30607097547` passes all four
 native targets.
 
+Revision `b1ee789ca942` applies `-@` to BAM output without allocating separate
+input and output pools. The declared budget includes noodles' coordinator
+thread, and one concern cannot silently consume twice the requested workers.
+SAM, BAM, and CRAM conversion plus indexed-region output pass the samtools 1.24
+oracle. Exact-head CI run `30607770570` passes all four native targets.
+
 The samtools 1.24 subsampling audit found two unresolved compatibility
 boundaries. Its documentation defines a retained fraction from zero through
 one, but `--subsample 0` retains every record and `NaN` is accepted; invalid
@@ -147,8 +153,8 @@ implementation must not accidentally claim cross-platform-identical selection
 while matching this platform-dependent step.
 
 The crate stays unpublished until samtools 1.24-compatible subsampling,
-remaining output and header semantics, worker controls, and the performance
-gates are complete.
+remaining output and header semantics, CRAM decode worker controls, and the
+performance gates are complete.
 
 ### Slice 2: file lifecycle
 
@@ -459,6 +465,27 @@ samtools 65.6 ms. This supports the backend migration but fails the product
 release-performance gate. It is not the final release benchmark because it
 does not yet include `view`, peak RSS, alternating trial order, or
 representative SAM and CRAM inputs.
+
+A provisional BAM-output comparison used a 170,283,848-byte BAM with 3,000,000
+records and SHA-256
+`48091653a1d4165be293df9bb7e5f1427bc6846e93e0a0b80dec38d47f1da1be`.
+On the same Apple M2 host, after three warm-ups, ten trials measured:
+
+| Implementation | Mean | Standard deviation | Range |
+|---|---:|---:|---:|
+| `rsomics-bam b1ee789 view -b -@ 0` | 6.398 s | 0.217 s | 6.129–6.841 s |
+| `rsomics-bam b1ee789 view -b -@ 2` | 4.245 s | 0.254 s | 3.912–4.547 s |
+| `rsomics-bam b1ee789 view -b -@ 4` | 2.192 s | 0.096 s | 1.947–2.301 s |
+| `samtools 1.24 view -b -@ 4` | 1.509 s | 0.117 s | 1.343–1.706 s |
+
+Four-thread rsomics output is about 2.92 times faster than its single-thread
+path, so the bounded worker control has measured value. Samtools remains about
+1.45 times faster at four threads, so the release-performance gate still
+fails. Both decoded outputs had SHA-256
+`91f653165a241b0a07b22e62be7850c795011836d0553212d03d96a02597abe2`.
+The JSON result is retained at
+`/Volumes/KIOXIA/Developments/tmp/rsomics-bam-view-output-thread-comparison.json`;
+the run still lacks peak RSS and alternating trial order.
 
 ## Explicit exclusions
 
