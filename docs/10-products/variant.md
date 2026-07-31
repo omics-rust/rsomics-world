@@ -730,7 +730,7 @@ benchmarks, exact-head four-native-target CI `30659084469`, and publish run
 `30659248849` pass. The resulting pileup 0.3.0 archive checksum is
 `def4cc70d0cd250f8b9ebb1d1e0280c1a890cffb66504a832cb1819cff9f8581`.
 
-`rsomics-call` revision `edd1d7ac5b5c` owns the typed allele, ploidy,
+`rsomics-call` revision `e53ede5a0777` owns the typed allele, ploidy,
 likelihood-site, called-site, and per-sample evidence models. It validates and
 coordinate-merges plain or BGZF SAM, raw or BGZF BAM, and CRAM inputs, checks
 their reference dictionaries, builds samples from source and read-group
@@ -775,6 +775,17 @@ likelihood records. All 66 debug and release tests, three live oracle groups,
 strict Clippy, rustdoc, and package verification pass locally; exact-head CI
 `30661640916` passes all four native targets.
 
+Revision `e53ede5a0777` adds target files with bcftools-compatible suffix
+semantics: `.bed`, `.bed.gz`, and `.bed.bgz` use zero-based half-open
+coordinates; ordinary tabular files use one-based inclusive positions or
+intervals; `.vcf` and `.vcf.gz` select POS. Compression is detected from
+content and accepts plain, gzip, or BGZF input. Invalid coordinates, malformed
+lines, unreadable input, and truncated compression fail with path and line
+context. The live no-index SAM oracle matches bcftools 1.24 for BED, tabular,
+and VCF target files. All 69 debug and release tests, three live oracle groups,
+strict Clippy, rustdoc, and package verification pass locally; exact-head CI
+`30662152861` passes all four native targets.
+
 Target exclusion remains deliberately absent. The bcftools 1.24 manual defines
 `^targets` as the logical complement, but `mpileup.c` filters out records with
 no target overlap before it inverts the site-level predicate. The installed
@@ -782,10 +793,10 @@ no target overlap before it inverts the site-level predicate. The installed
 should retain reads wholly outside the excluded interval. This contradicts
 the documented contract, so neither that defect nor a corrected behavior is
 being frozen into the public interface without an explicit compatibility
-decision. Complete annotations, target-file parsing and exclusion behavior,
-gVCF behavior, complete three-command orchestration, performance evidence, and
-the `rsomics-help` CLI remain. No command-line binary is exposed and the
-repository remains unpublished.
+decision. Complete annotations, target exclusion, gVCF behavior, complete
+three-command orchestration, performance evidence, and the `rsomics-help` CLI
+remain. No command-line binary is exposed and the repository remains
+unpublished.
 
 Calling likelihoods, allele selection, ploidy policy, priors, annotations, and
 VCF output remain in the product. `rsomics-stats` receives a numerical kernel
