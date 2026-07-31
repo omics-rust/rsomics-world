@@ -241,6 +241,15 @@ tagged with `rg2` while declaring only `rg1` in the header. `-R` stays
 unimplemented until the compatibility decision chooses this contradictory
 header or a consistent complement projection.
 
+Unselected output has a related header boundary. With `view -r rg1 -U
+rejected.sam`, samtools 1.24 writes the selected header projection to both
+files, so the rejected file can contain `RG:Z:rg2` while declaring only
+`@RG ID:rg1`. It also silently ignores `-U` in count mode. `-U` stays
+unimplemented until the compatibility decision chooses between those
+behaviors and the recommended dual-header contract: the selected output uses
+the projected header, the rejected output uses the complete input header, and
+`-c -U` fails non-zero.
+
 The samtools 1.24 subsampling audit found two unresolved compatibility
 boundaries. Its documentation defines a retained fraction from zero through
 one, but `--subsample 0` retains every record and `NaN` is accepted; invalid
