@@ -183,6 +183,14 @@ BAM, CRAM, count, SAM output, and raw BAM-to-BAM paths are covered; non-string
 `RG` tags fail non-zero. Exact-head CI run `30613925372` passes all four native
 targets and 14 samtools 1.24 oracle groups.
 
+Revision `5f47b594d32a` adds repeatable `view --add-flags` and
+`--remove-flags`. Filtering and counts use the original flags; accepted output
+then applies the union of additions followed by removals, so removal wins when
+the same bit appears in both sets. A non-zero transformation leaves the raw
+BAM-copy path and decodes the record before writing. SAM, BAM, and CRAM input
+to SAM output plus BAM output match samtools 1.24. Exact-head CI run
+`30614602607` passes all four native targets and 15 oracle groups.
+
 Standalone `view -n` remains unresolved. Samtools 1.24 emits the two tagged
 records from the current CRAM fixture with `view -n` but reports zero for
 `view -c -n`. In the
