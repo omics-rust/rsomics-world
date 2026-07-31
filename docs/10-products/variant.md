@@ -1,7 +1,9 @@
 # Variant format, calling, and copy-number product dossiers
 
 Status: boundary, upstream-operation, and historical-source audit complete.
-None of the three target repositories exists, and none is published.
+`rsomics-vcf` exists with complete `head` and current-contract `query`
+operations. `rsomics-call` and `rsomics-cnv` do not yet exist. None of the
+three products is published.
 
 ## Portfolio decision
 
@@ -131,13 +133,15 @@ pretend that a full streaming scan is equivalent.
 ### Current implementation
 
 `rsomics-vcf` revision
-`8a097c25db4d2e22c896d245c371a1fe2db30791` implements the complete `head`
-operation without advertising the other first-slice commands. It consolidates
-the historical `rsomics-vcf-head` and `rsomics-vcf-valfmt` assets into private
-product modules and uses `rsomics-help` and `rsomics-common` for the shared CLI,
-diagnostic, JSON-conflict, and exit contracts.
+`84e27f7349113b692f50ac939cd435b28b1597b8` implements complete `head` and
+the declared single-input `query` contract without advertising the other
+first-slice commands. It consolidates the historical `rsomics-vcf-head`,
+`rsomics-vcf-query`, `rsomics-vcf-extract`, and `rsomics-vcf-valfmt` assets
+into private product modules. `rsomics-help` supplies the shared command
+layout; `rsomics-common` 0.8 supplies diagnostics, exit behavior, and
+transactional named output.
 
-The command:
+`head`:
 
 - accepts plain VCF, gzip or BGZF VCF, uncompressed BCF 2.2, compressed BCF
   2.2, named files, and standard input;
@@ -150,6 +154,32 @@ The command:
   QUAL, typed INFO or FORMAT values, record/sample cardinality, truncated
   compression, and invalid BCF structure.
 
+`query`:
+
+- accepts the same VCF, gzip/BGZF VCF, BCF 2.2, named-file, and stdin inputs;
+- projects fixed columns, typed INFO/FORMAT values, samples, genotypes,
+  translated and IUPAC genotypes, variant types, whole FORMAT/record lines,
+  headers, and zero-based vector elements;
+- preserves current bcftools rules for sample-loop field shadowing, explicit
+  fixed fields, singleton INFO subscripts, missing and vector-end values, and
+  automatic newlines;
+- uses one parser and header/value model across text and BCF, with a private
+  direct BCF path for numeric projection and a typed fallback for complex
+  records;
+- validates every referenced tag and selected sample before replacing a named
+  output, and keeps projection data separate from `--json` summaries;
+- explicitly excludes regions, targets, expressions and functions,
+  multi-input masks, `PBINOM`, `N_PASS`, `TBCSQ`, `VKX`, and undefined-tag
+  fallback from the current command contract.
+
+The representative oracle covers multi-ALT, numeric and missing INFO arrays,
+flags, string INFO, FORMAT scalars and arrays, phased and missing genotypes,
+sample inclusion and exclusion, headers, and VCF/BGZF/BCF equivalence. When
+all samples are excluded, rsomics consistently removes them from `%FORMAT`
+and `%LINE` for both VCF and BCF. Bcftools 1.24 retains BCF samples on that
+path while its VCF path removes them; the format-dependent upstream result is
+recorded as a rejected compatibility defect.
+
 The rsomics spelling is `-H, --headers`, retaining `-h` for unified help.
 `--records` and `--samples` are mutually exclusive rather than inheriting
 bcftools's last-option-wins behavior. The bcftools behaviors where an invalid
@@ -157,10 +187,11 @@ number becomes zero, `-1` becomes an effectively unbounded count, or a
 malformed record prints a diagnostic but exits zero are compatibility defects,
 not contracts.
 
-Exact-head CI run `30619149446` passes native Linux and macOS on `x86_64` and
-`aarch64`. Its Linux `x86_64` job builds bcftools 1.24 from the official
-SHA-256-pinned archive and passes the VCF, compressed VCF, BCF, and stdin
-oracle groups.
+The initial `head` exact-head CI run `30619149446` passes native Linux and
+macOS on `x86_64` and `aarch64`. Exact-head CI run `30622684140` passes the
+same four native target classes at the current revision. Its Linux `x86_64`
+job builds bcftools 1.24 from the official SHA-256-pinned archive and passes
+both command oracle suites.
 
 ### Later slices
 
@@ -181,14 +212,17 @@ src/
 ├── lib.rs
 ├── main.rs
 ├── cli.rs
+├── head.rs
+├── query.rs
+├── query_bcf.rs
+├── query_format.rs
+├── variant_type.rs
 ├── format/
-│   ├── header.rs
 │   ├── reader.rs
 │   ├── record.rs
 │   ├── value.rs
-│   └── writer.rs
+│   └── text.rs
 ├── expression/
-├── query_format/
 └── commands/
     ├── head.rs
     ├── index.rs
@@ -210,7 +244,7 @@ adapters. Another rsomics IO wrapper is not justified merely to wrap noodles.
 | `rsomics-vcf-concat` `15088a2e6cbaef6bfb49669e9625e50b6ace7e50` | Refactor then merge | `concat`; replace VCF-text-only plumbing |
 | `rsomics-vcf-consensus` `bb016cf71d28ffa12562e875e0c5db7a431d148c` | Refactor then merge | Later `consensus` |
 | `rsomics-vcf-convert` `0322987e3f53b2d4099bede46d6b5df3f4f5efe0` | Test and conversion seed | Later complete `convert` profiles |
-| `rsomics-vcf-extract` `3bca5d5a6d2dbec187a00a29620c8c04b2fabe0d` | Merge fixtures and field selection | First-slice `query` |
+| `rsomics-vcf-extract` `3bca5d5a6d2dbec187a00a29620c8c04b2fabe0d` | Selection and fixture merge complete | First-slice `query` |
 | `rsomics-vcf-fill-tags` `a28b803cebc218468fd53280f5166ea76198f03a` | Refactor then merge | Later `annotate fill-tags`; update 1.24 rounding and groups |
 | `rsomics-vcf-filter` `93d91c114d2ce0fc31a6b1c7176280f558c06f3c` | Test and expression-integration seed | Later `filter`; discard whole-file input |
 | `rsomics-vcf-filter-summary` `f8323af72303498bcc59f16c4a9feb897b992d3f` | Merge report fixture | `stats filters` |
@@ -221,7 +255,7 @@ adapters. Another rsomics IO wrapper is not justified merely to wrap noodles.
 | `rsomics-vcf-isec` `86bedb28892ccbcb6137bfb3c82925fe931609f1` | Test and merge-loop seed | Later `isec` |
 | `rsomics-vcf-merge` `571af0688ac61b857b529b0db20ae886999e04fa` | Test asset | Replace incomplete header, allele, and FORMAT reconciliation |
 | `rsomics-vcf-norm` `c4eeb5026199141a08ddd7b710be14488887edc2` | Test and split seed | Later complete `norm`; add reference realignment and 1.24 semantics |
-| `rsomics-vcf-query` `1bd16a4562e931010d6138e71c3a6112040edd29` | Refactor then merge | First-slice streaming `query` |
+| `rsomics-vcf-query` `1bd16a4562e931010d6138e71c3a6112040edd29` | Refactor merge complete; partial parser replaced | First-slice streaming `query` |
 | `rsomics-vcf-reheader` `e25a2942b13b912fefc21e739d3f10876a59ac74` | Refactor then merge | Later transactional `reheader` |
 | `rsomics-vcf-sample` `3217323c7e6a22f2086367f8bdf9cc8bde6abd88` | Merge sample-selection fixtures | First-slice `view --samples` |
 | `rsomics-vcf-setgt` `a01b957b2259f4a75834c8354b2467cc3ea78cf6` | Refactor then merge | Later `setgt`; share internal expression engine |
@@ -342,19 +376,36 @@ and 6.3 MiB for bcftools. The retained hyperfine JSON is on external scratch;
 the repository benchmark independently reports approximately 174.9 MiB/s for
 the 100,000-record VCF path.
 
-The VCF and BGZF hot paths pass the throughput and memory decision. BCF is a
-correct typed fallback, not a performance claim. Its deficit remains explicit
-and must be revisited while `view` and `query` establish the shared BCF
-projection path; it is not hidden behind the faster text result.
+The final `query` revision was measured separately on the same machine and
+toolchain with `%CHROM\t%POS\t%INFO/DP\n`, two warm-ups, and seven measured
+runs over 1,000,000 records:
+
+| Input | rsomics mean | bcftools mean | Peak RSS, rsomics / bcftools | Decision |
+|---|---:|---:|---:|---|
+| plain VCF | 241.7 ± 5.6 ms | 450.5 ± 36.4 ms | 3.4 / 6.5 MiB | rsomics 1.86 times faster |
+| BGZF VCF | 262.5 ± 3.9 ms | 442.2 ± 28.2 ms | 3.5 / 6.7 MiB | rsomics 1.68 times faster |
+| BCF | 921.2 ± 21.8 ms | 209.0 ± 5.1 ms | 3.5 / 6.6 MiB | rsomics 4.41 times slower |
+
+The query plain fixture has 31,889,099 bytes and SHA-256
+`9873405b77dc5d3af91f4e33b65d1f0c66f41808933396fccb715500ff43f3fa`.
+The BGZF and BCF inputs use the digests recorded above. The retained final
+hyperfine files are `query-plain-final.json`, `query-bgzf-final.json`, and
+`query-bcf-final.json` under the external performance scratch.
+
+The plain VCF and BGZF principal query paths pass both throughput and memory
+gates. Direct typed BCF numeric projection improves the original generic
+fallback but does not pass the throughput gate. The remaining 4.41-times
+deficit is explicit and belongs to the shared raw BCF/index work used by
+`view`; it is not hidden behind the faster text result or claimed as a win.
 
 ### Publication decision
 
-Do not publish `rsomics-vcf` yet. The target repository and the complete
-`head` operation now exist with a current bcftools 1.24 oracle and performance
-record, but `view`, `query`, `validate`, and `index` remain absent. No
+Do not publish `rsomics-vcf` yet. The target repository and complete `head` and
+current-contract `query` operations now exist with bcftools 1.24 oracles and
+performance records, but `view`, `validate`, and `index` remain absent. No
 placeholder command is exposed. Publication waits for the complete first
-slice, a repeat exact-head four-native-platform CI over that slice, the
-representative multi-sample gate, and a fresh public API review.
+slice, exact-head four-native-platform CI over that slice, the representative
+region/index gate, and a fresh public API review.
 
 ## `rsomics-call`
 
