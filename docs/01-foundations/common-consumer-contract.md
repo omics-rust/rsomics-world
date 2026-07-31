@@ -1,8 +1,9 @@
 # `rsomics-common` consumer contract
 
-Status: common 0.7.0, help 0.4.0, and intervals 0.3.0 are published and
-verified from downloaded crates.io archives. Pilot products resolve those
-versions from the registry. Seqio 0.3 remains unpublished.
+Status: common 0.8.0, help 0.4.0, and intervals 0.3.0 are published and
+verified from downloaded crates.io archives. BED and VCF resolve common 0.8
+from the registry; the earlier pilot locks remain recorded at their tested
+versions. Seqio 0.3 remains unpublished.
 
 ## Why this audit exists
 
@@ -19,10 +20,11 @@ them.
 
 The table is based on live source at these revisions:
 
-- `rsomics-common` `5a46f8ee5888`;
+- `rsomics-common` `416d3615e780`;
 - `rsomics-seq` `bf00b71477b8`;
 - `rsomics-fastq-preprocess` `a56519d9d6c0`;
-- `rsomics-bed` `e8898dbcb0db`;
+- `rsomics-bed` `989894f2dad5`;
+- `rsomics-vcf` `84e27f734911`;
 - `rsomics-seqio` `7b5b1c68f52e`;
 - `rsomics-intervals` `6783f67614ae`.
 
@@ -32,11 +34,12 @@ The table is based on live source at these revisions:
 | `ExitCode`, JSON envelopes, `ToolMeta`, `run()` | `seq`, `fastq-preprocess`, `bed` | keep after removing unrelated capability initialization |
 | `OutputArgs::json` | `seq`, `fastq-preprocess`, `bed` | retained as the one demonstrated shared CLI control |
 | former `CommonFlags::threads` and global Rayon setup | effective only in `fastq-preprocess` | removed from common; preprocessing owns a local Rayon pool |
-| former `CommonFlags::seed` | none of the three current products | removed; no RNG work was manufactured to justify it |
+| former `CommonFlags::seed` | none of the current consumers | removed; no RNG work was manufactured to justify it |
 | former `CommonFlags::quiet` / `verbose` | no current product emits common info/debug messages | removed until two products establish a logging contract |
 | `StderrLog` | no direct product consumer | remove; its write errors are also currently discarded |
 | `Tool` trait | only unreconstructed `liftover` and `minimap2` repositories | do not let inherited wrappers freeze the pilot-product API |
-| path/stdin and path/stdout helpers | no current product consumer | remove; current output helper truncates directly and is weaker than product transaction contracts |
+| former path/stdin and truncating path/stdout helpers | no retained consumer | removed; they did not provide a safe shared contract |
+| `write_atomic` | `bed`, `vcf` | keep; both products use same-directory temporary output, atomic persist, cleanup on failure, destination-mode preservation, and parent-directory sync |
 | `format_g6` | no retained current product consumer | remove until two typed numeric-output contracts require it |
 | `test-support` / `tier2` | no current retained consumer | remove; the fixture macro assumes the deleted monorepo layout |
 | `flate2` dependency | no common source call site | remove |
@@ -45,9 +48,9 @@ The 562 historical micro-crate manifests that mention `rsomics-common` are
 implementation assets, not public-API consumers. Counting them would recreate
 the topology being retired.
 
-## Implemented 0.7 boundary
+## Implemented 0.8 boundary
 
-The 0.7 implementation contains:
+The 0.8 implementation contains:
 
 - the typed error categories and contextual I/O conversion;
 - stable process exit-code mapping;
@@ -55,7 +58,15 @@ The 0.7 implementation contains:
 - `ToolMeta`;
 - a minimal shared JSON/output-mode flag;
 - a runner that maps the body result to JSON/plain diagnostics and an exit
-  code without initializing unrelated global state.
+  code without initializing unrelated global state;
+- `write_atomic`, added only after BED and VCF demonstrated the same named-file
+  transaction contract.
+
+`write_atomic` creates its temporary file beside the destination, removes it
+when the producer fails, flushes and syncs before persist, preserves the mode
+of an existing destination, honors the process umask for a new destination,
+and syncs the parent directory on Unix. Consumer tests cover preservation and
+failure paths rather than assuming an atomic rename is sufficient.
 
 `rsomics-help` is the companion presentation layer. It decorates and parses
 the authoritative Clap tree; common does not render help, style argument
@@ -88,7 +99,16 @@ logging.
 
 Removes the same four inapplicable flags. The five operations remain
 single-process interval algorithms; adding speculative parallelism is not part
-of this migration.
+of this migration. Revision `989894f2dad5` removes its private transactional
+writer and consumes common 0.8; exact-head CI run `30621067404` passes all four
+native target classes and its pinned bedtools 2.31.1 oracle.
+
+### `rsomics-vcf`
+
+The `query` command writes named projections through common 0.8 while stdout
+remains a direct stream. A failed parse, compatibility check, or I/O operation
+does not replace the destination. Revision `84e27f734911` passes exact-head CI
+run `30622684140` on all four native target classes.
 
 ### Other retained repositories
 
@@ -108,10 +128,13 @@ representative performance decision. `rsomics-seq` likewise patches kmer
 
 ## Verification and release sequence
 
-1. Common 0.7.0, help 0.4.0, and intervals 0.3.0 are published, archive
+1. Common 0.8.0, help 0.4.0, and intervals 0.3.0 are published, archive
    checksum verified, and consumed from crates.io.
 2. Every migrated product regenerates its lockfile and passes exact-head CI
    without a path dependency for those releases.
 3. Seqio 0.3 is published only after its representative compatibility,
    throughput, memory, public-API, and exact-head gates are complete.
 4. Kmer remains unpublished until a second product demonstrates its contract.
+
+Common 0.8 exact-head CI run `30620810041` and publish run `30620883859`
+completed successfully. The downloaded registry archive resolves as 0.8.0.

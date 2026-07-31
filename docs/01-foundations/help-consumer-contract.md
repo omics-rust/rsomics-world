@@ -1,8 +1,8 @@
 # `rsomics-help` consumer contract
 
-Status: help 0.4.0, common 0.7.0, and intervals 0.3.0 are published and
-verified from downloaded crates.io archives. The pilot command trees consume
-the registry releases. Seqio 0.3 remains unpublished.
+Status: help 0.4.0, common 0.8.0, intervals 0.3.0, and seqio 0.3.0 are
+published and verified from downloaded crates.io archives. Product command
+trees consume the registry versions established by their exact lockfiles.
 
 ## Role
 
@@ -69,7 +69,8 @@ crates.io; only still-unpublished domain foundations use exact CI patches:
 |---|---|---|
 | `rsomics-seq` `bf00b71477b8` | five sequence subcommands | strict Clippy; 7 library, 4 binary, 26 CLI, one independent k-mer oracle, and six live SeqKit tests; five benchmark smokes; CI `30598213179` |
 | `rsomics-fastq-preprocess` `a56519d9d6c0` | three subcommands with nested input, trim, filter, length, thread, and output groups | strict Clippy; 18 library, 4 binary, 21 CLI, and four live fastp tests; benchmark smoke; CI `30598213737` |
-| `rsomics-bed` `e8898dbcb0db` | five interval subcommands with positional and required named inputs | strict Clippy; 40 library, 12 CLI, and three live bedtools/golden tests; full benchmark smoke and representative million-record gate; CI `30598213193` |
+| `rsomics-bed` `989894f2dad5` | five interval subcommands with positional and required named inputs | strict Clippy; 40 library, 12 CLI, and three live bedtools/golden tests; full benchmark smoke and representative million-record gate; CI `30621067404` |
+| `rsomics-vcf` `84e27f734911` | nested `head` and `query` operations with unified global output | strict Clippy; typed VCF/BGZF/BCF tests; pinned bcftools 1.24 command oracles; benchmark smoke; CI `30622684140` |
 
 The foundation itself passes strict Clippy, package verification, and six unit
 tests covering nested help, generated help navigation, suggestions, normal
@@ -80,9 +81,11 @@ exact-head CI `30596121607` on native Linux and macOS for both `x86_64` and
 ## Coordinated dependency boundary
 
 The prototype demonstrated that `rsomics-common` cannot be upgraded only at a
-Layer-B leaf when another foundation exposes its error types. Seqio therefore
-uses the same common 0.7 release as its products. Intervals now exposes its own
-narrow construction error and does not depend on common:
+Layer-B leaf when another foundation exposes its error types. Seqio and its
+sequence consumers therefore remain on their tested common 0.7 contract.
+Intervals exposes its own narrow construction error and does not depend on
+common. BED and VCF independently moved to common 0.8 for the shared
+transactional output contract:
 
 ```text
 seq -> help 0.4
@@ -92,8 +95,11 @@ fastq-preprocess -> help 0.4
 fastq-preprocess -> common 0.7 <- seqio
 
 bed -> help 0.4
-bed -> common 0.7
+bed -> common 0.8
 bed -> intervals 0.3
+
+vcf -> help 0.4
+vcf -> common 0.8
 ```
 
 `rsomics-seqio` commit `7b5b1c68f52e` passes strict Clippy, 45 unit tests, five
@@ -104,10 +110,11 @@ tests plus exact-head CI `30597681539`.
 
 ## Release order
 
-1. Help 0.4.0, common 0.7.0, and intervals 0.3.0 are published and verified.
+1. Help 0.4.0, common 0.8.0, intervals 0.3.0, and seqio 0.3.0 are published
+   and verified.
 2. The `seq`, `fastq-preprocess`, `bed`, and `annotation` lockfiles resolve
-   those releases from crates.io and retain their exact-head gates.
-3. Seqio 0.3 remains behind its representative performance decision; kmer
-   remains behind a second product consumer.
+   their reviewed versions from crates.io and retain their exact-head gates.
+3. VCF resolves help 0.4 and common 0.8 from crates.io; kmer remains behind a
+   second product consumer.
 4. Use these consumer contracts as the default CLI baseline for later product
    reconstruction.
