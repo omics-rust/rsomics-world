@@ -70,7 +70,7 @@ crates.io; only still-unpublished domain foundations use exact CI patches:
 | `rsomics-seq` `d4c840be2e37` | five sequence subcommands | strict Clippy; library, CLI, independent k-mer, live SeqKit, and benchmark gates against registry seqio 0.3; CI `30599999972` |
 | `rsomics-fastq-preprocess` `442c202908d1` | three subcommands with nested input, trim, filter, length, thread, and output groups | strict Clippy; library, CLI, live fastp, and benchmark gates against registry seqio 0.3; CI `30599999790` |
 | `rsomics-bed` `989894f2dad5` | five interval subcommands with positional and required named inputs | strict Clippy; 40 library, 12 CLI, and three live bedtools/golden tests; full benchmark smoke and representative million-record gate; CI `30621067404` |
-| `rsomics-vcf` `330736317e7d` | nested `head`, `query`, and `validate` operations with unified global output | strict Clippy; typed VCF/BGZF/BCF tests; pinned bcftools 1.24 and validation-corpus oracles; representative gates; CI `30627803709` |
+| `rsomics-vcf` `7c0197e6da72` | nested `head`, `query`, `validate`, and `index` operations with unified global output | strict Clippy; typed VCF/BGZF/BCF and CSI/TBI tests; pinned bcftools 1.24 and validation-corpus oracles; representative gates; CI `30630841891` |
 
 The foundation itself passes strict Clippy, package verification, and six unit
 tests covering nested help, generated help navigation, suggestions, normal

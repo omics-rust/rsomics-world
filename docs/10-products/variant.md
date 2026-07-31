@@ -2,8 +2,8 @@
 
 Status: boundary, upstream-operation, and historical-source audit complete.
 `rsomics-vcf` exists with complete `head`, current-contract `query`, and
-strict `validate` operations. `rsomics-call` and `rsomics-cnv` do not yet
-exist. None of the three products is published.
+strict `validate` and `index` operations. `rsomics-call` and `rsomics-cnv` do
+not yet exist. None of the three products is published.
 
 ## Portfolio decision
 
@@ -133,14 +133,14 @@ pretend that a full streaming scan is equivalent.
 ### Current implementation
 
 `rsomics-vcf` revision
-`330736317e7de74ac3ad147eb3b861c59ed4764f` implements complete `head`, the
-declared single-input `query` contract, and strict `validate` without
-advertising the other first-slice commands. It consolidates the historical
+`7c0197e6da72af3947cf76fd667b7cbac14ad36c` implements complete `head`, the
+declared single-input `query` contract, strict `validate`, and compatible
+`index` without advertising `view`. It consolidates the historical
 `rsomics-vcf-head`, `rsomics-vcf-query`, `rsomics-vcf-extract`,
-`rsomics-vcf-valfmt`, and `rsomics-vcf-validate` assets into private product
-modules. `rsomics-help` supplies the shared command layout. `rsomics-common`
-0.8 supplies transactional named output, and common 0.9 preserves complete
-invalid validation reports in the shared JSON and exit contract.
+`rsomics-vcf-valfmt`, `rsomics-vcf-validate`, and `rsomics-vcf-index` assets
+into private product modules. `rsomics-help` supplies the shared command
+layout. `rsomics-common` 0.9 supplies transactional named output and preserves
+complete invalid validation reports in the shared JSON and exit contract.
 
 `head`:
 
@@ -190,6 +190,25 @@ invalid validation reports in the shared JSON and exit contract.
   and retains only the normalized-variant coordinate window that can still
   collide with future sorted records.
 
+`index`:
+
+- builds CSI by default for complete BGZF VCF or BCF and TBI for BGZF VCF,
+  with custom CSI minimum shifts, real multithreaded BGZF decompression,
+  explicit replacement, named output, and named-output support for stdin;
+- chooses HTSlib-compatible CSI depth from the format and declared contig
+  lengths, preserves deep spanning-variant queries through propagated linear
+  offsets, and uses `REF`, `INFO/END`, symbolic `INFO/SVLEN`, and gVCF
+  `FORMAT/LEN` spans;
+- validates BCF shared and sample blocks while reusing per-record buffers,
+  rejects malformed dictionaries, truncated BGZF, ordinary gzip, unsorted
+  coordinates, noncontiguous contig blocks, and TBI for BCF;
+- reports total or per-contig mapped counts from variant paths, direct
+  `.csi`/`.tbi` paths, and explicit `##idx##` paths, retaining unknown
+  empty-contig counts as `.` like bcftools;
+- builds the complete index before common 0.9 atomically replaces the
+  destination, so parse, compatibility, allocation, write, flush, or sync
+  failures do not expose a partial index.
+
 The representative oracle covers multi-ALT, numeric and missing INFO arrays,
 flags, string INFO, FORMAT scalars and arrays, phased and missing genotypes,
 sample inclusion and exclusion, headers, and VCF/BGZF/BCF equivalence. When
@@ -218,11 +237,12 @@ compatibility extension. No corpus-specific exception is present in production
 code.
 
 The initial `head` exact-head CI run `30619149446` and query run `30622684140`
-pass native Linux and macOS on `x86_64` and `aarch64`. Exact-head CI run
-`30627803709` passes the same four native target classes at validation revision
-`330736317e7d`. Its Linux `x86_64` job builds bcftools 1.24 from the official
-SHA-256-pinned archive, fetches both exact validation corpora, and passes all
-command and validation oracle suites.
+pass native Linux and macOS on `x86_64` and `aarch64`. Validation run
+`30627803709` and index run `30630841891` pass the same four native target
+classes at revisions `330736317e7d` and `7c0197e6da72`. The Linux `x86_64`
+job builds bcftools 1.24 from the official SHA-256-pinned archive, fetches
+both exact validation corpora, and passes command, validation, index-region,
+spanning-variant, stats, and malformed-BCF oracle suites.
 
 ### Later slices
 
@@ -244,6 +264,7 @@ src/
 ├── main.rs
 ├── cli.rs
 ├── head.rs
+├── index.rs
 ├── query.rs
 ├── query_bcf.rs
 ├── query_format.rs
@@ -254,6 +275,12 @@ src/
 │   ├── record.rs
 │   ├── value.rs
 │   └── text.rs
+├── index/
+│   ├── bcf_record.rs
+│   ├── build.rs
+│   ├── csi.rs
+│   ├── stats.rs
+│   └── vcf.rs
 ├── validation/
 │   ├── definitions.rs
 │   ├── header.rs
@@ -288,7 +315,7 @@ adapters. Another rsomics IO wrapper is not justified merely to wrap noodles.
 | `rsomics-vcf-fixref` `d6efd2bd79067b2b7b2f738703e428ca40dc56f1` | Refactor then merge | Later `fixref`; retain reference-access performance seed |
 | `rsomics-vcf-head` `0297fa20cb271124c9ccc15d51fff973f1df50b6` | Refactor then merge | First-slice `head`; add BCF |
 | `rsomics-vcf-indel-stats` `a7774e648149a7b12dbfbbb60870d54d1cf2a373` | Refactor then merge | `stats indels` |
-| `rsomics-vcf-index` `5eafb949d64a101c1c4e2d21e9a311ad9379ac65` | Refactor after dirty-diff attribution | First-slice TBI/CSI `index` |
+| `rsomics-vcf-index` `5eafb949d64a101c1c4e2d21e9a311ad9379ac65` | Spanning-variant regression and linear-offset seed merged; implementation replaced | Complete first-slice TBI/CSI `index` |
 | `rsomics-vcf-isec` `86bedb28892ccbcb6137bfb3c82925fe931609f1` | Test and merge-loop seed | Later `isec` |
 | `rsomics-vcf-merge` `571af0688ac61b857b529b0db20ae886999e04fa` | Test asset | Replace incomplete header, allele, and FORMAT reconciliation |
 | `rsomics-vcf-norm` `c4eeb5026199141a08ddd7b710be14488887edc2` | Test and split seed | Later complete `norm`; add reference realignment and 1.24 semantics |
@@ -455,14 +482,38 @@ The retained Hyperfine JSON is
 with SHA-256
 `23d194d6fb3151aac36ef446b6f632253a67f333b264a68da2cd668500af1594`.
 
+The final `index` revision was measured on the same Apple M2 host and toolchain
+against bcftools/HTSlib 1.24 with three warm-ups and 20 measured runs. Both
+sides built default CSI indexes for the same one-million-record inputs:
+
+| Input | rsomics mean | bcftools mean | Peak RSS, rsomics / bcftools | Decision |
+|---|---:|---:|---:|---|
+| BGZF VCF | 170.4 ± 32.5 ms | 136.9 ± 2.8 ms | 3.36 / 6.44 MiB | bcftools 1.25 times faster; rsomics uses 48% less RSS |
+| BCF | 133.0 ± 17.9 ms | 77.2 ± 15.5 ms | 3.30 / 6.64 MiB | bcftools 1.72 times faster; rsomics uses 50% less RSS |
+
+The BGZF VCF is 1,715,168 bytes with SHA-256
+`72ad19cdda99612f294936df37b4d93daa4111b780f394dee20161b0b956b991`;
+the BCF is 2,319,778 bytes with SHA-256
+`e8c1a675d911aef115d4121cb50f98e56c73bb165f01c7d3861788d6dfe022c1`.
+The wall deficit is explicit: rsomics validates the complete BCF record
+structure and flushes, syncs, renames, and parent-syncs the index transaction,
+whereas the comparison does not provide the same durable replacement
+contract. The release claim is lower memory and stronger failure semantics,
+not higher indexing throughput. The retained Hyperfine files are
+`hyperfine-final-vcf.json` and `hyperfine-final-bcf.json` under the external
+index benchmark scratch, with SHA-256
+`c119210634775b0d278d1854a654eeaa56948af84d608c171d3e0a747704eb54`
+and
+`cb5f4fbc8645fb099455dc703ca2aa40f462dbed4d35c0ac7b992de8405a356f`.
+
 ### Publication decision
 
 Do not publish `rsomics-vcf` yet. The target repository and complete `head`,
-current-contract `query`, and strict `validate` operations now exist with
-bcftools 1.24, hts-specs, and EBI oracles plus performance records, but `view`
-and `index` remain absent. No placeholder command is exposed. Publication
-waits for the complete first slice, exact-head four-native-platform CI over
-that slice, the representative region/index gate, and a fresh public API
+current-contract `query`, strict `validate`, and compatible `index` operations
+now exist with bcftools 1.24, hts-specs, and EBI oracles plus performance
+records. `view` remains absent, and no placeholder command is exposed.
+Publication waits for the complete first slice, exact-head four-native-platform
+CI over that slice, the complete view/region gate, and a fresh public API
 review.
 
 ## `rsomics-call`
