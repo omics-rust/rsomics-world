@@ -707,21 +707,27 @@ the older consensus diploid model over PL records.
 ### Foundations and gates
 
 `rsomics-bamio` supplies validated SAM/BAM/CRAM streams and indexed access.
-`rsomics-pileup` revision `0d4414364d59` supplies a fallible sorted projection
+`rsomics-pileup` revision `d15b1a90aca0` supplies a fallible sorted projection
 kernel, checked CIGAR and long-CIGAR projection, overlap handling, retry-safe
-borrowed columns, bounded column state, and source-isolated overlap state.
-BAQ remains the next shared item and is implemented only through the calling
-and BAM consensus consumers that need it. `rsomics-call` is the first
-implemented pileup consumer; `rsomics-bam` remains the second named consumer
-required before publication.
+borrowed columns, bounded column state, source-isolated overlap state, and an
+optional per-source active-depth limit. The call product owns the 250-read
+default instead of freezing that policy into the foundation. Exact-head
+four-native-target CI `30640917434` passes. BAQ remains the next shared item
+and is implemented only through the calling and BAM consensus consumers that
+need it. `rsomics-call` is the first implemented pileup consumer;
+`rsomics-bam` remains the second named consumer required before publication.
 
-`rsomics-call` revision `c3f6107bfe5b` owns the typed allele, ploidy,
-likelihood-site, and per-sample evidence model. It ports the MAQ error model
-with lazy depth tables, constructs multisample SNP sites from source-aware
-pileup columns, and matches HTSlib 1.24 error matrices plus bcftools 1.24
-reference-only and two-sample PL records. Exact-head CI `30638298190` passes
-native Linux and macOS on `x86_64` and `aarch64`. No command-line binary is
-exposed yet, and the repository remains unpublished.
+`rsomics-call` revision `5da214d446a1` owns the typed allele, ploidy,
+likelihood-site, and per-sample evidence model. It validates and
+coordinate-merges plain or BGZF SAM, raw or BGZF BAM, and CRAM inputs, checks
+their reference dictionaries, builds samples from source and read-group
+metadata, and streams records through `rsomics-pileup` into multisample SNP
+likelihood sites. Its MAQ error model and deterministic deep-evidence sampling
+match HTSlib 1.24; reference-only, two-sample, and per-input-depth records match
+bcftools 1.24. Exact-head four-native-target CI `30641073393` passes. BAQ,
+indel likelihoods, caller models, likelihood VCF/BCF, and the `rsomics-help`
+CLI remain, so no command-line binary is exposed and the repository remains
+unpublished.
 
 Calling likelihoods, allele selection, ploidy policy, priors, annotations, and
 VCF output remain in the product. `rsomics-stats` receives a numerical kernel
