@@ -78,9 +78,11 @@ entry is created before each is complete.
 
 This is the first publishable slice because it establishes the shared format
 boundary without requiring an external sorter, index builder, or pileup
-engine. `view` includes SAM/BAM/CRAM input and output, header control, region
-selection when a usable index exists, flag and map-quality filters, count
-mode, deterministic subsampling, and explicit reference requirements.
+engine. `view` includes SAM/BAM/CRAM input, SAM/BAM output, header control,
+region selection when a usable index exists, flag and map-quality filters,
+count mode, deterministic subsampling, and explicit reference requirements.
+CRAM output joins the stable surface only after a conforming writer is
+available.
 
 Samtools 1.24 changed the default `view --subsample` seed from zero to a value
 derived from the input header. The rsomics default and its reproducibility
@@ -104,9 +106,25 @@ including reference-backed CRAM MD/NM reconstruction for mismatches, insertions,
 deletions, skips, ambiguous bases, and `=` sequence symbols. Exact-head CI run
 `30604810443` passes native Linux and macOS on `x86_64` and `aarch64`.
 
-`view` remains the missing first-slice operation. The crate stays unpublished
-until its streaming, indexed-region, filtering, subsampling, format-output, and
-performance gates are complete.
+At revision `b735539ffc75`, `view` streams SAM, BAM, and CRAM input; emits SAM
+body, header, header-only, or count output; and applies required, excluded,
+any-of, and all-of flag filters plus minimum mapping quality. Revision
+`12b6991e47b6` adds transactional BAM output with explicit BGZF finalization
+and passes SAM-to-BAM, BAM-to-BAM, and CRAM-to-BAM samtools 1.24 oracle
+comparisons. Exact-head CI run `30605884207` passes native Linux and macOS on
+`x86_64` and `aarch64`.
+
+CRAM output remains intentionally unavailable. noodles-cram 0.93 converts the
+CRAM read-group data series into the record read-group field but also retains
+the `RG` auxiliary tag, producing duplicate `RG` fields after a round trip.
+The same conversion logic is present at upstream revision
+[`87efef3f77cb`](https://github.com/zaeleus/noodles/blob/87efef3f77cb28b9a7327a00f06bc6c258f9f326/noodles-cram/src/io/writer/record/convert.rs).
+The product will not expose known-corrupting CRAM output while that contract is
+unresolved.
+
+The crate stays unpublished until indexed regions, samtools 1.24-compatible
+subsampling, remaining output and header semantics, compression and worker
+controls, and the performance gates are complete.
 
 ### Slice 2: file lifecycle
 
@@ -154,6 +172,7 @@ src/
 ├── cli.rs
 ├── input.rs
 ├── md.rs
+├── output.rs
 ├── commands/
 │   ├── flags.rs
 │   ├── flagstat.rs
@@ -310,9 +329,11 @@ only after two product repositories exercise the same policy-free contract.
 The first BAM slice alone does not justify publishing a redesigned API.
 Revision `acb8b3a5a150` therefore removes `rust-htslib` from `rsomics-bam` and
 implements the first consumer contract privately with noodles 0.110,
-noodles-util 0.79, and libdeflate-backed noodles-bgzf 0.47. It does not depend
-on or release a speculative `rsomics-bamio` revision. Promotion waits for a
-second implemented consumer such as `rsomics-count` or `rsomics-methyl`, with
+noodles-util 0.79, and libdeflate-backed noodles-bgzf 0.47. Revisions
+`b735539ffc75` and `12b6991e47b6` extend that private contract through
+streaming filters and transactional SAM/BAM output. They do not depend on or
+release a speculative `rsomics-bamio` revision. Promotion waits for a second
+implemented consumer such as `rsomics-count` or `rsomics-methyl`, with
 consumer-side tests.
 
 ### `rsomics-pileup`
@@ -431,8 +452,12 @@ representative SAM and CRAM inputs.
 
 ## Publication decision
 
-Do not publish `rsomics-bam` yet. The product repository is absent, the first
-slice has not been implemented, the required foundation contracts are not
-consumer-proven, and there is no four-native-platform exact-head or current
-samtools 1.24 performance evidence. Historical micro-crate versions do not
-reduce these gates.
+Do not publish `rsomics-bam` yet. The product repository exists and its
+streaming inspection commands, filters, and SAM/BAM output now have
+four-native-platform exact-head CI plus samtools 1.24 oracle evidence. The
+first slice remains incomplete: indexed regions, compatible subsampling,
+complete header and output controls, and a strict performance or resource-use
+advantage are not yet demonstrated. CRAM output is blocked by the verified
+duplicate-read-group behavior above, and the shared `rsomics-bamio` contract
+still lacks a second implemented consumer. Historical micro-crate versions do
+not reduce these gates.
