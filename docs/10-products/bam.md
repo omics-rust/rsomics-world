@@ -269,7 +269,7 @@ Product-specific filtering, CLI policy, and samtools defaults remain in
 
 Named consumers are `rsomics-bam`, `rsomics-count`, `rsomics-methyl`,
 `rsomics-minimap2`, `rsomics-peak`, `rsomics-rnaseq-qc`, `rsomics-signal`,
-and the alignment-consuming parts of `rsomics-vcf`. An API item becomes public
+and `rsomics-call`. An API item becomes public
 only after two product repositories exercise the same policy-free contract.
 The first BAM slice alone does not justify publishing a redesigned API.
 
@@ -280,7 +280,7 @@ The audited foundation is revision
 accepts a raw record through an infallible `feed` method and does not enforce
 coordinate order at the boundary.
 
-The shared contract needed by `rsomics-bam`, `rsomics-vcf`, and
+The shared contract needed by `rsomics-bam`, `rsomics-call`, and
 `rsomics-methyl` is:
 
 - a validated, coordinate-sorted record stream with fallible ingestion;
@@ -357,8 +357,8 @@ workflow benefit.
   `rsomics-signal`.
 - RSeQC, regtools, and Picard RNA-seq QC workflows belong to
   `rsomics-rnaseq-qc`.
-- Variant calling and VCF/BCF policy belong to `rsomics-vcf`, even when they
-  consume alignment pileups.
+- Variant calling belongs to `rsomics-call`; VCF/BCF format policy belongs to
+  `rsomics-vcf`.
 - Experimental CRAM 4 is outside the supported format contract.
 - Remote object-store protocols are not implied by accepting local
   SAM/BAM/CRAM. They require their own error, credential, retry, and

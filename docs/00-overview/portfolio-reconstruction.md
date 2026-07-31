@@ -66,9 +66,10 @@ The 622 local candidates break down as follows after description-first routing:
 | Generic capability pools, not presumed products | 172 |
 | Existing foundation libraries | 28 |
 
-The routing confidence is high for 592 rows and medium for 30. High means the
+The routing confidence is high for 574 rows and medium for 48. High means the
 package description names the upstream or the crate name has an unambiguous
-format/workflow prefix. Medium rows remain explicit review targets.
+format/workflow prefix. Medium includes explicit product-boundary corrections
+whose provenance remains visible in the dossier.
 
 `upstream_families` in the ledger is derived from the package description when
 possible. `upstream_mentions` is broader and includes README/test mentions.
@@ -80,25 +81,25 @@ Scanpy operation.
 the routing pass. A dirty repository is never copied blindly: its ownership and
 diff are resolved when that asset enters a product migration.
 
-At the 2026-07-30 generated snapshot, 553 source repositories were clean, 55
+At the 2026-07-31 generated snapshot, 554 source repositories were clean, 54
 were dirty, and 14 candidates were not Git repositories. Dirty does not mean
 discardable: it means the migration must inspect and attribute the local diff
 before selecting a source revision.
 
 ## Provisional product families
 
-The current implementation pool maps to 28 accepted product families.
+The current implementation pool maps to 30 accepted product families.
 Rejected workflow-metadata and differential-expression-reporting candidates
 remain in capability pools:
 
 | Product family | Candidates | Intended boundary |
 |---|---:|---|
-| `rsomics-vcf` | 47 | VCF/BCF operations and bcftools-like suite |
 | `rsomics-bed` | 42 | BED/interval suite |
+| `rsomics-plink` | 42 | PLINK-style genotype analysis and genotype QC |
 | `rsomics-bam` | 38 | SAM/BAM/CRAM format operations |
 | `rsomics-seq` | 34 | FASTA/FASTQ sequence utilities |
+| `rsomics-vcf` | 30 | VCF/BCF inspection, transformation, filtering, indexing, and format statistics |
 | `rsomics-sc` | 29 | stateful single-cell analysis workflow |
-| `rsomics-plink` | 31 | PLINK-style genotype analysis |
 | `rsomics-rnaseq-qc` | 26 | RSeQC/Picard RNA-seq QC |
 | `rsomics-ecology` | 19 | community diversity, dissimilarity, ordination, association, and permutation analysis |
 | `rsomics-edger` | 17 | edgeR workflow |
@@ -115,7 +116,9 @@ remain in capability pools:
 | `rsomics-metagenomics` | 5 | abundance-aware amplicon processing, taxonomic classification, and reports |
 | `rsomics-peak` | 5 | chromatin peak calling, annotation, and quantification |
 | `rsomics-count` | 2 | feature and read counting, including count-matrix collation |
-| `rsomics-annotation` | 2 | GFF/GTF and transcript utilities |
+| `rsomics-annotation` | 4 | GFF/GTF, transcript, and functional-consequence annotation |
+| `rsomics-call` | 2 | alignment pileup, genotype likelihoods, and lightweight small-variant calling |
+| `rsomics-cnv` | 2 | BAF/LRR copy-number and chromosome-level polysomy analysis |
 | Five single-implementation products | 5 | FastQC, persistent sequence sketches, liftOver, methylation, and minimap2 |
 
 This table is a routing result, not a declaration that every proposed family
@@ -132,13 +135,22 @@ kept simple significance-category annotation product-local.
 The structure review consolidated nine coordinate-analysis binaries into
 `rsomics-structure` and internalized `rsomics-pdb-core`: eight historical
 dependents become one target-product consumer after consolidation.
+The variant review split the upstream bcftools executable boundary by workflow:
+format operations stay in `rsomics-vcf`, alignment-to-variant work forms
+`rsomics-call`, BAF/LRR analysis forms `rsomics-cnv`, consequence operations
+join `rsomics-annotation`, and genotype QC/LD/family operations join
+`rsomics-plink`.
 
-The official suite shapes support these boundaries:
+The official suite shapes provide operation inventories, but not every
+executable is a product boundary:
 
-- [samtools](https://www.htslib.org/doc/samtools.html),
-  [bcftools](https://samtools.github.io/bcftools/bcftools), and
+- [samtools](https://www.htslib.org/doc/samtools.html) and
   [bedtools](https://bedtools.readthedocs.io/en/latest/content/bedtools-suite.html)
-  expose coherent command families over shared formats.
+  expose mostly coherent command families over shared formats.
+- [bcftools](https://samtools.github.io/bcftools/bcftools) mixes format
+  operations, variant calling, copy-number analysis, functional annotation,
+  and genotype analysis; those workflows are split across the reviewed
+  products.
 - [SeqKit](https://bioinf.shenwei.me/seqkit/usage/) groups FASTA/Q utilities
   behind one installation.
 - [PLINK](https://www.cog-genomics.org/plink/2.0/general_usage) composes
@@ -176,15 +188,15 @@ named products, not those raw counts, justify the boundary:
 
 | Foundation | Historical crate consumers | Named initial product consumers |
 |---|---:|---|
-| `rsomics-common` | 560 | all 28 accepted products |
-| `rsomics-help` | 317 | all 28 accepted CLI products |
-| `rsomics-bamio` | 70 | `bam`, `vcf`, `count`, `methyl`, `minimap2`, `rnaseq-qc`, `signal` |
+| `rsomics-common` | 560 | all 30 accepted products |
+| `rsomics-help` | 317 | all 30 accepted CLI products |
+| `rsomics-bamio` | 70 | `bam`, `call`, `count`, `methyl`, `minimap2`, `rnaseq-qc`, `signal` |
 | `rsomics-intervals` | 11 | `bed`, `annotation`, `peak`, `signal` |
 | `rsomics-kmer` | 6 | current: `seq`; concrete next reviews: `metagenomics`, `sketch` |
 | `rsomics-seqio` | 8 | `seq`, `fastq-preprocess`, `fastq-qc`, `minimap2` |
 | `rsomics-stats` | 3 | `composition`, `deseq`, `edger`, `limma`, `sc`, `ecology`, `popgen`, `plink` |
 | `rsomics-phylo-tree` | 9 | `composition`, `phylo`, `ecology` |
-| `rsomics-pileup` | 2 | `bam`, `vcf`, `methyl` |
+| `rsomics-pileup` | 2 | `bam`, `call`, `methyl` |
 
 The following current libraries have zero or one target-family consumer and
 should default to internalization unless a second concrete product is found:
@@ -203,14 +215,14 @@ The observed dependency relationships are:
 ```mermaid
 flowchart LR
     common["common"] --> products["nearly all target products"]
-    help["help"] --> cli["28 CLI families"]
+    help["help"] --> cli["30 CLI families"]
     bamio["bamio"] --> bam["bam"]
     bamio --> count["count"]
     bamio --> methyl["methyl"]
     bamio --> minimap2["minimap2"]
     bamio --> signal["signal"]
     bamio --> rnaqc["rnaseq-qc"]
-    bamio --> vcf["vcf"]
+    bamio --> call["call"]
     intervals["intervals"] --> bed["bed"]
     intervals --> signal
     intervals --> peak["peak"]
@@ -227,7 +239,7 @@ flowchart LR
     tree --> ecology["ecology"]
     pileup["pileup"] --> bam
     pileup --> methyl
-    pileup --> vcf
+    pileup --> call
 ```
 
 ## Revised size estimate
@@ -235,20 +247,21 @@ flowchart LR
 The product-level dependency calculation makes the earlier Layer A estimate too
 generous.
 
-- Current implementation pool: 28 coherent products.
+- Current implementation pool: 30 coherent products.
 - Clearly justified shared foundations: 9.
 - Strategic foundation candidates with concrete near-term second consumers:
   approximately 3–6.
-- Rationalized current portfolio: approximately 38–43 crates.
+- Rationalized current portfolio: approximately 40–46 crates, including the
+  temporary compatibility dependency.
 - After adding genuinely missing anchors such as short-read/spliced alignment,
-  quantification, classification, and assembly: approximately 53–73 crates.
+  quantification, classification, and assembly: approximately 55–75 crates.
 
-The number may change after the 30 medium-confidence rows and missing-anchor
+The number may change after the 48 medium-confidence rows and missing-anchor
 priorities are reviewed, but the evidence does not support hundreds of public
 crates.
 
 The aggressive registry-reset allowlist is
-[`registry-reset-keep.txt`](registry-reset-keep.txt). It contains the 28
+[`registry-reset-keep.txt`](registry-reset-keep.txt). It contains the 30
 provisional product-family names and nine foundations with demonstrated
 cross-product reuse. Names not yet published reserve an intended boundary;
 their absence does not justify retaining operation-sized predecessors.

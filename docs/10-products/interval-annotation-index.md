@@ -6,7 +6,7 @@ are verified. Index implementation has not started.
 Routing corrections move table aggregation to `rsomics-table`, SEACR to
 `rsomics-peak`, FASTA masking to `rsomics-bed`, and FASTA indexing plus
 sequence-dictionary creation to `rsomics-index`. The resulting source pool has
-42 BED, two annotation, and five index candidates.
+42 BED, four annotation, and five index candidates.
 
 ## Shared design
 
@@ -95,12 +95,29 @@ The primary behavior sources are:
 - [AGAT](https://github.com/NBISweden/AGAT) for the broader operation
   inventory and malformed real-world dialects, not as a byte-for-byte oracle.
 
-The source assets are `rsomics-gff-utils` and `rsomics-transcript-fasta`.
-`rsomics-gff-utils` contains 27 small commands but reparses the same record in
-most modules and has no shared typed record model. Its useful algorithms and
-fixtures are assets, not the target structure. `rsomics-transcript-fasta` has
-stronger gffread sequence goldens and a reusable transcript assembly path, but
-its parser silently skips short records and swaps inverted coordinates.
+The source assets are `rsomics-gff-utils`, `rsomics-transcript-fasta`,
+`rsomics-vcf-csq`, and `rsomics-vcf-split-vep`.
+`rsomics-gff-utils` at
+`b8d74faf579168ad10cd833076e0f587ccb39521` contains 27 small commands but
+reparses the same record in most modules and has no shared typed record model.
+Its useful algorithms and fixtures are assets, not the target structure.
+`rsomics-transcript-fasta` at
+`486063bfd8c6b3ba3a059b8926d0416a714583e9` has stronger gffread sequence
+goldens and a reusable transcript assembly path, but its parser silently skips
+short records and swaps inverted coordinates.
+
+The two consequence assets were formerly routed by their VCF input. Their user
+workflow is functional annotation:
+
+- `rsomics-vcf-csq` at
+  `0cbbba412ee08b48ff83ff172e5aadb4b85555d4` is a refactor seed for a later
+  `consequence` operation. Its current record-by-record consequence model does
+  not implement the complete haplotype-aware bcftools `csq` contract.
+- `rsomics-vcf-split-vep` at
+  `e844a185391221549674415827afb8f35ff2674a` is a test and parser asset for
+  later `consequence inspect` and `consequence extract` modes. Before merging,
+  it needs the bcftools 1.24 SnpEff field support, configurable consequence
+  field, and case-preserving severity behavior.
 
 The initial implementation slice is:
 
@@ -165,6 +182,22 @@ The old command inventory is consolidated as follows:
   while the permissive parser and invalid missing-phase fixture were
   discarded;
 - duplicate count-only commands and permissive line splitters are discarded.
+
+Functional consequence annotation is a later complete slice:
+
+- `consequence call` consumes the same validated transcript/CDS hierarchy and
+  reference model as sequence extraction, then applies variants with explicit
+  phasing, ploidy, overlapping-transcript, splice, symbolic-allele, and
+  compound-event policy;
+- `consequence inspect` lists and selects VEP `CSQ`, bcftools `BCSQ`, and
+  SnpEff `ANN` fields;
+- `consequence extract` renders selected consequence fields or promotes them
+  to typed INFO tags.
+
+The annotation product may parse VCF/BCF through an external standards-focused
+library, but it does not depend on the Layer B `rsomics-vcf` product. Generic
+VCF querying remains in `rsomics-vcf`; transcript-aware consequence semantics
+remain here.
 
 Historical source behavior was not safe to merge unchanged:
 

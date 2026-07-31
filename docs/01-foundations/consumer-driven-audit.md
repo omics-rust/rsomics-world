@@ -12,13 +12,13 @@ phase.
 
 | Foundation | Decision | Initial product drivers |
 |---|---|---|
-| `rsomics-common` | keep; refactor command/error/output contract | `seq`, `fastq-preprocess`, `bed`; later all 28 products |
+| `rsomics-common` | keep; refactor command/error/output contract | `seq`, `fastq-preprocess`, `bed`; later all 30 products |
 | `rsomics-help` | keep; replace the duplicate renderer with the family CLI UX adapter | `seq`, `fastq-preprocess`, `bed` |
 | `rsomics-seqio` | keep; redesign around FASTA/FASTQ stream contracts | `seq`, `fastq-preprocess`, `fastq-qc`, `minimap2` |
 | `rsomics-kmer` | keep; repair boundaries and expose only general primitives | `seq`; later `metagenomics`, `sketch` |
 | `rsomics-intervals` | keep; repair coordinate safety and remove BED policy | `bed`, `annotation`, `peak` |
-| `rsomics-bamio` | keep; narrow concrete backend types | `bam`, `vcf`, `count`, `methyl`, `minimap2`, `peak` |
-| `rsomics-pileup` | keep; add sortedness and real compatibility gates | `bam`, `vcf`, `methyl` |
+| `rsomics-bamio` | keep; narrow concrete backend types | `bam`, `call`, `count`, `methyl`, `minimap2`, `peak` |
+| `rsomics-pileup` | keep; add sortedness and real compatibility gates | `bam`, `call`, `methyl` |
 | `rsomics-stats` | keep; migrate only primitives used by two workflows | `composition`, DE workflows, `sc`, `ecology`, `popgen`, `plink` |
 | `rsomics-phylo-tree` | keep; re-establish topology and Newick invariants | `composition`, `phylo`, `ecology` |
 | `rsomics-igzip` | temporary; internalize into sequence I/O | `seqio` is the only current consumer |

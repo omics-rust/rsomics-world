@@ -12,6 +12,9 @@ Retain two products:
 - `rsomics-popgen` for neutral variation, population differentiation,
   admixture statistics, haplotype diversity, and selection scans.
 
+The routed source pools contain 42 PLINK/genotype-analysis candidates and 14
+population-genetics candidates.
+
 The input format does not determine the product. A VCF-native Hardy-Weinberg
 test or LD-pruning implementation belongs to the genotype-analysis workflow,
 while a VCF-native F-statistic or iHS implementation belongs to the
@@ -171,8 +174,19 @@ complete slices pass.
 | `rsomics-plink-tdt` | `e7487918d8891672cf615c3d34701baa160f12a2` | refactor then merge into later pedigree association |
 | `rsomics-plink-test-missing` | `b8b6d2ccbe4fce3afa3d2a0cf24a19a276ee2ffc` | refactor then merge into later phenotype-stratified QC |
 | `rsomics-ld-matrix` | `e1b691e400e03a04d0c5560457f4b60af9b2534d` | refactor then merge as a matrix input adapter and oracle asset for `ld` |
+| `rsomics-vcf-af-dist` | `5d3587b3f87fad72f15ab6131076218201bb3b65` | refactor then merge as a bcftools-profile genotype-probability report under `stats`; update the 1.24 per-sample mode |
+| `rsomics-vcf-contrast` | `c029a24cf4792dd4640247c031973f1eaafc2874` | refactor then merge into later case/control `glm`; preserve Fisher and novel-allele fixtures |
+| `rsomics-vcf-freq-table` | `0acb37c728e0e075b132ac6a31255bd6a4fd1680` | refactor then merge into first-release allele/genotype counts as a vcftools output profile |
+| `rsomics-vcf-geno-r2` | local non-Git source tree | formula, fixture, and vcftools report asset for first-release `ld`; remove its inherited build output before migration |
+| `rsomics-vcf-gtcheck` | `1c324f170cf613fc2808f1c8d8b46d7f4a3b7b7e` | refactor then merge into `relatedness` and sample-concordance QC |
 | `rsomics-vcf-hardy` | `7c2a75f2c7cd1876fd3d2933c06b5c285af35871` | test, formatting, and exact-test asset for VCF-input HWE; invalid allele indices must fail |
+| `rsomics-vcf-indv-stats` | `01f3c4c453e6636f59f202a94e5e24e0e6d6eb09` | split then merge Ts/Tv, singleton, and depth profiles into first-release sample QC |
 | `rsomics-vcf-ld-prune` | `527ac349609d649872ddf6c3363c00bf2d7553d9` | refactor then merge as the scikit-allel pruning profile over the shared VCF input |
+| `rsomics-vcf-missing-stats` | `dfe256b41fa8708baac839d8ac6bd64ec32fdeb4` | refactor then merge into first-release sample and variant missingness |
+| `rsomics-vcf-roh` | `61314b504884dfacdab17066c26fb3b7c5f1bfa0` | refactor then merge as a later genotype-likelihood HMM profile under `roh`; correct the 1.24 quality offset |
+| `rsomics-vcf-site-depth` | `be0404d7ae5eb83b2d77b0ccdbccef4fb50ab99d` | refactor then merge into first-release depth QC with checked wide accumulators |
+| `rsomics-vcf-smpl-stats` | `613065f0c67c4788459ef12392ee202612e23f33` | refactor then merge into first-release per-sample genotype statistics |
+| `rsomics-vcf-trio-stats` | `88a1dd5304482203734beae25588084dafe881f3` | refactor then merge into later pedigree-aware `family` reports |
 
 `rsomics-vcf-popgen` is primarily routed to `rsomics-popgen`; its `het` and
 haplotype-LD code and fixtures are secondary source assets for `rsomics-plink`.

@@ -18,9 +18,11 @@ operation will ship. It records:
 
 | Product | Source candidates | Dossier state |
 |---|---:|---|
-| `rsomics-annotation` | 2 | [audited](interval-annotation-index.md#rsomics-annotation) |
+| `rsomics-annotation` | 4 | [audited](interval-annotation-index.md#rsomics-annotation) |
 | `rsomics-bam` | 38 | [audited](bam.md) |
 | `rsomics-bed` | 42 | [audited](interval-annotation-index.md#rsomics-bed) |
+| `rsomics-call` | 2 | [audited](variant.md#rsomics-call) |
+| `rsomics-cnv` | 2 | [audited](variant.md#rsomics-cnv) |
 | `rsomics-composition` | 10 | [audited](composition.md) |
 | `rsomics-count` | 2 | [audited](count.md) |
 | `rsomics-deseq` | 12 | [audited](bulk-expression.md#rsomics-deseq) |
@@ -36,7 +38,7 @@ operation will ship. It records:
 | `rsomics-minimap2` | 1 | [audited](minimap2.md); legacy release requires reconstruction |
 | `rsomics-peak` | 5 | [audited](peak.md); four workflow assets and one discarded generic candidate |
 | `rsomics-phylo` | 11 | [audited](phylo.md) |
-| `rsomics-plink` | 31 | [audited](genotype-popgen.md#rsomics-plink) |
+| `rsomics-plink` | 42 | [audited](genotype-popgen.md#rsomics-plink) |
 | `rsomics-popgen` | 14 | [audited](genotype-popgen.md#rsomics-popgen) |
 | `rsomics-rnaseq-qc` | 26 | queued |
 | `rsomics-sc` | 29 | queued |
@@ -45,7 +47,7 @@ operation will ship. It records:
 | `rsomics-sketch` | 1 | [audited](metagenomics-sketch.md#rsomics-sketch) |
 | `rsomics-structure` | 9 | [audited](structure.md) |
 | `rsomics-table` | 16 | [audited](table.md) |
-| `rsomics-vcf` | 47 | queued after the low-state pilots |
+| `rsomics-vcf` | 30 | [audited](variant.md#rsomics-vcf) |
 
 Counts are generated from
 [`portfolio-inventory.tsv`](../00-overview/portfolio-inventory.tsv). They

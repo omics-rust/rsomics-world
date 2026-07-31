@@ -107,7 +107,7 @@ policy-free API. `rsomics-common` owns errors, exit mapping, reports, aliases,
 and multi-output transactions. `rsomics-help` owns the CLI presentation.
 
 `rsomics-count` is a concrete consumer of the validated reader and record
-contracts reconstructed in `rsomics-bamio`. `rsomics-bam`, `rsomics-vcf`,
+contracts reconstructed in `rsomics-bamio`. `rsomics-bam`, `rsomics-call`,
 `rsomics-rnaseq-qc`, and `rsomics-signal` are its other named consumers.
 Counting policy, GTF attributes, feature grouping, and assignment categories
 do not enter `bamio`.

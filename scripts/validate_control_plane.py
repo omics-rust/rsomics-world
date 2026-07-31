@@ -98,7 +98,7 @@ def main() -> None:
     inventory_names, inventory_kinds, inventory_rows = inventory()
     outputs = consolidation_outputs()
 
-    require(len(products) == 28, f"expected 28 products, found {len(products)}")
+    require(len(products) == 30, f"expected 30 products, found {len(products)}")
     require(len(foundations) == 9, f"expected 9 foundations, found {len(foundations)}")
     require(registry_products.keys() == products, "registry product set differs")
     require(registry_foundations == foundations, "registry foundation set differs")

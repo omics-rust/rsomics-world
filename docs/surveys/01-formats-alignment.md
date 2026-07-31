@@ -37,18 +37,21 @@ fixtures, and benchmarks move into modules of one product; small inspection
 operations consolidate rather than remain installable crates. See the
 [interval dossier](../10-products/interval-annotation-index.md#rsomics-bed).
 
-## bcftools 1.24 (23 operations) → `rsomics-vcf`
+## bcftools 1.24 (23 operations) → workflow products
 
-| bcftools operations | Historical assets | Current decision |
-|---|---|---|
-| `annotate`, `call`, `cnv`, `concat`, `consensus`, `convert`, `csq`, `filter`, `gtcheck`, `head`, `index`, `isec`, `merge`, `mpileup`, `norm`, `polysomy`, `query`, `reheader`, `roh`, `sort`, `stats`, `view` | Per-operation `rsomics-vcf-*` repositories | Candidate subcommands of one product; dossier audit pending |
-| `plugin`, including fill-tags/setGT/fixref behavior | Plugin-sized repositories | Internal modules or named product operations only after the VCF overlap review |
+| bcftools surface | Current decision |
+|---|---|
+| `annotate`, `concat`, `consensus`, `convert`, `filter`, `head`, `index`, `isec`, `merge`, `norm`, `query`, `reheader`, `sort`, `stats`, `view` | `rsomics-vcf` format subcommands |
+| `mpileup`, `call` | `rsomics-call` calling workflow |
+| `cnv`, `polysomy` | `rsomics-cnv` copy-number workflow |
+| `csq` and consequence plugins | `rsomics-annotation` |
+| `gtcheck`, `roh`, and genotype-QC/LD/association/family plugins | `rsomics-plink` |
+| Remaining plugins | Retain only named behavior that fits a reviewed product; no bcftools C plugin ABI |
 
 `rsomics-vcf-expr` does not qualify as a public foundation from historical
 micro-crate dependents alone. Keep expression parsing inside `rsomics-vcf`
-until a second target product demonstrates the same policy-free API. Population
-statistics route to `rsomics-popgen`; the remaining VCF convenience assets are
-reviewed in the VCF dossier rather than assumed distinct.
+until a second target product demonstrates the same policy-free API. See the
+[joint variant dossier](../10-products/variant.md).
 
 ## Verification status
 - The samtools and bcftools operation lists are binary-verified against 1.24;

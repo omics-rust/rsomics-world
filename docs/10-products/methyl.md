@@ -112,7 +112,7 @@ multi-output transactions. `rsomics-help` owns the complete command tree.
 records from `rsomics-bamio`. It is also a concrete driver for
 `rsomics-pileup`: sortedness validation, checked CIGAR projection,
 low-allocation column views, and generic overlapping-mate evidence are shared
-with BAM and VCF products. Bisulfite strand, cytosine context, conversion,
+with BAM and variant-calling products. Bisulfite strand, cytosine context, conversion,
 methylation calls, bias policy, and output formats stay inside this product.
 
 Indexed FASTA access may use the aligned external noodles implementation.

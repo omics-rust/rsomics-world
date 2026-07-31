@@ -17,6 +17,8 @@ Status meanings are defined in [CONVENTIONS.md](CONVENTIONS.md).
 | `rsomics-annotation` | repo-only | GFF/GTF inspection, selection, transformation, sequence extraction |
 | `rsomics-bam` | planned | SAM/BAM/CRAM format operations; archived orphan releases are source assets |
 | `rsomics-bed` | repo-only | BED/interval algebra and bedtools-like operations |
+| `rsomics-call` | planned | alignment pileup, genotype likelihoods, and lightweight small-variant calling |
+| `rsomics-cnv` | planned | BAF/LRR copy-number HMM and chromosome-level polysomy analysis |
 | `rsomics-composition` | planned | Aitchison geometry, log-ratio transforms, zero handling, proportionality, and composition-native inference |
 | `rsomics-count` | planned | feature and read counting workflows |
 | `rsomics-deseq` | planned | DESeq2-style differential-expression workflow |
@@ -41,7 +43,7 @@ Status meanings are defined in [CONVENTIONS.md](CONVENTIONS.md).
 | `rsomics-sketch` | planned | persistent sequence sketches, comparison, search, indexing, and mixture decomposition |
 | `rsomics-structure` | planned | protein structure and PDB analysis |
 | `rsomics-table` | planned | bioinformatics-oriented table manipulation |
-| `rsomics-vcf` | planned | VCF/BCF operations and bcftools-like suite |
+| `rsomics-vcf` | planned | VCF/BCF inspection, transformation, filtering, indexing, and format statistics |
 
 Product status summary:
 
@@ -50,8 +52,8 @@ Product status summary:
 | live | 1 |
 | repo-only | 5 |
 | pilot | 1 |
-| planned | 21 |
-| **Total** | **28** |
+| planned | 23 |
+| **Total** | **30** |
 
 `pilot` means the boundary and source audit are active. It does not imply that
 a public repository or installable release exists. `repo-only` likewise does
@@ -61,15 +63,15 @@ not imply that the crate has passed its publication gate.
 
 | Foundation | crates.io | GitHub | Pilot drivers and later consumers |
 |---|---|---|---|
-| `rsomics-common` | live | live | all 28 accepted products |
-| `rsomics-help` | live | live | all 28 accepted CLI products |
-| `rsomics-bamio` | live | live | BAM, VCF, RNA-seq QC, signal |
+| `rsomics-common` | live | live | all 30 accepted products |
+| `rsomics-help` | live | live | all 30 accepted CLI products |
+| `rsomics-bamio` | live | live | BAM, variant calling, RNA-seq QC, signal |
 | `rsomics-intervals` | live | live | BED, annotation, peak, signal |
 | `rsomics-kmer` | live | live | pilot: sequence; later: metagenomics and sketch |
 | `rsomics-seqio` | live | live | current: sequence and preprocessing; planned: FASTQ QC and indexing |
 | `rsomics-stats` | live | live | composition, expression workflows, single-cell, ecology, population genetics |
 | `rsomics-phylo-tree` | live | live | composition balance bases, phylogenetics, ecology |
-| `rsomics-pileup` | live | live | BAM, VCF |
+| `rsomics-pileup` | live | live | BAM, variant calling, methylation |
 
 ## Temporary public dependency
 

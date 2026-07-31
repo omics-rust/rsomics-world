@@ -2,6 +2,8 @@
 rsomics-annotation
 rsomics-bam
 rsomics-bed
+rsomics-call
+rsomics-cnv
 rsomics-composition
 rsomics-count
 rsomics-deseq
