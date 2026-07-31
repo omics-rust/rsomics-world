@@ -47,7 +47,7 @@ exclusions.
 - [x] `rsomics-plink`
 - [x] `rsomics-popgen`
 - [x] `rsomics-rnaseq-qc`
-- [ ] `rsomics-sc`
+- [x] `rsomics-sc`
 - [x] `rsomics-seq`
 - [x] `rsomics-signal`
 - [x] `rsomics-sketch`

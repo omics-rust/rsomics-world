@@ -41,7 +41,7 @@ operation will ship. It records:
 | `rsomics-plink` | 42 | [audited](genotype-popgen.md#rsomics-plink) |
 | `rsomics-popgen` | 14 | [audited](genotype-popgen.md#rsomics-popgen) |
 | `rsomics-rnaseq-qc` | 21 | [audited](rnaseq-qc-signal.md#rsomics-rnaseq-qc) |
-| `rsomics-sc` | 29 | queued |
+| `rsomics-sc` | 29 | [audited](sc.md) |
 | `rsomics-seq` | 34 | [audited](sequence-fastq.md#rsomics-seq) |
 | `rsomics-signal` | 15 | [audited](rnaseq-qc-signal.md#rsomics-signal) |
 | `rsomics-sketch` | 1 | [audited](metagenomics-sketch.md#rsomics-sketch) |
@@ -52,6 +52,10 @@ operation will ship. It records:
 Counts are generated from
 [`portfolio-inventory.tsv`](../00-overview/portfolio-inventory.tsv). They
 describe recoverable inputs, not planned subcommand counts.
+
+All 30 accepted product boundaries now have a source and upstream-operation
+dossier. An audited dossier authorizes reconstruction work; it does not mean
+the product or every listed operation is implemented or release-ready.
 
 ## Rejected public boundary
 

@@ -12,7 +12,8 @@ LATER, after the crates exist.)
 
 > Strategy per package = one of: **rebuild** (tractable 1:1) · **build primitives** (port the
 > hot numerical kernel as Layer-A, the full stat engine is too coupled) · **adopt** (a Rust/Py
-> equivalent exists). Same-op-across-ecosystems (scanpy↔Seurat) → one canonical Rust crate.
+> equivalent exists). Same-op-across-ecosystems (scanpy↔Seurat) maps to one
+> canonical `rsomics-sc` module and state transition.
 
 ## Ranges / annotation infrastructure — the most-downloaded packages
 
@@ -49,10 +50,10 @@ diagnostics, and versioned results. Policy-free numerical kernels move to
 `rsomics-stats` only after two product consumers prove the same contract; no
 new `rsomics-glm-nb` package is planned.
 
-## Single-cell — scanpy(Py) ↔ Seurat(R), the clearest cross-ecosystem dedup
+## Single-cell — Scanpy and Seurat over one stateful product
 
-Nearly every op exists in BOTH scanpy and Seurat (normalize, HVG, PCA, neighbors, leiden,
-UMAP, marker DE) → **one canonical Rust crate per op serves both**.
+Nearly every core operation exists in both Scanpy and Seurat. They share one
+annotated state in `rsomics-sc`; they do not become independent public crates.
 
 | pkg | 2025 dl | core | our crate |
 |---|---|---|---|
@@ -61,8 +62,9 @@ UMAP, marker DE) → **one canonical Rust crate per op serves both**.
 | scran | 0.21M | computeSumFactors (pooling deconvolution), modelGeneVar HVG | primitives (GPL-3) |
 | scater | ~0.1M | perCellQCMetrics, runPCA/UMAP | `rsomics-cell-filter`+`barcode-rank` (partial) |
 
-Shared op set (both ecosystems) → canonical crates: normalize, HVG, PCA, neighbors-graph,
-leiden, UMAP, marker-DE. (PCA/UMAP/leiden also overlap general ML.) See 04-single-cell.md.
+The shared operation set becomes `rsomics-sc` modules for normalization, HVG,
+PCA, neighbors, Leiden, UMAP, and marker analysis. Policy-free numerical reuse
+is reviewed through `rsomics-stats`; see 04-single-cell.md.
 
 ## ChIP/ATAC + methylation R
 

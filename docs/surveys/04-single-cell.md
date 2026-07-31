@@ -1,69 +1,123 @@
-# Survey: single-cell domain
+# Survey: single-cell expression analysis
 
-Verified 2026-05-30 against scanpy API, Seurat reference, Bioconductor (scran/scater/scuttle/
-DropletUtils), STARsolo.md, alevin-fry main.rs, Scrublet/DoubletFinder/CellBender GitHub,
-CellRanger algorithm docs. **Domain is largely greenfield** — 5 shallow crates exist, all
-operate on pre-computed TSV not h5ad/AnnData.
+Verified 2026-07-31 against Scanpy 1.12.3, Seurat 5.5.1, AnnData, current
+Bioconductor single-cell packages, infercnv 1.28.0, the 10x feature-barcode
+matrix contract, and public Cell Ranger, STARsolo, alevin-fry, and simpleaf
+documentation.
 
-> **The clearest cross-ecosystem dedup in the whole project:** nearly every analysis op exists
-> in BOTH scanpy (Py) and Seurat (R), most also in scran/scuttle. → **one canonical Rust crate
-> per op serves both.** Don't build scanpy-clone + Seurat-clone.
+This survey records the upstream workflow. The public architecture and exact
+historical source dispositions are in the
+[`rsomics-sc` dossier](../10-products/sc.md).
 
-## Preprocessing layer (FASTQ → count matrix) → ADOPT
+## Product boundary
 
-CellRanger (restricted license — not adoptable, but its ops define the standard: barcode
-correction posterior>0.975, UMI Hamming-1 dedup, OrdMag+EmptyDrops cell calling). **Adopt**:
-alevin-fry ① (generate-permit-list/collate/quant/infer + atac), simpleaf ① orchestrator,
-anndata-rs (h5ad — project decision). STARsolo (MIT, STAR mode) is the open CellRanger-count
-equivalent. **Velocyto spliced/unspliced output (for RNA velocity) is a gap.**
+Single-cell analysis is stateful. Normalization, features, reductions, graphs,
+clusters, embeddings, markers, and metadata all refer to the same cells and
+features. The target is therefore one `rsomics-sc` product over an annotated
+dataset, not one crate per Scanpy or Seurat function.
 
-## Analysis layer — shared scanpy↔Seurat↔scran op set → canonical crates
+Scanpy and Seurat expose many equivalent scientific operations through
+different object systems. They are compatibility sources for one set of
+product modules:
 
-| op | scanpy | Seurat | scran/scuttle | canonical crate |
-|---|---|---|---|---|
-| library normalize + log1p | normalize_total+log1p | NormalizeData | logNormCounts | `rsomics-sc-normalize` (P0) |
-| per-cell QC | calculate_qc_metrics | PercentageFeatureSet | perCellQCMetrics | `rsomics-sc-qc` (P0) |
-| cell/gene filter | filter_cells/genes | subset | quickPerCellQC | `rsomics-cell-filter` (exists, partial) |
-| HVG | highly_variable_genes | FindVariableFeatures | modelGeneVar+getTopHVGs | `rsomics-sc-hvg` (P0) |
-| scale | scale | ScaleData | — | `rsomics-sc-scale` (P0) |
-| regress-out | regress_out | ScaleData(vars) | fitLinearModel | `rsomics-sc-regress` (P1) |
-| PCA | pp.pca | RunPCA | denoisePCA | `rsomics-sc-pca` / adopt linfa-reduction |
-| kNN graph | neighbors | FindNeighbors | buildSNNGraph | `rsomics-sc-neighbors` / adopt hnsw_rs |
-| leiden/louvain | leiden/louvain | FindClusters | clusterSNNGraph | `rsomics-leiden` / adopt leiden-rs |
-| UMAP / tSNE | umap/tsne | RunUMAP/TSNE | runUMAP/TSNE | adopt annembed / bhtsne |
-| marker DE | rank_genes_groups | FindMarkers | findMarkers | `rsomics-sc-markers` (P1) |
-| gene-set score | score_genes | AddModuleScore | — | fold into sc-markers |
-| cell cycle | — | CellCycleScoring | cyclone | `rsomics-sc-cellcycle` (P2) |
-| doublet | scrublet | (DoubletFinder ✗) | doubletCells | `rsomics-sc-doublet` (P1) |
-| barcode rank | — | CalculateBarcodeInflections | barcodeRanks | `rsomics-barcode-rank` (exists) |
-| empty-droplet cell call | — | SubsetByBarcodeInflections | emptyDrops | `rsomics-sc-emptydrops` (**P0 gap — converts raw→filtered matrix**) |
-| pseudobulk | — | PseudobulkExpression | aggregateAcrossCells | `rsomics-sc-pseudobulk` (P1) |
-| ComBat batch | combat | — | — | `rsomics-sc-combat` (P1) |
-| ambient RNA | — | — | — | `rsomics-sc-ambient` (CellBender, P1) |
+| Workflow stage | Scanpy | Seurat/Bioconductor overlap | Target |
+|---|---|---|---|
+| import and state | readers, AnnData | `Read10X`, SingleCellExperiment | `import`, `export` |
+| QC and filtering | QC metrics, cell/gene filters, Scrublet | Seurat QC, scuttle, DropletUtils | `qc` |
+| normalization | total/log1p, Pearson residuals | `NormalizeData`, scrapper/scran lineage | `normalize` |
+| feature selection and scores | HVG, score genes, cell cycle | variable features, module scores, cyclone | `features` |
+| correction and scaling | regress, scale, ComBat | `ScaleData`, batch methods | `correct` |
+| reduction and graph | PCA, neighbors, UMAP, diffusion | PCA, neighbors, UMAP | `reduce`, `neighbors` |
+| clustering | Leiden/Louvain | `FindClusters`, graph clustering | `cluster` |
+| markers | rank/filter/overlap | `FindMarkers`, Bioconductor marker tests | `markers` |
+| trajectory | diffusion pseudotime, PAGA | trajectory ecosystems | `trajectory` |
+| aggregation | `aggregate` | pseudobulk aggregation | `aggregate` |
+| derived analysis | spatial metrics, inferCNV | spatial statistics, infercnv | `spatial`, later `cnv` |
 
-**PCA / Leiden / UMAP / Wilcoxon are NOT sc-specific** — shared with PLINK PCA, ATAC,
-bulk RNA, general ML. Build them as **domain-agnostic Layer-A primitives** consumed by sc-* tools.
+## Historical source pool
 
-## Adopt list (no build) → alevin-fry ①, simpleaf ①, anndata-rs, leiden-rs ① (audit+fork), annembed ①, bhtsne ①, linfa-reduction ①, hnsw_rs ①.
+Twenty-nine candidates route to `rsomics-sc`. They cover useful parts of QC,
+normalization, HVG selection, scaling, regression, ComBat, PCA, exact
+neighbors, diffusion, PAGA, DPT, marker testing, scores, pseudobulk, spatial
+statistics, and an inferCNV approximation.
 
-## Existing crates (shallow)
-`rsomics-barcode-rank` (knee from counts TSV; needs alevin-fry-output format), `rsomics-cell-filter`
-(min-genes/umis/mito from stats TSV; needs h5ad input), `rsomics-count-matrix` (**misnamed for
-sc — merges bulk featureCounts, not MEX/h5**), `rsomics-fastq-umi` (UMI extract), `rsomics-infercnv`
-(CNV from expression — implemented-vs-stub unconfirmed).
+They are not a working product:
 
-## Key findings
-1. Existing sc crates are shallow + TSV-bound (not h5ad) — need anndata-rs integration.
-2. `rsomics-count-matrix` is misnamed for sc (bulk merge; MEX/h5 assembly is a distinct op).
-3. **scran is deprecated** → scuttle (QC) + scrapper (normalization) are the new upstreams; cite those.
-4. **DoubletFinder CC BY-NC 4.0 — BLOCKED** (no Rust derivative). Use scrublet (MIT) / scran
-   doubletCells (GPL clean-room) / scDblFinder (GPL clean-room).
-5. emptyDrops cell-calling is a **P0 gap** — nothing converts raw barcode matrix → filtered cells.
-6. anndata-rs not standalone on crates.io (bundled in SnapATAC2) — adopt via path/fork until published.
+- most exchange 10x directories, dense TSV, Matrix Market, or graph triplets
+  instead of maintaining annotated state;
+- filters, HVG flavors, and exact neighbors are duplicated;
+- two neighbors snapshots have no Git history;
+- h5ad/Zarr I/O, Scrublet, scalable approximate neighbors, Leiden, UMAP, and a
+  coherent report are missing;
+- dense transformations do not define a product-level memory plan;
+- compatibility targets mix older Scanpy, NumPy, SciPy, and umap-learn
+  versions;
+- the inferCNV approximation omits most of the real infercnv workflow.
 
-## Verification notes
-HIGH: scanpy.pp/tl lists + algorithm details, Seurat reference, scran/scater/scuttle/DropletUtils
-(rdrr.io), STARsolo.md, alevin-fry main.rs, CellRanger algorithm page, Scrublet/DoubletFinder/
-CellBender GitHub, scran-deprecation quote. MEDIUM: leiden-rs/annembed rayon claims (project docs,
-not re-fetched), pp.neighbors/combat/scrublet generated pages (404 — from index summaries).
-Follow-up: survey `scrapper` (scran's replacement).
+The implementations remain valuable algorithm, fixture, RNG, compatibility,
+and benchmark assets. Their existence does not make an operation stable or
+release-ready.
+
+## Matrix generation
+
+`rsomics-sc` starts from a feature-by-cell matrix with stable identifiers.
+FASTQ alignment, barcode correction, permit-list generation, UMI
+deduplication, and transcript/gene quantification remain upstream workflows.
+
+Open implementations such as STARsolo, alevin-fry, and simpleaf can produce
+the matrix. Cell Ranger behavior is an interoperability source, not a reason
+to embed a restricted upstream implementation.
+
+Empty-droplet cell calling sits at the boundary between raw and filtered
+matrices. It is a later `qc` capability after the initial counts-to-clusters
+slice; it is not a separate public crate.
+
+## Required first workflow
+
+The first release must complete:
+
+1. 10x MEX or h5ad import;
+2. QC metrics, doublet evidence, and explicit filtering;
+3. normalization and log transform;
+4. highly variable feature selection;
+5. scaling and PCA;
+6. scalable neighbors;
+7. Leiden clustering;
+8. UMAP;
+9. marker analysis;
+10. annotated state, tables, and report export.
+
+Operations may also run independently, but all read and write the same checked
+state contract. A collection of fast TSV programs without this path is not a
+single-cell product.
+
+## Later workflow decisions
+
+- Pearson-residual normalization, regression, ComBat, scores, and cell cycle;
+- diffusion maps, DPT, PAGA, and dendrograms;
+- pseudobulk and spatial statistics;
+- complete inferCNV;
+- empty droplets, ambient RNA, demultiplexing, and additional integration;
+- RNA velocity, multiome, and spatial-assay I/O.
+
+Deep generative methods such as scVI are adoption/integration decisions with
+their own model and accelerator requirements, not small Rust port targets.
+
+## Shared components
+
+`rsomics-common` and `rsomics-help` provide the common runtime and CLI
+experience. Policy-free numerical items may evolve in `rsomics-stats` through
+single-cell, ecology, PLINK, DE, and signal consumers.
+
+AnnData state, cell/feature metadata, preprocessing recipes, neighbor graphs,
+and embeddings remain product-internal. Similar algorithms in multiple
+single-cell subcommands still represent one product consumer and do not
+justify public `rsomics-anndata`, graph, PCA, UMAP, or Leiden foundations.
+
+## Evidence state
+
+The upstream survey and source routing are complete. The product is not
+release-ready. It still needs the complete first workflow, current-oracle
+compatibility, representative sparse and backed-data CPU/memory/I/O evidence,
+a strict hot-path advantage, exact-head four-native-platform CI, and public
+API review.
