@@ -224,6 +224,23 @@ uses typed records. SAM, BAM, and CRAM output plus BAM output match the oracle
 for each valid mode. Exact-head CI run `30616604980` passes all four native
 targets and 18 oracle groups.
 
+Revision `d3be2001212a` adds the first `mpileup` slice as a real subcommand,
+not a wrapper around the deleted micro-crate. Coordinate-sorted SAM, BAM, and
+CRAM records feed `rsomics-pileup 0.2.0`; the raw BAM path validates and copies
+record bodies while SAM and CRAM use `rsomics-bamio 0.2.1` to produce the same
+checked representation. The implementation includes samtools-compatible
+quality and flag filters, per-input depth, anomalous-pair policy, overlapping
+mate adjustment, covered/used/all-reference position modes, indexed rolling
+reference access, standard and redo BAQ, and exact pileup text for insertions,
+deletions, skips, and read boundaries. Named output is transactional and
+machine summaries use the shared rsomics JSON envelope. The local release gate
+passes formatting, strict Clippy, debug and release tests, rustdoc, clean
+packaging, and all 19 samtools 1.24 oracle groups, including the new SAM, BAM,
+CRAM, BAQ, overlap, and indel matrix. Exact-head four-native-target CI
+`30654810659` passes; its Linux x86_64 job rebuilds and runs the pinned
+samtools 1.24 oracle. This closes the second concrete consumer gate for the
+pileup foundation, but does not make the incomplete BAM product publishable.
+
 Standalone `view -n` remains unresolved. Samtools 1.24 emits the two tagged
 records from the current CRAM fixture with `view -n` but reports zero for
 `view -c -n`. In the
@@ -481,9 +498,14 @@ package with SHA-256
 `c763f5d7d93597718946912f7637347b799a1c41a60d57e615c04bd10eebffd3`.
 The GitHub release is
 [`rsomics-bamio-v0.2.0`](https://github.com/omics-rust/rsomics-bamio/releases/tag/rsomics-bamio-v0.2.0).
-The published package is consumed from the registry by `rsomics-bam`
-`a2487fcd3d22`, whose consumer-side malformed-record, filter-equivalence,
-round-trip, and four-native-platform tests pass.
+The published package is consumed from the registry by `rsomics-bam`.
+Revision `3bcbe0ed9bb2` adds the policy-free `RawRecordEncoder` used by BAM for
+generic SAM/CRAM records and by call for its alignment stream. Version 0.2.1
+passed exact-head four-native-target CI `30653883521`, publish run
+`30654036896`, and downloaded-archive verification with checksum
+`2075d1a7c10a353437148743143b0a9326258bc0a82336ca7ae890cb38e49e00`.
+Both consumers pass malformed-record, encoding, filtering, and round-trip
+tests against the registry release.
 
 This release deliberately does not expose the larger speculative
 auto-detection and indexing layer. The eventual multi-product foundation
@@ -502,7 +524,7 @@ Product-specific filtering, CLI policy, and samtools defaults remain in
 
 Named consumers are `rsomics-bam`, `rsomics-count`, `rsomics-methyl`,
 `rsomics-minimap2`, `rsomics-peak`, `rsomics-rnaseq-qc`, `rsomics-signal`,
-and `rsomics-call`. `rsomics-bam` is the implemented 0.2 consumer.
+and `rsomics-call`. BAM and call are the implemented 0.2.1 consumers.
 `rsomics-methyl` and `rsomics-peak` have concrete dossier plans for validated
 alignment readers; their product-specific methylation, fragment, filter, and
 CLI policy remains outside the foundation. No additional public reader,
@@ -533,15 +555,17 @@ sequence or quality lengths must fail rather than silently alter a pileup.
 Peak-calling signal accumulation is product-private unless it later proves the
 same contract.
 
-Revision `b253b74bd0b1` checks header reference IDs and lengths, coordinates,
+Revision `2680f6c328be` checks header reference IDs and lengths, coordinates,
 CIGAR kinds and spans, BAM `CG:B,I` long CIGAR, zero-reference-span behavior,
 every mapped record's sorted watermark, and overlap adjustment. It adds
 HTSlib-compatible standard and extended BAQ plus full and bcftools-compatible
-partial column preparation. Exact-head four-native-target CI `30651430890`
+partial column preparation. Exact-head four-native-target CI `30654312487`
 passes; the Linux x86_64 job also runs the pinned samtools 1.24 column oracle.
 The ordinary and 250× engine benchmark records bounded RSS and sustained
-streaming with and without the partial trigger scan. The foundation remains
-unpublished until BAM supplies the second product-side contract.
+streaming with and without the partial trigger scan. Call and BAM now supply
+the two concrete consumers. Version 0.2.0 was published by run `30654567905`;
+the downloaded archive checksum is
+`0a2d901c6854470dbebae190ef30d3535333768c4c18c6cc47c03eeb33872684`.
 
 ### Other foundations
 

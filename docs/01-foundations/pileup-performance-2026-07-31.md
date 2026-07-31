@@ -65,5 +65,7 @@ The hyperfine JSON SHA-256 is
 The engine retains bounded state at 250× and the partial trigger scan adds
 11.6% to median wall time without material RSS growth. This closes the
 foundation's representative ordinary/deep-coverage performance and memory
-gate. Publication still requires a second product-side contract; the BAM
-integration is not replaced by this synthetic benchmark.
+gate. Call and BAM subsequently supplied the two concrete product contracts;
+the benchmark does not replace either consumer test. Revision `2680f6c328be`
+passed exact-head four-native-target CI `30654312487` and version 0.2.0 was
+published by run `30654567905`.

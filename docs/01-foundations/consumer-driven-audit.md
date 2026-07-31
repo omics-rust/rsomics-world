@@ -57,7 +57,8 @@ APIs:
 | `rsomics-intervals` | `6783f67614ae` | reduced the public crate to a validated generic zero-based half-open interval value; moved BED parsing, collections, algebra, merge policy, and COITrees indexing into products | 0.3.0 published; exact-head four-native-target CI `30597681539`; downloaded archive checksum `40cf072a5fb5900d8e4049cb9b03f28ce5ddc51e51ef2b3fed7c5c89bfa88ccd`; `bed` and `annotation` pass consumer tests against the registry release |
 | `rsomics-kmer` | `4258ac881119` | made `k = 32` well-defined, added checked encode/decode/canonical operations and a fallible count-accumulator boundary, and removed its unused `rsomics-common` dependency | exact-head CI green; `rsomics-seq` is the first real product consumer; a second product contract and comparative performance remain |
 | `rsomics-seqio` | `d7e1c33bb600` | retained strict allocation-reusing FASTA/FASTQ streams, bounded gzip decode buffering, wrapped FASTQ support, and fail-loud gzip/BGZF handling while removing unconsumed legacy, forced-format, and compression-policy APIs | 0.3.0 published; exact-head four-native-target CI `30599703477`; downloaded archive checksum `d2dcd0fab1a5320834a9b0f9cba7bbdd9bfe6b26c9c4740650ac88d939fcfcc5`; `seq` and `fastq-preprocess` pass consumer tests against the registry release |
-| `rsomics-pileup` | `b253b74bd0b1` | retains the checked projection and retry-safe borrowed-column contract, isolates mate-overlap state by input stream, applies an optional per-source depth ceiling, adds HTSlib-compatible standard/extended BAQ plus bcftools-compatible full and partial column preparation, and includes a deterministic ordinary/deep-coverage benchmark | 0.2 API remains unpublished while consumers integrate; exact-head four-native-target CI `30652290850` passes, including pinned samtools 1.24 column and overlap oracles; ordinary/deep performance and memory pass; the BAM product contract remains |
+| `rsomics-bamio` | `3bcbe0ed9bb2` | adds a validated reusable raw-record encoder without exposing product policy; BAM uses it for generic SAM/CRAM records and call uses it for its alignment stream, eliminating duplicate encoders | 0.2.1 published; exact-head four-native-target CI `30653883521`; publish run `30654036896`; downloaded archive checksum `2075d1a7c10a353437148743143b0a9326258bc0a82336ca7ae890cb38e49e00`; both consumers pass against the registry release |
+| `rsomics-pileup` | `2680f6c328be` | retains the checked projection and retry-safe borrowed-column contract, isolates mate-overlap state by input stream, applies an optional per-source depth ceiling, adds HTSlib-compatible standard/extended BAQ plus bcftools-compatible full and partial column preparation, and includes a deterministic ordinary/deep-coverage benchmark | 0.2.0 published after call and BAM supplied concrete contracts; exact-head four-native-target CI `30654312487`; publish run `30654567905`; downloaded archive checksum `0a2d901c6854470dbebae190ef30d3535333768c4c18c6cc47c03eeb33872684`; ordinary/deep performance and memory pass |
 
 Publication does not freeze these APIs. Every later public item still requires
 two named product consumers and consumer-side tests.
@@ -79,8 +80,9 @@ produce wrong biological results:
 4. `rsomics-common` previously ignored JSON serialization and output write
    errors; `9f11f37c0fa4` closes this blocker and supplies a plain-diagnostic
    fallback when the JSON output path itself fails.
-5. `rsomics-bamio::RawRecord::from(Vec<u8>)` permits unchecked bytes while
-   accessors assume a valid structure.
+5. `rsomics-bamio::RawRecord::from(Vec<u8>)` previously permitted unchecked
+   bytes while accessors assumed a valid structure. The fallible constructor
+   and `RawRecordEncoder` at `3bcbe0ed9bb2` close this boundary.
 6. `rsomics-phylo-tree::Tree::default()` does not establish a valid root and
    public node fields permit topology invariant violations.
 
@@ -202,7 +204,7 @@ feature assignment or annotation policy into the foundation. `rsomics-methyl`
 adds BAM/CRAM records, indexed regions, and bisulfite-specific aux-tag
 consumption while keeping methylation policy product-private.
 
-`rsomics-pileup` revision `b253b74bd0b1` now supplies fallible ingestion,
+`rsomics-pileup` revision `2680f6c328be` now supplies fallible ingestion,
 low-allocation borrowed column views, retry-safe output callbacks, checked
 header and projection bounds, BAM long-CIGAR replacement, exact flag-filter
 semantics, raw-reference-span behavior, source-isolated overlap state, and an
@@ -212,34 +214,36 @@ bcftools 1.24 partial-realignment trigger without moving maximum-read-length or
 mode selection out of products. Its live samtools 1.24 oracles cover matches,
 insertions, deletions, skips, padding, clipping, strand, head/tail markers,
 ordinary or indel-bearing overlapping mates, and independent input depth
-policy. Exact-head four-native-target CI `30651430890` passes.
+policy. Exact-head four-native-target CI `30654312487` passes. The published
+0.2.0 archive has checksum
+`0a2d901c6854470dbebae190ef30d3535333768c4c18c6cc47c03eeb33872684`.
 
-`rsomics-call` revision `81898da610d8` supplies the first published-head
-integration: it validates and coordinate-merges plain or BGZF SAM, raw or BGZF
-BAM, and CRAM sources; resolves source and read-group metadata into samples;
-streams columns into typed multisample SNP likelihood sites; and applies the
-bcftools-compatible depth and deterministic deep-evidence policies. Its
-reference-only, two-sample, per-input-depth, and consecutive deep-coverage
-oracles match bcftools/HTSlib 1.24. Its product-owned multiallelic caller adds
-bcftools-matched ploidy, grouping, allele-selection, genotype, and quality
-contracts without promoting those policies into the foundation. Its consensus
-caller matches the bcftools 1.24 allele-frequency posterior for diploid and
-haploid calls. Its fused typed path matches the materialized pipeline, and its
-product-private format layer streams likelihood and called records through
-plain VCF, BGZF VCF, raw BCF, and BGZF BCF with checked schemas, record-local
-input and call errors, and fallible output finalization. Exact-head
-four-native-target CI `30648436539` passes.
-Local-only revision `cf735d7` then drives full and default partial BAQ through
-the column-preparation API after overlap handling. Full, overlap-ordered, and
-indel-triggered likelihoods match bcftools 1.24. Its formatting, strict
-Clippy, debug and release tests, and rustdoc pass; package verification
-correctly remains unavailable until `rsomics-pileup 0.2` is published. The
-commit is not pushed or treated as release evidence yet. The ordinary and 250×
-engine gate records bounded RSS and more than 95 million entries/s in every
-case, including the partial trigger scan. `rsomics-bam` must still add the
-second product-side contract before foundation publication. Methyl extraction
-later provides the third consumer for checked columns and generic mate-overlap
-evidence; cytosine context and bisulfite calling do not enter the foundation.
+`rsomics-call` revision `bfa08d58df95` validates and coordinate-merges plain or
+BGZF SAM, raw or BGZF BAM, and CRAM sources; resolves source and read-group
+metadata into samples; streams columns into typed multisample SNP likelihood
+sites; and applies the bcftools-compatible depth, overlap, BAQ, and
+deterministic deep-evidence policies. Full, overlap-ordered, and default
+partial BAQ likelihoods match bcftools 1.24. Its product-owned consensus and
+multiallelic callers, checked VCF/BCF likelihood schema, and fused typed path
+remain product policy. The repository now consumes the published pileup and
+bamio archives rather than Git or path patches. Exact-head four-native-target
+CI `30654933140` passes.
+
+`rsomics-bam` revision `d3be2001212a` supplies the second concrete pileup
+consumer through `mpileup`. Coordinate-sorted SAM, BAM, and CRAM feed the same
+pileup engine; unchanged BAM bodies use the raw reader while generic records
+use the shared bamio encoder. Default, quality/flag/depth, overlap, all-position,
+reference, standard/full/redo BAQ, insertion, deletion, skip, and head/tail
+text behavior matches samtools 1.24 across its declared oracle matrix.
+Transactional named output and the shared rsomics JSON envelope remain product
+concerns. Exact-head four-native-target CI `30654810659` passes.
+
+The ordinary and 250× engine gate records bounded RSS and more than 95 million
+entries/s in every case, including the partial trigger scan. This establishes
+the two-consumer gate that permitted pileup 0.2.0 publication. Methyl
+extraction later provides a third consumer for checked columns and generic
+mate-overlap evidence; cytosine context and bisulfite calling do not enter the
+foundation.
 
 ### Analysis wave
 

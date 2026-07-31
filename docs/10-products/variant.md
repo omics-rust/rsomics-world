@@ -706,19 +706,22 @@ the older consensus diploid model over PL records.
 
 ### Foundations and gates
 
-`rsomics-bamio` supplies validated SAM/BAM/CRAM streams and indexed access.
-`rsomics-pileup` revision `b253b74bd0b1` supplies a fallible sorted projection
+`rsomics-bamio 0.2.1` supplies validated SAM/BAM/CRAM streams, indexed access,
+and the shared fallible raw-record encoder used by both BAM and call.
+`rsomics-pileup` revision `2680f6c328be` supplies a fallible sorted projection
 kernel, checked CIGAR and long-CIGAR projection, overlap handling, retry-safe
 borrowed columns, bounded column state, source-isolated overlap state, an
 optional per-source active-depth limit, and standard or extended BAQ. Column
 preparation supports full BAQ and the bcftools 1.24 partial trigger after
 current active records have entered overlap handling. The call product owns
 the 250-read and 500-base defaults instead of freezing those policies into the
-foundation. Exact-head four-native-target CI `30651430890` passes.
-`rsomics-call` is the first implemented pileup consumer;
-`rsomics-bam` remains the second named consumer required before publication.
+foundation. Exact-head four-native-target CI `30654312487` passes.
+`rsomics-call` and `rsomics-bam mpileup` provide the two implemented consumers.
+The resulting pileup 0.2.0 release was published by run `30654567905`; the
+downloaded archive checksum is
+`0a2d901c6854470dbebae190ef30d3535333768c4c18c6cc47c03eeb33872684`.
 
-`rsomics-call` revision `81898da610d8` owns the typed allele, ploidy,
+`rsomics-call` revision `bfa08d58df95` owns the typed allele, ploidy,
 likelihood-site, called-site, and per-sample evidence models. It validates and
 coordinate-merges plain or BGZF SAM, raw or BGZF BAM, and CRAM inputs, checks
 their reference dictionaries, builds samples from source and read-group
@@ -737,14 +740,15 @@ encodes called records, while content-detected streaming supports plain VCF,
 BGZF VCF, raw BCF, and BGZF BCF with record context on input or call failures
 and explicit output finalization. The format oracle includes a real bcftools
 1.24 multiallelic likelihood record and matching call. Exact-head
-four-native-target CI `30648436539` passes. Local-only revision `cf735d7`
-adds full, overlap-ordered, and default partial BAQ likelihood paths matching
-bcftools 1.24. Its local formatting, strict Clippy, debug and release tests,
-and rustdoc pass, but it is intentionally unpushed because package verification
-requires the unpublished `rsomics-pileup 0.2`. Indel likelihoods, complete
-annotations, indexed regions and streaming targets, gVCF behavior, complete
-three-command orchestration, performance evidence, and the `rsomics-help` CLI
-remain, so no command-line binary is exposed and the repository remains
+four-native-target CI `30648436539` established the typed baseline. The current
+head integrates full, overlap-ordered, and default partial BAQ likelihood paths
+matching bcftools 1.24, and replaces the duplicate raw encoder with the bamio
+0.2.1 contract. Formatting, strict Clippy, all 54 debug and release tests,
+rustdoc, and clean registry-based package verification pass locally. Indel
+likelihoods, complete annotations, indexed regions and streaming targets, gVCF
+behavior, complete three-command orchestration, performance evidence, and the
+`rsomics-help` CLI remain. Exact-head four-native-target CI `30654933140`
+passes, but no command-line binary is exposed and the repository remains
 unpublished.
 
 Calling likelihoods, allele selection, ploidy policy, priors, annotations, and
