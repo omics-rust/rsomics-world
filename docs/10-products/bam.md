@@ -175,6 +175,23 @@ BAM and decoded SAM/CRAM paths share the same threshold contract, and a zero
 threshold leaves the raw hot path without CIGAR traversal. Exact-head CI run
 `30613196557` passes all four native targets and 13 samtools 1.24 oracle groups.
 
+Revision `e481cb82f209` adds repeatable `view -r/--read-group`. Selected read
+groups form a union, records without an `RG` tag remain selected, and output
+headers retain only matching `@RG` records. Input and output headers are
+separate so header projection cannot change CRAM read-group decoding. SAM,
+BAM, CRAM, count, SAM output, and raw BAM-to-BAM paths are covered; non-string
+`RG` tags fail non-zero. Exact-head CI run `30613925372` passes all four native
+targets and 14 samtools 1.24 oracle groups.
+
+Standalone `view -n` remains unresolved. Samtools 1.24 emits the two tagged
+records from the current CRAM fixture with `view -n` but reports zero for
+`view -c -n`. In the
+[`sam_view.c` option switch](https://github.com/samtools/samtools/blob/1.24/sam_view.c#L1112-L1126),
+`-r` requests the CRAM `SAM_RGAUX` field while `-n` does not; combining `-r`
+and `-n` restores the expected count. The option stays unimplemented until
+the compatibility decision explicitly chooses the consistent record-filter
+contract or the 1.24 count bug.
+
 The samtools 1.24 subsampling audit found two unresolved compatibility
 boundaries. Its documentation defines a retained fraction from zero through
 one, but `--subsample 0` retains every record and `NaN` is accepted; invalid
