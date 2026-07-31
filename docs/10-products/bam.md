@@ -135,11 +135,21 @@ records as samtools 1.24, explicitly finalize the BGZF stream, and retain
 transactional file output. Exact-head CI run `30607097547` passes all four
 native targets.
 
-Revision `b1ee789ca942` applies `-@` to BAM output without allocating separate
-input and output pools. The declared budget includes noodles' coordinator
-thread, and one concern cannot silently consume twice the requested workers.
-SAM, BAM, and CRAM conversion plus indexed-region output pass the samtools 1.24
-oracle. Exact-head CI run `30607770570` passes all four native targets.
+Revision `b1ee789ca942` first applied `-@` to BAM output without allocating
+separate input and output pools. Revision `a2487fcd3d22` aligns the final worker
+model with samtools: `-@ N` supplies exactly N additional compression workers,
+while the calling thread coordinates output and BAM input does not allocate a
+second decoder pool. SAM, BAM, and CRAM conversion plus indexed-region output
+pass the samtools 1.24 oracle. Exact-head CI run `30610753005` passes all four
+native targets and builds samtools 1.24 for the Linux `x86_64` differential.
+
+Revision `a2487fcd3d22` also consumes published `rsomics-bamio 0.2.0` for
+validated borrowed BAM records and bounded default-level BGZF output. Sequential
+BAM count and BAM-to-BAM paths avoid decoding and re-encoding unchanged record
+bodies. Complete record layout is validated before flag and mapping-quality
+access; malformed bodies fail non-zero, and transactional named output remains
+absent after the failure. Raw and decoded filter tests cover the same flag
+predicates and missing-MAPQ behavior.
 
 The samtools 1.24 subsampling audit found two unresolved compatibility
 boundaries. Its documentation defines a retained fraction from zero through
@@ -152,9 +162,10 @@ decision. Samtools also scrambles non-zero seeds through platform libc
 implementation must not accidentally claim cross-platform-identical selection
 while matching this platform-dependent step.
 
-The crate stays unpublished until samtools 1.24-compatible subsampling,
-remaining output and header semantics, CRAM decode worker controls, and the
-performance gates are complete.
+The crate stays unpublished until the subsampling contract is decided and
+implemented, remaining output and header semantics are complete, CRAM decode
+worker controls are available, and the full release evidence includes peak RSS
+and representative cross-format measurements.
 
 ### Slice 2: file lifecycle
 
@@ -213,12 +224,14 @@ src/
 └── filter.rs
 ```
 
-Format detection, alignment headers, record decoding, and the current
-libdeflate-backed BAM path remain private product modules while BAM is the only
-implemented consumer. They move to `rsomics-bamio` only after a second product
-exercises the same policy-free contract. Product modules own command policy,
-filter composition, user-facing output, and samtools compatibility choices.
-Later slices add command modules only when their implementation is real.
+Format detection, alignment headers, decoded-record policy, and indexed access
+remain private product modules. `rsomics-bamio` contains only the policy-free
+validated raw-record and bounded BGZF primitives already exercised by this
+product, with `rsomics-methyl` and `rsomics-peak` recorded as the next concrete
+reader consumers. Product modules own command policy, filter composition,
+transactional path ownership, user-facing output, and samtools compatibility
+choices. Later slices add command modules only when their implementation is
+real.
 
 The binary must use `rsomics-help`. Product code supplies typed arguments,
 contracts, examples, and command-specific validation; `rsomics-help` supplies
@@ -330,16 +343,40 @@ compatibility reasons retain comments.
 
 ### `rsomics-bamio`
 
-The audited foundation is revision
-`dc4b19df5bc6664b39088b938136afecf48e21a9`, version 0.1.10. It is a
-1,514-line BAM-oriented reader/writer with noodles and libdeflate paths. It has
-tests but no external compatibility suite or benchmark recorded by the
-inventory.
+The historical foundation at
+`dc4b19df5bc6664b39088b938136afecf48e21a9`, version 0.1.10, was a
+1,514-line BAM-oriented reader/writer with noodles and libdeflate paths. Its
+public raw-record constructors accepted arbitrary bytes, several accessors
+relied on indexing or `unwrap`, and a declared BAM block length was treated as
+proof that all variable fields were internally consistent. The parallel writer
+also discarded its sink on finalization, joined workers with `unwrap`, and did
+not surface a final sink flush.
 
-Its current public raw-record constructors accept arbitrary bytes, and several
-accessors rely on indexing or `unwrap`. Reading a declared BAM block length
-does not prove that the record's variable fields are internally consistent.
-The eventual multi-product foundation contract is:
+`rsomics-bamio 0.2.0` at `51257940677b` replaces those boundaries. The release:
+
+- validates fixed fields, NUL-terminated read names, CIGAR, sequence, quality,
+  and auxiliary-data layout with checked arithmetic before field access;
+- makes owned and borrowed raw-record construction fallible and supplies a
+  valid default unmapped record;
+- writes borrowed raw records without product-specific policy;
+- exposes a bounded ring-based BGZF writer whose `finish` returns the sink,
+  flushes it, and maps worker failure or panic into structured I/O failure;
+- reduces implementation commentary to public contracts and stable
+  concurrency invariants.
+
+Native Linux and macOS CI on `x86_64` and `aarch64` passed at exact-head run
+`30610310217`. The controlled publish run `30610459857` produced the crates.io
+package with SHA-256
+`c763f5d7d93597718946912f7637347b799a1c41a60d57e615c04bd10eebffd3`.
+The GitHub release is
+[`rsomics-bamio-v0.2.0`](https://github.com/omics-rust/rsomics-bamio/releases/tag/rsomics-bamio-v0.2.0).
+The published package is consumed from the registry by `rsomics-bam`
+`a2487fcd3d22`, whose consumer-side malformed-record, filter-equivalence,
+round-trip, and four-native-platform tests pass.
+
+This release deliberately does not expose the larger speculative
+auto-detection and indexing layer. The eventual multi-product foundation
+contract remains:
 
 - auto-detected SAM, BAM, and CRAM readers with explicit input-format metadata;
 - typed headers, decoded records, references, and structured errors;
@@ -354,17 +391,12 @@ Product-specific filtering, CLI policy, and samtools defaults remain in
 
 Named consumers are `rsomics-bam`, `rsomics-count`, `rsomics-methyl`,
 `rsomics-minimap2`, `rsomics-peak`, `rsomics-rnaseq-qc`, `rsomics-signal`,
-and `rsomics-call`. An API item becomes public
-only after two product repositories exercise the same policy-free contract.
-The first BAM slice alone does not justify publishing a redesigned API.
-Revision `acb8b3a5a150` therefore removes `rust-htslib` from `rsomics-bam` and
-implements the first consumer contract privately with noodles 0.110,
-noodles-util 0.79, and libdeflate-backed noodles-bgzf 0.47. Revisions
-`b735539ffc75` and `12b6991e47b6` extend that private contract through
-streaming filters and transactional SAM/BAM output. They do not depend on or
-release a speculative `rsomics-bamio` revision. Promotion waits for a second
-implemented consumer such as `rsomics-count` or `rsomics-methyl`, with
-consumer-side tests.
+and `rsomics-call`. `rsomics-bam` is the implemented 0.2 consumer.
+`rsomics-methyl` and `rsomics-peak` have concrete dossier plans for validated
+alignment readers; their product-specific methylation, fragment, filter, and
+CLI policy remains outside the foundation. No additional public reader,
+indexing, header, or transactional-path item is added until a second product
+implements and tests the same policy-free contract.
 
 ### `rsomics-pileup`
 
@@ -487,6 +519,41 @@ The JSON result is retained at
 `/Volumes/KIOXIA/Developments/tmp/rsomics-bam-view-output-thread-comparison.json`;
 the run still lacks peak RSS and alternating trial order.
 
+The validated raw-record integration at `a2487fcd3d22` supersedes that output
+timing. It used the same 170,283,848-byte, 3,000,000-record BAM and the same
+Apple M2 host. Every generated default, fast, and uncompressed BAM passed
+samtools `quickcheck`, contained 3,000,000 records, and had decoded header and
+record SHA-256
+`91f653165a241b0a07b22e62be7850c795011836d0553212d03d96a02597abe2`.
+The record-only digest was
+`f0aa61994623f4701bf0b26f26a611d06fd87061180b6b004d1cf0481412e51d`.
+
+After three warm-ups, 20 four-additional-thread trials measured:
+
+| Implementation | Mean | Median | Standard deviation | Range |
+|---|---:|---:|---:|---:|
+| `rsomics-bam a2487fc view -b -@ 4` | 1.640 s | 1.489 s | 0.336 s | 1.413–2.803 s |
+| `samtools 1.24 view -b -@ 4` | 1.830 s | 1.779 s | 0.175 s | 1.626–2.234 s |
+
+The rsomics mean is 1.12 times faster and its median is 1.19 times faster,
+despite one slow rsomics trial. Twenty count trials measured 0.901 ± 0.025
+seconds for rsomics and 0.963 ± 0.025 seconds for samtools, a 1.07-times mean
+advantage. Twelve single-thread output trials measured 6.236 ± 0.582 seconds
+for rsomics and 6.498 ± 0.992 seconds for samtools; this 1.04-times mean
+difference is noisy and is not treated as a strong claim.
+
+The retained hyperfine JSON files and SHA-256 digests are:
+
+| Measurement | Path | SHA-256 |
+|---|---|---|
+| four-thread output | `/Volumes/KIOXIA/Developments/tmp/rsomics-bam-view-raw-parallel-final.json` | `13bbf1601700fe0e71d869a34bfb18ca89c71f7556404701302b9391527f8cab` |
+| count | `/Volumes/KIOXIA/Developments/tmp/rsomics-bam-view-raw-count-final.json` | `06bd1b04df612185aba47421e5c55083f516bf0ec47223fb697d50079bda9a24` |
+| single-thread output | `/Volumes/KIOXIA/Developments/tmp/rsomics-bam-view-raw-single-final.json` | `78163ee5a6eb662d0cfc51b92f3b91efe0aa497de047ab6d6805b8e68f1079cc` |
+
+The principal BAM streaming throughput sub-gate now passes. The full release
+evidence is still incomplete because these runs do not record peak RSS or
+representative SAM and CRAM paths.
+
 ## Explicit exclusions
 
 - `dict`, `faidx`, and `fqidx` are `rsomics-index` operations.
@@ -506,9 +573,11 @@ the run still lacks peak RSS and alternating trial order.
 Do not publish `rsomics-bam` yet. The product repository exists and its
 streaming inspection commands, filters, and SAM/BAM output now have
 four-native-platform exact-head CI plus samtools 1.24 oracle evidence. The
-first slice remains incomplete: compatible subsampling, complete header and
-output controls, and a strict performance or resource-use advantage are not
-yet demonstrated. CRAM output is blocked by the verified duplicate-read-group
-behavior above, and the shared `rsomics-bamio` contract still lacks a second
-implemented consumer. Historical micro-crate versions do not reduce these
-gates.
+principal four-thread BAM streaming path now demonstrates a strict throughput
+advantage, and the validated raw/BGZF foundation slice is published as
+`rsomics-bamio 0.2.0`. The first product slice remains incomplete: subsampling
+requires the explicit zero/NaN/platform-seed decision above, header and output
+controls are not complete, CRAM decoding has no worker control, and the final
+benchmark set lacks peak RSS and representative SAM/CRAM coverage. CRAM output
+is separately blocked by the verified duplicate-read-group behavior.
+Historical micro-crate versions do not reduce these gates.
