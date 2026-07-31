@@ -24,7 +24,7 @@ The table is based on live source at these revisions:
 - `rsomics-seq` `d4c840be2e37`;
 - `rsomics-fastq-preprocess` `442c202908d1`;
 - `rsomics-bed` `989894f2dad5`;
-- `rsomics-vcf` `7c0197e6da72`;
+- `rsomics-vcf` `bbc09be7ed38`;
 - `rsomics-seqio` `d7e1c33bb600`;
 - `rsomics-intervals` `6783f67614ae`.
 
@@ -112,14 +112,15 @@ native target classes and its pinned bedtools 2.31.1 oracle.
 
 ### `rsomics-vcf`
 
-The `query` command writes named projections transactionally while stdout
-remains a direct stream. The `index` command likewise builds a complete CSI or
-TBI before replacing its destination and retains the previous index on a
-parse, compatibility, allocation, write, flush, or sync failure. The
+The `query` and `view` commands write named projections transactionally while
+stdout remains a direct stream. The `index` command likewise builds a complete
+CSI or TBI before replacing its destination and retains the previous index on
+a parse, compatibility, allocation, write, flush, or sync failure. The
 `validate` command consumes common 0.9 so invalid JSON output retains the full
 structured report instead of reducing it to a message. Revision
-`7c0197e6da72` exercises all three contracts and passes exact-head CI run
-`30630841891` on all four native target classes.
+`bbc09be7ed38` exercises all four contracts and passes exact-head CI run
+`30633237582` on all four native target classes. Published VCF 0.1.0 was
+downloaded from crates.io, reinstalled, and tested from its registry archive.
 
 ### Other retained repositories
 

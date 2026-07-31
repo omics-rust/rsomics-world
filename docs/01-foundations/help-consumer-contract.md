@@ -70,7 +70,7 @@ crates.io; only still-unpublished domain foundations use exact CI patches:
 | `rsomics-seq` `d4c840be2e37` | five sequence subcommands | strict Clippy; library, CLI, independent k-mer, live SeqKit, and benchmark gates against registry seqio 0.3; CI `30599999972` |
 | `rsomics-fastq-preprocess` `442c202908d1` | three subcommands with nested input, trim, filter, length, thread, and output groups | strict Clippy; library, CLI, live fastp, and benchmark gates against registry seqio 0.3; CI `30599999790` |
 | `rsomics-bed` `989894f2dad5` | five interval subcommands with positional and required named inputs | strict Clippy; 40 library, 12 CLI, and three live bedtools/golden tests; full benchmark smoke and representative million-record gate; CI `30621067404` |
-| `rsomics-vcf` `7c0197e6da72` | nested `head`, `query`, `validate`, and `index` operations with unified global output | strict Clippy; typed VCF/BGZF/BCF and CSI/TBI tests; pinned bcftools 1.24 and validation-corpus oracles; representative gates; CI `30630841891` |
+| `rsomics-vcf` `bbc09be7ed38` | nested `head`, `query`, `validate`, `index`, and `view` operations with unified global output | strict Clippy; typed VCF/BGZF/BCF and CSI/TBI tests; pinned bcftools 1.24, validation-corpus, and view oracles; representative gates; CI `30633237582`; published 0.1.0 and registry-reinstalled |
 
 The foundation itself passes strict Clippy, package verification, and six unit
 tests covering nested help, generated help navigation, suggestions, normal
@@ -114,7 +114,7 @@ tests plus exact-head CI `30597681539`.
    and verified.
 2. The `seq`, `fastq-preprocess`, `bed`, and `annotation` lockfiles resolve
    their reviewed versions from crates.io and retain their exact-head gates.
-3. VCF resolves help 0.4 and common 0.9 from crates.io; kmer remains behind a
-   second product consumer.
+3. VCF 0.1.0 resolves help 0.4 and common 0.9 from crates.io and is published
+   and registry-reinstalled; kmer remains behind a second product consumer.
 4. Use these consumer contracts as the default CLI baseline for later product
    reconstruction.

@@ -1,9 +1,9 @@
 # Variant format, calling, and copy-number product dossiers
 
 Status: boundary, upstream-operation, and historical-source audit complete.
-`rsomics-vcf` exists with complete `head`, current-contract `query`, and
-strict `validate` and `index` operations. `rsomics-call` and `rsomics-cnv` do
-not yet exist. None of the three products is published.
+`rsomics-vcf` 0.1.0 is published with the complete first-release `head`,
+`query`, `validate`, `index`, and `view` slice. `rsomics-call` and
+`rsomics-cnv` do not yet exist and are not published.
 
 ## Portfolio decision
 
@@ -133,13 +133,14 @@ pretend that a full streaming scan is equivalent.
 ### Current implementation
 
 `rsomics-vcf` revision
-`7c0197e6da72af3947cf76fd667b7cbac14ad36c` implements complete `head`, the
-declared single-input `query` contract, strict `validate`, and compatible
-`index` without advertising `view`. It consolidates the historical
+`bbc09be7ed3873d9069e9bde88fa0119b134129a` implements the complete
+first-release slice. It consolidates the historical
 `rsomics-vcf-head`, `rsomics-vcf-query`, `rsomics-vcf-extract`,
-`rsomics-vcf-valfmt`, `rsomics-vcf-validate`, and `rsomics-vcf-index` assets
-into private product modules. `rsomics-help` supplies the shared command
-layout. `rsomics-common` 0.9 supplies transactional named output and preserves
+`rsomics-vcf-valfmt`, `rsomics-vcf-validate`, `rsomics-vcf-index`,
+`rsomics-vcf-sample`, and `rsomics-vcf-view` assets into private product
+modules, fixtures, and predicates while replacing their partial whole-file
+implementations. `rsomics-help` supplies the shared command layout.
+`rsomics-common` 0.9 supplies transactional named output and preserves
 complete invalid validation reports in the shared JSON and exit contract.
 
 `head`:
@@ -209,6 +210,30 @@ complete invalid validation reports in the shared JSON and exit contract.
   destination, so parse, compatibility, allocation, write, flush, or sync
   failures do not expose a partial index.
 
+`view`:
+
+- accepts plain VCF, BGZF VCF, raw BCF 2.2, and BGZF BCF 2.2, converting
+  between VCF, compressed VCF, raw BCF, and compressed BCF;
+- implements full, header-only, and no-header output, rejecting headerless BCF
+  because BCF records require their header dictionaries;
+- selects, excludes, reorders, or reads samples from a file, rejects duplicate
+  inclusions, supports explicit force for missing samples, and emits sites-only
+  output when every requested sample is absent under that policy;
+- removes genotypes or recalculates `AC` and `AN` after sample projection,
+  including the current no-ALT behavior;
+- filters by FILTER state, known or novel IDs, allele count, and the complete
+  bcftools 1.24 `snps`, `indels`, `mnps`, `ref`, `bnd`, `other`, and `overlap`
+  type model;
+- streams targets and uses CSI or TBI for record-, position-, or
+  variant-overlap regions, merging region lists and deduplicating only repeated
+  index hits for the same record;
+- validates every record on the direct text path, uses typed conversion where
+  the requested transformation requires it, and atomically replaces named
+  output only after the complete stream succeeds;
+- keeps expressions, allele trimming and remapping, frequency and genotype
+  predicates, output indexing, and compression workers outside the public
+  first-release contract.
+
 The representative oracle covers multi-ALT, numeric and missing INFO arrays,
 flags, string INFO, FORMAT scalars and arrays, phased and missing genotypes,
 sample inclusion and exclusion, headers, and VCF/BGZF/BCF equivalence. When
@@ -236,13 +261,14 @@ grammar, an unsorted VCF 4.5 passed fixture, and the EBI `%` FORMAT
 compatibility extension. No corpus-specific exception is present in production
 code.
 
-The initial `head` exact-head CI run `30619149446` and query run `30622684140`
-pass native Linux and macOS on `x86_64` and `aarch64`. Validation run
-`30627803709` and index run `30630841891` pass the same four native target
-classes at revisions `330736317e7d` and `7c0197e6da72`. The Linux `x86_64`
-job builds bcftools 1.24 from the official SHA-256-pinned archive, fetches
-both exact validation corpora, and passes command, validation, index-region,
-spanning-variant, stats, and malformed-BCF oracle suites.
+The initial `head` exact-head CI run `30619149446`, query run `30622684140`,
+validation run `30627803709`, index run `30630841891`, and view run
+`30632972348` pass native Linux and macOS on `x86_64` and `aarch64`. Final
+release-head run `30633237582` passes the same four native target classes at
+revision `bbc09be7ed38`. The Linux `x86_64` job builds bcftools 1.24 from the
+official SHA-256-pinned archive, fetches both exact validation corpora, and
+passes command, validation, index-region, spanning-variant, stats,
+malformed-BCF, and view compatibility suites.
 
 ### Later slices
 
@@ -270,6 +296,7 @@ src/
 ├── query_format.rs
 ├── validate.rs
 ├── variant_type.rs
+├── view.rs
 ├── format/
 │   ├── reader.rs
 │   ├── record.rs
@@ -286,7 +313,11 @@ src/
 │   ├── header.rs
 │   ├── record.rs
 │   └── v44.rs
-├── expression/
+├── view/
+│   ├── output.rs
+│   ├── regions.rs
+│   ├── samples.rs
+│   └── selection.rs
 └── commands/
     ├── head.rs
     ├── index.rs
@@ -321,7 +352,7 @@ adapters. Another rsomics IO wrapper is not justified merely to wrap noodles.
 | `rsomics-vcf-norm` `c4eeb5026199141a08ddd7b710be14488887edc2` | Test and split seed | Later complete `norm`; add reference realignment and 1.24 semantics |
 | `rsomics-vcf-query` `1bd16a4562e931010d6138e71c3a6112040edd29` | Refactor merge complete; partial parser replaced | First-slice streaming `query` |
 | `rsomics-vcf-reheader` `e25a2942b13b912fefc21e739d3f10876a59ac74` | Refactor then merge | Later transactional `reheader` |
-| `rsomics-vcf-sample` `3217323c7e6a22f2086367f8bdf9cc8bde6abd88` | Merge sample-selection fixtures | First-slice `view --samples` |
+| `rsomics-vcf-sample` `3217323c7e6a22f2086367f8bdf9cc8bde6abd88` | Sample-projection fixture merge complete; implementation replaced | First-slice `view --samples` |
 | `rsomics-vcf-setgt` `a01b957b2259f4a75834c8354b2467cc3ea78cf6` | Refactor then merge | Later `setgt`; share internal expression engine |
 | `rsomics-vcf-snp-density` `c8f2c9b1507712bcfb967693b18fc8d936f14465` | Merge legacy report fixture | `stats density` |
 | `rsomics-vcf-sort` `2ba24aa3573557117fc47900892264f358bdf96d` | Test asset only | Replace whole-file in-memory sorter |
@@ -332,7 +363,7 @@ adapters. Another rsomics IO wrapper is not justified merely to wrap noodles.
 | `rsomics-vcf-utils` `61287add0d662df97a4808ae05c473791b922ec4` | Split, refactor, and discard | Fold grounded operations into `view`, `query`, `stats`, and `convert`; discard duplicates |
 | `rsomics-vcf-validate` `e6fef96f3cdfde5d5740d57cb8c5185cfc5285ff` | Test seed merged; implementation replaced | Strict first-slice `validate` |
 | `rsomics-vcf-variant-distance` `b9a86dd089539bd9d3147acae72f3b19bfe8015a` | Refactor then merge | Later `annotate distance`; unsorted input fails |
-| `rsomics-vcf-view` `d0c187ec2c85033f721ac135be874cf0aa48eb02` | Test and predicate seed | Replace whole-file VCF-only command |
+| `rsomics-vcf-view` `d0c187ec2c85033f721ac135be874cf0aa48eb02` | Type and FILTER fixtures and predicate seed merged; whole-file implementation replaced | Complete first-slice `view` |
 
 The four dirty repositories contain only untracked `Cargo.lock` files during
 this audit. They are not copied until ownership is confirmed. The other 26
@@ -506,15 +537,36 @@ index benchmark scratch, with SHA-256
 and
 `cb5f4fbc8645fb099455dc703ca2aa40f462dbed4d35c0ac7b992de8405a356f`.
 
+The final `view` revision was measured on the same Apple M2 host and toolchain
+against bcftools 1.24 with three warm-ups and 20 measured runs. Both commands
+read the same one-million-record BGZF VCF, emit matching record bodies, and
+write uncompressed VCF:
+
+| Viewer | Mean ± standard deviation | Peak RSS |
+|---|---:|---:|
+| rsomics-vcf | 200.7 ± 9.2 ms | 3.14 MiB |
+| bcftools | 459.2 ± 12.8 ms | 6.62 MiB |
+
+Rsomics is 2.29 times faster and uses approximately 53% less observed peak
+memory. The 1,715,168-byte input has SHA-256
+`72ad19cdda99612f294936df37b4d93daa4111b780f394dee20161b0b956b991`;
+both output bodies have SHA-256
+`e18ba5e1a82390b96b878196158b005a7258f200e0b8870a093aa71a18d00890`.
+The retained final Hyperfine JSON has SHA-256
+`05c367276fee4c032a3d7a2c080c72f79e4b17d658d02bde5aeeb3fab9a4898f`.
+
 ### Publication decision
 
-Do not publish `rsomics-vcf` yet. The target repository and complete `head`,
-current-contract `query`, strict `validate`, and compatible `index` operations
-now exist with bcftools 1.24, hts-specs, and EBI oracles plus performance
-records. `view` remains absent, and no placeholder command is exposed.
-Publication waits for the complete first slice, exact-head four-native-platform
-CI over that slice, the complete view/region gate, and a fresh public API
-review.
+`rsomics-vcf` 0.1.0 publishes only the complete first-release slice. Final
+exact-head CI run `30633237582` passes at
+`bbc09be7ed3873d9069e9bde88fa0119b134129a`; publish run `30633450270`
+completed successfully. The crates.io archive has SHA-256
+`abc40a340f2e1c3814dd1c33085b54865ee7e8a6fc58b4814affa2e5e74f9731`,
+is not yanked, and reports Rust 1.91 with the MIT OR Apache-2.0 license.
+A fresh `cargo install rsomics-vcf --version 0.1.0 --locked` reported version
+0.1.0, matched the bcftools record-body fixture, and the downloaded archive
+passed the complete normal test suite. Later-slice commands remain absent
+rather than shipping placeholders.
 
 ## `rsomics-call`
 
