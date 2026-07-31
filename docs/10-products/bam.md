@@ -151,6 +151,15 @@ access; malformed bodies fail non-zero, and transactional named output remains
 absent after the failure. Raw and decoded filter tests cover the same flag
 predicates and missing-MAPQ behavior.
 
+Revision `aa3e278206b4` records output provenance in the alignment header.
+SAM and BAM output add a unique `@PG` record with program name, version,
+sanitized real command line, and the previous program ID. Existing program
+records remain in order, collisions use a numeric suffix, and `--no-pg` plus
+the samtools-compatible `--no-PG` alias suppresses the new record. Public
+library callers must construct validated program fields explicitly. Exact-head
+CI run `30611945848` passes all four native targets and the samtools 1.24
+differential.
+
 The samtools 1.24 subsampling audit found two unresolved compatibility
 boundaries. Its documentation defines a retained fraction from zero through
 one, but `--subsample 0` retains every record and `NaN` is accepted; invalid
@@ -166,6 +175,18 @@ The crate stays unpublished until the subsampling contract is decided and
 implemented, remaining output and header semantics are complete, CRAM decode
 worker controls are available, and the full release evidence includes peak RSS
 and representative cross-format measurements.
+
+The locked noodles-cram 0.93 synchronous reader exposes sequential
+`read_container`, `records`, and query iteration but no worker-count or
+multithreaded reader API. The current noodles-cram 0.95
+[`Reader`](https://docs.rs/noodles-cram/0.95.0/noodles_cram/io/reader/struct.Reader.html)
+has the same synchronous boundary; its optional async runtime does not itself
+provide ordered parallel container decoding. The product will not claim CRAM
+thread support by merely accepting `-@`. A custom container pipeline would
+first need explicit ordered emission, reference-cache ownership, bounded
+decoded-slice memory, error cancellation, and native-platform performance
+evidence. Until that contract exists, CRAM input with a non-zero thread request
+continues to fail before processing.
 
 ### Slice 2: file lifecycle
 
