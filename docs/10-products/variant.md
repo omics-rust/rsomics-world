@@ -717,7 +717,7 @@ and is implemented only through the calling and BAM consensus consumers that
 need it. `rsomics-call` is the first implemented pileup consumer;
 `rsomics-bam` remains the second named consumer required before publication.
 
-`rsomics-call` revision `7cc3dcfff15a` owns the typed allele, ploidy,
+`rsomics-call` revision `81898da610d8` owns the typed allele, ploidy,
 likelihood-site, called-site, and per-sample evidence models. It validates and
 coordinate-merges plain or BGZF SAM, raw or BGZF BAM, and CRAM inputs, checks
 their reference dictionaries, builds samples from source and read-group
@@ -727,16 +727,19 @@ match HTSlib 1.24; reference-only, two-sample, and per-input-depth records match
 bcftools 1.24. Its multiallelic caller matches bcftools 1.24 for reference,
 biallelic, triallelic, alternate-only, haploid, diploid, mixed/absent-ploidy,
 and independently grouped samples while keeping callable and emitted alleles
-distinct. The fused path passes typed likelihood sites directly into the caller
-and is record-equivalent to its materialized counterpart. A strict schema
-decodes likelihood records and encodes called records, while content-detected
-streaming supports plain VCF, BGZF VCF, raw BCF, and BGZF BCF with record
-context on input failures and explicit output finalization. The format oracle
-includes a real bcftools 1.24 multiallelic likelihood record and matching call.
-Exact-head four-native-target CI `30646850401` passes. BAQ, indel likelihoods,
-the consensus caller, indexed regions and streaming targets, gVCF behavior,
-complete command orchestration, performance evidence, and the `rsomics-help`
-CLI remain, so no command-line binary is exposed and the repository remains
+distinct. Its consensus caller ports the bcftools 1.24 allele-frequency
+posterior and matches reference, heterozygous, alternate, triallelic, and
+haploid calls, including optional genotype quality. The fused path passes typed
+likelihood sites directly into either caller and is record-equivalent to its
+materialized counterpart. A strict schema decodes likelihood records and
+encodes called records, while content-detected streaming supports plain VCF,
+BGZF VCF, raw BCF, and BGZF BCF with record context on input or call failures
+and explicit output finalization. The format oracle includes a real bcftools
+1.24 multiallelic likelihood record and matching call. Exact-head
+four-native-target CI `30648436539` passes. BAQ, indel likelihoods, complete
+annotations, indexed regions and streaming targets, gVCF behavior, complete
+three-command orchestration, performance evidence, and the `rsomics-help` CLI
+remain, so no command-line binary is exposed and the repository remains
 unpublished.
 
 Calling likelihoods, allele selection, ploidy policy, priors, annotations, and
