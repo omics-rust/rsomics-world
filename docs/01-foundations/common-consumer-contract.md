@@ -1,9 +1,9 @@
 # `rsomics-common` consumer contract
 
-Status: common 0.8.0, help 0.4.0, and intervals 0.3.0 are published and
-verified from downloaded crates.io archives. BED and VCF resolve common 0.8
-from the registry; the earlier pilot locks remain recorded at their tested
-versions. Seqio 0.3 remains unpublished.
+Status: common 0.9.0, help 0.4.0, intervals 0.3.0, and seqio 0.3.0 are
+published and verified from downloaded crates.io archives. BED resolves
+common 0.8 and VCF resolves common 0.9 from the registry; the sequence pilots
+remain on their tested common 0.7 contract through seqio.
 
 ## Why this audit exists
 
@@ -20,19 +20,20 @@ them.
 
 The table is based on live source at these revisions:
 
-- `rsomics-common` `416d3615e780`;
-- `rsomics-seq` `bf00b71477b8`;
-- `rsomics-fastq-preprocess` `a56519d9d6c0`;
+- `rsomics-common` `10a8b4708d36`;
+- `rsomics-seq` `d4c840be2e37`;
+- `rsomics-fastq-preprocess` `442c202908d1`;
 - `rsomics-bed` `989894f2dad5`;
-- `rsomics-vcf` `84e27f734911`;
-- `rsomics-seqio` `7b5b1c68f52e`;
+- `rsomics-vcf` `330736317e7d`;
+- `rsomics-seqio` `d7e1c33bb600`;
 - `rsomics-intervals` `6783f67614ae`.
 
 | Current item | Concrete retained consumers | Finding |
 |---|---|---|
 | `RsomicsError`, `Result`, `Context` | `seq`, `fastq-preprocess`, `bed`, `annotation`, `seqio` | keep; multiple real call sites and stable error categories |
 | `ExitCode`, JSON envelopes, `ToolMeta`, `run()` | `seq`, `fastq-preprocess`, `bed` | keep after removing unrelated capability initialization |
-| `OutputArgs::json` | `seq`, `fastq-preprocess`, `bed` | retained as the one demonstrated shared CLI control |
+| `Validation<T>`, `run_validation()` | implemented `vcf validate`; planned `bam validate` | keep the format-neutral valid/invalid report and exit contract; validator policy stays in products |
+| `OutputArgs::json` | `seq`, `fastq-preprocess`, `bed`, `vcf` | retained as the one demonstrated shared CLI control |
 | former `CommonFlags::threads` and global Rayon setup | effective only in `fastq-preprocess` | removed from common; preprocessing owns a local Rayon pool |
 | former `CommonFlags::seed` | none of the current consumers | removed; no RNG work was manufactured to justify it |
 | former `CommonFlags::quiet` / `verbose` | no current product emits common info/debug messages | removed until two products establish a logging contract |
@@ -48,9 +49,9 @@ The 562 historical micro-crate manifests that mention `rsomics-common` are
 implementation assets, not public-API consumers. Counting them would recreate
 the topology being retired.
 
-## Implemented 0.8 boundary
+## Implemented 0.9 boundary
 
-The 0.8 implementation contains:
+The 0.8 implementation established:
 
 - the typed error categories and contextual I/O conversion;
 - stable process exit-code mapping;
@@ -61,6 +62,12 @@ The 0.8 implementation contains:
   code without initializing unrelated global state;
 - `write_atomic`, added only after BED and VCF demonstrated the same named-file
   transaction contract.
+
+Common 0.9 adds `Validation<T>` and `run_validation`. A product can return a
+complete invalid report, emit it inside the shared JSON error envelope, and
+still use the shared invalid-input exit code. The common crate does not define
+diagnostics, record models, validity rules, or output summaries for VCF, BAM,
+or any other format.
 
 `write_atomic` creates its temporary file beside the destination, removes it
 when the producer fails, flushes and syncs before persist, preserves the mode
@@ -107,8 +114,10 @@ native target classes and its pinned bedtools 2.31.1 oracle.
 
 The `query` command writes named projections through common 0.8 while stdout
 remains a direct stream. A failed parse, compatibility check, or I/O operation
-does not replace the destination. Revision `84e27f734911` passes exact-head CI
-run `30622684140` on all four native target classes.
+does not replace the destination. The `validate` command consumes common 0.9
+so invalid JSON output retains the full structured report instead of reducing
+it to a message. Revision `330736317e7d` exercises both contracts and passes
+exact-head CI run `30627803709` on all four native target classes.
 
 ### Other retained repositories
 
@@ -119,22 +128,20 @@ the same explicit runner contract. Historical micro-crates are not updated.
 
 ## Remaining unpublished-foundation workaround
 
-Common, help, and intervals no longer use a CI path patch. Their consumers
-lock the published crates.io checksums and pass on four native targets.
-`rsomics-seq` and `rsomics-fastq-preprocess` still patch exact seqio 0.3
-revisions inside CI because that foundation has not yet passed its
-representative performance decision. `rsomics-seq` likewise patches kmer
-0.2.1 until a second product consumer exists.
+Common, help, intervals, and seqio no longer use a CI path patch. Their
+consumers lock the published crates.io checksums and pass on four native
+targets. `rsomics-seq` still patches kmer 0.2.1 until a second product
+consumer exists.
 
 ## Verification and release sequence
 
-1. Common 0.8.0, help 0.4.0, and intervals 0.3.0 are published, archive
-   checksum verified, and consumed from crates.io.
+1. Common 0.9.0, help 0.4.0, intervals 0.3.0, and seqio 0.3.0 are published,
+   archive-checksum verified, and consumed from crates.io.
 2. Every migrated product regenerates its lockfile and passes exact-head CI
    without a path dependency for those releases.
-3. Seqio 0.3 is published only after its representative compatibility,
-   throughput, memory, public-API, and exact-head gates are complete.
-4. Kmer remains unpublished until a second product demonstrates its contract.
+3. Kmer remains unpublished until a second product demonstrates its contract.
 
-Common 0.8 exact-head CI run `30620810041` and publish run `30620883859`
-completed successfully. The downloaded registry archive resolves as 0.8.0.
+Common 0.9 exact-head CI run `30626561250` and publish run `30626628961`
+completed successfully. The downloaded registry archive and crates.io API
+agree on SHA-256
+`00ecf388c7cccd2792438260c90e121f6de758c519f76ed64ff24b61f2e4ac78`.
