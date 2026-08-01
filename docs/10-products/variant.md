@@ -939,6 +939,15 @@ reference path in SNP allele selection. All 106 debug and release tests and 17
 live oracle groups pass; exact-head CI `30711321842` passes all four native
 targets.
 
+Revision `8d5b5c2d8610` composes the complete likelihood and call workflow
+without serializing the intermediate records. It builds the same checked
+likelihood schema and reuses the same ploidy resolver, sample groups, caller,
+site-output policy, gVCF blocker, and called-record writer as the materialized
+path. A combined grouped-sample, diploid, variant-only, and gVCF test is
+byte-identical to writing and reading the intermediate likelihood VCF. All 107
+debug and release tests and 17 live oracle groups pass; exact-head CI
+`30711752880` passes all four native targets.
+
 The current region-file reader materializes compressed region records before
 querying. This is correct for the verified contract but does not yet match
 bcftools' bounded-memory streaming path for a bgzip-compressed, tabix-indexed
@@ -992,7 +1001,7 @@ starting the command tree. The resulting implementation ledger is:
 | call models and ploidy | consensus, multiallelic, mutation prior, sample projection, fixed/preset/custom ploidy, and gVCF blocking are implemented | bind model and ploidy inputs into the product command |
 | call allele and site policy | callers trim selected alleles and preserve typed annotations; masked-reference, variant-only, SNP/indel skip, grouped-sample, keep-alternates, and prior-frequency workflows are implemented and checked against bcftools 1.24 | unseen-allele handling remains blocked on the help-versus-binary decision below |
 | call selections | indexed inline and file regions are implemented and verified | streaming targets remain blocked on the documented-versus-binary decision below |
-| fused workflow | `LikelihoodSite` already crosses pileup and caller without serialization | compose the full selected call policy, ploidy, gVCF, and output schema and prove record equivalence to the materialized pipeline |
+| fused workflow | the complete selected call policy, ploidy, sample groups, gVCF, and output schema run without serialization and are byte-equivalent to the materialized pipeline | bind the verified workflow into the product command |
 | product UX | `rsomics-help` 0.4 and `rsomics-common` provide the adopted parser, diagnostic, exit-code, JSON, and atomic-output layers | expose `pileup`, `call`, and `run` together only after the rows above are complete |
 
 Large indexed region-file throughput and peak RSS, product-level performance
