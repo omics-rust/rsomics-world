@@ -1,7 +1,8 @@
 # BAM product dossier
 
-Status: boundary and source-asset audit complete. The target repository exists,
-the first release slice is in progress, and no registry release is active.
+Status: boundary and source-asset audit complete. The seven-command first
+release slice has passed its local, oracle, performance, package, and native-CI
+gates; no registry release is active yet.
 
 ## Boundary
 
@@ -67,7 +68,7 @@ entry is created before each is complete.
 
 ## Release slices
 
-### Slice 1: streaming inspection and conversion
+### Release 0.4: streaming inspection, conversion, and pileup
 
 - `view`
 - `head`
@@ -75,19 +76,19 @@ entry is created before each is complete.
 - `flagstat`
 - `quickcheck`
 - `samples`
+- `mpileup`
 
 This is the first publishable slice because it establishes the shared format
-boundary without requiring an external sorter, index builder, or pileup
-engine. `view` includes SAM/BAM/CRAM input, SAM/BAM output, header control,
-region selection when a usable index exists, flag and map-quality filters,
-count mode, deterministic subsampling, and explicit reference requirements.
-CRAM output joins the stable surface only after a conforming writer is
-available.
+boundary without requiring an external sorter or index builder. `view`
+includes SAM/BAM/CRAM input, SAM/BAM output, header control, region selection
+when a usable index exists, flag and map-quality filters, count mode, and
+explicit reference requirements. `mpileup` is included because its shared
+engine and compatibility surface are complete. CRAM output joins the stable
+surface only after a conforming writer is available.
 
-Samtools 1.24 changed the default `view --subsample` seed from zero to a value
-derived from the input header. The rsomics default and its reproducibility
-tests must match the 1.24 behavior; a user-supplied zero seed retains the old
-behavior.
+Subsampling is not part of the 0.4 CLI or documentation. It remains a future
+`view` extension because the samtools 1.24 fraction, exit-status, seed, and
+platform contracts described below are contradictory.
 
 The slice is not complete if it only accepts BAM. It must prove:
 
@@ -251,6 +252,24 @@ versions. The 27 library tests, 40 ordinary compatibility cases, four mpileup
 cases, and 19 live samtools 1.24 oracle groups pass in debug and release mode;
 exact-head four-native-target CI `30715405895` passes.
 
+Revision `78925d1d019b` adopts published `rsomics-bamio 0.4.1`; all 19 live
+samtools 1.24 oracle groups pass locally and exact-head four-native-target CI
+`30722822003` passes. Revision `2e3781c5eaa5` removes the remaining
+input-reachable raw-record and pileup conversion panics, replacing them with
+explicit invalid-input errors. The 27 library tests, 40 ordinary compatibility
+tests, four pileup tests, all 19 live oracle groups, strict Clippy, rustdoc, and
+package verification pass; exact-head CI `30723046915` passes all four native
+targets.
+
+Revision `c2441aef1efe` records the release performance gate. On the 3,000,000
+record, 188,400,612-byte BAM fixture, five alternating Linux x86_64 rounds at
+`-@ 4` produced byte-identical decoded headers and records. Median wall time
+was 2.39 seconds for `rsomics-bam view` and 4.14 seconds for samtools 1.24;
+median CPU time was 7.12 versus 9.02 seconds, and median peak RSS was 4,480
+versus 10,752 KiB. Exact-head CI `30723489891` passes all four native targets,
+including the 19-group samtools differential on Linux x86_64. This is a BAM
+hot-path gate only; the release makes no throughput claim for SAM or CRAM.
+
 Standalone `view -n` remains unresolved. Samtools 1.24 emits the two tagged
 records from the current CRAM fixture with `view -n` but reports zero for
 `view -c -n`. In the
@@ -288,10 +307,12 @@ decision. Samtools also scrambles non-zero seeds through platform libc
 implementation must not accidentally claim cross-platform-identical selection
 while matching this platform-dependent step.
 
-The crate stays unpublished until the subsampling contract is decided and
-implemented, remaining output and header semantics are complete, CRAM decode
-worker controls are available, and the full release evidence includes peak RSS
-and representative cross-format measurements.
+Subsampling, direct `-n`, read-group file exclusion, unselected output, CRAM
+output, and parallel CRAM decoding are not part of release 0.4. None appears in
+the CLI or public documentation. They become release gates only when a later
+version chooses and exposes their contracts; no placeholder behavior is
+accepted. The stable 0.4 commands instead fail explicitly when a requested
+format or thread mode is unavailable.
 
 The locked noodles-cram 0.93 synchronous reader exposes sequential
 `read_container`, `records`, and query iteration but no worker-count or
