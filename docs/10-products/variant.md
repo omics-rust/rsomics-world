@@ -902,6 +902,14 @@ even when its final call is reference. All 101 debug and release tests and 13
 live oracle groups pass; exact-head CI `30709355039` passes all four native
 targets.
 
+Revision `2a5df4b2ebce` composes independently grouped samples through the
+multiallelic workflow rather than leaving grouping as a low-level caller-only
+function. Group dimensions and contiguous membership are validated before
+output, and consensus-model misuse fails explicitly. A live
+`bcftools call -G` 1.24 oracle with `FORMAT/QS` matches reordered genotype and
+depth output. All 102 debug and release tests and 14 live oracle groups pass;
+exact-head CI `30709683149` passes all four native targets.
+
 The current region-file reader materializes compressed region records before
 querying. This is correct for the verified contract but does not yet match
 bcftools' bounded-memory streaming path for a bgzip-compressed, tabix-indexed
@@ -945,7 +953,7 @@ starting the command tree. The resulting implementation ledger is:
 | pileup selections | indexed inline regions and streaming inline/file targets are implemented | bind alignment region-file input; target complement remains blocked on the documented-versus-binary decision below |
 | likelihood output | the four VCF/BCF encodings and the complete annotation schema are implemented | add transactional named-file and standard-output orchestration |
 | call models and ploidy | consensus, multiallelic, mutation prior, sample projection, fixed/preset/custom ploidy, and gVCF blocking are implemented | bind model and ploidy inputs into the product command |
-| call allele and site policy | callers trim selected alleles and preserve typed annotations; masked-reference, variant-only, and SNP/indel skip policies match bcftools 1.24 | implement prior-frequency tags, keep-alternates, unseen-allele, and grouped-sample orchestration |
+| call allele and site policy | callers trim selected alleles and preserve typed annotations; masked-reference, variant-only, SNP/indel skip, and grouped-sample workflows match bcftools 1.24 | implement prior-frequency tags, keep-alternates, and unseen-allele policy |
 | call selections | indexed inline and file regions are implemented and verified | streaming targets remain blocked on the documented-versus-binary decision below |
 | fused workflow | `LikelihoodSite` already crosses pileup and caller without serialization | compose the full selected call policy, ploidy, gVCF, and output schema and prove record equivalence to the materialized pipeline |
 | product UX | `rsomics-help` 0.4 and `rsomics-common` provide the adopted parser, diagnostic, exit-code, JSON, and atomic-output layers | expose `pileup`, `call`, and `run` together only after the rows above are complete |
