@@ -1,7 +1,7 @@
 # BAM product dossier
 
 Status: boundary and source-asset audit complete. The target repository exists,
-the first release slice is in progress, and no release has been published.
+the first release slice is in progress, and no registry release is active.
 
 ## Boundary
 
@@ -244,6 +244,12 @@ Revision `ae1c1561f941` then replaces the product-private BAI/CSI/CRAI
 discovery and indexed-reference setup with the shared bamio 0.3 contract,
 removing 101 duplicate lines. All 19 samtools 1.24 oracle groups pass locally
 and exact-head four-native-target CI `30659400959` passes.
+
+Revision `0d1a38d3f172` aligns the product on `rsomics-common` 0.10,
+`rsomics-bamio` 0.4, and `rsomics-pileup` 0.4 without duplicate dependency
+versions. The 27 library tests, 40 ordinary compatibility cases, four mpileup
+cases, and 19 live samtools 1.24 oracle groups pass in debug and release mode;
+exact-head four-native-target CI `30715405895` passes.
 
 Standalone `view -n` remains unresolved. Samtools 1.24 emits the two tagged
 records from the current CRAM fixture with `view -n` but reports zero for
@@ -519,6 +525,13 @@ optional indexed reference. BAM and call both exercise the contract. Version
 `30658840221`, and downloaded-archive verification with checksum
 `6ac17eb096cd976f6000ff813430236df0b723eb360c926427d7928e46702a93`.
 
+Revision `d563f0160c2a` aligns the foundation on `rsomics-common` 0.10 while
+retaining the same consumer-proven API. Version 0.4.0 passed exact-head
+four-native-target CI `30714717087`, publish run `30714794220`, and
+downloaded-archive verification with checksum
+`7dbfdde57d3f0553f962ab1836ff06ce59540637b6a501757690cdf66c85876b`.
+BAM and call pass their complete consumer suites on this release.
+
 The remaining multi-product foundation contract is:
 
 - auto-detected SAM, BAM, and CRAM readers with explicit input-format metadata;
@@ -581,6 +594,13 @@ without changing the hot path. Local samtools 1.24 compatibility and ordinary
 and 250× benchmarks pass. Exact-head four-native-target CI `30659084469` and
 publish run `30659248849` pass; the pileup 0.3.0 archive checksum is
 `def4cc70d0cd250f8b9ebb1d1e0280c1a890cffb66504a832cb1819cff9f8581`.
+
+Revision `4b48bfdafecd` aligns the shared raw-record dependency on bamio 0.4
+without changing the projection hot path. Version 0.4.0 passed the samtools
+1.24 oracle, debug and release suites, exact-head four-native-target CI
+`30714930834`, publish run `30715042037`, and downloaded-archive verification
+with checksum
+`d33b5fa1c3ddbe86c8f53c2bb3fa870e482e90957aa5e559fceca0600ff56533`.
 
 ### Other foundations
 
@@ -742,3 +762,13 @@ controls are not complete, CRAM decoding has no worker control, and the final
 benchmark set lacks peak RSS and representative SAM/CRAM coverage. CRAM output
 is separately blocked by the verified duplicate-read-group behavior.
 Historical micro-crate versions do not reduce these gates.
+
+A publication workflow was added before this dossier gate was rechecked and
+briefly published source revision `0d1a38d3f172` as 0.4.0 in run
+`30715708839`. The exact archive is retained with SHA-256
+`528b6103da6ab1c7bc3aa43a84e53301d201987ff4a7c83202dd4ef0115c440c`.
+The crate was immediately deleted under the registry's new-release deletion
+rule; the live registry API returns 404, publication-secret access was removed,
+and revision `0d81a978f9d2` removes the premature workflow. Its exact-head
+four-native-target CI `30715893286` passes. This event does not satisfy or
+weaken any product release gate.

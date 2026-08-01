@@ -708,7 +708,7 @@ the older consensus diploid model over PL records.
 
 ### Foundations and gates
 
-`rsomics-bamio 0.3.0` supplies validated SAM/BAM/CRAM streams, indexed access,
+`rsomics-bamio 0.3.0` established validated SAM/BAM/CRAM streams, indexed access,
 and the shared fallible raw-record encoder used by both BAM and call. Revision
 `94641eff97d7` moves appended and alternative BAI/CSI/CRAI discovery plus
 indexed-reference setup into the foundation after consumer-side BAM and call
@@ -716,6 +716,11 @@ tests established the same policy-free contract. Exact-head four-native-target
 CI `30658611800` and publish run `30658840221` pass. The downloaded archive
 checksum is
 `6ac17eb096cd976f6000ff813430236df0b723eb360c926427d7928e46702a93`.
+Revision `d563f0160c2a` aligns the foundation on `rsomics-common` 0.10;
+version 0.4.0 passes exact-head four-native-target CI `30714717087`, publish
+run `30714794220`, and downloaded-archive verification with checksum
+`7dbfdde57d3f0553f962ab1836ff06ce59540637b6a501757690cdf66c85876b`
+without changing the consumer contract.
 
 `rsomics-pileup` revision `2680f6c328be` supplies a fallible sorted projection
 kernel, checked CIGAR and long-CIGAR projection, overlap handling, retry-safe
@@ -731,6 +736,10 @@ changing the projection hot path. Its samtools 1.24 oracle, ordinary and 250×
 benchmarks, exact-head four-native-target CI `30659084469`, and publish run
 `30659248849` pass. The resulting pileup 0.3.0 archive checksum is
 `def4cc70d0cd250f8b9ebb1d1e0280c1a890cffb66504a832cb1819cff9f8581`.
+Revision `4b48bfdafecd` aligns the dependency on bamio 0.4 without changing the
+hot path. Version 0.4.0 passes exact-head four-native-target CI `30714930834`,
+publish run `30715042037`, and downloaded-archive verification with checksum
+`d33b5fa1c3ddbe86c8f53c2bb3fa870e482e90957aa5e559fceca0600ff56533`.
 
 `rsomics-call` revision `e53ede5a0777` owns the typed allele, ploidy,
 likelihood-site, called-site, and per-sample evidence models. It validates and
@@ -981,6 +990,12 @@ All 117 debug and release library tests, seven command integration tests, and
 21 live bcftools 1.24 oracle groups pass. Strict Clippy, rustdoc, locked
 packaging, and exact-head four-native-target CI `30714255852` also pass.
 
+Revision `e8394bf82f5a` aligns the complete product on `rsomics-common` 0.10,
+`rsomics-bamio` 0.4, and `rsomics-pileup` 0.4. `cargo tree -d` is empty; the
+same 117 library tests, seven command integration tests, and 21 live oracle
+groups pass in debug and release mode. Exact-head four-native-target CI
+`30715205443` passes.
+
 The current region-file reader materializes compressed region records before
 querying. This is correct for the verified contract but does not yet match
 bcftools' bounded-memory streaming path for a bgzip-compressed, tabix-indexed
@@ -1038,8 +1053,8 @@ and after implementing the command tree. The resulting ledger is:
 
 The complete three-command CLI is now exposed in the repository. The crate
 remains unpublished while large indexed region-file throughput and peak RSS,
-product-level performance evidence, dependency-graph version alignment, and
-the final public-API and hot-path review remain open.
+product-level performance evidence, and the final public-API and hot-path
+review remain open.
 
 Calling likelihoods, allele selection, ploidy policy, priors, annotations, and
 VCF output remain in the product. `rsomics-stats` receives a numerical kernel
