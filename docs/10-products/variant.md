@@ -2,9 +2,9 @@
 
 Status: boundary, upstream-operation, and historical-source audit complete.
 `rsomics-vcf` 0.1.0 is published with the complete first-release `head`,
-`query`, `validate`, `index`, and `view` slice. `rsomics-call` exists and is
-under implementation but remains unpublished. `rsomics-cnv` does not yet
-exist and is not published.
+`query`, `validate`, `index`, and `view` slice. `rsomics-call` 0.1.0 is
+published with its complete three-command first release. `rsomics-cnv` does
+not yet exist and is not published.
 
 ## Portfolio decision
 
@@ -721,6 +721,13 @@ version 0.4.0 passes exact-head four-native-target CI `30714717087`, publish
 run `30714794220`, and downloaded-archive verification with checksum
 `7dbfdde57d3f0553f962ab1836ff06ce59540637b6a501757690cdf66c85876b`
 without changing the consumer contract.
+Revision `82a8668717b5` caches the validated sequence and quality layout in the
+raw-record value rather than rechecking the BAM variable-length sections on
+every hot-path accessor. Call, BAM, and pileup consumer suites pass against
+the path-patched candidate. Version 0.4.1 passes exact-head four-native-target
+CI `30721193395`, publish run `30721286006`, and downloaded-archive
+verification with checksum
+`1ff830a8263e4a5c8784101c3d6674e4bd86ec8ced446327d94d35731db13600`.
 
 `rsomics-pileup` revision `2680f6c328be` supplies a fallible sorted projection
 kernel, checked CIGAR and long-CIGAR projection, overlap handling, retry-safe
@@ -996,11 +1003,12 @@ same 117 library tests, seven command integration tests, and 21 live oracle
 groups pass in debug and release mode. Exact-head four-native-target CI
 `30715205443` passes.
 
-The current region-file reader materializes compressed region records before
-querying. This is correct for the verified contract but does not yet match
-bcftools' bounded-memory streaming path for a bgzip-compressed, tabix-indexed
-region file. Large indexed region-file throughput and peak RSS therefore
-remain an explicit performance gate rather than a release claim.
+The current region-file reader materializes and normalizes the requested
+regions before querying. A source review corrected the earlier claim that
+bcftools 1.24 `mpileup -R` streams a tabix-indexed region file: that path also
+loads its region selections before alignment processing. Region-file
+streaming is therefore neither an upstream compatibility requirement nor an
+independent release blocker.
 
 Two bcftools 1.24 sample-file behaviors remain contradictory. Its man
 page says a missing second column assumes sex `F`, while `vcfcall.c` assigns
@@ -1051,10 +1059,25 @@ and after implementing the command tree. The resulting ledger is:
 | fused workflow | the complete selected call policy, ploidy, sample groups, gVCF, and output schema run without serialization and are byte-equivalent to the materialized pipeline | none for the first-release contract |
 | product UX | one `rsomics-help` 0.4 command tree exposes `pileup`, `call`, and `run`; `rsomics-common` provides the adopted diagnostic, exit-code, JSON, standard-output, and atomic-output layers | none for the first-release contract |
 
-The complete three-command CLI is now exposed in the repository. The crate
-remains unpublished while large indexed region-file throughput and peak RSS,
-product-level performance evidence, and the final public-API and hot-path
-review remain open.
+Revision `85579cb94f9a` narrows the hot likelihood path with inline small-vector
+state, generated checked model constructors, and one typed annotation
+observation. It consumes `rsomics-bamio` 0.4.1. All 117 release library tests,
+seven ordinary CLI tests, and 21 live bcftools 1.24 oracle groups pass; exact-
+head four-native-target CI `30721413157` passes. The final API and production
+hot-path review found no new shared public component: allele selection,
+calling policy, likelihood schema, annotations, ploidy, and output remain
+product-local.
+
+The representative Linux `x86_64` gate uses a deterministic 5 Mb, 30x wgsim
+fixture, pins both tools to one CPU, performs one warm-up, and alternates five
+timed rounds. Every round emits the same 5,024 sorted
+`CHROM/POS/REF/ALT/GT` calls. `rsomics-call run` has a 25.64 s median and
+22,400 KiB peak RSS; bcftools/HTSlib 1.24 `mpileup | call` has a 26.05 s
+median and 47,488 KiB peak RSS. This is a 1.6% median wall-time advantage and
+52.8% lower observed peak RSS on the declared fixture. Raw rounds, input and
+binary checksums, commands, machine provenance, limitations, and the fail-on-
+mismatch comparison script are tracked in the product's `PERFORMANCE.md` and
+`benchmarks/call-vs-bcftools.sh` at revision `74bd99fee96d`.
 
 Calling likelihoods, allele selection, ploidy policy, priors, annotations, and
 VCF output remain in the product. `rsomics-stats` receives a numerical kernel
@@ -1064,12 +1087,24 @@ Compatibility uses pinned bcftools 1.24 `mpileup`, `call`, and their composed
 pipeline, plus adversarial BAM/CRAM and reference fixtures. The audited
 bcftools 1.24 source archive has SHA-256
 `8caddc22610ee2851666047c859bb91da0c1e32d0c2ec553db6f153ad130e46f`.
-Performance compares both individual stages and the fused `run`; the fused
-path should provide a material I/O or memory advantage without changing calls.
+Performance compares the fused `run` workflow with the equivalent composed
+upstream pipeline. The result above establishes both a strict throughput
+advantage and a material memory advantage without changing the normalized
+calls.
 
-Do not publish `rsomics-call` until the complete slice, consumer-driven
-foundation APIs, four native exact-head CI classes, and current oracle and
-performance evidence pass.
+### Publication decision
+
+`rsomics-call` 0.1.0 publishes the complete `pileup`, `call`, and `run` slice
+and leaves the contradictory target-complement, call-target, numeric sample-
+ploidy, and unseen-allele options absent. Release head
+`b34cc226242ba2211d4b8135f50b8b5adc231482` passes exact-head four-native-
+target CI `30722248488`; publish run `30722470067` completed successfully. The
+first dispatch `30722408098` stopped before upload because the org secret did
+not yet grant this repository access; adding `rsomics-call` to that selected-
+repository scope resolved it without reading the token. The crates.io archive
+is not yanked and has checksum
+`83e2750f2b73b477da315d76f619db11c74e369528851a5108a69f4dd52bbde5`,
+identical to the local exact-head package.
 
 ## `rsomics-cnv`
 

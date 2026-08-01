@@ -17,7 +17,7 @@ Status meanings are defined in [CONVENTIONS.md](CONVENTIONS.md).
 | `rsomics-annotation` | repo-only | GFF/GTF inspection, selection, transformation, sequence extraction |
 | `rsomics-bam` | planned | SAM/BAM/CRAM format operations; archived orphan releases are source assets |
 | `rsomics-bed` | repo-only | BED/interval algebra and bedtools-like operations |
-| `rsomics-call` | planned | alignment pileup, genotype likelihoods, and lightweight small-variant calling |
+| `rsomics-call` | live | alignment pileup, genotype likelihoods, and lightweight small-variant calling |
 | `rsomics-cnv` | planned | BAF/LRR copy-number HMM and chromosome-level polysomy analysis |
 | `rsomics-composition` | planned | Aitchison geometry, log-ratio transforms, zero handling, proportionality, and composition-native inference |
 | `rsomics-count` | planned | feature and read counting workflows |
@@ -43,16 +43,16 @@ Status meanings are defined in [CONVENTIONS.md](CONVENTIONS.md).
 | `rsomics-sketch` | planned | persistent sequence sketches, comparison, search, indexing, and mixture decomposition |
 | `rsomics-structure` | planned | protein structure and PDB analysis |
 | `rsomics-table` | planned | bioinformatics-oriented table manipulation |
-| `rsomics-vcf` | planned | VCF/BCF inspection, transformation, filtering, indexing, and format statistics |
+| `rsomics-vcf` | live | VCF/BCF inspection, transformation, filtering, indexing, and format statistics |
 
 Product status summary:
 
 | Status | Count |
 |---|---:|
-| live | 1 |
+| live | 3 |
 | repo-only | 5 |
 | pilot | 1 |
-| planned | 23 |
+| planned | 21 |
 | **Total** | **30** |
 
 `pilot` means the boundary and source audit are active. It does not imply that

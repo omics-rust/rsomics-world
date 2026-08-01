@@ -74,7 +74,7 @@ Rejected public boundary:
       release gate.
 - [x] `rsomics-intervals`: retain only the two-consumer coordinate model and
       move checked indexing and BED policy into `rsomics-bed`.
-- [ ] Reconstruct `rsomics-bamio` and `rsomics-pileup` through BAM and VCF.
+- [x] Reconstruct `rsomics-bamio` and `rsomics-pileup` through BAM and calling.
 - [ ] Reconstruct `rsomics-stats` through at least two stateful workflows.
 - [ ] Reconstruct `rsomics-phylo-tree` through phylogenetics and ecology.
 - [ ] Internalize or replace `rsomics-igzip`, then remove its public registry
@@ -121,10 +121,13 @@ Rejected public boundary:
 - [x] Harden the provisional `pileup` ingestion and projection contract with
       checked sorted input, long-CIGAR coverage, overlap differentials, and
       four-native-target CI before product integration.
-- [ ] Review `pileup` through BAM, calling, and methylation consumers.
+- [x] Review `pileup` through BAM, calling, and methylation consumers.
 - [ ] Review `intervals` through BAM region selection without moving
       alignment-index policy into the foundation.
-- [ ] Reconstruct coherent `rsomics-bam` and `rsomics-vcf` products.
+- [x] Reconstruct and publish the coherent `rsomics-vcf` first-release slice.
+- [x] Reconstruct and publish the coherent three-command `rsomics-call`
+      first-release slice.
+- [ ] Reconstruct and publish the coherent `rsomics-bam` first-release slice.
 
 ## Durable evidence
 
