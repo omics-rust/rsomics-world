@@ -866,6 +866,40 @@ bcftools 1.24 header, genotypes, and depths. All 95 debug and release tests,
 ten live oracle groups, strict Clippy, rustdoc, and package verification pass
 locally; exact-head CI `30707009273` passes all four native targets.
 
+Revision `dcb4f5ee7fec` extracts the product-private likelihood schema and
+sample projection shared by sequential and indexed readers without changing
+the public record contract. All 95 debug and release tests and ten live
+bcftools 1.24 oracle groups pass; exact-head CI `30707694316` passes all four
+native targets.
+
+Revision `c23140b7938d` adds true indexed likelihood-region calling rather than
+a filtered sequential scan. BGZF VCF or BCF inputs are opened with their TBI
+or CSI index; inline regions are validated before output, ordered by input
+header, merged when overlapping or adjacent, and deduplicated when a spanning
+record intersects multiple disjoint queries. Sample projection and ploidy
+binding use the same typed schema as sequential calling. A spanning-record
+oracle matches `bcftools call -r` 1.24. All 98 debug and release tests and 11
+live oracle groups pass; exact-head CI `30708181137` passes all four native
+targets.
+
+Revision `f864788cf1cc` adds `-R`-equivalent region files and consolidates the
+previous target-only file parser into one product-private region-file module.
+Tabular region files require consistently two-column one-based positions or
+three-column one-based inclusive intervals; BED uses zero-based half-open
+coordinates; VCF region files use POS. Plain, gzip, and BGZF content is
+accepted with path and line context on failure. Region-file chromosome order
+follows first appearance in the file, coordinates are ordered within each
+chromosome, and repeated index hits are removed. Live bcftools 1.24 oracles
+cover tabular, BED, and VCF files, including cross-chromosome order, overlap,
+and the VCF POS-only rule. All 100 debug and release tests and 12 live oracle
+groups pass; exact-head CI `30708699415` passes all four native targets.
+
+The current region-file reader materializes compressed region records before
+querying. This is correct for the verified contract but does not yet match
+bcftools' bounded-memory streaming path for a bgzip-compressed, tabix-indexed
+region file. Large indexed region-file throughput and peak RSS therefore
+remain an explicit performance gate rather than a release claim.
+
 Two bcftools 1.24 sample-file behaviors remain a publication decision. Its man
 page says a missing second column assumes sex `F`, while `vcfcall.c` assigns
 fixed ploidy 2; the installed binary also emitted a diploid genotype for a
@@ -891,10 +925,12 @@ no target overlap before it inverts the site-level predicate. The installed
 should retain reads wholly outside the excluded interval. This contradicts
 the documented contract, so neither that defect nor a corrected behavior is
 being frozen into the public interface without an explicit compatibility
-decision. Target exclusion and sample-default compatibility remain unresolved,
-while call-stage region and target selection, the complete three-command CLI,
-performance evidence, and final public-API and hot-path review remain. No
-command-line binary is exposed and the repository remains unpublished.
+decision. Target exclusion and sample-default compatibility remain unresolved.
+Call regions are implemented and verified; streaming call targets, the
+complete three-command CLI, large indexed region-file performance,
+product-level performance evidence, and the final public-API and hot-path
+review remain. No command-line binary is exposed and the repository remains
+unpublished.
 
 Calling likelihoods, allele selection, ploidy policy, priors, annotations, and
 VCF output remain in the product. `rsomics-stats` receives a numerical kernel
