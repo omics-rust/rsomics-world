@@ -854,6 +854,27 @@ release tests, nine live oracle groups, strict Clippy, rustdoc, and package
 verification pass locally; exact-head CI `30706383364` passes all four native
 targets.
 
+Revision `3d0c4c107980` adds typed call-sample file binding without expanding
+a foundation. Inclusion preserves file order and binds each selected sample
+to an explicit sex, fixed zero-copy, haploid, or diploid state, or the ploidy
+definition's default sex. Exclusion preserves input-header order and applies
+the definition default to the retained samples. Comments and blank lines are
+ignored; malformed rows, duplicate names, missing input samples, undeclared
+sexes, empty selections, and I/O failures are errors rather than warnings.
+An explicit-sex file with reordered haploid and diploid samples matches the
+bcftools 1.24 header, genotypes, and depths. All 95 debug and release tests,
+ten live oracle groups, strict Clippy, rustdoc, and package verification pass
+locally; exact-head CI `30707009273` passes all four native targets.
+
+Two bcftools 1.24 sample-file behaviors remain a publication decision. Its man
+page says a missing second column assumes sex `F`, while `vcfcall.c` assigns
+fixed ploidy 2; the installed binary also emitted a diploid genotype for a
+documented numeric ploidy-1 row. The unpublished typed binder currently
+follows the documented contract and implements `0`, `1`, and `2` literally.
+It also rejects unknown and duplicate samples instead of reproducing the
+upstream warning-and-continue path. These choices are tested but are not yet a
+frozen command-line compatibility promise.
+
 Target exclusion remains deliberately absent. The bcftools 1.24 manual defines
 `^targets` as the logical complement, but `mpileup.c` filters out records with
 no target overlap before it inverts the site-level predicate. The installed
@@ -861,10 +882,10 @@ no target overlap before it inverts the site-level predicate. The installed
 should retain reads wholly outside the excluded interval. This contradicts
 the documented contract, so neither that defect nor a corrected behavior is
 being frozen into the public interface without an explicit compatibility
-decision. Target exclusion remains unresolved, while sample-assignment file
-binding, the complete three-command CLI, performance evidence, and final
-public-API and hot-path review remain. No command-line binary is exposed and
-the repository remains unpublished.
+decision. Target exclusion and sample-default compatibility remain unresolved,
+while call-stage region and target selection, the complete three-command CLI,
+performance evidence, and final public-API and hot-path review remain. No
+command-line binary is exposed and the repository remains unpublished.
 
 Calling likelihoods, allele selection, ploidy policy, priors, annotations, and
 VCF output remain in the product. `rsomics-stats` receives a numerical kernel
