@@ -930,6 +930,15 @@ custom Number=A vector at its old length. All 105 debug and release tests and
 16 live oracle groups pass; exact-head CI `30710931710` passes all four native
 targets.
 
+Revision `d3a0609d9356` adds explicit reference-free likelihood runs for both
+sequential and indexed-region alignment input. The mode emits `N` as REF,
+retains the observed SNP allele and likelihood dimensions matched by
+`bcftools mpileup --no-reference`, and rejects BAQ or indel configuration at
+the builder boundary. This also fixes the previously unreachable `N`
+reference path in SNP allele selection. All 106 debug and release tests and 17
+live oracle groups pass; exact-head CI `30711321842` passes all four native
+targets.
+
 The current region-file reader materializes compressed region records before
 querying. This is correct for the verified contract but does not yet match
 bcftools' bounded-memory streaming path for a bgzip-compressed, tabix-indexed
@@ -977,7 +986,7 @@ starting the command tree. The resulting implementation ledger is:
 |---|---|---|
 | alignment inputs and samples | SAM/BAM/CRAM, read-group discovery, explicit sample projection, and one-input-one-sample mode are implemented | parse and validate alignment-list files at the product boundary |
 | pileup record policy | all four FLAG predicates, mapping-quality filtering, anomalous-pair policy, overlap adjustment, per-source depth, quality bounds, and deterministic sampling are typed through `rsomics-pileup` and `SnpLikelihoodConfig` | bind the complete policy into one command configuration and oracle it as a unit |
-| reference and likelihood generation | reference-backed SNP, BAQ, and indel paths are implemented and verified | implement the explicitly reference-free likelihood mode; keep BAQ and indels unavailable when their reference contract cannot be met |
+| reference and likelihood generation | reference-backed SNP, BAQ, and indel paths plus explicit reference-free SNP likelihoods are implemented and verified; reference-free configuration rejects BAQ and indels | bind the complete mode choice into the product command |
 | pileup selections | indexed inline regions and streaming inline/file targets are implemented | bind alignment region-file input; target complement remains blocked on the documented-versus-binary decision below |
 | likelihood output | the four VCF/BCF encodings and the complete annotation schema are implemented | add transactional named-file and standard-output orchestration |
 | call models and ploidy | consensus, multiallelic, mutation prior, sample projection, fixed/preset/custom ploidy, and gVCF blocking are implemented | bind model and ploidy inputs into the product command |
