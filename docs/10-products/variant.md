@@ -614,8 +614,8 @@ All three commands ship together. The stable `pileup` contract includes:
   overlap adjustment, mapping/base-quality thresholds and caps, and bounded
   per-input depth with an explicit sampling seed;
 - default partial BAQ, full BAQ, forced BAQ recalculation, and disabled BAQ;
-- SNP and established indel likelihoods with explicit gap, support, fraction,
-  platform, and ambiguous-read policy;
+- SNP and established indel likelihoods with explicit gap, pooled or per-sample
+  support, fraction, and ambiguous-read allele-depth policy;
 - indexed regions and streaming targets, each accepting inline and file forms;
 - the bcftools 1.24 default annotation set plus `FORMAT/DP`, `FORMAT/ADF`,
   `FORMAT/ADR`, `FORMAT/QM`, `FORMAT/QS`, `FORMAT/SP`, `FORMAT/SCR`,
@@ -686,6 +686,8 @@ The first release does not advertise:
   by pileup;
 - output auto-indexing;
 - deprecated Illumina 1.3 quality recoding or deprecated caller aliases;
+- bcftools 1.24 `--platforms`, which stores and frees its argument but never
+  consumes it in the mpileup or indel path;
 - plugin behavior, somatic calling, structural variants, copy-number calling,
   annotation, or generic VCF transformations.
 
@@ -948,6 +950,17 @@ byte-identical to writing and reading the intermediate likelihood VCF. All 107
 debug and release tests and 17 live oracle groups pass; exact-head CI
 `30711752880` passes all four native targets.
 
+Revision `9eaeec978b4d` completes the established indel candidate and ambiguous
+read policy. Candidate support can be evaluated across the cohort or per
+sample. Ambiguous low-quality reference matches can be dropped, distributed
+over observed forward and reverse allele depths, or assigned to reference
+depth without changing genotype likelihoods. The latter path also matches the
+bcftools VCF integer ceiling when compensated depth has no quality-error mass.
+All 109 debug and release tests and 19 live oracle groups pass; exact-head CI
+`30712522200` passes all four native targets. The pinned bcftools 1.24 source
+at `fb9f0f783e0f` confirms that `--platforms` has no behavioral consumer, so
+the first release does not expose a no-op flag.
+
 The current region-file reader materializes compressed region records before
 querying. This is correct for the verified contract but does not yet match
 bcftools' bounded-memory streaming path for a bgzip-compressed, tabix-indexed
@@ -994,7 +1007,7 @@ starting the command tree. The resulting implementation ledger is:
 | Contract area | Current evidence | Work still required before CLI exposure |
 |---|---|---|
 | alignment inputs and samples | SAM/BAM/CRAM, read-group discovery, explicit sample projection, and one-input-one-sample mode are implemented | parse and validate alignment-list files at the product boundary |
-| pileup record policy | all four FLAG predicates, mapping-quality filtering, anomalous-pair policy, overlap adjustment, per-source depth, quality bounds, and deterministic sampling are typed through `rsomics-pileup` and `SnpLikelihoodConfig` | bind the complete policy into one command configuration and oracle it as a unit |
+| pileup record policy | all four FLAG predicates, mapping-quality filtering, anomalous-pair policy, overlap adjustment, per-source depth, quality bounds, deterministic sampling, pooled/per-sample indel support, and ambiguous-read depth policy are typed and verified | bind the complete policy into one command configuration and oracle it as a unit |
 | reference and likelihood generation | reference-backed SNP, BAQ, and indel paths plus explicit reference-free SNP likelihoods are implemented and verified; reference-free configuration rejects BAQ and indels | bind the complete mode choice into the product command |
 | pileup selections | indexed inline regions and streaming inline/file targets are implemented | bind alignment region-file input; target complement remains blocked on the documented-versus-binary decision below |
 | likelihood output | the four VCF/BCF encodings and the complete annotation schema are implemented | add transactional named-file and standard-output orchestration |
