@@ -16,7 +16,7 @@ Status meanings are defined in [CONVENTIONS.md](CONVENTIONS.md).
 |---|---|---|
 | `rsomics-annotation` | repo-only | GFF/GTF inspection, selection, transformation, sequence extraction |
 | `rsomics-bam` | planned | gate-complete SAM/BAM/CRAM release candidate; name cooldown ends 2026-08-02 19:56:02 UTC |
-| `rsomics-bed` | repo-only | BED/interval algebra and bedtools-like operations |
+| `rsomics-bed` | live | BED/interval algebra and bedtools-like operations |
 | `rsomics-call` | live | alignment pileup, genotype likelihoods, and lightweight small-variant calling |
 | `rsomics-cnv` | planned | BAF/LRR copy-number HMM and chromosome-level polysomy analysis |
 | `rsomics-composition` | planned | Aitchison geometry, log-ratio transforms, zero handling, proportionality, and composition-native inference |
@@ -49,8 +49,8 @@ Product status summary:
 
 | Status | Count |
 |---|---:|
-| live | 3 |
-| repo-only | 5 |
+| live | 4 |
+| repo-only | 4 |
 | pilot | 1 |
 | planned | 21 |
 | **Total** | **30** |
