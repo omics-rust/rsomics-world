@@ -842,6 +842,18 @@ headers, genotypes, and depths. All 88 debug and release tests, eight live
 oracle groups, strict Clippy, rustdoc, and package verification pass locally;
 exact-head CI `30705856695` passes all four native targets.
 
+Revision `3ef9def7ad90` adds the bounded likelihood-calling workflow used by
+both the serialized `call` path and the future fused `run` path. It validates
+the projected sample count and gVCF depth schema before opening the output,
+resolves per-site ploidy into a reused buffer, selects the consensus or
+multiallelic output schema, streams records through the caller and optional
+gVCF blocker, and preserves record context for call failures. Reordered sample
+projection, diploid ploidy, multiallelic calling, and two depth buckets are
+record-identical to one live bcftools 1.24 `call` workflow. All 91 debug and
+release tests, nine live oracle groups, strict Clippy, rustdoc, and package
+verification pass locally; exact-head CI `30706383364` passes all four native
+targets.
+
 Target exclusion remains deliberately absent. The bcftools 1.24 manual defines
 `^targets` as the logical complement, but `mpileup.c` filters out records with
 no target overlap before it inverts the site-level predicate. The installed
@@ -849,10 +861,10 @@ no target overlap before it inverts the site-level predicate. The installed
 should retain reads wholly outside the excluded interval. This contradicts
 the documented contract, so neither that defect nor a corrected behavior is
 being frozen into the public interface without an explicit compatibility
-decision. Target exclusion, sample-selection orchestration, complete
-three-command orchestration, performance evidence, and the `rsomics-help` CLI
-remain. No command-line binary is exposed and the repository remains
-unpublished.
+decision. Target exclusion remains unresolved, while sample-assignment file
+binding, the complete three-command CLI, performance evidence, and final
+public-API and hot-path review remain. No command-line binary is exposed and
+the repository remains unpublished.
 
 Calling likelihoods, allele selection, ploidy policy, priors, annotations, and
 VCF output remain in the product. `rsomics-stats` receives a numerical kernel
