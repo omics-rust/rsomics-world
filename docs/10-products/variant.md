@@ -819,6 +819,20 @@ All 79 debug and release tests, six live oracle groups, strict Clippy, rustdoc,
 and package verification pass locally; exact-head CI `30704669406` passes all
 four native targets.
 
+Revision `a8b6edcd1d22` adds typed gVCF reference blocking for the multiallelic
+caller. It groups consecutive reference calls by the minimum per-sample depth
+bucket, retains per-sample minimum depth, applies the bcftools 1.24 diploid PL
+pair-selection rule, and flushes on bucket, contig, gap, non-reference, and
+duplicate-coordinate SNP/indel boundaries. Collapsed records retain the first
+site's alleles and genotypes, emit `END` only for multi-site spans, and limit
+their fields to `MIN_DP`, `GT`, optional `PL`, and `DP`; below-threshold
+reference calls remain ordinary records with `MIN_DP`. Invalid ordering,
+sample dimensions, thresholds, and present non-diploid PL vectors fail
+explicitly. The four-site live oracle is record-identical to bcftools 1.24
+across two depth buckets. All 86 debug and release tests, seven live oracle
+groups, strict Clippy, rustdoc, and package verification pass locally;
+exact-head CI `30705253547` passes all four native targets.
+
 Target exclusion remains deliberately absent. The bcftools 1.24 manual defines
 `^targets` as the logical complement, but `mpileup.c` filters out records with
 no target overlap before it inverts the site-level predicate. The installed
@@ -826,10 +840,10 @@ no target overlap before it inverts the site-level predicate. The installed
 should retain reads wholly outside the excluded interval. This contradicts
 the documented contract, so neither that defect nor a corrected behavior is
 being frozen into the public interface without an explicit compatibility
-decision. Target exclusion, gVCF behavior, sample-selection orchestration,
-complete three-command orchestration, performance evidence, and the
-`rsomics-help` CLI remain. No command-line binary is exposed and the repository
-remains unpublished.
+decision. Target exclusion, sample-selection orchestration, complete
+three-command orchestration, performance evidence, and the `rsomics-help` CLI
+remain. No command-line binary is exposed and the repository remains
+unpublished.
 
 Calling likelihoods, allele selection, ploidy policy, priors, annotations, and
 VCF output remain in the product. `rsomics-stats` receives a numerical kernel
