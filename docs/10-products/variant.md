@@ -875,6 +875,15 @@ It also rejects unknown and duplicate samples instead of reproducing the
 upstream warning-and-continue path. These choices are tested but are not yet a
 frozen command-line compatibility promise.
 
+Call-stage targets expose another upstream contradiction. The bcftools 1.24
+manual presents `-t` and `-T` as streaming region or interval selectors, but
+the installed `call -t chr1:2-3` reports that it cannot open the argument,
+exits successfully, and emits every input site. With `-T`, `vcfcall.c` reads
+only CHROM and the first one-based position; a `chr1 2 3` row selects position
+2 rather than the documented interval. An interval-correct reader therefore
+cannot match that binary. No call-target API is committed until the desired
+documented-versus-binary behavior is chosen.
+
 Target exclusion remains deliberately absent. The bcftools 1.24 manual defines
 `^targets` as the logical complement, but `mpileup.c` filters out records with
 no target overlap before it inverts the site-level predicate. The installed
