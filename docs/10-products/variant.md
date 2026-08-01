@@ -910,6 +910,14 @@ output, and consensus-model misuse fails explicitly. A live
 depth output. All 102 debug and release tests and 14 live oracle groups pass;
 exact-head CI `30709683149` passes all four native targets.
 
+Revision `293488fcd66d` adds multiallelic alternate retention without leaving
+the record dimensions inconsistent. Unused ALT alleles and their PL, AD, QS,
+and AC entries remain aligned after allele selection. Live bcftools 1.24
+oracles cover ordinary unused alternates as well as the distinct symbolic
+allele behavior: `<*>` is still removed, while `<NON_REF>` is retained. All
+103 debug and release tests and 15 live oracle groups pass; exact-head CI
+`30710165666` passes all four native targets.
+
 The current region-file reader materializes compressed region records before
 querying. This is correct for the verified contract but does not yet match
 bcftools' bounded-memory streaming path for a bgzip-compressed, tabix-indexed
@@ -942,6 +950,14 @@ should retain reads wholly outside the excluded interval. This contradicts
 the documented contract, so neither that defect nor a corrected behavior is
 being frozen into the public interface without an explicit compatibility
 decision. Target exclusion and sample-default compatibility remain unresolved.
+
+Unseen-allele handling is likewise not a frozen option. The bcftools 1.24 help
+describes `--keep-unseen-allele` as retaining `<*>` or `<NON_REF>`, but the
+installed binary still removes `<*>` with `-A --keep-unseen-allele` and retains
+`<NON_REF>` with `-A` even when the flag is absent. The verified `-A` behavior
+is implemented; a separate unseen-allele switch would currently be either a
+no-op matching the binary or a correction matching the help text.
+
 The first-release contract was re-audited against the public Rust API before
 starting the command tree. The resulting implementation ledger is:
 
@@ -953,7 +969,7 @@ starting the command tree. The resulting implementation ledger is:
 | pileup selections | indexed inline regions and streaming inline/file targets are implemented | bind alignment region-file input; target complement remains blocked on the documented-versus-binary decision below |
 | likelihood output | the four VCF/BCF encodings and the complete annotation schema are implemented | add transactional named-file and standard-output orchestration |
 | call models and ploidy | consensus, multiallelic, mutation prior, sample projection, fixed/preset/custom ploidy, and gVCF blocking are implemented | bind model and ploidy inputs into the product command |
-| call allele and site policy | callers trim selected alleles and preserve typed annotations; masked-reference, variant-only, SNP/indel skip, and grouped-sample workflows match bcftools 1.24 | implement prior-frequency tags, keep-alternates, and unseen-allele policy |
+| call allele and site policy | callers trim selected alleles and preserve typed annotations; masked-reference, variant-only, SNP/indel skip, grouped-sample, and keep-alternates workflows match bcftools 1.24 | implement prior-frequency tags; unseen-allele handling remains blocked on the help-versus-binary decision below |
 | call selections | indexed inline and file regions are implemented and verified | streaming targets remain blocked on the documented-versus-binary decision below |
 | fused workflow | `LikelihoodSite` already crosses pileup and caller without serialization | compose the full selected call policy, ploidy, gVCF, and output schema and prove record equivalence to the materialized pipeline |
 | product UX | `rsomics-help` 0.4 and `rsomics-common` provide the adopted parser, diagnostic, exit-code, JSON, and atomic-output layers | expose `pileup`, `call`, and `run` together only after the rows above are complete |
