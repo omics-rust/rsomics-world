@@ -2,7 +2,8 @@
 
 Status: boundary and source-asset audit complete. The seven-command first
 release slice has passed its local, oracle, performance, package, and native-CI
-gates; no registry release is active yet.
+gates. Publication is waiting only for the registry name-reuse cooldown at
+2026-08-02 19:56:02 UTC; no registry release is active yet.
 
 ## Boundary
 
@@ -341,7 +342,7 @@ first-header merge are not acceptable implementations.
 
 ### Slice 3: projection, pileup, and statistics
 
-- `mpileup`, `consensus`, `calmd`, `depad`, `phase`, `reference`, and
+- `consensus`, `calmd`, `depad`, `phase`, `reference`, and
   `targetcut`;
 - `bedcov`, `coverage`, `depth`, `idxstats`, `stats`, `ampliconstats`, and
   `cram-size`;
@@ -752,9 +753,11 @@ The retained hyperfine JSON files and SHA-256 digests are:
 | count | `/Volumes/KIOXIA/Developments/tmp/rsomics-bam-view-raw-count-final.json` | `06bd1b04df612185aba47421e5c55083f516bf0ec47223fb697d50079bda9a24` |
 | single-thread output | `/Volumes/KIOXIA/Developments/tmp/rsomics-bam-view-raw-single-final.json` | `78163ee5a6eb662d0cfc51b92f3b91efe0aa497de047ab6d6805b8e68f1079cc` |
 
-The principal BAM streaming throughput sub-gate now passes. The full release
-evidence is still incomplete because these runs do not record peak RSS or
-representative SAM and CRAM paths.
+The formal Linux x86_64 gate at `c2441aef1efe` supersedes these provisional
+runs. It records peak RSS, alternates five measured rounds after warm-up, and
+verifies the decoded header and all 3,000,000 records after every round. SAM
+and CRAM remain correctness contracts in release 0.4; no cross-format
+throughput claim is made.
 
 ## Explicit exclusions
 
@@ -772,17 +775,12 @@ representative SAM and CRAM paths.
 
 ## Publication decision
 
-Do not publish `rsomics-bam` yet. The product repository exists and its
-streaming inspection commands, filters, and SAM/BAM output now have
-four-native-platform exact-head CI plus samtools 1.24 oracle evidence. The
-principal four-thread BAM streaming path now demonstrates a strict throughput
-advantage, and the validated raw/BGZF/indexed foundation slice is published as
-`rsomics-bamio 0.3.0`. The first product slice remains incomplete: subsampling
-requires the explicit zero/NaN/platform-seed decision above, header and output
-controls are not complete, CRAM decoding has no worker control, and the final
-benchmark set lacks peak RSS and representative SAM/CRAM coverage. CRAM output
-is separately blocked by the verified duplicate-read-group behavior.
-Historical micro-crate versions do not reduce these gates.
+Publish `rsomics-bam 0.4.0` from `e025f22de09d` when the crates.io name-reuse
+cooldown expires. The stable seven-command slice, explicit exclusions,
+samtools 1.24 compatibility, BAM hot-path advantage, package, public metadata,
+and all four native CI targets are complete. Exact-head CI `30723735961`
+passes; the Linux x86_64 job includes strict Clippy, package verification, and
+all 19 live oracle groups.
 
 A publication workflow was added before this dossier gate was rechecked and
 briefly published source revision `0d1a38d3f172` as 0.4.0 in run
@@ -793,3 +791,9 @@ rule; the live registry API returns 404, publication-secret access was removed,
 and revision `0d81a978f9d2` removes the premature workflow. Its exact-head
 four-native-target CI `30715893286` passes. This event does not satisfy or
 weaken any product release gate.
+
+The gated retry in run `30723829713` packaged and verified all 48 files and
+reached the crates.io upload endpoint. The registry rejected only the recently
+deleted name, reporting that reuse becomes available after
+`2026-08-02T19:56:02Z`. No package was created. The BAM repository was removed
+again from the selected publication-secret repositories after the failure.
