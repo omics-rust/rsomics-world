@@ -807,6 +807,18 @@ All 74 debug and release tests, five live bcftools 1.24 oracle groups, strict
 Clippy, rustdoc, and package verification pass locally; exact-head CI
 `30704136238` passes all four native targets.
 
+Revision `a59681a4417e` adds product-local typed ploidy resolution for constant,
+GRCh37, GRCh38, and checked custom definitions. It binds samples to declared
+sexes or fixed absent, haploid, and diploid states, computes the cohort maximum
+used by caller priors, validates sample counts against likelihood sites, and
+uses borrowed two-level interval lookup plus a reusable result buffer on the
+per-site path. Ambiguous same-sex overlaps and malformed coordinates fail with
+file and line context. The GRCh37 preset and an equivalent custom file match
+live bcftools 1.24 calls across PAR boundaries, X, Y, MT, and `chr` aliases.
+All 79 debug and release tests, six live oracle groups, strict Clippy, rustdoc,
+and package verification pass locally; exact-head CI `30704669406` passes all
+four native targets.
+
 Target exclusion remains deliberately absent. The bcftools 1.24 manual defines
 `^targets` as the logical complement, but `mpileup.c` filters out records with
 no target overlap before it inverts the site-level predicate. The installed
@@ -814,7 +826,7 @@ no target overlap before it inverts the site-level predicate. The installed
 should retain reads wholly outside the excluded interval. This contradicts
 the documented contract, so neither that defect nor a corrected behavior is
 being frozen into the public interface without an explicit compatibility
-decision. Target exclusion, sex-aware and custom ploidy input, gVCF behavior,
+decision. Target exclusion, gVCF behavior, sample-selection orchestration,
 complete three-command orchestration, performance evidence, and the
 `rsomics-help` CLI remain. No command-line binary is exposed and the repository
 remains unpublished.
