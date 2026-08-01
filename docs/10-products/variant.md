@@ -798,6 +798,15 @@ regions, and target files. All 72 debug and release tests, strict Clippy,
 rustdoc, and package verification pass locally; exact-head CI `30664419838`
 passes all four native targets.
 
+Revision `754616c72967` carries those annotations through both callers and
+removes the internal `I16` field from called records. A dedicated typed caller
+annotation model derives `DP4`, model-specific `MQ`, and `PV4` with the
+bcftools/HTSlib 1.24 Fisher, one-sided t-test, and incomplete-beta semantics.
+Allele trimming preserves the complete INFO and FORMAT annotation contract.
+All 74 debug and release tests, five live bcftools 1.24 oracle groups, strict
+Clippy, rustdoc, and package verification pass locally; exact-head CI
+`30704136238` passes all four native targets.
+
 Target exclusion remains deliberately absent. The bcftools 1.24 manual defines
 `^targets` as the logical complement, but `mpileup.c` filters out records with
 no target overlap before it inverts the site-level predicate. The installed
@@ -805,10 +814,10 @@ no target overlap before it inverts the site-level predicate. The installed
 should retain reads wholly outside the excluded interval. This contradicts
 the documented contract, so neither that defect nor a corrected behavior is
 being frozen into the public interface without an explicit compatibility
-decision. Target exclusion, sex-aware and custom ploidy input, caller-side
-`PV4`, gVCF behavior, complete three-command orchestration, performance
-evidence, and the `rsomics-help` CLI remain. No command-line binary is exposed
-and the repository remains unpublished.
+decision. Target exclusion, sex-aware and custom ploidy input, gVCF behavior,
+complete three-command orchestration, performance evidence, and the
+`rsomics-help` CLI remain. No command-line binary is exposed and the repository
+remains unpublished.
 
 Calling likelihoods, allele selection, ploidy policy, priors, annotations, and
 VCF output remain in the product. `rsomics-stats` receives a numerical kernel
