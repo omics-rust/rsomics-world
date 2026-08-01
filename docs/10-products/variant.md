@@ -833,6 +833,15 @@ across two depth buckets. All 86 debug and release tests, seven live oracle
 groups, strict Clippy, rustdoc, and package verification pass locally;
 exact-head CI `30705253547` passes all four native targets.
 
+Revision `6315fc8db7d2` projects likelihood samples during typed record decode.
+Explicit inclusion preserves requested order, exclusion preserves input-header
+order, and the projected schema drives the called-record header. Unknown and
+duplicate names, empty results, and selection after record reading fail
+explicitly. Both reordered inclusion and exclusion match bcftools 1.24 sample
+headers, genotypes, and depths. All 88 debug and release tests, eight live
+oracle groups, strict Clippy, rustdoc, and package verification pass locally;
+exact-head CI `30705856695` passes all four native targets.
+
 Target exclusion remains deliberately absent. The bcftools 1.24 manual defines
 `^targets` as the logical complement, but `mpileup.c` filters out records with
 no target overlap before it inverts the site-level predicate. The installed
