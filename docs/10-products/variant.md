@@ -926,11 +926,26 @@ should retain reads wholly outside the excluded interval. This contradicts
 the documented contract, so neither that defect nor a corrected behavior is
 being frozen into the public interface without an explicit compatibility
 decision. Target exclusion and sample-default compatibility remain unresolved.
-Call regions are implemented and verified; streaming call targets, the
-complete three-command CLI, large indexed region-file performance,
-product-level performance evidence, and the final public-API and hot-path
-review remain. No command-line binary is exposed and the repository remains
-unpublished.
+The first-release contract was re-audited against the public Rust API before
+starting the command tree. The resulting implementation ledger is:
+
+| Contract area | Current evidence | Work still required before CLI exposure |
+|---|---|---|
+| alignment inputs and samples | SAM/BAM/CRAM, read-group discovery, explicit sample projection, and one-input-one-sample mode are implemented | parse and validate alignment-list files at the product boundary |
+| pileup record policy | all four FLAG predicates, mapping-quality filtering, anomalous-pair policy, overlap adjustment, per-source depth, quality bounds, and deterministic sampling are typed through `rsomics-pileup` and `SnpLikelihoodConfig` | bind the complete policy into one command configuration and oracle it as a unit |
+| reference and likelihood generation | reference-backed SNP, BAQ, and indel paths are implemented and verified | implement the explicitly reference-free likelihood mode; keep BAQ and indels unavailable when their reference contract cannot be met |
+| pileup selections | indexed inline regions and streaming inline/file targets are implemented | bind alignment region-file input; target complement remains blocked on the documented-versus-binary decision below |
+| likelihood output | the four VCF/BCF encodings and the complete annotation schema are implemented | add transactional named-file and standard-output orchestration |
+| call models and ploidy | consensus, multiallelic, mutation prior, sample projection, fixed/preset/custom ploidy, and gVCF blocking are implemented | bind model and ploidy inputs into the product command |
+| call allele and site policy | callers trim selected alleles and preserve typed annotations | implement prior-frequency tags, keep-alternates, unseen-allele, masked-reference, SNP/indel skip, variant-only, and grouped-sample orchestration |
+| call selections | indexed inline and file regions are implemented and verified | streaming targets remain blocked on the documented-versus-binary decision below |
+| fused workflow | `LikelihoodSite` already crosses pileup and caller without serialization | compose the full selected call policy, ploidy, gVCF, and output schema and prove record equivalence to the materialized pipeline |
+| product UX | `rsomics-help` 0.4 and `rsomics-common` provide the adopted parser, diagnostic, exit-code, JSON, and atomic-output layers | expose `pileup`, `call`, and `run` together only after the rows above are complete |
+
+Large indexed region-file throughput and peak RSS, product-level performance
+evidence, the final public-API and hot-path review, and the complete
+three-command CLI therefore remain. No command-line binary is exposed and the
+repository remains unpublished.
 
 Calling likelihoods, allele selection, ploidy policy, priors, annotations, and
 VCF output remain in the product. `rsomics-stats` receives a numerical kernel
