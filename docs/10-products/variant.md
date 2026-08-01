@@ -918,6 +918,18 @@ allele behavior: `<*>` is still removed, while `<NON_REF>` is retained. All
 103 debug and release tests and 15 live oracle groups pass; exact-head CI
 `30710165666` passes all four native targets.
 
+Revision `04a715938579` applies configurable integer panel allele counts to the
+multiallelic frequency estimate used for allele selection, including
+independently grouped samples. The reader requires checked INFO Number=1/A
+integer definitions, rejects inconsistent counts, and carries the selected
+prior coordinate system through standard and custom tag names. A live
+bcftools 1.24 oracle matches selected alleles, genotypes, likelihood fields,
+and QUAL. When the caller removes an ALT, rsomics also projects the panel
+counts and total to the retained allele set; bcftools 1.24 instead leaves a
+custom Number=A vector at its old length. All 105 debug and release tests and
+16 live oracle groups pass; exact-head CI `30710931710` passes all four native
+targets.
+
 The current region-file reader materializes compressed region records before
 querying. This is correct for the verified contract but does not yet match
 bcftools' bounded-memory streaming path for a bgzip-compressed, tabix-indexed
@@ -969,7 +981,7 @@ starting the command tree. The resulting implementation ledger is:
 | pileup selections | indexed inline regions and streaming inline/file targets are implemented | bind alignment region-file input; target complement remains blocked on the documented-versus-binary decision below |
 | likelihood output | the four VCF/BCF encodings and the complete annotation schema are implemented | add transactional named-file and standard-output orchestration |
 | call models and ploidy | consensus, multiallelic, mutation prior, sample projection, fixed/preset/custom ploidy, and gVCF blocking are implemented | bind model and ploidy inputs into the product command |
-| call allele and site policy | callers trim selected alleles and preserve typed annotations; masked-reference, variant-only, SNP/indel skip, grouped-sample, and keep-alternates workflows match bcftools 1.24 | implement prior-frequency tags; unseen-allele handling remains blocked on the help-versus-binary decision below |
+| call allele and site policy | callers trim selected alleles and preserve typed annotations; masked-reference, variant-only, SNP/indel skip, grouped-sample, keep-alternates, and prior-frequency workflows are implemented and checked against bcftools 1.24 | unseen-allele handling remains blocked on the help-versus-binary decision below |
 | call selections | indexed inline and file regions are implemented and verified | streaming targets remain blocked on the documented-versus-binary decision below |
 | fused workflow | `LikelihoodSite` already crosses pileup and caller without serialization | compose the full selected call policy, ploidy, gVCF, and output schema and prove record equivalence to the materialized pipeline |
 | product UX | `rsomics-help` 0.4 and `rsomics-common` provide the adopted parser, diagnostic, exit-code, JSON, and atomic-output layers | expose `pileup`, `call`, and `run` together only after the rows above are complete |
