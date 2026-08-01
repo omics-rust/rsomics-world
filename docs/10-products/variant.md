@@ -969,20 +969,31 @@ cross-sequence file matches bcftools 1.24 `mpileup -R`. All 110 debug and
 release tests and 20 live oracle groups pass; exact-head CI `30712873521`
 passes all four native targets.
 
+Revision `dd1bbe5a7cf7` exposes the verified typed workflows through one
+`rsomics-help` command tree with `pileup`, `call`, and fused `run` commands.
+It binds positional and list-file alignment inputs, sample projection,
+reference-backed and reference-free modes, region and target selection,
+complete pileup and calling policy, custom ploidy and sample groups, gVCF,
+prior-frequency tags, all four VCF/BCF encodings, and
+`rsomics-common::write_output` for standard output or transactional named
+output. Fused output is byte-identical to the materialized two-stage path.
+All 117 debug and release library tests, seven command integration tests, and
+21 live bcftools 1.24 oracle groups pass. Strict Clippy, rustdoc, locked
+packaging, and exact-head four-native-target CI `30714255852` also pass.
+
 The current region-file reader materializes compressed region records before
 querying. This is correct for the verified contract but does not yet match
 bcftools' bounded-memory streaming path for a bgzip-compressed, tabix-indexed
 region file. Large indexed region-file throughput and peak RSS therefore
 remain an explicit performance gate rather than a release claim.
 
-Two bcftools 1.24 sample-file behaviors remain a publication decision. Its man
+Two bcftools 1.24 sample-file behaviors remain contradictory. Its man
 page says a missing second column assumes sex `F`, while `vcfcall.c` assigns
 fixed ploidy 2; the installed binary also emitted a diploid genotype for a
-documented numeric ploidy-1 row. The unpublished typed binder currently
-follows the documented contract and implements `0`, `1`, and `2` literally.
-It also rejects unknown and duplicate samples instead of reproducing the
-upstream warning-and-continue path. These choices are tested but are not yet a
-frozen command-line compatibility promise.
+documented numeric ploidy-1 row. The first command contract therefore accepts
+only the unambiguous one-column sample-selection form. Its typed binder rejects
+unknown and duplicate samples instead of reproducing the upstream
+warning-and-continue path. Numeric sample-file ploidy remains excluded.
 
 Call-stage targets expose another upstream contradiction. The bcftools 1.24
 manual presents `-t` and `-T` as streaming region or interval selectors, but
@@ -1010,25 +1021,25 @@ is implemented; a separate unseen-allele switch would currently be either a
 no-op matching the binary or a correction matching the help text.
 
 The first-release contract was re-audited against the public Rust API before
-starting the command tree. The resulting implementation ledger is:
+and after implementing the command tree. The resulting ledger is:
 
-| Contract area | Current evidence | Work still required before CLI exposure |
+| Contract area | Current evidence | Deferred or remaining release work |
 |---|---|---|
-| alignment inputs and samples | SAM/BAM/CRAM, read-group discovery, explicit sample projection, and one-input-one-sample mode are implemented | parse and validate alignment-list files at the product boundary |
-| pileup record policy | all four FLAG predicates, mapping-quality filtering, anomalous-pair policy, overlap adjustment, per-source depth, quality bounds, deterministic sampling, pooled/per-sample indel support, and ambiguous-read depth policy are typed and verified | bind the complete policy into one command configuration and oracle it as a unit |
-| reference and likelihood generation | reference-backed SNP, BAQ, and indel paths plus explicit reference-free SNP likelihoods are implemented and verified; reference-free configuration rejects BAQ and indels | bind the complete mode choice into the product command |
+| alignment inputs and samples | SAM/BAM/CRAM, alignment-list files, read-group discovery, explicit sample projection, and one-input-one-sample mode are implemented and exposed | none for the first-release contract |
+| pileup record policy | all four FLAG predicates, mapping-quality filtering, anomalous-pair policy, overlap adjustment, per-source depth, quality bounds, deterministic sampling, pooled/per-sample indel support, and ambiguous-read depth policy are typed, exposed, and verified as one command configuration | none for the first-release contract |
+| reference and likelihood generation | reference-backed SNP, BAQ, and indel paths plus explicit reference-free SNP likelihoods are implemented, exposed, and verified; reference-free configuration rejects BAQ and indels | none for the first-release contract |
 | pileup selections | indexed inline/file regions and streaming inline/file targets are implemented and verified | target complement remains blocked on the documented-versus-binary decision below |
-| likelihood output | the four VCF/BCF encodings and the complete annotation schema are implemented | add transactional named-file and standard-output orchestration |
-| call models and ploidy | consensus, multiallelic, mutation prior, sample projection, fixed/preset/custom ploidy, and gVCF blocking are implemented | bind model and ploidy inputs into the product command |
+| likelihood output | the four VCF/BCF encodings, complete annotation schema, standard output, and transactional named output are implemented and exposed | none for the first-release contract |
+| call models and ploidy | consensus, multiallelic, mutation prior, sample projection, fixed/preset/custom ploidy, sample groups, and gVCF blocking are implemented and exposed | numeric sample-file ploidy is excluded because the manual, source, and installed binary disagree |
 | call allele and site policy | callers trim selected alleles and preserve typed annotations; masked-reference, variant-only, SNP/indel skip, grouped-sample, keep-alternates, and prior-frequency workflows are implemented and checked against bcftools 1.24 | unseen-allele handling remains blocked on the help-versus-binary decision below |
 | call selections | indexed inline and file regions are implemented and verified | streaming targets remain blocked on the documented-versus-binary decision below |
-| fused workflow | the complete selected call policy, ploidy, sample groups, gVCF, and output schema run without serialization and are byte-equivalent to the materialized pipeline | bind the verified workflow into the product command |
-| product UX | `rsomics-help` 0.4 and `rsomics-common` provide the adopted parser, diagnostic, exit-code, JSON, and atomic-output layers | expose `pileup`, `call`, and `run` together only after the rows above are complete |
+| fused workflow | the complete selected call policy, ploidy, sample groups, gVCF, and output schema run without serialization and are byte-equivalent to the materialized pipeline | none for the first-release contract |
+| product UX | one `rsomics-help` 0.4 command tree exposes `pileup`, `call`, and `run`; `rsomics-common` provides the adopted diagnostic, exit-code, JSON, standard-output, and atomic-output layers | none for the first-release contract |
 
-Large indexed region-file throughput and peak RSS, product-level performance
-evidence, the final public-API and hot-path review, and the complete
-three-command CLI therefore remain. No command-line binary is exposed and the
-repository remains unpublished.
+The complete three-command CLI is now exposed in the repository. The crate
+remains unpublished while large indexed region-file throughput and peak RSS,
+product-level performance evidence, dependency-graph version alignment, and
+the final public-API and hot-path review remain open.
 
 Calling likelihoods, allele selection, ploidy policy, priors, annotations, and
 VCF output remain in the product. `rsomics-stats` receives a numerical kernel
