@@ -1,7 +1,8 @@
 # Methyl product dossier
 
-Status: source and upstream-operation audit complete. The target repository has
-not been created.
+Status: source and upstream-operation audit complete. The target repository is
+active; `merge-context` and the checked extraction core are implemented, but
+the complete first release slice is not yet publishable.
 
 ## Boundary
 
@@ -113,7 +114,9 @@ src/
 ```
 
 `rsomics-common` owns errors, exit mapping, execution reports, aliases, and
-multi-output transactions. `rsomics-help` owns the complete command tree.
+single-output transactions. Coordinated context outputs remain product-local
+until a second product demonstrates the same transaction contract.
+`rsomics-help` owns the complete command tree.
 
 `rsomics-methyl` is a concrete consumer of validated BAM/CRAM readers and
 records from `rsomics-bamio`. It is also a concrete driver for
@@ -140,7 +143,7 @@ at `9d32057f7ec5eb8bb241d53c115280f9d6acbdea`.
 | active mate window | refactor then merge only if shared pileup overlap handling does not supersede it |
 | full-reference loader and per-contig counts vector | discard; replace with indexed reference access and sparse or chunked accumulation |
 | output writer | tests and formatting asset; replace direct file creation with transactional context outputs |
-| synthetic BAM, reference, index, and golden bedGraph | retain and expand |
+| synthetic BAM, reference, index, and golden bedGraph | behavior asset only; replace with a project-owned synthetic fixture pinned to the corrected oracle |
 | Criterion subprocess benchmark | recipe only; the tiny fixture is not representative |
 | duplicated `HelpSpec`, inherited `Tool`, and narrative comments | discard during current common/help migration |
 
@@ -175,12 +178,26 @@ be published as the target product.
   contains extensive code narration.
 - CI covers only Linux `x86_64`.
 
-## Retained evidence
+## Implementation evidence
 
-The committed synthetic fixture has an authentic MethylDackel 0.6.1 CpG
-bedGraph golden and an optional live differential. A separate historical
-reverification reports byte-identical data lines on a 92 MB, four-million-read
-BAM producing about 2.5 million CpG rows.
+Repository revision `65944e50b82f` implements indexed-reference header
+validation, CpG/CHG/CHH classification, OT/OB/CTOT/CTOB strand resolution,
+record filters, checked sparse pileup calling, product-specific overlapping
+mate quality adjustment, and typed per-site metrics over published
+`rsomics-bamio` and `rsomics-pileup` 0.5. The project-owned fixture contains
+mixed 33% and 66% CpG calls plus MAPQ, NH, and duplicate exclusions; all ten
+data rows match corrected MethylDackel revision `3c77bda12141e`.
+Exact-head four-native-target CI `30750659399` passes at this revision.
+
+Repository revisions `1afbdcf` through `ab1f322` implement strict six-column
+`merge-context`, indexed FASTA access, coordinate and chromosome-order
+validation, transactional output, the unified help layer, and a byte-identical
+live MethylDackel differential. The extraction engine remains library-only
+until its complete user-visible output contract is ready; no placeholder
+subcommand is advertised.
+
+A separate historical reverification reports byte-identical data lines on a
+92 MB, four-million-read BAM producing about 2.5 million CpG rows.
 
 The useful historical performance baseline on that larger input is about 1.59
 times at one thread. A later 4.43-times record uses an 839 KB, 50,000-read

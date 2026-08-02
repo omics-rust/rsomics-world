@@ -57,8 +57,8 @@ APIs:
 | `rsomics-intervals` | `6783f67614ae` | reduced the public crate to a validated generic zero-based half-open interval value; moved BED parsing, collections, algebra, merge policy, and COITrees indexing into products | 0.3.0 published; exact-head four-native-target CI `30597681539`; downloaded archive checksum `40cf072a5fb5900d8e4049cb9b03f28ce5ddc51e51ef2b3fed7c5c89bfa88ccd`; `bed` and `annotation` pass consumer tests against the registry release |
 | `rsomics-kmer` | `d89e2df0d8ea` | retained the checked sequence-counting API and added allocation-reusing canonical DNA-window Murmur64 hashing with arbitrary nonzero `k` and a full-width seed after `rsomics-sketch` supplied the second concrete consumer | 0.2.2 published; exact-head four-native-target CI `30734719265`; publish run `30734861858`; downloaded archive checksum `e1254977d1eaf89b29e727b7ea552ec8bd4bd0740b45fa40ac943e93ffaf9ed4`; sequence and sketch consumer suites green |
 | `rsomics-seqio` | `4f0e2311f9ac` | retains strict allocation-reusing FASTA/FASTQ streams, bounded gzip decode buffering, wrapped FASTQ support, and fail-loud gzip/BGZF handling; 0.5 aligns the shared runtime contract with `rsomics-common` 0.12 without adding product policy | 0.5.0 published; exact-head four-native-target CI `30744450003`; publish run `30744498235`; downloaded archive checksum `15d43fe84756988ea45f2b39b5b1b745f7ea0b090ec1f1c74be8eaddf07838c6`; `seq`, `fastq-preprocess`, `phylo`, and `metagenomics` consumer paths are green |
-| `rsomics-bamio` | `82a8668717b5` | retains the validated raw-record encoder and indexed SAM/BAM/CRAM reader, aligns its shared runtime dependency with both product consumers on `rsomics-common` 0.10, and caches the compact validated variable-record layout after call, BAM, and pileup consumer checks | 0.4.1 published; exact-head four-native-target CI `30721193395`; publish run `30721286006`; downloaded archive checksum `1ff830a8263e4a5c8784101c3d6674e4bd86ec8ced446327d94d35731db13600`; three consumer suites green |
-| `rsomics-pileup` | `4b48bfdafecd` | retains the checked projection, retry-safe borrowed columns, per-source overlap and depth state, HTSlib-compatible BAQ, and bcftools-compatible column preparation while aligning its raw-record dependency with `rsomics-bamio` 0.4 | 0.4.0 published after call and BAM supplied concrete contracts; exact-head four-native-target CI `30714930834`; publish run `30715042037`; downloaded archive checksum `d33b5fa1c3ddbe86c8f53c2bb3fa870e482e90957aa5e559fceca0600ff56533`; registry-package tests and ordinary/deep performance and memory pass |
+| `rsomics-bamio` | `3a270c7f6bfd` | retains the validated raw-record encoder, compact cached variable-record layout, and indexed SAM/BAM/CRAM reader while aligning the shared runtime contract with `rsomics-common` 0.12 for call, BAM, count, pileup, and methyl consumers | 0.5.0 published; exact-head four-native-target CI `30737055735`; publish run `30737138969`; downloaded archive checksum `42cc41695faacaa9607db04a5d8dd183aa90bfcbd0d5722b1e839b67eff35ee7` |
+| `rsomics-pileup` | `7ab53a7cafc7` | retains checked projection, retry-safe borrowed columns, per-source overlap and depth state, HTSlib-compatible BAQ, and bcftools-compatible column preparation while aligning its raw-record dependency with `rsomics-bamio` 0.5; the benchmark entry point now ignores Cargo harness arguments correctly | 0.5.0 published after methyl supplied a third concrete consumer; exact-head four-native-target CI `30750094663`; publish run `30750341424`; downloaded archive checksum `089bd82c951451b21108b28f894bd5c896c75bbde33cac64f43ec17a64a7b18b`; ordinary and 250x benchmark paths pass |
 | `rsomics-phylo-tree` | `63e39e14964b` | replaces public mutable topology with checked construction, immutable node views, traversal, and strict iterative Newick parsing and serialization; composition uses named topology for ILR bases and phylo uses the same API for inference, comparison, and measures | 0.2.0 published; exact-head four-native-target CI `30742259200`; publish run `30742377050`; downloaded archive checksum `07234bb701159253e249cd8fccec70e728cb46e4999ec851f51dc549ad829fde`; the second concrete product consumer shipped in `rsomics-phylo 0.1.0` |
 
 Publication does not freeze these APIs. Every later public item still requires
@@ -219,7 +219,7 @@ feature assignment or annotation policy into the foundation. `rsomics-methyl`
 adds BAM/CRAM records, indexed regions, and bisulfite-specific aux-tag
 consumption while keeping methylation policy product-private.
 
-`rsomics-pileup` revision `2680f6c328be` now supplies fallible ingestion,
+`rsomics-pileup` revision `7ab53a7cafc7` supplies fallible ingestion,
 low-allocation borrowed column views, retry-safe output callbacks, checked
 header and projection bounds, BAM long-CIGAR replacement, exact flag-filter
 semantics, raw-reference-span behavior, source-isolated overlap state, and an
@@ -229,9 +229,9 @@ bcftools 1.24 partial-realignment trigger without moving maximum-read-length or
 mode selection out of products. Its live samtools 1.24 oracles cover matches,
 insertions, deletions, skips, padding, clipping, strand, head/tail markers,
 ordinary or indel-bearing overlapping mates, and independent input depth
-policy. Exact-head four-native-target CI `30654312487` passes. The published
-0.2.0 archive has checksum
-`0a2d901c6854470dbebae190ef30d3535333768c4c18c6cc47c03eeb33872684`.
+policy. Exact-head four-native-target CI `30750094663` passes. The published
+0.5.0 archive has checksum
+`089bd82c951451b21108b28f894bd5c896c75bbde33cac64f43ec17a64a7b18b`.
 
 `rsomics-call` revision `85579cb94f9a` validates and coordinate-merges plain or
 BGZF SAM, raw or BGZF BAM, and CRAM sources; resolves source and read-group
@@ -261,10 +261,10 @@ concerns. Exact-head four-native-target CI `30654810659` passes.
 
 The ordinary and 250× engine gate records bounded RSS and more than 95 million
 entries/s in every case, including the partial trigger scan. This establishes
-the two-consumer gate that permitted pileup 0.2.0 publication. Methyl
-extraction later provides a third consumer for checked columns and generic
-mate-overlap evidence; cytosine context and bisulfite calling do not enter the
-foundation.
+the two-consumer gate that permitted the original publication. Methyl
+extraction is now the third consumer for checked columns; cytosine context,
+bisulfite filtering, and methylation-specific mate adjustment remain inside
+the product.
 
 ### Analysis wave
 
