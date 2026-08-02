@@ -1,8 +1,8 @@
 # Sequence and FASTQ product dossier
 
-Status: source audit complete; first release slices selected; `rsomics-seq
-0.1.0` is published and verified; `rsomics-fastq-preprocess` has a verified
-public repository.
+Status: source audit complete; first release slices selected;
+`rsomics-seq 0.1.0` and `rsomics-fastq-preprocess 0.1.0` are published and
+independently verified.
 
 The source pool contains 47 relevant historical crates after routing
 corrections: 34 for `rsomics-seq`, 12 for preprocessing, and one for QC. The
@@ -16,7 +16,7 @@ two implemented products, and `rsomics-help` supplies their shared CLI
 presentation layer. `rsomics-kmer` currently serves sequence k-mer operations;
 it is not a preprocessing dependency.
 
-The first end-to-end gate is:
+The broader cross-product integration gate is:
 
 ```mermaid
 flowchart LR
@@ -25,7 +25,9 @@ flowchart LR
     qc --> stats["seq stats"]
 ```
 
-The same versioned inputs are compared against fastp, FastQC, and SeqKit.
+This later QC handoff is not a precondition for independently useful stable
+sequence and preprocessing slices. The same versioned inputs will be compared
+against fastp, FastQC, and SeqKit when the QC product is implemented.
 Compatibility, wall-clock distribution, peak memory, compression mode, and
 thread count are recorded together.
 
@@ -36,7 +38,8 @@ thread count are recorded together.
 - path and stdin/stdout boundaries;
 - borrowed streaming records plus owned batches for parallel stages;
 - paired-read semantics;
-- a private compression backend.
+- a validated writer boundary; a specialized compression backend remains
+  consumer-local until a second product needs the same contract.
 
 The historical `rsomics-fqgz` writer and `rsomics-igzip` backend are migration
 assets. New products do not depend on `rsomics-igzip` directly.
@@ -175,13 +178,14 @@ Correction and BBDuk-style filtering ship only after adversarial
 compatibility and representative hot-path benchmarks. Existing small
 subprocess benches are not release evidence.
 
-The initial `run`, `trim`, and `filter` slice is implemented at
-`omics-rust/rsomics-fastq-preprocess` revision `f217fc4902b2`. It combines
+The initial `run`, `trim`, and `filter` slice is published from
+`omics-rust/rsomics-fastq-preprocess` revision `755cd715276b`. It combines
 fixed, poly-G/poly-X, quality, N-content, length, and complexity transforms
-over one ordered chunk engine for single-end and paired-end reads. Its
-exact-head CI passes on native Linux and macOS for both `x86_64` and
-`aarch64` in run `30569428189`, including strict Clippy, 43 internal/CLI tests,
-four live fastp 1.3.6 differentials, and a benchmark smoke test.
+over one ordered engine for single-end and paired-end reads. Exact-head CI run
+`30726427849` passes on native Linux and macOS for both `x86_64` and
+`aarch64`, including formatting, strict Clippy, rustdoc, clean package
+verification, 52 debug and release tests, four live fastp 1.3.6
+differentials, and a benchmark smoke test.
 
 The product privately internalizes the useful `rsomics-fqgz` algorithm instead
 of reviving that historical micro-foundation. `rsomics-seqio` still validates
@@ -189,22 +193,28 @@ and serializes every record; ordered 256 KiB gzip members are compressed by
 libdeflate through the command's local Rayon pool and committed by the existing
 two-output transaction.
 
-On provenance-checked SRR341550 paired input, decompressed output is
-byte-identical to the aligned fastp slice. On Ubuntu 22.04 / Linux 6.8
-`x86_64`, four-thread paired output measures `10.863 ± 0.298 s` and 31.5 MiB
-peak RSS versus fastp's `13.891 ± 0.447 s` and 101.9 MiB. One-thread paired
-output measures `22.308 ± 0.610 s` and 31.5 MiB versus `39.091 ± 0.894 s`
-and 88.7 MiB. Single-end output is not a throughput win on that host:
-four-thread time is `5.360 ± 0.075 s` versus fastp's `4.937 ± 0.721 s`, but
-peak RSS is 19.6 MiB versus 52.9 MiB. The compressed files are about 0.07%
-larger than fastp's, pass `gzip -t`, and are consumed by SeqKit and fastp.
+On provenance-checked SRR341550 input, decompressed single-end and paired
+outputs are byte-identical to the aligned fastp slice. On Ubuntu 22.04 /
+Linux 6.8 `x86_64`, four-thread paired output measures
+`10.914 ± 0.493 s` and 31.5 MiB peak RSS versus fastp's
+`14.690 ± 0.715 s` and 99.2 MiB: 1.35 times the throughput with 68% less
+peak memory. Single-end output is not a throughput win on that host:
+`5.969 ± 0.431 s` versus `5.503 ± 0.862 s`, but peak RSS is 18.0 MiB versus
+51.1 MiB.
 
-This is a strong product checkpoint, not publication approval: end-to-end QC
-handoff, final API review, and the release-level performance decision remain.
-Common, help, and seqio resolve from their published registry releases. Exact
-machine, fixture, causal
-control, interoperability, and raw-result checksums are recorded in the
-[parallel-gzip product gate](fastq-preprocess-gate-2026-07-30.md).
+The final API review made public record transforms fallible on malformed
+caller input, tied pipeline operation labels to typed constructors, retained a
+validation-free parsed hot path, and verified `trim | filter` stream
+composition against `run`. Common, help, and seqio resolve from their
+published registry releases.
+
+Crates.io publication run `30726551865` produced non-yanked 0.1.0 archive
+checksum `d12cb432e56fdeb151e91c80804301089a8b5716e07dd922b347024b9c82c016`
+with VCS identity `755cd715276b`. An independent registry download,
+`cargo install --locked`, help check, identity stream, and malformed-input
+smoke all passed. Exact machine, fixture, compatibility, API, performance, and
+raw-result evidence is recorded in the
+[product gate](fastq-preprocess-gate-2026-07-30.md).
 
 ## `rsomics-fastq-qc`
 

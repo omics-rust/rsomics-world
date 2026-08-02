@@ -24,7 +24,7 @@ Status meanings are defined in [CONVENTIONS.md](CONVENTIONS.md).
 | `rsomics-deseq` | planned | DESeq2-style differential-expression workflow |
 | `rsomics-ecology` | planned | community-table diversity, ecological dissimilarity, ordination, metadata association, and permutation analysis |
 | `rsomics-edger` | planned | edgeR-style differential-expression workflow |
-| `rsomics-fastq-preprocess` | repo-only | trimming and filtering (initial fastp-compatible subset); later correction, UMI, merge, deduplication |
+| `rsomics-fastq-preprocess` | live | trimming and filtering (initial fastp-compatible subset); later correction, UMI, merge, deduplication |
 | `rsomics-fastq-qc` | pilot | FASTQ quality metrics and reports |
 | `rsomics-index` | planned | bgzip/tabix and reusable sequence-index workflows |
 | `rsomics-liftover` | repo-only | UCSC chain coordinate liftOver |
@@ -49,8 +49,8 @@ Product status summary:
 
 | Status | Count |
 |---|---:|
-| live | 6 |
-| repo-only | 2 |
+| live | 7 |
+| repo-only | 1 |
 | pilot | 1 |
 | planned | 21 |
 | **Total** | **30** |

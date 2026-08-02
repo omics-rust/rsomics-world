@@ -98,6 +98,8 @@ Rejected public boundary:
 - [x] Review `help` through sequence, preprocessing, BED, and annotation.
 - [ ] Review `kmer` through its required second product consumer.
 - [x] Publish the coherent five-command `rsomics-seq` first-release slice.
+- [x] Publish the coherent `run`/`trim`/`filter`
+      `rsomics-fastq-preprocess` first-release slice.
 
 ## P1 — interval pilot
 
