@@ -10,10 +10,17 @@ product. It converts coordinate-sorted alignments and an indexed reference into
 per-site, per-context, per-read, and positional-bias methylation evidence.
 
 The primary behavior source is
-[MethylDackel 0.6.1](https://github.com/dpryan79/MethylDackel), including its
-MIT-licensed implementation and installed command-line help. The public SAM,
-BAM, CRAM, FASTA, BED, bedGraph, and BigWig contracts define the surrounding
-formats.
+[MethylDackel](https://github.com/dpryan79/MethylDackel). The published 0.6.1
+tag and current upstream revision
+`3c77bda12141e99d80234d416e668a90ec70b3f7` are separate compatibility
+profiles. The public SAM, BAM, CRAM, FASTA, BED, bedGraph, and BigWig contracts
+define the surrounding formats.
+
+The current revision contains two correctness fixes made after 0.6.1: right-end
+trimming now indexes `l_qseq - 1 - i`, and the second mate's initial overlap
+scan uses its own projected positions. The corrected behavior is the primary
+oracle. The released tag remains a regression oracle for unaffected behavior;
+the Rust product does not reproduce either bug for byte compatibility.
 
 This boundary does not include differential methylation, DMR calling,
 segmentation, imputation, array normalization, or epigenomic visualization.
@@ -202,9 +209,11 @@ compatibility, memory, and throughput gates.
 
 ## Compatibility gates
 
-- Pin MethylDackel 0.6.1 and its HTSlib version for the initial oracle. Review
-  current master changes before publication rather than assuming the 2021 tag
-  is the complete modern contract.
+- Build MethylDackel revision
+  `3c77bda12141e99d80234d416e668a90ec70b3f7` with a pinned HTSlib as the
+  corrected primary oracle. Retain the 0.6.1 binary as a released-profile
+  regression oracle and explicitly classify differences caused by the two
+  post-release correctness fixes.
 - Run live differentials for all four subcommands on Linux and macOS. Frozen,
   provenance-recorded goldens run on all four native target classes.
 - Cover CpG, CHG, CHH, merged contexts, contig edges, ambiguous reference
@@ -247,8 +256,11 @@ compatibility, memory, and throughput gates.
 The retained Rust code and synthetic fixtures are team-owned and remain MIT OR
 Apache-2.0. MethylDackel is MIT licensed. Adapted algorithms retain its
 copyright notice and attribution at the appropriate source or product level.
-MethylDackel 0.6.1, HTSlib, relevant format specifications, and any directly
-consulted upstream modules are recorded with compatibility results.
+Record both upstream revision
+`3c77bda12141e99d80234d416e668a90ec70b3f7` and release-tag revision
+`b6db120e96ec8cf9ab44e1b1074d2aa7af876932`, the pinned HTSlib, relevant
+format specifications, and any directly consulted upstream modules with the
+compatibility results.
 
 ## Explicit exclusions
 
