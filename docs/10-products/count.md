@@ -1,7 +1,7 @@
 # Count product dossier
 
-Status: source and upstream-operation audit complete. The target repository has
-not been created.
+Status: first release slice published as `rsomics-count 0.1.0`. Later slices
+remain audited but unimplemented.
 
 ## Boundary
 

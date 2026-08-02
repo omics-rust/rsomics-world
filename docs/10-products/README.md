@@ -24,7 +24,7 @@ operation will ship. It records:
 | `rsomics-call` | 2 | [audited](variant.md#rsomics-call) |
 | `rsomics-cnv` | 2 | [audited](variant.md#rsomics-cnv) |
 | `rsomics-composition` | 10 | [audited](composition.md) |
-| `rsomics-count` | 4 | [audited](count.md) |
+| `rsomics-count` | 4 | [released 0.1.0](count-gate-2026-08-02.md) |
 | `rsomics-deseq` | 12 | [audited](bulk-expression.md#rsomics-deseq) |
 | `rsomics-ecology` | 19 | [audited](ecology.md) |
 | `rsomics-edger` | 17 | [audited](bulk-expression.md#rsomics-edger) |
