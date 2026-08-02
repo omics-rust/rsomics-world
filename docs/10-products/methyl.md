@@ -263,8 +263,29 @@ before parsing each field, so a legal zero sentinel can inherit unrelated
 process state. The Rust implementation deliberately follows the documented
 contract, retains position 5, parses zero deterministically, and freezes both
 corrections in tests. Exact-head four-native-target CI `30754904672` passes.
-The first release remains gated on BED, conversion and variant filters,
-cytosine reports, and retained performance fixtures.
+
+Revision `06770da6bf08` adds exhaustive Bismark-style cytosine reports as a
+format of `extract`, with the upstream-compatible `--cytosine-report` and
+`--cytosine_report` surface. It emits 1-based coordinates, reference strand,
+methylated and unmethylated counts, CG/CHG/CHH class, and oriented
+trinucleotide context. Zero-coverage cytosines are emitted regardless of the
+minimum-depth setting. The implementation walks reference gaps around the
+sorted sparse pileup and writes each metric immediately; it does not restore
+the retired whole-contig count array.
+
+The full project extraction fixture, its region-limited subset, and its
+all-alignments-filtered zero-coverage report are byte-identical to current
+MethylDackel with SHA-256
+`8c8b72dd82543c331b92319cc39b317d38c11a09daa8222c6c6a7f3284d0ed9a`,
+`01d725411caacffe535af77fbb5d99e1dfb68a7dc6a2c97c8c206caf323461e1`,
+and `26eb2f1ea20a2acda721226bc405d19919b1c68d14018c46d9d3f8955eec9c87`.
+A separate empty-alignment fixture covers all three contexts, both reference
+strands, contig boundaries, and an ambiguous base with byte-identical SHA-256
+`22b2f8b409642391f8a65538999fb271f5119f3cb5495bd66f2cc7e56fb065bb`.
+Region restriction, multi-reference streaming, incompatible context merging,
+and failed-output preservation have independent tests. Exact-head
+four-native-target CI `30755585468` passes. The first release remains gated on
+BED, conversion and variant filters, and retained performance fixtures.
 
 A separate historical reverification reports byte-identical data lines on a
 92 MB, four-million-read BAM producing about 2.5 million CpG rows.
