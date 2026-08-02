@@ -554,9 +554,80 @@ SHA-256
 `8764f4a9266ad8d579c96ee392c1fc243a6317d2af4921eefd26b70a42df8d17`,
 identical to BAM and MethylDackel.
 
-The high-depth targeted, all-context, and CRAM matrix rows are closed. The
-remaining performance gates are sparse RRBS-like extraction and separate
-`mbias`, `merge-context`, and `per-read` measurements.
+### Sparse RRBS-like extraction gate, 2026-08-03
+
+Revision `6494704743c2` adds an `rrbs` generator mode and compiles the generator
+under the Linux x86_64 CI job. It creates 104-base covered islands separated by
+396-base gaps, with 40-fold placement inside each island. Exact-head
+four-native-target CI `30766674318` passes.
+
+The retained `rrbs-sparse-4m-20260803` fixture contains four million
+coordinate-sorted reads. `samtools coverage` reports 3,958,762 nonduplicate
+reads, 10,400,000 covered bases across a 50,000,100-base reference, 20.8%
+coverage, and mean depth 7.91751. The generator source, reference, FAI, BAM,
+and BAI SHA-256 values are
+`57ffdd20771bff39e1d04244d0a9002a8a8b9cc1202f8ca49d5234341b232273`,
+`54826750c63602abd57dc3c022132f97f2c189a2b3ac8f1e4764410c5d915e9f`,
+`fd69fbf02c375f75a41fdb490b34a3b14940705c57ec406888c784ca05a7e965`,
+`3b6e3cc0199ae0dd39159af5e7b7fbda2f301dcfbbc082bfc9c31734d292bb6b`,
+and `2cdbb73dd3391b21471863e45ba07c023efc8758ed57e616ff05576a051ab001`.
+
+After one warmup per binary, ten alternating pairs produce exactly 1,200,000
+data rows with SHA-256
+`047e02b2acf6176db58025e7920a09f3d19f7a96de2499ec66e4f2886615b7e9`
+for both implementations. Rust completes in `4.349 ± 0.460` seconds versus
+`4.188 ± 0.367` seconds for MethylDackel and wins four pairs. The paired
+upstream-minus-Rust difference is `-0.161 ± 0.619` seconds with t statistic
+`-0.823`, so no throughput advantage is claimed. Mean user CPU is 3.502 versus
+3.478 seconds and mean maximum RSS is 9,828,762 versus 9,774,694 bytes. The
+Rust and upstream timing records have SHA-256
+`9aa3843d4a286f5a9b05f3dcc7e0469b3a40c48ee411674fa1242668c75106c0`
+and `42aa0ae797ddfb222f5390a85fa54713c06a9035b24190c59b48ecb93712e9ab`.
+This closes the sparse-coverage correctness and measurement row while leaving
+the product's performance claim on the representative, paired, and targeted
+extraction workloads where a strict advantage was measured.
+
+### M-bias gate, 2026-08-03
+
+Revision `637e84586132` replaces the per-call ordered map with dense
+strand-by-read-by-position counters, avoids reference-name comparisons on the
+validated alignment hot path, skips reference classification for bases that
+cannot encode a methylation call, and removes unused per-record chromosome
+allocation. Product policy remains private to `rsomics-methyl`; no foundation
+API was added. All 63 local tests in debug and release, strict Clippy, rustdoc,
+package verification, and exact-head four-native-target CI `30768331537` pass.
+
+The benchmark uses the retained `wgbs-single-4m-20260803` fixture and the same
+one-thread MethylDackel source revision. The current oracle rebuild has binary
+SHA-256
+`70e2296eb412bb4cf9c0ce2b74a0ab290211f2b50c29bced091db66317e8c152`;
+the final Rust binary has SHA-256
+`3d00ecc550801c2606e1a03657e32a0e41fb29ae892879f188b0d77286eb328c`.
+After one warmup per binary, ten pairs alternate which binary runs first and
+compare the TSV after every pair. All twenty 51-line files are byte-identical
+with SHA-256
+`2fa2af6289da84ae3f94109ddbf860d4d8a4001029598bf210d1aa3bf4ccb0a1`.
+
+Rust wall time is `6.443 ± 1.084` seconds versus `6.614 ± 0.796` seconds for
+MethylDackel. Each wins five pairs; the paired 0.171-second difference has
+standard deviation 1.322 seconds and t statistic 0.409, so no wall-time
+advantage is claimed. Mean user CPU is 4.030 versus 4.478 seconds: Rust wins
+all ten pairs, reducing user CPU by 10.0%, with paired difference
+`0.448 ± 0.225` seconds and t statistic 6.308. Mean system CPU is 0.384 versus
+0.382 seconds, and mean maximum RSS is 8,709,734 versus 8,565,555 bytes; no
+system-CPU or memory advantage is claimed.
+
+The Rust and upstream raw timing records have SHA-256
+`54100dc871313b11337e5b9b0b5ad1228e9f7f4fe435ace3e7548a7694cd48f3`
+and `19444eb146f47e7e2af50aae5bdbbe72b33675e9c41cb1528b291bcb0fcd3029`.
+Their parsed per-pair summaries have SHA-256
+`cd7c3242fa70f8ed7f82951b457d8d019b42f89dd07c8bfe29fbdb88b4e4271f`
+and `a92f7133a6e1a19b13789d768b1142b2899b70353d78c016b346e1a45d3d4e55`.
+The raw logs, summaries, and matching TSVs are retained with the WGBS fixture.
+
+The high-depth targeted, all-context, CRAM, sparse RRBS-like, and M-bias rows
+are closed. The remaining subcommand performance gates are `merge-context`
+and `per-read`; the matrix also retains its long-contig stress row.
 
 A separate historical reverification reports byte-identical data lines on a
 92 MB, four-million-read BAM producing about 2.5 million CpG rows.
