@@ -196,6 +196,26 @@ live MethylDackel differential. The extraction engine remains library-only
 until its complete user-visible output contract is ready; no placeholder
 subcommand is advertised.
 
+Revisions `3bc7f214bfe2`, `8debb4162bad`, and `270ece8529fd` expose transactional
+extraction, add standard, fraction, counts, logit, and methylKit representations,
+and merge complementary CpG and CHG calls before minimum-depth filtering. Their
+exact-head four-native-target CI runs `30750968404`, `30751189579`, and
+`30751453229` pass.
+
+Revision `8dac753e1d1c` implements `per-read` over published `rsomics-bamio` and
+`rsomics-pileup` 0.6. With `--ignore-nh`, its seven output rows are byte-identical
+to current MethylDackel on the project fixture; both files have SHA-256
+`714b5df32399395676e932aec3d0db26e613f6b3e1d0a2eb724920b130c26082`.
+The default produces six rows by enforcing MethylDackel's documented NH rule.
+The current upstream source advertises that rule but neither registers the
+`--ignoreNH` option nor applies the filter. It also advances both query and
+reference coordinates twice after a low-quality matched base and limits the
+reference fetch to a 10 kb tail. The Rust path tests and corrects all three
+cases, consumes the shared long-CIGAR contract, caches FAI lengths, and keeps
+single-output replacement transactional. Exact-head four-native-target CI
+`30752879575` passes. The complete first release remains gated on the remaining
+extract filters, cytosine report, and `mbias` surface below.
+
 A separate historical reverification reports byte-identical data lines on a
 92 MB, four-million-read BAM producing about 2.5 million CpG rows.
 
