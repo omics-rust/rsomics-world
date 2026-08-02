@@ -1,8 +1,9 @@
 # BAM product dossier
 
 Status: boundary and source-asset audit complete. The seven-command first
-release slice passed its local, oracle, performance, package, and native-CI
-gates. `rsomics-bam 0.4.0` is published.
+release slice is published as `rsomics-bam 0.4.0`. The eighth command,
+`depth`, has passed its local, oracle, performance, package, and
+four-native-target CI gates and is published as `rsomics-bam 0.5.0`.
 
 ## Boundary
 
@@ -270,6 +271,48 @@ versus 10,752 KiB. Exact-head CI `30723489891` passes all four native targets,
 including the 19-group samtools differential on Linux x86_64. This is a BAM
 hot-path gate only; the release makes no throughput claim for SAM or CRAM.
 
+### Release 0.5: streaming depth
+
+Revision `ebf7f9606db8` adds `depth` without reviving the deleted
+`rsomics-bam-depth` micro-crate. It accepts coordinate-sorted SAM, BAM, and
+CRAM; merges multiple inputs into separate depth columns; supports input lists,
+BED restriction, indexed regions, used- and all-reference zero-depth output,
+base and mapping quality thresholds, read-length and flag filters, deletion
+counting, overlapping-mate suppression, headers, transactional named output,
+and machine-readable summaries. Reference dictionaries must agree across
+inputs, and malformed or unsorted streams fail non-zero.
+
+The single-BAM path borrows validated raw records from `rsomics-bamio`; the
+multi-input path keeps one record of lookahead per source. Depth values use a
+bounded ring whose capacity follows the maximum live alignment span rather
+than reference length or file size. Long-CIGAR `CG:B,I` records use the shared
+validated fallback. The historical implementation retained value only as an
+algorithm and fixture seed: it buffered whole-reference events in hash maps,
+accepted one BAM only, and lacked quality, region, multi-input, and overlap
+contracts.
+
+`depth` deliberately remains product-internal rather than extending
+`rsomics-pileup`. Samtools depth and mpileup have materially different default
+deletion, overlap, filtering, multi-input, and output semantics. No second
+product currently needs the depth-specific accumulator contract, so promoting
+it would violate the two-consumer foundation rule.
+
+SAM, BAM, CRAM, multi-input, indexed-region, BED, zero-position, quality,
+flag, deletion, overlap, and header outputs match samtools 1.24 in the live
+oracle matrix. A 5,000,000-base, approximately 30x BAM also produced the exact
+78,888,186-byte samtools output with SHA-256
+`f9bbc936dab1d5e7ef17c834a505187edefcfb854935be7021614fd51aaf2a69`.
+Formatting, strict Clippy, debug and release tests, rustdoc, and package
+verification pass. Exact feature-head CI `30772124000` passes native Linux and
+macOS on both `x86_64` and `aarch64`; its Linux `x86_64` job builds samtools
+1.24 and runs all 19 prior oracle groups plus the depth differential.
+
+The release scope does not expose samtools' deprecated no-op `-d` and `-m`
+options, generic input-format option injection, diagnostic verbosity controls,
+or a custom index-file argument. These are absent rather than accepted and
+ignored. A later release adds any of them only with a concrete user contract
+and tests.
+
 Standalone `view -n` remains unresolved. Samtools 1.24 emits the two tagged
 records from the current CRAM fixture with `view -n` but reports zero for
 `view -c -n`. In the
@@ -343,7 +386,7 @@ first-header merge are not acceptable implementations.
 
 - `consensus`, `calmd`, `depad`, `phase`, `reference`, and
   `targetcut`;
-- `bedcov`, `coverage`, `depth`, `idxstats`, `stats`, `ampliconstats`, and
+- `bedcov`, `coverage`, `idxstats`, `stats`, `ampliconstats`, and
   `cram-size`;
 - `fasta`, `fastq`, `import`, `to-bed`, `reset`, `addreplacerg`,
   `ampliconclip`, and `checksum`.
@@ -431,7 +474,7 @@ SAM/CRAM support.
 | `rsomics-bam-consensus` `f202e114caa95ef38cd80dc40df8ee6a3f8ceae7` | Test asset and algorithm seed | `consensus`; historical simple mode is not the current default contract |
 | `rsomics-bam-coverage` `e115cd0bceb0735e584d75125e7a6940e896d4fe` | Refactor then merge | `coverage`; summary output only |
 | `rsomics-bam-depad` `de243fd7ccb7e0c313742b4e529fe95bad3833d4` | Refactor then merge | `depad`; retain padded-reference fixtures |
-| `rsomics-bam-depth` `cdc0a4ff70119edc193cd6bdfadaba6b6e190b61` | Refactor then merge | `depth`; share pileup kernel |
+| `rsomics-bam-depth` `cdc0a4ff70119edc193cd6bdfadaba6b6e190b61` | Test and algorithm seed; replacement merged | `depth`; discard whole-file event maps and keep the accumulator product-internal |
 | `rsomics-bam-divide` `71504b275797ec30df2399ef2fbe03d1c9b1e6b5` | Refactor then merge | `split --parts`; preserve disjoint-cover and seeded-partition fixtures |
 | `rsomics-bam-fasta` `ba661eddd57b45f725751f02a288546442acd3e7` | Refactor then merge | `fasta` |
 | `rsomics-bam-fixmate` `645e4e3c31f3e689e854c2de63e726b877d770ea` | Refactor then merge | `fixmate`; include supplementary mate behavior from 1.24 |
@@ -758,6 +801,28 @@ verifies the decoded header and all 3,000,000 records after every round. SAM
 and CRAM remain correctness contracts in release 0.4; no cross-format
 throughput claim is made.
 
+The release 0.5 depth gate used revision `ebf7f9606db8`, samtools/HTSlib 1.24,
+and a 36,459,282-byte coordinate-sorted BAM containing 1,000,000 records over
+5,000,000 reference bases at approximately 30x coverage. The fixture SHA-256
+is `33b6780ec3758a8ccde746935366dec441e89aaafb5b0253a19cfa1af350282c`.
+On an 8 GiB Apple M2 Mac mini, one warm-up preceded 20 AB/BA paired rounds.
+Both tools formatted the complete depth stream to `/dev/null`; a separate
+complete-file pass compared all 78,888,186 output bytes exactly.
+
+| Tool | Mean wall | Mean user | Mean system | Mean peak RSS |
+|---|---:|---:|---:|---:|
+| `rsomics-bam depth` | 0.4400 s | 0.3735 s | 0.0200 s | 3,978,854 bytes |
+| `samtools depth` | 0.4900 s | 0.4020 s | 0.0315 s | 6,572,442 bytes |
+
+The paired wall-time difference was -0.0500 +/- 0.0801 seconds, with a paired
+t-statistic of -2.790 and rsomics winning 16 of 20 pairs. This fixture shows a
+10.20% wall-time, 7.09% user-time, 36.51% system-time, and 39.46% peak-RSS
+reduction. The reproducible benchmark script is tracked in the product. The
+timing ledger and generated summary SHA-256 values are
+`ca2cad4d5d55aa0e492f1916c1d7c3ccf646308c63323b6615b99fa5afaec193`
+and `dccf26d1c6b115e7a86811ef0a7114ba998ade2a94a76f8c99936a5cca25ea45`.
+This is a default BAM depth-path claim only.
+
 ## Explicit exclusions
 
 - `dict`, `faidx`, and `fqidx` are `rsomics-index` operations.
@@ -800,3 +865,13 @@ After the cooldown, publish run `30766493471` completed from the same selected
 revision. A separate registry lookup downloaded `rsomics-bam 0.4.0` and
 confirmed its package metadata. The downloaded crate archive has SHA-256
 `016736c669e52155b999da533f78325c06e09c003946539ff6feb1767885762e`.
+
+`rsomics-bam 0.5.0` is published from release head `6d50829ec0d0`. Exact-head
+CI `30773087784` passes native Linux and macOS on `x86_64` and `aarch64`; the
+Linux `x86_64` job includes strict Clippy, package verification, samtools 1.24,
+the 19 prior oracle groups, and the depth differential. Publish run
+`30773247644` succeeds from the same revision. An independent static-registry
+download matches the locally verified package byte for byte with SHA-256
+`65da80cd273df134369bc21278843d5fc744d90c814dd43a06284cc1d6b729f8`.
+Its registry metadata declares Rust 1.91 and the embedded VCS revision is the
+exact release head.
