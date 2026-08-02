@@ -190,7 +190,7 @@ evidence.
 ### Interval wave
 
 `rsomics-intervals 0.3.0` is the smallest coordinate-safe geometry API
-demonstrated by two products. `Interval<C>` validates `start <= end`, keeps its
+first demonstrated by two products. `Interval<C>` validates `start <= end`, keeps its
 fields private, permits borrowed or owned chromosome identifiers, and exposes
 only accessors and basic half-open geometry.
 
@@ -205,10 +205,19 @@ and subtract is 5.09 times faster with about one eighteenth the peak RSS.
 features once into the shared half-open value and consumes
 `rsomics-common 0.11.0` for single-output transaction and alias safety.
 Annotation hierarchy, splicing, coordinated extraction outputs, and FASTA
-access remain inside the product. Both interval consumers resolve the
+access remain inside the product. Both initial interval consumers resolve the
 published registry archive rather than a path patch. No public overlap index
 remains to justify speculatively; another product may propose one only after a
 second concrete consumer exists.
+
+`rsomics-methyl` revision `1368a8ff1bb7` is a third registry consumer. It uses
+the validated half-open value for retained BED intervals while keeping parsing,
+merging, point and alignment-span indexing, reference clipping, and
+bisulfite-strand selection product-private. Extract and M-bias match current
+MethylDackel for unstranded and strand-aware selections; corrected exhaustive
+and per-read policies have independent goldens. Exact-head four-native-target
+CI `30756307754` passes. This consumer adds no reason to publish a shared BED
+parser or overlap-index API.
 
 ### Alignment wave
 

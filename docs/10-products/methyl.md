@@ -284,8 +284,39 @@ strands, contig boundaries, and an ambiguous base with byte-identical SHA-256
 `22b2f8b409642391f8a65538999fb271f5119f3cb5495bd66f2cc7e56fb065bb`.
 Region restriction, multi-reference streaming, incompatible context merging,
 and failed-output preservation have independent tests. Exact-head
-four-native-target CI `30755585468` passes. The first release remains gated on
-BED, conversion and variant filters, and retained performance fixtures.
+four-native-target CI `30755585468` passes.
+
+Revision `1368a8ff1bb7` adds plain and gzip BED selection to `extract`, `mbias`,
+and `per-read`. It uses the published `rsomics-intervals 0.3.0` value for
+validated zero-based half-open geometry while retaining BED parsing, merged
+query spans, and bisulfite-strand policy inside the product. Overlapping and
+touching input intervals become disjoint per-reference top and bottom vectors;
+point and alignment-span queries are logarithmic in the number of merged
+intervals. Unknown references, negative, empty, inverted, wholly outside, and
+invalid strand-aware records fail with a file and line number. Ends beyond a
+known reference are clipped, and an empty BED safely matches nothing.
+
+Unstranded, top-only, and bottom-only extract data rows match current
+MethylDackel byte for byte with SHA-256
+`b670e65b1449f84dcff9d923b239b6d84e9b1f129f1a80c02064094198b5fe80`,
+`f5b0d57e2fcb812734aace45cb1527effc2311de8fa7c9ddb583cc5094aa4fa7`,
+and `1e8dcc17b2e90661d4aaf32cdc477a118bf137fbd4d36c7cf195de27a8642975`.
+The corresponding M-bias TSV hashes are
+`3088333049b19395c67782db3db512c7c62379a53e099d9191fb1b6820e25462`,
+`a867bc5059ac8b376d9caa57282c7d1efd86af2e449e9e7ded5f86ffccb33cf2`,
+and `a32de680a0f50f3511e8626d463db4f6d8c7ec6a91f52a288ad034dee84791a9`.
+
+Two upstream BED defects are deliberately corrected. Its exhaustive report
+emits zero-coverage cytosines outside the requested BED; rsomics restricts
+every reported cytosine. Its per-read path tests only whether a large
+processing chunk overlaps any interval and never applies the requested BED
+strand; rsomics requires each alignment's complete reference span and
+bisulfite strand to match. The corrected top-only and bottom-only per-read
+goldens have SHA-256
+`427fe94dd4f07409855e2bdc5ea205f103bb38552852e72052491f3dc74926f6`
+and `3d747943a39dfaf19bdaf7fad09c4235d659b53d966567e0ea41846b34469ab8`.
+Exact-head four-native-target CI `30756307754` passes. The first release remains
+gated on conversion and variant filters and retained performance fixtures.
 
 A separate historical reverification reports byte-identical data lines on a
 92 MB, four-million-read BAM producing about 2.5 million CpG rows.
