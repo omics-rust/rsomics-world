@@ -111,6 +111,8 @@ Rejected public boundary:
 - [x] Consolidate compatibility fixtures and benchmarks.
 - [x] Review `common`, `help`, and the interval coordinate model through BED
       and annotation.
+- [x] Publish the coherent four-command `rsomics-annotation` first-release
+      slice.
 - [ ] Review sequence-index I/O through the `rsomics-index` consumer.
 
 ## P2 — alignment and variation

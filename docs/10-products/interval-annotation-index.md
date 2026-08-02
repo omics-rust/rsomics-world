@@ -132,10 +132,13 @@ The initial slice is implemented at `omics-rust/rsomics-annotation` revision
 `b8ad1eee786586fd1375e883c608e1feae0417d2`. Transcript, CDS, and protein
 FASTA extraction follows at revision
 `80920fb9e72b6d05c34de41eaa88bb971b1c48fe`; performance evidence is recorded
-at `f089ec6a54bb985639828d367bb7d5ec25486d72`. Exact-head CI run `30574846937`
-passes the final evidence head on native Linux and macOS for both `x86_64` and
-`aarch64`. The gate runs strict Clippy, debug and release suites, package
-verification, and 40 tests. Three live-oracle cases build pinned gffread
+at `f089ec6a54bb985639828d367bb7d5ec25486d72`. Release revision
+`8e7beed4d51e` consumes `rsomics-common 0.11.0`, removes the duplicate
+single-output transaction and path-alias implementation, and retains the
+product-specific coordinated extraction outputs. Exact-head CI run
+`30725476586` passes on native Linux and macOS for both `x86_64` and `aarch64`.
+The gate runs strict Clippy, rustdoc, debug and release suites, package
+verification, and 41 tests. Three live-oracle cases build pinned gffread
 0.12.9 and compare region selection, BED conversion, and all three sequence
 outputs.
 
@@ -162,11 +165,15 @@ repaired or skipped implicitly.
 
 On the documented Apple M2 fixture of 80,000 three-exon transcripts,
 `rsomics-annotation` and gffread produce byte-identical transcript, CDS, and
-protein FASTA. Five alternating warm-cache trials have medians of 1.84 and
-3.25 seconds respectively, a 1.77-times throughput advantage. Peak RSS medians
-are 266,207,232 and 146,210,816 bytes, so the implementation uses 1.82 times
-the memory. This passes the throughput gate with an explicit memory tradeoff;
-it is not a universal performance claim. The crate remains unpublished.
+protein FASTA. The release-head verification uses five alternating warm-cache
+trials with medians of 2.43 and 4.37 seconds respectively, a 1.80-times
+throughput advantage. Peak RSS medians are 275,644,416 and 143,949,824 bytes,
+so the implementation uses 1.91 times the memory. This passes the throughput
+gate with an explicit memory tradeoff; it is not a universal performance
+claim. Version 0.1.0 was published by run `30725542892`. The independently
+downloaded archive has SHA-256
+`4abbc46e44f4e98f5afa72bf3fba089f978d523aee739d33c592288d2e27b4ec`
+and VCS revision `8e7beed4d51efb78e839cddf24288e04bf93134a`.
 
 The old command inventory is consolidated as follows:
 

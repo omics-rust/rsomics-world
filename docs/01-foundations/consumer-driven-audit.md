@@ -188,9 +188,11 @@ million-record Linux gate matches bedtools byte for byte for all five
 operations; intersect is 3.99 times faster with roughly one third the peak RSS,
 and subtract is 5.09 times faster with about one eighteenth the peak RSS.
 
-`rsomics-annotation` revision `0e2d4c94e990` converts inclusive GFF/GTF
-features once into the shared half-open value. Annotation hierarchy, splicing,
-and FASTA access remain inside the product. Both consumers resolve the
+`rsomics-annotation` release revision `8e7beed4d51e` converts inclusive GFF/GTF
+features once into the shared half-open value and consumes
+`rsomics-common 0.11.0` for single-output transaction and alias safety.
+Annotation hierarchy, splicing, coordinated extraction outputs, and FASTA
+access remain inside the product. Both interval consumers resolve the
 published registry archive rather than a path patch. No public overlap index
 remains to justify speculatively; another product may propose one only after a
 second concrete consumer exists.

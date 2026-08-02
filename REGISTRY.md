@@ -14,7 +14,7 @@ Status meanings are defined in [CONVENTIONS.md](CONVENTIONS.md).
 
 | Product | Status | Initial scope / upstream anchors |
 |---|---|---|
-| `rsomics-annotation` | repo-only | GFF/GTF inspection, selection, transformation, sequence extraction |
+| `rsomics-annotation` | live | GFF/GTF inspection, selection, transformation, sequence extraction |
 | `rsomics-bam` | planned | gate-complete SAM/BAM/CRAM release candidate; name cooldown ends 2026-08-02 19:56:02 UTC |
 | `rsomics-bed` | live | BED/interval algebra and bedtools-like operations |
 | `rsomics-call` | live | alignment pileup, genotype likelihoods, and lightweight small-variant calling |
@@ -49,8 +49,8 @@ Product status summary:
 
 | Status | Count |
 |---|---:|
-| live | 5 |
-| repo-only | 3 |
+| live | 6 |
+| repo-only | 2 |
 | pilot | 1 |
 | planned | 21 |
 | **Total** | **30** |
