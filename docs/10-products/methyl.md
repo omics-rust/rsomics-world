@@ -1,9 +1,7 @@
 # Methyl product dossier
 
-Status: source and upstream-operation audit complete. The first-release command
-surface is implemented and passes four-native-target CI. The representative
-single-end and overlapping paired-end WGBS extraction gates pass; publication
-remains gated on the rest of the retained performance matrix.
+Status: 0.1.0 published. The first-release command surface and retained
+compatibility and performance matrix are complete.
 
 ## Boundary
 
@@ -626,8 +624,104 @@ and `a92f7133a6e1a19b13789d768b1142b2899b70353d78c016b346e1a45d3d4e55`.
 The raw logs, summaries, and matching TSVs are retained with the WGBS fixture.
 
 The high-depth targeted, all-context, CRAM, sparse RRBS-like, and M-bias rows
-are closed. The remaining subcommand performance gates are `merge-context`
-and `per-read`; the matrix also retains its long-contig stress row.
+are closed. The `merge-context`, `per-read`, and long-contig rows below close
+the remaining retained performance matrix.
+
+### Merge-context gate, 2026-08-03
+
+The retained `context-fast_CpG.bedGraph` input has SHA-256
+`ea9be89eb342c6ab2958e6b7c4046a1396896cf1a4eddd3913e4e2f6c9292a2e`.
+Revision `073421f66ce8` uses the registry release of `rsomics-common 0.12.1`;
+its Rust binary has SHA-256
+`2ca23e6c6e91cf1b72369fd0990f6a8c98747136a5142872a0044fa00041960d`.
+The oracle remains the one-thread MethylDackel rebuild with SHA-256
+`70e2296eb412bb4cf9c0ce2b74a0ab290211f2b50c29bced091db66317e8c152`.
+Both commands write through standard output redirection so the comparison does
+not charge only the Rust named-output path for an explicit durability sync.
+
+After one warmup per binary, ten alternating pairs produce the same 2,400,005
+lines with SHA-256
+`b43dc06f04fd162e61a9cc7d4e68da9d93c6b956e0b5b52bbe95f2265d0128e0`.
+Rust wall time is `3.327 ± 0.933` seconds versus `3.166 ± 0.595` seconds and
+mean user CPU is 1.629 versus 1.621 seconds, so no throughput or user-CPU
+advantage is claimed. Mean system CPU is 0.246 versus 0.344 seconds; Rust wins
+nine pairs, reducing system CPU by 28.5%, with paired difference
+`0.098 ± 0.085` seconds and t statistic 3.637. Mean maximum RSS is 8,698,266
+versus 6,240,666 bytes, so no memory advantage is claimed.
+
+The raw Rust and upstream timing files have SHA-256
+`402428891da7413d40f0e2f4f2cae854ece46d006773159eb20ca0c0a6a9cbac`
+and `1dd3313d6ac10f2ade3437ad4ed64dcec1430b10c247a42224f4621c1d6c309e`.
+Their parsed summaries have SHA-256
+`113fac1f139e89773c13495171c4f7386f42a3be9130ca26b31c7dab5e1658e8`
+and `c306553002ce64180fd8eea2b4ce409b4689feeb7c9ca1e2759b32bb4d334914`;
+the aggregate statistics have SHA-256
+`69a658ecd41b8af1da30ccd270d760bfd01160270b9f1d9563f69e06196d9b01`.
+
+The first named-output diagnostic exposed an independent shared-layer defect:
+millions of small writes reached an unbuffered file and took 61.19 seconds,
+including 46.63 seconds of system CPU. `rsomics-common 0.12.1` keeps the same
+transactional contract but adds the 1 MiB buffer and an explicit checked
+flush. A registry-resolved integration run produces the same output in 4.04
+seconds with 0.28 seconds of system CPU; it is a single correction check, not
+an additional comparative estimate. Its resource record has SHA-256
+`65e734c04100e39df50fbca0b2d49cba90a930440fffe1b954ffaa5b2cb01e68`.
+
+### Per-read and long-contig gates, 2026-08-03
+
+Revision `19c000cbe553` adds a CpG-only caller path, retains checked long-CIGAR
+fallback while avoiding an allocation for the common single-operation CIGAR,
+uses a borrowed streaming metric, and writes six-decimal percentages with an
+integer formatter verified exhaustively through 1,024 informative bases. The
+public callback exposes borrowed record fields rather than forcing an owned
+copy for every emitted row.
+
+All 64 local tests pass in debug and release together with strict Clippy,
+rustdoc, and package verification. Exact-head four-native-target CI
+`30769900077` passes.
+
+The benchmark uses the 48,000,100-base single-contig reference and four-million
+record BAM from `wgbs-single-4m-20260803`. After one warmup per binary, ten
+alternating pairs produce the same 3,995,987 lines with SHA-256
+`5ea398de4d5b1dd7c1d6db88f42ed6ef738bdd6e367f7097d6a3cd9c6f390dd7`.
+The Rust and oracle binaries have SHA-256
+`315465621ff3be6afc96418bdb499b6bfc773327b8e9f8325e9d0fa2965373f5`
+and `70e2296eb412bb4cf9c0ce2b74a0ab290211f2b50c29bced091db66317e8c152`.
+
+Rust wall time is `5.652 ± 0.832` seconds versus `4.467 ± 0.837` seconds and
+mean user CPU is 3.739 versus 2.897 seconds. This is an explicit CPU and
+throughput cost, not a speed claim. Mean maximum RSS is 9,810,739 versus
+13,851,034 bytes; Rust uses 29.2% less memory and wins all ten pairs, with a
+paired difference of `4,040,294 ± 911,117` bytes and t statistic 14.023.
+
+The raw Rust and upstream timing records have SHA-256
+`be4a33cc06e6d91977ef5940d692d6fe34d34bcffa695529164600e7fde50539`
+and `1b1319a5ff2e2d4ffc9e9f5bf15f7abac33ad453f3ff34e590bdf18634a86139`.
+Their parsed summaries have SHA-256
+`1abed5775a3d59f9f4ce4f973d1f09fbeb44bd3ca6e0bc8893106d6f78a23693`
+and `b6c9c28aea122273024286e6caeabdf54fdcadaae2beab7038ca9d4436fbd0b0`;
+the aggregate statistics have SHA-256
+`f4419199f0a6589f25a4937d9bc02ee024dee904bc9f5159404ee064f5018d60`.
+
+The same run traverses the full reference through the 1 MiB cache without
+reference-sized accumulation. The sparse RRBS fixture independently spans a
+50,000,100-base contig with mean Rust RSS 9,828,762 bytes, while the
+7,813,100-base targeted
+fixture recorded 10,289,152 bytes in its retained resource run. Together with
+the above per-read distribution and the over-20-kilobase CIGAR correctness
+test, this closes the long-contig bounded-memory row. The upstream's documented
+incorrect handling of alignments spanning more than 10 kb remains a deliberate
+compatibility improvement rather than a byte-equivalence target.
+
+### Release evidence, 2026-08-03
+
+The clean release revision is `916944d39f2a`. Exact-head four-native-target CI
+`30770176701` passes, including format, strict Clippy, rustdoc, package
+verification, and debug and release tests. Publish workflow `30770336093`
+released `rsomics-methyl 0.1.0`. An independent download from the crates.io
+static archive has SHA-256
+`1db1c6b7af380364bdcf93a4c71e7252faa03f5c5be635515cbfd3f6e5e924b4`;
+all 64 tests from that downloaded package pass in debug and release.
 
 A separate historical reverification reports byte-identical data lines on a
 92 MB, four-million-read BAM producing about 2.5 million CpG rows.
