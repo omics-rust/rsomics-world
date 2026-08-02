@@ -1,8 +1,8 @@
 # Methyl product dossier
 
-Status: source and upstream-operation audit complete. The target repository is
-active; `merge-context` and the checked extraction core are implemented, but
-the complete first release slice is not yet publishable.
+Status: source and upstream-operation audit complete. The first-release command
+surface is implemented and passes four-native-target CI. Publication remains
+gated on retained representative performance and memory evidence.
 
 ## Boundary
 
@@ -91,26 +91,23 @@ single consumer.
 
 ```text
 src/
+├── alignment.rs
+├── bed.rs
+├── calling.rs
 ├── cli.rs
-├── reference.rs
 ├── context.rs
-├── strand.rs
-├── calling/
-│   ├── projection.rs
-│   ├── overlap.rs
-│   ├── filters.rs
-│   └── metrics.rs
-├── extract/
-│   ├── window.rs
-│   ├── region.rs
-│   └── output.rs
-├── mbias/
-│   ├── metrics.rs
-│   ├── bounds.rs
-│   └── render.rs
+├── conversion.rs
+├── extract.rs
+├── extract_output.rs
+├── mbias.rs
+├── mbias_output.rs
 ├── merge_context.rs
+├── output.rs
 ├── per_read.rs
-└── report.rs
+├── reference.rs
+├── selection.rs
+├── strand.rs
+└── trimming.rs
 ```
 
 `rsomics-common` owns errors, exit mapping, execution reports, aliases, and
@@ -122,8 +119,9 @@ until a second product demonstrates the same transaction contract.
 records from `rsomics-bamio`. It is also a concrete driver for
 `rsomics-pileup`: sortedness validation, checked CIGAR projection,
 low-allocation column views, and generic overlapping-mate evidence are shared
-with BAM and variant-calling products. Bisulfite strand, cytosine context, conversion,
-methylation calls, bias policy, and output formats stay inside this product.
+with BAM and variant-calling products. Bisulfite strand, cytosine context,
+conversion, methylation calls, bias policy, and output formats stay inside this
+product.
 
 Indexed FASTA access may use the aligned external noodles implementation.
 `rsomics-seqio` is not expanded from streaming FASTA/FASTQ into speculative
@@ -334,9 +332,41 @@ and `94c74bf7a4f2e8d29291dee5d28c0ba44dea10ac355383babe9df175c28422e1`.
 An independent insertion-separated CIGAR test corrects current upstream's
 failure to advance its reference cursor between multiple match operations;
 low-quality non-CpG calls are excluded from both numerator and denominator.
-Exact-head four-native-target CI `30756788744` passes. The first release now
-remains gated on the opposite-strand variant filter and retained performance
-fixtures.
+Exact-head four-native-target CI `30756788744` passes.
+
+Revision `b1cd315ec4b3` completes the opposite-strand variant filter without a
+new foundation. After trimming, overlapping-mate adjustment, base-quality
+filtering, and strand-aware BED selection, it counts usable opposite-strand
+reference and non-reference evidence. `N` contributes to neither numerator
+nor denominator, a fraction equal to the configured maximum is retained, and
+minimum usable depth is enforced before the fraction test. CpG, CHG, and CHH
+share the same product-local evidence model; complementary CpG and CHG spans
+are excluded symmetrically when either cytosine fails.
+
+At minimum opposite depth four and maximum fractions 0.35 and 0.6, CpG data
+rows match current MethylDackel with SHA-256
+`ea2804d1135abddacf6ff7af3977a1f67865fae4d48cc048e0bed53c0e4b1c0e`
+and `6eee2fa4dc0d42761d05c406d4c40bb450a309c384c56887f3867e2441cf6a9b`;
+the corresponding CHG hashes are
+`5465d7734fdad91fe4e1405f51da3d3d4e6c879649f570813364cd83ee5821ce`
+and `fd8fba48fb89bcce1716f9844add7fa834971a04e936660975901cddabb70870`.
+An independent all-context differential has CpG, CHG, and CHH hashes
+`624ac320bcdb5f97961eb1a8bbb399924ec9b6e281544fa7a2171d1f3125d62c`,
+`a871c91a1db5f48f0de869ee2f0a67b93cff4e2aece9100615ca8c882501c81e`,
+and `08c8319bf1fa5bb87817bbe3e39b077d3881ac89c2b0f78981b1733700e4f953`.
+
+Four upstream contradictions are deliberately corrected and frozen in the
+fixture. Current MethylDackel counts `N` in usable depth, excludes equality
+despite describing a maximum allowed fraction, can emit one half of a merged
+CpG or CHG when the earlier half is variant, and recreates an excluded site as
+a zero-coverage row in an exhaustive report. The corrected exhaustive output
+has SHA-256
+`07b556a3ab5fec6cc1e5bea994581dd0bd8644504efcd353ceefa5b01c4400b5`.
+Exact-head four-native-target CI `30757468631` passes. Variant classification,
+context-span policy, and merged-output suppression remain inside
+`rsomics-methyl`; the existing `bamio`, `pileup`, and `intervals` contracts need
+no expansion. The implemented first-release surface is now gated on retained
+representative performance fixtures rather than another functional option.
 
 A separate historical reverification reports byte-identical data lines on a
 92 MB, four-million-read BAM producing about 2.5 million CpG rows.
