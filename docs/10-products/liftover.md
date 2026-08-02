@@ -1,7 +1,8 @@
 # Liftover product dossier
 
-Status: source and upstream-operation audit complete. The existing target
-repository is an implementation asset, not a release candidate.
+Status: `rsomics-liftover 0.1.0` published and independently verified. The
+production hot path was measured at `db576170a48b3b5762fd128890303298c6b2fa3e`;
+the published VCS identity is `597220ee2ed1102360bc3ab15646e2c9067a1a84`.
 
 ## Boundary
 
@@ -66,44 +67,33 @@ mode of `vcf`, and its Wiggle and BigWig operations share `signal`.
   reverse mappings, ties, and chain-size filters receive exact boundary tests.
 - Output aliases are rejected before work begins. Mapped and rejected outputs
   are staged and committed as one transaction.
-- User-supplied chain provenance, direction, and hash can be emitted in the
-  execution report. The crate does not download or redistribute assembly chain
-  files.
+- Chain direction remains an explicit user input. The crate does not download
+  or redistribute assembly chain files.
 
 ## Target structure
 
 ```text
 src/
+├── bed.rs
+├── bed12.rs
+├── chain.rs
 ├── cli.rs
-├── chain/
-│   ├── parser.rs
-│   ├── index.rs
-│   ├── validate.rs
-│   └── inspect.rs
-├── mapping/
-│   ├── candidate.rs
-│   ├── interval.rs
-│   └── rejection.rs
-├── formats/
-│   ├── bed.rs
-│   ├── position.rs
-│   ├── vcf.rs
-│   ├── alignment.rs
-│   ├── signal.rs
-│   ├── annotation.rs
-│   └── maf.rs
+├── io.rs
+├── lib.rs
+├── main.rs
+├── mapping.rs
 └── transaction.rs
 ```
 
 Format modules are added only with a complete release slice. Empty modules and
 advertised placeholder subcommands are forbidden.
 
-The chain parser, index, and mapping engine remain product-private initially.
+The chain parser, index, and mapping engine remain product-private.
 `rsomics-common` owns errors, exit mapping, input aliases, execution reports,
-and output transactions. `rsomics-help` owns the complete CLI presentation.
-`rsomics-intervals` may supply its checked half-open coordinate type after an
-API review, but liftover-specific chain ordering and candidate policy do not
-belong there.
+and single-output plumbing. `rsomics-help` owns CLI parsing and presentation.
+`rsomics-intervals` supplies the checked half-open interval type used by the
+BED paths. The liftover-specific two-output commit, chain ordering, and
+candidate policy remain private because they have no second product consumer.
 
 Future alignment support is a named consumer of `rsomics-bamio` alongside
 `rsomics-bam`. A public variant, signal, or annotation foundation is not
@@ -127,42 +117,45 @@ The one routed source candidate is the clean `rsomics-liftover` repository at
 No retired micro-crate needs revival. The target repository remains the owner
 of the selected code and history.
 
-## Existing implementation gaps
+## First-release implementation
 
-The current 302-line implementation covers only a narrow BED-like path and
-must not be published in its present form.
+The historical 302-line path was replaced rather than extended in place. The
+current implementation provides:
 
-- Header fields are indexed without length checks and numeric fields use
-  production `unwrap()`.
-- Invalid block tokens disappear through `filter_map`, while non-chain and
-  malformed BED lines are silently ignored.
-- Header bounds, target strand, endpoints, terminal block totals, identifiers,
-  ordering, overlaps, negative spans, zero spans, and overflow are unchecked.
-- Only `minMatch` is exposed. BED12 blocks and thick bounds, multiple mappings,
-  minimum blocks, preservation, chain-size filters, and exact tie behavior are
-  absent.
-- The current frozen test does not invoke the upstream binary in CI.
-- Mapped and rejected files are truncated before parsing or mapping succeeds.
-- The CLI bypasses `rsomics-help`, uses the inherited `Tool` shell, and contains
-  extensive historical and narrative comments that do not match the project
-  style.
+- strict streaming plain/gzip chain parsing with checked header, block,
+  identifier, span, terminal-total, UTF-8, and overflow failures;
+- typed chain candidates and UCSC-compatible rejection causes;
+- BED3-6 and BED12 conversion, including reverse chains, gaps, zero-length
+  coordinates, minimum-match and minimum-block boundaries, multiple mappings,
+  serial control, chain-size filters, name preservation, and thick bounds;
+- buffered mapped and rejected output with alias rejection and paired durable
+  commit behavior;
+- `rsomics-help` CLI presentation and `rsomics-common` errors, reports, and
+  exit mapping;
+- internal invariants, committed goldens, malformed-input CLI tests, and live
+  UCSC black-box differentials.
+
+Production paths contain no inherited narrative comments or unchecked parser
+operations. Future formats remain absent rather than exposed as placeholders.
 
 ## Retained evidence
 
-The committed small golden was regenerated on 2026-07-31 with the local
-official macOS arm64 `liftOver` binary. Both mapped and unmapped outputs were
-byte-identical. The oracle binary SHA-256 is
-`3df0770dbd09a76cc308bfdd025478964e26e3e3f1a150c177786488850a6996`.
+The small committed goldens and live differentials are byte-identical to the
+separately downloaded official macOS binaries. Exact-head CI pins macOS arm64
+SHA-256
+`0604b6ef4a0ae5dd56847950469fe000df7e206f235a05b3d1332e226823969d`
+and macOS x86_64 SHA-256
+`464a2850020a25b79d8931f0e9f7091b180333ec0579cdec88da69558ddff0f2`.
 
-The historical performance note reports 0.49 seconds for rsomics and 1.12
-seconds for UCSC on 300,000 intervals and a synthetic 2,000-block chain.
+The superseded historical performance note reports 0.49 seconds for rsomics
+and 1.12 seconds for UCSC on 300,000 intervals and a synthetic 2,000-block chain.
 Neither the large fixture nor its generator is retained, and the note does not
 record output hashes or timing distributions. The result is therefore a useful
 recipe, not a release claim.
 
 ## First release slice
 
-The first release contains:
+The implemented first release contains:
 
 - `chain validate`;
 - `chain inspect`;
@@ -172,7 +165,7 @@ The first release contains:
   them;
 - plain and gzip chain input;
 - mapped and rejected transactional outputs;
-- unified help, completion, error, and execution-report behavior.
+- unified help, error, and execution-report behavior.
 
 `bed` must preserve all fields whose semantics are unchanged, update strand
 and BED12 geometry correctly, and expose split behavior explicitly. It does
@@ -188,6 +181,11 @@ Alignment, signal, annotation, and MAF follow only after their format
 foundations or private I/O and independent compatibility gates are ready.
 
 ## Compatibility gates
+
+Exact-head CI run `30729541904` passed the stable slice on native Ubuntu 24.04
+and macOS 15 for both `x86_64` and `aarch64`. The macOS jobs downloaded the
+pinned official executable and required every live differential to run; Linux
+oracle evidence is the separately recorded release benchmark below.
 
 - Pin the official UCSC macOS and Linux binaries by download URL and hash
   because the executable has no useful version flag.
@@ -209,6 +207,19 @@ foundations or private I/O and independent compatibility gates are ready.
 
 ## Performance gates
 
+The current slice passes this gate. The tracked evidence is
+[`benchmarks/2026-08-02-linux-x86_64.md`](https://github.com/omics-rust/rsomics-liftover/blob/main/benchmarks/2026-08-02-linux-x86_64.md).
+At exact source `db57617`, the official Linux x86_64 oracle and rsomics produce
+byte-identical mapped and rejected files across single-chain, BED12,
+minus-heavy, dense multiple-mapping, and real `hg38ToHg19` workloads. A pinned
+five-run 20,000-block/100,000-record distribution measured median wall time of
+0.22 seconds for rsomics and 8.74 seconds for UCSC, with 2,688 and 12,544 KiB
+maximum RSS respectively. The real-chain run measured 0.44 versus 1.66 seconds
+and 15,232 versus 40,320 KiB. The record includes machine, command, binary,
+fixture, output, and generator hashes plus component accounting.
+
+The durable criteria remain:
+
 - Measure chain parse and index construction separately from record mapping.
 - Use a deterministic synthetic chain with hundreds of thousands of blocks and
   at least one million varied BED3, BED6, and BED12 records.
@@ -222,6 +233,23 @@ foundations or private I/O and independent compatibility gates are ready.
 - A stable hot path must be strictly faster or use materially fewer resources.
   The unreproducible historical 2.3-times note does not satisfy the release
   gate.
+
+## Publication verification
+
+Publish workflow `30729592353` uploaded version 0.1.0 from exact head
+`597220ee2ed1102360bc3ab15646e2c9067a1a84`. The live crates.io API reports a
+non-yanked 30,074-byte archive with SHA-256
+`a02e02938feb29c9dd27e9f9ea1a2864df5a9019b4ed8e00cffbeebffbef6e76`,
+Rust 1.91, the expected library, and one `rsomics-liftover` binary. An
+independently downloaded registry archive has the same checksum and records
+the same VCS identity.
+
+`cargo install --locked rsomics-liftover@0.1.0` succeeded on an isolated
+external-disk target. The installed binary reported version 0.1.0 and returned
+the expected JSON chain-validation summary for the committed two-chain golden.
+The org registry token was granted to this repository only for the publish
+run, removed immediately after success, and verified absent; the selected
+repository count returned from ten to nine.
 
 ## License and attribution
 
@@ -244,7 +272,7 @@ slice.
 
 ## Explicit exclusions
 
-- No publication of the current narrow implementation.
+- Publish only the verified BED and chain slice; deferred formats remain absent.
 - No silent malformed-record or malformed-chain skipping.
 - No automatic chain download, bundled UCSC chain, or embedded UCSC binary.
 - No generic line-by-line GFF/GTF lifting advertised as annotation-safe.

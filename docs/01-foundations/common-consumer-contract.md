@@ -26,23 +26,24 @@ The table is based on live source at these revisions:
 - `rsomics-bed` `7579c9d537f9`;
 - `rsomics-vcf` `bbc09be7ed38`;
 - `rsomics-annotation` `8e7beed4d51e`;
+- `rsomics-liftover` `597220ee2ed1`;
 - `rsomics-seqio` `0c6ce988d8c9`;
 - `rsomics-intervals` `6783f67614ae`.
 
 | Current item | Concrete retained consumers | Finding |
 |---|---|---|
-| `RsomicsError`, `Result`, `Context` | `seq`, `fastq-preprocess`, `bed`, `annotation`, `seqio` | keep; multiple real call sites and stable error categories |
-| `ExitCode`, JSON envelopes, `ToolMeta`, `run()` | `seq`, `fastq-preprocess`, `bed`, `annotation`, `vcf` | keep after removing unrelated capability initialization |
+| `RsomicsError`, `Result`, `Context` | `seq`, `fastq-preprocess`, `bed`, `annotation`, `liftover`, `seqio` | keep; multiple real call sites and stable error categories |
+| `ExitCode`, JSON envelopes, `ToolMeta`, `run()` | `seq`, `fastq-preprocess`, `bed`, `annotation`, `liftover`, `vcf` | keep after removing unrelated capability initialization |
 | `Validation<T>`, `run_validation()` | implemented `vcf validate`; planned `bam validate` | keep the format-neutral valid/invalid report and exit contract; validator policy stays in products |
-| `OutputArgs::json` | `seq`, `fastq-preprocess`, `bed`, `annotation`, `vcf` | retained as the one demonstrated shared CLI control |
+| `OutputArgs::json` | `seq`, `fastq-preprocess`, `bed`, `annotation`, `liftover`, `vcf` | retained as the one demonstrated shared CLI control |
 | former `CommonFlags::threads` and global Rayon setup | effective only in `fastq-preprocess` | removed from common; preprocessing owns a local Rayon pool |
 | former `CommonFlags::seed` | none of the current consumers | removed; no RNG work was manufactured to justify it |
 | former `CommonFlags::quiet` / `verbose` | no current product emits common info/debug messages | removed until two products establish a logging contract |
 | `StderrLog` | no direct product consumer | remove; its write errors are also currently discarded |
-| `Tool` trait | only unreconstructed `liftover` and `minimap2` repositories | do not let inherited wrappers freeze the pilot-product API |
+| `Tool` trait | only unreconstructed `minimap2` repository | do not let the inherited wrapper freeze the product API; liftover removed it |
 | former path/stdin and truncating path/stdout helpers | no retained consumer | removed; they did not provide a safe shared contract |
-| `write_atomic`, `write_output` | `seq`, `bed`, `annotation`, `vcf` | keep the same-directory transaction and stream selection; multi-file policy stays product-local |
-| `reject_output_alias` | `seq`, `bed`, `annotation` | keep the policy-free exact, normalized, hard-link, and symbolic-link preflight |
+| `write_atomic`, `write_output` | `seq`, `bed`, `annotation`, `liftover`, `vcf` | keep the same-directory transaction and stream selection; multi-file policy stays product-local |
+| `reject_output_alias` | `seq`, `bed`, `annotation`, `liftover` | keep the policy-free exact, normalized, hard-link, and symbolic-link preflight |
 | `format_g6` | no retained current product consumer | remove until two typed numeric-output contracts require it |
 | `test-support` / `tier2` | no current retained consumer | remove; the fixture macro assumes the deleted monorepo layout |
 | `flate2` dependency | no common source call site | remove |

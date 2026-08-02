@@ -117,6 +117,17 @@ Rejected public boundary:
       slice.
 - [ ] Review sequence-index I/O through the `rsomics-index` consumer.
 
+## P1 — coordinate conversion
+
+- [x] Replace the inherited narrow liftover path with strict chain parsing,
+      typed mapping outcomes, and transactional BED3-6/BED12 conversion.
+- [x] Verify the implemented slice against pinned official UCSC binaries,
+      representative synthetic topologies, and a real `hg38ToHg19` chain.
+- [x] Publish `rsomics-liftover 0.1.0` with `common`, `help`, and `intervals`
+      as its only public rsomics dependencies.
+- [ ] Add the reference-aware VCF slice only after its allele, normalization,
+      rejected-record, and modern-oracle contract is complete.
+
 ## P2 — alignment and variation
 
 - [x] Recover and classify the archived `rsomics-bam 0.1.0/0.2.0` packages

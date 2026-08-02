@@ -31,7 +31,7 @@ operation will ship. It records:
 | `rsomics-fastq-preprocess` | 12 | [audited](sequence-fastq.md#rsomics-fastq-preprocess) |
 | `rsomics-fastq-qc` | 1 | [audited](sequence-fastq.md#rsomics-fastq-qc) |
 | `rsomics-index` | 5 | [audited](interval-annotation-index.md#rsomics-index) |
-| `rsomics-liftover` | 1 | [audited](liftover.md) |
+| `rsomics-liftover` | 1 | [released 0.1.0](liftover.md) |
 | `rsomics-limma` | 16 | [audited](bulk-expression.md#rsomics-limma) |
 | `rsomics-metagenomics` | 5 | [audited](metagenomics-sketch.md#rsomics-metagenomics) |
 | `rsomics-methyl` | 1 | [audited](methyl.md) |
@@ -78,18 +78,21 @@ flowchart TB
         bed["rsomics-bed"]
         annotation["rsomics-annotation"]
         index["rsomics-index"]
+        liftover["rsomics-liftover"]
     end
 
     common["rsomics-common"] --> seq
     common --> prep
     common --> bed
     common --> annotation
+    common --> liftover
     common -. planned .-> qc
     common -. planned .-> index
     help["rsomics-help"] --> seq
     help --> prep
     help --> bed
     help --> annotation
+    help --> liftover
     help -. planned .-> qc
     help -. planned .-> index
     seqio["rsomics-seqio"] --> seq
@@ -99,6 +102,7 @@ flowchart TB
     kmer["rsomics-kmer"] --> seq
     intervals["rsomics-intervals"] --> bed
     intervals --> annotation
+    intervals --> liftover
 ```
 
 Solid arrows are current consumer contracts. Dotted arrows are planned

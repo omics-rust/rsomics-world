@@ -27,7 +27,7 @@ Status meanings are defined in [CONVENTIONS.md](CONVENTIONS.md).
 | `rsomics-fastq-preprocess` | live | trimming and filtering (initial fastp-compatible subset); later correction, UMI, merge, deduplication |
 | `rsomics-fastq-qc` | pilot | FASTQ quality metrics and reports |
 | `rsomics-index` | planned | bgzip/tabix and reusable sequence-index workflows |
-| `rsomics-liftover` | repo-only | UCSC chain coordinate liftOver |
+| `rsomics-liftover` | live | UCSC chain validation/inspection and strict BED3-6/BED12 coordinate conversion |
 | `rsomics-limma` | planned | limma/voom workflow |
 | `rsomics-metagenomics` | planned | abundance-aware amplicon processing, taxonomic databases, read classification, and reports |
 | `rsomics-methyl` | planned | methylation extraction and analysis |
@@ -49,8 +49,8 @@ Product status summary:
 
 | Status | Count |
 |---|---:|
-| live | 7 |
-| repo-only | 1 |
+| live | 8 |
+| repo-only | 0 |
 | pilot | 1 |
 | planned | 21 |
 | **Total** | **30** |
@@ -66,7 +66,7 @@ not imply that the crate has passed its publication gate.
 | `rsomics-common` | live | live | all 30 accepted products |
 | `rsomics-help` | live | live | all 30 accepted CLI products |
 | `rsomics-bamio` | live | live | BAM, variant calling, RNA-seq QC, signal |
-| `rsomics-intervals` | live | live | BED, annotation, peak, signal |
+| `rsomics-intervals` | live | live | current: BED, annotation, liftover; later: peak and signal |
 | `rsomics-kmer` | live | live | pilot: sequence; later: metagenomics and sketch |
 | `rsomics-seqio` | live | live | current: sequence and preprocessing; planned: FASTQ QC and indexing |
 | `rsomics-stats` | live | live | composition, expression workflows, single-cell, ecology, population genetics |
