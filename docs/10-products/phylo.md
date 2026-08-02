@@ -1,7 +1,8 @@
 # Phylogenetics product dossier
 
-Status: source and upstream-operation audit complete. The target repository has
-not been created.
+Status: the complete initial slice is published as `rsomics-phylo 0.1.0`.
+Source head `8971f75d6649776ecad54c8e0f0ee8427f0abc63` passes exact-head CI on
+native Linux and macOS `x86_64` and `aarch64`.
 
 ## Boundary
 
@@ -20,7 +21,7 @@ The primary behavior sources are:
 - [scikit-bio 0.7.3 tree algorithms](https://scikit.bio/docs/latest/tree.html)
   for nucleotide distances, NJ, UPGMA/WPGMA, GME/BME, NNI, consensus,
   patristic matrices, RF-family distances, and cophenetic comparison;
-- [DendroPy 5.0.11 tree measures](https://jeetsukumaran.github.io/DendroPy/library/treemeasure.html)
+- [DendroPy 5.0.8 tree measures](https://jeetsukumaran.github.io/DendroPy/library/treemeasure.html)
   and
   [tree comparison](https://jeetsukumaran.github.io/DendroPy/library/treecompare.html)
   for node timing, balance statistics, directional split errors, and
@@ -54,7 +55,7 @@ diversity operations in `rsomics-ecology`. Tree-derived ILR bases are in
 
 | Target subcommand | Upstream operation | Decision |
 |---|---|---|
-| `trim` | trimAl threshold and gap-score trimming | initial `gap` method with complete threshold, alignment, column-map, and format contracts |
+| `trim` | trimAl threshold and gap-score trimming | initial FASTA `gap` method with checked threshold, rectangular alignment, and zero-based column-map contracts |
 | `distance` | scikit-bio Hamming, JC69, and K2P | aligned nucleotide sequences to one canonical labelled distance matrix |
 | `infer` | scikit-bio `nj`, `upgma`; SciPy average linkage | `--method nj\|upgma`; rootedness, negative branches, and tie behavior are explicit |
 | `compare` | scikit-bio RF/wRF/KF/cophenetic; DendroPy symmetric difference, Euclidean branch score, FP/FN | one comparison engine and one result schema, not four binaries |
@@ -105,9 +106,9 @@ implemented” is not a release slice.
 
 ## Alignment and distance contracts
 
-- Aligned records have unique nonempty identities, a checked common width, an
-  explicit nucleotide or amino-acid alphabet, and preserved full descriptions
-  where the selected output format supports them.
+- Aligned records have unique nonempty identities, a checked common width,
+  printable sequence bytes, and preserved full descriptions. Individual
+  operations apply their own residue semantics.
 - `rsomics-seqio` supplies the common FASTA stream and record boundary.
   Alignment validation, gap semantics, residue scoring, and trimming decisions
   stay in this product.
@@ -118,11 +119,9 @@ implemented” is not a release slice.
   sequences are range checked before work begins. Ragged input is an error;
   missing bytes are not counted as non-gaps.
 - Column maps preserve original zero-based coordinates independently of output
-  wrapping. A complementary alignment and its retained alignment partition the
-  input columns exactly.
+  wrapping. Version 0.1 does not advertise a complementary-alignment output.
 - Distance matrices use a labelled square TSV profile with both header and row
-  identities. The current unlabelled-body rsomics format is accepted only
-  through an explicit legacy input profile.
+  identities. The unlabelled historical layouts are not accepted.
 - Matrix identities are unique and row identities must match the header.
   Shape, hollow diagonal, symmetry, finite values, and operation-specific
   negativity are checked once at the boundary.
@@ -159,11 +158,11 @@ implemented” is not a release slice.
   Euclidean branch score, directional FP/FN, and cophenetic comparison share
   one taxon index and split encoding. The implementation has no fixed 64-taxon
   ceiling.
-- Exact-taxon and shared-taxon comparison are separate policies. The safe
-  default is exact identity; scikit-bio compatibility may select shared taxa
-  where the pinned operation does so.
-- Comparison output records rootedness, taxon policy, common and excluded taxa,
-  terminal-branch inclusion, branch-length policy, metric, and normalization.
+- Version 0.1 supports exact-taxon comparison only. A later shared-taxon mode
+  must be explicit and report excluded identities; it cannot silently inherit
+  scikit-bio's intersection behavior.
+- Comparison output records rootedness, exact taxon count, terminal-branch
+  inclusion, metric, normalization, and directional counts where applicable.
 - Node ages and coalescence ages state whether they mean backward time on an
   ultrametric tree or forward depth. Those quantities are not conflated.
 - Colless and gamma validate strict bifurcation where required. Unary nodes,
@@ -176,13 +175,13 @@ implemented” is not a release slice.
   matrix contract and aligned to interaction rows and columns by identity.
 - The interaction matrix is binary, rectangular, uniquely labelled, and has
   enough edges and edge pairs for a defined correlation.
-- The observed statistic, alternative, inclusion of the observed value in the
-  p-value numerator, permutation count, RNG algorithm, seed, and thread count
-  are recorded.
-- A pinned scikit-bio compatibility mode reproduces its generator stream for a
-  fixed seed. A parallel native RNG mode may use independent deterministic
-  streams, but it is named separately and does not claim bit-identical
-  p-values.
+- The observed statistic matches scikit-bio. The result records the
+  permutation count, SplitMix64 algorithm, and seed. The p-value uses
+  `(extreme + 1) / (permutations + 1)`.
+- Version 0.1 uses one deterministic native stream and accepts no thread-count
+  option for this command. It does not claim NumPy-stream identity. A future
+  compatibility or parallel mode must be named explicitly and pass a separate
+  oracle.
 - `permutations=0` is an explicit statistic-only mode. The result distinguishes
   “not calculated” from a numerical NaN produced by degenerate data.
 
@@ -190,35 +189,17 @@ implemented” is not a release slice.
 
 ```text
 src/
+├── alignment.rs
+├── matrix.rs
+├── distance.rs
+├── inference.rs
+├── comparison.rs
+├── measures.rs
+├── cospeciation.rs
 ├── cli.rs
-├── alignment/
-│   ├── model.rs
-│   ├── score.rs
-│   ├── trim.rs
-│   └── column_map.rs
-├── distance/
-│   ├── model.rs
-│   ├── sequence.rs
-│   ├── simd.rs
-│   └── tsv.rs
-├── infer/
-│   ├── nj.rs
-│   └── upgma.rs
-├── compare/
-│   ├── taxa.rs
-│   ├── splits.rs
-│   ├── rf.rs
-│   └── cophenetic.rs
-├── measure/
-│   ├── paths.rs
-│   ├── timing.rs
-│   └── balance.rs
-├── cospeciation/
-│   ├── interaction.rs
-│   ├── correlation.rs
-│   └── permutation.rs
-├── output.rs
-└── report.rs
+├── error.rs
+├── lib.rs
+└── main.rs
 ```
 
 Later likelihood, species-tree, placement, and tree-set modules are added only
@@ -288,9 +269,13 @@ deleted. Their external-disk clones remain implementation assets.
 The untracked `target/` directories in the node-ages and tree-balance clones
 are inherited local state and are not source assets or deletion targets.
 
-## Audit findings that block direct consolidation
+## Historical audit findings resolved by consolidation
 
-1. The current `rsomics-phylo-tree` permits invalid construction:
+These findings describe the deleted operation-sized assets and the old
+foundation snapshot. The 0.1.0 implementation either removed the affected
+surface or replaced it with the checked contracts above.
+
+1. The historical `rsomics-phylo-tree` permitted invalid construction:
    `Tree::default()` has no root node, all topology fields are publicly mutable,
    and `to_newick()` can index an invalid root.
 2. Its Newick parser silently maps invalid UTF-8 labels to an empty string,
@@ -336,30 +321,51 @@ are inherited local state and are not source assets or deletion targets.
     equivalence, phases, and obvious loops. Selected algorithms are retained
     without carrying that comment style into the target.
 
-## Compatibility plan
+## Compatibility evidence and later gates
 
 Oracle tests are first-class jobs. A missing required oracle fails the job; it
-does not return success after printing `SKIP`.
+does not return success after printing `SKIP`. The table includes later profile
+gates as well as the declared 0.1 subset; the release evidence below states
+what the first release actually ran.
 
 | Operation | Pinned oracle | Required evidence |
 |---|---|---|
 | gap trimming | trimAl 1.5.1 | thresholds 0/1/interior, `-cons`, gap symbols, ragged rejection, column map, complement, formats, and randomized aligned fixtures |
 | sequence distance | scikit-bio 0.7.3 | Hamming/JC69/K2P finite values, ambiguity and gap deletion, saturation, identities, TSV serialization, and random aligned fixtures |
-| NJ | scikit-bio 0.7.3 canonical NJ; RapidNJ 2.3.2 as performance comparator | compare unrooted topology and branch lengths independent of sibling order/root placement; both negative-branch policies |
+| NJ | scikit-bio 0.7.3 canonical NJ | compare unrooted topology and branch lengths independent of sibling order/root placement; both negative-branch policies; RapidNJ may be an additional performance comparator |
 | UPGMA | scikit-bio 0.7.3 and its pinned SciPy linkage | topology, linkage, branch lengths, ties, WPGMA exclusion, and random finite matrices |
-| RF/wRF/KF/FP/FN | scikit-bio 0.7.3 and DendroPy 5.0.11 profiles | rooted/unrooted, exact/shared taxa, duplicate/unnamed tips, missing lengths, terminal branches, polytomies, unifurcations, 64/65/300/100,000-taxon cases |
-| tip distances | scikit-bio 0.7.3 and DendroPy 5.0.11 | branch lengths, edge counts, missing-length policy, tip order, identities, and byte goldens |
-| timing and balance | DendroPy 5.0.11 | ultrametric and non-ultrametric trees, unary/polytomy cases, all normalizations, missing/non-finite lengths, and current node-age semantics |
-| cospeciation | scikit-bio 0.7.3 | statistic, exact fixed-seed compatibility mode, native deterministic mode, zero permutations, degenerate matrices, and label permutations |
+| RF/wRF/KF/FP/FN | scikit-bio 0.7.3 and DendroPy 5.0.8 profiles | rooted/unrooted, exact taxa, duplicate/unnamed tips, missing lengths, terminal branches, polytomies, unifurcations, and large taxon sets |
+| tip distances | scikit-bio 0.7.3 and DendroPy 5.0.8 | branch lengths, edge counts, missing-length policy, tip order, identities, and byte goldens |
+| timing and balance | DendroPy 5.0.8 | ultrametric and non-ultrametric trees, unary/polytomy cases, all normalizations, missing/non-finite lengths, and current node-age semantics |
+| cospeciation | scikit-bio 0.7.3 | observed statistic, native deterministic mode, zero permutations, degenerate matrices, and label alignment |
 
-Newick foundation tests cover the declared grammar directly plus round trips
-through scikit-bio, DendroPy, IQ-TREE, trimAl label output, and ASTER tree
-fixtures. NEXUS, NeXML, MAT, and multi-tree streams are not accepted until
-their own declared profiles pass.
+Newick foundation tests cover the declared grammar directly. Later
+interoperability profiles add round trips through scikit-bio, DendroPy,
+IQ-TREE, trimAl label output, and ASTER tree fixtures. NEXUS, NeXML, MAT, and
+multi-tree streams are not accepted until their own declared profiles pass.
 
-## Performance and memory plan
+## Performance and memory evidence
 
-Historical results are migration clues, not automatic release evidence.
+Historical results were treated as migration clues, not release evidence. The
+0.1.0 gate records raw series, fixture hashes, machine and version provenance
+in the product repository. On the Apple M2 release host:
+
+| Hot path | rsomics median | Oracle median | Advantage |
+|---|---:|---:|---:|
+| trim, 1,000 × 50,000 | 0.2710 s | trimAl 7.3948 s | 27.29× |
+| K2P, 360 × 8,000 | 0.2560 s | scikit-bio 8.7155 s | 34.04× |
+| NJ, 2,500 taxa, core | 0.7798 s | scikit-bio 1.4673 s | 1.88× |
+| RF, 4,000 tips, core | 0.0108 s | scikit-bio 0.0258 s | 2.38× |
+| eight tree measures | 0.0060 s | DendroPy 0.0418 s | 6.91× |
+| Hommola, 99 permutations | 0.0388 s | scikit-bio 0.3068 s | 7.91× |
+
+The 2,500-taxon inference process peaks at 261,160,960 bytes versus
+304,693,248 bytes for scikit-bio. The complete five-operation 4,000-tip tree
+suite peaks at 392,790,016 versus 803,454,976 bytes. The published evidence
+does not inherit any invalid historical 300-tip fixed-mask or missing RapidNJ
+claim.
+
+Later releases retain these requirements:
 
 - Re-run trim against trimAl 1.5.1 on nucleotide and protein alignments with
   enough rows and columns to dominate startup. Record retained columns and
@@ -367,9 +373,9 @@ Historical results are migration clues, not automatic release evidence.
 - Re-run every sequence-distance metric thread-for-thread against scikit-bio
   0.7.3 on an alignment whose pairwise work and full output matrix are both
   material. Separate compute-only from parse/emit.
-- Measure NJ against RapidNJ 2.3.2 on finite 2,000-taxon and larger matrices.
-  Report input plus working-set RSS; the current implementation allocates a
-  four-times-expanded square matrix in addition to parsed rows.
+- Retain the scikit-bio NJ differential on finite 2,000-taxon and larger
+  matrices. RapidNJ 2.3.2 may add an independent performance comparison when
+  available, but a missing binary is not presented as evidence.
 - Re-run UPGMA against current SciPy through scikit-bio, preserving the
   2,000-taxon linkage fixture and measuring both algorithm-only and end-to-end
   paths.
@@ -409,6 +415,28 @@ compute-only comparison.
 7. Extend trimAl modes, tree editing/consensus/outlier operations, likelihood
    inference, species-tree estimation, and placement as separate complete
    releases.
+
+## First release evidence
+
+`rsomics-phylo 0.1.0` contains all seven initial subcommands and depends on the
+published `rsomics-common 0.12.0`, `rsomics-help 0.4.0`,
+`rsomics-seqio 0.5.0`, and `rsomics-phylo-tree 0.2.0` archives. There are no
+path dependencies or placeholder commands.
+
+Local Rust 1.91 gates passed strict Clippy, documentation with warnings denied,
+17 library tests, three process-level CLI tests, both benchmark smoke programs,
+debug and release all-target tests, and package verification. The live oracle
+passed 135 pairwise distance checks, 40 randomized NJ/UPGMA cases, 11 tree
+comparison and measure checks, the observed Hommola statistic, and a trimAl
+fixture. The maximum randomized inference branch-score difference was
+`4.2631696775044585e-15`.
+
+Exact-head CI run `30747064784` passed native Linux and macOS on `x86_64` and
+`aarch64`. Publication run `30747212059` succeeded. The crates.io API and a
+fresh download agree on archive checksum
+`c043221c5271e6dfae0fc52ed5eb7ae4e593ec5d081442801e7de6a511497f01`;
+the release is not yanked. A fresh external-target `cargo install` produced
+`rsomics-phylo 0.1.0` and completed a real distance-matrix smoke test.
 
 ## Explicit exclusions
 

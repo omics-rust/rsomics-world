@@ -56,10 +56,10 @@ APIs:
 | `rsomics-help` | `61dd6f2ce0ce` | replaced the duplicate `HelpSpec` renderer and argv interception with recursive styling and parsing of the authoritative Clap command tree | 0.4.0 published; exact-head four-native-target CI `30596121607`; downloaded archive checksum `5922ec5a261660869fc36aa05f731c0adb059c43344eb78c2393f05611797fe1`; registry-package tests green |
 | `rsomics-intervals` | `6783f67614ae` | reduced the public crate to a validated generic zero-based half-open interval value; moved BED parsing, collections, algebra, merge policy, and COITrees indexing into products | 0.3.0 published; exact-head four-native-target CI `30597681539`; downloaded archive checksum `40cf072a5fb5900d8e4049cb9b03f28ce5ddc51e51ef2b3fed7c5c89bfa88ccd`; `bed` and `annotation` pass consumer tests against the registry release |
 | `rsomics-kmer` | `d89e2df0d8ea` | retained the checked sequence-counting API and added allocation-reusing canonical DNA-window Murmur64 hashing with arbitrary nonzero `k` and a full-width seed after `rsomics-sketch` supplied the second concrete consumer | 0.2.2 published; exact-head four-native-target CI `30734719265`; publish run `30734861858`; downloaded archive checksum `e1254977d1eaf89b29e727b7ea552ec8bd4bd0740b45fa40ac943e93ffaf9ed4`; sequence and sketch consumer suites green |
-| `rsomics-seqio` | `d7e1c33bb600` | retained strict allocation-reusing FASTA/FASTQ streams, bounded gzip decode buffering, wrapped FASTQ support, and fail-loud gzip/BGZF handling while removing unconsumed legacy, forced-format, and compression-policy APIs | 0.3.0 published; exact-head four-native-target CI `30599703477`; downloaded archive checksum `d2dcd0fab1a5320834a9b0f9cba7bbdd9bfe6b26c9c4740650ac88d939fcfcc5`; `seq` and `fastq-preprocess` pass consumer tests against the registry release |
+| `rsomics-seqio` | `4f0e2311f9ac` | retains strict allocation-reusing FASTA/FASTQ streams, bounded gzip decode buffering, wrapped FASTQ support, and fail-loud gzip/BGZF handling; 0.5 aligns the shared runtime contract with `rsomics-common` 0.12 without adding product policy | 0.5.0 published; exact-head four-native-target CI `30744450003`; publish run `30744498235`; downloaded archive checksum `15d43fe84756988ea45f2b39b5b1b745f7ea0b090ec1f1c74be8eaddf07838c6`; `seq`, `fastq-preprocess`, and `phylo` consumer paths are green |
 | `rsomics-bamio` | `82a8668717b5` | retains the validated raw-record encoder and indexed SAM/BAM/CRAM reader, aligns its shared runtime dependency with both product consumers on `rsomics-common` 0.10, and caches the compact validated variable-record layout after call, BAM, and pileup consumer checks | 0.4.1 published; exact-head four-native-target CI `30721193395`; publish run `30721286006`; downloaded archive checksum `1ff830a8263e4a5c8784101c3d6674e4bd86ec8ced446327d94d35731db13600`; three consumer suites green |
 | `rsomics-pileup` | `4b48bfdafecd` | retains the checked projection, retry-safe borrowed columns, per-source overlap and depth state, HTSlib-compatible BAQ, and bcftools-compatible column preparation while aligning its raw-record dependency with `rsomics-bamio` 0.4 | 0.4.0 published after call and BAM supplied concrete contracts; exact-head four-native-target CI `30714930834`; publish run `30715042037`; downloaded archive checksum `d33b5fa1c3ddbe86c8f53c2bb3fa870e482e90957aa5e559fceca0600ff56533`; registry-package tests and ordinary/deep performance and memory pass |
-| `rsomics-phylo-tree` | `63e39e1` | replaces public mutable topology with checked construction, immutable node views, traversal, and strict iterative Newick parsing and serialization; composition consumer tests cover named tips, binary topology, and tree-derived balance bases | 0.2.0 published; exact-head four-native-target CI `30742259200`; publish run `30742377050`; downloaded archive checksum `07234bb701159253e249cd8fccec70e728cb46e4999ec851f51dc549ad829fde` |
+| `rsomics-phylo-tree` | `63e39e14964b` | replaces public mutable topology with checked construction, immutable node views, traversal, and strict iterative Newick parsing and serialization; composition uses named topology for ILR bases and phylo uses the same API for inference, comparison, and measures | 0.2.0 published; exact-head four-native-target CI `30742259200`; publish run `30742377050`; downloaded archive checksum `07234bb701159253e249cd8fccec70e728cb46e4999ec851f51dc549ad829fde`; the second concrete product consumer shipped in `rsomics-phylo 0.1.0` |
 
 Publication does not freeze these APIs. Every later public item still requires
 two named product consumers and consumer-side tests.
@@ -273,12 +273,13 @@ topology and tip identities for tree-derived ILR bases. The iterative parser
 and serializer also pass a 20,000-level ladder-tree regression without relying
 on recursive descent or recursive formatting.
 
-The `rsomics-phylo` dossier supplies the second named concrete contract: checked
+`rsomics-phylo 0.1.0` now supplies the second implemented contract: checked
 construction, immutable topology, traversal, root interpretation, tip identity,
-and Newick parsing/emission. Inference, split-distance policy, tree measures,
-and result schemas stay in the product. The released foundation now enforces
-these shared boundaries; phylo-specific inference, split, distance, and result
-policy still waits for product work.
+and Newick parsing/emission. Its NJ/UPGMA builders, RF-family split policy,
+patristic matrices, measures, and result schemas remain product-local. Exact-head
+four-native-target CI `30747064784`, the live scikit-bio/DendroPy/trimAl oracle,
+and the published archive demonstrate the foundation boundary without moving
+phylo-specific policy into `rsomics-phylo-tree`.
 
 The `rsomics-ecology` dossier supplies the community-diversity contract:
 validated topology, postorder traversal, finite branch views, and checked tip
