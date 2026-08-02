@@ -44,7 +44,7 @@ operation will ship. It records:
 | `rsomics-sc` | 29 | [audited](sc.md) |
 | `rsomics-seq` | 34 | [audited](sequence-fastq.md#rsomics-seq) |
 | `rsomics-signal` | 15 | [audited](rnaseq-qc-signal.md#rsomics-signal) |
-| `rsomics-sketch` | 1 | [audited](metagenomics-sketch.md#rsomics-sketch) |
+| `rsomics-sketch` | 1 | [released 0.1.0](sketch-gate-2026-08-02.md) |
 | `rsomics-structure` | 9 | [audited](structure.md) |
 | `rsomics-table` | 16 | [audited](table.md) |
 | `rsomics-vcf` | 30 | [audited](variant.md#rsomics-vcf) |
@@ -72,6 +72,7 @@ flowchart TB
         seq["rsomics-seq"]
         prep["rsomics-fastq-preprocess"]
         qc["rsomics-fastq-qc"]
+        sketch["rsomics-sketch"]
     end
 
     subgraph interval["Interval and annotation pilot"]
@@ -87,6 +88,7 @@ flowchart TB
     common --> annotation
     common --> liftover
     common --> qc
+    common --> sketch
     common -. planned .-> index
     help["rsomics-help"] --> seq
     help --> prep
@@ -94,12 +96,15 @@ flowchart TB
     help --> annotation
     help --> liftover
     help --> qc
+    help --> sketch
     help -. planned .-> index
     seqio["rsomics-seqio"] --> seq
     seqio --> prep
     seqio --> qc
+    seqio --> sketch
     seqio -. planned .-> index
     kmer["rsomics-kmer"] --> seq
+    kmer --> sketch
     intervals["rsomics-intervals"] --> bed
     intervals --> annotation
     intervals --> liftover

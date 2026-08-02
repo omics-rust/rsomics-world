@@ -1,7 +1,11 @@
 # Metagenomics and sequence-sketch product dossier
 
-Status: source and upstream-operation audit complete. Neither target repository
-has been created.
+Status: `rsomics-sketch 0.1.0` published and independently verified for the
+initial DNA FracMinHash slice. See
+[`sketch-gate-2026-08-02.md`](sketch-gate-2026-08-02.md).
+
+The `rsomics-metagenomics` source and upstream-operation audit is complete; its
+target repository has not been created.
 
 ## Boundary decision
 
@@ -410,9 +414,9 @@ and ANI semantics differ from canonical DNA.
 
 | Target subcommand | Upstream operation | Initial stable surface |
 |---|---|---|
-| `sketch` | sourmash `sketch dna`; Mash `sketch` as a secondary oracle | streaming canonical-DNA FracMinHash; selected `k`, scaled value, seed, optional abundance; one pinned sourmash signature profile |
-| `inspect` | sourmash signature describe/manifest; Mash `info` | parameters, identity, source metadata, digest, hash count, abundance state, and integrity validation |
-| `compare` | sourmash `compare`; Mash `dist` where mathematically aligned | Jaccard similarity, containment in both directions, ANI only under a declared estimator, pair-list and labelled matrix output |
+| `sketch` | sourmash `sketch dna` | streaming canonical-DNA FracMinHash; selected `k`, scaled value, seed, optional abundance; one pinned sourmash signature profile |
+| `inspect` | sourmash signature describe/manifest | parameters, identity, source metadata, digest, hash count, abundance state, and integrity validation |
+| `compare` | sourmash `compare` | Jaccard similarity, containment in both directions, ANI only under a declared estimator, pair-list and labelled matrix output |
 | `search` | sourmash `search` without an index | one query against a signature collection; similarity or containment threshold, stable ranking, selection, and complete tabular result |
 
 The release stores a real bounded sketch. It does not call an exact
@@ -441,10 +445,11 @@ reason to add a plotting subsystem to this product.
 
 ### Sketch and signature contract
 
-- A signature records format version, molecule type, `k`, hash function, seed,
-  selection kind, scaled or fixed-size parameter, maximum accepted hash,
-  abundance state, source identity, display name, filename where relevant,
-  source hashes, and a content digest.
+- A signature records the fields available in its declared format profile:
+  version, molecule type, `k`, hash function, seed, selection parameter,
+  maximum accepted hash, abundance state, display name, filename where
+  relevant, and a content digest. The sourmash 0.4 profile has no source-file
+  hash field; external benchmark and workflow manifests record input hashes.
 - Hashes are sorted and unique. Abundance counts are checked nonzero integers
   attached to retained hashes only. Deserialization validates order,
   uniqueness, range, parameter consistency, digest, and numeric limits.
@@ -488,35 +493,24 @@ reason to add a plotting subsystem to this product.
 ```text
 src/
 ├── cli.rs
-├── signature/
-│   ├── model.rs
-│   ├── sourmash.rs
-│   └── validate.rs
-├── sketch/
-│   ├── dna.rs
-│   ├── fracminhash.rs
-│   └── minhash.rs
-├── compare/
-│   ├── measures.rs
-│   ├── matrix.rs
-│   └── ani.rs
-├── collection/
-│   ├── manifest.rs
-│   ├── select.rs
-│   └── index.rs
-└── search/
-    ├── linear.rs
-    ├── indexed.rs
-    └── gather.rs
+├── compare.rs
+├── lib.rs
+├── main.rs
+├── signature.rs
+└── sketch.rs
 ```
+
+This is the complete 0.1 structure. Later collection, index, or gather modules
+are introduced only with implemented operations; the repository does not
+pre-create a directory tree of placeholders.
 
 ### Foundation relationships
 
 - `rsomics-common`, `rsomics-help`, and `rsomics-seqio` provide the same
   execution, CLI, sequence-stream, compression, and transactional-output
   contracts used by other products.
-- `rsomics-kmer` is reviewed through concrete calls from
-  `sketch::dna` for canonical rolling hashes and from the future
+- `rsomics-kmer` supplies canonical DNA-window Murmur64 hashing to the current
+  sketch builder and may later supply checked minimizer generation to the
   metagenomics minimizer builder. Consumer tests must pin ambiguity reset,
   `k` limits, canonicalization, hash seed, and byte order before any public
   item changes.
@@ -530,9 +524,9 @@ src/
 |---|---|---|
 | `rsomics-kmer-dist` | `7eb179076a1bb6ecdbfc85e9624e96e5a1060e7b` | test, formula, and baseline asset only; retain small Jaccard/Bray-Curtis/cosine fixtures if useful; discard the production profile loader, CLI, and “sketch” implication |
 
-The current `rsomics-kmer` revision
-`4258ac881119bcee69a3541119bb3e544500743a` is a foundation under review, not
-a second historical product asset.
+The published `rsomics-kmer 0.2.2` revision
+`d89e2df0d8eae38b64eb7b43a41f57436fc25bb4` is the consumer-driven foundation,
+not a second historical product asset.
 
 ### Audit findings that block direct consolidation
 
@@ -596,14 +590,17 @@ upstream regression does not become the only specification.
 
 ### Release sequence
 
+Steps 1-5 are complete in release 0.1.0. Later steps remain gated work, not
+advertised commands.
+
 1. Review the exact sourmash signature profile and the `rsomics-kmer`
    consumer boundary before creating public types.
 2. Create the product repository with the current `rsomics-help`,
    `rsomics-common`, and `rsomics-seqio` layers.
 3. Implement one deterministic DNA FracMinHash builder and validated persistent
    signature; add `inspect`, `compare`, and linear `search`.
-4. Run format, strict Clippy, unit, property, persistent-format, mandatory live
-   sourmash, selected Mash formula, integration, representative
+4. Run format, strict Clippy, unit, persistent-format, mandatory live
+   sourmash, integration, representative
    performance/RSS, and four-native-target exact-head gates.
 5. Publish only the complete persistent-sketch slice. Do not show index,
    gather, Mash interchange, protein, or taxonomy placeholders.

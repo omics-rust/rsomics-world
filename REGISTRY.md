@@ -40,7 +40,7 @@ Status meanings are defined in [CONVENTIONS.md](CONVENTIONS.md).
 | `rsomics-sc` | planned | stateful single-cell and spatial analysis workflow |
 | `rsomics-seq` | live | coherent FASTA/FASTQ sequence utility suite |
 | `rsomics-signal` | planned | deepTools/bigWig signal workflows |
-| `rsomics-sketch` | planned | persistent sequence sketches, comparison, search, indexing, and mixture decomposition |
+| `rsomics-sketch` | live | DNA FracMinHash construction, signature inspection, comparison, and linear search; indexing and mixture decomposition deferred |
 | `rsomics-structure` | planned | protein structure and PDB analysis |
 | `rsomics-table` | planned | bioinformatics-oriented table manipulation |
 | `rsomics-vcf` | live | VCF/BCF inspection, transformation, filtering, indexing, and format statistics |
@@ -49,10 +49,10 @@ Product status summary:
 
 | Status | Count |
 |---|---:|
-| live | 9 |
+| live | 10 |
 | repo-only | 0 |
 | pilot | 0 |
-| planned | 21 |
+| planned | 20 |
 | **Total** | **30** |
 
 `pilot` means the boundary and source audit are active. It does not imply that
@@ -67,7 +67,7 @@ not imply that the crate has passed its publication gate.
 | `rsomics-help` | live | live | all 30 accepted CLI products |
 | `rsomics-bamio` | live | live | BAM, variant calling, RNA-seq QC, signal |
 | `rsomics-intervals` | live | live | current: BED, annotation, liftover; later: peak and signal |
-| `rsomics-kmer` | live | live | pilot: sequence; later: metagenomics and sketch |
+| `rsomics-kmer` | live | live | current: sequence and sketch; later: metagenomics |
 | `rsomics-seqio` | live | live | current: sequence, preprocessing, and FASTQ QC; planned: indexing |
 | `rsomics-stats` | live | live | composition, expression workflows, single-cell, ecology, population genetics |
 | `rsomics-phylo-tree` | live | live | composition balance bases, phylogenetics, ecology |

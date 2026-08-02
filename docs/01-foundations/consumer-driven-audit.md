@@ -55,7 +55,7 @@ APIs:
 | `rsomics-common` | `4c2032737780` | narrowed the public runtime to demonstrated error, exit-code, output-mode, JSON-envelope, runner, and structured-validation contracts; added one stdout-or-atomic-file writer after BED `aaee6d408329` and call `dd1bbe5a7cf7` supplied concrete consumers | 0.10.0 published; exact-head four-native-target CI `30713298892`; publish run `30713383317`; downloaded archive checksum `7a69695dae27897693c49ebedd96355dc9a5decb9f21956f0e8d9c5ce135a5ec` |
 | `rsomics-help` | `61dd6f2ce0ce` | replaced the duplicate `HelpSpec` renderer and argv interception with recursive styling and parsing of the authoritative Clap command tree | 0.4.0 published; exact-head four-native-target CI `30596121607`; downloaded archive checksum `5922ec5a261660869fc36aa05f731c0adb059c43344eb78c2393f05611797fe1`; registry-package tests green |
 | `rsomics-intervals` | `6783f67614ae` | reduced the public crate to a validated generic zero-based half-open interval value; moved BED parsing, collections, algebra, merge policy, and COITrees indexing into products | 0.3.0 published; exact-head four-native-target CI `30597681539`; downloaded archive checksum `40cf072a5fb5900d8e4049cb9b03f28ce5ddc51e51ef2b3fed7c5c89bfa88ccd`; `bed` and `annotation` pass consumer tests against the registry release |
-| `rsomics-kmer` | `4258ac881119` | made `k = 32` well-defined, added checked encode/decode/canonical operations and a fallible count-accumulator boundary, and removed its unused `rsomics-common` dependency | exact-head CI green; `rsomics-seq` is the first real product consumer; a second product contract and comparative performance remain |
+| `rsomics-kmer` | `d89e2df0d8ea` | retained the checked sequence-counting API and added allocation-reusing canonical DNA-window Murmur64 hashing with arbitrary nonzero `k` and a full-width seed after `rsomics-sketch` supplied the second concrete consumer | 0.2.2 published; exact-head four-native-target CI `30734719265`; publish run `30734861858`; downloaded archive checksum `e1254977d1eaf89b29e727b7ea552ec8bd4bd0740b45fa40ac943e93ffaf9ed4`; sequence and sketch consumer suites green |
 | `rsomics-seqio` | `d7e1c33bb600` | retained strict allocation-reusing FASTA/FASTQ streams, bounded gzip decode buffering, wrapped FASTQ support, and fail-loud gzip/BGZF handling while removing unconsumed legacy, forced-format, and compression-policy APIs | 0.3.0 published; exact-head four-native-target CI `30599703477`; downloaded archive checksum `d2dcd0fab1a5320834a9b0f9cba7bbdd9bfe6b26c9c4740650ac88d939fcfcc5`; `seq` and `fastq-preprocess` pass consumer tests against the registry release |
 | `rsomics-bamio` | `82a8668717b5` | retains the validated raw-record encoder and indexed SAM/BAM/CRAM reader, aligns its shared runtime dependency with both product consumers on `rsomics-common` 0.10, and caches the compact validated variable-record layout after call, BAM, and pileup consumer checks | 0.4.1 published; exact-head four-native-target CI `30721193395`; publish run `30721286006`; downloaded archive checksum `1ff830a8263e4a5c8784101c3d6674e4bd86ec8ced446327d94d35731db13600`; three consumer suites green |
 | `rsomics-pileup` | `4b48bfdafecd` | retains the checked projection, retry-safe borrowed columns, per-source overlap and depth state, HTSlib-compatible BAQ, and bcftools-compatible column preparation while aligning its raw-record dependency with `rsomics-bamio` 0.4 | 0.4.0 published after call and BAM supplied concrete contracts; exact-head four-native-target CI `30714930834`; publish run `30715042037`; downloaded archive checksum `d33b5fa1c3ddbe86c8f53c2bb3fa870e482e90957aa5e559fceca0600ff56533`; registry-package tests and ordinary/deep performance and memory pass |
@@ -143,19 +143,23 @@ Linux `x86_64` path is byte-identical, 1.28 times faster, and uses about 69%
 less peak RSS than the aligned fastp slice. The single-end path is slower but
 uses about 63% less peak RSS, so it is recorded as a resource advantage rather
 than a throughput claim.
-Together these two products establish the second concrete consumer contract
-for the current common, help, and sequence-I/O APIs. The BED pilot is the third
-help/common consumer. This does not freeze `rsomics-kmer`, which still requires
-its own second product consumer.
+Together these products establish the current common, help, and sequence-I/O
+contracts. The BED pilot is another help/common consumer.
 
-The metagenomics/sketch dossier now supplies two concrete next call sites for
-that review: canonical rolling hashes in the DNA FracMinHash builder and
-checked minimizer generation in the taxonomy-labelled database builder.
+`rsomics-sketch 0.1.0` is now the second concrete `rsomics-kmer` product
+consumer. It drove the 0.2.2 canonical Murmur64 iterator, including arbitrary
+nonzero `k`, a full-width seed, allocation-reusing scratch buffers, ambiguity
+boundaries, and sourmash-compatible byte order. Randomized consumer tests and
+real-fixture output hashes match sourmash 4.9.4, while the foundation retains
+no FracMinHash, signature, comparison, or search policy. The future
+metagenomics minimizer call site remains unimplemented and cannot justify more
+public API on its own.
+
 Neither historical `rsomics-kmer-dist` nor `rsomics-tax-assign` demonstrates
-the contract. The former keeps every exact k-mer and the latter silently drops
-invalid windows and does not perform taxonomy LCA assignment. No k-mer API is
-added or published until the new consumer tests and representative memory
-measurements exist.
+an additional contract. The former keeps every exact k-mer and the latter
+silently drops invalid windows and does not perform taxonomy LCA assignment.
+Publication does not freeze the current API; later additions still require two
+named consumers and their tests.
 
 The consumers exposed and resolved a real difference in the old common runtime
 contract: preprocessing uses `--threads` to size its Rayon work, while

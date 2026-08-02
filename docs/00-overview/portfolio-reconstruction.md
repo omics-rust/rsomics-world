@@ -192,7 +192,7 @@ named products, not those raw counts, justify the boundary:
 | `rsomics-help` | 317 | all 30 accepted CLI products |
 | `rsomics-bamio` | 70 | `bam`, `call`, `count`, `methyl`, `minimap2`, `rnaseq-qc`, `signal` |
 | `rsomics-intervals` | 11 | `bed`, `annotation`, `peak`, `signal` |
-| `rsomics-kmer` | 6 | current: `seq`; concrete next reviews: `metagenomics`, `sketch` |
+| `rsomics-kmer` | 6 | current: `seq`, `sketch`; concrete next review: `metagenomics` |
 | `rsomics-seqio` | 8 | `seq`, `fastq-preprocess`, `fastq-qc`, `minimap2` |
 | `rsomics-stats` | 3 | `composition`, `deseq`, `edger`, `limma`, `sc`, `ecology`, `popgen`, `plink` |
 | `rsomics-phylo-tree` | 9 | `composition`, `phylo`, `ecology` |
