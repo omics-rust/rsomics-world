@@ -33,7 +33,7 @@ operation will ship. It records:
 | `rsomics-index` | 5 | [audited](interval-annotation-index.md#rsomics-index) |
 | `rsomics-liftover` | 1 | [released 0.1.0](liftover.md) |
 | `rsomics-limma` | 16 | [audited](bulk-expression.md#rsomics-limma) |
-| `rsomics-metagenomics` | 5 | [audited](metagenomics-sketch.md#rsomics-metagenomics) |
+| `rsomics-metagenomics` | 5 | [released 0.1.0](metagenomics-gate-2026-08-02.md) |
 | `rsomics-methyl` | 1 | [audited](methyl.md) |
 | `rsomics-minimap2` | 1 | [audited](minimap2.md); legacy release requires reconstruction |
 | `rsomics-peak` | 5 | [audited](peak.md); four workflow assets and one discarded generic candidate |
@@ -73,6 +73,7 @@ flowchart TB
         prep["rsomics-fastq-preprocess"]
         qc["rsomics-fastq-qc"]
         sketch["rsomics-sketch"]
+        meta["rsomics-metagenomics"]
     end
 
     subgraph interval["Interval and annotation pilot"]
@@ -89,6 +90,7 @@ flowchart TB
     common --> liftover
     common --> qc
     common --> sketch
+    common --> meta
     common -. planned .-> index
     help["rsomics-help"] --> seq
     help --> prep
@@ -97,14 +99,17 @@ flowchart TB
     help --> liftover
     help --> qc
     help --> sketch
+    help --> meta
     help -. planned .-> index
     seqio["rsomics-seqio"] --> seq
     seqio --> prep
     seqio --> qc
     seqio --> sketch
+    seqio --> meta
     seqio -. planned .-> index
     kmer["rsomics-kmer"] --> seq
     kmer --> sketch
+    kmer -. planned .-> meta
     intervals["rsomics-intervals"] --> bed
     intervals --> annotation
     intervals --> liftover

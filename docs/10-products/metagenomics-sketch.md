@@ -1,11 +1,9 @@
 # Metagenomics and sequence-sketch product dossier
 
-Status: `rsomics-sketch 0.1.0` published and independently verified for the
-initial DNA FracMinHash slice. See
-[`sketch-gate-2026-08-02.md`](sketch-gate-2026-08-02.md).
-
-The `rsomics-metagenomics` source and upstream-operation audit is complete; its
-target repository has not been created.
+Status: `rsomics-sketch 0.1.0` and `rsomics-metagenomics 0.1.0` are published
+and independently verified for their initial FracMinHash and amplicon-abundance
+slices. See [`sketch-gate-2026-08-02.md`](sketch-gate-2026-08-02.md) and
+[`metagenomics-gate-2026-08-02.md`](metagenomics-gate-2026-08-02.md).
 
 ## Boundary decision
 
@@ -35,7 +33,7 @@ sketch `gather` result can be summarized taxonomically by
 flowchart LR
     seqio["rsomics-seqio"] --> meta["rsomics-metagenomics"]
     seqio --> sketch["rsomics-sketch"]
-    kmer["rsomics-kmer"] --> meta
+    kmer["rsomics-kmer"] -. "future classifier contract" .-> meta
     kmer --> sketch
     sketch -- "versioned gather result" --> taxonomy["metagenomics taxonomy/report"]
     taxonomy_impl["internal taxonomy model"] --> meta
@@ -355,6 +353,10 @@ operation needs a strict throughput or material resource-use advantage on its
 relevant hot path.
 
 ### Release sequence
+
+Steps 1 through 5 produced the complete `rsomics-metagenomics 0.1.0` amplicon
+slice. Steps 6 through 8 remain gated future slices; no corresponding command
+or empty module is present in the release.
 
 1. Create the target repository only when the amplicon slice is ready to
    migrate.
