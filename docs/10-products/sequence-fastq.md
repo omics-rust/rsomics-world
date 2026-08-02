@@ -1,8 +1,8 @@
 # Sequence and FASTQ product dossier
 
-Status: source audit complete; first release slices selected;
-`rsomics-seq 0.1.0` and `rsomics-fastq-preprocess 0.1.0` are published and
-independently verified.
+Status: source audit complete; `rsomics-seq 0.1.0`,
+`rsomics-fastq-preprocess 0.1.1`, and `rsomics-fastq-qc 0.1.0` are published
+and independently verified.
 
 The source pool contains 47 relevant historical crates after routing
 corrections: 34 for `rsomics-seq`, 12 for preprocessing, and one for QC. The
@@ -25,11 +25,10 @@ flowchart LR
     qc --> stats["seq stats"]
 ```
 
-This later QC handoff is not a precondition for independently useful stable
-sequence and preprocessing slices. The same versioned inputs will be compared
-against fastp, FastQC, and SeqKit when the QC product is implemented.
-Compatibility, wall-clock distribution, peak memory, compression mode, and
-thread count are recorded together.
+The QC handoff is now implemented without coupling the three product
+boundaries. The same versioned inputs are checked against fastp, FastQC, and
+SeqKit as appropriate. Compatibility, wall-clock distribution, peak memory,
+compression mode, and thread count are recorded together.
 
 `rsomics-seqio` must provide:
 
@@ -216,6 +215,12 @@ smoke all passed. Exact machine, fixture, compatibility, API, performance, and
 raw-result evidence is recorded in the
 [product gate](fastq-preprocess-gate-2026-07-30.md).
 
+Patch release 0.1.1 at `89d4f534f90e` replaced the product-local duplicate
+thread argument with `rsomics-common::ThreadArgs` while retaining the local
+Rayon pool and product scheduling policy. Exact-head CI run `30731874951` and
+publish run `30732312288` passed; no preprocessing behavior or public product
+boundary changed.
+
 ## `rsomics-fastq-qc`
 
 ### Boundary
@@ -224,19 +229,42 @@ FastQC-style diagnostics and reports. Generic counts and length statistics
 belong to `rsomics-seq stats`; preprocessing reports belong to
 `rsomics-fastq-preprocess`.
 
-The historical `rsomics-fastqc` implementation is a refactor seed, not a
-finished compatibility claim. Its twelve analyzers are retained, but the
-product requires:
+The released `report` command accepts multiple plain, gzip, or BGZF FASTQ
+inputs and writes one report directory per input. Each directory contains
+FastQC/MultiQC-compatible `fastqc_data.txt`, a status summary, and a
+self-contained rsomics HTML report. BAM/SAM, Casava grouping, Nanopore
+`fast5`, custom limits, custom adapter and contaminant lists, and FastQC ZIP
+packaging remain explicit exclusions.
 
-- a typed analyzer pipeline without per-read trait-object dispatch;
-- one or more fixtures that trigger PASS, WARN, and FAIL for every module;
-- full module-data comparison, not summary status alone;
-- documented long-read binning and duplication-curve behavior;
-- complete text/HTML report compatibility rules;
-- single-thread and multi-thread performance evidence.
+The historical `rsomics-fastqc` repository was refactored rather than revived.
+Its analyzers and fixtures were classified module by module; the per-read
+trait-object dispatch, parallel mutable module state, JSON-only output,
+placeholder thread flag, and inherited compatibility claims were discarded.
+The product now uses a typed analyzer pipeline, real multi-file parallelism,
+strict `rsomics-seqio` parsing, shared `rsomics-common` thread and result
+contracts, and `rsomics-help` for the CLI presentation layer.
 
-The first slice is `report --format fastqc`, integrated with the new
-`rsomics-seqio`.
+Full module data is byte-identical to FastQC 0.12.1 on both 6,282,141-read
+SRR341550 mates. Controlled edge grids additionally freeze status thresholds,
+length grouping, the 100,000-unique-sequence duplication sampler, numeric
+formatting, and ordering. Exact-head CI run `30733371110` passes lint,
+documentation, package verification, debug/release tests, the live FastQC
+oracle, and benchmark smoke on native Linux and macOS for both `x86_64` and
+`aarch64`.
+
+The recorded Apple M2 end-to-end gate measures `16.563 ± 0.063 s` and
+43.0 MiB peak RSS versus FastQC's `25.003 ± 0.888 s` and 624.5 MiB. The
+rsomics workflow is 1.51 times faster with 93.1% less peak resident memory on
+that host. Report packaging differs: FastQC writes separate image assets,
+whereas rsomics embeds SVG charts in its HTML.
+
+Crates.io publication run `30733480364` produced non-yanked 0.1.0 archive
+checksum `979cf2d2340c8d4b6db2eab342cdefe526191a3a01a908a2b7554e9646eeb08b`
+with VCS identity `f24f0e1766d1`. An independent registry download,
+`cargo install --locked`, help check, and report-generation smoke passed.
+Complete identities, compatibility, transaction, performance, and publication
+evidence are recorded in the
+[product gate](fastq-qc-gate-2026-08-02.md).
 
 ## Origin and reuse
 

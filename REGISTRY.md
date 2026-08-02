@@ -25,7 +25,7 @@ Status meanings are defined in [CONVENTIONS.md](CONVENTIONS.md).
 | `rsomics-ecology` | planned | community-table diversity, ecological dissimilarity, ordination, metadata association, and permutation analysis |
 | `rsomics-edger` | planned | edgeR-style differential-expression workflow |
 | `rsomics-fastq-preprocess` | live | trimming and filtering (initial fastp-compatible subset); later correction, UMI, merge, deduplication |
-| `rsomics-fastq-qc` | pilot | FASTQ quality metrics and reports |
+| `rsomics-fastq-qc` | live | FASTQ quality metrics and FastQC-compatible reports |
 | `rsomics-index` | planned | bgzip/tabix and reusable sequence-index workflows |
 | `rsomics-liftover` | live | UCSC chain validation/inspection and strict BED3-6/BED12 coordinate conversion |
 | `rsomics-limma` | planned | limma/voom workflow |
@@ -49,9 +49,9 @@ Product status summary:
 
 | Status | Count |
 |---|---:|
-| live | 8 |
+| live | 9 |
 | repo-only | 0 |
-| pilot | 1 |
+| pilot | 0 |
 | planned | 21 |
 | **Total** | **30** |
 
@@ -68,7 +68,7 @@ not imply that the crate has passed its publication gate.
 | `rsomics-bamio` | live | live | BAM, variant calling, RNA-seq QC, signal |
 | `rsomics-intervals` | live | live | current: BED, annotation, liftover; later: peak and signal |
 | `rsomics-kmer` | live | live | pilot: sequence; later: metagenomics and sketch |
-| `rsomics-seqio` | live | live | current: sequence and preprocessing; planned: FASTQ QC and indexing |
+| `rsomics-seqio` | live | live | current: sequence, preprocessing, and FASTQ QC; planned: indexing |
 | `rsomics-stats` | live | live | composition, expression workflows, single-cell, ecology, population genetics |
 | `rsomics-phylo-tree` | live | live | composition balance bases, phylogenetics, ecology |
 | `rsomics-pileup` | live | live | BAM, variant calling, methylation |

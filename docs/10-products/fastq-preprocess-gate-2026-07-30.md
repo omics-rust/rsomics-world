@@ -177,12 +177,11 @@ The registry token was exposed to the repository only for publish workflow
 `30726551865`; repository access was removed immediately after success and
 verified absent.
 
-The unfinished `rsomics-fastq-qc` product is a later cross-product integration
-consumer, not a dependency of this release. Standard FASTQ output is already
-covered by strict seqio parsing, live fastp differentials, stream composition,
-gzip interoperability, SeqKit, and registry-install smoke. Deferring this
-standalone release until QC exists would couple independent product boundaries
-without adding correctness evidence to the implemented slice.
+`rsomics-fastq-qc` is a separate cross-product integration consumer, not a
+dependency of this release. Standard FASTQ output was already covered by
+strict seqio parsing, live fastp differentials, stream composition, gzip
+interoperability, SeqKit, and registry-install smoke. Its later independent
+release confirms the handoff without changing this product boundary.
 
 ## Raw evidence
 

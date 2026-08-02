@@ -29,7 +29,7 @@ operation will ship. It records:
 | `rsomics-ecology` | 19 | [audited](ecology.md) |
 | `rsomics-edger` | 17 | [audited](bulk-expression.md#rsomics-edger) |
 | `rsomics-fastq-preprocess` | 12 | [audited](sequence-fastq.md#rsomics-fastq-preprocess) |
-| `rsomics-fastq-qc` | 1 | [audited](sequence-fastq.md#rsomics-fastq-qc) |
+| `rsomics-fastq-qc` | 1 | [released 0.1.0](fastq-qc-gate-2026-08-02.md) |
 | `rsomics-index` | 5 | [audited](interval-annotation-index.md#rsomics-index) |
 | `rsomics-liftover` | 1 | [released 0.1.0](liftover.md) |
 | `rsomics-limma` | 16 | [audited](bulk-expression.md#rsomics-limma) |
@@ -86,18 +86,18 @@ flowchart TB
     common --> bed
     common --> annotation
     common --> liftover
-    common -. planned .-> qc
+    common --> qc
     common -. planned .-> index
     help["rsomics-help"] --> seq
     help --> prep
     help --> bed
     help --> annotation
     help --> liftover
-    help -. planned .-> qc
+    help --> qc
     help -. planned .-> index
     seqio["rsomics-seqio"] --> seq
     seqio --> prep
-    seqio -. planned .-> qc
+    seqio --> qc
     seqio -. planned .-> index
     kmer["rsomics-kmer"] --> seq
     intervals["rsomics-intervals"] --> bed
