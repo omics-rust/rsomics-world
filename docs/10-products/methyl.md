@@ -244,6 +244,28 @@ four-native-target CI `30754414728` passes. The first release is still gated on
 the remaining extraction filters, cytosine report, and retained performance
 fixtures.
 
+Revision `adb4c5ec9f83` adds one product-local trimming model shared by
+extraction and M-bias. It accepts OT, OB, CTOT, and CTOB bounds for both mates;
+inclusion bounds are 1-based and inclusive with zero as an unbounded sentinel,
+while fixed-end bounds are counts removed from each end. The canonical CLI uses
+lowercase `--ot` and `--trim-ot` forms and accepts MethylDackel-compatible
+`--OT` and `--nOT` aliases. Bounds are applied before overlapping-mate evidence
+selection so a retained mate is not lost when its partner is trimmed.
+
+Fixed-end extraction and M-bias results for `--nOT 5,1,1,1` are byte-identical
+to current MethylDackel after excluding the path-dependent bedGraph header,
+with SHA-256 `2de7009bf2472af1f1acabe8f5ed07d839735d708c0a52d3c75d5aeb41acfe10`
+and `e11fef5da452d1813408919c6c928880ac45ac24bea5ae8f1f048a093b8ecdfe`.
+The current upstream inclusion implementation contradicts its own help: for
+`--OT 5,30,1,30` it removes position 5, whereas the documented contract says
+positions 5 through 30 are included. Its parser also does not clear `errno`
+before parsing each field, so a legal zero sentinel can inherit unrelated
+process state. The Rust implementation deliberately follows the documented
+contract, retains position 5, parses zero deterministically, and freezes both
+corrections in tests. Exact-head four-native-target CI `30754904672` passes.
+The first release remains gated on BED, conversion and variant filters,
+cytosine reports, and retained performance fixtures.
+
 A separate historical reverification reports byte-identical data lines on a
 92 MB, four-million-read BAM producing about 2.5 million CpG rows.
 
