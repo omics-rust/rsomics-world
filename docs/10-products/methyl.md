@@ -216,6 +216,18 @@ single-output replacement transactional. Exact-head four-native-target CI
 `30752879575` passes. The complete first release remains gated on the remaining
 extract filters, cytosine report, and `mbias` surface below.
 
+Revision `aef52dd3bbe3` adds one product-local indexed region model consumed by
+both extraction and per-read reporting. It accepts standard 1-based inclusive
+regions, clips the requested end to the reference, rejects unknown or wholly
+outside references, limits extraction columns to the requested interval, and
+retains MethylDackel's per-read rule that an alignment start must lie inside the
+interval. Extract data rows for `chrSynthetic:5-10` match the live corrected
+oracle with SHA-256
+`b670e65b1449f84dcff9d923b239b6d84e9b1f129f1a80c02064094198b5fe80`;
+the corresponding per-read outside-start differential is empty on both tools.
+Documentation revision `67524780d001` is the exact head validated by
+four-native-target CI `30753726141`.
+
 A separate historical reverification reports byte-identical data lines on a
 92 MB, four-million-read BAM producing about 2.5 million CpG rows.
 
