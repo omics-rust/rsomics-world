@@ -315,8 +315,28 @@ bisulfite strand to match. The corrected top-only and bottom-only per-read
 goldens have SHA-256
 `427fe94dd4f07409855e2bdc5ea205f103bb38552852e72052491f3dc74926f6`
 and `3d747943a39dfaf19bdaf7fad09c4235d659b53d966567e0ea41846b34469ab8`.
-Exact-head four-native-target CI `30756307754` passes. The first release remains
-gated on conversion and variant filters and retained performance fixtures.
+Exact-head four-native-target CI `30756307754` passes.
+
+Revision `744c4eef1303` adds one product-local non-CpG conversion filter shared
+by extraction and M-bias. It evaluates each complete alignment before trimming
+and overlapping-mate adjustment, applies the configured base-quality floor,
+and defines efficiency as unmethylated divided by informative methylated plus
+unmethylated CHG/CHH calls. A read with no informative non-CpG calls has
+efficiency one, equality with the requested threshold passes, and finite
+thresholds outside zero through one are rejected.
+
+At thresholds 0.5 and 0.75, extract data rows match current MethylDackel with
+SHA-256 `aea36b2807f9ab1fa49a2d1f867c7728ec1bff2efde886aac9d6aa8c74b5476d`
+and `b1db45d1b4341c348c96046653632aa93bfed2dcd0bbe636c729809c42bac6e3`;
+the corresponding M-bias TSV hashes are
+`a02ec1567f57fba7b4b63cecf28fc3931c1dbbec18d55d35db90f0da262458d4`
+and `94c74bf7a4f2e8d29291dee5d28c0ba44dea10ac355383babe9df175c28422e1`.
+An independent insertion-separated CIGAR test corrects current upstream's
+failure to advance its reference cursor between multiple match operations;
+low-quality non-CpG calls are excluded from both numerator and denominator.
+Exact-head four-native-target CI `30756788744` passes. The first release now
+remains gated on the opposite-strand variant filter and retained performance
+fixtures.
 
 A separate historical reverification reports byte-identical data lines on a
 92 MB, four-million-read BAM producing about 2.5 million CpG rows.
