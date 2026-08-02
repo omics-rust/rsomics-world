@@ -15,7 +15,7 @@ Status meanings are defined in [CONVENTIONS.md](CONVENTIONS.md).
 | Product | Status | Initial scope / upstream anchors |
 |---|---|---|
 | `rsomics-annotation` | live | GFF/GTF inspection, selection, transformation, sequence extraction |
-| `rsomics-bam` | planned | gate-complete SAM/BAM/CRAM release candidate; name cooldown ends 2026-08-02 19:56:02 UTC |
+| `rsomics-bam` | live | SAM/BAM/CRAM inspection, conversion, filtering, validation, and pileup |
 | `rsomics-bed` | live | BED/interval algebra and bedtools-like operations |
 | `rsomics-call` | live | alignment pileup, genotype likelihoods, and lightweight small-variant calling |
 | `rsomics-cnv` | planned | BAF/LRR copy-number HMM and chromosome-level polysomy analysis |
@@ -49,10 +49,10 @@ Product status summary:
 
 | Status | Count |
 |---|---:|
-| live | 10 |
+| live | 11 |
 | repo-only | 0 |
 | pilot | 0 |
-| planned | 20 |
+| planned | 19 |
 | **Total** | **30** |
 
 `pilot` means the boundary and source audit are active. It does not imply that

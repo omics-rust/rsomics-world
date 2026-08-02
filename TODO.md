@@ -145,8 +145,8 @@ Rejected public boundary:
 - [x] Reconstruct and publish the coherent `rsomics-vcf` first-release slice.
 - [x] Reconstruct and publish the coherent three-command `rsomics-call`
       first-release slice.
-- [ ] Publish the gate-complete coherent `rsomics-bam` first-release slice
-      after the crates.io name cooldown ends at 2026-08-02 19:56:02 UTC.
+- [x] Publish the gate-complete coherent `rsomics-bam` first-release slice
+      after the crates.io name cooldown.
 
 ## Durable evidence
 

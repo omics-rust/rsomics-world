@@ -1,9 +1,8 @@
 # BAM product dossier
 
 Status: boundary and source-asset audit complete. The seven-command first
-release slice has passed its local, oracle, performance, package, and native-CI
-gates. Publication is waiting only for the registry name-reuse cooldown at
-2026-08-02 19:56:02 UTC; no registry release is active yet.
+release slice passed its local, oracle, performance, package, and native-CI
+gates. `rsomics-bam 0.4.0` is published.
 
 ## Boundary
 
@@ -775,12 +774,11 @@ throughput claim is made.
 
 ## Publication decision
 
-Publish `rsomics-bam 0.4.0` from `e025f22de09d` when the crates.io name-reuse
-cooldown expires. The stable seven-command slice, explicit exclusions,
-samtools 1.24 compatibility, BAM hot-path advantage, package, public metadata,
-and all four native CI targets are complete. Exact-head CI `30723735961`
-passes; the Linux x86_64 job includes strict Clippy, package verification, and
-all 19 live oracle groups.
+`rsomics-bam 0.4.0` is published from `e025f22de09d`. The stable seven-command
+slice, explicit exclusions, samtools 1.24 compatibility, BAM hot-path
+advantage, package, public metadata, and all four native CI targets are
+complete. Exact-head CI `30723735961` passes; the Linux x86_64 job includes
+strict Clippy, package verification, and all 19 live oracle groups.
 
 A publication workflow was added before this dossier gate was rechecked and
 briefly published source revision `0d1a38d3f172` as 0.4.0 in run
@@ -797,3 +795,8 @@ reached the crates.io upload endpoint. The registry rejected only the recently
 deleted name, reporting that reuse becomes available after
 `2026-08-02T19:56:02Z`. No package was created. The BAM repository was removed
 again from the selected publication-secret repositories after the failure.
+
+After the cooldown, publish run `30766493471` completed from the same selected
+revision. A separate registry lookup downloaded `rsomics-bam 0.4.0` and
+confirmed its package metadata. The downloaded crate archive has SHA-256
+`016736c669e52155b999da533f78325c06e09c003946539ff6feb1767885762e`.
