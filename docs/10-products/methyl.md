@@ -477,6 +477,87 @@ This closes the overlapping paired-end row of the matrix. Sparse RRBS-like,
 high-depth targeted, all-context, CRAM, and separate subcommand measurements
 remain open.
 
+### High-depth targeted all-context gate, 2026-08-03
+
+Revision `e99aba7f89a2` adds the retained
+`targeted-mixed-4m-20260803` fixture: four million coordinate-sorted reads
+concentrated into mixed CpG, CHG, and CHH targets. The reference, FAI, BAM, and
+BAI SHA-256 values are
+`22d8b864c0760eedb86d707ec9339f8fb64d5cd69e5e69fb6400e036ceed332a`,
+`af6079307282fc5574f6c59cfe0041439195df7f6439eede0eca5c350ed62b96`,
+`58b3a45f4757eac7d840112e382baaf0b181fccc56985ead59cf89854bdfec39`,
+and `b0e12c59b48aa2c895763f2dfda956bc57dba510c9e9e4e55e7517a1b340c79b`.
+Rust and MethylDackel produce the same 130,219 CpG, 130,218 CHG, and 65,109
+CHH lines including headers. The header-independent data hashes are
+`fd6cc730ea73b0e34a2b41de1f84052d88f368256b5751ab1be8f6d3dcc3e587`,
+`c3f2b81ff18b3b7d6fa98ca505701edce36ae67042db6a7394702a58ec7d7b33`,
+and `6e04629b1b7b6cb31a15514eb6bc5ea961d38d05a1160bbdd773ba260cab98fa`.
+
+After one warmup per binary, ten alternating pairs complete in
+`7.560 ± 0.357` seconds for Rust and `8.697 ± 1.052` seconds for
+MethylDackel. Rust wins nine pairs, a 13.1% mean wall-time advantage; the
+paired mean difference is 1.137 seconds with standard deviation 1.111 seconds
+and paired t statistic 3.235. Mean user CPU is 5.819 versus 6.384 seconds and
+mean system CPU is 0.425 versus 0.461 seconds. The Rust and upstream timing
+records have SHA-256
+`7d1b2c733906bcc585869ce49c308d2d3dfb501856efd0cb4bff9b6face7beea`
+and `01397387bf2c5ae035ac8ad0bc1b588d46625c3128bd1b108aa37949ee9eced7`;
+the resource records have SHA-256
+`88c89ebc239288a9a8787f50a6b8d44327dd2f189626b50146cf2ab5bc1f24c1`
+and `8bca058e32480032b446ef778cf4db2f7ef98f9f84511123a4342f6ad53376b4`.
+Exact-head four-native-target CI `30762903663` passes.
+
+### CRAM streaming gate, 2026-08-03
+
+The representative CRAM is a reference-compressed encoding of the four-million
+read single-end fixture. Its 383,267-byte CRAM and 3,083-byte CRAI have
+SHA-256
+`5a50c33c39fd6646f92de132a83ac8c7b4e34496e85ca01fe9f01f525091d055`
+and `9c7e2d9001022317d5885d851a0ee78340965b33d0996404c8ef02ca9c850b44`.
+The original full-container decode took 26.87 seconds and 149,389,312 bytes
+maximum RSS, versus 12.86 seconds and 32,522,240 bytes for MethylDackel. A
+slice-local variant still took 21.73 seconds and 162.7 MB and was rejected.
+
+`rsomics-bamio 0.8.0` instead decodes sequential CRAM through HTSlib into one
+reused record while retaining the existing validated `RawRecord` contract and
+Noodles indexed queries. Field-level CRAM and 65,536-operation long-CIGAR
+tests cover the conversion. Version 0.8.1 makes this backend the default
+`cram-htslib` feature; BAM-only consumers can disable it. Accordingly,
+`rsomics-pileup 0.8.0` disables the feature while `rsomics-methyl` enables it
+through its direct `bamio` dependency. This keeps the shared pileup library
+free of product-local CRAM linkage without duplicating alignment parsing.
+Exact-head four-native-target CI passes for `rsomics-bamio 0.8.1` in
+`30765211183`, `rsomics-pileup 0.8.0` in `30765656887`, and methyl revision
+`0002a5a07798` in `30766173656`. Both foundation releases were independently
+downloaded from crates.io before the methyl lockfile was accepted.
+
+After one warmup per binary, ten alternating pairs complete in
+`16.069 ± 2.820` seconds for Rust and `16.453 ± 2.342` seconds for
+MethylDackel. Rust wins six pairs, but the paired 0.384-second difference has
+standard deviation 3.730 seconds and paired t statistic 0.326, so no wall-time
+advantage is claimed. Mean user CPU is `6.024 ± 0.268` versus
+`6.745 ± 0.332` seconds, and mean maximum RSS is
+`22,480,486 ± 1,535,741` versus `28,167,373 ± 1,032,692` bytes. The Rust and
+upstream timing records have SHA-256
+`a9678976fca00fc2b18aee56f2030a8db7708964ac22980da6212ee657c71fe0`
+and `1b72b4bb4ebd0ccc29b6de1bc07556c26748ffa5e5a57c6b59beb2f60f5df633`.
+
+The final registry-resolved methyl build uses `rsomics-bamio 0.8.1` and
+`rsomics-pileup 0.8.0`; its binary SHA-256 is
+`29670089b322e4b3664b4131035eb640e529cac149abe9c7fe187dc63d8ecb03`.
+A separate integration run completes in 7.27 seconds with 19,529,728 bytes
+maximum RSS. Its resource record has SHA-256
+`a08daefd8a1fe252780df0493e93c01837dff83675d4e4ac8fea1705ff8fae45`.
+This single run is a dependency-integration check, not an additional
+performance estimate. Its 4,800,006 header-independent data lines retain
+SHA-256
+`8764f4a9266ad8d579c96ee392c1fc243a6317d2af4921eefd26b70a42df8d17`,
+identical to BAM and MethylDackel.
+
+The high-depth targeted, all-context, and CRAM matrix rows are closed. The
+remaining performance gates are sparse RRBS-like extraction and separate
+`mbias`, `merge-context`, and `per-read` measurements.
+
 A separate historical reverification reports byte-identical data lines on a
 92 MB, four-million-read BAM producing about 2.5 million CpG rows.
 
@@ -535,8 +616,8 @@ compatibility, memory, and throughput gates.
 
 - Use a retained or reproducibly generated WGBS-like input with at least four
   million reads and enough output to dominate startup and filesystem noise.
-- Add an RRBS-like sparse-coverage input, a high-depth targeted input, long
-  contigs, overlapping pairs, all contexts, and CRAM.
+- Retain the completed high-depth targeted, overlapping-pair, all-context, and
+  CRAM rows; add an RRBS-like sparse-coverage input and long-contig stress row.
 - Compare direct binaries at equal thread counts, with identical regions,
   filters, contexts, overlap behavior, and output bytes.
 - Record index and reference-cache setup separately from calling. Report wall
