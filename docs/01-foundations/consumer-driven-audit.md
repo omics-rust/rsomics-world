@@ -59,6 +59,7 @@ APIs:
 | `rsomics-seqio` | `d7e1c33bb600` | retained strict allocation-reusing FASTA/FASTQ streams, bounded gzip decode buffering, wrapped FASTQ support, and fail-loud gzip/BGZF handling while removing unconsumed legacy, forced-format, and compression-policy APIs | 0.3.0 published; exact-head four-native-target CI `30599703477`; downloaded archive checksum `d2dcd0fab1a5320834a9b0f9cba7bbdd9bfe6b26c9c4740650ac88d939fcfcc5`; `seq` and `fastq-preprocess` pass consumer tests against the registry release |
 | `rsomics-bamio` | `82a8668717b5` | retains the validated raw-record encoder and indexed SAM/BAM/CRAM reader, aligns its shared runtime dependency with both product consumers on `rsomics-common` 0.10, and caches the compact validated variable-record layout after call, BAM, and pileup consumer checks | 0.4.1 published; exact-head four-native-target CI `30721193395`; publish run `30721286006`; downloaded archive checksum `1ff830a8263e4a5c8784101c3d6674e4bd86ec8ced446327d94d35731db13600`; three consumer suites green |
 | `rsomics-pileup` | `4b48bfdafecd` | retains the checked projection, retry-safe borrowed columns, per-source overlap and depth state, HTSlib-compatible BAQ, and bcftools-compatible column preparation while aligning its raw-record dependency with `rsomics-bamio` 0.4 | 0.4.0 published after call and BAM supplied concrete contracts; exact-head four-native-target CI `30714930834`; publish run `30715042037`; downloaded archive checksum `d33b5fa1c3ddbe86c8f53c2bb3fa870e482e90957aa5e559fceca0600ff56533`; registry-package tests and ordinary/deep performance and memory pass |
+| `rsomics-phylo-tree` | `63e39e1` | replaces public mutable topology with checked construction, immutable node views, traversal, and strict iterative Newick parsing and serialization; composition consumer tests cover named tips, binary topology, and tree-derived balance bases | 0.2.0 published; exact-head four-native-target CI `30742259200`; publish run `30742377050`; downloaded archive checksum `07234bb701159253e249cd8fccec70e728cb46e4999ec851f51dc549ad829fde` |
 
 Publication does not freeze these APIs. Every later public item still requires
 two named product consumers and consumer-side tests.
@@ -83,8 +84,9 @@ produce wrong biological results:
 5. `rsomics-bamio::RawRecord::from(Vec<u8>)` previously permitted unchecked
    bytes while accessors assumed a valid structure. The fallible constructor
    and `RawRecordEncoder` at `3bcbe0ed9bb2` close this boundary.
-6. `rsomics-phylo-tree::Tree::default()` does not establish a valid root and
-   public node fields permit topology invariant violations.
+6. `rsomics-phylo-tree::Tree::default()` did not establish a valid root and
+   public node fields permitted topology invariant violations. Checked
+   construction and immutable views at `71af2cd` close this blocker.
 
 These are fixed in their consumer wave before the dependent product migration
 uses the API. They are not reasons to speculatively rewrite every foundation
@@ -261,23 +263,22 @@ foundation.
 
 `rsomics-stats` absorbs a numerical primitive only when two products use the
 same typed semantics. It does not become a container for all 91 historical
-statistics binaries.
+statistics binaries. Composition's optional-value p-adjustment implementation
+remains product-local because no second implemented product currently exercises
+that contract.
 
-`rsomics-composition` supplies concrete contracts for p-value adjustment and
-selected statistical tests. ANCOM-specific orchestration and cutoff policy
-remain in the product.
+`rsomics-phylo-tree 0.2.0` closes node mutation and root invariants and supports
+the declared strict Newick grammar. Composition consumes only validated
+topology and tip identities for tree-derived ILR bases. The iterative parser
+and serializer also pass a 20,000-level ladder-tree regression without relying
+on recursive descent or recursive formatting.
 
-`rsomics-phylo-tree` closes node mutation and root invariants and supports the
-declared Newick grammar before `composition`, `phylo`, and `ecology` depend on
-it. Composition consumes only validated topology and tip identities for
-tree-derived ILR bases.
-
-The `rsomics-phylo` dossier supplies the second concrete contract: checked
+The `rsomics-phylo` dossier supplies the second named concrete contract: checked
 construction, immutable topology, traversal, root interpretation, tip identity,
 and Newick parsing/emission. Inference, split-distance policy, tree measures,
-and result schemas stay in the product. The current foundation's public mutable
-nodes, invalid `Default` tree, incomplete label grammar, and unchecked
-non-finite branch lengths block its next release.
+and result schemas stay in the product. The released foundation now enforces
+these shared boundaries; phylo-specific inference, split, distance, and result
+policy still waits for product work.
 
 The `rsomics-ecology` dossier supplies the community-diversity contract:
 validated topology, postorder traversal, finite branch views, and checked tip

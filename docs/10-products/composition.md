@@ -1,7 +1,7 @@
 # Composition product dossier
 
-Status: source and upstream-operation audit complete. The target repository has
-not been created.
+Status: the complete initial slice is published as `rsomics-composition 0.1.0`.
+Later inference slices remain gated and are absent from the public CLI.
 
 ## Boundary
 
@@ -136,40 +136,27 @@ not a claim that scikit-bio itself performs that preprocessing.
 
 ```text
 src/
+├── adjustment.rs
+├── basis.rs
 ├── cli.rs
-├── table/
-│   ├── model.rs
-│   ├── delimited.rs
-│   ├── metadata.rs
-│   └── align.rs
-├── geometry/
-│   ├── closure.rs
-│   ├── perturb.rs
-│   ├── power.rs
-│   └── inner.rs
-├── transform/
-│   ├── alr.rs
-│   ├── clr.rs
-│   ├── rclr.rs
-│   └── ilr.rs
-├── basis/
-│   ├── model.rs
-│   ├── sbp.rs
-│   └── tree.rs
-├── zeros/
-│   ├── replacement.rs
-│   └── structural.rs
+├── error.rs
+├── geometry.rs
+├── inference.rs
+├── lib.rs
+├── limits.rs
+├── main.rs
+├── metadata.rs
 ├── proportionality.rs
-├── inference/
-│   ├── ancom.rs
-│   ├── tests.rs
-│   └── summary.rs
-├── output.rs
-└── report.rs
+├── table.rs
+├── transform.rs
+└── zeros.rs
 ```
 
-Later inference methods receive their own modules when implemented. The
-initial tree does not contain empty `ancom_bc`, `aldex`, or `dirmult` modules.
+This flat structure is deliberate: each current domain is small enough to be
+one cohesive module. A domain receives a directory only after real growth
+makes the split clearer. Later inference methods receive modules when
+implemented; the initial tree contains no empty `ancom_bc`, `aldex`, or
+`dirmult` placeholders.
 
 The library exposes checked table, basis, transform, and result types needed
 for programmatic use. Parsers, allocation strategy, CLI option models, and
@@ -182,12 +169,12 @@ and transactional named output. `rsomics-help` owns the complete recursive
 Clap command presentation. There is no duplicate help specification or argv
 interceptor inside this product.
 
-`rsomics-composition` is a concrete consumer of general p-value adjustment and
-statistical-test primitives from `rsomics-stats`. A public stats item moves
-there only when composition and a second named product exercise the same
-finite-value, tail, tie, and degeneracy contract. ANCOM's log-ratio matrix,
-W statistic, cutoff staircase, percentile layout, and bias-correction policy
-stay private.
+`rsomics-composition` supplies a concrete p-value-adjustment contract, but it
+is currently the only implemented consumer of that exact optional-value and
+finite-value behavior. The code therefore remains product-local. A public
+item moves to `rsomics-stats` only when a second named product exercises the
+same contract. ANCOM's log-ratio matrix, W statistic, cutoff staircase,
+percentile layout, and bias-correction policy stay private.
 
 Tree-derived ILR bases make composition a concrete consumer of the validated
 Newick and immutable topology contract in `rsomics-phylo-tree`, alongside
@@ -299,7 +286,55 @@ The first release contains every initial operation in the operation map:
 - a unified `rsomics-help` command tree with no advertised later subcommands.
 
 ANCOM-BC, ANCOM-BC2, Dirichlet-multinomial tests, ALDEx2, and SECOM are later
-slices. The package is not published until the complete first slice passes.
+slices. Version 0.1.0 was published only after the complete first slice passed.
+
+## Release evidence
+
+The product repository is
+[`omics-rust/rsomics-composition`](https://github.com/omics-rust/rsomics-composition).
+Release revision `b5b49869395ae4dde86e55d41eab7eeca54b14b9` contains all
+14 initial subcommands and depends on the published `rsomics-common 0.12.0`,
+`rsomics-help 0.4.0`, and `rsomics-phylo-tree 0.2.0` archives.
+
+The local release gate passed 38 library tests, two binary tests, and four
+process-level integration tests in both debug and release profiles, strict
+Clippy, warning-free documentation, package verification, and reconstruction
+from the packaged crate. The pinned scikit-bio 0.7.3 oracle passed 47
+differential and failure checks. Representative large-output comparisons
+recorded these maximum absolute differences: CLR `9.9964e-17`, default ILR
+`1.3323e-15`, rCLR `9.7904e-17`, multiplicative replacement `3.3307e-16`, and
+VLR `7.9937e-15`. Both ANCOM fixtures matched W statistics, significance
+decisions, and all 2,560 percentile values exactly.
+
+Exact-head CI run
+[`30743813161`](https://github.com/omics-rust/rsomics-composition/actions/runs/30743813161)
+passed native Linux and macOS execution on both `x86_64` and `aarch64` with
+Rust 1.91. The Linux `x86_64` job also installed the pinned Python oracle and
+ran all live differentials. Controlled publish run
+[`30743910370`](https://github.com/omics-rust/rsomics-composition/actions/runs/30743910370)
+succeeded. The registry archive and an independent download both have SHA-256
+`bc5ce2c03e16510115ac40eec85ff4af75fdc23734b02ec4bd44c9841a876767`.
+A fresh `cargo install` from crates.io reported version 0.1.0 and passed a
+labeled-table CLR smoke test.
+
+The end-to-end macOS `aarch64` gates include parsing, computation, and output:
+
+| Profile | Throughput advantage | Peak-RSS advantage |
+|---|---:|---:|
+| CLR, 20,000 × 64 | 3.53× | 7.98× |
+| default ILR, 500 × 2,000 | 3.84× | 12.64× |
+| sparse rCLR, 20,000 × 64 | 3.99× | 8.92× |
+| sparse replacement, 20,000 × 64 | 3.52× | 8.64× |
+| pairwise VLR, 2,000 × 512 | 5.69× | 10.90× |
+| ANCOM, 400 × 128 | 27.04× | 66.20× |
+| constant-ratio ANCOM, 400 × 128 | 27.56× | 61.87× |
+
+The ANCOM comparisons remain 17.02× and 17.28× faster after subtracting the
+measured Python scientific-stack import time. Raw timing distributions,
+`/usr/bin/time -l` outputs, fixture hashes, generators, and the exact oracle
+adapter are tracked in the product repository. ANCOM-BC, ANCOM-BC2,
+Dirichlet-multinomial tests, ALDEx2, and SECOM remain explicit later slices and
+are not advertised by version 0.1.0.
 
 ## Compatibility gates
 
