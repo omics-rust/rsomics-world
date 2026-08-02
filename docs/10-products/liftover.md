@@ -4,6 +4,15 @@ Status: `rsomics-liftover 0.1.0` published and independently verified. The
 production hot path was measured at `db576170a48b3b5762fd128890303298c6b2fa3e`;
 the published VCS identity is `597220ee2ed1102360bc3ab15646e2c9067a1a84`.
 
+Version 0.1.1 candidate `c27137165bb78d3d7b321fc46db782cff932dc03`
+uses the published `rsomics-common 0.12.0` paired-output transaction and
+removes the 187-line product-local duplicate. All local gates and both native
+Linux CI jobs pass. Exact-head run `30740174871` is not a release gate because
+both macOS jobs failed while downloading the pinned UCSC executables: the
+official endpoint timed out before tests began. Version 0.1.1 remains
+unpublished until the same head passes all four native jobs with the live
+macOS oracles.
+
 ## Boundary
 
 `rsomics-liftover` is one product for translating genomic records between
@@ -81,8 +90,7 @@ src/
 ├── io.rs
 ├── lib.rs
 ├── main.rs
-├── mapping.rs
-└── transaction.rs
+└── mapping.rs
 ```
 
 Format modules are added only with a complete release slice. Empty modules and
@@ -90,10 +98,10 @@ advertised placeholder subcommands are forbidden.
 
 The chain parser, index, and mapping engine remain product-private.
 `rsomics-common` owns errors, exit mapping, input aliases, execution reports,
-and single-output plumbing. `rsomics-help` owns CLI parsing and presentation.
-`rsomics-intervals` supplies the checked half-open interval type used by the
-BED paths. The liftover-specific two-output commit, chain ordering, and
-candidate policy remain private because they have no second product consumer.
+and single- and paired-output transactions. `rsomics-help` owns CLI parsing
+and presentation. `rsomics-intervals` supplies the checked half-open interval
+type used by the BED paths. Chain ordering and candidate policy remain private
+because they have no second product consumer.
 
 Future alignment support is a named consumer of `rsomics-bamio` alongside
 `rsomics-bam`. A public variant, signal, or annotation foundation is not
