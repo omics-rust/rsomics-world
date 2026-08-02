@@ -2,8 +2,8 @@
 
 Status: source and upstream-operation audit complete. The first-release command
 surface is implemented and passes four-native-target CI. The representative
-single-end WGBS extraction gate passes; publication remains gated on the rest
-of the retained performance matrix.
+single-end and overlapping paired-end WGBS extraction gates pass; publication
+remains gated on the rest of the retained performance matrix.
 
 ## Boundary
 
@@ -431,9 +431,51 @@ The resource records have SHA-256
 and `ce3665b7969d31a771e484f7c89b17ee5dd03fadcfc779d4f606615f40b4ecb5`.
 
 The result closes the representative single-end WGBS extraction gate only.
-RRBS-like sparse coverage, high-depth targeted data, overlapping pairs, all
-contexts, CRAM, and separate `mbias`, `merge-context`, and `per-read`
-measurements remain required before the first product publication.
+RRBS-like sparse coverage, high-depth targeted data, all contexts, CRAM, and
+separate `mbias`, `merge-context`, and `per-read` measurements remain required
+before the first product publication.
+
+### Overlapping paired-end WGBS gate, 2026-08-03
+
+Revision `8a746cf8a2ac` replaces per-column heap allocation with inline evidence
+storage. Columns of at most 32 retained records pair mates by a bounded linear
+scan; higher-depth columns retain the hash-indexed path. A unit test forces
+both branches through the same agreement and quality-adjustment contract. All
+63 local tests, strict Clippy, rustdoc, package verification, and exact-head
+four-native-target CI `30762469742` pass.
+
+The retained `wgbs-paired-overlap-2m-20260803` fixture contains two million
+fragments and four million coordinate-sorted 100-base alignments, with mates
+offset by ten bases. Its 50,625,121-byte reference and 93,979,516-byte BAM have
+SHA-256
+`2229b2631c87c8cd84ee8e38c010351e11f206bdf7002dd630a61102156840cc`
+and `6efe332101303a59350a6d66202ae1eda51a38a7084f10565041134ab28930c7`.
+The FAI and BAI hashes are
+`e4257313524c80aa008f31184bbfe2e7704f7ac98b7f5a9a6e260c789c0e9fa0`
+and `b03e217ab50876367478960f69985a0c6fe07215eb3d8673ce019668ac6cb88a`.
+
+The same machine, oracle, storage placement, one-thread commands, warmup, and
+alternating ten-pair method are used. Rust completes in
+`9.657 ± 0.778` seconds versus `10.717 ± 0.892` seconds for MethylDackel, a
+9.9% mean wall-time advantage. Rust wins seven of ten pairs; the paired mean
+difference is 1.060 seconds with a paired standard deviation of 1.363 seconds.
+Mean user CPU is 5.254 versus 5.955 seconds. A separate resource run records
+9,420,800 versus 13,254,656 bytes maximum RSS. The 4,999,919 data rows are
+identical with SHA-256
+`01b7a4306cab5cde4da8accd5bb3652df25f2bae228aca901cef8244aaa590d4`.
+The final Rust binary has SHA-256
+`3c78bcabf0cb110bb1b4725ed48239d2816a317d895d574308374435c9714e2f`.
+
+The Rust and upstream paired timing records have SHA-256
+`9aaaf7d4cf684ca3d5bf20c8404761b74c0e514ab200676198062e27cf7e9005`
+and `eaaff95b07be4722b8b80ff85b44603fc57866931a2f298303ed06f741aed3f1`.
+The resource records have SHA-256
+`f307e4052fe4c8cb49e9073c8cd20ab48d426dce8c3779640b3d377de9006925`
+and `138d1970a91ccd3d2bc55e5ce18b67edc274b53854b513d67412c038dcb1352e`.
+
+This closes the overlapping paired-end row of the matrix. Sparse RRBS-like,
+high-depth targeted, all-context, CRAM, and separate subcommand measurements
+remain open.
 
 A separate historical reverification reports byte-identical data lines on a
 92 MB, four-million-read BAM producing about 2.5 million CpG rows.
