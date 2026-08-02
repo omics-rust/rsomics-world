@@ -228,6 +228,22 @@ the corresponding per-read outside-start differential is empty on both tools.
 Documentation revision `67524780d001` is the exact head validated by
 four-native-target CI `30753726141`.
 
+Revision `20fd0ef1bc57` implements the `mbias` workflow without creating a
+separate product or foundation. Per-read and M-bias now consume one checked
+product-local alignment call walker; extraction and M-bias also share one CLI
+filter surface, while extraction and M-bias outputs share one transactional
+multi-file implementation. Default and region-limited TSV rows are
+byte-identical to the live corrected oracle with SHA-256
+`00149a22c832613159e7e0f80a70077e47ca57697ae4bd5942a3333abef6918b`
+and `3088333049b19395c67782db3db512c7c62379a53e099d9191fb1b6820e25462`.
+The Agresti-Coull intervals and inclusion-bound suggestions retain explicit
+MethylDackel provenance; nonzero edge detection and CTOT/CTOB read-two calls
+have independent tests. Deterministic valid SVGs and the TSV commit together,
+and failure injection preserves all previous outputs. Exact-head
+four-native-target CI `30754414728` passes. The first release is still gated on
+the remaining extraction filters, cytosine report, and retained performance
+fixtures.
+
 A separate historical reverification reports byte-identical data lines on a
 92 MB, four-million-read BAM producing about 2.5 million CpG rows.
 
