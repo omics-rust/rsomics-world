@@ -1,6 +1,14 @@
 # FASTQ preprocessing product gate — updated 2026-08-02
 
-Status: `rsomics-fastq-preprocess 0.1.0` published and independently verified.
+Status: `rsomics-fastq-preprocess 0.1.1` published and independently verified.
+
+Version 0.1.1 at `89d4f534f90eca7ce84cf0929474047bd1139d38`
+replaces the product-local thread argument with `rsomics-common 0.11.1`'s
+shared `ThreadArgs`; the consumer keeps only its Rayon pool policy. Exact-head
+four-native CI `30731874951` and publish run `30732312288` passed. The
+independently downloaded non-yanked archive is 39,843 bytes, has SHA-256
+`27e723ea3c1e3279f2fdc0c369a44da4e6c39ec9bb53ca6b5149169167ec7a95`,
+and records that exact VCS identity.
 
 ## Released slice
 

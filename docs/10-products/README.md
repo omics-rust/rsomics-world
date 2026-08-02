@@ -18,17 +18,17 @@ operation will ship. It records:
 
 | Product | Source candidates | Dossier state |
 |---|---:|---|
-| `rsomics-annotation` | 4 | [audited](interval-annotation-index.md#rsomics-annotation) |
+| `rsomics-annotation` | 4 | [released 0.1.0](interval-annotation-index.md#rsomics-annotation) |
 | `rsomics-bam` | 41 | [audited](bam.md) |
-| `rsomics-bed` | 42 | [audited](interval-annotation-index.md#rsomics-bed) |
-| `rsomics-call` | 2 | [audited](variant.md#rsomics-call) |
+| `rsomics-bed` | 42 | [released 0.1.0](bed-gate-2026-07-30.md) |
+| `rsomics-call` | 2 | [released 0.1.0](variant.md#rsomics-call) |
 | `rsomics-cnv` | 2 | [audited](variant.md#rsomics-cnv) |
 | `rsomics-composition` | 10 | [audited](composition.md) |
 | `rsomics-count` | 4 | [released 0.1.0](count-gate-2026-08-02.md) |
 | `rsomics-deseq` | 12 | [audited](bulk-expression.md#rsomics-deseq) |
 | `rsomics-ecology` | 19 | [audited](ecology.md) |
 | `rsomics-edger` | 17 | [audited](bulk-expression.md#rsomics-edger) |
-| `rsomics-fastq-preprocess` | 12 | [audited](sequence-fastq.md#rsomics-fastq-preprocess) |
+| `rsomics-fastq-preprocess` | 12 | [released 0.1.1](fastq-preprocess-gate-2026-07-30.md) |
 | `rsomics-fastq-qc` | 1 | [released 0.1.0](fastq-qc-gate-2026-08-02.md) |
 | `rsomics-index` | 5 | [audited](interval-annotation-index.md#rsomics-index) |
 | `rsomics-liftover` | 1 | [released 0.1.0](liftover.md) |
@@ -42,12 +42,12 @@ operation will ship. It records:
 | `rsomics-popgen` | 14 | [audited](genotype-popgen.md#rsomics-popgen) |
 | `rsomics-rnaseq-qc` | 21 | [audited](rnaseq-qc-signal.md#rsomics-rnaseq-qc) |
 | `rsomics-sc` | 29 | [audited](sc.md) |
-| `rsomics-seq` | 34 | [audited](sequence-fastq.md#rsomics-seq) |
+| `rsomics-seq` | 34 | [released 0.1.0](seq-gate-2026-07-30.md) |
 | `rsomics-signal` | 15 | [audited](rnaseq-qc-signal.md#rsomics-signal) |
 | `rsomics-sketch` | 1 | [released 0.1.0](sketch-gate-2026-08-02.md) |
 | `rsomics-structure` | 9 | [audited](structure.md) |
 | `rsomics-table` | 16 | [audited](table.md) |
-| `rsomics-vcf` | 30 | [audited](variant.md#rsomics-vcf) |
+| `rsomics-vcf` | 30 | [released 0.1.0](variant.md#rsomics-vcf) |
 
 Counts are generated from
 [`portfolio-inventory.tsv`](../00-overview/portfolio-inventory.tsv). They
