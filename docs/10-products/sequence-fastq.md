@@ -1,7 +1,8 @@
 # Sequence and FASTQ product dossier
 
-Status: source audit complete; first release slices selected; `rsomics-seq`
-and `rsomics-fastq-preprocess` have verified public repositories.
+Status: source audit complete; first release slices selected; `rsomics-seq
+0.1.0` is published and verified; `rsomics-fastq-preprocess` has a verified
+public repository.
 
 The source pool contains 47 relevant historical crates after routing
 corrections: 34 for `rsomics-seq`, 12 for preprocessing, and one for QC. The
@@ -67,11 +68,12 @@ skips ambiguity-bearing windows, constrains `k` to the foundation's checked
 `1..=32` representation, and adds an explicit canonical mode. This does not
 promote a new public crate or make k-mer counting product-independent policy.
 
-The complete first slice is implemented at `omics-rust/rsomics-seq` revision
-`2727daa3bf4f`. Exact-head CI run `30568955799` passes on native Linux and
-macOS for both `x86_64` and `aarch64`, including strict Clippy, 44 tests, six live SeqKit
-2.13.0 differentials, an independent ordered k-mer oracle, and five benchmark
-smoke tests.
+The complete first slice is published from `omics-rust/rsomics-seq` revision
+`81c1e03981e2`. Exact-head CI run `30724863360` passes on native Linux and
+macOS for both `x86_64` and `aarch64`, including strict Clippy, rustdoc,
+package verification, 45 tests, six live SeqKit 2.13.0 differentials, an
+independent ordered k-mer oracle, five benchmark smoke tests, and a standard
+stream composition across `grep`, `convert`, `validate`, and `stats`.
 
 The representative Linux `x86_64` gate covers all five commands. On 6,282,141
 compressed SRR341550 reads, `stats`, ID grep, double-strand sequence grep,
@@ -91,11 +93,12 @@ blanket replacement claim.
 The former shared `--threads` flag did not scale the current streaming
 sequence operations and has been removed rather than justified with
 speculative parallel code. The command tree now exposes only the shared JSON
-output option. Exact distributions, RSS, commands, checksums, and remaining gates are in the
-[representative product gate](seq-gate-2026-07-30.md). Publication remains
-blocked on final product API and hot-path review, the second real
-`rsomics-kmer` consumer. Common, help, and seqio resolve from their published
-registry releases. Linux `aarch64` has native correctness CI but no
+output option. Exact distributions, RSS, commands, checksums, release
+identities, and the remaining platform limitation are in the
+[representative product gate](seq-gate-2026-07-30.md). The final API and
+hot-path review removed the private output transaction and adopted the shared
+alias and atomic-output contracts. Common, help, seqio, and kmer resolve from
+published registry releases. Linux `aarch64` has native correctness CI but no
 representative performance host.
 
 ### Later operation groups

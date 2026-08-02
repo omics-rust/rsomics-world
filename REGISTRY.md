@@ -38,7 +38,7 @@ Status meanings are defined in [CONVENTIONS.md](CONVENTIONS.md).
 | `rsomics-popgen` | planned | population-genetic statistics outside the PLINK workflow |
 | `rsomics-rnaseq-qc` | planned | RSeQC/Picard-like RNA-seq quality control |
 | `rsomics-sc` | planned | stateful single-cell and spatial analysis workflow |
-| `rsomics-seq` | repo-only | coherent FASTA/FASTQ sequence utility suite |
+| `rsomics-seq` | live | coherent FASTA/FASTQ sequence utility suite |
 | `rsomics-signal` | planned | deepTools/bigWig signal workflows |
 | `rsomics-sketch` | planned | persistent sequence sketches, comparison, search, indexing, and mixture decomposition |
 | `rsomics-structure` | planned | protein structure and PDB analysis |
@@ -49,8 +49,8 @@ Product status summary:
 
 | Status | Count |
 |---|---:|
-| live | 4 |
-| repo-only | 4 |
+| live | 5 |
+| repo-only | 3 |
 | pilot | 1 |
 | planned | 21 |
 | **Total** | **30** |

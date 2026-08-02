@@ -70,8 +70,10 @@ Rejected public boundary:
 - [x] `rsomics-help`: replace duplicate CLI models with the shared Clap layer.
 - [x] `rsomics-seqio`: derive strict stream contracts from sequence and
       preprocessing.
-- [ ] `rsomics-kmer`: add a second product consumer and four-native-target
-      release gate.
+- [x] `rsomics-kmer`: correct the published codec boundary and add a
+      four-native-target maintenance-release gate.
+- [ ] `rsomics-kmer`: add a second current target-product consumer before
+      expanding the public API further.
 - [x] `rsomics-intervals`: retain only the two-consumer coordinate model and
       move checked indexing and BED policy into `rsomics-bed`.
 - [x] Reconstruct `rsomics-bamio` and `rsomics-pileup` through BAM and calling.
@@ -89,12 +91,13 @@ Rejected public boundary:
 - [x] Create or recover target product repositories on KIOXIA.
 - [x] Merge the first consumer slice without reviving micro-crate dependencies.
 - [x] Consolidate golden and compatibility tests for the implemented operations.
-- [ ] Add end-to-end tests composing multiple subcommands.
+- [x] Add end-to-end tests composing multiple subcommands.
 - [x] Benchmark implemented slices against the real upstream tools.
 - [x] Review `common` and `seqio` public API changes through the `seq` and
       `fastq-preprocess` consumers.
 - [x] Review `help` through sequence, preprocessing, BED, and annotation.
 - [ ] Review `kmer` through its required second product consumer.
+- [x] Publish the coherent five-command `rsomics-seq` first-release slice.
 
 ## P1 — interval pilot
 
