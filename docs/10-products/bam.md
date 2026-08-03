@@ -7,7 +7,9 @@ four-native-target CI gates and is published as `rsomics-bam 0.5.0`. The
 ninth command, `index`, has passed the same release gates and is published as
 `rsomics-bam 0.6.0`. The tenth command, `sort`, is published as
 `rsomics-bam 0.7.0` after the same correctness, performance, package, and
-four-native-target gates.
+four-native-target gates. The eleventh command, `merge`, has passed its
+feature-head correctness, performance, package, and four-native-target gates
+and is being prepared for `rsomics-bam 0.8.0`.
 
 ## Boundary
 
@@ -456,24 +458,46 @@ provenance moved to one product-internal type shared by `view` and `sort`; the
 old public `rsomics_bam::view::Program` path remains available. No new Layer A
 item was justified.
 
-The next Slice 2 candidate is an ordered, header-aware `merge`, not `cat` or
-`collate`. It is the second concrete consumer of the product's coordinate,
-natural-name, bytewise-name, and template-coordinate keys, so those keys may
-move to a private product module without changing the public foundation set.
-The stable candidate accepts named SAM, BAM, and CRAM inputs, writes BAM, keeps
-only one prefetched record per input, validates each input's declared and
-observed order, reconciles reference dictionaries, deterministically resolves
-read-group and program collisions, translates record reference, mate, `RG`,
-and `PG` fields, and commits named output transactionally. Conflicting
+Revision `83b73a0c7274` implements the ordered, header-aware `merge`. It is the
+second concrete consumer of the product's coordinate, natural-name,
+bytewise-name, and template-coordinate keys; the shared ordering model now
+lives in a private product module without changing the public foundation set.
+The command accepts up to 32 named SAM, BAM, and CRAM inputs, writes BAM,
+validates each input's declared and observed order, reconciles reference
+dictionaries, deterministically resolves read-group and program collisions,
+translates record reference, mate, `RG`, and `PG` fields, and commits named
+output transactionally. Per-input readers emit approximately 1 MiB raw-record
+batches through capacity-one channels, keeping read-ahead bounded by input
+count and the largest record rather than total file size. Conflicting
 reference definitions, order-destroying dictionary layouts, unknown record
 header IDs, truncation, and finalization errors fail non-zero.
 
-The candidate does not initially expose tag sorting, region/BED restriction,
-custom indexes, write-index coupling, arbitrary compression levels, CRAM
-output, or thousands-of-files fan-in. These remain absent until their complete
-contracts and performance evidence exist. The historical merge repository is
-only a fixture and heap-shape seed: its first-header policy, BAM-only reader,
-fallible-coordinate suppression, and non-transactional output are discarded.
+The ordinary suite covers reconciliation and translation, combine modes,
+transactional failure, declared and observed order, stdout finalization,
+dictionary conflicts, path aliases, and the input cap. The live samtools 1.24
+matrix covers all four ordering modes plus mixed SAM, BAM, and CRAM inputs.
+Because the ordering code moved out of `sort`, its complete samtools oracle was
+also rerun. Formatting, strict Clippy, debug and release tests, package
+verification, and exact-head CI run `30784029825` pass; that CI runs native
+Linux and macOS on both `x86_64` and `aarch64` and builds the pinned oracle on
+Linux `x86_64`.
+
+The 8,000,000-record natural-name BAM gate used feature revision
+`83b73a0c7274`, the 4,000,000-record fixture twice, and 12 alternating default
+pairs. `rsomics-bam merge` averaged 3.0158 seconds versus samtools 1.24 at
+9.3550 seconds, a 3.10 times wall-time advantage. Mean peak RSS was 20,959,232
+versus 13,873,152 bytes and mean CPU time was 1.34 times samtools, so neither
+is claimed as an advantage. With four additional workers for both tools,
+eight pairs averaged 3.3613 versus 3.3288 seconds and did not establish a
+throughput advantage. Every warm-up and timed output matched complete headers
+and order-sensitive full-record checksums.
+
+This release does not expose tag sorting, region/BED restriction, custom
+indexes, write-index coupling, arbitrary compression levels, CRAM output, or
+thousands-of-files fan-in. These remain absent until their complete contracts
+and performance evidence exist. The historical merge repository supplied only
+a fixture and heap-shape seed: its first-header policy, BAM-only reader,
+fallible-coordinate suppression, and non-transactional output were discarded.
 
 ### Slice 3: projection, pileup, and statistics
 
@@ -503,19 +527,27 @@ historical binaries:
 
 ```text
 src/
+├── alignment_order.rs
 ├── lib.rs
 ├── main.rs
 ├── cli.rs
+├── header_merge.rs
 ├── input.rs
 ├── md.rs
+├── merge.rs
 ├── output.rs
+├── sort.rs
 ├── commands/
+│   ├── depth.rs
 │   ├── flags.rs
 │   ├── flagstat.rs
 │   ├── head.rs
 │   ├── index.rs
+│   ├── merge.rs
+│   ├── mpileup.rs
 │   ├── quickcheck.rs
 │   ├── samples.rs
+│   ├── sort.rs
 │   └── view.rs
 └── filter.rs
 ```
@@ -579,7 +611,7 @@ SAM/CRAM support.
 | `rsomics-bam-import` `ba7f8fc7630676e1cdbe95a21c0ae35677f5b958` | Refactor then merge | `import`; share `rsomics-seqio` only through a concrete contract |
 | `rsomics-bam-index` `167e86bd0f5ee0cf13bf18e9ded89cb1f99a46a5` | Test asset; replacement merged at `4639c3676283` | `index`; discard the BAI-only wrapper |
 | `rsomics-bam-markdup` `e865796930fb72d8a185e3a0b18024d217ca6128` | Refactor then merge | `markdup`; retain scoring and duplicate fixtures |
-| `rsomics-bam-merge` `7334fce53ec3666f63893b450710daa4efd43641` | Test asset and merge-loop seed | Replace first-header policy and swallowed decode failures |
+| `rsomics-bam-merge` `7334fce53ec3666f63893b450710daa4efd43641` | Test asset; replacement merged at `83b73a0c7274` | Discard first-header policy and swallowed decode failures |
 | `rsomics-bam-mpileup` `5e51a7825384fd65aca38345a12ad7c89ad31143` | Refactor then merge after pileup API | Add BAQ and reference-aware default behavior |
 | `rsomics-bam-phase` `9f475c325e8e8c30873a12df5979c44023e78c1d` | Test and algorithm asset | Replace tolerance-only compatibility decisions |
 | `rsomics-bam-quickcheck` `5982123dbed16ab0f625495d550630c43d55f3ba` | Refactor then merge | First-slice `quickcheck`; cover all three formats |
