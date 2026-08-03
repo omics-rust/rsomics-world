@@ -1,124 +1,96 @@
-# Indexing
+# Indexing ownership
 
-> Random-access indexes for compressed bioinformatics files: fai, bai, csi,
-> tbi, gzi.
+Random-access index formats are shared standards, but index construction is
+not a standalone public foundation by default. The consuming product owns the
+format policy, command contract, validation, and lifecycle of its indexes.
+Codec and reader primitives remain external dependencies or narrow additions
+to an existing format foundation.
 
-## Scope
+## Product boundaries
 
-The sidecar index files that turn a streaming BGZF/gzipped archive into a
-random-access database: FASTA index (`.fai`), BAM index (`.bai`), coordinate
-sort index (`.csi`), tabix index (`.tbi`), and BGZF virtual-offset index
-(`.gzi`). Includes the `tabix` CLI that builds them. The codecs themselves
-(BGZF / gzip) live in [`compression.md`](compression.md); record-level
-readers that *use* these indexes live in [`io-formats.md`](io-formats.md).
+| Index | Input model | Owning product | Current decision |
+|---|---|---|---|
+| BAI, alignment CSI, CRAI | SAM, BAM, CRAM alignments | `rsomics-bam` | `rsomics-bam index` |
+| VCF CSI and TBI | VCF/BCF variation records | `rsomics-vcf` | `rsomics-vcf index` |
+| FAI, FASTQ index, GZI | reference and sequence files | `rsomics-index` | sequence-index utility workflow |
+| generic TBI/CSI | BGZF tabular records | `rsomics-index` | tabix-compatible workflow |
 
-## Design notes
+This split follows user workflow and record semantics. A BAI writer is not a
+reason to publish `rsomics-bai`, and a reusable bin calculation is not enough
+to create `rsomics-indexing`. A public item would still need two named product
+consumers, consumer-side contract tests, and an API free of format policy.
 
-- All five formats are well-specified in the
-  [hts-specs](http://samtools.github.io/hts-specs/) repository, and all five
-  are already implemented in `noodles-*` crates. The Rust gap here is
-  near-zero.
-- CSI generalises BAI (32-bit → 64-bit coordinates, configurable bin
-  depth). Most new pipelines should default to CSI; BAI is kept for
-  compatibility with chromosomes ≤ 512 Mbp.
-- `.gzi` is a small but essential index for random access into a *gzipped*
-  (non-BGZF) FASTA. `samtools faidx` will produce both `.fai` and `.gzi`
-  for `.fa.gz`.
-- The work is in producing **bit-identical indexes** to htslib so that
-  downstream tools (IGV, GATK, bcftools) accept them without complaint. Our
-  benchmark plan calls for byte-comparison against `samtools index` output.
-- A multi-threaded CSI/BAI builder is a real performance opportunity:
-  `samtools index -@` parallelises only BGZF decompression, not the
-  bin-tree construction.
+## Alignment indexes
 
-## TODO
+`rsomics-bam 0.6.0` builds BAI, CSI, and CRAI for coordinate-sorted BAM, BGZF
+SAM, and CRAM. The command owns:
 
-- [x] **`.fai` FASTA index** — record-offset table for random access into a FASTA file.
-  - Reference impl: `C` · [samtools/htslib/faidx.c](https://github.com/samtools/htslib) · `MIT`
-  - Existing Rust: [`noodles-fasta`](https://crates.io/crates/noodles-fasta) `0.61.0` (fai reader + writer); `rust-htslib::faidx` (FFI)
-  - Existing Rust kind: `pure-port/FFI-wrapper`
-  - Existing non-C alternatives: `pyfaidx` (Python)
-  - Parallelism: single-threaded (index build is trivially small)
-  - SIMD: none needed (linear scan)
-  - Quadrant: ① (noodles)
-  - GPU-amenable: no — index build is sub-second, no compute upside
-  - Upstream license: `MIT`
-  - Priority: `P0`
-  - Layer: `adopt`
-  - Consumes primitives: —
-  - Notes: Add CI test that builds `.fai` for GRCh38 and diffs byte-by-byte against `samtools faidx` output.
+- BAI or CSI selection for BAM and BGZF SAM, and CRAI selection for CRAM;
+- CSI minimum shift, custom output, multiple inputs, and worker selection;
+- BGZF or CRAM EOF requirements and fail-loud malformed-input behavior;
+- complete path-alias validation and transactional destination replacement;
+- shared rsomics help, error, and JSON-summary presentation;
+- compatibility and performance gates against samtools 1.24.
 
-- [x] **`.bai` BAM index** — BAM coordinate-sort index (≤ 512 Mbp chromosomes).
-  - Reference impl: `C` · [samtools/htslib](https://github.com/samtools/htslib) · `MIT`
-  - Existing Rust: [`noodles-bam`](https://crates.io/crates/noodles-bam) `0.89.0` (reader + writer)
-  - Existing Rust kind: `pure-port`
-  - Existing non-C alternatives: `htsjdk` (Java)
-  - Parallelism: serial index build today; a rayon-parallel bin-tree builder is open work
-  - SIMD: none
-  - Quadrant: ①
-  - GPU-amenable: no — irregular tree construction, latency-dominated
-  - Upstream license: `MIT`
-  - Priority: `P0`
-  - Layer: `adopt`
-  - Consumes primitives: —
-  - Notes: Watch for edge cases in placed-unmapped reads and pseudo-bin 37450 (the BAI metadata bin) — usual cause of incompatibility with older readers.
+The construction backend is HTSlib through a product-private adapter. This is
+an implementation dependency, not a public rsomics foundation API. The first
+custom noodles builder was removed when measured evidence showed it was slower
+and produced a larger BAI. Default indexing now selects up to four additional
+workers, while `-@ 0` requests one-thread behavior.
 
-- [x] **`.csi` Coordinate Sort Index** — 64-bit-capable generalisation of BAI/TBI.
-  - Reference impl: `C` · [samtools/htslib](https://github.com/samtools/htslib) · `MIT`
-  - Existing Rust: [`noodles-csi`](https://crates.io/crates/noodles-csi) `0.56.0`
-  - Existing Rust kind: `pure-port`
-  - Existing non-C alternatives: `htsjdk`
-  - Parallelism: serial build; same parallel-builder opportunity as BAI
-  - SIMD: none
-  - Quadrant: ①
-  - GPU-amenable: no — irregular tree construction
-  - Upstream license: `MIT`
-  - Priority: `P0`
-  - Layer: `adopt`
-  - Consumes primitives: —
-  - Notes: Default to CSI v1 with `min_shift=14` for new outputs. Required for plant genomes (some chromosomes > 512 Mbp).
+`rsomics-bamio 0.8.4` owns the narrower shared read-side contract. Its indexed
+alignment reader accepts BAI and CSI for BAM, CRAI for CRAM, CSI for BGZF SAM,
+and the samtools-default appended BAI for BGZF SAM. The last case is covered by
+a real region query, not only index parsing. No construction policy moved into
+`bamio`.
 
-- [x] **`.tbi` tabix index** — generic positional index for any tab-delimited bgzipped file (BED, GFF, VCF text).
-  - Reference impl: `C` · [samtools/htslib](https://github.com/samtools/htslib) · `MIT`
-  - Existing Rust: [`noodles-tabix`](https://crates.io/crates/noodles-tabix) `0.62.0`
-  - Existing Rust kind: `pure-port`
-  - Existing non-C alternatives: `htsjdk`
-  - Parallelism: serial build
-  - SIMD: none
-  - Quadrant: ①
-  - GPU-amenable: no — irregular tree construction
-  - Upstream license: `MIT`
-  - Priority: `P0`
-  - Layer: `adopt`
-  - Consumes primitives: —
-  - Notes: The CSI variant (`.tbi` → `.csi`) is preferred for new work; keep `.tbi` writer for backward compat.
+## Variation and generic indexes
 
-- [x] **`.gzi` BGZF virtual-offset index** — sidecar for random access into gzipped FASTA.
-  - Reference impl: `C` · [samtools/htslib/bgzf.c](https://github.com/samtools/htslib) · `MIT`
-  - Existing Rust: [`noodles-bgzf`](https://crates.io/crates/noodles-bgzf) `0.47.0` (read + write); consumed by `noodles-fasta` for bgzipped references
-  - Existing Rust kind: `pure-port`
-  - Existing non-C alternatives: —
-  - Parallelism: single-threaded
-  - SIMD: none
-  - Quadrant: ①
-  - GPU-amenable: no — trivial offset table
-  - Upstream license: `MIT`
-  - Priority: `P0`
-  - Layer: `adopt`
-  - Consumes primitives: —
-  - Notes: Trivial format but a frequent source of confusion. Document the "build `.gzi` *first*, then `.fai`" sequence explicitly in the `rsomics-faidx` CLI. The companion `rsomics-zip` binary ([`compression.md`](compression.md)) needs to learn `.gzi` emission alongside BGZF output — first follow-up TODO over there.
+VCF/BCF index construction stays in `rsomics-vcf` because contig dictionaries,
+record spans, TBI eligibility, and BCF policy are variation-specific. Generic
+tabix, FAI, FASTQ-index, and GZI work remains grouped under `rsomics-index` as
+one sequence and tabular indexing product. Deleted `rsomics-tabix`,
+`rsomics-fasta-index`, `rsomics-bgzip`, and similar micro-crates remain source
+or fixture assets and are not revived.
 
-- [ ] **`tabix` (CLI)** — command-line index builder.
-  - Reference impl: `C` · [samtools/htslib](https://github.com/samtools/htslib) · `MIT`
-  - Existing Rust: no published `tabix`-equivalent CLI; building blocks live in `noodles-tabix` + `noodles-csi`
-  - Existing Rust kind: `none`
-  - Existing non-C alternatives: —
-  - Parallelism: opportunity — rayon-parallel bin-tree construction (samtools serialises this)
-  - SIMD: none
-  - Quadrant: —
-  - GPU-amenable: no — irregular tree construction
-  - Upstream license: `MIT`
-  - Priority: `P1`
-  - Layer: `B` (tool — `rsomics-tabix`)
-  - Consumes primitives: `noodles-tabix`, `noodles-csi`, `noodles-bgzf`
-  - Notes: Real opportunity. Thin wrapper over noodles primitives but worth shipping for parallel-index-building (tracked upstream as [samtools/htslib#1735](https://github.com/samtools/htslib/issues/1735)). Match htslib output byte-for-byte.
+The external building blocks currently include:
+
+| Format | Specification or implementation source | License note |
+|---|---|---|
+| BAI and CSI | SAM/BAM and CSI specifications; HTSlib; noodles-bam/noodles-csi | HTSlib MIT/BSD-style; noodles MIT |
+| CRAI | CRAM and CRAI specifications; HTSlib; noodles-cram | permissive upstream licenses |
+| TBI | tabix specification; HTSlib; noodles-tabix | permissive upstream licenses |
+| FAI and GZI | HTSlib faidx/BGZF contracts; noodles-fasta/noodles-bgzf | permissive upstream licenses |
+
+Upstream names and behavior remain attributed even though historical rsomics
+code is team-owned.
+
+## Required evidence
+
+An index operation is stable only when all relevant gates pass:
+
+1. malformed, truncated, unsorted, out-of-range, and aliased inputs fail
+   non-zero without replacing an existing destination;
+2. the real upstream tool reads the generated index and returns identical
+   region or statistics output;
+3. rsomics readers consume the index through an actual query;
+4. index kind, minimum shift, metadata, empty references, unplaced records,
+   and alternative filenames have fixtures where relevant;
+5. a representative non-trivial benchmark records tool versions, machine,
+   input and binary checksums, flags, timing distribution, CPU, peak RSS, and
+   output identity;
+6. the established-tool hot path has a strict measured throughput or resource
+   advantage, or another material user benefit.
+
+Byte identity is required when the upstream format and backend make it stable.
+Otherwise compatibility is established through independent readers and
+query-output equality, with any byte-level difference explained.
+
+## Open work
+
+- Complete the `rsomics-index` dossier before implementing FAI, FASTQ index,
+  GZI, and generic tabix operations.
+- Retain format-specific construction inside its product until a second
+  concrete consumer proves a shared public API.
+- Benchmark CSI, BGZF SAM, and CRAM separately before making performance claims
+  beyond the default BAM/BAI gate.
