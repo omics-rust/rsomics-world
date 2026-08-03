@@ -499,6 +499,31 @@ and performance evidence exist. The historical merge repository supplied only
 a fixture and heap-shape seed: its first-header policy, BAM-only reader,
 fallible-coordinate suppression, and non-transactional output were discarded.
 
+The next stable operation is standard `collate`. It accepts SAM, BAM, and CRAM
+input, emits BAM, places every QNAME in one contiguous group, and sets
+`SO:unsorted` plus `GO:query`. Ordering between QNAME groups is deliberately
+unspecified. The implementation may use a deterministic hash order, but that
+order is not a public contract. Memory is a total record budget, temporary
+runs have bounded merge fan-in, named output is transactional, and temporary
+files are removed after success or failure. Its compatibility oracle compares
+the complete record multiset, QNAME-group contiguity, first/second ordering
+within groups, header semantics, filtering absence, and failure behavior rather
+than requiring samtools' incidental group order.
+
+Fast `collate -f`, compression-level selection, SAM or CRAM output, and the
+samtools prefix-as-output convention are not part of this first collate slice.
+Fast mode has a different primary-paired-record filter and bounded early-pair
+buffer; it remains absent until both that filtering contract and spill behavior
+have direct oracle coverage. The historical `rsomics-bam-collate` whole-file
+`HashMap` is retained only as a fixture seed. Its first-seen group order and
+unbounded record retention are discarded.
+
+This operation is the input-preparation edge of the real
+`collate -> fixmate -m -> coordinate sort -> markdup` workflow. The following
+slice implements `fixmate` against name-grouped input before `markdup` is
+exposed. Shared ordering, temporary-run, and output plumbing remains private to
+the BAM product; this workflow creates no new Layer A requirement.
+
 ### Slice 3: projection, pileup, and statistics
 
 - `consensus`, `calmd`, `depad`, `phase`, `reference`, and
