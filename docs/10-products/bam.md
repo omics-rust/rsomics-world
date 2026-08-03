@@ -5,7 +5,9 @@ release slice is published as `rsomics-bam 0.4.0`. The eighth command,
 `depth`, has passed its local, oracle, performance, package, and
 four-native-target CI gates and is published as `rsomics-bam 0.5.0`. The
 ninth command, `index`, has passed the same release gates and is published as
-`rsomics-bam 0.6.0`.
+`rsomics-bam 0.6.0`. The tenth command, `sort`, is published as
+`rsomics-bam 0.7.0` after the same correctness, performance, package, and
+four-native-target gates.
 
 ## Boundary
 
@@ -436,6 +438,24 @@ validation, `@RG` and `@PG` translation, stable tie behavior, transactional
 outputs, and cleanup after failure. The historical in-memory sorter and
 first-header merge are not acceptable implementations.
 
+Release 0.7 implements `sort` without claiming the rest of Slice 2. SAM, BAM,
+and CRAM inputs share coordinate, natural query-name, bytewise query-name, and
+template-coordinate ordering with BAM output. The implementation enforces a
+total record-memory budget, external compressed runs, a 32-way maximum merge
+fan-in, multi-pass merging, stable ties across runs, validated end markers,
+transactional named output, and temporary-file cleanup. A forced test creates
+more than 32 runs and proves tie stability through at least two merge passes.
+The live samtools 1.24 differential covers all four orders, all three input
+formats, and forced external runs. Tag sorting, minimizer sorting, CRAM output,
+write-index coupling, and compression-level controls remain unexposed rather
+than appearing as placeholders.
+
+The product reused its existing `rsomics-bamio` raw records, input boundary,
+transactional writer, and mandatory `rsomics-help` command tree. Program-header
+provenance moved to one product-internal type shared by `view` and `sort`; the
+old public `rsomics_bam::view::Program` path remains available. No new Layer A
+item was justified.
+
 ### Slice 3: projection, pileup, and statistics
 
 - `consensus`, `calmd`, `depad`, `phase`, `reference`, and
@@ -548,7 +568,7 @@ SAM/CRAM support.
 | `rsomics-bam-reheader` `bdf6f6ec0ed0b16307e781b0ef335dc71699cae2` | Refactor then merge | `reheader`; transactional BAM and CRAM paths |
 | `rsomics-bam-reset` `121947733112098c2b66d6151c23331cb4307e1f` | Refactor then merge | `reset`; current flag and auxiliary-tag behavior |
 | `rsomics-bam-samples` `40b39137a2f03333a7b9af0505b43ccffc311bc9` | Refactor then merge | First-slice multi-input `samples` |
-| `rsomics-bam-sort` `99144c7ba8d9abe78add7301cb300e74b5c11fe0` | Test asset only | Discard the whole-file `Vec` sorter |
+| `rsomics-bam-sort` `99144c7ba8d9abe78add7301cb300e74b5c11fe0` | Test asset; replacement merged at `8433aea711d5` | Discard the whole-file `Vec` sorter |
 | `rsomics-bam-split` `0393f01120602b785c30538954389d5742e9d7e7` | Refactor then merge | `split`; add tag and transactional multi-output policy |
 | `rsomics-bam-split-gene` `e401744815fc1630f5c44d3f7cdf298d39f5b909` | Test and routing asset | `split --genes`; replace permissive BED12 row skipping |
 | `rsomics-bam-split-pe` `8962f619d341cd18ea06d1cdf315efbfb4e2fa85` | Refactor then merge | `split --mates`; retain pairing-flag and mate-field fixtures |
@@ -941,3 +961,27 @@ SHA-256
 `678d0e59f4b4d5e4fb9e5540a2ad2c2edd1c78efd535caee53184e07d5d387d9`.
 The archive embeds the exact release head and registry metadata declares Rust
 1.91.
+
+`rsomics-bam 0.7.0` is published from release head `5e225f473b57`. Exact-head
+CI `30781282074` passes native Linux and macOS on `x86_64` and `aarch64`; the
+Linux `x86_64` job includes strict Clippy, package verification, samtools 1.24,
+all prior compatibility groups, and the new sort differentials. Publish run
+`30781583903` succeeds from the same revision. The independently downloaded
+registry archive is byte-identical to the clean local package with SHA-256
+`cf5c17f5cf8b28a82bb07be6cabd4efba33ea1d456d070b1a05128f74e186f7c`.
+Its embedded VCS revision is the exact release head, registry metadata declares
+Rust 1.91, and `cargo info` resolves 0.7.0 from crates.io.
+
+The default coordinate-sort gate at implementation revision `8433aea711d5`
+used 20 alternating pairs on a 4,000,000-record, 77,438,055-byte
+query-name-sorted WGBS BAM. `rsomics-bam sort` averaged 6.7300 seconds and
+848,793,600 bytes peak RSS; default samtools 1.24 averaged 11.5080 seconds and
+960,046,694
+bytes. The product path won 20 of 20 pairs, was 1.71 times as fast by mean wall
+time, used 11.59% less mean peak RSS, and used 31.81% more CPU time through its
+default automatic parallelism. Every warm-up and measured pair had identical
+headers and order-sensitive full-record checksums. The ledger, environment,
+summary, fixture, and outputs are retained under
+`/Volumes/Zane's HDD/rsomics-fixtures/bam/sort-4m-20260803`; this gate does not
+claim an equal-worker advantage or extend to other sort orders or input
+formats.
