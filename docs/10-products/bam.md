@@ -456,6 +456,25 @@ provenance moved to one product-internal type shared by `view` and `sort`; the
 old public `rsomics_bam::view::Program` path remains available. No new Layer A
 item was justified.
 
+The next Slice 2 candidate is an ordered, header-aware `merge`, not `cat` or
+`collate`. It is the second concrete consumer of the product's coordinate,
+natural-name, bytewise-name, and template-coordinate keys, so those keys may
+move to a private product module without changing the public foundation set.
+The stable candidate accepts named SAM, BAM, and CRAM inputs, writes BAM, keeps
+only one prefetched record per input, validates each input's declared and
+observed order, reconciles reference dictionaries, deterministically resolves
+read-group and program collisions, translates record reference, mate, `RG`,
+and `PG` fields, and commits named output transactionally. Conflicting
+reference definitions, order-destroying dictionary layouts, unknown record
+header IDs, truncation, and finalization errors fail non-zero.
+
+The candidate does not initially expose tag sorting, region/BED restriction,
+custom indexes, write-index coupling, arbitrary compression levels, CRAM
+output, or thousands-of-files fan-in. These remain absent until their complete
+contracts and performance evidence exist. The historical merge repository is
+only a fixture and heap-shape seed: its first-header policy, BAM-only reader,
+fallible-coordinate suppression, and non-transactional output are discarded.
+
 ### Slice 3: projection, pileup, and statistics
 
 - `consensus`, `calmd`, `depad`, `phase`, `reference`, and
