@@ -8,8 +8,8 @@ ninth command, `index`, has passed the same release gates and is published as
 `rsomics-bam 0.6.0`. The tenth command, `sort`, is published as
 `rsomics-bam 0.7.0` after the same correctness, performance, package, and
 four-native-target gates. The eleventh command, `merge`, has passed its
-feature-head correctness, performance, package, and four-native-target gates
-and is being prepared for `rsomics-bam 0.8.0`.
+correctness, performance, package, and four-native-target gates and is
+published as `rsomics-bam 0.8.0`.
 
 ## Boundary
 
@@ -1022,6 +1022,18 @@ registry archive is byte-identical to the clean local package with SHA-256
 `cf5c17f5cf8b28a82bb07be6cabd4efba33ea1d456d070b1a05128f74e186f7c`.
 Its embedded VCS revision is the exact release head, registry metadata declares
 Rust 1.91, and `cargo info` resolves 0.7.0 from crates.io.
+
+`rsomics-bam 0.8.0` is published from release head `01ba89e30b91`. Exact-head
+CI `30784684718` passes native Linux and macOS on `x86_64` and `aarch64`; the
+Linux `x86_64` job includes strict Clippy, package verification, samtools 1.24,
+all prior compatibility groups, and the new merge differentials. Publish run
+`30784995810` succeeds from the same revision. The independently downloaded
+registry archive is byte-identical to the clean local package with SHA-256
+`22b59bdbc7fae1e6502719b1050f0413598ff872cb9bc924e104f2146d32f0e3`.
+Its embedded VCS revision is the exact release head, the release is not yanked,
+and registry metadata declares Rust 1.91. A fresh locked registry install
+reports version 0.8.0, exposes the complete unified merge help, and writes a
+seven-record BAM that passes samtools quickcheck.
 
 The default coordinate-sort gate at implementation revision `8433aea711d5`
 used 20 alternating pairs on a 4,000,000-record, 77,438,055-byte

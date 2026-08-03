@@ -19,7 +19,7 @@ operation will ship. It records:
 | Product | Source candidates | Dossier state |
 |---|---:|---|
 | `rsomics-annotation` | 4 | [released 0.1.0](interval-annotation-index.md#rsomics-annotation) |
-| `rsomics-bam` | 41 | [audited](bam.md) |
+| `rsomics-bam` | 41 | [released 0.8.0](bam.md) |
 | `rsomics-bed` | 42 | [released 0.1.0](bed-gate-2026-07-30.md) |
 | `rsomics-call` | 2 | [released 0.1.0](variant.md#rsomics-call) |
 | `rsomics-cnv` | 2 | [audited](variant.md#rsomics-cnv) |
