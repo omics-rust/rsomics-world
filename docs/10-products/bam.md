@@ -538,9 +538,30 @@ unbounded record retention are discarded.
 
 This operation is the input-preparation edge of the real
 `collate -> fixmate -m -> coordinate sort -> markdup` workflow. The following
-slice implements `fixmate` against name-grouped input before `markdup` is
-exposed. Shared ordering, temporary-run, and output plumbing remains private to
-the BAM product; this workflow creates no new Layer A requirement.
+stable slice implements `fixmate` against valid name-grouped input before
+`markdup` is exposed. It includes default mate-coordinate, flag, TLEN, MC, and
+MQ repair plus `-m`, `-r`, and `-p`. Supplementary records receive mate
+coordinates, orientation, MC, and MQ from the opposite primary as in samtools
+1.24. Record order is preserved. A coordinate-sorted declaration is rejected;
+parse, truncation, output, and finalization failures remain fatal.
+
+The command accepts SAM, BAM, CRAM, or standard input, emits BAM to a named
+transaction or standard output, accepts a CRAM reference, uses bounded
+QNAME-group memory, and shares the product's thread and program-header
+contracts. The compatibility oracle is samtools 1.24 `fixmate -z off` over
+primary, orphan, secondary, supplementary, mapped, unmapped, cross-reference,
+missing-quality, existing-tag, and multi-primary templates. Sanitizer
+selection, `-c`, `-M`, uncompressed output, and alternate output formats remain
+absent until their independent contracts are implemented. The product accepts
+valid records rather than silently presenting a partial sanitizer as the
+samtools default.
+
+The historical implementation supplies the raw-record editing shape, fixture
+seeds, and performance seed. Its standalone CLI, comment-heavy source,
+BAM-only boundary, incomplete supplementary and multi-primary handling,
+missing sort-order and finalization checks, and non-transactional named output
+are discarded. Shared record I/O and output plumbing remain private to the BAM
+product; this workflow creates no new Layer A requirement.
 
 ### Slice 3: projection, pileup, and statistics
 
