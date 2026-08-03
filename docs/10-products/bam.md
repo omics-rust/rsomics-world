@@ -9,7 +9,8 @@ ninth command, `index`, has passed the same release gates and is published as
 `rsomics-bam 0.7.0` after the same correctness, performance, package, and
 four-native-target gates. The eleventh command, `merge`, has passed its
 correctness, performance, package, and four-native-target gates and is
-published as `rsomics-bam 0.8.0`.
+published as `rsomics-bam 0.8.0`. The twelfth command, `collate`, is published
+as `rsomics-bam 0.9.0` after the same gates.
 
 ## Boundary
 
@@ -499,8 +500,8 @@ and performance evidence exist. The historical merge repository supplied only
 a fixture and heap-shape seed: its first-header policy, BAM-only reader,
 fallible-coordinate suppression, and non-transactional output were discarded.
 
-The next stable operation is standard `collate`. It accepts SAM, BAM, and CRAM
-input, emits BAM, places every QNAME in one contiguous group, and sets
+Revision `24095b8650c2` implements standard `collate`. It accepts SAM, BAM,
+and CRAM input, emits BAM, places every QNAME in one contiguous group, and sets
 `SO:unsorted` plus `GO:query`. Ordering between QNAME groups is deliberately
 unspecified. The implementation may use a deterministic hash order, but that
 order is not a public contract. Memory is a total record budget, temporary
@@ -509,6 +510,23 @@ files are removed after success or failure. Its compatibility oracle compares
 the complete record multiset, QNAME-group contiguity, first/second ordering
 within groups, header semantics, filtering absence, and failure behavior rather
 than requiring samtools' incidental group order.
+
+The ordinary suite covers group and segment ordering, header behavior, stdout
+finalization, aliases, transactional failures, and a forced case with more
+than 32 temporary runs and at least two merge passes. The pinned samtools 1.24
+matrix covers SAM, BAM, CRAM, and forced external collation. All prior samtools
+oracles were rerun. Feature CI `30786031225`, performance-record CI
+`30786898804`, and release CI `30787583253` each pass native Linux and macOS on
+`x86_64` and `aarch64`.
+
+The representative default gate used a 4,000,000-record WGBS BAM and 12
+alternating pairs. `rsomics-bam collate` averaged 8.3400 seconds versus
+samtools 1.24 at 13.5742 seconds, a 1.63 times wall-time advantage, and won all
+12 pairs. With four additional workers for each tool, eight pairs averaged
+9.2463 versus 11.6563 seconds, a 1.26 times advantage, and the product won all
+eight pairs. The product used more CPU and peak RSS in both configurations, so
+neither is claimed as an advantage. Every output had an identical complete
+header, an equal full-record multiset fingerprint, and contiguous QNAME groups.
 
 Fast `collate -f`, compression-level selection, SAM or CRAM output, and the
 samtools prefix-as-output convention are not part of this first collate slice.
@@ -553,6 +571,7 @@ historical binaries:
 ```text
 src/
 ├── alignment_order.rs
+├── collate.rs
 ├── lib.rs
 ├── main.rs
 ├── cli.rs
@@ -563,6 +582,7 @@ src/
 ├── output.rs
 ├── sort.rs
 ├── commands/
+│   ├── collate.rs
 │   ├── depth.rs
 │   ├── flags.rs
 │   ├── flagstat.rs
@@ -621,7 +641,7 @@ SAM/CRAM support.
 | `rsomics-bam-calmd` `6d3a4d0657c5c4e534269767b98534cc0a5d383e` | Refactor then merge | `calmd`; preserve MD/NM fixtures |
 | `rsomics-bam-cat` `e0a21da2cf6c8f0f7eb1af87878a5dd03c02e211` | Refactor then merge | `cat`; retain block-copy ideas after header checks |
 | `rsomics-bam-checksum` `95fc3dc4dfd477fae92306208ee61058b60ec638` | Test and benchmark asset until gate passes | `checksum`; do not retain the performance exemption |
-| `rsomics-bam-collate` `f6f9b8ed029d6e1a30f4ecbc8bfe0ca2d25ad9ef` | Refactor then merge | `collate`; replace unbounded buffering |
+| `rsomics-bam-collate` `f6f9b8ed029d6e1a30f4ecbc8bfe0ca2d25ad9ef` | Test asset; replacement merged at `24095b8650c2` | Discard whole-file buffering and first-seen group order |
 | `rsomics-bam-consensus` `f202e114caa95ef38cd80dc40df8ee6a3f8ceae7` | Test asset and algorithm seed | `consensus`; historical simple mode is not the current default contract |
 | `rsomics-bam-coverage` `e115cd0bceb0735e584d75125e7a6940e896d4fe` | Refactor then merge | `coverage`; summary output only |
 | `rsomics-bam-depad` `de243fd7ccb7e0c313742b4e529fe95bad3833d4` | Refactor then merge | `depad`; retain padded-reference fixtures |
@@ -1059,6 +1079,19 @@ Its embedded VCS revision is the exact release head, the release is not yanked,
 and registry metadata declares Rust 1.91. A fresh locked registry install
 reports version 0.8.0, exposes the complete unified merge help, and writes a
 seven-record BAM that passes samtools quickcheck.
+
+`rsomics-bam 0.9.0` is published from release head `2abd073ddfcd`. Exact-head
+CI `30787583253` passes native Linux and macOS on `x86_64` and `aarch64`; the
+Linux `x86_64` job includes strict Clippy, package verification, samtools 1.24,
+all prior compatibility groups, and the new collate differentials. Publish run
+`30788060651` succeeds from the same revision. The independently downloaded
+registry archive is byte-identical to the clean local package with SHA-256
+`f69dce6dbe6748b7817378badbdd0eaa2f54f7f293eee0052234aa9bafc9822d`.
+Its embedded VCS revision is the exact release head, the release is not yanked,
+and registry metadata declares Rust 1.91. A fresh locked registry install
+reports version 0.9.0, exposes the unified collate help, and groups all nine
+records of the release smoke fixture into seven contiguous QNAME groups in a
+BAM that passes samtools quickcheck.
 
 The default coordinate-sort gate at implementation revision `8433aea711d5`
 used 20 alternating pairs on a 4,000,000-record, 77,438,055-byte

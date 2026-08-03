@@ -71,7 +71,7 @@ crates.io; only still-unpublished domain foundations use exact CI patches:
 | `rsomics-fastq-preprocess` `442c202908d1` | three subcommands with nested input, trim, filter, length, thread, and output groups | strict Clippy; library, CLI, live fastp, and benchmark gates against registry seqio 0.3; CI `30599999790` |
 | `rsomics-bed` `989894f2dad5` | five interval subcommands with positional and required named inputs | strict Clippy; 40 library, 12 CLI, and three live bedtools/golden tests; full benchmark smoke and representative million-record gate; CI `30621067404` |
 | `rsomics-vcf` `bbc09be7ed38` | nested `head`, `query`, `validate`, `index`, and `view` operations with unified global output | strict Clippy; typed VCF/BGZF/BCF and CSI/TBI tests; pinned bcftools 1.24, validation-corpus, and view oracles; representative gates; CI `30633237582`; published 0.1.0 and registry-reinstalled |
-| `rsomics-bam` `01ba89e30b91` | eleven SAM/BAM/CRAM inspection, pileup, depth, indexing, sorting, and merging subcommands with unified global output | strict Clippy; debug and release suites; samtools 1.24 compatibility and representative performance gates; CI `30784684718`; published 0.8.0 and registry-reinstalled |
+| `rsomics-bam` `2abd073ddfcd` | twelve SAM/BAM/CRAM inspection, pileup, depth, indexing, sorting, merging, and collation subcommands with unified global output | strict Clippy; debug and release suites; samtools 1.24 compatibility and representative performance gates; CI `30787583253`; published 0.9.0 and registry-reinstalled |
 
 The foundation itself passes strict Clippy, package verification, and six unit
 tests covering nested help, generated help navigation, suggestions, normal
