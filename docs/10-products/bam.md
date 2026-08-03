@@ -3,7 +3,9 @@
 Status: boundary and source-asset audit complete. The seven-command first
 release slice is published as `rsomics-bam 0.4.0`. The eighth command,
 `depth`, has passed its local, oracle, performance, package, and
-four-native-target CI gates and is published as `rsomics-bam 0.5.0`.
+four-native-target CI gates and is published as `rsomics-bam 0.5.0`. The
+ninth command, `index`, has passed the same release gates and is published as
+`rsomics-bam 0.6.0`.
 
 ## Boundary
 
@@ -313,6 +315,60 @@ or a custom index-file argument. These are absent rather than accepted and
 ignored. A later release adds any of them only with a concrete user contract
 and tests.
 
+### Release 0.6: alignment indexing
+
+Revision `4639c3676283` replaces the retired BAI-only
+`rsomics-bam-index` shell with the product `index` subcommand. It builds BAI
+for coordinate-sorted BAM or BGZF SAM, CSI with configurable minimum shift for
+the same inputs, and CRAI for CRAM. It supports a custom output, the legacy
+second positional output, multiple input files, and explicit worker counts.
+When `-@` is omitted, the product selects up to four additional workers; `-@ 0`
+requests one-thread indexing. Machine output records the actual worker count,
+format, index kind, minimum shift, and CSI depth.
+
+Input and output paths are resolved before work begins. Existing hard links,
+symlinks, alternate spellings, duplicate multi-input destinations, standard
+input, standard output, and attempts to overwrite any alignment input fail
+before indexing. BAM and BGZF SAM require a complete BGZF EOF marker, CRAM
+requires its EOF container, and a named destination is replaced only after
+HTSlib has built the full index and noodles has parsed it back successfully.
+Malformed, truncated, unsorted, and out-of-range inputs therefore fail
+non-zero without replacing an existing index.
+
+The implementation uses the established HTSlib indexing core through a
+product-private backend. The initial custom noodles indexer was discarded
+after its representative BAM gate was 1.49 times slower than samtools and
+produced a larger BAI. There is no public indexing foundation: format policy,
+CLI selection, path ownership, and the performance decision belong to this
+product, and no second product requires the construction API. The shared
+`rsomics-bamio 0.8.4` change is narrower: indexed alignment readers now load
+the samtools-default appended BAI for BGZF SAM, with a real region-query
+consumer test.
+
+BAI, CSI, CRAI, BGZF SAM, custom minimum shift, explicit workers, query output,
+and `idxstats` results match samtools 1.24 in the live oracle. Ordinary tests
+also cover transactional failure, hard-link aliases, multiple inputs, legacy
+output syntax, JSON summaries, and explicit `-@ 0`. Formatting, strict Clippy,
+debug and release tests, rustdoc, clean packaging, and publish dry-run pass
+locally.
+
+The exact 0.6.0 release binary at revision `dce21e7341cf` was measured over 20
+alternating pairs on a 4,000,000-record, 77,438,045-byte BAM. Default
+`rsomics-bam index` selected four additional workers and averaged 0.4280
+seconds; default samtools 1.24 averaged 0.7675 seconds. The product path was
+1.79 times as fast, used 13.34% less mean peak RSS, and won 19 of 20 pairs,
+while spending 47.38% more mean CPU time. Every generated BAI was byte
+identical with SHA-256
+`9c904c043df9e2252bcb527a571ac46d8947882e6a3e4c53abc0fe6e01c0bb7f`.
+This is a default BAM/BAI latency gate, not an equal-thread, CSI, BGZF SAM, or
+CRAM performance claim.
+
+The stable scope intentionally rejects CSI minimum shifts outside `1..=30`,
+does not expose generic input-format option injection or diagnostic verbosity,
+and does not index uncompressed SAM. CRAM always produces CRAI, including when
+BAI/CSI selection flags are present, matching the format-level samtools
+behavior.
+
 Standalone `view -n` remains unresolved. Samtools 1.24 emits the two tagged
 records from the current CRAM fixture with `view -n` but reports zero for
 `view -c -n`. In the
@@ -373,8 +429,6 @@ continues to fail before processing.
 
 - `sort`, with bounded memory, external runs, merge fan-in, temporary-path
   ownership, and coordinate/name/template-coordinate modes;
-- `index`, with BAI, CSI, and CRAI selection, custom output, minimum shift,
-  and multiple inputs where the oracle permits;
 - `merge`, `collate`, `cat`, `reheader`, `split`, `fixmate`, and `markdup`.
 
 This slice requires explicit header reconciliation, reference dictionary
@@ -420,6 +474,7 @@ src/
 │   ├── flags.rs
 │   ├── flagstat.rs
 │   ├── head.rs
+│   ├── index.rs
 │   ├── quickcheck.rs
 │   ├── samples.rs
 │   └── view.rs
@@ -483,7 +538,7 @@ SAM/CRAM support.
 | `rsomics-bam-head` `76ffd4d379191a968f1095a1854d0ce4c8fe49db` | Refactor then merge | First-slice `head` |
 | `rsomics-bam-idxstats` `f96b6aed4452243a982c9d7ca495e6fa23d8b497` | Refactor then merge | `idxstats`; require index-kind coverage |
 | `rsomics-bam-import` `ba7f8fc7630676e1cdbe95a21c0ae35677f5b958` | Refactor then merge | `import`; share `rsomics-seqio` only through a concrete contract |
-| `rsomics-bam-index` `167e86bd0f5ee0cf13bf18e9ded89cb1f99a46a5` | Test asset after dirty-diff attribution | Replace the BAI-only implementation |
+| `rsomics-bam-index` `167e86bd0f5ee0cf13bf18e9ded89cb1f99a46a5` | Test asset; replacement merged at `4639c3676283` | `index`; discard the BAI-only wrapper |
 | `rsomics-bam-markdup` `e865796930fb72d8a185e3a0b18024d217ca6128` | Refactor then merge | `markdup`; retain scoring and duplicate fixtures |
 | `rsomics-bam-merge` `7334fce53ec3666f63893b450710daa4efd43641` | Test asset and merge-loop seed | Replace first-header policy and swallowed decode failures |
 | `rsomics-bam-mpileup` `5e51a7825384fd65aca38345a12ad7c89ad31143` | Refactor then merge after pileup API | Add BAQ and reference-aware default behavior |
@@ -875,3 +930,14 @@ download matches the locally verified package byte for byte with SHA-256
 `65da80cd273df134369bc21278843d5fc744d90c814dd43a06284cc1d6b729f8`.
 Its registry metadata declares Rust 1.91 and the embedded VCS revision is the
 exact release head.
+
+`rsomics-bam 0.6.0` is published from release head `b38546813217`. Exact-head
+CI `30778102423` passes native Linux and macOS on `x86_64` and `aarch64`; the
+Linux `x86_64` job includes strict Clippy, package verification, samtools 1.24,
+the prior compatibility groups, and the alignment-index differential. Publish
+run `30778426695` succeeds from the same revision. An independent
+static-registry download is byte-identical to the clean local package with
+SHA-256
+`678d0e59f4b4d5e4fb9e5540a2ad2c2edd1c78efd535caee53184e07d5d387d9`.
+The archive embeds the exact release head and registry metadata declares Rust
+1.91.
