@@ -1,6 +1,6 @@
 # Sequence and FASTQ product dossier
 
-Status: source audit complete; `rsomics-seq 0.1.0`,
+Status: source audit complete; `rsomics-seq 0.2.0`,
 `rsomics-fastq-preprocess 0.1.1`, and `rsomics-fastq-qc 0.1.0` are published
 and independently verified.
 
@@ -102,6 +102,19 @@ hot-path review removed the private output transaction and adopted the shared
 alias and atomic-output contracts. Common, help, seqio, and kmer resolve from
 published registry releases. Linux `aarch64` has native correctness CI but no
 representative performance host.
+
+Release 0.2.0 adds BGZF named output for `grep` and `convert` through the
+consumer-driven `rsomics-seqio::OutputEncoder`; report commands continue to
+reject compressed suffixes. Product path, alias, transaction, and command
+policy remain in Layer B. Revision `516f4fda8b5b` passed exact-head CI
+`31377303031` on all four native target classes with pinned SeqKit 2.13.0 live
+differentials on every target. Publication workflow `31377624437` produced an
+unyanked 34,422-byte archive with SHA-256
+`bad34749922a62f6e475ba2717bd58e7b2fdc97fe9e322eafd87928f0ece13f5`
+and exact VCS metadata. A fresh registry install reports 0.2.0; decompressed
+BGZF convert and grep streams match SeqKit at
+`56d4d5931d35fb089fa4ac1b58dda5fd76924400ca466d5d537550163b5b449b`
+and `e752a8bf2615a96a4cebd4dd13ff8379003054e514b07c208ac5660949c3e9c3`.
 
 ### Later operation groups
 

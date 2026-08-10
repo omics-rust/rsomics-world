@@ -42,7 +42,7 @@ operation will ship. It records:
 | `rsomics-popgen` | 14 | [audited](genotype-popgen.md#rsomics-popgen) |
 | `rsomics-rnaseq-qc` | 21 | [audited](rnaseq-qc-signal.md#rsomics-rnaseq-qc) |
 | `rsomics-sc` | 29 | [audited](sc.md) |
-| `rsomics-seq` | 34 | [released 0.1.0](seq-gate-2026-07-30.md) |
+| `rsomics-seq` | 34 | [released 0.2.0](sequence-fastq.md#rsomics-seq) |
 | `rsomics-signal` | 15 | [audited](rnaseq-qc-signal.md#rsomics-signal) |
 | `rsomics-sketch` | 1 | [released 0.1.0](sketch-gate-2026-08-02.md) |
 | `rsomics-structure` | 9 | [audited](structure.md) |
