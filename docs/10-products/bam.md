@@ -10,7 +10,9 @@ ninth command, `index`, has passed the same release gates and is published as
 four-native-target gates. The eleventh command, `merge`, has passed its
 correctness, performance, package, and four-native-target gates and is
 published as `rsomics-bam 0.8.0`. The twelfth command, `collate`, is published
-as `rsomics-bam 0.9.0` after the same gates.
+as `rsomics-bam 0.9.0` after the same gates. The thirteenth command, `fixmate`,
+is published as `rsomics-bam 0.10.0` after compatibility, representative
+performance, package, and four-native-target gates.
 
 ## Boundary
 
@@ -563,6 +565,31 @@ missing sort-order and finalization checks, and non-transactional named output
 are discarded. Shared record I/O and output plumbing remain private to the BAM
 product; this workflow creates no new Layer A requirement.
 
+Revision `a8a684ba57c6` implements this slice with the public product API limited
+to typed `Options`, `Summary`, and `write`. It retains at most one QNAME group,
+uses narrow mate snapshots rather than cloned records, edits validated raw BAM
+records in place, and decodes `CG:B,I` only for long CIGARs. CRAM input passes
+through the product's reference-aware MD/NM completion so the BAM result
+matches HTSlib behavior. The ordinary suite covers long CIGARs, grouped
+templates, stdin/stdout, transactional failure, and option semantics. The
+samtools 1.24 matrix covers SAM, BAM, and CRAM across the default, `-m`, `-r`,
+`-p`, and combined modes. Feature CI `31352649611` passes native Linux and
+macOS on `x86_64` and `aarch64`.
+
+The representative gate used 4,000,000 records in 2,000,000 consecutive
+paired templates. Over 12 alternating default pairs, `rsomics-bam fixmate -m`
+averaged 2.2708 seconds versus samtools 1.24 at 7.0083 seconds, won all pairs,
+and used 7,002,795 versus 7,289,515 bytes mean peak RSS. The 3.09 times
+wall-time advantage uses the product's automatic four additional compression
+workers; its mean CPU time was 27.71% higher. With four additional workers for
+both tools, means were 2.3300 and 2.5050 seconds with 7 of 12 product wins and
+a -1.40 paired t-statistic, so no stable equal-worker throughput advantage is
+claimed. Mean peak RSS was 7,028,736 versus 13,100,373 bytes, a 46.35%
+reduction. Every warm-up and measured pair had an identical complete header
+and order-sensitive full-record semantic hash after normalizing only auxiliary
+tag order. Performance-record revision `68204535ccea` passes exact-head CI
+`31353739943` on all four native targets.
+
 ### Slice 3: projection, pileup, and statistics
 
 - `consensus`, `calmd`, `depad`, `phase`, `reference`, and
@@ -669,7 +696,7 @@ SAM/CRAM support.
 | `rsomics-bam-depth` `cdc0a4ff70119edc193cd6bdfadaba6b6e190b61` | Test and algorithm seed; replacement merged | `depth`; discard whole-file event maps and keep the accumulator product-internal |
 | `rsomics-bam-divide` `71504b275797ec30df2399ef2fbe03d1c9b1e6b5` | Refactor then merge | `split --parts`; preserve disjoint-cover and seeded-partition fixtures |
 | `rsomics-bam-fasta` `ba661eddd57b45f725751f02a288546442acd3e7` | Refactor then merge | `fasta` |
-| `rsomics-bam-fixmate` `645e4e3c31f3e689e854c2de63e726b877d770ea` | Refactor then merge | `fixmate`; include supplementary mate behavior from 1.24 |
+| `rsomics-bam-fixmate` `645e4e3c31f3e689e854c2de63e726b877d770ea` | Test, fixture, and performance asset; replacement merged at `a8a684ba57c6` | Discard the standalone shell and retain the supplementary and multi-primary oracle cases |
 | `rsomics-bam-flags` `921a428ba5e11f47fca875e1b9ae1335b3b5cb8f` | Refactor then merge after dirty-diff attribution | `flags` |
 | `rsomics-bam-flagstat` `ce1cc819d59fe37a56c762ba005ba0d9c91d3ba3` | Refactor then merge | First-slice `flagstat` |
 | `rsomics-bam-head` `76ffd4d379191a968f1095a1854d0ce4c8fe49db` | Refactor then merge | First-slice `head` |
@@ -1113,6 +1140,21 @@ and registry metadata declares Rust 1.91. A fresh locked registry install
 reports version 0.9.0, exposes the unified collate help, and groups all nine
 records of the release smoke fixture into seven contiguous QNAME groups in a
 BAM that passes samtools quickcheck.
+
+`rsomics-bam 0.10.0` is published from release head `dde097afee25`.
+Exact-head CI `31354120701` passes native Linux and macOS on `x86_64` and
+`aarch64`; the Linux `x86_64` job includes strict Clippy, package verification,
+samtools 1.24, all prior compatibility groups, and the complete fixmate
+matrix. Publish run `31354567207` succeeds from the same revision. The
+crates.io sparse index and independent static download agree on archive
+SHA-256
+`9359c28db43994eb963da645ae5f933ffd8f6a6b7467f24b23936913416ce39c`;
+the release is not yanked and declares Rust 1.91. A locally generated archive
+used a different gzip container, but all 86 extracted files are byte-identical
+to the registry archive, including the normalized manifest and VCS record.
+The registry archive embeds the exact release head. A fresh locked registry
+install reports version 0.10.0, exposes the unified fixmate help, and writes a
+21-record mate-repaired BAM that passes samtools quickcheck.
 
 The default coordinate-sort gate at implementation revision `8433aea711d5`
 used 20 alternating pairs on a 4,000,000-record, 77,438,055-byte
