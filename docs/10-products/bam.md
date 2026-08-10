@@ -28,6 +28,10 @@ successfully. The nineteenth command, `import`, is published as
 `rsomics-bam 0.14.0` from revision `d54924462ad6` after exact-head CI
 `31383580026` passed the four native targets and the complete samtools 1.24
 oracle. Publication workflow `31384051315` completed successfully.
+The twentieth command, `addreplacerg`, is published as `rsomics-bam 0.15.0`
+from revision `fe2beb388a75` after exact-head CI `31387911685` passed the same
+four native targets and complete oracle. Publication workflow `31388331846`
+completed successfully.
 
 ## Boundary
 
@@ -1057,6 +1061,32 @@ decoded output hashes, wall-time distributions, peak RSS, tool fingerprints,
 flags, and machine provenance, and requires a strict throughput or resource-use
 advantage on the BAM-to-BAM hot path.
 
+Feature revision `033a7fa6c274` implements this contract with typed header
+editing and a validated raw BAM-to-BAM auxiliary-field path. Eight product
+tests cover modes, source selection, SAM/BAM and standard input, output
+transactions, JSON, aliases, conflicts, and record failures. Two live samtools
+1.24 groups cover the source and mode matrix plus BAM and CRAM input. The full
+debug and release suites, strict Clippy, rustdoc, clean packaging, and every
+live product oracle pass. No Layer A API was added.
+
+The representative macOS arm64 gate used 4,000,260 records split equally
+between present and absent `RG` tags, four additional workers, and 12
+alternating pairs. Overwrite mode averaged 1.8125 seconds for rsomics and
+2.4600 seconds for samtools; orphan-only mode averaged 1.7692 versus 2.4825
+seconds. Rsomics won all pairs, reduced mean wall time by 26.32% and 28.73%,
+and reduced mean peak RSS by 44.46% and 45.21%. Complete record streams and
+normalized headers matched.
+
+Release revision `fe2beb388a75` passed exact-head four-native-target CI
+`31387911685`, including the complete samtools 1.24 oracle on Linux x86_64.
+Publication workflow `31388331846` produced the unyanked 171,070-byte registry
+archive with SHA-256
+`79dec6d6cf7deff0a27443539974bec188fba213c7d0e9485059a94ddef61527`
+and exact VCS metadata. A fresh registry install reports 0.15.0 and matches
+samtools for overwrite, orphan-only, and implicit-first-read-group smokes. It
+also rejects a conflicting header ID and emits the expected shared JSON
+summary.
+
 ### Slice 3: projection, pileup, and statistics
 
 - `consensus`, `calmd`, `depad`, `phase`, `reference`, and
@@ -1084,6 +1114,7 @@ copying historical binaries:
 
 ```text
 src/
+├── addreplacerg.rs
 ├── cli.rs
 ├── lib.rs
 ├── main.rs
@@ -1117,6 +1148,7 @@ src/
 ├── output.rs
 ├── program.rs
 └── commands/
+    ├── addreplacerg.rs
     ├── cat.rs
     ├── collate.rs
     ├── depth.rs
@@ -1174,7 +1206,7 @@ SAM/CRAM support.
 
 | Asset and revision | Disposition | Target |
 |---|---|---|
-| `rsomics-bam-addreplacerg` `26354a3724f7f2e32bdb4d686b3ac13b59eeb6b4` | Refactor then merge | `addreplacerg`; retain tag and header fixtures |
+| `rsomics-bam-addreplacerg` `26354a3724f7f2e32bdb4d686b3ac13b59eeb6b4` | Test, fixture, and raw-editing seed; replacement merged at `033a7fa6c274` | Discard the standalone shell, text-header policy, and process benchmark |
 | `rsomics-bam-ampliconclip` `94784e5b4132d39adcd0b784bb7d6ad7c0e69258` | Refactor then merge | `ampliconclip`; replace local format plumbing |
 | `rsomics-bam-ampliconstats` `d748a727eb870583059bc801f89c3d115f4dcbc5` | Refactor then merge | `ampliconstats`; retain oracle fixtures and performance seed |
 | `rsomics-bam-bedcov` `93204eea9155d118154ed237c84961b34ad7e29d` | Refactor then merge | `bedcov`; share validated pileup and interval input |
