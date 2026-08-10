@@ -1617,11 +1617,90 @@ byte for byte across CRAM 2.1, 3.0, and 3.1. On the one-million-record fixture,
 the installed binary reproduced the pre-release default and encoding report
 digests exactly.
 
-`stats` follows as release 0.21 because it is a distinct full alignment-report
-engine rather than a small extension of CRAM layout inspection. The historical
-`rsomics-bam-stats` implementation covers only a handful of summary counters;
-it remains an algorithm and fixture seed and does not define the public output
-or option surface.
+### Release 0.21: full alignment statistics
+
+`stats` is one report engine inside `rsomics-bam`, not a statistics foundation
+or a revival of the deleted micro-crate. Its compatibility contracts are the
+[`samtools stats` 1.24 manual](https://www.htslib.org/doc/1.24/samtools-stats.html),
+`stats.c`, `stats_isize.c`, `plot-bamstats`, and the upstream `test/stat`
+regression corpus at source revision
+`dc71c7274044d1050ccb64901731373ec7e915b6`. Samtools and its fixtures are MIT
+licensed. The 68-file upstream stats corpus has aggregate SHA-256
+`22545813e19377ce1abfc073e5bae969e56458ee616ed1dda4d707497b245386`.
+
+The stable input surface is SAM, BAM, CRAM, or standard input; optional indexed
+regions; a customized index; a reference FASTA; target regions; read-group or
+sample selection; required and excluded flags; duplicate and read-length
+filters; coverage bins and target thresholds; insert-size limits and bulk;
+BWA-style quality trimming; overlap removal; sparse insert rows; tagged split
+reports and prefixes; reference statistics and chunk size; and additional
+decompression threads. The upstream `-s`/`--sam` compatibility flag remains an
+accepted no-op because input format is detected. Release 0.21 does not expose
+the global `--input-fmt-option` or `--verbosity` controls because the product
+reader does not offer their full contract; they fail as unknown options rather
+than being silently ignored. `--reference` is an alias of `--ref-seq`.
+
+Compatibility text preserves the section order, labels, columns, rounding,
+and conditional presence consumed by `plot-bamstats`: `CHK`, `SN`, `FFQ`,
+`LFQ`, `MPC`, `GCF`, `GCL`, `GCC`, `GCT`, `FBC`, `FTC`, `LBC`, `LTC`, barcode
+content and quality sections for `BC/QT`, `CR/CY`, `OX/BZ`, and `RX/QX`, `IS`,
+`RL`, `FRL`, `LRL`, `MAPQ`, `ID`, `IC`, `COV`, `GCD`, and `RFS`. The 39
+ordinary summary rows include filtered, primary, supplementary, pairing,
+duplicate, length, mapped-CIGAR, mismatch, quality, insert-orientation, and
+proper-pair statistics; target mode adds its two coverage rows. Read-cycle
+orientation, clipping, indel-cycle position, NM handling, missing sequence,
+barcode validation, coordinate-order detection, insert orientation, coverage
+bin boundaries, reference percentiles, and checksum accumulation follow the
+1.24 oracle rather than the reduced historical model.
+
+`-o`/`--output` is the product-level named-output extension. Named main and
+split outputs are staged and committed only after input parsing, reporting,
+flush, and every auxiliary write succeed. Output paths must not alias the
+alignment, index, reference, or target inputs; duplicate split destinations
+and unsafe tag-derived names fail before replacement. Product-level `--json`
+requires a named compatibility report and returns the same typed summary,
+histograms, distributions, barcode sections, target statistics, and reference
+statistics through the common envelope. The first three provenance lines
+identify rsomics and its invocation; compatibility tests compare the complete
+stable body byte for byte with samtools after normalizing only those identity
+lines.
+
+The historical `rsomics-bam-stats` revision
+`25c3689b1267431fc0428bdfc873d81cf23c8d7c` is classified as refactor then
+merge for its small primary-record counter seed, plus test and benchmark asset
+for its two BAM fixtures. Its 0.1.2 archive SHA-256 is
+`8b030f692f9866827bc94d96ef3c0d26e4cb1fa15b31a5dce2fccce843761a8b`.
+It emits only 14 custom SN rows, does not retain samtools field names, derives
+only a minority of the full report, and has no coverage, cycle, insert, indel,
+barcode, reference, region, split, or full format contract. Its recorded
+12.96-fold claim lacks a representative fixture, complete-output identity,
+RSS, and reproducible repeated-trial evidence and is not a release result.
+
+The implementation stays private under `src/stats/`: typed accumulators,
+CIGAR and cycle accounting, barcode validation, coverage and overlap state,
+region and reference handling, insert-size classification, checksums, and text
+rendering are separate modules behind one narrow report API. Existing product
+input, flags, transactional output, `rsomics-help`, and common JSON envelope
+are reused. No Layer A API is added because no second product consumes this
+samtools-specific report policy.
+
+The release matrix imports the upstream default, reference, large-coordinate,
+supplementary, secondary, split, target, indexed-region, overlap, barcode,
+large-deletion, and reference-statistics cases. Product tests add standard
+input, SAM/BAM/CRAM equivalence, customized-index failures, malformed headers,
+records and tags, truncated streams, reference and target mismatches, output
+aliasing, write failures, split rollback, JSON separation, and allocation
+limits for adversarial lengths and indices. The performance gate uses a
+coordinate-sorted alignment with at least one million records, mixed flags,
+variable read lengths, CIGAR indels, tags, mapping qualities, and non-trivial
+coverage. It records fixture and complete-output digests, versions, machine,
+workers, warm-up, alternating trials, wall and CPU distributions, and peak
+RSS. Publication requires a strict throughput or resource-use advantage over
+samtools 1.24.
+
+`plot-bamstats` remains the separate upstream visualization consumer and is
+not embedded or reimplemented in this release. CRAM 4, remote-reference cache
+management, and speculative shared statistics APIs are also excluded.
 
 ### Slice 4: interactive viewing
 
@@ -1667,6 +1746,16 @@ src/
 ├── markdup/key.rs
 ├── merge.rs
 ├── sort.rs
+├── stats.rs
+├── stats/
+│   ├── barcode.rs
+│   ├── checksum.rs
+│   ├── coverage.rs
+│   ├── insert_size.rs
+│   ├── record.rs
+│   ├── reference.rs
+│   ├── regions.rs
+│   └── render.rs
 ├── depth.rs
 ├── flagstat.rs
 ├── head.rs
@@ -1707,6 +1796,7 @@ src/
     ├── reheader.rs
     ├── samples.rs
     ├── sort.rs
+    ├── stats.rs
     └── view.rs
 ```
 
