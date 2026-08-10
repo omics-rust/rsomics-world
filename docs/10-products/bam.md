@@ -13,6 +13,11 @@ published as `rsomics-bam 0.8.0`. The twelfth command, `collate`, is published
 as `rsomics-bam 0.9.0` after the same gates. The thirteenth command, `fixmate`,
 is published as `rsomics-bam 0.10.0` after compatibility, representative
 performance, package, and four-native-target gates.
+The fourteenth command, `markdup`, is published as `rsomics-bam 0.11.0` after
+correctness, compatibility, representative performance, package, and
+four-native-target gates. The fifteenth and sixteenth commands, `cat` and
+`reheader`, have passed their implementation gates and form the planned
+`rsomics-bam 0.12.0` release.
 
 ## Boundary
 
@@ -753,6 +758,38 @@ permissive EOF handling, benchmark exemptions, skip-on-missing-oracle tests,
 and comment-heavy source are discarded. Samtools and HTSlib remain
 MIT/Expat-licensed compatibility sources and receive command-level
 attribution.
+
+The stable slice is implemented at product revision `764bbe91bf1f`. The shared
+private rewrite engine validates complete BGZF frame structure in bounded
+batches, handles frames split across reader-buffer boundaries, preserves raw
+record blocks, and writes one canonical EOF marker. Both commands complete
+all input and alias checks before writing, and named outputs use same-directory
+temporary files followed by product quickcheck and atomic persistence. The
+public library exposes only typed `cat` and `reheader` contracts; no new Layer A
+item was needed because the framing policy has no second product consumer.
+
+The local gate passes 40 library tests, nine file-operation lifecycle tests,
+four direct samtools 1.24 compatibility tests, the complete product integration
+suite in debug and release profiles, strict Clippy, and rustdoc. The oracle
+matrix covers ordinary and list-based concatenation, read-group merging,
+external SAM/BAM/CRAM header sources, reference renaming, program records,
+decoded header and record order, and failure atomicity. Exact-head CI
+`31367441880` passes on native Linux and macOS for both x86_64 and aarch64;
+Linux x86_64 also builds samtools 1.24 and runs the explicit compatibility
+suite.
+
+The representative `cat` gate concatenates four 1,000,000-record BAM shards
+totalling 90,038,862 bytes. Across 12 alternating pairs, the selected bounded
+2 MiB path averaged 1.0667 seconds versus samtools at 0.9225 seconds and used
+5,503,659 versus 7,019,179 bytes mean peak RSS. It therefore makes a 21.59%
+memory-use claim, not a throughput claim. A separately measured 4 MiB buffer
+was rejected after it used more memory and remained slower. The `reheader`
+gate uses a 4,000,000-record, 92,673,552-byte BAM and averaged 0.6258 seconds
+versus 0.7225 seconds for samtools while using 5,496,832 versus 6,980,949 bytes
+mean peak RSS: 13.38% lower wall time and 21.26% lower memory on this fixture.
+Every timed result passed complete decoded-stream identity checks; detailed
+machine, input, command, timing, and checksum provenance is retained in the
+product performance record.
 
 ### Slice 3: projection, pileup, and statistics
 
