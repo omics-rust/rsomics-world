@@ -39,7 +39,9 @@ Publication workflow `31398905778` completed successfully.
 The twenty-fourth command, `calmd`, is published as `rsomics-bam 0.17.0` from
 revision `0debc103993f` after exact-head CI `31407557237` passed the same four
 native targets and complete oracle. Publication workflow `31408461408`
-completed successfully.
+completed successfully. The next planned increment is `depad`; its upstream,
+historical-asset, compatibility, and implementation dossier is complete below,
+but no command or release is claimed yet.
 
 ## Boundary
 
@@ -1274,9 +1276,69 @@ boundary is decided only with concrete `rsomics-bam` and `rsomics-call`
 consumer tests. CRAM output and undocumented legacy `calmd` switches are also
 excluded from this increment and stay absent from public help.
 
+### Release 0.18: padded-reference projection
+
+The twenty-fifth command, `depad`, converts padded-reference alignments and
+coordinates to their ordinary unpadded representation. The compatibility
+contract is [`samtools depad` 1.24](https://www.htslib.org/doc/1.24/samtools-depad.html),
+the SAM/BAM specifications, and samtools `padding.c` at revision
+`dc71c7274044d1050ccb64901731373ec7e915b6`. The upstream source is MIT
+licensed; the historical Rust implementation is team-owned and remains under
+this product's MIT OR Apache-2.0 license.
+
+The stable input surface accepts SAM, BAM, no-reference CRAM, and standard
+input. It writes SAM or BAM to standard output or a transactional named file.
+`-T` supplies an uncompressed padded FASTA whose `*` or `-` characters are gap
+columns; the index is built in memory so the command does not create a sidecar
+beside user data. The release includes `-s`, legacy no-op `-S`, `-u`, `-1`,
+`-O`, `-T`, `-o`, `-@`, and `--no-pg`. CRAM output, automatic output indexing,
+and general HTSlib format-option strings remain absent because they are not
+part of the product's validated output boundary.
+
+Without `-T`, each reference requires an embedded reference record before its
+mapped reads, and output `@SQ LN` remains padded with an explicit warning.
+With `-T`, every input reference must exist at exactly its padded header length;
+the output header length is the count of non-gap bases. An embedded reference
+and FASTA for the same sequence must agree column by column. Embedded reference
+records are retained with an all-`M` CIGAR, matching samtools. Query columns are
+projected to `M`, `I`, `D`, or `P`; redundant internal pads are removed, and
+mapped POS, same-reference PNEXT, cross-reference PNEXT, and BAM BIN are
+recomputed. Cross-reference mate projection requires `-T`. Unmapped records
+pass through unchanged. Input `N` is treated as `D` with a warning, while
+input `I` or `P`, invalid reference characters, missing references, dictionary
+mismatches, and coordinate or CIGAR bounds fail non-zero.
+
+Historical `rsomics-bam-depad` revision `de243fd7ccb7` contributes the
+padded-reference SAM/BAM fixture, position-map cases, CIGAR projection seed,
+and benchmark corpus as refactor-then-merge assets. Its standalone CLI,
+duplicate BAM layout and output plumbing, whole-output SAM conversion,
+fixed temporary path, optional oracle, direct stderr JSON, and narrative
+comments are discarded. Its implementation also changes unmapped coordinates,
+does not remap cross-reference mates, never performs its documented `-T`
+header correction, and accepts invalid FASTA bytes as ambiguous bases; none of
+those behaviors are retained.
+
+The target is one public product module, `src/depad.rs`, plus
+`src/commands/depad.rs`. Padded-reference lookup, projection state, warnings,
+format policy, transactions, and program records stay product-internal.
+Validated `rsomics-bamio` records may be used for the BAM hot path, but no
+Layer A API is added: no second product consumes depadding policy.
+
+Live samtools 1.24 tests may not skip. The matrix covers embedded and FASTA
+references; SAM, BAM, CRAM, and standard input; SAM, compressed BAM, fast BAM,
+and uncompressed BAM output; corrected and uncorrected headers; multiple
+references; same- and cross-reference mates; unmapped records; clips, leading
+pads, insertions, deletions, skips, and embedded-reference validation; program
+records, thread counts, JSON, aliases, malformed and truncated inputs,
+reference mismatches, output aliasing, and transaction preservation. Complete
+headers and record fields are compared after excluding only the expected
+program identity. The representative performance gate uses non-trivial padded
+multi-reference BAM and requires identical decoded output plus a strict
+throughput or resource-use advantage over samtools 1.24.
+
 ### Slice 3: remaining projection, pileup, and statistics
 
-- `consensus`, `depad`, `phase`, `reference`, and
+- `consensus`, `phase`, `reference`, and
   `targetcut`;
 - `stats`, `ampliconstats`, and `cram-size`;
 - `to-bed`, `reset`, `ampliconclip`, and `checksum`.
@@ -1414,7 +1476,7 @@ SAM/CRAM support.
 | `rsomics-bam-collate` `f6f9b8ed029d6e1a30f4ecbc8bfe0ca2d25ad9ef` | Test asset; replacement merged at `24095b8650c2` | Discard whole-file buffering and first-seen group order |
 | `rsomics-bam-consensus` `f202e114caa95ef38cd80dc40df8ee6a3f8ceae7` | Test asset and algorithm seed | `consensus`; historical simple mode is not the current default contract |
 | `rsomics-bam-coverage` `e115cd0bceb0735e584d75125e7a6940e896d4fe` | Refactor then merge | `coverage`; summary output only |
-| `rsomics-bam-depad` `de243fd7ccb7e0c313742b4e529fe95bad3833d4` | Refactor then merge | `depad`; retain padded-reference fixtures |
+| `rsomics-bam-depad` `de243fd7ccb7e0c313742b4e529fe95bad3833d4` | Fixture, algorithm, and benchmark seed; replacement specified for 0.18 | Discard standalone plumbing and known semantic defects |
 | `rsomics-bam-depth` `cdc0a4ff70119edc193cd6bdfadaba6b6e190b61` | Test and algorithm seed; replacement merged | `depth`; discard whole-file event maps and keep the accumulator product-internal |
 | `rsomics-bam-divide` `71504b275797ec30df2399ef2fbe03d1c9b1e6b5` | Refactor then merge | `split --parts`; preserve disjoint-cover and seeded-partition fixtures |
 | `rsomics-bam-fasta` `ba661eddd57b45f725751f02a288546442acd3e7` | Fixture, mapping, and golden seed; replacement merged at `d6cbf1070706` | Discard standalone CLI and per-record extraction |
