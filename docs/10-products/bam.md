@@ -680,6 +680,12 @@ mean peak RSS. The exact decoded stream fingerprint is
 These claims cover default duplicate marking on this BAM fixture; other input
 formats, removal, clearing, sequence mode, and different duplicate
 distributions remain correctness contracts rather than performance claims.
+Publication workflow `31360005824` released 0.11.0 from the exact tested head.
+The unyanked 133,328-byte registry archive has SHA-256
+`9134d34ef7752f8f3be0f38d1680c8a879a61c164211d5e557ea49a67edcd285`.
+A fresh registry install reports 0.11.0, exposes the shared command tree, and
+matches samtools byte-for-byte on the complete 16-record markdup smoke stream;
+docs.rs serves the corresponding public library documentation.
 
 ### Slice 3: projection, pileup, and statistics
 
