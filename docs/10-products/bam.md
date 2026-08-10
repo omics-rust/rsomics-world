@@ -36,6 +36,10 @@ completed successfully. The twenty-first through twenty-third commands,
 `rsomics-bam 0.16.0` from revision `be3cafe21867` after exact-head CI
 `31398246573` passed the four native targets and complete samtools 1.24 oracle.
 Publication workflow `31398905778` completed successfully.
+The twenty-fourth command, `calmd`, is published as `rsomics-bam 0.17.0` from
+revision `0debc103993f` after exact-head CI `31407557237` passed the same four
+native targets and complete oracle. Publication workflow `31408461408`
+completed successfully.
 
 ## Boundary
 
@@ -1192,7 +1196,7 @@ smokes for the three new workflows.
 
 ### Release 0.17: alignment tag recalculation
 
-`calmd` is the next standalone increment inside the BAM product. It recalculates
+The twenty-fourth command, `calmd`, recalculates
 the standard `MD` and `NM` auxiliary tags from each mapped record, its CIGAR,
 and an indexed reference FASTA. The compatibility contract is
 [`samtools calmd` 1.24](https://www.htslib.org/doc/1.24/samtools-calmd.html),
@@ -1240,12 +1244,29 @@ transaction preservation. Complete headers and record fields are compared;
 BAM tests additionally preserve auxiliary tag ordering and numeric subtype
 where the source value is already correct.
 
-The representative gate reuses the four-million-record coordinate-sorted BAM
-and its indexed reference, remeasured against samtools 1.24 with complete
-decoded-output equality. Default single-thread and equal-worker BAM-to-BAM
-paths record timing distributions, peak RSS, exact flags, binary/input/output
-hashes, and machine provenance. At least one production hot path must show a
-strict throughput or resource-use advantage before release.
+Feature revision `5e8e28129b3d` implements the command, reuses the validated
+mutable raw-BAM path, and adds no Layer A item. Revision `934137e01b37`
+separates literal CRAM completion semantics from `calmd`'s nucleotide-code
+match rule for query `=` bases. The samtools 1.24 oracle covers that distinction
+for SAM, BAM, and CRAM.
+
+The representative gate used a coordinate-sorted one-million-record BAM over
+a 5,000,000-base reference at approximately 30x, with four additional workers
+for both tools. After one warm-up, 20 alternating pairs gave mean wall times of
+0.589 seconds for `rsomics-bam calmd` and 0.922 seconds for samtools 1.24.
+Rsomics won all 20 pairs and was 1.57 times as fast, used 2.6% less mean CPU
+time, and used 5.2% more mean peak RSS. Both complete decoded outputs had
+SHA-256 `d1e0cfd0c1f1c1c88482e7140efc505ef323b0027ef1fac89be4c0b49d978eb9`.
+The claim is limited to default compressed BAM on this fixture.
+
+Release revision `0debc103993f` passed exact-head four-native-target CI
+`31407557237`, including the complete samtools 1.24 oracle on Linux x86_64.
+Publication workflow `31408461408` produced the unyanked 198,528-byte registry
+archive with SHA-256
+`6fd2ef2ad1c0072b3912d606b4bf52a2ee7d841a74a8af96383f53843eb6efc2`
+and exact VCS metadata. A fresh registry install reports 0.17.0, exposes
+`calmd` through the shared help tree, and passes a named-BAM and shared-JSON
+smoke over all one million records with the decoded-output hash above.
 
 BAQ realignment and mapping-quality capping (`-r`, `-A`, `-E`, and `-C`) are
 excluded from 0.17 rather than exposed incompletely. Their later foundation
@@ -1255,7 +1276,7 @@ excluded from this increment and stay absent from public help.
 
 ### Slice 3: remaining projection, pileup, and statistics
 
-- `consensus`, `calmd`, `depad`, `phase`, `reference`, and
+- `consensus`, `depad`, `phase`, `reference`, and
   `targetcut`;
 - `stats`, `ampliconstats`, and `cram-size`;
 - `to-bed`, `reset`, `ampliconclip`, and `checksum`.
