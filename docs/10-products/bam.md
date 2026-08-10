@@ -39,9 +39,13 @@ Publication workflow `31398905778` completed successfully.
 The twenty-fourth command, `calmd`, is published as `rsomics-bam 0.17.0` from
 revision `0debc103993f` after exact-head CI `31407557237` passed the same four
 native targets and complete oracle. Publication workflow `31408461408`
-completed successfully. The next planned increment is `depad`; its upstream,
-historical-asset, compatibility, and implementation dossier is complete below,
-but no command or release is claimed yet.
+completed successfully. The twenty-fifth command, `depad`, is published as
+`rsomics-bam 0.18.0` from revision `5304f278bfaa` after exact-head CI
+`31414206433` passed the same four native targets and complete oracle.
+Publication workflow `31415017446` completed successfully. The next increment
+is selected from the remaining audited operations by user workflow,
+compatibility scope, and performance evidence rather than historical
+micro-crate order.
 
 ## Boundary
 
@@ -1336,6 +1340,33 @@ program identity. The representative performance gate uses non-trivial padded
 multi-reference BAM and requires identical decoded output plus a strict
 throughput or resource-use advantage over samtools 1.24.
 
+Feature revision `e1b8f89eed74` implements the command as one product module,
+a focused CIGAR projector, and a validated raw-BAM record adapter. It keeps
+reference and output policy inside the product and adds no Layer A API. Exact
+feature-head CI `31413068218` passes native Linux and macOS on x86_64 and
+aarch64; Linux x86_64 builds samtools 1.24 and passes the complete compatibility
+matrix, including 70,000-operation long CIGAR output.
+
+The representative gate used a 1,000,000-record, 4,034,944-byte BAM against a
+5,000,000-column padded reference, with four additional workers for both tools.
+After one warm-up, 20 alternating pairs gave mean wall times of 0.3680 seconds
+for `rsomics-bam depad` and 0.6115 seconds for samtools 1.24. Rsomics won all
+20 pairs and was 1.66 times as fast, while using 9.1% more mean CPU time and
+62.0% more mean peak RSS. Both complete decoded outputs had SHA-256
+`b56d7863308db97b0b081782d1bc39a8805c8c1086b00c6ff72dee68e46de904`.
+The claim is limited to compressed BAM with a supplied padded FASTA on this
+fixture.
+
+Release revision `5304f278bfaa` passed exact-head four-native-target CI
+`31414206433`, including package verification and the complete samtools 1.24
+oracle on Linux x86_64. Publication workflow `31415017446` produced the
+unyanked 210,403-byte registry archive with SHA-256
+`e2a5f63c3cd11cdd8c8666883029879272467ccf1a8fa0efcd20a65675bee4f9`
+and exact VCS metadata. A fresh locked registry install reports 0.18.0, exposes
+`depad` through the shared help tree, and processes all one million records
+through named BAM and shared JSON output without creating a FASTA sidecar. The
+output passes samtools quickcheck and reproduces the decoded-output hash above.
+
 ### Slice 3: remaining projection, pileup, and statistics
 
 - `consensus`, `phase`, `reference`, and
@@ -1476,7 +1507,7 @@ SAM/CRAM support.
 | `rsomics-bam-collate` `f6f9b8ed029d6e1a30f4ecbc8bfe0ca2d25ad9ef` | Test asset; replacement merged at `24095b8650c2` | Discard whole-file buffering and first-seen group order |
 | `rsomics-bam-consensus` `f202e114caa95ef38cd80dc40df8ee6a3f8ceae7` | Test asset and algorithm seed | `consensus`; historical simple mode is not the current default contract |
 | `rsomics-bam-coverage` `e115cd0bceb0735e584d75125e7a6940e896d4fe` | Refactor then merge | `coverage`; summary output only |
-| `rsomics-bam-depad` `de243fd7ccb7e0c313742b4e529fe95bad3833d4` | Fixture, algorithm, and benchmark seed; replacement specified for 0.18 | Discard standalone plumbing and known semantic defects |
+| `rsomics-bam-depad` `de243fd7ccb7e0c313742b4e529fe95bad3833d4` | Fixture, algorithm, and benchmark seed; replacement merged at `e1b8f89eed74` | Discard standalone plumbing and known semantic defects |
 | `rsomics-bam-depth` `cdc0a4ff70119edc193cd6bdfadaba6b6e190b61` | Test and algorithm seed; replacement merged | `depth`; discard whole-file event maps and keep the accumulator product-internal |
 | `rsomics-bam-divide` `71504b275797ec30df2399ef2fbe03d1c9b1e6b5` | Refactor then merge | `split --parts`; preserve disjoint-cover and seeded-partition fixtures |
 | `rsomics-bam-fasta` `ba661eddd57b45f725751f02a288546442acd3e7` | Fixture, mapping, and golden seed; replacement merged at `d6cbf1070706` | Discard standalone CLI and per-record extraction |
