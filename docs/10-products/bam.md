@@ -803,6 +803,74 @@ complete decoded streams at
 and `8bc5ca00000bfa575068de363b70bf3224cbebb3919519b58e2e01f410a19a15`;
 docs.rs serves the corresponding public library documentation.
 
+The next sequence-recovery increment consolidates samtools 1.24
+[`fasta` and `fastq`](https://www.htslib.org/doc/1.24/samtools-fasta.html).
+They are two views of one alignment-to-sequence engine, not separate products
+or duplicated modules. The first stable slice accepts named SAM, BAM, or CRAM
+input and standard input, supports the existing product reference and
+compression-worker controls, applies samtools record filters in the documented
+`-d/-D`, `-f`, `-F`, `--rf`, `-G` precedence, and writes one complete FASTA or
+FASTQ stream to standard output or a transactional `-o/--output` path. The
+product-wide `-o` contract means the entire default stream; it deliberately
+does not inherit samtools fastq's command-local use of `-o` as an alias for
+only read categories 1 and 2.
+
+Filtered records are grouped by adjacent QNAME and classified as read 1, read
+2, or other from the READ1 and READ2 bits. At most one record per category is
+written for each group. The first record with qualities wins, or the first
+record when every candidate lacks qualities. Output within a group is read 1,
+read 2, then other, matching the upstream default stream. Reverse-strand
+records restore original read orientation by reverse-complementing the full
+stored sequence and reversing qualities. Soft clips remain because their
+bases are stored; hard-clipped bases cannot be recovered. Secondary and
+supplementary records are excluded by default. Default names receive `/1` or
+`/2`; `-n` suppresses suffixes. FASTQ uses Phred 1 when qualities are absent,
+with `-v` selecting another valid default, and `-O` prefers a valid `OQ` tag.
+
+Named `.gz`, `.bgz`, and `.bgzf` outputs use BGZF as samtools 1.24 does. That
+capability belongs in `rsomics-seqio`, not in BAM-specific code: an explicit
+plain-or-BGZF encoder will wrap a caller-owned stream without choosing paths,
+opening files, or imposing transaction policy. Its named product consumers
+are `rsomics-bam fasta/fastq` and `rsomics-seq convert/grep`. Both products
+must add compressed-output round trips, finalization failures, and
+transactional replacement tests before the public API is released. Existing
+strict `rsomics-seqio::Writer` record validation remains the FASTA/FASTQ
+contract; alignment grouping, filters, orientation, qualities, and path suffix
+policy remain inside the BAM product.
+
+The initial slice does not expose split read-1/read-2/other/singleton outputs,
+tag copying, UMI and CASAVA name decoration, barcode-derived index reads,
+soft-clip removal, arbitrary output-tag selection, or alternate compression
+formats. Each affects selection or coordinates several output streams and
+will be added only with a complete failure and transactional policy. `-N` is
+also unnecessary while there are no split destinations because mate suffixes
+are already the single-stream default. These omissions remain absent from
+help rather than accepted as ineffective flags.
+
+The samtools 1.24 oracle covers adjacent QNAME grouping, category order,
+quality-preferred duplicates, missing qualities, reverse orientation, OQ,
+mate suffixes, default and explicit filters, and SAM/BAM/CRAM/stdin input.
+Product tests add malformed OQ and quality lengths, ambiguous READ1/READ2
+flags, empty sequences, declared coordinate order, truncated input,
+input/output aliases, BGZF suffixes, standard-output and named-output failures,
+and the shared JSON envelope. The representative performance gate uses the
+existing 4,000,000-record query-name-sorted `fixmate` fixture, alternates at
+least 12 default and equal-worker pairs against samtools 1.24, verifies the
+complete FASTA or FASTQ stream for every run, and records wall time, CPU, peak
+RSS, machine, command, binary, input, and output fingerprints.
+
+Historical `rsomics-bam-fasta` revision `ba661eddd57b` and
+`rsomics-bam-to-fastq` revision `9675f305021d` share one 384-byte BAM fixture
+with SHA-256
+`aeee5e08c912b3e82b611a330fd7f44f4ef88aa75a53db52f21acb0d169d5e1f`.
+The fixture, reverse-complement mapping, and FASTQ golden file are retained as
+test seeds. Their standalone CLIs, per-record extraction, direct file
+truncation, skip-on-missing-oracle tests, tiny process-launch benchmarks,
+duplicate complement functions, per-record allocations, comment-heavy source,
+and failure to implement QNAME category selection and missing-quality behavior
+are discarded. Samtools and HTSlib remain MIT/Expat-licensed compatibility
+sources and receive command-level attribution.
+
 ### Slice 3: projection, pileup, and statistics
 
 - `consensus`, `calmd`, `depad`, `phase`, `reference`, and
@@ -826,36 +894,58 @@ failure behavior, and native-platform tests are complete.
 
 ## Target structure
 
-The initial repository should use a narrow structure rather than copy 38
-historical binaries:
+The repository uses operation modules and narrow private plumbing rather than
+copying historical binaries:
 
 ```text
 src/
-├── alignment_order.rs
-├── collate.rs
+├── cli.rs
 ├── lib.rs
 ├── main.rs
-├── cli.rs
+├── cat.rs
+├── reheader.rs
+├── bgzf_rewrite.rs
+├── header_source.rs
+├── collate.rs
+├── fixmate.rs
+├── markdup.rs
+├── markdup/key.rs
+├── merge.rs
+├── sort.rs
+├── depth.rs
+├── flagstat.rs
+├── head.rs
+├── index.rs
+├── mpileup.rs
+├── quickcheck.rs
+├── samples.rs
+├── view.rs
+├── alignment_order.rs
+├── filter.rs
 ├── header_merge.rs
+├── hts_metadata.rs
+├── hts_quickcheck.rs
 ├── input.rs
 ├── md.rs
-├── merge.rs
 ├── output.rs
-├── sort.rs
-├── commands/
-│   ├── collate.rs
-│   ├── depth.rs
-│   ├── flags.rs
-│   ├── flagstat.rs
-│   ├── head.rs
-│   ├── index.rs
-│   ├── merge.rs
-│   ├── mpileup.rs
-│   ├── quickcheck.rs
-│   ├── samples.rs
-│   ├── sort.rs
-│   └── view.rs
-└── filter.rs
+├── program.rs
+└── commands/
+    ├── cat.rs
+    ├── collate.rs
+    ├── depth.rs
+    ├── fixmate.rs
+    ├── flags.rs
+    ├── flagstat.rs
+    ├── head.rs
+    ├── index.rs
+    ├── markdup.rs
+    ├── merge.rs
+    ├── mpileup.rs
+    ├── quickcheck.rs
+    ├── reheader.rs
+    ├── samples.rs
+    ├── sort.rs
+    └── view.rs
 ```
 
 Format detection, alignment headers, decoded-record policy, and indexed access
