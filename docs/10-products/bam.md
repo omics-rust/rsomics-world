@@ -590,6 +590,69 @@ and order-sensitive full-record semantic hash after normalizing only auxiliary
 tag order. Performance-record revision `68204535ccea` passes exact-head CI
 `31353739943` on all four native targets.
 
+The next editing increment is the non-optical core of samtools 1.24
+[`markdup`](https://www.htslib.org/doc/1.24/samtools-markdup.html). It accepts
+coordinate-sorted SAM, BAM, CRAM, or standard input produced by `fixmate -m`,
+emits transactional BAM to a named path or BAM to standard output, and retains
+the product's reference, compression-worker, program-record, and structured
+summary conventions. Default template mode and explicit sequence mode use
+unclipped five-prime coordinates, orientation, left/right template position,
+and the mate CIGAR. Paired reads outrank single reads at the same signature;
+otherwise the highest sum of base qualities at least 15 wins, a non-QC-fail
+read outranks a QC-fail read, and equal paired scores select the
+lexicographically smaller QNAME.
+
+The stable CLI slice includes removal of duplicate records, clearing prior
+duplicate flags and `do`/`dt` tags before a fresh decision, inclusion of
+QC-failed primary reads, template or sequence decision mode, and a configurable
+maximum read length for the bounded coordinate window. Existing duplicate
+flags remain authoritative unless clearing is requested, so removal also
+removes already flagged records. Secondary, supplementary, and unmapped
+records otherwise pass through unchanged. The implementation rejects a
+query-name-sorted declaration, any observed decrease in mapped coordinate
+order, missing or wrongly typed `MC` and `ms` tags when a paired comparison
+requires them, malformed CIGAR or auxiliary data, truncated input, a required
+but unavailable CRAM reference, same-target input/output, output or
+finalization failure, and
+named BAM or CRAM input without its required EOF marker.
+
+The operation is one bounded streaming engine inside `rsomics-bam`. Validated
+raw records enter through the existing product input boundary; a key module
+computes checked ordinary and `CG:B,I` long-CIGAR geometry; a marker owns the
+live coordinate window and winner maps; the existing output boundary writes
+records and commits named output only after successful input validation and
+writer finalization. The public library surface is limited to typed mode,
+options, summary, and write interfaces. This creates no new Layer A API:
+`rsomics-bamio` already owns policy-free record validation and raw editing,
+while duplicate-selection policy stays in the BAM product.
+
+The samtools 1.24 source tests for query-name order, observed bad order,
+missing `MC`, missing `ms`, default marking, and removal are direct oracle
+fixtures. Product tests add template and sequence modes, paired-versus-single,
+quality and QNAME tie breaks, QC-fail inclusion, clearing, pre-existing
+duplicates, soft and hard clipping, `CG:B,I`, SAM/BAM/CRAM, stdin/stdout,
+transactional failure, and EOF failure. Data-output comparison covers header,
+record order, every field, auxiliary tags, and duplicate flags; diagnostics
+need not clone incidental samtools wording. The representative performance
+gate will use a non-trivial coordinate-sorted output of the published
+`collate -> fixmate -m -> sort` product path, alternate runs against samtools
+1.24 at default and equal worker budgets, record wall time, CPU, peak RSS,
+machine and fixture provenance, and require semantic identity for every run.
+
+Supplementary/secondary/unmapped propagation (`-S`) is not in this increment:
+it requires an independently tested disk spool and second pass because a
+non-primary alignment can precede the duplicate primary. Optical duplicate
+coordinates and chains, barcode or UMI partitioning and movement, read-group
+partitioning, original-name and duplicate-count tags, samtools-specific stats
+files, alternate output formats, write-index, and uncompressed output also
+remain absent. They will be added only as complete compatible extensions, not
+as accepted but ineffective flags. The historical `rsomics-bam-markdup`
+revision `e865796930fb` supplies scoring and signature seeds, three small
+compatibility fixtures, and a performance baseline. Its standalone CLI,
+BAM-only raw stream, template-only key, unchecked auxiliary reads, ordinary-
+CIGAR-only geometry, comment-heavy source, non-transactional output, and
+partial statistics are discarded.
+
 ### Slice 3: projection, pileup, and statistics
 
 - `consensus`, `calmd`, `depad`, `phase`, `reference`, and
@@ -703,7 +766,7 @@ SAM/CRAM support.
 | `rsomics-bam-idxstats` `f96b6aed4452243a982c9d7ca495e6fa23d8b497` | Refactor then merge | `idxstats`; require index-kind coverage |
 | `rsomics-bam-import` `ba7f8fc7630676e1cdbe95a21c0ae35677f5b958` | Refactor then merge | `import`; share `rsomics-seqio` only through a concrete contract |
 | `rsomics-bam-index` `167e86bd0f5ee0cf13bf18e9ded89cb1f99a46a5` | Test asset; replacement merged at `4639c3676283` | `index`; discard the BAI-only wrapper |
-| `rsomics-bam-markdup` `e865796930fb72d8a185e3a0b18024d217ca6128` | Refactor then merge | `markdup`; retain scoring and duplicate fixtures |
+| `rsomics-bam-markdup` `e865796930fb72d8a185e3a0b18024d217ca6128` | Algorithm, fixture, and performance seed; replacement specified above | Discard the standalone shell and retain scoring, signatures, and duplicate fixtures |
 | `rsomics-bam-merge` `7334fce53ec3666f63893b450710daa4efd43641` | Test asset; replacement merged at `83b73a0c7274` | Discard first-header policy and swallowed decode failures |
 | `rsomics-bam-mpileup` `5e51a7825384fd65aca38345a12ad7c89ad31143` | Refactor then merge after pileup API | Add BAQ and reference-aware default behavior |
 | `rsomics-bam-phase` `9f475c325e8e8c30873a12df5979c44023e78c1d` | Test and algorithm asset | Replace tolerance-only compatibility decisions |
