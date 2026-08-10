@@ -17,7 +17,12 @@ The fourteenth command, `markdup`, is published as `rsomics-bam 0.11.0` after
 correctness, compatibility, representative performance, package, and
 four-native-target gates. The fifteenth and sixteenth commands, `cat` and
 `reheader`, are published as `rsomics-bam 0.12.0` after the same release
-gates.
+gates. The seventeenth and eighteenth commands, `fasta` and `fastq`, are
+implemented as one shared extraction engine at revision `d6cbf1070706` and
+have passed their local correctness, live-oracle, package, and representative
+performance gates. Exact-head CI `31375096419` passes on native Linux and
+macOS for both x86_64 and aarch64, including the samtools 1.24 oracle on Linux
+x86_64. They remain unpublished until the release review completes.
 
 ## Boundary
 
@@ -803,7 +808,7 @@ complete decoded streams at
 and `8bc5ca00000bfa575068de363b70bf3224cbebb3919519b58e2e01f410a19a15`;
 docs.rs serves the corresponding public library documentation.
 
-The next sequence-recovery increment consolidates samtools 1.24
+The sequence-recovery increment consolidates samtools 1.24
 [`fasta` and `fastq`](https://www.htslib.org/doc/1.24/samtools-fasta.html).
 They are two views of one alignment-to-sequence engine, not separate products
 or duplicated modules. The first stable slice accepts named SAM, BAM, or CRAM
@@ -855,9 +860,45 @@ flags, empty sequences, declared coordinate order, truncated input,
 input/output aliases, BGZF suffixes, standard-output and named-output failures,
 and the shared JSON envelope. The representative performance gate uses the
 existing 4,000,000-record query-name-sorted `fixmate` fixture, alternates at
-least 12 default and equal-worker pairs against samtools 1.24, verifies the
-complete FASTA or FASTQ stream for every run, and records wall time, CPU, peak
-RSS, machine, command, binary, input, and output fingerprints.
+least ten default pairs against samtools 1.24, verifies the complete FASTA or
+FASTQ stream for every run, and records wall time, CPU, peak RSS, machine,
+command, binary, input, and output fingerprints.
+
+Revision `d6cbf1070706` implements that shared engine and revision
+`84c9c5e3c854` records its reproducible performance gate. Five ordinary CLI
+tests cover empty sequences, quality and filter policy, BGZF round trips,
+transactional failure, and JSON output. A separately invoked live suite is
+byte-identical to samtools 1.24 for SAM, BAM, CRAM, and standard-input paths
+under the default, `-n`, `-O`, `-v`, and `-F 0` policies. The historical
+384-byte fixture still matches its retained FASTQ golden byte for byte. The
+complete product suite, strict Clippy, rustdoc, benchmark entry, and packaged
+source all pass locally with registry releases `rsomics-common 0.12.2` and
+`rsomics-seqio 0.5.1`.
+
+The reproducible macOS arm64 gate uses a 92,673,124-byte, 4,000,000-record
+query-name-sorted BAM with SHA-256
+`b949852de15f08a5e13d8c6d908b6d5801ef9f254eca58699aa353883cf88326`.
+Across ten alternating pairs, `rsomics-bam fasta` takes 1.294 +/- 0.032 s and
+5,559,091 bytes peak RSS, versus 1.705 +/- 0.091 s and 6,709,248 bytes for
+samtools 1.24. `rsomics-bam fastq` takes 1.773 +/- 0.071 s and 5,559,091 bytes,
+versus 2.608 +/- 0.071 s and 6,696,141 bytes. The Rust implementation wins all
+ten pairs for both views: 24.11% lower FASTA wall time, 32.02% lower FASTQ wall
+time, and about 17% lower peak RSS. Complete output hashes match at
+`7e13841514dd9137e08b0d9994afa5b4baafd0583bf7228740949bfcd6de80e3`
+for FASTA and
+`a961649b1a0ee9beec27439fae61441e1d48694aa1486c7c74c1c64238ce4988`
+for FASTQ. The tracked benchmark script, environment, raw timings, summary,
+input, and exact binary fingerprints make the result auditable.
+
+This increment supplied both concrete consumers required for
+`rsomics-seqio::OutputEncoder`: BAM `fasta`/`fastq` and sequence
+`convert`/`grep`. The public encoder was therefore released only after each
+product exercised compressed output and finalization behavior. The empty SAM
+SEQ oracle also exposed a shared FASTA edge case; `rsomics-seqio 0.5.1` now
+represents it as one canonical empty sequence line while continuing to reject
+blank lines inside non-empty records. Transactional permission testing in the
+sequence consumer similarly found and fixed exact existing-mode preservation
+in `rsomics-common 0.12.2`. Neither foundation API was added speculatively.
 
 Historical `rsomics-bam-fasta` revision `ba661eddd57b` and
 `rsomics-bam-to-fastq` revision `9675f305021d` share one 384-byte BAM fixture
@@ -877,8 +918,7 @@ sources and receive command-level attribution.
   `targetcut`;
 - `bedcov`, `coverage`, `idxstats`, `stats`, `ampliconstats`, and
   `cram-size`;
-- `fasta`, `fastq`, `import`, `to-bed`, `reset`, `addreplacerg`,
-  `ampliconclip`, and `checksum`.
+- `import`, `to-bed`, `reset`, `addreplacerg`, `ampliconclip`, and `checksum`.
 
 Pileup-dependent work proceeds with the `rsomics-pileup` contract described
 below. `checksum` ships only if it meets the same performance or material
@@ -908,6 +948,7 @@ src/
 ├── header_source.rs
 ├── collate.rs
 ├── fixmate.rs
+├── fastx.rs
 ├── markdup.rs
 ├── markdup/key.rs
 ├── merge.rs
@@ -933,6 +974,7 @@ src/
     ├── cat.rs
     ├── collate.rs
     ├── depth.rs
+    ├── fastx.rs
     ├── fixmate.rs
     ├── flags.rs
     ├── flagstat.rs
@@ -998,7 +1040,7 @@ SAM/CRAM support.
 | `rsomics-bam-depad` `de243fd7ccb7e0c313742b4e529fe95bad3833d4` | Refactor then merge | `depad`; retain padded-reference fixtures |
 | `rsomics-bam-depth` `cdc0a4ff70119edc193cd6bdfadaba6b6e190b61` | Test and algorithm seed; replacement merged | `depth`; discard whole-file event maps and keep the accumulator product-internal |
 | `rsomics-bam-divide` `71504b275797ec30df2399ef2fbe03d1c9b1e6b5` | Refactor then merge | `split --parts`; preserve disjoint-cover and seeded-partition fixtures |
-| `rsomics-bam-fasta` `ba661eddd57b45f725751f02a288546442acd3e7` | Refactor then merge | `fasta` |
+| `rsomics-bam-fasta` `ba661eddd57b45f725751f02a288546442acd3e7` | Fixture, mapping, and golden seed; replacement merged at `d6cbf1070706` | Discard standalone CLI and per-record extraction |
 | `rsomics-bam-fixmate` `645e4e3c31f3e689e854c2de63e726b877d770ea` | Test, fixture, and performance asset; replacement merged at `a8a684ba57c6` | Discard the standalone shell and retain the supplementary and multi-primary oracle cases |
 | `rsomics-bam-flags` `921a428ba5e11f47fca875e1b9ae1335b3b5cb8f` | Refactor then merge after dirty-diff attribution | `flags` |
 | `rsomics-bam-flagstat` `ce1cc819d59fe37a56c762ba005ba0d9c91d3ba3` | Refactor then merge | First-slice `flagstat` |
@@ -1023,7 +1065,7 @@ SAM/CRAM support.
 | `rsomics-bam-subsample` `93052bf1e726f95022d6a6b8a549b9646c1e358a` | Merge algorithm after semantic update | First-slice `view --subsample` |
 | `rsomics-bam-targetcut` `9d7fa02f6557cca7b52dfaf8ca73f837ee55e400` | Refactor then merge | Later `targetcut`; preserve fosmid-specific scope |
 | `rsomics-bam-to-bed` `6d500bbcaa04ef307dc093170738bdbe4682d326` | Refactor then merge | Later `to-bed` |
-| `rsomics-bam-to-fastq` `9675f305021dceb00ed03e9b847fa7d7a1a89d6c` | Refactor then merge | Later `fastq` |
+| `rsomics-bam-to-fastq` `9675f305021dceb00ed03e9b847fa7d7a1a89d6c` | Fixture and golden seed; replacement merged at `d6cbf1070706` | Discard duplicate complement code, allocations, and direct truncation |
 | `rsomics-bam-view` `dde533dbcbe4f30243a004815da4c179ca52f12d` | Test and filter seed | Replace the BAM-only command shell |
 | `rsomics-sam-to-bam` `f125e730d0edf498bc299a3ae37e7ec6fe1b8260` | Test asset | First-slice `view` format conversion |
 
