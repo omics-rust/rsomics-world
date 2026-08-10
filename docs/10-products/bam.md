@@ -1190,6 +1190,69 @@ and exact VCS metadata. A fresh registry install reports 0.16.0, exposes all
 three commands through the shared help tree, and passes text and shared-JSON
 smokes for the three new workflows.
 
+### Release 0.17: alignment tag recalculation
+
+`calmd` is the next standalone increment inside the BAM product. It recalculates
+the standard `MD` and `NM` auxiliary tags from each mapped record, its CIGAR,
+and an indexed reference FASTA. The compatibility contract is
+[`samtools calmd` 1.24](https://www.htslib.org/doc/1.24/samtools-calmd.html),
+the SAM tag specification, and the 1.24 `bam_md.c` implementation at revision
+`dc71c7274044d1050ccb64901731373ec7e915b6`.
+
+The stable surface accepts SAM, BAM, or reference-backed CRAM from a named path
+or standard input and emits SAM or BAM to standard output or a transactional
+named output. It includes `-e`, `-b`, `-u`, `-O`, `-o`, `-@`, and `--no-pg`.
+SAM is the standard-output default, matching samtools; a named `.bam` output
+selects BAM unless `-O` overrides it. JSON requires a named alignment output
+and reports processed, recalculated, corrected-tag, and missing-sequence counts
+through the shared envelope.
+
+The product-private `md` module becomes the single decoded and raw-record
+implementation used by both existing CRAM completion paths and `calmd`.
+The target files are `src/calmd.rs`, `src/commands/calmd.rs`, and the existing
+`src/md.rs`; the only public surface is the BAM product library and subcommand.
+Query `=` bases follow samtools' nucleotide-code match rule. Invalid CIGAR,
+sequence, reference bounds, auxiliary data, or reference dictionaries fail the
+command instead of producing a partial MD string. A mapped record without a
+stored query sequence is preserved and counted because secondary and
+supplementary records legitimately use this representation. A missing required
+reference sequence is an error. BAM-to-BAM may use validated raw records to
+preserve auxiliary-field order and integer representation; all format policy,
+warnings, transactions, and program records remain outside that hot path.
+
+Historical `rsomics-bam-calmd` revision `6d3a4d0657c5` contributes its MD/NM
+walk, raw auxiliary-tag fixtures, reference fixture, and performance corpus as
+refactor-then-merge assets. Its standalone command, duplicate reference and
+output plumbing, BAM-only behavior, direct JSON-on-stderr, fixed temporary
+paths, optional live oracle, silent out-of-bounds truncation, and dense source
+commentary are discarded. No code or API moves to Layer A: only this product
+currently consumes the recalculation policy. Samtools and HTSlib are MIT
+licensed and retain source and behavior attribution; the historical Rust asset
+is team-owned and remains under this product's MIT OR Apache-2.0 license.
+
+Live samtools 1.24 tests may not skip. The matrix covers SAM, BAM, CRAM, and
+standard input; SAM, compressed BAM, and uncompressed BAM output; default and
+`-e` sequence behavior; matches, mismatches, insertions, deletions, skips,
+ambiguous bases, existing correct and incorrect tags, missing query sequence,
+unsorted reference revisits, program records, thread counts, JSON, aliases,
+malformed and truncated inputs, missing references, output aliasing, and
+transaction preservation. Complete headers and record fields are compared;
+BAM tests additionally preserve auxiliary tag ordering and numeric subtype
+where the source value is already correct.
+
+The representative gate reuses the four-million-record coordinate-sorted BAM
+and its indexed reference, remeasured against samtools 1.24 with complete
+decoded-output equality. Default single-thread and equal-worker BAM-to-BAM
+paths record timing distributions, peak RSS, exact flags, binary/input/output
+hashes, and machine provenance. At least one production hot path must show a
+strict throughput or resource-use advantage before release.
+
+BAQ realignment and mapping-quality capping (`-r`, `-A`, `-E`, and `-C`) are
+excluded from 0.17 rather than exposed incompletely. Their later foundation
+boundary is decided only with concrete `rsomics-bam` and `rsomics-call`
+consumer tests. CRAM output and undocumented legacy `calmd` switches are also
+excluded from this increment and stay absent from public help.
+
 ### Slice 3: remaining projection, pileup, and statistics
 
 - `consensus`, `calmd`, `depad`, `phase`, `reference`, and
