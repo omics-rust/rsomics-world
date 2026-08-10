@@ -31,7 +31,11 @@ oracle. Publication workflow `31384051315` completed successfully.
 The twentieth command, `addreplacerg`, is published as `rsomics-bam 0.15.0`
 from revision `fe2beb388a75` after exact-head CI `31387911685` passed the same
 four native targets and complete oracle. Publication workflow `31388331846`
-completed successfully.
+completed successfully. The twenty-first through twenty-third commands,
+`bedcov`, `coverage`, and `idxstats`, are published together as
+`rsomics-bam 0.16.0` from revision `be3cafe21867` after exact-head CI
+`31398246573` passed the four native targets and complete samtools 1.24 oracle.
+Publication workflow `31398905778` completed successfully.
 
 ## Boundary
 
@@ -1167,6 +1171,25 @@ resource advantage. `idxstats` records indexed and scan-fallback costs; its
 material product value is the unified install, explicit index handling, and
 typed shared JSON, not a process-launch microbenchmark.
 
+Feature revision `e21b823bea14` implements the three commands with one private
+alignment stream and one private coverage engine. No Layer A item was added.
+The complete local debug and release suites, strict Clippy, packaging, and live
+SAM/BAM/CRAM oracle passed. On the four-million-record gate, `coverage` was
+1.10 times as fast as samtools and used 35.9% less mean peak RSS. Dense
+`bedcov` was 10.40 times as fast, while its sparse indexed path was 1.46 times
+as fast and used 25.0% less mean peak RSS. Batched indexed `idxstats` was 1.44
+times as fast and used 24.9% less mean peak RSS. All compared outputs were
+byte-identical.
+
+Release revision `be3cafe21867` passed exact-head four-native-target CI
+`31398246573`, including the complete samtools 1.24 oracle on Linux x86_64.
+Publication workflow `31398905778` produced the unyanked 190,502-byte registry
+archive with SHA-256
+`47f7bf82915054ac2a1fc1b66dbed35c77b47940fdb3f6c680ce789478be3345`
+and exact VCS metadata. A fresh registry install reports 0.16.0, exposes all
+three commands through the shared help tree, and passes text and shared-JSON
+smokes for the three new workflows.
+
 ### Slice 3: remaining projection, pileup, and statistics
 
 - `consensus`, `calmd`, `depad`, `phase`, `reference`, and
@@ -1194,7 +1217,16 @@ copying historical binaries:
 ```text
 src/
 ├── addreplacerg.rs
+├── alignment_stream.rs
+├── bedcov.rs
+├── bedcov/
+│   ├── bed.rs
+│   └── sweep.rs
 ├── cli.rs
+├── coverage.rs
+├── coverage_engine.rs
+├── coverage_hts.rs
+├── idxstats.rs
 ├── lib.rs
 ├── main.rs
 ├── cat.rs
@@ -1228,8 +1260,10 @@ src/
 ├── program.rs
 └── commands/
     ├── addreplacerg.rs
+    ├── bedcov.rs
     ├── cat.rs
     ├── collate.rs
+    ├── coverage.rs
     ├── depth.rs
     ├── fastx.rs
     ├── import.rs
@@ -1238,6 +1272,7 @@ src/
     ├── flagstat.rs
     ├── head.rs
     ├── index.rs
+    ├── idxstats.rs
     ├── markdup.rs
     ├── merge.rs
     ├── mpileup.rs
