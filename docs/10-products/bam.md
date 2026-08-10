@@ -1536,6 +1536,52 @@ benefit gate as every other established-tool replacement. Its historical
 implementation is slower than the recorded samtools comparison and receives
 no exemption.
 
+### Release 0.20: CRAM storage diagnostics
+
+`cram-size` is a format-diagnostic operation inside `rsomics-bam`, not a new
+crate or foundation. Its compatibility contracts are the CRAM 2.1, 3.0, and
+3.1 specifications, the samtools 1.24 manual, `cram_size.c` at source revision
+`dc71c7274044d1050ccb64901731373ec7e915b6`, and the upstream regression
+fixture. The samtools source and fixture are MIT licensed.
+
+The stable surface is the CRAM input, standard input, `-o`/`--output`,
+`-v`/`--verbose`, and `-e`/`--encodings`. Despite the manual synopsis spelling
+the input as `in.bam`, the live executable rejects BAM: this command accepts
+CRAM only. Plain output preserves the content-ID ordering, raw and compressed
+sizes, ratios, compact or verbose compression-method names, data-series and
+tag associations, embedded-reference annotation, encoding maps per container,
+and final container, slice, sequence, base, file-size, and format-overhead
+totals. Repeated `-v` or `-e` has the same boolean effect as samtools.
+
+The parser validates the file definition, supported version, container and
+block lengths, ITF8 and LTF8 values, block types, slice structure, and CRAM 3
+checksums before indexed access. Compression-method classification includes
+gzip and bzip2 levels, rANS 4x8 order, rANS Nx16 order/PACK/RLE/stripe/CAT
+variants, arithmetic variants, FQZComp, and name-tokenizer entropy choice.
+Compression-header encodings supply the content-ID-to-data-series map and the
+per-container `--encodings` rendering. Named output is transactional and must
+differ from the input. A parse, checksum, output, or finalization failure exits
+non-zero and leaves any existing destination unchanged rather than committing
+samtools-style partial diagnostics.
+
+The product-level `--json` envelope requires a named compatibility output and
+returns the same typed block and file totals on standard output. No Layer A API
+is added: CRAM physical-layout policy has no second product consumer and stays
+private to `rsomics-bam`. Release tests compare all three text modes byte for
+byte with samtools 1.24, cover stdin and transactional output, and exercise
+valid CRAM 2.1, 3.0, and 3.1 plus wrong-format, truncated, oversized, malformed,
+and checksum-corrupt inputs. The performance fixture must contain multiple
+containers, slices, codecs, content IDs, and tag encodings; the release gate
+records complete-output identity, input digest and shape, tool revisions,
+workers, warm-up, alternating trials, wall and CPU distributions, and peak
+RSS. Publication still requires a strict throughput or resource-use advantage.
+
+`stats` follows as release 0.21 because it is a distinct full alignment-report
+engine rather than a small extension of CRAM layout inspection. The historical
+`rsomics-bam-stats` implementation covers only a handful of summary counters;
+it remains an algorithm and fixture seed and does not define the public output
+or option surface.
+
 ### Slice 4: interactive viewing
 
 `tview` is a complete terminal interface, not a formatting helper. It stays
