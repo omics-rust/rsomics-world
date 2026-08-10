@@ -1398,12 +1398,14 @@ or a transactional named file. Its stable surface includes `-b`, `-o`, `-f`,
 `-u`, `--soft-clip`, `--hard-clip`, `--both-ends`, `--strand`, `--clipped`,
 `--fail`, `--filter-len`, `--fail-len`, `--unmap-len`, `--no-excluded`,
 `--rejects-file`, `--primer-counts`, `--original`, `--keep-tag`, `--tolerance`,
-`--no-pg`, and `-@`. It soft-clips the five-prime end by default. Both-end
-clipping ignores strand, mapped-position changes downgrade coordinate sort
-order, clipped reads lose stale `NM` and `MD` tags unless requested otherwise,
-and the `OA` tag records the original alignment when enabled. Rejected reads,
-the stats block, and per-primer bedGraph counts are complete outputs rather
-than side effects that may be silently skipped.
+`--no-pg`, and `-@`. It soft-clips the five-prime end by default. With
+`--both-ends`, `--strand` still restricts each match to the corresponding BED
+strand in the samtools 1.24 executable, despite the contrary sentence in its
+manual page. Mapped-position changes downgrade coordinate sort order, clipped
+reads lose stale `NM` and `MD` tags unless requested otherwise, and the `OA`
+tag records the original alignment when enabled. Rejected reads, the stats
+block, and per-primer bedGraph counts are complete outputs rather than side
+effects that may be silently skipped.
 
 `ampliconstats` accepts the same six-column primer BED and one or more BAM
 inputs. Its stable surface includes `-f`, `-F`, `-a`, `-l`, `-d`, `-m`, `-o`,
@@ -1467,6 +1469,46 @@ samtools 1.24 before either is published in 0.19. The historical claim of
 0.143 seconds versus 0.607 seconds for `ampliconstats` remains only a fixture
 and implementation seed because it lacks repeated-trial, RSS, output-digest,
 and samtools 1.24 evidence.
+
+Feature revision `c3f5c57a08d3` implements both commands, the shared private
+primer model, transactional auxiliary outputs, the unified help and JSON
+contracts, committed golden fixtures, and live samtools 1.24 matrices. Its
+exact-head CI run `31421209078` passes native Linux and macOS on x86_64 and
+aarch64; Linux x86_64 also builds samtools 1.24, verifies it, packages the
+crate, and runs the live compatibility tests. Performance revision
+`99d9999f6450` replaces owned record copies on the read-only statistics path,
+bounds mate state by expected coordinate, retains same-coordinate mates,
+removes typical clipping-path allocations, and selects level-1 BGZF for the
+clipping product's default output.
+
+The release-performance fixture is a 6,530,043-byte coordinate-ordered BAM
+containing 2,000,000 records, 1,000,000 pairs, and 100 amplicons. Its SHA-256 is
+`43c7138c06090b5bf9ea67298de0c0a25301e4e6b8da1e8352608735310824ba`;
+the 5,952-byte primer BED SHA-256 is
+`60d3f323e7bc8097c1896fe16083c6f2272330ec5922025d41c0d8b6b39fbcc3`.
+Measurements ran on an eight-core Apple M2 Mac mini with 8 GB RAM, macOS
+26.6/Darwin 25.6.0, Rust 1.91.0, and samtools/HTSlib 1.24. Both tools used no
+additional workers. Standard BAM output was redirected to `/dev/null` so the
+gate measures record processing and BGZF compression rather than external-disk
+placement. Each command received one warm-up followed by five rounds in fixed
+rsomics/samtools alternating pairs under `/usr/bin/time -lp`.
+
+For `ampliconclip`, rsomics wall times were 0.70, 0.71, 0.70, 0.80, and 0.71
+seconds; samtools times were 0.70 seconds in all five trials. Median user CPU
+was 0.67 versus 0.66 seconds. Median peak RSS was 5,472,256 versus 7,553,024
+bytes, a 27.6% reduction, so the gate is a resource-use win at essentially
+equal throughput. Named-output checks produced 6,660,190 and 6,616,556-byte
+BAMs respectively; decoded records shared SHA-256
+`44f25c69e6106f843f698760f921b644896e00f01f439ccad6f55ee95a86d6a5`.
+The rsomics level-1 stream is 0.66% larger on this fixture.
+
+For `ampliconstats`, rsomics wall times were 0.36, 0.37, 0.36, 0.37, and 0.36
+seconds; samtools times were 0.46, 0.47, 0.46, 0.47, and 0.47 seconds. Median
+wall time was 23.4% lower and median user CPU was 0.34 versus 0.44 seconds.
+Median peak RSS was 20,627,456 versus 19,300,352 bytes. Normalized complete
+text from both tools shared SHA-256
+`960c4eaeb02a0e6a50c791519f6f2d8946e1e4e96972612e1fa674450436a336`;
+normalization removes only tool-version and command-line identity lines.
 
 ### Slice 3: remaining projection, pileup, and statistics
 
