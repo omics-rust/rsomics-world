@@ -43,9 +43,9 @@ completed successfully. The twenty-fifth command, `depad`, is published as
 `rsomics-bam 0.18.0` from revision `5304f278bfaa` after exact-head CI
 `31414206433` passed the same four native targets and complete oracle.
 Publication workflow `31415017446` completed successfully. The next increment
-is selected from the remaining audited operations by user workflow,
-compatibility scope, and performance evidence rather than historical
-micro-crate order.
+is the paired `ampliconclip` and `ampliconstats` workflow specified below. Its
+historical assets and local samtools 1.24 baselines have been audited, but no
+implementation or 0.19 release is claimed yet.
 
 ## Boundary
 
@@ -1367,12 +1367,113 @@ and exact VCS metadata. A fresh locked registry install reports 0.18.0, exposes
 through named BAM and shared JSON output without creating a FASTA sidecar. The
 output passes samtools quickcheck and reproduces the decoded-output hash above.
 
+### Release 0.19: amplicon clipping and reporting
+
+The next increment treats `ampliconclip` and `ampliconstats` as one user
+workflow rather than two historical packages. `ampliconclip` removes primer
+sequence described by a BED file; `ampliconstats` consumes alignment files
+that have already been clipped and the same primer BED to produce the text
+sections accepted by `plot-ampliconstats`. The compatibility contracts are
+[`samtools ampliconclip` 1.24](https://www.htslib.org/doc/1.24/samtools-ampliconclip.html),
+[`samtools ampliconstats` 1.24](https://www.htslib.org/doc/1.24/samtools-ampliconstats.html),
+the SAM/BAM specifications, and samtools `bam_ampliconclip.c` and
+`amplicon_stats.c` at tag 1.24. Samtools and HTSlib are MIT licensed. The
+historical Rust implementations are team-owned and remain under this product's
+MIT OR Apache-2.0 license.
+
+The shared product-private model parses standard BED rows once, preserves
+reference and primer order, and exposes separate indexed views for clipping
+and amplicon construction. Clipping may use the first three BED columns or,
+with `--strand`, the strand in column six. Statistics requires one or more
+forward primers followed by one or more reverse primers for each amplicon and
+supports alternative primers. Empty intervals, negative or reversed
+coordinates, malformed strand rows, invalid amplicon ordering, duplicate
+output targets, and references absent from the alignment dictionary fail
+non-zero. This primer policy is not a general interval contract and remains
+inside `rsomics-bam`; `rsomics-intervals` and every other Layer A crate remain
+unchanged.
+
+`ampliconclip` accepts coordinate-ordered BAM and writes BAM to standard output
+or a transactional named file. Its stable surface includes `-b`, `-o`, `-f`,
+`-u`, `--soft-clip`, `--hard-clip`, `--both-ends`, `--strand`, `--clipped`,
+`--fail`, `--filter-len`, `--fail-len`, `--unmap-len`, `--no-excluded`,
+`--rejects-file`, `--primer-counts`, `--original`, `--keep-tag`, `--tolerance`,
+`--no-pg`, and `-@`. It soft-clips the five-prime end by default. Both-end
+clipping ignores strand, mapped-position changes downgrade coordinate sort
+order, clipped reads lose stale `NM` and `MD` tags unless requested otherwise,
+and the `OA` tag records the original alignment when enabled. Rejected reads,
+the stats block, and per-primer bedGraph counts are complete outputs rather
+than side effects that may be silently skipped.
+
+`ampliconstats` accepts the same six-column primer BED and one or more BAM
+inputs. Its stable surface includes `-f`, `-F`, `-a`, `-l`, `-d`, `-m`, `-o`,
+`-s`, `-t`, `-b`, `-c`, `-D`, `-S`, and `-@`. Numeric, symbolic, hexadecimal,
+and octal SAM flag expressions reuse the product's existing flag parser. Plain
+output preserves the samtools 1.24 `SS`, `AMPLICON`, file-specific, and
+combined section schema, ordering, sample naming, multi-reference columns,
+alternative-primer rules, template-coordinate bins, and run-length depth
+encoding. `--json` requires a named text output and reports the typed run
+summary through the shared `rsomics-help` and `rsomics-common` envelope without
+mixing JSON into the compatibility stream.
+
+Historical `rsomics-bam-ampliconclip` revision `94784e5b4132` contributes its
+raw-record CIGAR and sequence trimming seed, primer-match cases, golden SAM
+records, and samtools differential matrix. Its standalone CLI, duplicate
+header and BAM plumbing, incomplete option set, unchecked raw-record indexing,
+generated dependency selection, tiny broken benchmark, fixed temporary paths,
+and narrative comments are discarded. Its ordinary tests pass against local
+samtools 1.24, but `cargo test --all-targets` fails because the benchmark feeds
+SAM to its BAM-only reader; this is not retained as evidence.
+
+Historical `rsomics-bam-ampliconstats` revision `d748a727eb87` contributes its
+statistics and text-rendering seed, committed BAM/BED fixture, and
+metadata-normalized default-output oracle. Its standalone CLI, duplicate BED
+and BAM plumbing, direct output mutation, hard-coded samtools 1.23.1 version,
+unchecked allocation products, unbounded unmatched-pair map, sparse option
+coverage, and narrative comments are discarded. Its locked all-target test
+passes against local samtools 1.24, but exercises only one default fixture and
+does not validate the full stable surface.
+
+The target files are `src/amplicon.rs`, `src/ampliconclip.rs`,
+`src/ampliconstats.rs`, and their two command adapters. Public library modules
+expose narrow typed options and results; parsing, indexing, transactions,
+format policy, and rendering stay private. Existing `rsomics-common`,
+`rsomics-help`, and `rsomics-bamio` contracts are reused without a speculative
+foundation API. SAM or CRAM input, SAM or CRAM output, HTSlib format-option
+strings, reference download, and plot generation are excluded from 0.19 and
+remain absent from public help.
+
+Live samtools 1.24 tests may not skip. The clipping matrix covers every stable
+option alone and in meaningful combinations; five-prime and both-end
+soft/hard clipping; forward, reverse, paired, unmapped, QC-fail, and unmatched
+records; CIGAR operations and auxiliary-tag types; header sort order and
+program records; stats, rejects, primer counts, JSON, threads, malformed and
+truncated records, aliasing, and transaction preservation. Complete alignment
+records and output ordering are compared after excluding only program identity.
+The statistics matrix covers one and multiple files and references, alternative
+primers, sample names, every filter and binning option, legacy single-reference
+output, all documented output sections, missing mates, long templates,
+malformed BED and BAM, JSON, aliasing, and transaction preservation. Text is
+byte-compared after normalizing only tool version and command-line identity.
+
+Each command has its own release-performance gate on a representative
+coordinate-ordered BAM with many amplicons and at least one million read pairs.
+The record count, input and output digests, BED digest, machine, tool revisions,
+workers, warm-up, alternating order, timing distribution, CPU, and peak RSS
+are recorded. Clipping requires identical decoded alignments, counters,
+rejects, and primer counts; statistics requires identical normalized text.
+Both commands must show a strict throughput or resource-use advantage over
+samtools 1.24 before either is published in 0.19. The historical claim of
+0.143 seconds versus 0.607 seconds for `ampliconstats` remains only a fixture
+and implementation seed because it lacks repeated-trial, RSS, output-digest,
+and samtools 1.24 evidence.
+
 ### Slice 3: remaining projection, pileup, and statistics
 
 - `consensus`, `phase`, `reference`, and
   `targetcut`;
-- `stats`, `ampliconstats`, and `cram-size`;
-- `to-bed`, `reset`, `ampliconclip`, and `checksum`.
+- `stats` and `cram-size`;
+- `to-bed`, `reset`, and `checksum`.
 
 Pileup-dependent work proceeds with the `rsomics-pileup` contract described
 below. `checksum` ships only if it meets the same performance or material
