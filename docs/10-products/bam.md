@@ -1087,12 +1087,91 @@ samtools for overwrite, orphan-only, and implicit-first-read-group smokes. It
 also rejects a conflicting header ID and emits the expected shared JSON
 summary.
 
-### Slice 3: projection, pileup, and statistics
+### Release 0.16: coverage and index summaries
+
+`bedcov`, `coverage`, and `idxstats` form one coverage-summary increment. They
+share alignment filtering, reference dictionaries, indexed access, pileup
+semantics, and structured reporting, but remain separate subcommands because
+their output units are BED regions, reference summaries, and index counts.
+They do not become separate crates.
+
+`bedcov` accepts a BED file and one or more named SAM, BAM, or CRAM inputs with
+usable indices. Its stable surface includes `-Q`, `-g`, `-G`, `-j`, `-d`,
+`--max-depth`, `-c`, `-H`, `-X`, `-@`, `--reference`, and transactional named
+output in addition to standard output. It preserves BED row order and original
+columns, emits one coverage column per input, and optionally emits per-input
+depth-threshold and overlapping-read counts. Header, comment, `track`,
+`browser`, malformed-row, unknown-reference, deletion, and reference-skip
+behavior follow
+[`samtools bedcov` 1.24](https://www.htslib.org/doc/1.24/samtools-bedcov.html).
+
+`coverage` accepts one or more SAM, BAM, or CRAM inputs, a file list, or
+standard input for one unindexed full scan and emits the nine-column
+per-reference table from
+[`samtools coverage` 1.24](https://www.htslib.org/doc/1.24/samtools-coverage.html).
+The stable table slice includes `-l`, `-q`, `-Q`, `--rf`, `--ff`, `-d`,
+`--min-depth`, `-r`, `-b`, `-H`, `-o`, `-@`, and `--reference`. Region mode
+requires usable indices; named output is transactional. Histogram rendering
+(`-m`, `-D`, `-A`, and `-w`) is excluded from 0.16 rather than implemented as
+an inconsistent one-off terminal UI. It remains a later mode of `coverage`,
+not a new product or crate.
+
+`idxstats` emits reference name, reference length, mapped segments, and
+unmapped segments followed by the unplaced-unmapped row. It reads BAI, CSI, or
+CRAI metadata when available and otherwise scans a coordinate-sorted SAM, BAM,
+or CRAM stream, matching
+[`samtools idxstats` 1.24](https://www.htslib.org/doc/1.24/samtools-idxstats.html).
+`-X` selects an explicit index; `-o`, `-@`, and `--reference` follow product
+conventions. The shared JSON mode returns typed reference rows and the
+unplaced count rather than embedding ad hoc JSON in the text stream.
+
+The product-private target modules are `src/bedcov.rs`,
+`src/bedcov/{bed,sweep}.rs`, `src/coverage.rs`, `src/coverage_engine.rs`,
+`src/idxstats.rs`, and matching files under `src/commands/`. Existing
+`rsomics-pileup` columns, `rsomics-bamio` records and indexed readers, and BAM
+input and transaction contracts are reused. All three command trees render
+through `rsomics-help` and use the shared JSON envelope. Any scan merging or
+interval routing needed only by this product stays private. This slice has no
+second target-product consumer for a new foundation item, so it does not
+expand a Layer A API.
+
+Historical `rsomics-bam-bedcov` revision `93204eea9155` contributes its dense
+and sparse fixtures, adaptive single-pass idea, raw CIGAR-span seed, and
+representative 50,000-region performance corpus. Its BAM-only boundary,
+partial option surface, ignored thread argument, direct output creation,
+skip-on-missing oracle, magic crossover policy, process benchmark, and
+comment-heavy standalone CLI are discarded. Historical
+`rsomics-bam-coverage` revision `e115cd0bceb0` contributes only fixtures and
+basic interval-union tests; its incomplete seven-column output, whole-file
+event vectors, missing quality semantics, and standalone shell are discarded.
+Historical `rsomics-bam-idxstats` revision `f96b6aed4452` contributes its
+index-metadata fixture and expected rows; its BAI-only lookup, missing scan
+fallback, skipped oracle, duplicate JSON mode, and standalone shell are
+discarded.
+
+Live samtools 1.24 tests may not skip. The matrix covers SAM, BAM, and CRAM;
+BAI, CSI, CRAI, explicit indices, and unindexed `idxstats`; multi-input and
+file-list behavior; every declared filter and depth option; missing qualities;
+BED comments, headers, unsorted and overlapping regions, deletions, and skips;
+reference-dictionary disagreement; malformed or truncated input; standard and
+named output; JSON; aliases; and transaction preservation on failure.
+
+The performance gate remeasures samtools 1.24 rather than inheriting the old
+1.21 results. `bedcov` uses both a sparse indexed workload and the retained
+3,000,000-record, 50,000-region dense workload, with complete output equality.
+`coverage` measures the complete nine-field calculation on a representative
+alignment rather than the historical incomplete implementation. Each hot path
+records timing distributions, peak RSS, exact flags, machine and tool
+fingerprints, input and output hashes, and must show a strict throughput or
+resource advantage. `idxstats` records indexed and scan-fallback costs; its
+material product value is the unified install, explicit index handling, and
+typed shared JSON, not a process-launch microbenchmark.
+
+### Slice 3: remaining projection, pileup, and statistics
 
 - `consensus`, `calmd`, `depad`, `phase`, `reference`, and
   `targetcut`;
-- `bedcov`, `coverage`, `idxstats`, `stats`, `ampliconstats`, and
-  `cram-size`;
+- `stats`, `ampliconstats`, and `cram-size`;
 - `to-bed`, `reset`, `ampliconclip`, and `checksum`.
 
 Pileup-dependent work proceeds with the `rsomics-pileup` contract described
