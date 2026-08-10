@@ -1510,6 +1510,19 @@ text from both tools shared SHA-256
 `960c4eaeb02a0e6a50c791519f6f2d8946e1e4e96972612e1fa674450436a336`;
 normalization removes only tool-version and command-line identity lines.
 
+Release revision `6d82ba05b1722ffaef14bc1abdd2061ec0ebb29c` passed exact-head CI run
+`31424768417` on native Linux and macOS x86_64 and aarch64, including the
+Linux samtools 1.24 oracle and package gate. Publish run `31425446427` then
+released `rsomics-bam` 0.19.0 through `cargo publish --locked`. The live,
+unyanked registry archive is 241,278 bytes with SHA-256
+`73aa144cfa9a2332f123046d8f2a440424832b6f3e2181af48803617e476f115`;
+its Cargo VCS record points to the same release revision. A fresh registry
+install with Rust 1.91.0 on the external build volume reported version 0.19.0
+and exposed both command surfaces. Its `ampliconclip` smoke processed all
+2,000,000 fixture records and passed samtools `quickcheck`; the BAM, normalized
+clip counters, and normalized `ampliconstats` report were byte-identical to
+outputs from the exact-head release build.
+
 ### Slice 3: remaining projection, pileup, and statistics
 
 - `consensus`, `phase`, `reference`, and
