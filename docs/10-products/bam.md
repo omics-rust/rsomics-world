@@ -42,10 +42,14 @@ native targets and complete oracle. Publication workflow `31408461408`
 completed successfully. The twenty-fifth command, `depad`, is published as
 `rsomics-bam 0.18.0` from revision `5304f278bfaa` after exact-head CI
 `31414206433` passed the same four native targets and complete oracle.
-Publication workflow `31415017446` completed successfully. The next increment
-is the paired `ampliconclip` and `ampliconstats` workflow specified below. Its
-historical assets and local samtools 1.24 baselines have been audited, but no
-implementation or 0.19 release is claimed yet.
+Publication workflow `31415017446` completed successfully. The paired
+`ampliconclip` and `ampliconstats` workflow is published as `rsomics-bam
+0.19.0` from revision `6d82ba05b172` after exact-head CI `31424768417` and
+publication workflow `31425446427` completed successfully. The twenty-eighth
+command, `cram-size`, is implemented at revision `74c7a7fa8f06`; performance
+evidence is recorded at revision `1540cbfae358`, whose exact-head CI
+`31429722062` passed all four native targets. Version 0.20.0 is not yet
+published.
 
 ## Boundary
 
@@ -1576,6 +1580,33 @@ records complete-output identity, input digest and shape, tool revisions,
 workers, warm-up, alternating trials, wall and CPU distributions, and peak
 RSS. Publication still requires a strict throughput or resource-use advantage.
 
+Feature revision `74c7a7fa8f06` implements the private streaming parser,
+typed report, all stable CRAM compression-method and encoding renderers,
+transactional output, unified help and JSON surfaces, committed golden
+fixtures, and the error-path matrix. Official and generated fixtures cover
+CRAM 2.1, 3.0, and 3.1. Default and `--encodings` output for each version, plus
+all three text modes on the official samtools regression fixture, are byte-for-
+byte identical to samtools 1.24. A separate 14,354,392-byte release fixture
+contains 100 containers, 100 slices, 1,000,000 sequences, 150,000,000 bases,
+multiple codecs, content IDs, and tag encodings. Its SHA-256 is
+`8b37d7ef3e2ac30236bb5b5c4bba27335b1ec2b71356e376db25e7864195d5c0`;
+complete default and encoding reports from both tools share SHA-256
+`e430528d73de3086be9032b811243138247d5ecca45f8f2f113b8e42a7570903`
+and `78477e90b7b2a684d3da9579d570c2344deeddc16a53a7adcc29984edd9fb5f5`.
+
+The exact performance gate at revision `1540cbfae358` ran on an eight-core
+Apple M2 Mac mini with 8 GB RAM, macOS 26.6.1, Rust 1.91.0, and
+samtools/HTSlib 1.24. After warm-up, twenty alternating paired rounds each
+processed the release fixture ten times and retained complete output identity.
+Rsomics mean and median wall time were both 0.0130 seconds versus 0.00905 and
+0.00900 seconds for samtools, so no throughput advantage is claimed. Mean peak
+RSS was 5,512,397 versus 7,611,187 bytes, a 27.58% reduction, satisfying the
+strict resource-use gate. Exact-head CI `31429722062` passed native Linux and
+macOS on x86_64 and aarch64; Linux x86_64 also passed formatting, strict
+Clippy, debug and release tests, package verification, and the complete
+samtools 1.24 compatibility oracle. Version 0.20.0 remains unpublished until
+the versioned release revision passes these gates again.
+
 `stats` follows as release 0.21 because it is a distinct full alignment-report
 engine rather than a small extension of CRAM layout inspection. The historical
 `rsomics-bam-stats` implementation covers only a handful of summary counters;
@@ -1605,6 +1636,12 @@ src/
 ├── coverage.rs
 ├── coverage_engine.rs
 ├── coverage_hts.rs
+├── cram_size.rs
+├── cram_size/
+│   ├── encoding.rs
+│   ├── parser.rs
+│   ├── render.rs
+│   └── varint.rs
 ├── idxstats.rs
 ├── lib.rs
 ├── main.rs
@@ -1643,6 +1680,7 @@ src/
     ├── cat.rs
     ├── collate.rs
     ├── coverage.rs
+    ├── cram_size.rs
     ├── depth.rs
     ├── fastx.rs
     ├── import.rs
