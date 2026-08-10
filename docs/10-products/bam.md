@@ -20,9 +20,11 @@ four-native-target gates. The fifteenth and sixteenth commands, `cat` and
 gates. The seventeenth and eighteenth commands, `fasta` and `fastq`, are
 implemented as one shared extraction engine at revision `d6cbf1070706` and
 have passed their local correctness, live-oracle, package, and representative
-performance gates. Exact-head CI `31375096419` passes on native Linux and
-macOS for both x86_64 and aarch64, including the samtools 1.24 oracle on Linux
-x86_64. They remain unpublished until the release review completes.
+performance gates. They are published as `rsomics-bam 0.13.0` from revision
+`4829bbb3be06` after exact-head CI `31376119277` passed on native Linux and
+macOS for both x86_64 and aarch64, including the FASTA/FASTQ samtools 1.24
+oracle on Linux x86_64. Publication workflow `31376581939` completed
+successfully.
 
 ## Boundary
 
@@ -899,6 +901,14 @@ represents it as one canonical empty sequence line while continuing to reject
 blank lines inside non-empty records. Transactional permission testing in the
 sequence consumer similarly found and fixed exact existing-mode preservation
 in `rsomics-common 0.12.2`. Neither foundation API was added speculatively.
+
+The unyanked 151,519-byte registry archive has SHA-256
+`97cc23593d5b92a7f3c49c19ab9b9c014e466ecc37e12e392b07ccaac27cf056`
+and embeds exact release revision `4829bbb3be06`. A fresh registry install
+reports 0.13.0, exposes both commands through the shared help tree, and writes
+FASTA plus BGZF FASTQ streams that match samtools 1.24 at
+`a69efdbf4ebf740457c7df6e52112d1a56b63c388ad493c2a0f9ffbc0f8e61f8`
+and `ca6ae968349466db34aa481149c0fc005689a3595cc3a3f8627139316754d733`.
 
 Historical `rsomics-bam-fasta` revision `ba661eddd57b` and
 `rsomics-bam-to-fastq` revision `9675f305021d` share one 384-byte BAM fixture
