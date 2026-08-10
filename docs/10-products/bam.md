@@ -687,6 +687,73 @@ A fresh registry install reports 0.11.0, exposes the shared command tree, and
 matches samtools byte-for-byte on the complete 16-record markdup smoke stream;
 docs.rs serves the corresponding public library documentation.
 
+The next file-operation increment consolidates samtools 1.24
+[`cat`](https://www.htslib.org/doc/1.24/samtools-cat.html) and
+[`reheader`](https://www.htslib.org/doc/1.24/samtools-reheader.html). Both are
+header rewrites followed by compressed-record passthrough, so they share one
+private BGZF rewrite engine inside `rsomics-bam`; they are not separate
+products and do not create a Layer A API. The first stable slice is BAM-only.
+CRAM concatenation has container-version, read-group ordering, region,
+fraction, and boundary-recoding semantics, while CRAM reheadering has distinct
+container and in-place layouts. Those paths remain absent until complete CRAM
+output support can satisfy their own compatibility and performance gates.
+
+`cat [--list FILE]... [--header FILE] [-o FILE] [--no-pg] BAM...` accepts one
+or more named BAM inputs, repeated files of filenames, an optional alignment
+file supplying the output header, a named output or standard output, and
+program-record suppression. List entries precede
+positional inputs as in samtools. It preserves record order and compressed
+record blocks, takes the first input header by default, and appends read-group
+lines whose IDs are absent from that base. Before output begins it reads every
+header, requires every input to have a canonical BGZF EOF marker, rejects mixed
+formats and same-target aliases, and requires identical reference names,
+order, and lengths across inputs and the optional header source. Conflicting
+read-group IDs retain the base definition. Named output is transactional and
+is committed only after the complete result passes product quickcheck.
+
+`reheader [-o FILE] [--no-pg] HEADER BAM` accepts a replacement header from
+SAM, BAM, or CRAM, a named BAM input, a named BAM output or standard output,
+and program-record suppression.
+It validates both headers, requires the replacement reference count to match
+the input while allowing names and lengths to be corrected without remapping
+record reference IDs, preserves compressed record blocks and record order,
+requires the input EOF marker, rejects same-target aliases, and commits named
+output transactionally after quickcheck. External shell transformation
+(`-c`) and in-place editing (`-i`) are not exposed in this slice: the former
+needs a separate process, quoting, and failure contract, and the latter is a
+CRAM-only destructive operation.
+
+The shared engine parses variable-length BGZF extra fields, locates and checks
+the `BC` subfield and declared frame size, inflates and validates only frames
+needed to consume the BAM header, reframes the boundary tail, structurally
+checks and copies all complete record frames, removes each source EOF marker,
+and writes exactly one output EOF marker. Malformed headers, inconsistent
+dictionaries, invalid frame structure, premature or missing EOF, bytes after
+EOF, input or output I/O errors, and output finalization errors remain fatal.
+The public product library exposes narrow typed options, summaries, and write
+interfaces for the two operations; BGZF framing remains private product
+plumbing because no second Layer B consumer exists.
+
+The samtools 1.24 oracle covers ordinary concatenation, read-group merging,
+file lists, external headers, reheadering with renamed references, program
+records, and complete decoded header and record order. Product tests add
+malformed and truncated frames, dictionary and reference-count disagreement,
+same-target aliases, standard output, transactional failure, write failure,
+large headers spanning several frames, unusual valid BGZF extra layouts, and
+exactly one output EOF marker. Representative benchmarks use non-trivial BAM
+shards and the same full-record input for reheader, alternate command order at
+least 12 times, record wall time, CPU, peak RSS, machine and fixture
+provenance, and require semantic identity after every run.
+
+Historical `rsomics-bam-cat` revision `e0a21da2cf6` and
+`rsomics-bam-reheader` revision `bdf6f6ec0ed0` contribute boundary-frame
+fixtures and raw-copy algorithm seeds. Their duplicated BGZF modules,
+standalone CLIs, non-transactional writes, BAM-header slice assumptions,
+permissive EOF handling, benchmark exemptions, skip-on-missing-oracle tests,
+and comment-heavy source are discarded. Samtools and HTSlib remain
+MIT/Expat-licensed compatibility sources and receive command-level
+attribution.
+
 ### Slice 3: projection, pileup, and statistics
 
 - `consensus`, `calmd`, `depad`, `phase`, `reference`, and
