@@ -46,10 +46,9 @@ Publication workflow `31415017446` completed successfully. The paired
 `ampliconclip` and `ampliconstats` workflow is published as `rsomics-bam
 0.19.0` from revision `6d82ba05b172` after exact-head CI `31424768417` and
 publication workflow `31425446427` completed successfully. The twenty-eighth
-command, `cram-size`, is implemented at revision `74c7a7fa8f06`; performance
-evidence is recorded at revision `1540cbfae358`, whose exact-head CI
-`31429722062` passed all four native targets. Version 0.20.0 is not yet
-published.
+command, `cram-size`, is published as `rsomics-bam 0.20.0` from revision
+`5ecdcc33ccbe` after exact-head CI `31431000225` and publication workflow
+`31431664650` completed successfully.
 
 ## Boundary
 
@@ -1601,11 +1600,22 @@ processed the release fixture ten times and retained complete output identity.
 Rsomics mean and median wall time were both 0.0130 seconds versus 0.00905 and
 0.00900 seconds for samtools, so no throughput advantage is claimed. Mean peak
 RSS was 5,512,397 versus 7,611,187 bytes, a 27.58% reduction, satisfying the
-strict resource-use gate. Exact-head CI `31429722062` passed native Linux and
-macOS on x86_64 and aarch64; Linux x86_64 also passed formatting, strict
-Clippy, debug and release tests, package verification, and the complete
-samtools 1.24 compatibility oracle. Version 0.20.0 remains unpublished until
-the versioned release revision passes these gates again.
+strict resource-use gate. Implementation exact-head CI `31429722062` passed
+native Linux and macOS on x86_64 and aarch64; Linux x86_64 also passed
+formatting, strict Clippy, debug and release tests, package verification, and
+the complete samtools 1.24 compatibility oracle.
+
+Release revision `5ecdcc33ccbe48cb9db12efb70ff5e434dbdc66f` passed the same
+four-native-target gates in exact-head CI `31431000225`. Publish run
+`31431664650` released 0.20.0 through `cargo publish --locked`. The live,
+unyanked registry archive is 314,444 bytes with SHA-256
+`2501e8303efb214f02d5654655cecd2a8caae1480443de216f5927a47544bda2`;
+its Cargo VCS record points to the release revision. A fresh registry install
+with Rust 1.91.0 on the external build volume reported version 0.20.0. Its
+default, verbose, and encoding reports matched every committed release golden
+byte for byte across CRAM 2.1, 3.0, and 3.1. On the one-million-record fixture,
+the installed binary reproduced the pre-release default and encoding report
+digests exactly.
 
 `stats` follows as release 0.21 because it is a distinct full alignment-report
 engine rather than a small extension of CRAM layout inspection. The historical
