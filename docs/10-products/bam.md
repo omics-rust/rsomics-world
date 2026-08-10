@@ -16,8 +16,8 @@ performance, package, and four-native-target gates.
 The fourteenth command, `markdup`, is published as `rsomics-bam 0.11.0` after
 correctness, compatibility, representative performance, package, and
 four-native-target gates. The fifteenth and sixteenth commands, `cat` and
-`reheader`, have passed their implementation gates and form the planned
-`rsomics-bam 0.12.0` release.
+`reheader`, are published as `rsomics-bam 0.12.0` after the same release
+gates.
 
 ## Boundary
 
@@ -790,6 +790,18 @@ mean peak RSS: 13.38% lower wall time and 21.26% lower memory on this fixture.
 Every timed result passed complete decoded-stream identity checks; detailed
 machine, input, command, timing, and checksum provenance is retained in the
 product performance record.
+
+Release revision `dfbc321d9dbe` passed exact-head four-native-target CI
+`31368507277`. Publication workflow `31368957921` released 0.12.0 from that
+head. The unyanked 144,963-byte registry archive has SHA-256
+`df10fadae75e377e4a3c40244ad5bfd19d47010a874cc8063b81641fc8d1182b`
+and embeds the exact release revision. A fresh registry install reports
+0.12.0 and exposes `cat` and `reheader` through the shared help tree. Its
+two-shard cat smoke and four-million-record reheader smoke match samtools 1.24
+complete decoded streams at
+`0c9f5514885e469f4720858c25bef106a529091844c33c37ccc449ba45feb675`
+and `8bc5ca00000bfa575068de363b70bf3224cbebb3919519b58e2e01f410a19a15`;
+docs.rs serves the corresponding public library documentation.
 
 ### Slice 3: projection, pileup, and statistics
 
