@@ -1001,13 +1001,69 @@ registry archive with SHA-256
 and exact VCS metadata. A fresh registry install reports 0.14.0 and passes
 single-end SAM, gzip-standard-input, paired-BAM, and invalid-base smokes.
 
+### Release 0.15: read-group editing
+
+`addreplacerg` edits the read-group dictionary and record `RG` tags as one
+alignment-header workflow. The compatibility oracle is
+[`samtools addreplacerg` 1.24](https://www.htslib.org/doc/1.24/samtools-addreplacerg.html)
+and its MIT-licensed `bam_addrprg.c` implementation.
+
+The stable surface is:
+
+- SAM, BAM, and reference-backed CRAM input, including standard input;
+- SAM or BAM output, with SAM on standard output, extension inference for a
+  named target, and `-O sam|bam` as an explicit override;
+- repeatable `-r` fields for a new `@RG` record, `-R` for an existing ID, or
+  the first existing header read group when neither is supplied;
+- `-m overwrite_all|orphan_only`, `-w`, `-u`, `-@`, `--reference`,
+  `--no-PG`, and transactional named output.
+
+`-r` and `-R` are mutually exclusive. A new read group must contain exactly
+one non-empty `ID` field. Replacing the same header ID requires `-w`. In
+`overwrite_all` mode, a new read group becomes the only `@RG` header record
+and every alignment receives its ID. In `orphan_only` mode, existing header
+read groups and record tags remain while only records without an `RG` tag are
+stamped. Selecting an existing ID, explicitly or by default, preserves the
+header dictionary in either mode. Any existing record field named `RG` counts
+as present for `orphan_only`; overwrite mode replaces it with a string tag.
+
+CRAM output, HTSlib format-option strings, automatic output indexing, and
+arbitrary verbosity settings are excluded from this release. They are future
+extensions of the same command, not separate products. Named output cannot
+alias its input, and a failed read, write, or validation cannot replace an
+existing destination.
+
+Historical `rsomics-bam-addreplacerg` revision `26354a3724f7f` is
+refactor-then-merge input. Retain its small BAM fixture, raw auxiliary-field
+editing seed, overwrite/orphan cases, and benchmark corpus generator. Discard
+its standalone CLI and help schema, BAM-only boundary, mandatory `-r`/`-R`,
+incorrect same-ID replacement and header-retention behavior, direct output
+truncation, skip-on-missing-oracle tests, process-launch microbenchmark, and
+comment-heavy text-header manipulation.
+
+The target modules are `src/addreplacerg.rs` and
+`src/commands/addreplacerg.rs`. The command uses the existing typed header,
+input, raw-record, output, program-provenance, and transaction contracts.
+There is no second product consumer or missing shared primitive, so this slice
+does not add a Layer A API.
+
+Compatibility tests must require samtools 1.24 and cover all source and mode
+combinations, repeated fields, escaped tabs and backslashes, same-ID conflict
+and replacement, implicit first-ID selection, malformed header fields, SAM,
+BAM, CRAM, standard input, both output formats, uncompressed BAM, record-tag
+type replacement, program provenance, and output failure. The performance gate
+uses a representative BAM with mixed present and absent tags, records complete
+decoded output hashes, wall-time distributions, peak RSS, tool fingerprints,
+flags, and machine provenance, and requires a strict throughput or resource-use
+advantage on the BAM-to-BAM hot path.
+
 ### Slice 3: projection, pileup, and statistics
 
 - `consensus`, `calmd`, `depad`, `phase`, `reference`, and
   `targetcut`;
 - `bedcov`, `coverage`, `idxstats`, `stats`, `ampliconstats`, and
   `cram-size`;
-- `to-bed`, `reset`, `addreplacerg`, `ampliconclip`, and `checksum`.
+- `to-bed`, `reset`, `ampliconclip`, and `checksum`.
 
 Pileup-dependent work proceeds with the `rsomics-pileup` contract described
 below. `checksum` ships only if it meets the same performance or material
