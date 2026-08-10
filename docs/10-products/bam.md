@@ -922,6 +922,57 @@ and failure to implement QNAME category selection and missing-quality behavior
 are discarded. Samtools and HTSlib remain MIT/Expat-licensed compatibility
 sources and receive command-level attribution.
 
+### Release 0.14 candidate: FASTQ import
+
+`import` is the next alignment-format slice. It converts FASTQ streams into
+unmapped SAM or BAM records inside the existing product; it is not a new
+sequence or BAM micro-crate. The compatibility contract is
+[`samtools import` 1.24](https://www.htslib.org/doc/1.24/samtools-import.html)
+and the SAM/BAM specifications.
+
+The stable candidate surface is:
+
+- one positional FASTQ, two positional mate FASTQs, `-0`, `-s`, and the
+  `-1`/`-2` pair;
+- transparent plain, gzip, and BGZF FASTQ input through `rsomics-seqio`;
+- automatic `/1` and `/2` read-name interpretation for a single input,
+  including when it was supplied with `-0` or `-s`;
+- unmapped single and paired FLAGs, original read orientation, exact sequence
+  and quality transfer, and rejection of unequal paired-file record counts;
+- `-r`/`--rg-line`, `-R`/`--rg`, `--order`, `--no-PG`, `-o`, `-O`, `-u`, and
+  `-@` with transactional named output.
+
+SAM remains the standard-output default. Named output is inferred from `.sam`
+and `.bam`, with `-O sam|bam` as the explicit override. CRAM output is excluded
+until this product has a conforming CRAM writer. Index FASTQs, CASAVA parsing,
+UMI extraction, SRA second-field names, arbitrary FASTQ-comment auxiliary tags,
+custom barcode tags, and HTSlib format-option strings are also excluded from
+this increment. They remain extensions of `import`, not separate products.
+
+Historical `rsomics-bam-import` revision `ba7f8fc76306` is refactor-then-merge
+input. Retain its three FASTQ fixtures, direct BAM payload encoder, nucleotide
+packing tests, read-group seeds, and paired-count failure cases. Discard its
+standalone CLI and help schema, forced single/interleaved mode model, output
+path implying BAM regardless of extension, first-mate-name reuse for both
+records, unconditional ASCII-quality subtraction, direct destination
+truncation, skip-on-missing-oracle tests, process-launch microbenchmark, and
+comment-heavy source.
+
+The target modules are `src/import.rs` and `src/commands/import.rs`. BAM payload
+validation and output use the existing `rsomics-bamio` and product-private
+writer contracts. FASTQ parsing uses the already-public `rsomics-seqio` reader.
+No new Layer A item is justified by this slice.
+
+Compatibility tests must require samtools 1.24 and compare decoded headers,
+records, FLAGs, names, sequence, quality, read-group tags, order tags, SAM/BAM
+selection, compressed input, standard I/O, malformed input, and differing
+paired-file lengths. The representative gate uses a non-trivial single-end and
+paired FASTQ corpus, records complete output hashes, wall-time distributions,
+peak RSS, tool fingerprints, flags, and machine provenance, and requires a
+strict throughput or resource-use win over samtools for the BAM hot path.
+Samtools `bam_import.c` and its manual are MIT-licensed behavior references and
+receive command-level attribution.
+
 ### Slice 3: projection, pileup, and statistics
 
 - `consensus`, `calmd`, `depad`, `phase`, `reference`, and
@@ -959,6 +1010,7 @@ src/
 ├── collate.rs
 ├── fixmate.rs
 ├── fastx.rs
+├── import.rs
 ├── markdup.rs
 ├── markdup/key.rs
 ├── merge.rs
@@ -985,6 +1037,7 @@ src/
     ├── collate.rs
     ├── depth.rs
     ├── fastx.rs
+    ├── import.rs
     ├── fixmate.rs
     ├── flags.rs
     ├── flagstat.rs
