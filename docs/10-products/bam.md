@@ -24,7 +24,10 @@ performance gates. They are published as `rsomics-bam 0.13.0` from revision
 `4829bbb3be06` after exact-head CI `31376119277` passed on native Linux and
 macOS for both x86_64 and aarch64, including the FASTA/FASTQ samtools 1.24
 oracle on Linux x86_64. Publication workflow `31376581939` completed
-successfully.
+successfully. The nineteenth command, `import`, is published as
+`rsomics-bam 0.14.0` from revision `d54924462ad6` after exact-head CI
+`31383580026` passed the four native targets and the complete samtools 1.24
+oracle. Publication workflow `31384051315` completed successfully.
 
 ## Boundary
 
@@ -922,15 +925,15 @@ and failure to implement QNAME category selection and missing-quality behavior
 are discarded. Samtools and HTSlib remain MIT/Expat-licensed compatibility
 sources and receive command-level attribution.
 
-### Release 0.14 candidate: FASTQ import
+### Release 0.14: FASTQ import
 
-`import` is the next alignment-format slice. It converts FASTQ streams into
+`import` converts FASTQ streams into
 unmapped SAM or BAM records inside the existing product; it is not a new
 sequence or BAM micro-crate. The compatibility contract is
 [`samtools import` 1.24](https://www.htslib.org/doc/1.24/samtools-import.html)
 and the SAM/BAM specifications.
 
-The stable candidate surface is:
+The stable surface is:
 
 - one positional FASTQ, two positional mate FASTQs, `-0`, `-s`, and the
   `-1`/`-2` pair;
@@ -973,13 +976,38 @@ strict throughput or resource-use win over samtools for the BAM hot path.
 Samtools `bam_import.c` and its manual are MIT-licensed behavior references and
 receive command-level attribution.
 
+Feature revision `1df18368dd7c` implements this contract in the planned two
+modules. Thirteen product tests cover the input modes, compression and standard
+input, flags, tags, output inference, transactions, aliases, lowercase IUPAC
+normalization, invalid bases, and configuration conflicts. Three live samtools
+1.24 groups cover the declared mode and tag matrix, BAM, gzip, standard input,
+and invalid-base decisions. The complete product suite passes in debug and
+release profiles together with strict Clippy, rustdoc, and clean package
+verification. No new Layer A item was added.
+
+The final 12-pair macOS arm64 performance gate used 500,000 reads in each mate
+file and four additional compression workers. Single-input mean wall time was
+0.3150 seconds for rsomics and 0.5200 seconds for samtools; paired mean wall
+time was 0.6133 versus 0.8825 seconds. Rsomics won all 12 pairs in both modes
+and reduced mean peak RSS by 42.18% and 40.05%. Stable headers and complete
+record streams matched. The measured rsomics binary had SHA-256
+`b3e81cc1945cba86999d37839e44c57c16f100f04dfeb1caece7d03ddb1bfe25`.
+
+Release revision `d54924462ad6` passed exact-head four-native-target CI
+`31383580026`; its Linux x86_64 job rebuilt samtools 1.24 and ran the complete
+oracle. Publication workflow `31384051315` produced the unyanked 162,589-byte
+registry archive with SHA-256
+`d092eb6d53b301d1e9be0d9e17671502f66d216d1e5b3eb63e4f311da442dcef`
+and exact VCS metadata. A fresh registry install reports 0.14.0 and passes
+single-end SAM, gzip-standard-input, paired-BAM, and invalid-base smokes.
+
 ### Slice 3: projection, pileup, and statistics
 
 - `consensus`, `calmd`, `depad`, `phase`, `reference`, and
   `targetcut`;
 - `bedcov`, `coverage`, `idxstats`, `stats`, `ampliconstats`, and
   `cram-size`;
-- `import`, `to-bed`, `reset`, `addreplacerg`, `ampliconclip`, and `checksum`.
+- `to-bed`, `reset`, `addreplacerg`, `ampliconclip`, and `checksum`.
 
 Pileup-dependent work proceeds with the `rsomics-pileup` contract described
 below. `checksum` ships only if it meets the same performance or material
@@ -1109,7 +1137,7 @@ SAM/CRAM support.
 | `rsomics-bam-flagstat` `ce1cc819d59fe37a56c762ba005ba0d9c91d3ba3` | Refactor then merge | First-slice `flagstat` |
 | `rsomics-bam-head` `76ffd4d379191a968f1095a1854d0ce4c8fe49db` | Refactor then merge | First-slice `head` |
 | `rsomics-bam-idxstats` `f96b6aed4452243a982c9d7ca495e6fa23d8b497` | Refactor then merge | `idxstats`; require index-kind coverage |
-| `rsomics-bam-import` `ba7f8fc7630676e1cdbe95a21c0ae35677f5b958` | Refactor then merge | `import`; share `rsomics-seqio` only through a concrete contract |
+| `rsomics-bam-import` `ba7f8fc7630676e1cdbe95a21c0ae35677f5b958` | Fixture and encoder seed; replacement merged at `1df18368dd7c` | Discard standalone CLI, mode model, output policy, skipped oracles, and comment-heavy source |
 | `rsomics-bam-index` `167e86bd0f5ee0cf13bf18e9ded89cb1f99a46a5` | Test asset; replacement merged at `4639c3676283` | `index`; discard the BAI-only wrapper |
 | `rsomics-bam-markdup` `e865796930fb72d8a185e3a0b18024d217ca6128` | Algorithm, fixture, and performance seed; replacement specified above | Discard the standalone shell and retain scoring, signatures, and duplicate fixtures |
 | `rsomics-bam-merge` `7334fce53ec3666f63893b450710daa4efd43641` | Test asset; replacement merged at `83b73a0c7274` | Discard first-header policy and swallowed decode failures |
