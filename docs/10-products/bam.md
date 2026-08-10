@@ -653,6 +653,34 @@ BAM-only raw stream, template-only key, unchecked auxiliary reads, ordinary-
 CIGAR-only geometry, comment-heavy source, non-transactional output, and
 partial statistics are discarded.
 
+Release 0.11 implements this stable slice at product revision
+`c581a8955f6b`. The bounded engine supports default template and sequence
+signatures, marking or removal, clearing prior duplicate state, QC-fail
+inclusion, long CIGARs, SAM/BAM/CRAM and standard input, transactional BAM
+output, explicit compression-worker control, program provenance, and the
+shared JSON envelope. It preserves exact samtools 1.24 CRAM field and
+auxiliary-tag order by completing only missing `MD` and `NM` tags. The local
+release gate passes 35 library tests, 25 markdup lifecycle tests, ten direct
+markdup compatibility tests, the complete product integration suite, all 27
+release-oracle tests, strict Clippy, rustdoc, and clean crate-package
+verification. Exact-head CI `31359628927` passes on native Linux and macOS for
+both x86_64 and aarch64. A lifecycle regression test also exposed and fixed a
+shared single-thread BAM finalization path that had written two EOF blocks; the
+corrected writer and the pre-existing sort fixture now use one standard EOF.
+
+The representative four-million-record BAM gate uses feature revision
+`5c7dc5603dab` and compares the complete `samtools view -h --no-PG` stream on
+every warm-up and timed run. With default worker policies, the product averaged
+2.3475 seconds versus samtools 1.24 at 7.6617 seconds, won all 12 pairs, and
+used 6,980,949 versus 7,587,157 bytes mean peak RSS. With four additional
+workers for both tools, means were 2.5317 and 2.7792 seconds with ten product
+wins, a -2.26 paired t-statistic, 8.63% lower mean CPU time, and 48.82% lower
+mean peak RSS. The exact decoded stream fingerprint is
+`6279ec79c152d1b2f6092b31021a32f8a62935615a0e2f3668c42e9a17011c99`.
+These claims cover default duplicate marking on this BAM fixture; other input
+formats, removal, clearing, sequence mode, and different duplicate
+distributions remain correctness contracts rather than performance claims.
+
 ### Slice 3: projection, pileup, and statistics
 
 - `consensus`, `calmd`, `depad`, `phase`, `reference`, and
