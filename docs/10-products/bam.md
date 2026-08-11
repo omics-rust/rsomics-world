@@ -2422,6 +2422,156 @@ reported one phase set and two heterozygous sites, and a BAM partition smoke
 retained all 12 input records as five, seven, and zero records in the two
 haplotypes and chimera output.
 
+### Release 0.27: transactional alignment partitioning
+
+`split` absorbs four historical operation-sized repositories into one
+alignment-partitioning workflow. Default mode partitions by header read group;
+`--tag TAG` partitions by a string, hexadecimal, or integer auxiliary value;
+`--parts N` makes a reproducible pseudo-random exact cover; `--genes BED12`
+routes mapped records by their leftmost alignment start; and `--mates` emits
+the RSeQC read-one, read-two, and unmapped projections. The four selectors are
+mutually exclusive, and omitting all of them selects read-group mode. They are
+options of one product operation rather than nested commands or new crates
+because they share the alignment stream, output lifecycle, headers, and the
+user decision to partition one file.
+
+Three boundary designs were considered. Restoring four binaries would preserve
+historical names but recreate the rejected micro-crate portfolio. Nested
+`split read-group`, `split parts`, `split genes`, and `split mates` commands
+would make every mode repeat input, format, reference, worker, provenance, and
+output options. One command with mutually exclusive mode selectors keeps the
+shared contract visible and matches the already approved portfolio routing.
+The last design is selected. No new Layer A item follows from it: alignment
+tag decoding, BED12 policy, filenames, random routing, and mate projection are
+product policy. The point-interval index remains private until a second
+product consumer requires the same public contract.
+
+The samtools baseline is the installed 1.24 executable, the
+[public split manual](https://www.htslib.org/doc/samtools-split.html), and
+`bam_split.c` at revision `dc71c7274044d1050ccb64901731373ec7e915b6`.
+The executable SHA-256 is
+`c265b440b09c4b21d1f25a65963cf907b0d9f9d18caa9382c31104158f89d027`;
+the downloaded manual and source hashes are
+`01861b37832deabf1ff92c9ea9bbb2adef08913c01031e9d34e8a2552a803a66`
+and `d2d6495f0420fac64933ec6cda5d615c675a69a291fc7c4c7d95b829a7840897`.
+The source is MIT licensed. RSeQC 5.0.4 supplies the other three observable
+oracles. The installed `divide_bam.py`, `split_bam.py`, and
+`split_paired_bam.py` hashes are
+`30ab2a0eed1f9b5ccc68c51d1aa20e9cca96644a9a44db220d33b26e0c3515a0`,
+`9d74fee52c2bab6462f60e4b23dec95dd5792192ff2da99f49682e1a8176666d`,
+and `de6987b9165c6207ace97cf8b6f56af292be93e27321e7d2bdff144de36d6635`.
+RSeQC behavior is treated as a black-box compatibility target; its source is
+not an implementation input.
+
+Read-group mode creates an output for every `@RG` ID in header order, including
+header-only outputs for groups with no records. Each partition header retains
+only its matching `@RG` line. A missing RG, a non-string RG, or a record RG not
+declared in the header fails unless `--unaccounted FILE` is present. Explicit
+`--tag RG` additionally creates a partition for an undeclared RG and gives it
+a single synthesized `@RG` line, matching samtools. Other explicit tags accept
+`Z`, `H`, and signed or unsigned BAM integer types; their output headers retain
+the complete read-group table. Missing values, invalid types, and values beyond
+`--max-outputs` route to the unaccounted output or fail. The default dynamic
+limit is 100; declared header groups remain representable and count against
+the limit before dynamic groups. An optional unaccounted replacement header
+must preserve reference names, order, and lengths.
+
+Every mode requires `--output-prefix PREFIX`. Read-group and auxiliary outputs
+are `<prefix>.<encoded-value>.<format>`; part outputs use a zero-based numeric
+component; gene outputs use `in`, `ex`, and `junk`; mate outputs use `R1`,
+`R2`, and `unmap`. Components preserve ASCII letters, digits, dot, dash, and
+underscore and percent-encode every other byte, including percent and path
+separators. This mapping is reversible and collision-free. `--zero-pad` applies
+to part numbers and integer auxiliary values. The arbitrary samtools `-f`
+filename language is excluded: live 1.24 accepts two groups that expand to one
+path, returns success, and leaves a corrupt BGZF file; a format resolving to
+the input likewise returns success after corrupting the input. Fixed encoded
+components, canonical target identities, and pre-commit collision checks remove
+that failure class.
+
+SAM, BAM, reference-backed CRAM, and standard input are accepted. Outputs may
+be SAM, BAM, or CRAM; BAM is the default, and CRAM output requires a reference.
+Unless `--no-PG` is set, equivalent partition headers receive one rsomics
+program record. All paths are checked against the input, the unaccounted file,
+and each other. Every writer targets a temporary file beside its destination;
+headers, records, encoders, close operations, and optional validation must all
+succeed before the complete output set replaces any existing target. A decode,
+tag, BED, path, or write failure leaves every previous target intact and no
+new final output. Index generation and arbitrary HTSlib format key/value
+options are not in this release.
+
+`--parts N` uses a documented deterministic 64-bit generator with `--seed 0`
+by default. Each retained input record is written exactly once, with input
+order preserved inside each part. `--skip-unmapped` drops only records carrying
+SAM flag `0x4`. The result need only preserve the RSeQC contract of a random
+roughly equal partition, not reproduce Python's unseeded per-record choices.
+Zero parts, a part count beyond the configured output limit, count overflow,
+and invalid records fail before commit.
+
+`--genes BED12` parses every data row strictly. It accepts comment, track, and
+browser lines but requires twelve fields, nonnegative half-open transcript
+coordinates, a positive block count, matching block-size and block-start
+counts, positive block sizes, and blocks contained by the transcript span.
+Reference names are case-sensitive and must exist in the alignment header.
+Exons are merged into private per-reference point indexes. Unmapped or
+QC-failed records go to `junk`; every other record goes to `in` exactly when
+its zero-based leftmost alignment start lies inside an exon, otherwise to
+`ex`. CIGAR overlap is deliberately not used: current black-box output confirms
+that a record starting outside an exon remains `ex` even if its span reaches
+the exon. This preserves RSeQC's useful rule while replacing its silent skips
+for malformed BED rows.
+
+`--mates` sends unmapped records unchanged to `unmap`, mapped READ1 records to
+`R1`, and every other mapped record to `R2`, including mapped records without
+READ2. The two mapped outputs project records to single-end form by retaining
+only REVERSE, SECONDARY, QCFAIL, and DUP, clearing every other flag including
+SUPPLEMENTARY, and setting mate reference, mate position, and template length
+to their missing or zero values. The upstream 5.0.4 rerun is byte-identical to
+the retained ordinary and one-bit flag goldens, including this catch-all and
+flag mask.
+
+The current RSeQC rerun also reproduces all retained gene and mate goldens.
+Gene counts are five `in`, two `ex`, and two `junk`; paired and flag-corpus
+record-body SHA-256 values match their committed oracle files. A three-way
+divide rerun produces a disjoint nine-record cover with counts three, six, and
+zero, demonstrating why no exact partition membership is inherited. Current
+samtools probes confirm eight and one records for two declared RGs, a third
+empty header group producing a zero-record file, and missing or unknown RGs
+failing without `-u`. Integer `NM` values 0, 6, 4, and 3 produce four dynamic
+groups in first-seen order. With `-M 2`, the other three records fail or route
+to `-u`. These observations become committed ordinary tests plus an ignored
+live 1.24 differential; they are not left as an audit narrative alone.
+
+The historical asset disposition is deliberately asymmetric. Revision
+`0393f01120602b785c30538954389d5742e9d7e7` contributes its two-RG input and
+captured record bodies, but its lazy BAM-only writers, sanitized collisions,
+unchanged headers, and implicit `noRG` behavior are discarded. Revision
+`71504b275797ec30df2399ef2fbe03d1c9b1e6b5` contributes the seeded exact-cover
+tests and generator seed. Revision
+`e401744815fc1630f5c44d3f7cdf298d39f5b909` contributes the RSeQC gene goldens
+and point-routing observation, while its whole-file BED read, uppercased
+references, permissive row parsing, and eager outputs are discarded. Revision
+`8962f619d341cd18ea06d1cdf315efbfb4e2fa85` contributes both mate golden sets
+and the transform mask; its standalone shell and eager BAM-only output are
+discarded. Useful code may be re-expressed inside narrow product modules, but
+none of the four repository structures or public APIs survives.
+
+The implementation boundary is one command adapter plus private `split`
+modules for mode selection, tag values, BED12 point indexes, output labels,
+and grouped writers. BAM-to-BAM routing retains validated raw records on the
+hot path; SAM and CRAM use decoded alignment records. The public library
+surface contains typed options and a typed per-output summary, not writer or
+filename-policy internals. Ordinary tests must cover every mode, empty groups,
+integer and unsafe-byte labels, missing and invalid tags, limits, strict BED12,
+SAM/BAM/CRAM equivalence, mate mutation, deterministic parts, JSON, aliases,
+pre-existing targets, malformed and truncated inputs, write failures, and
+grouped rollback. The release oracle must compare decoded records and relevant
+headers to samtools 1.24 and RSeQC 5.0.4. Representative BAM measurements must
+rerun default, parts, genes, and mates rather than inheriting the June reports;
+each mode needs complete output fingerprints, timing distribution, peak RSS,
+machine and fixture provenance, and a strict hot-path advantage before 0.27 is
+published.
+
 ### Slice 4: interactive viewing
 
 `tview` is a complete terminal interface, not a formatting helper. It stays
