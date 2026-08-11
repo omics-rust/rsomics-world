@@ -1819,6 +1819,63 @@ exposed the complete `reset` help surface. Its SAM smoke output matched
 samtools 1.24 byte for byte with SHA-256
 `0c541dcefad0e5f60dea3d6dd98ab7dc5a3ab793cdfc94045ef20300adac7281`.
 
+### Release 0.23 candidate: content checksum
+
+`checksum` remains one operation with two modes: compute a content report from
+sequence data, or merge prior checksum reports. Its compatibility contracts
+are the
+[`samtools checksum` 1.24 manual](https://www.htslib.org/doc/1.24/samtools-checksum.html),
+`bam_checksum.c` at revision
+`dc71c7274044d1050ccb64901731373ec7e915b6`, the upstream checksum regression
+suite, and biobambam2 `bamseqchksum` output where `-B` requests that contract.
+Samtools, HTSlib, and the upstream fixtures are MIT licensed. The 13-file
+upstream checksum corpus has aggregate SHA-256
+`98ba1de219a87a936b03b517e2e0719f41714a954f2664fb42b62e68bb7c527a`.
+
+The target compute surface accepts multiple SAM, BAM, CRAM, and FASTQ inputs or
+standard input. It includes required and excluded flag filters, the checksum
+flag mask, reverse-complement normalization, ordered or wildcard auxiliary-tag
+selection, one or two order-sensitive levels, position, CIGAR, and mate
+columns, sanitization, a record limit, QC pass/fail rows, zero-count rows, the
+`--all` round-trip contract, tabular output, bamseqchksum compatibility,
+additional input workers, and named transactional output. Merge mode parses
+both native and bamseqchksum reports, rejects incompatible versions, tags, or
+columns, and cannot merge the absolute double-order form. Product-level JSON
+requires a named compatibility report and returns typed groups and checksum
+columns through the shared envelope. HTSlib input-format option strings are
+excluded unless the product reader can implement their complete behavior.
+
+Historical `rsomics-bam-checksum` revision `95fc3dc` is classified as refactor
+then merge for its validated raw-BAM default checksum kernel. Its 571-line
+core implements the multiplicative Mersenne-prime fold, forward and reverse
+sequence expansion, canonical integer tags, read-group grouping, and the four
+default checksum families. It is not a release implementation: it only
+accepts BAM; exposes a conflicting custom `-t` thread convention; has no merge,
+ordering, QC, wildcard-tag, position, CIGAR, mate, sanitization, count,
+tabular, bamseqchksum, SAM, CRAM, FASTQ, transaction, or product JSON contract;
+and its compatibility tests silently skip every non-1.23 samtools version.
+
+The product implementation will keep the checksum state and report policy
+private under `src/checksum/`. Validated borrowed BAM records remain the fast
+path; existing product readers supply SAM and CRAM records, and the existing
+`rsomics-seqio` dependency supplies FASTQ. The alignment flag parser, path
+ownership, transactional output, `rsomics-help`, and JSON envelope are reused.
+The additive packed-record checksum used by `stats` is a different upstream
+contract and is not generalized into this module. No Layer A API is planned:
+no second product consumes the checksum policy or report parser.
+
+The release oracle imports the complete upstream default, all-fields, QC,
+merge, and bamseqchksum cases and adds SAM, BAM, CRAM, FASTQ, standard input,
+double-order, tag canonicalization and wildcard ordering, malformed auxiliary
+data, incompatible reports, output rollback, and JSON separation. A
+representative performance gate uses at least four million mixed records and
+records exact versions, binaries, fixture and report digests, worker counts,
+alternating wall and CPU trials, and peak RSS. The historical one-worker pilot
+matched samtools 1.24 output but used 43% more wall time; with four workers it
+used 19% more wall time. It used substantially less peak RSS in both pilots,
+so a strict resource advantage is plausible but not yet a release result. No
+performance exemption applies.
+
 ### Slice 4: interactive viewing
 
 `tview` is a complete terminal interface, not a formatting helper. It stays
