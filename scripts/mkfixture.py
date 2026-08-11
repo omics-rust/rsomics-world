@@ -6,6 +6,7 @@
     mkfixture.py fastqgz OUT n_reads read_len     # same bytes, gzip (mtime=0)
     mkfixture.py bed     OUT n_intervals n_chroms  # sorted, overlapping
     mkfixture.py csv     OUT n_records cardinality # repeated categorical keys
+    mkfixture.py bam-to-bed OUT n_pairs 100        # paired mixed-CIGAR BAM
 
 Fixed seed → byte-identical across runs, so a fixture's sha256 is a
 stable identity recorded by perfgate.
@@ -128,6 +129,72 @@ elif KIND == "bam":
         sys.exit("samtools sort failed")
     subprocess.run(["samtools", "index", OUT], check=True,
                    stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+
+elif KIND == "bam-to-bed":
+    import subprocess
+    if B != 100:
+        sys.exit("bam-to-bed read length must be 100")
+    view = subprocess.Popen(
+        ["samtools", "view", "--no-PG", "-b", "-o", OUT, "-"],
+        stdin=subprocess.PIPE,
+        stdout=subprocess.DEVNULL,
+    )
+    w = view.stdin
+    w.write(b"@HD\tVN:1.6\tSO:queryname\n")
+    for chrom in range(1, 5):
+        w.write(f"@SQ\tSN:chr{chrom}\tLN:10000000\n".encode())
+    cigars = [
+        "100M",
+        "5S40M2I20=3X2D30M",
+        "30M50N70M",
+        "20M5D30M20N50M",
+        "10H100M",
+        "10S30M5N60M",
+        "25=5X3I67M",
+        "45M10D55M",
+    ]
+    seq1 = "ACGT" * 25
+    seq2 = "TGCA" * 25
+    qual = "I" * 100
+    buf = []
+    for i in range(A):
+        name = f"pair{i:010d}"
+        chrom = f"chr{1 + i % 4}"
+        pos = (i * 211) % 9_000_000 + 1
+        mate_pos = pos + 200
+        nm1 = i % 9
+        nm2 = (i * 3) % 11
+        xi1 = i % 101
+        xi2 = (i * 7) % 101
+        cigar1 = cigars[i % len(cigars)]
+        cigar2 = cigars[(i + 3) % len(cigars)]
+        if i % 16 == 0:
+            first = f"{name}\t77\t*\t0\t0\t*\t*\t0\t0\t{seq1}\t{qual}\n"
+            second = f"{name}\t141\t*\t0\t0\t*\t*\t0\t0\t{seq2}\t{qual}\n"
+        elif i % 16 == 1:
+            first = (
+                f"{name}\t73\t{chrom}\t{pos}\t55\t{cigar1}\t*\t0\t0\t"
+                f"{seq1}\t{qual}\tNM:i:{nm1}\tXI:i:{xi1}\n"
+            )
+            second = f"{name}\t133\t*\t0\t0\t*\t{chrom}\t{pos}\t0\t{seq2}\t{qual}\n"
+        else:
+            first = (
+                f"{name}\t99\t{chrom}\t{pos}\t55\t{cigar1}\t=\t{mate_pos}\t300\t"
+                f"{seq1}\t{qual}\tNM:i:{nm1}\tXI:i:{xi1}\n"
+            )
+            second = (
+                f"{name}\t147\t{chrom}\t{mate_pos}\t42\t{cigar2}\t=\t{pos}\t-300\t"
+                f"{seq2}\t{qual}\tNM:i:{nm2}\tXI:i:{xi2}\n"
+            )
+        buf.extend((first, second))
+        if len(buf) >= 50_000:
+            w.write("".join(buf).encode())
+            buf.clear()
+    if buf:
+        w.write("".join(buf).encode())
+    w.close()
+    if view.wait() != 0:
+        sys.exit("samtools view failed")
 
 elif KIND == "vcf":
     # A = n_variants, B = n_samples. Generates a minimal VCF with random SNPs.

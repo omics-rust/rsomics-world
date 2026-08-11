@@ -57,9 +57,10 @@ publication workflow `31452351520` completed successfully.
 The thirty-first command, `checksum`, is published as `rsomics-bam 0.23.0`
 from revision `3b721cf22666` after exact-head CI `31457635764` and publication
 workflow `31458113573` completed successfully.
-The thirty-second command candidate, `to-bed`, has a complete upstream,
-historical-asset, interface, oracle, and performance contract below; it is not
-yet part of the public command tree.
+The thirty-second command candidate, `to-bed`, is implemented at revision
+`772a2d6fcc7b` and has passed its upstream, historical-asset, interface,
+oracle, performance, package, and four-native-target CI gates. It is not yet
+published on crates.io.
 
 ## Boundary
 
@@ -2016,6 +2017,57 @@ alternating wall and CPU trials, peak RSS, and output digests. Publication
 requires a strict throughput or resource-use advantage over bedtools 2.31.1;
 the historical benchmark and unmeasured claim are not release evidence.
 
+Revision `86927ab371e8` implements the complete candidate. Revision
+`772a2d6fcc7b` changes only a pre-existing `reset` parameter-validation test:
+the test had written to stdin after the child could reject its arguments and
+exit, which exposed a `BrokenPipe` race in optimized Linux aarch64 runs. The
+revised test has no irrelevant stdin pipe and passed 30 consecutive local
+release runs. Formatting, strict Clippy, debug and release tests, the upstream
+captured corpus, and the live bedtools 2.31.1 oracle pass locally.
+Exact-head CI run `31463962517` passes native Linux and macOS on both x86_64
+and aarch64, including the complete bedtools 2.31.1 oracle and package gate on
+Linux x86_64.
+
+The representative fixture was generated with samtools 1.24 by
+`scripts/mkfixture.py bam-to-bed` and contains 4,000,000 query-name-grouped
+records across four references: 3,625,000 mapped and 375,000 unmapped records.
+Its 66,914,163 bytes have SHA-256
+`0490ef874e4a6f8918db3e349c858821a8f0276315af712c9cdb3955a8b48d1f`.
+Default BED6 emits 3,625,000 rows, split BED6 emits 5,000,000, BED12 emits
+3,625,000, and BEDPE emits 2,000,000. The feature-revision release binary has
+SHA-256 `e298fc63936a3b2b8f0752dfeb2aefb1a0077dccfdf80c693c34b4ae9289a732`.
+The following complete output hashes are identical between that binary and
+bedtools 2.31.1:
+
+| Mode | Output SHA-256 |
+|---|---|
+| Default BED6 | `d975583965a79b5767a48f59e953edf19df886dcab5356985cf8ef0bf658baf4` |
+| Split BED6 | `00fb7a41172e191dd1af890326684092cb66da99b123f770634e00b55e6f405c` |
+| Deletion-split BED6 | `b74e43667982405374ed74367d5c314c8373df58d239a56eb97105d4a730a91b` |
+| BED12 | `af9804f7f73c8428237c1d384ee900631edbeb0aab0d4aaafa8535879a2aa6d5` |
+| BEDPE | `309e9a181f1bba1231a2f7bb186992fb4cade4a2227cf53ebfffc7eec7aef5f4` |
+| Edit-distance score | `8908a0b3b2ad366fd5fa94ee6ca1be57a15d69e7d463957ef1da3ac48cf35e88` |
+| Non-negative `XI` score | `1d97b98c715ab8216cec02649d286a7238693243c510d0b6663919c5cf77372d` |
+| CIGAR column | `30d262175745aa46b2a006a765a1d66af8d1cfd033525dbfc58862650858f942` |
+
+The performance host was an eight-core Apple M2 running macOS 26.6.1.
+`scripts/benchmark_bam_to_bed.sh` used one warm-up for each implementation and
+mode, then ten trials with alternating start order, `/usr/bin/time -lp`, output
+discarded, and no additional rsomics decoding workers. The exact 81-line TSV
+has SHA-256
+`eb5a25c02e159757a5a6f28f254c9e00f49e6ee3eef913ea7edcb86e27b44896`.
+
+| Mode | rsomics mean wall | bedtools mean wall | Speedup | rsomics peak RSS | bedtools peak RSS |
+|---|---:|---:|---:|---:|---:|
+| Default BED6 | 0.706 s | 4.525 s | 6.41x | 5,226,496 B | 2,637,824 B |
+| Split BED6 | 0.933 s | 4.836 s | 5.18x | 5,242,880 B | 2,670,592 B |
+| BED12 | 1.287 s | 6.670 s | 5.18x | 5,292,032 B | 2,670,592 B |
+| BEDPE | 0.969 s | 3.534 s | 3.65x | 5,308,416 B | 2,654,208 B |
+
+Every measured hot path therefore passes the strict throughput gate. The
+rsomics process uses about twice the peak RSS of bedtools on this compact
+compressed fixture, so no memory advantage is claimed.
+
 ### Slice 4: interactive viewing
 
 `tview` is a complete terminal interface, not a formatting helper. It stays
@@ -2216,7 +2268,7 @@ SAM/CRAM support.
 | `rsomics-bam-stats` `25c3689b1267431fc0428bdfc873d81cf23c8d7c` | Refactor then merge | `stats`; re-audit 1.24 output and customized-index behavior |
 | `rsomics-bam-subsample` `93052bf1e726f95022d6a6b8a549b9646c1e358a` | Merge algorithm after semantic update | First-slice `view --subsample` |
 | `rsomics-bam-targetcut` `9d7fa02f6557cca7b52dfaf8ca73f837ee55e400` | Refactor then merge | Later `targetcut`; preserve fosmid-specific scope |
-| `rsomics-bam-to-bed` `6d500bbcaa04ef307dc093170738bdbe4682d326` | Refactor then merge | Later `to-bed` |
+| `rsomics-bam-to-bed` `6d500bbcaa04ef307dc093170738bdbe4682d326` | Fixture and algorithm seed; replacement merged at `86927ab371e8` | Discard standalone CLI, partial surface, and subprocess benchmark |
 | `rsomics-bam-to-fastq` `9675f305021dceb00ed03e9b847fa7d7a1a89d6c` | Fixture and golden seed; replacement merged at `d6cbf1070706` | Discard duplicate complement code, allocations, and direct truncation |
 | `rsomics-bam-view` `dde533dbcbe4f30243a004815da4c179ca52f12d` | Test and filter seed | Replace the BAM-only command shell |
 | `rsomics-sam-to-bam` `f125e730d0edf498bc299a3ae37e7ec6fe1b8260` | Test asset | First-slice `view` format conversion |
