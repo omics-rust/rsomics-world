@@ -48,7 +48,10 @@ Publication workflow `31415017446` completed successfully. The paired
 publication workflow `31425446427` completed successfully. The twenty-eighth
 command, `cram-size`, is published as `rsomics-bam 0.20.0` from revision
 `5ecdcc33ccbe` after exact-head CI `31431000225` and publication workflow
-`31431664650` completed successfully.
+`31431664650` completed successfully. The twenty-ninth command, `stats`, is
+published as `rsomics-bam 0.21.0` from revision `bfa282600128` after exact-head
+CI `31444377940` and publication workflow `31444920118` completed
+successfully.
 
 ## Boundary
 
@@ -1701,6 +1704,48 @@ samtools 1.24.
 `plot-bamstats` remains the separate upstream visualization consumer and is
 not embedded or reimplemented in this release. CRAM 4, remote-reference cache
 management, and speculative shared statistics APIs are also excluded.
+
+Feature revision `a349543c78bd` implements the complete report engine and its
+CLI surface. Coverage is streamed into a sparse depth histogram; per-cycle
+quality, barcode-quality, insert-size, and split-report state allocate only
+for observed values. Coverage intervals are bounded at 1,000,000 and distinct
+split values at 4,096. Indexed multi-region queries deduplicate records by
+physical BAM offset, reference ranges are checked, and grouped output commit
+restores every prior target if any main or split report cannot be finalized.
+The implementation adds no public foundation item.
+
+The local gate passed formatting, strict Clippy, rustdoc with warnings denied,
+all-feature debug and release tests, package verification, and seven live
+samtools 1.24 cases covering SAM, supplementary alignments, barcode sections,
+targets, indexed region unions, reference statistics, and two-thread CRAM.
+The final source package contains 298 files. A package scan found and removed
+creation-host paths from the stats and older CRAM-version fixtures before
+release; the retained fixtures have deterministic file identifiers and no
+`@PG` creation command. The CRAM version fixtures remain byte-matched to
+samtools `cram-size` output for 2.1, 3.0, and 3.1.
+
+The performance gate used the 39,015,817-byte, 1,000,000-record BAM fixture
+with SHA-256
+`bfe301fb892a39547e5384629bc52afdf7fb7ffd34e9ec47d3c0df62b0af937f`.
+Both tools produced the same stable report with SHA-256
+`0e21fec7de1b6b645689520902b33a628f09ab834ab2530f4cf6fd1dd988e29e`.
+Across twenty alternating pairs, rsomics used 24.27% less mean peak RSS with
+one decompression thread and 33.85% less with four additional threads. Mean
+wall time was 9.38% and 10.87% slower, respectively, so the release records a
+strict memory advantage and makes no throughput claim.
+
+Release revision `bfa282600128153f3ec0883fc1dab682ba0ab1a5` passed native
+Linux and macOS CI on x86_64 and aarch64 in exact-head run `31444377940`.
+Publish run `31444920118` released 0.21.0 through `cargo publish --locked`.
+The live release is not yanked, declares Rust 1.91, and its 1,045,581-byte
+registry archive has SHA-256
+`668a9f22c6e7406872a2fb42dd021a0d9f21cd8253727191e6c92d5b8e8c47df`.
+Its VCS record points to the exact release revision, and its 298 extracted
+files are byte-identical to the locally verified package. A fresh locked
+registry install reported version 0.21.0 and exposed `stats` through the
+shared help tree. SAM and CRAM smokes produced the same committed stable
+report, and the installed binary reproduced the million-record report digest
+above.
 
 ### Slice 4: interactive viewing
 
