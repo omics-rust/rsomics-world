@@ -66,6 +66,9 @@ The thirty-third command, `consensus`, is published as `rsomics-bam 0.25.0`
 from revision `1663c0633cab` after exact-head CI `31487127885` passed the four
 native targets, including the complete samtools 1.24 oracle on Linux x86_64.
 Publication workflow `31487943508` completed successfully.
+The thirty-fourth command, `phase`, has a source-, manual-, live-oracle-, and
+historical-asset-audited 0.26 contract below; it is not implemented or
+published yet.
 
 ## Boundary
 
@@ -2230,6 +2233,143 @@ switches, and rejected an attempted `--SC-cost`. Default Bayesian, simple
 pileup, `bayesian_116` FASTQ, and HiFi-profile pileup smoke outputs were
 byte-identical to samtools 1.24.
 
+### Release 0.26 candidate: read-backed SNP phasing
+
+`phase` calls heterozygous SNPs from coordinate-sorted alignments, builds
+locally consistent haplotypes from reads spanning those sites, reports phase
+sets and their read evidence, and can partition the accepted alignments into
+two haplotype files plus a chimera file. It remains an operation of
+`rsomics-bam`: its records, filters, output headers, and user workflow are
+alignment-specific, and neither SNP calling nor haplotype partitioning is a
+separate installable product.
+
+The compatibility baseline is the installed samtools 1.24 executable, the
+[public manual](https://www.htslib.org/doc/1.24/samtools-phase.html), and
+`phase.c` at revision `dc71c7274044d1050ccb64901731373ec7e915b6`.
+The audited executable is
+`/opt/homebrew/Cellar/samtools/1.24/bin/samtools`, SHA-256
+`c265b440b09c4b21d1f25a65963cf907b0d9f9d18caa9382c31104158f89d027`.
+The archived source, manual, and upstream license have SHA-256 values
+`71dcef380a1d15e9c9da0bd0418a06c344058489ba652f7b27ccfc7e784251b5`,
+`000fcbef88951e6837a88ef3c2a1118da07d8fe99c2af31bc783cd9ad9406896`,
+and `3567b264a6bd25b207b7a66b5c6a3d913a7766488cb3596c595e0caef937016d`.
+The source and manual are MIT licensed.
+
+The stable calling surface is `-k`, `-q`, `-Q`/`--min-BQ`, `-D`, `-F`, and
+`-A`. The defaults are a 13-site local window, Phred LOD 37, base quality 13,
+depth 256, and chimera repair enabled. The 1.24 manual still states a LOD
+default of 40, but `phase.c`, live help, and observable output use 37. A
+12-read, 10:2 high-quality A/C fixture is called by the implicit default and
+explicit `-q 37`, while `-q 40` emits no phase set. The product follows the
+observable default and documents 37.
+
+Variant discovery uses the HTSlib MAQ error model over the full diploid 4-by-4
+genotype likelihood matrix. Each usable observation is encoded from its base,
+strand, and the lesser of base and mapping quality, clamped to 4 through 63.
+It is not equivalent to allele counts, a minor-allele fraction, or summed base
+quality. A position whose raw pileup depth exceeds `-D` is skipped in full;
+the depth option must not instead discard only the records beyond the limit.
+Deleted and reference-skipping observations and non-ACGT bases do not enter
+the likelihood. Unmapped, secondary, QC-fail, and duplicate records are
+excluded before pileup; supplementary records remain eligible. Mapping-quality
+zero observations can enter site likelihoods at the quality floor but do not
+enter a read fragment's phase evidence.
+
+The phasing kernel retains the exact local-pattern count, complement-state
+dynamic program, tie decisions, fragment phase and ambiguity rules, local
+chimera head-or-tail repair, maximum-subarray mask, singleton handling, phase
+block boundary, and marker-index semantics of the audited source. Stable text
+output includes the complete `CC` legend and exact `PS`, `FL`, `M0`/`M1`/`M2`,
+`EV`, and `//` records. Allele order, one-based coordinates, phase-set start,
+global heterozygote index, four support/error counts, evidence order, tags,
+and empty-input legend are compatibility data, not presentation details.
+
+The accepted input is sequential SAM, BAM, CRAM, or standard input despite the
+manual synopsis saying `in.bam`. A reference FASTA may be supplied for CRAM.
+Named report output is a transactional rsomics extension needed for consistent
+JSON separation; standard output remains the default. Additional I/O workers
+use the product-wide `-@` convention. Multiple positional inputs are rejected
+instead of reproducing samtools 1.24's silent disregard of every input after
+the first. Numeric options are parsed and range-checked before reading input or
+creating output; the product does not reproduce `atoi` fallback, unchecked
+bit shifts, oversized allocations, or partial files for invalid values.
+
+`-b`/`--output-prefix` creates `<prefix>.0.<format>`,
+`<prefix>.1.<format>`, and `<prefix>.chimera.<format>` in SAM, BAM, or CRAM.
+The live executable uses `chimera`, although the 1.24 manual says
+`chimeric.bam`; observable output wins. The three files preserve accepted
+input order within their partition and receive equivalent headers. Unless
+`--no-PG` is set, each header receives one rsomics program record. A phased,
+unflipped record carries `ZP:A:Y`; unknown-phase records are allocated between
+the two haplotypes by the audited deterministic 48-bit random sequence, and
+switch-error records go to the chimera output. `-A` sends ambiguous-phase reads
+to the chimera output instead of randomly allocating them. All three files,
+their headers, and any pre-existing targets commit as one transaction only
+after input decoding, phasing, encoding, flushing, and close succeed.
+
+Live checks on the historical 12-read fixture produced identical text for
+SAM, BAM, CRAM, and each standard-input form, SHA-256
+`39f7c4c77a360fc9f331610f6cefe6f6e49309afbcb8066f4b309c4b6adfe793`.
+The default split contained five, seven, and zero records in haplotype 0,
+haplotype 1, and chimera respectively. Two independent `--no-PG` runs were
+byte-identical in all three BAM files. SAM and CRAM split formats retained the
+same partition counts. Unsorted inputs failed through the pileup boundary;
+empty input failed at the header boundary.
+
+The source also accepts undocumented `-l` and `-e` switches, but both are
+commented out of live help and absent from the 1.24 manual. They are excluded
+from the stable product surface. Generic HTSlib format-option key/value
+plumbing is likewise excluded; the operation exposes the actual SAM, BAM, and
+CRAM formats, reference, worker budget, and supported compression choices
+through the common rsomics CLI vocabulary.
+
+Historical `rsomics-bam-phase` revision
+`9f475c325e8e8c30873a12df5979c44023e78c1d` is classified as a fixture and
+benchmark seed plus an algorithm cross-check, not a code merge. Against its
+own golden BAM, samtools 1.24 emitted 33 lines while the historical binary
+emitted nine. Samtools reported the alleles as `T/A`, used global marker
+indices 1 and 2, emitted 12 evidence records, and counted support per phased
+haplotype. The historical result reversed the alleles, used indices 0 and 1,
+omitted every evidence record, and produced different support counts. Its
+text SHA-256 was
+`6d097d8dae3d7a78065858cee71f5c3e264873ddec7b2b939dfa8714855b0bad`.
+
+The incompatibility is structural. The historical caller replaces the MAQ
+likelihood with a two-allele count and quality-sum heuristic. Its pattern table
+omits complement states, its DP resolves ties differently, and its ambiguity,
+chimera, mask, singleton, and record-routing rules differ from `phase.c`. It
+filters supplementary records, omits `EV`, writes nonstandard integer tags,
+forces one input worker, eagerly truncates BAM targets, and supports neither
+SAM/CRAM input nor SAM/CRAM split output. Its compatibility test skips a
+missing oracle, accepts any samtools version at least 1.23, compares only phase
+and marker counts, and explicitly declines byte-exact output. The standalone
+CLI, implementation, tests-as-release-evidence, and narrative source comments
+are discarded. The small fixture remains useful after replacing its expected
+outputs with exact 1.24 oracles. Its previously described large performance
+fixture is absent from both retained external volumes, so the old performance
+claim is not reproducible and is not inherited.
+
+Implementation stays in private `rsomics-bam` modules. It consumes validated
+`rsomics-pileup` columns with retained record identity, using no depth filter
+inside the foundation because phase owns the skip-entire-column rule. HTSlib's
+already-linked error model supplies the exact genotype likelihood primitive;
+phase-set policy, evidence, deterministic routing, and the three-output
+transaction remain product-local. This is a new concrete use of existing
+Layer A contracts, not a reason to add a foundation or widen a public API.
+
+The candidate gate requires exact ordinary and live-oracle coverage for the
+default-37 discriminator, singletons, multiple blocks and references, gaps,
+DP ties, masks, ambiguous fragments, head and tail chimera repair, `-F`, `-A`,
+depth boundaries, base and mapping quality boundaries, all retained/excluded
+FLAG classes, SAM/BAM/CRAM and stdin equivalence, complete text records,
+deterministic partition membership, `ZP`, PG suppression, all three split
+formats, target collisions, rollback, malformed/truncated/unsorted input,
+broken output, and JSON separation. A newly generated representative fixture
+must replace the missing historical benchmark. Timing begins only after exact
+text and normalized split outputs match 1.24; a release then needs a strict
+throughput or peak-memory advantage, package verification, exact-head CI on
+the four native target classes, and the complete Linux x86_64 oracle.
+
 ### Slice 4: interactive viewing
 
 `tview` is a complete terminal interface, not a formatting helper. It stays
@@ -2417,7 +2557,7 @@ SAM/CRAM support.
 | `rsomics-bam-markdup` `e865796930fb72d8a185e3a0b18024d217ca6128` | Algorithm, fixture, and performance seed; replacement specified above | Discard the standalone shell and retain scoring, signatures, and duplicate fixtures |
 | `rsomics-bam-merge` `7334fce53ec3666f63893b450710daa4efd43641` | Test asset; replacement merged at `83b73a0c7274` | Discard first-header policy and swallowed decode failures |
 | `rsomics-bam-mpileup` `5e51a7825384fd65aca38345a12ad7c89ad31143` | Refactor then merge after pileup API | Add BAQ and reference-aware default behavior |
-| `rsomics-bam-phase` `9f475c325e8e8c30873a12df5979c44023e78c1d` | Test and algorithm asset | Replace tolerance-only compatibility decisions |
+| `rsomics-bam-phase` `9f475c325e8e8c30873a12df5979c44023e78c1d` | Fixture, benchmark, and algorithm cross-check seed | Discard the incompatible standalone implementation; replacement specified above |
 | `rsomics-bam-quickcheck` `5982123dbed16ab0f625495d550630c43d55f3ba` | Refactor then merge | First-slice `quickcheck`; cover all three formats |
 | `rsomics-bam-region` `902f6f333a9d0ea623006f76d4e360e4fe5f5f0f` | Merge useful predicates | First-slice `view --region` |
 | `rsomics-bam-reheader` `bdf6f6ec0ed0b16307e781b0ef335dc71699cae2` | Refactor then merge | `reheader`; transactional BAM and CRAM paths |
