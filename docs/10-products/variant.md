@@ -2,7 +2,7 @@
 
 Status: boundary, upstream-operation, and historical-source audit complete.
 `rsomics-vcf` 0.1.0 is published with the complete first-release `head`,
-`query`, `validate`, `index`, and `view` slice. `rsomics-call` 0.1.0 is
+`query`, `validate`, `index`, and `view` slice. `rsomics-call` 0.1.1 is
 published with its complete three-command first release. `rsomics-cnv` does
 not yet exist and is not published.
 
@@ -1123,6 +1123,12 @@ repository scope resolved it without reading the token. The crates.io archive
 is not yanked and has checksum
 `83e2750f2b73b477da315d76f619db11c74e369528851a5108a69f4dd52bbde5`,
 identical to the local exact-head package.
+
+`rsomics-call` 0.1.1 publishes the record-state migration at release head
+`7d20d6b119dc`. Exact-head four-native-target CI `31474757244` and publish run
+`31475365157` pass. The crates.io version is not yanked, records the same Git
+head, and its 135,087-byte archive has SHA-256
+`e22ccb74c60e4e5b9cd5de6b97285700e6686596556c7612e7bf1e59fb69cb7b`.
 
 ## `rsomics-cnv`
 
