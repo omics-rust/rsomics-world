@@ -62,6 +62,10 @@ from revision `97df7d64ae4c` after exact-head CI `31465936399` passed its
 upstream, historical-asset, interface, oracle, performance, package, and four
 native-target gates. Publication workflow `31466603102` completed
 successfully.
+The thirty-third command, `consensus`, is published as `rsomics-bam 0.25.0`
+from revision `1663c0633cab` after exact-head CI `31487127885` passed the four
+native targets, including the complete samtools 1.24 oracle on Linux x86_64.
+Publication workflow `31487943508` completed successfully.
 
 ## Boundary
 
@@ -1542,7 +1546,7 @@ outputs from the exact-head release build.
 
 ### Slice 3: remaining projection, pileup, and statistics
 
-- `consensus`, `phase`, `reference`, and `targetcut`.
+- `phase`, `reference`, and `targetcut`.
 
 Pileup-dependent work proceeds with the `rsomics-pileup` contract described
 below. `checksum` passed its material-benefit gate in release 0.23 through a
@@ -2091,7 +2095,7 @@ all eight complete fixture hashes above, and returned the schema 1.0 JSON
 summary with two mapped rows and one skipped record on the three-record smoke
 fixture.
 
-### Release 0.25 candidate: alignment consensus
+### Release 0.25: alignment consensus
 
 `consensus` derives one consensus sequence per requested reference or region
 from coordinate-sorted SAM, BAM, or CRAM alignments. Its compatibility
@@ -2150,40 +2154,81 @@ manual. Remote reference retrieval and accepting an unindexed region request
 by silently scanning the full input are likewise excluded.
 
 Historical `rsomics-bam-consensus` revision
-`f202e114caa95ef38cd80dc40df8ee6a3f8ceae7` is a refactor-then-merge asset,
-not a command implementation. Its small BAM/reference fixtures, simple-call
-lookup tables, and compatibility cases remain useful. Its standalone binary,
+`f202e114caa95ef38cd80dc40df8ee6a3f8ceae7` is a test and algorithm seed, not
+a source merge. Its small BAM/reference fixtures, simple-call lookup ideas,
+and compatibility cases informed the replacement. Its standalone binary,
 custom active-read walker, BAM-only input, ignored worker count, eager
 per-reference output buffer, non-transactional file creation, partial simple
 surface, bespoke help, JSON-on-stderr behavior, and
 implementation-narration comments are discarded.
 
-The product implementation belongs under `src/consensus/` with typed caller,
-output, calibration, region, and rendering modules plus one narrow command
-adapter. It consumes `rsomics-pileup` columns and their checked raw records;
-insertion-column expansion and consensus policy remain inside `rsomics-bam`.
-No new Layer A item is assumed. If both `rsomics-bam consensus` and the
-existing `rsomics-call` indel path need the same checked query-span operation,
-that operation may be added to `rsomics-pileup` only with tests at both call
-sites.
+Revision `3f7fee2ad056` implements the replacement as ten private typed modules
+under `src/consensus/`, 3,769 lines in total, plus one narrow command adapter.
+Only CLI contract documentation appears as source comments. The operation
+consumes checked `rsomics-pileup 0.9.0` columns; insertion-column expansion and
+consensus policy stay inside `rsomics-bam`. No new Layer A crate or public item
+was needed. Compatibility review at `e0f2992a0e13` corrected the observable
+simple-mode `--het-fract` default to 0.5, made `bayesian_116` retain the old
+quality adjustment with the current probability table, and removed
+undocumented experimental switches from the public CLI.
 
-The always-run matrix will import all 68 upstream expected outputs and their
-nine input and index fixtures, then add SAM/BAM/CRAM and standard-input
-equivalence, long CIGAR, missing quality, ambiguous bases, malformed `MD`, clipping,
-filters, reference disagreement, duplicate and overlapping BED rows, invalid
-option combinations, output rollback, path aliasing, broken pipes, and JSON
-separation. The live Linux oracle must exercise every documented mode,
-format, calibration profile, region form, and reference-fill policy against
-samtools 1.24.
+The committed corpus retains all 68 upstream expected outputs and nine input
+or index fixtures. The samtools 1.24 regression driver references 66 outputs;
+ordinary tests assert 60 of them, and the release oracle asserts the six
+indexed-region and BED outputs. The two unreferenced upstream files remain
+source assets rather than compatibility claims. Tests also cover SAM/BAM/CRAM
+and standard-input equivalence, repeated BED rows, reference fill, insertions
+and deletions, malformed input, option isolation, output rollback, aliases,
+broken pipes, and JSON separation. The release oracle exercises Bayesian,
+simple, and `bayesian_116` modes; FASTA, FASTQ, and pileup; all five profiles;
+all six calibrations; indexed region and BED selection; and reference fill
+against a real samtools 1.24 executable. Local debug and release suites,
+strict Clippy, rustdoc warnings, packaging, and the live oracle passed before
+the version commit. Exact-head CI `31487127885` then passed native Linux and
+macOS on both x86_64 and aarch64, with the complete oracle on Linux x86_64.
+A post-release coverage audit added the previously indirect FASTA, cutoff,
+and uncovered-indexed-region cases at `3f745cd54a23`; all already matched the
+committed upstream outputs without a production-code change. Exact-head CI
+`31489099688` passed the four native targets and the complete Linux x86_64
+oracle for that test-only revision.
 
-The representative performance fixture will cover at least five million
-reference positions with mixed-depth SNP, insertion, deletion, clipping,
-homopolymer, and uncovered-reference cases. Default Bayesian FASTA, simple
-FASTA, FASTQ, pileup, reference fill, and indexed multi-region execution must
-retain complete output identity. The benchmark records exact revisions,
-digests, workers, warm-up, alternating timing distributions, CPU, peak RSS,
-and output hashes. Publication requires a strict throughput or resource-use
-advantage on the relevant default and projection hot paths.
+The representative default-path benchmark used a 92,673,552-byte,
+coordinate-sorted BAM containing 4,000,000 reads across a 48,000,100-base
+reference. Its SHA-256 is
+`bc2257da48b4c06da643edafbec1a383e946b7d1a0c0dd09dc21edc48dc2ef2d`.
+An eight-core Apple M2 running macOS 26.6.1 executed one warm-up per tool and
+20 alternating pairs with zero additional workers. The rsomics and samtools
+outputs were byte-identical with SHA-256
+`d5fab7764bf37f328206f227cd909b416cf8c4193611be47de10e1383f84ca05`.
+
+| Tool | Mean wall | Median wall | Wall standard deviation | Mean user | Mean system | Mean peak RSS |
+|---|---:|---:|---:|---:|---:|---:|
+| rsomics | 16.297 s | 16.275 s | 0.251 s | 14.664 s | 0.306 s | 57,496,371 B |
+| samtools | 16.323 s | 16.315 s | 0.147 s | 15.226 s | 0.376 s | 108,254,003 B |
+
+The paired mean wall difference was 0.026 seconds with a two-sided t-test
+probability of 0.406; rsomics won 11 of 20 pairs. This is throughput parity,
+not a speed claim. The release gate is the strict 46.9% peak-RSS reduction;
+mean process CPU was also 4.1% lower. The environment, timing table, summary,
+and output-manifest SHA-256 values are respectively
+`55f037e2135bd1f2f44c98f5b5a5688736e365f7de821cd3ce84af00f1a59200`,
+`e5f4cefebb57cd71d47faf6d170813c0431ca790b30d53ec03a0dd1a80f32180`,
+`debaa3c43dc7cfa18a119e7d01ce9b7b668eaf25a2c92685e76f0fdb6bdcf25d`,
+and `bebfa21eb8d0ed05cff0ea6e2ce43ba5745e7a3bd0e243c457abb8a62c139226`.
+
+Publish workflow `31487943508` released the exact revision through
+`cargo publish --locked`. The live, unyanked registry archive is 1,345,891
+bytes with SHA-256
+`f87efd59d07e0b7a6d2ae75150a11c8657e21834a68bda6003d49bfdcb675ba3`;
+it is byte-identical to the locally reviewed package, contains 435 files, and
+records revision `1663c0633cabcde9938128329fc6b5004489bfa6`. A fresh locked
+registry install with Rust 1.91.0 on the external build volume reported
+version 0.25.0 and produced an installed binary with SHA-256
+`5a818720be85947f30933e72202915b27599c350b2a0b9b7cd9fca07b2c3fbf8`.
+Its public help included `consensus`, excluded all rejected experimental
+switches, and rejected an attempted `--SC-cost`. Default Bayesian, simple
+pileup, `bayesian_116` FASTQ, and HiFi-profile pileup smoke outputs were
+byte-identical to samtools 1.24.
 
 ### Slice 4: interactive viewing
 
@@ -2413,9 +2458,9 @@ The recurring implementation problems are structural:
 - `merge` copies the first header without reference, read-group, program, or
   tag translation and converts some decode failures into absent sort keys;
 - `index` only creates a default BAI beside one BAM input;
-- `consensus` implements only a simple mode, while the current upstream
-  contract includes Bayesian consensus, FASTQ output, regions, reference
-  fill, allele modes, and base modifications;
+- the retired standalone `consensus` implements only a simple mode and lacks
+  the Bayesian, FASTQ, region, reference-fill, and allele contracts now
+  supplied by the product replacement;
 - `mpileup` lacks BAQ and cannot provide the current reference-aware default;
 - `phase` accepts loose outcome ranges where exact decisions are observable;
 - public format records are not consistently validated before indexed
