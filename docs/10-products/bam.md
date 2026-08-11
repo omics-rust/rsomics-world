@@ -57,10 +57,11 @@ publication workflow `31452351520` completed successfully.
 The thirty-first command, `checksum`, is published as `rsomics-bam 0.23.0`
 from revision `3b721cf22666` after exact-head CI `31457635764` and publication
 workflow `31458113573` completed successfully.
-The thirty-second command candidate, `to-bed`, is implemented at revision
-`97df7d64ae4c` and has passed its upstream, historical-asset, interface,
-oracle, performance, package, and four-native-target CI gates. It is not yet
-published on crates.io.
+The thirty-second command, `to-bed`, is published as `rsomics-bam 0.24.0`
+from revision `97df7d64ae4c` after exact-head CI `31465936399` passed its
+upstream, historical-asset, interface, oracle, performance, package, and four
+native-target gates. Publication workflow `31466603102` completed
+successfully.
 
 ## Boundary
 
@@ -1541,8 +1542,7 @@ outputs from the exact-head release build.
 
 ### Slice 3: remaining projection, pileup, and statistics
 
-- `consensus`, `phase`, `reference`, and `targetcut`;
-- `to-bed`.
+- `consensus`, `phase`, `reference`, and `targetcut`.
 
 Pileup-dependent work proceeds with the `rsomics-pileup` contract described
 below. `checksum` passed its material-benefit gate in release 0.23 through a
@@ -1935,7 +1935,7 @@ the BAM smoke report matched samtools 1.24 byte for byte with SHA-256
 `0faf71f4e23fb6988ee2ef1996b9ba1c2a16ce709fd9ae784c639f8e59f75365`,
 and the JSON smoke returned the same typed report through schema 1.0.
 
-### Release 0.24 candidate: alignment-to-interval conversion
+### Release 0.24: alignment-to-interval conversion
 
 `to-bed` converts alignments to BED6, split BED6, BED12, or BEDPE inside the
 alignment product. Its compatibility contracts are the
@@ -2077,6 +2077,19 @@ has SHA-256
 Every measured hot path therefore passes the strict throughput gate. The
 rsomics process uses about twice the peak RSS of bedtools on this compact
 compressed fixture, so no memory advantage is claimed.
+
+Publish workflow `31466603102` released the exact revision through
+`cargo publish --locked`. The live, unyanked registry archive is 1,308,235
+bytes with SHA-256
+`0fc0965fbbd509a572b3904f55ad3a65b024ba3f54526508356c02b8a89c7d40`;
+its 341 files and Cargo VCS record match the locally reviewed package and
+revision `97df7d64ae4c`. A fresh locked registry install on the external build
+volume reported version 0.24.0 and produced an installed binary with SHA-256
+`1c56cafd102bbbb3fbbf71d7ab9f572432cbb172cac3fbf438845d791677abfe`.
+That binary exposed the complete command and global-help surfaces, reproduced
+all eight complete fixture hashes above, and returned the schema 1.0 JSON
+summary with two mapped rows and one skipped record on the three-record smoke
+fixture.
 
 ### Slice 4: interactive viewing
 
