@@ -283,6 +283,93 @@ malformed-BCF, and view compatibility suites.
 An unfinished command is absent from public help. No operation ships as a
 flag-compatible shell around a partial line parser.
 
+### Release 0.2: typed filtering
+
+The next release increment is `filter`. It is a record-selection and
+record-annotation operation, not another spelling of `view`: `view` selects
+records by identity, type, sample, and location, whereas `filter` evaluates a
+typed expression and may annotate failing records or rewrite only the failing
+samples. `setgt` remains a later operation for rule-driven genotype editing
+outside this failure contract.
+
+The behavior oracle is bcftools 1.24 `filter` and its shared expression
+language. The installed executable has SHA-256
+`33100a6b961c529e915394d53b4737a0f8dd7a164eac352afe4e74e1ced51f60`.
+The official 1.24 source archive has SHA-256
+`8caddc22610ee2851666047c859bb91da0c1e32d0c2ec553db6f153ad130e46f`;
+its MIT-licensed `vcffilter.c` and `filter.c` have SHA-256
+`8df4eab21b2e0c9b9261faff889b5bb23f47ef9c09e840f5798bb3ba4ff344a5`
+and `8768cd317e3b051d1ae6731de4cd1062967e8d0dfba8f174b13918afd63b6e83`.
+The VCF 4.1-4.5 and BCF2 specifications remain the format authority.
+
+The stable command accepts plain or BGZF VCF, raw or BGZF BCF, named input or
+standard input, and writes VCF, BGZF VCF, raw BCF, or BGZF BCF. It includes:
+
+- mutually exclusive include and exclude expressions;
+- numeric and string constants, file-backed sets, arithmetic, comparisons,
+  case-sensitive or explicitly case-insensitive regular expressions,
+  parentheses, and the distinct `&`, `&&`, `|`, and `||` sample/site rules;
+- fixed columns, typed INFO and FORMAT fields, FILTER-set comparisons,
+  genotype classes, variant type, missing values, arrays, sample and element
+  subscripts, genotype-selected allele subscripts, and calculated allele,
+  sample, missingness, and indel-length variables;
+- site and per-sample aggregate functions, string and numeric functions,
+  binomial and Fisher tests, phred scaling, and `N_PASS`/`F_PASS`;
+- hard filtering, named or generated soft filters, replace/add/reset modes,
+  and setting failing sample genotypes to missing or reference while updating
+  existing valid `AC` and `AN` fields;
+- SNP-gap and indel-cluster filtering with bounded look-ahead;
+- inline or file-backed masks, streaming targets, and indexed regions with
+  position, record, or variant overlap policy;
+- transactional named output, bounded compression workers, shared JSON
+  summary, and non-zero failure on malformed schema, record, expression,
+  region, index, or output data.
+
+Perl callbacks are excluded because they are an optional bcftools build-time
+extension rather than a portable format contract. Automatic output indexing
+is also excluded from this increment; the product already has an explicit
+transactional `index` operation, and coupled output-plus-index replacement
+needs a later grouped-transaction contract. Upstream verbosity levels are not
+copied into the public interface. Additional positional regions are rejected
+in favor of the explicit region options. None of these exclusions appears in
+help as accepted behavior.
+
+The expression implementation is private to `rsomics-vcf`. It evaluates the
+existing typed record model after one header-bound compile step and is shared
+internally by `filter`, later `setgt`, and later expression-enabled `view` and
+`annotate` modes. Those are commands of one product, not independent Layer A
+consumers. No public VCF expression or VCF I/O crate is added.
+
+The historical `rsomics-vcf-filter` revision
+`93d91c114d2ce0fc31a6b1c7176280f558c06f3c` contributes its small malformed,
+sites-only, compound-FILTER, and quality fixtures only. Its whole-file input,
+VCF-text-only output, three-predicate surface, direct destination creation,
+untyped expressions, and narrated source are discarded. Historical
+`rsomics-vcf-expr` revision
+`94722777e8e1851182cb4c5ccf0b3ae9127eca2f` is a grammar and regression seed,
+not mergeable implementation: it rejects regexes and array indexes, reads
+only the first INFO value, does not use header types, and implements only a
+small fraction of the current expression algebra.
+
+The target structure adds private `expression` modules for tokens, syntax,
+typed values, header binding, evaluation, and functions, plus private
+`filter` modules for application, genotype rewriting, masks, and gap state.
+The command adapter contains only CLI conversion and common-layer output.
+Existing format readers/writers, region indexes, variant classification,
+transaction ownership, and `rsomics-help` styling are reused.
+
+The ordinary release matrix covers every operator and value family, scalar
+and vector missingness, mixed ploidy, multiallelic records, flags, FILTER
+sets, undefined or wrongly typed tags, numeric edge values, sites-only input,
+all four encodings, standard input, every annotation mode, genotype and
+`AC`/`AN` updates, masks, regions, targets, gap boundaries, malformed and
+truncated inputs, broken pipes, target aliasing, and rollback. The live oracle
+compares normalized headers, records, selected samples, and exit decisions
+with bcftools 1.24. Representative text and BCF fixtures must record input and
+output hashes, repeated timing distributions, peak RSS, versions, flags, and
+machine provenance. At least the principal filter hot path must show a strict
+throughput or memory advantage before 0.2 is published.
+
 ### Target structure
 
 ```text
