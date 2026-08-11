@@ -58,7 +58,7 @@ The thirty-first command, `checksum`, is published as `rsomics-bam 0.23.0`
 from revision `3b721cf22666` after exact-head CI `31457635764` and publication
 workflow `31458113573` completed successfully.
 The thirty-second command candidate, `to-bed`, is implemented at revision
-`772a2d6fcc7b` and has passed its upstream, historical-asset, interface,
+`97df7d64ae4c` and has passed its upstream, historical-asset, interface,
 oracle, performance, package, and four-native-target CI gates. It is not yet
 published on crates.io.
 
@@ -2022,9 +2022,16 @@ Revision `86927ab371e8` implements the complete candidate. Revision
 the test had written to stdin after the child could reject its arguments and
 exit, which exposed a `BrokenPipe` race in optimized Linux aarch64 runs. The
 revised test has no irrelevant stdin pipe and passed 30 consecutive local
-release runs. Formatting, strict Clippy, debug and release tests, the upstream
-captured corpus, and the live bedtools 2.31.1 oracle pass locally.
-Exact-head CI run `31463962517` passes native Linux and macOS on both x86_64
+release runs. Revision `0a3035df4a32` replaces the public writer's mutually
+dependent booleans with typed record and pair layouts, makes invalid
+layout-score combinations unrepresentable, represents RGB as three bounded
+channels, and enforces the 256-worker ceiling at the library boundary.
+Revision `97df7d64ae4c` makes the closed-output test produce more than a pipe
+can buffer before requiring `EPIPE`; the former one-row test had a scheduling
+race. The deterministic test passed 30 consecutive debug and 30 release runs.
+Formatting, strict Clippy, debug and release tests, the upstream captured
+corpus, and the live bedtools 2.31.1 oracle pass locally.
+Exact-head CI run `31465936399` passes native Linux and macOS on both x86_64
 and aarch64, including the complete bedtools 2.31.1 oracle and package gate on
 Linux x86_64.
 
@@ -2034,8 +2041,11 @@ records across four references: 3,625,000 mapped and 375,000 unmapped records.
 Its 66,914,163 bytes have SHA-256
 `0490ef874e4a6f8918db3e349c858821a8f0276315af712c9cdb3955a8b48d1f`.
 Default BED6 emits 3,625,000 rows, split BED6 emits 5,000,000, BED12 emits
-3,625,000, and BEDPE emits 2,000,000. The feature-revision release binary has
-SHA-256 `e298fc63936a3b2b8f0752dfeb2aefb1a0077dccfdf80c693c34b4ae9289a732`.
+3,625,000, and BEDPE emits 2,000,000. The exact 0.24.0 release-head binary has
+SHA-256 `a99f32bb055c2b89ffd20b1769d8170ae89512b2f1a0f1ecf3f35c72c0636591`.
+The locally verified 341-file package archive has SHA-256
+`0fc0965fbbd509a572b3904f55ad3a65b024ba3f54526508356c02b8a89c7d40`
+and records the same VCS revision.
 The following complete output hashes are identical between that binary and
 bedtools 2.31.1:
 
@@ -2055,14 +2065,14 @@ The performance host was an eight-core Apple M2 running macOS 26.6.1.
 mode, then ten trials with alternating start order, `/usr/bin/time -lp`, output
 discarded, and no additional rsomics decoding workers. The exact 81-line TSV
 has SHA-256
-`eb5a25c02e159757a5a6f28f254c9e00f49e6ee3eef913ea7edcb86e27b44896`.
+`d9a42c27ba57c10cf5f8796debd1da8394798ae0fd80c79631b260d3a31c3821`.
 
 | Mode | rsomics mean wall | bedtools mean wall | Speedup | rsomics peak RSS | bedtools peak RSS |
 |---|---:|---:|---:|---:|---:|
-| Default BED6 | 0.706 s | 4.525 s | 6.41x | 5,226,496 B | 2,637,824 B |
-| Split BED6 | 0.933 s | 4.836 s | 5.18x | 5,242,880 B | 2,670,592 B |
-| BED12 | 1.287 s | 6.670 s | 5.18x | 5,292,032 B | 2,670,592 B |
-| BEDPE | 0.969 s | 3.534 s | 3.65x | 5,308,416 B | 2,654,208 B |
+| Default BED6 | 0.700 s | 4.525 s | 6.46x | 5,472,256 B | 2,621,440 B |
+| Split BED6 | 0.931 s | 4.862 s | 5.22x | 5,505,024 B | 2,670,592 B |
+| BED12 | 1.320 s | 6.645 s | 5.03x | 5,505,024 B | 2,686,976 B |
+| BEDPE | 0.956 s | 3.549 s | 3.71x | 5,603,328 B | 2,621,440 B |
 
 Every measured hot path therefore passes the strict throughput gate. The
 rsomics process uses about twice the peak RSS of bedtools on this compact
