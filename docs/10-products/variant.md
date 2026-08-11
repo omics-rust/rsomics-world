@@ -1079,6 +1079,24 @@ binary checksums, commands, machine provenance, limitations, and the fail-on-
 mismatch comparison script are tracked in the product's `PERFORMANCE.md` and
 `benchmarks/call-vs-bcftools.sh` at revision `74bd99fee96d`.
 
+Revision `8f29a887dc96` moves the CIGAR-derived per-record state retained across
+pileup columns onto `rsomics-pileup` 0.9's generic record-state contract. The
+product still owns its variant-calling policy and cached `CigarMetrics`; the
+foundation only retains the consumer-supplied state. It also aligns on
+`rsomics-bamio` 0.8 and `rsomics-common` 0.12. All 118 library tests, seven
+ordinary command tests, and 21 live bcftools 1.24 oracle groups pass. Exact-
+head four-native-target CI `31473004262` passes.
+
+The migration regression gate at documentation revision `018dad978474` reuses
+the same deterministic Linux `x86_64` 5 Mb, 30x fixture and compares the
+published 0.1.0 head with revision `8f29a887dc96`. Both revisions emit the
+same 5,024 normalized calls and use 22,400 KiB peak RSS. Across five measured
+runs, the candidate has a 34.08 s median versus 50.64 s for the baseline; the
+baseline measurements were noisy under shared-server load, so this is evidence
+of no regression rather than a replacement throughput claim. Raw hyperfine,
+RSS, environment, command, and checksum evidence remains on external storage.
+Exact-head four-native-target CI `31473510015` passes.
+
 Calling likelihoods, allele selection, ploidy policy, priors, annotations, and
 VCF output remain in the product. `rsomics-stats` receives a numerical kernel
 only if another product demonstrates the same contract.
