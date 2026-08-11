@@ -57,6 +57,9 @@ publication workflow `31452351520` completed successfully.
 The thirty-first command, `checksum`, is published as `rsomics-bam 0.23.0`
 from revision `3b721cf22666` after exact-head CI `31457635764` and publication
 workflow `31458113573` completed successfully.
+The thirty-second command candidate, `to-bed`, has a complete upstream,
+historical-asset, interface, oracle, and performance contract below; it is not
+yet part of the public command tree.
 
 ## Boundary
 
@@ -1930,6 +1933,88 @@ has SHA-256
 the BAM smoke report matched samtools 1.24 byte for byte with SHA-256
 `0faf71f4e23fb6988ee2ef1996b9ba1c2a16ce709fd9ae784c639f8e59f75365`,
 and the JSON smoke returned the same typed report through schema 1.0.
+
+### Release 0.24 candidate: alignment-to-interval conversion
+
+`to-bed` converts alignments to BED6, split BED6, BED12, or BEDPE inside the
+alignment product. Its compatibility contracts are the
+[`bedtools bamtobed` 2.31.1 documentation](https://bedtools.readthedocs.io/en/latest/content/tools/bamtobed.html),
+`bamToBed.cpp`, and the upstream `test/bamtobed` regression corpus at bedtools
+revision `705ccfdf2c9a77d71560c8adcece0663c2f5e18e`. Bedtools and the upstream
+fixtures are MIT licensed. The documentation, implementation, test driver,
+and six source fixtures have aggregate SHA-256
+`3fbd7764ad266d765312f60e7e3fe1ab5dd38df734ce445537a806ada338ba7a`.
+
+The stable default emits one BED6 row for every mapped alignment, using the
+full reference-consuming CIGAR span, query name with independent `/1` and `/2`
+mate suffixes, mapping quality, and alignment strand. `--split` emits one BED6
+row per block separated by `N`; `--split-d` also splits on `D`. `--bed12`
+emits the complete thick-start, thick-end, color, block-count, block-size, and
+block-start fields and accepts a validated `--color R,G,B`. `--bedpe` consumes
+query-name-grouped pairs, renders unmapped ends as `.` and `-1`, orders ends by
+reference and position by default, and lets `--mate1` preserve mate-one first.
+Its default score is the lower mapped-end MAPQ; `--ed` uses the sum of present
+`NM` values.
+
+`--tag TAG` selects a signed or unsigned integer auxiliary value as the BED6
+or BED12 score, while `--ed` is the `NM` compatibility form. A missing,
+malformed, or non-integer requested tag fails the command. `--cigar` appends
+the complete CIGAR only to unsplit BED6. Ambiguous combinations fail before
+reading input: BEDPE excludes BED12, split modes, arbitrary tags, color, and
+CIGAR; color requires BED12; mate-one ordering requires BEDPE; CIGAR excludes
+split and BED12; and edit-distance scoring excludes split BED6 because a
+record-level `NM` cannot be assigned to individual chunks. Unlike the
+upstream accidental seven-column `-tag -split` rendering, the product keeps
+the requested numeric value in the BED score column and does not insert an
+extra coordinate column.
+
+The product accepts SAM, BAM, CRAM, or standard input by content, with a
+reference FASTA for reference-backed CRAM, positional input plus upstream
+`-i` compatibility, additional BAM decompression workers, and named
+transactional output. Product-level JSON requires named text output and
+returns the selected format plus input, mapped, skipped, pair, and emitted-row
+counts through the shared envelope. Invalid reference IDs, coordinates,
+CIGAR operations or lengths, incomplete BEDPE pairs, non-adjacent mates,
+inconsistent query names, output aliasing, parse failures, and write failures
+exit non-zero. The stricter BEDPE failures follow the documented requirement
+that pairs occur as adjacent groups of two rather than the upstream
+implementation's warning-and-skip path.
+
+Historical `rsomics-bam-to-bed` revision
+`6d500bbcaa04ef307dc093170738bdbe4682d326` is classified as refactor then
+merge. Its borrowed raw-BAM loop, reference-span calculation, independent
+mate suffix behavior, missing-`NM` failure, two small BAM fixtures, and BED6
+goldens are useful assets. The standalone crate accepts only BAM and implements
+only default BED6, `--split`, `--ed`, and `--cigar`; its split handling, signed
+tag conversion, input policy, worker default, help shell, compatibility skips,
+comments, and subprocess benchmark are not retained.
+
+The implementation remains private under `src/to_bed/`, with separate typed
+record projection, block construction, BED/BED12 rendering, and BEDPE pair
+state. It reuses the product input boundary, checked raw BAM records,
+transactional output, `rsomics-help`, and JSON envelope. No Layer A API is
+added: BEDTools compatibility policy has no second product consumer, and
+promoting an interval formatter alone would violate the consumer rule.
+
+The always-run matrix imports every upstream one-, two-, and three-block,
+deletion-split, BED12, numeric-tag, and long-header case. Product cases add
+BEDPE ordering, mate-one ordering, one-end-unmapped pairs, signed and unsigned
+integer tag encodings, `=`/`X` and long CIGAR, hard and soft clipping, zero
+MAPQ, empty input, SAM/BAM/CRAM equivalence, standard input, reference-backed
+CRAM, malformed records and tags, incomplete or misgrouped pairs, option
+conflicts, transactional rollback, path aliasing, broken pipes, and JSON
+separation. The live bedtools 2.31.1 oracle covers all documented output modes
+and score choices on Linux x86_64 CI; deterministic captured goldens keep the
+same cases active on every native target.
+
+The performance gate uses at least four million mapped and unmapped records
+with paired flags, multiple references, mixed strands, CIGAR insertions,
+deletions, skips, clipping, `=`/`X`, and numeric tags. Default BED6, split
+BED6, BED12, and name-grouped BEDPE retain complete output identity. Each mode
+records exact revisions, binary and fixture digests, worker counts, warm-up,
+alternating wall and CPU trials, peak RSS, and output digests. Publication
+requires a strict throughput or resource-use advantage over bedtools 2.31.1;
+the historical benchmark and unmeasured claim are not release evidence.
 
 ### Slice 4: interactive viewing
 
