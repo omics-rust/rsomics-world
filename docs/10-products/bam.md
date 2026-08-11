@@ -2626,6 +2626,12 @@ Their SHA-256 values are
 `c1f7fc59a919c23bcd59168949aafa76c300f0aa84aa4f95fc129ea503794b01`
 and `97195e26c0aaa1cab07f09e47abfb0421f003d4ce210c17e3d8933ac8f92a82a`.
 
+Exact-head workflow
+[`31521016190`](https://github.com/omics-rust/rsomics-bam/actions/runs/31521016190)
+passed at revision `b8abe45fbb0febcdbefba3998f82ddfe5c67aea8`. Its native
+Linux and macOS jobs passed on both x86_64 and aarch64; the Linux x86_64 job
+also rebuilt samtools 1.24 and passed the compatibility oracle.
+
 ### Slice 4: interactive viewing
 
 `tview` is a complete terminal interface, not a formatting helper. It stays
