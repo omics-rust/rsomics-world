@@ -54,6 +54,9 @@ CI `31444377940` and publication workflow `31444920118` completed
 successfully. The thirtieth command, `reset`, is published as `rsomics-bam
 0.22.0` from revision `df6bd9054d60` after exact-head CI `31451859877` and
 publication workflow `31452351520` completed successfully.
+The thirty-first command, `checksum`, is published as `rsomics-bam 0.23.0`
+from revision `3b721cf22666` after exact-head CI `31457635764` and publication
+workflow `31458113573` completed successfully.
 
 ## Boundary
 
@@ -1535,13 +1538,12 @@ outputs from the exact-head release build.
 ### Slice 3: remaining projection, pileup, and statistics
 
 - `consensus`, `phase`, `reference`, and `targetcut`;
-- `to-bed` and `checksum`.
+- `to-bed`.
 
 Pileup-dependent work proceeds with the `rsomics-pileup` contract described
-below. `checksum` ships only if it meets the same performance or material
-benefit gate as every other established-tool replacement. Its historical
-implementation is slower than the recorded samtools comparison and receives
-no exemption.
+below. `checksum` passed its material-benefit gate in release 0.23 through a
+strict peak-memory advantage; no throughput advantage or performance
+exemption is claimed.
 
 ### Release 0.20: CRAM storage diagnostics
 
@@ -1819,7 +1821,7 @@ exposed the complete `reset` help surface. Its SAM smoke output matched
 samtools 1.24 byte for byte with SHA-256
 `0c541dcefad0e5f60dea3d6dd98ab7dc5a3ab793cdfc94045ef20300adac7281`.
 
-### Release 0.23 candidate: content checksum
+### Release 0.23: content checksum
 
 `checksum` remains one operation with two modes: compute a content report from
 sequence data, or merge prior checksum reports. Its compatibility contracts
@@ -1832,10 +1834,10 @@ Samtools, HTSlib, and the upstream fixtures are MIT licensed. The 13-file
 upstream checksum corpus has aggregate SHA-256
 `98ba1de219a87a936b03b517e2e0719f41714a954f2664fb42b62e68bb7c527a`.
 
-The target compute surface accepts multiple SAM, BAM, CRAM, and FASTQ inputs or
-standard input. It includes required and excluded flag filters, the checksum
-flag mask, reverse-complement normalization, ordered or wildcard auxiliary-tag
-selection, one or two order-sensitive levels, position, CIGAR, and mate
+The stable compute surface accepts multiple SAM, BAM, CRAM, FASTA, and FASTQ
+inputs or standard input. It includes required and excluded flag filters, the
+checksum flag mask, reverse-complement normalization, ordered or wildcard
+auxiliary-tag selection, one or two order-sensitive levels, position, CIGAR, and mate
 columns, sanitization, a record limit, QC pass/fail rows, zero-count rows, the
 `--all` round-trip contract, tabular output, bamseqchksum compatibility,
 additional input workers, and named transactional output. Merge mode parses
@@ -1855,26 +1857,79 @@ ordering, QC, wildcard-tag, position, CIGAR, mate, sanitization, count,
 tabular, bamseqchksum, SAM, CRAM, FASTQ, transaction, or product JSON contract;
 and its compatibility tests silently skip every non-1.23 samtools version.
 
-The product implementation will keep the checksum state and report policy
+The product implementation keeps the checksum state and report policy
 private under `src/checksum/`. Validated borrowed BAM records remain the fast
 path; existing product readers supply SAM and CRAM records, and the existing
-`rsomics-seqio` dependency supplies FASTQ. The alignment flag parser, path
-ownership, transactional output, `rsomics-help`, and JSON envelope are reused.
+`rsomics-seqio` dependency supplies FASTA and FASTQ. The alignment flag parser,
+path ownership, transactional output, `rsomics-help`, and JSON envelope are reused.
 The additive packed-record checksum used by `stats` is a different upstream
-contract and is not generalized into this module. No Layer A API is planned:
+contract and is not generalized into this module. No Layer A API was added:
 no second product consumes the checksum policy or report parser.
 
 The release oracle imports the complete upstream default, all-fields, QC,
-merge, and bamseqchksum cases and adds SAM, BAM, CRAM, FASTQ, standard input,
-double-order, tag canonicalization and wildcard ordering, malformed auxiliary
+merge, and bamseqchksum cases and adds SAM, BAM, CRAM, FASTA, FASTQ, standard
+input, double-order, tag canonicalization and wildcard ordering, malformed auxiliary
 data, incompatible reports, output rollback, and JSON separation. A
 representative performance gate uses at least four million mixed records and
 records exact versions, binaries, fixture and report digests, worker counts,
-alternating wall and CPU trials, and peak RSS. The historical one-worker pilot
-matched samtools 1.24 output but used 43% more wall time; with four workers it
+alternating wall and CPU trials, and peak RSS. The pre-implementation
+one-worker pilot matched samtools 1.24 output but used 43% more wall time; with four workers it
 used 19% more wall time. It used substantially less peak RSS in both pilots,
-so a strict resource advantage is plausible but not yet a release result. No
-performance exemption applies.
+but was insufficient as release evidence. No performance exemption applied.
+
+Feature revision `581a112cff7f` implements the typed record normalization,
+Mersenne-prime checksum state, native and bamseqchksum reports, strict report
+merge parser, borrowed-record BAM fast path, FASTA/FASTQ paths, transactional
+output, unified help, and JSON envelope. `--all` is a single unambiguous
+contract and conflicts with overridden fine-grained fields. The merge parser
+rejects mismatched schemas, versions, tags, flags, columns, duplicate rows or
+headers, hybrid report kinds, inconsistent totals, and the absolute
+double-order form. Long-CIGAR BAM records use the checked `rsomics-bamio`
+decoder and omit the on-disk `CG` transport tag in the same way as HTSlib.
+`-@` selects additional BAM decompression workers through the shared input
+layer; release 0.23 deliberately does not advertise a threaded CRAM path.
+
+The complete 13-file upstream regression corpus is committed with
+attribution. Always-run tests cover its compute and merge cases plus
+SAM/BAM/CRAM, FASTA/FASTQ, gzip, standard input, JSON separation,
+transactional failures, malformed auxiliary fields and reports, output
+conflicts, and generated 65,536-operation long CIGAR. The ignored live oracle
+uses samtools 1.24 for 17 compute and merge cases plus the long-CIGAR case, and
+Linux x86_64 CI runs it explicitly. Formatting, strict Clippy, all-feature
+debug and release tests, package verification, and the live oracle all passed
+at the release head. The source package contains 325 files.
+
+The representative fixture contains 4,000,260 records in 85,567,476 bytes
+with SHA-256
+`2c91241d03f4c692e8ce21a2f49110499c642d103e41a0859da4f42c531ba348`.
+Both tools produced the same report with SHA-256
+`35dd4634e0fcd871e6b668cf8f4c544df2c9ef0893aa308488d155f3989953c8`.
+At performance revision `d77a55bccd17`, twenty alternating paired rounds
+after warm-up gave rsomics mean wall time 0.939 versus 0.919 seconds with no
+additional workers, 2.18% slower, while mean peak RSS was 5,246,157 versus
+6,593,741 bytes, 20.44% lower. With four additional workers, mean wall time
+was 0.6415 versus 0.6465 seconds, 0.77% faster, and mean peak RSS was 5,813,862
+versus 8,258,355 bytes, 29.60% lower. The release therefore claims throughput
+parity and a strict memory advantage.
+
+Release revision `3b721cf226663e30c5adc8a86c7767517581d66a` passed native Linux
+and macOS CI on x86_64 and aarch64 in exact-head run `31457635764`; Linux
+x86_64 also passed the complete checksum oracle and package gate. Publish run
+`31458113573` released 0.23.0 through `cargo publish --locked`. The live
+release is not yanked, declares Rust 1.91, and its 1,092,722-byte registry
+archive has SHA-256
+`f687905266cbf0551932536d038ef07b1484c39aee19d3dd67fb6dfb3382c4f3`.
+Its Cargo VCS record points to the release revision. The registry archive and
+locally verified package use different archive containers, but their 325
+extracted files are byte-identical; the common file-manifest SHA-256 is
+`eace3909c75dc29f4bdd8172f3751926806a3269f467c0cd5b5dfd15681f1dd8`.
+A fresh locked registry install on the external build volume reported version
+0.23.0 and exposed the complete checksum help surface. Its installed binary
+has SHA-256
+`eb79ad36f6fdf7fa5588f79e4cd96a1358d758195be3b0fb7573de44e24cdbd8`;
+the BAM smoke report matched samtools 1.24 byte for byte with SHA-256
+`0faf71f4e23fb6988ee2ef1996b9ba1c2a16ce709fd9ae784c639f8e59f75365`,
+and the JSON smoke returned the same typed report through schema 1.0.
 
 ### Slice 4: interactive viewing
 
@@ -1889,94 +1944,117 @@ copying historical binaries:
 
 ```text
 src/
-├── addreplacerg.rs
-├── alignment_stream.rs
-├── bedcov.rs
-├── bedcov/
-│   ├── bed.rs
-│   └── sweep.rs
-├── cli.rs
-├── coverage.rs
-├── coverage_engine.rs
-├── coverage_hts.rs
-├── cram_size.rs
+├── ampliconclip/
+│   └── record.rs
+├── ampliconstats/
+│   ├── model.rs
+│   └── output.rs
+├── checksum/
+│   ├── merge.rs
+│   ├── mod.rs
+│   ├── record.rs
+│   └── report.rs
+├── commands/
+│   ├── addreplacerg.rs
+│   ├── ampliconclip.rs
+│   ├── ampliconstats.rs
+│   ├── bedcov.rs
+│   ├── calmd.rs
+│   ├── cat.rs
+│   ├── checksum.rs
+│   ├── collate.rs
+│   ├── coverage.rs
+│   ├── cram_size.rs
+│   ├── depad.rs
+│   ├── depth.rs
+│   ├── fastx.rs
+│   ├── fixmate.rs
+│   ├── flags.rs
+│   ├── flagstat.rs
+│   ├── head.rs
+│   ├── idxstats.rs
+│   ├── import.rs
+│   ├── index.rs
+│   ├── markdup.rs
+│   ├── merge.rs
+│   ├── mod.rs
+│   ├── mpileup.rs
+│   ├── quickcheck.rs
+│   ├── reheader.rs
+│   ├── reset.rs
+│   ├── samples.rs
+│   ├── sort.rs
+│   ├── stats.rs
+│   └── view.rs
 ├── cram_size/
 │   ├── encoding.rs
 │   ├── parser.rs
 │   ├── render.rs
 │   └── varint.rs
-├── idxstats.rs
-├── lib.rs
-├── main.rs
-├── cat.rs
-├── reheader.rs
-├── bgzf_rewrite.rs
-├── header_source.rs
-├── collate.rs
-├── fixmate.rs
-├── fastx.rs
-├── import.rs
-├── markdup.rs
-├── markdup/key.rs
-├── merge.rs
-├── sort.rs
-├── stats.rs
+├── depad/
+│   ├── bam_record.rs
+│   └── cigar.rs
+├── markdup/
+│   └── key.rs
+├── reset/
+│   ├── cram.rs
+│   └── raw.rs
 ├── stats/
 │   ├── barcode.rs
 │   ├── checksum.rs
 │   ├── coverage.rs
-│   ├── insert_size.rs
 │   ├── record.rs
+│   ├── record_data.rs
+│   ├── ref_stats.rs
 │   ├── reference.rs
 │   ├── regions.rs
 │   └── render.rs
+├── addreplacerg.rs
+├── alignment_order.rs
+├── alignment_stream.rs
+├── amplicon.rs
+├── ampliconclip.rs
+├── ampliconstats.rs
+├── bedcov.rs
+├── bgzf_rewrite.rs
+├── calmd.rs
+├── cat.rs
+├── cli.rs
+├── collate.rs
+├── coverage.rs
+├── coverage_hts.rs
+├── cram_size.rs
+├── depad.rs
 ├── depth.rs
+├── fastx.rs
+├── filter.rs
+├── fixmate.rs
+├── flags.rs
 ├── flagstat.rs
 ├── head.rs
-├── index.rs
-├── mpileup.rs
-├── quickcheck.rs
-├── reset.rs
-├── reset/
-│   ├── cram.rs
-│   └── raw.rs
-├── samples.rs
-├── view.rs
-├── alignment_order.rs
-├── filter.rs
 ├── header_merge.rs
+├── header_source.rs
 ├── hts_metadata.rs
 ├── hts_quickcheck.rs
+├── idxstats.rs
+├── import.rs
+├── index.rs
 ├── input.rs
+├── lib.rs
+├── main.rs
+├── markdup.rs
 ├── md.rs
+├── merge.rs
+├── mpileup.rs
 ├── output.rs
 ├── program.rs
-└── commands/
-    ├── addreplacerg.rs
-    ├── bedcov.rs
-    ├── cat.rs
-    ├── collate.rs
-    ├── coverage.rs
-    ├── cram_size.rs
-    ├── depth.rs
-    ├── fastx.rs
-    ├── import.rs
-    ├── fixmate.rs
-    ├── flags.rs
-    ├── flagstat.rs
-    ├── head.rs
-    ├── index.rs
-    ├── idxstats.rs
-    ├── markdup.rs
-    ├── merge.rs
-    ├── mpileup.rs
-    ├── quickcheck.rs
-    ├── reheader.rs
-    ├── reset.rs
-    ├── samples.rs
-    ├── sort.rs
-    ├── stats.rs
-    └── view.rs
+├── quickcheck.rs
+├── reheader.rs
+├── reset.rs
+├── samples.rs
+├── sort.rs
+├── stats.rs
+└── view.rs
 ```
 
 Format detection, alignment headers, decoded-record policy, and indexed access
@@ -2022,7 +2100,7 @@ SAM/CRAM support.
 | `rsomics-bam-bedcov` `93204eea9155d118154ed237c84961b34ad7e29d` | Refactor then merge | `bedcov`; share validated pileup and interval input |
 | `rsomics-bam-calmd` `6d3a4d0657c5c4e534269767b98534cc0a5d383e` | Refactor then merge | `calmd`; preserve MD/NM fixtures |
 | `rsomics-bam-cat` `e0a21da2cf6c8f0f7eb1af87878a5dd03c02e211` | Refactor then merge | `cat`; retain block-copy ideas after header checks |
-| `rsomics-bam-checksum` `95fc3dc4dfd477fae92306208ee61058b60ec638` | Test and benchmark asset until gate passes | `checksum`; do not retain the performance exemption |
+| `rsomics-bam-checksum` `95fc3dc4dfd477fae92306208ee61058b60ec638` | Kernel, test, and benchmark seed; replacement merged at `581a112cff7f` | Discard standalone CLI, partial surface, version-skipping oracle, and performance exemption |
 | `rsomics-bam-collate` `f6f9b8ed029d6e1a30f4ecbc8bfe0ca2d25ad9ef` | Test asset; replacement merged at `24095b8650c2` | Discard whole-file buffering and first-seen group order |
 | `rsomics-bam-consensus` `f202e114caa95ef38cd80dc40df8ee6a3f8ceae7` | Test asset and algorithm seed | `consensus`; historical simple mode is not the current default contract |
 | `rsomics-bam-coverage` `e115cd0bceb0735e584d75125e7a6940e896d4fe` | Refactor then merge | `coverage`; summary output only |
