@@ -2632,6 +2632,18 @@ passed at revision `b8abe45fbb0febcdbefba3998f82ddfe5c67aea8`. Its native
 Linux and macOS jobs passed on both x86_64 and aarch64; the Linux x86_64 job
 also rebuilt samtools 1.24 and passed the compatibility oracle.
 
+Publication workflow
+[`31522361769`](https://github.com/omics-rust/rsomics-bam/actions/runs/31522361769)
+published the locked 0.27.0 package from that revision. The 1,385,646-byte
+crates.io archive is byte-identical to the locally verified package, has
+SHA-256 `b32473d2d4f9507b9a9694bfea46ab43a8f703b31f3f3bc933129c9b7cea3dc4`,
+and records the same VCS revision. A fresh locked registry install produced a
+binary with SHA-256
+`c82847549c418e170ffcae6902d4512fa82216b657c06504580c4c1a030115fa`.
+Its common-layer help exposed all four split selectors; a default read-group
+smoke retained all nine records as eight and one records, and both decoded
+outputs matched their committed goldens.
+
 ### Slice 4: interactive viewing
 
 `tview` is a complete terminal interface, not a formatting helper. It stays
