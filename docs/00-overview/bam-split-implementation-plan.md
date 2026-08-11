@@ -122,9 +122,6 @@ Commit as `refactor(bam): own transactional output targets`.
 - Create: `src/split/tag.rs`
 - Create: `src/split/output.rs`
 - Modify: `src/lib.rs`
-- Modify: `src/commands/mod.rs`
-- Create: `src/commands/split.rs`
-- Modify: `src/cli.rs`
 - Test: `tests/split.rs`
 
 **Interfaces:**
@@ -132,16 +129,13 @@ Commit as `refactor(bam): own transactional output targets`.
 ```rust
 pub enum Format { Sam, Bam, Cram }
 
-pub enum Mode<'a> {
+pub enum Mode {
     ReadGroup,
     Tag([u8; 2]),
-    Parts { count: usize, seed: u64, skip_unmapped: bool },
-    Genes(&'a Path),
-    Mates,
 }
 
 pub struct Options<'a> {
-    pub mode: Mode<'a>,
+    pub mode: Mode,
     pub output_prefix: &'a Path,
     pub unaccounted: Option<&'a Path>,
     pub unaccounted_header: Option<&'a Path>,
@@ -162,64 +156,48 @@ pub struct Summary { pub outputs: Vec<OutputSummary>, pub skipped: u64 }
 pub fn run(input: &Path, options: Options<'_>) -> Result<Summary>;
 ```
 
-- [ ] **Step 1: Write and verify the failing command-contract test**
-
-Add `split_help_exposes_one_mode_selector_set`, parse
-`rsomics-bam split --help`, and require the literal options below. Run it and
-confirm the failure is that `split` is unknown.
-
-```rust
-for option in [
-    "--output-prefix", "--tag", "--parts", "--genes", "--mates",
-    "--unaccounted", "--unaccounted-header", "--max-outputs",
-    "--zero-pad", "--seed", "--skip-unmapped", "--output-fmt",
-    "--reference", "--no-pg", "--threads",
-] {
-    assert!(help.contains(option), "missing {option} in {help}");
-}
-assert!(!help.contains("read-group\n"));
-```
-
-- [ ] **Step 2: Write failing literal tests for filename components**
+- [ ] **Step 1: Write failing literal tests for filename components**
 
 Require `rg1 -> rg1`, `a/b -> a%2Fb`, `a%b -> a%25b`, backslash to `%5C`,
 byte `0xff` to `%FF`, and empty input to fail. Require different byte strings
 to produce different components.
 
-- [ ] **Step 3: Verify RED, then implement the percent encoder**
+- [ ] **Step 2: Verify RED, then implement the percent encoder**
 
 Run the label unit test; expected missing module failure. Implement a single
 byte loop preserving ASCII alphanumeric, dot, dash, and underscore and writing
 uppercase `%HH` for all other bytes. Re-run until green.
 
-- [ ] **Step 4: Write failing tag-value tests**
+- [ ] **Step 3: Write failing tag-value tests**
 
 Use real validated raw BAM records and require `Z`, `H`, `c/C/s/S/i/I`,
 negative integer padding, missing, and invalid `A/f/B` outcomes. Literal
 expected labels include `-005` for value -5 at width 3 and `007` for 7.
 
-- [ ] **Step 5: Verify RED, implement tag decoding, verify GREEN**
+- [ ] **Step 4: Verify RED, implement tag decoding, verify GREEN**
 
 Return a three-way result: present bytes, unaccounted missing, or unaccounted
 invalid type. Strip exactly one terminating NUL from `Z` and `H`; decode
 integers little-endian without lossy casts.
 
-- [ ] **Step 6: Write the failing two-RG integration test**
+- [ ] **Step 5: Write the failing two-RG integration test**
 
-Run `split --no-pg -o PREFIX tworg.bam`. Require exactly `PREFIX.rg1.bam` and
-`PREFIX.rg2.bam`, record counts 8 and 1, committed record bodies equal to the
-literal goldens, and each decoded header to retain only its matching `@RG`.
+Call `split::run` with `Mode::ReadGroup`, no program record, and prefix
+`PREFIX`. Require exactly `PREFIX.rg1.bam` and `PREFIX.rg2.bam`, record counts
+8 and 1, committed record bodies equal to the literal goldens, and each decoded
+header to retain only its matching `@RG`.
 
-- [ ] **Step 7: Verify RED, implement the complete typed command and grouped BAM routing**
+- [ ] **Step 6: Verify RED, implement the typed library API and grouped routing**
 
-Define mutually exclusive clap selectors in one `ArgGroup`, require
-`--output-prefix`, add the `Command::Split` dispatch and typed public API, then
-precreate one sink per header RG, derive each header independently, write
-validated raw records without decoding on BAM-to-BAM input, finish every
-writer, and call one `TransactionalFile::commit_all`. Add one program record
-to every derived header when requested.
+Define only the implemented `ReadGroup` and `Tag` mode variants. Precreate one
+sink per header RG, derive each header independently, write validated raw
+records without decoding on BAM-to-BAM input, finish every writer, and call one
+`TransactionalFile::commit_all`. Add one program record to every derived
+header when requested. Implement decoded SAM and reference-backed CRAM input
+and SAM/BAM/CRAM output in this task so every exposed `Format` value is real;
+CRAM output requires the indexed reference repository.
 
-- [ ] **Step 8: Add missing, unknown, empty-group, integer-tag, and limit tests**
+- [ ] **Step 7: Add missing, unknown, empty-group, integer-tag, and limit tests**
 
 Each behavior gets one test that first fails against the current branch:
 
@@ -232,19 +210,18 @@ Each behavior gets one test that first fails against the current branch:
 - unsafe label bytes cannot escape the prefix directory;
 - any computed output aliasing input or unaccounted output fails before commit.
 
-- [ ] **Step 9: Implement each failing branch one at a time**
+- [ ] **Step 8: Implement each failing branch one at a time**
 
 Do not batch behavior before observing its test fail. Validate canonical target
 identities when each dynamic sink is created. The unaccounted replacement
 header must match every reference name and length in order.
 
-- [ ] **Step 10: Verify the command contract and complete read-group/tag matrix**
+- [ ] **Step 9: Verify the complete read-group/tag matrix**
 
-Run the help test, `cli::tests::command_tree_is_valid`, split unit/integration
-tests, and all ordinary tests. The command becomes visible only in this green,
-functional commit.
+Run split unit/integration tests and all ordinary tests. No CLI or help entry
+exists yet.
 
-- [ ] **Step 11: Commit**
+- [ ] **Step 10: Commit**
 
 Commit as `feat(bam): add transactional tag splitting`.
 
@@ -259,6 +236,9 @@ Commit as `feat(bam): add transactional tag splitting`.
 **Interfaces:**
 
 ```rust
+// Added to split::Mode only in the same green commit as its implementation.
+Parts { count: usize, seed: u64, skip_unmapped: bool }
+
 pub(super) struct SplitMix64(u64);
 impl SplitMix64 {
     pub(super) fn new(seed: u64) -> Self;
@@ -298,6 +278,9 @@ Commit as `feat(bam): consolidate random BAM partitioning`.
 **Interfaces:**
 
 ```rust
+// This task changes Mode to Mode<'a> and Options.mode to Mode<'a>.
+Genes(&'a Path)
+
 pub(super) struct ExonIndex { by_reference: Vec<Vec<Range<i32>>> }
 impl ExonIndex {
     pub(super) fn read(path: &Path, header: &sam::Header) -> Result<Self>;
@@ -352,6 +335,9 @@ Run all split tests and all ordinary tests. Commit as
 **Interfaces:**
 
 ```rust
+// Added to split::Mode only in the same green commit as its implementation.
+Mates
+
 pub(super) const MATE_KEEP_FLAGS: u16 = 0x10 | 0x100 | 0x200 | 0x400;
 pub(super) fn project_raw(record: &mut RawRecord);
 pub(super) fn project_decoded(record: &mut sam::alignment::RecordBuf);
@@ -375,11 +361,11 @@ Convert the same corpus to SAM and reference-backed CRAM with test utilities,
 run mate mode to each supported output format, and compare normalized headers,
 record order, flags, and mate fields to the BAM result.
 
-- [ ] **Step 4: Implement decoded projection and multi-format writers**
+- [ ] **Step 4: Implement decoded projection using the shared multi-format writers**
 
-Use `RecordBuf` mutation for non-raw paths. SAM and BAM use the existing output
-writer; CRAM uses the noodles alignment writer with the indexed reference
-repository. Require a reference for CRAM output and finish before commit.
+Use `RecordBuf` mutation for non-raw paths and route it through the writers
+completed in Task 3. Require a reference for CRAM output and finish before
+commit.
 
 - [ ] **Step 5: Verify all formats/modes and commit**
 
@@ -392,6 +378,8 @@ Run split tests, complete ordinary debug tests, and release tests. Commit as
 
 - Modify: `tests/split.rs`
 - Create: `tests/split_compat.rs`
+- Modify: `src/commands/mod.rs`
+- Create: `src/commands/split.rs`
 - Modify: `.github/workflows/ci.yml`
 - Modify: `README.md`
 - Modify: `src/cli.rs`
@@ -403,45 +391,66 @@ Run split tests, complete ordinary debug tests, and release tests. Commit as
 - Adds `CommandOutput::Split { summary: split::Summary }` to the shared JSON
   envelope.
 
-- [ ] **Step 1: Write failing JSON and help-experience tests**
+- [ ] **Step 1: Write and verify the failing complete command-contract test**
+
+Add `split_help_exposes_one_mode_selector_set`, parse
+`rsomics-bam split --help`, and require the literal options below. Run it and
+confirm the failure is that `split` is unknown.
+
+```rust
+for option in [
+    "--output-prefix", "--tag", "--parts", "--genes", "--mates",
+    "--unaccounted", "--unaccounted-header", "--max-outputs",
+    "--zero-pad", "--seed", "--skip-unmapped", "--output-fmt",
+    "--reference", "--no-pg", "--threads",
+] {
+    assert!(help.contains(option), "missing {option} in {help}");
+}
+assert!(!help.contains("read-group\n"));
+```
+
+- [ ] **Step 2: Write failing JSON and help-experience tests**
 
 Require the envelope command name `split`, stable per-output labels, paths and
 counts, and `skipped`; require mode conflicts to fail through shared help and
 errors. Require `--json` not to mix machine output with progress text.
 
-- [ ] **Step 2: Complete the final adapter and machine summary**
+- [ ] **Step 3: Add the complete adapter and machine summary**
 
-Map clap values into `split::Options`, construct the program record, call
-`split::run`, and return the typed summary. Keep human success silent; JSON is
-emitted only by `rsomics-common::run`.
+Define mutually exclusive `--tag`, `--parts`, `--genes`, and `--mates` in one
+clap `ArgGroup`; require `--output-prefix`; map values into `split::Options`,
+construct the program record, call `split::run`, and return the typed summary.
+Keep human success silent; JSON is emitted only by `rsomics-common::run`. This
+is the first commit that makes `split` visible in CLI help, after all four mode
+variants and all three output formats are implemented.
 
-- [ ] **Step 3: Add grouped rollback and corrupt-input tests**
+- [ ] **Step 4: Add grouped rollback and corrupt-input tests**
 
 Start with literal previous bytes at every target. Trigger malformed SAM/BAM,
 invalid tag type, malformed BED, output directory failure, and late writer
 failure. Require all prior bytes unchanged and no new final path.
 
-- [ ] **Step 4: Add and run live oracle matrices**
+- [ ] **Step 5: Add and run live oracle matrices**
 
 For samtools 1.24 compare decoded bodies and relevant `@RG` headers for default,
 empty, missing/unknown with unaccounted, explicit RG, integer NM, limits,
 padding, SAM input, BAM input, CRAM input, and no-PG. For RSeQC 5.0.4 compare
 gene and mate bodies exactly and parts by disjoint-cover invariants.
 
-- [ ] **Step 5: Run strict local verification**
+- [ ] **Step 6: Run strict local verification**
 
 Run `cargo fmt --check`, `cargo clippy --all-targets --all-features -- -D
 warnings`, debug tests, release tests, ignored live oracles, and `cargo package
 --locked`. Build the unpacked package with Rust 1.91.0. Record exact commands,
 versions, hashes, and outputs.
 
-- [ ] **Step 6: Update README only after all modes pass**
+- [ ] **Step 7: Update README only after all modes pass**
 
 Add the `split` command row, examples for the four selectors, input/output
 formats, transactional guarantee, strict BED behavior, encoded labels, and
 explicit exclusions. Do not mention a benchmark advantage yet.
 
-- [ ] **Step 7: Commit and pass exact-head four-native CI**
+- [ ] **Step 8: Commit and pass exact-head four-native CI**
 
 Commit as `test(bam): close split compatibility gates`, push, and wait for the
 exact SHA. Linux x86_64 must run the complete samtools/RSeQC oracle or consume
