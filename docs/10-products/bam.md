@@ -66,9 +66,11 @@ The thirty-third command, `consensus`, is published as `rsomics-bam 0.25.0`
 from revision `1663c0633cab` after exact-head CI `31487127885` passed the four
 native targets, including the complete samtools 1.24 oracle on Linux x86_64.
 Publication workflow `31487943508` completed successfully.
-The thirty-fourth command, `phase`, has a source-, manual-, live-oracle-, and
-historical-asset-audited 0.26 contract below; it is not implemented or
-published yet.
+The thirty-fourth command, `phase`, is published as `rsomics-bam 0.26.0` from
+revision `516a56b21c79` after exact-head CI `31503800833` passed the four
+native targets, including package verification and the complete samtools 1.24
+oracle on Linux x86_64. Publication workflow `31504777540` completed
+successfully.
 
 ## Boundary
 
@@ -2233,7 +2235,7 @@ switches, and rejected an attempted `--SC-cost`. Default Bayesian, simple
 pileup, `bayesian_116` FASTQ, and HiFi-profile pileup smoke outputs were
 byte-identical to samtools 1.24.
 
-### Release 0.26 candidate: read-backed SNP phasing
+### Release 0.26: read-backed SNP phasing
 
 `phase` calls heterozygous SNPs from coordinate-sorted alignments, builds
 locally consistent haplotypes from reads spanning those sites, reports phase
@@ -2278,11 +2280,13 @@ enter a read fragment's phase evidence.
 The phasing kernel retains the exact local-pattern count, complement-state
 dynamic program, tie decisions, fragment phase and ambiguity rules, local
 chimera head-or-tail repair, maximum-subarray mask, singleton handling, phase
-block boundary, and marker-index semantics of the audited source. Stable text
+block boundary, and report semantics of the audited source. Stable text
 output includes the complete `CC` legend and exact `PS`, `FL`, `M0`/`M1`/`M2`,
 `EV`, and `//` records. Allele order, one-based coordinates, phase-set start,
-global heterozygote index, four support/error counts, evidence order, tags,
-and empty-input legend are compatibility data, not presentation details.
+reference-local heterozygote index, four support/error counts, tags, and
+empty-input legend are compatibility data. `EV` rows are ordered by first
+marker and complete query name instead of exposing the upstream khash bucket
+order.
 
 The accepted input is sequential SAM, BAM, CRAM, or standard input despite the
 manual synopsis saying `in.bam`. A reference FASTA may be supplied for CRAM.
@@ -2292,7 +2296,11 @@ use the product-wide `-@` convention. Multiple positional inputs are rejected
 instead of reproducing samtools 1.24's silent disregard of every input after
 the first. Numeric options are parsed and range-checked before reading input or
 creating output; the product does not reproduce `atoi` fallback, unchecked
-bit shifts, oversized allocations, or partial files for invalid values.
+bit shifts, oversized allocations, or partial files for invalid values. The
+local window is bounded to 1 through 23, depth to 1 through 65,535, and the
+pattern table to 16,777,216 count cells. A connected phase set that exceeds
+that workspace fails before allocation. DP accumulation uses 64-bit scores so
+a valid long block cannot overflow the upstream 32-bit accumulator.
 
 `-b`/`--output-prefix` creates `<prefix>.0.<format>`,
 `<prefix>.1.<format>`, and `<prefix>.chimera.<format>` in SAM, BAM, or CRAM.
@@ -2306,6 +2314,15 @@ switch-error records go to the chimera output. `-A` sends ambiguous-phase reads
 to the chimera output instead of randomly allocating them. All three files,
 their headers, and any pre-existing targets commit as one transaction only
 after input decoding, phasing, encoding, flushing, and close succeed.
+
+Four source defects are deliberately not reproduced. Fragment identity uses
+the complete query name rather than the collision-prone X31 hash; `Aa` and
+`BB`, for example, remain distinct. Assignments are retained even when an
+earlier long uninformative record delays coordinate-ordered output, so later
+short records do not lose their phase block. Marker indexes restart at one on
+each reference instead of inheriting the source's reset-before-flush state.
+When no variant is called, every accepted record is deterministically routed;
+samtools 1.24 with `-b` writes headers but drops those records.
 
 Live checks on the historical 12-read fixture produced identical text for
 SAM, BAM, CRAM, and each standard-input form, SHA-256
@@ -2357,18 +2374,53 @@ phase-set policy, evidence, deterministic routing, and the three-output
 transaction remain product-local. This is a new concrete use of existing
 Layer A contracts, not a reason to add a foundation or widen a public API.
 
-The candidate gate requires exact ordinary and live-oracle coverage for the
-default-37 discriminator, singletons, multiple blocks and references, gaps,
-DP ties, masks, ambiguous fragments, head and tail chimera repair, `-F`, `-A`,
-depth boundaries, base and mapping quality boundaries, all retained/excluded
-FLAG classes, SAM/BAM/CRAM and stdin equivalence, complete text records,
-deterministic partition membership, `ZP`, PG suppression, all three split
-formats, target collisions, rollback, malformed/truncated/unsorted input,
-broken output, and JSON separation. A newly generated representative fixture
-must replace the missing historical benchmark. Timing begins only after exact
-text and normalized split outputs match 1.24; a release then needs a strict
-throughput or peak-memory advantage, package verification, exact-head CI on
-the four native target classes, and the complete Linux x86_64 oracle.
+Revision `5cb994af1991` implements the operation as four narrow model, error
+model, routing, and orchestration modules plus one command adapter. The public
+library surface is limited to report generation, typed options, and a typed
+summary; partition file handles and routing policy remain product-private.
+Source comments are limited to CLI contract documentation. Seventeen ordinary
+phase tests cover the default-37 discriminator, singleton and multi-block
+behavior, reference-local markers, bounded windows and depth, complete query
+names, delayed assignments, ambiguous and head/tail chimera routing, SAM/BAM/
+CRAM partitions, CRAM references, standard input, JSON separation, aliases,
+rollback, unsorted input, and output failure. Model tests exhaustively compare
+all ternary patterns through length seven and exercise a 16,385-site score
+boundary. The release oracle matches samtools 1.24 reports across SAM, BAM,
+CRAM, the stable option matrix, chimeras, multiple blocks and references, and
+matches decoded records for all three partition formats plus `-A` and repaired
+chimeras. All ordinary debug and release tests and every ignored samtools 1.24
+and bedtools 2.31.1 release oracle pass locally with Rust 1.91.0.
+
+The representative fixture contains 50,000 independent phase sets, 100,000
+heterozygous markers, and 600,000 records in 1,901,460 bytes; its SHA-256 is
+`079215c2e83248a5294abbe569f2876a9c4d877b19ecfd3ebd90af9519d47f81`.
+On an eight-core Apple M2 with 8 GiB of memory and macOS 26.6.1, one complete
+correctness pass preceded 12 paired rounds with alternating order. Both tools
+produced the same 50,000-set, 100,000-marker normalized report fingerprint,
+`afd086da418056978a585b1242f89e8b9b14f3911644b1b85a7b0a2676ca8585`.
+Median wall time was 2.455 seconds for rsomics and 11.600 seconds for samtools
+1.24, a 4.725-fold speedup. rsomics won all pairs and reduced mean wall time by
+78.66% and mean peak RSS by 2.30%. The exact feature-head rsomics binary has
+SHA-256 `986e32989e5f7ea14f38ee73d23432ccc07f1f589b50ff9c5d1e49bd69c731cb`;
+the retained environment, timing, summary, output fingerprints, and artifact
+manifest are recorded in the product performance ledger.
+
+The release gate is closed. Final revision `516a56b21c79` passed exact-head CI
+`31503800833` on native Linux and macOS for x86_64 and aarch64. Linux x86_64
+verified the 446-file package and the complete samtools 1.24 oracle. The local
+locked package compiled from its unpacked archive; its 1,363,780-byte SHA-256
+is `9a5f458a0accc7d6366f805fb517f1d29301b07e72d9330eb8e60bd34023009f`.
+Publication workflow `31504777540` uploaded that exact archive. The live
+crates.io checksum matches, the downloaded archive is byte-identical, and its
+VCS record names revision `516a56b21c7925c808f8beb26d57780080ac81a7`.
+
+A fresh locked registry install with Rust 1.91.0 on the external build volume
+reported version 0.26.0 and produced an installed binary with SHA-256
+`97bdb9968b2f89142737e30a201ca879a4a6f2605f0db35e284adde992731296`.
+Its common-layer help exposed the declared phase contract. A JSON smoke run
+reported one phase set and two heterozygous sites, and a BAM partition smoke
+retained all 12 input records as five, seven, and zero records in the two
+haplotypes and chimera output.
 
 ### Slice 4: interactive viewing
 
@@ -2402,6 +2454,7 @@ src/
 │   ├── cat.rs
 │   ├── checksum.rs
 │   ├── collate.rs
+│   ├── consensus.rs
 │   ├── coverage.rs
 │   ├── cram_size.rs
 │   ├── depad.rs
@@ -2418,13 +2471,24 @@ src/
 │   ├── merge.rs
 │   ├── mod.rs
 │   ├── mpileup.rs
+│   ├── phase.rs
 │   ├── quickcheck.rs
 │   ├── reheader.rs
 │   ├── reset.rs
 │   ├── samples.rs
 │   ├── sort.rs
 │   ├── stats.rs
+│   ├── to_bed.rs
 │   └── view.rs
+├── consensus/
+│   ├── call.rs
+│   ├── columns.rs
+│   ├── mod.rs
+│   ├── output.rs
+│   ├── record.rs
+│   ├── regions.rs
+│   ├── run.rs
+│   └── walker.rs
 ├── cram_size/
 │   ├── encoding.rs
 │   ├── parser.rs
@@ -2435,6 +2499,11 @@ src/
 │   └── cigar.rs
 ├── markdup/
 │   └── key.rs
+├── phase/
+│   ├── errmod.rs
+│   ├── mod.rs
+│   ├── model.rs
+│   └── output.rs
 ├── reset/
 │   ├── cram.rs
 │   └── raw.rs
@@ -2447,6 +2516,11 @@ src/
 │   ├── ref_stats.rs
 │   ├── reference.rs
 │   ├── regions.rs
+│   └── render.rs
+├── to_bed/
+│   ├── mod.rs
+│   ├── pair.rs
+│   ├── record.rs
 │   └── render.rs
 ├── addreplacerg.rs
 ├── alignment_order.rs
@@ -2488,6 +2562,7 @@ src/
 ├── output.rs
 ├── program.rs
 ├── quickcheck.rs
+├── raw_aux.rs
 ├── reheader.rs
 ├── reset.rs
 ├── samples.rs
