@@ -51,7 +51,9 @@ command, `cram-size`, is published as `rsomics-bam 0.20.0` from revision
 `31431664650` completed successfully. The twenty-ninth command, `stats`, is
 published as `rsomics-bam 0.21.0` from revision `bfa282600128` after exact-head
 CI `31444377940` and publication workflow `31444920118` completed
-successfully.
+successfully. The thirtieth command, `reset`, is published as `rsomics-bam
+0.22.0` from revision `df6bd9054d60` after exact-head CI `31451859877` and
+publication workflow `31452351520` completed successfully.
 
 ## Boundary
 
@@ -111,9 +113,10 @@ Historical convenience boundaries collapse as follows:
   to `rsomics-signal` and RNA-seq alignment QC belongs to
   `rsomics-rnaseq-qc`.
 
-`reference`, `cram-size`, and `tview` have no historical implementation asset.
-They remain legitimate later operations, but no placeholder command or help
-entry is created before each is complete.
+`reference` and `tview` have no historical implementation asset. `cram-size`
+likewise had none and was implemented only after its format contract was
+audited. No placeholder command or help entry is created before an operation
+is complete.
 
 ## Release slices
 
@@ -1531,10 +1534,8 @@ outputs from the exact-head release build.
 
 ### Slice 3: remaining projection, pileup, and statistics
 
-- `consensus`, `phase`, `reference`, and
-  `targetcut`;
-- `stats` and `cram-size`;
-- `to-bed`, `reset`, and `checksum`.
+- `consensus`, `phase`, `reference`, and `targetcut`;
+- `to-bed` and `checksum`.
 
 Pileup-dependent work proceeds with the `rsomics-pileup` contract described
 below. `checksum` ships only if it meets the same performance or material
@@ -1747,6 +1748,77 @@ shared help tree. SAM and CRAM smokes produced the same committed stable
 report, and the installed binary reproduced the million-record report digest
 above.
 
+### Release 0.22: alignment reset
+
+`reset` restores primary alignments to their pre-alignment read form inside
+the existing alignment product. Its compatibility contracts are the
+[`samtools reset` 1.24 manual](https://www.htslib.org/doc/1.24/samtools-reset.html),
+`reset.c`, and the shared auxiliary-tag parser in `sam_utils.c` at samtools
+revision `dc71c7274044d1050ccb64901731373ec7e915b6`. Samtools and HTSlib are
+MIT licensed.
+
+The stable surface accepts SAM, BAM, CRAM, or standard input and emits SAM,
+BAM, or CRAM. It drops secondary and supplementary alignments, restores
+reverse-strand sequence and quality orientation, clears alignment and mate
+coordinates, and removes the samtools default alignment tags. Explicit remove
+and keep lists, caret keep mode, read-group removal, program-chain rejection,
+duplicate-flag preservation, reference-backed CRAM, I/O workers, and program
+provenance suppression match samtools 1.24. Format selection and extension
+inference are case-insensitive. HTSlib input and output format-option strings
+remain explicit exclusions because the product reader and writer do not expose
+their complete contract.
+
+Named output is transactional and cannot alias the input. SAM and BAM are
+fully parsed or validated before commit. CRAM output uses HTSlib for encoding,
+then is fully decoded and its record count checked before the staged file is
+committed; this prevents a close-time encoder failure from being hidden by the
+writer destructor. The BAM-to-BAM hot path transforms validated borrowed
+record payloads in a reusable buffer and validates the transformed payload
+before raw output. Generic decoded paths cover the remaining format matrix.
+
+Historical `rsomics-bam-reset` revision
+`121947733112098c2b66d6151c23331cb4307e1f` is classified as refactor then
+merge. Its raw BAM record transformation, fixture, and compatibility test were
+useful implementation assets. The deleted micro-crate only accepted BAM,
+targeted samtools 1.23, deliberately excluded SAM and CRAM output, and carried
+its own binary, help, header, and I/O policy. The product implementation keeps
+the useful record-level idea while replacing those boundaries with the shared
+`rsomics-help`, product input/output, provenance, JSON, transaction, and format
+contracts. No Layer A item was added because no second product consumes reset
+policy.
+
+Feature revision `f1a88df13f6675e071f22d45c0f5c436ae8c930c` passed formatting,
+strict Clippy, all-feature debug and release tests, rustdoc with warnings
+denied, package verification, and live samtools 1.24 oracles for SAM, BAM, and
+CRAM input and output. Tests cover tag precedence and parser edges, header
+projection, odd-length ambiguous reverse reads, duplicate policy, malformed
+input rollback, path aliasing, case-insensitive formats, standard output, and
+the shared JSON envelope. The package contains 304 files.
+
+The representative performance fixture contained 4,000,260 records, occupied
+99,545,915 bytes, and had SHA-256
+`9f82e1faae07d53bf916689828146c6923714d08a29078df726d00284363b1b3`.
+Across twenty alternating four-worker pairs, the complete decoded header and
+record stream matched samtools 1.24 with SHA-256
+`8706d0a368bb61714d169e1045daf2489e03c0fe60f053be8fb26f920048a151`.
+Rsomics won all twenty pairs: mean wall time was 1.6370 versus 2.4725 seconds,
+a 33.79% reduction, and mean peak RSS was 7,468,646 versus 12,901,581 bytes,
+a 42.11% reduction. The paired wall-time t-statistic was -12.583.
+
+Release revision `df6bd9054d60df51a04e51da4a421212b57cf205` passed native Linux
+and macOS CI on x86_64 and aarch64 in exact-head run `31451859877`; Linux
+x86_64 also passed the complete samtools 1.24 oracle and package gate. Publish
+run `31452351520` released 0.22.0 through `cargo publish --locked`. The live
+release is not yanked, declares Rust 1.91, and its 1,055,021-byte registry
+archive has SHA-256
+`468b757d3c47b6838adae06d8ec4e1e6d6de86af4fadc8fb4ed6b564c6a78bb6`.
+Its 304 extracted entries are byte-identical to the locally verified package,
+and its Cargo VCS record points to the release revision. A fresh locked
+registry install on the external build volume reported version 0.22.0 and
+exposed the complete `reset` help surface. Its SAM smoke output matched
+samtools 1.24 byte for byte with SHA-256
+`0c541dcefad0e5f60dea3d6dd98ab7dc5a3ab793cdfc94045ef20300adac7281`.
+
 ### Slice 4: interactive viewing
 
 `tview` is a complete terminal interface, not a formatting helper. It stays
@@ -1807,6 +1879,10 @@ src/
 ├── index.rs
 ├── mpileup.rs
 ├── quickcheck.rs
+├── reset.rs
+├── reset/
+│   ├── cram.rs
+│   └── raw.rs
 ├── samples.rs
 ├── view.rs
 ├── alignment_order.rs
@@ -1839,6 +1915,7 @@ src/
     ├── mpileup.rs
     ├── quickcheck.rs
     ├── reheader.rs
+    ├── reset.rs
     ├── samples.rs
     ├── sort.rs
     ├── stats.rs
