@@ -2091,6 +2091,100 @@ all eight complete fixture hashes above, and returned the schema 1.0 JSON
 summary with two mapped rows and one skipped record on the three-record smoke
 fixture.
 
+### Release 0.25 candidate: alignment consensus
+
+`consensus` derives one consensus sequence per requested reference or region
+from coordinate-sorted SAM, BAM, or CRAM alignments. Its compatibility
+contract is samtools 1.24 `consensus`: the installed executable, the
+[public manual](https://www.htslib.org/doc/1.24/samtools-consensus.html),
+`bam_consensus.c`, `bam_consensus_tab.h`, `consensus_pileup.c`, and the
+complete upstream regression corpus at revision
+`dc71c7274044d1050ccb64901731373ec7e915b6`. The five source and manual files
+plus 78 corpus files form an 83-entry digest manifest with SHA-256
+`a9cfb21947c98b5bf8656d378151e48340ed38db2aa67c05eeffa73d2af83607`.
+The upstream implementation, manual, and fixtures are MIT licensed.
+
+The stable operation includes FASTA, FASTQ, and consensus-oriented pileup
+output. FASTA and FASTQ retain insertion columns and omit deletion calls by
+default; `--show-ins`, `--show-del`, and `--mark-ins` make the coordinate
+mapping explicit. Pileup emits reference name, one-based reference position,
+insertion ordinal, depth, consensus call and confidence, observed bases, and
+qualities for each consensus column. Line wrapping, transactional named
+output, the shared JSON envelope, SAM/BAM/CRAM content detection, standard
+input, CRAM references, and the product's additional-worker convention are
+part of the product contract.
+
+The default caller is the samtools Gap5-derived Bayesian model, including
+substitution and indel hypotheses, mapping-quality use and local `MD`-based
+adjustment, neighboring-quality adjustment, heterozygous and indel priors,
+homopolymer correction, quality calibration files, and the `hiseq`, `hifi`,
+`r10.4_sup`, `r10.4_dup`, and `ultima` profiles. The documented
+`bayesian_116` compatibility mode is retained. The alternative `simple` mode
+implements quality-weighted or unweighted frequency calls, minimum depth,
+call fraction, heterozygous fraction, and optional IUPAC ambiguity output.
+Mode-specific options fail when combined with the other caller rather than
+being accepted without effect.
+
+Samtools 1.24 help labels the simple-mode `--het-fract` default as 0.15 while
+the exact source initializes 0.5. Live output on `consen1` is byte-identical
+to an explicit 0.5 and differs from an explicit 0.15. The product follows the
+observable 0.5 behavior and documents 0.5 instead of reproducing the stale
+help value.
+
+Region selection supports one indexed region or every row of a BED regions
+file without implicit merging or deduplication. `-a` extends each used
+reference or region across uncovered positions; `-aa` also emits unused
+references. An indexed FASTA can fill uncovered sequence and supplies an
+explicit reference quality. Record and base filters preserve the documented
+include/exclude FLAG, mapping-quality, and base-quality behavior. Missing
+indices, unknown or invalid regions, malformed BED, invalid calibration
+tables, unsorted sequential input, inconsistent reference dictionaries,
+malformed records, output aliases, parse failures, and write failures exit
+non-zero.
+
+The undocumented experimental samtools modes and switches
+`bayesian_m`, `bayesian_p`, `bayesian_r`, `--default-qual`, `--het-only`,
+`--SC-cost`, and `--homopoly-redux` are excluded from the public surface.
+They are implementation experiments rather than user contracts in the 1.24
+manual. Remote reference retrieval and accepting an unindexed region request
+by silently scanning the full input are likewise excluded.
+
+Historical `rsomics-bam-consensus` revision
+`f202e114caa95ef38cd80dc40df8ee6a3f8ceae7` is a refactor-then-merge asset,
+not a command implementation. Its small BAM/reference fixtures, simple-call
+lookup tables, and compatibility cases remain useful. Its standalone binary,
+custom active-read walker, BAM-only input, ignored worker count, eager
+per-reference output buffer, non-transactional file creation, partial simple
+surface, bespoke help, JSON-on-stderr behavior, and
+implementation-narration comments are discarded.
+
+The product implementation belongs under `src/consensus/` with typed caller,
+output, calibration, region, and rendering modules plus one narrow command
+adapter. It consumes `rsomics-pileup` columns and their checked raw records;
+insertion-column expansion and consensus policy remain inside `rsomics-bam`.
+No new Layer A item is assumed. If both `rsomics-bam consensus` and the
+existing `rsomics-call` indel path need the same checked query-span operation,
+that operation may be added to `rsomics-pileup` only with tests at both call
+sites.
+
+The always-run matrix will import all 68 upstream expected outputs and their
+nine input and index fixtures, then add SAM/BAM/CRAM and standard-input
+equivalence, long CIGAR, missing quality, ambiguous bases, malformed `MD`, clipping,
+filters, reference disagreement, duplicate and overlapping BED rows, invalid
+option combinations, output rollback, path aliasing, broken pipes, and JSON
+separation. The live Linux oracle must exercise every documented mode,
+format, calibration profile, region form, and reference-fill policy against
+samtools 1.24.
+
+The representative performance fixture will cover at least five million
+reference positions with mixed-depth SNP, insertion, deletion, clipping,
+homopolymer, and uncovered-reference cases. Default Bayesian FASTA, simple
+FASTA, FASTQ, pileup, reference fill, and indexed multi-region execution must
+retain complete output identity. The benchmark records exact revisions,
+digests, workers, warm-up, alternating timing distributions, CPU, peak RSS,
+and output hashes. Publication requires a strict throughput or resource-use
+advantage on the relevant default and projection hot paths.
+
 ### Slice 4: interactive viewing
 
 `tview` is a complete terminal interface, not a formatting helper. It stays
