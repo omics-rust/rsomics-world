@@ -2514,10 +2514,12 @@ coordinates, a positive block count, matching block-size and block-start
 counts, positive block sizes, and blocks contained by the transcript span.
 Reference names are case-sensitive and must exist in the alignment header.
 Exons are merged into private per-reference point indexes. Unmapped or
-QC-failed records go to `junk`; every other record goes to `in` exactly when
-its zero-based leftmost alignment start lies inside an exon, otherwise to
-`ex`. CIGAR overlap is deliberately not used: current black-box output confirms
-that a record starting outside an exon remains `ex` even if its span reaches
+QC-failed records go to `junk`. Every other record goes to `in` when its
+zero-based leftmost alignment start lies inside an exon. A paired record with
+a mapped mate also goes to `in` when the mate's leftmost start lies inside an
+exon, keeping an exon-linked pair together; otherwise it goes to `ex`. CIGAR
+overlap is deliberately not used: current black-box output confirms that an
+unpaired record starting outside an exon remains `ex` even if its span reaches
 the exon. This preserves RSeQC's useful rule while replacing its silent skips
 for malformed BED rows.
 
@@ -2541,6 +2543,17 @@ failing without `-u`. Integer `NM` values 0, 6, 4, and 3 produce four dynamic
 groups in first-seen order. With `-M 2`, the other three records fail or route
 to `-u`. These observations become committed ordinary tests plus an ignored
 live 1.24 differential; they are not left as an audit narrative alone.
+
+The retained `genes.bed12` row for `chr1` ends at 2100 while its second block
+ends at 2101. It remains unchanged as evidence that the historical parser
+silently accepted an invalid BED12 row. The strict oracle input extends that
+transcript to 2101 and has SHA-256
+`408c7e6be2d8490d2a993e42d30502827ca324c02065eae7394ffd0fead1cb74`.
+RSeQC 5.0.4 produces the retained five/two/two record bodies from this strict
+input. A four-million-record differential later exposed one paired boundary:
+the first mate started four bases inside an exon and the second nine bases
+after it. RSeQC kept both in `in`; revision `cbc4c5f` now preserves that
+mate-linked rule in raw BAM and decoded SAM/CRAM paths.
 
 The historical asset disposition is deliberately asymmetric. Revision
 `0393f01120602b785c30538954389d5742e9d7e7` contributes its two-RG input and
@@ -2571,6 +2584,47 @@ rerun default, parts, genes, and mates rather than inheriting the June reports;
 each mode needs complete output fingerprints, timing distribution, peak RSS,
 machine and fixture provenance, and a strict hot-path advantage before 0.27 is
 published.
+
+Revisions `c05b2aa`, `cc30f75`, and `cbc4c5f` expose the single `split`
+command through `rsomics-help`, add the samtools and RSeQC live differentials,
+bound output compression workers across the complete destination set, and
+close the mate-linked gene boundary. The ordinary split suite has 15 tests.
+The retained live suite compares default RG and integer `NM` outputs with
+samtools 1.24 and gene/mate outputs with RSeQC 5.0.4. Complete record bodies
+and relevant headers match.
+
+The release-performance gate uses two external-disk fixtures on an Apple M2
+running macOS 26.6, Rust 1.91.0, samtools/HTSlib 1.24, and RSeQC 5.0.4. The
+66,108,167-byte default fixture contains 4,000,260 coordinate-ordered records,
+split evenly between `old` and `new` read groups; its SHA-256 is
+`93d3f03f0ce3ef54d41fba17c0827ab79845c7e02110c155bd1aba2b66ff8627`.
+The 92,673,552-byte coordinate fixture contains 4,000,000 records and has
+SHA-256
+`bc2257da48b4c06da643edafbec1a383e946b7d1a0c0dd09dc21edc48dc2ef2d`.
+Its BAI and the two-exon BED12 have SHA-256
+`d207836008a4cb7f75384ec2e357d0eecc75eb1d7876509a190de2082c958385`
+and `00a74b5557c6d802f13fe54721a1374a22a17f0b54e9309e6d89365c3b6c834f`.
+
+One complete fingerprinted validation pass precedes five AB/BA alternating
+trials. Default mode gives both tools four additional workers; the three
+RSeQC comparisons and rsomics use their single-worker defaults. All 24 output
+files record compressed and decoded SHA-256 plus counts. Default, gene, and
+mate decoded outputs match their oracle exactly; both part implementations
+retain all 4,000,000 records.
+
+| Mode | rsomics mean ± σ | Oracle mean ± σ | Oracle/rsomics | rsomics max RSS | Oracle max RSS |
+|---|---:|---:|---:|---:|---:|
+| default RG | 2.172 ± 0.435 s | 2.426 ± 0.054 s | 1.12× | 8,732,672 B | 15,286,272 B |
+| four parts | 6.992 ± 0.087 s | 12.884 ± 0.242 s | 1.84× | 6,930,432 B | 30,081,024 B |
+| genes | 5.812 ± 0.105 s | 12.908 ± 0.094 s | 2.22× | 6,668,288 B | 42,582,016 B |
+| mates | 5.694 ± 0.131 s | 42.884 ± 0.196 s | 7.53× | 6,569,984 B | 42,369,024 B |
+
+The reproducible runner is `scripts/benchmark_bam_split.sh`. Raw timing and
+output manifests are retained under
+`/Volumes/Zane's HDD/rsomics-fixtures/bam/split-4m-20260812/bench-cbc4c5f/`.
+Their SHA-256 values are
+`c1f7fc59a919c23bcd59168949aafa76c300f0aa84aa4f95fc129ea503794b01`
+and `97195e26c0aaa1cab07f09e47abfb0421f003d4ce210c17e3d8933ac8f92a82a`.
 
 ### Slice 4: interactive viewing
 
