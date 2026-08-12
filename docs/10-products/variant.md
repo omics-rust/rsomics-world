@@ -1510,6 +1510,30 @@ HMM and Levenberg-Marquardt code stays product-private initially.
 `rsomics-stats` promotion requires a second product consumer with identical
 parameter, convergence, missingness, and error contracts.
 
+### Reconstruction ledger
+
+The new `omics-rust/rsomics-cnv` repository is implemented through revision
+`732980953138f5a1484f8407768941bdb85845ce`. It now has one `rsomics-help`
+command tree, typed plain or BGZF VCF and raw or BGZF BCF input, checked
+single- and paired-sample HMM inference, the complete CN2/CN3/CN4 polysomy
+fitter, and whole-directory transactional reports. Call reports match bcftools
+1.24 `dat.*.tab` and `cn.*.tab` byte for byte on the accepted fixtures;
+polysomy distributions match every `DIST` row and the accepted fractional
+model decisions and fit intervals.
+
+`call --allele-frequencies` streams plain or gzip-compressed four-column
+frequency tables in variant-header order with constant table memory. It
+reproduces the upstream site restriction, exact REF/ALT matching, and the 0.1
+fallback for missing frequencies or mismatched alleles. The indexed BGZF
+oracle produces byte-identical call tables.
+
+Exact-head CI `31604455733` passed debug and release tests on native Linux and
+macOS for both `x86_64` and `aarch64`. Its Linux `x86_64` job built the pinned
+bcftools and htslib 1.24 sources with GSL, then passed all three call oracle
+groups and both polysomy oracle groups. The crate remains unpublished: indexed
+regions, streaming targets, call optimization, plotting, and representative
+equivalent-workflow timing and peak RSS are still release gates.
+
 The product uses current `rsomics-help` for the single Clap command tree and
 the existing `rsomics-common` error, result-envelope, and multi-file atomic
 commit contracts. Typed VCF/BCF access remains product-internal over noodles.
