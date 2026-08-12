@@ -71,6 +71,11 @@ revision `516a56b21c79` after exact-head CI `31503800833` passed the four
 native targets, including package verification and the complete samtools 1.24
 oracle on Linux x86_64. Publication workflow `31504777540` completed
 successfully.
+The thirty-fifth command, `split`, is published as `rsomics-bam 0.27.0` from
+revision `b8abe45fbb0f` after exact-head CI `31521016190` passed the four
+native targets and the complete samtools 1.24 and RSeQC 5.0.4 oracle. Publish
+run `31522361769` and independent registry verification completed
+successfully.
 
 ## Boundary
 

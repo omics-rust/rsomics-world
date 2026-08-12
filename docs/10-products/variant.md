@@ -1,8 +1,9 @@
 # Variant format, calling, and copy-number product dossiers
 
 Status: boundary, upstream-operation, and historical-source audit complete.
-`rsomics-vcf` 0.2.0 is published with the complete first-release `head`,
-`query`, `validate`, `index`, and `view` slice plus typed `filter`.
+`rsomics-vcf` 0.3.0 is published with the complete first-release `head`,
+`query`, `validate`, `index`, and `view` slice plus typed `filter` and allele
+normalization.
 `rsomics-call` 0.1.3 is published with its complete three-command first
 release. `rsomics-cnv` 0.1.0 is published with its complete two-command first
 release.
