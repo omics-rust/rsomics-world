@@ -3,7 +3,7 @@
 Status: boundary, upstream-operation, and historical-source audit complete.
 `rsomics-vcf` 0.2.0 is published with the complete first-release `head`,
 `query`, `validate`, `index`, and `view` slice plus typed `filter`.
-`rsomics-call` 0.1.1 is published with its complete three-command first
+`rsomics-call` 0.1.2 is published with its complete three-command first
 release. `rsomics-cnv` does not yet exist and is not published.
 
 ## Portfolio decision
@@ -1407,6 +1407,18 @@ identical to the local exact-head package.
 `31475365157` pass. The crates.io version is not yanked, records the same Git
 head, and its 135,087-byte archive has SHA-256
 `e22ccb74c60e4e5b9cd5de6b97285700e6686596556c7612e7bf1e59fb69cb7b`.
+
+`rsomics-call` 0.1.2 publishes the indexed-reference consolidation, missing-
+quality compatibility, and platform-stable undefined-QM normalization at
+release head `f22e61a7a64e493db0066808a0590cb7e3868708`. Exact-head CI run
+`31595132020` passes all four native target classes, including the pinned
+bcftools 1.24 compatibility oracle on Linux `x86_64`; publish run
+`31595453581` completed successfully. The non-yanked 136,387-byte crates.io
+archive has SHA-256
+`ad19a203da39c4b51d901ba7b2ab44142233e7641a10018f5b9291892917fb58`,
+records the same Git head, and has the same unpacked file contents as the
+locally verified package. A fresh locked registry install reports version
+0.1.2 and exposes the unified `pileup`, `call`, and `run` help tree.
 
 ## `rsomics-cnv`
 
