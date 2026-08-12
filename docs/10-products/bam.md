@@ -2759,11 +2759,99 @@ embedded CRAM recovery then matched the pinned regional FASTA files with
 SHA-256 `08304f25c2c19a8e7c1537c5b2c0ec3387b818305b620b3e967f92bd0edbc05e`
 and `c669911e54def62dbe8046c3bdde8ed586b0695f8daaf5913a4cd9b089d4ecef`.
 
-### Slice 4: interactive viewing
+### Release 0.29: interactive alignment viewing
 
-`tview` is a complete terminal interface, not a formatting helper. It stays
-out of public help until navigation, reference display, color modes, terminal
-failure behavior, and native-platform tests are complete.
+`tview` is a complete terminal interface, not a formatting helper. Its
+compatibility contracts are the
+[`samtools tview` 1.24 manual](https://www.htslib.org/doc/1.24/samtools-tview.html),
+`bam_tview.c`, `bam_tview.h`, `bam_tview_curses.c`, `bam_tview_html.c`, and
+the upstream large-coordinate fixture. The four implementation files have
+SHA-256 values
+`aa963584d76d85bc33e95cfb1e15394f636e19b2134c16382a85bb72c7b70fba`,
+`d3b4d8c202c63d6ecab122e433ef53625a13c4c78f151fbb5fdc4d1a1abfbd38`,
+`3ff20ae15152452f50ff796ec3cf381a2f0ea790484f8c1f32146412515279bc`,
+and `1a4f1fa34393011622ac94406345f9edf367284ca4ead6dbc309a6b948b6d23e`.
+Their MIT notice is retained in the product attribution file. The upstream
+80-column expected text and its SAM input have SHA-256 values
+`6c426d3ab105d6bc7c081c164712ae989e5f375ead8cd9ff2fd39743ad296e67`
+and `5625df1c321d9ac835f07a5062750717f548c20806f10b8d9eb59ca1522638bf`.
+There is no historical rsomics implementation to merge.
+
+The stable command accepts one coordinate-sorted, indexed SAM, BAM, or CRAM
+file. It supports interactive terminal, deterministic plain-text, and HTML
+display; an initial one-based reference position; sample or read-group
+selection through `@RG ID` and `SM`; an explicit alignment index; an optional
+indexed FASTA reference; insert hiding; decompression workers; and a fixed
+width for non-interactive output. `-d/--display` accepts `C`, `T`, `H` and
+their full names. Invalid display values fail rather than silently selecting
+the terminal. `-X/--index FILE` takes the index as its value instead of making
+the user infer an extra positional argument. `-o/--output FILE` is an rsomics
+extension for transactional text or HTML output. Interactive mode rejects
+named output and non-terminal input or output; `--json` is rejected there and
+requires named output for text or HTML so it cannot corrupt the rendered
+stream.
+
+Each viewport has one coordinate scale row, one reference row, one consensus
+row, and non-overlapping alignment rows. With no FASTA, the reference is `N`.
+With one, reference matches use `.` on the forward strand and `,` on the
+reverse strand; mismatches remain visible and reverse-strand symbols are
+lowercase. Deletions, reference skips, insertions, padding, read names,
+ambiguous bases, missing qualities, explicit `=` and `X`, and alignments wider
+than the viewport have one checked projection model shared by all three
+renderers. Consensus uses the samtools 1.24 genotype-likelihood and confidence
+contract rather than a majority-base shortcut. Mapping quality, base quality,
+nucleotide, color-space base, and color-space quality modes preserve the
+upstream thresholds. Secondary or improperly paired alignments remain
+distinguishable without relying on color alone.
+
+The terminal state machine supports `?` help; arrows and `h/j/k/l` for small
+movement; `H/J/K/L` for larger movement; control-H/control-L for 1 kb movement;
+space and backspace for viewport movement; `g` or `/` for a checked goto prompt
+with reference completion and `=position`; `m`, `b`, `n`, `c`, and `z` for
+color modes; `.`, `s`, `r`, `N`, `C`, and `i` for display toggles; `v` for the
+inverse palette; resize redraw; and `q`, Escape, or control-C for exit. Position
+and row offsets saturate at valid bounds. Every normal exit, input/output
+error, and caught application failure restores cursor visibility, raw mode,
+and the prior screen before the command reports nonzero.
+
+Text output must match the upstream stable character grid byte for byte for
+the same width, start, reference, sample, and insert setting when stdout is
+not a terminal. HTML has the same cells and attributes, valid escaped markup,
+one accessible location label, and no terminal escape bytes; cosmetic HTML
+source layout is not a byte-level compatibility contract. If width is omitted,
+`COLUMNS` controls text and HTML when it contains a valid value, otherwise the
+default is 80. Width, terminal dimensions, reference lengths, row packing,
+insertion expansion, and coordinate arithmetic are checked before allocation.
+
+Mouse control, alignment editing, read-name search, multi-input comparison,
+and remote-object authentication are explicit exclusions from 0.29. The
+command does not keep an entire chromosome or complete alignment file in
+memory: each redraw fetches one indexed window and holds only the reference
+slice, visible rows, and records overlapping that window.
+
+The product reuses `rsomics-bamio` for checked indexed input and the existing
+`rsomics-pileup` column and retained-record-state APIs for projection. Row
+packing, consensus policy, styled cells, renderer selection, and terminal
+events remain private BAM modules. The authoritative command tree and global
+diagnostic contract still come from `rsomics-help`; terminal rendering is not
+added to that public foundation because no second product consumer is
+concrete. A pure-Rust terminal dependency, if needed, remains product-local
+until that condition changes.
+
+Ordinary tests must cover the complete cell model, all display and color
+modes, sample and read-group unions, optional reference behavior, every CIGAR
+operation, strand and dot notation, row packing, large coordinates, width and
+allocation limits, text and HTML escaping, aliases, malformed and truncated
+input, missing or wrong indexes, output transactions, and write failures. A
+deterministic state-machine suite covers every key and resize event. Native
+Linux and macOS pseudo-terminal tests on x86_64 and aarch64 must prove initial
+draw, goto, toggles, resize, help, clean exit, and terminal restoration. The
+release differential regenerates the upstream fixture and a compact complete
+mode matrix with samtools 1.24. Representative indexed BAM and CRAM windows
+record exact output fingerprints, alternating text and HTML timings, peak RSS,
+interactive redraw latency, fixture and machine provenance, and exact binary
+hashes. At least one complete display path needs a strict throughput or
+resource-use advantage before 0.29 is published.
 
 ## Target structure
 
