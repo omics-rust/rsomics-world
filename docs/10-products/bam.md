@@ -2791,8 +2791,11 @@ named output and non-terminal input or output; `--json` is rejected there and
 requires named output for text or HTML so it cannot corrupt the rendered
 stream.
 
-Each viewport has one coordinate scale row, one reference row, one consensus
-row, and non-overlapping alignment rows. With no FASTA, the reference is `N`.
+Each nonempty viewport has one coordinate scale row, one reference row, one
+consensus row, and packed alignment rows; an empty viewport omits the unused
+consensus row like samtools. The retained level allocator reproduces upstream
+free-row delay and same-coordinate tail/head reuse rather than approximating
+layout from alignment intervals. With no FASTA, the reference is `N`.
 With one, reference matches use `.` on the forward strand and `,` on the
 reverse strand; mismatches remain visible and reverse-strand symbols are
 lowercase. Deletions, reference skips, insertions, padding, read names,
@@ -2852,6 +2855,36 @@ record exact output fingerprints, alternating text and HTML timings, peak RSS,
 interactive redraw latency, fixture and machine provenance, and exact binary
 hashes. At least one complete display path needs a strict throughput or
 resource-use advantage before 0.29 is published.
+
+Revision `f871d4edac57` implements the complete slice in private modules for
+indexed loading, checked pileup projection, upstream-compatible row packing,
+consensus calling, styled cells, renderers, and terminal state. The public
+library surface is limited to Text or HTML rendering options and its summary;
+terminal policy remains in the product command adapter. A shared private
+errmod wrapper replaces the phase-specific unsafe handle, so both `phase` and
+`tview` propagate allocation and depth errors through the product error
+contract. No new Layer A item is justified.
+
+The ordinary tview suite has 15 passing cases. Five pinned samtools 1.24
+differentials cover the upstream text fixture, complete CIGAR modes, sample
+and read-group selection, the 10-gigabase coordinate fixture, and the
+8,001-read depth boundary. Full release-mode product regression, strict
+Clippy, rustdoc, and clean package verification pass. Text output for both the
+representative BAM and CRAM is byte-identical to samtools: 968,363 bytes with
+SHA-256 `e8af8bc6756e1c61b6dca4e12768267468b87200a37d83f799e657d90f5608a9`.
+
+The release-performance gate used the feature revision, Rust 1.97.1, and
+samtools/HTSlib 1.24 on the Apple M2 Mac mini. Twenty alternating pairs used a
+120-column viewport across 8,001 randomized 1,000-base alignments. On BAM,
+rsomics Text won all twenty pairs and reduced mean wall time from 0.2515 to
+0.2000 seconds, a 20.48% reduction, while using 9.37% more mean peak RSS. On
+CRAM, mean Text wall time was 0.3125 versus 0.3155 seconds and is treated as
+parity; mean peak RSS fell from 130,262,630 to 82,938,266 bytes, a 36.33%
+reduction. HTML was slower for both inputs and has no throughput claim.
+Twenty pseudo-terminal redraws had median completion times of 0.216675479
+seconds for BAM and 0.333513209 seconds for CRAM. The product `PERFORMANCE.md`
+records the full timing, paired, RSS, terminal, input, output, tool, and binary
+hash ledger.
 
 ## Target structure
 
