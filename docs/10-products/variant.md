@@ -404,6 +404,89 @@ observed maximum RSS of 3,702,784 bytes for rsomics and 6,782,976 bytes for
 bcftools. The committed `benches/filter.rs` regenerates the input and
 benchmarks both filters and their view baselines under the same conditions.
 
+### Release 0.3: allele normalization
+
+The next release increment is `norm`. It owns equivalent VCF
+representations of one variant: reference-guided left alignment and trimming,
+complex-allele atomization, multiallelic split and join, and the typed field
+remapping required by each transformation. It does not absorb reference index
+creation, general sorting, or arbitrary annotation merely because those can be
+composed with normalization.
+
+The behavior oracle is bcftools 1.24 `norm`. The installed executable has
+SHA-256
+`33100a6b961c529e915394d53b4737a0f8dd7a164eac352afe4e74e1ced51f60`.
+The official 1.24 archive has SHA-256
+`8caddc22610ee2851666047c859bb91da0c1e32d0c2ec553db6f153ad130e46f`;
+`vcfnorm.c`, `abuf.c`, and `gff.c` have SHA-256
+`97163126a8d2f04f25daf793e67731f3ed070d8fcd52ae54c28efeb7c2c69657`,
+`19c85ba4831ed4e1a169206a7b44352e8bad644a2aa040164adfa48602523e1c`,
+and `70a55a5b1cbe531e03e4608fd4c56bb53ca96b20c81c04ab75495f63b554d821`.
+The VCF 4.5 specification PDF has SHA-256
+`7a1f6990dbfca4a20d9b6f21a4cb0bcbfd876853bfc86a832af2de6153abffa5`.
+
+The stable command accepts plain or BGZF VCF, raw or BGZF BCF, named input or
+standard input, and writes all four encodings. Its declared behavior includes:
+
+- indexed plain or BGZF FASTA reference access, sequence-name and range
+  validation, left alignment, parsimonious trimming, IUPAC reference handling,
+  and the exit, warn, exclude, or REF-fix mismatch policies;
+- MNV and complex-allele atomization with missing or spanning-deletion overlap
+  alleles, original-record annotation, and composition with normalization and
+  splitting;
+- multiallelic split and biallelic join for SNPs, indels, separate mixed types,
+  or any type, with configurable overlapping-allele replacement and strict
+  merged FILTER behavior;
+- schema-driven INFO and FORMAT remapping for fixed, `A`, `R`, `G`, and
+  variable cardinalities across integer, float, string, character, flag, and
+  genotype fields, including mixed ploidy, phasing, missing values, vector-end
+  values, AD sum preservation, and valid AC and AN updates;
+- symbolic alleles, breakends, spanning deletions, gVCF alleles and blocks,
+  telomere coordinates, duplicate alleles, and duplicate-record policies;
+- optional expression selection through the existing private typed engine,
+  indexed regions, streaming targets, position or lexicographic local output
+  order, bounded displacement buffering, transactional named output, bounded
+  compression workers, and JSON separation from variant output;
+- GFF3-directed HGVS 3-prime right alignment for unambiguous forward-strand
+  transcripts, with left alignment retained for overlapping or conflicting
+  transcript orientation.
+
+The experimental upstream `--force` behavior is excluded: a malformed
+allele-indexed field fails rather than being silently discarded. The deprecated
+`-D` alias is excluded in favor of the explicit duplicate policy. Automatic
+output indexing remains excluded until a grouped output-and-index transaction
+exists. Upstream verbosity, version stamping, and positional region shortcuts
+are not copied into the public interface. These exclusions are absent from
+help rather than accepted as no-ops.
+
+The historical `rsomics-vcf-norm` revision
+`c4eeb5026199141a08ddd7b710be14488887edc2` contributes its small split
+fixtures and regressions for GT and `Number=R` remapping. Its whole-file load,
+VCF-text-only parser and writer, partial `Number=A/R` INFO handling, direct
+output creation, one-flag CLI, and source narration are discarded. The old
+implementation does not perform reference normalization despite its product
+name and is not a mergeable command.
+
+Reference access becomes a public `rsomics-seqio` item because it has two
+concrete consumers: the existing indexed and chunk-cached FASTA paths in
+`rsomics-call` and the new `rsomics-vcf norm` realignment path. The public
+contract is zero-based half-open range access by reference name over indexed
+plain or BGZF FASTA with bounded cache ownership and contextual errors. It does
+not expose VCF policy or caller-specific reference IDs. `rsomics-call` and
+`rsomics-vcf` must each have consumer-side tests before release; until then the
+item is not published merely for the planned command.
+
+The ordinary compatibility matrix retains the bcftools 1.24 norm fixtures and
+adds all four variant encodings, plain and BGZF references, standard input,
+every declared transformation and composition order, allele cardinalities and
+types, haploid through mixed-polyploid samples, symbolic and gVCF boundaries,
+reference mismatch modes, selection, displacement windows, output failures,
+target aliasing, and rollback. A representative reference-guided indel path
+and multiallelic typed-remapping path must each record input hashes, repeated
+timing distributions, peak RSS, versions, flags, and machine provenance. At
+least the principal established hot path must have a strict throughput or
+resource-use advantage before publication.
+
 ### Current structure
 
 ```text
