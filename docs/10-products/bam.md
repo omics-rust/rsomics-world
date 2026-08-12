@@ -81,6 +81,11 @@ from revision `53e7d18b9911` after exact-head CI `31623869168` passed the four
 native targets and the complete samtools 1.24 oracle. Publish run
 `31624656980` and independent registry installation and output verification
 completed successfully.
+The thirty-seventh command, `tview`, is published as `rsomics-bam 0.29.0`
+from revision `6a8da2a25479` after exact-head CI `31635217563` passed the four
+native targets and the complete samtools 1.24 oracle. Publish run
+`31635971932` and independent registry installation and output verification
+completed successfully.
 
 ## Boundary
 
@@ -2888,6 +2893,28 @@ Twenty pseudo-terminal redraws had median completion times of 0.214339167
 seconds for BAM and 0.334060438 seconds for CRAM. The product `PERFORMANCE.md`
 records the full timing, paired, RSS, terminal, input, output, tool, and binary
 hash ledger.
+
+Exact-head workflow
+[`31635217563`](https://github.com/omics-rust/rsomics-bam/actions/runs/31635217563)
+passed at release revision `6a8da2a25479788895b0358be9e2a215a551bf14` on
+native Linux and macOS for both x86_64 and aarch64. Linux x86_64 also passed
+strict Clippy, package verification, and the complete samtools 1.24 oracle.
+Publication workflow
+[`31635971932`](https://github.com/omics-rust/rsomics-bam/actions/runs/31635971932)
+published the locked 0.29.0 package from that revision.
+
+The downloaded 1,422,898-byte crates.io archive is not yanked and has SHA-256
+`948a65ac4ce46188d3207a9dd6a045bb06b2744415f569bd8d8126932778c9e5`.
+Its VCS record names the exact release revision, and its complete unpacked
+file tree matches the locally verified package. A fresh locked registry
+install produced a binary with SHA-256
+`a938fc36b393e32a52d4ae6b1dfcf26711a8acbcb3be59ce3dfb3c4150b7752c`.
+The installed binary reports 0.29.0 and exposes the complete command through
+the shared help tree. On a freshly generated indexed BAM, its 40-column Text
+view matched samtools 1.24 byte for byte with SHA-256
+`fc377c6dc2afb68ed7eb13589b9a7c13bcaafe90bda454063a6f70299148d2cc`;
+the corresponding valid HTML output has SHA-256
+`636dacfd07013561a33cd2e782391639a20dfbbe11df759ef8675ccd96cc3388`.
 
 ## Target structure
 
