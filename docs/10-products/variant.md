@@ -1502,6 +1502,44 @@ commit contracts. Typed VCF/BCF access remains product-internal over noodles.
 VCF-I/O wrapper is not justified while noodles already supplies the shared
 format mechanism and the policies remain product-specific.
 
+### Oracle and evidence plan
+
+The local bcftools 1.24 build exposes both commands, including the optional
+GSL-backed `polysomy`, so the primary development oracle does not require an
+older upstream build. Release CI must still build the pinned 1.24 archive with
+GSL on Linux x86_64 and fail when either oracle is unavailable.
+
+The current historical fixtures are insufficient: `test_cnv.vcf` contains 180
+single-sample records on one chromosome, and `diploid_ra_500.vcf` contains
+only 500 heterozygous diploid records on one chromosome. Their SHA-256 values
+are respectively
+`d53793e8a732b3f1f08603be7631e6ff1c1c4e243cc93b9c1f706af84b14f0de`
+and
+`c00f698e39107e535ba93fe8b864f5f901625aac454870f98597bfaf579fab78`.
+They remain regression seeds rather than release evidence.
+
+The accepted oracle matrix covers:
+
+- CN0 through CN3 segments, chromosome boundaries, large coordinate gaps,
+  query/control disagreement, AF-file restriction, optimization, paired-state
+  priors, smoothing, and every documented region and target overlap policy;
+- CN1, ambiguous, CN2, fractional CN3, and fractional CN4 polysomy decisions,
+  failed-fit thresholds, AA inclusion, multi-chromosome input, and all public
+  algorithm parameters;
+- plain VCF, BGZF VCF, and BCF representations of the same typed records,
+  explicit samples, missing values, malformed schema, non-finite values,
+  unsorted input, empty selections, and failed output finalization;
+- every compatibility report and coordinate, state, count, and provenance
+  field, with declared tolerances for posterior, quality, fitted parameters,
+  and fractional copy number instead of integer-rounded spot checks.
+
+Performance uses a deterministic multi-chromosome fixture with at least
+300,000 informative records and non-trivial state and model transitions. It
+records input, binary, and output digests, pinned upstream versions, machine
+and flags, order-reversed timing distributions, and peak RSS. The HMM caller
+and polysomy fitter each need their own result; a faster parser does not prove
+a faster complete scientific workflow.
+
 Do not publish `rsomics-cnv` until both operations pass current bcftools 1.24
 decisions and reports, representative performance and memory gates, and all
 four native exact-head CI classes.
