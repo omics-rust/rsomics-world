@@ -3,8 +3,9 @@
 Status: boundary, upstream-operation, and historical-source audit complete.
 `rsomics-vcf` 0.2.0 is published with the complete first-release `head`,
 `query`, `validate`, `index`, and `view` slice plus typed `filter`.
-`rsomics-call` 0.1.2 is published with its complete three-command first
-release. `rsomics-cnv` does not yet exist and is not published.
+`rsomics-call` 0.1.3 is published with its complete three-command first
+release. `rsomics-cnv` is implemented through its complete two-command first
+release and is awaiting registry publication.
 
 ## Portfolio decision
 
@@ -1420,6 +1421,13 @@ records the same Git head, and has the same unpacked file contents as the
 locally verified package. A fresh locked registry install reports version
 0.1.2 and exposes the unified `pileup`, `call`, and `run` help tree.
 
+`rsomics-call` 0.1.3 publishes the repaired indexed-reference short-read and
+symbolic-deletion paths at release head
+`4ba89480de892f9f0bab3bd5fcc7fb1a80b486d4`. Exact-head four-native-target CI
+`31606224117` and publish run `31607429269` pass. The non-yanked crates.io
+archive has SHA-256
+`8983472a297ce6a01e045d0fe45b2167a534cc02cf1d29f66ed6c8768751466`.
+
 ## `rsomics-cnv`
 
 ### Boundary
@@ -1513,13 +1521,13 @@ parameter, convergence, missingness, and error contracts.
 ### Reconstruction ledger
 
 The new `omics-rust/rsomics-cnv` repository is implemented through revision
-`732980953138f5a1484f8407768941bdb85845ce`. It now has one `rsomics-help`
+`de5c5724d0c37a3dcb45a617e75a78d93293eee4`. It has one `rsomics-help`
 command tree, typed plain or BGZF VCF and raw or BGZF BCF input, checked
 single- and paired-sample HMM inference, the complete CN2/CN3/CN4 polysomy
-fitter, and whole-directory transactional reports. Call reports match bcftools
-1.24 `dat.*.tab` and `cn.*.tab` byte for byte on the accepted fixtures;
-polysomy distributions match every `DIST` row and the accepted fractional
-model decisions and fit intervals.
+fitter, and whole-directory transactional reports. `call` writes and releases
+one chromosome at a time, preserves complete compatibility tables, and stores
+a compact `call-result/v2` artifact manifest instead of duplicating per-site
+measurements and posteriors in JSON.
 
 `call --allele-frequencies` streams plain or gzip-compressed four-column
 frequency tables in variant-header order with constant table memory. It
@@ -1527,12 +1535,26 @@ reproduces the upstream site restriction, exact REF/ALT matching, and the 0.1
 fallback for missing frequencies or mismatched alleles. The indexed BGZF
 oracle produces byte-identical call tables.
 
-Exact-head CI `31604455733` passed debug and release tests on native Linux and
-macOS for both `x86_64` and `aarch64`. Its Linux `x86_64` job built the pinned
-bcftools and htslib 1.24 sources with GSL, then passed all three call oracle
-groups and both polysomy oracle groups. The crate remains unpublished: indexed
-regions, streaming targets, call optimization, plotting, and representative
-equivalent-workflow timing and peak RSS are still release gates.
+The stable surface includes indexed regions, streaming targets and all three
+overlap policies; query and control optimization with distinct model
+parameters; every documented call and polysomy parameter; self-contained SVG
+plots; and transactional compatibility and machine-readable report bundles.
+Six call, two polysomy, and three selection oracle groups pass against bcftools
+1.24. Call signal and posterior tables are byte-identical on the release
+fixture; polysomy distributions are byte-identical, and fitted deviations use
+a `1e-5` tolerance while preserving model intervals and copy-number decisions.
+
+The selection oracle explicitly sets the smoothing window to one when a
+selection retains only one or two sites. Bcftools 1.24 `smooth_data` otherwise
+initializes five values for a default width-ten window even when `ndat` is one,
+so its single-site CN state depends on memory outside the accepted data. This
+upstream defect is excluded from the compatibility contract; both tools still
+use their default width ten in complete-workflow tests and performance gates.
+
+Exact-head CI `31617643951` passes debug and release tests on native Linux and
+macOS for both `x86_64` and `aarch64` at revision `de5c5724d0c3`. The Linux
+`x86_64` job builds the SHA-256-pinned bcftools and htslib 1.24 sources with
+GSL, verifies the command surface, and passes all 11 live oracle groups.
 
 The product uses current `rsomics-help` for the single Clap command tree and
 the existing `rsomics-common` error, result-envelope, and multi-file atomic
@@ -1541,21 +1563,27 @@ commit contracts. Typed VCF/BCF access remains product-internal over noodles.
 VCF-I/O wrapper is not justified while noodles already supplies the shared
 format mechanism and the policies remain product-specific.
 
-### Oracle and evidence plan
+### Oracle and performance evidence
 
 The local bcftools 1.24 build exposes both commands, including the optional
 GSL-backed `polysomy`, so the primary development oracle does not require an
 older upstream build. Release CI must still build the pinned 1.24 archive with
 GSL on Linux x86_64 and fail when either oracle is unavailable.
 
-The current historical fixtures are insufficient: `test_cnv.vcf` contains 180
+The historical fixtures are insufficient: `test_cnv.vcf` contains 180
 single-sample records on one chromosome, and `diploid_ra_500.vcf` contains
 only 500 heterozygous diploid records on one chromosome. Their SHA-256 values
 are respectively
 `d53793e8a732b3f1f08603be7631e6ff1c1c4e243cc93b9c1f706af84b14f0de`
 and
 `c00f698e39107e535ba93fe8b864f5f901625aac454870f98597bfaf579fab78`.
-They remain regression seeds rather than release evidence.
+They remain regression seeds rather than release evidence. The release gate
+instead uses deterministic 12-chromosome fixtures with 300,000 informative
+records per workflow. Their SHA-256 values are
+`fb5b1fa37ea19d60fafe12320a5fa8edfb18c65e732f46b0a080d3f9b8a4eb76`
+for `call.vcf` and
+`b15942724f7e47c8648830125400b5bf4c2eb1f446a09f863e4af71a358b8c1d`
+for `polysomy.vcf`.
 
 The accepted oracle matrix covers:
 
@@ -1572,16 +1600,21 @@ The accepted oracle matrix covers:
   field, with declared tolerances for posterior, quality, fitted parameters,
   and fractional copy number instead of integer-rounded spot checks.
 
-Performance uses a deterministic multi-chromosome fixture with at least
-300,000 informative records and non-trivial state and model transitions. It
-records input, binary, and output digests, pinned upstream versions, machine
-and flags, order-reversed timing distributions, and peak RSS. The HMM caller
-and polysomy fitter each need their own result; a faster parser does not prove
-a faster complete scientific workflow.
+The macOS arm64 gate alternates tool order for 12 measured rounds and checks
+compatibility after every pair. On Apple M2 and macOS 26.6.1, `call` has a
+1.420-second median wall time, 1.170-second CPU time, and 25,772,032-byte peak
+RSS; bcftools 1.24 has 1.375 seconds, 1.200 seconds, and 37,978,112 bytes.
+`call` therefore uses 32.1% less peak memory and 2.5% less CPU while its median
+wall time is 3.3% higher. `polysomy` has a 1.170-second median and 3,792,896-byte
+peak RSS versus 5.160 seconds and 7,536,640 bytes upstream, a 77.3% wall-time
+and 49.7% memory reduction. Raw rounds, commands, machine metadata, fixture and
+release-binary hashes, generator, and fail-on-mismatch runner are tracked under
+the product repository's `benchmarks/` directory.
 
-Do not publish `rsomics-cnv` until both operations pass current bcftools 1.24
-decisions and reports, representative performance and memory gates, and all
-four native exact-head CI classes.
+Both operations now pass current bcftools 1.24 decisions and reports,
+representative performance and memory gates, package and API review, and all
+four native exact-head CI classes. No new Layer A API was justified: the HMM,
+mixture fitting, signal policy, and VCF/BCF access remain product-private.
 
 ## Cross-routed source record
 
