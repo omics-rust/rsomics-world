@@ -834,6 +834,19 @@ fresh registry fetch resolved and downloaded `rsomics-vcf` 0.2.0 from
 crates.io. Remaining later-slice commands stay absent rather than shipping
 placeholders.
 
+`rsomics-vcf` 0.3.0 publishes the completed allele-normalization slice at
+revision `8051f3bfaff9b04958fd0f6a6264582af4acd6b3`. Exact-head CI run
+`31574424729` passed all four native target classes, including package and
+bcftools 1.24 oracle verification on Linux `x86_64`; publish run `31574785496`
+completed successfully from the same revision. The non-yanked crates.io
+archive has SHA-256
+`fcd6ca3f83cebd2bd7695a8fb4fac39cfe22a49c60410c140ed65682a886d70c`.
+A fresh registry install downloaded and compiled 0.3.0 on external storage,
+reported version 0.3.0, exposed the unified `norm` help, and split the formal
+200,000-record typed fixture into 400,000 records with body SHA-256
+`03b3ab4553d2289049bf9fb92566b97b43a55d151a5e70763c29cbb9a6123c56`,
+matching the pre-publication oracle.
+
 ## `rsomics-call`
 
 ### Boundary
