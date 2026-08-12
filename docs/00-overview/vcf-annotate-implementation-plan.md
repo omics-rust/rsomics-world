@@ -649,7 +649,7 @@ pub(crate) struct SampleSelection {
 }
 ```
 
-- [ ] **Step 1: Add failing FORMAT and sample tests**
+- [x] **Step 1: Add failing FORMAT and sample tests**
 
 Cover automatic same-name mapping, ordered inclusion, exclusion with `^`, samples file, missing source or target samples, GT phasing and ploidy, scalar and array FORMAT values, all write modes, absent target FORMAT keys, whole FORMAT transfer except GT, explicit GT transfer, and `Number=A/R/G` remapping per sample.
 
@@ -667,19 +667,19 @@ fn transfers_selected_samples_by_name_not_position() {
 }
 ```
 
-- [ ] **Step 2: Run FORMAT tests and confirm RED**
+- [x] **Step 2: Run FORMAT tests and confirm RED**
 
 Run `cargo test annotate::edit::tests::format --lib`. Expected: sample-transfer interface is absent.
 
-- [ ] **Step 3: Implement keyed sample mutation**
+- [x] **Step 3: Implement keyed sample mutation**
 
 Resolve samples by header name once, retain target sample order, extend the target FORMAT key list deterministically, initialize unselected samples as missing for newly introduced keys, and remap genotype allele indices through `Matched::allele_map`. Fail on unavailable selected names and impossible genotype alleles.
 
-- [ ] **Step 4: Run edit, view sample, and norm sample tests**
+- [x] **Step 4: Run edit, view sample, and norm sample tests**
 
 Run `cargo test annotate::edit --lib`, `cargo test --test view`, and `cargo test norm:: --lib`. Expected: all pass.
 
-- [ ] **Step 5: Commit sample transfer**
+- [x] **Step 5: Commit sample transfer**
 
 ```bash
 git add src/annotate.rs src/annotate/columns.rs src/annotate/edit.rs
@@ -688,6 +688,19 @@ git push origin main
 ```
 
 Wait for exact-head CI.
+
+Completed in `b40b3cc`: FORMAT transfer is keyed by sample name and supports
+explicit inclusion, exclusion, and files; deterministic new keys; scalar and
+array values; the replace, missing, add, and existing-only policies; explicit
+GT with separator and ploidy preservation; and per-sample `Number=A/R/G`
+remapping across reordered alleles and mixed ploidy. Whole FORMAT transfer
+deliberately excludes GT, while variant-source append modes fail during
+binding. Invalid schemas, fixed cardinalities, and unavailable genotype
+alleles fail loud. The FORMAT implementation lives in the product-internal
+`edit/samples.rs` module rather than adding a speculative foundation API. All
+191 debug and release library tests, non-oracle integration tests, strict
+all-target Clippy, rustdoc, and locked package verification pass locally.
+Exact-head CI run `31649085358` passed on all four native target classes.
 
 ---
 
