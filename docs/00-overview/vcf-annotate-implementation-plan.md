@@ -127,7 +127,7 @@ pub(crate) enum Column {
 }
 ```
 
-- [ ] **Step 1: Add failing parser tests**
+- [x] **Step 1: Add failing parser tests**
 
 Test literal match columns, `INFO/TAG`, `FMT/TAG`, `DST:=SRC`, ignored `-`, `~ID`, `~INFO/END`, all seven write-mode prefixes, whole INFO/FORMAT, and malformed combinations. Assert that tabular plans require exactly one CHROM plus either POS or FROM/TO, while VCF/BCF plans infer coordinate columns.
 
@@ -150,7 +150,7 @@ fn rejects_ambiguous_coordinate_and_mode_grammar() {
 }
 ```
 
-- [ ] **Step 2: Run the focused test and confirm RED**
+- [x] **Step 2: Run the focused test and confirm RED**
 
 ```bash
 env CARGO_HOME=/Volumes/KIOXIA/Developments/cargo-home \
@@ -161,7 +161,7 @@ env CARGO_HOME=/Volumes/KIOXIA/Developments/cargo-home \
 
 Expected: compilation fails because `ColumnSpec` and the grammar types do not exist.
 
-- [ ] **Step 3: Implement the grammar without record mutation**
+- [x] **Step 3: Implement the grammar without record mutation**
 
 Parse prefixes in the order `.+`, `.=` , `.`, `+`, `=`, `-`; parse rename syntax only once; normalize bare tags to INFO destinations; reject duplicate match roles and duplicate destination writes. `from_file` reads one nonempty, non-comment column expression per line and joins them in file order.
 
@@ -180,7 +180,7 @@ fn parse_column(source: &str) -> Result<Column>;
 fn validate_layout(fields: &[Column]) -> Result<()>;
 ```
 
-- [ ] **Step 4: Run focused tests and strict Clippy**
+- [x] **Step 4: Run focused tests and strict Clippy**
 
 ```bash
 env CARGO_HOME=/Volumes/KIOXIA/Developments/cargo-home \
@@ -195,7 +195,7 @@ env CARGO_HOME=/Volumes/KIOXIA/Developments/cargo-home \
 
 Expected: parser tests pass and Clippy reports no warnings.
 
-- [ ] **Step 5: Commit the grammar**
+- [x] **Step 5: Commit the grammar**
 
 ```bash
 git add src/lib.rs src/annotate.rs src/annotate/columns.rs
@@ -204,6 +204,10 @@ git push origin main
 ```
 
 Wait for exact-head four-native-target CI before continuing.
+
+Completed in `3bcbb84`: eight focused grammar tests and all 131 library tests
+pass, strict all-target/all-feature Clippy is clean on Rust 1.97.1, and exact-head
+CI run `31638366855` passed on all four native target classes.
 
 ---
 
