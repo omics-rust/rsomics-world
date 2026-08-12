@@ -4,8 +4,8 @@ Status: boundary, upstream-operation, and historical-source audit complete.
 `rsomics-vcf` 0.2.0 is published with the complete first-release `head`,
 `query`, `validate`, `index`, and `view` slice plus typed `filter`.
 `rsomics-call` 0.1.3 is published with its complete three-command first
-release. `rsomics-cnv` is implemented through its complete two-command first
-release and is awaiting registry publication.
+release. `rsomics-cnv` 0.1.0 is published with its complete two-command first
+release.
 
 ## Portfolio decision
 
@@ -1520,8 +1520,8 @@ parameter, convergence, missingness, and error contracts.
 
 ### Reconstruction ledger
 
-The new `omics-rust/rsomics-cnv` repository is implemented through revision
-`de5c5724d0c37a3dcb45a617e75a78d93293eee4`. It has one `rsomics-help`
+The new `omics-rust/rsomics-cnv` repository is released at revision
+`d0c4ba873d72e388f7f375d12c3b89fa0747dc7a`. It has one `rsomics-help`
 command tree, typed plain or BGZF VCF and raw or BGZF BCF input, checked
 single- and paired-sample HMM inference, the complete CN2/CN3/CN4 polysomy
 fitter, and whole-directory transactional reports. `call` writes and releases
@@ -1551,10 +1551,17 @@ so its single-site CN state depends on memory outside the accepted data. This
 upstream defect is excluded from the compatibility contract; both tools still
 use their default width ten in complete-workflow tests and performance gates.
 
-Exact-head CI `31617643951` passes debug and release tests on native Linux and
-macOS for both `x86_64` and `aarch64` at revision `de5c5724d0c3`. The Linux
+Exact-head CI `31618474876` passes debug and release tests on native Linux and
+macOS for both `x86_64` and `aarch64` at revision `d0c4ba873d72`. The Linux
 `x86_64` job builds the SHA-256-pinned bcftools and htslib 1.24 sources with
 GSL, verifies the command surface, and passes all 11 live oracle groups.
+Publish run `31618816189` succeeds from that exact head. The non-yanked 0.1.0
+archive has SHA-256
+`55dcf0bedebde8c2db906872f918cffd82763114d3e12c12d3d3e48b90978a69`,
+which matches the crates.io API and downloaded archive, and its VCS metadata
+records the complete release revision. A fresh locked registry install on the
+external build volume reports 0.1.0 and exposes the reviewed `call` and
+`polysomy` help trees.
 
 The product uses current `rsomics-help` for the single Clap command tree and
 the existing `rsomics-common` error, result-envelope, and multi-file atomic
