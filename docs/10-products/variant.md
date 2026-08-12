@@ -467,51 +467,58 @@ output creation, one-flag CLI, and source narration are discarded. The old
 implementation does not perform reference normalization despite its product
 name and is not a mergeable command.
 
-Reference access becomes a public `rsomics-seqio` item because it has two
+Reference access is a public `rsomics-seqio` item because it has two
 concrete consumers: the existing indexed and chunk-cached FASTA paths in
 `rsomics-call` and the new `rsomics-vcf norm` realignment path. The public
 contract is zero-based half-open range access by reference name over indexed
 plain or BGZF FASTA with bounded cache ownership and contextual errors. It does
-not expose VCF policy or caller-specific reference IDs. `rsomics-call` and
-`rsomics-vcf` must each have consumer-side tests before release; until then the
-item is not published merely for the planned command.
+not expose VCF policy or caller-specific reference IDs. `rsomics-call` tests
+cross-line indexed FASTA windows through its reference cache, and
+`rsomics-vcf` tests indexed plain and BGZF references through normalization.
 
-The feature-gated implementation now covers the reference-normalization core,
+The default implementation at `777c38362c14` covers reference normalization,
 typed multiallelic split and join, biallelic and complex atomization, AD sum
 preservation, original-record tracing, explicit duplicate policies,
 split-overlap policy, strict joined FILTER precedence, and REF mismatch exit,
-warn, exclude, and fix behavior. Expression selection controls transformation
-without dropping unselected records. Streaming targets filter the sequential
+warn, skip, and fix behavior. Expression selection controls transformation
+without dropping unselected records. Streaming targets filter sequential
 input, while indexed regions query TBI or CSI inputs before transformation;
-region queries merge overlaps, suppress repeated spanning records, support
-position, record, or variant overlap, and compose with targets. Join supports
-SNPs, indels, separated mixed types, or any type with typed `A`, `R`, `G`,
-scalar, GT, mixed-ploidy, symbolic, breakend, and allele-extension handling.
-The contiguous implementation range is `90bd113` through `9ab24be`; `norm`
-remains absent from the default build and from the published 0.2.0 crate.
-Exact-head runs `31560629845`, `31561286723`, `31561685917`, `31563112790`,
-`31565335254`, `31566011960`, `31566919156`, `31567865832`, `31568327866`, and
-`31569120321` passed Linux and macOS on both `x86_64` and `aarch64`. The latest
-gate includes bcftools 1.24 oracles for all four variant encodings, indexed
-plain and BGZF FASTA, IUPAC and missing REF repair, phased and mixed-ploidy GT
-remapping, AC updates, duplicate alleles created by REF swaps,
-split-plus-atomize origin tracing, every join class, strict FILTER behavior,
-expression selection, all three target overlap modes, and indexed VCF and BCF
-region queries. GFF-directed right alignment, explicit local sort modes,
-bounded compression workers, performance evidence, and the final public API
-review remain release blockers.
+region queries merge overlaps, suppress repeated spanning records, support all
+three overlap rules, and compose with targets. Join supports SNPs, indels,
+separated mixed types, or any type with typed `A`, `R`, `G`, scalar, GT,
+mixed-ploidy, symbolic, breakend, and allele-extension handling. GFF3-directed
+HGVS right alignment, explicit local sort modes, and bounded BGZF compression
+workers are included. The command and its `rsomics-seqio` dependency are no
+longer feature-gated.
 
-The ordinary compatibility matrix retains the bcftools 1.24 norm fixtures and
-adds all four variant encodings, plain and BGZF references, standard input,
-every declared transformation and composition order, allele cardinalities and
-types, haploid through mixed-polyploid samples, symbolic and gVCF boundaries,
-reference mismatch modes, selection, displacement windows, output failures,
-target aliasing, indexed TBI and CSI selection, region deduplication,
-region-target composition, and rollback. A representative reference-guided
-indel path and multiallelic typed-remapping path must each record input hashes,
-repeated timing distributions, peak RSS, versions, flags, and machine
-provenance. At least the principal established hot path must have a strict
-throughput or resource-use advantage before publication.
+The contiguous implementation range is `90bd113` through `777c383`. Exact-head
+runs `31571842323`, `31572567989`, and `31573693688` pass native Linux and
+macOS on both `x86_64` and `aarch64`; the final Linux `x86_64` job packages the
+default command and passes all 24 bcftools 1.24 normalization oracles. Those
+oracles cover all four variant encodings, indexed plain and BGZF FASTA, IUPAC
+and missing REF repair, phased and mixed-ploidy GT remapping, AC updates,
+duplicate alleles created by REF swaps, split-plus-atomize origin tracing,
+every join class, strict FILTER behavior, expression selection, target and
+region overlap modes, local sort modes, GFF orientation, and indexed VCF and
+BCF queries. The default local gate passes 123 unit tests, 24 CLI tests, all 24
+oracles, release tests, strict Clippy, formatting, and package verification.
+
+The formal benchmark used revision `998ff3e06927`, bcftools/HTSlib 1.24,
+hyperfine 1.20.0, three warmups, and ten measured runs on the Apple M2 host
+described below. Record bodies were byte-identical before timing. The
+500,000-record reference-guided indel fixture has SHA-256
+`c525d895c7d836ec0a30e099adb36d6ad02a2d05761fbefd4c8e5c8528410a1a`;
+rsomics took `0.920359 ± 0.008359` seconds versus
+`1.169889 ± 0.017242` seconds for bcftools, a 1.27-times throughput win. One
+resource run used 6,799,360 versus 7,012,352 bytes RSS. The 200,000-record,
+eight-sample typed split fixture has SHA-256
+`1456d81007b74bf54ff0d28cc76941b9519d84dec71359808bed145dca21e162`;
+it produces 400,000 records and took `5.456640 ± 0.061248` seconds versus
+`7.455577 ± 0.047262` seconds, a 1.37-times throughput win. Its single-run RSS
+was higher at 10,518,528 versus 8,437,760 bytes, so the decision rests on the
+strict throughput advantage rather than a false memory claim. The committed
+`benchmarks/norm-vs-bcftools.sh` regenerates inputs, verifies bodies, and
+records binaries, hashes, flags, timings, RSS, and machine provenance.
 
 ### Current structure
 
@@ -522,6 +529,7 @@ src/
 ├── cli.rs
 ├── head.rs
 ├── index.rs
+├── norm.rs
 ├── query.rs
 ├── query_bcf.rs
 ├── query_format.rs
@@ -550,13 +558,20 @@ src/
 │   ├── csi.rs
 │   ├── stats.rs
 │   └── vcf.rs
+├── norm/
+│   ├── atomize.rs
+│   ├── cardinality.rs
+│   ├── duplicate.rs
+│   ├── gff.rs
+│   ├── merge.rs
+│   ├── reference.rs
+│   └── split.rs
 ├── validation/
 │   ├── definitions.rs
 │   ├── header.rs
 │   ├── record.rs
 │   └── v44.rs
 ├── view/
-│   ├── output.rs
 │   ├── regions.rs
 │   ├── samples.rs
 │   └── selection.rs
@@ -564,6 +579,7 @@ src/
     ├── filter.rs
     ├── head.rs
     ├── index.rs
+    ├── norm.rs
     ├── query.rs
     ├── validate.rs
     ├── variant.rs
