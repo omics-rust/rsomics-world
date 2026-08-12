@@ -107,12 +107,13 @@ presentation use the common rsomics CLI layer.
 ## Current operation map
 
 The current samtools surface contains 40 operations. Three reference-index
-operations belong to `rsomics-index`; the remaining 37 fit this product.
+operations belong to `rsomics-index`, and the fosmid-pool-only `targetcut` is
+excluded. The remaining 36 fit this product.
 
 | Upstream group | `rsomics-bam` operations | Decision |
 |---|---|---|
 | Indexing | `index` | BAI, CSI, and CRAI lifecycle stays with the alignment product because it depends on alignment headers, coordinate sorting, and alignment-format policy |
-| Editing | `calmd`, `fixmate`, `reheader`, `targetcut`, `addreplacerg`, `markdup`, `ampliconclip` | Product subcommands |
+| Editing | `calmd`, `fixmate`, `reheader`, `addreplacerg`, `markdup`, `ampliconclip` | Product subcommands |
 | File operations | `collate`, `cat`, `consensus`, `merge`, `mpileup`, `sort`, `split`, `quickcheck`, `fastq`, `fasta`, `import`, `reference`, `reset` | Product subcommands |
 | Statistics | `bedcov`, `coverage`, `depth`, `flagstat`, `idxstats`, `cram-size`, `phase`, `stats`, `ampliconstats`, `checksum` | Product subcommands |
 | Viewing | `flags`, `head`, `tview`, `view`, `depad`, `samples` | Product subcommands |
@@ -134,6 +135,15 @@ Historical convenience boundaries collapse as follows:
 - BAM coverage summaries remain here, while bigWig signal generation belongs
   to `rsomics-signal` and RNA-seq alignment QC belongs to
   `rsomics-rnaseq-qc`.
+
+`targetcut` is not a general alignment operation. Its own 1.24 manual limits
+it to cutting fosmid clones from fosmid-pool sequencing, its upstream source
+has had no functional change since 2021, and the upstream regression suite has
+no targetcut case. The historical rsomics port mislabels the operation as an
+amplicon workflow, accepts a reference while skipping the required BAQ, and
+allocates consensus and backtracking arrays across each complete reference.
+That repository remains in the retired source pool but does not justify a
+stable product command.
 
 `reference` and `tview` have no historical implementation asset. `cram-size`
 likewise had none and was implemented only after its format contract was
@@ -1556,7 +1566,7 @@ outputs from the exact-head release build.
 
 ### Slice 3: remaining projection, pileup, and statistics
 
-- `phase`, `reference`, and `targetcut`.
+- `phase` and `reference`.
 
 Pileup-dependent work proceeds with the `rsomics-pileup` contract described
 below. `checksum` passed its material-benefit gate in release 0.23 through a
@@ -2649,6 +2659,58 @@ Its common-layer help exposed all four split selectors; a default read-group
 smoke retained all nine records as eight and one records, and both decoded
 outputs matched their committed goldens.
 
+### Release 0.28: alignment reference recovery
+
+`reference` recovers a FASTA reference from alignment evidence; it is not a
+reference indexer and does not move to `rsomics-index`. The compatibility
+contracts are the
+[`samtools reference` 1.24 manual](https://www.htslib.org/doc/1.24/samtools-reference.html),
+`reference.c` at revision `a60ce3d1e2a2`, and the official embedded-reference
+and MD-tag fixtures. The 1.24 source archive has SHA-256
+`89b2a440123eeaa400392ce1736e7d60ce9041843027d76819753c5a8246bfdd`;
+`reference.c` has SHA-256
+`7d29bee115cc2f87bfc00e7ff0ffe618179ba22dd3c3d214359bb9b398d22ce6`.
+The two expected FASTA files have SHA-256
+`01903d0ff0ceac5807ed41cde76b726f68ca74f545e6be16c9aa6225feb4728a`
+and
+`28f16cb6f2c9a5c8caf223693cbeb5b572395354c8fb43cff430b2fddedc4044`.
+
+The stable command accepts SAM, BAM, or CRAM from a path or standard input in
+default mode. It reconstructs bases from sequence, CIGAR, and `MD:Z`, fills
+unobserved positions with `N`, emits references in header order using 60-base
+FASTA lines, and reports non-`N` coverage unless `--quiet` is set. Embedded
+mode accepts CRAM only and extracts each declared slice reference block without
+decoding alignment records. A single indexed region works in either mode and
+retains the requested one-based inclusive coordinates in the FASTA name.
+Malformed CIGAR/MD combinations, reference-order regressions, conflicting base
+evidence, missing embedded blocks, unsupported CRAM versions, corrupt blocks,
+and incomplete input fail nonzero rather than producing a plausible partial
+reference.
+
+Named output uses the existing `rsomics-common` transaction and preserves the
+old file on any decode, write, flush, or commit failure. Standard output
+remains available; `--json` requires named FASTA output so the command envelope
+cannot mix with sequence data. Worker count only controls input decompression,
+matching the upstream scope. The command uses the authoritative
+`rsomics-help` tree and does not reserve flags for unfinished behavior.
+
+The default BAM path reuses validated borrowed records from `rsomics-bamio`.
+Embedded CRAM recovery shares checked container, slice, block, checksum, and
+codec parsing privately with `cram-size`; neither the recovery policy nor CRAM
+container internals become public foundation APIs. No second product has the
+same contract, so no Layer A change is justified.
+
+Ordinary tests must cover complete and sparse reconstruction, match,
+substitution, deletion, insertion, clipping, skips, conflicting evidence,
+missing or malformed MD tags, multi-reference order, stdin, transactional
+failure, every supported CRAM version, embedded blocks, missing blocks, and
+region/index errors. The release oracle regenerates the official 1.24 fixture
+and compares full and regional default and embedded FASTA byte for byte.
+Representative MD and embedded fixtures must record input and output hashes,
+command lines, alternating timings, peak RSS, and exact binaries. At least one
+complete recovery path must show a strict throughput or resource advantage
+before publication.
+
 ### Slice 4: interactive viewing
 
 `tview` is a complete terminal interface, not a formatting helper. It stays
@@ -2871,7 +2933,7 @@ SAM/CRAM support.
 | `rsomics-bam-split-pe` `8962f619d341cd18ea06d1cdf315efbfb4e2fa85` | Refactor then merge | `split --mates`; retain pairing-flag and mate-field fixtures |
 | `rsomics-bam-stats` `25c3689b1267431fc0428bdfc873d81cf23c8d7c` | Refactor then merge | `stats`; re-audit 1.24 output and customized-index behavior |
 | `rsomics-bam-subsample` `93052bf1e726f95022d6a6b8a549b9646c1e358a` | Merge algorithm after semantic update | First-slice `view --subsample` |
-| `rsomics-bam-targetcut` `9d7fa02f6557cca7b52dfaf8ca73f837ee55e400` | Refactor then merge | Later `targetcut`; preserve fosmid-specific scope |
+| `rsomics-bam-targetcut` `9d7fa02f6557cca7b52dfaf8ca73f837ee55e400` | Discard | Fosmid-pool-only surface; reference/BAQ contract is incomplete and whole-reference memory use is retained only as negative evidence |
 | `rsomics-bam-to-bed` `6d500bbcaa04ef307dc093170738bdbe4682d326` | Fixture and algorithm seed; replacement merged at `86927ab371e8` | Discard standalone CLI, partial surface, and subprocess benchmark |
 | `rsomics-bam-to-fastq` `9675f305021dceb00ed03e9b847fa7d7a1a89d6c` | Fixture and golden seed; replacement merged at `d6cbf1070706` | Discard duplicate complement code, allocations, and direct truncation |
 | `rsomics-bam-view` `dde533dbcbe4f30243a004815da4c179ca52f12d` | Test and filter seed | Replace the BAM-only command shell |
@@ -3202,6 +3264,7 @@ This is a default BAM depth-path claim only.
   `rsomics-signal`.
 - RSeQC, regtools, and Picard RNA-seq QC workflows belong to
   `rsomics-rnaseq-qc`.
+- Fosmid-pool-only `targetcut` is not a stable product workflow.
 - Variant calling belongs to `rsomics-call`; VCF/BCF format policy belongs to
   `rsomics-vcf`.
 - Experimental CRAM 4 is outside the supported format contract.
