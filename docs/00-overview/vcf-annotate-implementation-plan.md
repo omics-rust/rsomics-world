@@ -341,7 +341,7 @@ pub(crate) struct IdPlan {
 }
 ```
 
-- [ ] **Step 1: Add failing renderer and ID tests**
+- [x] **Step 1: Add failing renderer and ID tests**
 
 Reuse the query parser for `%CHROM`, `%POS`, `%ID`, `%REF`, `%ALT`, `%FIRST_ALT`, `%QUAL`, `%FILTER`, `%INFO/TAG`, `%TYPE`, subscripts, escaped literals, and `+FORMAT`. Reject sample loops, FORMAT/sample fields, newlines, tabs, empty output, and VCF-invalid whitespace.
 
@@ -356,19 +356,19 @@ fn sets_only_missing_ids_from_site_fields() {
 }
 ```
 
-- [ ] **Step 2: Run renderer tests and confirm RED**
+- [x] **Step 2: Run renderer tests and confirm RED**
 
 Run `cargo test query_format::tests annotate::set_id --lib` with external paths. Expected: `SiteFormat` is absent.
 
-- [ ] **Step 3: Refactor one authoritative query renderer**
+- [x] **Step 3: Refactor one authoritative query renderer**
 
 Move site-token validation and typed rendering behind `SiteFormat`; keep sample-loop rendering in `query`. Serialize `RecordBuf` into a reusable VCF line buffer, trim its line ending, and call the same fixed/info formatter used by query. Parse the leading `+` only as the set-if-missing policy.
 
-- [ ] **Step 4: Run query, annotate, and strict Clippy tests**
+- [x] **Step 4: Run query, annotate, and strict Clippy tests**
 
 Run `cargo test --lib`, `cargo test --test query --test query_cli`, and strict all-target Clippy. Expected: existing query bytes remain unchanged and the ID tests pass.
 
-- [ ] **Step 5: Commit the shared renderer**
+- [x] **Step 5: Commit the shared renderer**
 
 ```bash
 git add src/query.rs src/query_format.rs src/annotate.rs src/annotate/set_id.rs
@@ -377,6 +377,12 @@ git push origin main
 ```
 
 Wait for exact-head CI.
+
+Completed in `40c7d09`: five focused site-format and ID tests, all 144
+library tests, and 11 existing query integration tests pass; strict
+all-target/all-feature Clippy is clean on Rust 1.97.1, and exact-head CI run
+`31640941696` passed on all four native target classes. The renderer reuses
+its serialized-line, column-span, and output allocations across records.
 
 ---
 
