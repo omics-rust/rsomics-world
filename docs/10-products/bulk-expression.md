@@ -343,26 +343,58 @@ same oracle and design matrix.
 
 | Historical asset | Audited revision | Disposition |
 |---|---|---|
-| `rsomics-edger-camera` | `d05098f33384ba884016e3009d5aa22af35c8edb` | refactor then merge into later limma gene-set analysis; the name is discarded |
-| `rsomics-limma-array-weights` | `546aefb55e51d2fad7a8586ae3f8aaddfe99665d` | refactor then merge behind fitted sample-weight state |
-| `rsomics-limma-decide-tests` | `44bb7e715e66f24babbc574c63eb668292fc0e56` | refactor then merge into results |
-| `rsomics-limma-diff-splice` | `dffbb49cae01e453af00ecc9c3c93f8d2af65ee3` | refactor then merge after core model and feature mapping |
-| `rsomics-limma-duplicate-correlation` | `146dbc5f2cd793b250b54013f3a059940d2b9e5c` | refactor then merge with named block data and current voom path |
-| `rsomics-limma-ebayes` | `8fbfa0b8fcb9444dcf5740a4c4feab7a398e9c30` | refactor then merge as the log-expression seed |
-| `rsomics-limma-fry` | archive-only local tree, no Git revision | algorithm, R oracle, and fixture asset for later gene-set analysis |
-| `rsomics-limma-genas` | archive-only local tree, no Git revision | algorithm, R oracle, and fixture asset for a later operation |
+| `rsomics-edger-camera` | `d05098f33384ba884016e3009d5aa22af35c8edb` | later numerical and golden seed for limma gene-set analysis; discard the old name and independent fit |
+| `rsomics-limma-array-weights` | `546aefb55e51d2fad7a8586ae3f8aaddfe99665d` | algorithm and fixture seed only; its current 0.5% compatibility tolerance is insufficient for a fitted sample-weight contract |
+| `rsomics-limma-decide-tests` | `44bb7e715e66f24babbc574c63eb668292fc0e56` | decision-kernel and exact-boundary goldens for later results export |
+| `rsomics-limma-diff-splice` | `dffbb49cae01e453af00ecc9c3c93f8d2af65ee3` | legacy algorithm and fixture seed; replace its fit and feature mapping, and do not advertise the held unequal-exon path |
+| `rsomics-limma-duplicate-correlation` | `146dbc5f2cd793b250b54013f3a059940d2b9e5c` | algorithm and fixture seed for named block data; revalidate per-gene optimizer behavior in the current voom path |
+| `rsomics-limma-ebayes` | `8fbfa0b8fcb9444dcf5740a4c4feab7a398e9c30` | numerical and golden seed for the unweighted log-expression slice; replace its positional data model and incomplete fit state |
+| `rsomics-limma-fry` | archive-only local tree, no Git revision | retain oracle and fixtures as a later negative-result asset; the directional p-value approximation is not value-accurate |
+| `rsomics-limma-genas` | archive-only local tree, no Git revision | retain oracle and fixtures as a later negative-result asset; biological correlation and p-value fields are not value-exact |
 | `rsomics-limma-proptruenull` | `9299ec337f5b3eeb952f144ffe6bd994061ead63` | internalize; promote a policy-free estimator to `rsomics-stats` only with a second consumer |
-| `rsomics-limma-squeeze-var` | `f95ae44a3a4511569335c74c0c0446f9eee5eafb` | refactor then merge into empirical-Bayes moderation |
-| `rsomics-limma-treat` | `37f3790d5ef3670ce4bbb8d5ed39b4de43eef955` | refactor then merge into thresholded results |
-| `rsomics-limma-vooma` | `b96f4fdc423d33418a5f26f1ef38f9a034c10738` | later non-count mean-variance asset |
-| `rsomics-quantile-norm` | `8167d3346376573f06914fc5508a5c55e759ad98` | refactor then merge into input-aware normalization |
-| `rsomics-remove-batch-effect` | `78381156c72cdeedebae0d09f4036d3ed2bf8ecc` | refactor then merge as an explicitly exploratory transform |
-| `rsomics-voom` | `f51e528200ef16259f04451e1a33becc22932d57` | algorithm and fixture asset; recompose around current `voomLmFit` |
-| `rsomics-voom-quality-weights` | `18ad63de6ed12827da6edc2625fd2f99cd7c36cc` | algorithm and fixture asset; recompose around current sample-weight behavior |
+| `rsomics-limma-squeeze-var` | `f95ae44a3a4511569335c74c0c0446f9eee5eafb` | numerical and golden seed for the product-owned empirical-Bayes stage |
+| `rsomics-limma-treat` | `37f3790d5ef3670ce4bbb8d5ed39b4de43eef955` | later numerical and golden seed for thresholded results |
+| `rsomics-limma-vooma` | `b96f4fdc423d33418a5f26f1ef38f9a034c10738` | later non-count mean-variance algorithm and golden asset |
+| `rsomics-quantile-norm` | `8167d3346376573f06914fc5508a5c55e759ad98` | normalization kernel and golden seed; expose only for declared suitable input types |
+| `rsomics-remove-batch-effect` | `78381156c72cdeedebae0d09f4036d3ed2bf8ecc` | algorithm and golden seed for an explicitly exploratory transform |
+| `rsomics-voom` | `f51e528200ef16259f04451e1a33becc22932d57` | intercept-only voom kernel and golden seed; replace its fit boundary with current `voomLmFit` |
+| `rsomics-voom-quality-weights` | `18ad63de6ed12827da6edc2625fd2f99cd7c36cc` | algorithm and golden seed for sample weights; recompose inside current `voomLmFit` and persist the estimated sample weights |
 
 `rsomics-ebayes-core` has only limma consumers in the historical graph. Its
 useful empirical-Bayes code is internalized in `rsomics-limma`; the old public
 foundation is not revived.
+
+### Live source audit
+
+The historical implementations were inspected at the revisions above on
+2026-08-12. The archive-only `fry` and `genas` trees were read without
+modification; their missing Git provenance and known compatibility residuals
+remain part of their dispositions.
+
+| Contract | What exists | Reuse decision | Missing release evidence |
+|---|---|---|---|
+| expression, counts, and metadata | repeated TSV readers; eBayes retains design row ids but checks only row count, while voom readers discard optional design ids | retain fixtures only; implement one identity-joined expression/count, sample, feature, offset, weight, block, and design model | duplicate and reordered identities, missing values, integer counts, supplied library sizes and normalization factors, observation and sample weights, blocks, and transactional ingest |
+| design and contrasts | numeric design matrices and contrast tables; eBayes silently fills a missing contrast coefficient with zero | replace the positional loaders; retain matrix fixtures | formula/model-matrix differentials, near-rank deficiency, complete named contrast coverage, duplicate and extra terms, stable coefficient names, and explicit non-estimable states |
+| unweighted linear fit | Householder QR, `contrasts.fit`, and ordinary least squares with shared residual degrees of freedom | port selected QR and fit tests behind the typed dataset | missing-value rows, gene-specific rank and residual df, multiple contrasts, correlation, weights, convergence state, and current-oracle output |
+| empirical Bayes | unweighted `eBayes`/`topTable`, `squeezeVar`, and B-statistic fragments; principal goldens are pinned to limma 3.62.1 | port selected numerical kernels into one moderation stage | current 3.68.4 oracle, robust and trend modes, unequal residual df, weights, zero and missing variances, confidence intervals, sorting and selection options, and fitted-state reuse |
+| current RNA-seq fit | no `voomLmFit` implementation; plain voom is intercept-only and the quality-weight crate manually composes the older transform and array-weight steps | implement a new current `voomLmFit` path; reuse LOWESS, log-CPM, and weight fixtures selectively | arbitrary design, normalization factors, sample and observation weights, block correlation, current defaults, coefficient fit, diagnostics, convergence, and complete results in one bundle |
+| array and block weights | separate REML array-weight and duplicate-correlation implementations; array weights accept a 0.5% residual and only the final consensus correlation is exact | later algorithm and fixture seeds | joint use with voom, named sample/block joins, per-gene fit state, convergence, degeneracy, current-oracle matrices, and a reviewed compatibility threshold |
+| decisions and threshold tests | exact `decideTests` boundary fixtures and a separate TREAT implementation | later result-derivation seeds | direct consumption of the fitted contrast state, all upstream methods and adjustment options, multi-contrast semantics, and current-oracle results |
+| splice, gene-set, and association | disconnected legacy diffSplice, camera, fry, and genas paths; unequal-exon diffSplice is held, while fry and genas retain material residuals | later fixture assets; no production merge until each compatibility gap is resolved | current methods, typed feature and set universes, correlation semantics, unequal df, fit reuse, and required oracle CI |
+| transforms | quantile normalization, vooma, and batch removal kernels with small goldens | later product-owned modules with input-type policy | NA policy, ties and weights, covariates, block and design preservation, edge matrices, and current-oracle coverage |
+| CLI and output | retired `HelpSpec`, direct multi-file writes, and fit components flattened into unrelated TSVs; quality weights are printed only to stderr | discard | current `rsomics-help`, `rsomics-common` process behavior, atomic versioned bundle, durable sample weights, provenance, diagnostics, and recovery tests |
+| performance | Criterion loops over small goldens; the quality-weight README cites an absent performance document for its 13.55-times wall-time and five-times RSS claims | reject as release evidence | representative matrices, pinned limma/R, machine and flags, timing distributions, peak RSS, output equivalence, and a strict material advantage |
+
+Fifteen historical limma-related repositories carry the same `main.rs`, and
+the plain and quality-weight voom crates share a byte-identical LOWESS module.
+The eBayes, TREAT, splice, camera, fry, and genas trees also repeat or fork fit,
+matrix, empirical-Bayes, and special-function code. No historical repository
+is the target skeleton.
+
+Live R checks remain optional developer evidence only. Required compatibility
+CI provisions pinned limma and R versions and fails when the oracle is absent
+or fails. Ported production code keeps stable invariants but drops the old
+line-by-line reconstruction and compatibility-history comments.
 
 ### Existing implementation gaps
 
@@ -372,8 +404,12 @@ foundation is not revived.
 - The main `rsomics-limma-ebayes` seed has no observation-weight,
   block-correlation, robust/trend, missing-value, or complete rank-deficiency
   model.
+- The eBayes seed ignores design row identities and joins by position. Its
+  contrast loader silently converts absent coefficient rows to zero, so an
+  incomplete contrast can look valid.
 - The historical `voom` and quality-weight binaries implement the older manual
-  composition, while current limma recommends `voomLmFit`.
+  composition, while current limma recommends `voomLmFit`; the plain path is
+  intercept-only and the quality-weight path does not persist sample weights.
 - Gene-set, splicing, batch, correlation, and decision helpers consume ad hoc
   tables rather than one fitted state.
 - Live limma differentials are optional and can skip in Ubuntu-only CI.
