@@ -257,7 +257,7 @@ pub(crate) struct HeaderPlan {
 }
 ```
 
-- [ ] **Step 1: Add failing header and record-edit tests**
+- [x] **Step 1: Add failing header and record-edit tests**
 
 Cover removal of ID/QUAL/all FILTER/all INFO/all FORMAT, selected-tag removal, `^` complements, GT removal, appended INFO/FORMAT/FILTER/contig definitions, chromosome rename, annotation rename, missing old tags, duplicate new tags, and two mappings targeting the same name.
 
@@ -278,11 +278,11 @@ fn renames_header_and_record_keys_together() {
 }
 ```
 
-- [ ] **Step 2: Run the focused test and confirm RED**
+- [x] **Step 2: Run the focused test and confirm RED**
 
 Run `cargo test annotate::header --lib` with the global external-disk environment. Expected: missing `HeaderPlan` symbols.
 
-- [ ] **Step 3: Implement checked header preparation and record edits**
+- [x] **Step 3: Implement checked header preparation and record edits**
 
 Parse every appended line as a one-line VCF header and merge only INFO, FORMAT, FILTER, and contig records. Build all rename maps before mutating, reject collisions, then reconstruct the relevant ordered maps and record fields. Apply removals before renames, matching bcftools command order established by the pinned differential.
 
@@ -290,19 +290,20 @@ Parse every appended line as a one-line VCF header and merge only INFO, FORMAT, 
 impl HeaderPlan {
     pub(crate) fn prepare(&self, header: &mut Header) -> Result<()> {
         apply_appended_lines(header, &self.appended)?;
+        validate_removals(header, &self.removals)?;
+        remove_header_definitions(header, &self.removals);
         validate_rename_targets(header, &self.renames)?;
         rename_header_maps(header, &self.renames)?;
-        remove_header_definitions(header, &self.removals);
         Ok(())
     }
 }
 ```
 
-- [ ] **Step 4: Run focused and existing format tests**
+- [x] **Step 4: Run focused and existing format tests**
 
 Run `cargo test annotate::header --lib` and `cargo test --test view --test norm_cli`. Expected: all pass.
 
-- [ ] **Step 5: Commit the header engine**
+- [x] **Step 5: Commit the header engine**
 
 ```bash
 git add src/annotate.rs src/annotate/header.rs
@@ -311,6 +312,11 @@ git push origin main
 ```
 
 Wait for exact-head CI.
+
+Completed in `1415e6c`: eight focused header/record tests, all 139 library
+tests, and 31 existing `view`/`norm` integration tests pass; strict
+all-target/all-feature Clippy is clean on Rust 1.97.1, and exact-head CI run
+`31639880846` passed on all four native target classes.
 
 ---
 
