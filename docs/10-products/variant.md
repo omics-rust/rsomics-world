@@ -522,6 +522,70 @@ strict throughput advantage rather than a false memory claim. The committed
 `benchmarks/norm-vs-bcftools.sh` regenerates inputs, verifies bodies, and
 records binaries, hashes, flags, timings, RSS, and machine provenance.
 
+### Release 0.4: typed annotation transfer
+
+The next VCF increment is `annotate`. It edits the target VCF/BCF header and
+records, optionally joining a second sorted annotation stream. It does not
+turn every tag-producing bcftools plugin into the same command. `fill-tags`,
+reference repair, genotype rewriting, and variant-distance calculation retain
+their separately testable policies and join the product only after this core
+transfer contract is stable.
+
+The compatibility oracle is bcftools 1.24 `annotate`, its official regression
+fixtures, and `vcfannotate.c` with SHA-256
+`6be47073e1d549f2bcded27f4cf8952ccd03f90ad537088f418dfe8a5d645730`.
+The installed bcftools executable has SHA-256
+`33100a6b961c529e915394d53b4737a0f8dd7a164eac352afe4e74e1ced51f60`.
+The historical `rsomics-vcf-annotate` revision
+`c958d89eeb5ff8ec0ce343ded3ab9ddfe10e957a` contributes its compact BED and
+replacement fixtures only. Its VCF-text-only reader, inferred string header,
+whole-file annotation index, one-label policy, direct output creation,
+standalone CLI, and 1.23.1 claims are discarded.
+
+The stable command accepts every VCF and BCF encoding already supported by
+the product, standard input for the target stream, and every existing output
+encoding. Its declared contract includes:
+
+- removing or retaining fixed fields, FILTER values, INFO tags, FORMAT tags,
+  and genotypes with checked complement rules;
+- renaming contigs, INFO, FORMAT, and FILTER identifiers in both the header
+  and every affected record, while rejecting missing sources and collisions;
+- appending validated header lines and setting missing or all IDs from the
+  product's site-level query format;
+- transferring fixed fields, typed INFO, typed FORMAT, and genotype values
+  from a sorted VCF/BCF annotation stream with explicit sample mapping;
+- transferring typed columns from sorted BED or tab-delimited annotations,
+  with zero-based BED and one-based inclusive tabular coordinates kept
+  distinct and with destination definitions required in the output header;
+- matching by position or interval, optional REF/ALT, ID, and END, current
+  bcftools pair logic, and checked annotation/target overlap fractions;
+- the replace, replace-missing, add-if-missing, append, and
+  replace-only-existing column policies, including schema-driven `Number=A`,
+  `R`, and `G` allele remapping;
+- target expression selection, keep-unchanged behavior, site marking,
+  indexed target regions, bounded BGZF compression workers, transactional
+  named output, and JSON summaries separated from variant output.
+
+The annotation join is a forward merge over two coordinate-sorted streams.
+It retains only source records that can overlap the current target coordinate,
+so memory is bounded by maximum simultaneous annotation overlap rather than
+source-file size. Unknown contigs, coordinate regressions, malformed columns,
+undeclared destinations, type or cardinality mismatches, impossible allele
+maps, missing selected samples, and incomplete compressed input fail before a
+named output replaces its predecessor.
+
+The experimental upstream merge-logic interface, dynamic expressions that
+refer to source columns through braces, `--force`, `--single-overlaps`,
+automatic output indexing, compression-level spelling, and provenance header
+stamping are excluded from 0.4. These flags remain absent rather than being
+accepted without full behavior. The existing output-and-index exclusion is
+unchanged until the product has one grouped transaction for both artifacts.
+
+No Layer A API is added. Column grammar, allele correspondence, header edits,
+and annotation buffering are VCF product policy. Existing format, expression,
+region, transaction, help, and indexed-reference components are reused at
+their current boundaries.
+
 ### Current structure
 
 ```text
