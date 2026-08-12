@@ -409,10 +409,11 @@ pub(crate) struct AnnotationRecord {
     pub(crate) id: Option<String>,
     pub(crate) info_end: Option<usize>,
     pub(crate) payload: Payload,
+    pub(crate) zero_based: bool,
 }
 
 pub(crate) enum Payload {
-    Variant(RecordBuf),
+    Variant(Box<RecordBuf>),
     Tabular(Vec<Option<Vec<u8>>>),
 }
 
@@ -439,7 +440,7 @@ pub(crate) struct AnnotationSource {
 }
 ```
 
-- [ ] **Step 1: Add failing source-reader tests**
+- [x] **Step 1: Add failing source-reader tests**
 
 Cover sorted plain/BGZF BED, sorted plain/gzip/BGZF tabular input, all four VCF/BCF encodings, blank/comment tab lines, BED zero-based half-open conversion, tabular one-based inclusive conversion, CRLF, long fields, missing columns, invalid integers, end-before-start, unknown contigs, coordinate regressions, truncated gzip/BGZF/BCF, and source standard-input rejection.
 
@@ -453,19 +454,19 @@ fn bed_and_tab_coordinates_remain_distinct() {
 }
 ```
 
-- [ ] **Step 2: Run source tests and confirm RED**
+- [x] **Step 2: Run source tests and confirm RED**
 
 Run `cargo test annotate::source --lib`. Expected: missing source-reader implementation.
 
-- [ ] **Step 3: Implement streaming readers with bounded buffers**
+- [x] **Step 3: Implement streaming readers with bounded buffers**
 
 Use `Reader` and `RecordScratch` for variant sources. Use `BufRead` plus `MultiGzDecoder` for tabular sources and detect BED by case-insensitive `.bed`, `.bed.gz`, `.bed.bgz`, or `.bed.bgzf` suffix. Map names to the target header's contig order and retain one lookahead record.
 
-- [ ] **Step 4: Run source tests and malformed-input regression**
+- [x] **Step 4: Run source tests and malformed-input regression**
 
 Run `cargo test annotate::source --lib` plus `cargo test --test validate --test index`. Expected: all pass without writing to the boot disk.
 
-- [ ] **Step 5: Commit the source readers**
+- [x] **Step 5: Commit the source readers**
 
 ```bash
 git add src/annotate.rs src/annotate/columns.rs src/annotate/source.rs tests/upstream/bcftools-annotate
@@ -474,6 +475,14 @@ git push origin main
 ```
 
 Wait for exact-head CI.
+
+Completed in `e120382`: nine source-reader tests cover plain, gzip, BGZF, raw
+BCF, compressed BCF, BED coordinate semantics, CRLF and long records, sorted
+target-contig order, malformed values, truncation, and standard-input rejection.
+All 154 library tests and the full non-oracle integration suite pass locally;
+the boxed variant payload keeps enum size bounded without changing ownership.
+Exact-head CI run `31642574358` passed on all four native target classes after
+rerunning a Linux oracle job whose first download attempt received HTTP 503.
 
 ---
 
