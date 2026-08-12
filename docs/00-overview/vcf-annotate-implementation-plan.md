@@ -722,7 +722,6 @@ pub(crate) struct Options {
     pub(crate) source: Option<SourceOptions>,
     pub(crate) header: HeaderOptions,
     pub(crate) set_id: Option<String>,
-    pub(crate) set_id_missing_only: bool,
     pub(crate) expression: Option<String>,
     pub(crate) expression_logic: Logic,
     pub(crate) keep_sites: bool,
@@ -740,7 +739,8 @@ pub(crate) struct SourceOptions {
 }
 
 pub(crate) enum SampleRequest {
-    Names { values: Vec<String>, exclude: bool },
+    List(String),
+    File(PathBuf),
 }
 
 pub(crate) enum MarkSites {
@@ -767,21 +767,21 @@ pub(crate) fn write_parallel<W: Write + Send + 'static>(
 ) -> Result<Summary>;
 ```
 
-- [ ] **Step 1: Add failing lifecycle and help tests**
+- [x] **Step 1: Add failing lifecycle and help tests**
 
 Test no-action rejection; source-without-columns; columns-without-source; mark-without-source; mutually exclusive expression, region, sample, and header-file options; all output types; stdin target; named output; JSON separation; BGZF workers; indexed regions; expression drop and keep-unchanged behavior; mark-present and mark-absent; write/flush failures; same input/output aliases; and old-file preservation after a late malformed record.
 
 Assert the unified help contains every declared option and none of the excluded flags.
 
-- [ ] **Step 2: Run CLI tests and confirm RED**
+- [x] **Step 2: Run CLI tests and confirm RED**
 
 Run `cargo test --test annotate_cli`. Expected: the public command is absent.
 
-- [ ] **Step 3: Implement orchestration before exposing the command**
+- [x] **Step 3: Implement orchestration before exposing the command**
 
 Read and validate the target header, bind header edits and the optional source, prepare the complete output header, bind expressions and ID formatting, then emit records through `Writer` or `ParallelWriter`. For indexed regions use `IndexedRecords`; otherwise use `Reader`. Apply target selection, removals, renames, ID edits, source matching, field transfer, and mark-sites in the pinned bcftools order. Call `finish()` before committing named output.
 
-- [ ] **Step 4: Wire the authoritative command tree and README**
+- [x] **Step 4: Wire the authoritative command tree and README**
 
 Expose `Command::Annotate`, `CommandOutput::Annotate`, and `commands::annotate::Arguments`. Use readable long names with bcftools-compatible short aliases where they do not conflict with unified `-h`: `--header-lines` has no short alias and `-H` remains repeatable `--header-line`.
 
@@ -790,11 +790,11 @@ Expose `Command::Annotate`, `CommandOutput::Annotate`, and `commands::annotate::
 Annotate(commands::annotate::Arguments),
 ```
 
-- [ ] **Step 5: Run the ordinary product gate**
+- [x] **Step 5: Run the ordinary product gate**
 
 Run formatting with the explicit Rust 1.97.1 `rustfmt`, strict all-target/all-feature Clippy, `cargo test`, `cargo test --release`, rustdoc with warnings denied, and `cargo package --locked`. Expected: no warning, failure, unfinished public option, or boot-disk output.
 
-- [ ] **Step 6: Commit the complete public command**
+- [x] **Step 6: Commit the complete public command**
 
 ```bash
 git add src/annotate.rs src/commands/annotate.rs src/commands/mod.rs src/cli.rs README.md tests/annotate_cli.rs
@@ -803,6 +803,29 @@ git push origin main
 ```
 
 Wait for exact-head four-native-target CI, including the ordinary annotate suite on every target.
+
+Completed in `683e716`: the public command now exposes the complete bounded
+streaming contract through the unified `rsomics-help` command tree. Ten CLI
+tests cover lifecycle rejection, typed VCF and tabular transfer, explicit
+sample mapping, allele-aware FORMAT and GT edits, expression drop and
+keep-unchanged semantics, global renames, mark-present and mark-absent,
+standard input, indexed regions, all four output encodings, bounded BGZF
+workers, JSON separation, transactional replacement, path aliases, late
+parse failures, and bounded public help. Output write and final flush failures
+have separate unit coverage. A live bcftools 1.24 probe established that
+expression-rejected records retained by `--keep-sites` skip removals but still
+receive global renames; the output header correspondingly retains definitions
+needed by those records.
+
+The shared writer defect uncovered by parallel BCF coverage was fixed
+separately in `0f9377c`: the compression flush runs inside the bounded Rayon
+pool, while the blocking BGZF writer join runs on the caller, avoiding a
+one-worker scheduling deadlock. Its exact-head CI run `31651009133` and the
+Task 8 exact-head run `31651659317` both passed on native Linux and macOS for
+x86_64 and aarch64. The final local gate passed formatting, strict all-target
+Clippy, 195 debug and release unit tests, ten annotate CLI tests and every
+existing ordinary integration suite, rustdoc with warnings denied, and a
+clean locked package build. No Layer A API was added.
 
 ---
 
