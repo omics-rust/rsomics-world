@@ -1428,6 +1428,25 @@ quality models, output transactions, and report provenance.
 This is a scientific workflow, not a VCF format command. It does not depend on
 the Layer B VCF product.
 
+### Upstream surface and exclusions
+
+The compatibility target is bcftools 1.24 `cnv` and `polysomy`, from the
+audited release archive with SHA-256
+`8caddc22610ee2851666047c859bb91da0c1e32d0c2ec553db6f153ad130e46f`.
+The public surface to account for is:
+
+| Operation | Upstream user surface |
+|---|---|
+| `call` | query and optional control samples; AF-file restriction; indexed regions and streaming targets with overlap policy; aberrant-cell, BAF/LRR, smoothing, optimization, paired-state, and transition parameters; per-sample signal, state, region, and optional plot reports |
+| `polysomy` | sample selection; indexed regions and streaming targets with overlap policy; peak-size, CN-penalty, fit, AA, minimum-fraction, and symmetry parameters; distribution, fitted-model, copy-number, and plotting artifacts |
+
+This first product scope does not claim read-depth segmentation from CNVkit,
+CNVnator, Control-FREEC, or GATK; purity and ploidy inference from ASCAT,
+FACETS, or ichorCNA; structural-variant discovery; or expression-derived
+single-cell CNV. The last is routed to `rsomics-sc cnv`. Adding one of the
+other data models requires a new operation dossier rather than stretching the
+BAF/LRR implementation.
+
 ### Historical assets and first release
 
 | Asset and audited revision | Disposition |
@@ -1435,10 +1454,29 @@ the Layer B VCF product.
 | `rsomics-vcf-cnv` `09af90225defbea05173c199aaae5fd5c7639469` | Refactor then merge as `call`; correct the bcftools 1.24 HMM quality offset and validate all report files |
 | `rsomics-vcf-polysomy` `cf511935afdc2299f717f84614f5db0e6c2945fb` | Refactor then merge as `polysomy`; retain mixture solver, decisions, fixtures, and performance seed |
 
-Both repositories are clean. The first release completes both operations:
+The `rsomics-vcf-cnv` clone is clean. The deleted polysomy repository is
+recoverable from its verified Git bundle and 0.1.0 crate archive under
+`_retired/registry-reset-2026-07-30`; the bundle head matches the revision
+above.
+
+The historical code is not a direct merge source:
+
+| Source area | Disposition and reason |
+|---|---|
+| CNV CLI and help | Discard and rebuild around `rsomics-cnv call` and current `rsomics-help`; the old binary boundary and removed `HelpSpec` API cannot define the product UX |
+| CNV text reader and output orchestration | Discard; it claims VCF/BCF but line-parses only text VCF, silently skips malformed fields, omits control, region, target, signal-report, and plot behavior, and writes partial files directly |
+| CNV emission and HMM code | Algorithm reference for refactor, not accepted production code; the region-quality path complements the posterior twice and the existing oracle ignores coordinates, quality, counts, and most output files |
+| CNV fixture and benchmark | Adversarial-test seed only; two tests can skip without a pinned oracle and compare only chromosome and CN state, while the benchmark has no accepted upstream or RSS result |
+| Polysomy CLI, reader, and writer | Discard and rebuild; the reader silently drops invalid values and does not support BCF, output is non-transactional, and its provenance header incorrectly identifies the producer as bcftools |
+| Polysomy histogram and fitting code | Refactor candidate only; retain model structure and deterministic seeds, but the diagonal-Hessian solver has not demonstrated equivalence to the upstream GSL fit |
+| Polysomy fixtures and benchmark | Test and performance seeds only; the accepted test is one rounded CN2 decision and does not compare distributions, fits, fractional CN, failure decisions, or complete artifacts |
+
+The first release completes both operations:
 
 - plain VCF, BGZF VCF, and BCF input;
-- single and explicit multi-sample selection;
+- query-sample and optional control-sample calling, plus explicit polysomy
+  sample selection;
+- indexed regions, streaming targets, and their documented overlap policies;
 - checked BAF, LRR, allele-frequency, chromosome, and missing-value policy;
 - deterministic HMM and mixture fitting under explicit seeds;
 - transactional output directories with schema-versioned machine-readable
@@ -1456,6 +1494,13 @@ record.
 HMM and Levenberg-Marquardt code stays product-private initially.
 `rsomics-stats` promotion requires a second product consumer with identical
 parameter, convergence, missingness, and error contracts.
+
+The product uses current `rsomics-help` for the single Clap command tree and
+the existing `rsomics-common` error, result-envelope, and multi-file atomic
+commit contracts. Typed VCF/BCF access remains product-internal over noodles.
+`rsomics-vcf` is a Layer B product and is not a dependency, and a new public
+VCF-I/O wrapper is not justified while noodles already supplies the shared
+format mechanism and the policies remain product-specific.
 
 Do not publish `rsomics-cnv` until both operations pass current bcftools 1.24
 decisions and reports, representative performance and memory gates, and all
