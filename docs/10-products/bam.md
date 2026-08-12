@@ -76,6 +76,11 @@ revision `b8abe45fbb0f` after exact-head CI `31521016190` passed the four
 native targets and the complete samtools 1.24 and RSeQC 5.0.4 oracle. Publish
 run `31522361769` and independent registry verification completed
 successfully.
+The thirty-sixth command, `reference`, is published as `rsomics-bam 0.28.0`
+from revision `53e7d18b9911` after exact-head CI `31623869168` passed the four
+native targets and the complete samtools 1.24 oracle. Publish run
+`31624656980` and independent registry installation and output verification
+completed successfully.
 
 ## Boundary
 
@@ -2710,6 +2715,49 @@ Representative MD and embedded fixtures must record input and output hashes,
 command lines, alternating timings, peak RSS, and exact binaries. At least one
 complete recovery path must show a strict throughput or resource advantage
 before publication.
+
+Revision `796418e274ce` implements the command as narrow `reference` modules
+for evidence assembly, MD/CIGAR interpretation, and embedded CRAM blocks plus
+one command adapter. The ordinary suite covers streaming SAM and BAM, indexed
+BAM and CRAM regions, embedded blocks, output transactions, conflicting or
+incompatible evidence, sorting, clipping, insertions, skips, truncation, and
+missing blocks. The pinned differential regenerates the official samtools
+1.24 fixture and byte-compares full and regional MD and embedded output.
+CRAM MD recovery explicitly requests decoded MD fields from HTSlib; the
+earlier noodles-only route was rejected when it silently recovered `N` rather
+than evidence-backed bases.
+
+The release-performance gate used revision `796418e274ce`, Rust 1.97.1, and
+samtools/HTSlib 1.24 on an Apple M2 Mac mini with 8 GiB of memory and macOS
+26.6.1. One warm-up preceded twenty alternating paired trials per mode. The
+1,000,000-record MD fixture produced byte-identical FASTA; rsomics used 11.10%
+less mean peak RSS but took 171.59% more mean wall time, so no MD throughput
+advantage is claimed. The embedded human chromosome 17 fixture also produced
+byte-identical FASTA; rsomics won 20 of 20 pairs, reduced mean wall time by
+53.19% for a 2.14-times throughput ratio, and used 2.13% less mean peak RSS.
+The reproducible runner is `tools/benchmark-reference.sh`; the complete
+timing, summary, paired, environment, input, output, and binary hashes are
+recorded in the product's `PERFORMANCE.md`.
+
+Exact-head workflow
+[`31623869168`](https://github.com/omics-rust/rsomics-bam/actions/runs/31623869168)
+passed at release revision `53e7d18b9911949a354209638eee13f282e653a8`.
+Its native Linux and macOS jobs passed on both x86_64 and aarch64; Linux
+x86_64 rebuilt samtools 1.24 and passed the full compatibility suite,
+including the reference differential. Publication workflow
+[`31624656980`](https://github.com/omics-rust/rsomics-bam/actions/runs/31624656980)
+published the locked 0.28.0 package from the same revision.
+
+The downloaded 1,395,585-byte crates.io archive is not yanked and has SHA-256
+`a7c9f44eecb501130e22f7a483ad8ae8fed171f175ef0488560d6f6cad05b05b`.
+Its VCS record names the release revision, and its complete unpacked file tree
+matches the locally verified package. A fresh locked registry install produced
+a binary with SHA-256
+`fa6c39fc5fd76aad6448b84707b8a874edd8ce34ba6e88c32db64c9379bfb2f2`.
+Its common-layer help exposes only the stable command surface. Indexed MD and
+embedded CRAM recovery then matched the pinned regional FASTA files with
+SHA-256 `08304f25c2c19a8e7c1537c5b2c0ec3387b818305b620b3e967f92bd0edbc05e`
+and `c669911e54def62dbe8046c3bdde8ed586b0695f8daaf5913a4cd9b089d4ecef`.
 
 ### Slice 4: interactive viewing
 
