@@ -519,7 +519,7 @@ pub(crate) struct Matched<'a> {
 }
 ```
 
-- [ ] **Step 1: Add failing coordinate, pair, and resource-bound tests**
+- [x] **Step 1: Add failing coordinate, pair, and resource-bound tests**
 
 Cover point and span matches; END and REF-derived target spans; REF/ALT, ID, and END constraints; all pair-logic values; symbolic, breakend, spanning-deletion, reference-only, and mixed records; reciprocal overlap boundaries; repeated coordinates; contig transitions; and a million sorted annotations with active memory bounded by maximum overlap.
 
@@ -534,19 +534,19 @@ fn forward_join_discards_expired_annotations() {
 }
 ```
 
-- [ ] **Step 2: Run matching tests and confirm RED**
+- [x] **Step 2: Run matching tests and confirm RED**
 
 Run `cargo test annotate::matching --lib`. Expected: missing matching types and functions.
 
-- [ ] **Step 3: Implement the active-window join and allele correspondence**
+- [x] **Step 3: Implement the active-window join and allele correspondence**
 
 Advance source records while their start can overlap the current target, remove expired records, preserve source order among active records, and return the first compatible match. Construct an allele map from source REF/ALT indices to target indices and fail only when a requested allele-indexed transfer cannot be represented.
 
-- [ ] **Step 4: Run matching tests under debug and release profiles**
+- [x] **Step 4: Run matching tests under debug and release profiles**
 
 Run `cargo test annotate::matching --lib` and `cargo test --release annotate::matching --lib`. Expected: identical results and bounded active-state assertions.
 
-- [ ] **Step 5: Commit the matcher**
+- [x] **Step 5: Commit the matcher**
 
 ```bash
 git add src/annotate.rs src/annotate/source.rs src/annotate/matching.rs
@@ -555,6 +555,16 @@ git push origin main
 ```
 
 Wait for exact-head CI.
+
+Completed in `bbcb609`: 12 focused tests cover sorted active-window matching,
+point and interval coordinates, REF- and END-derived spans, reciprocal overlap,
+tabular constraints, every pair-logic class, symbolic and mixed alleles,
+allele remapping, repeated coordinates, contig transitions, and one million
+source rows while retaining at most five active records. The focused matcher
+finishes in about 0.45 seconds in the local release profile; all 167 library
+tests, the non-oracle integration suite, and strict all-target Clippy pass.
+Exact-head CI run `31644600764` passed on all four native target classes,
+including the pinned bcftools 1.24 compatibility gate on Linux x86_64.
 
 ---
 
