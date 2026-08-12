@@ -480,30 +480,38 @@ The feature-gated implementation now covers the reference-normalization core,
 typed multiallelic split and join, biallelic and complex atomization, AD sum
 preservation, original-record tracing, explicit duplicate policies,
 split-overlap policy, strict joined FILTER precedence, and REF mismatch exit,
-warn, exclude, and fix behavior. Join supports SNPs, indels, separated mixed
-types, or any type with typed `A`, `R`, `G`, scalar, GT, mixed-ploidy, symbolic,
-breakend, and allele-extension handling. The contiguous implementation range is
-`90bd113` through `8ef9463`; `norm` remains absent from the default build and
-from the published 0.2.0 crate. Exact-head runs `31560629845`, `31561286723`,
-`31561685917`, `31563112790`, `31565335254`, `31566011960`, and `31566919156`
-passed Linux and macOS on both `x86_64` and `aarch64`. The latest gate includes
-bcftools 1.24 oracles for all four variant encodings, indexed plain and BGZF
-FASTA, IUPAC and missing REF repair, phased and mixed-ploidy GT remapping, AC
-updates, duplicate alleles created by REF swaps, split-plus-atomize origin
-tracing, every join class, and strict FILTER behavior. Selection, targets and
-regions, right alignment, performance evidence, and the final public API review
-remain release blockers.
+warn, exclude, and fix behavior. Expression selection controls transformation
+without dropping unselected records. Streaming targets filter the sequential
+input, while indexed regions query TBI or CSI inputs before transformation;
+region queries merge overlaps, suppress repeated spanning records, support
+position, record, or variant overlap, and compose with targets. Join supports
+SNPs, indels, separated mixed types, or any type with typed `A`, `R`, `G`,
+scalar, GT, mixed-ploidy, symbolic, breakend, and allele-extension handling.
+The contiguous implementation range is `90bd113` through `9ab24be`; `norm`
+remains absent from the default build and from the published 0.2.0 crate.
+Exact-head runs `31560629845`, `31561286723`, `31561685917`, `31563112790`,
+`31565335254`, `31566011960`, `31566919156`, `31567865832`, `31568327866`, and
+`31569120321` passed Linux and macOS on both `x86_64` and `aarch64`. The latest
+gate includes bcftools 1.24 oracles for all four variant encodings, indexed
+plain and BGZF FASTA, IUPAC and missing REF repair, phased and mixed-ploidy GT
+remapping, AC updates, duplicate alleles created by REF swaps,
+split-plus-atomize origin tracing, every join class, strict FILTER behavior,
+expression selection, all three target overlap modes, and indexed VCF and BCF
+region queries. GFF-directed right alignment, explicit local sort modes,
+bounded compression workers, performance evidence, and the final public API
+review remain release blockers.
 
 The ordinary compatibility matrix retains the bcftools 1.24 norm fixtures and
 adds all four variant encodings, plain and BGZF references, standard input,
 every declared transformation and composition order, allele cardinalities and
 types, haploid through mixed-polyploid samples, symbolic and gVCF boundaries,
 reference mismatch modes, selection, displacement windows, output failures,
-target aliasing, and rollback. A representative reference-guided indel path
-and multiallelic typed-remapping path must each record input hashes, repeated
-timing distributions, peak RSS, versions, flags, and machine provenance. At
-least the principal established hot path must have a strict throughput or
-resource-use advantage before publication.
+target aliasing, indexed TBI and CSI selection, region deduplication,
+region-target composition, and rollback. A representative reference-guided
+indel path and multiallelic typed-remapping path must each record input hashes,
+repeated timing distributions, peak RSS, versions, flags, and machine
+provenance. At least the principal established hot path must have a strict
+throughput or resource-use advantage before publication.
 
 ### Current structure
 
