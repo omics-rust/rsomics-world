@@ -109,24 +109,57 @@ compatibility tests pass.
 
 | Historical asset | Audited revision | Disposition |
 |---|---|---|
-| `rsomics-deseq-estimate-dispersions` | `30cfe948a68924b308d2cd61867fb194860fc4ca` | refactor then merge; central dispersion source and fixture asset |
+| `rsomics-deseq-estimate-dispersions` | `30cfe948a68924b308d2cd61867fb194860fc4ca` | refactor selected dispersion kernels and retain the fixtures; discard the standalone parser, CLI, and fitted-state boundary |
 | `rsomics-deseq-fpkm` | `ec263aa17cc91718fc5118a8436c971d22e30bb2` | test, fixture, and export-formula asset; do not keep as a binary |
 | `rsomics-deseq-fpm` | `376778fd58599f8026298a12178e7cc05b5bd0e1` | test, fixture, and export-formula asset; deduplicate with normalized-count state |
-| `rsomics-deseq-lfc-shrink` | `13275091e33acd3090b69508587f5718a5c06cd6` | refactor then merge for the normal-prior path; current upstream alternatives need separate implementations and evidence |
-| `rsomics-deseq-lrt` | `a011348a0a61f20de84024b6ba59e56afc27c3a7` | refactor then merge; retain full/reduced design fixtures |
+| `rsomics-deseq-lfc-shrink` | `13275091e33acd3090b69508587f5718a5c06cd6` | algorithm and fixture seed for the later normal-prior path; current upstream alternatives need separate implementations and evidence |
+| `rsomics-deseq-lrt` | `a011348a0a61f20de84024b6ba59e56afc27c3a7` | refactor the NB-GLM/LRT numerical seed and retain the full/reduced fixtures; replace the limited formula and design implementation |
 | `rsomics-deseq-norm-transform` | `9c4e4f2f8b9c9859e0c7b1cdfdfec56ef7feaa2b` | refactor then merge into transforms |
 | `rsomics-deseq-prep` | `522a9ff561e5e559b23a05d2433a119a34b2559b` | fixture and policy-warning asset only; fixed thresholds do not replace method-aware filtering |
-| `rsomics-deseq-results` | `94b1cea1e19f1e02fcf829a7f3cec7bb2f51dc5b` | refactor then merge as the initial Wald seed |
-| `rsomics-deseq-rlog` | `44f7e815c2174366fd3696ae281018fcbdf9809b` | refactor then merge after general-design and blind-mode review |
-| `rsomics-deseq-sizefactors` | `2aae52e2a4fc0d31d51c732d79f8dad38db7cf13` | refactor then merge; deduplicate every copied median-of-ratios implementation |
-| `rsomics-deseq-unmix` | `9713ce792a3f077190f9e9488f398d2b62fade84` plus an inherited `src/cli.rs` diff | test and algorithm asset for a later operation; resolve ownership before copying |
-| `rsomics-deseq-vst` | `4178daad4d14b7bb4a3c6121b631464d35aeccef` | refactor then merge into transforms |
+| `rsomics-deseq-results` | `94b1cea1e19f1e02fcf829a7f3cec7bb2f51dc5b` | algorithm and fixture seed for Wald, Cook's distance, independent filtering, and adjustment; do not use its two-group object model as the target skeleton |
+| `rsomics-deseq-rlog` | `44f7e815c2174366fd3696ae281018fcbdf9809b` | algorithm and golden seed for a later blind rlog transform; integrate through the fitted dataset rather than preserve another parser and dispersion copy |
+| `rsomics-deseq-sizefactors` | `2aae52e2a4fc0d31d51c732d79f8dad38db7cf13` | refactor the ratio estimator into the single product-owned normalization stage; discard its standalone binary boundary and copied matrix parser |
+| `rsomics-deseq-unmix` | `9713ce792a3f077190f9e9488f398d2b62fade84` plus a user-owned `src/cli.rs` diff | test and optimizer asset for a later operation; preserve the inherited diff and do not copy the working tree wholesale |
+| `rsomics-deseq-vst` | `4178daad4d14b7bb4a3c6121b631464d35aeccef` | algorithm and golden seed for the transform module; fit or reuse the trend through the product dataset |
 
-The initial source seed is `rsomics-deseq-results`, but no repository is
-merged wholesale. `rsomics-deseq-results` and
-`rsomics-deseq-lfc-shrink` contain exact copies of matrix and results modules
-and near-copies of the dispersion and GLM pipeline. Consolidation creates one
-typed fit path rather than choosing one fork for each public command.
+No historical repository is the target skeleton. `rsomics-deseq-results` and
+`rsomics-deseq-lfc-shrink` contain byte-identical matrix modules
+(`92be3dd8ebfd0b2362cfd6397fde6f1cfddabbe70542b0fa349a04cf60ac5039`)
+and result modules
+(`feec1f85b53a1248bb44dbbd462193cefa55471dfced1e747b76e2e422717d63`),
+plus near-copies of the dispersion and GLM pipeline. Ten repositories also
+carry the same `main.rs`. Consolidation starts with a new product-owned dataset
+and fit state, then ports reviewed numerical components behind that contract.
+
+### Live source audit
+
+The historical implementations were inspected at the revisions above on
+2026-08-12. Their names and README claims are not treated as evidence that the
+corresponding product contract is complete.
+
+| Contract | What exists | Reuse decision | Missing release evidence |
+|---|---|---|---|
+| matrix and sample metadata | repeated hand-written TSV readers; the main Wald path accepts a comma-separated two-level condition vector | retain fixtures only; implement one identity-joined integer matrix and typed metadata model | duplicate identities, reordered metadata, missing values, invalid counts, numeric covariates, declared factor levels, and transactional ingest |
+| design and contrasts | LRT and dispersion repositories build an intercept plus dummy-coded additive categorical factors | replace; the parser does not support numeric covariates, interactions, explicit intercept control, or general named contrasts | model-matrix differentials for all supported term classes, stable coefficient names, rank failure, and reference-level control |
+| size factors | several copies of the median-of-ratios `type="ratio"` estimator; the dedicated golden has only a small matrix | port once into the dataset fit | current-oracle matrices covering zeros, extreme library imbalance, invalid factors, supplied size or normalization factors, and deterministic cross-platform output |
+| dispersion fit | Cox-Reid gene estimates, parametric and approximate local trends, MAP shrinkage, and committed 1.50.2 goldens | refactor selected kernels; do not preserve its separate dataset or CLI | current 1.52.0 oracle across design ranks, low residual degrees of freedom, trend fallback, outliers, convergence failures, and supplied dispersions |
+| Wald results | one two-column `[intercept, group]` GLM with Cook's cutoff, independent filtering, and BH adjustment | port numerical pieces only after general-design tests | arbitrary full-rank designs, named contrasts, beta convergence, Cook's replacement semantics, threshold alternatives, all-zero and low-count rows, and fitted-state reuse |
+| LRT | dense NB-GLM full/reduced fits and one `~condition+batch` versus `~batch` golden | retain numerical and fixture seeds; replace its design layer | explicit verification that the reduced model is nested, multi-degree tests, numeric and interaction terms, convergence state, Cook's behavior, and current-oracle results |
+| transforms | blind parametric VST and rlog implementations with committed 1.50.2 matrices | port one first-release transform through the shared dataset; keep the other feature-gated | blind and design-aware modes, supplied and reused fits, non-parametric fit types, edge matrices, current-oracle output, and memory evidence |
+| shrinkage | normal-prior implementation only | later algorithm seed | `apeglm` and `ashr` method contracts, s-values, interaction restrictions, thresholds, and current-oracle fixtures |
+| unmix | analytic-gradient box optimizer and small 1.50.2 goldens; the default non-smooth path intentionally differs by up to `2e-2` | later product-local algorithm asset | decide compatibility versus objective-optimal semantics, expand mixtures and boundary cases, and resolve the user-owned CLI diff before copying |
+| CLI and output | retired `HelpSpec` calls, direct file creation, and independent TSV outputs | discard | current `rsomics-help` command tree, `rsomics-common` process behavior, atomic multi-file bundle, provenance, and recovery tests |
+| performance | Criterion loops over the same small golden inputs, without upstream wall-time, peak-memory, or I/O comparison | reject as release evidence | representative matrix, pinned DESeq2/R oracle, machine and flags, warmups and distributions, peak RSS, output equivalence, and strict material advantage |
+
+The committed DESeq2 1.50.2 goldens remain regression inputs, not the current
+compatibility oracle. A live differential may skip only in an explicitly
+reported optional developer test. Required compatibility CI must provision the
+pinned oracle and fail when it cannot run or when the oracle itself fails.
+
+The historical sources are also substantially over-commented. Ported code is
+rewritten around explicit types and narrow functions; phase narration,
+line-by-line algorithm restatement, compatibility history, and audit notes do
+not move into production source comments.
 
 ### Existing implementation gaps
 
@@ -140,10 +173,15 @@ typed fit path rather than choosing one fork for each public command.
 - Several repositories preserve useful committed R goldens, but live DESeq2
   checks search private local R environments and return success after a loud
   skip when the oracle is unavailable.
+- The LRT and dispersion formula parser supports only additive categorical
+  factors with an implicit intercept. It cannot satisfy the dossier's numeric,
+  interaction, intercept-control, or general contrast contract, and the LRT
+  path checks only that the reduced model has fewer columns rather than proving
+  it is nested in the full model.
 - The goldens do not form a central matrix of upstream version, design class,
   contrast class, low-count behavior, outliers, convergence, and platform.
-- CLI implementations use the retired duplicate `HelpSpec` model and direct
-  file creation.
+- CLI implementations use the retired duplicate `HelpSpec` model removed from
+  `rsomics-help` 0.4 and direct file creation.
 - Every repository has only Ubuntu `x86_64` CI.
 
 ## `rsomics-edger`
