@@ -583,7 +583,7 @@ including the pinned bcftools 1.24 compatibility gate on Linux x86_64.
 - Produces: `Editor::apply_info(&self, &Header, &Matched, &mut RecordBuf) -> Result<bool>`.
 - Promotes the module and `norm::cardinality::{combinations, infer_ploidy}` to `pub(crate)` for product-internal reuse.
 
-- [ ] **Step 1: Add failing fixed and INFO transfer tests**
+- [x] **Step 1: Add failing fixed and INFO transfer tests**
 
 Cover ID, QUAL, FILTER, one INFO tag, renamed source/destination tags, all INFO, flags, integer/float/character/string values, missing values, every write mode, array append, duplicate suppression where the mode requires it, and schema mismatches. Cover `Number=A`, `R`, and `G` for reordered, subset, and extended target alleles with haploid, diploid, triploid, and mixed source records.
 
@@ -597,19 +597,19 @@ fn remaps_number_r_to_target_alleles() {
 }
 ```
 
-- [ ] **Step 2: Run edit tests and confirm RED**
+- [x] **Step 2: Run edit tests and confirm RED**
 
 Run `cargo test annotate::edit --lib`. Expected: missing `Editor` and remapping functions.
 
-- [ ] **Step 3: Implement typed fixed and INFO mutation**
+- [x] **Step 3: Implement typed fixed and INFO mutation**
 
 Copy source header definitions before output header emission. Apply write modes without string round trips. For `Number=G`, enumerate canonical genotype combinations with checked arithmetic and map every source genotype cell to the target allele order. Reject type, count, or ploidy ambiguity instead of dropping values.
 
-- [ ] **Step 4: Run edit, norm, and full library tests**
+- [x] **Step 4: Run edit, norm, and full library tests**
 
 Run `cargo test annotate::edit --lib`, `cargo test norm --lib`, and `cargo test --lib`. Expected: annotation and normalization cardinality tests all pass.
 
-- [ ] **Step 5: Commit typed field transfer**
+- [x] **Step 5: Commit typed field transfer**
 
 ```bash
 git add src/annotate.rs src/annotate/columns.rs src/annotate/edit.rs src/norm.rs src/norm/cardinality.rs
@@ -618,6 +618,17 @@ git push origin main
 ```
 
 Wait for exact-head CI.
+
+Completed in `e288f03`: 15 focused tests cover atomic header preparation,
+fixed fields, renamed and whole INFO transfer, all seven write modes, typed
+tabular parsing, bcftools-compatible three-state flags and append semantics,
+schema failures, duplicate set values, and `Number=A/R/G` remapping across
+reordered, subset, and extended alleles for haploid, diploid, and triploid
+cardinalities. The annotation and normalization paths now share one checked
+genotype-cardinality implementation. All 182 library tests, the non-oracle
+integration suite, release edit and norm tests, and strict all-target Clippy
+pass locally. Exact-head CI run `31646757707` passed on all four native target
+classes, including package and pinned bcftools 1.24 compatibility gates.
 
 ---
 
