@@ -2876,13 +2876,16 @@ SHA-256 `e8af8bc6756e1c61b6dca4e12768267468b87200a37d83f799e657d90f5608a9`.
 The release-performance gate used the feature revision, Rust 1.97.1, and
 samtools/HTSlib 1.24 on the Apple M2 Mac mini. Twenty alternating pairs used a
 120-column viewport across 8,001 randomized 1,000-base alignments. On BAM,
-rsomics Text won all twenty pairs and reduced mean wall time from 0.2515 to
-0.2000 seconds, a 20.48% reduction, while using 9.37% more mean peak RSS. On
-CRAM, mean Text wall time was 0.3125 versus 0.3155 seconds and is treated as
-parity; mean peak RSS fell from 130,262,630 to 82,938,266 bytes, a 36.33%
-reduction. HTML was slower for both inputs and has no throughput claim.
-Twenty pseudo-terminal redraws had median completion times of 0.216675479
-seconds for BAM and 0.333513209 seconds for CRAM. The product `PERFORMANCE.md`
+rsomics Text won all twenty pairs and reduced mean wall time from 0.2510 to
+0.2005 seconds, a 20.12% reduction, while using 9.34% more mean peak RSS. On
+CRAM, mean Text wall time was 0.3135 versus 0.3170 seconds and is treated as
+parity; mean peak RSS fell from 130,270,822 to 83,039,027 bytes, a 36.26%
+reduction. Revision `f199ca0377a0` coalesces adjacent HTML cells with the same
+style, shrinking the representative document from 26,893,242 to 1,184,839
+bytes. BAM HTML then won all twenty pairs and reduced mean wall time by 15.60%;
+CRAM HTML remained at throughput parity while using 36.42% less mean peak RSS.
+Twenty pseudo-terminal redraws had median completion times of 0.214339167
+seconds for BAM and 0.334060438 seconds for CRAM. The product `PERFORMANCE.md`
 records the full timing, paired, RSS, terminal, input, output, tool, and binary
 hash ledger.
 
