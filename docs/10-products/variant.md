@@ -477,18 +477,22 @@ not expose VCF policy or caller-specific reference IDs. `rsomics-call` and
 item is not published merely for the planned command.
 
 The feature-gated implementation now covers the reference-normalization core,
-typed multiallelic split, biallelic and complex atomization, AD sum preservation,
-original-record tracing, explicit duplicate policies, split-overlap policy, and
-REF mismatch exit, warn, exclude, and fix behavior. The contiguous implementation
-range is `90bd113` through `b946ab6`; `norm` remains absent from the default build
-and from the published 0.2.0 crate. Exact-head runs `31560629845`, `31561286723`,
-`31561685917`, and `31563112790` passed Linux and macOS on both `x86_64` and
-`aarch64`. The latest gate includes bcftools 1.24 oracles for all four variant
-encodings, indexed plain and BGZF FASTA, IUPAC and missing REF repair, phased and
-mixed-ploidy GT remapping, AC updates, duplicate alleles created by REF swaps,
-and split-plus-atomize origin tracing. Join, selection, targets and regions,
-right alignment, performance evidence, and the final public API review remain
-release blockers.
+typed multiallelic split and join, biallelic and complex atomization, AD sum
+preservation, original-record tracing, explicit duplicate policies,
+split-overlap policy, strict joined FILTER precedence, and REF mismatch exit,
+warn, exclude, and fix behavior. Join supports SNPs, indels, separated mixed
+types, or any type with typed `A`, `R`, `G`, scalar, GT, mixed-ploidy, symbolic,
+breakend, and allele-extension handling. The contiguous implementation range is
+`90bd113` through `8ef9463`; `norm` remains absent from the default build and
+from the published 0.2.0 crate. Exact-head runs `31560629845`, `31561286723`,
+`31561685917`, `31563112790`, `31565335254`, `31566011960`, and `31566919156`
+passed Linux and macOS on both `x86_64` and `aarch64`. The latest gate includes
+bcftools 1.24 oracles for all four variant encodings, indexed plain and BGZF
+FASTA, IUPAC and missing REF repair, phased and mixed-ploidy GT remapping, AC
+updates, duplicate alleles created by REF swaps, split-plus-atomize origin
+tracing, every join class, and strict FILTER behavior. Selection, targets and
+regions, right alignment, performance evidence, and the final public API review
+remain release blockers.
 
 The ordinary compatibility matrix retains the bcftools 1.24 norm fixtures and
 adds all four variant encodings, plain and BGZF references, standard input,
