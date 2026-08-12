@@ -223,30 +223,72 @@ dispersion default is not a replacement for fitting the current workflow.
 
 | Historical asset | Audited revision | Disposition |
 |---|---|---|
-| `rsomics-avelogcpm` | `7871fc7b72b149e3e7fac7b3f1a595062d7004a5` | refactor then merge into derived expression exports |
-| `rsomics-cpm` | `128e1f0e61070c7844b1fb74e2292280aff21216` | refactor then merge with one library-state implementation |
+| `rsomics-avelogcpm` | `7871fc7b72b149e3e7fac7b3f1a595062d7004a5` | algorithm and golden seed for derived exports; discard its matrix and CLI boundary |
+| `rsomics-cpm` | `128e1f0e61070c7844b1fb74e2292280aff21216` | algorithm and golden seed for one shared fitted library-state export |
 | `rsomics-edger-binom-test` | `f0188271f2919e68171c32bf78dc576e4514c4ee` | test and later-operation asset |
-| `rsomics-edger-cpm-by-group` | `698bf089a60cd726e3dc12a030d70c0a57d0b52c` | refactor then merge into exports |
-| `rsomics-edger-diff-splice` | `b9c4afdd3f6db10259e1ce38523c38a2e6c1a21e` | refactor then merge after the core fit and gene/exon contract are stable |
-| `rsomics-edger-estimate-disp` | `3eda06381596b5c574ac18448c57d7a0255b17b0` | algorithm, fixture, and legacy-compatibility asset; reconcile with edgeR 4 before merge |
-| `rsomics-edger-exact-test` | `ab70f259c2ce1c5db11b50e01f31e99e44236a17` | refactor then merge for the later classic pipeline |
-| `rsomics-edger-glm-lrt` | `e54fd78695c9883bc679bc5b1d18ffd9e4fc094a` | refactor then merge behind the shared design and fit state |
-| `rsomics-edger-glm-qlf` | `c2f26cf9d9dc755961a8f7ea529ff28ca65262d8` | refactor then merge as the initial QL seed; replace fixed-dispersion workflow |
-| `rsomics-edger-glm-treat` | `0206008c7f792ca207b9f2bb58542019af8f22b4` | refactor then merge after QL/LRT result contracts |
+| `rsomics-edger-cpm-by-group` | `698bf089a60cd726e3dc12a030d70c0a57d0b52c` | algorithm and golden seed for grouped exports; consume the product design and library state |
+| `rsomics-edger-diff-splice` | `b9c4afdd3f6db10259e1ce38523c38a2e6c1a21e` | later algorithm and fixture seed; replace its independent fit, design, and feature mapping |
+| `rsomics-edger-estimate-disp` | `3eda06381596b5c574ac18448c57d7a0255b17b0` | legacy algorithm and fixture asset; its approximate trended prior and disconnected output do not enter the first current-QL slice |
+| `rsomics-edger-exact-test` | `ab70f259c2ce1c5db11b50e01f31e99e44236a17` | algorithm and golden seed for the later classic pipeline |
+| `rsomics-edger-glm-lrt` | `e54fd78695c9883bc679bc5b1d18ffd9e4fc094a` | numerical and golden seed for the later LRT pipeline; integrate only behind the shared design and fitted state |
+| `rsomics-edger-glm-qlf` | `c2f26cf9d9dc755961a8f7ea529ff28ca65262d8` | legacy QL numerical and fixture asset only; it explicitly implements `legacy=TRUE, abundance.trend=FALSE`, not the first-release edgeR 4 workflow |
+| `rsomics-edger-glm-treat` | `0206008c7f792ca207b9f2bb58542019af8f22b4` | later algorithm and golden seed after the current QL/LRT result contracts |
 | `rsomics-edger-goodturing` | `b1313f13c9f22780e4becb10fc4b27b9a27bafb6` | test and niche-operation asset only |
-| `rsomics-edger-predfc` | `86f1ede753ca140127912c130e14c9a2a673a485` | refactor then merge only with ranking/plotting consumers |
-| `rsomics-edger-robust-disp` | archive-only local tree, no Git revision | algorithm and fixture asset only; establish provenance and current upstream relevance before copying |
-| `rsomics-edger-rpkm` | `c43d59ac9f25bcad9f3c83958b702bdfa29053cf` | refactor then merge into exports |
-| `rsomics-filter-by-expr` | `451580a86a4c36de536605fc08037f2c4b1b83c7` | refactor then merge into the first QL workflow |
-| `rsomics-tmm-norm` | `3f37f84a8935c419a37378bc43dc09930da83067` | refactor then merge into normalization |
+| `rsomics-edger-predfc` | `86f1ede753ca140127912c130e14c9a2a673a485` | internal numerical and golden seed only; do not retain a public operation |
+| `rsomics-edger-robust-disp` | archive-only local tree, no Git revision | discard as production code for now; retain the fixture as a documented negative result because tagwise estimates differ from edgeR by up to 26% |
+| `rsomics-edger-rpkm` | `c43d59ac9f25bcad9f3c83958b702bdfa29053cf` | algorithm and golden seed for exports; integrate lengths and groups through typed metadata |
+| `rsomics-filter-by-expr` | `451580a86a4c36de536605fc08037f2c4b1b83c7` | port the tested group path into the first workflow, then implement and oracle-test the design path |
+| `rsomics-tmm-norm` | `3f37f84a8935c419a37378bc43dc09930da83067` | port the TMM kernel and goldens into the single normalization stage; discard its parser and binary boundary |
 | `rsomics-uq-norm` | `9f53b4c7af2717ccca8d90a48762c957465cc837` | later normalization-method asset |
+
+Across the historical bulk-expression pool, eighteen repositories carry the
+same `main.rs`; the QL, LRT, dispersion, splice, threshold, and export crates
+also repeat parsers, special functions, design matrices, adjustment code, and
+writers. No historical repository is the target skeleton.
+
+### Live source audit
+
+The historical implementations were inspected at the revisions above on
+2026-08-12. The archive-only robust-dispersion tree was read without modifying
+it; its missing Git provenance remains part of its disposition.
+
+| Contract | What exists | Reuse decision | Missing release evidence |
+|---|---|---|---|
+| dataset and metadata | repeated positional TSV readers; some silently discard a leading design sample-id field, and factors or lengths are loaded by row order | retain fixtures only; implement one identity-joined count, sample, feature, offset, and weight model | duplicate and reordered identities, integer enforcement, missing values, supplied library sizes and offsets, observation weights, feature metadata, and transactional ingest |
+| expression filtering | value-tested `filterByExpr` group path with exact boundary fixtures | port the decision kernel | design-derived minimum sample size, supplied library sizes, interaction designs, leverage behavior, parameter provenance, and current-oracle matrices |
+| normalization | value-tested TMM, upper-quartile, CPM, grouped CPM, aveLogCPM, and RPKM fragments | port TMM first and reuse one library state for every export | reference selection, sparse and extreme-composition matrices, supplied factors, zero libraries, method-specific options, deterministic platforms, and current-oracle output |
+| current QL fit | no implementation; the QLF repository and oracle explicitly select `legacy=TRUE, abundance.trend=FALSE` with a caller-supplied common dispersion | begin a new edgeR 4 QL path; keep the old implementation only as a possible pinned legacy mode | `legacy=FALSE` adjusted deviances, abundance trend, current default options, robust path, small means, large NB dispersions, general contrasts, weights, convergence, and fitted-state reuse |
+| legacy QL fit | a constant-prior QL implementation with one-way and general-design fixtures | retain selected numerical tests and special functions | full-rank rejection, non-finite and negative counts, zero libraries, per-gene dispersions, explicit convergence failures, required oracle CI, and all native platforms |
+| dispersion estimation | common/tagwise Cox-Reid path plus `none` and moving-average trends | legacy algorithm and fixture asset | current workflow relevance, locfit trend, covariate-conditioned prior degrees of freedom, heterogeneous low-abundance genes, robust compatibility, and direct typed consumption by a fit |
+| LRT, exact, and threshold tests | separate GLM LRT, two-group exact, and `glmTreat` implementations with small goldens | later numerical and fixture seeds | common fitted dataset, multi-coefficient contrasts, current options, convergence state, offsets and weights, result provenance, and current-oracle matrices |
+| splice and niche operations | disconnected `diffSplice`, binomial, Good-Turing, and predictive-FC implementations | later test or internal assets only | typed exon-to-gene mapping, complete fit reuse, operation-specific edge cases, current upstream relevance, and required oracles |
+| CLI and output | retired `HelpSpec`, direct files, per-operation TSVs, and no durable fit object | discard | current `rsomics-help`, `rsomics-common` process behavior, atomic versioned bundle, provenance, diagnostics, and recovery tests |
+| performance | Criterion loops over small repository goldens without pinned edgeR wall-time, peak-memory, I/O, or equivalent-output checks | reject as release evidence | representative count matrices, exact oracle version and flags, machine, distributions, peak RSS, output equivalence, and a strict material advantage |
+
+The old dispersion README says its tagwise output feeds both LRT and QLF. The
+LRT has a positional `--dispersion-file`, but QLF accepts only one scalar
+`--dispersion`; the claimed QLF composition does not exist. The first product
+implementation therefore wires typed state internally rather than reproducing
+file-order coupling.
+
+Live R checks remain optional developer evidence only. Required compatibility
+CI provisions the pinned edgeR and R versions and fails if the oracle is absent
+or fails. Ported numerical code also loses the historical line-by-line and
+compatibility-history comments in favor of narrow types and functions.
 
 ### Existing implementation gaps
 
 - The QL, LRT, and exact-test crates each own another matrix parser, design
   representation, numerical helper set, p-value adjustment, writer, and CLI.
 - The historical QL CLI defaults to a caller-supplied constant dispersion of
-  `0.05`; it does not execute edgeR 4's complete fitted QL lifecycle.
+  `0.05`; its oracle explicitly requests the legacy constant-prior path, so it
+  does not execute edgeR 4's complete fitted QL lifecycle.
+- The QLF path does not reject a rank-deficient design. Its Cholesky solver
+  floors singular pivots to `1e-300`, which can turn an invalid model into
+  finite-looking output instead of failing loudly.
+- Sample ids, normalization factors, dispersions, gene lengths, and feature
+  mappings are joined by position in different binaries rather than by checked
+  identity. The supposed dispersion-to-QLF handoff is not implemented.
 - Current edgeR accepts counts from multiple omics types, offsets, observation
   weights, general designs, contrasts, and feature metadata. The old binaries
   cover disconnected subsets.
