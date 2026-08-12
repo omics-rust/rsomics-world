@@ -1489,7 +1489,10 @@ milliseconds for bcftools 1.23.1 on a 300,000-record Apple M2 fixture, a 5.88
 times throughput advantage. It remains a seed until output identity or
 decision equivalence, repeated 1.24 trials, input digest, source revisions, and
 peak RSS are re-established. The HMM caller has no accepted performance
-record.
+record. Its historical 1.65 times CPU result used bcftools 1.13, omitted the
+upstream signal and plotting outputs, and accepted different region boundaries,
+posteriors, and qualities; the timing therefore does not compare equivalent
+scientific workflows and is rejected rather than carried forward.
 
 HMM and Levenberg-Marquardt code stays product-private initially.
 `rsomics-stats` promotion requires a second product consumer with identical
