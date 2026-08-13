@@ -971,14 +971,31 @@ ordinary integration tests, five live annotate oracle groups, rustdoc with
 warnings denied, and package reconstruction passed. Exact-head CI run
 `31658168246` passed Linux and macOS on x86_64 and aarch64.
 
-- [ ] **Step 5: Prepare and publish 0.4.0**
+- [x] **Step 5: Prepare and publish 0.4.0**
 
 Set `version = "0.4.0"`, update the lockfile and README release surface, commit `chore: prepare rsomics-vcf 0.4.0`, push, wait exact release-head CI, and trigger the existing GitHub publication workflow from that exact head.
 
-- [ ] **Step 6: Independently verify crates.io**
+Product revision `203b11974adf719f24ac485fbcc8d02fa77e5423` contains the
+reviewed release metadata. Exact-head CI run `31659288542` passed the four
+native target classes, and publish run `31659664891` completed from that same
+head.
+
+- [x] **Step 6: Independently verify crates.io**
 
 Download the static registry archive to a new external directory, compare its checksum with the crates.io API, verify `.cargo_vcs_info.json`, diff the unpacked tree against `cargo package`, perform a fresh locked registry install to an external root, check `--version` and unified `annotate --help`, and rerun one complete BED and one typed VCF oracle through the installed binary.
 
-- [ ] **Step 7: Close the control-plane gate**
+The non-yanked registry archive is 233,120 bytes with SHA-256
+`938a9dfa4cda40c114865f1a86b8a1168ab07599d3567c17bec3d1306c65fcac`.
+It matches the crates.io API, records the exact release revision, and unpacks
+to the same tree as the final local package. A fresh locked registry install
+under `/Volumes/KIOXIA/Developments/tmp/rsomics-vcf-release-verify.iShycL`
+reports 0.4.0 and exposes unified annotation help. The installed binary has
+SHA-256 `a989f3758dc258cc907c8752c48a7c9e6c8002c72c500d04b75a21ca1e1e200e`.
+Its complete interval and typed annotation outputs match bcftools 1.24 with
+canonical SHA-256 values
+`f9354d0fe551aaca2f9c3ac14d176638840ce453d43687834ee1dd7172e356a9`
+and `0e2eba0b57db893a2fd564b31eee5391b1181b69bf3ab53fa2f53954061c3ee6`.
+
+- [x] **Step 7: Close the control-plane gate**
 
 Update `docs/10-products/variant.md` with the exact release head, CI and publish run IDs, registry archive checksum and size, installed binary checksum, oracle output fingerprints, and measured performance decision. Validate `scripts/validate_control_plane.py`, commit `docs(vcf): record annotation release`, push, and wait exact-head control-plane CI.

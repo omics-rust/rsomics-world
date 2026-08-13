@@ -1,9 +1,9 @@
 # Variant format, calling, and copy-number product dossiers
 
 Status: boundary, upstream-operation, and historical-source audit complete.
-`rsomics-vcf` 0.3.0 is published with the complete first-release `head`,
-`query`, `validate`, `index`, and `view` slice plus typed `filter` and allele
-normalization.
+`rsomics-vcf` 0.4.0 is published with the complete first-release `head`,
+`query`, `validate`, `index`, and `view` slice plus typed `filter`, allele
+normalization, and typed annotation transfer.
 `rsomics-call` 0.1.3 is published with its complete three-command first
 release. `rsomics-cnv` 0.1.0 is published with its complete two-command first
 release.
@@ -524,7 +524,7 @@ records binaries, hashes, flags, timings, RSS, and machine provenance.
 
 ### Release 0.4: typed annotation transfer
 
-The next VCF increment is `annotate`. It edits the target VCF/BCF header and
+Release 0.4 adds `annotate`. It edits the target VCF/BCF header and
 records, optionally joining a second sorted annotation stream. It does not
 turn every tag-producing bcftools plugin into the same command. `fill-tags`,
 reference repair, genotype rewriting, and variant-distance calculation retain
@@ -585,6 +585,33 @@ No Layer A API is added. Column grammar, allele correspondence, header edits,
 and annotation buffering are VCF product policy. Existing format, expression,
 region, transaction, help, and indexed-reference components are reused at
 their current boundaries.
+
+The release revision is
+`203b11974adf719f24ac485fbcc8d02fa77e5423`. Exact-head CI run
+`31659288542` passes debug and release tests on native Linux and macOS for
+`x86_64` and `aarch64`; the Linux `x86_64` job builds the pinned bcftools and
+HTSlib 1.24 oracle and passes the complete compatibility matrix. Publish run
+`31659664891` succeeds from that same head. The non-yanked 0.4.0 registry
+archive is 233,120 bytes with SHA-256
+`938a9dfa4cda40c114865f1a86b8a1168ab07599d3567c17bec3d1306c65fcac`.
+That checksum matches the crates.io API, its VCS metadata records the release
+revision, and its unpacked tree is identical to the final local Cargo package.
+A fresh locked registry install reports 0.4.0, exposes the unified
+`rsomics-help` annotation surface, and produces a binary with SHA-256
+`a989f3758dc258cc907c8752c48a7c9e6c8002c72c500d04b75a21ca1e1e200e`.
+The installed binary's complete interval and typed outputs match bcftools 1.24
+with canonical SHA-256 values
+`f9354d0fe551aaca2f9c3ac14d176638840ce453d43687834ee1dd7172e356a9`
+and `0e2eba0b57db893a2fd564b31eee5391b1181b69bf3ab53fa2f53954061c3ee6`.
+
+The release performance claim is bounded memory, not general throughput. On
+the Apple M2 reference host, the 2,000,000-record interval join is 4.28%
+slower than bcftools 1.24 but uses 96.15% less median peak RSS. The
+300,000-record, eight-sample typed transfer is 5.45 times slower and uses
+38.59% less median peak RSS. Complete normalized outputs are equal before
+timing; raw paired rounds, commands, fixture and binary fingerprints, CPU,
+RSS, and environment provenance are retained in the product performance
+ledger.
 
 ### Current structure
 
