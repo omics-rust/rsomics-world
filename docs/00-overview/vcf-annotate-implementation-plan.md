@@ -840,15 +840,18 @@ clean locked package build. No Layer A API was added.
 
 **Interfaces:**
 - Adds an ignored live suite selected with `RSOMICS_BCFTOOLS` and a CI-pinned bcftools 1.24 build.
-- Normalizes only bcftools provenance header lines before comparing complete headers and record bodies.
+- Removes bcftools provenance lines, compares the remaining parsed header structures, and compares record bodies byte for byte. Parsing avoids false failures from equivalent header attribute order and quoting.
 
-- [ ] **Step 1: Copy and fingerprint the selected official fixtures**
+- [x] **Step 1: Copy and fingerprint the selected official fixtures**
 
 Select official cases for fixed and typed fields, all write modes, remove complements, rename collisions, interval and allele matching, pair logic, sample mapping, `Number=A/R/G`, mark-sites, overlap fractions, regions, and malformed inputs. Record bcftools tag/version, source paths, license, and SHA-256 values in the fixture README.
 
-- [ ] **Step 2: Add failing differential cases**
+- [x] **Step 2: Add failing differential cases**
 
-For each case, generate required BGZF/CSI/TBI artifacts in an external temporary directory, run both binaries, decode BCF to canonical VCF through pinned bcftools, remove only `##bcftools_` provenance lines, and compare complete remaining bytes and exit success/failure.
+For each case, generate required BGZF/CSI/TBI artifacts in an external
+temporary directory, run both binaries, decode BCF to canonical VCF through
+pinned bcftools, remove only `##bcftools_` provenance lines, and compare parsed
+remaining headers, byte-identical record bodies, and exit success/failure.
 
 ```rust
 #[test]
@@ -860,7 +863,7 @@ fn typed_annotation_matrix_matches_bcftools_1_24() {
 }
 ```
 
-- [ ] **Step 3: Run the live matrix and fix every semantic mismatch**
+- [x] **Step 3: Run the live matrix and fix every semantic mismatch**
 
 ```bash
 env RSOMICS_BCFTOOLS=/opt/homebrew/bin/bcftools \
@@ -872,11 +875,11 @@ env RSOMICS_BCFTOOLS=/opt/homebrew/bin/bcftools \
 
 Expected: every declared case matches complete normalized output or the same fail-loud decision.
 
-- [ ] **Step 4: Add the pinned CI invocation and rerun full gates**
+- [x] **Step 4: Add the pinned CI invocation and rerun full gates**
 
 Linux x86_64 builds bcftools 1.24 from the existing SHA-256-pinned archive and runs `annotate_compat`; the other three native targets run all ordinary tests. Run the complete local debug/release, Clippy, rustdoc, and package gates again.
 
-- [ ] **Step 5: Commit compatibility evidence**
+- [x] **Step 5: Commit compatibility evidence**
 
 ```bash
 git add tests/annotate_compat.rs tests/upstream/bcftools-annotate THIRD_PARTY_LICENSES.md .github/workflows/ci.yml
@@ -885,6 +888,33 @@ git push origin main
 ```
 
 Wait for exact-head four-native-target CI and record its run ID.
+
+Completed across `1a7723d`, `6d2684a`, `a0ad31d`, `8c8c1f5`, `a286593`,
+and `c45ac9f`. The official fixture import records the bcftools 1.24 archive,
+source, license, and per-file SHA-256 values. Five live tests cover six missing
+value write policies, Character values, typed VCF samples, `Number=A/R/G`,
+multi-row allele accumulation, expressions, indexed regions, interval and
+variant matching, pair logic, overlap fractions, site marking, renames, and
+malformed inputs.
+
+The live differential exposed and fixed three production defects: BCF output
+could not encode missing GT or all-missing text FORMAT fields, tabular
+annotations used only the first per-allele row, and FORMAT rows parsed from
+VCF could remain shorter than their key set. Scalar fields and FORMAT still
+use the first matching source record; only tabular `Number=A/R` transfers
+request and merge all applicable records. The forward join preserves its
+first-match fast path for every other plan.
+
+Two deliberate boundaries are asserted rather than hidden. bcftools 1.24
+reports `-INFO/TAG` as unimplemented while rsomics supports it, and bcftools
+accepts a whole-INFO transfer whose source and target cardinalities conflict,
+producing schema-invalid output; rsomics rejects that transfer before writing.
+The local gate passed formatting, strict all-target/all-feature Clippy, 198
+debug and release unit tests, all ordinary integration tests, the five live
+annotation tests, rustdoc with warnings denied, and locked package
+verification. Exact-head CI run `31655886611` passed Linux and macOS on both
+x86_64 and aarch64; Linux x86_64 built bcftools and HTSlib tools from the
+SHA-256-pinned 1.24 archive and ran the complete compatibility suite.
 
 ---
 
