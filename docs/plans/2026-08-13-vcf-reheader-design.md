@@ -1,6 +1,7 @@
 # `rsomics-vcf reheader` design
 
-Status: approved product design; implementation not started.
+Status: direction approved; written specification pending review; implementation
+not started.
 
 ## Purpose and boundary
 
@@ -92,10 +93,14 @@ path.
 BGZF VCF reads and decompresses blocks only until the first body byte. It
 writes the edited header plus the uncompressed remainder of that block,
 flushes the new leading BGZF block, and copies all remaining compressed blocks
-unchanged, including the existing EOF marker. The existing `noodles-bgzf`
-reader and writer expose the required buffered remainder, `flush`,
-`into_inner`, and underlying buffered reader; no custom BGZF parser or new
-dependency is needed.
+unchanged. A private raw-frame copier checks each remaining BGZF header,
+`BSIZE`, complete frame length, and the final canonical EOF block while it
+copies. Missing, partial, trailing, or structurally malformed frames fail
+without decoding variant records. It does not inflate or CRC-check untouched
+record blocks; complete body validation remains the `validate` contract. The
+existing `noodles-bgzf` reader and writer expose the
+required buffered remainder, `flush`, `into_inner`, and underlying buffered
+reader; no new dependency or general-purpose BGZF API is added.
 
 BCF records refer to numeric header dictionaries, so neither raw nor BGZF BCF
 can use a body block copy. The BCF path parses the original and edited headers,
@@ -105,7 +110,9 @@ streams records through the existing typed BCF reader and writer while
 checking that every referenced numeric ID resolves to the same retained name
 and kind. Removed definitions still used by a record, moved identities,
 invalid sample cardinality, malformed dictionaries, and truncated records
-fail before commit.
+fail before commit. In particular, removing a contig still referenced by BCF
+produces a controlled error; the observed bcftools 1.24 segmentation fault on
+that path is a compatibility defect rather than behavior to reproduce.
 
 ## Transactions and errors
 
