@@ -931,17 +931,27 @@ SHA-256-pinned 1.24 archive and ran the complete compatibility suite.
 - Benchmark accepts explicit rsomics binary, bcftools binary, target, annotation source, column plan, and result directory.
 - Every timed run first proves complete normalized output equality and records fixture, output, command, binary, environment, timing, CPU, and peak-RSS fingerprints.
 
-- [ ] **Step 1: Add the correctness-first benchmark harness**
+- [x] **Step 1: Add the correctness-first benchmark harness**
 
-Generate two non-trivial workloads on external storage: a multi-million-record BED-to-INFO interval join with bounded overlap and a multi-sample typed VCF-to-VCF transfer with reordered alleles and `Number=A/R/G` fields. Use three warmups and at least ten alternating measured pairs per workload.
+Generate two non-trivial workloads on external storage: a multi-million-record BED-to-INFO interval join with bounded overlap and a multi-sample typed VCF-to-VCF transfer with reordered samples and `Number=A/R/G` fields. Use three warmups and at least ten alternating measured pairs per workload. Keep reordered-allele behavior in the compatibility suite because bcftools 1.24 does not remap the affected values and therefore cannot provide semantically equal benchmark output.
 
-- [ ] **Step 2: Run release benchmarks and make a measured decision**
+- [x] **Step 2: Run release benchmarks and make a measured decision**
 
 Run on the Apple M2 reference host against bcftools/HTSlib 1.24. Require one complete representative path to show strict throughput or resource-use advantage. If neither workload passes, profile the measured hot path, make one evidence-led optimization, and rerun the same fixtures; do not change semantics or invent a favorable microbenchmark.
 
-- [ ] **Step 3: Record the complete evidence ledger**
+- [x] **Step 3: Record the complete evidence ledger**
 
 Write exact revision, OS, CPU, memory, Rust, bcftools/HTSlib, commands, fixture construction, SHA-256 values, raw timing distribution, paired summary, CPU, RSS, output equality, and the publication decision. State losses and parity honestly.
+
+Completed in product revisions `2204b1d`, `f5a76ed`, and `e6f248b`. Exact-head
+CI run `31656782702` passed all four native target classes for the final harness.
+The retained Apple M2 ledger at
+`/Volumes/KIOXIA/Developments/tmp/rsomics-annotate-benchmark-20260813-0111`
+contains three warmups and ten alternating measured pairs per workload. Complete
+normalized outputs match bcftools/HTSlib 1.24. The interval join is 5.26% slower
+but uses 96.16% less peak RSS; the typed transfer is 5.66 times slower but uses
+38.89% less peak RSS. `PERFORMANCE.md` records the raw distribution, environment,
+commands, hashes, semantic boundary, and resource-advantage publication decision.
 
 - [ ] **Step 4: Run the final pre-release review**
 
