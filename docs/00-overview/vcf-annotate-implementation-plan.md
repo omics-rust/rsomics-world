@@ -945,17 +945,31 @@ Write exact revision, OS, CPU, memory, Rust, bcftools/HTSlib, commands, fixture 
 
 Completed in product revisions `2204b1d`, `f5a76ed`, and `e6f248b`. Exact-head
 CI run `31656782702` passed all four native target classes for the final harness.
-The retained Apple M2 ledger at
-`/Volumes/KIOXIA/Developments/tmp/rsomics-annotate-benchmark-20260813-0111`
-contains three warmups and ten alternating measured pairs per workload. Complete
-normalized outputs match bcftools/HTSlib 1.24. The interval join is 5.26% slower
-but uses 96.16% less peak RSS; the typed transfer is 5.66 times slower but uses
-38.89% less peak RSS. `PERFORMANCE.md` records the raw distribution, environment,
-commands, hashes, semantic boundary, and resource-advantage publication decision.
+The retained Apple M2 inputs are under
+`/Volumes/KIOXIA/Developments/tmp/rsomics-annotate-benchmark-20260813-0111`;
+the final clean-revision ledger is under
+`/Volumes/KIOXIA/Developments/tmp/rsomics-annotate-benchmark-20260813-799a768`.
+It contains three warmups and ten alternating measured pairs per workload.
+Complete normalized outputs match bcftools/HTSlib 1.24. The interval join is
+4.28% slower but uses 96.15% less peak RSS; the typed transfer is 5.45 times
+slower but uses 38.59% less peak RSS. `PERFORMANCE.md` records the raw
+distribution, environment, commands, hashes, semantic boundary, and
+resource-advantage publication decision.
 
-- [ ] **Step 4: Run the final pre-release review**
+- [x] **Step 4: Run the final pre-release review**
 
 Review every production annotate module for error propagation, unchecked allocation, accidental whole-file retention, repeated parsing, comments, public help accuracy, and product-specific code that escaped into Layer A. Run format, strict Clippy, debug/release tests, live oracle, rustdoc, package verification, and exact-head four-target CI.
+
+The final review removed redundant per-record FORMAT transfer allocation and
+sample-matrix cloning in `799a768`; the same typed fixture improved from 8.825
+to 8.495 seconds median without changing canonical output. It also made the
+checked column grammar discoverable in unified `rsomics-help` output in
+`e0cdd11`. No whole-file variant retention, swallowed production error,
+speculative Layer A API, or narrative source comments remain. Local format,
+strict all-target/all-feature Clippy, 198 debug and release library tests, all
+ordinary integration tests, five live annotate oracle groups, rustdoc with
+warnings denied, and package reconstruction passed. Exact-head CI run
+`31658168246` passed Linux and macOS on x86_64 and aarch64.
 
 - [ ] **Step 5: Prepare and publish 0.4.0**
 
