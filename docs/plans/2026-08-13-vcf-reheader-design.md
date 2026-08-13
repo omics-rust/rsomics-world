@@ -44,9 +44,10 @@ The command preserves the input encoding: plain VCF remains plain VCF, BGZF
 VCF remains BGZF VCF, raw BCF remains raw BCF, and BGZF BCF remains BGZF BCF.
 Format conversion stays in `view`; `reheader` does not expose `-O`.
 
-`--threads INT` is available only for BCF. A nonzero value on VCF fails as an
-invalid configuration instead of being accepted without effect. The ignored
-upstream `-T, --temp-prefix` and general verbosity levels are absent.
+`--threads INT` is available only for BGZF BCF. A nonzero value on plain or
+BGZF VCF or raw BCF fails as an invalid configuration instead of being
+accepted without effect. The ignored upstream `-T, --temp-prefix` and general
+verbosity levels are absent.
 
 Global `--json` follows the existing product rule: variant output must use a
 named file so the JSON result can use standard output. The summary reports the
@@ -58,8 +59,10 @@ copy the body without decoding it.
 
 A replacement header must contain one valid `##fileformat` line and one valid
 `#CHROM` line. The fixed columns, FORMAT column, and sample columns must be
-structurally consistent. Replacement input is normalized to one LF terminator
-per header line and exactly one final LF before the body.
+structurally consistent, sample IDs must be unique, and its sample count must
+equal the original header's sample count. A replacement header cannot add or
+remove body columns. Replacement input is normalized to one LF terminator per
+header line and exactly one final LF before the body.
 
 FAI synchronization:
 
