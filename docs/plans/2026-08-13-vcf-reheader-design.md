@@ -1,7 +1,6 @@
 # `rsomics-vcf reheader` design
 
-Status: direction approved; written specification pending review; implementation
-not started.
+Status: approved 2026-08-18; implementation not started.
 
 ## Purpose and boundary
 
@@ -101,9 +100,10 @@ unchanged. A private raw-frame copier checks each remaining BGZF header,
 copies. Missing, partial, trailing, or structurally malformed frames fail
 without decoding variant records. It does not inflate or CRC-check untouched
 record blocks; complete body validation remains the `validate` contract. The
-existing `noodles-bgzf` reader and writer expose the
-required buffered remainder, `flush`, `into_inner`, and underlying buffered
-reader; no new dependency or general-purpose BGZF API is added.
+same private frame reader retains each raw frame, uses `noodles-bgzf` to
+inflate only frames containing the header, and therefore handles a header-only
+standard-input stream without losing its EOF marker. No new dependency or
+general-purpose BGZF API is added.
 
 BCF records refer to numeric header dictionaries, so neither raw nor BGZF BCF
 can use a body block copy. The BCF path parses the original and edited headers,
