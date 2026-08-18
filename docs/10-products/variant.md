@@ -1,9 +1,9 @@
 # Variant format, calling, and copy-number product dossiers
 
 Status: boundary, upstream-operation, and historical-source audit complete.
-`rsomics-vcf` 0.4.0 is published with the complete first-release `head`,
+`rsomics-vcf` 0.5.0 is published with the complete first-release `head`,
 `query`, `validate`, `index`, and `view` slice plus typed `filter`, allele
-normalization, and typed annotation transfer.
+normalization, typed annotation transfer, and encoding-preserving `reheader`.
 `rsomics-call` 0.1.3 is published with its complete three-command first
 release. `rsomics-cnv` 0.1.0 is published with its complete two-command first
 release.
@@ -613,6 +613,69 @@ timing; raw paired rounds, commands, fixture and binary fingerprints, CPU,
 RSS, and environment provenance are retained in the product performance
 ledger.
 
+### Release 0.5: encoding-preserving reheader
+
+Release 0.5 adds the complete `reheader` operation. It composes whole-header
+replacement, ordered FAI contig synchronization, and positional or mapped
+sample renaming without introducing another crate or a public Layer A API.
+Plain VCF copies record bytes; BGZF VCF rewrites only the header frames and
+copies the remaining valid frames through one canonical EOF; raw and BGZF BCF
+stream typed records through stable edited numeric dictionaries. Named output
+uses the existing common-layer transaction. Nonzero compression workers are
+accepted only for BGZF BCF.
+
+The implementation rejects malformed or cardinality-changing replacement
+headers, invalid FAI rows, unknown or duplicate sample mappings, unsafe output
+aliases, ordinary gzip VCF, malformed BGZF framing, truncated BCF, and removal
+of BCF definitions still referenced by records. The complete bcftools 1.24
+oracle covers all four encodings and five edit combinations, plus plain and
+BGZF standard input. Five intentional fail-loud divergences separately cover
+sample count, unknown sources, duplicate final names, referenced contig
+removal, and truncated BGZF. `setgt` remains absent from help and documentation
+until its independent rule and expression contract passes the same gates.
+
+The release revision is
+`f16584e18a9412c995f8d30ca2d97e206e8a9314`. Exact-head CI run
+`32117463766` passes debug and release tests on native Linux and macOS for
+`x86_64` and `aarch64`; Linux `x86_64` additionally packages the crate, builds
+the pinned bcftools/HTSlib 1.24 oracle, and passes the compatibility suites.
+Publish run `32117948265` succeeds from the same head.
+
+The non-yanked crates.io archive is 258,773 bytes with SHA-256
+`b6983e5e7e6c43a9352d97f9ed9037469f96b817b78dcb38d05ca06741656b7b`.
+The crates.io API checksum agrees, `.cargo_vcs_info.json` records the exact
+release head, and the unpacked registry and local package trees have identical
+aggregate SHA-256
+`0f73e8087691ed1ac4fca9df3e73c7676743c3db7fd765d02dd4ab7f703907ca`.
+A fresh locked install under an isolated external Cargo home and target reports
+0.5.0, exposes the shared help surface, and produces a binary with SHA-256
+`6f8d07b36a37c8de1c98956fe5ca9fdfd0e57dac9bc372bb652e9e9939c1c68c`.
+The complete independent verification tree is retained under
+`/Volumes/KIOXIA/Developments/tmp/rsomics-vcf-0.5.0-verify.UounrQ`.
+
+The installed registry binary passes a four-encoding oracle smoke test. Plain
+VCF matches bcftools byte for byte, and both decoded BGZF VCF outputs have
+SHA-256
+`ce5331722928dabdb070e7f8ee36e2f72cb08a3826c5b60fdde5f796222122d1`.
+The raw BCF input and rsomics output were independently checked for the `BCF`
+magic rather than inferred from a filename; BGZF BCF retains gzip framing.
+For both BCF encodings, decoded records have SHA-256
+`02ccac78a80415791367e69e1eaa98902a4e7cf6f4d2000dac0558e503b7e0b9`
+and normalized BCF headers have SHA-256
+`00bcf80da66f1057d602b02411df4a67ed92d76c8b7b98910ad47b86a0187f8e`,
+matching bcftools 1.24.
+
+The representative performance gate used revision `b1e50bd0cc99`, an Apple
+M2 with 8 GB RAM, three warmups, and ten alternating measured pairs over
+2,000,000 records and eight samples. Plain VCF took 0.515 seconds median
+versus 3.075 seconds for bcftools and used 3,915,776 versus 6,389,760 bytes
+median peak RSS. BGZF VCF took 0.040 versus 0.020 seconds, so it is not a
+throughput win, but used 4,636,672 versus 7,012,352 bytes RSS. Both paths pass
+on a strict measured advantage; the BGZF claim is memory only. Equality
+hashes, paired distributions, commands, machine data, and binary fingerprints
+remain in the product `PERFORMANCE.md` and the retained external result
+directory.
+
 ### Current structure
 
 ```text
@@ -620,6 +683,7 @@ src/
 ├── lib.rs
 ├── main.rs
 ├── cli.rs
+├── annotate.rs
 ├── head.rs
 ├── index.rs
 ├── norm.rs
@@ -627,9 +691,17 @@ src/
 ├── query_bcf.rs
 ├── query_format.rs
 ├── regions.rs
+├── reheader.rs
 ├── validate.rs
 ├── variant_type.rs
 ├── view.rs
+├── annotate/
+│   ├── columns.rs
+│   ├── edit.rs
+│   ├── header.rs
+│   ├── matching.rs
+│   ├── set_id.rs
+│   └── source.rs
 ├── expression/
 │   ├── bind.rs
 │   ├── evaluate.rs
@@ -640,6 +712,7 @@ src/
 │   ├── gaps.rs
 │   └── stream.rs
 ├── format/
+│   ├── bgzf.rs
 │   ├── reader.rs
 │   ├── record.rs
 │   ├── value.rs
@@ -659,6 +732,12 @@ src/
 │   ├── merge.rs
 │   ├── reference.rs
 │   └── split.rs
+├── reheader/
+│   ├── bcf.rs
+│   ├── fai.rs
+│   ├── header.rs
+│   ├── samples.rs
+│   └── vcf.rs
 ├── validation/
 │   ├── definitions.rs
 │   ├── header.rs
@@ -669,11 +748,13 @@ src/
 │   ├── samples.rs
 │   └── selection.rs
 └── commands/
+    ├── annotate.rs
     ├── filter.rs
     ├── head.rs
     ├── index.rs
     ├── norm.rs
     ├── query.rs
+    ├── reheader.rs
     ├── validate.rs
     ├── variant.rs
     └── view.rs

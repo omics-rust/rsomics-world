@@ -1,6 +1,7 @@
 # `rsomics-vcf reheader` design
 
-Status: approved 2026-08-18; implementation not started.
+Status: released as rsomics-vcf 0.5.0 on 2026-08-18 from
+`f16584e18a9412c995f8d30ca2d97e206e8a9314`.
 
 ## Purpose and boundary
 
