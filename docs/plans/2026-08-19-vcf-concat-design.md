@@ -29,9 +29,9 @@ SHA-256 `7a7c212fdcf8d9b9cb40b545ee88a5fe4598855a48e7cd8781ec039ba568bc90`.
 The installed Apple-arm64 oracle has SHA-256
 `33100a6b961c529e915394d53b4737a0f8dd7a164eac352afe4e74e1ced51f60`.
 VCF 4.1 through 4.5, BCF2, BGZF, CSI, and TBI remain the format authorities.
-Bcftools is GPL-3.0-or-later and is used as an attributed behavior oracle; no
-upstream source text or source structure is copied into the MIT-or-Apache-2.0
-implementation.
+The audited `vcfconcat.c` and HTSlib synced-reader sources use the MIT license
+and are used as attributed behavior oracles; no upstream source text or source
+structure is copied into the implementation.
 
 The historical `rsomics-vcf-concat` revision
 `15088a2e6cbaef6bfb49669e9625e50b6ace7e50` is a source-asset pool, not a
@@ -152,8 +152,11 @@ or variant-overlap semantics. Unknown contigs, stale or incompatible indexes,
 coordinate regression, and truncated input are fatal.
 
 Duplicate removal suppresses only a record matched in an earlier input;
-duplicates within one input remain. The first matching input wins. Matching
-uses CHROM, POS, REF, and ALT rather than ID, QUAL, FILTER, INFO, or FORMAT:
+duplicates within one input remain. Pairing is one-to-one for each later input
+at a coordinate: exact allele matches are assigned first, then the selected
+relaxed matches, and one earlier record cannot suppress multiple records from
+the same later input. The first matching input wins. Matching uses CHROM, POS,
+REF, and ALT rather than ID, QUAL, FILTER, INFO, or FORMAT:
 
 - `exact` requires the same complete allele set;
 - `snps` additionally pairs different SNP allele sets at the same position;
