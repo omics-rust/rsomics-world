@@ -631,7 +631,7 @@ of BCF definitions still referenced by records. The complete bcftools 1.24
 oracle covers all four encodings and five edit combinations, plus plain and
 BGZF standard input. Five intentional fail-loud divergences separately cover
 sample count, unknown sources, duplicate final names, referenced contig
-removal, and truncated BGZF. `setgt` remains absent from help and documentation
+removal, and truncated BGZF. `setgt` remains absent from public help and README
 until its independent rule and expression contract passes the same gates.
 
 The release revision is
@@ -675,6 +675,31 @@ on a strict measured advantage; the BGZF claim is memory only. Equality
 hashes, paired distributions, commands, machine data, and binary fingerprints
 remain in the product `PERFORMANCE.md` and the retained external result
 directory.
+
+### Release 0.6: typed genotype rewriting
+
+Release 0.6 is authorized around the complete `setgt` contract in
+[`2026-08-19-vcf-setgt-design.md`](../plans/2026-08-19-vcf-setgt-design.md).
+It covers missing-state, all, expression, binomial, and reproducibly random
+sample selection plus missing, reference, phase, unphase, inversion,
+minor/major, allelic-depth, and custom-ploidy replacements. It operates on all
+four existing input and output encodings and extends the private typed
+expression engine with bcftools-compatible genotype classes.
+
+The historical micro-crate is a fixture and behavior seed rather than a merge
+base. The implementation uses a private genotype-edit layer shared with
+`filter --set-GTs`, keeps expression and VCF/BCF policy within this product,
+and adds no Layer A API. Named output is transactional. Existing AC and AN are
+reconciled after edits; malformed AD, binomial, GT, allele, and sample
+cardinality fails nonzero. The oracle records upstream 1.24's query-inversion
+sample-offset error, silent AD skip, stale AC/AN, permissive mask parsing, and
+partial destination writes as explicit divergences rather than behavior to
+copy.
+
+The operation will remain absent from public help and README until its full
+local, oracle, representative performance, package, API/hot-path review, and
+four-native exact-head CI gates pass. Passing those gates is required before
+0.6.0 can publish.
 
 ### Current structure
 
@@ -787,7 +812,7 @@ adapters. Another rsomics IO wrapper is not justified merely to wrap noodles.
 | `rsomics-vcf-query` `1bd16a4562e931010d6138e71c3a6112040edd29` | Refactor merge complete; partial parser replaced | First-slice streaming `query` |
 | `rsomics-vcf-reheader` `e25a2942b13b912fefc21e739d3f10876a59ac74` | Refactor then merge | Later transactional `reheader` |
 | `rsomics-vcf-sample` `3217323c7e6a22f2086367f8bdf9cc8bde6abd88` | Sample-projection fixture merge complete; implementation replaced | First-slice `view --samples` |
-| `rsomics-vcf-setgt` `a01b957b2259f4a75834c8354b2467cc3ea78cf6` | Refactor then merge | Later `setgt`; share internal expression engine |
+| `rsomics-vcf-setgt` `a01b957b2259f4a75834c8354b2467cc3ea78cf6` | Test, fixture, and behavior seed only | Reimplement complete `setgt` on the current typed format and expression layers |
 | `rsomics-vcf-snp-density` `c8f2c9b1507712bcfb967693b18fc8d936f14465` | Merge legacy report fixture | `stats density` |
 | `rsomics-vcf-sort` `2ba24aa3573557117fc47900892264f358bdf96d` | Test asset only | Replace whole-file in-memory sorter |
 | `rsomics-vcf-split` `4b84ce255e2ccd1292d4caa49d6011bf7e30f8bc` | Refactor after dirty-diff attribution | Later transactional `split` |
