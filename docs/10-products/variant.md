@@ -1051,6 +1051,28 @@ VCF consumer and near-term `rsomics-plink stats hardy` consumer;
 UX and variant-plus-index transaction. All VCF genotype, group, assignment,
 and distance policy remains product-private.
 
+### Planned release 0.16: checked reference-orientation repair
+
+The complete target contract is recorded in
+[`2026-08-19-vcf-fixref-design.md`](../plans/2026-08-19-vcf-fixref-design.md).
+`fixref inspect` diagnoses reference matches, strand compatibility, skipped
+types, and candidate actions without writing variants. `fixref repair`
+requires an explicit `top`, `id`, `flip`, or `flip-all` mode and applies
+checked allele transformations across arbitrary-ploidy GT and every
+representable allele-indexed field.
+
+This remains separate from `norm`: representation normalization cannot infer
+strand convention, and the upstream guide warns against using normalization's
+REF/ALT fix as a strand repair. The two operations share one private typed
+allele-permutation implementation inside `rsomics-vcf`; no new foundation is
+added.
+
+The target fails on missing reference contigs and conflicting ID rows, reports
+typed missing percentages instead of NaN, resolves TOP context without an
+arbitrary 100-base cutoff, and restores sorted order after explicitly enabled
+ID relocation. Upstream allele-only `ref-alt` and `swap` modes are excluded
+because they deliberately leave GT and allele-indexed fields inconsistent.
+
 ### Current structure
 
 ```text
@@ -1163,7 +1185,7 @@ adapters. Another rsomics IO wrapper is not justified merely to wrap noodles.
 | `rsomics-vcf-fill-tags` `a28b803cebc218468fd53280f5166ea76198f03a` | Refactor HWE integration, genotype fixtures, formatting, and corrected algorithms; replace parser and orchestration | Complete `annotate fill-tags` |
 | `rsomics-vcf-filter` `93d91c114d2ce0fc31a6b1c7176280f558c06f3c` | Fixture and expression-integration seed merged; whole-file implementation discarded | Complete typed `filter` |
 | `rsomics-vcf-filter-summary` `f8323af72303498bcc59f16c4a9feb897b992d3f` | Refactor grouping, formatting, and fixtures; discard parser and standalone CLI | Complete `stats filters` |
-| `rsomics-vcf-fixref` `d6efd2bd79067b2b7b2f738703e428ca40dc56f1` | Refactor then merge | Later `fixref`; retain reference-access performance seed |
+| `rsomics-vcf-fixref` `d6efd2bd79067b2b7b2f738703e428ca40dc56f1` | Retain compact four-action SNP fixtures and algorithm branches; discard parser, whole-contig cache, incomplete GT-only rewriting, direct writer, and unsupported benchmark claim | Complete typed `fixref inspect` and explicit `fixref repair` family |
 | `rsomics-vcf-head` `0297fa20cb271124c9ccc15d51fff973f1df50b6` | Refactor then merge | First-slice `head`; add BCF |
 | `rsomics-vcf-indel-stats` `a7774e648149a7b12dbfbbb60870d54d1cf2a373` | Refactor typed accumulators and 1.24-confirmed report rows; discard parser and orchestration | Complete `stats indels` |
 | `rsomics-vcf-index` `5eafb949d64a101c1c4e2d21e9a311ad9379ac65` | Spanning-variant regression and linear-offset seed merged; implementation replaced | Complete first-slice TBI/CSI `index` |
@@ -1260,7 +1282,6 @@ Historical results are promising but not current release claims:
 
 - fill-tags reports 2.48 times bcftools 1.23.1 throughput on a 142 MB,
   200-sample VCF using eight Apple M2 cores;
-- fixref reports 3.93 times throughput on 500,000 sites on the same machine;
 - setGT states approximately 2.5 times throughput without a complete
   product-level provenance record;
 - variant-distance asserts a win without recording numeric results in its
@@ -1268,6 +1289,12 @@ Historical results are promising but not current release claims:
 
 They require current 1.24 output, repeated timing, RSS, and exact source
 revision evidence.
+
+The historical fixref 3.93-times statement is rejected rather than carried as
+promising evidence: its benchmark target does not reproduce the stated
+500,000-site comparison, the required raw ledger and semantic digest are
+absent, and its claimed per-record seek contradicts the whole-contig cache in
+the measured source.
 
 The implemented `head` path has a current local gate on an Apple M2
 (`Mac14,3`), macOS 26.6, Rust 1.91.0, bcftools/HTSlib 1.24, and hyperfine
