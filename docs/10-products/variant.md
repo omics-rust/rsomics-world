@@ -905,6 +905,43 @@ ordinal-prefixed relative filename. The release performance claim requires a
 measured strict resource advantage, expected to be bounded descriptors on
 large sample or region plans, while ordinary workloads remain competitive.
 
+### Planned release 0.12: streaming reference consensus
+
+The complete target contract is recorded in
+[`2026-08-19-vcf-consensus-design.md`](../plans/2026-08-19-vcf-consensus-design.md).
+`consensus` applies selected typed VCF or BCF alleles to plain, gzip, or BGZF
+FASTA without owning a complete chromosome. It includes explicit first-ALT,
+sample-IUPAC, haplotype, missing-genotype, expression, mask, absent, mark,
+overlap, partial-reference, and UCSC-chain behavior in the VCF product.
+Alignment-derived sequence consensus remains in `rsomics-seq`, and read
+consensus remains in the BAM product.
+
+The historical 0.1.1 implementation is discarded except for its compact
+reference, variant, and expected-FASTA seeds. It loads the complete FASTA and
+VCF, accepts only text variants, always chooses the first ALT, silently skips
+overlaps and bounds problems, does not validate REF, reports incorrect applied
+counts, truncates named output directly, and sends FASTA to a sink under JSON.
+Its three-record fixture was rerun with bcftools and HTSlib 1.24 and produced
+the byte-identical historical golden, so that file remains a narrow regression
+seed rather than evidence for the missing command surface.
+
+The target uses the current typed record, expression, indexed-reference,
+unified-help, and output-transaction layers. Named FASTA and chain
+files commit as one existing `rsomics-common` transaction; no new common API is
+needed. Live bcftools 1.24 probes establish deliberate fail-loud corrections
+for extra inputs, multi-byte mark values, duplicate reference identifiers,
+inconsistent partial-reference spans, same-contig out-of-range records,
+overlaps, REF mismatch, and partial output.
+
+This slice supplies the first VCF consumer for a chunked public FASTA reader in
+`rsomics-seqio`. Its second product consumer is `rsomics-seq`, specifically the
+FASTA paths in `stats` and `validate`, which need only sequential chunks but
+currently use the whole-record reader. The candidate owns checked FASTA record
+boundaries, headers, identifiers, chunks, encodings, and error context; VCF
+application, masks, coordinates, wrapping, and CLI policy stay product-private.
+Consumer-first API tests and allocation measurements precede promotion. No new
+crate is created.
+
 ### Current structure
 
 ```text
@@ -1011,7 +1048,7 @@ adapters. Another rsomics IO wrapper is not justified merely to wrap noodles.
 | `rsomics-vcf-allele-length` `d4e3b56d5132e4e6bb96faeddc1ee9992fe6ee53` | Refactor then merge | `stats allele-length` |
 | `rsomics-vcf-annotate` `c958d89eeb5ff8ec0ce343ded3ab9ddfe10e957a` | Test and algorithm seed | Later typed `annotate` |
 | `rsomics-vcf-concat` `15088a2e6cbaef6bfb49669e9625e50b6ace7e50` | Fixture and behavior seeds only; implementation discarded | Complete ordered, overlap, deduplication, ligation, and validated naive `concat` on current product layers |
-| `rsomics-vcf-consensus` `bb016cf71d28ffa12562e875e0c5db7a431d148c` | Refactor then merge | Later `consensus` |
+| `rsomics-vcf-consensus` `bb016cf71d28ffa12562e875e0c5db7a431d148c` | Compact fixture and 1.24-confirmed narrow golden only; implementation discarded | Complete streaming typed `consensus` with masks, marks, haplotypes, partial references, and chain output |
 | `rsomics-vcf-convert` `0322987e3f53b2d4099bede46d6b5df3f4f5efe0` | Test and conversion seed | Later complete `convert` profiles |
 | `rsomics-vcf-extract` `3bca5d5a6d2dbec187a00a29620c8c04b2fabe0d` | Selection and fixture merge complete | First-slice `query` |
 | `rsomics-vcf-fill-tags` `a28b803cebc218468fd53280f5166ea76198f03a` | Refactor then merge | Later `annotate fill-tags`; update 1.24 rounding and groups |
