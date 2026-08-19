@@ -1016,6 +1016,41 @@ correlation stays private until `rsomics-vcf` and `rsomics-plink` demonstrate
 the same missingness and numerical contract; no speculative `rsomics-stats`
 API or new crate is added.
 
+### Planned release 0.15: unified annotation family
+
+The complete target contract is recorded in
+[`2026-08-19-vcf-annotate-family-design.md`](../plans/2026-08-19-vcf-annotate-family-design.md).
+The released typed transfer engine becomes the canonical `annotate transfer`
+leaf, while the current flat grammar remains one compatibility route through
+1.0. `annotate fill-tags` adds the complete standard, population, depth, and
+calculated-field surface; `annotate distance` adds every upstream direction
+with bounded sorted state. Reference and genotype repair remain outside this
+family under the separately audited `fixref` and `setgt` contracts.
+
+The retired fill-tags implementation contributes HWE integration, genotype
+fixtures, float-format expectations, and algorithm seeds. Its text parser,
+whole-file parallel path, incomplete field set, direct writer, permissive
+genotype handling, and incomparable 1.23.1 performance claim are discarded.
+The retired distance implementation contributes compact sorted-position and
+INFO fixtures; its whole-file record store, numeric-prefix parser, single
+direction, reconstructed VCF text, and in-process-only benchmark are
+discarded. The old annotation-transfer micro-crate has already been replaced
+except for fixtures.
+
+Live bcftools 1.24 probes show that two triploid genotypes with six called
+alleles are reported as AN=4, unsorted positions 20 then 10 exit successfully
+with DIST=-10, and missing sides in `both` are serialized as zero. The target
+counts actual ploidy, fails on coordinate regression, and uses typed missing
+directions. Multiallelic HWE uses declared per-ALT diploid projections rather
+than the approximation noted in upstream source.
+
+No new foundation item is added. The existing
+`rsomics-stats::hwe_exact` numerical kernel is reviewed through the concrete
+VCF consumer and near-term `rsomics-plink stats hardy` consumer;
+`rsomics-help` and `rsomics-common::AtomicFile::commit_all` supply the nested
+UX and variant-plus-index transaction. All VCF genotype, group, assignment,
+and distance policy remains product-private.
+
 ### Current structure
 
 ```text
@@ -1120,12 +1155,12 @@ adapters. Another rsomics IO wrapper is not justified merely to wrap noodles.
 | Asset and audited revision | Disposition | Target |
 |---|---|---|
 | `rsomics-vcf-allele-length` `d4e3b56d5132e4e6bb96faeddc1ee9992fe6ee53` | Refactor histogram and writer with the 1.24-confirmed golden; discard parser and silent first-ALT policy | Complete `stats allele-length` |
-| `rsomics-vcf-annotate` `c958d89eeb5ff8ec0ce343ded3ab9ddfe10e957a` | Test and algorithm seed | Later typed `annotate` |
+| `rsomics-vcf-annotate` `c958d89eeb5ff8ec0ce343ded3ab9ddfe10e957a` | Compact BED and replacement fixtures retained; historical implementation discarded | Released typed transfer and complete `annotate` family |
 | `rsomics-vcf-concat` `15088a2e6cbaef6bfb49669e9625e50b6ace7e50` | Fixture and behavior seeds only; implementation discarded | Complete ordered, overlap, deduplication, ligation, and validated naive `concat` on current product layers |
 | `rsomics-vcf-consensus` `bb016cf71d28ffa12562e875e0c5db7a431d148c` | Compact fixture and 1.24-confirmed narrow golden only; implementation discarded | Complete streaming typed `consensus` with masks, marks, haplotypes, partial references, and chain output |
 | `rsomics-vcf-convert` `0322987e3f53b2d4099bede46d6b5df3f4f5efe0` | Compact fixtures, layout expectations, and 1.24-confirmed narrow HAP golden only; implementation discarded | Complete checked external-format `convert` profiles on current product layers |
 | `rsomics-vcf-extract` `3bca5d5a6d2dbec187a00a29620c8c04b2fabe0d` | Selection and fixture merge complete | First-slice `query` |
-| `rsomics-vcf-fill-tags` `a28b803cebc218468fd53280f5166ea76198f03a` | Refactor then merge | Later `annotate fill-tags`; update 1.24 rounding and groups |
+| `rsomics-vcf-fill-tags` `a28b803cebc218468fd53280f5166ea76198f03a` | Refactor HWE integration, genotype fixtures, formatting, and corrected algorithms; replace parser and orchestration | Complete `annotate fill-tags` |
 | `rsomics-vcf-filter` `93d91c114d2ce0fc31a6b1c7176280f558c06f3c` | Fixture and expression-integration seed merged; whole-file implementation discarded | Complete typed `filter` |
 | `rsomics-vcf-filter-summary` `f8323af72303498bcc59f16c4a9feb897b992d3f` | Refactor grouping, formatting, and fixtures; discard parser and standalone CLI | Complete `stats filters` |
 | `rsomics-vcf-fixref` `d6efd2bd79067b2b7b2f738703e428ca40dc56f1` | Refactor then merge | Later `fixref`; retain reference-access performance seed |
@@ -1147,7 +1182,7 @@ adapters. Another rsomics IO wrapper is not justified merely to wrap noodles.
 | `rsomics-vcf-tstv-strat` `f1697b722b7a1d99c6393a82ca924f69773e4c38` | Refactor formatter and corrected goldens; discard parser and unsafe counting | Complete `stats tstv` family |
 | `rsomics-vcf-utils` `61287add0d662df97a4808ae05c473791b922ec4` | Split, refactor, and discard | Fold grounded operations into `view`, `query`, `stats`, and `convert`; discard duplicates |
 | `rsomics-vcf-validate` `e6fef96f3cdfde5d5740d57cb8c5185cfc5285ff` | Test seed merged; implementation replaced | Strict first-slice `validate` |
-| `rsomics-vcf-variant-distance` `b9a86dd089539bd9d3147acae72f3b19bfe8015a` | Refactor then merge | Later `annotate distance`; unsorted input fails |
+| `rsomics-vcf-variant-distance` `b9a86dd089539bd9d3147acae72f3b19bfe8015a` | Retain compact position and INFO fixtures; discard whole-file untyped implementation | Complete bounded `annotate distance`; unsorted input fails |
 | `rsomics-vcf-view` `d0c187ec2c85033f721ac135be874cf0aa48eb02` | Type and FILTER fixtures and predicate seed merged; whole-file implementation replaced | Complete first-slice `view` |
 
 The four dirty repositories contain only untracked `Cargo.lock` files during
