@@ -766,6 +766,39 @@ dictionaries, and command policy remain product-private. The extraction must
 preserve the existing BAM and VCF hot-path performance before either duplicate
 private implementation is removed. No new public crate is created.
 
+### Planned release 0.8: typed cohort and gVCF merge
+
+The complete target contract is recorded in
+[`2026-08-19-vcf-merge-design.md`](../plans/2026-08-19-vcf-merge-design.md).
+`merge` combines disjoint sample sets through checked coordinate grouping,
+record-pairing modes, one output allele space, typed A/R/G and genotype
+remapping, INFO reducers, FORMAT unions, missing-value policy, local
+LAA/LAD/LPL representation, and gVCF block expansion. All four VCF/BCF
+encodings, indexed regions, and a validated no-index streaming path remain in
+one product command.
+
+The historical 0.1.1 implementation is discarded except for minimal fixtures.
+It parses text columns permissively, turns an invalid POS into zero, drops IDs
+and INFO, assumes one FORMAT layout, remaps only GT, ignores duplicate samples
+and incompatible schemas, has no BCF or gVCF semantics, and discards output
+under JSON. It is not a merge base for a typed cohort operation.
+
+The stable slice includes bcftools 1.24's complete useful merge surface rather
+than publishing a GT-only placeholder. Deliberate differences are fail-loud:
+missing `.` IDs do not match under ID mode, positional and file-list input
+sources cannot be mixed, file-list comments are supported, custom and merged
+headers are validated before output, local-allele prerequisites cannot degrade
+to a warning and unlocalized record, unindexed sort order is checked, and
+named output is atomic. Provenance stamping, numeric compression levels,
+automatic indexing, and duplicate aliases remain excluded under product-wide
+policy.
+
+Concat and merge may share a private coordinate-group reader and schema
+primitives after both call sites exist, but their policies stay separate:
+concat requires identical samples and preserves or deduplicates records;
+merge requires disjoint samples and constructs new alleles and typed fields.
+No merge-specific public foundation is added.
+
 ### Current structure
 
 ```text
@@ -883,7 +916,7 @@ adapters. Another rsomics IO wrapper is not justified merely to wrap noodles.
 | `rsomics-vcf-indel-stats` `a7774e648149a7b12dbfbbb60870d54d1cf2a373` | Refactor then merge | `stats indels` |
 | `rsomics-vcf-index` `5eafb949d64a101c1c4e2d21e9a311ad9379ac65` | Spanning-variant regression and linear-offset seed merged; implementation replaced | Complete first-slice TBI/CSI `index` |
 | `rsomics-vcf-isec` `86bedb28892ccbcb6137bfb3c82925fe931609f1` | Test and merge-loop seed | Later `isec` |
-| `rsomics-vcf-merge` `571af0688ac61b857b529b0db20ae886999e04fa` | Test asset | Replace incomplete header, allele, and FORMAT reconciliation |
+| `rsomics-vcf-merge` `571af0688ac61b857b529b0db20ae886999e04fa` | Fixture seeds only; implementation discarded | Complete typed cohort, multiallelic, local-allele, and gVCF `merge` |
 | `rsomics-vcf-norm` `c4eeb5026199141a08ddd7b710be14488887edc2` | Test and split seed | Later complete `norm`; add reference realignment and 1.24 semantics |
 | `rsomics-vcf-query` `1bd16a4562e931010d6138e71c3a6112040edd29` | Refactor merge complete; partial parser replaced | First-slice streaming `query` |
 | `rsomics-vcf-reheader` `e25a2942b13b912fefc21e739d3f10876a59ac74` | Refactor then merge | Later transactional `reheader` |
