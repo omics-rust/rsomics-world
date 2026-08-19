@@ -173,8 +173,10 @@ scope and deterministic winner explicit.
 
 Ligate mode consumes phased chunks in ascending chunk order and keeps at most
 two active chunks plus their overlap buffer. Inputs must be coordinate sorted,
-indexed, and sample-identical. Empty chunks are ignored. Noncontiguous contig
-blocks and decreasing chunk starts fail.
+indexed, sample-identical, and contain records from at most one contig per
+file. Empty chunks are ignored. Separate files may advance from one contig to
+the next; decreasing chunk starts fail. The per-file restriction prevents the
+silent record loss observed when bcftools 1.24 ligates multi-contig chunks.
 
 For every sample, informative overlap sites are complete, phased, diploid,
 heterozygous genotypes present in both chunks. Direct and swapped haplotype
@@ -309,6 +311,8 @@ or unsafe switches and are recorded as explicit differences:
   names `--file-list` rather than incorrectly naming `-l`;
 - `--naive` checks complete schema compatibility and BGZF integrity before
   raw copying;
+- ligation rejects a chunk containing multiple contigs instead of silently
+  dropping records from its later contig, as observed with bcftools 1.24;
 - `--naive-force`, provenance stamping, numeric compression levels,
   per-command verbosity, and automatic output indexing are not exposed;
 - named output is atomic rather than truncated before a later input failure.
