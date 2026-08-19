@@ -731,6 +731,41 @@ Actions registry secret, rerunning the exact-head publish workflow, and
 completing the independent registry verification. No implementation or CI
 gate is waived by this credential failure.
 
+### Planned release 0.7: checked chunk concatenation
+
+The complete target contract is recorded in
+[`2026-08-19-vcf-concat-design.md`](../plans/2026-08-19-vcf-concat-design.md).
+`concat` remains one `rsomics-vcf` subcommand and will cover ordered chunk
+streaming, coordinate overlap merging, cross-file duplicate policies, indexed
+regions, genotype removal, phased chunk ligation, and safe raw BGZF VCF or BCF
+concatenation. A partial base command will not be advertised while ligation or
+naive compatibility is a placeholder.
+
+The old 0.1.2 micro-crate supplies only fixture and behavior seeds. Its
+text-only string header merge, double-open readers, unchecked coordinates,
+direct file truncation, tiny launch benchmark, standalone help surface, and
+JSON data sink are discarded. The target implementation reuses the current
+typed headers and records, region/index layer, four output encodings,
+transaction layer, and `rsomics-help` tree.
+
+The audit found three deliberate safety differences from bcftools 1.24.
+Ordinary mode checks global coordinate order because live 1.24 probes emitted
+decreasing positions successfully. Semantic header conflicts fail rather than
+leaving later records under the first incompatible definition. Safe naive
+mode validates complete headers, dictionaries, BGZF frames, checksums, and one
+EOF before copying; the corruption-prone `--naive-force` switch is excluded.
+Named output is atomic, one standard-input stream works in ordinary mode, and
+automatic indexing remains absent until output and index share one grouped
+transaction.
+
+This slice creates one concrete Layer A extraction after 0.6.0 publication.
+Format-neutral BGZF frame parsing, validation, raw access, and EOF handling
+move to `rsomics-seqio::bgzf`, with consumer tests in the BAM cat/reheader and
+VCF reheader/concat call sites. BAM headers, VCF headers, BCF
+dictionaries, and command policy remain product-private. The extraction must
+preserve the existing BAM and VCF hot-path performance before either duplicate
+private implementation is removed. No new public crate is created.
+
 ### Current structure
 
 ```text
@@ -836,7 +871,7 @@ adapters. Another rsomics IO wrapper is not justified merely to wrap noodles.
 |---|---|---|
 | `rsomics-vcf-allele-length` `d4e3b56d5132e4e6bb96faeddc1ee9992fe6ee53` | Refactor then merge | `stats allele-length` |
 | `rsomics-vcf-annotate` `c958d89eeb5ff8ec0ce343ded3ab9ddfe10e957a` | Test and algorithm seed | Later typed `annotate` |
-| `rsomics-vcf-concat` `15088a2e6cbaef6bfb49669e9625e50b6ace7e50` | Refactor then merge | `concat`; replace VCF-text-only plumbing |
+| `rsomics-vcf-concat` `15088a2e6cbaef6bfb49669e9625e50b6ace7e50` | Fixture and behavior seeds only; implementation discarded | Complete ordered, overlap, deduplication, ligation, and validated naive `concat` on current product layers |
 | `rsomics-vcf-consensus` `bb016cf71d28ffa12562e875e0c5db7a431d148c` | Refactor then merge | Later `consensus` |
 | `rsomics-vcf-convert` `0322987e3f53b2d4099bede46d6b5df3f4f5efe0` | Test and conversion seed | Later complete `convert` profiles |
 | `rsomics-vcf-extract` `3bca5d5a6d2dbec187a00a29620c8c04b2fabe0d` | Selection and fixture merge complete | First-slice `query` |
