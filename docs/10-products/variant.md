@@ -942,6 +942,45 @@ application, masks, coordinates, wrapping, and CLI policy stay product-private.
 Consumer-first API tests and allocation measurements precede promotion. No new
 crate is created.
 
+### Planned release 0.13: checked external format conversion
+
+The complete target contract is recorded in
+[`2026-08-19-vcf-convert-design.md`](../plans/2026-08-19-vcf-convert-design.md).
+`convert` retains only real cross-format profiles: GEN/SAMPLE,
+HAP/SAMPLE, and HAP/LEGEND/SAMPLE in both directions; TSV or 23andMe-style
+import; gVCF reference-block expansion; and a canonical BED3 export. Generic
+VCF/BCF encoding remains `view`, while arbitrary tables and genotype matrices
+remain `query`.
+
+The historical 0.1.1 convert implementation is discarded except for compact
+fixtures, layout expectations, and one three-record HAP golden confirmed
+byte-identical under bcftools 1.24. Its VCF path duplicates `view`, mislabels
+ordinary gzip as BGZF, rejects BCF, performs no typed validation, truncates output,
+and sinks data under JSON. Its only external-format implementation loses
+missing, haploid, partial-missing, multiallelic, and unsupported alleles and
+writes three final files independently.
+
+The historical VCF-to-BED parser is also discarded except for its coordinate
+fixture. It silently accepts malformed positions and ignores symbolic END. The
+target BED3 profile is a named preset over the current typed `%POS0` and `%END`
+query fields, so there is one span implementation. Historical `vcf-utils`
+genotype and TSV projections remain routed to `query`, not this family.
+
+Export bundles use deterministic prefix-derived paths and the existing
+`rsomics-common::AtomicFile::commit_all` transaction. Imports and gVCF emit all
+four VCF/BCF encodings with optional grouped indexes. TSV and gVCF reference
+access reuse the existing `rsomics-seqio::IndexedFasta`. Probability grammar,
+HAP markers, legacy SAMPLE schemas, bundle naming, gVCF policy, and BED presets
+stay private to the VCF product; no public foundation item or new crate is
+added.
+
+Live bcftools 1.24 probes establish explicit fail-loud corrections for ignored
+extra inputs, aliased bundle members, partial multi-file replacement, silent
+multiallelic and duplicate loss, skipped malformed TSV rows, out-of-reference
+empty REF alleles, invalid GEN probabilities, all-zero GEN calls, partial
+failed imports, and overlapping gVCF blocks. Compatibility skip or trim modes
+remain available only when named explicitly.
+
 ### Current structure
 
 ```text
@@ -1049,7 +1088,7 @@ adapters. Another rsomics IO wrapper is not justified merely to wrap noodles.
 | `rsomics-vcf-annotate` `c958d89eeb5ff8ec0ce343ded3ab9ddfe10e957a` | Test and algorithm seed | Later typed `annotate` |
 | `rsomics-vcf-concat` `15088a2e6cbaef6bfb49669e9625e50b6ace7e50` | Fixture and behavior seeds only; implementation discarded | Complete ordered, overlap, deduplication, ligation, and validated naive `concat` on current product layers |
 | `rsomics-vcf-consensus` `bb016cf71d28ffa12562e875e0c5db7a431d148c` | Compact fixture and 1.24-confirmed narrow golden only; implementation discarded | Complete streaming typed `consensus` with masks, marks, haplotypes, partial references, and chain output |
-| `rsomics-vcf-convert` `0322987e3f53b2d4099bede46d6b5df3f4f5efe0` | Test and conversion seed | Later complete `convert` profiles |
+| `rsomics-vcf-convert` `0322987e3f53b2d4099bede46d6b5df3f4f5efe0` | Compact fixtures, layout expectations, and 1.24-confirmed narrow HAP golden only; implementation discarded | Complete checked external-format `convert` profiles on current product layers |
 | `rsomics-vcf-extract` `3bca5d5a6d2dbec187a00a29620c8c04b2fabe0d` | Selection and fixture merge complete | First-slice `query` |
 | `rsomics-vcf-fill-tags` `a28b803cebc218468fd53280f5166ea76198f03a` | Refactor then merge | Later `annotate fill-tags`; update 1.24 rounding and groups |
 | `rsomics-vcf-filter` `93d91c114d2ce0fc31a6b1c7176280f558c06f3c` | Fixture and expression-integration seed merged; whole-file implementation discarded | Complete typed `filter` |
@@ -1069,7 +1108,7 @@ adapters. Another rsomics IO wrapper is not justified merely to wrap noodles.
 | `rsomics-vcf-sort` `2ba24aa3573557117fc47900892264f358bdf96d` | Order and malformed-input fixtures only; implementation discarded | Complete bounded external `sort` with stable multi-pass ties |
 | `rsomics-vcf-split` `4b84ce255e2ccd1292d4caa49d6011bf7e30f8bc` | Multi-contig fixture and membership seed only; implementation discarded; untracked lockfile preserved | Complete transactional `split samples` and `split records` with bounded descriptors and manifest |
 | `rsomics-vcf-stats` `66299f4d56e26b1d4c1498ffba9b489cfb7d5f85` | Test asset after dirty-diff attribution | Later `stats`; current implementation is too narrow |
-| `rsomics-vcf-to-bed` `50e87e5821cdc498e950f6e412d6b25fb016c944` | Merge coordinate fixtures | Later `convert bed` |
+| `rsomics-vcf-to-bed` `50e87e5821cdc498e950f6e412d6b25fb016c944` | Coordinate fixture only; implementation discarded | Typed `convert bed` preset reusing query spans |
 | `rsomics-vcf-tstv-strat` `f1697b722b7a1d99c6393a82ca924f69773e4c38` | Merge legacy report fixture | `stats tstv` |
 | `rsomics-vcf-utils` `61287add0d662df97a4808ae05c473791b922ec4` | Split, refactor, and discard | Fold grounded operations into `view`, `query`, `stats`, and `convert`; discard duplicates |
 | `rsomics-vcf-validate` `e6fef96f3cdfde5d5740d57cb8c5185cfc5285ff` | Test seed merged; implementation replaced | Strict first-slice `validate` |
