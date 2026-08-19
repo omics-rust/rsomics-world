@@ -834,6 +834,41 @@ same-filesystem staging, sync, commit, and rollback rather than VCF or report
 policy. Synchronized variant matching and Venn behavior remain private to
 `rsomics-vcf`; no operation-sized foundation is created.
 
+### Planned release 0.10: bounded external variant sort
+
+The complete target contract is recorded in
+[`2026-08-19-vcf-sort-design.md`](../plans/2026-08-19-vcf-sort-design.md).
+`sort` accepts one VCF/BCF file or standard input, validates typed records, and
+orders them by header contig rank, POS, complete REF/ALT vector, and source
+ordinal. It preserves exact ties, supports all four output encodings, uses a
+measured record-memory budget, spills fast BCF runs to a private temporary
+directory, bounds each merge to 32 runs, performs hierarchical merges, cleans
+scratch on success and handled failure, and commits named output atomically.
+
+The old 0.1.3 micro-crate is discarded except for order and malformed-input
+fixtures. It holds the compressed input, inflated input, copied header lines,
+and copied record fields in memory at once, supports only text VCF, creates
+named output by truncation, and sinks standard output under JSON. Its seven-
+record launch benchmark says nothing about external sorting.
+
+Live bcftools 1.24 probes exposed two fail-loud differences. Extra positional
+inputs are silently ignored, while malformed memory values such as `2x`, zero,
+and negative values succeed. They will fail in rsomics. The upstream in-run
+comparator is case-sensitive but its disk-merge comparator is case-insensitive,
+so mixed-case allele order changes with the memory budget. Rsomics uses one
+case-insensitive allele comparator plus input ordinal in every path, making
+output independent of run boundaries.
+
+This operation creates a real second product consumer for bounded external-
+merge plumbing already proven privately by published `rsomics-bam sort` and
+`collate`. A narrow `rsomics-common::external_sort` module is therefore a
+candidate with concrete BAM and VCF consumer gates. It may own byte-budget run
+segmentation, stable ordinals, temporary-file lifecycle, bounded fan-in,
+multi-pass merging, cancellation, and counters; record types, keys, codecs,
+headers, and output remain product-local. Existing crates including `extsort`
+and `spillover` are tested first, and the common API is promoted only if both
+products retain correctness and performance. No new sort crate is created.
+
 ### Current structure
 
 ```text
@@ -958,7 +993,7 @@ adapters. Another rsomics IO wrapper is not justified merely to wrap noodles.
 | `rsomics-vcf-sample` `3217323c7e6a22f2086367f8bdf9cc8bde6abd88` | Sample-projection fixture merge complete; implementation replaced | First-slice `view --samples` |
 | `rsomics-vcf-setgt` `a01b957b2259f4a75834c8354b2467cc3ea78cf6` | Fixture and behavior seeds merged; implementation replaced | Complete typed `setgt` on the current format and expression layers |
 | `rsomics-vcf-snp-density` `c8f2c9b1507712bcfb967693b18fc8d936f14465` | Merge legacy report fixture | `stats density` |
-| `rsomics-vcf-sort` `2ba24aa3573557117fc47900892264f358bdf96d` | Test asset only | Replace whole-file in-memory sorter |
+| `rsomics-vcf-sort` `2ba24aa3573557117fc47900892264f358bdf96d` | Order and malformed-input fixtures only; implementation discarded | Complete bounded external `sort` with stable multi-pass ties |
 | `rsomics-vcf-split` `4b84ce255e2ccd1292d4caa49d6011bf7e30f8bc` | Refactor after dirty-diff attribution | Later transactional `split` |
 | `rsomics-vcf-stats` `66299f4d56e26b1d4c1498ffba9b489cfb7d5f85` | Test asset after dirty-diff attribution | Later `stats`; current implementation is too narrow |
 | `rsomics-vcf-to-bed` `50e87e5821cdc498e950f6e412d6b25fb016c944` | Merge coordinate fixtures | Later `convert bed` |
