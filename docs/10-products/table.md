@@ -1,7 +1,8 @@
 # Table product dossier
 
-Status: source and upstream-operation audit complete. No target repository has
-been created.
+Status: target repository created. The initial six-operation release scope is
+implemented and has passed the pinned compatibility CI gate; representative
+release performance and publication remain.
 
 ## Boundary
 

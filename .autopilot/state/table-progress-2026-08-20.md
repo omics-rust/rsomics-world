@@ -11,7 +11,13 @@ Completed product operations:
 - `join` at `164e08b0630796c6658ce832e9f64b19bab5ab41`;
 - shared record-buffer reuse at
   `fb9becc6a430ce0008043de0f592d2f01d39c76d`;
-- `groupby` at `90f57c4a9c71d9231f04d3f0d6bd35f929c95001`.
+- `groupby` at `90f57c4a9c71d9231f04d3f0d6bd35f929c95001`;
+- unified table-output options at
+  `acdc41154ea49912e34222a521a37d9c48ee1c62`;
+- exact source attribution at
+  `a2e7772d585cfd3379168a14775ca138b70e001e`;
+- pinned source-oracle CI at
+  `12bacee862c51678a6b37d1ea681b1532bdf9aa8`.
 
 The filter, sort, and join heads passed debug and release tests on native Linux
 and macOS for `x86_64` and `aarch64`. Exact-head CI runs were `32297305110`,
@@ -21,6 +27,17 @@ The record-buffer and groupby heads passed the same four native targets in
 exact-head CI runs `32301836380` and `32302405199`. The local full suite also
 passed live differentials against csvtk 0.37.0, GNU datamash 1.9, and bedtools
 2.31.1.
+
+The pinned-oracle head passed exact-head CI run `32305265384`. All four native
+Linux and macOS `x86_64` and `aarch64` jobs built csvtk 0.37.0 from revision
+`cc94b40d35cef9188d19f961718d9630479827c0` and passed debug, release, and live
+csvtk differentials. The Linux oracle job additionally built GNU datamash 1.9
+from its SHA-256-verified release archive and BEDTools 2.31.1 from revision
+`705ccfdf2c9a77d71560c8adcece0663c2f5e18e`, then passed the complete ignored
+compatibility suite. CLI integration tests cover the six exposed operations,
+shared help sections, suggestions, non-ANSI output under `NO_COLOR`, and
+machine-output separation. Source and license provenance is tracked in the
+product's `THIRD_PARTY_LICENSES.md`.
 
 The join head packages from a separate external target directory as 42 files,
 197.4 KiB uncompressed and 43.1 KiB compressed. The crate archive SHA-256 is
@@ -61,5 +78,5 @@ final high-cardinality and low-cardinality release gate.
 
 No new public foundation was created. The strict table reader, field grammar,
 expression engine, prepared sort keys, and deterministic sorter remain
-product-private. The pinned-oracle CI job, attribution, final representative
-performance gate, release review, and publication remain incomplete.
+product-private. The final representative performance gate, release review,
+and publication remain incomplete.
