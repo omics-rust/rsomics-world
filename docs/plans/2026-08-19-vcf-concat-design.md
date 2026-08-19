@@ -196,8 +196,11 @@ Default ligation requires perfect overlap: every site inside the shared span
 must exist in both chunks with a matchable variant key. `--ligate-warn` drops
 unpaired overlap sites and reports one structured warning summary.
 `--ligate-force` keeps unpaired sites and also permits nonoverlapping chunks.
-The three policies are tested separately against bcftools 1.24. Phase updates
-are typed and preserve all fields unrelated to GT, PQ, and PS.
+The three policies are tested separately against bcftools 1.24. When no
+variant key is shared, warn mode drops every unpaired site in the shared span;
+it does not retain the later chunk's terminal overlap record as bcftools 1.24
+does. Phase updates are typed and preserve all fields unrelated to GT, PQ, and
+PS.
 
 ## Naive BGZF mode
 
@@ -313,6 +316,8 @@ or unsafe switches and are recorded as explicit differences:
   raw copying;
 - ligation rejects a chunk containing multiple contigs instead of silently
   dropping records from its later contig, as observed with bcftools 1.24;
+- ligation warn mode drops every unpaired overlap record when no variant key
+  is shared instead of retaining one unmatched later record as a handoff;
 - `--naive-force`, provenance stamping, numeric compression levels,
   per-command verbosity, and automatic output indexing are not exposed;
 - named output is atomic rather than truncated before a later input failure.
