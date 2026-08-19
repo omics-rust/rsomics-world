@@ -799,6 +799,41 @@ concat requires identical samples and preserves or deduplicates records;
 merge requires disjoint samples and constructs new alleles and typed fields.
 No merge-specific public foundation is added.
 
+### Planned release 0.9: deterministic variant set operations
+
+The complete target contract is recorded in
+[`2026-08-19-vcf-isec-design.md`](../plans/2026-08-19-vcf-isec-design.md).
+`isec` performs intersections, unions, complements, count thresholds, and
+exact input-presence bitmaps over two or more indexed VCF/BCF inputs. It uses
+typed exact, shared-ALT, variant-class, all-record, and nonmissing-ID matching;
+deterministic one-to-one grouping at duplicate coordinates; per-input typed
+expressions; FILTER selection; regions and targets; site tables; unchanged
+source projections; and transactional two-input Venn output.
+
+The old 0.1.2 crate is discarded except for compact valid and malformed
+fixtures. Its entire algorithm is a literal text-key `HashSet` of the second
+file: it cannot model ALT sets, relaxed matching, symbolic END, duplicates,
+more than two inputs, BCF, indexes, filters, location selection, bitmaps,
+source projections, or multi-output transactions. Its JSON path silently
+sinks the VCF stream, and its tiny launch benchmark is not evidence.
+
+`exact` is the canonical spelling, with upstream `none` retained as an alias.
+ID mode follows the same policy as merge: equal nonmissing IDs match at one
+coordinate and `.` never supplies identity. This intentionally follows the
+meaningful documented operation rather than bcftools 1.24's implementation,
+which adds ID to an allele key and still requires compatible alleles. Input
+lists accept comments but cannot be mixed with positional files, syntax is
+parsed completely, single-input filtering stays in `view`, and named
+multi-output is atomic.
+
+The slice supplies the first concrete VCF consumer for an
+`rsomics-common::AtomicDirectory` extension. Its second named product consumer
+is the transactional report bundle from `rsomics-cnv call`. The public item is
+promoted only with consumer-side fault-injection tests and owns generic
+same-filesystem staging, sync, commit, and rollback rather than VCF or report
+policy. Synchronized variant matching and Venn behavior remain private to
+`rsomics-vcf`; no operation-sized foundation is created.
+
 ### Current structure
 
 ```text
@@ -915,7 +950,7 @@ adapters. Another rsomics IO wrapper is not justified merely to wrap noodles.
 | `rsomics-vcf-head` `0297fa20cb271124c9ccc15d51fff973f1df50b6` | Refactor then merge | First-slice `head`; add BCF |
 | `rsomics-vcf-indel-stats` `a7774e648149a7b12dbfbbb60870d54d1cf2a373` | Refactor then merge | `stats indels` |
 | `rsomics-vcf-index` `5eafb949d64a101c1c4e2d21e9a311ad9379ac65` | Spanning-variant regression and linear-offset seed merged; implementation replaced | Complete first-slice TBI/CSI `index` |
-| `rsomics-vcf-isec` `86bedb28892ccbcb6137bfb3c82925fe931609f1` | Test and merge-loop seed | Later `isec` |
+| `rsomics-vcf-isec` `86bedb28892ccbcb6137bfb3c82925fe931609f1` | Compact fixture seeds only; implementation discarded | Complete indexed multi-input `isec` with deterministic matching and transactional Venn output |
 | `rsomics-vcf-merge` `571af0688ac61b857b529b0db20ae886999e04fa` | Fixture seeds only; implementation discarded | Complete typed cohort, multiallelic, local-allele, and gVCF `merge` |
 | `rsomics-vcf-norm` `c4eeb5026199141a08ddd7b710be14488887edc2` | Test and split seed | Later complete `norm`; add reference realignment and 1.24 semantics |
 | `rsomics-vcf-query` `1bd16a4562e931010d6138e71c3a6112040edd29` | Refactor merge complete; partial parser replaced | First-slice streaming `query` |
