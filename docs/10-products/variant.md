@@ -94,9 +94,9 @@ The current bcftools commands retained here are:
   `isec`, `merge`, `norm`, `query`, `reheader`, `sort`, `stats`, and `view`.
 
 Named plugin behavior that fits this boundary includes allele-length
-inspection, fill-tags, fixref, indel statistics, setGT, split, and
-variant-distance. Arbitrary dynamic plugin loading is excluded: a Rust product
-does not promise the bcftools C plugin ABI.
+inspection, fill-tags, fixref, indel statistics, setGT, sample split, record
+scatter, and variant-distance. Arbitrary dynamic plugin loading is excluded:
+a Rust product does not promise the bcftools C plugin ABI.
 
 Historical convenience operations collapse into the product:
 
@@ -869,6 +869,42 @@ headers, and output remain product-local. Existing crates including `extsort`
 and `spillover` are tested first, and the common API is promoted only if both
 products retain correctness and performance. No new sort crate is created.
 
+### Planned release 0.11: transactional sample and record splitting
+
+The complete target contract is recorded in
+[`2026-08-19-vcf-split-design.md`](../plans/2026-08-19-vcf-split-design.md).
+`split` has two explicit modes inside the product: `split samples` implements
+bcftools 1.24 `+split` sample and group projection, while `split records`
+implements `+scatter` fixed-count and named-region partitioning. The latter is
+the real upstream home of the historical crate's chromosome behavior. VEP and
+SnpEff field splitting remains in `rsomics-annotation`.
+
+The historical 0.1.0 implementation is discarded except for its compact
+multi-contig fixture and membership expectations. It parses only plain VCF
+lines, keeps every chromosome writer open, maps distinct contig names onto
+colliding filenames, writes directly to final paths, and tests against
+`bcftools view -r` rather than either split plugin. Its untracked `Cargo.lock`
+is preserved in the historical clone and is not merged.
+
+Both target modes use typed VCF/BCF records, all four encodings, input regions
+and targets, expressions, optional grouped indexes, collision-free generated
+filenames, a content-hashed manifest, and one absent-destination directory
+transaction. A bounded LRU pool writes private appendable shards and finalizes
+one output at a time, so sample count or region count does not become the live
+file-descriptor count. The shard format and routing policy stay private to the
+product; only the already justified `rsomics-common::AtomicDirectory` is
+shared.
+
+Live probes make several deliberate corrections part of the contract.
+Missing samples, unknown keep-tags, fractional part sizes, malformed records,
+and existing destinations fail before commit. Expressions advertised by
+record scatter are actually applied. User labels never become paths: a
+bcftools scatter label of `../escape` wrote outside its output directory in the
+audit, whereas rsomics stores the label in the manifest and generates an
+ordinal-prefixed relative filename. The release performance claim requires a
+measured strict resource advantage, expected to be bounded descriptors on
+large sample or region plans, while ordinary workloads remain competitive.
+
 ### Current structure
 
 ```text
@@ -994,7 +1030,7 @@ adapters. Another rsomics IO wrapper is not justified merely to wrap noodles.
 | `rsomics-vcf-setgt` `a01b957b2259f4a75834c8354b2467cc3ea78cf6` | Fixture and behavior seeds merged; implementation replaced | Complete typed `setgt` on the current format and expression layers |
 | `rsomics-vcf-snp-density` `c8f2c9b1507712bcfb967693b18fc8d936f14465` | Merge legacy report fixture | `stats density` |
 | `rsomics-vcf-sort` `2ba24aa3573557117fc47900892264f358bdf96d` | Order and malformed-input fixtures only; implementation discarded | Complete bounded external `sort` with stable multi-pass ties |
-| `rsomics-vcf-split` `4b84ce255e2ccd1292d4caa49d6011bf7e30f8bc` | Refactor after dirty-diff attribution | Later transactional `split` |
+| `rsomics-vcf-split` `4b84ce255e2ccd1292d4caa49d6011bf7e30f8bc` | Multi-contig fixture and membership seed only; implementation discarded; untracked lockfile preserved | Complete transactional `split samples` and `split records` with bounded descriptors and manifest |
 | `rsomics-vcf-stats` `66299f4d56e26b1d4c1498ffba9b489cfb7d5f85` | Test asset after dirty-diff attribution | Later `stats`; current implementation is too narrow |
 | `rsomics-vcf-to-bed` `50e87e5821cdc498e950f6e412d6b25fb016c944` | Merge coordinate fixtures | Later `convert bed` |
 | `rsomics-vcf-tstv-strat` `f1697b722b7a1d99c6393a82ca924f69773e4c38` | Merge legacy report fixture | `stats tstv` |
