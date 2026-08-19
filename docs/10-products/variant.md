@@ -1,9 +1,11 @@
 # Variant format, calling, and copy-number product dossiers
 
 Status: boundary, upstream-operation, and historical-source audit complete.
-`rsomics-vcf` 0.5.0 is published with the complete first-release `head`,
-`query`, `validate`, `index`, and `view` slice plus typed `filter`, allele
-normalization, typed annotation transfer, and encoding-preserving `reheader`.
+`rsomics-vcf` 0.5.0 is the latest published release. The complete typed
+`setgt` slice is release-ready at revision
+`682942cfa69768dc3a127a8544f2f07213b704ea`; exact-head four-native-platform
+CI passes, while 0.6.0 publication remains gated only by a revoked crates.io
+credential.
 `rsomics-call` 0.1.3 is published with its complete three-command first
 release. `rsomics-cnv` 0.1.0 is published with its complete two-command first
 release.
@@ -678,7 +680,7 @@ directory.
 
 ### Release 0.6: typed genotype rewriting
 
-Release 0.6 is authorized around the complete `setgt` contract in
+Release 0.6 implements the complete `setgt` contract in
 [`2026-08-19-vcf-setgt-design.md`](../plans/2026-08-19-vcf-setgt-design.md).
 It covers missing-state, all, expression, binomial, and reproducibly random
 sample selection plus missing, reference, phase, unphase, inversion,
@@ -696,10 +698,38 @@ sample-offset error, silent AD skip, stale AC/AN, permissive mask parsing, and
 partial destination writes as explicit divergences rather than behavior to
 copy.
 
-The operation will remain absent from public help and README until its full
-local, oracle, representative performance, package, API/hot-path review, and
-four-native exact-head CI gates pass. Passing those gates is required before
-0.6.0 can publish.
+Revision `682942cfa69768dc3a127a8544f2f07213b704ea` exposes the complete
+operation through the unified `rsomics-help` command tree and stable README.
+The API and hot-path review retained every new type inside the product, added
+no dependency or Layer A item, and changed the BCF writer to reuse one record
+encoder and its string maps instead of serializing the header for every
+record. Strict Clippy, 262 unit tests, all debug and release integration
+tests, the benchmark smoke targets, and all nine live bcftools 1.24 `setGT`
+oracle groups pass locally.
+
+Exact-head CI run `32244016001` passes native Linux and macOS on `x86_64` and
+`aarch64`. Linux `x86_64` additionally verifies the package, builds and
+exposes the pinned bcftools 1.24 plugin set, fetches the pinned validation
+corpora, and passes the complete compatibility oracle. The clean local
+package contains 163 files, has SHA-256
+`fed88be830f02b8b9cd4c01956692cf4427dbc17d1c14f45f9bd9a86d06a2dba`,
+and embeds the exact release revision without a dirty marker.
+
+The formal Apple M2 performance gate uses revision
+`16fc008470056e7bd40637cd3122126d86adc096`, 2,000,000 records, eight samples,
+three warmups, ten alternating measured pairs, three operations, and VCF,
+BGZF VCF, and BCF output. All 180 measured commands reproduce their expected
+semantic hash. Median peak RSS is 28.50% to 37.02% lower than bcftools 1.24;
+median wall time is 3.20 to 16.60 times slower. The supported release claim is
+bounded-memory genotype editing with verified compatibility, not throughput.
+
+Publish run `32244558404` reached the crates.io upload endpoint from the exact
+release head but received `403 authentication failed`. The registry version
+therefore remains unpublished and has no archive, install, or live smoke
+evidence yet. Publication resumes only after replacing the revoked GitHub
+Actions registry secret, rerunning the exact-head publish workflow, and
+completing the independent registry verification. No implementation or CI
+gate is waived by this credential failure.
 
 ### Current structure
 
@@ -717,6 +747,8 @@ src/
 ├── query_format.rs
 ├── regions.rs
 ├── reheader.rs
+├── genotype.rs
+├── setgt.rs
 ├── validate.rs
 ├── variant_type.rs
 ├── view.rs
@@ -736,6 +768,9 @@ src/
 ├── filter/
 │   ├── gaps.rs
 │   └── stream.rs
+├── genotype/
+│   ├── counts.rs
+│   └── edit.rs
 ├── format/
 │   ├── bgzf.rs
 │   ├── reader.rs
@@ -763,6 +798,11 @@ src/
 │   ├── header.rs
 │   ├── samples.rs
 │   └── vcf.rs
+├── setgt/
+│   ├── random.rs
+│   ├── replacement.rs
+│   ├── stream.rs
+│   └── target.rs
 ├── validation/
 │   ├── definitions.rs
 │   ├── header.rs
@@ -780,6 +820,7 @@ src/
     ├── norm.rs
     ├── query.rs
     ├── reheader.rs
+    ├── setgt.rs
     ├── validate.rs
     ├── variant.rs
     └── view.rs
@@ -812,7 +853,7 @@ adapters. Another rsomics IO wrapper is not justified merely to wrap noodles.
 | `rsomics-vcf-query` `1bd16a4562e931010d6138e71c3a6112040edd29` | Refactor merge complete; partial parser replaced | First-slice streaming `query` |
 | `rsomics-vcf-reheader` `e25a2942b13b912fefc21e739d3f10876a59ac74` | Refactor then merge | Later transactional `reheader` |
 | `rsomics-vcf-sample` `3217323c7e6a22f2086367f8bdf9cc8bde6abd88` | Sample-projection fixture merge complete; implementation replaced | First-slice `view --samples` |
-| `rsomics-vcf-setgt` `a01b957b2259f4a75834c8354b2467cc3ea78cf6` | Test, fixture, and behavior seed only | Reimplement complete `setgt` on the current typed format and expression layers |
+| `rsomics-vcf-setgt` `a01b957b2259f4a75834c8354b2467cc3ea78cf6` | Fixture and behavior seeds merged; implementation replaced | Complete typed `setgt` on the current format and expression layers |
 | `rsomics-vcf-snp-density` `c8f2c9b1507712bcfb967693b18fc8d936f14465` | Merge legacy report fixture | `stats density` |
 | `rsomics-vcf-sort` `2ba24aa3573557117fc47900892264f358bdf96d` | Test asset only | Replace whole-file in-memory sorter |
 | `rsomics-vcf-split` `4b84ce255e2ccd1292d4caa49d6011bf7e30f8bc` | Refactor after dirty-diff attribution | Later transactional `split` |

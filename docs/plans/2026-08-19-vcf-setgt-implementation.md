@@ -834,7 +834,7 @@ strict measured advantage. Add the exact passing result to `PERFORMANCE.md`.
   non-yanked registry archive, independent install, and control-plane release
   ledger.
 
-- [ ] **Step 1: Perform a fresh API, hot-path, comments, and package review**
+- [x] **Step 1: Perform a fresh API, hot-path, comments, and package review**
 
 Verify all new product internals are private, no new dependency or public
 foundation API exists, production errors propagate, only statically obvious
@@ -842,14 +842,14 @@ production invariants use `unwrap`/`expect`, source comments satisfy the
 sparse-comment rule, stream memory is bounded, and every advertised syntax is
 covered by a normal or explicit-divergence oracle case.
 
-- [ ] **Step 2: Add stable user documentation and bump the version**
+- [x] **Step 2: Add stable user documentation and bump the version**
 
 Document only the complete command, accepted grammar, examples, AC/AN policy,
 and deliberate fail-loud differences in `README.md`. Set both manifest and
 lockfile package version to `0.6.0`. Keep benchmark claims bounded to the exact
 passing paths.
 
-- [ ] **Step 3: Run a fresh full local release gate**
+- [x] **Step 3: Run a fresh full local release gate**
 
 ```bash
 cargo fmt --all -- --check
@@ -864,7 +864,7 @@ cargo run --locked -- setgt --help
 cargo run --locked -- --version
 ```
 
-- [ ] **Step 4: Commit and push the release candidate**
+- [x] **Step 4: Commit and push the release candidate**
 
 ```bash
 git add README.md PERFORMANCE.md Cargo.toml Cargo.lock
@@ -877,6 +877,12 @@ HTTPS repository URL without changing remote configuration. Record the full
 40-character head.
 
 - [ ] **Step 5: Wait for exact-head CI and publish from that head**
+
+Exact-head CI run `32244016001` passed all four native platforms. Publish run
+`32244558404` reached upload from the same revision but crates.io returned 403
+because the registry token had been revoked. Replace the Actions secret and
+rerun from revision `682942cfa69768dc3a127a8544f2f07213b704ea`; do not mark
+this step complete before the publish run succeeds.
 
 Use `gh run list` and `gh run view` to require the product CI run's
 `headSha` to equal the release head and every native job to succeed. Then

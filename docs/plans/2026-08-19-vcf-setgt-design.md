@@ -1,7 +1,10 @@
 # `rsomics-vcf setgt` design
 
-Status: authorized for implementation on 2026-08-19. This design is the
-complete scope of `rsomics-vcf` 0.6.0.
+Status: implementation, package, performance, API review, and exact-head
+four-native-platform CI complete at revision
+`682942cfa69768dc3a127a8544f2f07213b704ea`. The 0.6.0 registry publication is
+authentication-gated after publish run `32244558404` received a crates.io 403;
+0.6.0 is not yet published.
 
 ## Purpose and boundary
 
@@ -339,3 +342,23 @@ head native CI on Linux and macOS for both `x86_64` and `aarch64`. After CI,
 the published archive is downloaded independently, matched to the release
 head and package tree, installed with a fresh external Cargo home and target,
 and smoke-tested on all four encodings. Only then may 0.6.0 publish.
+
+## Current gate result
+
+The complete command is public in the release candidate and all pre-registry
+gates pass. Local verification covers strict Clippy, 262 unit tests, all debug
+and release integration tests, nine live bcftools 1.24 oracle groups, script
+syntax, help, version, and a clean 163-file package. Exact-head CI run
+`32244016001` passes Linux and macOS on both native architectures. The clean
+package SHA-256 is
+`fed88be830f02b8b9cd4c01956692cf4427dbc17d1c14f45f9bd9a86d06a2dba`.
+
+The formal 180-measurement performance gate passes on strict peak-memory
+advantage across three operations and three encodings. Median RSS is 28.50%
+to 37.02% lower than bcftools 1.24, while median wall time is 3.20 to 16.60
+times slower. No throughput claim is supported.
+
+Publish run `32244558404` packaged and verified the same head, then failed at
+upload because the registry token had been revoked. Registry download,
+archive identity, fresh install, and installed-binary smoke tests remain
+mandatory and incomplete until a replacement secret is available.
