@@ -117,8 +117,13 @@ The expression engine gains typed genotype comparisons required by the
 bcftools 1.24 expression contract:
 
 - exact missing spellings preserve phase and ploidy: `.`, `./.`, and `.|.`;
-- `mis`, `ref`, `alt`, `hom`, `het`, `hap`, `RR`, `AA`, `RA` or `AR`, `Aa` or
-  `aA`, `R`, and `A` are matched case-insensitively;
+- the named classes `mis`, `ref`, `alt`, `hom`, `het`, and `hap` are matched
+  case-insensitively;
+- symbolic classes retain bcftools' case pattern: same-case `AA` or `aa` means
+  alternate homozygous, mixed-case `Aa` or `aA` means heterozygous between
+  alternate alleles, `RR` or `rr` means reference homozygous, `RA`, `AR`,
+  `ra`, or `ar` means reference-alternate heterozygous, and haploid `R` or `r`
+  and `A` or `a` distinguish reference from alternate;
 - equality and inequality operate on genotype classes or exact spellings;
 - regex matching renders the typed genotype spelling and never coerces a
   genotype into an arbitrary ordinary string.
