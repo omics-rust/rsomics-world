@@ -981,6 +981,41 @@ empty REF alleles, invalid GEN probabilities, all-zero GEN calls, partial
 failed imports, and overlapping gVCF blocks. Compatibility skip or trim modes
 remain available only when named explicitly.
 
+### Planned release 0.14: complete statistics family
+
+The complete target contract is recorded in
+[`2026-08-19-vcf-stats-design.md`](../plans/2026-08-19-vcf-stats-design.md).
+One nested `stats` family replaces six historical operation-sized crates. It
+contains the complete one- and two-file bcftools-style report, lossless native
+shard merge, self-contained HTML visualization, and focused FILTER, density,
+Ts/Tv, allele-length, and indel reports. Legacy bcftools reports remain valid
+plot inputs but are not merge inputs because they lack exact sufficient state
+and partition provenance. Genotype, pedigree, LD, relatedness, and population
+statistics workflows remain routed to `rsomics-plink` or `rsomics-popgen`.
+
+The old basic stats implementation is discarded except for fixtures because it
+silently skips malformed and valid record classes while exposing only eight
+plain-VCF counters. FILTER grouping and formatting, density boundaries, Ts/Tv
+formatting, allele-length bins, and detailed indel accumulators remain
+refactor assets behind the current typed VCF/BCF, expression, selection, and
+output layers. Their standalone CLIs, parsers, direct writers, process-launch
+benchmarks, and audit-narrating comments are discarded.
+
+Live bcftools 1.24 and VCFtools 0.1.17 probes establish fail-loud corrections:
+`+allele-length` exits 139 on a valid no-ALT record; all-alternate diploid
+Ts/Tv count is silently omitted; the final quality threshold prints
+uninitialized memory; explicit indel VAF bin counts are validated against the
+wrong `[0,1]` interval; malformed comprehensive input leaks a plausible stdout
+preamble; and sparse density uses coordinate-sized storage. The target avoids
+all six while retaining explicit compatibility formats for sound behavior.
+
+`rsomics-seqio::IndexedFasta`, `rsomics-common::AtomicFile`, and
+`rsomics-help` supply their existing generic contracts. VCF-specific report
+sections, bins, genotype matrices, and strata remain private. Online
+correlation stays private until `rsomics-vcf` and `rsomics-plink` demonstrate
+the same missingness and numerical contract; no speculative `rsomics-stats`
+API or new crate is added.
+
 ### Current structure
 
 ```text
@@ -1084,7 +1119,7 @@ adapters. Another rsomics IO wrapper is not justified merely to wrap noodles.
 
 | Asset and audited revision | Disposition | Target |
 |---|---|---|
-| `rsomics-vcf-allele-length` `d4e3b56d5132e4e6bb96faeddc1ee9992fe6ee53` | Refactor then merge | `stats allele-length` |
+| `rsomics-vcf-allele-length` `d4e3b56d5132e4e6bb96faeddc1ee9992fe6ee53` | Refactor histogram and writer with the 1.24-confirmed golden; discard parser and silent first-ALT policy | Complete `stats allele-length` |
 | `rsomics-vcf-annotate` `c958d89eeb5ff8ec0ce343ded3ab9ddfe10e957a` | Test and algorithm seed | Later typed `annotate` |
 | `rsomics-vcf-concat` `15088a2e6cbaef6bfb49669e9625e50b6ace7e50` | Fixture and behavior seeds only; implementation discarded | Complete ordered, overlap, deduplication, ligation, and validated naive `concat` on current product layers |
 | `rsomics-vcf-consensus` `bb016cf71d28ffa12562e875e0c5db7a431d148c` | Compact fixture and 1.24-confirmed narrow golden only; implementation discarded | Complete streaming typed `consensus` with masks, marks, haplotypes, partial references, and chain output |
@@ -1092,10 +1127,10 @@ adapters. Another rsomics IO wrapper is not justified merely to wrap noodles.
 | `rsomics-vcf-extract` `3bca5d5a6d2dbec187a00a29620c8c04b2fabe0d` | Selection and fixture merge complete | First-slice `query` |
 | `rsomics-vcf-fill-tags` `a28b803cebc218468fd53280f5166ea76198f03a` | Refactor then merge | Later `annotate fill-tags`; update 1.24 rounding and groups |
 | `rsomics-vcf-filter` `93d91c114d2ce0fc31a6b1c7176280f558c06f3c` | Fixture and expression-integration seed merged; whole-file implementation discarded | Complete typed `filter` |
-| `rsomics-vcf-filter-summary` `f8323af72303498bcc59f16c4a9feb897b992d3f` | Merge report fixture | `stats filters` |
+| `rsomics-vcf-filter-summary` `f8323af72303498bcc59f16c4a9feb897b992d3f` | Refactor grouping, formatting, and fixtures; discard parser and standalone CLI | Complete `stats filters` |
 | `rsomics-vcf-fixref` `d6efd2bd79067b2b7b2f738703e428ca40dc56f1` | Refactor then merge | Later `fixref`; retain reference-access performance seed |
 | `rsomics-vcf-head` `0297fa20cb271124c9ccc15d51fff973f1df50b6` | Refactor then merge | First-slice `head`; add BCF |
-| `rsomics-vcf-indel-stats` `a7774e648149a7b12dbfbbb60870d54d1cf2a373` | Refactor then merge | `stats indels` |
+| `rsomics-vcf-indel-stats` `a7774e648149a7b12dbfbbb60870d54d1cf2a373` | Refactor typed accumulators and 1.24-confirmed report rows; discard parser and orchestration | Complete `stats indels` |
 | `rsomics-vcf-index` `5eafb949d64a101c1c4e2d21e9a311ad9379ac65` | Spanning-variant regression and linear-offset seed merged; implementation replaced | Complete first-slice TBI/CSI `index` |
 | `rsomics-vcf-isec` `86bedb28892ccbcb6137bfb3c82925fe931609f1` | Compact fixture seeds only; implementation discarded | Complete indexed multi-input `isec` with deterministic matching and transactional Venn output |
 | `rsomics-vcf-merge` `571af0688ac61b857b529b0db20ae886999e04fa` | Fixture seeds only; implementation discarded | Complete typed cohort, multiallelic, local-allele, and gVCF `merge` |
@@ -1104,12 +1139,12 @@ adapters. Another rsomics IO wrapper is not justified merely to wrap noodles.
 | `rsomics-vcf-reheader` `e25a2942b13b912fefc21e739d3f10876a59ac74` | Refactor then merge | Later transactional `reheader` |
 | `rsomics-vcf-sample` `3217323c7e6a22f2086367f8bdf9cc8bde6abd88` | Sample-projection fixture merge complete; implementation replaced | First-slice `view --samples` |
 | `rsomics-vcf-setgt` `a01b957b2259f4a75834c8354b2467cc3ea78cf6` | Fixture and behavior seeds merged; implementation replaced | Complete typed `setgt` on the current format and expression layers |
-| `rsomics-vcf-snp-density` `c8f2c9b1507712bcfb967693b18fc8d936f14465` | Merge legacy report fixture | `stats density` |
+| `rsomics-vcf-snp-density` `c8f2c9b1507712bcfb967693b18fc8d936f14465` | Retain boundary and format fixtures plus formatter seed; discard parser and record-sized accumulator | Complete `stats density` |
 | `rsomics-vcf-sort` `2ba24aa3573557117fc47900892264f358bdf96d` | Order and malformed-input fixtures only; implementation discarded | Complete bounded external `sort` with stable multi-pass ties |
 | `rsomics-vcf-split` `4b84ce255e2ccd1292d4caa49d6011bf7e30f8bc` | Multi-contig fixture and membership seed only; implementation discarded; untracked lockfile preserved | Complete transactional `split samples` and `split records` with bounded descriptors and manifest |
-| `rsomics-vcf-stats` `66299f4d56e26b1d4c1498ffba9b489cfb7d5f85` | Test asset after dirty-diff attribution | Later `stats`; current implementation is too narrow |
+| `rsomics-vcf-stats` `66299f4d56e26b1d4c1498ffba9b489cfb7d5f85` | Retain adversarial fixture seeds only; discard the narrow line parser and implementation | Complete comprehensive `stats report`, native merge, and plot family |
 | `rsomics-vcf-to-bed` `50e87e5821cdc498e950f6e412d6b25fb016c944` | Coordinate fixture only; implementation discarded | Typed `convert bed` preset reusing query spans |
-| `rsomics-vcf-tstv-strat` `f1697b722b7a1d99c6393a82ca924f69773e4c38` | Merge legacy report fixture | `stats tstv` |
+| `rsomics-vcf-tstv-strat` `f1697b722b7a1d99c6393a82ca924f69773e4c38` | Refactor formatter and corrected goldens; discard parser and unsafe counting | Complete `stats tstv` family |
 | `rsomics-vcf-utils` `61287add0d662df97a4808ae05c473791b922ec4` | Split, refactor, and discard | Fold grounded operations into `view`, `query`, `stats`, and `convert`; discard duplicates |
 | `rsomics-vcf-validate` `e6fef96f3cdfde5d5740d57cb8c5185cfc5285ff` | Test seed merged; implementation replaced | Strict first-slice `validate` |
 | `rsomics-vcf-variant-distance` `b9a86dd089539bd9d3147acae72f3b19bfe8015a` | Refactor then merge | Later `annotate distance`; unsorted input fails |
