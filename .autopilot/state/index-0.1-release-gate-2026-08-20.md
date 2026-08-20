@@ -4,8 +4,11 @@
 
 - Product repository: `/Volumes/KIOXIA/Documents/omics-rust/rsomics-index`
 - Code head: `05960a4609a3b2acc388c0a149b5e023d53027f1`
-- Documentation head: `2f14a29921d454b17bf5362cedaf6a9931618f94`
+- Repository head: `2f14a29921d454b17bf5362cedaf6a9931618f94`
 - Four-native exact-code-head CI: run `32331824268`, passed
+- Four-native exact-repository-head CI: run `32336738071`, passed, including
+  strict Clippy, debug and release tests, rustdoc, package verification, and
+  the pinned HTSlib 1.24 compatibility suites
 - Stable slice: `bgzip`; `tabix build`, `query`, and `list`
 - Compatibility oracle: HTSlib 1.24
 
@@ -40,12 +43,12 @@ after the invalid benchmark stopped.
 
 1. Restore the boot disk below 80% without deleting project or session data.
 2. Recheck `/` and KIOXIA capacity and resolve all Cargo paths.
-3. Build `rsomics-index --release` from the exact documentation head.
+3. Build `rsomics-index --release` from the exact repository head.
 4. Verify the binary timestamp, SHA-256, version, and clean Git head before the
    benchmark starts.
 5. Run all 13 workloads with three warmups and ten alternating measured pairs
    into a new result directory.
-6. Replace the historical performance decision, then rerun package and
-   exact-head four-native CI gates.
+6. Replace the historical performance decision in a new repository commit,
+   then rerun package and exact-head four-native CI gates for that final head.
 7. Publish only after a valid crates.io credential is available; the previous
    registry token is revoked.

@@ -278,10 +278,14 @@ until their complete samtools contracts and fixtures are included.
 ### Implementation and evidence
 
 The initial implementation runs from `acba3ec` through code head
-`05960a4609a3b2acc388c0a149b5e023d53027f1`. Exact-head CI run `32331824268`
-passes on native Linux and macOS for both `x86_64` and `aarch64`; the Linux
-`x86_64` job builds pinned HTSlib 1.24 and runs the live compatibility suite.
-The always-run suite has 60 tests, with nine additional HTSlib oracle tests.
+`05960a4609a3b2acc388c0a149b5e023d53027f1`; documentation head
+`2f14a29921d454b17bf5362cedaf6a9931618f94` explicitly withdraws the stale
+performance claim. Exact-code-head CI run `32331824268` and
+exact-repository-head run `32336738071` pass on native Linux and macOS for both
+`x86_64` and `aarch64`. The latter includes strict Clippy, debug and release
+tests, rustdoc, package verification, and the Linux `x86_64` live compatibility
+suite against pinned HTSlib 1.24. The always-run suite has 60 tests, with nine
+additional HTSlib oracle tests.
 
 The product uses `rsomics-help` for the complete nested command tree and
 `rsomics-common` for structured success and failure output. Named output and
