@@ -741,6 +741,14 @@ regions, genotype removal, phased chunk ligation, and safe raw BGZF VCF or BCF
 concatenation. A partial base command will not be advertised while ligation or
 naive compatibility is a placeholder.
 
+A substantial uncommitted candidate now exists on top of the 0.6.0 release
+revision. It is an implementation asset rather than release evidence. The
+2026-08-20 static review retains its typed and transactional structure but
+requires exact index resolution, bounded indexed-input resources, a complete
+oracle matrix, a ligation and scaling benchmark, and measured naive-mode
+behavior before it can be accepted. The durable review is
+[`vcf-concat-audit-2026-08-20.md`](../../.autopilot/state/vcf-concat-audit-2026-08-20.md).
+
 The old 0.1.2 micro-crate supplies only fixture and behavior seeds. Its
 text-only string header merge, double-open readers, unchecked coordinates,
 direct file truncation, tiny launch benchmark, standalone help surface, and

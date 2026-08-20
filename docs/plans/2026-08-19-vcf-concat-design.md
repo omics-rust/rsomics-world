@@ -1,10 +1,12 @@
 # `rsomics-vcf concat` design
 
 Status: product boundary, upstream contract, historical assets, deliberate
-differences, shared-foundation requirement, and release gate audited. Product
-implementation is intentionally not started while `rsomics-vcf` main remains
-the exact publishable 0.6.0 revision
-`682942cfa69768dc3a127a8544f2f07213b704ea`.
+differences, shared-foundation requirement, and release gate audited. A
+substantial uncommitted implementation candidate now exists on top of
+`rsomics-vcf` revision `682942cfa69768dc3a127a8544f2f07213b704ea`.
+It is retained as an implementation asset, not accepted as a stable command.
+The 2026-08-20 static review and remaining gates are recorded in
+`../../.autopilot/state/vcf-concat-audit-2026-08-20.md`.
 
 ## Purpose and boundary
 
