@@ -278,10 +278,11 @@ until their complete samtools contracts and fixtures are included.
 ### Implementation and evidence
 
 The initial implementation runs from `acba3ec` through code head
-`05960a4609a3b2acc388c0a149b5e023d53027f1`; documentation head
-`2f14a29921d454b17bf5362cedaf6a9931618f94` explicitly withdraws the stale
-performance claim. Exact-code-head CI run `32331824268` and
-exact-repository-head run `32336738071` pass on native Linux and macOS for both
+`05960a4609a3b2acc388c0a149b5e023d53027f1`; repository head
+`821d491042a92d35153efcdf160acebf381ca4ee` both withdraws the stale performance
+claim and makes the formal harness build and authenticate its own exact-head
+binary. Exact-code-head CI run `32331824268` and exact-repository-head run
+`32340291429` pass on native Linux and macOS for both
 `x86_64` and `aarch64`. The latter includes strict Clippy, debug and release
 tests, rustdoc, package verification, and the Linux `x86_64` live compatibility
 suite against pinned HTSlib 1.24. The always-run suite has 60 tests, with nine
@@ -309,6 +310,11 @@ are not evidence for the current head. Publication requires a clean rebuild of
 the exact head and a replacement 13-workload run with three warmups and ten
 alternating measured pairs. No current performance claim is inherited from the
 old micro-crates.
+
+The replacement harness records and checks the clean Git head, release-binary
+SHA-256, `Cargo.lock` SHA-256, toolchain, binary path, and build time before
+correctness or timing work. It also rejects nonempty result directories, and
+the summary command verifies the complete evidence manifest before rendering.
 
 ### Historical asset dispositions
 
