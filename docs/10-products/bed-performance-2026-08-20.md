@@ -2,14 +2,17 @@
 
 Date: 2026-08-20
 
-Status: passed for the eight-command 0.2 candidate. Versioning, exact-head
-release CI, and registry publication remain separate gates.
+Status: passed for release candidate 0.2.0. Exact-head release CI is green;
+registry publication is credential-blocked.
 
 ## Evidence identity
 
 - performance source: `d7b1507b178053a087862255d84a244e4921f192`;
 - documentation source: `52764bdc401ea3a2512f3deba10453757da32a6f`;
-- exact-head four-platform CI: run `32328054861`, passed;
+- release candidate: `02b85a1a348c271e485cca629dc4e71fa075388a`;
+- release-candidate four-platform CI: run `32329089591`, passed;
+- clean local 0.2.0 package SHA-256:
+  `6ce9d3cc727e385e4e66accc85c774b18f8ac7b902315c0782551e4266b1c80e`;
 - release binary SHA-256:
   `9a55972f96e11bf087515b61799575505291d12d67902b4c965b8b9e32b51ff8`;
 - BEDTools: 2.31.1, release archive SHA-256
@@ -20,6 +23,11 @@ release CI, and registry publication remain separate gates.
   `ba09fce09fb7152e1a02d983defa282a951d64931b8a9ef4d8de66e64d48f6f2`;
 - relation runner SHA-256:
   `9d16cbc2b808c93210b5a3b4c637a08fd2a84b6e33545e1a73b6324a9d004e76`.
+
+Publish workflow run `32329397022` built and verified all 93 package files,
+then failed at upload with crates.io `403 authentication failed`. The workflow
+was not repeated, and no tag or GitHub release was created. The performance
+decision remains valid independently of that credential gate.
 
 The representative host was `dell-Precision-7920-Tower`, Linux
 6.8.0-90-generic, `x86_64`, with two Intel Xeon Gold 6238R CPUs. The candidate

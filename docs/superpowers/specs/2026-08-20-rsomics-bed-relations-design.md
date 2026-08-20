@@ -3,10 +3,11 @@
 Date: 2026-08-20
 
 Status: implemented at performance source
-`d7b1507b178053a087862255d84a244e4921f192`; exact-head CI and both
-representative Linux gates pass. This design covers the `rsomics-bed` 0.2
-release slice only. The complete family boundary is in
-`docs/10-products/bed.md`.
+`d7b1507b178053a087862255d84a244e4921f192` and prepared as release candidate
+`02b85a1a348c271e485cca629dc4e71fa075388a`; exact-head four-platform CI and
+both representative Linux gates pass. Registry publication is blocked by the
+expired credential. This design covers the `rsomics-bed` 0.2 release slice
+only. The complete family boundary is in `docs/10-products/bed.md`.
 
 ## Outcome
 

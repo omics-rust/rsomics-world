@@ -533,17 +533,17 @@ Build release binaries on the external target, generate and hash a multi-million
 
 Use the exact 0.1 representative fixture recipe after the shared index changes. Require each of sort, merge, intersect, subtract, and complement to retain its documented throughput or resource advantage; record regressions honestly and optimize before versioning if a required advantage is lost.
 
-- [ ] **Step 6: Perform the final source and public API review**
+- [x] **Step 6: Perform the final source and public API review**
 
 Inspect every production `unwrap`, comment, public item, allocation in query loops, candidate ordering, coordinate cast, error conversion, and output write. Require no swallowed failures, speculative flags, duplicated relation parser, narrated comments, or public foundation additions.
 
-- [ ] **Step 7: Bump to 0.2.0 and run the release command set**
+- [x] **Step 7: Bump to 0.2.0 and run the release command set**
 
 Run: `cargo fmt --all -- --check && cargo clippy --locked --all-targets --all-features -- -D warnings && cargo test --locked --all-features && cargo test --release --locked --all-features && cargo package --locked && cargo bench --locked --bench operations -- --test`
 
 Expected: every command exits zero with BEDTools 2.31.1 present and the package contains complete documentation for exactly eight stable operations.
 
-- [ ] **Step 8: Commit, push, and require exact-head four-platform CI**
+- [x] **Step 8: Commit, push, and require exact-head four-platform CI**
 
 ```bash
 git add Cargo.toml Cargo.lock README.md MIGRATION.md PERFORMANCE.md benches/operations.rs .github/workflows/ci.yml
@@ -551,6 +551,6 @@ git commit -m "feat(bed): prepare 0.2.0 relation release"
 git push https://github.com/omics-rust/rsomics-bed.git HEAD:main
 ```
 
-- [ ] **Step 9: Publish only with a valid registry credential**
+- [x] **Step 9: Publish only with a valid registry credential**
 
 After exact-head CI succeeds, dispatch the repository release workflow, verify crates.io checksum and package install from a fresh external Cargo home, create the exact `v0.2.0` tag/release if the workflow does not, then record registry and CI evidence in the control dossier. If crates.io authentication remains expired, record the credential gate and continue the next unblocked family without weakening or repeating the release.

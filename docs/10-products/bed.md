@@ -1,12 +1,14 @@
 # BED product dossier
 
 Status: `rsomics-bed 0.1.0` is published with `sort`, `merge`, `intersect`,
-`subtract`, and `complement`. The 0.2 candidate adds `cluster`, `window`, and
-`closest`. Performance source `d7b1507b178053a087862255d84a244e4921f192`
-passed exact-head CI run `32328054861` on four native target classes and both
-representative Linux gates. Documentation head `52764bdc401ea3a2512f3deba10453757da32a6f`
-records the evidence. The package remains version 0.1.0 until the final API
-review, version bump, release CI, and registry publication complete.
+`subtract`, and `complement`. Release candidate 0.2.0 at
+`02b85a1a348c271e485cca629dc4e71fa075388a` adds `cluster`, `window`, and
+`closest` and passed exact-head four-platform CI run `32329089591`. The
+representative performance source is
+`d7b1507b178053a087862255d84a244e4921f192`. Registry publication is blocked
+only by the expired organization credential: publish run `32329397022`
+completed package verification and then received crates.io `403 authentication
+failed`. The registry therefore still serves 0.1.0.
 
 ## Boundary
 
@@ -181,6 +183,15 @@ The independently verified 0.1 gate is recorded in
 `d7b1507b178053a087862255d84a244e4921f192` passed exact-head CI run
 `32328054861`, the regenerated five-operation gate, and the new sparse/dense
 relation gate.
+
+Final source and public API review produced release candidate
+`02b85a1a348c271e485cca629dc4e71fa075388a`. The candidate passed exact-head CI
+run `32329089591` on all four native target classes. Its clean local package
+archive has SHA-256
+`6ce9d3cc727e385e4e66accc85c774b18f8ac7b902315c0782551e4266b1c80e`.
+Publish run `32329397022` reached the upload and failed with crates.io `403
+authentication failed`; it was not retried. No `v0.2.0` tag or GitHub release
+was created for an unpublished version.
 
 The 0.2 implementation slice is complete:
 
