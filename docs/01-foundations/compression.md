@@ -13,8 +13,9 @@ BGZF (those live in [`indexing.md`](indexing.md)).
 
 ## Design notes
 
-- BGZF is the workhorse: every BAM/VCF/CRAM/BCF/tabix file in production is
-  a BGZF stream. Throughput here translates directly to pipeline wall time.
+- BGZF is the workhorse beneath BAM, compressed VCF and BCF, and tabix-indexed
+  text. CRAM has its own container and codec model. Throughput on the BGZF
+  paths translates directly to pipeline wall time.
 - Two implementation strategies coexist: pure-Rust DEFLATE via
   [`flate2`](https://github.com/rust-lang/flate2-rs) (with `miniz_oxide`
   or `zlib-ng` backends) and FFI to `libdeflate` via `libdeflater`. For
@@ -72,9 +73,9 @@ BGZF (those live in [`indexing.md`](indexing.md)).
   - GPU-amenable: no — block layout is fixed and DEFLATE is bit-serial
   - Upstream license: `MIT`
   - Priority: `P0`
-  - Layer: `adopt` (writers); `A` (a future parallel `rsomics-bgzf` decoder)
-  - Consumes primitives: future on `rsomics-bgzf` would consume noodles-bgzf primitives
-  - Notes: Adopt `noodles-bgzf` for IO correctness; pair with `gzp` / `libdeflater` for multithreaded *write* paths. Parallel *decoder* is an open project (tracking [zaeleus/noodles#17](https://github.com/zaeleus/noodles/issues/17)).
+  - Layer: `adopt`; any shared raw-frame mechanics belong in `rsomics-seqio`
+  - Consumes primitives: —
+  - Notes: Adopt `noodles-bgzf` for IO correctness; pair with `gzp` / `libdeflater` for multithreaded *write* paths. `rsomics-bam` and `rsomics-vcf` currently keep raw-frame rewriting private. Only their demonstrated common, format-neutral contract may move into `rsomics-seqio`, with structural framing kept distinct from optional decompression and CRC validation. Parallel decoding remains an upstream or measured consumer-driven project, not a separate crate (tracking [zaeleus/noodles#17](https://github.com/zaeleus/noodles/issues/17)).
 
 - [x] **`bgzip` (CLI)** — samtools companion for creating BGZF files.
   - Reference impl: `C` · [samtools/htslib/bgzip.c](https://github.com/samtools/htslib) · `MIT`
@@ -87,9 +88,9 @@ BGZF (those live in [`indexing.md`](indexing.md)).
   - GPU-amenable: no — bit-serial DEFLATE
   - Upstream license: `MIT`
   - Priority: `P1`
-  - Layer: `subcommand-of-rsomics-zip`
+  - Layer: `rsomics-index bgzip`
   - Consumes primitives: `gzp`, `libdeflater`
-  - Notes: Already beats `bgzip --threads` on large inputs by using libdeflate per block. **Gap to close on adoption**: crabz handles BGZF block layout via `gzp::deflate::Bgzf` but does not emit a `.gzi` virtual-offset index alongside the output (samtools' `bgzip --index` does). Adding `.gzi` emission is the first follow-up TODO inside `rsomics-zip` — see also [`indexing.md`](indexing.md) `.gzi` entry.
+  - Notes: The BGZF CLI and its `.gzi` lifecycle belong to the accepted indexing workflow. `crabz` is an implementation candidate because it handles BGZF block layout through `gzp::deflate::Bgzf`, but compatibility and representative performance must be demonstrated inside `rsomics-index`; no generic compression product is implied. See also [`indexing.md`](indexing.md) `.gzi` entry.
 
 - [x] **`pigz`** — parallel gzip CLI.
   - Reference impl: `C` · [madler/pigz](https://github.com/madler/pigz) · `Zlib`
@@ -102,9 +103,9 @@ BGZF (those live in [`indexing.md`](indexing.md)).
   - GPU-amenable: no — bit-serial DEFLATE
   - Upstream license: `Zlib`
   - Priority: `P1`
-  - Layer: `subcommand-of-rsomics-zip` — collapsed with `bgzip` into one `rsomics-zip` binary with `gzip` and `bgzip` subcommands
+  - Layer: `adopt`; excluded from the current product allowlist
   - Consumes primitives: `gzp`, `libdeflater` / `flate2`
-  - Notes: `crabz` is the closest Rust equivalent. The single `rsomics-zip` binary ships as the default gzip / bgzip companion in `rsomics-*` containers.
+  - Notes: `crabz` is the closest Rust equivalent. General-purpose parallel gzip is already served by `pigz` and `crabz` and does not justify an rsomics product. Product-specific parallel compression remains behind the owning product or `rsomics-seqio` contract when two consumers demonstrate it.
 
 - [x] **`zstd`** — Facebook's zstandard codec.
   - Reference impl: `C` · [facebook/zstd](https://github.com/facebook/zstd) · `BSD-3-Clause OR GPL-2.0`

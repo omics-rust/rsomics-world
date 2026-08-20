@@ -34,9 +34,10 @@ everything in modules 02–09 depends on this layer working well.
 - Many of the canonical Rust crates here (`noodles`, `needletail`,
   `rust-htslib`) already exist and are production-grade. The work in this
   module is **audit, fill gaps, and document**, not "rewrite from zero".
-- Where Rust *must* still ship a new crate (e.g. a pure-Rust bgzf writer
-  that matches `libdeflate` throughput; an h5ad reader that does not depend
-  on Python), the topic doc says so explicitly.
+- A missing Rust capability is not itself a public-crate boundary. Adopt an
+  external dependency or keep the implementation inside its first product.
+  Promote it only after two named products demonstrate the same policy-free
+  contract with consumer tests.
 - Higher modules use mature shared parsers when those contracts fit. A parser
   that carries one product's compatibility or output policy stays inside that
   product until a second consumer demonstrates the same policy-free contract.

@@ -19,10 +19,9 @@ live one level down. Random-access indexes (fai/bai/csi) live in
   is a pure-Rust, spec-tracking implementation of nearly every sequencing
   format and is the de-facto reference library. Most "rewrites" in this
   topic are not new crates but contributions back to noodles.
-- The single largest hole is **h5ad / AnnData**. Several crates (`anndata`,
-  `anndata-memory`, `single_rust`/`SingleRust`) exist but each implements
-  only a subset of the spec; a unified pure-Rust AnnData layer is still
-  needed for single-cell workflows.
+- **h5ad / AnnData** support remains fragmented across several Rust crates.
+  The first concrete single-cell product must select or fill only the subset
+  it needs; format coverage alone does not justify another public foundation.
 - Streaming-first APIs matter: a typical aligned BAM is 100+ GB. Every
   reader in this layer must expose `Iterator<Item = Record>` rather than
   forcing `Vec<Record>`.
@@ -142,7 +141,7 @@ live one level down. Random-access indexes (fai/bai/csi) live in
   - GPU-amenable: no — text parsing; operations themselves are interval-tree work, CPU-friendly
   - Upstream license: `MIT`
   - Priority: `P0`
-  - Layer: `adopt` (parsing); the operations belong to `rsomics-bedtools` (Layer B, module 09)
+  - Layer: `adopt` (parsing); the operations belong to `rsomics-bed`
   - Consumes primitives: —
   - Notes: Adopt noodles for parsing. Operations crate is downstream of `rsomics-intervals` (foundation, [`data-structures.md`](data-structures.md)).
 
@@ -157,9 +156,9 @@ live one level down. Random-access indexes (fai/bai/csi) live in
   - GPU-amenable: no — small text parser
   - Upstream license: `MIT`
   - Priority: `P1`
-  - Layer: `A` (foundation — a future `rsomics-paf` or contribution to `noodles-paf`)
+  - Layer: product-private in `rsomics-minimap2`, or contribute to `noodles`
   - Consumes primitives: —
-  - Notes: `paf` crate last update 2024-10-29 is borderline stale — kept because PAF spec is stable and parsers don't need active dev. `rustybam` is a binary tool, not a clean library. Fragmented landscape; a `noodles-paf` would resolve it. Track upstream PAF spec discussion under minimap2.
+  - Notes: `paf` crate last update 2024-10-29 is borderline stale — kept because PAF spec is stable and parsers do not need active development. `rustybam` is a binary tool, not a clean library. Implement or adopt the required contract inside `rsomics-minimap2`; prefer contributing a generally useful parser upstream to `noodles` over creating an rsomics foundation. A second concrete product consumer would be required before public promotion.
 
 - [ ] **`MAF`** — multiple alignment format (UCSC) and Mutation Annotation Format (NCI/TCGA). Two *different* formats sharing a name; both unhandled.
   - Reference impl (UCSC): `C` · [UCSC kent tools](http://hgdownload.soe.ucsc.edu/admin/exe/) · UCSC academic source license (free for non-commercial)
@@ -173,9 +172,9 @@ live one level down. Random-access indexes (fai/bai/csi) live in
   - GPU-amenable: no — text parsing
   - Upstream license: see above (two different flavours)
   - Priority: `P2`
-  - Layer: `A` (foundation — future `rsomics-maf`)
+  - Layer: product-private until two concrete consumers share a contract
   - Consumes primitives: —
-  - Notes: Niche but cited often in cancer pipelines. Start with TCGA-MAF because it interoperates with the VCF stack; UCSC-MAF can wait until comparative genomics work begins (module 08).
+  - Notes: The two MAF meanings require separate typed contracts. Start with the flavour required by a concrete cancer or comparative-genomics product and keep it there. Neither current portfolio nor format similarity establishes a public foundation.
 
 - [~] **`h5ad` / AnnData** — HDF5-backed single-cell matrix container.
   - Reference impl: `Python` · [scverse/anndata](https://github.com/scverse/anndata) · `BSD-3-Clause`
@@ -188,9 +187,9 @@ live one level down. Random-access indexes (fai/bai/csi) live in
   - GPU-amenable: maybe — only at the on-device array layer (Vectorize / Candle); HDF5 IO is FFI-bound and stays on CPU
   - Upstream license: `BSD-3-Clause`
   - Priority: `P0`
-  - Layer: `A` (foundation — future `rsomics-anndata`)
-  - Consumes primitives: future `rsomics-stats` (compute side); HDF5 IO is FFI-bound today
-  - Notes: Fragmented landscape; no crate covers the full spec (`.layers`, `.raw`, `.uns` nested groups, `.obsm`/`.varm` arrays, backed/lazy access). Real target is `rsomics-anndata` that the single-cell crates in module 04 all consume. Coordinate with SnapATAC2 (uses anndata-rs internally) before forking. The HDF5 FFI dependency is the architectural challenge — a pure-Rust HDF5 reader for the AnnData subset would let us cross into Quadrant ① end-to-end.
+  - Layer: product-private in `rsomics-sc` until a second concrete consumer exists
+  - Consumes primitives: HDF5 IO is FFI-bound today
+  - Notes: No crate covers the full spec (`.layers`, `.raw`, `.uns` nested groups, `.obsm`/`.varm` arrays, backed/lazy access), but full coverage is not the first deliverable. `rsomics-sc` should adopt or implement its required subset and coordinate with SnapATAC2 before forking. Only a second product with the same format-only contract can justify public promotion; computation policy remains in the products or in independently justified `rsomics-stats` items.
 
 - [ ] **`zarr`** — chunked array format (h5ad-zarr variant, spatial-omics next gen).
   - Reference impl: `Python` · [zarr-developers/zarr-python](https://github.com/zarr-developers/zarr-python) · `MIT`

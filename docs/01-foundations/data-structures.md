@@ -33,8 +33,9 @@ compression lives in [`compression.md`](compression.md).
   but lose to it on either API or performance.
 - SIMD matters everywhere here: the inner loops of FM-index rank queries,
   rolling hashes, and Bloom filter lookups are all vectorisable, but only
-  a few existing crates expose explicit SIMD paths. Opportunity for a
-  `rsomics-kmer` crate that consolidates the fast paths.
+  a few existing crates expose explicit SIMD paths. `rsomics-kmer` exposes
+  only primitives already demonstrated by `rsomics-seq` and
+  `rsomics-sketch`; SIMD work still requires consumer-level measurements.
 
 ## TODO
 
@@ -49,9 +50,9 @@ compression lives in [`compression.md`](compression.md).
   - GPU-amenable: maybe — rank queries on a fixed index port to GPU but the engineering cost is high
   - Upstream license: various (BWA itself MIT)
   - Priority: `P0`
-  - Layer: `A` (foundation — `rsomics-fm-index`)
+  - Layer: adopt or keep private in the consuming aligner/product
   - Consumes primitives: —
-  - Notes: rust-bio implementation works but issues [#30](https://github.com/rust-bio/rust-bio/issues/30) and [#495](https://github.com/rust-bio/rust-bio/issues/495) flag UX + correctness corners. A modernised `rsomics-fm-index` with `std::simd` rank queries, 64-bit suffix arrays, and FMD support (needed for BWA-style aligners) is on the critical path.
+  - Notes: rust-bio implementation works but issues [#30](https://github.com/rust-bio/rust-bio/issues/30) and [#495](https://github.com/rust-bio/rust-bio/issues/495) flag UX and correctness corners. The retired `rsomics-fm-index` repository is an implementation asset, not a boundary decision. An aligner may adopt or internalize the parts it needs after compatibility and performance validation; public promotion requires another concrete product consumer.
 
 - [~] **BWT (Burrows-Wheeler Transform)** — string permutation underlying FM-index.
   - Reference impl: `C` · [bwa BWT routines](https://github.com/lh3/bwa) · `MIT`
@@ -64,9 +65,9 @@ compression lives in [`compression.md`](compression.md).
   - GPU-amenable: maybe — SA-IS variants have GPU implementations in the literature; engineering cost is non-trivial
   - Upstream license: `MIT`
   - Priority: `P0`
-  - Layer: `A` (foundation — same crate as FM-index)
+  - Layer: adopt or keep private with the consuming FM/FMD index
   - Consumes primitives: —
-  - Notes: Construction performance is the bottleneck for indexing multi-Gbp references. The induced-sorting (SA-IS) variant is the state of the art; need a pure-Rust port that matches `libdivsufsort` on GRCh38. Parallel SA-IS (parlay-style) is a known but unexplored Rust opportunity.
+  - Notes: Construction performance is the bottleneck for indexing multi-Gbp references. Select an existing implementation or improve it only through a concrete product, with real-reference compatibility, memory, and throughput evidence. A possible optimization does not create a public foundation.
 
 - [~] **Suffix array** — sorted suffix offsets.
   - Reference impl: `C` · [y-256/libdivsufsort](https://github.com/y-256/libdivsufsort) · `MIT`
@@ -79,9 +80,9 @@ compression lives in [`compression.md`](compression.md).
   - GPU-amenable: maybe — parallel SA construction is researched but engineering-heavy
   - Upstream license: `MIT`
   - Priority: `P0`
-  - Layer: `A` (foundation — same crate as FM-index)
+  - Layer: adopt or keep private with the consuming index
   - Consumes primitives: —
-  - Notes: `divsufsort` is the right adoption target for SA construction. Validate against `libdivsufsort` on real genomes byte-for-byte.
+  - Notes: `divsufsort` is the initial adoption candidate for SA construction. Validate it against `libdivsufsort` on real genomes before a product depends on it; keep the adapter product-private unless a second consumer demonstrates the same contract.
 
 - [x] **`ntHash`** — rolling hash for DNA k-mers.
   - Reference impl: `C++` · [bcgsc/ntHash](https://github.com/bcgsc/ntHash) · `MIT`
@@ -184,6 +185,6 @@ compression lives in [`compression.md`](compression.md).
   - GPU-amenable: maybe — graph compaction is irregular, but k-mer counting prequel is SIMT-friendly
   - Upstream license: `MIT` (bcalm); ggcat is `MIT OR Apache-2.0`
   - Priority: `P1`
-  - Layer: `A` (foundation — the graph type) + `B` (tool — `ggcat`-equivalent assembler)
-  - Consumes primitives: `rsomics-kmer` (the ntHash crate), `rsomics-fm-index` indirectly
-  - Notes: `ggcat` is production-grade and the right consolidation target. `debruijn` (10x) is older but still maintained. Note: the crates.io name `ggcat` is squatted by an unrelated crate (`ggcat = "0.0.1"`, clipboard tool); install algbio's ggcat from source. Cross-references [`02-genomics/assembly.md`](../02-genomics/assembly.md).
+  - Layer: adopt or keep private in the consuming assembly or pangenome product
+  - Consumes primitives: proven `rsomics-kmer` items only where the selected implementation needs them
+  - Notes: `ggcat` is production-grade and the initial adoption target; `debruijn` (10x) is older but still maintained. Do not extract a graph foundation before two products demonstrate the same representation and traversal contract. The crates.io name `ggcat` is occupied by an unrelated clipboard crate, so the upstream bioinformatics tool installs from source. Cross-references [`02-genomics/assembly.md`](../02-genomics/assembly.md).
