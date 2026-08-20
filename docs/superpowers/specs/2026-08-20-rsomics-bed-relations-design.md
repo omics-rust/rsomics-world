@@ -31,11 +31,13 @@ The declared contract covers the complete documented BED input surface:
 - distance zero by default, including book-ended records;
 - `--distance <BP>` for a nonnegative maximum gap;
 - `--strand any|same`, with `-s` as a compatibility alias;
-- one-based cluster IDs in the exact output order of the input contract;
-- checked coordinate ordering and chromosome/strand sortedness.
+- one-based cluster IDs, preserving input order in unstranded mode and using
+  BEDTools' chromosome-local `+` then `-` output order in same-strand mode;
+- checked chromosome grouping and nondecreasing start coordinates.
 
 Same-strand mode requires valid BED6 records. Missing, malformed, or unsupported
-strand values fail before partial named output is committed.
+strand values fail before partial named output is committed instead of being
+silently discarded as they are by the upstream executable.
 
 ### `window`
 
@@ -117,9 +119,10 @@ candidates. `closest` queries overlaps first; if none are eligible, its start
 and end orderings locate the nearest downstream and upstream distances without
 a full B scan.
 
-`cluster` does not use an interval index. It is a constant-space state machine
-over a sorted `BedReader`, with separate active state only where strand mode
-requires it.
+`cluster` does not use an interval index. Unstranded execution is a
+constant-space state machine over a sorted `BedReader`. Same-strand execution
+buffers one chromosome at a time so it can reproduce BEDTools' `+` then `-`
+output order while retaining streaming input and bounded memory.
 
 ```mermaid
 flowchart LR
