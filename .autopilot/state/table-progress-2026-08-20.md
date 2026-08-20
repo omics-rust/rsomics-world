@@ -103,4 +103,10 @@ more peak RSS; this throughput-for-memory trade-off is accepted and recorded.
 Full evidence is in `docs/10-products/table-performance-2026-08-20.md`.
 
 The code, compatibility, package, and performance gates are complete.
-Publication and registry-install verification remain.
+Publication workflow run `32321555568` repeated format, strict Clippy, release
+tests, and package verification successfully at the exact candidate head. The
+upload was rejected with crates.io `403 authentication failed`: the selected
+GitHub organization secret contains the expired token recorded by crates.io.
+A replacement scoped token requires the browser's explicit key-creation
+confirmation. No registry entry was created. Publication and registry-install
+verification remain; the product revision does not need to change.
