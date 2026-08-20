@@ -274,18 +274,23 @@ product consumers are:
    currently backed by `rsomics-vcf::format::bgzf`.
 
 The two implementations already duplicate frame-header parsing, BC size
-checks, EOF handling, raw copying, and malformed-stream tests. The VCF copy is
-less complete because it assumes the canonical six-byte extra field and does
-not itself expose CRC and uncompressed-size validation. The BAM copy accepts
-arbitrary extra-subfield order and performs the stronger checks.
+checks, EOF handling, raw copying, and malformed-stream tests. Both private
+frame parsers now accept unrelated extra subfields around `BC`, but VCF
+reheader's outer format detector still assumes the canonical six-byte extra
+field and rejects such streams before its frame parser runs. Payload guarantees
+also differ: VCF naive preflight inflates every frame, BAM inflates header
+frames, and BAM's record-frame copy is structural rather than a full CRC pass.
 
 The format-neutral frame layer will move to `rsomics-seqio::bgzf`, not a new
 crate and not `rsomics-common`. `rsomics-seqio` is already a long-term Layer A
 I/O foundation, already carries gzip and BGZF dependencies, and is already a
-dependency of both products. Its public item is limited to reusable buffered
-frame parsing, validation, decoding, raw frame access, and canonical EOF
-handling. BAM headers, VCF headers, BCF dictionaries, record boundaries,
-transaction policy, and command behavior remain private to their products.
+dependency of both products. Any public item must distinguish structural frame
+parsing from explicit DEFLATE, CRC, and ISIZE validation while preserving a
+buffer-reusing raw-copy path. BAM headers, VCF headers, BCF dictionaries,
+record boundaries, transaction policy, and command behavior remain private to
+their products. The exact consumer contract and extraction order are recorded
+in
+[`seqio-bgzf-consumer-contract.md`](../01-foundations/seqio-bgzf-consumer-contract.md).
 
 Extraction occurs only after 0.6.0 publication allows the VCF consumer to move
 off its frozen release head. It requires consumer-side tests in both products,
@@ -298,6 +303,88 @@ No other Layer A API is justified. `rsomics-common` already supplies the
 transaction, alias, error, and JSON contracts. `rsomics-help` already supplies
 the unified command presentation. Header merge, duplicate collapse, ligation,
 and VCF/BCF policy have no second product consumer and stay internal.
+
+## Repair execution order
+
+No production repair starts until a permitted build environment can run the
+new regression and show it failing. The current dirty worktree is preserved
+unchanged until then.
+
+### 1. Resolve and inject one exact index
+
+Replace `require_fresh(input)` with a private format-aware resolver that owns
+the selected path and parsed index. Its selection contract matches the
+reader that will query it:
+
+- BGZF VCF selects `<input>.tbi` when it exists; only when TBI is absent does
+  it select `<input>.csi`;
+- BCF selects only `<input>.csi` and ignores an unrelated TBI;
+- an existing but stale or corrupt preferred index is an error, not a reason
+  to fall back to the other format;
+- the selected parsed index is passed through
+  `indexed_reader::Builder::set_index`, so validation and query cannot resolve
+  different sibling files.
+
+The first regression creates both sibling indexes with intentionally different
+query contents and proves that VCF uses TBI. Further tests cover valid, stale,
+and corrupt preferred indexes with a valid alternate; CSI fallback only when
+TBI is absent; BCF with TBI only; BCF with valid CSI plus corrupt TBI; and a
+missing index. Each failure must occur before named output replacement.
+
+### 2. Remove per-input OS threads
+
+Replace the current scoped thread and one-record-channel topology with a
+region-by-region indexed merge on the calling thread. Open one indexed reader
+per input, query the same merged region across those readers, and keep at most
+one decoded record per input in the heap. Merged region intervals prevent
+overlapping queries; retain explicit cross-region suppression for long records
+that can be returned by more than one disjoint query.
+
+This keeps the irreducible k-way state at `O(inputs)` while eliminating one
+thread stack and channel per input. Input-open failures remain pre-output
+errors. Query, decode, order, writer, and broken-pipe failures propagate
+directly without worker cancellation or join ambiguity. Do not add an
+arbitrary worker flag or fixed input cap unless measured file-descriptor
+evidence requires one.
+
+The regression matrix uses one, two, 64, and 256 indexed inputs; equal-position
+ties across at least three inputs; multiple disjoint and merged regions; a
+long record returned for more than one disjoint query; a corrupt early and
+late input; and a failing output writer. On Linux, the scaling harness records
+peak threads and open descriptors from `/proc`; macOS records the equivalent
+process counts. Plain-output indexed concat must not create one thread per
+input.
+
+### 3. Collapse naive preflight from three passes to two
+
+Keep full preflight before the first output byte. Combine structural frame
+checking, canonical EOF enforcement, decompression integrity, format
+detection, typed header parsing, dictionary comparison, record validation, and
+record counting in one pass per input. The raw copy is the unavoidable second
+pass after every input has passed preflight; it preserves compressed record
+frames and emits one final EOF marker.
+
+Do not replace typed header equality with dictionary-position checks, and do
+not weaken DEFLATE, CRC, ISIZE, EOF, or trailing-byte failures. Add a
+short-read source, arbitrary extra fields, malformed payload with valid frame
+length, CRC and ISIZE corruption, and writer failure to the regression set.
+Benchmark the retained two-pass contract
+against both the current three-pass candidate and bcftools 1.24.
+
+### 4. Close the declared compatibility matrix
+
+Add the missing file-list, compact-PS, region-overlap, four-encoding,
+three-input tie, genotype-removal, and deliberate-divergence oracles. Expected
+differences assert both the rsomics result and the observed bcftools 1.24
+result; they are not skipped comparisons. Complete the many-sample ligation
+and indexed many-input performance workloads before interpreting any speed
+claim.
+
+### 5. Finish the product before extracting BGZF
+
+Only after concat is correct, bounded, compatible, and measured may the BAM
+and VCF raw-frame overlap move through the separate `rsomics-seqio` consumer
+gate. Concat repair must not be coupled to a public foundation API change.
 
 ## Deliberate compatibility differences
 

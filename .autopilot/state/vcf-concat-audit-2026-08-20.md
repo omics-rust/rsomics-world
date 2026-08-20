@@ -71,6 +71,13 @@ so it cannot accidentally change the exact 0.6.0 publication candidate.
    implementations until that consumer-driven extraction gate is genuinely
    available.
 
+7. The dirty frame parser accepts arbitrary gzip extra subfields around `BC`,
+   but `reheader.rs::detect` still classifies BGZF only when `XLEN` is six and
+   `BC` is first. Reheader therefore rejects some structurally valid BGZF
+   before the parser runs. Add the product-level failing regression first and
+   route detection through the same structural parser; the module test alone
+   does not prove the command contract.
+
 ## Verification state
 
 No local build, test, package, or benchmark was run for this candidate during
