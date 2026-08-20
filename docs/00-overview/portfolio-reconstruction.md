@@ -6,6 +6,8 @@ registry reset was explicitly authorized and is tracked below.
 
 The final live namespace and recovery check is recorded in
 [`registry-reset-gate-2026-07-31.md`](registry-reset-gate-2026-07-31.md).
+The current post-reconstruction namespace is recorded independently in
+[`registry-live-state-2026-08-20.md`](registry-live-state-2026-08-20.md).
 
 The generated crate-level ledger is
 [`portfolio-inventory.tsv`](portfolio-inventory.tsv). Regenerate it with:
@@ -290,7 +292,7 @@ The reset is a namespace cleanup, not source-code destruction:
   the reset. It had no live version, repository, local clone, or reverse
   dependency.
 
-The completed reset leaves 11 published crates: ten allowlisted names with
+At the completed reset, 11 published crates remained: ten allowlisted names with
 non-yanked releases plus temporary `rsomics-igzip`. The other 27 accepted
 product names are boundaries to reconstruct, not empty packages to publish
 immediately.

@@ -7,6 +7,8 @@ Live state is verified against crates.io and the
 [omics-rust organization](https://github.com/omics-rust). Historical
 operation-sized code is indexed separately in
 [`docs/00-overview/portfolio-inventory.tsv`](docs/00-overview/portfolio-inventory.tsv).
+The latest exact namespace snapshot is
+[`registry-live-state-2026-08-20.md`](docs/00-overview/registry-live-state-2026-08-20.md).
 
 Status meanings are defined in [CONVENTIONS.md](CONVENTIONS.md).
 
@@ -18,22 +20,22 @@ Status meanings are defined in [CONVENTIONS.md](CONVENTIONS.md).
 | `rsomics-bam` | live | SAM/BAM/CRAM inspection, conversion, filtering, validation, and pileup |
 | `rsomics-bed` | live | BED/interval algebra and bedtools-like operations |
 | `rsomics-call` | live | alignment pileup, genotype likelihoods, and lightweight small-variant calling |
-| `rsomics-cnv` | planned | BAF/LRR copy-number HMM and chromosome-level polysomy analysis |
-| `rsomics-composition` | planned | Aitchison geometry, log-ratio transforms, zero handling, proportionality, and composition-native inference |
-| `rsomics-count` | planned | feature and read counting workflows |
+| `rsomics-cnv` | live | BAF/LRR copy-number HMM and chromosome-level polysomy analysis |
+| `rsomics-composition` | live | Aitchison geometry, log-ratio transforms, zero handling, proportionality, and composition-native inference |
+| `rsomics-count` | live | feature and read counting workflows |
 | `rsomics-deseq` | planned | DESeq2-style differential-expression workflow |
 | `rsomics-ecology` | planned | community-table diversity, ecological dissimilarity, ordination, metadata association, and permutation analysis |
 | `rsomics-edger` | planned | edgeR-style differential-expression workflow |
 | `rsomics-fastq-preprocess` | live | trimming and filtering (initial fastp-compatible subset); later correction, UMI, merge, deduplication |
 | `rsomics-fastq-qc` | live | FASTQ quality metrics and FastQC-compatible reports |
-| `rsomics-index` | planned | bgzip/tabix and reusable sequence-index workflows |
+| `rsomics-index` | repo-only | bgzip/tabix and reusable sequence-index workflows |
 | `rsomics-liftover` | live | UCSC chain validation/inspection and strict BED3-6/BED12 coordinate conversion |
 | `rsomics-limma` | planned | limma/voom workflow |
-| `rsomics-metagenomics` | planned | abundance-aware amplicon processing, taxonomic databases, read classification, and reports |
-| `rsomics-methyl` | planned | methylation extraction and analysis |
+| `rsomics-metagenomics` | live | abundance-aware amplicon processing, taxonomic databases, read classification, and reports |
+| `rsomics-methyl` | live | methylation extraction and analysis |
 | `rsomics-minimap2` | live | published legacy FFI wrapper; reconstruction required |
 | `rsomics-peak` | planned | chromatin peak calling, annotation, and quantification |
-| `rsomics-phylo` | planned | alignment trimming, evolutionary distance, tree inference, comparison, measures, and later likelihood/species-tree/placement workflows |
+| `rsomics-phylo` | live | alignment trimming, evolutionary distance, tree inference, comparison, measures, and later likelihood/species-tree/placement workflows |
 | `rsomics-plink` | planned | PLINK-style genotype analysis |
 | `rsomics-popgen` | planned | population-genetic statistics outside the PLINK workflow |
 | `rsomics-rnaseq-qc` | planned | RSeQC/Picard-like RNA-seq quality control |
@@ -42,17 +44,17 @@ Status meanings are defined in [CONVENTIONS.md](CONVENTIONS.md).
 | `rsomics-signal` | planned | deepTools/bigWig signal workflows |
 | `rsomics-sketch` | live | DNA FracMinHash construction, signature inspection, comparison, and linear search; indexing and mixture decomposition deferred |
 | `rsomics-structure` | planned | protein structure and PDB analysis |
-| `rsomics-table` | planned | bioinformatics-oriented table manipulation |
+| `rsomics-table` | repo-only | bioinformatics-oriented table manipulation |
 | `rsomics-vcf` | live | VCF/BCF inspection, transformation, filtering, indexing, and format statistics |
 
 Product status summary:
 
 | Status | Count |
 |---|---:|
-| live | 11 |
-| repo-only | 0 |
+| live | 17 |
+| repo-only | 2 |
 | pilot | 0 |
-| planned | 19 |
+| planned | 11 |
 | **Total** | **30** |
 
 `pilot` means the boundary and source audit are active. It does not imply that

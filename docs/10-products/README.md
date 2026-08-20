@@ -19,22 +19,22 @@ operation will ship. It records:
 | Product | Source candidates | Dossier state |
 |---|---:|---|
 | `rsomics-annotation` | 4 | [released 0.1.0](interval-annotation-index.md#rsomics-annotation) |
-| `rsomics-bam` | 41 | [released 0.18.0](bam.md) |
+| `rsomics-bam` | 41 | [released 0.29.0](bam.md) |
 | `rsomics-bed` | 42 | [released 0.1.0](bed-gate-2026-07-30.md) |
-| `rsomics-call` | 2 | [released 0.1.0](variant.md#rsomics-call) |
-| `rsomics-cnv` | 2 | [audited](variant.md#rsomics-cnv) |
-| `rsomics-composition` | 10 | [audited](composition.md) |
+| `rsomics-call` | 2 | [released 0.1.3](variant.md#rsomics-call) |
+| `rsomics-cnv` | 2 | [released 0.1.0](variant.md#rsomics-cnv) |
+| `rsomics-composition` | 10 | [released 0.1.0](composition.md) |
 | `rsomics-count` | 4 | [released 0.1.0](count-gate-2026-08-02.md) |
 | `rsomics-deseq` | 12 | [audited](bulk-expression.md#rsomics-deseq) |
 | `rsomics-ecology` | 19 | [audited](ecology.md) |
 | `rsomics-edger` | 17 | [audited](bulk-expression.md#rsomics-edger) |
 | `rsomics-fastq-preprocess` | 12 | [released 0.1.1](fastq-preprocess-gate-2026-07-30.md) |
 | `rsomics-fastq-qc` | 1 | [released 0.1.0](fastq-qc-gate-2026-08-02.md) |
-| `rsomics-index` | 5 | [audited](interval-annotation-index.md#rsomics-index) |
+| `rsomics-index` | 5 | [release candidate; performance rerun pending](interval-annotation-index.md#rsomics-index) |
 | `rsomics-liftover` | 1 | [released 0.1.0](liftover.md) |
 | `rsomics-limma` | 16 | [audited](bulk-expression.md#rsomics-limma) |
 | `rsomics-metagenomics` | 5 | [released 0.1.0](metagenomics-gate-2026-08-02.md) |
-| `rsomics-methyl` | 1 | [audited](methyl.md) |
+| `rsomics-methyl` | 1 | [released 0.1.0](methyl.md) |
 | `rsomics-minimap2` | 1 | [audited](minimap2.md); legacy release requires reconstruction |
 | `rsomics-peak` | 5 | [audited](peak.md); four workflow assets and one discarded generic candidate |
 | `rsomics-phylo` | 11 | [released 0.1.0](phylo.md#first-release-evidence) |
@@ -46,8 +46,8 @@ operation will ship. It records:
 | `rsomics-signal` | 15 | [audited](rnaseq-qc-signal.md#rsomics-signal) |
 | `rsomics-sketch` | 1 | [released 0.1.0](sketch-gate-2026-08-02.md) |
 | `rsomics-structure` | 9 | [audited](structure.md) |
-| `rsomics-table` | 16 | [audited](table.md) |
-| `rsomics-vcf` | 30 | [released 0.1.0](variant.md#rsomics-vcf) |
+| `rsomics-table` | 16 | [release candidate; registry credential blocked](table.md) |
+| `rsomics-vcf` | 30 | [released 0.5.0; 0.6.0 registry credential blocked](variant.md#rsomics-vcf) |
 
 Counts are generated from
 [`portfolio-inventory.tsv`](../00-overview/portfolio-inventory.tsv). They
@@ -91,7 +91,7 @@ flowchart TB
     common --> qc
     common --> sketch
     common --> meta
-    common -. planned .-> index
+    common --> index
     help["rsomics-help"] --> seq
     help --> prep
     help --> bed
@@ -100,7 +100,7 @@ flowchart TB
     help --> qc
     help --> sketch
     help --> meta
-    help -. planned .-> index
+    help --> index
     seqio["rsomics-seqio"] --> seq
     seqio --> prep
     seqio --> qc
