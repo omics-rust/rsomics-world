@@ -1,8 +1,10 @@
 # Interval, annotation, and index product dossier
 
 Status: the BED and annotation initial slices are published and independently
-verified. The complete BED family map is now maintained in `bed.md`. Index
-implementation has not started.
+verified. The complete BED family map is now maintained in `bed.md`. The BGZF
+and tabix slice of `rsomics-index` is implemented and compatibility-verified;
+publication still requires a current-head performance run and registry
+credentials.
 
 Routing corrections move table aggregation to `rsomics-table`, SEACR to
 `rsomics-peak`, FASTA masking to `rsomics-bed`, and FASTA indexing plus
@@ -232,33 +234,116 @@ solely to create a second `IntervalIndex` consumer.
 
 ### Boundary
 
-User-facing compression and indexing workflows:
+One local genomic-resource indexing product with format-specific workflows as
+subcommands:
 
 - `bgzip`
 - `tabix build`
 - `tabix query`
 - `tabix list`
-- `fasta-index`
+- `faidx build`
+- `faidx query`
 - `dict`
 
-The source assets are `rsomics-bgzip`, `rsomics-tabix`,
-`rsomics-fasta-index`, `rsomics-fm-search`, and `rsomics-bam-dict`.
+The install identity is the resource preparation and random-access workflow,
+not an individual index encoding. BGZF, GZI, TBI, CSI, FAI, and SAM sequence
+dictionaries therefore do not become separate products.
 
-The first release slice is BGZF compression plus tabix build/query/list.
-`fasta-index` follows the FASTA reader and random-access contract in
-`rsomics-seqio`. FM search remains deferred until its product fit and second
-consumer are concrete. `dict` creates a Picard/samtools-compatible sequence
-dictionary from FASTA and belongs beside the other reference indexing
-operations; the historical crate name reflected its source binary rather than
-its user workflow.
+### Upstream operation map
+
+The compatibility sources are HTSlib 1.24 `bgzip` and `tabix`, samtools 1.24
+`faidx` and `dict`, the SAMv1 BGZF and sequence-dictionary contracts, and the
+TBI/CSI specifications. The stable 0.1 slice covers:
+
+- BGZF compression, decompression, integrity testing, GZI creation and
+  rebuilding, indexed byte-range reads, compression levels, text or binary
+  block policy, and bounded worker counts;
+- TBI or CSI construction with BED, GFF, SAM, and VCF presets or checked custom
+  columns;
+- inline, region-file, and streaming target queries, header modes, global
+  deduplication, region separators, bounded BGZF cache, explicit indexes, and
+  stored reference-name listing.
+
+HTSlib 1.24 GAF indexing, reheadering, rebgzip layout reproduction, remote URI
+and index discovery, metadata copying, implicit input deletion, and
+multi-input invocation are explicit 0.1 exclusions. Unsupported operations
+are absent from help rather than accepted as placeholders.
+
+The next complete slice is FAI/GZI construction plus FASTA random-access
+querying under `faidx`, followed by sequence-dictionary creation under `dict`.
+FASTQ indexing, reverse-complement rendering, strand-label policy, alternate
+locus dictionaries, and compressed-reference output indexing remain excluded
+until their complete samtools contracts and fixtures are included.
+
+### Implementation and evidence
+
+The initial implementation runs from `acba3ec` through code head
+`05960a4609a3b2acc388c0a149b5e023d53027f1`. Exact-head CI run `32331824268`
+passes on native Linux and macOS for both `x86_64` and `aarch64`; the Linux
+`x86_64` job builds pinned HTSlib 1.24 and runs the live compatibility suite.
+The always-run suite has 60 tests, with nine additional HTSlib oracle tests.
+
+The product uses `rsomics-help` for the complete nested command tree and
+`rsomics-common` for structured success and failure output. Named output and
+index pairs are staged before replacement. Malformed frames, CRC failures,
+missing or duplicate EOF members, invalid GZI offsets, stale or corrupt tabix
+indexes, unsorted records, malformed coordinates, write failures, and path
+aliases fail nonzero without replacing an existing destination.
+
+Compatibility covers cross-tool BGZF and GZI reads in both directions, TBI
+and CSI structure and cross-reading, all four stable presets, custom columns,
+header and query modes, large-coordinate boundaries, partial option defaults,
+and semantic output hashes. A release review found and fixed one real drift:
+when any tabix configuration flag is present, HTSlib starts from the GFF
+defaults and overrides only supplied fields; requiring both sequence and begin
+columns was incompatible.
+
+The formal data at revision `df8089c8db89b5a3e064bb01d60414a47780f4d1`
+is retained only as a historical optimization baseline. Later revisions
+changed BGZF decompression and multi-region query algorithms, so those numbers
+are not evidence for the current head. Publication requires a clean rebuild of
+the exact head and a replacement 13-workload run with three warmups and ten
+alternating measured pairs. No current performance claim is inherited from the
+old micro-crates.
+
+### Historical asset dispositions
+
+The source assets are classified rather than revived:
+
+- `rsomics-bgzip`: refactor then merge. Its basic stream and oracle fixtures
+  informed the product, while input deletion, direct destination creation, and
+  permissive lifecycle policy were discarded.
+- `rsomics-tabix`: refactor then merge. Its presets, fixtures, binning work,
+  and cross-tool evidence remain useful; the line-oriented query path and
+  micro-crate CLI are replaced by the checked product model.
+- `rsomics-fasta-index`: refactor then merge for future `faidx`; retain FAI and
+  fetch goldens, but replace whole-file loading, lossy header conversion,
+  non-transactional output, and the duplicate dictionary implementation.
+- `rsomics-bam-dict`: refactor then merge for future `dict`; retain its
+  streaming MD5 path, samtools option matrix, and goldens, then integrate them
+  with the product's shared FASTA and output contracts.
+- `rsomics-fm-search`: discard from this product. It rebuilds an in-memory FM
+  index independently for every FASTA record and persists no index artifact.
+  Exact sequence location belongs in `rsomics-seq` unless a real persistent
+  search workflow and another consumer later justify a shared index API.
+- `rsomics-fm-index`: internalize only if that later workflow proves it; its
+  current single consumer does not justify a public foundation.
+
+FAI and dictionary implementation will compare both historical sources instead
+of selecting one wholesale. The shared parser must stream, preserve raw byte
+offsets, reject duplicate or empty names, distinguish LF and CRLF line widths,
+and make output replacement transactional before either operation is stable.
 
 The current bgzip/tabix path uses bundled native libdeflate and is therefore an
 FFI-backed dependency boundary. Product documentation and performance evidence
 must say so explicitly.
 
-Do not create `rsomics-hts-index` speculatively. Reconsider a neutral shared
-index foundation only after both `rsomics-index` and a second product such as
-`rsomics-vcf` require the same API.
+Do not create `rsomics-hts-index` speculatively. BGZF frames and tabix policy
+remain in this product until a second product demonstrates the same
+format-neutral API with consumer tests. `rsomics-seqio` may receive shared
+FASTA record or random-access contracts only when concrete `rsomics-index` and
+another product call site, such as annotation extraction, agree on a
+policy-free interface.
 
 ## Foundation corrections before product use
 
