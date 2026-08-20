@@ -130,7 +130,7 @@ in [`integration.md`](integration.md). Multimodal joint analysis is in
   - GPU-amenable: maybe — community-detection passes have GPU variants in the literature
   - Upstream license: `GPL-3.0`
   - Priority: `P0`
-  - Layer: `A` (foundation — `rsomics-leiden` once a canonical pick emerges; `leiden-rs` is the likely fork target)
+  - Layer: adopt or implement inside `rsomics-sc`
   - Consumes primitives: `petgraph`
   - Notes: `leiden-rs` 0.8.0 ships rayon-parallel by default, putting the leading Rust crate in Quadrant ①. Audit it against `leidenalg` on benchmark graphs; fork and harden rather than starting from scratch. `petgraph` integration is the priority. Clean-room derivation needed because of GPL upstream.
 
@@ -145,7 +145,7 @@ in [`integration.md`](integration.md). Multimodal joint analysis is in
   - GPU-amenable: maybe — same family as Leiden
   - Upstream license: `BSD-3-Clause`
   - Priority: `P1`
-  - Layer: `subcommand-of-rsomics-leiden` (Leiden umbrella crate with `--algorithm louvain` flag)
+  - Layer: `rsomics-sc cluster --algorithm louvain`
   - Consumes primitives: `petgraph`
   - Notes: Lower priority than Leiden — Leiden subsumes most use cases. Worth supporting for legacy reproducibility only.
 

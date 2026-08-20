@@ -46,8 +46,8 @@ separate problem under module 08).
   - Upstream license: `MIT` (bwa-mem2 + bwa-mem3); `MIT/GPL-3.0` dual (original bwa)
   - Priority: `P0`
   - Layer: `B` (tool — `rsomics-bwa` after the foundations FM-index work lands; for now adopt FFI)
-  - Consumes primitives: `rsomics-fm-index` (foundation, see [`01-foundations/data-structures.md`](../01-foundations/data-structures.md)), `block-aligner` for the SW kernel, `noodles-bam` for output
-  - Notes: Inner SW kernel is SIMD-critical. Start with the FFI wrapper to unblock downstream pipelines; plan pure-Rust port after `rsomics-fm-index` lands. Compare against `bwa-mem2` (or bwa-mem3 if production-stable) — not against `bwa 0.7.17` — for fairness. `bwa-mem2-rs` v0.1.1 is a recent caller-owned-parallelism design that fits the `rsomics-*` thread-model contract better than the older 10x wrapper.
+  - Consumes primitives: a product-private FM/FMD index or adopted implementation, `block-aligner` for the SW kernel, `noodles-bam` for output
+  - Notes: Inner SW kernel is SIMD-critical. Start with the FFI wrapper to unblock downstream pipelines; a pure-Rust product must select and validate its own index before any shared boundary is considered. Compare against `bwa-mem2` (or bwa-mem3 if production-stable) — not against `bwa 0.7.17` — for fairness. `bwa-mem2-rs` v0.1.1 is a recent caller-owned-parallelism design that fits the `rsomics-*` thread-model contract better than the older 10x wrapper.
 
 - [ ] **`Bowtie2`** — gapped seed-extend aligner with end-to-end and local modes.
   - Reference impl: `C++` · [BenLangmead/bowtie2](https://github.com/BenLangmead/bowtie2) · `GPL-3.0`
@@ -61,7 +61,7 @@ separate problem under module 08).
   - Upstream license: `GPL-3.0`
   - Priority: `P1`
   - Layer: `B` (tool — `rsomics-bowtie2`)
-  - Consumes primitives: `rsomics-fm-index`, `block-aligner`, `noodles-bam`
+  - Consumes primitives: a product-private FM index or adopted implementation, `block-aligner`, `noodles-bam`
   - Notes: GPL-3.0 license complicates re-derivation; a clean-room Rust port can ship under MIT/Apache-2.0 as a sibling — see `## Origin` section template in CONVENTIONS.md. Bowtie2 retains a loyal user base (epigenetics, ATAC-seq) so module 05 will need it.
 
 - [ ] **`SNAP`** — hash-based aligner, parallel-friendly.
@@ -120,6 +120,6 @@ separate problem under module 08).
   - GPU-amenable: maybe — the algorithm has been ported to GPU in the literature; engineering cost is non-trivial
   - Upstream license: `MIT`
   - Priority: `P0`
-  - Layer: `A` (foundation — `rsomics-align-core`)
+  - Layer: `adopt`; keep product adapters private
   - Consumes primitives: —
-  - Notes: Adopt as the standard SW kernel for any pure-Rust short-read aligner work. Avoids re-implementing the most-vectorised inner loop in the field. The Layer-A `rsomics-align-core` either wraps `block-aligner` directly or contributes upstream.
+  - Notes: Adopt as an SW-kernel candidate for pure-Rust alignment work and validate it in each product hot path. Avoid re-implementing the most-vectorised inner loop in the field. A generally useful improvement belongs upstream; an rsomics wrapper is not a foundation without two concrete product contracts.

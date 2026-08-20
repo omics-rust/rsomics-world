@@ -43,7 +43,7 @@ core minimap2 entry is in module 02.
   - Upstream license: `MIT`
   - Priority: `P0`
   - Layer: `B` (tool — `rsomics-star`)
-  - Consumes primitives: `rsomics-fm-index`, `block-aligner`, `noodles-bam`, `noodles-fasta`, `noodles-gff` (for the `--sjdbGTFfile` splice-junction guide), future `rsomics-stats` for SJ.out.tab
+  - Consumes primitives: a product-private sequence index, `block-aligner`, `noodles-bam`, `noodles-fasta`, `noodles-gff` (for the `--sjdbGTFfile` splice-junction guide), future `rsomics-stats` for SJ.out.tab
   - Notes: Memory-hungry but the de-facto pipeline standard (ENCODE, GTEx, TCGA). Pure-Rust rewrite is a Phase-2+ project; an FFI binding is the realistic first step. Output is a CellRanger-compatible BAM + SJ.out.tab — both already covered by `noodles`.
 
 - [ ] **`HISAT2`** — hierarchical FM-index spliced aligner.
@@ -58,8 +58,8 @@ core minimap2 entry is in module 02.
   - Upstream license: `GPL-3.0`
   - Priority: `P0`
   - Layer: `B` (tool — `rsomics-hisat`)
-  - Consumes primitives: `rsomics-fm-index` (hierarchical FM-index extension lives here), `block-aligner`, `noodles-bam`, `noodles-fasta`, `noodles-gff`
-  - Notes: GPL constrains derivative crates — a clean-room Rust port can be MIT/Apache via the `## Origin` template (see CONVENTIONS.md). FM-index primitives in `rust-bio` and `fm-index` are a credible foundation. Probably the most realistic full short-read splice aligner to attempt.
+  - Consumes primitives: a product-private hierarchical FM index, `block-aligner`, `noodles-bam`, `noodles-fasta`, `noodles-gff`
+  - Notes: GPL constrains derivative crates — a clean-room Rust port can be MIT/Apache via the `## Origin` template (see CONVENTIONS.md). `rust-bio` and `fm-index` are implementation candidates for the product-private hierarchical index. Probably the most realistic full short-read splice aligner to attempt.
 
 - [ ] **`TopHat2`** — first widely-used RNA-seq spliced aligner; built on bowtie2.
   - Reference impl: `C++` · [DaehwanKimLab/tophat](https://github.com/DaehwanKimLab/tophat) · `Artistic-2.0`
@@ -88,7 +88,7 @@ core minimap2 entry is in module 02.
   - Upstream license: `GPL-3.0`
   - Priority: `P2`
   - Layer: `subcommand-of-rsomics-subread` (within the Subread/featureCounts umbrella)
-  - Consumes primitives: `rsomics-fm-index`, `noodles-bam`, `noodles-fasta`
+  - Consumes primitives: a product-private sequence index, `noodles-bam`, `noodles-fasta`
   - Notes: Used mostly by R users via Rsubread; standalone usage is rare. Worth at least an `extendr` wrapper rather than a rewrite — the C code is small and stable.
 
 - [ ] **`MapSplice`** — junction-aware aligner used heavily by TCGA legacy pipelines.

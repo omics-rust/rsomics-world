@@ -211,9 +211,9 @@ and largely closed-source) and post-alignment QC (samtools stats, mosdepth
   - GPU-amenable: yes — neural-net basecalling is GPU-native
   - Upstream license: `Apache-2.0`
   - Priority: `P1`
-  - Layer: `A` (adopt — subprocess wrapper, not a reimplementation)
+  - Layer: external tool invoked by the owning workflow; no public crate
   - Consumes primitives: —
-  - Notes: ONT's current basecaller replacing Guppy. Rust reimplementation is impractical (GPU model inference). The rsomics role is an `[A]` subprocess-adopt entry — orchestrate dorado from rsomics pipelines, normalize output formats. Apache-2.0.
+  - Notes: ONT's current basecaller replacing Guppy. Rust reimplementation is impractical (GPU model inference). An owning workflow may invoke Dorado and normalize its outputs without publishing a wrapper crate. Apache-2.0.
 
 - [ ] **`NanoPlot` / `NanoPack2`** — quality visualization and filtering for long-read ONT data.
   - Reference impl: `Python + Rust (chopper)` · [wdecoster/NanoPlot](https://github.com/wdecoster/NanoPlot) · `MIT`

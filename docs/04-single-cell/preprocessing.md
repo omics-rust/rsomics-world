@@ -42,7 +42,7 @@ processing (Visium / Stereo-seq / MERFISH) is in
   - Upstream license: restricted (research use)
   - Priority: `P0`
   - Layer: `B` (tool — `rsomics-cellranger` as an output-compatible wrapper around `simpleaf` + `alevin-fry`)
-  - Consumes primitives: `simpleaf`, `alevin-fry`, `piscem`, future `rsomics-anndata` for the filtered-matrix h5 output
+  - Consumes primitives: `simpleaf`, `alevin-fry`, `piscem`, product-private AnnData/HDF5 I/O for the filtered matrix
   - Notes: Output BAM + filtered matrix h5 is a *de facto* standard. The realistic rsomics role is to produce indistinguishable outputs via `alevin-fry` / `simpleaf` so downstream Scanpy / Seurat scripts work unchanged. `scan-rs` is not on crates.io (squatted by `entropyscan-rs`); install from 10x source. Quadrant is `—` because the restricted upstream is not adoptable as a Rust crate; the future `rsomics-cellranger` adopts `alevin-fry`'s Quadrant ① instead.
 
 - [ ] **`STARsolo`** — single-cell extension of STAR, drop-in Cell Ranger replacement.
@@ -117,7 +117,7 @@ processing (Visium / Stereo-seq / MERFISH) is in
   - Upstream license: restricted
   - Priority: `P0`
   - Layer: `B` (tool — `rsomics-cellranger-atac` as an output-compatible wrapper)
-  - Consumes primitives: future `rsomics-chromap` or chromap FFI, `rsomics-intervals`, future `rsomics-anndata`
+  - Consumes primitives: an adopted chromap path, `rsomics-intervals`, product-private AnnData/HDF5 I/O
   - Notes: Clear opening for a Rust scATAC pipeline that goes from FASTQ to a 10x-compatible fragments.tsv.gz + peak/cell matrix. `chromap` is the fastest aligner; a Rust binary wrapping it (or a pure-Rust port) + barcode handling + Tn5 shift would close this gap.
 
 - [~] **`alevin-fry-atac`** — emerging COMBINE-lab scATAC pipeline.
@@ -147,5 +147,5 @@ processing (Visium / Stereo-seq / MERFISH) is in
   - Upstream license: restricted
   - Priority: `P1`
   - Layer: `B` (tool — `rsomics-cellranger-arc` as a multiome orchestrator)
-  - Consumes primitives: `alevin-fry` (RNA), `alevin-fry-atac` (ATAC), future `rsomics-anndata` / `rsomics-mudata`
+  - Consumes primitives: `alevin-fry` (RNA), `alevin-fry-atac` (ATAC), product-private AnnData/MuData I/O
   - Notes: A multiome orchestrator wrapping `alevin-fry` (RNA) + `alevin-fry-atac` (ATAC) + a barcode-matching step is the obvious Rust deliverable. Output: AnnData / MuData via `anndata-rs`.

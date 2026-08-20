@@ -166,6 +166,6 @@ The benchmarking framework lives in
   - GPU-amenable: no — CPU SIMD only by definition
   - Upstream license: `MIT OR Apache-2.0` (wide, pulp)
   - Priority: `P0`
-  - Layer: `A` (foundation — every Layer A perf-critical crate consumes this)
+  - Layer: adopt as a product or foundation implementation technique
   - Consumes primitives: —
-  - Notes: Every hot kernel ships a scalar fallback and a SIMD path. `pulp` handles runtime feature detection nicely (`x86_64-v3` / `aarch64+neon` etc.). Avoid AVX-512-only code paths in shipped binaries (still poorly supported on consumer CPUs); detect at runtime via `pulp` instead.
+  - Notes: Add an explicit SIMD path only where representative profiling justifies it, with a correct portable fallback and runtime feature detection. `pulp` is a candidate for dispatch across x86_64 and aarch64. SIMD does not justify a wrapper crate or a public API by itself.

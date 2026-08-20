@@ -3,6 +3,12 @@
 > Mass-spectrometry-based peptide/protein identification and quantification,
 > protein structure prediction, structure analysis, and molecular docking.
 
+Status: upstream landscape survey. Public product boundaries and implementation
+decisions are authoritative in the
+[structure dossier](../10-products/structure.md) and the namespace allowlist.
+`Layer` and `rsomics-*` labels retained in the sub-area surveys are research
+routing labels, not approved crates or repositories.
+
 ## Sub-areas
 
 | File | Scope |

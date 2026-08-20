@@ -48,7 +48,7 @@ in [`assembly-isoform.md`](assembly-isoform.md).
   - Upstream license: `GPL-3.0`
   - Priority: `P0`
   - Layer: `B` (tool — `rsomics-salmon`)
-  - Consumes primitives: `rsomics-kmer`, `rsomics-fm-index`, `block-aligner`, `noodles-fastq`, `noodles-fasta`, `noodles-gff`, `noodles-bam`, future `rsomics-stats` (EM)
+  - Consumes primitives: proven `rsomics-kmer` items, a product-private compact sequence index, `block-aligner`, `noodles-fastq`, `noodles-fasta`, `noodles-gff`, `noodles-bam`, future `rsomics-stats` (EM)
   - Notes: Bulk-quant feature parity with `salmon quant` is the single most impactful Rust deliverable in transcriptomics. The maths (selective-alignment scoring + range-factor EM) is well-documented; the engineering pain is the compact suffix-array index. Coordinate with COMBINE-lab on whether `piscem` becomes the canonical path.
 
 - [~] **`kallisto`** — pseudoalignment-based transcript quantification using the T-DBG.

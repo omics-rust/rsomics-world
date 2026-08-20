@@ -9,6 +9,12 @@ the upstream IO and short-read primitives we lean on are described in
 [`02-genomics/`](../02-genomics/) — RNA-only tools shared with neither are the
 focus here.
 
+Status: upstream landscape survey. Public product boundaries and implementation
+decisions are authoritative in [`docs/10-products`](../10-products/README.md)
+and the namespace allowlist. `Layer` and `rsomics-*` labels retained in the
+subtopic surveys are research routing labels, not approved crates or
+repositories.
+
 ## Sub-topics
 
 - [`alignment-spliced.md`](alignment-spliced.md) — STAR, HISAT2, TopHat2,

@@ -62,7 +62,7 @@ in [`spatial.md`](spatial.md).
   - Upstream license: `LGPL-3.0`
   - Priority: `P1`
   - Layer: `B` (tool — `rsomics-mofa`)
-  - Consumes primitives: `ndarray-linalg`, `statrs`, future `rsomics-mudata` (MuData rust crate), `anndata-rs`
+  - Consumes primitives: `ndarray-linalg`, `statrs`, product-private MuData state, `anndata-rs`
   - Notes: Clean variational inference, no deep-learning component. Realistic pure-Rust target — VI updates are ~standard linear-algebra blocks. Output factors slot into `obsm["X_mofa"]` of an AnnData / MuData.
 
 - [ ] **`WNN` (Seurat v4+)** — weighted nearest-neighbour multimodal integration.
@@ -77,7 +77,7 @@ in [`spatial.md`](spatial.md).
   - Upstream license: `MIT`
   - Priority: `P1`
   - Layer: `subcommand-of-rsomics-sc` (multimodal neighbour primitive inside the rsomics-sc umbrella)
-  - Consumes primitives: `hnsw_rs`, `petgraph`, future `rsomics-mudata`
+  - Consumes primitives: `hnsw_rs`, `petgraph`, product-private MuData state
   - Notes: Algorithmically small once a k-NN primitive exists — WNN is a per-cell weighted combination of modality-specific neighbour graphs. Pairs naturally with the `rsomics-sc` neighbours layer.
 
 - [ ] **`totalVI`** — VAE for joint RNA + ADT (CITE-seq).
@@ -92,7 +92,7 @@ in [`spatial.md`](spatial.md).
   - Upstream license: `BSD-3-Clause`
   - Priority: `P2`
   - Layer: `subcommand-of-rsomics-integrate` (DL family, see [`integration.md`](integration.md))
-  - Consumes primitives: `candle` or `burn`, future `rsomics-mudata`, future `rsomics-stats` (NB / NB-mixture decoders)
+  - Consumes primitives: `candle` or `burn`, product-private MuData state, future `rsomics-stats` (NB / NB-mixture decoders)
   - Notes: Deep-learning model. PyO3 bridge first; pure Rust is Phase-4 once `candle` covers the negative-binomial-plus-NB-mixture decoders.
 
 - [ ] **`MultiVI`** — VAE for joint / mosaic RNA + ATAC.
@@ -151,6 +151,6 @@ in [`spatial.md`](spatial.md).
   - GPU-amenable: no — same as AnnData IO
   - Upstream license: `BSD-3-Clause`
   - Priority: `P0`
-  - Layer: `A` (foundation — `rsomics-mudata` once stable; same FFI quadrant story as `rsomics-anndata`)
+  - Layer: adopt inside `rsomics-sc`; no public foundation without a second product
   - Consumes primitives: `anndata-rs`, HDF5 FFI deps
-  - Notes: Underpins every entry in this file. Make sure `anndata-rs` grows a stable MuData layer before building MOFA+ / WNN / integration-related Rust crates.
+  - Notes: MuData can underpin several operations inside one single-cell product, but that is still one consumer. Grow or adopt the required `anndata-rs` layer behind `rsomics-sc`; do not create a public crate until another product demonstrates the same format-only contract.

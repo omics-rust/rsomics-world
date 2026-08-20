@@ -50,8 +50,8 @@ methylation lives in module 04.
   - Upstream license: `GPL-3.0`
   - Priority: `P1`
   - Layer: `subcommand-of-rsomics-bisulfite` (alignment mode flag)
-  - Consumes primitives: `rsomics-fm-index`, `block-aligner`, `noodles-bam`, `noodles-fasta`
-  - Notes: Pure-Rust short-read bisulfite aligner is a credible target once `02-genomics` ships a Rust short-read aligner. Strategy: in-silico convert both reference and reads (C→T forward, G→A reverse), align with `rsomics-align`, restore base identities and emit a Bismark-compatible BAM.
+  - Consumes primitives: the selected aligner's private index, `block-aligner`, `noodles-bam`, `noodles-fasta`
+  - Notes: A pure-Rust short-read bisulfite aligner becomes credible only after a validated short-read aligner exists. The product strategy is to convert reference and reads in silico (C→T forward, G→A reverse), use the selected aligner, restore base identities, and emit a Bismark-compatible BAM.
 
 - [ ] **`BWA-meth`** — Python wrapper around BWA for bisulfite alignment.
   - Reference impl: `Python + C` · [brentp/bwa-meth](https://github.com/brentp/bwa-meth) · `MIT`

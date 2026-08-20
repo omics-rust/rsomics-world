@@ -81,7 +81,7 @@ binning (see [assembly-mag](assembly-mag.md) for MetaBAT2 etc.).
   - Upstream license: `GPL-3`
   - Priority: `P2`
   - Layer: `B` (tool — `rsomics-centrifuge`)
-  - Consumes primitives: `rsomics-fm-index`, `noodles-fastq`, future `rsomics-stats`
+  - Consumes primitives: a product-private FM index or adopted implementation, `noodles-fastq`, future `rsomics-stats`
   - Notes: Largely superseded by `Centrifuger` and by k-mer methods. Lower priority than Kraken2. If we port, target `Centrifuger`'s data structures rather than legacy Centrifuge.
 
 - [ ] **`MetaPhlAn4`** — clade-specific marker-gene profiler.
@@ -141,7 +141,7 @@ binning (see [assembly-mag](assembly-mag.md) for MetaBAT2 etc.).
   - Upstream license: `GPL-3`
   - Priority: `P1`
   - Layer: `subcommand-of-rsomics-mmseqs` (a `--mode kaiju` flag within the protein-search umbrella)
-  - Consumes primitives: `rsomics-fm-index`, future `rsomics-mmseqs`, `noodles-fastq`
+  - Consumes primitives: a product-private protein-space index, an adopted MMseqs2 path, `noodles-fastq`
   - Notes: Protein-space classification matters for highly diverged or novel organisms. The right Rust target is probably a focused MMseqs2-prefilter port rather than reimplementing Kaiju's full BWT.
 
 - [ ] **`CCMetagen`** — KMA-alignment based eukaryote/prokaryote classifier.

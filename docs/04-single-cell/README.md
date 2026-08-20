@@ -3,6 +3,12 @@
 > Single-cell RNA-seq, scATAC, multiome, and spatial transcriptomics — from
 > raw FASTQ to integrated cross-modality atlases.
 
+Status: upstream landscape survey. The accepted `rsomics-sc` boundary and its
+implementation decisions are authoritative in the
+[single-cell dossier](../10-products/sc.md). `Layer` and `rsomics-*` labels
+retained in the subtopic surveys are research routing labels, not approved
+crates or repositories.
+
 ## Sub-topics
 
 - [`preprocessing.md`](preprocessing.md) — Cell Ranger, STARsolo,

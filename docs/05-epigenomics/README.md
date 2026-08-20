@@ -3,6 +3,12 @@
 > Peak calling, chromatin pipelines, DNA methylation, 3D chromatin
 > conformation, and transcription-factor footprinting.
 
+Status: upstream landscape survey. Public product boundaries and implementation
+decisions are authoritative in [`docs/10-products`](../10-products/README.md)
+and the namespace allowlist. `Layer` and `rsomics-*` labels retained in the
+subtopic surveys are research routing labels, not approved crates or
+repositories.
+
 ## Sub-topics
 
 - [`peak-calling.md`](peak-calling.md) — MACS2/3, HOMER findPeaks, SEACR,

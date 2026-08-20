@@ -117,9 +117,9 @@ analysis is in [`analysis-core.md`](analysis-core.md).
   - GPU-amenable: no — data model layer
   - Upstream license: `BSD-3-Clause`
   - Priority: `P0`
-  - Layer: `A` (foundation — `rsomics-spatialdata` mirroring the SpatialData on-disk layout)
+  - Layer: adopt or implement inside `rsomics-sc`
   - Consumes primitives: `zarrs`, `anndata-rs`, image crates
-  - Notes: Adopt the SpatialData on-disk Zarr layout in `rsomics-spatial`. `zarrs` (Rust Zarr crate) covers the IO; the typed model (`Image`, `Labels`, `Points`, `Shapes`) maps cleanly to Rust enums.
+  - Notes: Adopt only the required SpatialData on-disk Zarr layout inside `rsomics-sc`. `zarrs` covers the I/O; keep the typed `Image`, `Labels`, `Points`, and `Shapes` model private until another product demonstrates the same contract.
 
 - [~] **`Visium HD` tooling** — high-resolution Visium analysis (2 µm bins).
   - Reference impl: SpaceRanger 3.x + Scanpy / Seurat extensions

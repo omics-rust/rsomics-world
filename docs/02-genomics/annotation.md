@@ -90,7 +90,7 @@ and downstream prioritisation / clinical reporting (a future module).
   - Upstream license: `BSD-3-Clause`
   - Priority: `P2`
   - Layer: `subcommand-of-rsomics-haplotypecaller` (within the GATK umbrella; ships alongside the caller)
-  - Consumes primitives: `noodles-vcf`, `noodles-gff`, `noodles-fasta`, future `rsomics-maf` (the writer is the distinctive feature)
+  - Consumes primitives: `noodles-vcf`, `noodles-gff`, `noodles-fasta`, a product-private TCGA-MAF writer
   - Notes: Mostly used inside GATK-flavoured pipelines. Outputs VCF or MAF; the MAF writer is uniquely useful (TCGA workflows). Lower priority than VEP/SnpEff but ships MAF support.
 
 - [x] **`echtvar`** — fast compressed annotation joiner.

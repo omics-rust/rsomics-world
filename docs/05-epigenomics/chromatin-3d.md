@@ -48,9 +48,9 @@ scHi-C lives in module 04 (spatial / single-cell).
   - GPU-amenable: maybe — sparse matrix ops are GPU-friendly
   - Upstream license: `BSD-3-Clause`
   - Priority: `P0`
-  - Layer: `A` (foundation — `rsomics-cooler`)
+  - Layer: adopt inside the first concrete 3D-chromatin product
   - Consumes primitives: `hdf5-metno`, `ndarray`, `nalgebra-sparse`
-  - Notes: Build `rsomics-cooler` first — every other 3D chromatin entry depends on reading/writing `.cool` / `.mcool`. Schema is tiny (a few HDF5 groups). One-week project for a focused Rust dev. Quadrant ② once the HDF5 FFI lands; potentially ① end-to-end if a pure-Rust HDF5 reader for the cooler subset matures.
+  - Notes: A concrete 3D-chromatin product would first need private `.cool` / `.mcool` I/O because the rest of the workflow depends on it. The small schema does not make it a standalone foundation. The initial path is Quadrant ② through HDF5 FFI; reassess public extraction only after a second product consumer exists.
 
 - [ ] **`cooltools`** — analysis on top of cooler (eigenvector compartments, insulation, dot calling).
   - Reference impl: `Python` · [open2c/cooltools](https://github.com/open2c/cooltools) · `MIT`
@@ -63,9 +63,9 @@ scHi-C lives in module 04 (spatial / single-cell).
   - GPU-amenable: maybe — dense linear algebra on contact matrices
   - Upstream license: `MIT`
   - Priority: `P1`
-  - Layer: `B` (tool — `rsomics-cooltools`)
-  - Consumes primitives: `rsomics-cooler`, `ndarray-linalg`, `nalgebra-sparse`, future `rsomics-stats`
-  - Notes: Once `rsomics-cooler` exists, each analytic in cooltools (insulation, eigendecomposition for A/B compartments, expected decay) is a small `ndarray` routine. Build piecewise.
+  - Layer: survey candidate; no accepted product boundary
+  - Consumes primitives: product-private Cooler I/O, `ndarray-linalg`, `nalgebra-sparse`, future `rsomics-stats`
+  - Notes: Keep Cooler I/O and the selected cooltools analyses together in the first concrete product. Insulation, compartment eigendecomposition, and expected-decay routines do not establish separate product or foundation boundaries.
 
 - [ ] **`HiC-Pro`** — established Hi-C processing pipeline (mapping + filtering + matrix construction).
   - Reference impl: `Python / Bash` · [nservant/HiC-Pro](https://github.com/nservant/HiC-Pro) · `BSD-3-Clause`
@@ -80,7 +80,7 @@ scHi-C lives in module 04 (spatial / single-cell).
   - Priority: `P1`
   - Layer: —
   - Consumes primitives: future rsomics-* binaries
-  - Notes: The "official" pipeline orchestration here is out of scope; the rsomics contribution is Rust components (`rsomics-pairtools`, `rsomics-cooler`) it can call.
+  - Notes: Pipeline orchestration is out of scope. Revisit component implementation only after a coherent 3D-chromatin product boundary enters the allowlist.
 
 - [ ] **`HiCExplorer`** — Hi-C visualisation and analysis suite.
   - Reference impl: `Python` · [deeptools/HiCExplorer](https://github.com/deeptools/HiCExplorer) · `GPL-3.0`
@@ -93,8 +93,8 @@ scHi-C lives in module 04 (spatial / single-cell).
   - GPU-amenable: maybe — visualisation rendering is GPU-friendly
   - Upstream license: `GPL-3.0`
   - Priority: `P2`
-  - Layer: `subcommand-of-rsomics-cooltools`
-  - Consumes primitives: `rsomics-cooler`, `ndarray-linalg`
+  - Layer: product-private analysis operation if a 3D-chromatin product is accepted
+  - Consumes primitives: product-private Cooler I/O, `ndarray-linalg`
   - Notes: User-facing tool; not a priority for Rust rewrite.
 
 - [ ] **`Juicer` / `JuicerTools`** — Aiden lab pipeline + `.hic` toolkit.
@@ -108,8 +108,8 @@ scHi-C lives in module 04 (spatial / single-cell).
   - GPU-amenable: maybe — dense linear algebra
   - Upstream license: `MIT`
   - Priority: `P2`
-  - Layer: `subcommand-of-rsomics-cooler` (`.hic` format reader/writer as one mode)
-  - Consumes primitives: `noodles-bam`, future `rsomics-hic` format parser
+  - Layer: product-private legacy-format compatibility if a 3D-chromatin product is accepted
+  - Consumes primitives: `noodles-bam`, a product-private `.hic` parser
   - Notes: A Rust `.hic` reader/writer would be useful for legacy compatibility, but the field is converging on `.cool`.
 
 - [ ] **`pairtools`** — extract `.pairs` from SAM/BAM, dedup, filter.
@@ -123,7 +123,7 @@ scHi-C lives in module 04 (spatial / single-cell).
   - GPU-amenable: no — dedup hash + sort, latency-bound
   - Upstream license: `MIT`
   - Priority: `P0`
-  - Layer: `B` (tool — `rsomics-pairtools`)
+  - Layer: survey candidate; no accepted product boundary
   - Consumes primitives: `noodles-bam`, `rsomics-intervals`, `rayon`, `xxhash`-style hashing
   - Notes: **High-impact Rust target.** Read-pair extraction is the pipeline bottleneck. `noodles-bam` reader + parallel dedup (xxhash3 → sharded hashmap) + parallel sort → `.pairs.gz` output. Match pairtools' format exactly so downstream cooler can read it.
 
@@ -168,8 +168,8 @@ scHi-C lives in module 04 (spatial / single-cell).
   - GPU-amenable: maybe — same as cooltools
   - Upstream license: `GPL-3.0`
   - Priority: `P2`
-  - Layer: `subcommand-of-rsomics-cooltools`
-  - Consumes primitives: `rsomics-cooler`, `ndarray-linalg`
+  - Layer: product-private analysis operation if a 3D-chromatin product is accepted
+  - Consumes primitives: product-private Cooler I/O, `ndarray-linalg`
   - Notes: Niche; useful for differential Hi-C analysis. Not a porting target.
 
 - [ ] **`chromosight`** — pattern-matching loop / stripe caller.
@@ -183,8 +183,8 @@ scHi-C lives in module 04 (spatial / single-cell).
   - GPU-amenable: yes — 2D convolution / template matching is GPU-trivial
   - Upstream license: `MIT`
   - Priority: `P1`
-  - Layer: `subcommand-of-rsomics-cooltools` (loop-calling mode)
-  - Consumes primitives: `rsomics-cooler`, `ndarray`, FFT crate, `imageproc`-style primitives
+  - Layer: product-private loop-calling operation if a 3D-chromatin product is accepted
+  - Consumes primitives: product-private Cooler I/O, `ndarray`, FFT crate, `imageproc`-style primitives
   - Notes: Algorithm is a 2D convolution / template matching on the contact map. `ndarray` + an FFT crate covers it; small focused Rust port worth ~100× speedups on dense matrices.
 
 - [ ] **`mustache`** — scale-space chromatin loop caller.
@@ -198,6 +198,6 @@ scHi-C lives in module 04 (spatial / single-cell).
   - GPU-amenable: yes — Gaussian pyramids are GPU-friendly
   - Upstream license: `MIT`
   - Priority: `P1`
-  - Layer: `subcommand-of-rsomics-cooltools`
-  - Consumes primitives: `rsomics-cooler`, `ndarray`, Gaussian-pyramid Rust crate
+  - Layer: product-private loop-calling operation if a 3D-chromatin product is accepted
+  - Consumes primitives: product-private Cooler I/O, `ndarray`, Gaussian-pyramid Rust crate
   - Notes: Scale-space blob detection on the contact matrix. Like chromosight, well suited to `ndarray` + Gaussian-pyramid Rust crates.

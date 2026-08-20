@@ -4,6 +4,12 @@ DNA-centric workflows: read alignment, assembly, variant calling (small +
 structural), variant annotation, and preprocessing. The bread-and-butter of
 short-read and long-read genomics pipelines.
 
+Status: upstream landscape survey. Public product boundaries and implementation
+decisions are authoritative in [`docs/10-products`](../10-products/README.md)
+and the namespace allowlist. `Layer` and `rsomics-*` labels retained in the
+subtopic surveys are research routing labels, not approved crates or
+repositories.
+
 ## Sub-docs
 
 - [`alignment-short-read.md`](alignment-short-read.md) — BWA, Bowtie2, SNAP,
