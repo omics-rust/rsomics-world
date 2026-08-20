@@ -98,10 +98,11 @@ by the shared reader instead of reconstructed by each operation.
 
 ## Internal model
 
-`BedRecord` remains the single owned record type. It gains checked, lazy field
-access for name and strand plus its physical input line number. Operations
-request an optional field only when their contract needs it; ordinary BED3
-operations do not start validating unrelated display fields.
+`BedRecord` remains the single owned record type. Checked optional-field access
+is added only with a concrete consumer: strand is present for cluster and
+window, while name waits for `closest --different-name`. Operations request an
+optional field only when their contract needs it; ordinary BED3 operations do
+not start validating unrelated display fields.
 
 `overlap_index.rs` is separated into:
 
@@ -109,15 +110,15 @@ operations do not start validating unrelated display fields.
   metadata;
 - the existing coordinate-only wrapper used by `intersect`, preserving its
   current memory profile;
-- a relation wrapper that owns full B records plus per-chromosome start and end
-  orderings for `window` and `closest`.
+- a relation wrapper that owns full B records and initially exposes only the
+  file-ordered range queries consumed by `window`.
 
 The core keeps one index implementation and one zero-length policy. The
 relation wrapper preserves B file IDs for duplicate multiplicity and tie
 ordering. `window` submits an expanded query range and receives file-ordered
-candidates. `closest` queries overlaps first; if none are eligible, its start
-and end orderings locate the nearest downstream and upstream distances without
-a full B scan.
+candidates. `closest` will add the smallest directional structure justified by
+its overlap, eligibility, distance, and tie tests; no closest-only API is kept
+alive speculatively.
 
 `cluster` does not use an interval index. Unstranded execution is a
 constant-space state machine over a sorted `BedReader`. Same-strand execution

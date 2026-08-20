@@ -43,19 +43,19 @@ cargo metadata --no-deps --format-version 1 | jq -er '.target_directory | starts
 - Modify: `src/bed.rs`
 
 **Interfaces:**
-- Produces: `BedRecord::line_number() -> usize`, `BedRecord::field_count() -> usize`, `BedRecord::name(&str) -> Result<&[u8]>`, `BedRecord::strand(&str) -> Result<Strand>`, `BedRecord::write_joined(&mut dyn Write, &BedRecord) -> Result<()>`, and `BedRecord::write_column(&mut dyn Write, impl Display) -> Result<()>`.
-- Produces: private `Strand::{Forward, Reverse}` with `Strand::is_same(Strand) -> bool`.
+- Produces initially: `BedRecord::line_number() -> usize`, `BedRecord::field_count() -> usize`, and the checked `BedRecord::strand(&str) -> Result<Strand>` contract.
+- Adds joined and appended-column writers with the first relation consumer. Adds name access only when `closest --different-name` consumes it.
+- Preserves the private `Strand::{Forward, Reverse}` model without speculative helpers.
 - Preserves: BED3 parsing and all current raw/coordinate writers byte for byte.
 
 - [ ] **Step 1: Add failing parser and writer tests**
 
-Add unit tests proving that BED3 remains valid until name or strand is requested, BED4 empty names fail with the physical line number, BED6 accepts only `+` and `-`, CRLF input stays normalized to one LF, joined output contains exactly one tab, and appended columns preserve every original field.
+Add unit tests proving that BED3 remains valid until strand is requested, BED6 accepts only `+` and `-`, CRLF input stays normalized to one LF, and appended columns preserve every original field. Add name and joined-output cases with their first consumers.
 
 ```rust
 let record = read_records(&b"chr1\t10\t20\tname\t0\t-\r\n"[..]).unwrap().remove(0);
 assert_eq!(record.line_number(), 1);
 assert_eq!(record.field_count(), 6);
-assert_eq!(record.name("closest A").unwrap(), b"name");
 assert_eq!(record.strand("closest A").unwrap(), Strand::Reverse);
 ```
 
@@ -253,19 +253,19 @@ git commit -m "refactor(bed): separate coordinate index core"
 
 **Interfaces:**
 - Consumes: Task 3 `IntervalIndex` and Task 1 `BedRecord`.
-- Produces: private `RelationBed::load(input: impl Read, label: &str) -> Result<Self>`, `record(usize) -> &BedRecord`, `field_count() -> usize`, `intersection_candidates(&BedRecord, &str, &mut Vec<usize>) -> Result<()>`, and directional candidate iterators ordered by distance and stable B-file ID.
-- Guarantees: uniform B column count, duplicate multiplicity, original B-file IDs, per-chromosome start/end orderings, and BED3 width for an empty B stream.
+- Produces for `window`: private `RelationBed::load(input: impl Read, label: &str) -> Result<Self>`, `record(usize) -> &BedRecord`, `len() -> usize`, and file-ordered range candidates.
+- Guarantees: uniform B column count, duplicate multiplicity, original B-file IDs, shared virtual bounds, and no unused closest-only API. Directional orderings are added only when failing `closest` tests establish their contract.
 
 - [ ] **Step 1: Add failing relation-index tests**
 
-Test full raw record retention, stable duplicate IDs, variable B widths rejected with both physical line numbers, empty B width equal to three, overlap candidate ordering, nested intervals, zero-length virtual footprints, absent chromosomes, and nearest left/right iteration without scanning unrelated chromosomes.
+Test full raw record retention, stable duplicate IDs, variable B widths rejected with both physical line numbers, range candidate ordering, zero-length virtual footprints, and absent chromosomes.
 
 ```rust
 let relation = RelationBed::load(
     &b"chr1\t30\t40\tfirst\nchr1\t10\t20\tsecond\nchr1\t30\t40\tlast\n"[..],
     "B",
 ).unwrap();
-assert_eq!(relation.field_count(), 4);
+assert_eq!(relation.len(), 3);
 ```
 
 - [ ] **Step 2: Verify the new module tests fail**
@@ -276,7 +276,7 @@ Expected: compilation fails because `RelationBed` is absent.
 
 - [ ] **Step 3: Implement one relation wrapper over the coordinate core**
 
-Load B through `BedReader`, validate a uniform field count, retain owned records in file order, build the shared coordinate index, and build per-chromosome vectors sorted by `(start, end, file_id)` and `(end, start, file_id)`. Directional access begins at partition points around A's virtual bounds and advances outward; consumers apply strand/name eligibility without forcing a chromosome-wide scan.
+Load B through `BedReader`, validate a uniform field count, retain owned records in file order, and build the shared coordinate index. Return range hits in B-file order. Keep closest-specific directional structures out until the closest eligibility and tie tests consume them.
 
 - [ ] **Step 4: Run relation, index, and existing operation tests**
 
@@ -311,11 +311,11 @@ git commit -m "refactor(bed): add private relation index"
 **Interfaces:**
 - Consumes: `RelationBed`, `BedRecord::strand`, raw/joined/column writers.
 - Produces: public `window::StrandFilter::{Any, Same, Opposite}`, `window::WindowReport::{Pairs, Any, Count, None}`, `window::WindowOptions`, and `window::window(a: impl Read, b: impl Read, output: impl Write, options: WindowOptions) -> Result<()>`.
-- Produces: CLI `window -a BED -b BED [-o BED]` with `--window`, paired `--left/--right`, `--strand-relative`, `--strand`, `--report`, and compatible `-s/-S/-u/-c/-v` aliases.
+- Produces: CLI `window -a BED -b BED [-o BED]` with `--window`, paired `--left/--right`, `--strand-relative`, `--strand`, `--report`, and compatible `-u/-c/-v` aliases.
 
 - [ ] **Step 1: Freeze pair, asymmetric, strand-relative, and report-mode oracles**
 
-Generate exact BEDTools 2.31.1 output for default `-w 1000`, `-l/-r`, `-sw`, `-s`, `-S`, `-u`, `-c`, and `-v`. Include no-hit A rows, B-file order, duplicates, zero-length records, and negative-strand A rows.
+Generate exact BEDTools 2.31.1 output for default `-w 1000`, `-l/-r`, `-sw`, `-sm`, `-Sm`, `-u`, `-c`, and `-v`. Include no-hit A rows, B-file order, duplicates, zero-length records, and negative-strand A rows.
 
 - [ ] **Step 2: Add failing option and output tests**
 
@@ -345,7 +345,7 @@ Convert A to BEDTools virtual bounds, apply left/right with checked upper additi
 
 - [ ] **Step 5: Wire canonical typed CLI values and conflict-checked aliases**
 
-Resolve all aliases before opening input. `-s` maps to same, `-S` to opposite, `-u` to any, `-c` to count, and `-v` to none; Clap rejects multiple report or strand selectors. B remains a named file, and shared output alias/JSON handling applies unchanged.
+Resolve report aliases before opening input. `-u` maps to any, `-c` to count, and `-v` to none; Clap rejects multiple report selectors. BEDTools uses the operation-specific `-sm` and `-Sm` spellings, so the product keeps one canonical `--strand any|same|opposite` interface instead of introducing misleading `-s/-S` aliases. B remains a named file, and shared output alias/JSON handling applies unchanged.
 
 - [ ] **Step 6: Run full strict verification and live oracle comparisons**
 
