@@ -17,7 +17,12 @@ Completed product operations:
 - exact source attribution at
   `a2e7772d585cfd3379168a14775ca138b70e001e`;
 - pinned source-oracle CI at
-  `12bacee862c51678a6b37d1ea681b1532bdf9aa8`.
+  `12bacee862c51678a6b37d1ea681b1532bdf9aa8`;
+- final streaming-buffer reuse at
+  `6cb41d907c18ab707f8856c24fe753d9ecffc94f`;
+- release workflow, installation documentation, semantic BEDTools comparator,
+  and Ubuntu 22 benchmark artifacts through
+  `2bd0fd3698c152bb27e7d0d7635d51fb41655112`.
 
 The filter, sort, and join heads passed debug and release tests on native Linux
 and macOS for `x86_64` and `aarch64`. Exact-head CI runs were `32297305110`,
@@ -78,5 +83,24 @@ final high-cardinality and low-cardinality release gate.
 
 No new public foundation was created. The strict table reader, field grammar,
 expression engine, prepared sort keys, and deterministic sorter remain
-product-private. The final representative performance gate, release review,
-and publication remain incomplete.
+product-private.
+
+The final candidate passed exact-head GitHub Actions run `32314817480`: all
+four native platform jobs, pinned full-oracle compatibility, package
+verification, and the Ubuntu 22 benchmark-artifact build. The formal release
+benchmark completed ten paired runs after three warmups on four pinned physical
+cores. Seven upstream outputs were byte-identical; the BEDTools consecutive
+grouping comparison used exact structure and counts plus `1e-9` relative
+tolerance for its lower-precision sum and mean formatting.
+
+The final throughput ratios, expressed as upstream time divided by
+`rsomics-table` time, were 1.349 for plain selection, 0.998 for gzip selection,
+11.032 for filtering, 1.100 for numeric sorting, 1.335 for joining, 1.236 for
+low-cardinality global grouping, 0.747 for 500,000-group global grouping, and
+1.026 for consecutive grouping. Gzip selection used 84.8% less peak RSS, and
+high-cardinality grouping used 73.8% less peak RSS. Numeric sort used 81.8%
+more peak RSS; this throughput-for-memory trade-off is accepted and recorded.
+Full evidence is in `docs/10-products/table-performance-2026-08-20.md`.
+
+The code, compatibility, package, and performance gates are complete.
+Publication and registry-install verification remain.

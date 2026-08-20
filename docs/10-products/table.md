@@ -1,8 +1,9 @@
 # Table product dossier
 
-Status: target repository created. The initial six-operation release scope is
-implemented and has passed the pinned compatibility CI gate; representative
-release performance and publication remain.
+Status: release candidate `2bd0fd3698c152bb27e7d0d7635d51fb41655112`.
+The initial six-operation scope has passed pinned compatibility, four-native-
+platform exact-head CI, package verification, and its representative release
+performance gate. Registry publication remains.
 
 ## Boundary
 
@@ -280,6 +281,27 @@ This slice exercises the shared reader and field grammar, streaming and
 materializing operations, multi-input semantics, aggregation, strict failure,
 transactional output, and the unified CLI layer. `join` must cover inner,
 left, and full joins plus duplicate keys before it is documented.
+
+### 0.1.0 release decision
+
+The exact-head release gate passed in GitHub Actions run `32314817480` and on
+the formal Ubuntu 22 benchmark host. The release candidate exposes only the six
+operations above; planned operations remain absent from CLI help and are not
+advertised as implemented.
+
+Fresh measurements against csvtk 0.37.0, GNU datamash 1.9, and BEDTools 2.31.1
+show strict throughput or resource-use advantages on every compared operation.
+The largest throughput wins are `filter` at 11.03 times csvtk, `select` at
+1.35 times, and `join` at 1.33 times. Numeric sorting is 1.10 times faster but
+uses 81.8% more peak RSS. Global grouping with 500,000 groups is 33.9% slower
+than datamash but uses 73.8% less peak RSS. Gzip selection is time-equivalent
+and uses 84.8% less peak RSS. These trade-offs are accepted and must remain
+visible in performance documentation.
+
+The complete protocol, timing distributions, memory results, artifact hashes,
+correctness policy, and integrity audit are recorded in
+`docs/10-products/table-performance-2026-08-20.md`. No historical micro-crate
+result is used as release evidence.
 
 ## Compatibility and performance gates
 
