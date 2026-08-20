@@ -2,9 +2,11 @@
 
 Date: 2026-08-20
 
-Status: approved by the user's standing unattended architecture authorization.
-This design covers the next `rsomics-bed` release slice only. The complete
-family boundary is in `docs/10-products/bed.md`.
+Status: implemented at performance source
+`d7b1507b178053a087862255d84a244e4921f192`; exact-head CI and both
+representative Linux gates pass. This design covers the `rsomics-bed` 0.2
+release slice only. The complete family boundary is in
+`docs/10-products/bed.md`.
 
 ## Outcome
 
@@ -55,6 +57,10 @@ appear together. Strand-relative windows require valid BED6 A records; strand
 filtering requires valid BED6 on both sides. Coordinate expansion uses checked
 arithmetic and fails rather than clamping at the upper `u64` boundary. The
 lower boundary is naturally bounded at zero, matching genomic coordinates.
+Multiple B matches are emitted in stable B-file order. BEDTools 2.31.1 may
+instead expose UCSC-bin traversal order when matches cross internal bin
+boundaries; rsomics records that incidental ordering as an explicit divergence
+rather than reproducing it.
 
 ### `closest`
 
@@ -75,11 +81,21 @@ slice intentionally does not expose multiple B databases, `k > 1`, or
 upstream/downstream ignore and preference switches. They remain absent rather
 than accepted and ignored.
 
+Unsigned and distance-free ties retain B-file order. Signed modes order equal
+absolute distances by signed direction and then B-file order; `first` and
+`last` apply after that ordering, matching the pinned executable. Required B
+names and strands are validated before A streams so an unused chromosome
+cannot hide malformed selected fields.
+
 ## CLI and output
 
 The three commands use the existing product-level `rsomics-help` parsing and
 `rsomics-common` result/error envelope. Long typed values are canonical; only
 unambiguous BEDTools short flags become migration aliases.
+
+BEDTools multi-character single-dash spellings such as `-sw`, `-sm`, `-Sm`,
+and `-io` are not reinterpreted as Clap short-option clusters. Their typed long
+forms own the product contract.
 
 `window` pair mode writes the original A fields followed by the original B
 fields. Any and none modes write A once. Count mode appends one count column.
@@ -98,11 +114,12 @@ by the shared reader instead of reconstructed by each operation.
 
 ## Internal model
 
-`BedRecord` remains the single owned record type. Checked optional-field access
-is added only with a concrete consumer: strand is present for cluster and
-window, while name waits for `closest --different-name`. Operations request an
-optional field only when their contract needs it; ordinary BED3 operations do
-not start validating unrelated display fields.
+`BedRecord` remains the owned streaming record for A and cluster input.
+`RelationBed` reads B once into a contiguous raw byte buffer and stores only
+record ranges, physical line numbers, checked coordinates, and required
+orderings. Checked optional-field access is shared over raw bytes. Operations
+request an optional field only when their contract needs it; ordinary BED3
+operations do not start validating unrelated display fields.
 
 `overlap_index.rs` is separated into:
 
@@ -110,15 +127,15 @@ not start validating unrelated display fields.
   metadata;
 - the existing coordinate-only wrapper used by `intersect`, preserving its
   current memory profile;
-- a relation wrapper that owns full B records and initially exposes only the
-  file-ordered range queries consumed by `window`.
+- a relation wrapper that retains raw B ranges, exposes file-ordered range
+  queries for `window`, and adds start/end directional order for `closest`.
 
-The core keeps one index implementation and one zero-length policy. The
-relation wrapper preserves B file IDs for duplicate multiplicity and tie
-ordering. `window` submits an expanded query range and receives file-ordered
-candidates. `closest` will add the smallest directional structure justified by
-its overlap, eligibility, distance, and tie tests; no closest-only API is kept
-alive speculatively.
+The core keeps one index implementation and one zero-length policy. Virtual
+bounds are reconstructed from already validated original coordinates instead
+of stored twice. The relation wrapper preserves B file IDs for duplicate
+multiplicity and tie ordering. `window` submits an expanded query range and
+receives file-ordered candidates. `closest` advances outward through the two
+directional orders only until the best eligible distance has been exhausted.
 
 `cluster` does not use an interval index. Unstranded execution is a
 constant-space state machine over a sorted `BedReader`. Same-strand execution
@@ -190,6 +207,13 @@ large enough that a full per-A scan cannot pass. Ten paired measurements after
 warmup record output equality, time distribution, CPU, peak RSS, exact binary
 and oracle identities, fixture hashes, commands, and an explicit decision for
 each operation.
+
+The accepted source passes at 4.07-5.19x for cluster, 4.17x for window pairs,
+1.23-1.36x for closest, and 13.98x for dense window count. The first benchmark
+head failed default closest at 0.943x; it was rejected before compact raw B
+storage and index-order reuse reduced time to 1.349 seconds and RSS from
+577,304 to 316,696 KiB. Closest claims throughput, not memory superiority over
+the sorted-stream upstream implementation.
 
 ## Source quality
 

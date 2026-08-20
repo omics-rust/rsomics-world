@@ -1,11 +1,12 @@
 # BED product dossier
 
 Status: `rsomics-bed 0.1.0` is published with `sort`, `merge`, `intersect`,
-`subtract`, and `complement`. The current main head is
-`7579c9d537f98b37ca70ffc56465ab9559587629`; exact-head CI run `30724471765`
-passed native Linux and macOS on `x86_64` and `aarch64`. The complete product
-boundary and historical-asset map are settled below. The next distance and
-neighborhood slice is designed but not implemented.
+`subtract`, and `complement`. The 0.2 candidate adds `cluster`, `window`, and
+`closest`. Performance source `d7b1507b178053a087862255d84a244e4921f192`
+passed exact-head CI run `32328054861` on four native target classes and both
+representative Linux gates. Documentation head `52764bdc401ea3a2512f3deba10453757da32a6f`
+records the evidence. The package remains version 0.1.0 until the final API
+review, version bump, release CI, and registry publication complete.
 
 ## Boundary
 
@@ -66,9 +67,9 @@ may be migration aliases, but the typed long-form contract owns the help.
 | `intersect` | BEDTools `intersect`; BEDOPS intersect/element-of | published clipped-output slice; later report modes stay options here |
 | `subtract` | BEDTools `subtract`; BEDOPS `--difference` | published |
 | `complement` | BEDTools `complement`; bounded BEDOPS complement | published with an explicit genome file |
-| `cluster` | BEDTools `cluster` | next slice; sorted streaming, distance, and strand policy |
-| `window` | BEDTools `window` | next slice; symmetric/asymmetric and strand-relative windows |
-| `closest` | BEDTools `closest`; BEDOPS `closest-features` | next slice; single-B complete declared contract before multi-B extensions |
+| `cluster` | BEDTools `cluster` | implemented on main; sorted streaming, distance, and strand policy |
+| `window` | BEDTools `window` | implemented on main; symmetric/asymmetric, strand-relative, and report modes |
+| `closest` | BEDTools `closest`; BEDOPS `closest-features` | implemented on main; complete declared single-B contract before multi-B extensions |
 | `coverage` | BEDTools `coverage` | later coverage slice; BED input only, with count, breadth, histogram, and depth modes |
 | `annotate` | BEDTools `annotate` | later coverage slice; multi-file count/fraction output |
 | `map` | BEDTools `map`; BEDOPS `bedmap` | later coverage slice; one private reducer shared with `annotate` |
@@ -126,9 +127,9 @@ discarded.
 | Assets and recorded revisions | Classification | Retained value |
 |---|---|---|
 | `bed-sort` `5dce75d5a7e`, `bed-merge` `c9e39b3e760e`, `bed-intersect` `e7dc1e7e462e`, `bed-subtract` `927c257de23b`, `bed-complement` `94ea9f552620` | 2, completed | algorithms and strongest goldens were refactored into 0.1.0 |
-| `bed-closest` `e85ed1339165` | 2 | retain fixed distance, zero-length, no-hit, and tie cases; replace permissive parser and full B scan |
-| `bed-cluster` `b63b75567ba7` | 2 | retain sorted streaming sweep and oracle cases; use the product parser and output layer |
-| `bed-window` `875459ee2f79` | 3 | retain fixtures and benchmark recipe; rewrite indexing, parsing, output modes, and CLI |
+| `bed-closest` `e85ed1339165` | 2, completed | retained corrected distance, zero-length, no-hit, and tie cases; replaced the permissive parser and full B scan |
+| `bed-cluster` `b63b75567ba7` | 2, completed | retained the sorted sweep and oracle cases; moved behavior onto the product parser and output layer |
+| `bed-window` `875459ee2f79` | 3, completed | retained fixtures and benchmark recipe; rewrote indexing, parsing, output modes, and CLI |
 | `bed-coverage` `269e1f6ca740`, `bed-annotate` `551632db1dce`, `bed-map` `1fb4c6cc8d84` | 2/3 | retain coverage math and goldens; replace three readers and converge on one candidate/reducer core |
 | `bed-jaccard` `ca81d15e39d0` | 2 | retain merged-set sweep, numeric formatting tests, and fixtures; add checked filters and product I/O |
 | `bed-fisher` `fc7bb057f3d2` (dirty), `bed-reldist` `36cdfdead5f6`, `bed-multiinter` `6c07acd0a68e` | 2/3 | retain fixed reldist oracle cases and multi-file fixtures; audit dirty fisher state before reuse |
@@ -162,6 +163,9 @@ diffs and recovery paths.
   machine output cannot mix.
 - The product does not silently sort an operation whose upstream contract
   requires presorted input. It reports the first ordering violation.
+- `window` emits multiple matches in stable B-file order. BEDTools exposes
+  UCSC-bin traversal order at some internal bin boundaries; rsomics treats that
+  incidental instability as an explicit output-order divergence.
 - gzip stream support is a concrete shared-code candidate with
   `rsomics-table`, but is not promoted into `rsomics-common` until both
   consumers migrate with contract tests after the table 0.1 release.
@@ -171,11 +175,14 @@ diffs and recovery paths.
 Published 0.1.0 source head `c252c6036b4173fc95209938b45fc032ca34872d`
 has crates.io checksum
 `9c8883539cb78d946bdb1355704e1b8810130a2b9eadab8c37e94bf3c25f4ebe`.
-The independently verified representative gate is recorded in
-`bed-gate-2026-07-30.md`. Current main adds shared transactional output and
-alias preflight without changing the five operation contracts.
+The independently verified 0.1 gate is recorded in
+`bed-gate-2026-07-30.md`. The 0.2 candidate evidence is recorded in
+`bed-performance-2026-08-20.md`. Its implementation and performance source
+`d7b1507b178053a087862255d84a244e4921f192` passed exact-head CI run
+`32328054861`, the regenerated five-operation gate, and the new sparse/dense
+relation gate.
 
-The next release slice is:
+The 0.2 implementation slice is complete:
 
 - `cluster`, with the complete documented BED distance and same-strand modes;
 - `window`, with symmetric, asymmetric, strand-relative, pair, any, count, and
@@ -193,20 +200,23 @@ cluster state machine. It does not create or expand a public foundation.
 
 ## Compatibility and performance gates
 
-- Pin the BEDTools 2.31.1 release archive and binary identity in CI.
-- Freeze byte-level goldens, then run the real executable for every supported
-  option family, malformed boundary, zero-length case, strand mode, tie mode,
-  no-hit case, and report mode.
-- Add seeded differential trials that vary ordering, duplicates, long/nested
-  intervals, chromosome absence, zero length, optional columns, strand, and
-  coordinate boundaries.
-- Measure sparse and dense neighborhood queries separately. Cluster receives a
-  multi-million-record sorted stream. Window and closest receive enough B
-  records to distinguish indexed lookup from a per-A full scan.
-- Record exact source and oracle revisions, fixture hashes, commands, paired
-  timing distributions, output equality, peak RSS, and explicit trade-offs.
-- Re-run all published 0.1 operation gates after any shared parser, index, or
-  output refactor; no historical speedup is inherited.
+- CI pins the BEDTools 2.31.1 archive digest and runs the live executable on
+  native Linux and macOS for `x86_64` and `aarch64`.
+- Fixed goldens and deterministic differentials cover every declared option
+  family, zero-length case, strand and tie mode, no-hit output, malformed
+  selected fields, duplicates, nesting, and coordinate boundaries.
+- The one-million-record relation gate verifies complete output before ten
+  alternating measurements. Cluster passes at 4.07-5.19x, window pairs at
+  4.17x, closest at 1.23-1.36x, and dense window count at 13.98x.
+- The first benchmark head failed default closest at 0.943x. Compact B storage
+  and index-order reuse moved it to 1.23x and reduced RSS from 577,304 to
+  316,696 KiB before the candidate was accepted.
+- The original one-million-record five-operation gate was regenerated after
+  the shared index refactor. All five retain strict throughput advantages;
+  merge is the narrowest at 1.11x and must be remeasured for later releases.
+- Exact identities, fixture/output hashes, wall and CPU distributions, RSS,
+  raw JSON paths, and the closest memory trade-off are recorded in
+  `bed-performance-2026-08-20.md`.
 
 ## Explicit exclusions
 
