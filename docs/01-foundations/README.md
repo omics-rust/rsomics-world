@@ -16,6 +16,9 @@ everything in modules 02–09 depends on this layer working well.
 - [`seqio-release-gate-2026-07-31.md`](seqio-release-gate-2026-07-31.md) —
   narrowed sequence-I/O API, two-consumer evidence, representative reader
   performance, and verified registry release.
+- [`seqio-bgzf-consumer-contract.md`](seqio-bgzf-consumer-contract.md) — BAM
+  and VCF raw-frame overlap, explicit exclusions, and extraction gates without
+  freezing a public API.
 - [`io-formats.md`](io-formats.md) — FASTA/FASTQ, SAM/BAM/CRAM, VCF/BCF,
   GFF/GTF, BED, MAF, PAF, h5ad. Centred on `noodles` + `needletail`.
 - [`compression.md`](compression.md) — gzip/bgzf/zstd/lz4/xz codecs and the
