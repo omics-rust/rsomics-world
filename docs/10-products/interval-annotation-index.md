@@ -1,7 +1,8 @@
 # Interval, annotation, and index product dossier
 
-Status: the BED slice and the annotation core plus sequence-extraction slice
-are verified. Index implementation has not started.
+Status: the BED and annotation initial slices are published and independently
+verified. The complete BED family map is now maintained in `bed.md`. Index
+implementation has not started.
 
 Routing corrections move table aggregation to `rsomics-table`, SEACR to
 `rsomics-peak`, FASTA masking to `rsomics-bed`, and FASTA indexing plus
@@ -19,6 +20,9 @@ The public geometry layer does not absorb product-specific header, formatting,
 or command behavior.
 
 ## `rsomics-bed`
+
+The canonical full-family operation and asset dossier is `bed.md`. This
+section retains the provenance of the five-operation 0.1 pilot.
 
 ### Boundary
 
@@ -53,9 +57,9 @@ fragments, merge groups, and complement gaps. Complete outputs match bedtools
 byte for byte before timing. All five operations retain strict throughput
 advantages; see `bed-gate-2026-07-30.md`. The old empty-output intersect and
 subtract figures are superseded rather than retained as release claims. The
-current subtract implementation no longer builds an unused overlap tree and
-must be remeasured on the representative fixture before publication. The
-repository remains unpublished.
+current subtract implementation no longer builds an unused overlap tree. It
+was remeasured on the representative fixture, and version 0.1.0 was published
+and independently verified; see `bed-gate-2026-07-30.md`.
 
 ### Asset dispositions
 
