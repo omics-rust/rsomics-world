@@ -24,8 +24,8 @@ consumer evidence determine what belongs in Layer A.
   correctness/performance evidence.
 - [`io-formats.md`](io-formats.md) — FASTA/FASTQ, SAM/BAM/CRAM, VCF/BCF,
   GFF/GTF, BED, MAF, PAF, h5ad. Centred on `noodles` + `needletail`.
-- [`compression.md`](compression.md) — gzip/bgzf/zstd/lz4/xz codecs and the
-  `bgzip` / `pigz` CLI tools.
+- [`compression.md`](compression.md) — current sequence/BGZF/CRAM ownership,
+  codec and CLI references, shared-path evidence gates and explicit exclusions.
 - [`indexing.md`](indexing.md) — fai/bai/csi/tbi/gzi random-access indexes
   and the `tabix` CLI.
 - [`data-structures.md`](data-structures.md) — capability-to-product ownership

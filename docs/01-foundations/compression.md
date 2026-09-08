@@ -1,168 +1,142 @@
-# Compression
+# Compression — consumer and upstream survey
 
-> Codecs and CLI tools for the squashed bytes underneath every bioinformatics
-> file.
+Updated 2026-09-09. This is an ownership and adoption map, not a list of
+compression crates to publish. Record formats belong in
+[io-formats.md](io-formats.md); coordinate and byte-offset indexes belong in
+[indexing.md](indexing.md). Codec availability is not evidence of a completed
+rsomics operation or a performance advantage.
 
-## Scope
+## Current ownership
 
-Block- and stream-level compression: DEFLATE/gzip, BGZF, zstd, lz4, xz, and
-the user-facing CLIs (`bgzip`, `pigz`, `crabz`) that wrap them. Excludes
-*record-level* file formats (those live in
-[`io-formats.md`](io-formats.md)) and random-access indexes built on top of
-BGZF (those live in [`indexing.md`](indexing.md)).
+| Capability | Product workflow | Current implementation boundary |
+|---|---|---|
+| Plain/gzip/BGZF sequence input | Sequence utilities, FASTQ preprocessing/QC, sketch construction | `rsomics-seqio` probes gzip magic and replays the prefix; its gzip stream uses `flate2::read::MultiGzDecoder` on one producer thread |
+| Plain/BGZF byte output | For example, `rsomics-seq` compressed sequence output | Existing `rsomics-seqio::OutputEncoder`; the product selects encoding, level, destination and transaction policy |
+| Thread-controlled gzip output | FASTQ preprocessing | Product-private writer; FASTA/FASTQ validation and serialization use `rsomics-seqio::Writer` |
+| BAM BGZF output | Alignment-format operations | Existing `rsomics-bamio::RingBgzfWriter` over libdeflater; BAM record policy stays in the product |
+| BGZF compression, integrity, GZI creation/rebuilding and indexed byte reads | `rsomics-index bgzip` | Product-owned workflow, frame reader/writer and GZI modules; ordered compression workers use libdeflater |
+| Already-compressed frame copy/splice | BAM cat/reheader; VCF/BCF reheader and candidate concat | Private consumer implementations; a narrow shared seqio contract is under review, not approved by this survey |
+| CRAM containers and codecs | CRAM paths in `rsomics-bam` and its format I/O foundation | CRAM-aware backend; not a BGZF wrapper or a generic sequence decoder |
+| Other stream/archival codecs | Only a product that explicitly needs their format | External dependency or product-private adapter; no additional public foundation justified here |
 
-## Design notes
+Source snapshot: clean `rsomics-seqio` at `bf8c2c8eac4e8f44907587527bfd5f7f808de97e`,
+`rsomics-bamio` at `30459c78951fae406bd362854e7b80e42665a5c0`, and
+`rsomics-index` at `41b161a7dac7eb3700208f025a6be6005c917002`.
+Relevant anchors are seqio's
+[input probe](https://github.com/omics-rust/rsomics-seqio/blob/bf8c2c8eac4e8f44907587527bfd5f7f808de97e/src/detect.rs),
+[gzip producer](https://github.com/omics-rust/rsomics-seqio/blob/bf8c2c8eac4e8f44907587527bfd5f7f808de97e/src/reader_gz.rs),
+[output encoder](https://github.com/omics-rust/rsomics-seqio/blob/bf8c2c8eac4e8f44907587527bfd5f7f808de97e/src/output_writer.rs),
+bamio's [ring writer](https://github.com/omics-rust/rsomics-bamio/blob/30459c78951fae406bd362854e7b80e42665a5c0/src/ring_writer.rs),
+and index's [compression workers](https://github.com/omics-rust/rsomics-index/blob/41b161a7dac7eb3700208f025a6be6005c917002/src/bgzip/writer.rs).
+These are source observations, not fresh execution or registry-release claims.
 
-- BGZF is the workhorse beneath BAM, compressed VCF and BCF, and tabix-indexed
-  text. CRAM has its own container and codec model. Throughput on the BGZF
-  paths translates directly to pipeline wall time.
-- Two implementation strategies coexist: pure-Rust DEFLATE via
-  [`flate2`](https://github.com/rust-lang/flate2-rs) (with `miniz_oxide`
-  or `zlib-ng` backends) and FFI to `libdeflate` via `libdeflater`. For
-  block-sized inputs, libdeflate is ~2× faster — `gzp` and `crabz` use it
-  by default.
-- Multi-threaded compression is where Rust beats single-threaded `gzip` and
-  matches `pigz`: see [`gzp`](https://github.com/sstadick/gzp) and
-  [`crabz`](https://github.com/sstadick/crabz).
-- zstd is a serious contender for *new* file formats (CRAM 3.1 uses it
-  internally) but the existing bioinformatics ecosystem is overwhelmingly
-  gzip/BGZF, so any zstd-only output needs a fallback path.
-- xz/LZMA shows up only in archival contexts (e.g. SRA fasterq-dump
-  outputs) and is not worth optimising.
+`rsomics-igzip` remains a temporary namespace exception for immutable historical
+registry dependencies. The inspected seqio manifest no longer depends on it;
+neither this fact nor a faster codec candidate authorizes deleting an archive
+required by a published version.
 
-## TODO
+## DEFLATE, gzip and BGZF are different contracts
 
-- [x] **`flate2`** — DEFLATE/gzip/zlib codec for Rust.
-  - Reference impl: `C` · [madler/zlib](https://github.com/madler/zlib) · `Zlib`
-  - Existing Rust: [`flate2`](https://github.com/rust-lang/flate2-rs) `1.1.9` (pluggable: `miniz_oxide` pure-Rust default, `zlib-ng` FFI, `cloudflare-zlib`); supplementary [`libflate`](https://github.com/sile/libflate) `2.3.0` (pure-Rust)
-  - Existing Rust kind: `pure-port/FFI-wrapper`
-  - Existing non-C alternatives: —
-  - Parallelism: single-threaded codec (wrap with `gzp` for parallel)
-  - SIMD: inherited via backend dep (`miniz_oxide` `simd` feature; or `zlib-ng` hand SIMD when that backend is selected). flate2 itself contains no SIMD.
-  - Quadrant: ①+② (① with default `miniz_oxide` + `simd` feature; ② when `zlib-ng` backend selected)
-  - GPU-amenable: no — DEFLATE is inherently bit-serial
-  - Upstream license: `Zlib`
-  - Priority: `P0`
-  - Layer: `adopt`
-  - Consumes primitives: —
-  - Notes: Default `miniz_oxide` is portable and safe; switch to `zlib-ng` when throughput matters and ship a feature flag.
+[flate2](https://docs.rs/flate2/1.1.10/flate2/) supports raw DEFLATE, zlib and
+gzip wrappers with selectable backends. `miniz_oxide` and `zlib-rs` are Rust
+implementations; `zlib-ng` is a C backend, not pure Rust. The inspected seqio
+manifest explicitly disables defaults and requests `zlib-rs`. Backend features
+can unify transitively, so record the actual compiled feature set when comparing
+products. Do not infer a codec from the direct manifest alone.
 
-- [x] **`libdeflate`** — block-oriented DEFLATE optimised for known-size inputs.
-  - Reference impl: `C` · [ebiggers/libdeflate](https://github.com/ebiggers/libdeflate) · `MIT`
-  - Existing Rust: [`libdeflater`](https://github.com/adamkewley/libdeflater) `1.25.2` (safe wrapper); [`libdeflate-sys`](https://crates.io/crates/libdeflate-sys) `1.25.2` (raw bindings)
-  - Existing Rust kind: `FFI-wrapper`
-  - Existing non-C alternatives: —
-  - Parallelism: single-threaded codec (caller schedules parallel blocks)
-  - SIMD: inherits libdeflate's hand-written CRC32 / vector intrinsics
-  - Quadrant: ②
-  - GPU-amenable: no — bit-serial DEFLATE
-  - Upstream license: `MIT`
-  - Priority: `P0`
-  - Layer: `adopt`
-  - Consumes primitives: —
-  - Notes: FFI-only today. A pure-Rust libdeflate-equivalent (block-DEFLATE with `std::simd` / `target_feature` vector intrinsics) is a real opportunity but a multi-month project. SIMD-critical inner loops.
+Whole-stream input must consume all gzip members: a single-member decoder can
+silently return only the first member, whereas flate2's `MultiGzDecoder`
+processes concatenated members and rejects trailing non-gzip data. Reading BGZF
+as gzip supplies decoded bytes; it does not retain virtual positions or prove
+a strict canonical-EOF/frame-copy contract.
 
-- [x] **`BGZF`** — Blocked GNU Zip Format used by samtools/htslib.
-  - Reference impl: `C` · [samtools/htslib/bgzf.c](https://github.com/samtools/htslib/blob/develop/bgzf.c) · `MIT`
-  - Existing Rust: [`noodles-bgzf`](https://crates.io/crates/noodles-bgzf) `0.47.0` (pure-Rust); [`bgzip`](https://github.com/informationsea/bgzip-rs) `0.3.1`; [`gzp`](https://github.com/sstadick/gzp) `2.0.2` (multithreaded write path)
-  - Existing Rust kind: `pure-port/partial-port`
-  - Existing non-C alternatives: —
-  - Parallelism: noodles-bgzf reader is single-threaded; gzp uses `flume` channels for parallel write
-  - SIMD: inherits codec dep (`miniz_oxide` SIMD or `libdeflate` SIMD depending on backend)
-  - Quadrant: ① (noodles-bgzf) / ①+② (gzp with default libdeflater backend)
-  - GPU-amenable: no — block layout is fixed and DEFLATE is bit-serial
-  - Upstream license: `MIT`
-  - Priority: `P0`
-  - Layer: `adopt`; any shared raw-frame mechanics belong in `rsomics-seqio`
-  - Consumes primitives: —
-  - Notes: Adopt `noodles-bgzf` for IO correctness; pair with `gzp` / `libdeflater` for multithreaded *write* paths. `rsomics-bam` and `rsomics-vcf` currently keep raw-frame rewriting private. Only their demonstrated common, format-neutral contract may move into `rsomics-seqio`, with structural framing kept distinct from optional decompression and CRC validation. Parallel decoding remains an upstream or measured consumer-driven project, not a separate crate (tracking [zaeleus/noodles#17](https://github.com/zaeleus/noodles/issues/17)).
+[libdeflate](https://github.com/ebiggers/libdeflate) supplies whole-buffer
+DEFLATE/zlib/gzip operations, exposed to Rust by libdeflater. It is not a
+streaming replacement for an arbitrary large gzip member. Bounded BGZF blocks
+are a concrete use case; backend adoption still needs the consumer's output
+size, checksum, failure and resource evidence. No unconditional two-fold
+speed claim is retained.
 
-- [x] **`bgzip` (CLI)** — samtools companion for creating BGZF files.
-  - Reference impl: `C` · [samtools/htslib/bgzip.c](https://github.com/samtools/htslib) · `MIT`
-  - Existing Rust: [`crabz`](https://github.com/sstadick/crabz) `0.10.0` (pigz-style multithreaded gzip/BGZF CLI built on `gzp`)
-  - Existing Rust kind: `rust-native` (crabz is a Rust-native pigz-style CLI, not a code-port of samtools/bgzip)
-  - Existing non-C alternatives: `bgzip` ships as part of htslib
-  - Parallelism: rayon-equivalent worker pool via `gzp` (`flume` + N workers)
-  - SIMD: inherits libdeflate SIMD (default backend) or miniz_oxide SIMD
-  - Quadrant: ①+② (Rust-native scheduling + FFI codec backend by default)
-  - GPU-amenable: no — bit-serial DEFLATE
-  - Upstream license: `MIT`
-  - Priority: `P1`
-  - Layer: `rsomics-index bgzip`
-  - Consumes primitives: `gzp`, `libdeflater`
-  - Notes: The BGZF CLI and its `.gzi` lifecycle belong to the accepted indexing workflow. `crabz` is an implementation candidate because it handles BGZF block layout through `gzp::deflate::Bgzf`, but compatibility and representative performance must be demonstrated inside `rsomics-index`; no generic compression product is implied. See also [`indexing.md`](indexing.md) `.gzi` entry.
+The [HTSlib BGZF description](https://www.htslib.org/doc/bgzip.html#BGZF_FORMAT)
+defines concatenated gzip members with a `BC` extra subfield and a 64 KiB
+compressed and uncompressed block ceiling. Shared code must separate structural
+framing from DEFLATE, CRC and ISIZE validation. The
+[BAM/VCF raw-frame contract](seqio-bgzf-consumer-contract.md) names the two
+consumers, copy-through requirements and extraction gates. Header semantics,
+record ordering, index freshness and CLI policy stay with their owners.
 
-- [x] **`pigz`** — parallel gzip CLI.
-  - Reference impl: `C` · [madler/pigz](https://github.com/madler/pigz) · `Zlib`
-  - Existing Rust: [`crabz`](https://github.com/sstadick/crabz) `0.10.0`; library is [`gzp`](https://crates.io/crates/gzp) `2.0.2`
-  - Existing Rust kind: `rust-native` (crabz is independent Rust-native; takes the pigz approach but does not port pigz's code)
-  - Existing non-C alternatives: —
-  - Parallelism: parallel block compression via `gzp`
-  - SIMD: inherits codec backend
-  - Quadrant: ①+② (Rust-native scheduler + FFI codec backend by default)
-  - GPU-amenable: no — bit-serial DEFLATE
-  - Upstream license: `Zlib`
-  - Priority: `P1`
-  - Layer: `adopt`; excluded from the current product allowlist
-  - Consumes primitives: `gzp`, `libdeflater` / `flate2`
-  - Notes: `crabz` is the closest Rust equivalent. General-purpose parallel gzip is already served by `pigz` and `crabz` and does not justify an rsomics product. Product-specific parallel compression remains behind the owning product or `rsomics-seqio` contract when two consumers demonstrate it.
+The inspected `noodles-bgzf 0.47.0` source already exports both
+`MultithreadedReader` and `MultithreadedWriter` alongside synchronous I/O.
+The old claim that its reader is necessarily single-threaded is withdrawn.
+An available upstream API is not a reason to replace the current decoder or
+introduce `rsomics-bgzf` without a measured consumer requirement.
 
-- [x] **`zstd`** — Facebook's zstandard codec.
-  - Reference impl: `C` · [facebook/zstd](https://github.com/facebook/zstd) · `BSD-3-Clause OR GPL-2.0`
-  - Existing Rust: [`zstd`](https://github.com/gyscos/zstd-rs) `0.13.3` (FFI, multi-threaded encoder); [`ruzstd`](https://github.com/KillingSpark/zstd-rs) `0.8.3` (pure-Rust decoder only)
-  - Existing Rust kind: `FFI-wrapper/partial-port`
-  - Existing non-C alternatives: —
-  - Parallelism: zstd-rs exposes the upstream's multi-threaded encoder
-  - SIMD: inherits zstd's hand-written SIMD
-  - Quadrant: ② (production path); ① for `ruzstd` decoder
-  - GPU-amenable: no — codec is bit-serial
-  - Upstream license: `BSD-3-Clause OR GPL-2.0` (user picks); typically `BSD-3-Clause` in our adoption
-  - Priority: `P1`
-  - Layer: `adopt`
-  - Consumes primitives: —
-  - Notes: Use FFI `zstd` for production (much faster, multi-threaded encoder). `ruzstd` is decoder-only and lags upstream; not yet a drop-in replacement.
+## BGZF workflow, not a general-purpose compression product
 
-- [x] **`lz4`** — fast streaming compressor.
-  - Reference impl: `C` · [lz4/lz4](https://github.com/lz4/lz4) · `BSD-2-Clause`
-  - Existing Rust: [`lz4_flex`](https://github.com/PSeitz/lz4_flex) `0.13.1` (pure-Rust); [`lz4-sys`](https://crates.io/crates/lz4-sys) `1.11.1+lz4-1.10.0` (FFI)
-  - Existing Rust kind: `pure-port/FFI-wrapper`
-  - Existing non-C alternatives: —
-  - Parallelism: single-threaded codec; caller schedules
-  - SIMD: lz4_flex relies on auto-vectorize; lz4-sys inherits upstream's hand SIMD
-  - Quadrant: ① (lz4_flex) / ② (lz4-sys)
-  - GPU-amenable: no — codec is byte-serial
-  - Upstream license: `BSD-2-Clause`
-  - Priority: `P2`
-  - Layer: `adopt`
-  - Consumes primitives: —
-  - Notes: `lz4_flex` is within ~10% of the C library, `no unsafe by default`. Used mostly for intermediate scratch files; rarely a user-facing format in genomics.
+The [HTSlib bgzip manual](https://www.htslib.org/doc/bgzip.html) covers
+compression/decompression, integrity testing, GZI creation/rebuilding,
+uncompressed-offset reads, text/binary block placement and worker selection.
+GZI maps compressed block offsets to uncompressed stream offsets; it is not
+a genomic-coordinate index. The accepted
+[index product dossier](../10-products/interval-annotation-index.md#rsomics-index)
+owns this operation map and its explicit exclusions, including rebgzip layout
+reproduction, implicit input deletion and multi-input invocation for 0.1.
+The command's help does not imply every upstream flag is implemented.
 
-- [~] **`xz` / `liblzma`** — high-ratio LZMA codec.
-  - Reference impl: `C` · [tukaani-project/xz](https://github.com/tukaani-project/xz) · `0BSD OR LGPL-2.1`
-  - Existing Rust: [`xz2`](https://github.com/alexcrichton/xz2-rs) `0.1.7` (FFI); [`lzma-rs`](https://github.com/gendx/lzma-rs) `0.3.0` (pure-Rust, partial)
-  - Existing Rust kind: `FFI-wrapper/partial-port`
-  - Existing non-C alternatives: —
-  - Parallelism: single-threaded
-  - SIMD: none
-  - Quadrant: ② (xz2) / ③ (lzma-rs)
-  - GPU-amenable: no — LZMA is bit-serial
-  - Upstream license: `0BSD` (xz core); some legacy parts `LGPL-2.1`
-  - Priority: `P2`
-  - Layer: `adopt`
-  - Consumes primitives: —
-  - Notes: FFI is fine for archival ingest. Only relevant for SRA archive ingest and some legacy CRAM. Not a focus.
+[pigz](https://zlib.net/pigz/) and [crabz](https://github.com/sstadick/crabz)
+already serve general parallel gzip workflows. [gzp](https://docs.rs/gzp/2.0.4/gzp/)
+provides worker-backed writers for gzip, BGZF and related encodings. These are
+implementation references, not new install identities or proof that rsomics
+matches their speed. The current index writer is product-local, not a gzp or
+crabz adoption. Any later scheduler sharing must demonstrate matching consumers
+and exclude product-specific block placement, worker budget and output policy.
 
-- [x] **`niffler`** — format-sniffing reader (auto-detect gzip/bgzf/zstd/xz).
-  - Reference impl: — (Rust-native concept; analogous to Python `xopen`)
-  - Existing Rust: [`niffler`](https://github.com/luizirber/niffler) `3.0.1`; supplementary [`zopen`](https://crates.io/crates/zopen) `1.0.1` (hosted on chiselapp, GitHub aliveness unverifiable)
-  - Existing Rust kind: `rust-native`
-  - Existing non-C alternatives: `xopen` (Python)
-  - Parallelism: single-threaded sniffer; the underlying codec defines parallelism
-  - SIMD: inherits codec dep
-  - Quadrant: ④ at the sniffing layer; the actual codec quadrant flows through (e.g. ② when xz is detected)
-  - GPU-amenable: no — file-header lookup, microsecond-class work
-  - Upstream license: `MIT`
-  - Priority: `P1`
-  - Layer: `adopt`
-  - Consumes primitives: `flate2`, `zstd`, `xz2` (all transitively)
-  - Notes: Adopt `niffler` as the default open-by-extension helper in CLI tools. Eliminates a class of "forgot to gunzip" user errors.
+The index repository's
+[current performance record](https://github.com/omics-rust/rsomics-index/blob/41b161a7dac7eb3700208f025a6be6005c917002/PERFORMANCE.md)
+holds publication because the original raw evidence cannot currently be
+reverified. Historical tables do not close that gate.
+
+## Other codecs and format detection
+
+| Survey topic | Reference and adoption boundary |
+|---|---|
+| zstd | [Zstandard](https://github.com/facebook/zstd), Rust `zstd` bindings and the `ruzstd` decoder are candidates only where a product explicitly supports that encoding. Neither gzip nor BGZF permits replacing DEFLATE with zstd while retaining format compatibility. |
+| LZ4 | [lz4_flex](https://github.com/PSeitz/lz4_flex) exposes block and frame formats. The distinction, framing, limits and durability contract must be explicit if used for product-local scratch or interchange; no numerical ranking against C is established here. |
+| xz / liblzma | [XZ Utils](https://tukaani.org/xz/) provides the xz format/library. Rust bindings and decoder alternatives require version-specific compatibility and dependency review. This is not intrinsically an SRA ingest or standalone rsomics workflow. |
+| niffler | [niffler](https://docs.rs/niffler/3.0.1/niffler/) detects compression from bytes and exposes feature-selected readers/writers. It is not an open-by-extension helper and is not a new portfolio-wide default. Existing seqio consumers should retain their tested shared contract. |
+
+CRAM 3.1 does not introduce zstd: its
+[format specification, sections 8 and 14](https://samtools.github.io/hts-specs/CRAMv3.pdf)
+adds rANS4x16, adaptive arithmetic coding, fqzcomp and read-name tokenisation
+to the earlier codec set. CRAM 3.0 already supports LZMA encapsulated in xz.
+These are CRAM block codecs, not an instruction to open a CRAM file as an xz
+stream. The old zstd and archival-only descriptions are withdrawn.
+[NCBI's fasterq-dump guide](https://github.com/ncbi/sra-tools/wiki/HowTo:-fasterq-dump)
+also distinguishes FASTQ generation from subsequent explicit compression;
+it does not establish the old claimed xz output workflow.
+
+License and attribution review belongs to the exact selected source version,
+including native bindings, bundled codec code and optional features. The
+previous approximate license/version labels are not an adoption approval.
+
+## Evidence before changing a shared path
+
+1. Name two actual product consumers and their matching byte-stream contract
+   before adding a public item; otherwise keep the adapter private.
+2. Test content detection independently of extensions, concatenated members,
+   truncated input, checksum failures, short/interrupted I/O, finalization
+   failures and cancellation. Add BGZF frame/EOF/index cases only where that
+   stronger guarantee is promised.
+3. Retain both consumer oracles and the downstream record semantics, not just
+   a codec round trip. Standard-output piping and named-output transactions
+   are distinct product contracts.
+4. Measure complete representative workflows with exact binaries, backend
+   features, inputs, levels, thread budgets, output sizes, timing distributions
+   and peak memory on the relevant native platforms.
+5. Make an explicit correctness/performance decision. A successful benchmark
+   collection, dependency's advertised speed or generic SIMD/GPU label does
+   not constitute a release gate.
+
+No new public crate, backend switch or parallel-compression API is approved by
+this survey. The next shared compression work remains driven by the existing
+consumer contracts, not by the old checked adoption list.
