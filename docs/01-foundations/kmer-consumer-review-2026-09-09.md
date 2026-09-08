@@ -2,10 +2,12 @@
 
 Status: the short-sequence repair passes both consumers on all four native
 platforms, including successful artifact retention at the second candidate.
-Two equivalent guards nevertheless regressed in x86_64 measurements. The
+Two equivalent guards measured slower in the original x86_64 comparisons. The
 subsequent inlining hint made performance worse and has been withdrawn.
-An equal-source measurement control is running before further structural
-changes. No corrected registry release or delivered product repair is claimed.
+Equal-source controls now demonstrate substantial measurement confounding,
+including a stable x86_64 difference in a same-process diagnostic. The earlier
+ratios cannot be attributed entirely to the guard. No performance pass,
+corrected registry release or delivered product repair is claimed.
 Local product builds remain stopped by the physical boot-storage gate.
 
 ## Identities and evidence scope
@@ -174,19 +176,63 @@ actually did. The experiment failed its measured gate and was withdrawn by
 | Ubuntu x86_64 | 1.808787 | 1.620417 |
 | Ubuntu aarch64 | 1.140139 | 1.122348 |
 | macOS aarch64 | 1.240617 | 1.209461 |
+| macOS x86_64 | 1.089177 | 0.939991 |
 
-The Intel macOS measurement is still running; the three completed platforms
-already reject the attribute. The inlining consumer run has an artifact-only
-HTTP 403 on Linux x86_64 sketch; it is not needed to approve an experiment
-that has been rejected. No additional blind local guard change follows it.
+All four measurement jobs completed successfully. Intel macOS alone favors
+inlining over the corrected control, but does not override the other three
+platforms' regressions. The inlining consumer run completed with an
+artifact-only HTTP 403 on Linux x86_64 sketch; it is not needed to approve an
+experiment that has been rejected. No additional blind local guard change
+follows it.
 
 At the withdrawal head, `src`, tests, benchmarks and both Cargo files are
 byte-identical to corrected control `23e42f3`. Run
 [34254249238](https://github.com/omics-rust/rsomics-kmer/actions/runs/34254249238)
 therefore supplies an equal-source candidate/reference control while retaining
-the released baseline. Resolve measurement variation and review the iterator's
-internal representation before another production optimization. This does not
-relax the performance threshold, change a public API or authorize publication.
+the released baseline. Linux x86_64's six candidate/reference ratios are
+0.825729, 1.001047, 0.833103, 1.055229, 0.994564 and 0.945402: identical source,
+library assembly and caller assembly can still differ by approximately 17%
+within a pair. Intel macOS's median is 1.037087. The run completed with three
+successful jobs and a macOS ARM artifact-finalization HTTP 403 after
+measurement. Its missing ARM artifact is not represented as retained evidence.
+
+### Same-process null control
+
+Commit `22faa44` replaces the separate Criterion processes with a CI-only,
+unpublished comparison harness. It compiles three pinned dependency identities
+in one binary and balances all six orders across 60 measured triplets after
+six warmup triplets. Linux pins one allowed CPU. Input generation, `k=31`,
+seed 42 and XOR reduction match the old workload; each observation verifies
+the checksum, but this is not a substitute for full consumer oracles.
+
+Run [34256249038](https://github.com/omics-rust/rsomics-kmer/actions/runs/34256249038)
+passed all four native jobs at `3d4b7516c9914724ebc1c96031b046c9c71cbf1c`.
+Normal exact-head CI
+[34256246005](https://github.com/omics-rust/rsomics-kmer/actions/runs/34256246005)
+also passed. Every artifact has 198 observations, including 180 measurements,
+the three expected resolved Git identities, equal checksums, and fixture SHA-256
+`ecfc819faea7528e21043367dc95845d311fb1ffaf19b3989be82067a0869f3d`.
+Candidate and corrected reference have identical production sources.
+
+| Native runner | Median candidate/reference time ratio | Median candidate/released time ratio |
+|---|---|---|
+| Ubuntu x86_64 | 0.906807 | 0.902147 |
+| Ubuntu aarch64 | 1.002371 | 1.009129 |
+| macOS x86_64 | 0.924302 | 0.921327 |
+| macOS aarch64 | 1.014703 | 1.004022 |
+
+These are diagnostic observations, not optimization results. The Linux x86_64
+equal-source ratio stays between 0.893190 and 0.927590 across all 60 pairs,
+so balancing time and CPU affinity alone does not remove the systematic bias.
+The compiled harness has three separate caller loops and three distinct
+iterator symbols; labels remain tied to call sites, object locations and
+linked code locations. Identify or counterbalance that confound before using
+small timing differences to approve or reject a production change. No
+additional production optimization was made for this diagnostic.
+
+The benchmark and consumer workflows now use `actions/upload-artifact@v7.0.1`.
+This aligns their artifact client with its supported runtime; successful new
+uploads do not establish the cause of earlier intermittent HTTP 403 failures.
 
 Both completed measurement sets, including all four platforms, are retained
 outside scratch under
@@ -205,6 +251,9 @@ the GitHub artifact digests:
 
 Scratch copies remain under
 `/Volumes/KIOXIA/Developments/tmp/kmer-repair-evidence-20260909-619Btb`.
+The complete four-platform inlining set, three retained equal-source
+platforms, and all four same-process controls have also been copied and
+recursively compared in `inlining`, `equal-source` and `interleaved-control`.
 No measurements or failed-candidate evidence was deleted.
 
 ## Remaining repair gate
