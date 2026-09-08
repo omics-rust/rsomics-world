@@ -111,6 +111,10 @@ remaining concat performance or publication gates.
 
 ## Remaining gates
 
+Indexed ingestion and writer repairs now continue in
+`vcf-indexed-ingestion-2026-09-09.md`; its observed reds and revised per-contig
+chunk-union design supersede the initial region-at-a-time proposal.
+
 1. Do not publish frozen `682942c` unchanged: it retains the preexisting lossy
    default-index path helper. Transfer the fix into a separately verified
    backport or a verified superseding product release. Registry authorization

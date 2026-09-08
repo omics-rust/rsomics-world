@@ -306,9 +306,10 @@ and VCF/BCF policy have no second product consumer and stay internal.
 
 ## Repair execution order
 
-No production repair starts until a permitted build environment can run the
-new regression and show it failing. The current dirty worktree is preserved
-unchanged until then.
+Each production repair follows an observed failing regression in a permitted
+build environment. Source-snapshot diagnostics can establish that evidence
+without publishing or committing the inherited product worktree. The current
+execution record is `.autopilot/state/vcf-indexed-ingestion-2026-09-09.md`.
 
 ### 1. Resolve and inject one exact index
 
@@ -333,27 +334,51 @@ missing index. Each failure must occur before named output replacement.
 
 ### 2. Remove per-input OS threads
 
-Replace the current scoped thread and one-record-channel topology with a
-region-by-region indexed merge on the calling thread. Open one indexed reader
-per input, query the same merged region across those readers, and keep at most
-one decoded record per input in the heap. Merged region intervals prevent
-overlapping queries; retain explicit cross-region suppression for long records
-that can be returned by more than one disjoint query.
+Replace scoped input threads and one-record channels with caller-thread
+merging. Open and retain one indexed reader per input during header/index
+preflight, before constructing either serial or parallel output writers.
+Process selected contigs in output-header order. Within each contig, obtain
+chunks for every merged interval from each input's selected index and union
+the virtual-offset chunks before reading records. VCF resolves contigs through
+the index's name table; BCF resolves them through that input's original header
+dictionary, never through the merged output header.
 
-This keeps the irreducible k-way state at `O(inputs)` while eliminating one
-thread stack and channel per input. Input-open failures remain pre-output
-errors. Query, decode, order, writer, and broken-pipe failures propagate
-directly without worker cancellation or join ambiguity. Do not add an
-arbitrary worker flag or fixed input cap unless measured file-descriptor
-evidence requires one.
+The originally proposed region-at-a-time merge was rejected after independent
+review. Diagnostic `34286117195` reproduces both coordinate inversion and
+split same-position duplicate groups on all four native targets: a POS 10
+variant selected only at 100 must not appear after POS 20 selected at 20.
+Unioning chunks preserves input physical order without scanning a whole
+contig envelope or rereading long records for several disjoint queries.
+
+Keep at most one pending record per input in the merge heap. The total memory
+bound also includes parsed indexes, headers, and the complete same-coordinate
+batch required by duplicate matching; it is not strictly `O(inputs)`. File
+descriptors still scale with inputs. Query, decode, order, writer, and
+broken-pipe failures propagate directly without worker cancellation or join
+ambiguity. Do not add an arbitrary worker flag or fixed input cap without
+measured need.
+
+For indexed concat, `records_read` counts each physical candidate record per
+input once when its coarse reference/span overlaps any selected interval.
+It includes candidates later rejected by position/variant overlap policy,
+but excludes off-region records included incidentally in an index chunk.
+Separate input files and distinct repeated records still count separately.
+Apply the coarse filter before full typed decoding. This replaces concat's
+unpublished query-occurrence count; the existing `view` visit/count contract
+does not change.
 
 The regression matrix uses one, two, 64, and 256 indexed inputs; equal-position
 ties across at least three inputs; multiple disjoint and merged regions; a
 long record returned for more than one disjoint query; a corrupt early and
-late input; and a failing output writer. On Linux, the scaling harness records
-peak threads and open descriptors from `/proc`; macOS records the equivalent
-process counts. Plain-output indexed concat must not create one thread per
-input.
+late input; and a failing output writer. The harness samples threads, open
+descriptors, and RSS with stdout backpressured after the first data record,
+using `/proc` on Linux and process tools on macOS. These are point-in-time
+synthetic diagnostic samples, not peak-memory or throughput benchmarks.
+Plain-output indexed concat must retain one child thread at every tested input
+count, exit promptly after a broken pipe, and report it as an I/O error.
+Writer fault injection separately checks every byte boundary and preserves
+the innermost I/O kind, leaf diagnostic, and record context. It does not retain
+the structured error source chain.
 
 ### 3. Collapse naive preflight from three passes to two
 
