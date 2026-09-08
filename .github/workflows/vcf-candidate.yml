@@ -31,16 +31,9 @@ jobs:
             runner: macos-15
             system: Darwin
             architecture: arm64
-    env:
-      CARGO_HOME: ${{ runner.temp }}/cargo-home
-      CARGO_TARGET_DIR: ${{ runner.temp }}/cargo-target
-      RUSTUP_HOME: ${{ runner.temp }}/rustup-home
-      TMPDIR: ${{ runner.temp }}/scratch
-      EVIDENCE: ${{ runner.temp }}/vcf-evidence
     defaults:
       run:
         shell: bash
-        working-directory: ${{ runner.temp }}/vcf-candidate
     steps:
       - uses: actions/checkout@v6
         with:
@@ -53,6 +46,13 @@ jobs:
           set -euo pipefail
           test "$(uname -s)" = '${{ matrix.system }}'
           test "$(uname -m)" = '${{ matrix.architecture }}'
+          export CARGO_HOME="$RUNNER_TEMP/cargo-home"
+          export CARGO_TARGET_DIR="$RUNNER_TEMP/cargo-target"
+          export RUSTUP_HOME="$RUNNER_TEMP/rustup-home"
+          export TMPDIR="$RUNNER_TEMP/scratch"
+          export EVIDENCE="$RUNNER_TEMP/vcf-evidence"
+          printf 'CARGO_HOME=%s\nCARGO_TARGET_DIR=%s\nRUSTUP_HOME=%s\nTMPDIR=%s\nEVIDENCE=%s\n' \
+            "$CARGO_HOME" "$CARGO_TARGET_DIR" "$RUSTUP_HOME" "$TMPDIR" "$EVIDENCE" >> "$GITHUB_ENV"
           snapshot=.autopilot/snapshots/vcf-concat-index-2026-09-09
           echo "7de7ecdb1d5375c56f97037b00dee26682fdf4c90e39f28abb7b13e94015da30  $snapshot/source.tar.gz" | shasum -a 256 --check
           echo "d71d58ea62b5d1cb97dd2cf82559bd8419c47259434ce61e0a19dfc24a382475  $snapshot/files.sha256" | shasum -a 256 --check
@@ -80,6 +80,7 @@ jobs:
 
       - name: Record resolved dependencies and toolchain
         id: metadata
+        working-directory: ${{ runner.temp }}/vcf-candidate
         run: |
           set -euo pipefail
           rustc -Vv | tee "$EVIDENCE/rustc.log"
@@ -90,24 +91,28 @@ jobs:
 
       - name: Test index-selection regressions
         if: ${{ !cancelled() && steps.metadata.outcome == 'success' }}
+        working-directory: ${{ runner.temp }}/vcf-candidate
         run: |
           set -euo pipefail
           cargo test --locked --test index_selection_cli -- --nocapture 2>&1 | tee "$EVIDENCE/index-selection.log"
 
       - name: Test debug
         if: ${{ !cancelled() && steps.metadata.outcome == 'success' }}
+        working-directory: ${{ runner.temp }}/vcf-candidate
         run: |
           set -euo pipefail
           cargo test --locked --all-features 2>&1 | tee "$EVIDENCE/test-debug.log"
 
       - name: Test release
         if: ${{ !cancelled() && steps.metadata.outcome == 'success' }}
+        working-directory: ${{ runner.temp }}/vcf-candidate
         run: |
           set -euo pipefail
           cargo test --release --locked --all-features 2>&1 | tee "$EVIDENCE/test-release.log"
 
       - name: Format, strict Clippy, harness syntax, and package
         if: ${{ !cancelled() && steps.metadata.outcome == 'success' && matrix.target == 'linux-x86_64' }}
+        working-directory: ${{ runner.temp }}/vcf-candidate
         run: |
           set -euo pipefail
           cargo fmt --all -- --check 2>&1 | tee "$EVIDENCE/format.log"
@@ -169,6 +174,7 @@ jobs:
 
       - name: Test pinned compatibility oracles in both profiles
         if: ${{ !cancelled() && steps.corpora.outcome == 'success' }}
+        working-directory: ${{ runner.temp }}/vcf-candidate
         run: |
           set -euo pipefail
           export RSOMICS_BCFTOOLS="$(command -v bcftools)"
@@ -191,6 +197,7 @@ jobs:
 
       - name: Verify source immutability after tests
         if: ${{ !cancelled() && steps.snapshot.outcome == 'success' }}
+        working-directory: ${{ runner.temp }}/vcf-candidate
         run: |
           set -euo pipefail
           shasum -a 256 --check "$EVIDENCE/files.sha256" | tee "$EVIDENCE/source-post-test.log"
