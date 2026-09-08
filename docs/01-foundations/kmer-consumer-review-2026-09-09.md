@@ -1,11 +1,10 @@
 # K-mer consumer and boundary recheck
 
-Status: the short-sequence panic has been reproduced on all four native CI
-targets and fixed in the first foundation candidate. Both consumers' validation
-steps passed on all four platforms, but the first candidate regressed in the
-paired Linux x86_64 benchmark. An equivalent end-boundary candidate is now
-being tested. No corrected registry release or delivered product repair is
-claimed.
+Status: the short-sequence repair passes both consumers on all four native
+platforms, including successful artifact retention at the second candidate.
+Two equivalent guards nevertheless regressed in x86_64 measurements. A single
+inlining hint is now being tested against both the corrected and released
+controls. No corrected registry release or delivered product repair is claimed.
 Local product builds remain stopped by the physical boot-storage gate.
 
 ## Identities and evidence scope
@@ -103,8 +102,11 @@ Both setup defects were corrected at
 [34251307513](https://github.com/omics-rust/rsomics-kmer/actions/runs/34251307513),
 all eight consumer validation steps passed. One macOS ARM sketch job failed
 only while finalizing its uploaded artifact (intermediary HTTP 403), so its
-exact job is being retried. Do not report the overall run as green until that
-artifact gate succeeds.
+exact job was retried once, with the same artifact-only failure. This first
+candidate's overall run remains failed. The second candidate's complete
+consumer run [34252192237](https://github.com/omics-rust/rsomics-kmer/actions/runs/34252192237)
+passed all eight jobs, including artifact upload; this is the closed consumer
+gate. The first run was not relabelled as green.
 
 An independent read-only review approved the first candidate's correctness
 and test coverage, but withheld release approval because of the performance
@@ -126,8 +128,8 @@ retained; these are real measurements, not `--test` smoke.
 |---|---|---|
 | Ubuntu x86_64 | AMD EPYC 9V74 | 1.199778; performance hold |
 | Ubuntu aarch64 | Neoverse-N2 | 1.002289 |
-| macOS aarch64 | See retained provenance | 0.999841 |
-| macOS x86_64 | Pending | Not yet available |
+| macOS aarch64 | Apple M1 (Virtual) | 0.999841 |
+| macOS x86_64 | See retained provenance | 1.148879; performance hold |
 
 The x86_64 ratios were 1.199778, 1.070189, 1.443603, 1.160394 and 1.200397.
 This is about 20% longer median elapsed time, not a 20% throughput loss.
@@ -138,17 +140,51 @@ without assembly evidence.
 The next candidate, production commit `0ba84a6`, uses the equivalent guard
 `len < k || start > len - k`. Short-circuit evaluation protects subtraction
 on short inputs while retaining a loop-invariant end boundary. At head
-`ff0357d`, ordinary CI, both consumers
+`ff0357d`, ordinary CI and both consumers
 ([34252192237](https://github.com/omics-rust/rsomics-kmer/actions/runs/34252192237))
-and paired benchmarks
+passed. Paired benchmark collection
 ([34252186622](https://github.com/omics-rust/rsomics-kmer/actions/runs/34252186622))
-are running. No performance benefit is yet established. Optimized benchmark
-assembly is now included in the measurement artifacts for further diagnosis.
+also completed, but the median paired-time ratios still fail the performance
+gate: Linux x86_64 1.161514, Linux ARM 0.966408, macOS x86_64 1.098681 and
+macOS ARM 1.071380. Successful collection is not a performance pass.
 
-Downloaded first-run raw evidence is under
-`/Volumes/KIOXIA/Developments/tmp/kmer-repair-evidence-20260909-619Btb/benchmarks`.
-The three completed platforms are present; the Intel macOS artifact is still
-pending. Publication must not depend solely on the 90-day CI retention.
+The benchmark caller assembly for this comparison is byte-identical across
+baseline and candidate; both call the iterator's `next` for each window.
+Separate library assembly from
+[34252843366](https://github.com/omics-rust/rsomics-kmer/actions/runs/34252843366)
+shows changed guard instructions, block layout and register use, but does not
+establish the cause of the slowdown. That diagnostic run's Linux artifacts
+are available; both macOS artifact uploads failed. It is not a timing run.
+
+An independent review recommended one bounded cross-crate optimization
+experiment: ordinary `#[inline]` on `next`, leaving the second guard and
+iterator state unchanged. Commit `0924135` adds only that attribute. Candidate
+head `1dcb6a71b7dcab8c8095b63d474e4fbd9e9686b5` runs six balanced triplets
+against both released `d89e2df` and corrected, non-inlined `23e42f3` controls
+in [34253569461](https://github.com/omics-rust/rsomics-kmer/actions/runs/34253569461).
+Consumer verification is
+[34253574988](https://github.com/omics-rust/rsomics-kmer/actions/runs/34253574988).
+Neither improvement nor successful inlining is assumed. Both library and
+caller assembly are retained to check what the compiler actually did.
+
+Both completed measurement sets, including all four platforms, are retained
+outside scratch under
+`/Volumes/Zane's HDD/rsomics-fixtures/evidence/kmer-short-window-2026-09-09/`
+in `first-guard` and `invariant-boundary`. Copies were compared recursively
+against the downloaded source. First-run raw ZIP archives in
+`archives-34251528752` also pass ZIP integrity checks and independently match
+the GitHub artifact digests:
+
+| Artifact ID | SHA-256 |
+|---|---|
+| `10066232031` | `4e31382b0a251cc660e29d3ac13bfd5e88ef2d79dfc7afdc69d14de0b3999c64` |
+| `10066239983` | `d404cededd5ae0b924932b676af5e6648daac4ab616fdbec3b551278fa47c5aa` |
+| `10066311402` | `a86086049318459a3554bf62085741cf68870d30dfc88f6201343e56d5f0901d` |
+| `10066607598` | `31f243affa8f62adfae9260e6e31e3e423ac6bc322dc6a18c064de1e028c4ff8` |
+
+Scratch copies remain under
+`/Volumes/KIOXIA/Developments/tmp/kmer-repair-evidence-20260909-619Btb`.
+No measurements or failed-candidate evidence was deleted.
 
 ## Remaining repair gate
 
