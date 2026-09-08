@@ -1,14 +1,46 @@
 # Sparse BCF index construction, names and interoperability
 
-Status: four-native expected reds verified; builder/statistics repair full
-diagnostics running as `34290416281` at world
-`47de686b0d4606992010cf07887745129804ee3d` (control CI `34289977881` passed).
-External-index empty-tail behavior is a separate observed compatibility gap,
-not fixed or publishable yet. Snapshot `vcf-empty-tail-red-2026-09-09` adds
-three focused groups covering 32 query cases, shortened-index statistics and
-16 rejection/output-preservation cases. Only index tests change from the
-repair snapshot; these additions have not yet run. Boot occupancy now exceeds
-95%; local compilation remains prohibited.
+Status: sparse builder/statistics repair full four-native diagnostics verified
+green. Subsequent empty-tail query/statistics expected reds verified on all
+four native platforms. Snapshot `vcf-empty-tail-fix-2026-09-09` is reviewed and
+ready for full diagnostics, not yet runtime-verified or publishable. Boot
+occupancy exceeds 95%; local compilation remains prohibited.
+
+## Latest verified results
+
+Builder/statistics fix run `34290416281` at world
+`47de686b0d4606992010cf07887745129804ee3d` passed all native jobs; control CI
+`34289977881` passed. Four ZIP API digests/sizes, CRCs, 97 extracted files,
+172 source checks before/after, Rust/native host and dependency identities
+were independently verified. Every ordinary profile passes 428 Linux or
+426 macOS tests, with 61 ignored oracle tests. Linux x86 separately passes
+all 61 pinned oracle tests per profile, plus fmt, strict Clippy, per-harness
+syntax and package. Focused index construction/concat/resources/writer pass
+10/37/3/11. The probe confirms default BCF statistics fixed and owned CSI
+creation succeeds with 10 slots; the external six-slot CSI still exposes
+the empty-tail query and `--all` omissions. These are separate gates.
+
+Permanent evidence, recursively verified against KIOXIA capture
+`vcf-sparse-fix-34290416281-cTcG84`, is
+`/Volumes/Zane's HDD/rsomics-fixtures/evidence/vcf-index-selection-2026-09-09/sparse-fix-34290416281/`.
+
+Focused empty-tail red run `34290914478` at world
+`d7fd393970ea1605ae9cb512e010c6528e21f36a` fails exactly the index step on
+all four native targets (11 pass/two fail); control CI `34290856966` passes.
+Each platform records all 32 intended query failures and both statistics
+omissions. The 16 unknown-region/corrupt-index output-preservation cases pass.
+All four ZIPs, 56 extracted files and 172-source before/after identities are
+verified. This focused run intentionally does not execute ordinary full
+debug/release or oracle suites. Evidence is at
+`/Volumes/Zane's HDD/rsomics-fixtures/evidence/vcf-index-selection-2026-09-09/empty-tail-red-34290914478/`,
+identical to KIOXIA capture `vcf-empty-tail-red-34290914478-5zt4La`.
+
+The empty-tail fix changes only the private region reader and statistics
+implementation. The expected-red tests are byte-identical. It caches the BCF
+index span once per input, skips valid out-of-span IDs without suppressing
+header/index errors, and appends declared tail contigs in raw-ID order for
+`--all`. Default totals, VCF behavior and existing read-counter semantics
+remain unchanged. Source review approves remote execution, not correctness.
 
 ## Evidence
 
@@ -72,10 +104,10 @@ index storage already grow densely before/alongside this code.
 
 ## Next gates
 
-1. Run the full four-native repair diagnostics and verify retained artifacts.
-2. Add and run empty-tail query/statistics regressions using externally shaped
-   CSI, including `view` and concat, before changing that behavior. Preserve
-   unknown-contig rejection and index corruption errors.
+1. Run the full four-native empty-tail repair diagnostics and verify retained
+   artifacts, including the actual HTSlib-generated CSI probe.
+2. Preserve unknown-contig rejection, index corruption errors, counters and
+   unchanged expected-red tests while checking the repair.
 3. Add pinned sparse-ID interoperability tests with explicit expected
    differences for the observed upstream `--all` crash, not silent comparison
    exclusions. Continue concat's remaining naive/reheader/oracle/performance
