@@ -8,6 +8,11 @@ identifies an unresolved short-sequence bounds error in the consumed hashing
 iterator. The old successful CI and release checks do not cover that case and
 must not be used to dismiss it.
 
+The [September product review](sketch-contract-review-2026-09-09.md) also
+identifies signature scale recovery and mixed-scale collection comparison
+defects. Its new repair evidence supersedes this historical correctness claim
+for those cases; the original release record remains intact below.
+
 ## Released contract
 
 The release provides four complete commands:

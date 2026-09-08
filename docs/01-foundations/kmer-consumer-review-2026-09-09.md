@@ -2,7 +2,7 @@
 
 Status: the short-sequence repair passes both consumers on all four native
 platforms. Actual sketch measurements now retain all four genome workloads
-and the two ARM full FASTQ workloads; x86_64 FASTQ remains running. These
+and three full FASTQ workloads; Intel macOS FASTQ remains running. These
 completed workloads show a material memory advantage but mixed throughput
 against sourmash. Old microbenchmark attribution remains inconclusive; the
 rejected inlining hint stays withdrawn. No whole-gate performance pass,
@@ -386,7 +386,7 @@ not support a universal throughput claim: the x86_64 candidate is approximately
 11.1% slower than sourmash on Linux and 9.5% slower on macOS by paired medians.
 Same-source control differences are recorded rather than attributed to the
 guard. This is not yet a complete performance or publication gate: the full
-FASTQ results below are partial while the x86_64 jobs remain running.
+FASTQ results below remain partial while the Intel macOS job is running.
 
 A separate read-only reviewer independently recomputed all four results,
 including compiled feature sets from Cargo messages and all raw resource
@@ -411,7 +411,7 @@ The retained copy was recursively compared with external scratch at
 `/Volumes/KIOXIA/Developments/tmp/sketch-construction-34261423289-mjkyFe/`.
 Do not overwrite these files when collecting the remaining FASTQ artifacts.
 
-#### ARM full FASTQ results; x86_64 still pending
+#### ARM full FASTQ results
 
 The Linux ARM and macOS ARM full gzip FASTQ abundance jobs completed
 successfully. Each artifact contains 36 raw trials: four warmup observations
@@ -436,8 +436,9 @@ The ARM FASTQ results support a substantial memory advantage on both runners
 and a throughput advantage only on Linux ARM. macOS ARM takes approximately
 36.1% longer than sourmash by paired median; its peak RSS is approximately
 81.3% lower. Historical August FASTQ ratios are not substituted for this result.
-The two x86_64 FASTQ jobs remain live, so neither the full four-native workload
-gate nor publication is approved yet.
+At initial ARM collection both x86_64 jobs were live; Linux x86_64 subsequently
+completed as recorded below. Intel macOS remains pending, so neither the full
+four-native workload gate nor publication is approved yet.
 
 | Artifact ID | Native FASTQ artifact | SHA-256 |
 |---|---|---|
@@ -458,6 +459,34 @@ in all eight measured pairs (3.16–3.77% longer elapsed time, median 3.39%).
 That observed regression remains part of the eventual release decision;
 closeness to the same-source corrected reference does not erase it.
 
+#### Linux x86_64 full FASTQ result; Intel macOS still pending
+
+Job `102180058482` completed with all three archived-candidate oracle tests
+and binary/lockfile checksum checks passing. Artifact `10072798104` has SHA-256
+`29e68c60307ab1af1e8ae680ec3eb724407f19f8b326071ff25cf1598a306020`.
+The ZIP digest and integrity, all 36 raw trials, eight complete measured rounds,
+balanced positions, input/parameter provenance, full output equality, dependency
+identities, actual compiled features and ordinary release profiles were verified.
+
+| Control | Median paired candidate time / control | Median paired candidate RSS / control |
+|---|---|---|
+| Registry kmer baseline | 0.699100 | 0.997876 |
+| Same-source corrected reference | 0.966135 | 0.999808 |
+| sourmash 4.9.4 | 1.864916 | 0.090191 |
+
+On this AMD EPYC 7763 runner, candidate elapsed time is higher than sourmash
+in all eight pairs: 86.49% higher by paired median, despite 90.98% lower peak
+RSS. Candidate/reference ratios range from 0.935437 to 0.994874; equal sources
+still have persistent timing differences, so the baseline improvement is not
+assigned specifically to the guard. The same 40,425 hashes and abundances match
+both ARM artifacts after removing only the absolute filename.
+
+An independent reviewer reproduced every value and validated the provenance.
+The ZIP, extracted evidence, job log and updated artifact metadata were copied
+to the permanent evidence directory above and recursively compared with scratch.
+Only Intel macOS FASTQ job `102180058887` remains running. These measurements
+still describe product head `3802b1a`, not the subsequent product-local repairs.
+
 ### Fresh API and publication preflight
 
 A fresh independent source review of kmer `61de048`, sketch `3802b1a` and seq
@@ -475,6 +504,13 @@ No secret value was read, no access list changed and no publish dispatched.
 The last successful seq/VCF publication runs predate the secret's August 20
 update, so they do not establish its current validity. Credential availability
 remains separate from the unfinished product performance gate.
+
+The separate [product contract recheck](../10-products/sketch-contract-review-2026-09-09.md)
+found and repaired scale recovery and collection comparison defects after the
+foundation review. Product head `f430522` passes exact-head four-native CI, but
+still depends on registry kmer 0.2.2 and still reproduces its short-input panic.
+Neither those green checks nor the earlier construction measurements establish
+delivery of the corrected dependency.
 
 ## Remaining repair gate
 

@@ -90,6 +90,12 @@ Rejected public boundary:
       boundary when immutable dependencies allow.
 - [ ] Correct repository metadata in future foundation releases.
 
+## P0.4 — current product correctness repairs
+
+- [ ] `rsomics-sketch`: deliver signature scale recovery and collection-wide
+      comparison sampling, separately from the kmer dependency repair; see the
+      [product contract recheck](docs/10-products/sketch-contract-review-2026-09-09.md).
+
 ## P1 — sequence pilot
 
 - [x] Complete the `seq/fastq` historical asset classification.

@@ -5,6 +5,10 @@ and independently verified for their initial FracMinHash and amplicon-abundance
 slices. See [`sketch-gate-2026-08-02.md`](sketch-gate-2026-08-02.md) and
 [`metagenomics-gate-2026-08-02.md`](metagenomics-gate-2026-08-02.md).
 
+The [September sketch contract recheck](sketch-contract-review-2026-09-09.md)
+records later correctness findings and source repairs that are not yet
+registry-delivered; publication history alone is not a current correctness gate.
+
 ## Boundary decision
 
 `rsomics-metagenomics` and `rsomics-sketch` remain separate products.
