@@ -216,6 +216,9 @@ If only one product needs the code, keep it internal.
   allowed external-disk locations. Also check free space on `/` and KIOXIA.
   Stop before compiling if the boot disk is at or above 80% usage or any build
   path resolves to it.
+  On macOS, calculate occupancy from `APFSContainerSize` and
+  `APFSContainerFree` in `diskutil info -plist /`; `df /` alone describes the
+  read-only system volume and can substantially understate boot-disk pressure.
 - Work in the owning repository under
   `/Volumes/KIOXIA/Documents/omics-rust/rsomics-<name>`.
 - Direct commits to `main`; no pull requests unless the user requests one.
