@@ -278,12 +278,11 @@ until their complete samtools contracts and fixtures are included.
 ### Implementation and evidence
 
 The initial implementation runs from `acba3ec` through code head
-`05960a4609a3b2acc388c0a149b5e023d53027f1`; repository head
-`821d491042a92d35153efcdf160acebf381ca4ee` both withdraws the stale performance
-claim and makes the formal harness build and authenticate its own exact-head
-binary. Exact-code-head CI run `32331824268` and exact-repository-head run
-`32340291429` pass on native Linux and macOS for both
-`x86_64` and `aarch64`. The latter includes strict Clippy, debug and release
+`05960a4609a3b2acc388c0a149b5e023d53027f1`. Harness revision
+`821d491042a92d35153efcdf160acebf381ca4ee` builds and authenticates its own
+exact-head binary. Four-native CI `33843770617` for repository head
+`880e9dcaa259ca71a3a37f4b4554dadcaf0fa886` was reverified successful on
+September 8. It includes strict Clippy, debug and release
 tests, rustdoc, package verification, and the Linux `x86_64` live compatibility
 suite against pinned HTSlib 1.24. The always-run suite has 60 tests, with nine
 additional HTSlib oracle tests.
@@ -304,17 +303,24 @@ defaults and overrides only supplied fields; requiring both sequence and begin
 columns was incompatible.
 
 The formal data at revision `df8089c8db89b5a3e064bb01d60414a47780f4d1`
-is retained only as a historical optimization baseline. Later revisions
-changed BGZF decompression and multi-region query algorithms, so those numbers
-are not evidence for the current head. Publication requires a clean rebuild of
-the exact head and a replacement 13-workload run with three warmups and ten
-alternating measured pairs. No current performance claim is inherited from the
-old micro-crates.
+is a historical optimization baseline. The replacement run from `821d491`
+completed 13 workloads with three warmups and ten alternating measured pairs;
+the product report records eight scoped throughput wins and lower median RSS
+in all 13 lanes, not universal superiority. On September 8 its recorded raw
+evidence directory was absent, so these remain historical reported numbers
+until the manifest and trials are restored and verified or reproduced.
+Publication is held. No performance claim is inherited from old micro-crates.
 
 The replacement harness records and checks the clean Git head, release-binary
 SHA-256, `Cargo.lock` SHA-256, toolchain, binary path, and build time before
 correctness or timing work. It also rejects nonempty result directories, and
 the summary command verifies the complete evidence manifest before rendering.
+The September repair also checks physical APFS container occupancy rather than
+the read-only system-volume `df /` percentage. The live Mac and Linux build
+hosts exceed the storage threshold. The
+[release state](../../.autopilot/state/index-0.1-release-gate-2026-08-20.md)
+tracks this gate, the missing raw evidence, exact-head CI, and the separate
+registry-credential access gate.
 
 ### Historical asset dispositions
 
