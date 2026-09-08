@@ -2,8 +2,13 @@
 
 Status: sparse builder/statistics repair full four-native diagnostics verified
 green. Subsequent empty-tail query/statistics expected reds verified on all
-four native platforms. Snapshot `vcf-empty-tail-fix-2026-09-09` is reviewed and
-ready for full diagnostics, not yet runtime-verified or publishable. Boot
+four native platforms. Snapshot `vcf-empty-tail-fix-2026-09-09` full run
+`34291571671` at world `ac6ccc9e8cecec466844b627f3b2f5cd41d46037` is being
+verified (control CI `34291509323` passed). A subsequent test-only candidate,
+`vcf-sparse-oracle-bidirectional-2026-09-09`, adds one pinned bidirectional
+oracle group and deduplicates fixture data inside the product tests. Its 174
+source identities are verified; production files match the preceding repair.
+The new oracle remains unexecuted. No publication gate is closed. Boot
 occupancy exceeds 95%; local compilation remains prohibited.
 
 ## Latest verified results
