@@ -1,190 +1,136 @@
-# Data structures
+# Data structures — consumer and upstream survey
 
-> The string-index, hashing, and probabilistic structures underlying every
-> aligner, k-mer counter, and sketcher in the rsomics stack.
+Updated 2026-09-09. This is an operation and dependency map, not a queue of
+crates to publish. Upstream availability does not establish rsomics completion,
+compatibility, performance, or a public-foundation boundary.
 
-## Scope
+## Current ownership
 
-Sequence indexes (FM-index, BWT, suffix array), k-mer hashing (ntHash,
-MurmurHash3, xxHash), MinHash sketching, HyperLogLog cardinality
-estimation, and Bloom / Cuckoo membership filters. Sequence *alignment*
-algorithms that consume these indexes live in module 02; *codec-level*
-compression lives in [`compression.md`](compression.md).
+The accepted names remain the [30-product/nine-foundation allowlist](../00-overview/registry-reset-keep.txt).
+Detailed behavior and release gates belong to the product dossiers.
 
-## Design notes
+| Capability | User workflow and owner | Current boundary | Required contract |
+|---|---|---|---|
+| Exact DNA k-mer encoding and counting | `rsomics-seq kmers` | Existing `rsomics-kmer::KmerCounts` and codec APIs | Checked k, strand policy, ambiguity, overflow, deterministic count rows |
+| Canonical Murmur64 windows | DNA signature construction in `rsomics-sketch` | Existing versioned `rsomics-kmer` API; only sketch currently consumes this hasher | Complete-window exhaustion, alphabet, canonical strand, hash lane, seed width, scratch reuse |
+| Persistent MinHash / FracMinHash | `rsomics-sketch` construction, inspection, comparison and search | Product-owned signatures and operations; later collection/index/gather work stays in this product | Hash/selection profile, abundance, interchange, downsampling, score semantics, output transactions |
+| Minimizer index and lookup | Planned `rsomics-minimap2 index` / `align` | Embedded minimap2 engine, not a replacement foundation | Pinned engine/preset/index parameters, MMI compatibility, mapping results |
+| Taxonomy-labelled minimizer database | Planned `rsomics-metagenomics` database/classification slice | Product-private until a second matching consumer is proven | Minimizer/spaced-seed profile, taxonomy revision, LCA assignment, database integrity, read reports |
+| FM/FMD index, BWT and suffix array | Full-text sequence matching | No validated current consumer establishes a new public foundation | Sentinel/alphabet, coordinate width, count/locate semantics, index construction and memory evidence |
+| HyperLogLog | Approximate distinct-item estimation | No accepted operation currently justifies extraction; evaluate inside its eventual consumer | Error profile, hash/precision parameters, merge compatibility, serialization |
+| Bloom / Cuckoo filters | Approximate membership or candidate filtering | Consumer-local dependency choice, not an independently installable rsomics product | False-positive behavior, capacity, insertion/deletion, exact-verification policy, thread safety |
+| Compacted / coloured de Bruijn graph | Graph construction and graph queries | Survey-only; no assembly/graph product is added to the current allowlist | Oriented graph model, compaction, colours, interchange, real graph/query oracle and resource evidence |
 
-- The classical full-text indexes (FM-index, BWT, suffix array) are well
-  covered by [`rust-bio`](https://github.com/rust-bio/rust-bio) — but the
-  implementation is dated and several issues (terminal-sentinel
-  requirements, lack of FMD index variants, limited 64-bit support) need
-  resolution before we declare it production-ready for a BWA-class
-  aligner.
-- Hash function choice is performance-critical for any k-mer-based tool.
-  `ntHash` (rolling) is the right default for adjacent k-mers; `xxHash3`
-  for general use; `MurmurHash3` for compatibility with existing sketches
-  (Mash, sourmash, finch).
-- MinHash and HyperLogLog have multiple Rust implementations with
-  overlapping but inconsistent APIs. `sourmash` (Rust core) and `finch`
-  are the production-grade options; new work should plug into one of them
-  rather than start a third sketching library.
-- For Bloom / Cuckoo filters,
-  [`probabilistic-collections`](https://github.com/jeffrey-xiao/probabilistic-collections-rs)
-  is the most complete single crate; lots of one-off implementations exist
-  but lose to it on either API or performance.
-- SIMD matters everywhere here: the inner loops of FM-index rank queries,
-  rolling hashes, and Bloom filter lookups are all vectorisable, but only
-  a few existing crates expose explicit SIMD paths. `rsomics-kmer` exposes
-  only primitives already demonstrated by `rsomics-seq` and
-  `rsomics-sketch`; SIMD work still requires consumer-level measurements.
+Current source anchors are
+[sequence counting](https://github.com/omics-rust/rsomics-seq/blob/d9734e51c4ed557f6d8790d97a686717ebc4769e/src/operations/kmers.rs),
+[sketch construction](https://github.com/omics-rust/rsomics-sketch/blob/3802b1aaca54a95c14dbdeb6571aff4eb5ebafc3/src/sketch.rs)
+and the [foundation consumer recheck](kmer-consumer-review-2026-09-09.md).
+Two products using different k-mer APIs do not prove that every public item
+has two consumers. Preserve existing compatible interfaces while auditing
+them; require two concrete contracts before any public expansion.
 
-## TODO
+## Hashing and sketches
 
-- [~] **FM-index** — succinct full-text index for backward search.
-  - Reference impl: `C++` · [Ferragina & Manzini original; bwa internal](https://github.com/lh3/bwa) · various
-  - Existing Rust: [`rust-bio::data_structures::fmindex`](https://crates.io/crates/bio) (in `bio` `3.0.0`); [`fm-index`](https://crates.io/crates/fm-index) `0.3.0`; [`nucleic-acid`](https://crates.io/crates/nucleic-acid) `0.1.1`
-  - Existing Rust kind: `partial-port` (no FMD-index variant; rank-query SIMD missing)
-  - Existing non-C alternatives: `sdsl-lite` (C++)
-  - Parallelism: single-threaded construction and query in all three crates today
-  - SIMD: none explicit (rank loops are auto-vectorize candidates)
-  - Quadrant: ③
-  - GPU-amenable: maybe — rank queries on a fixed index port to GPU but the engineering cost is high
-  - Upstream license: various (BWA itself MIT)
-  - Priority: `P0`
-  - Layer: adopt or keep private in the consuming aligner/product
-  - Consumes primitives: —
-  - Notes: rust-bio implementation works but issues [#30](https://github.com/rust-bio/rust-bio/issues/30) and [#495](https://github.com/rust-bio/rust-bio/issues/495) flag UX and correctness corners. The retired `rsomics-fm-index` repository is an implementation asset, not a boundary decision. An aligner may adopt or internalize the parts it needs after compatibility and performance validation; public promotion requires another concrete product consumer.
+The checked-in foundation wraps `nthash 0.5.1` and implements the selected
+MurmurHash3 profile. The upstream [ntHash project](https://github.com/BirolLab/ntHash)
+and [SMHasher/MurmurHash3 source](https://github.com/aappleby/smhasher) are
+behavior references, not interchangeable hash identities.
 
-- [~] **BWT (Burrows-Wheeler Transform)** — string permutation underlying FM-index.
-  - Reference impl: `C` · [bwa BWT routines](https://github.com/lh3/bwa) · `MIT`
-  - Existing Rust: `bio::data_structures::bwt` (in `bio` `3.0.0`); `nucleic-acid`
-  - Existing Rust kind: `partial-port`
-  - Existing non-C alternatives: `libdivsufsort` (C/C++)
-  - Parallelism: single-threaded SA construction (the bottleneck)
-  - SIMD: none explicit
-  - Quadrant: ③
-  - GPU-amenable: maybe — SA-IS variants have GPU implementations in the literature; engineering cost is non-trivial
-  - Upstream license: `MIT`
-  - Priority: `P0`
-  - Layer: adopt or keep private with the consuming FM/FMD index
-  - Consumes primitives: —
-  - Notes: Construction performance is the bottleneck for indexing multi-Gbp references. Select an existing implementation or improve it only through a concrete product, with real-reference compatibility, memory, and throughput evidence. A possible optimization does not create a public foundation.
+A hash name alone is insufficient for persisted data. Pin the variant, lane
+width, seed width, byte order, case/ambiguity policy and strand canonicalization.
+Do not replace MurmurHash3 with ntHash, xxHash or another hash merely because
+an isolated benchmark is faster. Internal hash tables may select a different
+hash privately when no external representation or algorithm contract depends
+on it; there is no portfolio-wide default established by this survey.
 
-- [~] **Suffix array** — sorted suffix offsets.
-  - Reference impl: `C` · [y-256/libdivsufsort](https://github.com/y-256/libdivsufsort) · `MIT`
-  - Existing Rust: `bio::data_structures::suffix_array` (in `bio` `3.0.0`); [`suffix`](https://crates.io/crates/suffix) `1.3.0`; [`divsufsort`](https://crates.io/crates/divsufsort) `2.0.0` (Rust port of libdivsufsort)
-  - Existing Rust kind: `pure-port` (`divsufsort` is a faithful Rust port)
-  - Existing non-C alternatives: —
-  - Parallelism: single-threaded
-  - SIMD: none explicit
-  - Quadrant: ③
-  - GPU-amenable: maybe — parallel SA construction is researched but engineering-heavy
-  - Upstream license: `MIT`
-  - Priority: `P0`
-  - Layer: adopt or keep private with the consuming index
-  - Consumes primitives: —
-  - Notes: `divsufsort` is the initial adoption candidate for SA construction. Validate it against `libdivsufsort` on real genomes before a product depends on it; keep the adapter product-private unless a second consumer demonstrates the same contract.
+The [sourmash command reference](https://sourmash.readthedocs.io/en/latest/command-line.html)
+documents sketch construction, comparison, search and gather as related
+workflows. Our pinned compatibility profile and implemented-versus-planned
+surface are defined in the [sketch dossier](../10-products/metagenomics-sketch.md#rsomics-sketch),
+not inferred from the latest upstream manual. FracMinHash, fixed-size Mash
+sketches, exact k-mer counts and taxonomic classification are not synonymous.
+Retaining the same upstream function name is not enough to establish file or
+score compatibility.
 
-- [x] **`ntHash`** — rolling hash for DNA k-mers.
-  - Reference impl: `C++` · [bcgsc/ntHash](https://github.com/bcgsc/ntHash) · `MIT`
-  - Existing Rust: [`nthash`](https://crates.io/crates/nthash) `0.5.1` (luizirber); [`nthash-rs`](https://crates.io/crates/nthash-rs) `0.1.3` (pure-Rust port)
-  - Existing Rust kind: `pure-port`
-  - Existing non-C alternatives: —
-  - Parallelism: per-k-mer rolling, trivially parallel over input chunks
-  - SIMD: none explicit yet (a candidate for `std::simd` rolling-hash batching)
-  - Quadrant: ①
-  - GPU-amenable: yes — rolling hash over a large sequence batch is SIMT-friendly (per-position parallelism)
-  - Upstream license: `MIT`
-  - Priority: `P0`
-  - Layer: `A` (foundation — `rsomics-kmer`)
-  - Consumes primitives: —
-  - Notes: `nthash-rs` is the cleaner modern port (handles non-ACGT bases, canonical k-mers). Used by sourmash, GGCAT, many others.
+The canonical short-input repair is source-verified but not yet a delivered
+registry repair; its [current evidence](kmer-consumer-review-2026-09-09.md)
+takes precedence over old completion ticks or historical speed claims.
 
-- [x] **`MurmurHash3`** — general non-cryptographic hash.
-  - Reference impl: `C++` · [aappleby/smhasher](https://github.com/aappleby/smhasher) · `Public domain`
-  - Existing Rust: [`murmurhash3`](https://crates.io/crates/murmurhash3) `0.0.5`; [`mur3`](https://crates.io/crates/mur3) `0.1.0`; [`murmur3`](https://crates.io/crates/murmur3)
-  - Existing Rust kind: `pure-port`
-  - Existing non-C alternatives: `xxHash` (faster modern alternative)
-  - Parallelism: stateless per-key
-  - SIMD: none explicit
-  - Quadrant: ④
-  - GPU-amenable: yes — per-key stateless hash is SIMT-trivial (but rarely the bottleneck)
-  - Upstream license: `Public domain`
-  - Priority: `P1`
-  - Layer: `adopt`
-  - Consumes primitives: —
-  - Notes: Pick one (`mur3` has the cleanest Hasher API). Required for compatibility with Mash/sourmash sketches; new internal hashes should prefer `xxh3` or `ahash`.
+## Sequence indexes are not one shared index format
 
-- [x] **MinHash sketching** — locality-sensitive sketch for similarity.
-  - Reference impl: `C++` · [marbl/Mash](https://github.com/marbl/Mash) · `BSD-3-Clause`
-  - Existing Rust: [`sourmash`](https://crates.io/crates/sourmash) `0.22.0` (Rust core); [`finch`](https://github.com/onecodex/finch-rs) `0.6.2`
-  - Existing Rust kind: `rust-native` (independent Rust impls of an academic algorithm; Mash is one of several MinHash impls, not a C/C++ upstream being ported)
-  - Existing non-C alternatives: `mash` itself (C++)
-  - Parallelism: rayon-amenable per-sketch
-  - SIMD: none explicit in sketching loops; underlying hashes auto-vectorize
-  - Quadrant: ①
-  - GPU-amenable: maybe — sketch construction is parallel but I/O bound on the FASTA read
-  - Upstream license: `BSD-3-Clause`
-  - Priority: `P0`
-  - Layer: `adopt`
-  - Consumes primitives: —
-  - Notes: Adopt sourmash (broader feature set, scaled MinHash) or finch (lighter, faster, no Python interop). Both are production-grade. New work plugs in as a feature on these crates.
+[Rust-Bio's documented data structures](https://docs.rs/bio/4.0.1/bio/data_structures/index.html)
+include BWT, suffix arrays and FM/FMD indexes. The previous claim that Rust-Bio
+lacked an FMD implementation is withdrawn. API availability alone does not
+validate a particular aligner, coordinate size or workload.
 
-- [x] **HyperLogLog** — approximate cardinality counter.
-  - Reference impl: `C++` · [original Flajolet et al.](https://research.neustar.biz/2012/10/25/sketch-of-the-day-hyperloglog-cornerstone-of-a-big-data-pipeline/) · academic
-  - Existing Rust: [`probabilistic-collections`](https://crates.io/crates/probabilistic-collections) `0.7.0`; [`hyperloglog`](https://crates.io/crates/hyperloglog) `1.0.3`; [`amadeus-streaming`](https://crates.io/crates/amadeus-streaming) `0.4.3` (SIMD-accelerated)
-  - Existing Rust kind: `rust-native` (academic algorithm; multiple independent Rust impls, no canonical C upstream being ported)
-  - Existing non-C alternatives: HLL ships in Redis, ClickHouse, etc.
-  - Parallelism: per-register merge; rayon-able
-  - SIMD: explicit in `amadeus-streaming` (other crates rely on auto-vectorize)
-  - Quadrant: ① (`amadeus-streaming`) / ④ (others)
-  - GPU-amenable: maybe — only worth doing for very large estimation streams
-  - Upstream license: academic / public domain in spirit
-  - Priority: `P1`
-  - Layer: `adopt`
-  - Consumes primitives: —
-  - Notes: Adopt `probabilistic-collections` for one-stop import unless profiling justifies the SIMD path.
+[Minimap2's algorithm and index guide](https://github.com/lh3/minimap2#algorithm-overview)
+describes minimizer extraction and lookup, with index parameters fixed when
+the index is built. Its [product dossier](../10-products/minimap2.md) keeps
+that engine-owned representation inside the product. Neither FM-index code
+nor the sketch hasher is substituted for the embedded minimizer engine.
 
-- [x] **Bloom filter** — approximate-membership probabilistic set.
-  - Reference impl: `C++` · academic; many implementations · public domain
-  - Existing Rust: [`probabilistic-collections`](https://crates.io/crates/probabilistic-collections) `0.7.0`; [`bloom-filters`](https://crates.io/crates/bloom-filters) `0.1.2`; [`fastbloom`](https://github.com/tomtomwombat/fastbloom) `0.17.0` (`no_std`, concurrent)
-  - Existing Rust kind: `rust-native` (academic algorithm; no specific C upstream being ported)
-  - Existing non-C alternatives: —
-  - Parallelism: `fastbloom` supports full concurrency via `portable-atomic`
-  - SIMD: bit-manipulation auto-vectorizes; `fastbloom` documents this as its perf edge
-  - Quadrant: ① (`fastbloom`) / ④ (others)
-  - GPU-amenable: no — latency-bound point queries
-  - Upstream license: public domain in spirit; `fastbloom` is `MIT OR Apache-2.0`
-  - Priority: `P0`
-  - Layer: `adopt`
-  - Consumes primitives: —
-  - Notes: Adopt `fastbloom` for hot paths, fall back to `probabilistic-collections` for the feature-rich API. Used by ABySS, sourmash, many metagenomics tools.
+FAI, BAI, CSI, TBI and GZI access belong to the
+[format-index survey](indexing.md) and the relevant products. An FM search
+index is not a prerequisite for `rsomics-index` bgzip/tabix, and a sketch
+collection index is not a reason to move sketch policy into that product.
 
-- [x] **Cuckoo filter** — Bloom alternative with deletion + better locality.
-  - Reference impl: `C++` · [efficient/cuckoofilter](https://github.com/efficient/cuckoofilter) · `Apache-2.0`
-  - Existing Rust: [`cuckoofilter`](https://crates.io/crates/cuckoofilter) `0.5.0`; [`probabilistic-collections`](https://crates.io/crates/probabilistic-collections) `0.7.0`; [`autoscale_cuckoo_filter`](https://crates.io/crates/autoscale_cuckoo_filter) `0.5.21`
-  - Existing Rust kind: `rust-native` (algorithm published by efficient/cuckoofilter but the Rust crates are independent impls, not code-ports)
-  - Existing non-C alternatives: —
-  - Parallelism: single-threaded today; concurrent variant is an open opportunity
-  - SIMD: none explicit
-  - Quadrant: ④
-  - GPU-amenable: no — latency-bound point queries
-  - Upstream license: `Apache-2.0`
-  - Priority: `P1`
-  - Layer: `adopt`
-  - Consumes primitives: —
-  - Notes: Strong fit for k-mer deduplication where deletion is needed (streaming metagenomics).
+## Probabilistic structures
 
-- [ ] **Compacted de Bruijn graph** — adjacency structure for assembly + pangenome.
-  - Reference impl: `C++` · [GATB-bcalm](https://github.com/GATB/bcalm) · `MIT`
-  - Existing Rust: [`debruijn`](https://crates.io/crates/debruijn) `0.3.4` ([`10XGenomics/rust-debruijn`](https://github.com/10XGenomics/rust-debruijn)); [`ggcat`](https://github.com/algbio/ggcat) (binary tool, not a published library on crates.io — install from source); [`rust-mdbg`](https://github.com/ekimb/rust-mdbg) (binary tool; companion library [`rust-seq2kminmers`](https://crates.io/crates/rust-seq2kminmers) `0.1.0`)
-  - Existing Rust kind: `pure-port` (compaction in `ggcat` follows the bcalm/MEGAHIT algorithmic blueprint)
-  - Existing non-C alternatives: —
-  - Parallelism: explicit rayon-equivalent (`parallel-processor` in ggcat); 10x's `debruijn` is multi-threaded build
-  - SIMD: ggcat uses `streaming-libdeflate-rs` and other SIMD-aware deps
-  - Quadrant: ①
-  - GPU-amenable: maybe — graph compaction is irregular, but k-mer counting prequel is SIMT-friendly
-  - Upstream license: `MIT` (bcalm); ggcat is `MIT OR Apache-2.0`
-  - Priority: `P1`
-  - Layer: adopt or keep private in the consuming assembly or pangenome product
-  - Consumes primitives: proven `rsomics-kmer` items only where the selected implementation needs them
-  - Notes: `ggcat` is production-grade and the initial adoption target; `debruijn` (10x) is older but still maintained. Do not extract a graph foundation before two products demonstrate the same representation and traversal contract. The crates.io name `ggcat` is occupied by an unrelated clipboard crate, so the upstream bioinformatics tool installs from source. Cross-references [`02-genomics/assembly.md`](../02-genomics/assembly.md).
+[probabilistic-collections](https://docs.rs/probabilistic-collections/0.7.0/probabilistic_collections/index.html)
+documents HyperLogLog and Bloom/Cuckoo families; the
+[Cuckoo filter reference](https://github.com/efficient/cuckoofilter) is another
+behavior and implementation source. These are candidates to evaluate, not a
+ranking of the fastest or most complete libraries.
+
+Choose an implementation only through a product workload. Record accuracy
+as well as CPU, memory, I/O, construction, query and merge costs. A filter
+must not silently change an exact operation into approximate deduplication;
+the operation must either verify candidates exactly or explicitly expose and
+validate an approximate profile. Concurrent access, deletion and serialization
+are separate contracts, not properties inferred from the algorithm's name.
+
+No blanket SIMD, GPU, parallel scalability or maintenance claims are carried
+forward from the old survey. Re-establish them for the selected version and
+actual consumer before they influence an implementation or release decision.
+
+## Graph construction
+
+[GGCAT](https://github.com/algbio/ggcat) documents compacted/coloured graph
+construction and graph queries, with Rust and C++ APIs. That is a real
+workflow reference; it is not evidence that a small adjacency-map helper
+implements assembly, graph compaction or its interchangeable formats.
+
+The historical graph source is retained for inspection, not automatically
+promoted. The current allowlist has no standalone assembly or pangenome-graph
+product. Adding one would require a separate product-boundary decision and
+a dossier; this survey does not make that decision. Related upstream scope
+remains in the [assembly survey](../02-genomics/assembly.md).
+
+## Historical assets and adoption gates
+
+The [routing ledger](../00-overview/portfolio-inventory.tsv) is a historical
+source snapshot, not a current dependency graph. Its inbound counts must not
+override current product manifests and call sites.
+
+| Asset | Retained evidence | Disposition for this survey |
+|---|---|---|
+| `rsomics-fm-index` | Ledger head `3f81d6b52fa870f48ae88742b4f21b24015be807`; snapshot marked dirty; local source includes BWT/SA and occurrence storage | Inspect the owned diff before reuse; adopt or refactor only into a concrete full-text-search consumer, not the bgzip/tabix slice |
+| `rsomics-debruijn` | Ledger head `96743c6c519b1cc5d69307d58c2147b120965fdb`; snapshot marked dirty; local source exposes a canonical k-mer adjacency model | Retain as an unvalidated implementation asset; do not call it a compacted/coloured graph product or republish its old name |
+| `rsomics-kmer` | Current consumers and repair evidence linked above | Retain the accepted foundation; repair existing contracts without speculative public APIs |
+
+Neither retired asset is deleted, modified or accepted as release-ready here.
+The earlier crate/version catalog remains recoverable in Git history.
+
+For any later adoption or extraction:
+
+1. Name the owning product operation and its observable data contract.
+2. Compare existing dependencies and team-owned assets against that contract.
+3. Pin the actual source, license and attribution requirements; an academic
+   algorithm does not establish a software implementation's license.
+4. Test malformed input, boundaries and upstream compatibility, then measure
+   representative CPU, memory and I/O with retained provenance.
+5. Keep product policy internal. Promote a public item only after a second
+   named product and consumer-side tests demonstrate the same contract.
+
+No new public crate, product, dependency or completion claim follows merely
+from an entry appearing in this survey.

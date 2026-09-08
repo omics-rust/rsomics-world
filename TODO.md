@@ -16,6 +16,8 @@ maps belong in their dossiers under `docs/`.
 - [x] Regenerate `REGISTRY.md` from live GitHub, crates.io, and the allowlist.
 - [ ] Convert stale domain documents from crate queues into product-operation
       surveys.
+      The [data-structure survey](docs/01-foundations/data-structures.md) now
+      records consumer ownership and adoption gates; other domain pages remain.
 - [x] Record the final reset gate and exact live counts.
 
 ## P0.2 — product dossiers

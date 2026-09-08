@@ -1,9 +1,9 @@
 # 01 — Foundations
 
-Cross-cutting infrastructure every higher-level tool needs: file format I/O,
-compression, indexing, building-block data structures, and the parallelism
-patterns that hold it all together. Nothing in this module is biology-specific;
-everything in modules 02–09 depends on this layer working well.
+Cross-product contracts and upstream surveys for file I/O, compression,
+indexing, data structures and execution. A topic appearing here is not
+automatically a public foundation; the accepted boundaries and concrete
+consumer evidence determine what belongs in Layer A.
 
 ## Sub-docs
 
@@ -19,24 +19,27 @@ everything in modules 02–09 depends on this layer working well.
 - [`seqio-bgzf-consumer-contract.md`](seqio-bgzf-consumer-contract.md) — BAM
   and VCF raw-frame overlap, explicit exclusions, and extraction gates without
   freezing a public API.
+- [`kmer-consumer-review-2026-09-09.md`](kmer-consumer-review-2026-09-09.md) —
+  per-product call sites, canonical short-input repair and current consumer
+  correctness/performance evidence.
 - [`io-formats.md`](io-formats.md) — FASTA/FASTQ, SAM/BAM/CRAM, VCF/BCF,
   GFF/GTF, BED, MAF, PAF, h5ad. Centred on `noodles` + `needletail`.
 - [`compression.md`](compression.md) — gzip/bgzf/zstd/lz4/xz codecs and the
   `bgzip` / `pigz` CLI tools.
 - [`indexing.md`](indexing.md) — fai/bai/csi/tbi/gzi random-access indexes
   and the `tabix` CLI.
-- [`data-structures.md`](data-structures.md) — FM-index/BWT/suffix arrays,
-  k-mer hashing (ntHash, MurmurHash3), MinHash, HyperLogLog, Bloom/Cuckoo
-  filters.
+- [`data-structures.md`](data-structures.md) — capability-to-product ownership
+  for indexes, hashing, sketches, probabilistic filters and graphs; upstream
+  references and adoption gates, not an algorithm-per-crate completion queue.
 - [`parallelism.md`](parallelism.md) — `rayon`, async I/O, GPU offload via
   `candle`/`burn`/`wgpu`; how big tools thread today and where Rust improves
   on that.
 
 ## Design posture
 
-- Many of the canonical Rust crates here (`noodles`, `needletail`,
-  `rust-htslib`) already exist and are production-grade. The work in this
-  module is **audit, fill gaps, and document**, not "rewrite from zero".
+- Evaluate existing implementations (`noodles`, `needletail`, `rust-htslib`
+  and others) against the selected consumer contract before replacing them.
+  Their availability does not establish current compatibility or performance.
 - A missing Rust capability is not itself a public-crate boundary. Adopt an
   external dependency or keep the implementation inside its first product.
   Promote it only after two named products demonstrate the same policy-free
