@@ -2,7 +2,8 @@
 
 Status: the per-contig chunk-union candidate passes the complete four-native
 source-snapshot diagnostic gate. Sparse BCF index construction/statistics
-regressions are the next expected-red run, not yet observed. No publication.
+reds and the next repair are tracked in `vcf-sparse-index-2026-09-09.md`.
+No publication.
 The exact-index/native-path gate in `vcf-index-selection-2026-09-09.md` remains
 the preceding completed slice. The broader concat plan is still incomplete.
 

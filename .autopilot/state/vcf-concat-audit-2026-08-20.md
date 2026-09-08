@@ -9,7 +9,13 @@ The [September 9 index-selection follow-up](vcf-index-selection-2026-09-09.md)
 records native source-snapshot evidence for item 1 and an additional test-first
 byte-path repair. Local compilation remains prohibited by boot-container
 occupancy; remote snapshot validation does not complete the product release
-gate. Items 2–7 below remain open.
+gate. The [indexed-ingestion follow-up](vcf-indexed-ingestion-2026-09-09.md)
+now records full four-native evidence for the item-2 caller-thread repair,
+stdout preflight, ordering and writer I/O classification. Representative
+performance and items 3–7 remain open. Newly exposed sparse BCF builder,
+statistics and external-index interoperability gaps are tracked in
+[the sparse-index record](vcf-sparse-index-2026-09-09.md). The historical
+findings below describe the August source, not the latest verified snapshot.
 
 ## Candidate evidence
 
