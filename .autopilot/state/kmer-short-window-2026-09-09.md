@@ -5,7 +5,8 @@ release. Exact-head package verification passed on Linux x86_64; native tests
 and both real consumers pass on all four platforms. All eight consumer performance
 bundles are verified and permanently retained. Release acceptance is based on
 the measured resource-use advantage, not universal throughput or a causal
-guard optimization. No publication or secret-access mutation has happened yet.
+guard optimization. One publication attempt failed registry authentication;
+kmer alone was added to the selected secret-access list. Registry remains 0.2.2.
 
 The authoritative detailed evidence, rejected experiments and release decision
 are in `docs/01-foundations/kmer-consumer-review-2026-09-09.md`.
@@ -108,23 +109,38 @@ The later sketch loading/comparison changes require new product-head evidence.
 
 ## Next bounded actions
 
-1. Preserve the release decision in world and wait for exact-head control CI.
-2. Add only repository ID `1245819199` (`omics-rust/rsomics-kmer`) to the
-   existing selected-repository `CARGO_REGISTRY_TOKEN`, preserving all 17
-   existing repositories. Never read the value. Main-only `publish.yml` at
-   candidate `c79111f` runs `cargo publish --locked`.
-3. Dispatch once after rechecking main and registry state. Verify exact publish
-   head, registry entry/checksum and downloaded archive source/VCS metadata.
-   An authorization failure stops publication, not other unblocked work.
-4. Once publication is verified, update sketch minimum registry dependency and
+1. Continue independent control-plane and product work. Do not rerun publication
+   unchanged or claim sketch has adopted a nonexistent registry version.
+2. Wait for an externally updated valid organization publication credential.
+   Do not read/request its value. After a confirmed change, recheck candidate
+   main, current registry and quality evidence; then dispatch once and verify
+   registry checksum, archive source/VCS identity and exact publish head.
+3. Once publication is verified, update sketch minimum registry dependency and
    lockfile, remove its expected-failure diagnostic, and run all native product
    tests/oracles and representative final-head measurements. Publish sketch
    only after its own complete gate; do not call it delivered beforehand.
 
-Latest read-only registry check still has kmer 0.2.2, non-yanked, checksum
+World decision `3be29dd4` passed exact-head CI `34274695274`. Remote kmer main
+was verified as `c79111f`. Only kmer repository ID `1245819199` was added to
+the organization secret: before/after API records prove all 17 prior entries
+are preserved, total 18, visibility still selected. No value was read/changed;
+sketch remains excluded.
+
+Publish run `34274791181` at `c79111f` constructed and verified the package,
+then failed uploading with HTTP 403 `authentication failed`, exit 101. The
+credential was present (masked) in the environment. Its exact invalidity cause
+is not established; selection alone did not resolve authentication. No retry.
+
+Raw job/CI logs, before/after selected-access metadata and registry snapshots
+are permanently retained in `publication-34274791181/` under the evidence root,
+recursively matched with scratch
+`/Volumes/KIOXIA/Developments/tmp/kmer-publication-20260909-2xSzvA/`.
+
+Post-failure registry check still has kmer 0.2.2, non-yanked, checksum
 `e1254977d1eaf89b29e727b7ea552ec8bd4bd0740b45fa40ac943e93ffaf9ed4`.
-Secret metadata has visibility selected, updated 2026-08-20T01:35:00Z;
-17 selected repos exclude kmer and sketch. No value was read or changed.
+Secret metadata changed from timestamp 2026-08-20T01:35:00Z to
+2026-09-08T20:26:08Z after the access-only request. This timestamp does not
+prove a credential-value change; the value's age is unknown. No 0.2.3 is published.
 
 ## Storage and operating limits
 

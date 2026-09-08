@@ -78,9 +78,10 @@ Rejected public boundary:
       four-native-target maintenance-release gate.
 - [x] `rsomics-kmer`: verify `seq` and `sketch` as two current target-product
       consumers, with concrete call sites and exact-head CI.
-- [ ] `rsomics-kmer`: repair the canonical Murmur iterator's short-input
-      exhaustion boundary and verify the `sketch` consumer before another
-      release; see the [consumer recheck](docs/01-foundations/kmer-consumer-review-2026-09-09.md).
+- [ ] `rsomics-kmer`: deliver the canonical Murmur short-input repair.
+      Candidate 0.2.3 passed native consumer and scoped performance gates;
+      publication failed registry authentication, so the fixed dependency is
+      not delivered. See the [consumer recheck](docs/01-foundations/kmer-consumer-review-2026-09-09.md).
 - [ ] `rsomics-kmer`: review public items individually before API expansion;
       two products using different APIs do not prove each item is shared.
 - [x] `rsomics-intervals`: retain only the two-consumer coordinate model and

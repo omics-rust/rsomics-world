@@ -6,7 +6,8 @@ verified and retained. The narrow foundation correctness patch is approved
 for publication using the resource-use decision below, with slower workloads
 explicitly retained. This is not a speed-optimization claim. Microbenchmark
 attribution remains inconclusive; the rejected inlining hint stays withdrawn.
-No corrected registry release or delivered sketch repair is yet claimed.
+Publication attempt `34274791181` failed registry authentication after package
+verification; no corrected registry release or delivered sketch repair exists.
 Local product builds remain stopped by the physical boot-storage gate.
 
 ## Identities and evidence scope
@@ -567,13 +568,14 @@ types are unchanged. The existing default boundary tests cover exhaustion and
 reuse, and the real sketch caller handles allocation errors. This is a
 patch-compatibility review, not a performance or publication approval.
 
-GitHub metadata still lists `CARGO_REGISTRY_TOKEN` for 17 selected repositories,
+The preflight listed `CARGO_REGISTRY_TOKEN` for 17 selected repositories,
 excluding kmer and sketch. Both repositories are active `omics-rust` main-branch
 repositories with administration available to the current GitHub account.
-No secret value was read, no access list changed and no publish dispatched.
-The last successful seq/VCF publication runs predate the secret's August 20
-update, so they do not establish its current validity. Credential availability
-remains separate from the unfinished product performance gate.
+At that preflight no value was read, access list changed or publish dispatched.
+The last successful seq/VCF publication runs predate its August 20 metadata
+timestamp, which does not establish token rotation or current validity. Credential availability
+was still unverified; the actual publication attempt below now establishes
+that the stored credential fails registry authentication.
 
 The separate [product contract recheck](../10-products/sketch-contract-review-2026-09-09.md)
 found and repaired scale recovery and collection comparison defects after the
@@ -611,17 +613,46 @@ matches the extracted files. The permanent copy matches external scratch
 `/Volumes/KIOXIA/Developments/tmp/kmer-consumers-34272105400-pix9ml/`.
 This preparation is not publication and does not change measured identities.
 
+### Publication attempt and credential barrier
+
+World release decision `3be29dd4886040edc1661f25031fe0d0241af1b3` passed
+exact-head control CI `34274695274`. The kmer remote main still matched
+`c79111f`. Repository ID `1245819199` was added individually to the existing
+organization secret's selected list. Before/after API records verify exactly
+18 repositories: all 17 existing entries plus kmer, with visibility still
+`selected`. No secret value was read or changed; sketch remains excluded.
+
+The reviewed main-only workflow was dispatched once as
+[34274791181](https://github.com/omics-rust/rsomics-kmer/actions/runs/34274791181).
+Its exact-head package construction and verification passed, then uploading
+0.2.3 failed with HTTP 403, `authentication failed`, exit 101. The secret was
+present in the job environment (masked); this is no longer an unknown
+repository-selection problem. It does not establish whether the credential
+was revoked, expired or otherwise invalid for the request.
+
+The sparse registry index was freshly read after the failed attempt: it still
+ends at non-yanked 0.2.2 with the recorded checksum; no 0.2.3 exists. The raw
+job log, exact run identity, selected-access before/after metadata and both
+registry snapshots are preserved at
+`/Volumes/Zane's HDD/rsomics-fixtures/evidence/kmer-short-window-2026-09-09/publication-34274791181/`,
+recursively compared with
+`/Volumes/KIOXIA/Developments/tmp/kmer-publication-20260909-2xSzvA/`.
+No retry, credential extraction, broad access grant or fallback publication
+was attempted. Registry adoption is stopped while independent work continues.
+
 Remaining delivery:
 
-1. Add only the verified kmer repository to the existing selected-repository
-   publication secret, preserving the other 17 entries; read no secret value.
-   Dispatch the reviewed main-only publish workflow once, then verify its
-   exact head, registry checksum, archive contents and source provenance.
+1. Wait for a valid publication credential to replace the organization secret;
+   do not request its value in chat or rerun the failed workflow unchanged.
+   After a confirmed credential change, recheck main, registry and quality
+   gates before one publication attempt. Verify exact head, registry checksum,
+   archive contents and source provenance before claiming delivery.
 2. Align sketch's minimum registry dependency and lockfile with the verified
    fixed release, remove its expected-failure diagnostic and run complete
    final-head native tests, oracles and representative measurements.
 3. Publish the coherent sketch repair only after its own gates pass. A fixed
    foundation alone does not mean the product dependency has been delivered.
 
-The physical-storage restriction is unchanged. No registry version or secret
-setting was changed. The published sketch dependency remains affected.
+The physical-storage restriction is unchanged. No registry version was added;
+only kmer's selected secret access was added. The published sketch dependency
+remains affected.
