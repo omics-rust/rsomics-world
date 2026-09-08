@@ -3,12 +3,14 @@
 Both guards are correctness-verified but not performance-approved. The
 inlining hint made performance worse and was withdrawn. Equal-source controls
 revealed substantial confounding in the measurements; a same-process control
-still has a systematic x86_64 difference. No performance pass, release or
+still has a systematic x86_64 difference even after its compiled scan loop and
+iterator-state address were unified. Microbenchmark attribution is inconclusive;
+advance representative consumer measurements. No performance pass, release or
 secret access change has been made.
 
 ## Owning repositories
 
-- `rsomics-kmer`: clean at `3d4b7516c9914724ebc1c96031b046c9c71cbf1c`;
+- `rsomics-kmer`: clean at `61de048cb1fce0c860beb22e78d2cdf9233aac39`;
   production guard is `len < k || start > len - k` (commit `0ba84a6`).
   `0924135`'s inlining hint was withdrawn. Source, tests, Cargo files and
   benchmarks are identical to corrected control `23e42f3`.
@@ -37,7 +39,9 @@ interpretation are in
 | Equal-source control | `34254249238` | Complete; three retained platform artifacts; macOS ARM upload failed. Identical source and x86 library/caller assembly still yield per-pair differences of about 17% |
 | Withdrawal-head ordinary CI | `34254245907` | Passed exact head `2f2eda2` on all four native targets, with lint/package/benchmark smoke |
 | Same-process null control | `34256249038` | Passed all four native jobs; 60 measured triplets each. Same-source candidate/reference median ratios: Linux x86_64 0.906807, Linux ARM 1.002371, Intel macOS 0.924302, macOS ARM 1.014703. Not a performance pass |
-| Current-head ordinary CI | `34256246005` | Passed exact head `3d4b751` on all four native targets, with lint/package/benchmark smoke |
+| Interleaved-head ordinary CI | `34256246005` | Passed exact head `3d4b751` on all four native targets, with lint/package/benchmark smoke |
+| Shared-scan control | `34257486430` | Passed all four native jobs at `61de048`; compiled one common scan and iterator-state address, but null ratios remain Linux x86_64 0.789447, Linux ARM 1.009003, Intel macOS 0.859599, macOS ARM 1.007179. Attribution remains inconclusive |
+| Current-head ordinary CI | `34257483815` | Passed exact head `61de048` on all four native targets, with lint/package/benchmark smoke |
 
 Both completed four-platform measurement sets are retained outside scratch at
 `/Volumes/Zane's HDD/rsomics-fixtures/evidence/kmer-short-window-2026-09-09/`,
@@ -45,12 +49,12 @@ in `first-guard` and `invariant-boundary`. First-run raw ZIPs independently
 match GitHub digests and pass integrity checks. The dossier lists their hashes.
 All four inlining platforms are copied to `inlining`; the three available
 equal-source artifacts are in `equal-source`, and the new four-platform
-same-process controls are in `interleaved-control`. All copies were compared
-recursively. The latter retains native binaries, generated harness source,
+same-process controls are in `interleaved-control` and `shared-scan-control`.
+All copies were compared recursively. These retain native binaries, generated harness source,
 manifest, lockfile, metadata, fixture, provenance and raw CSV observations.
 Scratch copies and downloaded library assembly remain under
 `/Volumes/KIOXIA/Developments/tmp/kmer-repair-evidence-20260909-619Btb`.
-Do not overwrite these with inlining measurements.
+Do not overwrite any of these experiment directories.
 
 Current source SHA-256:
 
@@ -58,7 +62,8 @@ Current source SHA-256:
 39415b62c6a989ced3815f324e027c55751607889f0e88d1923754e66e35ae4b  src/hash.rs
 41e7c3f50bff2f5dadf8af8a9d3cbca8b0e89db8d663f10f5d602603b6154e44  tests/canonical_windows.rs
 e900f14e040f7454e02b53373df90f3a64d175c523254081906dcad6a764cc8e  .github/workflows/consumers.yml
-e8bdac3464d162eeb70ab39a83499431c8ded8fff5a8ffcbdf2c13a7946e21ea  .github/workflows/benchmark.yml
+c16dbcf5c76f99cac1315910582a0bc0b21667a6519a1a6f3aece34796594577  .github/workflows/benchmark.yml
+8b32ba71f8426bc8722226e3cff7a0070841b415cfb6fe8c898811e915175aec  .github/benchmarks/compare-hashes.rs
 ```
 
 ## Release and storage constraints
@@ -74,16 +79,29 @@ gate. `df /` shows only the system volume and must not be used to waive it.
 All source edits and downloaded evidence remain on external disks. No remote
 4090 build was attempted.
 
-Do not publish either package merely because tests pass. Close the measured
-regression, finish consumer and exact release-head CI gates, publish the fixed
+Do not publish either package merely because tests pass. Close the current
+consumer performance gate, finish consumer and exact release-head CI gates, publish the fixed
 foundation, then bump the sketch minimum registry dependency and lockfile,
 remove its expected-failure diagnostic, and verify its own release head.
 
-Before another production optimization, identify or counterbalance the
-same-source harness confound. Its three aliases occupy separate caller loops,
-hasher objects and linked iterator locations. Linux x86_64's 60 null ratios
-span only 0.893190–0.927590, so this is not explained by broad temporal noise
-alone. The three local optimization attempts have not cleared the gate.
-Do not add more guard permutations or `inline(always)` blindly. Any later
-internal refactor needs explicit invariants, existing consumer regressions
-and matched measurements; no public API expansion is required.
+## Next bounded work
+
+Stop the guard and minor microbenchmark permutations. Both independent review
+and executable inspection confirm that the latest diagnostic shares one scan
+and iterator-state address, but library/jump-table and hasher-buffer addresses
+remain distinct. The guard's causal timing effect is not established.
+
+Refresh the real sketch product gate using the historical 4.70 Mbp E. coli
+FASTA and gzip FASTQ abundance workloads as the starting scope. Locate and
+hash-check the actual fixtures and recorded source URLs; do not treat old
+reported numbers as new evidence. Use native CI while local storage is blocked.
+Pin sketch, released/fixed kmer and sourmash identities; prove the resolved
+dependencies and binary hashes. Compare complete outputs, repeated timings
+and peak RSS, retaining raw observations outside scratch. Report scoped
+slowdowns as well as any throughput/resource advantages.
+
+The current `benchmark.yml` deliberately pins candidate dependency `3d4b751`
+as an equal-source diagnostic control. It does not benchmark a future production
+HEAD automatically. Do not reuse its successful status as a release gate.
+No public API expansion or additional production optimization is needed to
+start the consumer performance refresh.

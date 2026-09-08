@@ -234,6 +234,56 @@ The benchmark and consumer workflows now use `actions/upload-artifact@v7.0.1`.
 This aligns their artifact client with its supported runtime; successful new
 uploads do not establish the cause of earlier intermittent HTTP 403 failures.
 
+### Shared-scan diagnostic and decision
+
+Commit `61de048cb1fce0c860beb22e78d2cdf9233aac39` keeps all three dependency
+revisions fixed and uses one non-inlined checksum over a borrowed iterator.
+Only the selected iterator is constructed in a common enum payload before
+timing. Production code is unchanged. Both exact-head normal CI
+[34257483815](https://github.com/omics-rust/rsomics-kmer/actions/runs/34257483815)
+and the four-native diagnostic
+[34257486430](https://github.com/omics-rust/rsomics-kmer/actions/runs/34257486430)
+completed successfully, including retained artifacts.
+
+The Linux x86_64 executable has one checksum function at `0x1a740`, with the
+repeated indirect iterator call at `0x1a77c`. Its three unrolled outer call
+sites correspond to the balanced temporal positions and all pass iterator
+state at `rsp + 0x38`. An independent read-only review checked these facts and
+the retained binary/source hashes. This establishes that the intended shared
+scan and common iterator-state address were actually compiled.
+
+| Native runner | Median candidate/reference time ratio | Median candidate/released time ratio |
+|---|---|---|
+| Ubuntu x86_64 | 0.789447 | 0.773894 |
+| Ubuntu aarch64 | 1.009003 | 0.973069 |
+| macOS x86_64 | 0.859599 | 0.861923 |
+| macOS aarch64 | 1.007179 | 1.003740 |
+
+All four artifacts contain the expected 198 observations, including 60 full
+measured triplets, identical fixture bytes and the three pinned dependency
+identities. The equal-source Linux x86_64 ratios range from 0.763333 to
+0.866569. Distinct library code/jump-table addresses, dispatch targets and
+hasher scratch-buffer addresses remain; their actual contribution is not
+established. The intervention therefore did not validate this microbenchmark
+as a way to attribute the guard's performance effect.
+
+Decision: measurement execution and provenance are valid; guard-specific
+attribution and a no-regression conclusion are inconclusive. These runs do
+not pass the performance release gate. Stop adding guard permutations or
+further minor microbenchmark variants. Advance the actual consumer's release
+gate on representative genome FASTA and gzip FASTQ abundance workloads.
+Retain the older negative observations and the failed null controls; neither
+selective omission nor a claimed synthetic speedup is justified.
+
+The consumer comparison must pin the current sketch source, released and
+corrected foundation identities and sourmash 4.9.4, prove resolved dependencies
+and binary hashes, compare complete output bytes, and retain repeated timings
+and peak RSS with input/machine/command provenance. The historical August
+workloads motivate those choices, but their old performance numbers are not
+evidence for a new release. The gate is the current product's strict
+throughput or resource-use advantage, as required by `AGENTS.md`, with any
+remaining workload-specific slowdown explicitly reported.
+
 Both completed measurement sets, including all four platforms, are retained
 outside scratch under
 `/Volumes/Zane's HDD/rsomics-fixtures/evidence/kmer-short-window-2026-09-09/`
@@ -254,6 +304,8 @@ Scratch copies remain under
 The complete four-platform inlining set, three retained equal-source
 platforms, and all four same-process controls have also been copied and
 recursively compared in `inlining`, `equal-source` and `interleaved-control`.
+The final four-platform shared-scan diagnostic is also retained and recursively
+compared in `shared-scan-control`, including all binaries and raw observations.
 No measurements or failed-candidate evidence was deleted.
 
 ## Remaining repair gate
@@ -262,10 +314,11 @@ Before the next k-mer or sketch release:
 
 1. Complete both consumer suites and pinned upstream differentials with the
    exact candidate on all four native platforms.
-2. Measure the affected hot path against the pre-fix baseline and retain raw
-   timing distributions and provenance. Benchmark smoke is not a performance
-   decision. The source has no new allocation sites; this is not a measured
-   process-memory result.
+2. Measure the affected hot path through the real sketch consumer against
+   the pre-fix artifact and sourmash, retaining timing distributions and RSS
+   with provenance. Benchmark smoke and the failed same-source microbenchmark
+   controls are not performance passes. The source has no new allocation
+   sites; this is not a measured process-memory result.
 3. Finish the normal publication gates, then align the sketch minimum
    dependency and lockfile with the fixed registry release. Remove the
    expected-failure diagnostic, rerun exact-head CI and publish the consumer
