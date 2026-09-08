@@ -1,12 +1,16 @@
 # K-mer consumer and boundary recheck
 
-Status: source review complete for the two existing consumers. Product tests
-were not rerun locally because the physical boot-storage gate remains closed.
-The short-sequence finding below is unresolved, not a verified repair.
+Status: the short-sequence panic has been reproduced on all four native CI
+targets and fixed in the first foundation candidate. Both consumers' validation
+steps passed on all four platforms, but the first candidate regressed in the
+paired Linux x86_64 benchmark. An equivalent end-boundary candidate is now
+being tested. No corrected registry release or delivered product repair is
+claimed.
+Local product builds remain stopped by the physical boot-storage gate.
 
 ## Identities and evidence scope
 
-The three local worktrees were clean during inspection. Their exact-head
+The three local worktrees were clean during the initial source inspection. Their exact-head
 GitHub Actions results were re-read; all four native target jobs succeeded.
 Those old runs do not cover the newly identified missing regression.
 
@@ -57,31 +61,109 @@ out-of-bounds slice instead of returning `None`.
 The sketch builder calls this iterator on each parsed sequence without a
 length filter, so ordinary short FASTA/FASTQ records reach the affected path.
 This is not an error in the exact-count sequence operation, which uses a
-different iterator. It is a source-proven failure path; no runtime panic or
-upstream differential was executed in this recheck.
+different iterator. The initial inspection established this from source;
+the later runtime reproductions are recorded below.
 
-The existing canonical-hash tests cover exact-length windows, longer inputs,
+The pre-repair canonical-hash tests cover exact-length windows, longer inputs,
 case/strand normalization, ambiguity, long `k`, scratch reuse and allocation
 failure. They omit `len < k`. The sourmash differential uses a 20,000-base
 generated sequence for its `k` 1/17/31/51 cases, so it also misses this boundary.
 The green CI results therefore do not contradict the source finding.
 
-## Next repair gate
+## Executed repair evidence
+
+| Scope | Commit | CI run | Verified result |
+|---|---|---|---|
+| Foundation regression | `45782dac92236d9befa1b58adee362ab590a37e1` | [34249477451](https://github.com/omics-rust/rsomics-kmer/actions/runs/34249477451) | Both new empty/short tests panic on the old implementation on all four native platforms; the diagnostic step explicitly requires these failures |
+| Foundation repair | `86fbbcec1ce1819024540a7d6817e55d5dcce6b3` | [34249836770](https://github.com/omics-rust/rsomics-kmer/actions/runs/34249836770) | 45 unit tests and all three new integration tests pass normally on all four native platforms; lint/package/benchmark smoke pass |
+| Published sketch consumer | `8bacc91b4ad8892f93e21adbf02211eeedbf7703` | [34250061363](https://github.com/omics-rust/rsomics-sketch/actions/runs/34250061363) | The new sourmash differential reaches a bounds panic on registry kmer 0.2.2; CI explicitly expects this failure, so this is reproduction, not repair |
+
+The first production change checks `sequence.len().saturating_sub(start) < k`
+before accessing the window. It adds no public item, scratch buffer or
+per-record allocation. The integration tests cover empty input, `k-1`, `k`,
+`k+1`, repeated exhaustion, exact `len`/`size_hint`, and hasher reuse.
+
+The sketch oracle regression compares complete signatures for mixed-length
+and all-short FASTA/FASTQ, with `k` 31 and 51 (eight fixture combinations).
+It remains an external-oracle test, matching the existing oracle suite's
+execution convention. Its normal CI diagnostic must be removed when the
+product moves to the fixed registry dependency.
+
+The manual foundation `Consumer contracts` workflow pins both product heads
+and both real upstream oracles. A runner-local Cargo configuration selects the
+exact foundation Git SHA; resolved metadata must prove that SHA, and all later
+commands remain `--locked`. Product manifests are not rewritten to Git/path
+dependencies. Run [34250441947](https://github.com/omics-rust/rsomics-kmer/actions/runs/34250441947)
+failed before compilation because a command-line override was not inherited
+by a Cargo subprocess. Run
+[34251056970](https://github.com/omics-rust/rsomics-kmer/actions/runs/34251056970)
+then exposed a missing Cargo-home directory before configuration creation.
+Both setup defects were corrected at
+`1fa83cf05f1ec3f057c28d3d05a116b7e60c6ae9`. In
+[34251307513](https://github.com/omics-rust/rsomics-kmer/actions/runs/34251307513),
+all eight consumer validation steps passed. One macOS ARM sketch job failed
+only while finalizing its uploaded artifact (intermediary HTTP 403), so its
+exact job is being retried. Do not report the overall run as green until that
+artifact gate succeeds.
+
+An independent read-only review approved the first candidate's correctness
+and test coverage, but withheld release approval because of the performance
+result below. It found no new public API, allocation, or valid-hash change.
+
+## Measured performance hold
+
+Run [34251528752](https://github.com/omics-rust/rsomics-kmer/actions/runs/34251528752)
+compares baseline `d89e2df0d8eae38b64eb7b43a41f57436fc25bb4` with candidate
+`a17e32f65b7e1b1f8beee1b63acd0ed1e2571647` (the first guard). It asserts
+identical benchmark source, Cargo manifest and lockfile, builds both before
+measurement, then alternates baseline/candidate order across five pairs.
+Each pair uses Criterion 0.7, 50 samples, one-second warmup and a requested
+three-second measurement on the existing 1,048,576-byte `k=31`, seed-42
+fixture. All raw samples, estimates, logs and machine/source provenance are
+retained; these are real measurements, not `--test` smoke.
+
+| Native runner | CPU | Median of five candidate/baseline median-time ratios |
+|---|---|---|
+| Ubuntu x86_64 | AMD EPYC 9V74 | 1.199778; performance hold |
+| Ubuntu aarch64 | Neoverse-N2 | 1.002289 |
+| macOS aarch64 | See retained provenance | 0.999841 |
+| macOS x86_64 | Pending | Not yet available |
+
+The x86_64 ratios were 1.199778, 1.070189, 1.443603, 1.160394 and 1.200397.
+This is about 20% longer median elapsed time, not a 20% throughput loss.
+It does not support a no-regression decision. Shared-runner variation is
+visible in other rounds; the effect is not attributed to compiler behavior
+without assembly evidence.
+
+The next candidate, production commit `0ba84a6`, uses the equivalent guard
+`len < k || start > len - k`. Short-circuit evaluation protects subtraction
+on short inputs while retaining a loop-invariant end boundary. At head
+`ff0357d`, ordinary CI, both consumers
+([34252192237](https://github.com/omics-rust/rsomics-kmer/actions/runs/34252192237))
+and paired benchmarks
+([34252186622](https://github.com/omics-rust/rsomics-kmer/actions/runs/34252186622))
+are running. No performance benefit is yet established. Optimized benchmark
+assembly is now included in the measurement artifacts for further diagnosis.
+
+Downloaded first-run raw evidence is under
+`/Volumes/KIOXIA/Developments/tmp/kmer-repair-evidence-20260909-619Btb/benchmarks`.
+The three completed platforms are present; the Intel macOS artifact is still
+pending. Publication must not depend solely on the 90-day CI retention.
+
+## Remaining repair gate
 
 Before the next k-mer or sketch release:
 
-1. Run a failing foundation regression for empty input and lengths `k-1`,
-   `k`, `k+1`, including `k = 1` and 51. Check `len`/`size_hint`, repeated
-   exhaustion, and reuse of the same hasher from short to valid input.
-2. Correct the exhaustion boundary without changing valid-window hashes or
-   allocating per record. No public API addition is required for this fix.
-3. Add a sketch CLI regression mixing short and valid FASTA/FASTQ records and
-   an all-short input. Match the pinned sourmash output and error contract;
-   compare complete signatures, not only their count.
-4. Rerun both consumer suites, pinned sourmash compatibility, four-native
-   exact-head CI, and a no-regression throughput/allocation check. Keep the
-   consumer's minimum dependency version and lockfile aligned with the fixed
-   registry release before calling the product repair delivered.
+1. Complete both consumer suites and pinned upstream differentials with the
+   exact candidate on all four native platforms.
+2. Measure the affected hot path against the pre-fix baseline and retain raw
+   timing distributions and provenance. Benchmark smoke is not a performance
+   decision. The source has no new allocation sites; this is not a measured
+   process-memory result.
+3. Finish the normal publication gates, then align the sketch minimum
+   dependency and lockfile with the fixed registry release. Remove the
+   expected-failure diagnostic, rerun exact-head CI and publish the consumer
+   repair before calling it delivered.
 
-The physical-storage restriction is unchanged. No product source, dependency,
-registry version, or repository setting was modified by this review.
+The physical-storage restriction is unchanged. No registry version or secret
+setting was changed. The published sketch dependency remains affected.
