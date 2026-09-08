@@ -107,8 +107,29 @@ only while finalizing its uploaded artifact (intermediary HTTP 403), so its
 exact job was retried once, with the same artifact-only failure. This first
 candidate's overall run remains failed. The second candidate's complete
 consumer run [34252192237](https://github.com/omics-rust/rsomics-kmer/actions/runs/34252192237)
-passed all eight jobs, including artifact upload; this is the closed consumer
-gate. The first run was not relabelled as green.
+passed all eight jobs, including artifact upload; this closed that candidate's
+consumer gate. The first run was not relabelled as green.
+
+The current refresh at kmer
+`1a0d9aac5307644fd6d9cdaab20c648bd9193984`, run
+[34269918433](https://github.com/omics-rust/rsomics-kmer/actions/runs/34269918433),
+also passed all eight jobs. It pins repaired sketch
+`f430522bb3d3c6fd38e08af758dca11e5262f47b` and unchanged seq `d9734e5`.
+Sketch's complete four-test sourmash suite executes in debug and release on
+each native platform, including short-input and mixed-scale collection cases.
+All eight ZIP digests, archive integrity, exact Git dependency identities in
+metadata/lock/config and successful raw test logs were independently checked.
+Ordinary exact-head CI
+[34269915993](https://github.com/omics-rust/rsomics-kmer/actions/runs/34269915993)
+passed as well. This workflow-only commit leaves production sources, tests,
+benchmarks and Cargo files identical to `61de048`; it does not change the
+dependency selected by the separate construction measurement.
+
+The complete refresh evidence is retained at
+`/Volumes/Zane's HDD/rsomics-fixtures/evidence/kmer-short-window-2026-09-09/consumers-34269918433/`,
+recursively compared with its external scratch copy. This is source-head
+consumer evidence, not a corrected registry publication or future release-head
+gate.
 
 An independent read-only review approved the first candidate's correctness
 and test coverage, but withheld release approval because of the performance

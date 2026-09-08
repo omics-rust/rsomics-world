@@ -91,6 +91,14 @@ orientation. Independent review found no blocker in types, thresholds,
 directional metrics, error propagation or transactional output. Construction
 performance was not remeasured at this repaired product head.
 
+The repaired product also passes the foundation's refreshed consumer run
+[34269918433](https://github.com/omics-rust/rsomics-kmer/actions/runs/34269918433)
+with exact Git kmer `1a0d9aac5307644fd6d9cdaab20c648bd9193984` on all
+four native platforms. Each runs the complete four-test live sourmash oracle
+in debug and release, including the short-input regression. Retained metadata,
+lockfiles and Cargo configuration prove the patched dependency; the product
+manifest still selects published kmer 0.2.2 outside this isolated workflow.
+
 ## Retained evidence and remaining gates
 
 Raw red/green CI job logs and exact-head metadata are collected under

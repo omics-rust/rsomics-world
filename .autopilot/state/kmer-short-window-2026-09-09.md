@@ -9,7 +9,7 @@ performance pass, release or secret access change has been made.
 
 ## Owning repositories
 
-- `rsomics-kmer`: clean at `61de048cb1fce0c860beb22e78d2cdf9233aac39`;
+- `rsomics-kmer`: clean at `1a0d9aac5307644fd6d9cdaab20c648bd9193984`;
   production guard is `len < k || start > len - k` (commit `0ba84a6`).
   `0924135`'s inlining hint was withdrawn. Source, tests, Cargo files and
   benchmarks are identical to corrected control `23e42f3`.
@@ -45,7 +45,9 @@ interpretation are in
 | Same-process null control | `34256249038` | Passed all four native jobs; 60 measured triplets each. Same-source candidate/reference median ratios: Linux x86_64 0.906807, Linux ARM 1.002371, Intel macOS 0.924302, macOS ARM 1.014703. Not a performance pass |
 | Interleaved-head ordinary CI | `34256246005` | Passed exact head `3d4b751` on all four native targets, with lint/package/benchmark smoke |
 | Shared-scan control | `34257486430` | Passed all four native jobs at `61de048`; compiled one common scan and iterator-state address, but null ratios remain Linux x86_64 0.789447, Linux ARM 1.009003, Intel macOS 0.859599, macOS ARM 1.007179. Attribution remains inconclusive |
-| Current-head ordinary CI | `34257483815` | Passed exact head `61de048` on all four native targets, with lint/package/benchmark smoke |
+| Shared-scan-head ordinary CI | `34257483815` | Passed exact head `61de048` on all four native targets, with lint/package/benchmark smoke |
+| Current-head ordinary CI | `34269915993` | Passed exact head `1a0d9aa` on all four native targets, with lint/package/benchmark smoke |
+| Repaired-product consumers | `34269918433` | Passed all eight jobs at kmer `1a0d9aa`, pinning sketch `f430522` and seq `d9734e5`; full four-test sketch oracle passes in debug and release on every platform |
 | Sketch recorder ordinary CI | `34261359503` | Passed exact sketch head `3802b1a`: four native test jobs and lint/package/benchmark smoke; ordinary short-input test still documents the registry failure |
 | Sketch product measurements | `34261423289` | All four genome and three FASTQ jobs passed and artifacts retained; Intel macOS FASTQ job `102180058887` still running. Exact sketch head `3802b1a`; no whole-gate performance decision yet |
 | Sketch scale recovery | `34266897367`, `34267432784` | Four-native expected failure at `63abafa`, then normal CI pass at `db59472`; source repair, not registry delivery |
@@ -69,7 +71,7 @@ Current source SHA-256:
 ```text
 39415b62c6a989ced3815f324e027c55751607889f0e88d1923754e66e35ae4b  src/hash.rs
 41e7c3f50bff2f5dadf8af8a9d3cbca8b0e89db8d663f10f5d602603b6154e44  tests/canonical_windows.rs
-e900f14e040f7454e02b53373df90f3a64d175c523254081906dcad6a764cc8e  .github/workflows/consumers.yml
+a18b40f5addda72a5ccc9c3b08a7ecef627654e29978a329d151f63c6e7b4f88  .github/workflows/consumers.yml
 c16dbcf5c76f99cac1315910582a0bc0b21667a6519a1a6f3aece34796594577  .github/workflows/benchmark.yml
 8b32ba71f8426bc8722226e3cff7a0070841b415cfb6fe8c898811e915175aec  .github/benchmarks/compare-hashes.rs
 ```
@@ -93,6 +95,22 @@ foundation, then bump the sketch minimum registry dependency and lockfile,
 remove its expected-failure diagnostic, and verify its own release head.
 
 ## Next bounded work
+
+The consumer refresh at `1a0d9aa` changes only the workflow's sketch pin and
+adds the release-mode full oracle command. Production sources, tests, benches
+and Cargo files remain identical to `61de048`. All eight artifact ZIPs match
+GitHub SHA-256 digests and pass integrity checks. Their metadata, lockfiles
+and Cargo configurations resolve exactly one kmer package at `1a0d9aa`.
+Raw logs show all four sketch oracle tests executing successfully in both
+profiles, not merely ignored during ordinary tests. Sequence retains its
+independent k-mer oracle and pinned SeqKit contracts.
+
+Artifacts, exact-head CI metadata and eight raw job logs are preserved at
+`/Volumes/Zane's HDD/rsomics-fixtures/evidence/kmer-short-window-2026-09-09/consumers-34269918433/`.
+The copy was recursively compared with scratch
+`/Volumes/KIOXIA/Developments/tmp/kmer-consumers-34269918433-Yvr8UM/`.
+This closes the current source-head consumer refresh, not the future release
+head or registry-adoption gates.
 
 Stop the guard and minor microbenchmark permutations. Both independent review
 and executable inspection confirm that the latest diagnostic shares one scan
