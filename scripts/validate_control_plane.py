@@ -91,6 +91,27 @@ def require(condition: bool, message: str) -> None:
         raise SystemExit(message)
 
 
+def validate_roadmap(products: set[str]) -> None:
+    text = (ROOT / "ROADMAP.md").read_text()
+    blocks = re.findall(
+        r"^(?:Target products|Targets):\n\n((?:- `rsomics-[a-z0-9-]+`\n)+)",
+        text,
+        re.MULTILINE,
+    )
+    targets = Counter(
+        name
+        for block in blocks
+        for name in re.findall(r"`(rsomics-[a-z0-9-]+)`", block)
+    )
+    missing = sorted(products - targets.keys())
+    unexpected = sorted(targets.keys() - products)
+    repeated = sorted(name for name, count in targets.items() if count != 1)
+    require(
+        targets == Counter(products),
+        f"roadmap targets differ: missing={missing}; unexpected={unexpected}; repeated={repeated}",
+    )
+
+
 def main() -> None:
     products, foundations = allowlist()
     registry_products, registry_foundations, registry_summary = registry()
@@ -100,6 +121,7 @@ def main() -> None:
 
     require(len(products) == 30, f"expected 30 products, found {len(products)}")
     require(len(foundations) == 9, f"expected 9 foundations, found {len(foundations)}")
+    validate_roadmap(products)
     require(registry_products.keys() == products, "registry product set differs")
     require(registry_foundations == foundations, "registry foundation set differs")
     require(dossiers.keys() == products, "dossier product set differs")

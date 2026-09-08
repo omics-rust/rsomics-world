@@ -3,6 +3,13 @@
 This roadmap replaces the operation-per-crate campaign. Phase completion is
 recorded, but unattended work continues into the next unblocked phase.
 
+Each accepted product has one primary workstream below. The target lists must
+match the [30-product allowlist](docs/00-overview/registry-reset-keep.txt)
+exactly; foundations are cross-cutting dependencies, not additional products.
+The [dossier index](docs/10-products/README.md) records per-product scope and
+release slices. A recorded first release does not complete the whole family,
+and a roadmap status is not a fresh registry or performance verification.
+
 ## Phase 0 — namespace and control-plane reset
 
 Status: in progress.
@@ -21,7 +28,8 @@ describe the same architecture.
 
 ## Phase 1 — product dossiers
 
-Status: active.
+Status: a dossier baseline is recorded for all 30 products. Source and
+upstream-contract review continues before each implementation or release.
 
 For all 30 products:
 
@@ -38,7 +46,9 @@ map. No public code is required yet.
 
 ## Phase 2 — low-state consolidation pilots
 
-Status: planned.
+Status: initial sequence, preprocessing, QC, BED and annotation slices are
+recorded in their dossiers; further consolidation and the index release gate
+remain open.
 
 ### Sequence pilot
 
@@ -79,12 +89,17 @@ subcommand, compatibility, benchmark, and foundation-consumer pattern.
 
 ## Phase 3 — alignment and variation
 
-Status: planned.
+Status: active. BAM, VCF, calling and copy-number dossiers record implemented
+first slices; RNA-seq QC, signal and peak reconstruction remain open. The
+[VCF concat repair](.autopilot/state/vcf-index-selection-2026-09-08.md) is an
+unverified local candidate, not an advertised release operation.
 
 Targets:
 
 - `rsomics-bam`
 - `rsomics-vcf`
+- `rsomics-call`
+- `rsomics-cnv`
 - `rsomics-rnaseq-qc`
 - `rsomics-signal`
 - `rsomics-peak`
@@ -96,9 +111,10 @@ Foundations:
 - `rsomics-intervals`
 - `rsomics-stats`
 
-Recover the yanked historical `rsomics-bam` package and all BAM/VCF
-operation-sized source assets. Separate format operations from RNA-seq QC and
-signal workflows.
+Use the recovered historical BAM packages and the classified BAM/VCF source
+assets without reviving micro-crate repositories. Keep format operations,
+variant calling, copy-number inference, RNA-seq QC and signal workflows in
+their accepted product boundaries.
 
 Gate: BAM and VCF products cover their declared release slices with
 compatibility and resource evidence.
@@ -112,19 +128,23 @@ Targets:
 - `rsomics-deseq`
 - `rsomics-edger`
 - `rsomics-limma`
-- `rsomics-expression`
 - `rsomics-sc`
 
 Treat each as a data-model workflow, not a bag of independent statistical
 functions. Move only genuinely reusable numerical primitives into
 `rsomics-stats`.
+The rejected `rsomics-expression` utility boundary stays excluded: count-matrix
+collation belongs to `rsomics-count`, and significance labels remain local to
+the product producing the analysis results.
 
 Gate: workflow state, transformations, model fitting, result objects, and
 compatibility evidence form coherent product contracts.
 
 ## Phase 5 — domain products
 
-Status: planned.
+Status: mixed. Dossiers record initial composition, phylogeny, metagenomics,
+methylation and sketch slices; the remaining families and deferred operations
+still require reconstruction and release evidence.
 
 Targets:
 
@@ -144,7 +164,8 @@ status unless a real omics workflow needs them.
 
 ## Phase 6 — remaining anchors and workflow integration
 
-Status: planned.
+Status: mixed. Count and liftover dossiers record initial releases; minimap2
+still requires reconstruction, and table remains a held release candidate.
 
 Targets:
 
@@ -152,10 +173,11 @@ Targets:
 - `rsomics-liftover`
 - `rsomics-minimap2`
 - `rsomics-table`
-- `rsomics-workflow`
 
-Review whether generic table and workflow functionality belongs in standalone
-rsomics products or should remain internal support.
+Table is an accepted product with its own dossier. Sample-sheet validation is
+consumer-owned metadata handling, not the rejected `rsomics-workflow` product.
+External workflow engines may compose product binaries without introducing
+Layer B to Layer B library dependencies.
 
 Gate: each live product justifies its namespace, ships a coherent binary, and
 has a maintained compatibility and performance contract.
