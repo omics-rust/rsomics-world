@@ -8,6 +8,11 @@ current APIs reflect the deleted operation-sized topology. They evolve through
 real product slices, not through an independent “finish all common crates”
 phase.
 
+The [September 9 k-mer recheck](kmer-consumer-review-2026-09-09.md) confirms
+the second product consumer but finds a short-sequence bounds error and a gap
+between crate-level consumer counts and per-item API justification. Its repair
+gate takes precedence over the older green release summary below.
+
 ## Disposition
 
 | Foundation | Decision | Initial product drivers |
@@ -15,7 +20,7 @@ phase.
 | `rsomics-common` | keep; refactor command/error/output contract | `seq`, `fastq-preprocess`, `bed`; later all 30 products |
 | `rsomics-help` | keep; replace the duplicate renderer with the family CLI UX adapter | `seq`, `fastq-preprocess`, `bed` |
 | `rsomics-seqio` | keep; redesign around FASTA/FASTQ stream contracts | `seq`, `fastq-preprocess`, `fastq-qc`, `minimap2` |
-| `rsomics-kmer` | keep; repair boundaries and expose only general primitives | `seq`; later `metagenomics`, `sketch` |
+| `rsomics-kmer` | keep; repair short-input hashing and audit public items before expansion | current `seq`, `sketch`; future `metagenomics` contract unproven |
 | `rsomics-intervals` | keep; repair coordinate safety and remove BED policy | `bed`, `annotation`, `peak` |
 | `rsomics-bamio` | keep; narrow concrete backend types | `bam`, `call`, `count`, `methyl`, `minimap2`, `peak` |
 | `rsomics-pileup` | keep; add sortedness and real compatibility gates | `bam`, `call`, `methyl` |
@@ -152,7 +157,8 @@ Together these products establish the current common, help, and sequence-I/O
 contracts. The BED pilot is another help/common consumer.
 
 `rsomics-sketch 0.1.0` is now the second concrete `rsomics-kmer` product
-consumer. It drove the 0.2.2 canonical Murmur64 iterator, including arbitrary
+consumer, but is the only current consumer of the canonical Murmur API.
+It drove the 0.2.2 canonical Murmur64 iterator, including arbitrary
 nonzero `k`, a full-width seed, allocation-reusing scratch buffers, ambiguity
 boundaries, and sourmash-compatible byte order. Randomized consumer tests and
 real-fixture output hashes match sourmash 4.9.4, while the foundation retains

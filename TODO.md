@@ -72,8 +72,13 @@ Rejected public boundary:
       preprocessing.
 - [x] `rsomics-kmer`: correct the published codec boundary and add a
       four-native-target maintenance-release gate.
-- [ ] `rsomics-kmer`: add a second current target-product consumer before
-      expanding the public API further.
+- [x] `rsomics-kmer`: verify `seq` and `sketch` as two current target-product
+      consumers, with concrete call sites and exact-head CI.
+- [ ] `rsomics-kmer`: repair the canonical Murmur iterator's short-input
+      exhaustion boundary and verify the `sketch` consumer before another
+      release; see the [consumer recheck](docs/01-foundations/kmer-consumer-review-2026-09-09.md).
+- [ ] `rsomics-kmer`: review public items individually before API expansion;
+      two products using different APIs do not prove each item is shared.
 - [x] `rsomics-intervals`: retain only the two-consumer coordinate model and
       move checked indexing and BED policy into `rsomics-bed`.
 - [x] Reconstruct `rsomics-bamio` and `rsomics-pileup` through BAM and calling.
@@ -96,7 +101,8 @@ Rejected public boundary:
 - [x] Review `common` and `seqio` public API changes through the `seq` and
       `fastq-preprocess` consumers.
 - [x] Review `help` through sequence, preprocessing, BED, and annotation.
-- [ ] Review `kmer` through its required second product consumer.
+- [x] Review `kmer` through the actual `sketch` second consumer; the short-input
+      repair and per-item public-API gate remain open above.
 - [x] Publish the coherent five-command `rsomics-seq` first-release slice.
 - [x] Publish the coherent `run`/`trim`/`filter`
       `rsomics-fastq-preprocess` first-release slice.

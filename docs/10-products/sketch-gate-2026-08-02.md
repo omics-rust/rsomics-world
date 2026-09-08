@@ -2,6 +2,12 @@
 
 Status: `rsomics-sketch 0.1.0` published and independently verified.
 
+This is the historical release gate. The
+[September 9 consumer review](../01-foundations/kmer-consumer-review-2026-09-09.md)
+identifies an unresolved short-sequence bounds error in the consumed hashing
+iterator. The old successful CI and release checks do not cover that case and
+must not be used to dismiss it.
+
 ## Released contract
 
 The release provides four complete commands:
