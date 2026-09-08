@@ -1,12 +1,11 @@
 # Canonical short-window repair checkpoint
 
-Both guards are correctness-verified but not performance-approved. The
-inlining hint made performance worse and was withdrawn. Equal-source controls
-revealed substantial confounding in the measurements; a same-process control
-still has a systematic x86_64 difference even after its compiled scan loop and
-iterator-state address were unified. Microbenchmark attribution is inconclusive;
-advance representative consumer measurements. No performance pass, release or
-secret access change has been made.
+The production guard is correctness-verified; the rejected inlining hint stays
+withdrawn. Microbenchmark attribution remains inconclusive. Actual sketch
+measurements now retain all four genome jobs and two ARM full FASTQ jobs;
+the two x86_64 FASTQ jobs remain live. The completed workloads show substantial
+memory advantages but mixed throughput against sourmash. No whole-gate
+performance pass, release or secret access change has been made.
 
 ## Owning repositories
 
@@ -45,7 +44,7 @@ interpretation are in
 | Shared-scan control | `34257486430` | Passed all four native jobs at `61de048`; compiled one common scan and iterator-state address, but null ratios remain Linux x86_64 0.789447, Linux ARM 1.009003, Intel macOS 0.859599, macOS ARM 1.007179. Attribution remains inconclusive |
 | Current-head ordinary CI | `34257483815` | Passed exact head `61de048` on all four native targets, with lint/package/benchmark smoke |
 | Sketch recorder ordinary CI | `34261359503` | Passed exact sketch head `3802b1a`: four native test jobs and lint/package/benchmark smoke; ordinary short-input test still documents the registry failure |
-| Sketch product measurements | `34261423289` | All four genome jobs passed and artifacts retained; four full FASTQ abundance jobs still running. Exact sketch head `3802b1a`; no whole-gate performance decision yet |
+| Sketch product measurements | `34261423289` | All four genome and two ARM FASTQ jobs passed and artifacts retained; two x86_64 FASTQ jobs still running. Exact sketch head `3802b1a`; no whole-gate performance decision yet |
 
 Both completed four-platform measurement sets are retained outside scratch at
 `/Volumes/Zane's HDD/rsomics-fixtures/evidence/kmer-short-window-2026-09-09/`,
@@ -112,7 +111,7 @@ compiler-artifact feature sets are compared. The live oracle explicitly uses
 `RSOMICS_SKETCH_BIN` to execute the archived candidate, whose digest is checked
 again afterward. Production source and public manifests were not changed.
 
-Next: finish the four full FASTQ measurement jobs; investigate any actual
+Next: finish the two x86_64 full FASTQ measurement jobs; investigate any actual
 failures, then download each new artifact to external scratch, verify it, and
 preserve a verified copy outside scratch. Review paired time/RSS distributions
 and full output equality before a whole-gate performance decision. Neither
@@ -127,14 +126,30 @@ compiled dependency features were checked. Genome candidate/sourmash paired
 median wall ratios are 1.110640 Linux x86_64, 0.515002 Linux aarch64, 1.095327
 Intel macOS and 0.704724 ARM macOS. Peak-RSS ratios range from 0.058394 to
 0.063158. This supports a scoped memory advantage but not universal speedup.
-The full FASTQ abundance jobs are still running; do not release from this
+The two x86_64 FASTQ abundance jobs are still running; do not release from this
 partial workload result.
 
 Genome evidence and completed job logs are preserved and recursively compared
 under the permanent evidence root's `sketch-construction-34261423289/` directory.
 Scratch is `/Volumes/KIOXIA/Developments/tmp/sketch-construction-34261423289-mjkyFe`.
-The dossier records the four artifact IDs/digests. Collect only the new FASTQ
-artifacts into fresh child paths, preserving the existing genome evidence.
+The dossier records all six retained artifact IDs/digests. Collect only the new
+x86_64 FASTQ artifacts into fresh child paths, preserving existing evidence.
+
+ARM FASTQ verification covers 36 raw trials per platform, eight measured
+four-tool rounds, exact dependency/build-feature identities, binary/lock hashes,
+complete output equality and raw resource values. Candidate/sourmash median
+time and RSS ratios are 0.885291 / 0.082669 on Linux ARM and 1.360956 / 0.187212
+on macOS ARM. Candidate/published-baseline time ratios are 1.033869 and 1.014050;
+candidate/same-source-reference ratios are 1.000000 and 1.003284. These scoped
+differences do not establish a guard-specific causal effect. Both ARM ZIPs and
+completed job logs were copied into the permanent evidence directory and
+recursively compared with scratch.
+
+A fresh independent API/hot-path review found no correctness or API blocker
+for a patch-compatible foundation repair; it does not approve performance or
+publication. Live secret metadata still selects 17 repositories and excludes
+kmer/sketch. Older successful publish runs precede the secret's latest update
+and cannot prove it remains valid. No credential or access setting was changed.
 
 The kmer `benchmark.yml` deliberately pins dependency `3d4b751` as an equal-source
 microbenchmark control. The separate sketch workflow pins corrected reference

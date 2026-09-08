@@ -1,12 +1,11 @@
 # K-mer consumer and boundary recheck
 
 Status: the short-sequence repair passes both consumers on all four native
-platforms, including successful artifact retention at the second candidate.
-Two equivalent guards measured slower in the original x86_64 comparisons. The
-subsequent inlining hint made performance worse and has been withdrawn.
-Equal-source controls now demonstrate substantial measurement confounding,
-including a stable x86_64 difference in a same-process diagnostic. The earlier
-ratios cannot be attributed entirely to the guard. No performance pass,
+platforms. Actual sketch measurements now retain all four genome workloads
+and the two ARM full FASTQ workloads; x86_64 FASTQ remains running. These
+completed workloads show a material memory advantage but mixed throughput
+against sourmash. Old microbenchmark attribution remains inconclusive; the
+rejected inlining hint stays withdrawn. No whole-gate performance pass,
 corrected registry release or delivered product repair is claimed.
 Local product builds remain stopped by the physical boot-storage gate.
 
@@ -361,7 +360,7 @@ normalization. Ruff, Rustfmt and YAML/Bash syntax checks passed. No local Rust
 compilation or product timing was performed; physical boot APFS usage remains
 94.6%, so native product validation runs in GitHub CI.
 
-#### Genome results; FASTQ still pending
+#### Genome results
 
 All four genome jobs completed successfully, including the full three-test
 live oracle on the archived corrected candidate and its post-test checksum.
@@ -386,8 +385,8 @@ all four targets, and a throughput advantage on the two ARM targets. It does
 not support a universal throughput claim: the x86_64 candidate is approximately
 11.1% slower than sourmash on Linux and 9.5% slower on macOS by paired medians.
 Same-source control differences are recorded rather than attributed to the
-guard. This is not yet a complete performance or publication gate: all four
-full FASTQ abundance jobs are still running.
+guard. This is not yet a complete performance or publication gate: the full
+FASTQ results below are partial while the x86_64 jobs remain running.
 
 A separate read-only reviewer independently recomputed all four results,
 including compiled feature sets from Cargo messages and all raw resource
@@ -411,6 +410,71 @@ metadata under
 The retained copy was recursively compared with external scratch at
 `/Volumes/KIOXIA/Developments/tmp/sketch-construction-34261423289-mjkyFe/`.
 Do not overwrite these files when collecting the remaining FASTQ artifacts.
+
+#### ARM full FASTQ results; x86_64 still pending
+
+The Linux ARM and macOS ARM full gzip FASTQ abundance jobs completed
+successfully. Each artifact contains 36 raw trials: four warmup observations
+and 32 measured observations, forming eight four-tool rounds. Input SHA-256,
+87,439,836 compressed bytes, k31, scaled 1000, seed 42 and abundance profile
+match the pinned complete workload. All signature bytes match across variants
+and repeats within each job. The archived candidate's full oracle and checksum
+passed before timing.
+
+| Native runner | Time / published baseline | Time / same-source reference | Time / sourmash | Peak RSS / sourmash |
+|---|---|---|---|---|
+| Linux aarch64 | 1.033869 | 1.000000 | 0.885291 | 0.082669 |
+| macOS aarch64 | 1.014050 | 1.003284 | 1.360956 | 0.187212 |
+
+These again are medians of eight within-round ratios. Candidate/reference
+median peak-RSS ratios are 0.999576 on Linux ARM and 1.001642 on macOS ARM;
+candidate/baseline ratios are 0.986625 and 1.035370 respectively. Candidate
+elapsed-time differences versus the published baseline are reported, not
+silently equated to zero or assigned a guard-specific cause.
+
+The ARM FASTQ results support a substantial memory advantage on both runners
+and a throughput advantage only on Linux ARM. macOS ARM takes approximately
+36.1% longer than sourmash by paired median; its peak RSS is approximately
+81.3% lower. Historical August FASTQ ratios are not substituted for this result.
+The two x86_64 FASTQ jobs remain live, so neither the full four-native workload
+gate nor publication is approved yet.
+
+| Artifact ID | Native FASTQ artifact | SHA-256 |
+|---|---|---|
+| `10071134303` | Linux aarch64 | `1a34e4e0a37702da1d025bf724e0260cf2e540d1f4c5b93810d6cacd69024027` |
+| `10071183821` | macOS aarch64 | `5f3c219c9084287712b1506a65630a644dad1033cdd12ff9b1a1add2c4600eff` |
+
+Both ZIPs match GitHub digests and pass integrity checks. Binary and lockfile
+hashes, exact dependencies, actual compiled external features, balanced unique
+round/tool observations and all raw wall/user/system/RSS values were checked.
+These artifacts and completed job logs are now preserved beside the genome
+evidence at the permanent path above, with recursive scratch/copy comparison.
+
+Independent review reproduced all ratios and every raw resource value. The
+two platforms retain the same 40,425 hashes and abundances with signature MD5
+`e7bb44c73d20b4063b654c04210a4f11`; cross-platform JSON differs only in the
+absolute input filename. Linux ARM is slower than the registry-kmer baseline
+in all eight measured pairs (3.16–3.77% longer elapsed time, median 3.39%).
+That observed regression remains part of the eventual release decision;
+closeness to the same-source corrected reference does not erase it.
+
+### Fresh API and publication preflight
+
+A fresh independent source review of kmer `61de048`, sketch `3802b1a` and seq
+`d9734e5` found no correctness or public-API blocker for the foundation patch.
+The production diff from registry baseline `d89e2df` is exactly the short-input
+guard; constructors, exports, iterator layout, hash body, allocations and error
+types are unchanged. The existing default boundary tests cover exhaustion and
+reuse, and the real sketch caller handles allocation errors. This is a
+patch-compatibility review, not a performance or publication approval.
+
+GitHub metadata still lists `CARGO_REGISTRY_TOKEN` for 17 selected repositories,
+excluding kmer and sketch. Both repositories are active `omics-rust` main-branch
+repositories with administration available to the current GitHub account.
+No secret value was read, no access list changed and no publish dispatched.
+The last successful seq/VCF publication runs predate the secret's August 20
+update, so they do not establish its current validity. Credential availability
+remains separate from the unfinished product performance gate.
 
 ## Remaining repair gate
 
