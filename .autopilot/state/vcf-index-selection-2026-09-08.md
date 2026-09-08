@@ -1,7 +1,10 @@
 # VCF indexed-input repair — 2026-09-08
 
-Status: regression reproduced; repair retained locally, not compiled or
-verified after the repair. Do not commit or publish the concat candidate yet.
+Historical status on September 8: regression reproduced; repair retained
+locally, not compiled or verified after the repair. The
+[September 9 follow-up](vcf-index-selection-2026-09-09.md) records subsequent
+native snapshot tests and an additional byte-path repair. The complete concat
+candidate remains uncommitted and unpublished.
 
 The product remains based on `682942cfa69768dc3a127a8544f2f07213b704ea`.
 All inherited concat changes remain in its external-disk worktree. No unrelated

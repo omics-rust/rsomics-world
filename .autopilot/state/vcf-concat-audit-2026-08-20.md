@@ -5,10 +5,11 @@ Date: 2026-08-20
 Status: retain and repair; do not commit, advertise, benchmark as current, or
 publish yet.
 
-The [September 8 index-selection follow-up](vcf-index-selection-2026-09-08.md)
-records reproduced regressions and a local repair of item 1. That repair is
-not yet compiled or verified: physical boot-container occupancy is above the
-storage gate. Items 2–7 below remain open.
+The [September 9 index-selection follow-up](vcf-index-selection-2026-09-09.md)
+records native source-snapshot evidence for item 1 and an additional test-first
+byte-path repair. Local compilation remains prohibited by boot-container
+occupancy; remote snapshot validation does not complete the product release
+gate. Items 2–7 below remain open.
 
 ## Candidate evidence
 

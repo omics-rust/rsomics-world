@@ -163,6 +163,12 @@ Rejected public boundary:
 - [ ] Review `intervals` through BAM region selection without moving
       alignment-index policy into the foundation.
 - [x] Reconstruct and publish the coherent `rsomics-vcf` first-release slice.
+- [ ] Transfer the verified VCF index-selection and byte-path fixes into the
+      owning product's release candidate; resolve the defective unpublished
+      0.6.0 head before any publication retry.
+- [ ] Complete the VCF concat slice with bounded indexed ingestion, validated
+      two-pass naive mode, the missing oracle matrix, and many-input and
+      many-sample resource/performance evidence.
 - [x] Reconstruct and publish the coherent three-command `rsomics-call`
       first-release slice.
 - [x] Publish the gate-complete coherent `rsomics-bam` first-release slice

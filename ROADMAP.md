@@ -91,8 +91,10 @@ subcommand, compatibility, benchmark, and foundation-consumer pattern.
 
 Status: active. BAM, VCF, calling and copy-number dossiers record implemented
 first slices; RNA-seq QC, signal and peak reconstruction remain open. The
-[VCF concat repair](.autopilot/state/vcf-index-selection-2026-09-08.md) is an
-unverified local candidate, not an advertised release operation.
+[VCF concat repair](.autopilot/state/vcf-index-selection-2026-09-09.md) now has
+native source-snapshot evidence for index selection. The complete operation
+remains an uncommitted candidate with resource, compatibility and performance
+gates open, not an advertised release operation.
 
 Targets:
 

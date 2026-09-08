@@ -726,10 +726,13 @@ bounded-memory genotype editing with verified compatibility, not throughput.
 Publish run `32244558404` reached the crates.io upload endpoint from the exact
 release head but received `403 authentication failed`. The registry version
 therefore remains unpublished and has no archive, install, or live smoke
-evidence yet. Publication resumes only after replacing the revoked GitHub
-Actions registry secret, rerunning the exact-head publish workflow, and
-completing the independent registry verification. No implementation or CI
-gate is waived by this credential failure.
+evidence yet. Publication requires a verified working registry credential and
+independent registry verification; a secret's presence does not prove it works.
+The September 9 review also reproduced a preexisting byte-loss defect in the
+default index-path helper used by this frozen head. `682942c` must not be
+published unchanged: a verified backport or superseding release must include
+the path repair and pass its own exact-head gate. Credential repair alone no
+longer closes this release gate.
 
 ### Planned release 0.7: checked chunk concatenation
 
@@ -748,6 +751,12 @@ requires exact index resolution, bounded indexed-input resources, a complete
 oracle matrix, a ligation and scaling benchmark, and measured naive-mode
 behavior before it can be accepted. The durable review is
 [`vcf-concat-audit-2026-08-20.md`](../../.autopilot/state/vcf-concat-audit-2026-08-20.md).
+
+The [September 9 follow-up](../../.autopilot/state/vcf-index-selection-2026-09-09.md)
+adds four-native source-snapshot verification of the original index-selection
+repair and test-first coverage of a newly exposed non-UTF-8 path defect. These
+are component-level diagnostic results, not a completed concat release or a
+substitute for the remaining resource and compatibility gates.
 
 The old 0.1.2 micro-crate supplies only fixture and behavior seeds. Its
 text-only string header merge, double-open readers, unchecked coordinates,
