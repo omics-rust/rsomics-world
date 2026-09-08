@@ -133,6 +133,9 @@ Rejected public boundary:
 - [x] Publish the coherent four-command `rsomics-annotation` first-release
       slice.
 - [ ] Review sequence-index I/O through the `rsomics-index` consumer.
+      The [source recheck](docs/01-foundations/indexing.md) confirms current
+      BGZF/tabix does not consume `seqio`; future `faidx` and annotation
+      adapter tests are required before sharing a reference-access API.
 
 ## P1 — coordinate conversion
 
