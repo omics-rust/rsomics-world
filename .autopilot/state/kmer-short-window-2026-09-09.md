@@ -15,8 +15,10 @@ secret access change has been made.
   `0924135`'s inlining hint was withdrawn. Source, tests, Cargo files and
   benchmarks are identical to corrected control `23e42f3`.
 - `rsomics-sketch`: clean at
-  `8bacc91b4ad8892f93e21adbf02211eeedbf7703`; still uses registry kmer 0.2.2.
-  Its short-input oracle diagnostic deliberately expects the old panic.
+  `3802b1aaca54a95c14dbdeb6571aff4eb5ebafc3`; still uses registry kmer 0.2.2.
+  Its ordinary CI short-input diagnostic deliberately expects the old panic.
+  New product measurements patch the candidate only in isolated runner Cargo
+  homes and test the archived, fixed-dependency binary against the full oracle.
 - `rsomics-seq`: pinned consumer
   `d9734e51c4ed557f6d8790d97a686717ebc4769e`; no source/dependency edits.
 
@@ -42,6 +44,8 @@ interpretation are in
 | Interleaved-head ordinary CI | `34256246005` | Passed exact head `3d4b751` on all four native targets, with lint/package/benchmark smoke |
 | Shared-scan control | `34257486430` | Passed all four native jobs at `61de048`; compiled one common scan and iterator-state address, but null ratios remain Linux x86_64 0.789447, Linux ARM 1.009003, Intel macOS 0.859599, macOS ARM 1.007179. Attribution remains inconclusive |
 | Current-head ordinary CI | `34257483815` | Passed exact head `61de048` on all four native targets, with lint/package/benchmark smoke |
+| Sketch recorder ordinary CI | `34261359503` | Passed exact sketch head `3802b1a`: four native test jobs and lint/package/benchmark smoke; ordinary short-input test still documents the registry failure |
+| Sketch product measurements | `34261423289` | Dispatched at exact sketch head `3802b1a`; eight jobs, four native targets times genome and full gzip FASTQ abundance |
 
 Both completed four-platform measurement sets are retained outside scratch at
 `/Volumes/Zane's HDD/rsomics-fixtures/evidence/kmer-short-window-2026-09-09/`,
@@ -91,17 +95,34 @@ and executable inspection confirm that the latest diagnostic shares one scan
 and iterator-state address, but library/jump-table and hasher-buffer addresses
 remain distinct. The guard's causal timing effect is not established.
 
-Refresh the real sketch product gate using the historical 4.70 Mbp E. coli
-FASTA and gzip FASTQ abundance workloads as the starting scope. Locate and
-hash-check the actual fixtures and recorded source URLs; do not treat old
-reported numbers as new evidence. Use native CI while local storage is blocked.
-Pin sketch, released/fixed kmer and sourmash identities; prove the resolved
-dependencies and binary hashes. Compare complete outputs, repeated timings
-and peak RSS, retaining raw observations outside scratch. Report scoped
-slowdowns as well as any throughput/resource advantages.
+The real sketch product refresh is implemented and dispatched. All local
+fixtures were independently hash-checked, with live NCBI/ENA source metadata
+checked. The 4,699,745-byte E. coli FASTA and 87,439,836-byte gzip FASTQ are
+complete historical inputs, not downsampled replacements. A read-only strict
+FASTQ scan verified 6,282,141 records, 634,496,241 bases and uniformly 101-base
+reads; there are no shorter-than-k31 reads in this timing workload. The separate
+full candidate oracle retains mixed/all-short FASTA and FASTQ regressions.
 
-The current `benchmark.yml` deliberately pins candidate dependency `3d4b751`
-as an equal-source diagnostic control. It does not benchmark a future production
-HEAD automatically. Do not reuse its successful status as a release gate.
+The recorder is in sketch `.github/benchmarks/`; eight local recorder tests,
+Ruff, Rustfmt and YAML/Bash syntax checks passed without local Rust compilation.
+Independent review caught and resolved asymmetric test-build feature unification:
+all three measured binaries are now archived immediately after ordinary release
+builds, before test builds. Normalized external package identities and actual
+compiler-artifact feature sets are compared. The live oracle explicitly uses
+`RSOMICS_SKETCH_BIN` to execute the archived candidate, whose digest is checked
+again afterward. Production source and public manifests were not changed.
+
+Next: wait for exact-head ordinary CI and the eight measurement jobs; investigate
+any actual failures, then download every artifact to external scratch, verify it,
+and preserve a verified copy outside scratch. Review paired time/RSS distributions
+and full output equality before any performance decision. Neither dispatch nor
+the recorder's `complete.json` is a performance or release pass. Old August
+numbers remain historical only.
+
+The kmer `benchmark.yml` deliberately pins dependency `3d4b751` as an equal-source
+microbenchmark control. The separate sketch workflow pins corrected reference
+`23e42f3`, current candidate `61de048`, published registry kmer 0.2.2 and sourmash
+4.9.4. Neither workflow automatically follows a future production HEAD.
+Do not reuse the microbenchmark's successful status as a release gate.
 No public API expansion or additional production optimization is needed to
 start the consumer performance refresh.

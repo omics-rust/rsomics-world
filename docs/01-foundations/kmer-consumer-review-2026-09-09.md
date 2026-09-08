@@ -308,6 +308,59 @@ The final four-platform shared-scan diagnostic is also retained and recursively
 compared in `shared-scan-control`, including all binaries and raw observations.
 No measurements or failed-candidate evidence was deleted.
 
+### Real sketch construction refresh
+
+Sketch commit `3802b1aaca54a95c14dbdeb6571aff4eb5ebafc3` adds a private
+measurement recorder and a manual eight-job native workflow, not a production
+optimization or a new public crate. Ordinary CI
+[34261359503](https://github.com/omics-rust/rsomics-sketch/actions/runs/34261359503)
+passed all four native test jobs plus lint, documentation, package and benchmark
+smoke checks. Measurements
+[34261423289](https://github.com/omics-rust/rsomics-sketch/actions/runs/34261423289)
+are running; their performance outcome remains unverified at this checkpoint.
+
+All three product controls use that exact sketch head, Rust 1.91.0 and matched
+ordinary release-bin builds. Only kmer selection differs: registry 0.2.2,
+corrected reference `23e42f3`, and candidate `61de048`. The latter two have the
+same production source. The workflow asserts the registry checksum and pinned
+Git revisions, compares resolved external packages and actual compiled feature
+sets, and archives binary digests, manifests, lockfiles and Cargo messages.
+The live sourmash 4.9.4 oracle explicitly tests the archived candidate before
+timing, including the short-input regression; later test builds cannot replace
+the measured file. This corrects a build-mode confound found during independent
+review. No production source, public dependency requirement or API was changed.
+
+The pinned complete inputs were rechecked locally and against live source
+metadata:
+
+| Input | Bytes | SHA-256 |
+|---|---|---|
+| NCBI ASM584v2 genomic FASTA | 4,699,745 | `53bb6a51b6e92139ced1e38f74b7938781027c52200922ff03718c2237d23bb4` |
+| Source FASTA gzip | 1,379,902 | `a96d3cfa58c88d477013c768f90a11d2386d42a70d566abfb6d9013dcbd24255` |
+| ENA SRR341550 read 1 gzip FASTQ | 87,439,836 | `d7a15c1762d64a5434ced0cc665d7f5d167ca81a71e239f8237b9cd490dd7683` |
+
+The source URLs and full protocol live in sketch's
+[measurement README](https://github.com/omics-rust/rsomics-sketch/blob/3802b1aaca54a95c14dbdeb6571aff4eb5ebafc3/.github/benchmarks/README.md).
+A strict read-only scan verifies 6,282,141 complete 101-base FASTQ records
+(634,496,241 bases), with no short reads in that benchmark input. This avoids
+the known old baseline panic during timing without removing short-input tests.
+
+Genome construction uses 4 warmup and 16 measured rounds; FASTQ abundance uses
+1 warmup and 8 measured rounds. Every round executes all three product controls
+and sourmash, with balanced positions and within-round predecessors. All commands
+use DNA k31, scaled 1000, seed 42, one-worker settings, and identical absolute
+input paths within the job. Every signature must match complete nonempty bytes.
+Native time output, wall/user/system time, byte-normalized peak RSS, commands,
+stderr/stdout, signatures and incremental observations are retained. A completion
+marker requires all executions and byte comparisons to succeed; it does not
+approve performance or publication.
+
+Eight recorder tests passed locally, including subprocess failure, output
+mismatch, no-overwrite, digest validation, explicit seed/profile and native RSS
+normalization. Ruff, Rustfmt and YAML/Bash syntax checks passed. No local Rust
+compilation or product timing was performed; physical boot APFS usage remains
+94.6%, so native product validation runs in GitHub CI.
+
 ## Remaining repair gate
 
 Before the next k-mer or sketch release:
