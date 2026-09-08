@@ -1,0 +1,16 @@
+ M .github/workflows/ci.yml
+ M README.md
+ M src/cli.rs
+ M src/commands/mod.rs
+ M src/format/bgzf.rs
+ M src/format/writer.rs
+ M src/index.rs
+ M src/lib.rs
+ M src/regions.rs
+?? benchmarks/concat-vs-bcftools.sh
+?? src/commands/concat.rs
+?? src/concat.rs
+?? src/concat/
+?? tests/concat_cli.rs
+?? tests/concat_compat.rs
+?? tests/index_selection_cli.rs

@@ -2,6 +2,11 @@ name: VCF candidate audit
 
 on:
   workflow_dispatch:
+    inputs:
+      regressions_only:
+        description: Run only the focused index-selection regressions
+        type: boolean
+        default: false
 
 permissions:
   contents: read
@@ -53,9 +58,9 @@ jobs:
           export EVIDENCE="$RUNNER_TEMP/vcf-evidence"
           printf 'CARGO_HOME=%s\nCARGO_TARGET_DIR=%s\nRUSTUP_HOME=%s\nTMPDIR=%s\nEVIDENCE=%s\n' \
             "$CARGO_HOME" "$CARGO_TARGET_DIR" "$RUSTUP_HOME" "$TMPDIR" "$EVIDENCE" >> "$GITHUB_ENV"
-          snapshot=.autopilot/snapshots/vcf-concat-index-2026-09-09
-          echo "7de7ecdb1d5375c56f97037b00dee26682fdf4c90e39f28abb7b13e94015da30  $snapshot/source.tar.gz" | shasum -a 256 --check
-          echo "d71d58ea62b5d1cb97dd2cf82559bd8419c47259434ce61e0a19dfc24a382475  $snapshot/files.sha256" | shasum -a 256 --check
+          snapshot=.autopilot/snapshots/vcf-index-paths-red-portable-2026-09-09
+          echo "6afa597b5a96144fa628397dcb9b1d23fe3e1216d6c9adc4622bcf0f5886560d  $snapshot/source.tar.gz" | shasum -a 256 --check
+          echo "1afb5e607a86a6261c797b04f8610acde320070da6262f0eb8f1cbe5d6e67a81  $snapshot/files.sha256" | shasum -a 256 --check
           mkdir "$RUNNER_TEMP/vcf-candidate"
           mkdir -p "$CARGO_HOME" "$CARGO_TARGET_DIR" "$RUSTUP_HOME" "$TMPDIR" "$EVIDENCE"
           tar -xzf "$snapshot/source.tar.gz" -C "$RUNNER_TEMP/vcf-candidate" --no-same-owner
@@ -97,21 +102,21 @@ jobs:
           cargo test --locked --test index_selection_cli -- --nocapture 2>&1 | tee "$EVIDENCE/index-selection.log"
 
       - name: Test debug
-        if: ${{ !cancelled() && steps.metadata.outcome == 'success' }}
+        if: ${{ !cancelled() && !inputs.regressions_only && steps.metadata.outcome == 'success' }}
         working-directory: ${{ runner.temp }}/vcf-candidate
         run: |
           set -euo pipefail
           cargo test --locked --all-features 2>&1 | tee "$EVIDENCE/test-debug.log"
 
       - name: Test release
-        if: ${{ !cancelled() && steps.metadata.outcome == 'success' }}
+        if: ${{ !cancelled() && !inputs.regressions_only && steps.metadata.outcome == 'success' }}
         working-directory: ${{ runner.temp }}/vcf-candidate
         run: |
           set -euo pipefail
           cargo test --release --locked --all-features 2>&1 | tee "$EVIDENCE/test-release.log"
 
       - name: Format, strict Clippy, harness syntax, and package
-        if: ${{ !cancelled() && steps.metadata.outcome == 'success' && matrix.target == 'linux-x86_64' }}
+        if: ${{ !cancelled() && !inputs.regressions_only && steps.metadata.outcome == 'success' && matrix.target == 'linux-x86_64' }}
         working-directory: ${{ runner.temp }}/vcf-candidate
         run: |
           set -euo pipefail
@@ -121,7 +126,7 @@ jobs:
           cargo package --locked 2>&1 | tee "$EVIDENCE/package.log"
 
       - name: Install bcftools oracle dependencies
-        if: ${{ !cancelled() && steps.metadata.outcome == 'success' && matrix.target == 'linux-x86_64' }}
+        if: ${{ !cancelled() && !inputs.regressions_only && steps.metadata.outcome == 'success' && matrix.target == 'linux-x86_64' }}
         run: |
           set -euo pipefail
           printf '%s\n' 'https://archive.ubuntu.com/ubuntu/' | sudo tee /etc/apt/apt-mirrors.txt >/dev/null
@@ -132,7 +137,7 @@ jobs:
 
       - name: Build bcftools 1.24 oracle
         id: oracle
-        if: ${{ !cancelled() && steps.metadata.outcome == 'success' && matrix.target == 'linux-x86_64' }}
+        if: ${{ !cancelled() && !inputs.regressions_only && steps.metadata.outcome == 'success' && matrix.target == 'linux-x86_64' }}
         run: |
           set -euo pipefail
           archive="$RUNNER_TEMP/bcftools-1.24.tar.bz2"
