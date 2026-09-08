@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       regressions_only:
-        description: Run only the index-selection, concat CLI, and resource regressions
+        description: Run only the focused index, concat, resource, and writer regressions
         type: boolean
         default: false
 
@@ -58,9 +58,9 @@ jobs:
           export EVIDENCE="$RUNNER_TEMP/vcf-evidence"
           printf 'CARGO_HOME=%s\nCARGO_TARGET_DIR=%s\nRUSTUP_HOME=%s\nTMPDIR=%s\nEVIDENCE=%s\n' \
             "$CARGO_HOME" "$CARGO_TARGET_DIR" "$RUSTUP_HOME" "$TMPDIR" "$EVIDENCE" >> "$GITHUB_ENV"
-          snapshot=.autopilot/snapshots/vcf-indexed-resources-bounded-red-2026-09-09
-          echo "3c216c7f8c9bde43a7af4d0ebb3cedf5ffb379a2b9cccb479edb8ebd7078928e  $snapshot/source.tar.gz" | shasum -a 256 --check
-          echo "3139c1836867160c5197e45e5107382b1344b6f24a319ac578e7f6925373b3ca  $snapshot/files.sha256" | shasum -a 256 --check
+          snapshot=.autopilot/snapshots/vcf-indexed-io-red-2026-09-09
+          echo "d6cb764cfc151891eb02afa5924c253b22f0d9de046c86af572c7c2e2fb5dad1  $snapshot/source.tar.gz" | shasum -a 256 --check
+          echo "66376439f9241db62973894dfbde616811acc2e3fb00d69aae40dbb35e90e2d1  $snapshot/files.sha256" | shasum -a 256 --check
           mkdir "$RUNNER_TEMP/vcf-candidate"
           mkdir -p "$CARGO_HOME" "$CARGO_TARGET_DIR" "$RUSTUP_HOME" "$TMPDIR" "$EVIDENCE"
           tar -xzf "$snapshot/source.tar.gz" -C "$RUNNER_TEMP/vcf-candidate" --no-same-owner
@@ -117,6 +117,13 @@ jobs:
           set -euo pipefail
           test "$(ulimit -n)" -gt 259
           cargo test --locked --test concat_resources -- --nocapture --test-threads=1 2>&1 | tee "$EVIDENCE/concat-resources.log"
+
+      - name: Test variant writer errors
+        if: ${{ !cancelled() && steps.metadata.outcome == 'success' }}
+        working-directory: ${{ runner.temp }}/vcf-candidate
+        run: |
+          set -euo pipefail
+          cargo test --locked --lib format::writer::tests -- --nocapture 2>&1 | tee "$EVIDENCE/writer-errors.log"
 
       - name: Test debug
         if: ${{ !cancelled() && !inputs.regressions_only && steps.metadata.outcome == 'success' }}
