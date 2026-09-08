@@ -1,8 +1,14 @@
 # Sparse BCF index construction, names and interoperability
 
-Status: four-native expected reds verified; builder/statistics repair candidate
-ready for full native diagnostics. External-index empty-tail behavior is a
-separate observed compatibility gap, not fixed or publishable yet.
+Status: four-native expected reds verified; builder/statistics repair full
+diagnostics running as `34290416281` at world
+`47de686b0d4606992010cf07887745129804ee3d` (control CI `34289977881` passed).
+External-index empty-tail behavior is a separate observed compatibility gap,
+not fixed or publishable yet. Snapshot `vcf-empty-tail-red-2026-09-09` adds
+three focused groups covering 32 query cases, shortened-index statistics and
+16 rejection/output-preservation cases. Only index tests change from the
+repair snapshot; these additions have not yet run. Boot occupancy now exceeds
+95%; local compilation remains prohibited.
 
 ## Evidence
 
