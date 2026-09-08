@@ -5,6 +5,11 @@ Date: 2026-08-20
 Status: retain and repair; do not commit, advertise, benchmark as current, or
 publish yet.
 
+The [September 8 index-selection follow-up](vcf-index-selection-2026-09-08.md)
+records reproduced regressions and a local repair of item 1. That repair is
+not yet compiled or verified: physical boot-container occupancy is above the
+storage gate. Items 2–7 below remain open.
+
 ## Candidate evidence
 
 The dirty `rsomics-vcf` worktree is based on committed revision
