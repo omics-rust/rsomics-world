@@ -30,7 +30,7 @@ operation will ship. It records:
 | `rsomics-edger` | 17 | [audited](bulk-expression.md#rsomics-edger) |
 | `rsomics-fastq-preprocess` | 12 | [released 0.1.1](fastq-preprocess-gate-2026-07-30.md) |
 | `rsomics-fastq-qc` | 1 | [released 0.1.0](fastq-qc-gate-2026-08-02.md) |
-| `rsomics-index` | 5 | [release candidate; performance rerun pending](interval-annotation-index.md#rsomics-index) |
+| `rsomics-index` | 5 | [held: raw performance evidence unavailable; storage and credential gates open](interval-annotation-index.md#rsomics-index) |
 | `rsomics-liftover` | 1 | [released 0.1.0](liftover.md) |
 | `rsomics-limma` | 16 | [audited](bulk-expression.md#rsomics-limma) |
 | `rsomics-metagenomics` | 5 | [released 0.1.0](metagenomics-gate-2026-08-02.md) |
