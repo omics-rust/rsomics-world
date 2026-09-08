@@ -4,7 +4,8 @@ Status: signature scale recovery and mixed-scale collection comparison are
 repaired in source with four-native CI. Neither change is registry-delivered. The
 separate
 [kmer short-input repair and construction measurements](../01-foundations/kmer-consumer-review-2026-09-09.md)
-remain open release gates.
+approve the narrow foundation patch for publication, but registry adoption and
+the repaired product's own release gates remain open.
 
 ## Scope and decision
 
@@ -98,6 +99,13 @@ four native platforms. Each runs the complete four-test live sourmash oracle
 in debug and release, including the short-input regression. Retained metadata,
 lockfiles and Cargo configuration prove the patched dependency; the product
 manifest still selects published kmer 0.2.2 outside this isolated workflow.
+
+The exact 0.2.3 candidate `c79111f` also passes all eight consumer jobs in
+[34272105400](https://github.com/omics-rust/rsomics-kmer/actions/runs/34272105400),
+with the complete four-test oracle executing in both profiles on every native
+platform. All artifact identities and raw logs were independently verified
+and permanently retained in the foundation dossier's candidate evidence path.
+This does not change the product manifest or establish registry delivery.
 
 ## Retained evidence and remaining gates
 

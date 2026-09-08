@@ -1,12 +1,12 @@
 # K-mer consumer and boundary recheck
 
-Status: the short-sequence repair passes both consumers on all four native
-platforms. Actual sketch measurements now retain all four genome workloads
-and three full FASTQ workloads; Intel macOS FASTQ remains running. These
-completed workloads show a material memory advantage but mixed throughput
-against sourmash. Old microbenchmark attribution remains inconclusive; the
-rejected inlining hint stays withdrawn. No whole-gate performance pass,
-corrected registry release or delivered product repair is claimed.
+Status: candidate 0.2.3 passes exact-head Linux x86_64 package verification,
+native tests and both consumers on all four platforms. All eight measurement bundles are
+verified and retained. The narrow foundation correctness patch is approved
+for publication using the resource-use decision below, with slower workloads
+explicitly retained. This is not a speed-optimization claim. Microbenchmark
+attribution remains inconclusive; the rejected inlining hint stays withdrawn.
+No corrected registry release or delivered sketch repair is yet claimed.
 Local product builds remain stopped by the physical boot-storage gate.
 
 ## Identities and evidence scope
@@ -337,7 +337,7 @@ optimization or a new public crate. Ordinary CI
 passed all four native test jobs plus lint, documentation, package and benchmark
 smoke checks. Measurements
 [34261423289](https://github.com/omics-rust/rsomics-sketch/actions/runs/34261423289)
-are running; their performance outcome remains unverified at this checkpoint.
+completed all eight native jobs. The full evidence and scoped decision follow.
 
 All three product controls use that exact sketch head, Rust 1.91.0 and matched
 ordinary release-bin builds. Only kmer selection differs: registry 0.2.2,
@@ -406,8 +406,8 @@ all four targets, and a throughput advantage on the two ARM targets. It does
 not support a universal throughput claim: the x86_64 candidate is approximately
 11.1% slower than sourmash on Linux and 9.5% slower on macOS by paired medians.
 Same-source control differences are recorded rather than attributed to the
-guard. This is not yet a complete performance or publication gate: the full
-FASTQ results below remain partial while the Intel macOS job is running.
+guard. Genome evidence alone was not used to approve publication; the complete
+FASTQ results and final decision are recorded below.
 
 A separate read-only reviewer independently recomputed all four results,
 including compiled feature sets from Cargo messages and all raw resource
@@ -430,7 +430,7 @@ metadata under
 `/Volumes/Zane's HDD/rsomics-fixtures/evidence/kmer-short-window-2026-09-09/sketch-construction-34261423289/`.
 The retained copy was recursively compared with external scratch at
 `/Volumes/KIOXIA/Developments/tmp/sketch-construction-34261423289-mjkyFe/`.
-Do not overwrite these files when collecting the remaining FASTQ artifacts.
+All later FASTQ artifacts were added without overwriting these files.
 
 #### ARM full FASTQ results
 
@@ -457,9 +457,9 @@ The ARM FASTQ results support a substantial memory advantage on both runners
 and a throughput advantage only on Linux ARM. macOS ARM takes approximately
 36.1% longer than sourmash by paired median; its peak RSS is approximately
 81.3% lower. Historical August FASTQ ratios are not substituted for this result.
-At initial ARM collection both x86_64 jobs were live; Linux x86_64 subsequently
-completed as recorded below. Intel macOS remains pending, so neither the full
-four-native workload gate nor publication is approved yet.
+At initial ARM collection both x86_64 jobs were live. Both subsequently
+completed as recorded below; the partial ARM result was not treated as the
+full four-native workload gate.
 
 | Artifact ID | Native FASTQ artifact | SHA-256 |
 |---|---|---|
@@ -480,7 +480,7 @@ in all eight measured pairs (3.16–3.77% longer elapsed time, median 3.39%).
 That observed regression remains part of the eventual release decision;
 closeness to the same-source corrected reference does not erase it.
 
-#### Linux x86_64 full FASTQ result; Intel macOS still pending
+#### Linux x86_64 full FASTQ result
 
 Job `102180058482` completed with all three archived-candidate oracle tests
 and binary/lockfile checksum checks passing. Artifact `10072798104` has SHA-256
@@ -505,8 +505,57 @@ both ARM artifacts after removing only the absolute filename.
 An independent reviewer reproduced every value and validated the provenance.
 The ZIP, extracted evidence, job log and updated artifact metadata were copied
 to the permanent evidence directory above and recursively compared with scratch.
-Only Intel macOS FASTQ job `102180058887` remains running. These measurements
-still describe product head `3802b1a`, not the subsequent product-local repairs.
+These measurements describe product head `3802b1a`, not the subsequent
+product-local repairs.
+
+#### Intel macOS full FASTQ result and complete-run decision
+
+Final job `102180058887` passed at the same pinned product head. Artifact
+`10074526630` has SHA-256
+`8f1ff839c0062660ce6190445e60502afd6bd266641f76147e187eca30b18cf0`.
+Its ZIP/API digest, CRC, extracted bytes, all 36 raw observations, commands,
+resource values, full signatures and three archived-candidate oracle passes
+with post-test checksum were independently verified. The final artifact,
+completed run metadata and raw log are permanently retained alongside the
+other seven bundles; recursive comparison with scratch passed.
+
+| Control | Median paired candidate time / control | Median paired candidate RSS / control |
+|---|---|---|
+| Registry kmer baseline | 0.843520 | 1.000000 |
+| Same-source corrected reference | 1.004950 | 1.000227 |
+| sourmash 4.9.4 | 1.815349 | 0.096582 |
+
+On the Intel Core i7-8700B runner, candidate elapsed time exceeds sourmash in
+all eight pairs: 81.53% longer by paired median, with 90.34% lower peak RSS.
+Candidate/reference time ranges from 0.935102 to 1.070288; this is not evidence
+of a guard-specific optimization. Signature content matches the other native
+FASTQ artifacts after removing only the absolute input filename.
+
+The completed run contains 464 trials, including 384 measured observations.
+All eight archive digests, 24 product binary/lockfile checksum sets, dependency
+identities, reconstructed compiled features and complete output bytes passed
+both primary and independent review. Every measured candidate/sourmash pair
+uses less peak memory. Paired median RSS reductions are 93.68–94.16% for genome
+construction and 81.28–91.73% for FASTQ abundance. Throughput is mixed, with
+the slower paths explicitly listed above. Each cell is one warm-cache runner
+job, not an independent machine replication or general workload guarantee.
+
+Decision: accept this evidence for the narrow `rsomics-kmer` correctness patch
+under the architecture's strict throughput **or resource-use** gate. The patch
+repairs a deterministic valid-short-input panic without changing hashes,
+public API, iterator state or allocation policy. Accept the observed Linux ARM
+FASTQ median 3.39% elapsed-time regression against the registry-kmer baseline
+as an explicit correctness tradeoff; do not call it zero or assign its cause.
+The failed microbenchmark null controls and slower sourmash comparisons remain
+part of the record. No throughput/no-regression claim follows this decision.
+
+Measured foundation `61de048` and release candidate `c79111f` have identical
+production sources, tests and benchmarks. Their metadata/build identities
+remain distinct: these are supporting consumer hot-path measurements, not a
+claim that the 0.2.3 registry artifact was timed. Candidate-specific package,
+API and consumer checks below complete the foundation gate. The newer sketch
+`f430522` changed loading and comparison after the measured `3802b1a`; it still
+requires its own final-head validation and measurements before product release.
 
 ### Fresh API and publication preflight
 
@@ -533,7 +582,7 @@ still depends on registry kmer 0.2.2 and still reproduces its short-input panic.
 Neither those green checks nor the earlier construction measurements establish
 delivery of the corrected dependency.
 
-## Remaining repair gate
+## Release-candidate gate and remaining delivery
 
 The unpublished 0.2.3 candidate is now
 `c79111f31651bad581920b7b5c2ddde9a57534e1`. Only the root version in the
@@ -546,23 +595,33 @@ Normal exact-head CI
 passed all four native targets and lint/package/benchmark smoke. Candidate
 consumer validation
 [34272105400](https://github.com/omics-rust/rsomics-kmer/actions/runs/34272105400)
-has been dispatched; completion and artifact verification are still pending.
-This preparation is not publication and does not change the identities in the
-ongoing construction measurements.
+passed all eight jobs. Every retained metadata graph, lockfile and Cargo
+configuration selects exactly one kmer 0.2.3 at `c79111f`. Raw logs confirm
+the pinned product checkouts and native hosts; all four sketch oracle tests,
+six live SeqKit contracts and the independent sequence kmer oracle execute in
+both profiles. Ordinary CI logs also verify strict lint, package reconstruction
+and benchmark smoke. Independent review found no remaining source/API/metadata
+or correctness-evidence blocker.
 
-Before the next k-mer or sketch release:
+The eight original archives, extracted metadata/configuration/lockfiles, exact
+CI records and all 13 ordinary/consumer job logs are retained at
+`/Volumes/Zane's HDD/rsomics-fixtures/evidence/kmer-short-window-2026-09-09/consumers-34272105400/`.
+Every archive matches its GitHub SHA-256 digest and size, passes CRC, and
+matches the extracted files. The permanent copy matches external scratch
+`/Volumes/KIOXIA/Developments/tmp/kmer-consumers-34272105400-pix9ml/`.
+This preparation is not publication and does not change measured identities.
 
-1. Complete both consumer suites and pinned upstream differentials with the
-   exact candidate on all four native platforms.
-2. Measure the affected hot path through the real sketch consumer against
-   the pre-fix artifact and sourmash, retaining timing distributions and RSS
-   with provenance. Benchmark smoke and the failed same-source microbenchmark
-   controls are not performance passes. The source has no new allocation
-   sites; this is not a measured process-memory result.
-3. Finish the normal publication gates, then align the sketch minimum
-   dependency and lockfile with the fixed registry release. Remove the
-   expected-failure diagnostic, rerun exact-head CI and publish the consumer
-   repair before calling it delivered.
+Remaining delivery:
+
+1. Add only the verified kmer repository to the existing selected-repository
+   publication secret, preserving the other 17 entries; read no secret value.
+   Dispatch the reviewed main-only publish workflow once, then verify its
+   exact head, registry checksum, archive contents and source provenance.
+2. Align sketch's minimum registry dependency and lockfile with the verified
+   fixed release, remove its expected-failure diagnostic and run complete
+   final-head native tests, oracles and representative measurements.
+3. Publish the coherent sketch repair only after its own gates pass. A fixed
+   foundation alone does not mean the product dependency has been delivered.
 
 The physical-storage restriction is unchanged. No registry version or secret
 setting was changed. The published sketch dependency remains affected.
