@@ -1,0 +1,205 @@
+name: VCF candidate audit
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  native:
+    name: ${{ matrix.target }}
+    runs-on: ${{ matrix.runner }}
+    timeout-minutes: 60
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - target: linux-x86_64
+            runner: ubuntu-24.04
+            system: Linux
+            architecture: x86_64
+          - target: linux-aarch64
+            runner: ubuntu-24.04-arm
+            system: Linux
+            architecture: aarch64
+          - target: macos-x86_64
+            runner: macos-15-intel
+            system: Darwin
+            architecture: x86_64
+          - target: macos-aarch64
+            runner: macos-15
+            system: Darwin
+            architecture: arm64
+    env:
+      CARGO_HOME: ${{ runner.temp }}/cargo-home
+      CARGO_TARGET_DIR: ${{ runner.temp }}/cargo-target
+      RUSTUP_HOME: ${{ runner.temp }}/rustup-home
+      TMPDIR: ${{ runner.temp }}/scratch
+      EVIDENCE: ${{ runner.temp }}/vcf-evidence
+    defaults:
+      run:
+        shell: bash
+        working-directory: ${{ runner.temp }}/vcf-candidate
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+
+      - name: Verify and extract frozen source snapshot
+        id: snapshot
+        working-directory: ${{ github.workspace }}
+        run: |
+          set -euo pipefail
+          test "$(uname -s)" = '${{ matrix.system }}'
+          test "$(uname -m)" = '${{ matrix.architecture }}'
+          snapshot=.autopilot/snapshots/vcf-concat-index-2026-09-09
+          echo "7de7ecdb1d5375c56f97037b00dee26682fdf4c90e39f28abb7b13e94015da30  $snapshot/source.tar.gz" | shasum -a 256 --check
+          echo "d71d58ea62b5d1cb97dd2cf82559bd8419c47259434ce61e0a19dfc24a382475  $snapshot/files.sha256" | shasum -a 256 --check
+          mkdir "$RUNNER_TEMP/vcf-candidate"
+          mkdir -p "$CARGO_HOME" "$CARGO_TARGET_DIR" "$RUSTUP_HOME" "$TMPDIR" "$EVIDENCE"
+          tar -xzf "$snapshot/source.tar.gz" -C "$RUNNER_TEMP/vcf-candidate" --no-same-owner
+          (
+            cd "$RUNNER_TEMP/vcf-candidate"
+            shasum -a 256 --check "$GITHUB_WORKSPACE/$snapshot/files.sha256"
+          ) | tee "$EVIDENCE/source-verification.log"
+          cp "$snapshot/files.sha256" "$snapshot/README.md" "$EVIDENCE/"
+          {
+            git rev-parse HEAD
+            uname -a
+            df -h
+            printf 'CARGO_HOME=%s\nCARGO_TARGET_DIR=%s\nRUSTUP_HOME=%s\nTMPDIR=%s\n' \
+              "$CARGO_HOME" "$CARGO_TARGET_DIR" "$RUSTUP_HOME" "$TMPDIR"
+          } | tee "$EVIDENCE/host.log"
+
+      - name: Install Rust 1.91
+        id: toolchain
+        uses: dtolnay/rust-toolchain@1.91.0
+        with:
+          components: clippy,rustfmt
+
+      - name: Record resolved dependencies and toolchain
+        id: metadata
+        run: |
+          set -euo pipefail
+          rustc -Vv | tee "$EVIDENCE/rustc.log"
+          cargo -V | tee "$EVIDENCE/cargo.log"
+          cargo metadata --locked --format-version 1 > "$EVIDENCE/metadata.json"
+          python3 -B -c 'import json,os; m=json.load(open(os.environ["EVIDENCE"]+"/metadata.json")); assert os.path.realpath(m["target_directory"]) == os.path.realpath(os.environ["CARGO_TARGET_DIR"])'
+          cp Cargo.lock "$EVIDENCE/Cargo.lock"
+
+      - name: Test index-selection regressions
+        if: ${{ !cancelled() && steps.metadata.outcome == 'success' }}
+        run: |
+          set -euo pipefail
+          cargo test --locked --test index_selection_cli -- --nocapture 2>&1 | tee "$EVIDENCE/index-selection.log"
+
+      - name: Test debug
+        if: ${{ !cancelled() && steps.metadata.outcome == 'success' }}
+        run: |
+          set -euo pipefail
+          cargo test --locked --all-features 2>&1 | tee "$EVIDENCE/test-debug.log"
+
+      - name: Test release
+        if: ${{ !cancelled() && steps.metadata.outcome == 'success' }}
+        run: |
+          set -euo pipefail
+          cargo test --release --locked --all-features 2>&1 | tee "$EVIDENCE/test-release.log"
+
+      - name: Format, strict Clippy, harness syntax, and package
+        if: ${{ !cancelled() && steps.metadata.outcome == 'success' && matrix.target == 'linux-x86_64' }}
+        run: |
+          set -euo pipefail
+          cargo fmt --all -- --check 2>&1 | tee "$EVIDENCE/format.log"
+          cargo clippy --locked --all-targets --all-features -- -D warnings 2>&1 | tee "$EVIDENCE/clippy.log"
+          for harness in benchmarks/*.sh; do bash -n "$harness"; done
+          cargo package --locked 2>&1 | tee "$EVIDENCE/package.log"
+
+      - name: Install bcftools oracle dependencies
+        if: ${{ !cancelled() && steps.metadata.outcome == 'success' && matrix.target == 'linux-x86_64' }}
+        run: |
+          set -euo pipefail
+          printf '%s\n' 'https://archive.ubuntu.com/ubuntu/' | sudo tee /etc/apt/apt-mirrors.txt >/dev/null
+          sudo timeout 180 apt-get -o Acquire::Retries=2 -o Acquire::https::Timeout=20 update
+          sudo timeout 180 env DEBIAN_FRONTEND=noninteractive apt-get \
+            -o Acquire::Retries=2 -o Acquire::https::Timeout=20 \
+            install -y libbz2-dev libcurl4-openssl-dev liblzma-dev libssl-dev zlib1g-dev
+
+      - name: Build bcftools 1.24 oracle
+        id: oracle
+        if: ${{ !cancelled() && steps.metadata.outcome == 'success' && matrix.target == 'linux-x86_64' }}
+        run: |
+          set -euo pipefail
+          archive="$RUNNER_TEMP/bcftools-1.24.tar.bz2"
+          curl --fail --location --retry 3 \
+            https://github.com/samtools/bcftools/releases/download/1.24/bcftools-1.24.tar.bz2 \
+            --output "$archive"
+          echo "8caddc22610ee2851666047c859bb91da0c1e32d0c2ec553db6f153ad130e46f  $archive" | shasum -a 256 --check
+          tar -xjf "$archive" -C "$RUNNER_TEMP"
+          cd "$RUNNER_TEMP/bcftools-1.24"
+          ./configure --without-curses
+          make -j2
+          make -C htslib-1.24 -j2 bgzip tabix
+          test "$(./bcftools --version | sed -n '1p')" = "bcftools 1.24"
+          BCFTOOLS_PLUGINS="$PWD/plugins" ./bcftools plugin -l | grep -Fx setGT
+          ./bcftools --version | tee "$EVIDENCE/bcftools.log"
+          shasum -a 256 ./bcftools htslib-1.24/bgzip htslib-1.24/tabix >> "$EVIDENCE/bcftools.log"
+          echo "$PWD" >> "$GITHUB_PATH"
+          echo "BCFTOOLS_PLUGINS=$PWD/plugins" >> "$GITHUB_ENV"
+
+      - name: Fetch pinned validation corpora
+        id: corpora
+        if: ${{ !cancelled() && steps.oracle.outcome == 'success' }}
+        run: |
+          set -euo pipefail
+          hts="$RUNNER_TEMP/hts-specs"
+          git init "$hts"
+          git -C "$hts" remote add origin https://github.com/samtools/hts-specs.git
+          git -C "$hts" fetch --depth=1 origin da617203a9527537746e200abda2885bec3a822c
+          git -C "$hts" checkout --detach FETCH_HEAD
+          test "$(git -C "$hts" rev-parse HEAD)" = da617203a9527537746e200abda2885bec3a822c
+          validator="$RUNNER_TEMP/vcf-validator"
+          git init "$validator"
+          git -C "$validator" remote add origin https://github.com/EBIvariation/vcf-validator.git
+          git -C "$validator" fetch --depth=1 origin 0aacc4a44430ab9cee87d9925aacb28a2fb0a9fb
+          git -C "$validator" checkout --detach FETCH_HEAD
+          test "$(git -C "$validator" rev-parse HEAD)" = 0aacc4a44430ab9cee87d9925aacb28a2fb0a9fb
+          echo "HTS_SPECS_DIR=$hts" >> "$GITHUB_ENV"
+          echo "VCF_VALIDATOR_DIR=$validator" >> "$GITHUB_ENV"
+
+      - name: Test pinned compatibility oracles in both profiles
+        if: ${{ !cancelled() && steps.corpora.outcome == 'success' }}
+        run: |
+          set -euo pipefail
+          export RSOMICS_BCFTOOLS="$(command -v bcftools)"
+          result=0
+          for profile in debug release; do
+            flags=()
+            if [[ "$profile" == release ]]; then flags+=(--release); fi
+            for suite in annotate_compat concat_compat compat filter_compat index_compat norm_compat \
+              query reheader_compat setgt_compat validate_compat view_compat; do
+              if cargo test --locked "${flags[@]}" --test "$suite" -- --ignored --test-threads=1 \
+                2>&1 | tee "$EVIDENCE/oracle-$profile-$suite.log"; then
+                printf '%s\t%s\tpass\n' "$profile" "$suite" >> "$EVIDENCE/oracle-results.tsv"
+              else
+                result=1
+                printf '%s\t%s\tfail\n' "$profile" "$suite" >> "$EVIDENCE/oracle-results.tsv"
+              fi
+            done
+          done
+          exit "$result"
+
+      - name: Verify source immutability after tests
+        if: ${{ !cancelled() && steps.snapshot.outcome == 'success' }}
+        run: |
+          set -euo pipefail
+          shasum -a 256 --check "$EVIDENCE/files.sha256" | tee "$EVIDENCE/source-post-test.log"
+
+      - name: Retain audit evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: vcf-candidate-${{ matrix.target }}-${{ github.run_id }}
+          path: ${{ runner.temp }}/vcf-evidence
+          if-no-files-found: error
+          retention-days: 90
