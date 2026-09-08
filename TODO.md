@@ -17,8 +17,9 @@ maps belong in their dossiers under `docs/`.
 - [ ] Convert stale domain documents from crate queues into product-operation
       surveys.
       The [data-structure](docs/01-foundations/data-structures.md) and
-      [compression](docs/01-foundations/compression.md) surveys now record
-      consumer ownership and adoption gates; other domain pages remain.
+      [compression](docs/01-foundations/compression.md) surveys and
+      [I/O format map](docs/01-foundations/io-formats.md) now record consumer
+      ownership and adoption gates; other domain pages remain.
 - [x] Record the final reset gate and exact live counts.
 
 ## P0.2 — product dossiers

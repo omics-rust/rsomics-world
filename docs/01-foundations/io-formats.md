@@ -1,222 +1,166 @@
-# I/O formats
+# I/O formats — product and contract survey
 
-> Parsers, writers, and record types for the file formats every other
-> module reads or writes.
+Updated 2026-09-09. This maps record and dataset formats to coherent products
+and their existing foundations. It is not a parser-per-crate publication queue.
+Compression framing and codecs belong in [compression.md](compression.md);
+random-access formats belong in [indexing.md](indexing.md).
 
-## Scope
+## Current ownership
 
-Covers the textual and binary file formats that move sequence, alignment,
-variant, feature, and single-cell data between tools: FASTA/FASTQ,
-SAM/BAM/CRAM, VCF/BCF, GFF/GTF, BED, MAF, PAF, h5ad. The boundary with the
-neighbouring topic [`compression.md`](compression.md) is: this doc covers
-*record-level* readers/writers; the codecs themselves (DEFLATE, BGZF, zstd)
-live one level down. Random-access indexes (fai/bai/csi) live in
-[`indexing.md`](indexing.md).
+| Format or capability | Product workflows | Boundary and evidence scope |
+|---|---|---|
+| FASTA/FASTQ | Sequence utilities, FASTQ preprocessing/QC, sketch input | Existing `rsomics-seqio` borrowed/owned records, readers and writers; products own operation policy |
+| SAM/BAM/CRAM | Alignment-format operations and alignment-consuming calling/methylation workflows | Existing `rsomics-bamio` and selected format backends; pileup accumulation is a separate `rsomics-pileup` contract |
+| VCF/BCF | `rsomics-vcf` view, conversion, normalization, statistics and related format workflows | Product-owned format modules and operation policy; a format name alone does not justify a variant-I/O foundation |
+| GFF3/GTF | `rsomics-annotation` validation, conversion, transcript and sequence extraction | Product-private feature/transcript model over compatible noodles parsers; interval geometry uses `rsomics-intervals` |
+| BED | `rsomics-bed` interval operations; `rsomics-annotation` BED conversion output | BED product preserves raw fields through its own parser/model; reusable interval geometry is already in `rsomics-intervals` |
+| PAF | Planned complete `rsomics-minimap2 align` output contract | Engine/product-private mapping fields and tags; a PAF parser is not a separate product |
+| AnnData / h5ad / Zarr | Planned `rsomics-sc` import, persisted analysis state and export | Product-private dataset I/O until a second matching consumer exists; array storage is not the scientific state model |
+| UCSC MAF and mutation-annotation MAF | Distinct comparative-alignment and mutation-annotation use cases | Survey references only; neither the shared acronym nor a small parser establishes an accepted operation |
+| htsget | Remote retrieval of reads or variants | Transport/client contract, not a record encoding; no standalone server or public foundation is implied |
 
-## Design notes
+The source snapshot includes clean seqio `bf8c2c8eac4e`, bamio `30459c78951f`,
+BED `02b85a1a348c` and annotation `8e7beed4d51e`.
+VCF is a dirty worktree atop `682942cfa697`: its uncommitted concat and related
+changes are implementation assets, not a new accepted release. This survey
+does not mutate them or refresh portfolio-wide publication counts.
 
-- Rust is in a strong position here. [`noodles`](https://github.com/zaeleus/noodles)
-  is a pure-Rust, spec-tracking implementation of nearly every sequencing
-  format and is the de-facto reference library. Most "rewrites" in this
-  topic are not new crates but contributions back to noodles.
-- **h5ad / AnnData** support remains fragmented across several Rust crates.
-  The first concrete single-cell product must select or fill only the subset
-  it needs; format coverage alone does not justify another public foundation.
-- Streaming-first APIs matter: a typical aligned BAM is 100+ GB. Every
-  reader in this layer must expose `Iterator<Item = Record>` rather than
-  forcing `Vec<Record>`.
-- Zero-copy record views over the input buffer (`&[u8]` fields, not
-  `String` everywhere) are the main differentiator vs. naive ports of
-  htslib's API.
-- For tools that already wrap htslib (`rust-htslib`), treat them as
-  transitional. Goal is to make `noodles` strictly superset their feature
-  coverage so we can drop the FFI dependency.
+## Source-led library choices
 
-## TODO
+[noodles](https://github.com/zaeleus/noodles) supplies format-specific Rust
+libraries and a feature-selected umbrella crate. Its format list is a useful
+inventory, not proof of complete compatibility with every samtools/bcftools
+operation or every malformed input. Optional native codec features also mean
+that Rust-facing APIs do not establish an entirely Rust dependency graph.
+Use the [HTS specifications](https://samtools.github.io/hts-specs/) and the
+product's pinned command-line oracle to define behavior.
 
-- [x] **`noodles`** — pure-Rust SAM/BAM/CRAM/VCF/BCF/GFF/GTF/BED/FASTA/FASTQ/BGZF/CSI/tabix.
-  - Reference impl: `C` · [samtools/htslib](https://github.com/samtools/htslib) · `MIT`
-  - Existing Rust: [`noodles`](https://github.com/zaeleus/noodles) `0.110.0` (workspace meta-crate; subcrates carry their own versions)
-  - Existing Rust kind: `pure-port`
-  - Existing non-C alternatives: `htsjdk` (Java, GATK backbone); `pysam` (CPython binding of htslib)
-  - Parallelism: streaming-iterator (`Iterator<Item = Record>`); rayon-amenable on the consumer side
-  - SIMD: auto-vectorize at record-decode level; explicit SIMD comes via codec deps (`zlib-rs`, `libdeflater`)
-  - Quadrant: ①
-  - GPU-amenable: no — parsing is I/O-bound, not compute
-  - Upstream license: `MIT`
-  - Priority: `P0`
-  - Layer: `adopt`
-  - Consumes primitives: —
-  - Notes: Authoritative IO layer for the entire `rsomics-*` family. Contribute upstream rather than fork. Watch CRAM 3.1 codec compliance and async-tokio surface; both are improving but still flagged experimental. Edition 2024, MSRV 1.89, workspace under one repo.
+[needletail](https://github.com/onecodex/needletail) and
+[seq_io](https://github.com/markschl/seq_io) are FASTA/FASTQ parser candidates.
+Needletail also exposes sequence and k-mer operations; format detection is not
+sequencing-adapter inference or trimming. The existing seqio contract does not
+become obsolete because a parser advertises a faster scan. Compare complete
+parsing, validation, decompression and consumer work under matching semantics
+before changing its implementation. No unmeasured ranking against noodles is
+retained.
 
-- [x] **`needletail`** — fast FASTA/FASTQ parser with adapter detection.
-  - Reference impl: `C` · [lh3/readfq](https://github.com/lh3/readfq) (kseq.h) · `MIT`
-  - Existing Rust: [`needletail`](https://github.com/onecodex/needletail) `0.7.3`
-  - Existing Rust kind: `pure-port`
-  - Existing non-C alternatives: `seq_io` (Rust, lower-level)
-  - Parallelism: streaming-iterator; designed for outer-loop rayon parallelism per chunk
-  - SIMD: auto-vectorize; relies on bytewise scan (`memchr`) rather than handwritten SIMD
-  - Quadrant: ①
-  - GPU-amenable: no — sequential parsing, I/O-bound
-  - Upstream license: `MIT`
-  - Priority: `P0`
-  - Layer: `adopt`
-  - Consumes primitives: —
-  - Notes: Adopt for FASTX hot paths. Internally uses `seq_io` algorithm. Faster than `noodles-fastq` on raw scan-only workloads because it skips UTF-8 validation. Use noodles when you need record-level metadata, needletail when you need throughput.
+[rust-htslib](https://github.com/rust-bio/rust-htslib) is an HTSlib binding,
+not automatically technical debt to remove. The inspected bamio manifest
+defaults to its `cram-htslib` feature, and
+[CRAM record visitation](https://github.com/omics-rust/rsomics-bamio/blob/30459c78951fae406bd362854e7b80e42665a5c0/src/indexed.rs)
+uses that backend. Replacing it requires the same reference handling, tags,
+record semantics and platform coverage plus measured benefit. A goal of
+making noodles a universal superset is not a prerequisite for this portfolio.
 
-- [x] **`rust-htslib`** — FFI bindings to htslib.
-  - Reference impl: `C` · [samtools/htslib](https://github.com/samtools/htslib) · `MIT`
-  - Existing Rust: [`rust-htslib`](https://github.com/rust-bio/rust-htslib) `1.0.0` (paired with [`hts-sys`](https://crates.io/crates/hts-sys) `2.2.0` for raw bindings)
-  - Existing Rust kind: `FFI-wrapper`
-  - Existing non-C alternatives: `pysam`, `htsjdk`
-  - Parallelism: inherits htslib's pthread model on `bam_mt_*` paths; otherwise single-threaded
-  - SIMD: inherits htslib's compile-time SIMD (CRC32C / popcnt intrinsics)
-  - Quadrant: ②
-  - GPU-amenable: no — htslib is CPU-only
-  - Upstream license: `MIT` (htslib also `MIT`)
-  - Priority: `P1`
-  - Layer: `adopt`
-  - Consumes primitives: —
-  - Notes: Transitional. Keep as a fallback when noodles lacks a feature (mpileup engine, some CRAM 3.1 corner cases). Each use site gets a tracking issue for migration to noodles. The 1.0 release in 2026-04 makes it a stable transitional target.
+Version alignment follows actual type relationships. Annotation currently
+pairs noodles-gff 0.55, noodles-gtf 0.50, noodles-core 0.19 and noodles-fasta
+0.59; its private
+[feature wrapper](https://github.com/omics-rust/rsomics-annotation/blob/8e7beed4d51efb78e839cddf24288e04bf93134a/src/annotation.rs)
+uses the shared GFF record representation. VCF uses a different compatible
+format graph. Review upgrades as graphs; neither arbitrary independent bumps
+nor a portfolio-wide version pin is justified by this survey.
 
-- [~] **`SAM/BAM/CRAM`** — alignment record format family.
-  - Reference impl: `C` · [samtools/htslib](https://github.com/samtools/htslib) · `MIT`
-  - Existing Rust: [`noodles-sam`](https://crates.io/crates/noodles-sam) `0.85.0`, [`noodles-bam`](https://crates.io/crates/noodles-bam) `0.89.0`, [`noodles-cram`](https://crates.io/crates/noodles-cram) `0.93.0`
-  - Existing Rust kind: `pure-port`
-  - Existing non-C alternatives: `htsjdk` (Java)
-  - Parallelism: streaming-iterator + per-record async tokio variants
-  - SIMD: auto-vectorize; BGZF codec deps carry explicit SIMD
-  - Quadrant: ①
-  - GPU-amenable: no — record-level parsing, not compute
-  - Upstream license: `MIT`
-  - Priority: `P0`
-  - Layer: `adopt`
-  - Consumes primitives: —
-  - Notes: noodles covers SAM 1.6 and BAM 1.6 in full; CRAM 3.1 codecs (rANS Nx16, fqzcomp) are landing but still flagged "experimental" in some entry points. Heavy users (Hi-C, single-cell) push noodles-bam edges first.
+## Streaming and ownership contracts
 
-- [~] **`VCF/BCF`** — variant call format.
-  - Reference impl: `C` · [samtools/bcftools](https://github.com/samtools/bcftools) · `MIT`
-  - Existing Rust: [`noodles-vcf`](https://crates.io/crates/noodles-vcf) `0.88.0`, [`noodles-bcf`](https://crates.io/crates/noodles-bcf) `0.86.0`; supplementary [`bcf_reader`](https://github.com/bguo068/bcf-reader) `0.3.2`
-  - Existing Rust kind: `pure-port`
-  - Existing non-C alternatives: `htsjdk` (Java); `cyvcf2` (Python/Cython)
-  - Parallelism: streaming-iterator for noodles; `bcf_reader` adds explicit rayon over records
-  - SIMD: auto-vectorize
-  - Quadrant: ①
-  - GPU-amenable: no — record-level parsing, not compute
-  - Upstream license: `MIT`
-  - Priority: `P0`
-  - Layer: `adopt`
-  - Consumes primitives: —
-  - Notes: noodles is the default; `bcf_reader` is a lightweight option for pop-gen scale (1000G, gnomAD) where parsing 700M-variant BCFs needs careful streaming and the rayon-over-records pattern wins.
+The existing seqio
+[reader](https://github.com/omics-rust/rsomics-seqio/blob/bf8c2c8eac4e8f44907587527bfd5f7f808de97e/src/reader.rs)
+returns `Result<Option<Record<'_>>>` from `read_record(&mut self)`, borrowing
+the reader's reusable storage. That is intentionally not an ordinary
+`Iterator<Item = Record>`. Owned records, lending-style methods, visitors and
+bounded batches are all valid when the consumer needs them. Preserve explicit
+parse/I/O errors and distinguish them from normal exhaustion.
 
-- [x] **`GFF/GTF`** — feature annotation formats.
-  - Reference impl: `C++` · [The Sequence Ontology / Ensembl](http://gmod.org/wiki/GFF3) · spec is public domain; reference parsers in `gffread` (`MIT`)
-  - Existing Rust: [`noodles-gff`](https://crates.io/crates/noodles-gff) `0.57.0`, [`noodles-gtf`](https://crates.io/crates/noodles-gtf) `0.50.0`
-  - Existing Rust kind: `pure-port`
-  - Existing non-C alternatives: `gffutils` (Python), `rtracklayer` (R)
-  - Parallelism: streaming-iterator
-  - SIMD: auto-vectorize
-  - Quadrant: ①
-  - GPU-amenable: no — text parsing, I/O-bound
-  - Upstream license: `MIT` (for gffread; spec itself is open)
-  - Priority: `P0`
-  - Layer: `adopt`
-  - Consumes primitives: —
-  - Notes: Used by every quantifier and annotation tool downstream.
-    `rsomics-annotation` currently pairs `noodles-gff` 0.55 with
-    `noodles-gtf` 0.50 because that GTF release uses the same GFF record
-    version internally. Its extraction path uses `noodles-fasta` 0.59 and
-    `noodles-core` 0.19 from the same compatible graph. Selecting newer format
-    crates independently would duplicate core parser types; upgrade the set
-    together.
+Describe allocation and lifetime guarantees precisely. A borrowed view is not
+proof that decompression or wrapped-record assembly performs no copying.
+Threaded stages need owned or otherwise lifetime-safe data and bounded queues.
+Sorting, transcript assembly and matrix algorithms may need retained state;
+choose bounded-memory or external-memory algorithms from their real workload,
+not from a blanket ban on `Vec<Record>`.
 
-- [x] **`BED`** — interval format.
-  - Reference impl: `C++` · [arq5x/bedtools2](https://github.com/arq5x/bedtools2) · `MIT`
-  - Existing Rust: [`noodles-bed`](https://crates.io/crates/noodles-bed) `0.34.0`; supplementary `rust-bio` interval trees
-  - Existing Rust kind: `pure-port`
-  - Existing non-C alternatives: `pybedtools`
-  - Parallelism: streaming-iterator; the *operations* (intersect/merge/sort) are rayon-amenable when implemented
-  - SIMD: auto-vectorize
-  - Quadrant: ①
-  - GPU-amenable: no — text parsing; operations themselves are interval-tree work, CPU-friendly
-  - Upstream license: `MIT`
-  - Priority: `P0`
-  - Layer: `adopt` (parsing); the operations belong to `rsomics-bed`
-  - Consumes primitives: —
-  - Notes: Adopt noodles for parsing. Operations crate is downstream of `rsomics-intervals` (foundation, [`data-structures.md`](data-structures.md)).
+Seqio's
+[input entry points](https://github.com/omics-rust/rsomics-seqio/blob/bf8c2c8eac4e8f44907587527bfd5f7f808de97e/src/lib.rs)
+detect gzip from content. Generic `Read` input decodes synchronously; the
+file-path gzip path uses the producer thread described in the compression
+survey. Their shared FASTA/FASTQ grammar does not imply identical execution
+plumbing. Format detection, record parsing, format-specific validation and
+product transformations should remain distinguishable.
 
-- [~] **`PAF`** — pairwise mapping format (minimap2 default output).
-  - Reference impl: `C` · [lh3/minimap2](https://github.com/lh3/minimap2) · `MIT`
-  - Existing Rust: [`paf`](https://github.com/ARU-life-sciences/paf) `0.2.1` (parser only, borderline stale 2024-10); `rustybam::paf` (part of a binary toolkit)
-  - Existing Rust kind: `partial-port`
-  - Existing non-C alternatives: `paftools.js` (JS distributed with minimap2)
-  - Parallelism: single-threaded in the existing parsers
-  - SIMD: none
-  - Quadrant: ④
-  - GPU-amenable: no — small text parser
-  - Upstream license: `MIT`
-  - Priority: `P1`
-  - Layer: product-private in `rsomics-minimap2`, or contribute to `noodles`
-  - Consumes primitives: —
-  - Notes: `paf` crate last update 2024-10-29 is borderline stale — kept because PAF spec is stable and parsers do not need active development. `rustybam` is a binary tool, not a clean library. Implement or adopt the required contract inside `rsomics-minimap2`; prefer contributing a generally useful parser upstream to `noodles` over creating an rsomics foundation. A second concrete product consumer would be required before public promotion.
+## Format-specific compatibility obligations
 
-- [ ] **`MAF`** — multiple alignment format (UCSC) and Mutation Annotation Format (NCI/TCGA). Two *different* formats sharing a name; both unhandled.
-  - Reference impl (UCSC): `C` · [UCSC kent tools](http://hgdownload.soe.ucsc.edu/admin/exe/) · UCSC academic source license (free for non-commercial)
-  - Reference impl (TCGA): `Python/Perl` · [mskcc/vcf2maf](https://github.com/mskcc/vcf2maf) · `Apache-2.0`
-  - Existing Rust: none verified for either flavour
-  - Existing Rust kind: `none`
-  - Existing non-C alternatives: `maftools` (R) for TCGA-MAF
-  - Parallelism: single-threaded in upstreams
-  - SIMD: none
-  - Quadrant: —
-  - GPU-amenable: no — text parsing
-  - Upstream license: see above (two different flavours)
-  - Priority: `P2`
-  - Layer: product-private until two concrete consumers share a contract
-  - Consumes primitives: —
-  - Notes: The two MAF meanings require separate typed contracts. Start with the flavour required by a concrete cancer or comparative-genomics product and keep it there. Neither current portfolio nor format similarity establishes a public foundation.
+| Family | Required distinctions before reuse or migration |
+|---|---|
+| FASTA/FASTQ | Names versus comments, wrapped records, quality absent for FASTA and required for FASTQ, sequence/quality length, accepted bytes, empty/truncated input and record lifetime |
+| SAM/BAM/CRAM | Header dictionaries, reference identity, coordinates, CIGAR, flags, typed auxiliary tags, missing fields, long records and CRAM reference/codec behavior |
+| VCF/BCF | Header-defined INFO/FORMAT types and cardinalities, missing/vector-end representations, allele/genotype mapping, sample order, numeric rendering and compressed/raw encodings |
+| GFF3/GTF | Coordinate conversion, directives, escaping, multivalued attributes, dialect-specific quoting, parent/transcript relationships, strand and CDS phase |
+| BED | Zero-based half-open coordinates, required versus operation-required fields, raw trailing columns, strand, empty intervals, BED12 blocks and upstream-specific accepted input |
+| PAF | Query/target identities and lengths, intervals, strand, mapping quality and optional alignment tags; mapping summaries are not necessarily base-level alignments |
+| Annotated matrices | Axis identity/order, dense versus CSR/CSC representation, data types, missing values, categories, aligned layers/graphs/embeddings and metadata preservation |
 
-- [~] **`h5ad` / AnnData** — HDF5-backed single-cell matrix container.
-  - Reference impl: `Python` · [scverse/anndata](https://github.com/scverse/anndata) · `BSD-3-Clause`
-  - Existing Rust: [`anndata`](https://github.com/kaizhang/anndata-rs) `0.6.2` (workspace; subset of spec); [`anndata-memory`](https://github.com/SingleRust/Anndata-Memory) `1.0.7`; [`single_rust`](https://github.com/SingleRust/SingleRust) `0.5.8`; [`af-anndata`](https://github.com/COMBINE-lab/af-anndata) `0.4.1`
-  - Existing Rust kind: `partial-port` (each covers a different subset)
-  - Existing non-C alternatives: `anndataR` (R); native HDF5 readers in Julia
-  - Parallelism: `anndata-rs` and `anndata-memory` lean on `ndarray + rayon`; `single_rust` also uses `nalgebra + rayon` and optional tokio
-  - SIMD: auto-vectorize via ndarray; HDF5 codec layer (blosc) carries SIMD
-  - Quadrant: ①+② (in-memory ops are ①, HDF5 IO is ② via `hdf5-metno-sys` + `blosc-src` + `libz-sys`)
-  - GPU-amenable: maybe — only at the on-device array layer (Vectorize / Candle); HDF5 IO is FFI-bound and stays on CPU
-  - Upstream license: `BSD-3-Clause`
-  - Priority: `P0`
-  - Layer: product-private in `rsomics-sc` until a second concrete consumer exists
-  - Consumes primitives: HDF5 IO is FFI-bound today
-  - Notes: No crate covers the full spec (`.layers`, `.raw`, `.uns` nested groups, `.obsm`/`.varm` arrays, backed/lazy access), but full coverage is not the first deliverable. `rsomics-sc` should adopt or implement its required subset and coordinate with SnapATAC2 before forking. Only a second product with the same format-only contract can justify public promotion; computation policy remains in the products or in independently justified `rsomics-stats` items.
+These are review obligations, not a claim that every listed case is already
+supported. Each release declares its completed profile and explicit exclusions.
+The [BED format reference](https://genome.ucsc.edu/FAQ/FAQformat.html#format1),
+[GFF3 specification](https://github.com/The-Sequence-Ontology/Specifications/blob/master/gff3.md),
+[Ensembl GTF description](https://www.ensembl.org/info/website/upload/gff.html)
+and [minimap2 output specification](https://github.com/lh3/minimap2/blob/master/minimap2.1)
+supply distinct syntax and coordinate contracts.
 
-- [ ] **`zarr`** — chunked array format (h5ad-zarr variant, spatial-omics next gen).
-  - Reference impl: `Python` · [zarr-developers/zarr-python](https://github.com/zarr-developers/zarr-python) · `MIT`
-  - Existing Rust: [`zarrs`](https://github.com/zarrs/zarrs) `0.23.11` (active, v3 spec)
-  - Existing Rust kind: `pure-port`
-  - Existing non-C alternatives: `zarr-java`, `tensorstore` (C++)
-  - Parallelism: explicit rayon (`rayon`, `rayon_iter_concurrent_limit`)
-  - SIMD: explicit (optional `simd-adler32` checksum codec)
-  - Quadrant: ①
-  - GPU-amenable: maybe — at the on-device array layer; not at the chunked IO layer itself
-  - Upstream license: `MIT`
-  - Priority: `P1`
-  - Layer: `adopt`
-  - Consumes primitives: —
-  - Notes: `zarrs` is the strongest pure-Rust Zarr v3 implementation; build.rs is a thin metadata generator (no C compile). Important for spatial transcriptomics and atlas-scale data. Adopt when module 04 spatial work begins.
+The current
+[BED record model](https://github.com/omics-rust/rsomics-bed/blob/02b85a1a348c271e485cca629dc4e71fa075388a/src/bed.rs)
+combines checked interval geometry with original row bytes. Replacing it with
+noodles-bed solely to unify parser names could change observable columns or
+bedtools compatibility. Share demonstrated mechanics, not product policy.
+Likewise, the private VCF schema/rendering path is not equivalent to simply
+calling a generic BCF reader.
 
-- [ ] **`htsget`** — HTTP-streamed BAM/VCF.
-  - Reference impl: `Java` · [ga4gh/htsget-refserver](https://github.com/ga4gh/htsget-refserver) · `Apache-2.0`
-  - Existing Rust: [`noodles-htsget`](https://crates.io/crates/noodles-htsget) `0.11.0` (client); [`htsget-rs`](https://github.com/umccr/htsget-rs) (server, edition 2024 workspace with actix/axum/lambda backends)
-  - Existing Rust kind: `rust-native` (independent Rust impls of the GA4GH htsget spec; Java refserver is one of several spec implementations, not a C/C++ upstream to port)
-  - Existing non-C alternatives: `htsget-refserver` (Java/Go)
-  - Parallelism: tokio async for both client and server
-  - SIMD: inherits codec SIMD via BGZF deps
-  - Quadrant: ①
-  - GPU-amenable: no — HTTP streaming
-  - Upstream license: `Apache-2.0` (spec); `MIT` (htsget-rs)
-  - Priority: `P2`
-  - Layer: `adopt`
-  - Consumes primitives: —
-  - Notes: `htsget-rs` (UMCCR) is a strong Rust server implementation. Adopt; document interop with the noodles client.
+## Annotated datasets and remote transport
+
+[AnnData's on-disk specification](https://anndata.readthedocs.io/en/stable/fileformat-prose.html)
+defines versioned elements on HDF5 or Zarr stores, including dense/sparse arrays,
+data frames, categorical values and nested mappings. Reading `X` alone is not
+an AnnData round trip. The [single-cell dossier](../10-products/sc.md) owns
+the complete state and operation plan; unsupported elements must not be
+silently dropped. Rust implementations such as
+[anndata-rs](https://github.com/scverse/anndata-rs) are candidates to audit
+against that declared profile, not evidence that all Rust libraries either
+cover or fail the entire format.
+
+[Zarr v3](https://zarr-specs.readthedocs.io/en/latest/v3/core/index.html) is a
+chunked-array storage specification. Codec, data-type, metadata and storage
+support must match the selected AnnData encoding and access pattern.
+[zarrs](https://github.com/zarrs/zarrs) is an implementation candidate, not
+automatic AnnData compatibility or a reason to create another foundation.
+Keep scientific normalization, state alignment and provenance in the product.
+
+[UCSC multiple-alignment MAF](https://genome.ucsc.edu/FAQ/FAQformat.html#format5)
+and [GDC mutation-annotation MAF](https://docs.gdc.cancer.gov/Data/File_Formats/MAF_Format/)
+need separate names and types. The former represents alignment blocks and
+oriented sequences; the latter represents annotated variants. A generic
+`MafRecord` or a claim that one reader supports both would hide incompatible
+contracts. No new cancer or comparative-genomics product is created here.
+
+[htsget](https://samtools.github.io/hts-specs/htsget.html) uses tickets describing
+data blocks to retrieve and concatenate; it is not just a remote filename.
+A future consumer must define authentication, request/coordinate semantics,
+header/body assembly, URL handling, cancellation and failures before adopting
+a client such as noodles-htsget. [htsget-rs](https://github.com/umccr/htsget-rs)
+is a server reference, not an instruction to deploy a service or a current
+product dependency.
+
+## Adoption and extraction gate
+
+Keep one coherent model inside each product. Add a Layer A item only after two
+named consumers demonstrate the same policy-free contract, tests and resource
+requirements. Existing `common`/`help` continue to own shared CLI reporting and
+presentation; a format adapter must not build another UX layer.
+
+For each migration, retain exact format/operation oracles, malformed-input and
+write-failure tests, full-output or semantic round trips, and representative
+timing/memory evidence. Record source revisions, actual dependency features,
+native platforms, input identities and compatibility exclusions. Backend
+language, broad SIMD/GPU labels, repository activity and a passing round trip
+are not substitutes for that evidence. Review licenses and attribution for
+the exact adopted sources and native dependencies.
+
+No parser replacement, FFI-removal campaign, new public API, format expansion
+or release approval follows from this survey alone.

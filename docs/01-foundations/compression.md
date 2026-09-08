@@ -10,7 +10,7 @@ rsomics operation or a performance advantage.
 
 | Capability | Product workflow | Current implementation boundary |
 |---|---|---|
-| Plain/gzip/BGZF sequence input | Sequence utilities, FASTQ preprocessing/QC, sketch construction | `rsomics-seqio` probes gzip magic and replays the prefix; its gzip stream uses `flate2::read::MultiGzDecoder` on one producer thread |
+| Plain/gzip/BGZF sequence input | Sequence utilities, FASTQ preprocessing/QC, sketch construction | `rsomics-seqio` probes gzip magic and replays the prefix; `MultiGzDecoder` runs synchronously for generic readers and on one producer thread for gzip file paths |
 | Plain/BGZF byte output | For example, `rsomics-seq` compressed sequence output | Existing `rsomics-seqio::OutputEncoder`; the product selects encoding, level, destination and transaction policy |
 | Thread-controlled gzip output | FASTQ preprocessing | Product-private writer; FASTA/FASTQ validation and serialization use `rsomics-seqio::Writer` |
 | BAM BGZF output | Alignment-format operations | Existing `rsomics-bamio::RingBgzfWriter` over libdeflater; BAM record policy stays in the product |

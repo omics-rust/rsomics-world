@@ -22,8 +22,8 @@ consumer evidence determine what belongs in Layer A.
 - [`kmer-consumer-review-2026-09-09.md`](kmer-consumer-review-2026-09-09.md) —
   per-product call sites, canonical short-input repair and current consumer
   correctness/performance evidence.
-- [`io-formats.md`](io-formats.md) — FASTA/FASTQ, SAM/BAM/CRAM, VCF/BCF,
-  GFF/GTF, BED, MAF, PAF, h5ad. Centred on `noodles` + `needletail`.
+- [`io-formats.md`](io-formats.md) — record/dataset ownership, borrowed and
+  owned streaming contracts, format obligations and source-led backend choices.
 - [`compression.md`](compression.md) — current sequence/BGZF/CRAM ownership,
   codec and CLI references, shared-path evidence gates and explicit exclusions.
 - [`indexing.md`](indexing.md) — fai/bai/csi/tbi/gzi random-access indexes
