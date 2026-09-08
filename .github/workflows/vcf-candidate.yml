@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       regressions_only:
-        description: Run only the focused index-selection regressions
+        description: Run only the index-selection and concat CLI regressions
         type: boolean
         default: false
 
@@ -58,9 +58,9 @@ jobs:
           export EVIDENCE="$RUNNER_TEMP/vcf-evidence"
           printf 'CARGO_HOME=%s\nCARGO_TARGET_DIR=%s\nRUSTUP_HOME=%s\nTMPDIR=%s\nEVIDENCE=%s\n' \
             "$CARGO_HOME" "$CARGO_TARGET_DIR" "$RUSTUP_HOME" "$TMPDIR" "$EVIDENCE" >> "$GITHUB_ENV"
-          snapshot=.autopilot/snapshots/vcf-index-paths-fix-2026-09-09
-          echo "4ce4d9fa1f058d8a2b0f6ec5f7008f5eaf07548951b45d81985e3d908f718704  $snapshot/source.tar.gz" | shasum -a 256 --check
-          echo "81fa8caa108a7d9c09ab4ef3af42462c41c6790f1c74727d94cec1c0f6248b3a  $snapshot/files.sha256" | shasum -a 256 --check
+          snapshot=.autopilot/snapshots/vcf-indexed-stdout-red-2026-09-09
+          echo "57bb9a593c649a062f452c26829549fa52ed843268fce52b2f2ee988f346da5b  $snapshot/source.tar.gz" | shasum -a 256 --check
+          echo "c24b9e6bb5bbf292e3de2308b1da2316dfb3df29f78fe2d946d02aa398627fbc  $snapshot/files.sha256" | shasum -a 256 --check
           mkdir "$RUNNER_TEMP/vcf-candidate"
           mkdir -p "$CARGO_HOME" "$CARGO_TARGET_DIR" "$RUSTUP_HOME" "$TMPDIR" "$EVIDENCE"
           tar -xzf "$snapshot/source.tar.gz" -C "$RUNNER_TEMP/vcf-candidate" --no-same-owner
@@ -100,6 +100,13 @@ jobs:
         run: |
           set -euo pipefail
           cargo test --locked --test index_selection_cli -- --nocapture 2>&1 | tee "$EVIDENCE/index-selection.log"
+
+      - name: Test concat CLI regressions
+        if: ${{ !cancelled() && steps.metadata.outcome == 'success' }}
+        working-directory: ${{ runner.temp }}/vcf-candidate
+        run: |
+          set -euo pipefail
+          cargo test --locked --test concat_cli -- --nocapture 2>&1 | tee "$EVIDENCE/concat-cli.log"
 
       - name: Test debug
         if: ${{ !cancelled() && !inputs.regressions_only && steps.metadata.outcome == 'success' }}
