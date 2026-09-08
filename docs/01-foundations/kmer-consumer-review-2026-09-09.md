@@ -2,9 +2,10 @@
 
 Status: the short-sequence repair passes both consumers on all four native
 platforms, including successful artifact retention at the second candidate.
-Two equivalent guards nevertheless regressed in x86_64 measurements. A single
-inlining hint is now being tested against both the corrected and released
-controls. No corrected registry release or delivered product repair is claimed.
+Two equivalent guards nevertheless regressed in x86_64 measurements. The
+subsequent inlining hint made performance worse and has been withdrawn.
+An equal-source measurement control is running before further structural
+changes. No corrected registry release or delivered product repair is claimed.
 Local product builds remain stopped by the physical boot-storage gate.
 
 ## Identities and evidence scope
@@ -164,8 +165,28 @@ against both released `d89e2df` and corrected, non-inlined `23e42f3` controls
 in [34253569461](https://github.com/omics-rust/rsomics-kmer/actions/runs/34253569461).
 Consumer verification is
 [34253574988](https://github.com/omics-rust/rsomics-kmer/actions/runs/34253574988).
-Neither improvement nor successful inlining is assumed. Both library and
-caller assembly are retained to check what the compiler actually did.
+Both library and caller assembly are retained to check what the compiler
+actually did. The experiment failed its measured gate and was withdrawn by
+`2f2eda21729dc049524cfedb77b77ffdead41aaa`:
+
+| Completed native runner | Median candidate/released time ratio | Median candidate/corrected time ratio |
+|---|---|---|
+| Ubuntu x86_64 | 1.808787 | 1.620417 |
+| Ubuntu aarch64 | 1.140139 | 1.122348 |
+| macOS aarch64 | 1.240617 | 1.209461 |
+
+The Intel macOS measurement is still running; the three completed platforms
+already reject the attribute. The inlining consumer run has an artifact-only
+HTTP 403 on Linux x86_64 sketch; it is not needed to approve an experiment
+that has been rejected. No additional blind local guard change follows it.
+
+At the withdrawal head, `src`, tests, benchmarks and both Cargo files are
+byte-identical to corrected control `23e42f3`. Run
+[34254249238](https://github.com/omics-rust/rsomics-kmer/actions/runs/34254249238)
+therefore supplies an equal-source candidate/reference control while retaining
+the released baseline. Resolve measurement variation and review the iterator's
+internal representation before another production optimization. This does not
+relax the performance threshold, change a public API or authorize publication.
 
 Both completed measurement sets, including all four platforms, are retained
 outside scratch under
