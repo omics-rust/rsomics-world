@@ -45,7 +45,7 @@ interpretation are in
 | Shared-scan control | `34257486430` | Passed all four native jobs at `61de048`; compiled one common scan and iterator-state address, but null ratios remain Linux x86_64 0.789447, Linux ARM 1.009003, Intel macOS 0.859599, macOS ARM 1.007179. Attribution remains inconclusive |
 | Current-head ordinary CI | `34257483815` | Passed exact head `61de048` on all four native targets, with lint/package/benchmark smoke |
 | Sketch recorder ordinary CI | `34261359503` | Passed exact sketch head `3802b1a`: four native test jobs and lint/package/benchmark smoke; ordinary short-input test still documents the registry failure |
-| Sketch product measurements | `34261423289` | Dispatched at exact sketch head `3802b1a`; eight jobs, four native targets times genome and full gzip FASTQ abundance |
+| Sketch product measurements | `34261423289` | All four genome jobs passed and artifacts retained; four full FASTQ abundance jobs still running. Exact sketch head `3802b1a`; no whole-gate performance decision yet |
 
 Both completed four-platform measurement sets are retained outside scratch at
 `/Volumes/Zane's HDD/rsomics-fixtures/evidence/kmer-short-window-2026-09-09/`,
@@ -112,12 +112,29 @@ compiler-artifact feature sets are compared. The live oracle explicitly uses
 `RSOMICS_SKETCH_BIN` to execute the archived candidate, whose digest is checked
 again afterward. Production source and public manifests were not changed.
 
-Next: wait for exact-head ordinary CI and the eight measurement jobs; investigate
-any actual failures, then download every artifact to external scratch, verify it,
-and preserve a verified copy outside scratch. Review paired time/RSS distributions
-and full output equality before any performance decision. Neither dispatch nor
-the recorder's `complete.json` is a performance or release pass. Old August
-numbers remain historical only.
+Next: finish the four full FASTQ measurement jobs; investigate any actual
+failures, then download each new artifact to external scratch, verify it, and
+preserve a verified copy outside scratch. Review paired time/RSS distributions
+and full output equality before a whole-gate performance decision. Neither
+dispatch nor the recorder's `complete.json` is a performance or release pass.
+Old August numbers remain historical only.
+
+Ordinary CI has now passed. All four genome jobs also passed, including the
+archived candidate's full three-test oracle and checksum. The four original
+ZIPs independently match GitHub digests and pass integrity checks; all 320 raw
+trials, complete output bytes, 12 product binaries, lockfile hashes and actual
+compiled dependency features were checked. Genome candidate/sourmash paired
+median wall ratios are 1.110640 Linux x86_64, 0.515002 Linux aarch64, 1.095327
+Intel macOS and 0.704724 ARM macOS. Peak-RSS ratios range from 0.058394 to
+0.063158. This supports a scoped memory advantage but not universal speedup.
+The full FASTQ abundance jobs are still running; do not release from this
+partial workload result.
+
+Genome evidence and completed job logs are preserved and recursively compared
+under the permanent evidence root's `sketch-construction-34261423289/` directory.
+Scratch is `/Volumes/KIOXIA/Developments/tmp/sketch-construction-34261423289-mjkyFe`.
+The dossier records the four artifact IDs/digests. Collect only the new FASTQ
+artifacts into fresh child paths, preserving the existing genome evidence.
 
 The kmer `benchmark.yml` deliberately pins dependency `3d4b751` as an equal-source
 microbenchmark control. The separate sketch workflow pins corrected reference

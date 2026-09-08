@@ -361,6 +361,57 @@ normalization. Ruff, Rustfmt and YAML/Bash syntax checks passed. No local Rust
 compilation or product timing was performed; physical boot APFS usage remains
 94.6%, so native product validation runs in GitHub CI.
 
+#### Genome results; FASTQ still pending
+
+All four genome jobs completed successfully, including the full three-test
+live oracle on the archived corrected candidate and its post-test checksum.
+Each retained artifact has 80 raw trials: 16 warmup observations and 64 measured
+observations, forming 16 measured four-tool rounds. Independent verification
+checked full output bytes, binary/lockfile digests, foundation revisions,
+external dependency feature equality and native resource-unit normalization.
+
+The following are medians of per-round candidate/other ratios, not ratios of
+unpaired medians. Lower means faster or less peak memory. These results apply
+only to the complete E. coli genome construction workload described above.
+
+| Native runner | Time / published baseline | Time / same-source reference | Time / sourmash | Peak RSS / sourmash |
+|---|---|---|---|---|
+| Linux x86_64 | 0.769231 | 0.977528 | 1.110640 | 0.063158 |
+| Linux aarch64 | 1.000000 | 1.000000 | 0.515002 | 0.058569 |
+| macOS x86_64 | 0.884854 | 1.008772 | 1.095327 | 0.058394 |
+| macOS aarch64 | 1.017518 | 1.000705 | 0.704724 | 0.062135 |
+
+The current genome evidence supports a substantial peak-memory advantage on
+all four targets, and a throughput advantage on the two ARM targets. It does
+not support a universal throughput claim: the x86_64 candidate is approximately
+11.1% slower than sourmash on Linux and 9.5% slower on macOS by paired medians.
+Same-source control differences are recorded rather than attributed to the
+guard. This is not yet a complete performance or publication gate: all four
+full FASTQ abundance jobs are still running.
+
+A separate read-only reviewer independently recomputed all four results,
+including compiled feature sets from Cargo messages and all raw resource
+values. Signatures contain the same 4,476 hashes and content MD5 across native
+platforms; only their absolute input filename metadata differs. These are
+single-job, single-host-per-platform observations, not machine replications
+or a formal equivalence test of the corrected-source controls.
+
+The four original ZIPs pass integrity checks and match the GitHub digests:
+
+| Artifact ID | Native genome artifact | SHA-256 |
+|---|---|---|
+| `10070175121` | Linux x86_64 | `5d5cc037fdd168cba4c4c0a7b433962aa8680973e9417324ce31c1b6a882ef20` |
+| `10070132041` | Linux aarch64 | `404fdc9b782928d60aad55ec3312b5507d53dab30e18378c1c955e22ce8dbb85` |
+| `10070492835` | macOS x86_64 | `bf95054e2fb0436c87b754b39dcaca6c15b63ef1aa23b700c73fbdf63bdb5eb5` |
+| `10070216489` | macOS aarch64 | `647b98bfd3f140843cb3a36c5885bce35a1f1c09a70c06ea50a5e8b3e6437c7a` |
+
+They are preserved with extracted evidence, completed job logs and ordinary-CI
+metadata under
+`/Volumes/Zane's HDD/rsomics-fixtures/evidence/kmer-short-window-2026-09-09/sketch-construction-34261423289/`.
+The retained copy was recursively compared with external scratch at
+`/Volumes/KIOXIA/Developments/tmp/sketch-construction-34261423289-mjkyFe/`.
+Do not overwrite these files when collecting the remaining FASTQ artifacts.
+
 ## Remaining repair gate
 
 Before the next k-mer or sketch release:
