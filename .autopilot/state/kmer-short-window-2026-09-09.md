@@ -9,10 +9,11 @@ performance pass, release or secret access change has been made.
 
 ## Owning repositories
 
-- `rsomics-kmer`: clean at `1a0d9aac5307644fd6d9cdaab20c648bd9193984`;
+- `rsomics-kmer`: clean at `c79111f31651bad581920b7b5c2ddde9a57534e1`;
   production guard is `len < k || start > len - k` (commit `0ba84a6`).
-  `0924135`'s inlining hint was withdrawn. Source, tests, Cargo files and
-  benchmarks are identical to corrected control `23e42f3`.
+  `0924135`'s inlining hint was withdrawn. Source, tests and benchmarks are
+  identical to corrected control `23e42f3`; Cargo metadata changes only the
+  root version to unpublished candidate 0.2.3.
 - `rsomics-sketch`: clean at
   `f430522bb3d3c6fd38e08af758dca11e5262f47b`; still uses registry kmer 0.2.2.
   Its ordinary CI short-input diagnostic deliberately expects the old panic.
@@ -46,8 +47,10 @@ interpretation are in
 | Interleaved-head ordinary CI | `34256246005` | Passed exact head `3d4b751` on all four native targets, with lint/package/benchmark smoke |
 | Shared-scan control | `34257486430` | Passed all four native jobs at `61de048`; compiled one common scan and iterator-state address, but null ratios remain Linux x86_64 0.789447, Linux ARM 1.009003, Intel macOS 0.859599, macOS ARM 1.007179. Attribution remains inconclusive |
 | Shared-scan-head ordinary CI | `34257483815` | Passed exact head `61de048` on all four native targets, with lint/package/benchmark smoke |
-| Current-head ordinary CI | `34269915993` | Passed exact head `1a0d9aa` on all four native targets, with lint/package/benchmark smoke |
+| Consumer-refresh-head ordinary CI | `34269915993` | Passed exact head `1a0d9aa` on all four native targets, with lint/package/benchmark smoke |
 | Repaired-product consumers | `34269918433` | Passed all eight jobs at kmer `1a0d9aa`, pinning sketch `f430522` and seq `d9734e5`; full four-test sketch oracle passes in debug and release on every platform |
+| Release-candidate ordinary CI | `34271886882` | Passed exact head `c79111f`, candidate 0.2.3, on all four native targets with lint/package/benchmark smoke |
+| Release-candidate consumers | `34272105400` | Dispatched at exact head `c79111f`; completion and raw artifact review remain pending |
 | Sketch recorder ordinary CI | `34261359503` | Passed exact sketch head `3802b1a`: four native test jobs and lint/package/benchmark smoke; ordinary short-input test still documents the registry failure |
 | Sketch product measurements | `34261423289` | All four genome and three FASTQ jobs passed and artifacts retained; Intel macOS FASTQ job `102180058887` still running. Exact sketch head `3802b1a`; no whole-gate performance decision yet |
 | Sketch scale recovery | `34266897367`, `34267432784` | Four-native expected failure at `63abafa`, then normal CI pass at `db59472`; source repair, not registry delivery |
@@ -111,6 +114,17 @@ The copy was recursively compared with scratch
 `/Volumes/KIOXIA/Developments/tmp/kmer-consumers-34269918433-Yvr8UM/`.
 This closes the current source-head consumer refresh, not the future release
 head or registry-adoption gates.
+
+Candidate `c79111f` changes only the root package version in `Cargo.toml` and
+`Cargo.lock` from 0.2.2 to 0.2.3. Parsed metadata comparison confirms no
+dependency change; its production source tree remains
+`4ea404fb294e376032ce49bcbedaac72b1b4f79e`, identical to `1a0d9aa`.
+Independent source/API review confirms the original short-input guard remains
+the sole production delta from registry baseline `d89e2df`. Exact-head ordinary
+CI passed. Complete and retain consumer run `34272105400` before claiming that
+release-candidate gate. No publish workflow or secret-access mutation occurred.
+The separate construction run still measures its original pinned binaries;
+the candidate version bump does not relabel them as newly measured artifacts.
 
 Stop the guard and minor microbenchmark permutations. Both independent review
 and executable inspection confirm that the latest diagnostic shares one scan

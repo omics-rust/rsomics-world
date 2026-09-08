@@ -535,6 +535,21 @@ delivery of the corrected dependency.
 
 ## Remaining repair gate
 
+The unpublished 0.2.3 candidate is now
+`c79111f31651bad581920b7b5c2ddde9a57534e1`. Only the root version in the
+manifest and lockfile changes from `1a0d9aa`; parsed dependency metadata,
+production source tree, tests and benchmarks remain unchanged. Fresh independent
+API/source review confirmed that the sole production delta from the published
+baseline is still the short-input guard, with no inlining experiment restored.
+Normal exact-head CI
+[34271886882](https://github.com/omics-rust/rsomics-kmer/actions/runs/34271886882)
+passed all four native targets and lint/package/benchmark smoke. Candidate
+consumer validation
+[34272105400](https://github.com/omics-rust/rsomics-kmer/actions/runs/34272105400)
+has been dispatched; completion and artifact verification are still pending.
+This preparation is not publication and does not change the identities in the
+ongoing construction measurements.
+
 Before the next k-mer or sketch release:
 
 1. Complete both consumer suites and pinned upstream differentials with the
