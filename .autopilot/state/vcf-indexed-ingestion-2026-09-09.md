@@ -1,7 +1,8 @@
 # VCF indexed ingestion and writer repair
 
-Status: observed diagnostic failures are retained; the per-contig chunk-union
-candidate is ready for full native source-snapshot validation, not publication.
+Status: the per-contig chunk-union candidate passes the complete four-native
+source-snapshot diagnostic gate. Sparse BCF index construction/statistics
+regressions are the next expected-red run, not yet observed. No publication.
 The exact-index/native-path gate in `vcf-index-selection-2026-09-09.md` remains
 the preceding completed slice. The broader concat plan is still incomplete.
 
@@ -74,15 +75,56 @@ independently with Noodles after checking raw RIDs and BGZF record offsets.
 The initial undispatched chunk-union draft relied on the product index builder,
 whose contig-count allocation rejects valid sparse RIDs. That existing defect
 is isolated from concat and must receive a separate test-first repair.
-Source review is not runtime
-verification: the full diagnostic run is still required.
+The sparse index-builder and statistics repair remains separate from the
+verified chunk-union snapshot.
+
+## Full chunk-union green
+
+Run `34287699977` at world `63a00b6b2a20be7da7b6bb1d413a44110f310c10`
+passes all four native jobs. Each Linux target passes 424 ordinary tests per
+debug/release profile; each macOS target passes 422. Each profile leaves 61
+oracle tests ignored, while Linux x86_64 explicitly passes all 61 per profile
+across 11 suites. Formatting, strict Clippy, package verification and the raw
+fail-fast Bash syntax loop for benchmark harnesses pass. These syntax checks
+are not performance measurements.
+
+Focused concat passes 37 groups, resources three and writer errors 11 on
+every target; focused index selection passes 11 on Linux and nine on macOS.
+The two observed ordering/dedup red groups and helper are byte-identical.
+Writer/resource tests are unchanged. Every resource sample has one child
+thread at 1/2/64/256 inputs; file descriptors still scale with input count.
+
+All four API ZIP digests/sizes, CRC, 87 extracted files, source archive and
+manifest, exact 172-path pre/post source checks, native Rust 1.91 identities,
+lock/dependency identities and raw test/oracle counts were independently
+verified. Permanent evidence matches scratch recursively:
+`/Volumes/Zane's HDD/rsomics-fixtures/evidence/vcf-index-selection-2026-09-09/chunk-green-34287699977/`.
+Scratch capture is `vcf-chunk-green-34287699977-XUtbYu` on KIOXIA. Exact-head
+control-plane CI `34287659054` also passed.
+
+The newer expected-red snapshot is
+`.autopilot/snapshots/vcf-sparse-index-red-2026-09-09`. Only `tests/index.rs`
+changes from the green source. Two new groups should expose sparse build/empty
+slot sizing and ordinal-based stats naming; a third preserves hole/outside/MAX
+raw-RID rejection and transactional output under serial/two-worker decoding.
+An independently indexed small fixture prevents builder failures from hiding
+statistics failures. Its intended omission of unnamed dictionary holes is not
+yet declared bcftools-equivalent. The bounded control-plane oracle probe
+records actual pinned-tool behavior, statuses and partial output on timeouts;
+core dumps are disabled. The probe's three mocked subprocess tests and the
+four architecture-validator tests pass locally without executing Rust.
+
+Primary-source reasoning and artifact hashes are in the new snapshot README.
+Huge-header allocation safety is not claimed: Noodles parses sparse IDs into
+dense dictionaries before this code can validate them, and its indexer also
+resizes densely. Keep that guard question separate from the valid sparse-ID
+repair rather than claiming a later vector resize closes it.
 
 ## Open gates and resumption
 
-1. Dispatch and verify the current snapshot's full four-native debug/release
-   tests, index/concat/resource/writer regressions, and Linux x86_64 pinned
-   bcftools 1.24 oracles, formatting, strict Clippy, harness syntax and package.
-2. Add an observed sparse-BCF index-builder red and repair its raw-ID slot
+1. Dispatch and verify the sparse-index expected-red snapshot and pinned
+   oracle probe. Do not change production before the intended assertions fail.
+2. Repair sparse-BCF raw-ID slot
    sizing without weakening unknown-ID rejection. Continue remaining
    query/error and oracle-matrix coverage, two-pass fully
    validated naive concat, many-sample ligation/per-mode performance, and the

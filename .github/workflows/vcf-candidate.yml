@@ -58,9 +58,9 @@ jobs:
           export EVIDENCE="$RUNNER_TEMP/vcf-evidence"
           printf 'CARGO_HOME=%s\nCARGO_TARGET_DIR=%s\nRUSTUP_HOME=%s\nTMPDIR=%s\nEVIDENCE=%s\n' \
             "$CARGO_HOME" "$CARGO_TARGET_DIR" "$RUSTUP_HOME" "$TMPDIR" "$EVIDENCE" >> "$GITHUB_ENV"
-          snapshot=.autopilot/snapshots/vcf-indexed-chunk-union-sparse-2026-09-09
-          echo "f2628a56ca2e9c7b9d8fef8e7d0fea6faab2f49d6e792df91ce94342a21ef322  $snapshot/source.tar.gz" | shasum -a 256 --check
-          echo "fdaa8097ff5673fabdd72bf8e93059af942f55caef1d7bcf738ab3a4e2a4dbe6  $snapshot/files.sha256" | shasum -a 256 --check
+          snapshot=.autopilot/snapshots/vcf-sparse-index-red-2026-09-09
+          echo "15c4370a2446324beacd28f784691af6b014a7a48f40f1855c8bbcbd35942bb2  $snapshot/source.tar.gz" | shasum -a 256 --check
+          echo "1bd368f8883a42ed3fe9df72e1cc2d82f2100485100deb708cf47e489a66eaa3  $snapshot/files.sha256" | shasum -a 256 --check
           mkdir "$RUNNER_TEMP/vcf-candidate"
           mkdir -p "$CARGO_HOME" "$CARGO_TARGET_DIR" "$RUSTUP_HOME" "$TMPDIR" "$EVIDENCE"
           tar -xzf "$snapshot/source.tar.gz" -C "$RUNNER_TEMP/vcf-candidate" --no-same-owner
@@ -108,6 +108,13 @@ jobs:
         run: |
           set -euo pipefail
           cargo test --locked --test concat_cli -- --nocapture 2>&1 | tee "$EVIDENCE/concat-cli.log"
+
+      - name: Test index construction and metadata
+        if: ${{ !cancelled() && steps.metadata.outcome == 'success' }}
+        working-directory: ${{ runner.temp }}/vcf-candidate
+        run: |
+          set -euo pipefail
+          cargo test --locked --test index -- --nocapture 2>&1 | tee "$EVIDENCE/index-construction.log"
 
       - name: Test indexed concat resources and pipe cancellation
         timeout-minutes: 5
@@ -180,6 +187,16 @@ jobs:
           shasum -a 256 ./bcftools htslib-1.24/bgzip htslib-1.24/tabix >> "$EVIDENCE/bcftools.log"
           echo "$PWD" >> "$GITHUB_PATH"
           echo "BCFTOOLS_PLUGINS=$PWD/plugins" >> "$GITHUB_ENV"
+
+      - name: Record sparse BCF oracle behavior
+        timeout-minutes: 5
+        if: ${{ !cancelled() && steps.oracle.outcome == 'success' }}
+        run: |
+          set -euo pipefail
+          python3 -B "$GITHUB_WORKSPACE/scripts/probe_sparse_bcf_oracle.py" \
+            --binary "$CARGO_TARGET_DIR/debug/rsomics-vcf" \
+            --oracle "$RUNNER_TEMP/bcftools-1.24/bcftools" \
+            --output "$EVIDENCE/sparse-oracle" 2>&1 | tee "$EVIDENCE/sparse-oracle.log"
 
       - name: Fetch pinned validation corpora
         id: corpora

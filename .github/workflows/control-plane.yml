@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
-      - name: Test architecture validation
-        run: python3 -B -m unittest discover -s scripts -p test_validate_control_plane.py
+      - name: Test control-plane scripts
+        run: python3 -B -m unittest discover -s scripts -p 'test_*.py'
       - name: Validate architecture ledgers
         run: python3 -B scripts/validate_control_plane.py
