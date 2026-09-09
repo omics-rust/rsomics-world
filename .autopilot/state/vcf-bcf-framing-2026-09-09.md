@@ -2,11 +2,32 @@
 
 Status: expected-red run `34295859204` fails the intended concat/reheader
 steps on all four native targets. The Linux ARM assertions were read before
-production edits. Reviewed repair `vcf-bcf-framing-fix-2026-09-09` is running
+production edits. Reviewed repair `vcf-bcf-framing-fix-2026-09-09` passes
 full four-native verification as `34296650518`, world
 `cb4fb108147b0518f8e758bf2915d8201cc90850`; control CI `34296576628` passed.
 This follows the separately verified extended
 BGZF reheader repair `34294546912`; that green archive excludes these tests.
+
+The repair's full artifacts are independently verified: all four ZIP API
+digests/sizes/CRCs, 101 extracted files, before/after 174-source lists, exact
+heads, native Rust 1.91 and shared dependency identities. Each debug/release
+profile passes 445 ordinary tests on Linux or 443 on macOS, with 62 ignored;
+all three new reader unit groups pass on every target/profile. Focused concat
+38, reheader 21, index 13, selection 11 Linux/9 macOS, resources three and
+writer 11 groups pass. Every target rejects all 48 malformed consumer cases,
+accepts all 16 split-magic cases and passes 12 header-only controls, with the
+unchanged tests enforcing output preservation. Linux x86 passes all 62 pinned
+oracle tests per profile, format, strict Clippy, harness syntax and packaging.
+Sparse empty-tail queries remain correct; the separately recorded bcftools
+`--all` SIGSEGV divergence is unchanged.
+
+Permanent repair evidence is
+`/Volumes/Zane's HDD/rsomics-fixtures/evidence/vcf-index-selection-2026-09-09/bcf-framing-fix-34296650518/`.
+All 112 retained files (4,501,966 bytes) match external scratch recursively;
+inventory SHA-256 is `1f3f11a7008dc13d2dd6ef862808a4d84cfc1d5525bd581b0a82b355fd7ba291`.
+This validates the frozen repair, not subsequent worktree edits or performance.
+The [indexed BCF follow-up](vcf-indexed-bcf-framing-2026-09-09.md) now records
+separate expected-red consumer evidence and a pending indexed repair.
 
 Red world head is `86869341898cf2b4932c7ebd91571c44c6ff39bd`; control CI
 `34295758040` passed. First raw assertions are at KIOXIA
@@ -39,8 +60,8 @@ Noodles zero return after available bytes. Buffered compressed/raw consumers
 supply the contract without a public API. Reheader accumulates a three-byte
 magic across frames before replaying its full raw prefix. Three new unit
 groups cover EOF/zero/partial lengths, helper I/O kinds and short/interrupted
-valid reads; they have not run yet. Independent source reviews approve remote
-verification, not runtime correctness or performance.
+valid reads; all pass in both profiles on all four native targets. Their
+helper-level contract does not establish end-to-end I/O classification.
 
 Decoded buffering adds per-reader memory and a per-record buffered check;
 measure rather than assume its performance. Raw-prefix accumulation over
@@ -62,10 +83,10 @@ survive raw input, compression and frame boundaries.
 
 Pinned Noodles BCF 0.88 `src/io/reader/record.rs:13-15` returns zero when the
 decoded `l_shared` is zero. Its `read_site_length` uses the same zero value
-for physical EOF and four actual zero bytes. Product `format::Reader` and
-reheader's BCF loop currently trust this as EOF. A malformed record can
-therefore truncate processing while permitting success, as confirmed by the
-expected-red consumer tests above.
+for physical EOF and four actual zero bytes. Before this repair, product
+`format::Reader` and reheader's BCF loop trusted this as EOF. A malformed
+record could therefore truncate processing while permitting success, as
+confirmed by the expected-red consumer tests above.
 
 The current regression slice covers nonindexed `format::Reader` and reheader.
 Indexed concat's `regions::QueryReader::Bcf` and the dependency's indexed-view
@@ -81,9 +102,9 @@ before fixing this logical EOF ambiguity could additionally skip later CRC,
 ISIZE, EOF and trailing-byte checks. Blindly draining after a typed EOF would
 not reject the malformed record itself and is not an acceptable fix.
 
-Separately, reheader classifies from the first nonempty inflated frame.
+Separately, before the repair reheader classified from the first nonempty inflated frame.
 BCF magic split after byte one or two is a legal transport segmentation but
-is misclassified in all 16 new positive cases, including leading/intermediate
+was misclassified in all 16 new positive cases, including leading/intermediate
 empty frames and stdin. It is not the XLEN/extra-subfield defect already fixed.
 
 ## Execution plan

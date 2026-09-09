@@ -20,7 +20,10 @@ Item 7's four-native expected red and private read-path repair are tracked in
 [the reheader record](vcf-reheader-extra-2026-09-09.md); full four-native repair
 verification now passes, while performance remains pending. Before item 3's
 pass reduction, [BCF logical record boundaries](vcf-bcf-framing-2026-09-09.md)
-must be verified so typed early EOF cannot bypass remaining integrity checks.
+now have full four-native repair evidence, so the naive preflight may build on
+that checked contract. [Indexed BCF record boundaries](vcf-indexed-bcf-framing-2026-09-09.md)
+have separate expected-red evidence and a pending repair; they are not included
+in the nonindexed repair's fixed-scope claim.
 
 ## Candidate evidence
 

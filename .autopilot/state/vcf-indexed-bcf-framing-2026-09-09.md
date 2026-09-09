@@ -1,11 +1,18 @@
 # Indexed BCF logical EOF audit
 
-Status: reviewed test-only snapshot `vcf-indexed-bcf-framing-red-2026-09-09`
-is ready for remote expected-red execution. No indexed production fix has
-been made and no failure has yet been observed in these new tests.
+Status: test-only snapshot `vcf-indexed-bcf-framing-red-2026-09-09` is running
+as `34297832960`, world `d449c86b369e2ae3928060f17c7d30c34fdfcd96`; exact-head
+control CI `34297754328` passed before dispatch. Linux ARM raw assertions were
+read before indexed production edits. All 16 malformed commands incorrectly
+succeed and replace synthetic prior destinations; all eight positive controls
+succeed. Selection has 11 pass/one fail; concat 38, reheader 21, index 13,
+resources three and writer 11 pass. First raw log is external
+`/Volumes/KIOXIA/Developments/tmp/vcf-indexed-bcf-first-red-qDU0aX/linux-aarch64.log`.
+All-target artifact verification remains separate. The reviewed one-file
+indexed repair is now being implemented; no repaired execution is claimed.
 
-This follows the nonindexed/reheader repair under full verification in
-`34296650518`. That run excludes this new test. Current pinned Noodles BCF
+This follows the fully verified nonindexed/reheader repair in `34296650518`.
+That run excludes this new test. Current pinned Noodles BCF
 0.88 uses zero for both actual record EOF and encoded `l_shared=0`.
 `regions::QueryReader::Bcf` directly trusts that return; indexed view delegates
 to Noodles util 0.82 / BCF query, whose record loop also trusts it. These are
