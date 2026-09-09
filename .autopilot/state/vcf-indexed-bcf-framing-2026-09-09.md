@@ -11,7 +11,33 @@ resources three and writer 11 pass. First raw log is external
 All four targets fail only index selection with the same 16 malformed
 successes/destination replacements and eight controls; macOS has nine pass/
 one fail. The reviewed one-file repair `vcf-indexed-bcf-framing-fix-2026-09-09`
-is frozen for full verification; no repaired execution is claimed yet.
+was submitted for full verification as `34298954629`, world
+`9868be30ec97bde5343ea1ddf6be04fc92dd3a0f`; control CI `34298801698` passed.
+Focused indexed regressions pass, but both supplemental unit groups fail in
+debug/release. A fixture-only correction is now frozen as
+`vcf-indexed-bcf-fixture-fix-2026-09-09` for another full run. This is not a
+completed indexed correctness gate.
+
+The first actual Linux ARM failures were read at
+`/Volumes/KIOXIA/Developments/tmp/vcf-indexed-bcf-unit-failure-MNjEp4/linux-aarch64.log`.
+Both ordinary invocations stop in the library with 280 pass/two fail; do not
+report the intended full 448/446 totals. The fixture's Noodles BCF writer
+assigns raw RID 2 from explicit IDX 2/5, but serializes its header through a
+VCF writer which omits those IDX fields. Re-read header IDs become 0/1, so
+the production predicate correctly rejects a missing name. Source inspection
+independently confirms both paths. The correction rebuilds the raw BCF header
+from literal sparse text, then independently checks both mapping directions,
+raw RID and typed decoding. Production and frozen CLI bytes are unchanged.
+All-target raw artifact verification for the failed full run is pending.
+
+The corrected snapshot excludes the separately appended naive CLI draft.
+Its README also records a capture-format issue: local `diff.external=difft`
+renders `git diff` rather than producing an applicable patch. Previous source
+archives/hashes remain verified and immutable. The corrected snapshot uses
+explicit `--no-ext-diff --binary` and an external temporary Git index; applying
+that patch to a fresh HEAD archive reproduces every tracked source. Use this
+explicit capture/replay check for future snapshots; the product index remains
+empty throughout.
 
 Both independent audits verify four ZIP API hashes/sizes/CRCs, all 60 extracted
 files, exact 174-source before/after lists, native Rust 1.91, shared lock and
