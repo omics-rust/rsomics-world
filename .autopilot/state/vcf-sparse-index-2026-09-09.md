@@ -2,16 +2,42 @@
 
 Status: sparse builder/statistics repair full four-native diagnostics verified
 green. Subsequent empty-tail query/statistics expected reds verified on all
-four native platforms. Snapshot `vcf-empty-tail-fix-2026-09-09` full run
-`34291571671` at world `ac6ccc9e8cecec466844b627f3b2f5cd41d46037` is being
-verified (control CI `34291509323` passed). A subsequent test-only candidate,
-`vcf-sparse-oracle-bidirectional-2026-09-09`, adds one pinned bidirectional
-oracle group and deduplicates fixture data inside the product tests. Its 174
-source identities are verified; production files match the preceding repair.
-The new oracle remains unexecuted. No publication gate is closed. Boot
-occupancy exceeds 95%; local compilation remains prohibited.
+four native platforms. Empty-tail repair run `34291571671` is fully verified
+green, including actual HTSlib-generated CSI queries. Subsequent oracle
+expansion `34292257895` exposes a wrong test expectation: the completely
+empty bcftools index has three slots, not zero. The corrected isolated test
+snapshot is `vcf-sparse-oracle-empty-layout-2026-09-09`; only that expectation
+changes from the previous 174-file snapshot. Complete empty-file bidirectional
+validation is still pending. No publication gate is closed. Boot occupancy
+exceeds 95%; local compilation remains prohibited.
 
 ## Latest verified results
+
+Empty-tail fix `34291571671`, world
+`ac6ccc9e8cecec466844b627f3b2f5cd41d46037`, passes four native jobs and
+control CI `34291509323`. Every ordinary profile passes 431 Linux or 429 Mac
+tests, with 61 ignored, and Linux x86 separately passes all 61 oracle groups
+per profile plus fmt/Clippy/harness syntax/package. Focused index construction
+passes 13, including all 32 intended query cases and rejection guards;
+concat/resources/writer remain 37/3/11. Four ZIP API identities/CRCs, 97
+extracted files, 172-source before/after lists, heads, native Rust and lock
+identities are independently verified. The live HTSlib CSI has six slots;
+both tools now return success/empty for RID 9, and rsomics `--all` correctly
+includes `empty\t300\t.`. The upstream `--all` crash remains explicit.
+Permanent evidence matches KIOXIA `vcf-empty-tail-fix-34291571671-sKk0O5` at
+`/Volumes/Zane's HDD/rsomics-fixtures/evidence/vcf-index-selection-2026-09-09/empty-tail-fix-34291571671/`.
+
+The subsequent test-only run `34292257895`, world
+`d4383d4e8e672cbb881d1eee383039cac93bb1eb`, fails only the Linux oracle step;
+its new index oracle fails at the empty-file span assertion in both profiles
+after completing the nonempty case. Actual span is three, expected zero.
+Raw log evidence is at KIOXIA `vcf-sparse-oracle-first-failure-cZSubA`.
+HTSlib initializes from the declared contig count before raw-ID expansion.
+Only this test expectation is corrected; the independent zero-slot fixture
+and all production code remain unchanged. The full run artifacts are being
+retained, and the later empty-file checks must still execute. Control CI
+`34292169465` passed. A prepared reheader expected-red test draft is excluded
+from the isolated corrected-oracle snapshot; see its README for staging.
 
 Builder/statistics fix run `34290416281` at world
 `47de686b0d4606992010cf07887745129804ee3d` passed all native jobs; control CI
@@ -109,14 +135,12 @@ index storage already grow densely before/alongside this code.
 
 ## Next gates
 
-1. Run the full four-native empty-tail repair diagnostics and verify retained
-   artifacts, including the actual HTSlib-generated CSI probe.
-2. Preserve unknown-contig rejection, index corruption errors, counters and
-   unchanged expected-red tests while checking the repair.
-3. Add pinned sparse-ID interoperability tests with explicit expected
-   differences for the observed upstream `--all` crash, not silent comparison
-   exclusions. Continue concat's remaining naive/reheader/oracle/performance
-   gates in its design and audit documents.
+1. Run the corrected full native oracle candidate, finish empty-file
+   bidirectional checks, and retain/verify the erroneous-expectation run.
+2. Keep the actual upstream `--all` crash distinct from product contracts and
+   preserve zero-slot native regressions alongside HTSlib's three-slot case.
+3. Continue reheader extra-field expected-red verification and concat's
+   remaining naive/oracle/performance gates in its design and audit documents.
 4. Before eventual owning-product exact-head CI, correct its inherited
    `bash -n benchmarks/*.sh` command: Bash treats later paths as arguments and
    checks only the first script. The diagnostic workflow already loops over

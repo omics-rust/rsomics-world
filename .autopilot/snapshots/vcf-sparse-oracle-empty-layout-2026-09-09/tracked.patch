@@ -1,0 +1,1502 @@
+diff --git a/.github/workflows/ci.yml b/.github/workflows/ci.yml
+index e2db285..b79eb36 100644
+--- a/.github/workflows/ci.yml
++++ b/.github/workflows/ci.yml
+@@ -122,6 +122,8 @@ jobs:
+         run: |
+           RSOMICS_BCFTOOLS="$(command -v bcftools)" \
+             cargo test --locked --test annotate_compat -- --ignored --test-threads=1
++          RSOMICS_BCFTOOLS="$(command -v bcftools)" \
++            cargo test --locked --test concat_compat -- --ignored --test-threads=1
+           cargo test --locked --test compat -- --ignored
+           cargo test --locked --test filter_compat -- --ignored
+           cargo test --locked --test index_compat -- --ignored
+diff --git a/README.md b/README.md
+index 3689679..ec21fe8 100644
+--- a/README.md
++++ b/README.md
+@@ -6,6 +6,8 @@ The current implementation provides:
+ 
+ - `annotate`: edit headers and records or transfer typed fields from sorted
+   VCF, BCF, BED, and tab-delimited annotation streams.
++- `concat`: combine sorted VCF or BCF chunks, merge overlapping inputs, remove
++  cross-input duplicates, ligate phased chunks, or splice compatible BGZF.
+ - `head`: stream ordered VCF headers and an optional record prefix from plain
+   VCF, BGZF-compressed VCF, BCF, or standard input.
+ - `filter`: evaluate typed site and sample expressions, annotate failures, and
+@@ -24,6 +26,30 @@ The current implementation provides:
+ - `view`: convert among VCF, BGZF VCF, raw BCF, and BGZF BCF while selecting
+   records, samples, indexed regions, or streaming targets.
+ 
++`concat` preflights typed headers and then streams ordinary chunks in argument
++order or performs a bounded coordinate merge with stable input ordering.
++Duplicate removal is cross-input and one-to-one. Indexed regions compose with
++position, record, and variant overlap rules.
++
++```console
++rsomics-vcf concat chr1.vcf.gz chr2.vcf.gz -O z -o genome.vcf.gz
++rsomics-vcf concat -a -d exact cohort-a.bcf cohort-b.bcf -O b -o cohort.bcf
++rsomics-vcf concat -a -r chr1:1-1000000 chunk-a.vcf.gz chunk-b.vcf.gz
++```
++
++Ligation reconciles complete phased diploid heterozygous genotypes across a
++chunk handoff and writes typed PQ and PS values. Each indexed chunk may contain
++records from one contig; separate files can advance to later contigs. Default
++ligation requires a perfect overlap, while `--ligate-warn` drops and reports
++unpaired overlap sites and `--ligate-force` retains them or permits disjoint
++chunks.
++
++Validated naive mode copies compatible BGZF VCF or BCF record frames without
++recompression. It rejects mixed encodings, incompatible headers or BCF
++dictionaries, malformed frames, CRC failures, missing canonical EOF blocks,
++and trailing bytes. Named output is transactional in every mode, and JSON
++summaries require a separate named variant destination.
++
+ `annotate` applies checked header removals and renames, site-format ID edits,
+ typed fixed/INFO/FORMAT/GT transfer, explicit sample mapping, allele-aware
+ `Number=A`, `R`, and `G` remapping, target expressions, site marking, and
+diff --git a/src/cli.rs b/src/cli.rs
+index 1f9791e..056fcdf 100644
+--- a/src/cli.rs
++++ b/src/cli.rs
+@@ -31,6 +31,9 @@ enum Command {
+     /// Edit and transfer VCF or BCF annotations
+     Annotate(commands::annotate::Arguments),
+ 
++    /// Concatenate sorted VCF or BCF chunks
++    Concat(commands::concat::Arguments),
++
+     /// Filter VCF or BCF records with typed expressions and genomic masks
+     Filter(commands::filter::Arguments),
+ 
+@@ -63,6 +66,7 @@ enum Command {
+ #[serde(tag = "command", rename_all = "kebab-case")]
+ pub(crate) enum CommandOutput {
+     Annotate { summary: crate::annotate::Summary },
++    Concat { summary: crate::concat::Summary },
+     Filter { summary: crate::filter::Summary },
+     Head { summary: head::Summary },
+     Index { outcome: crate::index::Outcome },
+@@ -86,6 +90,9 @@ fn execute(cli: Cli) -> Result<Validation<CommandOutput>> {
+         Command::Annotate(arguments) => {
+             commands::annotate::execute(arguments, cli.output.json).map(Validation::Valid)
+         }
++        Command::Concat(arguments) => {
++            commands::concat::execute(arguments, cli.output.json).map(Validation::Valid)
++        }
+         Command::Filter(arguments) => {
+             commands::filter::execute(arguments, cli.output.json).map(Validation::Valid)
+         }
+@@ -164,6 +171,22 @@ mod tests {
+         assert!(help.contains("-O, --output-type <TYPE>"), "{help}");
+     }
+ 
++    #[test]
++    fn concat_help_uses_family_layout() {
++        let error = rsomics_help::try_parse_from::<Cli, _, _>(["rsomics-vcf", "concat", "--help"])
++            .unwrap_err();
++        let help = error.to_string();
++        assert!(help.contains("Input VCF or BCF chunks"), "{help}");
++        assert!(help.contains("-f, --file-list <FILE>"), "{help}");
++        assert!(help.contains("-a, --allow-overlaps"), "{help}");
++        assert!(help.contains("-d, --rm-dups <MODE>"), "{help}");
++        assert!(help.contains("-G, --drop-genotypes"), "{help}");
++        assert!(help.contains("-l, --ligate"), "{help}");
++        assert!(help.contains("-n, --naive"), "{help}");
++        assert!(help.contains("-O, --output-type <TYPE>"), "{help}");
++        assert!(help.contains("--threads <INT>"), "{help}");
++    }
++
+     #[test]
+     fn setgt_help_uses_family_layout() {
+         let error = rsomics_help::try_parse_from::<Cli, _, _>(["rsomics-vcf", "setgt", "--help"])
+diff --git a/src/commands/mod.rs b/src/commands/mod.rs
+index 6351928..604c552 100644
+--- a/src/commands/mod.rs
++++ b/src/commands/mod.rs
+@@ -1,4 +1,5 @@
+ pub(crate) mod annotate;
++pub(crate) mod concat;
+ pub(crate) mod filter;
+ pub(crate) mod head;
+ pub(crate) mod index;
+diff --git a/src/format/bgzf.rs b/src/format/bgzf.rs
+index 64c499a..5f8918a 100644
+--- a/src/format/bgzf.rs
++++ b/src/format/bgzf.rs
+@@ -35,26 +35,26 @@ impl<R: Read> FrameReader<R> {
+             return Ok(None);
+         }
+ 
+-        let mut header = [0; 18];
++        let mut header = [0; 12];
+         let Some(first) = read_byte(&mut self.inner)? else {
+             return Ok(None);
+         };
+         header[0] = first;
+         read_complete(&mut self.inner, &mut header[1..], "partial BGZF header")?;
+-        validate_header(&header)?;
+-
+-        let length = usize::from(u16::from_le_bytes([header[16], header[17]])) + 1;
+-        if !(EOF_BLOCK.len()..=65_536).contains(&length) {
++        validate_fixed_header(&header)?;
++        let extra_length = usize::from(u16::from_le_bytes([header[10], header[11]]));
++        let mut extra = vec![0; extra_length];
++        read_complete(&mut self.inner, &mut extra, "partial BGZF extra field")?;
++        let length = block_size(&extra)?;
++        let prefix = header.len() + extra.len();
++        if length < prefix + 8 || length > 65_536 {
+             return Err(invalid(format!("invalid BGZF block size: {length}")));
+         }
+         let mut raw = Vec::with_capacity(length);
+         raw.extend_from_slice(&header);
++        raw.extend_from_slice(&extra);
+         raw.resize(length, 0);
+-        read_complete(
+-            &mut self.inner,
+-            &mut raw[header.len()..],
+-            "partial BGZF payload",
+-        )?;
++        read_complete(&mut self.inner, &mut raw[prefix..], "partial BGZF payload")?;
+ 
+         if raw == EOF_BLOCK {
+             if read_byte(&mut self.inner)?.is_some() {
+@@ -128,16 +128,42 @@ impl<R: Read> Read for ValidatedReader<R> {
+     }
+ }
+ 
+-fn validate_header(header: &[u8; 18]) -> io::Result<()> {
++fn validate_fixed_header(header: &[u8; 12]) -> io::Result<()> {
+     if header[..4] != [0x1f, 0x8b, 0x08, 0x04] {
+         return Err(invalid("invalid BGZF gzip header"));
+     }
+-    if header[10..16] != [0x06, 0x00, 0x42, 0x43, 0x02, 0x00] {
+-        return Err(invalid("invalid BGZF extra field"));
++    if header[3] != 0x04 {
++        return Err(invalid("invalid BGZF gzip flags"));
+     }
+     Ok(())
+ }
+ 
++fn block_size(extra: &[u8]) -> io::Result<usize> {
++    let mut offset = 0;
++    let mut size = None;
++    while offset < extra.len() {
++        if extra.len() - offset < 4 {
++            return Err(invalid("partial BGZF extra subfield header"));
++        }
++        let length = usize::from(u16::from_le_bytes([extra[offset + 2], extra[offset + 3]]));
++        let end = offset
++            .checked_add(4 + length)
++            .ok_or_else(|| invalid("BGZF extra subfield length overflow"))?;
++        if end > extra.len() {
++            return Err(invalid("partial BGZF extra subfield payload"));
++        }
++        if extra[offset..offset + 2] == *b"BC" {
++            if length != 2 || size.is_some() {
++                return Err(invalid("invalid or duplicate BGZF BC subfield"));
++            }
++            size =
++                Some(usize::from(u16::from_le_bytes([extra[offset + 4], extra[offset + 5]])) + 1);
++        }
++        offset = end;
++    }
++    size.ok_or_else(|| invalid("BGZF BC subfield is missing"))
++}
++
+ fn read_byte(reader: &mut impl Read) -> io::Result<Option<u8>> {
+     let mut byte = [0];
+     loop {
+@@ -232,7 +258,15 @@ mod tests {
+     #[test]
+     fn rejects_invalid_frame_headers_and_sizes() {
+         let input = bgzf_fixture(b"body");
+-        for (index, value) in [(0, 0), (3, 0), (10, 0), (12, b'X'), (14, 0)] {
++        for (index, value) in [
++            (0, 0),
++            (3, 0),
++            (3, 0x05),
++            (3, 0x0c),
++            (10, 0),
++            (12, b'X'),
++            (14, 0),
++        ] {
+             let mut invalid = input.clone();
+             invalid[index] = value;
+             assert_eq!(
+@@ -279,4 +313,22 @@ mod tests {
+         assert!(matches!(reader.next().unwrap(), Some(Frame::Data(frame)) if frame == empty));
+         assert!(matches!(reader.next().unwrap(), Some(Frame::Eof)));
+     }
++
++    #[test]
++    fn accepts_arbitrary_extra_subfields_around_bc() {
++        let input = bgzf_fixture(b"body");
++        let mut frames = FrameReader::new(input.as_slice());
++        let Some(Frame::Data(mut raw)) = frames.next().unwrap() else {
++            panic!("missing data frame");
++        };
++        raw.splice(12..12, [b'X', b'Y', 1, 0, 7]);
++        raw[10..12].copy_from_slice(&11u16.to_le_bytes());
++        let size = u16::try_from(raw.len() - 1).unwrap();
++        raw[21..23].copy_from_slice(&size.to_le_bytes());
++        raw.extend_from_slice(&EOF_BLOCK);
++
++        let mut reader = FrameReader::new(raw.as_slice());
++        assert!(matches!(reader.next().unwrap(), Some(Frame::Data(_))));
++        assert!(matches!(reader.next().unwrap(), Some(Frame::Eof)));
++    }
+ }
+diff --git a/src/format/writer.rs b/src/format/writer.rs
+index 24e6dc5..b391ab4 100644
+--- a/src/format/writer.rs
++++ b/src/format/writer.rs
+@@ -80,6 +80,7 @@ pub(crate) struct BcfOutput<W> {
+     inner: W,
+     encoder: bcf::io::Writer<Vec<u8>>,
+     string_maps: Option<StringMaps>,
++    header: Option<vcf::Header>,
+ }
+ 
+ impl<W> Writer<W>
+@@ -367,6 +368,7 @@ impl<W> BcfOutput<W> {
+             inner,
+             encoder: bcf::io::Writer::from(Vec::new()),
+             string_maps: None,
++            header: None,
+         }
+     }
+ }
+@@ -377,17 +379,20 @@ where
+ {
+     fn write_record(
+         &mut self,
+-        header: &vcf::Header,
++        _header: &vcf::Header,
+         record: &RecordBuf,
+         number: u64,
+     ) -> Result<()> {
+         let string_maps = self.string_maps.as_ref().ok_or_else(|| {
+             RsomicsError::InvalidInput("BCF header must be written before records".to_owned())
+         })?;
++        let encoding_header = self.header.as_ref().ok_or_else(|| {
++            RsomicsError::InvalidInput("BCF header must be written before records".to_owned())
++        })?;
+         write_bcf_record(
+             &mut self.inner,
+             &mut self.encoder,
+-            header,
++            encoding_header,
+             string_maps,
+             record,
+             number,
+@@ -405,11 +410,27 @@ where
+ }
+ 
+ fn map_write_error(error: std::io::Error, context: &str) -> RsomicsError {
+-    let message = format!("{context}: {error}");
+-    if error.kind() == std::io::ErrorKind::InvalidInput {
++    let mut kind = error.kind();
++    let mut cause: &(dyn std::error::Error + 'static) = &error;
++    loop {
++        let next = if let Some(error) = cause.downcast_ref::<std::io::Error>() {
++            kind = error.kind();
++            error
++                .get_ref()
++                .map(|source| source as &(dyn std::error::Error + 'static))
++        } else {
++            cause.source()
++        };
++        match next {
++            Some(source) => cause = source,
++            None => break,
++        }
++    }
++    let message = format!("{context}: {cause}");
++    if kind == std::io::ErrorKind::InvalidInput {
+         RsomicsError::InvalidInput(message)
+     } else {
+-        RsomicsError::Io(std::io::Error::new(error.kind(), message))
++        RsomicsError::Io(std::io::Error::new(kind, message))
+     }
+ }
+ 
+@@ -419,11 +440,14 @@ where
+ {
+     let string_maps = StringMaps::try_from(header)
+         .map_err(|error| std::io::Error::new(std::io::ErrorKind::InvalidInput, error))?;
+-    output.encoder.write_header(header)?;
++    let mut encoding_header = header.clone();
++    *encoding_header.string_maps_mut() = string_maps.clone();
++    output.encoder.write_header(&encoding_header)?;
+     output.encoder.get_mut().clear();
+     let encoded = encode_bcf_header(header, &string_maps)?;
+     output.inner.write_all(&encoded)?;
+     output.string_maps = Some(string_maps);
++    output.header = Some(encoding_header);
+     Ok(())
+ }
+ 
+@@ -884,6 +908,73 @@ mod tests {
+         }
+     }
+ 
++    struct FailAfter {
++        remaining: usize,
++        kind: std::io::ErrorKind,
++    }
++
++    impl Write for FailAfter {
++        fn write(&mut self, buffer: &[u8]) -> std::io::Result<usize> {
++            if self.remaining == 0 {
++                return Err(std::io::Error::new(self.kind, "injected output failure"));
++            }
++            let written = buffer.len().min(self.remaining);
++            self.remaining -= written;
++            Ok(written)
++        }
++
++        fn flush(&mut self) -> std::io::Result<()> {
++            Ok(())
++        }
++    }
++
++    #[test]
++    fn typed_vcf_writes_preserve_io_errors_at_every_record_byte() {
++        let header: vcf::Header = "##fileformat=VCFv4.3\n\
++##FORMAT=<ID=GT,Number=1,Type=String,Description=\"Genotype\">\n\
++#CHROM\tPOS\tID\tREF\tALT\tQUAL\tFILTER\tINFO\tFORMAT\tS1\n"
++            .parse()
++            .unwrap();
++        let bytes = b"chr1\t1\tv1\tA\tC\t50\tPASS\t.\tGT\t0/1";
++        let source = vcf::Record::try_from(bytes.as_slice()).unwrap();
++        let record = RecordBuf::try_from_variant_record(&header, &source).unwrap();
++        for kind in [
++            std::io::ErrorKind::BrokenPipe,
++            std::io::ErrorKind::PermissionDenied,
++            std::io::ErrorKind::WriteZero,
++        ] {
++            for remaining in 0..=bytes.len() {
++                let output = FailAfter { remaining, kind };
++                let mut writer =
++                    Writer::Vcf(vcf::io::Writer::new(BufWriter::with_capacity(0, output)));
++                let error = writer.write_record(&header, &record, 7).unwrap_err();
++                match error {
++                    RsomicsError::Io(error) => {
++                        assert_eq!(error.kind(), kind, "offset {remaining}");
++                        assert!(error.to_string().contains("injected output failure"));
++                        assert!(error.to_string().contains("writing variant record 7"));
++                    }
++                    error => panic!("{kind:?} at offset {remaining}: {error}"),
++                }
++            }
++        }
++    }
++
++    #[test]
++    fn malformed_vcf_fields_remain_invalid_input() {
++        let mut record = RecordBuf::builder()
++            .set_reference_sequence_name("chr1")
++            .set_variant_start(noodles_core::Position::MIN)
++            .set_reference_bases("A")
++            .build();
++        *record.filters_mut() = ["bad filter".to_owned()].into_iter().collect();
++        let mut writer = Writer::new(Vec::new(), OutputFormat::Vcf);
++        let error = writer
++            .write_record(&vcf::Header::default(), &record, 1)
++            .unwrap_err();
++        assert!(matches!(error, RsomicsError::InvalidInput(_)), "{error}");
++    }
++
+     #[test]
+     fn parallel_bgzf_uses_the_requested_bounded_pool() {
+         let output = SharedOutput::default();
+@@ -965,6 +1056,39 @@ mod tests {
+         assert!(reader.record_bufs(&header).next().unwrap().is_ok());
+     }
+ 
++    #[test]
++    fn bcf_rebuilds_dictionary_after_header_definitions_are_added() {
++        let raw = "##fileformat=VCFv4.3\n\
++##INFO=<ID=DP,Number=1,Type=Integer,Description=\"Depth\">\n\
++##contig=<ID=chr1,length=1>\n\
++#CHROM\tPOS\tID\tREF\tALT\tQUAL\tFILTER\tINFO\n";
++        let mut header: vcf::Header = raw.parse().unwrap();
++        *header.string_maps_mut() = StringMaps::try_from(&header).unwrap();
++        header.infos_mut().insert(
++            "AF".to_owned(),
++            vcf::header::record::value::Map::<vcf::header::record::value::map::Info>::new(
++                vcf::header::record::value::map::info::Number::A,
++                Type::Float,
++                "Frequency",
++            ),
++        );
++        let source =
++            vcf::Record::try_from(b"chr1\t1\t.\tA\tC\t.\tPASS\tDP=2;AF=0.5".as_slice()).unwrap();
++        let record = RecordBuf::try_from_variant_record(&header, &source).unwrap();
++        let output = SharedOutput::default();
++        let bytes = output.0.clone();
++        let mut writer = Writer::new(output, OutputFormat::BcfRaw);
++        writer.write_header(&header, HeaderMode::Full).unwrap();
++        writer.write_record(&header, &record, 1).unwrap();
++        writer.finish().unwrap();
++
++        let raw = bytes.lock().unwrap().clone();
++        let mut reader = bcf::io::Reader::from(Cursor::new(raw));
++        let header = reader.read_header().unwrap();
++        let record = reader.record_bufs(&header).next().unwrap().unwrap();
++        assert!(record.info().get("AF").is_some());
++    }
++
+     #[test]
+     fn bcf_encodes_explicitly_missing_info_values() {
+         let raw = "##fileformat=VCFv4.3\n\
+diff --git a/src/index.rs b/src/index.rs
+index 25a216d..2a19b0e 100644
+--- a/src/index.rs
++++ b/src/index.rs
+@@ -6,7 +6,7 @@ mod vcf;
+ 
+ use std::path::{Path, PathBuf};
+ 
+-use rsomics_common::Result;
++use rsomics_common::{Context, Result, RsomicsError};
+ use serde::Serialize;
+ 
+ /// On-disk random-access index type.
+@@ -86,7 +86,10 @@ pub fn default_output_path(input: &Path, kind: IndexKind) -> PathBuf {
+         IndexKind::Csi => "csi",
+         IndexKind::Tbi => "tbi",
+     };
+-    PathBuf::from(format!("{}.{}", input.display(), extension))
++    let mut output = input.as_os_str().to_owned();
++    output.push(".");
++    output.push(extension);
++    PathBuf::from(output)
+ }
+ 
+ /// Creates a random-access index without exposing a partial destination.
+@@ -98,3 +101,54 @@ pub fn create(input: &Path, output: &Path, options: BuildOptions) -> Result<Buil
+ pub fn inspect(input: &Path, mode: InspectMode) -> Result<InspectReport> {
+     stats::inspect(input, mode)
+ }
++
++pub(crate) fn read_fresh(input: &Path) -> Result<Box<dyn noodles_csi::BinningIndex>> {
++    let is_vcf = crate::format::Reader::open(input)?.is_text();
++    let (index, kind) = resolve_query_index(input, is_vcf)?;
++    let input_modified = std::fs::metadata(input)
++        .rs_with_context(|| format!("reading variant metadata {}", input.display()))?
++        .modified()
++        .rs_with_context(|| format!("reading variant modification time {}", input.display()))?;
++    let index_modified = std::fs::metadata(&index)
++        .rs_with_context(|| format!("reading index metadata {}", index.display()))?
++        .modified()
++        .rs_with_context(|| format!("reading index modification time {}", index.display()))?;
++    if index_modified < input_modified {
++        return Err(RsomicsError::InvalidInput(format!(
++            "variant index is older than its input: {}",
++            index.display()
++        )));
++    }
++    match kind {
++        IndexKind::Csi => noodles_csi::fs::read(&index)
++            .map(|index| Box::new(index) as Box<dyn noodles_csi::BinningIndex>)
++            .rs_with_context(|| format!("reading CSI index {}", index.display())),
++        IndexKind::Tbi => noodles_tabix::fs::read(&index)
++            .map(|index| Box::new(index) as Box<dyn noodles_csi::BinningIndex>)
++            .rs_with_context(|| format!("reading TBI index {}", index.display())),
++    }
++}
++
++fn resolve_query_index(input: &Path, is_vcf: bool) -> Result<(PathBuf, IndexKind)> {
++    let kinds: &[_] = if is_vcf {
++        &[IndexKind::Tbi, IndexKind::Csi]
++    } else {
++        &[IndexKind::Csi]
++    };
++    for &kind in kinds {
++        let path = default_output_path(input, kind);
++        match std::fs::symlink_metadata(&path) {
++            Ok(_) => return Ok((path, kind)),
++            Err(error) if error.kind() == std::io::ErrorKind::NotFound => {}
++            Err(error) => {
++                return Err(error)
++                    .rs_with_context(|| format!("reading index metadata {}", path.display()));
++            }
++        }
++    }
++    let expected = if is_vcf { "CSI or TBI" } else { "CSI" };
++    Err(RsomicsError::InvalidInput(format!(
++        "no {expected} index found for {}",
++        input.display()
++    )))
++}
+diff --git a/src/index/build.rs b/src/index/build.rs
+index 26fe0b2..0060aa3 100644
+--- a/src/index/build.rs
++++ b/src/index/build.rs
+@@ -241,8 +241,19 @@ where
+         .or(Some(i32::MAX as usize));
+     let (min_shift, depth) = settings(requested_min_shift, 0, max_length);
+     let reference_sequence_count = header.contigs().len();
++    let reference_sequence_slots = header.contigs().keys().try_fold(0usize, |slots, name| {
++        let id = header
++            .string_maps()
++            .contigs()
++            .get_index_of(name)
++            .ok_or_else(|| invalid("BCF contig is absent from the header dictionary"))?;
++        let end = id
++            .checked_add(1)
++            .ok_or_else(|| invalid("BCF contig dictionary span exceeds usize"))?;
++        Ok::<_, io::Error>(slots.max(end))
++    })?;
+     let mut indexer = binning_index::Indexer::<BinnedIndex>::new(min_shift, depth);
+-    let mut linear = (0..reference_sequence_count)
++    let mut linear = (0..reference_sequence_slots)
+         .map(|_| LinearIndex::new(min_shift, depth))
+         .collect::<Vec<_>>();
+     let mut reader = bcf_reader.into_inner();
+@@ -293,7 +304,7 @@ where
+         start_offset = end_offset;
+     }
+ 
+-    let index = apply_loffsets(indexer.build(reference_sequence_count), &mut linear, None);
++    let index = apply_loffsets(indexer.build(reference_sequence_slots), &mut linear, None);
+     Ok(Built {
+         index: Index::Csi(index),
+         format: VariantFormat::Bcf,
+diff --git a/src/index/stats.rs b/src/index/stats.rs
+index 402f613..028aae6 100644
+--- a/src/index/stats.rs
++++ b/src/index/stats.rs
+@@ -12,7 +12,9 @@ use noodles_tabix as tabix;
+ use noodles_vcf as vcf;
+ use rsomics_common::{Context, Result, RsomicsError};
+ 
+-use super::{ContigStat, IndexKind, InspectMode, InspectReport, default_output_path};
++use super::{
++    ContigStat, IndexKind, InspectMode, InspectReport, VariantFormat, default_output_path,
++};
+ 
+ enum Index {
+     Csi(csi::Index),
+@@ -43,10 +45,11 @@ pub(super) fn inspect(input: &Path, mode: InspectMode) -> Result<InspectReport>
+         .transpose()?;
+     let lengths = variant_header
+         .as_ref()
+-        .map(contig_lengths)
++        .map(|(header, _)| contig_lengths(header))
+         .unwrap_or_default();
+ 
+     let (names, counts) = metadata(&loaded);
++    let index_span = counts.len();
+     let mut contigs = Vec::with_capacity(counts.len());
+     let mut total = 0u64;
+     for (i, records) in counts.into_iter().enumerate() {
+@@ -55,15 +58,29 @@ pub(super) fn inspect(input: &Path, mode: InspectMode) -> Result<InspectReport>
+                 RsomicsError::InvalidInput("index record count overflow".to_owned())
+             })?;
+         }
+-        let name = names
+-            .get(i)
+-            .cloned()
+-            .or_else(|| {
+-                variant_header
+-                    .as_ref()
+-                    .and_then(|header| header.contigs().get_index(i).map(|(name, _)| name.clone()))
+-            })
+-            .unwrap_or_else(|| "n/a".to_owned());
++        let name = match &variant_header {
++            Some((header, VariantFormat::Bcf)) => {
++                match header.string_maps().contigs().get_index(i) {
++                    Some(name) => name.to_owned(),
++                    None if records.is_some_and(|records| records > 0) => {
++                        return Err(RsomicsError::InvalidInput(format!(
++                            "{}: index slot {i} has records but no BCF contig",
++                            resolved.index.display()
++                        )));
++                    }
++                    None => continue,
++                }
++            }
++            _ => names
++                .get(i)
++                .cloned()
++                .or_else(|| {
++                    variant_header.as_ref().and_then(|(header, _)| {
++                        header.contigs().get_index(i).map(|(name, _)| name.clone())
++                    })
++                })
++                .unwrap_or_else(|| "n/a".to_owned()),
++        };
+         let include = match mode {
+             InspectMode::Total => false,
+             InspectMode::PerContig { include_zero } => {
+@@ -79,6 +96,35 @@ pub(super) fn inspect(input: &Path, mode: InspectMode) -> Result<InspectReport>
+         }
+     }
+ 
++    if let (Some((header, VariantFormat::Bcf)), InspectMode::PerContig { include_zero: true }) =
++        (&variant_header, mode)
++    {
++        let mut trailing = Vec::new();
++        for (name, contig) in header.contigs() {
++            let reference = header
++                .string_maps()
++                .contigs()
++                .get_index_of(name)
++                .ok_or_else(|| {
++                    RsomicsError::InvalidInput(format!(
++                        "BCF contig is absent from its dictionary: {name}"
++                    ))
++                })?;
++            if reference >= index_span {
++                trailing.push((
++                    reference,
++                    ContigStat {
++                        name: name.clone(),
++                        length: contig.length(),
++                        records: None,
++                    },
++                ));
++            }
++        }
++        trailing.sort_unstable_by_key(|(reference, _)| *reference);
++        contigs.extend(trailing.into_iter().map(|(_, contig)| contig));
++    }
++
+     Ok(InspectReport {
+         index: resolved.index,
+         kind: resolved.kind,
+@@ -152,9 +198,14 @@ fn optional_kind_from_path(path: &Path) -> Option<IndexKind> {
+     }
+ }
+ 
+-fn read_variant_header(path: &Path) -> Result<vcf::Header> {
++fn read_variant_header(path: &Path) -> Result<(vcf::Header, VariantFormat)> {
+     let mut reader = crate::format::Reader::open(path)?;
+-    reader.read_header().map(|(header, _, _)| header)
++    let format = if reader.is_text() {
++        VariantFormat::Vcf
++    } else {
++        VariantFormat::Bcf
++    };
++    reader.read_header().map(|(header, _, _)| (header, format))
+ }
+ 
+ fn contig_lengths(header: &vcf::Header) -> HashMap<String, Option<usize>> {
+diff --git a/src/lib.rs b/src/lib.rs
+index 688cd88..ea71d29 100644
+--- a/src/lib.rs
++++ b/src/lib.rs
+@@ -10,6 +10,7 @@ pub mod view;
+ 
+ mod cli;
+ mod commands;
++mod concat;
+ mod expression;
+ mod filter;
+ mod format;
+diff --git a/src/regions.rs b/src/regions.rs
+index ab56c56..763f6f3 100644
+--- a/src/regions.rs
++++ b/src/regions.rs
+@@ -33,23 +33,51 @@ pub(crate) struct IndexedRecords {
+     regions: Vec<Region>,
+     overlap: OverlapMode,
+     input: PathBuf,
++    bcf_index_span: Option<usize>,
++}
++
++type ChunkReader<'a> = noodles_csi::io::Query<'a, bgzf::io::Reader<File>>;
++
++enum QueryReader<'a> {
++    Vcf(
++        noodles_vcf::io::Reader<ChunkReader<'a>>,
++        noodles_vcf::Record,
++    ),
++    Bcf(
++        noodles_bcf::io::Reader<ChunkReader<'a>>,
++        noodles_bcf::Record,
++    ),
++}
++
++pub(crate) struct IndexedQuery<'a> {
++    reader: QueryReader<'a>,
++    header: &'a noodles_vcf::Header,
++    input: &'a Path,
++    regions: &'a [Region],
++    overlap: OverlapMode,
++    read: &'a mut u64,
+ }
+ 
+ impl IndexedRecords {
+     pub(crate) fn open(input: &Path, regions: &RegionSet) -> Result<Self> {
++        let index = crate::index::read_fresh(input)?;
+         let mut reader = indexed_reader::Builder::default()
++            .set_index(index)
+             .build_from_path(input)
+             .rs_with_context(|| format!("opening indexed variant input {}", input.display()))?;
+         let header = reader
+             .read_header()
+             .rs_with_context(|| format!("reading variant header {}", input.display()))?;
+         let query_regions = regions.merged(&header)?;
++        let bcf_index_span = matches!(reader, indexed_reader::IndexedReader::Bcf(_))
++            .then(|| reader.index().reference_sequences().count());
+         Ok(Self {
+             reader,
+             header,
+             regions: query_regions,
+             overlap: regions.overlap(),
+             input: input.to_path_buf(),
++            bcf_index_span,
+         })
+     }
+ 
+@@ -57,6 +85,49 @@ impl IndexedRecords {
+         &self.header
+     }
+ 
++    pub(crate) fn query_contig<'a>(
++        &'a mut self,
++        regions: &'a [Region],
++        read: &'a mut u64,
++    ) -> Result<IndexedQuery<'a>> {
++        let reference = reference_id(&self.reader, &self.header, &self.input, &regions[0])?;
++        let index = self.reader.index();
++        let mut chunks = Vec::new();
++        if self.bcf_index_span.is_none_or(|span| reference < span) {
++            for region in regions {
++                chunks.extend(
++                    index
++                        .query(reference, region.interval())
++                        .rs_with_context(|| {
++                            format!("querying region {region} in {}", self.input.display())
++                        })?,
++                );
++            }
++        }
++        let chunks = noodles_csi::binning_index::merge_chunks(&chunks);
++        let reader = match &mut self.reader {
++            indexed_reader::IndexedReader::Vcf(reader) => QueryReader::Vcf(
++                noodles_vcf::io::Reader::new(noodles_csi::io::Query::new(reader.get_mut(), chunks)),
++                noodles_vcf::Record::default(),
++            ),
++            indexed_reader::IndexedReader::Bcf(reader) => QueryReader::Bcf(
++                noodles_bcf::io::Reader::from(noodles_csi::io::Query::new(
++                    reader.get_mut(),
++                    chunks,
++                )),
++                noodles_bcf::Record::default(),
++            ),
++        };
++        Ok(IndexedQuery {
++            reader,
++            header: &self.header,
++            input: &self.input,
++            regions,
++            overlap: self.overlap,
++            read,
++        })
++    }
++
+     pub(crate) fn visit(
+         &mut self,
+         mut visit: impl FnMut(&noodles_vcf::Header, RecordBuf, u64) -> Result<()>,
+@@ -67,33 +138,26 @@ impl IndexedRecords {
+             regions,
+             overlap,
+             input,
++            bcf_index_span,
+         } = self;
+         let mut read = 0;
+         for (region_index, region) in regions.iter().enumerate() {
+-            let records = reader
+-                .query(header, region)
+-                .rs_with_context(|| format!("querying region {region}"))?;
++            if let Some(span) = bcf_index_span
++                && reference_id(reader, header, input, region)? >= *span
++            {
++                continue;
++            }
++            let records = query_records(
++                reader,
++                header,
++                input,
++                *overlap,
++                region,
++                &regions[..region_index],
++                &mut read,
++            )?;
+             for result in records {
+-                let number = read + 1;
+-                let record = result
+-                    .rs_with_context(|| format!("reading indexed variant record {number}"))?;
+-                let record = RecordBuf::try_from_variant_record(header, record.as_ref()).map_err(
+-                    |error| {
+-                        RsomicsError::InvalidInput(format!(
+-                            "{}: decoding indexed variant record {number}: {error}",
+-                            input.display()
+-                        ))
+-                    },
+-                )?;
+-                read += 1;
+-                if !overlaps(&record, region.interval(), *overlap)
+-                    || regions[..region_index].iter().any(|previous| {
+-                        previous.name() == region.name()
+-                            && overlaps(&record, previous.interval(), *overlap)
+-                    })
+-                {
+-                    continue;
+-                }
++                let (record, number) = result?;
+                 visit(header, record, number)?;
+             }
+         }
+@@ -101,6 +165,159 @@ impl IndexedRecords {
+     }
+ }
+ 
++fn reference_id(
++    reader: &indexed_reader::IndexedReader<bgzf::io::Reader<File>>,
++    header: &noodles_vcf::Header,
++    input: &Path,
++    region: &Region,
++) -> Result<usize> {
++    let name = region.name();
++    match reader {
++        indexed_reader::IndexedReader::Vcf(_) => reader
++            .index()
++            .header()
++            .and_then(|header| header.reference_sequence_names().get_index_of(name)),
++        indexed_reader::IndexedReader::Bcf(_) => {
++            let name = std::str::from_utf8(name).map_err(|_| {
++                RsomicsError::InvalidInput(format!("region reference name is not UTF-8: {name}"))
++            })?;
++            header.string_maps().contigs().get_index_of(name)
++        }
++    }
++    .ok_or_else(|| {
++        RsomicsError::InvalidInput(format!(
++            "indexed input {} has no reference for region {name}",
++            input.display()
++        ))
++    })
++}
++
++impl QueryReader<'_> {
++    fn read_record(&mut self) -> std::io::Result<Option<&dyn noodles_vcf::variant::Record>> {
++        match self {
++            Self::Vcf(reader, record) => match reader.read_record(record)? {
++                0 => Ok(None),
++                _ => Ok(Some(record)),
++            },
++            Self::Bcf(reader, record) => match reader.read_record(record)? {
++                0 => Ok(None),
++                _ => Ok(Some(record)),
++            },
++        }
++    }
++}
++
++impl IndexedQuery<'_> {
++    fn read_record(&mut self) -> Result<Option<(RecordBuf, u64)>> {
++        loop {
++            let number = self.read.checked_add(1).ok_or_else(|| {
++                RsomicsError::InvalidInput("variant record count exceeds u64".to_owned())
++            })?;
++            let Some(record) = self.reader.read_record().rs_with_context(|| {
++                format!(
++                    "reading indexed variant record {number} in {}",
++                    self.input.display()
++                )
++            })?
++            else {
++                return Ok(None);
++            };
++            if !intersects_query(self.header, record, self.regions).rs_with_context(|| {
++                format!(
++                    "locating indexed variant record {number} in {}",
++                    self.input.display()
++                )
++            })? {
++                continue;
++            }
++            let record =
++                RecordBuf::try_from_variant_record(self.header, record).map_err(|error| {
++                    RsomicsError::InvalidInput(format!(
++                        "{}: decoding indexed variant record {number}: {error}",
++                        self.input.display()
++                    ))
++                })?;
++            *self.read = number;
++            if self
++                .regions
++                .iter()
++                .any(|region| overlaps(&record, region.interval(), self.overlap))
++            {
++                return Ok(Some((record, number)));
++            }
++        }
++    }
++}
++
++impl Iterator for IndexedQuery<'_> {
++    type Item = Result<(RecordBuf, u64)>;
++
++    fn next(&mut self) -> Option<Self::Item> {
++        self.read_record().transpose()
++    }
++}
++
++fn intersects_query(
++    header: &noodles_vcf::Header,
++    record: &dyn noodles_vcf::variant::Record,
++    regions: &[Region],
++) -> std::io::Result<bool> {
++    let name = record.reference_sequence_name(header)?;
++    let region_name: &[u8] = regions[0].name().as_ref();
++    if name.as_bytes() != region_name {
++        return Ok(false);
++    }
++    let Some(start) = record.variant_start().transpose()? else {
++        return Ok(false);
++    };
++    let interval = Interval::from(start..=record.variant_end(header)?);
++    Ok(regions
++        .iter()
++        .any(|region| region.interval().intersects(interval)))
++}
++
++fn query_records<'a>(
++    reader: &'a mut indexed_reader::IndexedReader<bgzf::io::Reader<File>>,
++    header: &'a noodles_vcf::Header,
++    input: &'a Path,
++    overlap: OverlapMode,
++    region: &'a Region,
++    previous: &'a [Region],
++    read: &'a mut u64,
++) -> Result<impl Iterator<Item = Result<(RecordBuf, u64)>> + 'a> {
++    let records = reader
++        .query(header, region)
++        .rs_with_context(|| format!("querying region {region} in {}", input.display()))?;
++    Ok(records.filter_map(move |result| {
++        let result = (|| {
++            let number = read.checked_add(1).ok_or_else(|| {
++                RsomicsError::InvalidInput("variant record count exceeds u64".to_owned())
++            })?;
++            let record = result.rs_with_context(|| {
++                format!(
++                    "reading indexed variant record {number} in {}",
++                    input.display()
++                )
++            })?;
++            let record =
++                RecordBuf::try_from_variant_record(header, record.as_ref()).map_err(|error| {
++                    RsomicsError::InvalidInput(format!(
++                        "{}: decoding indexed variant record {number}: {error}",
++                        input.display()
++                    ))
++                })?;
++            *read = number;
++            let keep = overlaps(&record, region.interval(), overlap)
++                && !previous.iter().any(|previous| {
++                    previous.name() == region.name()
++                        && overlaps(&record, previous.interval(), overlap)
++                });
++            Ok(keep.then_some((record, number)))
++        })();
++        result.transpose()
++    }))
++}
++
+ impl RegionSelection {
+     pub fn new(regions: RegionSet, exclude: bool) -> Self {
+         Self { regions, exclude }
+diff --git a/tests/index.rs b/tests/index.rs
+index 5fc8da3..41af6dd 100644
+--- a/tests/index.rs
++++ b/tests/index.rs
+@@ -7,6 +7,9 @@ use noodles_bcf as bcf;
+ use noodles_bgzf as bgzf;
+ use noodles_vcf::{self as vcf, variant::io::Write as _};
+ 
++#[path = "common/sparse_bcf.rs"]
++mod sparse_fixture;
++
+ fn binary() -> PathBuf {
+     PathBuf::from(env!("CARGO_BIN_EXE_rsomics-vcf"))
+ }
+@@ -223,3 +226,356 @@ fn rejects_incomplete_and_unsorted_inputs() {
+     assert!(String::from_utf8_lossy(&result.stderr).contains("positions are not sorted"));
+     assert!(!PathBuf::from(format!("{}.csi", unsorted.display())).exists());
+ }
++
++fn sparse_bcf(directory: &Path, empty: bool) -> PathBuf {
++    let source = directory.join("sparse.vcf");
++    let input = directory.join("sparse.bcf");
++    sparse_fixture::write_vcf(&source, empty);
++    run(&[
++        "view",
++        "-Ob",
++        "-o",
++        input.to_str().unwrap(),
++        source.to_str().unwrap(),
++    ]);
++    sparse_fixture::assert_bcf(&input, empty);
++    input
++}
++
++fn sparse_csi(input: &Path) {
++    sparse_csi_slots(input, 10);
++}
++
++fn sparse_csi_slots(input: &Path, slots: usize) {
++    use noodles_csi::binning_index::{
++        Indexer,
++        index::reference_sequence::{bin::Chunk, index::BinnedIndex},
++    };
++    let mut reader = bcf::io::Reader::new(File::open(input).unwrap());
++    reader.read_header().unwrap();
++    let mut indexer = Indexer::<BinnedIndex>::new(14, 5);
++    let mut record = bcf::Record::default();
++    loop {
++        let start = reader.get_ref().virtual_position();
++        if reader.read_record(&mut record).unwrap() == 0 {
++            break;
++        }
++        let end = reader.get_ref().virtual_position();
++        let reference = record.reference_sequence_id().unwrap();
++        let position = record.variant_start().unwrap().unwrap();
++        indexer
++            .add_record(
++                Some((reference, position, position, true)),
++                Chunk::new(start, end),
++            )
++            .unwrap();
++    }
++    noodles_csi::fs::write(input.with_extension("bcf.csi"), &indexer.build(slots)).unwrap();
++}
++
++#[test]
++fn sparse_bcf_builds_preserve_dictionary_span_and_declared_contig_count() {
++    let mut failures = Vec::new();
++    for empty in [false, true] {
++        for threads in ["0", "2"] {
++            let directory = tempfile::tempdir().unwrap();
++            let input = sparse_bcf(directory.path(), empty);
++            let output = Command::new(binary())
++                .args(["--json", "index", "--threads", threads])
++                .arg(&input)
++                .output()
++                .unwrap();
++            if !output.status.success() {
++                failures.push(format!(
++                    "empty={empty}, threads={threads}: {}",
++                    String::from_utf8_lossy(&output.stderr)
++                ));
++                continue;
++            }
++            let json: serde_json::Value = serde_json::from_slice(&output.stdout).unwrap();
++            let summary = &json["result"]["outcome"];
++            assert_eq!(summary["reference_sequences"], 3);
++            assert_eq!(summary["records"], if empty { 0 } else { 3 });
++            let index = noodles_csi::fs::read(input.with_extension("bcf.csi")).unwrap();
++            if index.reference_sequences().len() != 10 {
++                failures.push(format!(
++                    "empty={empty}, threads={threads}: {} index slots, expected 10",
++                    index.reference_sequences().len()
++                ));
++                continue;
++            }
++            for (region, suffix) in [
++                ("chrB:10", "chrB\t10\tb1\tA\tC\t.\tPASS\t.\n"),
++                ("chrA:30", "chrA\t30\ta1\tT\tA\t.\tPASS\t.\n"),
++                ("empty:1", ""),
++            ] {
++                let output = run(&["view", "--no-header", "-r", region, input.to_str().unwrap()]);
++                assert_eq!(
++                    output.stdout,
++                    if empty {
++                        b"".as_slice()
++                    } else {
++                        suffix.as_bytes()
++                    }
++                );
++            }
++            assert_eq!(
++                run(&["index", "--nrecords", input.to_str().unwrap()]).stdout,
++                if empty { b"0\n" } else { b"3\n" }
++            );
++        }
++    }
++    assert!(failures.is_empty(), "{failures:#?}");
++}
++
++#[test]
++fn sparse_bcf_statistics_use_raw_ids_without_inventing_contigs() {
++    let directory = tempfile::tempdir().unwrap();
++    let input = sparse_bcf(directory.path(), false);
++    sparse_csi(&input);
++    let mut failures = Vec::new();
++    for all in [false, true] {
++        let mut command = Command::new(binary());
++        command.args(["index", "--stats"]);
++        if all {
++            command.arg("--all");
++        }
++        let output = command.arg(&input).output().unwrap();
++        assert!(output.status.success());
++        let expected = if all {
++            "chrB\t100\t2\nchrA\t200\t1\nempty\t300\t.\n"
++        } else {
++            "chrB\t100\t2\nchrA\t200\t1\n"
++        };
++        if output.stdout != expected.as_bytes() {
++            failures.push(format!(
++                "all={all}: {}",
++                String::from_utf8_lossy(&output.stdout)
++            ));
++        }
++    }
++    assert!(failures.is_empty(), "{failures:#?}");
++}
++
++#[test]
++fn sparse_bcf_rejects_unknown_record_ids_without_replacing_an_index() {
++    for reference in [1i32, 10, i32::MAX] {
++        for threads in ["0", "2"] {
++            let directory = tempfile::tempdir().unwrap();
++            let valid = sparse_bcf(directory.path(), false);
++            let input = directory.path().join("invalid.bcf");
++            let output = input.with_extension("bcf.csi");
++            let mut data = Vec::new();
++            bgzf::io::Reader::new(File::open(&valid).unwrap())
++                .read_to_end(&mut data)
++                .unwrap();
++            let header_length =
++                usize::try_from(u32::from_le_bytes(data[5..9].try_into().unwrap())).unwrap();
++            let record_start = 9 + header_length;
++            data[record_start + 8..record_start + 12].copy_from_slice(&reference.to_le_bytes());
++            bgzip(&data, &input);
++            fs::write(&output, b"existing").unwrap();
++            let result = Command::new(binary())
++                .args(["index", "--force", "--threads", threads])
++                .arg(&input)
++                .output()
++                .unwrap();
++            assert!(
++                !result.status.success(),
++                "RID={reference}, threads={threads}"
++            );
++            assert!(
++                String::from_utf8_lossy(&result.stderr)
++                    .contains("contig ID is outside the header dictionary")
++            );
++            assert_eq!(fs::read(&output).unwrap(), b"existing");
++        }
++    }
++}
++
++#[test]
++fn sparse_bcf_statistics_reject_counts_in_an_unnamed_index_slot() {
++    use noodles_csi::BinningIndex as _;
++    let directory = tempfile::tempdir().unwrap();
++    let input = sparse_bcf(directory.path(), false);
++    sparse_csi(&input);
++    let path = input.with_extension("bcf.csi");
++    let index = noodles_csi::fs::read(&path).unwrap();
++    let mut references = index.reference_sequences().to_vec();
++    references.swap(1, 2);
++    for auxiliary_names in [false, true] {
++        let mut builder = noodles_csi::Index::builder()
++            .set_min_shift(index.min_shift())
++            .set_depth(index.depth())
++            .set_reference_sequences(references.clone());
++        if auxiliary_names {
++            let header = noodles_csi::binning_index::index::Header::builder()
++                .set_reference_sequence_names(
++                    ["fake0".into(), "fake1".into()].into_iter().collect(),
++                )
++                .build();
++            builder = builder.set_header(header);
++        }
++        noodles_csi::fs::write(&path, &builder.build()).unwrap();
++        for option in ["--stats", "--nrecords"] {
++            let output = Command::new(binary())
++                .args(["index", option])
++                .arg(&input)
++                .output()
++                .unwrap();
++            assert!(
++                !output.status.success(),
++                "auxiliary_names={auxiliary_names}, {option}"
++            );
++            assert!(output.stdout.is_empty());
++            assert!(
++                String::from_utf8_lossy(&output.stderr)
++                    .contains("index slot 1 has records but no BCF contig")
++            );
++        }
++    }
++}
++
++fn variant_body(path: &Path) -> Vec<u8> {
++    let mut reader = noodles_util::variant::io::Reader::new(File::open(path).unwrap()).unwrap();
++    let header = reader.read_header().unwrap();
++    let mut writer = vcf::io::Writer::new(Vec::new());
++    for record in reader.records(&header) {
++        writer
++            .write_variant_record(&header, record.unwrap().as_ref())
++            .unwrap();
++    }
++    writer.into_inner()
++}
++
++#[test]
++fn sparse_bcf_queries_accept_indexes_without_empty_tail_slots() {
++    let mut failures = Vec::new();
++    for empty in [false, true] {
++        let directory = tempfile::tempdir().unwrap();
++        let input = sparse_bcf(directory.path(), empty);
++        let slots = if empty { 0 } else { 6 };
++        sparse_csi_slots(&input, slots);
++        let index = noodles_csi::fs::read(input.with_extension("bcf.csi")).unwrap();
++        assert_eq!(index.reference_sequences().len(), slots);
++        for operation in ["view", "concat"] {
++            for encoding in ["v", "z", "b", "u"] {
++                for region in ["empty:1", "empty:1,chrB:10"] {
++                    let output_path = directory.path().join("output");
++                    let mut command = Command::new(binary());
++                    command.args(["--json", operation]);
++                    if operation == "concat" {
++                        command.arg("-a");
++                    }
++                    let result = command
++                        .args(["-O", encoding, "-r", region, "-o"])
++                        .arg(&output_path)
++                        .arg(&input)
++                        .output()
++                        .unwrap();
++                    let case = format!("empty={empty}, {operation}, {encoding}, {region}");
++                    if !result.status.success() {
++                        failures.push(format!(
++                            "{case}: {}",
++                            String::from_utf8_lossy(&result.stderr)
++                        ));
++                        continue;
++                    }
++                    let expected = if empty || region == "empty:1" {
++                        b"".as_slice()
++                    } else {
++                        b"chrB\t10\tb1\tA\tC\t.\tPASS\t.\n".as_slice()
++                    };
++                    assert_eq!(variant_body(&output_path), expected, "{case}");
++                    let json: serde_json::Value = serde_json::from_slice(&result.stdout).unwrap();
++                    let summary = &json["result"]["summary"];
++                    let (read, written) = if operation == "view" {
++                        ("read", "written")
++                    } else {
++                        ("records_read", "records_written")
++                    };
++                    assert_eq!(summary[written], u64::from(!expected.is_empty()), "{case}");
++                    if expected.is_empty() {
++                        assert_eq!(summary[read], 0, "{case}");
++                    }
++                }
++            }
++        }
++    }
++    assert!(failures.is_empty(), "{failures:#?}");
++}
++
++#[test]
++fn sparse_bcf_statistics_include_declared_contigs_beyond_index_span() {
++    let mut failures = Vec::new();
++    for empty in [false, true] {
++        let directory = tempfile::tempdir().unwrap();
++        let input = sparse_bcf(directory.path(), empty);
++        sparse_csi_slots(&input, if empty { 0 } else { 6 });
++        let output = run(&["index", "--stats", "--all", input.to_str().unwrap()]);
++        let expected = if empty {
++            b"chrB\t100\t.\nchrA\t200\t.\nempty\t300\t.\n".as_slice()
++        } else {
++            b"chrB\t100\t2\nchrA\t200\t1\nempty\t300\t.\n".as_slice()
++        };
++        if output.stdout != expected {
++            failures.push(format!(
++                "empty={empty}: {}",
++                String::from_utf8_lossy(&output.stdout)
++            ));
++        }
++        assert_eq!(
++            run(&["index", "--nrecords", input.to_str().unwrap()]).stdout,
++            if empty { b"0\n" } else { b"3\n" }
++        );
++        assert_eq!(
++            run(&["index", "--stats", input.to_str().unwrap()]).stdout,
++            if empty {
++                b"".as_slice()
++            } else {
++                b"chrB\t100\t2\nchrA\t200\t1\n"
++            }
++        );
++    }
++    assert!(failures.is_empty(), "{failures:#?}");
++}
++
++#[test]
++fn sparse_bcf_empty_queries_still_reject_unknown_regions_and_corrupt_indexes() {
++    let directory = tempfile::tempdir().unwrap();
++    let input = sparse_bcf(directory.path(), false);
++    for corrupt in [false, true] {
++        sparse_csi_slots(&input, 6);
++        if corrupt {
++            fs::write(input.with_extension("bcf.csi"), b"broken CSI").unwrap();
++        }
++        for operation in ["view", "concat"] {
++            for encoding in ["v", "z", "b", "u"] {
++                let destination = directory.path().join("preserved");
++                fs::write(&destination, b"existing output").unwrap();
++                let mut command = Command::new(binary());
++                command.arg(operation);
++                if operation == "concat" {
++                    command.arg("-a");
++                }
++                let region = if corrupt { "empty:1" } else { "missing:1" };
++                let output = command
++                    .args(["-O", encoding, "-r", region, "-o"])
++                    .arg(&destination)
++                    .arg(&input)
++                    .output()
++                    .unwrap();
++                assert!(
++                    !output.status.success(),
++                    "corrupt={corrupt}, {operation}, {encoding}"
++                );
++                assert!(output.stdout.is_empty());
++                assert!(!output.stderr.is_empty());
++                if !corrupt {
++                    assert!(String::from_utf8_lossy(&output.stderr).contains("missing"));
++                }
++                assert_eq!(fs::read(&destination).unwrap(), b"existing output");
++            }
++        }
++    }
++}
+diff --git a/tests/index_compat.rs b/tests/index_compat.rs
+index 0ddf65e..aba8569 100644
+--- a/tests/index_compat.rs
++++ b/tests/index_compat.rs
+@@ -5,6 +5,9 @@ use std::process::{Command, Output};
+ 
+ use noodles_bgzf as bgzf;
+ 
++#[path = "common/sparse_bcf.rs"]
++mod sparse_fixture;
++
+ fn binary() -> PathBuf {
+     PathBuf::from(env!("CARGO_BIN_EXE_rsomics-vcf"))
+ }
+@@ -162,3 +165,101 @@ fn malformed_bcf_is_rejected_like_bcftools() {
+     assert!(!ours.status.success());
+     assert!(!oracle.status.success());
+ }
++
++#[test]
++#[ignore = "release oracle: requires bcftools 1.24"]
++fn sparse_bcf_indexes_interoperate_with_bcftools_including_empty_tail_queries() {
++    assert_bcftools_1_24();
++    for empty in [false, true] {
++        let directory = tempfile::tempdir().unwrap();
++        let source = directory.path().join("sparse.vcf");
++        let oracle = directory.path().join("oracle.bcf");
++        sparse_fixture::write_vcf(&source, empty);
++        run(Command::new("bcftools")
++            .args(["view", "--no-version", "-Ob", "-o"])
++            .arg(&oracle)
++            .arg(&source));
++        sparse_fixture::assert_bcf(&oracle, empty);
++        run(Command::new("bcftools").arg("index").arg(&oracle));
++        let index = noodles_csi::fs::read(oracle.with_extension("bcf.csi")).unwrap();
++        assert_eq!(index.reference_sequences().len(), if empty { 3 } else { 6 });
++        let expected_stats = if empty {
++            b"".as_slice()
++        } else {
++            b"chrB\t100\t2\nchrA\t200\t1\n".as_slice()
++        };
++        let expected_all = if empty {
++            b"chrB\t100\t.\nchrA\t200\t.\nempty\t300\t.\n".as_slice()
++        } else {
++            b"chrB\t100\t2\nchrA\t200\t1\nempty\t300\t.\n".as_slice()
++        };
++        let mut inputs = vec![oracle];
++        for threads in ["0", "2"] {
++            let ours = directory.path().join(format!("ours-{threads}.bcf"));
++            fs::copy(&inputs[0], &ours).unwrap();
++            run(Command::new(binary())
++                .args(["index", "--threads", threads])
++                .arg(&ours));
++            inputs.push(ours);
++        }
++        for input in &inputs {
++            assert_eq!(
++                run(Command::new("bcftools")
++                    .args(["index", "--stats"])
++                    .arg(input))
++                .stdout,
++                expected_stats
++            );
++            assert_eq!(
++                run(Command::new(binary()).args(["index", "--stats"]).arg(input)).stdout,
++                expected_stats
++            );
++            assert_eq!(
++                run(Command::new(binary())
++                    .args(["index", "--stats", "--all"])
++                    .arg(input))
++                .stdout,
++                expected_all
++            );
++            let ours_count = run(Command::new(binary())
++                .args(["index", "--nrecords"])
++                .arg(input));
++            assert_eq!(ours_count.stdout, if empty { b"0\n" } else { b"3\n" });
++            assert_eq!(
++                ours_count.stdout,
++                run(Command::new("bcftools")
++                    .args(["index", "--nrecords"])
++                    .arg(input))
++                .stdout
++            );
++            for (region, expected) in [
++                ("chrB:10", "chrB\t10\tb1\tA\tC\t.\tPASS\t.\n"),
++                ("chrA:30", "chrA\t30\ta1\tT\tA\t.\tPASS\t.\n"),
++                ("empty:1", ""),
++                ("empty:1,chrB:10", "chrB\t10\tb1\tA\tC\t.\tPASS\t.\n"),
++            ] {
++                let expected = if empty { "" } else { expected }.as_bytes();
++                assert_eq!(query(input, region), expected, "{input:?}, {region}");
++                assert_eq!(
++                    run(Command::new(binary())
++                        .args(["view", "--no-header", "-r", region])
++                        .arg(input))
++                    .stdout,
++                    expected,
++                    "{input:?}, {region}"
++                );
++                let concat = run(Command::new(binary())
++                    .args(["concat", "-a", "-r", region])
++                    .arg(input));
++                let body: Vec<u8> = concat
++                    .stdout
++                    .split_inclusive(|byte| *byte == b'\n')
++                    .filter(|line| !line.starts_with(b"#"))
++                    .flatten()
++                    .copied()
++                    .collect();
++                assert_eq!(body, expected, "{input:?}, {region}");
++            }
++        }
++    }
++}

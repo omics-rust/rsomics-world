@@ -58,9 +58,9 @@ jobs:
           export EVIDENCE="$RUNNER_TEMP/vcf-evidence"
           printf 'CARGO_HOME=%s\nCARGO_TARGET_DIR=%s\nRUSTUP_HOME=%s\nTMPDIR=%s\nEVIDENCE=%s\n' \
             "$CARGO_HOME" "$CARGO_TARGET_DIR" "$RUSTUP_HOME" "$TMPDIR" "$EVIDENCE" >> "$GITHUB_ENV"
-          snapshot=.autopilot/snapshots/vcf-sparse-oracle-bidirectional-2026-09-09
-          echo "aae04505c4e50fb0c46af7f4cca871c294666bd4ddd4d701f746e72fb9c7ea99  $snapshot/source.tar.gz" | shasum -a 256 --check
-          echo "392b1c4976f3ba58e6b637dad064a66b2dc546f785f601f7d7e4d2753ea8c2ef  $snapshot/files.sha256" | shasum -a 256 --check
+          snapshot=.autopilot/snapshots/vcf-sparse-oracle-empty-layout-2026-09-09
+          echo "c92ab989d15a2bf8bc194c638b3f698db306b1a12fdc379e18a0ce4beaf5056c  $snapshot/source.tar.gz" | shasum -a 256 --check
+          echo "73546225149f54bae22c8fd9d4c41935dc50465291e3300b83dccc3114224fe4  $snapshot/files.sha256" | shasum -a 256 --check
           mkdir "$RUNNER_TEMP/vcf-candidate"
           mkdir -p "$CARGO_HOME" "$CARGO_TARGET_DIR" "$RUSTUP_HOME" "$TMPDIR" "$EVIDENCE"
           tar -xzf "$snapshot/source.tar.gz" -C "$RUNNER_TEMP/vcf-candidate" --no-same-owner
