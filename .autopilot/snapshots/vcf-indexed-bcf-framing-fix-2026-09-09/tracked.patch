@@ -1,0 +1,2873 @@
+.github/workflows/ci.yml --- YAML
+119                                      119 
+120       - name: Test compatibility or  120       - name: Test compatibility or
+... acle                                 ... acle
+121         if: matrix.target == 'linux  121         if: matrix.target == 'linux
+... -x86_64'                             ... -x86_64'
+122         run: |                       122         run: |
+123           RSOMICS_BCFTOOLS="$(comma  123           RSOMICS_BCFTOOLS="$(comma
+... nd -v bcftools)" \                   ... nd -v bcftools)" \
+124             cargo test --locked --t  124             cargo test --locked --t
+... est annotate_compat -- --ignored --  ... est annotate_compat -- --ignored --
+... test-threads=1                       ... test-threads=1
+125           cargo test --locked --tes  125           RSOMICS_BCFTOOLS="$(comma
+... t compat -- --ignored                ... nd -v bcftools)" \
+...                                      126             cargo test --locked --t
+...                                      ... est concat_compat -- --ignored --te
+...                                      ... st-threads=1
+...                                      127           cargo test --locked --tes
+...                                      ... t compat -- --ignored
+126           cargo test --locked --tes  128           cargo test --locked --tes
+... t filter_compat -- --ignored         ... t filter_compat -- --ignored
+127           cargo test --locked --tes  129           cargo test --locked --tes
+... t index_compat -- --ignored          ... t index_compat -- --ignored
+128           cargo test --locked --tes  130           cargo test --locked --tes
+... t norm_compat -- --ignored           ... t norm_compat -- --ignored
+129           cargo test --locked --tes  131           cargo test --locked --tes
+... t query -- --ignored                 ... t query -- --ignored
+130           RSOMICS_BCFTOOLS="$(comma  132           RSOMICS_BCFTOOLS="$(comma
+... nd -v bcftools)" \                   ... nd -v bcftools)" \
+131             cargo test --locked --t  133             cargo test --locked --t
+... est reheader_compat -- --ignored --  ... est reheader_compat -- --ignored --
+... test-threads=1                       ... test-threads=1
+132           RSOMICS_BCFTOOLS="$(comma  134           RSOMICS_BCFTOOLS="$(comma
+... nd -v bcftools)" \                   ... nd -v bcftools)" \
+133             cargo test --locked --t  135             cargo test --locked --t
+... est setgt_compat -- --ignored --tes  ... est setgt_compat -- --ignored --tes
+... t-threads=1                          ... t-threads=1
+134           cargo test --locked --tes  136           cargo test --locked --tes
+... t validate_compat -- --ignored       ... t validate_compat -- --ignored
+135           cargo test --locked --tes  137           cargo test --locked --tes
+... t view_compat -- --ignored           ... t view_compat -- --ignored
+
+README.md --- 1/2 --- Text
+ 6  6 
+ 7  7 - `annotate`: edit headers and records or transfer typed fields from sorted
+ 8  8   VCF, BCF, BED, and tab-delimited annotation streams.
+ .  9 - `concat`: combine sorted VCF or BCF chunks, merge overlapping inputs, remove
+ . 10   cross-input duplicates, ligate phased chunks, or splice compatible BGZF.
+ 9 11 - `head`: stream ordered VCF headers and an optional record prefix from plain
+10 12   VCF, BGZF-compressed VCF, BCF, or standard input.
+11 13 - `filter`: evaluate typed site and sample expressions, annotate failures, and
+
+README.md --- 2/2 --- Text
+24 26 - `view`: convert among VCF, BGZF VCF, raw BCF, and BGZF BCF while selecting
+25 27   records, samples, indexed regions, or streaming targets.
+26 28 
+.. 29 `concat` preflights typed headers and then streams ordinary chunks in argument
+.. 30 order or performs a bounded coordinate merge with stable input ordering.
+.. 31 Duplicate removal is cross-input and one-to-one. Indexed regions compose with
+.. 32 position, record, and variant overlap rules.
+.. 33 
+.. 34 ```console
+.. 35 rsomics-vcf concat chr1.vcf.gz chr2.vcf.gz -O z -o genome.vcf.gz
+.. 36 rsomics-vcf concat -a -d exact cohort-a.bcf cohort-b.bcf -O b -o cohort.bcf
+.. 37 rsomics-vcf concat -a -r chr1:1-1000000 chunk-a.vcf.gz chunk-b.vcf.gz
+.. 38 ```
+.. 39 
+.. 40 Ligation reconciles complete phased diploid heterozygous genotypes across a
+.. 41 chunk handoff and writes typed PQ and PS values. Each indexed chunk may contain
+.. 42 records from one contig; separate files can advance to later contigs. Default
+.. 43 ligation requires a perfect overlap, while `--ligate-warn` drops and reports
+.. 44 unpaired overlap sites and `--ligate-force` retains them or permits disjoint
+.. 45 chunks.
+.. 46 
+.. 47 Validated naive mode copies compatible BGZF VCF or BCF record frames without
+.. 48 recompression. It rejects mixed encodings, incompatible headers or BCF
+.. 49 dictionaries, malformed frames, CRC failures, missing canonical EOF blocks,
+.. 50 and trailing bytes. Named output is transactional in every mode, and JSON
+.. 51 summaries require a separate named variant destination.
+.. 52 
+27 53 `annotate` applies checked header removals and renames, site-format ID edits,
+28 54 typed fixed/INFO/FORMAT/GT transfer, explicit sample mapping, allele-aware
+29 55 `Number=A`, `R`, and `G` remapping, target expressions, site marking, and
+
+src/cli.rs --- 1/4 --- Rust
+ 31  31     /// Edit and transfer VCF or BCF annotations
+ 32  32     Annotate(commands::annotate::Arguments),
+ ..  33 
+ ..  34     /// Concatenate sorted VCF or BCF chunks
+ ..  35     Concat(commands::concat::Arguments),
+ 33  36 
+ 34  37     /// Filter VCF or BCF records with typed expressions and genomic masks
+ 35  38     Filter(commands::filter::Arguments),
+
+src/cli.rs --- 2/4 --- Rust
+ 63  66 #[serde(tag = "command", rename_all = "kebab-case")]
+ 64  67 pub(crate) enum CommandOutput {
+ 65  68     Annotate { summary: crate::annotate::Summary },
+ ..  69     Concat { summary: crate::concat::Summary },
+ 66  70     Filter { summary: crate::filter::Summary },
+ 67  71     Head { summary: head::Summary },
+ 68  72     Index { outcome: crate::index::Outcome },
+
+src/cli.rs --- 3/4 --- Rust
+ 86  90         Command::Annotate(arguments) => {
+ 87  91             commands::annotate::execute(arguments, cli.output.json).map(Validation::Valid)
+ 88  92         }
+ ..  93         Command::Concat(arguments) => {
+ ..  94             commands::concat::execute(arguments, cli.output.json).map(Validation::Valid)
+ ..  95         }
+ 89  96         Command::Filter(arguments) => {
+ 90  97             commands::filter::execute(arguments, cli.output.json).map(Validation::Valid)
+ 91  98         }
+
+src/cli.rs --- 4/4 --- Rust
+164 171         assert!(help.contains("-O, --output-type <TYPE>"), "{help}");
+165 172     }
+... 173 
+... 174     #[test]
+... 175     fn concat_help_uses_family_layout() {
+... 176         let error = rsomics_help::try_parse_from::<Cli, _, _>(["rsomics-vcf", "concat", "--help"])
+... 177             .unwrap_err();
+... 178         let help = error.to_string();
+... 179         assert!(help.contains("Input VCF or BCF chunks"), "{help}");
+... 180         assert!(help.contains("-f, --file-list <FILE>"), "{help}");
+... 181         assert!(help.contains("-a, --allow-overlaps"), "{help}");
+... 182         assert!(help.contains("-d, --rm-dups <MODE>"), "{help}");
+... 183         assert!(help.contains("-G, --drop-genotypes"), "{help}");
+... 184         assert!(help.contains("-l, --ligate"), "{help}");
+... 185         assert!(help.contains("-n, --naive"), "{help}");
+... 186         assert!(help.contains("-O, --output-type <TYPE>"), "{help}");
+... 187         assert!(help.contains("--threads <INT>"), "{help}");
+... 188     }
+166 189 
+167 190     #[test]
+168 191     fn setgt_help_uses_family_layout() {
+
+src/commands/mod.rs --- Rust
+1 1 pub(crate) mod annotate;
+. 2 pub(crate) mod concat;
+2 3 pub(crate) mod filter;
+3 4 pub(crate) mod head;
+4 5 pub(crate) mod index;
+
+src/format/bgzf.rs --- 1/7 --- Rust
+ 35             return Ok(None);          35             return Ok(None);
+ 36         }                             36         }
+ 37                                       37 
+ 38         let mut header = [0; 18];     38         let mut header = [0; 12];
+ 39         let Some(first) = read_byte   39         let Some(first) = read_byte
+ .. (&mut self.inner)? else {             .. (&mut self.inner)? else {
+ 40             return Ok(None);          40             return Ok(None);
+ 41         };                            41         };
+ 42         header[0] = first;            42         header[0] = first;
+ 43         read_complete(&mut self.inn   43         read_complete(&mut self.inn
+ .. er, &mut header[1..], "partial BGZF   .. er, &mut header[1..], "partial BGZF
+ ..  header")?;                           ..  header")?;
+ 44         validate_header(&header)?;    44         validate_fixed_header(&head
+ ..                                       .. er)?;
+ 45                                       .. 
+ 46         let length = usize::from(u1   45         let extra_length = usize::f
+ .. 6::from_le_bytes([header[16], heade   .. rom(u16::from_le_bytes([header[10],
+ .. r[17]])) + 1;                         ..  header[11]]));
+ ..                                       46         let mut extra = vec![0; ext
+ ..                                       .. ra_length];
+ ..                                       47         read_complete(&mut self.inn
+ ..                                       .. er, &mut extra, "partial BGZF extra
+ ..                                       ..  field")?;
+ ..                                       48         let length = block_size(&ex
+ ..                                       .. tra)?;
+ ..                                       49         let prefix = header.len() +
+ ..                                       ..  extra.len();
+ 47         if !(EOF_BLOCK.len()..=65_5   50         if length < prefix + 8 || l
+ .. 36).contains(&length) {               .. ength > 65_536 {
+ 48             return Err(invalid(form   51             return Err(invalid(form
+ .. at!("invalid BGZF block size: {leng   .. at!("invalid BGZF block size: {leng
+ .. th}")));                              .. th}")));
+ 49         }                             52         }
+ 50         let mut raw = Vec::with_cap   53         let mut raw = Vec::with_cap
+ .. acity(length);                        .. acity(length);
+ 51         raw.extend_from_slice(&head   54         raw.extend_from_slice(&head
+ .. er);                                  .. er);
+ ..                                       55         raw.extend_from_slice(&extr
+ ..                                       .. a);
+ 52         raw.resize(length, 0);        56         raw.resize(length, 0);
+ 53         read_complete(                57         read_complete(&mut self.inn
+ ..                                       .. er, &mut raw[prefix..], "partial BG
+ ..                                       .. ZF payload")?;
+ 54             &mut self.inner,          .. 
+ 55             &mut raw[header.len()..   .. 
+ .. ],                                    .. 
+ 56             "partial BGZF payload",   .. 
+ 57         )?;                           .. 
+ 58                                       58 
+
+src/format/bgzf.rs --- 2/7 --- Rust
+ 86     }                                 86     }
+ 87 }                                     87 }
+ ..                                       88 
+ ..                                       89 pub(crate) fn inflate_frame(raw: &[
+ ..                                       .. u8]) -> io::Result<Vec<u8>> {
+ ..                                       90     let mut decoder = flate2::bufre
+ ..                                       .. ad::GzDecoder::new(raw);
+ ..                                       91     let mut inflated = Vec::new();
+ ..                                       92     decoder
+ ..                                       93         .by_ref()
+ ..                                       94         .take(65_537)
+ ..                                       95         .read_to_end(&mut inflated)
+ ..                                       96         .map_err(|error| invalid(fo
+ ..                                       .. rmat!("invalid BGZF member: {error}
+ ..                                       .. ")))?;
+ ..                                       97     if inflated.len() > 65_536 {
+ ..                                       98         return Err(invalid("inflate
+ ..                                       .. d BGZF block exceeds 65536 bytes"))
+ ..                                       .. ;
+ ..                                       99     }
+ ..                                      100     if !decoder.into_inner().is_emp
+ ..                                      ... ty() {
+ ..                                      101         return Err(invalid("bytes f
+ ..                                      ... ollow the gzip member within a BGZF
+ ..                                      ...  block"));
+ ..                                      102     }
+ ..                                      103     Ok(inflated)
+ ..                                      104 }
+ 88                                      105 
+ 89 pub(crate) struct ValidatedReader<R  106 pub(crate) struct DecodedReader<R> 
+ .. > {                                  ... {
+ 90     frames: FrameReader<R>,          107     frames: FrameReader<R>,
+ 91     current: Cursor<Vec<u8>>,        108     current: Cursor<Vec<u8>>,
+ 92     complete: bool,                  109     complete: bool,
+ 93 }                                    110 }
+ 94                                      111 
+ 95 impl<R> ValidatedReader<R> {         112 impl<R> DecodedReader<R> {
+ 96     pub(crate) fn new(inner: R) ->   113     pub(crate) fn new(inner: R) -> 
+ .. Self {                               ... Self {
+ 97         Self {                       114         Self {
+ 98             frames: FrameReader::ne  115             frames: FrameReader::ne
+ .. w(inner),                            ... w(inner),
+
+src/format/bgzf.rs --- 3/7 --- Rust
+102     }                                119     }
+103 }                                    120 }
+104                                      121 
+105 impl<R: Read> Read for ValidatedRea  122 impl<R: Read> Read for DecodedReade
+... der<R> {                             ... r<R> {
+106     fn read(&mut self, buffer: &mut  123     fn read(&mut self, buffer: &mut
+...  [u8]) -> io::Result<usize> {        ...  [u8]) -> io::Result<usize> {
+107         if buffer.is_empty() {       124         if buffer.is_empty() {
+108             return Ok(0);            125             return Ok(0);
+
+src/format/bgzf.rs --- 4/7 --- Rust
+119                 Some(Frame::Data(ra  136                 Some(Frame::Data(ra
+... w)) => raw,                          ... w)) => raw,
+120                 Some(Frame::Eof) =>  137                 Some(Frame::Eof) =>
+...  {                                   ...  {
+121                     self.complete =  138                     self.complete =
+...  true;                               ...  true;
+122                     EOF_BLOCK.to_ve  139                     return Ok(0);
+... c()                                  ... 
+123                 }                    140                 }
+124                 None => return Err(  141                 None => return Err(
+... invalid("canonical BGZF EOF block i  ... invalid("canonical BGZF EOF block i
+... s missing")),                        ... s missing")),
+125             };                       142             };
+126             self.current = Cursor::  143             self.current = Cursor::
+... new(raw);                            ... new(inflate_frame(&raw)?);
+127         }                            144         }
+128     }                                145     }
+129 }                                    146 }
+130                                      147 
+131 fn validate_header(header: &[u8; 18  148 fn validate_fixed_header(header: &[
+... ]) -> io::Result<()> {               ... u8; 12]) -> io::Result<()> {
+132     if header[..4] != [0x1f, 0x8b,   149     if header[..4] != [0x1f, 0x8b, 
+... 0x08, 0x04] {                        ... 0x08, 0x04] {
+133         return Err(invalid("invalid  150         return Err(invalid("invalid
+...  BGZF gzip header"));                ...  BGZF gzip header"));
+134     }                                151     }
+135     if header[10..16] != [0x06, 0x0  152     if header[3] != 0x04 {
+... 0, 0x42, 0x43, 0x02, 0x00] {         ... 
+136         return Err(invalid("invalid  153         return Err(invalid("invalid
+...  BGZF extra field"));                ...  BGZF gzip flags"));
+137     }                                154     }
+138     Ok(())                           155     Ok(())
+139 }                                    156 }
+...                                      157 
+...                                      158 fn block_size(extra: &[u8]) -> io::
+...                                      ... Result<usize> {
+...                                      159     let mut offset = 0;
+...                                      160     let mut size = None;
+...                                      161     while offset < extra.len() {
+...                                      162         if extra.len() - offset < 4
+...                                      ...  {
+...                                      163             return Err(invalid("par
+...                                      ... tial BGZF extra subfield header"));
+...                                      164         }
+...                                      165         let length = usize::from(u1
+...                                      ... 6::from_le_bytes([extra[offset + 2]
+...                                      ... , extra[offset + 3]]));
+...                                      166         let end = offset
+...                                      167             .checked_add(4 + length
+...                                      ... )
+...                                      168             .ok_or_else(|| invalid(
+...                                      ... "BGZF extra subfield length overflo
+...                                      ... w"))?;
+...                                      169         if end > extra.len() {
+...                                      170             return Err(invalid("par
+...                                      ... tial BGZF extra subfield payload"))
+...                                      ... ;
+...                                      171         }
+...                                      172         if extra[offset..offset + 2
+...                                      ... ] == *b"BC" {
+...                                      173             if length != 2 || size.
+...                                      ... is_some() {
+...                                      174                 return Err(invalid(
+...                                      ... "invalid or duplicate BGZF BC subfi
+...                                      ... eld"));
+...                                      175             }
+...                                      176             size =
+...                                      177                 Some(usize::from(u1
+...                                      ... 6::from_le_bytes([extra[offset + 4]
+...                                      ... , extra[offset + 5]])) + 1);
+...                                      178         }
+...                                      179         offset = end;
+...                                      180     }
+...                                      181     size.ok_or_else(|| invalid("BGZ
+...                                      ... F BC subfield is missing"))
+...                                      182 }
+140                                      183 
+141 fn read_byte(reader: &mut impl Read  184 fn read_byte(reader: &mut impl Read
+... ) -> io::Result<Option<u8>> {        ... ) -> io::Result<Option<u8>> {
+142     let mut byte = [0];              185     let mut byte = [0];
+
+src/format/bgzf.rs --- 5/7 --- Rust
+169 212 
+170 213 #[cfg(test)]
+171 214 mod tests {
+172 215     use std::io::{self, Read, Write};
+173 216 
+174 217     use super::{DecodedReader, EOF_BLOCK, Frame, FrameReader, inflate_frame};
+175 218 
+176 219     fn bgzf_fixture(source: &[u8]) -> Vec<u8> {
+177 220         let mut writer = noodles_bgzf::io::Writer::new(Vec::new());
+
+src/format/bgzf.rs --- 6/7 --- Rust
+235 278         for (index, value) in [
+... 279             (0, 0),
+... 280             (3, 0),
+... 281             (3, 0x05),
+... 282             (3, 0x0c),
+... 283             (10, 0),
+... 284             (12, b'X'),
+... 285             (14, 0),
+... 286         ] {
+236 287             let mut invalid = input.clone();
+237 288             invalid[index] = value;
+
+src/format/bgzf.rs --- 7/7 --- Rust
+280 331         assert!(matches!(reader.next().unwrap(), Some(Frame::Eof)));
+281 332     }
+... 333 
+... 334     #[test]
+... 335     fn accepts_arbitrary_extra_subfields_around_bc() {
+... 336         let input = bgzf_fixture(b"body");
+... 337         let mut frames = FrameReader::new(input.as_slice());
+... 338         let Some(Frame::Data(mut raw)) = frames.next().unwrap() else {
+... 339             panic!("missing data frame");
+... 340         };
+... 341         raw.splice(12..12, [b'X', b'Y', 1, 0, 7]);
+... 342         raw[10..12].copy_from_slice(&11u16.to_le_bytes());
+... 343         let size = u16::try_from(raw.len() - 1).unwrap();
+... 344         raw[21..23].copy_from_slice(&size.to_le_bytes());
+... 345         raw.extend_from_slice(&EOF_BLOCK);
+... 346 
+... 347         let mut reader = FrameReader::new(raw.as_slice());
+... 348         assert!(matches!(reader.next().unwrap(), Some(Frame::Data(_))));
+... 349         assert!(matches!(reader.next().unwrap(), Some(Frame::Eof)));
+... 350     }
+... 351 
+... 352     fn gzip_frame(source: &[u8]) -> Vec<u8> {
+... 353         let mut writer = flate2::GzBuilder::new()
+... 354             .extra(vec![b'B', b'C', 2, 0, 0, 0])
+... 355             .write(Vec::new(), flate2::Compression::default());
+... 356         writer.write_all(source).unwrap();
+... 357         let mut raw = writer.finish().unwrap();
+... 358         set_block_size(&mut raw);
+... 359         raw
+... 360     }
+... 361 
+... 362     fn set_block_size(raw: &mut [u8]) {
+... 363         let size = u16::try_from(raw.len() - 1).unwrap();
+... 364         raw[16..18].copy_from_slice(&size.to_le_bytes());
+... 365     }
+... 366 
+... 367     #[test]
+... 368     fn inflation_accepts_the_bgzf_uncompressed_size_boundary() {
+... 369         for length in [0, 65_536] {
+... 370             let source = vec![b'A'; length];
+... 371             assert_eq!(inflate_frame(&gzip_frame(&source)).unwrap(), source);
+... 372         }
+... 373     }
+... 374 
+... 375     #[test]
+... 376     fn inflation_rejects_oversized_blocks_even_with_a_forged_isize() {
+... 377         let raw = gzip_frame(&vec![b'A'; 65_537]);
+... 378         for forged in [false, true] {
+... 379             let mut raw = raw.clone();
+... 380             if forged {
+... 381                 let end = raw.len();
+... 382                 raw[end - 4..].copy_from_slice(&65_536u32.to_le_bytes());
+... 383             }
+... 384             let error = inflate_frame(&raw).unwrap_err();
+... 385             assert_eq!(error.kind(), io::ErrorKind::InvalidData);
+... 386             assert!(error.to_string().contains("exceeds 65536 bytes"));
+... 387         }
+... 388     }
+... 389 
+... 390     #[test]
+... 391     fn inflation_checks_crc_and_isize() {
+... 392         let original = gzip_frame(b"body");
+... 393         for offset in [8, 4] {
+... 394             let mut raw = original.clone();
+... 395             let index = raw.len() - offset;
+... 396             raw[index] ^= 1;
+... 397             assert_eq!(
+... 398                 inflate_frame(&raw).unwrap_err().kind(),
+... 399                 io::ErrorKind::InvalidData
+... 400             );
+... 401         }
+... 402     }
+... 403 
+... 404     #[test]
+... 405     fn inflation_rejects_bytes_outside_the_single_gzip_member() {
+... 406         for suffix in [b"trailing".to_vec(), gzip_frame(b"second")] {
+... 407             let mut raw = gzip_frame(b"body");
+... 408             raw.extend_from_slice(&suffix);
+... 409             set_block_size(&mut raw);
+... 410             let error = inflate_frame(&raw).unwrap_err();
+... 411             assert_eq!(error.kind(), io::ErrorKind::InvalidData);
+... 412             assert!(error.to_string().contains("within a BGZF block"));
+... 413         }
+... 414     }
+... 415 
+... 416     #[test]
+... 417     fn decoded_reader_skips_empty_frames_and_retains_frame_boundaries() {
+... 418         let mut empty = EOF_BLOCK;
+... 419         empty[4] = 1;
+... 420         let input = [
+... 421             empty.to_vec(),
+... 422             gzip_frame(b"first"),
+... 423             empty.to_vec(),
+... 424             gzip_frame(b"second"),
+... 425             EOF_BLOCK.to_vec(),
+... 426         ]
+... 427         .concat();
+... 428         let mut reader = DecodedReader::new(input.as_slice());
+... 429         assert_eq!(reader.read(&mut []).unwrap(), 0);
+... 430         let mut actual = Vec::new();
+... 431         let mut buffer = [0; 3];
+... 432         loop {
+... 433             let read = reader.read(&mut buffer).unwrap();
+... 434             if read == 0 {
+... 435                 break;
+... 436             }
+... 437             actual.extend_from_slice(&buffer[..read]);
+... 438         }
+... 439         assert_eq!(actual, b"firstsecond");
+... 440         assert_eq!(reader.read(&mut buffer).unwrap(), 0);
+... 441     }
+... 442 
+... 443     #[test]
+... 444     fn decoded_reader_requires_one_terminal_canonical_eof() {
+... 445         let data = gzip_frame(b"body");
+... 446         for suffix in [
+... 447             Vec::new(),
+... 448             [EOF_BLOCK.as_slice(), b"trailing"].concat(),
+... 449             [EOF_BLOCK.as_slice(), EOF_BLOCK.as_slice()].concat(),
+... 450         ] {
+... 451             let input = [data.clone(), suffix].concat();
+... 452             assert_eq!(
+... 453                 DecodedReader::new(input.as_slice())
+... 454                     .read_to_end(&mut Vec::new())
+... 455                     .unwrap_err()
+... 456                     .kind(),
+... 457                 io::ErrorKind::InvalidData
+... 458             );
+... 459         }
+... 460     }
+282 461 }
+
+src/format/mod.rs --- Rust
+ 7 
+ 8 use serde::Serialize;
+ 9 
+10 pub(crate) use reader::{Reader, RecordScratch, read_bcf_record_checked};
+11 pub(crate) use record::reformat_record;
+12 pub(crate) use text::HeaderTypes;
+13 pub(crate) use value::{ValueType, write_f32};
+
+src/format/reader.rs --- 1/5 --- Rust
+ 14 type Compressed = MultiGzDecoder<Buffered>;
+ 15 
+ 16 enum Inner {
+ 17     Bcf(bcf::io::Reader<BufReader<Compressed>>),
+ 18     BcfRaw(bcf::io::Reader<Buffered>),
+ 19     Vcf(Buffered),
+ 20     VcfGz(BufReader<Compressed>),
+
+src/format/reader.rs --- 2/5 --- Rust
+ 52  52         let bcf = is_bcf(&mut input, compression)
+ 53  53             .map_err(|error| invalid(&source, "detecting variant format", error))?;
+ 54  54         let inner = match (bcf, compression) {
+ 55  55             (true, true) => Inner::Bcf(bcf::io::Reader::from(BufReader::new(MultiGzDecoder::new(
+ ..  56                 input,
+ ..  57             )))),
+ 56  58             (true, false) => Inner::BcfRaw(bcf::io::Reader::from(input)),
+ 57  59             (false, true) => Inner::VcfGz(BufReader::new(MultiGzDecoder::new(input))),
+ 58  60             (false, false) => Inner::Vcf(input),
+
+src/format/reader.rs --- 3/5 --- Rust
+147         number: usize,               149         number: usize,
+148     ) -> Result<usize> {             150     ) -> Result<usize> {
+149         let result = match &mut sel  151         let result = match &mut sel
+... f.inner {                            ... f.inner {
+150             Inner::Bcf(reader) => r  152             Inner::Bcf(reader) => r
+... eader.read_record(record),           ... ead_bcf_record_checked(reader, reco
+...                                      ... rd),
+151             Inner::BcfRaw(reader) =  153             Inner::BcfRaw(reader) =
+... > reader.read_record(record),        ... > read_bcf_record_checked(reader, r
+...                                      ... ecord),
+152             _ => unreachable!(),     154             _ => unreachable!(),
+153         };                           155         };
+154         result.map_err(|error| {     156         result.map_err(|error| {
+
+src/format/reader.rs --- 4/5 --- Rust
+189 191     }
+190 192 }
+... 193 
+... 194 pub(crate) fn read_bcf_record_checked<R: BufRead>(
+... 195     reader: &mut bcf::io::Reader<R>,
+... 196     record: &mut bcf::Record,
+... 197 ) -> io::Result<usize> {
+... 198     loop {
+... 199         match reader.get_mut().fill_buf() {
+... 200             Ok([]) => return Ok(0),
+... 201             Ok(_) => break,
+... 202             Err(error) if error.kind() == io::ErrorKind::Interrupted => {}
+... 203             Err(error) => return Err(error),
+... 204         }
+... 205     }
+... 206     match reader.read_record(record)? {
+... 207         0 => Err(io::Error::new(
+... 208             io::ErrorKind::InvalidData,
+... 209             "BCF record has zero shared length",
+... 210         )),
+... 211         read => Ok(read),
+... 212     }
+... 213 }
+191 214 
+192 215 fn is_gzip(reader: &mut impl BufRead) -> io::Result<bool> {
+193 216     Ok(reader
+
+src/format/reader.rs --- 5/5 --- Rust
+412 435         );
+413 436     }
+... 437 
+... 438     #[test]
+... 439     fn bcf_record_boundaries_distinguish_eof_zero_and_partial_lengths() {
+... 440         for length in 0..=8 {
+... 441             let bytes = vec![0; length];
+... 442             let mut reader = bcf::io::Reader::from(bytes.as_slice());
+... 443             let result = read_bcf_record_checked(&mut reader, &mut bcf::Record::default());
+... 444             match length {
+... 445                 0 => assert_eq!(result.unwrap(), 0),
+... 446                 1..=3 => assert_eq!(
+... 447                     result.unwrap_err().kind(),
+... 448                     io::ErrorKind::UnexpectedEof,
+... 449                     "length={length}"
+... 450                 ),
+... 451                 _ => {
+... 452                     let error = result.unwrap_err();
+... 453                     assert_eq!(error.kind(), io::ErrorKind::InvalidData);
+... 454                     assert!(error.to_string().contains("zero shared length"));
+... 455                 }
+... 456             }
+... 457         }
+... 458     }
+... 459 
+... 460     #[test]
+... 461     fn bcf_record_boundary_preserves_io_errors() {
+... 462         struct Failing(io::ErrorKind);
+... 463 
+... 464         impl Read for Failing {
+... 465             fn read(&mut self, _: &mut [u8]) -> io::Result<usize> {
+... 466                 Err(self.0.into())
+... 467             }
+... 468         }
+... 469 
+... 470         for kind in [io::ErrorKind::PermissionDenied, io::ErrorKind::BrokenPipe] {
+... 471             let mut reader = bcf::io::Reader::from(BufReader::new(Failing(kind)));
+... 472             assert_eq!(
+... 473                 read_bcf_record_checked(&mut reader, &mut bcf::Record::default())
+... 474                     .unwrap_err()
+... 475                     .kind(),
+... 476                 kind
+... 477             );
+... 478         }
+... 479     }
+... 480 
+... 481     #[test]
+... 482     fn bcf_record_boundaries_handle_short_and_interrupted_reads() {
+... 483         use noodles_vcf::variant::io::Write as _;
+... 484 
+... 485         struct Fragmented<'a> {
+... 486             bytes: &'a [u8],
+... 487             interrupt: bool,
+... 488         }
+... 489 
+... 490         impl Read for Fragmented<'_> {
+... 491             fn read(&mut self, buffer: &mut [u8]) -> io::Result<usize> {
+... 492                 if buffer.is_empty() {
+... 493                     return Ok(0);
+... 494                 }
+... 495                 self.interrupt = !self.interrupt;
+... 496                 if self.interrupt {
+... 497                     return Err(io::ErrorKind::Interrupted.into());
+... 498                 }
+... 499                 self.bytes.read(&mut buffer[..1])
+... 500             }
+... 501         }
+... 502 
+... 503         let header: vcf::Header = "##fileformat=VCFv4.3\n\
+... 504 ##contig=<ID=sq0,length=10>\n\
+... 505 #CHROM\tPOS\tID\tREF\tALT\tQUAL\tFILTER\tINFO\n"
+... 506             .parse()
+... 507             .unwrap();
+... 508         let source = b"sq0\t1\t.\tA\tC\t.\tPASS\t.";
+... 509         let record = vcf::Record::try_from(source.as_slice()).unwrap();
+... 510         let mut writer = bcf::io::Writer::from(Vec::new());
+... 511         writer.write_header(&header).unwrap();
+... 512         writer.write_variant_record(&header, &record).unwrap();
+... 513         let encoded = writer.into_inner();
+... 514         let mut reader = bcf::io::Reader::from(encoded.as_slice());
+... 515         let header = reader.read_header().unwrap();
+... 516         let encoded_record = *reader.get_ref();
+... 517 
+... 518         for capacity in [1, 7, 8192] {
+... 519             let input = Fragmented {
+... 520                 bytes: encoded_record,
+... 521                 interrupt: false,
+... 522             };
+... 523             let mut reader = bcf::io::Reader::from(BufReader::with_capacity(capacity, input));
+... 524             let mut record = bcf::Record::default();
+... 525             assert!(read_bcf_record_checked(&mut reader, &mut record).unwrap() > 0);
+... 526             let mut writer = vcf::io::Writer::new(Vec::new());
+... 527             writer.write_variant_record(&header, &record).unwrap();
+... 528             assert_eq!(writer.into_inner(), [source.as_slice(), b"\n"].concat());
+... 529             assert_eq!(
+... 530                 read_bcf_record_checked(&mut reader, &mut record).unwrap(),
+... 531                 0
+... 532             );
+... 533             assert!(reader.get_ref().get_ref().bytes.is_empty());
+... 534         }
+... 535     }
+414 536 }
+
+src/format/writer.rs --- 1/7 --- Rust
+ 80   80     inner: W,
+ 81   81     encoder: bcf::io::Writer<Vec<u8>>,
+ 82   82     string_maps: Option<StringMaps>,
+ ..   83     header: Option<vcf::Header>,
+ 83   84 }
+ 84   85 
+ 85   86 impl<W> Writer<W>
+
+src/format/writer.rs --- 2/7 --- Rust
+367  368             inner,
+368  369             encoder: bcf::io::Writer::from(Vec::new()),
+369  370             string_maps: None,
+...  371             header: None,
+370  372         }
+371  373     }
+372  374 }
+
+src/format/writer.rs --- 3/7 --- Rust
+377 {                                    379 {
+378     fn write_record(                 380     fn write_record(
+379         &mut self,                   381         &mut self,
+380         header: &vcf::Header,        382         _header: &vcf::Header,
+381         record: &RecordBuf,          383         record: &RecordBuf,
+382         number: u64,                 384         number: u64,
+383     ) -> Result<()> {                385     ) -> Result<()> {
+384         let string_maps = self.str   386         let string_maps = self.str
+... ing_maps.as_ref().ok_or_else(|| {    ... ing_maps.as_ref().ok_or_else(|| {
+385             RsomicsError::InvalidI   387             RsomicsError::InvalidI
+... nput("BCF header must be written b   ... nput("BCF header must be written b
+... efore records".to_owned())           ... efore records".to_owned())
+386         })?;                         388         })?;
+...                                      389         let encoding_header = self
+...                                      ... .header.as_ref().ok_or_else(|| {
+...                                      390             RsomicsError::InvalidI
+...                                      ... nput("BCF header must be written b
+...                                      ... efore records".to_owned())
+...                                      391         })?;
+387         write_bcf_record(            392         write_bcf_record(
+388             &mut self.inner,         393             &mut self.inner,
+389             &mut self.encoder,       394             &mut self.encoder,
+390             header,                  395             encoding_header,
+391             string_maps,             396             string_maps,
+392             record,                  397             record,
+393             number,                  398             number,
+
+src/format/writer.rs --- 4/7 --- Rust
+405 }                                    410 }
+406                                      411 
+407 fn map_write_error(error: std::io:   412 fn map_write_error(error: std::io:
+... :Error, context: &str) -> RsomicsE   ... :Error, context: &str) -> RsomicsE
+... rror {                               ... rror {
+...                                      413     let mut kind = error.kind();
+...                                      414     let mut cause: &(dyn std::erro
+...                                      ... r::Error + 'static) = &error;
+...                                      415     loop {
+...                                      416         let next = if let Some(err
+...                                      ... or) = cause.downcast_ref::<std::io
+...                                      ... ::Error>() {
+...                                      417             kind = error.kind();
+...                                      418             error
+...                                      419                 .get_ref()
+...                                      420                 .map(|source| sour
+...                                      ... ce as &(dyn std::error::Error + 's
+...                                      ... tatic))
+...                                      421         } else {
+...                                      422             cause.source()
+...                                      423         };
+...                                      424         match next {
+...                                      425             Some(source) => cause 
+...                                      ... = source,
+...                                      426             None => break,
+...                                      427         }
+...                                      428     }
+408     let message = format!("{contex   429     let message = format!("{contex
+... t}: {error}");                       ... t}: {cause}");
+409     if error.kind() == std::io::Er   430     if kind == std::io::ErrorKind:
+... rorKind::InvalidInput {              ... :InvalidInput {
+410         RsomicsError::InvalidInput   431         RsomicsError::InvalidInput
+... (message)                            ... (message)
+411     } else {                         432     } else {
+412         RsomicsError::Io(std::io::   433         RsomicsError::Io(std::io::
+... Error::new(error.kind(), message))   ... Error::new(kind, message))
+413     }                                434     }
+414 }                                    435 }
+415                                      436 
+
+src/format/writer.rs --- 5/7 --- Rust
+419 {                                    440 {
+420     let string_maps = StringMaps::   441     let string_maps = StringMaps::
+... try_from(header)                     ... try_from(header)
+421         .map_err(|error| std::io::   442         .map_err(|error| std::io::
+... Error::new(std::io::ErrorKind::Inv   ... Error::new(std::io::ErrorKind::Inv
+... alidInput, error))?;                 ... alidInput, error))?;
+...                                      443     let mut encoding_header = head
+...                                      ... er.clone();
+...                                      444     *encoding_header.string_maps_m
+...                                      ... ut() = string_maps.clone();
+422     output.encoder.write_header(he   445     output.encoder.write_header(&e
+... ader)?;                              ... ncoding_header)?;
+423     output.encoder.get_mut().clear   446     output.encoder.get_mut().clear
+... ();                                  ... ();
+424     let encoded = encode_bcf_heade   447     let encoded = encode_bcf_heade
+... r(header, &string_maps)?;            ... r(header, &string_maps)?;
+425     output.inner.write_all(&encode   448     output.inner.write_all(&encode
+... d)?;                                 ... d)?;
+426     output.string_maps = Some(stri   449     output.string_maps = Some(stri
+... ng_maps);                            ... ng_maps);
+...                                      450     output.header = Some(encoding_
+...                                      ... header);
+427     Ok(())                           451     Ok(())
+428 }                                    452 }
+429                                      453 
+
+src/format/writer.rs --- 6/7 --- Rust
+884  908         }
+885  909     }
+...  910 
+...  911     struct FailAfter {
+...  912         remaining: usize,
+...  913         kind: std::io::ErrorKind,
+...  914     }
+...  915 
+...  916     impl Write for FailAfter {
+...  917         fn write(&mut self, buffer: &[u8]) -> std::io::Result<usize> {
+...  918             if self.remaining == 0 {
+...  919                 return Err(std::io::Error::new(self.kind, "injected output failure"));
+...  920             }
+...  921             let written = buffer.len().min(self.remaining);
+...  922             self.remaining -= written;
+...  923             Ok(written)
+...  924         }
+...  925 
+...  926         fn flush(&mut self) -> std::io::Result<()> {
+...  927             Ok(())
+...  928         }
+...  929     }
+...  930 
+...  931     #[test]
+...  932     fn typed_vcf_writes_preserve_io_errors_at_every_record_byte() {
+...  933         let header: vcf::Header = "##fileformat=VCFv4.3\n\
+...  934 ##FORMAT=<ID=GT,Number=1,Type=String,Description=\"Genotype\">\n\
+...  935 #CHROM\tPOS\tID\tREF\tALT\tQUAL\tFILTER\tINFO\tFORMAT\tS1\n"
+...  936             .parse()
+...  937             .unwrap();
+...  938         let bytes = b"chr1\t1\tv1\tA\tC\t50\tPASS\t.\tGT\t0/1";
+...  939         let source = vcf::Record::try_from(bytes.as_slice()).unwrap();
+...  940         let record = RecordBuf::try_from_variant_record(&header, &source).unwrap();
+...  941         for kind in [
+...  942             std::io::ErrorKind::BrokenPipe,
+...  943             std::io::ErrorKind::PermissionDenied,
+...  944             std::io::ErrorKind::WriteZero,
+...  945         ] {
+...  946             for remaining in 0..=bytes.len() {
+...  947                 let output = FailAfter { remaining, kind };
+...  948                 let mut writer =
+...  949                     Writer::Vcf(vcf::io::Writer::new(BufWriter::with_capacity(0, output)));
+...  950                 let error = writer.write_record(&header, &record, 7).unwrap_err();
+...  951                 match error {
+...  952                     RsomicsError::Io(error) => {
+...  953                         assert_eq!(error.kind(), kind, "offset {remaining}");
+...  954                         assert!(error.to_string().contains("injected output failure"));
+...  955                         assert!(error.to_string().contains("writing variant record 7"));
+...  956                     }
+...  957                     error => panic!("{kind:?} at offset {remaining}: {error}"),
+...  958                 }
+...  959             }
+...  960         }
+...  961     }
+...  962 
+...  963     #[test]
+...  964     fn malformed_vcf_fields_remain_invalid_input() {
+...  965         let mut record = RecordBuf::builder()
+...  966             .set_reference_sequence_name("chr1")
+...  967             .set_variant_start(noodles_core::Position::MIN)
+...  968             .set_reference_bases("A")
+...  969             .build();
+...  970         *record.filters_mut() = ["bad filter".to_owned()].into_iter().collect();
+...  971         let mut writer = Writer::new(Vec::new(), OutputFormat::Vcf);
+...  972         let error = writer
+...  973             .write_record(&vcf::Header::default(), &record, 1)
+...  974             .unwrap_err();
+...  975         assert!(matches!(error, RsomicsError::InvalidInput(_)), "{error}");
+...  976     }
+886  977 
+887  978     #[test]
+888  979     fn parallel_bgzf_uses_the_requested_bounded_pool() {
+
+src/format/writer.rs --- 7/7 --- Rust
+965 1056         assert!(reader.record_bufs(&header).next().unwrap().is_ok());
+966 1057     }
+... 1058 
+... 1059     #[test]
+... 1060     fn bcf_rebuilds_dictionary_after_header_definitions_are_added() {
+... 1061         let raw = "##fileformat=VCFv4.3\n\
+... 1062 ##INFO=<ID=DP,Number=1,Type=Integer,Description=\"Depth\">\n\
+... 1063 ##contig=<ID=chr1,length=1>\n\
+... 1064 #CHROM\tPOS\tID\tREF\tALT\tQUAL\tFILTER\tINFO\n";
+... 1065         let mut header: vcf::Header = raw.parse().unwrap();
+... 1066         *header.string_maps_mut() = StringMaps::try_from(&header).unwrap();
+... 1067         header.infos_mut().insert(
+... 1068             "AF".to_owned(),
+... 1069             vcf::header::record::value::Map::<vcf::header::record::value::map::Info>::new(
+... 1070                 vcf::header::record::value::map::info::Number::A,
+... 1071                 Type::Float,
+... 1072                 "Frequency",
+... 1073             ),
+... 1074         );
+... 1075         let source =
+... 1076             vcf::Record::try_from(b"chr1\t1\t.\tA\tC\t.\tPASS\tDP=2;AF=0.5".as_slice()).unwrap();
+... 1077         let record = RecordBuf::try_from_variant_record(&header, &source).unwrap();
+... 1078         let output = SharedOutput::default();
+... 1079         let bytes = output.0.clone();
+... 1080         let mut writer = Writer::new(output, OutputFormat::BcfRaw);
+... 1081         writer.write_header(&header, HeaderMode::Full).unwrap();
+... 1082         writer.write_record(&header, &record, 1).unwrap();
+... 1083         writer.finish().unwrap();
+... 1084 
+... 1085         let raw = bytes.lock().unwrap().clone();
+... 1086         let mut reader = bcf::io::Reader::from(Cursor::new(raw));
+... 1087         let header = reader.read_header().unwrap();
+... 1088         let record = reader.record_bufs(&header).next().unwrap().unwrap();
+... 1089         assert!(record.info().get("AF").is_some());
+... 1090     }
+967 1091 
+968 1092     #[test]
+969 1093     fn bcf_encodes_explicitly_missing_info_values() {
+
+src/index.rs --- 1/3 --- Rust
+  6 
+  7 use std::path::{Path, PathBuf};
+  8 
+  9 use rsomics_common::{Context, Result, RsomicsError};
+ 10 use serde::Serialize;
+ 11 
+ 12 /// On-disk random-access index type.
+
+src/index.rs --- 2/3 --- Rust
+ 86         IndexKind::Csi => "csi",      86         IndexKind::Csi => "csi",
+ 87         IndexKind::Tbi => "tbi",      87         IndexKind::Tbi => "tbi",
+ 88     };                                88     };
+ ..                                       89     let mut output = input.as_os_st
+ ..                                       .. r().to_owned();
+ ..                                       90     output.push(".");
+ ..                                       91     output.push(extension);
+ 89     PathBuf::from(format!("{}.{}",    92     PathBuf::from(output)
+ .. input.display(), extension))          .. 
+ 90 }                                     93 }
+ 91                                       94 
+ 92 /// Creates a random-access index w   95 /// Creates a random-access index w
+ .. ithout exposing a partial destinati   .. ithout exposing a partial destinati
+ .. on.                                   .. on.
+
+src/index.rs --- 3/3 --- Rust
+ 99 102     stats::inspect(input, mode)
+100 103 }
+    104 
+    105 pub(crate) fn read_fresh(input: &Path) -> Result<Box<dyn noodles_csi::BinningIndex>> {
+    106     let is_vcf = crate::format::Reader::open(input)?.is_text();
+    107     let (index, kind) = resolve_query_index(input, is_vcf)?;
+    108     let input_modified = std::fs::metadata(input)
+    109         .rs_with_context(|| format!("reading variant metadata {}", input.display()))?
+    110         .modified()
+    111         .rs_with_context(|| format!("reading variant modification time {}", input.display()))?;
+    112     let index_modified = std::fs::metadata(&index)
+    113         .rs_with_context(|| format!("reading index metadata {}", index.display()))?
+    114         .modified()
+    115         .rs_with_context(|| format!("reading index modification time {}", index.display()))?;
+    116     if index_modified < input_modified {
+    117         return Err(RsomicsError::InvalidInput(format!(
+    118             "variant index is older than its input: {}",
+    119             index.display()
+    120         )));
+    121     }
+    122     match kind {
+    123         IndexKind::Csi => noodles_csi::fs::read(&index)
+    124             .map(|index| Box::new(index) as Box<dyn noodles_csi::BinningIndex>)
+    125             .rs_with_context(|| format!("reading CSI index {}", index.display())),
+    126         IndexKind::Tbi => noodles_tabix::fs::read(&index)
+    127             .map(|index| Box::new(index) as Box<dyn noodles_csi::BinningIndex>)
+    128             .rs_with_context(|| format!("reading TBI index {}", index.display())),
+    129     }
+    130 }
+    131 
+    132 fn resolve_query_index(input: &Path, is_vcf: bool) -> Result<(PathBuf, IndexKind)> {
+    133     let kinds: &[_] = if is_vcf {
+    134         &[IndexKind::Tbi, IndexKind::Csi]
+    135     } else {
+    136         &[IndexKind::Csi]
+    137     };
+    138     for &kind in kinds {
+    139         let path = default_output_path(input, kind);
+    140         match std::fs::symlink_metadata(&path) {
+    141             Ok(_) => return Ok((path, kind)),
+    142             Err(error) if error.kind() == std::io::ErrorKind::NotFound => {}
+    143             Err(error) => {
+    144                 return Err(error)
+    145                     .rs_with_context(|| format!("reading index metadata {}", path.display()));
+    146             }
+    147         }
+    148     }
+    149     let expected = if is_vcf { "CSI or TBI" } else { "CSI" };
+    150     Err(RsomicsError::InvalidInput(format!(
+    151         "no {expected} index found for {}",
+    152         input.display()
+    153     )))
+    154 }
+
+src/index/build.rs --- 1/2 --- Rust
+241         .or(Some(i32::MAX as usize)  241         .or(Some(i32::MAX as usize)
+... );                                   ... );
+242     let (min_shift, depth) = settin  242     let (min_shift, depth) = settin
+... gs(requested_min_shift, 0, max_leng  ... gs(requested_min_shift, 0, max_leng
+... th);                                 ... th);
+243     let reference_sequence_count =   243     let reference_sequence_count = 
+... header.contigs().len();              ... header.contigs().len();
+...                                      244     let reference_sequence_slots = 
+...                                      ... header.contigs().keys().try_fold(0u
+...                                      ... size, |slots, name| {
+...                                      245         let id = header
+...                                      246             .string_maps()
+...                                      247             .contigs()
+...                                      248             .get_index_of(name)
+...                                      249             .ok_or_else(|| invalid(
+...                                      ... "BCF contig is absent from the head
+...                                      ... er dictionary"))?;
+...                                      250         let end = id
+...                                      251             .checked_add(1)
+...                                      252             .ok_or_else(|| invalid(
+...                                      ... "BCF contig dictionary span exceeds
+...                                      ...  usize"))?;
+...                                      253         Ok::<_, io::Error>(slots.ma
+...                                      ... x(end))
+...                                      254     })?;
+244     let mut indexer = binning_index  255     let mut indexer = binning_index
+... ::Indexer::<BinnedIndex>::new(min_s  ... ::Indexer::<BinnedIndex>::new(min_s
+... hift, depth);                        ... hift, depth);
+245     let mut linear = (0..reference_  256     let mut linear = (0..reference_
+... sequence_count)                      ... sequence_slots)
+246         .map(|_| LinearIndex::new(m  257         .map(|_| LinearIndex::new(m
+... in_shift, depth))                    ... in_shift, depth))
+247         .collect::<Vec<_>>();        258         .collect::<Vec<_>>();
+248     let mut reader = bcf_reader.int  259     let mut reader = bcf_reader.int
+... o_inner();                           ... o_inner();
+
+src/index/build.rs --- 2/2 --- Rust
+293         start_offset = end_offset;   304         start_offset = end_offset;
+294     }                                305     }
+295                                      306 
+296     let index = apply_loffsets(inde  307     let index = apply_loffsets(inde
+... xer.build(reference_sequence_count)  ... xer.build(reference_sequence_slots)
+... , &mut linear, None);                ... , &mut linear, None);
+297     Ok(Built {                       308     Ok(Built {
+298         index: Index::Csi(index),    309         index: Index::Csi(index),
+299         format: VariantFormat::Bcf,  310         format: VariantFormat::Bcf,
+
+src/index/stats.rs --- 1/5 --- Rust
+ 13  13 use rsomics_common::{Context, Result, RsomicsError};
+ 14  14 
+ 15  15 use super::{
+ ..  16     ContigStat, IndexKind, InspectMode, InspectReport, VariantFormat, default_output_path,
+ ..  17 };
+ 16  18 
+ 17  19 enum Index {
+
+src/index/stats.rs --- 2/5 --- Rust
+ 43  45         .transpose()?;
+ 44  46     let lengths = variant_header
+ 45  47         .as_ref()
+ 46  48         .map(|(header, _)| contig_lengths(header))
+ 47  49         .unwrap_or_default();
+ 48  50 
+ 49  51     let (names, counts) = metadata(&loaded);
+ ..  52     let index_span = counts.len();
+ 50  53     let mut contigs = Vec::with_capacity(counts.len());
+ 51  54     let mut total = 0u64;
+ 52  55     for (i, records) in counts.into_iter().enumerate() {
+
+src/index/stats.rs --- 3/5 --- Rust
+ 55                 RsomicsError::Inval   58                 RsomicsError::Inval
+ .. idInput("index record count overflo   .. idInput("index record count overflo
+ .. w".to_owned())                        .. w".to_owned())
+ 56             })?;                      59             })?;
+ 57         }                             60         }
+ 58         let name = names              61         let name = match &variant_h
+ ..                                       .. eader {
+ ..                                       62             Some((header, VariantFo
+ ..                                       .. rmat::Bcf)) => {
+ ..                                       63                 match header.string
+ ..                                       .. _maps().contigs().get_index(i) {
+ ..                                       64                     Some(name) => n
+ ..                                       .. ame.to_owned(),
+ ..                                       65                     None if records
+ ..                                       .. .is_some_and(|records| records > 0)
+ ..                                       ..  => {
+ ..                                       66                         return Err(
+ ..                                       .. RsomicsError::InvalidInput(format!(
+ ..                                       67                             "{}: in
+ ..                                       .. dex slot {i} has records but no BCF
+ ..                                       ..  contig",
+ ..                                       68                             resolve
+ ..                                       .. d.index.display()
+ ..                                       69                         )));
+ ..                                       70                     }
+ ..                                       71                     None => continu
+ ..                                       .. e,
+ ..                                       72                 }
+ ..                                       73             }
+ ..                                       74             _ => names
+ 59             .get(i)                   75                 .get(i)
+ 60             .cloned()                 76                 .cloned()
+ 61             .or_else(|| {             77                 .or_else(|| {
+ 62                 variant_header        78                     variant_header.
+ ..                                       .. as_ref().and_then(|(header, _)| {
+ 63                     .as_ref()         .. 
+ 64                     .and_then(|head   79                         header.cont
+ .. er| header.contigs().get_index(i).m   .. igs().get_index(i).map(|(name, _)| 
+ .. ap(|(name, _)| name.clone()))         .. name.clone())
+ ..                                       80                     })
+ 65             })                        81                 })
+ 66             .unwrap_or_else(|| "n/a   82                 .unwrap_or_else(|| 
+ .. ".to_owned());                        .. "n/a".to_owned()),
+ ..                                       83         };
+ 67         let include = match mode {    84         let include = match mode {
+ 68             InspectMode::Total => f   85             InspectMode::Total => f
+ .. alse,                                 .. alse,
+ 69             InspectMode::PerContig    86             InspectMode::PerContig 
+ .. { include_zero } => {                 .. { include_zero } => {
+
+src/index/stats.rs --- 4/5 --- Rust
+ 79  96         }
+ 80  97     }
+ ..  98 
+ ..  99     if let (Some((header, VariantFormat::Bcf)), InspectMode::PerContig { include_zero: true }) =
+ .. 100         (&variant_header, mode)
+ .. 101     {
+ .. 102         let mut trailing = Vec::new();
+ .. 103         for (name, contig) in header.contigs() {
+ .. 104             let reference = header
+ .. 105                 .string_maps()
+ .. 106                 .contigs()
+ .. 107                 .get_index_of(name)
+ .. 108                 .ok_or_else(|| {
+ .. 109                     RsomicsError::InvalidInput(format!(
+ .. 110                         "BCF contig is absent from its dictionary: {name}"
+ .. 111                     ))
+ .. 112                 })?;
+ .. 113             if reference >= index_span {
+ .. 114                 trailing.push((
+ .. 115                     reference,
+ .. 116                     ContigStat {
+ .. 117                         name: name.clone(),
+ .. 118                         length: contig.length(),
+ .. 119                         records: None,
+ .. 120                     },
+ .. 121                 ));
+ .. 122             }
+ .. 123         }
+ .. 124         trailing.sort_unstable_by_key(|(reference, _)| *reference);
+ .. 125         contigs.extend(trailing.into_iter().map(|(_, contig)| contig));
+ .. 126     }
+ 81 127 
+ 82 128     Ok(InspectReport {
+ 83 129         index: resolved.index,
+
+src/index/stats.rs --- 5/5 --- Rust
+152 198     }
+153 199 }
+154 200 
+155 201 fn read_variant_header(path: &Path) -> Result<(vcf::Header, VariantFormat)> {
+156 202     let mut reader = crate::format::Reader::open(path)?;
+... 203     let format = if reader.is_text() {
+... 204         VariantFormat::Vcf
+... 205     } else {
+... 206         VariantFormat::Bcf
+... 207     };
+157 208     reader.read_header().map(|(header, _, _)| (header, format))
+158 209 }
+159 210 
+160 211 fn contig_lengths(header: &vcf::Header) -> HashMap<String, Option<usize>> {
+
+src/lib.rs --- Rust
+10 10 
+11 11 mod cli;
+12 12 mod commands;
+.. 13 mod concat;
+13 14 mod expression;
+14 15 mod filter;
+15 16 mod format;
+
+src/regions.rs --- 1/5 --- Text (exceeded DFT_GRAPH_LIMIT)
+  1   1 use std::fs::File;
+  .   2 use std::io;
+  2   3 use std::path::{Path, PathBuf};
+  3   4 
+  4   5 use noodles_bgzf as bgzf;
+
+src/regions.rs --- 2/5 --- Text (exceeded DFT_GRAPH_LIMIT)
+  7   8 use noodles_vcf::variant::{RecordBuf, record::info::field::key, record_buf::info::field::Value};
+  8   9 use rsomics_common::{Context, Result, RsomicsError};
+  9  10 
+  .  11 use crate::format::read_bcf_record_checked;
+  .  12 
+ 10  13 #[derive(Clone, Copy, Debug, Default, Eq, PartialEq)]
+ 11  14 pub enum OverlapMode {
+ 12  15     Position,
+
+src/regions.rs --- 3/5 --- Text (exceeded DFT_GRAPH_LIMIT)
+ 33  36     regions: Vec<Region>,
+ 34  37     overlap: OverlapMode,
+ 35  38     input: PathBuf,
+ ..  39     bcf_index_span: Option<usize>,
+ 36  40 }
+ 37  41 
+ ..  42 type ChunkReader<'a> = noodles_csi::io::Query<'a, bgzf::io::Reader<File>>;
+ ..  43 type RawRecords<'a> =
+ ..  44     Box<dyn Iterator<Item = io::Result<Box<dyn noodles_vcf::variant::Record>>> + 'a>;
+ ..  45 
+ ..  46 enum QueryReader<'a> {
+ ..  47     Vcf(
+ ..  48         noodles_vcf::io::Reader<ChunkReader<'a>>,
+ ..  49         noodles_vcf::Record,
+ ..  50     ),
+ ..  51     Bcf(
+ ..  52         noodles_bcf::io::Reader<ChunkReader<'a>>,
+ ..  53         noodles_bcf::Record,
+ ..  54     ),
+ ..  55 }
+ ..  56 
+ ..  57 pub(crate) struct IndexedQuery<'a> {
+ ..  58     reader: QueryReader<'a>,
+ ..  59     header: &'a noodles_vcf::Header,
+ ..  60     input: &'a Path,
+ ..  61     regions: &'a [Region],
+ ..  62     overlap: OverlapMode,
+ ..  63     read: &'a mut u64,
+ ..  64 }
+ ..  65 
+ 38  66 impl IndexedRecords {
+ 39  67     pub(crate) fn open(input: &Path, regions: &RegionSet) -> Result<Self> {
+ ..  68         let index = crate::index::read_fresh(input)?;
+ 40  69         let mut reader = indexed_reader::Builder::default()
+ ..  70             .set_index(index)
+ 41  71             .build_from_path(input)
+ 42  72             .rs_with_context(|| format!("opening indexed variant input {}", input.display()))?;
+ 43  73         let header = reader
+ 44  74             .read_header()
+ 45  75             .rs_with_context(|| format!("reading variant header {}", input.display()))?;
+ 46  76         let query_regions = regions.merged(&header)?;
+ ..  77         let bcf_index_span = matches!(reader, indexed_reader::IndexedReader::Bcf(_))
+ ..  78             .then(|| reader.index().reference_sequences().count());
+ 47  79         Ok(Self {
+ 48  80             reader,
+ 49  81             header,
+ 50  82             regions: query_regions,
+ 51  83             overlap: regions.overlap(),
+ 52  84             input: input.to_path_buf(),
+ ..  85             bcf_index_span,
+ 53  86         })
+ 54  87     }
+ 55  88 
+ 56  89     pub(crate) fn header(&self) -> &noodles_vcf::Header {
+ 57  90         &self.header
+ 58  91     }
+ 59  92 
+ ..  93     pub(crate) fn query_contig<'a>(
+ ..  94         &'a mut self,
+ ..  95         regions: &'a [Region],
+ ..  96         read: &'a mut u64,
+ ..  97     ) -> Result<IndexedQuery<'a>> {
+ ..  98         let reference = reference_id(&self.reader, &self.header, &self.input, &regions[0])?;
+ ..  99         let index = self.reader.index();
+ .. 100         let mut chunks = Vec::new();
+ .. 101         if self.bcf_index_span.is_none_or(|span| reference < span) {
+ .. 102             for region in regions {
+ .. 103                 chunks.extend(
+ .. 104                     index
+ .. 105                         .query(reference, region.interval())
+ .. 106                         .rs_with_context(|| {
+ .. 107                             format!("querying region {region} in {}", self.input.display())
+ .. 108                         })?,
+ .. 109                 );
+ .. 110             }
+ .. 111         }
+ .. 112         let chunks = noodles_csi::binning_index::merge_chunks(&chunks);
+ .. 113         let reader = match &mut self.reader {
+ .. 114             indexed_reader::IndexedReader::Vcf(reader) => QueryReader::Vcf(
+ .. 115                 noodles_vcf::io::Reader::new(noodles_csi::io::Query::new(reader.get_mut(), chunks)),
+ .. 116                 noodles_vcf::Record::default(),
+ .. 117             ),
+ .. 118             indexed_reader::IndexedReader::Bcf(reader) => QueryReader::Bcf(
+ .. 119                 noodles_bcf::io::Reader::from(noodles_csi::io::Query::new(
+ .. 120                     reader.get_mut(),
+ .. 121                     chunks,
+ .. 122                 )),
+ .. 123                 noodles_bcf::Record::default(),
+ .. 124             ),
+ .. 125         };
+ .. 126         Ok(IndexedQuery {
+ .. 127             reader,
+ .. 128             header: &self.header,
+ .. 129             input: &self.input,
+ .. 130             regions,
+ .. 131             overlap: self.overlap,
+ .. 132             read,
+ .. 133         })
+ .. 134     }
+ .. 135 
+ 60 136     pub(crate) fn visit(
+ 61 137         &mut self,
+ 62 138         mut visit: impl FnMut(&noodles_vcf::Header, RecordBuf, u64) -> Result<()>,
+
+src/regions.rs --- 4/5 --- Text (exceeded DFT_GRAPH_LIMIT)
+ 67             regions,                 143             regions,
+ 68             overlap,                 144             overlap,
+ 69             input,                   145             input,
+ ..                                      146             bcf_index_span,
+ 70         } = self;                    147         } = self;
+ 71         let mut read = 0;            148         let mut read = 0;
+ 72         for (region_index, region)   149         for (region_index, region) 
+ .. in regions.iter().enumerate() {      ... in regions.iter().enumerate() {
+ 73             let records = reader     150             if let Some(span) = bcf
+ ..                                      ... _index_span
+ 74                 .query(header, regi  151                 && reference_id(rea
+ .. on)                                  ... der, header, input, region)? >= *sp
+ ..                                      ... an
+ 75                 .rs_with_context(||  152             {
+ ..  format!("querying region {region}"  ... 
+ .. ))?;                                 ... 
+ ..                                      153                 continue;
+ ..                                      154             }
+ ..                                      155             let records = query_rec
+ ..                                      ... ords(
+ ..                                      156                 reader,
+ ..                                      157                 header,
+ ..                                      158                 input,
+ ..                                      159                 *overlap,
+ ..                                      160                 region,
+ ..                                      161                 &regions[..region_i
+ ..                                      ... ndex],
+ ..                                      162                 &mut read,
+ ..                                      163             )?;
+ 76             for result in records {  164             for result in records {
+ 77                 let number = read +  165                 let (record, number
+ ..  1;                                  ... ) = result?;
+ 78                 let record = result  ... 
+ 79                     .rs_with_contex  ... 
+ .. t(|| format!("reading indexed varia  ... 
+ .. nt record {number}"))?;              ... 
+ 80                 let record = Record  ... 
+ .. Buf::try_from_variant_record(header  ... 
+ .. , record.as_ref()).map_err(          ... 
+ 81                     |error| {        ... 
+ 82                         RsomicsErro  ... 
+ .. r::InvalidInput(format!(             ... 
+ 83                             "{}: de  ... 
+ .. coding indexed variant record {numb  ... 
+ .. er}: {error}",                       ... 
+ 84                             input.d  ... 
+ .. isplay()                             ... 
+ 85                         ))           ... 
+ 86                     },               ... 
+ 87                 )?;                  ... 
+ 88                 read += 1;           ... 
+ 89                 if !overlaps(&recor  ... 
+ .. d, region.interval(), *overlap)      ... 
+ 90                     || regions[..re  ... 
+ .. gion_index].iter().any(|previous| {  ... 
+ 91                         previous.na  ... 
+ .. me() == region.name()                ... 
+ 92                             && over  ... 
+ .. laps(&record, previous.interval(),   ... 
+ .. *overlap)                            ... 
+ 93                     })               ... 
+ 94                 {                    ... 
+ 95                     continue;        ... 
+ 96                 }                    ... 
+ 97                 visit(header, recor  166                 visit(header, recor
+ .. d, number)?;                         ... d, number)?;
+ 98             }                        167             }
+ 99         }                            168         }
+100         Ok(read)                     169         Ok(read)
+101     }                                170     }
+102 }                                    171 }
+103                                      172 
+...                                      173 fn reference_id(
+...                                      174     reader: &indexed_reader::Indexe
+...                                      ... dReader<bgzf::io::Reader<File>>,
+...                                      175     header: &noodles_vcf::Header,
+...                                      176     input: &Path,
+...                                      177     region: &Region,
+...                                      178 ) -> Result<usize> {
+...                                      179     let name = region.name();
+...                                      180     match reader {
+...                                      181         indexed_reader::IndexedRead
+...                                      ... er::Vcf(_) => reader
+...                                      182             .index()
+...                                      183             .header()
+...                                      184             .and_then(|header| head
+...                                      ... er.reference_sequence_names().get_i
+...                                      ... ndex_of(name)),
+...                                      185         indexed_reader::IndexedRead
+...                                      ... er::Bcf(_) => {
+...                                      186             let name = std::str::fr
+...                                      ... om_utf8(name).map_err(|_| {
+...                                      187                 RsomicsError::Inval
+...                                      ... idInput(format!("region reference n
+...                                      ... ame is not UTF-8: {name}"))
+...                                      188             })?;
+...                                      189             header.string_maps().co
+...                                      ... ntigs().get_index_of(name)
+...                                      190         }
+...                                      191     }
+...                                      192     .ok_or_else(|| {
+...                                      193         RsomicsError::InvalidInput(
+...                                      ... format!(
+...                                      194             "indexed input {} has n
+...                                      ... o reference for region {name}",
+...                                      195             input.display()
+...                                      196         ))
+...                                      197     })
+...                                      198 }
+...                                      199 
+...                                      200 impl QueryReader<'_> {
+...                                      201     fn read_record(&mut self) -> st
+...                                      ... d::io::Result<Option<&dyn noodles_v
+...                                      ... cf::variant::Record>> {
+...                                      202         match self {
+...                                      203             Self::Vcf(reader, recor
+...                                      ... d) => match reader.read_record(reco
+...                                      ... rd)? {
+...                                      204                 0 => Ok(None),
+...                                      205                 _ => Ok(Some(record
+...                                      ... )),
+...                                      206             },
+...                                      207             Self::Bcf(reader, recor
+...                                      ... d) => match read_bcf_record_checked
+...                                      ... (reader, record)? {
+...                                      208                 0 => Ok(None),
+...                                      209                 _ => Ok(Some(record
+...                                      ... )),
+...                                      210             },
+...                                      211         }
+...                                      212     }
+...                                      213 }
+...                                      214 
+...                                      215 impl IndexedQuery<'_> {
+...                                      216     fn read_record(&mut self) -> Re
+...                                      ... sult<Option<(RecordBuf, u64)>> {
+...                                      217         loop {
+...                                      218             let number = self.read.
+...                                      ... checked_add(1).ok_or_else(|| {
+...                                      219                 RsomicsError::Inval
+...                                      ... idInput("variant record count excee
+...                                      ... ds u64".to_owned())
+...                                      220             })?;
+...                                      221             let Some(record) = self
+...                                      ... .reader.read_record().rs_with_conte
+...                                      ... xt(|| {
+...                                      222                 format!(
+...                                      223                     "reading indexe
+...                                      ... d variant record {number} in {}",
+...                                      224                     self.input.disp
+...                                      ... lay()
+...                                      225                 )
+...                                      226             })?
+...                                      227             else {
+...                                      228                 return Ok(None);
+...                                      229             };
+...                                      230             if !intersects_query(se
+...                                      ... lf.header, record, self.regions).rs
+...                                      ... _with_context(|| {
+...                                      231                 format!(
+...                                      232                     "locating index
+...                                      ... ed variant record {number} in {}",
+...                                      233                     self.input.disp
+...                                      ... lay()
+...                                      234                 )
+...                                      235             })? {
+...                                      236                 continue;
+...                                      237             }
+...                                      238             let record =
+...                                      239                 RecordBuf::try_from
+...                                      ... _variant_record(self.header, record
+...                                      ... ).map_err(|error| {
+...                                      240                     RsomicsError::I
+...                                      ... nvalidInput(format!(
+...                                      241                         "{}: decodi
+...                                      ... ng indexed variant record {number}:
+...                                      ...  {error}",
+...                                      242                         self.input.
+...                                      ... display()
+...                                      243                     ))
+...                                      244                 })?;
+...                                      245             *self.read = number;
+...                                      246             if self
+...                                      247                 .regions
+...                                      248                 .iter()
+...                                      249                 .any(|region| overl
+...                                      ... aps(&record, region.interval(), sel
+...                                      ... f.overlap))
+...                                      250             {
+...                                      251                 return Ok(Some((rec
+...                                      ... ord, number)));
+...                                      252             }
+...                                      253         }
+...                                      254     }
+...                                      255 }
+...                                      256 
+...                                      257 impl Iterator for IndexedQuery<'_> 
+...                                      ... {
+...                                      258     type Item = Result<(RecordBuf, 
+...                                      ... u64)>;
+...                                      259 
+...                                      260     fn next(&mut self) -> Option<Se
+...                                      ... lf::Item> {
+...                                      261         self.read_record().transpos
+...                                      ... e()
+...                                      262     }
+...                                      263 }
+...                                      264 
+...                                      265 fn intersects_query(
+...                                      266     header: &noodles_vcf::Header,
+...                                      267     record: &dyn noodles_vcf::varia
+...                                      ... nt::Record,
+...                                      268     regions: &[Region],
+...                                      269 ) -> std::io::Result<bool> {
+...                                      270     let name = record.reference_seq
+...                                      ... uence_name(header)?;
+...                                      271     let region_name: &[u8] = region
+...                                      ... s[0].name().as_ref();
+...                                      272     if name.as_bytes() != region_na
+...                                      ... me {
+...                                      273         return Ok(false);
+...                                      274     }
+...                                      275     let Some(start) = record.varian
+...                                      ... t_start().transpose()? else {
+...                                      276         return Ok(false);
+...                                      277     };
+...                                      278     let interval = Interval::from(s
+...                                      ... tart..=record.variant_end(header)?)
+...                                      ... ;
+...                                      279     Ok(regions
+...                                      280         .iter()
+...                                      281         .any(|region| region.interv
+...                                      ... al().intersects(interval)))
+...                                      282 }
+...                                      283 
+...                                      284 fn query_records<'a>(
+...                                      285     reader: &'a mut indexed_reader:
+...                                      ... :IndexedReader<bgzf::io::Reader<Fil
+...                                      ... e>>,
+...                                      286     header: &'a noodles_vcf::Header
+...                                      ... ,
+...                                      287     input: &'a Path,
+...                                      288     overlap: OverlapMode,
+...                                      289     region: &'a Region,
+...                                      290     previous: &'a [Region],
+...                                      291     read: &'a mut u64,
+...                                      292 ) -> Result<impl Iterator<Item = Re
+...                                      ... sult<(RecordBuf, u64)>> + 'a> {
+...                                      293     let records = match reader {
+...                                      294         indexed_reader::IndexedRead
+...                                      ... er::Vcf(reader) => reader.query(hea
+...                                      ... der, region).map(|query| {
+...                                      295             Box::new(query.records(
+...                                      ... ).map(|result| {
+...                                      296                 result.map(|record|
+...                                      ...  Box::new(record) as Box<dyn noodle
+...                                      ... s_vcf::variant::Record>)
+...                                      297             })) as RawRecords<'a>
+...                                      298         }),
+...                                      299         indexed_reader::IndexedRead
+...                                      ... er::Bcf(reader) => query_bcf_record
+...                                      ... s(reader, header, region),
+...                                      300     }
+...                                      301     .rs_with_context(|| format!("qu
+...                                      ... erying region {region} in {}", inpu
+...                                      ... t.display()))?;
+...                                      302     Ok(records.filter_map(move |res
+...                                      ... ult| {
+...                                      303         let result = (|| {
+...                                      304             let number = read.check
+...                                      ... ed_add(1).ok_or_else(|| {
+...                                      305                 RsomicsError::Inval
+...                                      ... idInput("variant record count excee
+...                                      ... ds u64".to_owned())
+...                                      306             })?;
+...                                      307             let record = result.rs_
+...                                      ... with_context(|| {
+...                                      308                 format!(
+...                                      309                     "reading indexe
+...                                      ... d variant record {number} in {}",
+...                                      310                     input.display()
+...                                      311                 )
+...                                      312             })?;
+...                                      313             let record =
+...                                      314                 RecordBuf::try_from
+...                                      ... _variant_record(header, record.as_r
+...                                      ... ef()).map_err(|error| {
+...                                      315                     RsomicsError::I
+...                                      ... nvalidInput(format!(
+...                                      316                         "{}: decodi
+...                                      ... ng indexed variant record {number}:
+...                                      ...  {error}",
+...                                      317                         input.displ
+...                                      ... ay()
+...                                      318                     ))
+...                                      319                 })?;
+...                                      320             *read = number;
+...                                      321             let keep = overlaps(&re
+...                                      ... cord, region.interval(), overlap)
+...                                      322                 && !previous.iter()
+...                                      ... .any(|previous| {
+...                                      323                     previous.name()
+...                                      ...  == region.name()
+...                                      324                         && overlaps
+...                                      ... (&record, previous.interval(), over
+...                                      ... lap)
+...                                      325                 });
+...                                      326             Ok(keep.then_some((reco
+...                                      ... rd, number)))
+...                                      327         })();
+...                                      328         result.transpose()
+...                                      329     }))
+...                                      330 }
+...                                      331 
+...                                      332 fn query_bcf_records<'a>(
+...                                      333     reader: &'a mut noodles_bcf::io
+...                                      ... ::IndexedReader<bgzf::io::Reader<Fi
+...                                      ... le>>,
+...                                      334     header: &'a noodles_vcf::Header
+...                                      ... ,
+...                                      335     region: &Region,
+...                                      336 ) -> io::Result<RawRecords<'a>> {
+...                                      337     let name = std::str::from_utf8(
+...                                      ... region.name())
+...                                      338         .map_err(|error| io::Error:
+...                                      ... :new(io::ErrorKind::InvalidInput, e
+...                                      ... rror))?;
+...                                      339     let reference = header
+...                                      340         .string_maps()
+...                                      341         .contigs()
+...                                      342         .get_index_of(name)
+...                                      343         .ok_or_else(|| {
+...                                      344             io::Error::new(
+...                                      345                 io::ErrorKind::Inva
+...                                      ... lidInput,
+...                                      346                 format!("region doe
+...                                      ... s not exist in contigs: {region:?}"
+...                                      ... ),
+...                                      347             )
+...                                      348         })?;
+...                                      349     let interval = region.interval(
+...                                      ... );
+...                                      350     let chunks = reader.index().que
+...                                      ... ry(reference, interval)?;
+...                                      351     let mut reader =
+...                                      352         noodles_bcf::io::Reader::fr
+...                                      ... om(noodles_csi::io::Query::new(read
+...                                      ... er.get_mut(), chunks));
+...                                      353     let mut record = noodles_bcf::R
+...                                      ... ecord::default();
+...                                      354     Ok(Box::new(std::iter::from_fn(
+...                                      ... move || {
+...                                      355         let result: io::Result<Opti
+...                                      ... on<Box<dyn noodles_vcf::variant::Re
+...                                      ... cord>>> = (|| {
+...                                      356             loop {
+...                                      357                 if read_bcf_record_
+...                                      ... checked(&mut reader, &mut record)? 
+...                                      ... == 0 {
+...                                      358                     return Ok(None)
+...                                      ... ;
+...                                      359                 }
+...                                      360                 if bcf_query_inters
+...                                      ... ects(header, &record, reference, in
+...                                      ... terval)? {
+...                                      361                     return Ok(Some(
+...                                      362                         Box::new(re
+...                                      ... cord.clone()) as Box<dyn noodles_vc
+...                                      ... f::variant::Record>
+...                                      363                     ));
+...                                      364                 }
+...                                      365             }
+...                                      366         })();
+...                                      367         result.transpose()
+...                                      368     })))
+...                                      369 }
+...                                      370 
+...                                      371 fn bcf_query_intersects(
+...                                      372     header: &noodles_vcf::Header,
+...                                      373     record: &noodles_bcf::Record,
+...                                      374     reference: usize,
+...                                      375     interval: Interval,
+...                                      376 ) -> io::Result<bool> {
+...                                      377     use noodles_vcf::variant::Recor
+...                                      ... d as _;
+...                                      378 
+...                                      379     let name = record.reference_seq
+...                                      ... uence_name(header.string_maps())?;
+...                                      380     let record_reference = header
+...                                      381         .string_maps()
+...                                      382         .contigs()
+...                                      383         .get_index_of(name)
+...                                      384         .ok_or_else(|| {
+...                                      385             io::Error::new(
+...                                      386                 io::ErrorKind::Inva
+...                                      ... lidInput,
+...                                      387                 format!("reference 
+...                                      ... sequence name does not exist in con
+...                                      ... tigs: {name}"),
+...                                      388             )
+...                                      389         })?;
+...                                      390     if reference != record_referenc
+...                                      ... e {
+...                                      391         return Ok(false);
+...                                      392     }
+...                                      393     if interval.start().is_none() &
+...                                      ... & interval.end().is_none() {
+...                                      394         return Ok(true);
+...                                      395     }
+...                                      396     let Some(start) = record.varian
+...                                      ... t_start().transpose()? else {
+...                                      397         return Ok(false);
+...                                      398     };
+...                                      399     Ok(Interval::from(start..=recor
+...                                      ... d.variant_end(header)?).intersects(
+...                                      ... interval))
+...                                      400 }
+...                                      401 
+104 impl RegionSelection {               402 impl RegionSelection {
+105     pub fn new(regions: RegionSet,   403     pub fn new(regions: RegionSet, 
+... exclude: bool) -> Self {             ... exclude: bool) -> Self {
+
+src/regions.rs --- 5/5 --- Text (exceeded DFT_GRAPH_LIMIT)
+336 634 
+337 635         assert!(!exact.matches(&later));
+338 636         assert!(open.matches(&later));
+... 637     }
+... 638 
+... 639     fn bcf_record(value: &[u8]) -> (vcf::Header, noodles_bcf::Record) {
+... 640         use vcf::variant::io::Write as _;
+... 641 
+... 642         let header: vcf::Header = "##fileformat=VCFv4.3\n\
+... 643 ##contig=<ID=sq0,length=100,IDX=2>\n\
+... 644 ##contig=<ID=sq1,length=100,IDX=5>\n\
+... 645 #CHROM\tPOS\tID\tREF\tALT\tQUAL\tFILTER\tINFO\n"
+... 646             .parse()
+... 647             .unwrap();
+... 648         let record = vcf::Record::try_from(value).unwrap();
+... 649         let mut writer = noodles_bcf::io::Writer::from(Vec::new());
+... 650         writer.write_header(&header).unwrap();
+... 651         writer.write_variant_record(&header, &record).unwrap();
+... 652         let encoded = writer.into_inner();
+... 653         let mut reader = noodles_bcf::io::Reader::from(encoded.as_slice());
+... 654         let header = reader.read_header().unwrap();
+... 655         let mut record = noodles_bcf::Record::default();
+... 656         assert!(reader.read_record(&mut record).unwrap() > 0);
+... 657         assert_eq!(record.reference_sequence_id().unwrap(), 2);
+... 658         assert!(reader.get_ref().is_empty());
+... 659         (header, record)
+... 660     }
+... 661 
+... 662     #[test]
+... 663     fn bcf_coarse_query_matches_record_span_and_original_sparse_id() {
+... 664         let (header, record) = bcf_record(b"sq0\t10\t.\tACG\tA\t.\tPASS\t.");
+... 665         for (interval, expected) in [
+... 666             ("9-9", false),
+... 667             ("10-10", true),
+... 668             ("12-12", true),
+... 669             ("13-13", false),
+... 670         ] {
+... 671             assert_eq!(
+... 672                 bcf_query_intersects(&header, &record, 2, interval.parse().unwrap()).unwrap(),
+... 673                 expected,
+... 674                 "interval={interval}"
+... 675             );
+... 676         }
+... 677         assert!(!bcf_query_intersects(&header, &record, 5, Interval::from(..)).unwrap());
+... 678         assert!(bcf_query_intersects(&header, &record, 2, Interval::from(..)).unwrap());
+... 679     }
+... 680 
+... 681     #[test]
+... 682     fn bcf_coarse_query_checks_names_before_unbounded_or_missing_positions() {
+... 683         let (header, record) = bcf_record(b"sq0\t0\t.\tA\tC\t.\tPASS\t.");
+... 684         assert!(record.variant_start().is_none());
+... 685         assert!(bcf_query_intersects(&header, &record, 2, Interval::from(..)).unwrap());
+... 686         assert!(!bcf_query_intersects(&header, &record, 2, "1-100".parse().unwrap()).unwrap());
+... 687         assert!(!bcf_query_intersects(&header, &record, 5, Interval::from(..)).unwrap());
+... 688 
+... 689         let mut missing_names = header;
+... 690         *missing_names.string_maps_mut() = Default::default();
+... 691         for reference in [2, 5] {
+... 692             let error =
+... 693                 bcf_query_intersects(&missing_names, &record, reference, Interval::from(..))
+... 694                     .unwrap_err();
+... 695             assert_eq!(error.kind(), io::ErrorKind::InvalidData);
+... 696             assert!(
+... 697                 error
+... 698                     .to_string()
+... 699                     .contains("missing reference sequence name")
+... 700             );
+... 701         }
+339 702     }
+340 703 }
+
+src/reheader.rs --- 1/2 --- Rust
+105 fn inspect_bgzf<R: Read>(input: R)   105 fn inspect_bgzf<R: Read>(input: R) 
+... -> Result<(bool, impl Read)> {       ... -> Result<(bool, impl Read)> {
+106     let mut frames = FrameReader::n  106     let mut frames = FrameReader::n
+... ew(input);                           ... ew(input);
+107     let mut raw_prefix = Vec::new()  107     let mut raw_prefix = Vec::new()
+... ;                                    ... ;
+...                                      108     let mut magic = [0; 3];
+...                                      109     let mut magic_length = 0;
+108     loop {                           110     loop {
+109         match frames.next().map_err  111         match frames.next().map_err
+... (map_frame_error)? {                 ... (map_frame_error)? {
+110             Some(Frame::Data(raw))   112             Some(Frame::Data(raw)) 
+... => {                                 ... => {
+111                 let inflated = vcf:  113                 let inflated = vcf:
+... :inflate_frame(&raw)?;               ... :inflate_frame(&raw)?;
+112                 raw_prefix.extend_f  114                 raw_prefix.extend_f
+... rom_slice(&raw);                     ... rom_slice(&raw);
+...                                      115                 let copied = (magic
+...                                      ... .len() - magic_length).min(inflated
+...                                      ... .len());
+...                                      116                 magic[magic_length.
+...                                      ... .magic_length + copied].copy_from_s
+...                                      ... lice(&inflated[..copied]);
+...                                      117                 magic_length += cop
+...                                      ... ied;
+113                 if !inflated.is_emp  118                 if magic_length == 
+... ty() {                               ... magic.len() {
+114                     return Ok((      119                     return Ok((
+115                         inflated.st  120                         magic == *b
+... arts_with(b"BCF"),                   ... "BCF",
+116                         Cursor::new  121                         Cursor::new
+... (raw_prefix).chain(frames.into_inne  ... (raw_prefix).chain(frames.into_inne
+... r()),                                ... r()),
+117                     ));              122                     ));
+118                 }                    123                 }
+
+src/reheader.rs --- 2/2 --- Rust
+173         return Ok(Encoding::RawBcf)  178         return Ok(Encoding::RawBcf)
+... ;                                    ... ;
+174     }                                179     }
+175     if prefix.starts_with(&[0x1f, 0  180     if prefix.starts_with(&[0x1f, 0
+... x8b]) {                              ... x8b]) {
+176         if prefix.len() >= 18        181         if prefix.starts_with(&[0x1
+...                                      ... f, 0x8b, 0x08, 0x04]) {
+177             && prefix[..4] == [0x1f  ... 
+... , 0x8b, 0x08, 0x04]                  ... 
+178             && prefix[10..16] == [0  ... 
+... x06, 0x00, 0x42, 0x43, 0x02, 0x00]   ... 
+179         {                            ... 
+180             return Ok(Encoding::Bgz  182             return Ok(Encoding::Bgz
+... fVcf);                               ... fVcf);
+181         }                            183         }
+
+src/reheader/bcf.rs --- 1/4 --- Rust
+ 1 use std::collections::HashMap;         1 use std::collections::HashMap;
+ 2 use std::io::{self, Read, Write};      2 use std::io::{self, BufRead, BufRead
+ .                                        . er, Read, Write};
+ 3                                        3 
+ 4 use noodles_vcf::{self as vcf, heade   4 use noodles_vcf::{self as vcf, heade
+ . r::StringMaps, variant::RecordBuf};    . r::StringMaps, variant::RecordBuf};
+ 5 use rsomics_common::{Context, Result   5 use rsomics_common::{Context, Result
+ . , RsomicsError};                       . , RsomicsError};
+ 6                                        6 
+ 7 use crate::format::bgzf::ValidatedRe   7 use crate::format::bgzf::DecodedRead
+ . ader;                                  . er;
+ 8 use crate::format::{HeaderMode, Outp   8 use crate::format::{
+ . utFormat, ParallelWriter, VariantWri   . 
+ . ter, Writer};                          . 
+ .                                        9     HeaderMode, OutputFormat, Parall
+ .                                        . elWriter, VariantWriter, Writer, rea
+ .                                        . d_bcf_record_checked,
+ .                                       10 };
+ 9                                       11 
+10 use super::header::HeaderText;        12 use super::header::HeaderText;
+11 use super::{Encoding, Options, Summa  13 use super::{Encoding, Options, Summa
+.. ry, edit_header};                     .. ry, edit_header};
+12                                       14 
+13 pub(super) fn rewrite_raw<R: Read, W  15 pub(super) fn rewrite_raw<R: BufRead
+.. : Write>(                             .. , W: Write>(
+14     input: R,                         16     input: R,
+15     output: W,                        17     output: W,
+16     options: &Options,                18     options: &Options,
+
+src/reheader/bcf.rs --- 2/4 --- Rust
+25     output: W,                        27     output: W,
+26     options: &Options,                28     options: &Options,
+27 ) -> Result<Summary> {                29 ) -> Result<Summary> {
+28     let reader = noodles_bcf::io::Re  30     let reader = noodles_bcf::io::Re
+.. ader::new(ValidatedReader::new(input  .. ader::from(BufReader::new(DecodedRea
+.. ));                                   .. der::new(input)));
+29     let mut writer = Writer::new(out  31     let mut writer = Writer::new(out
+.. put, OutputFormat::Bcf);              .. put, OutputFormat::Bcf);
+30     rewrite(reader, &mut writer, opt  32     rewrite(reader, &mut writer, opt
+.. ions, Encoding::BgzfBcf)              .. ions, Encoding::BgzfBcf)
+31 }                                     33 }
+
+src/reheader/bcf.rs --- 3/4 --- Rust
+40     R: Read,                          42     R: Read,
+41     W: Write + Send + 'static,        43     W: Write + Send + 'static,
+42 {                                     44 {
+43     let reader = noodles_bcf::io::Re  45     let reader = noodles_bcf::io::Re
+.. ader::new(ValidatedReader::new(input  .. ader::from(BufReader::new(DecodedRea
+.. ));                                   .. der::new(input)));
+44     let mut writer = ParallelWriter:  46     let mut writer = ParallelWriter:
+.. :new(output, OutputFormat::Bcf, work  .. :new(output, OutputFormat::Bcf, work
+.. ers)?;                                .. ers)?;
+45     rewrite(reader, &mut writer, opt  47     rewrite(reader, &mut writer, opt
+.. ions, Encoding::BgzfBcf)              .. ions, Encoding::BgzfBcf)
+46 }                                     48 }
+47                                       49 
+48 fn rewrite<R: Read>(                  50 fn rewrite<R: BufRead>(
+49     mut reader: noodles_bcf::io::Rea  51     mut reader: noodles_bcf::io::Rea
+.. der<R>,                               .. der<R>,
+50     writer: &mut impl VariantWriter,  52     writer: &mut impl VariantWriter,
+51     options: &Options,                53     options: &Options,
+
+src/reheader/bcf.rs --- 4/4 --- Rust
+63         let next = number             65         let next = number
+64             .checked_add(1)           66             .checked_add(1)
+65             .ok_or_else(|| invalid("  67             .ok_or_else(|| invalid("
+.. BCF record count exceeds u64"))?;     .. BCF record count exceeds u64"))?;
+66         let read = reader             68         let read = read_bcf_record_c
+..                                       .. hecked(&mut reader, &mut raw)
+67             .read_record(&mut raw)    .. 
+68             .map_err(|error| input_e  69             .map_err(|error| input_e
+.. rror(format!("reading BCF record {ne  .. rror(format!("reading BCF record {ne
+.. xt}"), error))?;                      .. xt}"), error))?;
+69         if read == 0 {                70         if read == 0 {
+70             break;                    71             break;
+
+src/reheader/vcf.rs --- 1/2 --- Rust
+  1 use std::io::{self, BufRead, Cursor, Read, Write};
+  2 
+  3 use noodles_bgzf as bgzf;
+  4 use rsomics_common::{Result, RsomicsError};
+
+src/reheader/vcf.rs --- 2/2 --- Rust
+ 90 }                                     90 }
+ 91                                       91 
+ 92 pub(super) fn inflate_frame(raw: &[   92 pub(super) fn inflate_frame(raw: &[
+ .. u8]) -> Result<Vec<u8>> {             .. u8]) -> Result<Vec<u8>> {
+ 93     let mut reader = bgzf::io::Read   93     crate::format::bgzf::inflate_fr
+ .. er::new(Cursor::new(raw));            .. ame(raw)
+ 94     let mut inflated = Vec::new();    .. 
+ 95     reader                            .. 
+ 96         .read_to_end(&mut inflated)   .. 
+ 97         .map_err(|error| invalid(fo   94         .map_err(|error| invalid(fo
+ .. rmat!("inflating BGZF header frame:   .. rmat!("inflating BGZF header frame:
+ ..  {error}")))?;                        ..  {error}")))
+ 98     Ok(inflated)                      .. 
+ 99 }                                     95 }
+100                                       96 
+101 fn scan_header(source: &[u8], scann   97 fn scan_header(source: &[u8], scann
+... ed: &mut usize) -> Result<Option<us   .. ed: &mut usize) -> Result<Option<us
+... ize>> {                               .. ize>> {
+
+tests/index.rs --- 1/2 --- Rust
+  7   7 use noodles_bgzf as bgzf;
+  8   8 use noodles_vcf::{self as vcf, variant::io::Write as _};
+  .   9 
+  .  10 #[path = "common/sparse_bcf.rs"]
+  .  11 mod sparse_fixture;
+  9  12 
+ 10  13 fn binary() -> PathBuf {
+ 11  14     PathBuf::from(env!("CARGO_BIN_EXE_rsomics-vcf"))
+
+tests/index.rs --- 2/2 --- Rust
+224 227     assert!(!PathBuf::from(format!("{}.csi", unsorted.display())).exists());
+225 228 }
+    229 
+    230 fn sparse_bcf(directory: &Path, empty: bool) -> PathBuf {
+    231     let source = directory.join("sparse.vcf");
+    232     let input = directory.join("sparse.bcf");
+    233     sparse_fixture::write_vcf(&source, empty);
+    234     run(&[
+    235         "view",
+    236         "-Ob",
+    237         "-o",
+    238         input.to_str().unwrap(),
+    239         source.to_str().unwrap(),
+    240     ]);
+    241     sparse_fixture::assert_bcf(&input, empty);
+    242     input
+    243 }
+    244 
+    245 fn sparse_csi(input: &Path) {
+    246     sparse_csi_slots(input, 10);
+    247 }
+    248 
+    249 fn sparse_csi_slots(input: &Path, slots: usize) {
+    250     use noodles_csi::binning_index::{
+    251         Indexer,
+    252         index::reference_sequence::{bin::Chunk, index::BinnedIndex},
+    253     };
+    254     let mut reader = bcf::io::Reader::new(File::open(input).unwrap());
+    255     reader.read_header().unwrap();
+    256     let mut indexer = Indexer::<BinnedIndex>::new(14, 5);
+    257     let mut record = bcf::Record::default();
+    258     loop {
+    259         let start = reader.get_ref().virtual_position();
+    260         if reader.read_record(&mut record).unwrap() == 0 {
+    261             break;
+    262         }
+    263         let end = reader.get_ref().virtual_position();
+    264         let reference = record.reference_sequence_id().unwrap();
+    265         let position = record.variant_start().unwrap().unwrap();
+    266         indexer
+    267             .add_record(
+    268                 Some((reference, position, position, true)),
+    269                 Chunk::new(start, end),
+    270             )
+    271             .unwrap();
+    272     }
+    273     noodles_csi::fs::write(input.with_extension("bcf.csi"), &indexer.build(slots)).unwrap();
+    274 }
+    275 
+    276 #[test]
+    277 fn sparse_bcf_builds_preserve_dictionary_span_and_declared_contig_count() {
+    278     let mut failures = Vec::new();
+    279     for empty in [false, true] {
+    280         for threads in ["0", "2"] {
+    281             let directory = tempfile::tempdir().unwrap();
+    282             let input = sparse_bcf(directory.path(), empty);
+    283             let output = Command::new(binary())
+    284                 .args(["--json", "index", "--threads", threads])
+    285                 .arg(&input)
+    286                 .output()
+    287                 .unwrap();
+    288             if !output.status.success() {
+    289                 failures.push(format!(
+    290                     "empty={empty}, threads={threads}: {}",
+    291                     String::from_utf8_lossy(&output.stderr)
+    292                 ));
+    293                 continue;
+    294             }
+    295             let json: serde_json::Value = serde_json::from_slice(&output.stdout).unwrap();
+    296             let summary = &json["result"]["outcome"];
+    297             assert_eq!(summary["reference_sequences"], 3);
+    298             assert_eq!(summary["records"], if empty { 0 } else { 3 });
+    299             let index = noodles_csi::fs::read(input.with_extension("bcf.csi")).unwrap();
+    300             if index.reference_sequences().len() != 10 {
+    301                 failures.push(format!(
+    302                     "empty={empty}, threads={threads}: {} index slots, expected 10",
+    303                     index.reference_sequences().len()
+    304                 ));
+    305                 continue;
+    306             }
+    307             for (region, suffix) in [
+    308                 ("chrB:10", "chrB\t10\tb1\tA\tC\t.\tPASS\t.\n"),
+    309                 ("chrA:30", "chrA\t30\ta1\tT\tA\t.\tPASS\t.\n"),
+    310                 ("empty:1", ""),
+    311             ] {
+    312                 let output = run(&["view", "--no-header", "-r", region, input.to_str().unwrap()]);
+    313                 assert_eq!(
+    314                     output.stdout,
+    315                     if empty {
+    316                         b"".as_slice()
+    317                     } else {
+    318                         suffix.as_bytes()
+    319                     }
+    320                 );
+    321             }
+    322             assert_eq!(
+    323                 run(&["index", "--nrecords", input.to_str().unwrap()]).stdout,
+    324                 if empty { b"0\n" } else { b"3\n" }
+    325             );
+    326         }
+    327     }
+    328     assert!(failures.is_empty(), "{failures:#?}");
+    329 }
+    330 
+    331 #[test]
+    332 fn sparse_bcf_statistics_use_raw_ids_without_inventing_contigs() {
+    333     let directory = tempfile::tempdir().unwrap();
+    334     let input = sparse_bcf(directory.path(), false);
+    335     sparse_csi(&input);
+    336     let mut failures = Vec::new();
+    337     for all in [false, true] {
+    338         let mut command = Command::new(binary());
+    339         command.args(["index", "--stats"]);
+    340         if all {
+    341             command.arg("--all");
+    342         }
+    343         let output = command.arg(&input).output().unwrap();
+    344         assert!(output.status.success());
+    345         let expected = if all {
+    346             "chrB\t100\t2\nchrA\t200\t1\nempty\t300\t.\n"
+    347         } else {
+    348             "chrB\t100\t2\nchrA\t200\t1\n"
+    349         };
+    350         if output.stdout != expected.as_bytes() {
+    351             failures.push(format!(
+    352                 "all={all}: {}",
+    353                 String::from_utf8_lossy(&output.stdout)
+    354             ));
+    355         }
+    356     }
+    357     assert!(failures.is_empty(), "{failures:#?}");
+    358 }
+    359 
+    360 #[test]
+    361 fn sparse_bcf_rejects_unknown_record_ids_without_replacing_an_index() {
+    362     for reference in [1i32, 10, i32::MAX] {
+    363         for threads in ["0", "2"] {
+    364             let directory = tempfile::tempdir().unwrap();
+    365             let valid = sparse_bcf(directory.path(), false);
+    366             let input = directory.path().join("invalid.bcf");
+    367             let output = input.with_extension("bcf.csi");
+    368             let mut data = Vec::new();
+    369             bgzf::io::Reader::new(File::open(&valid).unwrap())
+    370                 .read_to_end(&mut data)
+    371                 .unwrap();
+    372             let header_length =
+    373                 usize::try_from(u32::from_le_bytes(data[5..9].try_into().unwrap())).unwrap();
+    374             let record_start = 9 + header_length;
+    375             data[record_start + 8..record_start + 12].copy_from_slice(&reference.to_le_bytes());
+    376             bgzip(&data, &input);
+    377             fs::write(&output, b"existing").unwrap();
+    378             let result = Command::new(binary())
+    379                 .args(["index", "--force", "--threads", threads])
+    380                 .arg(&input)
+    381                 .output()
+    382                 .unwrap();
+    383             assert!(
+    384                 !result.status.success(),
+    385                 "RID={reference}, threads={threads}"
+    386             );
+    387             assert!(
+    388                 String::from_utf8_lossy(&result.stderr)
+    389                     .contains("contig ID is outside the header dictionary")
+    390             );
+    391             assert_eq!(fs::read(&output).unwrap(), b"existing");
+    392         }
+    393     }
+    394 }
+    395 
+    396 #[test]
+    397 fn sparse_bcf_statistics_reject_counts_in_an_unnamed_index_slot() {
+    398     use noodles_csi::BinningIndex as _;
+    399     let directory = tempfile::tempdir().unwrap();
+    400     let input = sparse_bcf(directory.path(), false);
+    401     sparse_csi(&input);
+    402     let path = input.with_extension("bcf.csi");
+    403     let index = noodles_csi::fs::read(&path).unwrap();
+    404     let mut references = index.reference_sequences().to_vec();
+    405     references.swap(1, 2);
+    406     for auxiliary_names in [false, true] {
+    407         let mut builder = noodles_csi::Index::builder()
+    408             .set_min_shift(index.min_shift())
+    409             .set_depth(index.depth())
+    410             .set_reference_sequences(references.clone());
+    411         if auxiliary_names {
+    412             let header = noodles_csi::binning_index::index::Header::builder()
+    413                 .set_reference_sequence_names(
+    414                     ["fake0".into(), "fake1".into()].into_iter().collect(),
+    415                 )
+    416                 .build();
+    417             builder = builder.set_header(header);
+    418         }
+    419         noodles_csi::fs::write(&path, &builder.build()).unwrap();
+    420         for option in ["--stats", "--nrecords"] {
+    421             let output = Command::new(binary())
+    422                 .args(["index", option])
+    423                 .arg(&input)
+    424                 .output()
+    425                 .unwrap();
+    426             assert!(
+    427                 !output.status.success(),
+    428                 "auxiliary_names={auxiliary_names}, {option}"
+    429             );
+    430             assert!(output.stdout.is_empty());
+    431             assert!(
+    432                 String::from_utf8_lossy(&output.stderr)
+    433                     .contains("index slot 1 has records but no BCF contig")
+    434             );
+    435         }
+    436     }
+    437 }
+    438 
+    439 fn variant_body(path: &Path) -> Vec<u8> {
+    440     let mut reader = noodles_util::variant::io::Reader::new(File::open(path).unwrap()).unwrap();
+    441     let header = reader.read_header().unwrap();
+    442     let mut writer = vcf::io::Writer::new(Vec::new());
+    443     for record in reader.records(&header) {
+    444         writer
+    445             .write_variant_record(&header, record.unwrap().as_ref())
+    446             .unwrap();
+    447     }
+    448     writer.into_inner()
+    449 }
+    450 
+    451 #[test]
+    452 fn sparse_bcf_queries_accept_indexes_without_empty_tail_slots() {
+    453     let mut failures = Vec::new();
+    454     for empty in [false, true] {
+    455         let directory = tempfile::tempdir().unwrap();
+    456         let input = sparse_bcf(directory.path(), empty);
+    457         let slots = if empty { 0 } else { 6 };
+    458         sparse_csi_slots(&input, slots);
+    459         let index = noodles_csi::fs::read(input.with_extension("bcf.csi")).unwrap();
+    460         assert_eq!(index.reference_sequences().len(), slots);
+    461         for operation in ["view", "concat"] {
+    462             for encoding in ["v", "z", "b", "u"] {
+    463                 for region in ["empty:1", "empty:1,chrB:10"] {
+    464                     let output_path = directory.path().join("output");
+    465                     let mut command = Command::new(binary());
+    466                     command.args(["--json", operation]);
+    467                     if operation == "concat" {
+    468                         command.arg("-a");
+    469                     }
+    470                     let result = command
+    471                         .args(["-O", encoding, "-r", region, "-o"])
+    472                         .arg(&output_path)
+    473                         .arg(&input)
+    474                         .output()
+    475                         .unwrap();
+    476                     let case = format!("empty={empty}, {operation}, {encoding}, {region}");
+    477                     if !result.status.success() {
+    478                         failures.push(format!(
+    479                             "{case}: {}",
+    480                             String::from_utf8_lossy(&result.stderr)
+    481                         ));
+    482                         continue;
+    483                     }
+    484                     let expected = if empty || region == "empty:1" {
+    485                         b"".as_slice()
+    486                     } else {
+    487                         b"chrB\t10\tb1\tA\tC\t.\tPASS\t.\n".as_slice()
+    488                     };
+    489                     assert_eq!(variant_body(&output_path), expected, "{case}");
+    490                     let json: serde_json::Value = serde_json::from_slice(&result.stdout).unwrap();
+    491                     let summary = &json["result"]["summary"];
+    492                     let (read, written) = if operation == "view" {
+    493                         ("read", "written")
+    494                     } else {
+    495                         ("records_read", "records_written")
+    496                     };
+    497                     assert_eq!(summary[written], u64::from(!expected.is_empty()), "{case}");
+    498                     if expected.is_empty() {
+    499                         assert_eq!(summary[read], 0, "{case}");
+    500                     }
+    501                 }
+    502             }
+    503         }
+    504     }
+    505     assert!(failures.is_empty(), "{failures:#?}");
+    506 }
+    507 
+    508 #[test]
+    509 fn sparse_bcf_statistics_include_declared_contigs_beyond_index_span() {
+    510     let mut failures = Vec::new();
+    511     for empty in [false, true] {
+    512         let directory = tempfile::tempdir().unwrap();
+    513         let input = sparse_bcf(directory.path(), empty);
+    514         sparse_csi_slots(&input, if empty { 0 } else { 6 });
+    515         let output = run(&["index", "--stats", "--all", input.to_str().unwrap()]);
+    516         let expected = if empty {
+    517             b"chrB\t100\t.\nchrA\t200\t.\nempty\t300\t.\n".as_slice()
+    518         } else {
+    519             b"chrB\t100\t2\nchrA\t200\t1\nempty\t300\t.\n".as_slice()
+    520         };
+    521         if output.stdout != expected {
+    522             failures.push(format!(
+    523                 "empty={empty}: {}",
+    524                 String::from_utf8_lossy(&output.stdout)
+    525             ));
+    526         }
+    527         assert_eq!(
+    528             run(&["index", "--nrecords", input.to_str().unwrap()]).stdout,
+    529             if empty { b"0\n" } else { b"3\n" }
+    530         );
+    531         assert_eq!(
+    532             run(&["index", "--stats", input.to_str().unwrap()]).stdout,
+    533             if empty {
+    534                 b"".as_slice()
+    535             } else {
+    536                 b"chrB\t100\t2\nchrA\t200\t1\n"
+    537             }
+    538         );
+    539     }
+    540     assert!(failures.is_empty(), "{failures:#?}");
+    541 }
+    542 
+    543 #[test]
+    544 fn sparse_bcf_empty_queries_still_reject_unknown_regions_and_corrupt_indexes() {
+    545     let directory = tempfile::tempdir().unwrap();
+    546     let input = sparse_bcf(directory.path(), false);
+    547     for corrupt in [false, true] {
+    548         sparse_csi_slots(&input, 6);
+    549         if corrupt {
+    550             fs::write(input.with_extension("bcf.csi"), b"broken CSI").unwrap();
+    551         }
+    552         for operation in ["view", "concat"] {
+    553             for encoding in ["v", "z", "b", "u"] {
+    554                 let destination = directory.path().join("preserved");
+    555                 fs::write(&destination, b"existing output").unwrap();
+    556                 let mut command = Command::new(binary());
+    557                 command.arg(operation);
+    558                 if operation == "concat" {
+    559                     command.arg("-a");
+    560                 }
+    561                 let region = if corrupt { "empty:1" } else { "missing:1" };
+    562                 let output = command
+    563                     .args(["-O", encoding, "-r", region, "-o"])
+    564                     .arg(&destination)
+    565                     .arg(&input)
+    566                     .output()
+    567                     .unwrap();
+    568                 assert!(
+    569                     !output.status.success(),
+    570                     "corrupt={corrupt}, {operation}, {encoding}"
+    571                 );
+    572                 assert!(output.stdout.is_empty());
+    573                 assert!(!output.stderr.is_empty());
+    574                 if !corrupt {
+    575                     assert!(String::from_utf8_lossy(&output.stderr).contains("missing"));
+    576                 }
+    577                 assert_eq!(fs::read(&destination).unwrap(), b"existing output");
+    578             }
+    579         }
+    580     }
+    581 }
+
+tests/index_compat.rs --- 1/2 --- Rust
+  5   5 
+  6   6 use noodles_bgzf as bgzf;
+  .   7 
+  .   8 #[path = "common/sparse_bcf.rs"]
+  .   9 mod sparse_fixture;
+  7  10 
+  8  11 fn binary() -> PathBuf {
+  9  12     PathBuf::from(env!("CARGO_BIN_EXE_rsomics-vcf"))
+
+tests/index_compat.rs --- 2/2 --- Rust
+163 166     assert!(!oracle.status.success());
+164 167 }
+    168 
+    169 #[test]
+    170 #[ignore = "release oracle: requires bcftools 1.24"]
+    171 fn sparse_bcf_indexes_interoperate_with_bcftools_including_empty_tail_queries() {
+    172     assert_bcftools_1_24();
+    173     for empty in [false, true] {
+    174         let directory = tempfile::tempdir().unwrap();
+    175         let source = directory.path().join("sparse.vcf");
+    176         let oracle = directory.path().join("oracle.bcf");
+    177         sparse_fixture::write_vcf(&source, empty);
+    178         run(Command::new("bcftools")
+    179             .args(["view", "--no-version", "-Ob", "-o"])
+    180             .arg(&oracle)
+    181             .arg(&source));
+    182         sparse_fixture::assert_bcf(&oracle, empty);
+    183         run(Command::new("bcftools").arg("index").arg(&oracle));
+    184         let index = noodles_csi::fs::read(oracle.with_extension("bcf.csi")).unwrap();
+    185         assert_eq!(index.reference_sequences().len(), if empty { 3 } else { 6 });
+    186         let expected_stats = if empty {
+    187             b"".as_slice()
+    188         } else {
+    189             b"chrB\t100\t2\nchrA\t200\t1\n".as_slice()
+    190         };
+    191         let expected_all = if empty {
+    192             b"chrB\t100\t.\nchrA\t200\t.\nempty\t300\t.\n".as_slice()
+    193         } else {
+    194             b"chrB\t100\t2\nchrA\t200\t1\nempty\t300\t.\n".as_slice()
+    195         };
+    196         let mut inputs = vec![oracle];
+    197         for threads in ["0", "2"] {
+    198             let ours = directory.path().join(format!("ours-{threads}.bcf"));
+    199             fs::copy(&inputs[0], &ours).unwrap();
+    200             run(Command::new(binary())
+    201                 .args(["index", "--threads", threads])
+    202                 .arg(&ours));
+    203             inputs.push(ours);
+    204         }
+    205         for input in &inputs {
+    206             assert_eq!(
+    207                 run(Command::new("bcftools")
+    208                     .args(["index", "--stats"])
+    209                     .arg(input))
+    210                 .stdout,
+    211                 expected_stats
+    212             );
+    213             assert_eq!(
+    214                 run(Command::new(binary()).args(["index", "--stats"]).arg(input)).stdout,
+    215                 expected_stats
+    216             );
+    217             assert_eq!(
+    218                 run(Command::new(binary())
+    219                     .args(["index", "--stats", "--all"])
+    220                     .arg(input))
+    221                 .stdout,
+    222                 expected_all
+    223             );
+    224             let ours_count = run(Command::new(binary())
+    225                 .args(["index", "--nrecords"])
+    226                 .arg(input));
+    227             assert_eq!(ours_count.stdout, if empty { b"0\n" } else { b"3\n" });
+    228             assert_eq!(
+    229                 ours_count.stdout,
+    230                 run(Command::new("bcftools")
+    231                     .args(["index", "--nrecords"])
+    232                     .arg(input))
+    233                 .stdout
+    234             );
+    235             for (region, expected) in [
+    236                 ("chrB:10", "chrB\t10\tb1\tA\tC\t.\tPASS\t.\n"),
+    237                 ("chrA:30", "chrA\t30\ta1\tT\tA\t.\tPASS\t.\n"),
+    238                 ("empty:1", ""),
+    239                 ("empty:1,chrB:10", "chrB\t10\tb1\tA\tC\t.\tPASS\t.\n"),
+    240             ] {
+    241                 let expected = if empty { "" } else { expected }.as_bytes();
+    242                 assert_eq!(query(input, region), expected, "{input:?}, {region}");
+    243                 assert_eq!(
+    244                     run(Command::new(binary())
+    245                         .args(["view", "--no-header", "-r", region])
+    246                         .arg(input))
+    247                     .stdout,
+    248                     expected,
+    249                     "{input:?}, {region}"
+    250                 );
+    251                 let concat = run(Command::new(binary())
+    252                     .args(["concat", "-a", "-r", region])
+    253                     .arg(input));
+    254                 let body: Vec<u8> = concat
+    255                     .stdout
+    256                     .split_inclusive(|byte| *byte == b'\n')
+    257                     .filter(|line| !line.starts_with(b"#"))
+    258                     .flatten()
+    259                     .copied()
+    260                     .collect();
+    261                 assert_eq!(body, expected, "{input:?}, {region}");
+    262             }
+    263         }
+    264     }
+    265 }
+
+tests/reheader_cli.rs --- Rust
+687  687     }
+688  688 }
+     689 
+     690 fn with_extra_subfields(source: &[u8], before: &[u8], after: &[u8]) -> Vec<u8> {
+     691     let mut output = Vec::new();
+     692     for original in raw_frames(source) {
+     693         if original == crate_eof_block() {
+     694             output.extend_from_slice(original);
+     695             continue;
+     696         }
+     697         let mut frame = original[..12].to_vec();
+     698         frame.extend_from_slice(before);
+     699         frame.extend_from_slice(&original[12..18]);
+     700         frame.extend_from_slice(after);
+     701         frame.extend_from_slice(&original[18..]);
+     702         let extra_length = u16::try_from(6 + before.len() + after.len()).unwrap();
+     703         frame[10..12].copy_from_slice(&extra_length.to_le_bytes());
+     704         let size = u16::try_from(frame.len() - 1).unwrap();
+     705         let size_offset = 16 + before.len();
+     706         frame[size_offset..size_offset + 2].copy_from_slice(&size.to_le_bytes());
+     707         output.extend_from_slice(&frame);
+     708     }
+     709     output
+     710 }
+     711 
+     712 fn gunzip(source: &[u8]) -> Vec<u8> {
+     713     let mut output = Vec::new();
+     714     flate2::read::MultiGzDecoder::new(source)
+     715         .read_to_end(&mut output)
+     716         .unwrap();
+     717     output
+     718 }
+     719 
+     720 fn assert_renamed_variant_data(raw: &[u8]) {
+     721     use noodles_vcf::variant::io::Write as _;
+     722     let mut reader = noodles_util::variant::io::Reader::new(raw).unwrap();
+     723     let header = reader.read_header().unwrap();
+     724     assert_eq!(
+     725         header
+     726             .sample_names()
+     727             .iter()
+     728             .map(String::as_str)
+     729             .collect::<Vec<_>>(),
+     730         ["N1", "N2"]
+     731     );
+     732     let mut writer = noodles_vcf::io::Writer::new(Vec::new());
+     733     for record in reader.records(&header) {
+     734         writer
+     735             .write_variant_record(&header, record.unwrap().as_ref())
+     736             .unwrap();
+     737     }
+     738     assert_eq!(writer.into_inner(), body(BCF_SOURCE));
+     739 }
+     740 
+     741 #[test]
+     742 fn bgzf_extra_subfields_work_for_vcf_bcf_files_and_stdin() {
+     743     let mut failures = Vec::new();
+     744     for encoding in ["vcf", "bcf"] {
+     745         let directory = tempfile::tempdir().unwrap();
+     746         let source = if encoding == "vcf" {
+     747             BCF_SOURCE.to_vec()
+     748         } else {
+     749             let fixture = BcfFixture::new("b");
+     750             inflate(&fs::read(fixture.input).unwrap())
+     751         };
+     752         let split = if encoding == "vcf" {
+     753             source.len() - body(&source).len()
+     754         } else {
+     755             11
+     756         };
+     757         let canonical = bgzf_bytes(&[&source[..split], &source[split..]]);
+     758         for (before, after) in [
+     759             (b"XY\x01\x00\x07".as_slice(), b"".as_slice()),
+     760             (b"".as_slice(), b"UV\x02\x00\x08\x09".as_slice()),
+     761             (
+     762                 b"XY\x01\x00\x07".as_slice(),
+     763                 b"UV\x02\x00\x08\x09".as_slice(),
+     764             ),
+     765         ] {
+     766             for leading_empty in [false, true] {
+     767                 let mut input = canonical.clone();
+     768                 if leading_empty {
+     769                     let mut empty = crate_eof_block().to_vec();
+     770                     empty[4] = 1;
+     771                     input.splice(0..0, empty);
+     772                 }
+     773                 let input = with_extra_subfields(&input, before, after);
+     774                 assert_eq!(gunzip(&input), source);
+     775                 let input_path = directory.path().join("input");
+     776                 fs::write(&input_path, &input).unwrap();
+     777                 let workers: &[&str] = if encoding == "vcf" {
+     778                     &["0"]
+     779                 } else {
+     780                     &["0", "2"]
+     781                 };
+     782                 for &threads in workers {
+     783                     for stdin in [false, true] {
+     784                         let output_path = directory.path().join("output");
+     785                         fs::write(&output_path, b"existing output").unwrap();
+     786                         let mut command = command();
+     787                         command
+     788                             .args([
+     789                                 "reheader",
+     790                                 "--json",
+     791                                 "-n",
+     792                                 "N1,N2",
+     793                                 "--threads",
+     794                                 threads,
+     795                                 "-o",
+     796                             ])
+     797                             .arg(&output_path);
+     798                         if stdin {
+     799                             command.arg("-").stdin(fs::File::open(&input_path).unwrap());
+     800                         } else {
+     801                             command.arg(&input_path);
+     802                         }
+     803                         let result = command.output().unwrap();
+     804                         let case = format!(
+     805                             "{encoding}, before={}, after={}, empty={leading_empty}, threads={threads}, stdin={stdin}",
+     806                             before.len(),
+     807                             after.len()
+     808                         );
+     809                         if !result.status.success() {
+     810                             assert_eq!(
+     811                                 fs::read(&output_path).unwrap(),
+     812                                 b"existing output",
+     813                                 "{case}"
+     814                             );
+     815                             failures.push(format!(
+     816                                 "{case}: {}",
+     817                                 String::from_utf8_lossy(&result.stderr)
+     818                             ));
+     819                             continue;
+     820                         }
+     821                         let output = fs::read(&output_path).unwrap();
+     822                         assert!(output.starts_with(&[0x1f, 0x8b]));
+     823                         assert!(output.ends_with(crate_eof_block()));
+     824                         let decoded = gunzip(&output);
+     825                         assert_eq!(
+     826                             decoded.starts_with(b"BCF\x02\x02"),
+     827                             encoding == "bcf",
+     828                             "{case}"
+     829                         );
+     830                         assert_eq!(
+     831                             decoded.starts_with(b"##fileformat="),
+     832                             encoding == "vcf",
+     833                             "{case}"
+     834                         );
+     835                         assert_renamed_variant_data(&decoded);
+     836                         let json: serde_json::Value =
+     837                             serde_json::from_slice(&result.stdout).unwrap();
+     838                         assert_eq!(
+     839                             json["result"]["summary"]["encoding"],
+     840                             format!("bgzf-{encoding}"),
+     841                             "{case}"
+     842                         );
+     843                         assert_eq!(json["result"]["summary"]["samples_after"], 2, "{case}");
+     844                     }
+     845                 }
+     846             }
+     847         }
+     848     }
+     849     assert!(failures.is_empty(), "{failures:#?}");
+     850 }
+     851 
+     852 #[test]
+     853 fn malformed_bgzf_extra_subfields_preserve_existing_output() {
+     854     let directory = tempfile::tempdir().unwrap();
+     855     let input_path = directory.path().join("invalid.vcf.gz");
+     856     let output_path = directory.path().join("output.vcf.gz");
+     857     let canonical = bgzf_bytes(&[BCF_SOURCE]);
+     858     for malformed in ["missing-bc", "duplicate-bc", "truncated-subfield", "crc"] {
+     859         let after = match malformed {
+     860             "duplicate-bc" => b"BC\x02\x00\x00\x00".as_slice(),
+     861             "truncated-subfield" => b"XY\x02\x00\x07".as_slice(),
+     862             _ => b"XY\x01\x00\x07".as_slice(),
+     863         };
+     864         let mut input = with_extra_subfields(&canonical, &[], after);
+     865         if malformed == "missing-bc" {
+     866             input[12] = b'X';
+     867         } else if malformed == "crc" {
+     868             let first_frame_size = usize::from(u16::from_le_bytes([input[16], input[17]])) + 1;
+     869             input[first_frame_size - 8] ^= 1;
+     870         }
+     871         fs::write(&input_path, input).unwrap();
+     872         fs::write(&output_path, b"existing output").unwrap();
+     873         let result = command()
+     874             .args(["reheader", "-n", "N1,N2", "-o"])
+     875             .arg(&output_path)
+     876             .arg(&input_path)
+     877             .output()
+     878             .unwrap();
+     879         assert!(!result.status.success(), "{malformed}");
+     880         assert!(result.stdout.is_empty());
+     881         assert!(!result.stderr.is_empty());
+     882         assert_eq!(
+     883             fs::read(&output_path).unwrap(),
+     884             b"existing output",
+     885             "{malformed}"
+     886         );
+     887     }
+     888 }
+     889 
+     890 #[test]
+     891 fn bgzf_bcf_magic_can_span_frames() {
+     892     let fixture = BcfFixture::new("u");
+     893     let source = fs::read(&fixture.input).unwrap();
+     894     assert!(source.starts_with(b"BCF\x02\x02"));
+     895     assert_eq!(body(&decode_bcf(&source)), body(BCF_SOURCE));
+     896     let directory = tempfile::tempdir().unwrap();
+     897     let input_path = directory.path().join("split-magic.bcf");
+     898     let output_path = directory.path().join("output.bcf");
+     899     let mut failures = Vec::new();
+     900     for split in [1, 2] {
+     901         let canonical = bgzf_bytes(&[&source[..split], &source[split..]]);
+     902         for empty_frames in [false, true] {
+     903             let mut empty = crate_eof_block().to_vec();
+     904             empty[4] = 1;
+     905             let mut input = Vec::new();
+     906             for frame in raw_frames(&canonical) {
+     907                 if empty_frames && frame != crate_eof_block() {
+     908                     input.extend_from_slice(&empty);
+     909                 }
+     910                 input.extend_from_slice(frame);
+     911             }
+     912             assert_eq!(gunzip(&input), source);
+     913             let nonempty_frames: Vec<_> = raw_frames(&input)
+     914                 .into_iter()
+     915                 .map(gunzip)
+     916                 .filter(|frame| !frame.is_empty())
+     917                 .collect();
+     918             assert_eq!(
+     919                 nonempty_frames,
+     920                 [source[..split].to_vec(), source[split..].to_vec()]
+     921             );
+     922             fs::write(&input_path, &input).unwrap();
+     923             for threads in ["0", "2"] {
+     924                 for stdin in [false, true] {
+     925                     fs::write(&output_path, b"existing output").unwrap();
+     926                     let mut command = command();
+     927                     command
+     928                         .args([
+     929                             "reheader",
+     930                             "--json",
+     931                             "-n",
+     932                             "N1,N2",
+     933                             "--threads",
+     934                             threads,
+     935                             "-o",
+     936                         ])
+     937                         .arg(&output_path);
+     938                     if stdin {
+     939                         command.arg("-").stdin(fs::File::open(&input_path).unwrap());
+     940                     } else {
+     941                         command.arg(&input_path);
+     942                     }
+     943                     let result = command.output().unwrap();
+     944                     let case = format!(
+     945                         "split={split}, empty_frames={empty_frames}, threads={threads}, stdin={stdin}"
+     946                     );
+     947                     eprintln!("BCF split magic: {case}, status={:?}", result.status.code());
+     948                     if !result.status.success() {
+     949                         assert_eq!(
+     950                             fs::read(&output_path).unwrap(),
+     951                             b"existing output",
+     952                             "{case}"
+     953                         );
+     954                         failures.push(format!(
+     955                             "{case}: {}",
+     956                             String::from_utf8_lossy(&result.stderr)
+     957                         ));
+     958                         continue;
+     959                     }
+     960                     let output = fs::read(&output_path).unwrap();
+     961                     assert!(output.starts_with(&[0x1f, 0x8b]), "{case}");
+     962                     assert!(output.ends_with(crate_eof_block()), "{case}");
+     963                     let decoded = gunzip(&output);
+     964                     assert!(decoded.starts_with(b"BCF\x02\x02"), "{case}");
+     965                     assert_renamed_variant_data(&decoded);
+     966                     let json: serde_json::Value = serde_json::from_slice(&result.stdout).unwrap();
+     967                     assert_eq!(json["result"]["summary"]["encoding"], "bgzf-bcf", "{case}");
+     968                     assert_eq!(json["result"]["summary"]["samples_after"], 2, "{case}");
+     969                 }
+     970             }
+     971         }
+     972     }
+     973     assert!(failures.is_empty(), "{failures:#?}");
+     974 }
+     975 
+     976 #[test]
+     977 fn zero_bcf_shared_length_is_not_end_of_input() {
+     978     let fixture = BcfFixture::new("u");
+     979     let source = fs::read(&fixture.input).unwrap();
+     980     assert!(source.starts_with(b"BCF\x02\x02"));
+     981     assert_eq!(body(&decode_bcf(&source)), body(BCF_SOURCE));
+     982     let header_length =
+     983         usize::try_from(u32::from_le_bytes(source[5..9].try_into().unwrap())).unwrap();
+     984     let header_end = 9 + header_length;
+     985     let header = &source[..header_end];
+     986     let record = &source[header_end..];
+     987     let shared_length =
+     988         usize::try_from(u32::from_le_bytes(record[..4].try_into().unwrap())).unwrap();
+     989     let sample_length =
+     990         usize::try_from(u32::from_le_bytes(record[4..8].try_into().unwrap())).unwrap();
+     991     assert!(shared_length >= 24);
+     992     assert_eq!(record.len(), 8 + shared_length + sample_length);
+     993     assert!(body(&decode_bcf(header)).is_empty());
+     994     let zero_shared = [0; 4];
+     995     let zero_lengths = [0; 8];
+     996     let layouts = [
+     997         (
+     998             "zero-after-header",
+     999             vec![header, zero_shared.as_slice()],
+    1000             header_end,
+    1001         ),
+    1002         (
+    1003             "zero-after-record",
+    1004             vec![header, record, zero_shared.as_slice()],
+    1005             source.len(),
+    1006         ),
+    1007         (
+    1008             "zero-lengths-after-header",
+    1009             vec![header, zero_lengths.as_slice()],
+    1010             header_end,
+    1011         ),
+    1012         (
+    1013             "zero-before-record",
+    1014             vec![header, zero_lengths.as_slice(), record],
+    1015             header_end,
+    1016         ),
+    1017     ];
+    1018     let directory = tempfile::tempdir().unwrap();
+    1019     let input_path = directory.path().join("input.bcf");
+    1020     let output_path = directory.path().join("output.bcf");
+    1021     let mut failures = Vec::new();
+    1022     for compressed in [false, true] {
+    1023         let workers: &[&str] = if compressed { &["0", "2"] } else { &["0"] };
+    1024         let valid = if compressed {
+    1025             bgzf_bytes(&[header])
+    1026         } else {
+    1027             header.to_vec()
+    1028         };
+    1029         if compressed {
+    1030             assert_eq!(gunzip(&valid), header);
+    1031         }
+    1032         fs::write(&input_path, &valid).unwrap();
+    1033         for &threads in workers {
+    1034             for stdin in [false, true] {
+    1035                 fs::write(&output_path, b"existing output").unwrap();
+    1036                 let mut command = command();
+    1037                 command
+    1038                     .args([
+    1039                         "reheader",
+    1040                         "--json",
+    1041                         "-n",
+    1042                         "N1,N2",
+    1043                         "--threads",
+    1044                         threads,
+    1045                         "-o",
+    1046                     ])
+    1047                     .arg(&output_path);
+    1048                 if stdin {
+    1049                     command.arg("-").stdin(fs::File::open(&input_path).unwrap());
+    1050                 } else {
+    1051                     command.arg(&input_path);
+    1052                 }
+    1053                 let result = command.output().unwrap();
+    1054                 let case = format!(
+    1055                     "header-only, compressed={compressed}, threads={threads}, stdin={stdin}"
+    1056                 );
+    1057                 eprintln!(
+    1058                     "BCF zero-length control: {case}, status={:?}",
+    1059                     result.status.code()
+    1060                 );
+    1061                 if !result.status.success() {
+    1062                     failures.push(format!(
+    1063                         "{case}: {}",
+    1064                         String::from_utf8_lossy(&result.stderr)
+    1065                     ));
+    1066                     continue;
+    1067                 }
+    1068                 let output = fs::read(&output_path).unwrap();
+    1069                 assert_eq!(output.starts_with(&[0x1f, 0x8b]), compressed, "{case}");
+    1070                 let decoded = if compressed {
+    1071                     assert!(output.ends_with(crate_eof_block()), "{case}");
+    1072                     gunzip(&output)
+    1073                 } else {
+    1074                     output
+    1075                 };
+    1076                 assert!(decoded.starts_with(b"BCF\x02\x02"), "{case}");
+    1077                 let mut reader = noodles_bcf::io::Reader::from(decoded.as_slice());
+    1078                 let header = reader.read_header().unwrap();
+    1079                 assert!(reader.get_ref().is_empty(), "{case}");
+    1080                 assert_eq!(
+    1081                     header
+    1082                         .sample_names()
+    1083                         .iter()
+    1084                         .map(String::as_str)
+    1085                         .collect::<Vec<_>>(),
+    1086                     ["N1", "N2"],
+    1087                     "{case}"
+    1088                 );
+    1089                 let mut record = noodles_bcf::Record::default();
+    1090                 assert_eq!(reader.read_record(&mut record).unwrap(), 0, "{case}");
+    1091                 assert!(reader.get_ref().is_empty(), "{case}");
+    1092                 let json: serde_json::Value = serde_json::from_slice(&result.stdout).unwrap();
+    1093                 assert_eq!(
+    1094                     json["result"]["summary"]["encoding"],
+    1095                     if compressed { "bgzf-bcf" } else { "raw-bcf" },
+    1096                     "{case}"
+    1097                 );
+    1098                 assert_eq!(json["result"]["summary"]["samples_after"], 2, "{case}");
+    1099             }
+    1100         }
+    1101         for (layout, parts, zero_at) in &layouts {
+    1102             let raw = parts.concat();
+    1103             assert_eq!(&raw[*zero_at..*zero_at + 4], &[0; 4]);
+    1104             let input = if compressed {
+    1105                 let input = bgzf_bytes(parts);
+    1106                 assert_eq!(gunzip(&input), raw);
+    1107                 input
+    1108             } else {
+    1109                 raw
+    1110             };
+    1111             fs::write(&input_path, &input).unwrap();
+    1112             for &threads in workers {
+    1113                 for stdin in [false, true] {
+    1114                     fs::write(&output_path, b"existing output").unwrap();
+    1115                     let mut command = command();
+    1116                     command
+    1117                         .args(["reheader", "-n", "N1,N2", "--threads", threads, "-o"])
+    1118                         .arg(&output_path);
+    1119                     if stdin {
+    1120                         command.arg("-").stdin(fs::File::open(&input_path).unwrap());
+    1121                     } else {
+    1122                         command.arg(&input_path);
+    1123                     }
+    1124                     let result = command.output().unwrap();
+    1125                     let case = format!(
+    1126                         "{layout}, compressed={compressed}, threads={threads}, stdin={stdin}"
+    1127                     );
+    1128                     eprintln!(
+    1129                         "BCF zero shared length: {case}, status={:?}",
+    1130                         result.status.code()
+    1131                     );
+    1132                     let preserved = fs::read(&output_path).unwrap() == b"existing output";
+    1133                     if result.status.success() {
+    1134                         failures.push(format!(
+    1135                             "{case}: malformed record accepted, output_preserved={preserved}"
+    1136                         ));
+    1137                     } else if !result.stdout.is_empty() || result.stderr.is_empty() || !preserved {
+    1138                         failures.push(format!(
+    1139                             "{case}: invalid failure outcome, output_preserved={preserved}, stdout={}, stderr={}",
+    1140                             String::from_utf8_lossy(&result.stdout),
+    1141                             String::from_utf8_lossy(&result.stderr)
+    1142                         ));
+    1143                     }
+    1144                 }
+    1145             }
+    1146         }
+    1147     }
+    1148     assert!(failures.is_empty(), "{failures:#?}");
+    1149 }
+

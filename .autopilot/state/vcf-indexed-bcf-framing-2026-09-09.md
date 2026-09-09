@@ -1,6 +1,6 @@
 # Indexed BCF logical EOF audit
 
-Status: test-only snapshot `vcf-indexed-bcf-framing-red-2026-09-09` is running
+Status: test-only snapshot `vcf-indexed-bcf-framing-red-2026-09-09` failed
 as `34297832960`, world `d449c86b369e2ae3928060f17c7d30c34fdfcd96`; exact-head
 control CI `34297754328` passed before dispatch. Linux ARM raw assertions were
 read before indexed production edits. All 16 malformed commands incorrectly
@@ -8,8 +8,18 @@ succeed and replace synthetic prior destinations; all eight positive controls
 succeed. Selection has 11 pass/one fail; concat 38, reheader 21, index 13,
 resources three and writer 11 pass. First raw log is external
 `/Volumes/KIOXIA/Developments/tmp/vcf-indexed-bcf-first-red-qDU0aX/linux-aarch64.log`.
-All-target artifact verification remains separate. The reviewed one-file
-indexed repair is now being implemented; no repaired execution is claimed.
+All four targets fail only index selection with the same 16 malformed
+successes/destination replacements and eight controls; macOS has nine pass/
+one fail. The reviewed one-file repair `vcf-indexed-bcf-framing-fix-2026-09-09`
+is frozen for full verification; no repaired execution is claimed yet.
+
+Both independent audits verify four ZIP API hashes/sizes/CRCs, all 60 extracted
+files, exact 174-source before/after lists, native Rust 1.91, shared lock and
+dependency identities, raw unique case evidence and intended skipped steps.
+Permanent evidence is
+`/Volumes/Zane's HDD/rsomics-fixtures/evidence/vcf-index-selection-2026-09-09/indexed-bcf-framing-red-34297832960/`.
+All 71 retained files (3,367,370 bytes) match external scratch recursively;
+inventory SHA-256 is `02d8bf6f976b5a16c54e31bb9092dff49591245ff0b090899c61f01344c236bc`.
 
 This follows the fully verified nonindexed/reheader repair in `34296650518`.
 That run excludes this new test. Current pinned Noodles BCF
@@ -31,13 +41,19 @@ Coverage is one contig/chunk/frame. Cross-frame words, multiple chunks,
 excluded corruption, ligation and precise error classification are outside
 this slice. See the immutable snapshot README for hashes and limitations.
 
-After observing actual expected-red failures, reuse the private checked BCF
-reader in indexed concat and replace only the unchecked BCF query route for
-view. Preserve candidate filtering, record counters, region overlap/dedup,
+After observing actual expected-red failures, the repair reuses the private
+checked BCF reader in indexed concat and replaces the unchecked BCF query
+route for view. It preserves candidate filtering, record counters, region overlap/dedup,
 sparse RID handling, chosen-index precedence and I/O error propagation. In
 particular, Noodles' unbounded BCF query short-circuits its interval test;
-do not silently change this while fixing record framing. No new foundation,
-public item, dependency or product boundary is required.
+the private raw filter retains this order. The VCF branch uses the same inner
+query/records mapping as pinned noodles-util 0.82 without another iterator
+box. Concat gains no additional buffer. Two supplemental unit groups cover
+sparse RID 2, record-span endpoints, unbounded POS 0 and missing RID names.
+Independent review approves the exact repaired source
+`7188ed9ac337c5e4bd3d1b67517e09643e3d30062ffe726af38cf3291eeca2f3`; source
+inspection is not runtime or performance evidence. No new foundation,
+public item, dependency or product boundary is introduced.
 
 Keep tests unchanged for the repair, review source independently, then run all
 four native debug/release suites, focused tests, pinned Linux oracles, strict
