@@ -16,6 +16,9 @@ performance and items 3–7 remain open. Newly exposed sparse BCF builder,
 statistics and external-index interoperability gaps are tracked in
 [the sparse-index record](vcf-sparse-index-2026-09-09.md). The historical
 findings below describe the August source, not the latest verified snapshot.
+Item 7's four-native expected red and private read-path repair are tracked in
+[the reheader record](vcf-reheader-extra-2026-09-09.md); full repair verification
+and performance are still pending.
 
 ## Candidate evidence
 

@@ -58,9 +58,9 @@ jobs:
           export EVIDENCE="$RUNNER_TEMP/vcf-evidence"
           printf 'CARGO_HOME=%s\nCARGO_TARGET_DIR=%s\nRUSTUP_HOME=%s\nTMPDIR=%s\nEVIDENCE=%s\n' \
             "$CARGO_HOME" "$CARGO_TARGET_DIR" "$RUSTUP_HOME" "$TMPDIR" "$EVIDENCE" >> "$GITHUB_ENV"
-          snapshot=.autopilot/snapshots/vcf-reheader-extra-red-2026-09-09
-          echo "33e29dde9e2cf18ecd2a344f166d2aad1d6f4db8fa969aa1bf03c50d0682fb2a  $snapshot/source.tar.gz" | shasum -a 256 --check
-          echo "efdf5ae15f32d4111481e806de96b178f400bf1a81396df4224a350768c203ec  $snapshot/files.sha256" | shasum -a 256 --check
+          snapshot=.autopilot/snapshots/vcf-reheader-extra-fix-2026-09-09
+          echo "6ebf29ca9842bd16279be21ef30d60a7c514f01ef08ce273743509e9eda6551e  $snapshot/source.tar.gz" | shasum -a 256 --check
+          echo "2854472a672998e56e52653b50755505974bacccd3dc4f63382302e415f4f32e  $snapshot/files.sha256" | shasum -a 256 --check
           mkdir "$RUNNER_TEMP/vcf-candidate"
           mkdir -p "$CARGO_HOME" "$CARGO_TARGET_DIR" "$RUSTUP_HOME" "$TMPDIR" "$EVIDENCE"
           tar -xzf "$snapshot/source.tar.gz" -C "$RUNNER_TEMP/vcf-candidate" --no-same-owner
