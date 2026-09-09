@@ -1,9 +1,15 @@
 # BCF logical record boundaries and BGZF prefix classification
 
-Status: source findings only; consumer regressions are being prepared. No
-production repair or compatibility/performance claim. This follows the
-separate extended-BGZF reheader repair run `34294546912`; its frozen archive
+Status: source findings with reviewed, frozen expected-red consumer tests in
+`vcf-bcf-framing-red-2026-09-09`, ready for focused four-native execution. No
+production repair or observed failure yet. This follows the separately
+verified extended-BGZF reheader repair run `34294546912`; that green archive
 does not include these new tests.
+
+Only two appended test files change across 174 source entries. Concat adds
+24 malformed cases and six header-only controls; reheader adds 24 malformed
+cases, six header-only controls and 16 split-magic cases. All prior test bytes
+are retained. Snapshot README records identities and exact boundaries.
 
 ## Contracts and evidence
 
@@ -19,6 +25,14 @@ for physical EOF and four actual zero bytes. Product `format::Reader` and
 reheader's BCF loop currently trust this as EOF. A malformed record can
 therefore plausibly truncate processing while permitting success. The result
 has not yet been observed in a product process.
+
+The current regression slice covers nonindexed `format::Reader` and reheader.
+Indexed concat's `regions::QueryReader::Bcf` and the dependency's indexed-view
+query loop also trust zero return values and need explicit chunk/index
+fixtures before being included in any fixed-scope claim. Index construction
+is different: `index/bcf_record.rs` reads the eight-byte length prefix and
+rejects shared blocks shorter than 24 bytes; do not label that path affected
+by the same zero-as-EOF ambiguity without contradictory evidence.
 
 Naive concat currently performs a separate complete frame-validation pass,
 then typed inspection, then raw copying. Removing its separate frame pass

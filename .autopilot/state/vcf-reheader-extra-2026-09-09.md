@@ -2,9 +2,26 @@
 
 Status: expected-red run `34293512685` fails the intended reheader step on
 all four native targets. Source-reviewed repair snapshot
-`vcf-reheader-extra-fix-2026-09-09` is running full four-native verification
+`vcf-reheader-extra-fix-2026-09-09` passes full four-native verification
 as `34294546912`, world `8c45d22737fb5fb7899840a4dac0983d99584ea1`;
 control CI `34294508570` passed.
+
+All four jobs pass. Each ordinary debug/release profile passes 439 Linux or
+437 macOS tests, with 62 ignored; the six new BGZF unit groups and both added
+reheader groups pass by name on every target/profile. Focused reheader has
+19 passes; index/concat/resources/writer remain 13/37/3/11. Linux x86 passes
+all 62 pinned oracle groups per profile, fmt, strict Clippy, harness syntax
+and package. The 36-case red test is unchanged and now passes completely.
+The independent sparse probe retains prior corrected behavior and the
+documented upstream `--all` signal 11.
+
+Four ZIP API digests/sizes/CRCs, 101 extracted files, exact 174-source
+before/after lists, native Rust/lock identities, heads and raw results are
+independently verified. Permanent evidence is
+`/Volumes/Zane's HDD/rsomics-fixtures/evidence/vcf-index-selection-2026-09-09/reheader-extra-fix-34294546912/`;
+112 retained files (4,380,271 bytes) match KIOXIA capture
+`vcf-reheader-fix-capture-qveEdLI9/reheader-extra-fix-34294546912` byte-for-byte.
+This closes only extended-header correctness for the frozen read path.
 
 World red head is `540a8094ef6b724a074f722cec4c9473bc8d2462`; control CI
 `34293413259` passed. The first Linux ARM assertion was read before source
@@ -24,13 +41,14 @@ field. A bounded flate2 single-member inflater checks CRC/ISIZE, decoded
 size and unconsumed member bytes. A private decoded reader replaces the
 compressed passthrough for BCF so no fixed-header Noodles BGZF decoder remains
 in this reheader path. VCF header inflation shares the helper. All CLI red
-test bytes are unchanged; six additional unit groups await execution.
+test bytes are unchanged; six additional unit groups pass as recorded above.
 
 Review found no remote-verification blocker. Per-frame decoding/buffering
 changes need performance evidence. VCF tail CRC checking is not broadened,
 and canonical EOF enforcement still depends on consuming BCF to actual EOF.
-Separate source-only follow-ups are tiny-frame split magic and malformed BCF
-early logical EOF; neither is claimed reproduced or fixed here.
+Separate follow-ups are tiny-frame split magic and malformed BCF early logical
+EOF, tracked in `vcf-bcf-framing-2026-09-09.md`; neither is claimed reproduced
+or fixed by this snapshot.
 
 The August concat audit item 7 observed an inconsistent BGZF boundary:
 `format/bgzf.rs` parses extra subfields structurally, while reheader detection
@@ -49,14 +67,14 @@ transactions are asserted. BCF headers cross a frame boundary. Guards that
 pass only because the old classifier rejects every extended header do not
 prove downstream CRC/subfield validation; preserve them through the fix.
 
-Source snapshot has 174 files and differs only by appended reheader tests
+The expected-red source snapshot has 174 files and differs only by appended reheader tests
 from the corrected sparse-oracle candidate. That other full run is
 `34293201835`, world `e2f13662f2a19c0c308274f39b717bbf46e16319`, with
 control CI `34293102709` passed. Do not confuse its test-only empty-index
 layout correction with this reheader behavior change.
 
-After the repair's exact-head control CI, run full four-native and pinned
-oracle checks, including ordinary-gzip diagnostics and error/output contracts.
+Preserve the verified four-native/oracle source identity and continue the
+separate BCF framing regressions and unmeasured performance gate.
 Keep BGZF framing product-local; cross-product foundation promotion still
 requires concrete BAM/VCF consumer tests and representative no-regression
 performance evidence. No local builds or product binaries while the boot

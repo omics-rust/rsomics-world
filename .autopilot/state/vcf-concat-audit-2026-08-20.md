@@ -17,8 +17,10 @@ statistics and external-index interoperability gaps are tracked in
 [the sparse-index record](vcf-sparse-index-2026-09-09.md). The historical
 findings below describe the August source, not the latest verified snapshot.
 Item 7's four-native expected red and private read-path repair are tracked in
-[the reheader record](vcf-reheader-extra-2026-09-09.md); full repair verification
-and performance are still pending.
+[the reheader record](vcf-reheader-extra-2026-09-09.md); full four-native repair
+verification now passes, while performance remains pending. Before item 3's
+pass reduction, [BCF logical record boundaries](vcf-bcf-framing-2026-09-09.md)
+must be verified so typed early EOF cannot bypass remaining integrity checks.
 
 ## Candidate evidence
 
