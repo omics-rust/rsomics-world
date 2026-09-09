@@ -396,6 +396,16 @@ length, CRC and ISIZE corruption, and writer failure to the regression set.
 Benchmark the retained two-pass contract
 against both the current three-pass candidate and bcftools 1.24.
 
+September source review identifies a second reason to share the validated
+decoded stream: naive's local `inflate` still uses Noodles' fixed-size BGZF
+header reader, while its structural parser accepts arbitrary extra subfields.
+Its separate `format::Reader::open` also sniffs compressed magic from only the
+current buffered slice, which can end before a legal large extra field or
+long empty-frame prefix. These are source findings pending dedicated CLI
+evidence, not yet claimed runtime failures. Test valid arbitrary-extra and
+split-header inputs before replacing these paths; a small replayable decoded
+magic prefix must not require retaining an unbounded compressed prefix.
+
 ### 4. Close the declared compatibility matrix
 
 Add the missing file-list, compact-PS, region-overlap, four-encoding,
