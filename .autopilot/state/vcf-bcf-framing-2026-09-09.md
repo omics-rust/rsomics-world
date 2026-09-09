@@ -1,15 +1,41 @@
 # BCF logical record boundaries and BGZF prefix classification
 
-Status: source findings with reviewed, frozen expected-red consumer tests in
-`vcf-bcf-framing-red-2026-09-09`, ready for focused four-native execution. No
-production repair or observed failure yet. This follows the separately
-verified extended-BGZF reheader repair run `34294546912`; that green archive
-does not include these new tests.
+Status: expected-red run `34295859204` fails the intended concat/reheader
+steps on all four native targets. The Linux ARM assertions were read before
+production edits. Reviewed repair `vcf-bcf-framing-fix-2026-09-09` is frozen
+for full four-native execution. This follows the separately verified extended
+BGZF reheader repair `34294546912`; that green archive excludes these tests.
 
-Only two appended test files change across 174 source entries. Concat adds
+Red world head is `86869341898cf2b4932c7ebd91571c44c6ff39bd`; control CI
+`34295758040` passed. First raw assertions are at KIOXIA
+`vcf-bcf-framing-first-red-bcCYpy/linux-aarch64.log`. Concat has 37 pass/one
+fail: all 24 malformed invocations return success, all 12 named destinations
+are replaced and four naive stdout cases emit output. Reheader has 19 pass/
+two fail: all 24 malformed invocations succeed/replace output and all 16
+legal split-magic inputs fail. Both consumers' six header-only controls pass.
+All overwritten outputs are synthetic test assets inside temporary fixture
+directories. Full debug/release/oracles were intentionally skipped. Complete
+artifact identity and per-target case evidence are being independently audited.
+
+The red changes only two appended test files across 174 source entries. Concat adds
 24 malformed cases and six header-only controls; reheader adds 24 malformed
 cases, six header-only controls and 16 split-magic cases. All prior test bytes
 are retained. Snapshot README records identities and exact boundaries.
+
+The repair changes four source files and neither CLI test. A shared private
+checked BCF read peeks actual decoded EOF, retries Interrupted and rejects a
+Noodles zero return after available bytes. Buffered compressed/raw consumers
+supply the contract without a public API. Reheader accumulates a three-byte
+magic across frames before replaying its full raw prefix. Three new unit
+groups cover EOF/zero/partial lengths, helper I/O kinds and short/interrupted
+valid reads; they have not run yet. Independent source reviews approve remote
+verification, not runtime correctness or performance.
+
+Decoded buffering adds per-reader memory and a per-record buffered check;
+measure rather than assume its performance. Raw-prefix accumulation over
+arbitrarily many empty frames remains unbounded. The existing top-level input
+wrapper still reclassifies some I/O errors; only the helper's kind preservation
+is covered by the new unit contract. Naive's current integrity pass is unchanged.
 
 ## Contracts and evidence
 
@@ -23,8 +49,8 @@ Pinned Noodles BCF 0.88 `src/io/reader/record.rs:13-15` returns zero when the
 decoded `l_shared` is zero. Its `read_site_length` uses the same zero value
 for physical EOF and four actual zero bytes. Product `format::Reader` and
 reheader's BCF loop currently trust this as EOF. A malformed record can
-therefore plausibly truncate processing while permitting success. The result
-has not yet been observed in a product process.
+therefore truncate processing while permitting success, as confirmed by the
+expected-red consumer tests above.
 
 The current regression slice covers nonindexed `format::Reader` and reheader.
 Indexed concat's `regions::QueryReader::Bcf` and the dependency's indexed-view
@@ -42,23 +68,22 @@ not reject the malformed record itself and is not an acceptable fix.
 
 Separately, reheader classifies from the first nonempty inflated frame.
 BCF magic split after byte one or two is a legal transport segmentation but
-appears liable to misclassification. This requires a positive product test,
-including leading/intermediate empty data frames and stdin, before changing
-classification. It is not the XLEN/extra-subfield defect already observed.
+is misclassified in all 16 new positive cases, including leading/intermediate
+empty frames and stdin. It is not the XLEN/extra-subfield defect already fixed.
 
 ## Execution plan
 
-1. Freeze tests with both real private consumers: reheader and concat.
+1. Retain the frozen tests with both real private consumers: reheader and concat.
    Cover zero-length records at the first/later boundary, with and without
    subsequent records, raw/BGZF input, and valid header-only controls. Named
    destinations must survive failure. Naive preflight must emit no stdout;
    ordinary streaming output does not promise rollback of earlier records.
-2. Observe the actual four-native failures before production edits. Keep the
-   reheader split-magic case distinct from malformed logical EOF cases.
-3. Introduce a reader-private checked BCF record boundary if the hypothesis
-   is confirmed. Only actual decoded EOF may end iteration; Noodles zero
-   returned after available record bytes is an input error. Preserve partial
-   reads and Interrupted behavior. Share this within VCF, not as Layer A.
+2. Finish all-target raw artifact verification for the observed failures.
+   Keep split-magic rejection distinct from malformed logical EOF acceptance.
+3. Run full four-native and pinned-oracle checks on the reviewed repair.
+   Only actual decoded EOF may end iteration; Noodles zero returned after
+   available bytes is an input error. Preserve partial reads/Interrupted
+   and the unchanged CLI tests. Share this within VCF, not as Layer A.
 4. After that correctness gate, add a typed reader over the validated BGZF
    decoder for naive inspection. Combine structural/inflate and typed checks
    into one full preflight, retain raw-copy pass two, and unify header-boundary
