@@ -14,9 +14,10 @@ one fail. The reviewed one-file repair `vcf-indexed-bcf-framing-fix-2026-09-09`
 was submitted for full verification as `34298954629`, world
 `9868be30ec97bde5343ea1ddf6be04fc92dd3a0f`; control CI `34298801698` passed.
 Focused indexed regressions pass, but both supplemental unit groups fail in
-debug/release. A fixture-only correction is now frozen as
-`vcf-indexed-bcf-fixture-fix-2026-09-09` for another full run. This is not a
-completed indexed correctness gate.
+debug/release. Fixture-only correction
+`vcf-indexed-bcf-fixture-fix-2026-09-09` is now running as `34299936099`, world
+`5e300ee1e0309beaf1cf783fc5415386f6183cb5`; control CI `34299771171` passed.
+This is not a completed indexed correctness gate.
 
 The first actual Linux ARM failures were read at
 `/Volumes/KIOXIA/Developments/tmp/vcf-indexed-bcf-unit-failure-MNjEp4/linux-aarch64.log`.
@@ -28,7 +29,18 @@ the production predicate correctly rejects a missing name. Source inspection
 independently confirms both paths. The correction rebuilds the raw BCF header
 from literal sparse text, then independently checks both mapping directions,
 raw RID and typed decoding. Production and frozen CLI bytes are unchanged.
-All-target raw artifact verification for the failed full run is pending.
+The failed full run is independently verified on all four targets: each
+debug/release invocation reaches only the library group, with 280 pass/two
+fail/zero ignored. All focused groups pass, including 16 indexed malformed
+cases rejected with preserved destinations and eight controls. Linux x86's
+separate 62 oracles per profile, format, strict Clippy, harness syntax and
+package checks pass. Sparse-query results and the upstream `--all` SIGSEGV
+divergence are unchanged. All four ZIP API hashes/sizes/CRCs, 101 extracted
+files, 174-source before/after identities and native Rust/lock metadata are
+verified. Evidence is
+`/Volumes/Zane's HDD/rsomics-fixtures/evidence/vcf-index-selection-2026-09-09/indexed-bcf-framing-fix-34298954629/`:
+112 retained files (4,076,056 bytes), recursively identical to scratch,
+inventory SHA-256 `6dc63141760b6a35a1f5ccddb9059295d981188b82df74ec816d5c8d1036e54b`.
 
 The corrected snapshot excludes the separately appended naive CLI draft.
 Its README also records a capture-format issue: local `diff.external=difft`
