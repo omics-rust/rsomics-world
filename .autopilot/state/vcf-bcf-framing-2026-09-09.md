@@ -2,8 +2,10 @@
 
 Status: expected-red run `34295859204` fails the intended concat/reheader
 steps on all four native targets. The Linux ARM assertions were read before
-production edits. Reviewed repair `vcf-bcf-framing-fix-2026-09-09` is frozen
-for full four-native execution. This follows the separately verified extended
+production edits. Reviewed repair `vcf-bcf-framing-fix-2026-09-09` is running
+full four-native verification as `34296650518`, world
+`cb4fb108147b0518f8e758bf2915d8201cc90850`; control CI `34296576628` passed.
+This follows the separately verified extended
 BGZF reheader repair `34294546912`; that green archive excludes these tests.
 
 Red world head is `86869341898cf2b4932c7ebd91571c44c6ff39bd`; control CI
@@ -15,7 +17,16 @@ two fail: all 24 malformed invocations succeed/replace output and all 16
 legal split-magic inputs fail. Both consumers' six header-only controls pass.
 All overwritten outputs are synthetic test assets inside temporary fixture
 directories. Full debug/release/oracles were intentionally skipped. Complete
-artifact identity and per-target case evidence are being independently audited.
+artifact identity and per-target case evidence are independently verified:
+all four ZIP API digests/sizes/CRCs, 60 extracted files, 174-source before/after
+lists, exact heads, native Rust 1.91, shared lock and 110 external package
+identities. Every target independently shows the same 48 malformed successes,
+16 split failures and 12 successful controls, including output checks.
+
+Permanent evidence is
+`/Volumes/Zane's HDD/rsomics-fixtures/evidence/vcf-index-selection-2026-09-09/bcf-framing-red-34295859204/`.
+All 71 retained files (3,392,495 bytes) match external scratch recursively;
+inventory SHA-256 is `c0fcdc204a667064ebcbc855e4dbbeac06c7528d4d253e586299c30b84546dd5`.
 
 The red changes only two appended test files across 174 source entries. Concat adds
 24 malformed cases and six header-only controls; reheader adds 24 malformed
@@ -36,6 +47,10 @@ measure rather than assume its performance. Raw-prefix accumulation over
 arbitrarily many empty frames remains unbounded. The existing top-level input
 wrapper still reclassifies some I/O errors; only the helper's kind preservation
 is covered by the new unit contract. Naive's current integrity pass is unchanged.
+The existing `reheader-vs-bcftools.sh` and 0.5 performance record cover only
+plain/BGZF VCF, not BCF reheader. They are also calibrated for macOS time and
+`/Volumes` paths. A representative BCF gate on the permitted native runner
+must be added before claiming performance for the changed BCF path.
 
 ## Contracts and evidence
 
