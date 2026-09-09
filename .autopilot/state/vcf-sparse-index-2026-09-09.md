@@ -7,11 +7,30 @@ green, including actual HTSlib-generated CSI queries. Subsequent oracle
 expansion `34292257895` exposes a wrong test expectation: the completely
 empty bcftools index has three slots, not zero. The corrected isolated test
 snapshot is `vcf-sparse-oracle-empty-layout-2026-09-09`; only that expectation
-changes from the previous 174-file snapshot. Complete empty-file bidirectional
-validation is still pending. No publication gate is closed. Boot occupancy
+changes from the previous 174-file snapshot. Corrected run `34293201835` is
+fully verified green, including empty-file bidirectional checks. No publication
+gate is closed. Boot occupancy
 exceeds 95%; local compilation remains prohibited.
 
 ## Latest verified results
+
+Corrected oracle run `34293201835`, world
+`e2f13662f2a19c0c308274f39b717bbf46e16319`, passes all four native jobs;
+control CI `34293102709` passed. Each ordinary debug/release profile passes
+431 Linux or 429 macOS tests, with 62 ignored. Linux x86 explicitly passes
+all 62 pinned oracle groups per profile, including the complete new sparse
+index group: both empty and nonempty files, all three index origins, both
+tools' statistics/totals, and all 72 query checks per profile. Fmt, strict
+Clippy, per-harness syntax and package pass. The independent probe still
+records upstream `--all` signal 11; it does not redefine our contract.
+
+All four API ZIP identities/sizes/CRCs, 97 extracted files, 174-source
+before/after lists, native Rust/lock identities, exact heads and test counts
+are independently verified. Permanent evidence is
+`/Volumes/Zane's HDD/rsomics-fixtures/evidence/vcf-index-selection-2026-09-09/sparse-oracle-fix-34293201835/`.
+Its 108 retained files total 4,341,359 bytes and match scratch byte-for-byte.
+This closes the bounded sparse interoperability diagnostic, not product CI,
+full concat compatibility/performance, or publication.
 
 Empty-tail fix `34291571671`, world
 `ac6ccc9e8cecec466844b627f3b2f5cd41d46037`, passes four native jobs and
@@ -34,8 +53,12 @@ after completing the nonempty case. Actual span is three, expected zero.
 Raw log evidence is at KIOXIA `vcf-sparse-oracle-first-failure-cZSubA`.
 HTSlib initializes from the declared contig count before raw-ID expansion.
 Only this test expectation is corrected; the independent zero-slot fixture
-and all production code remain unchanged. The full run artifacts are being
-retained, and the later empty-file checks must still execute. Control CI
+and all production code remain unchanged. The erroneous run's four API ZIPs,
+97 extracted files and source/native/test identities were independently
+verified and retained at
+`/Volumes/Zane's HDD/rsomics-fixtures/evidence/vcf-index-selection-2026-09-09/sparse-oracle-layout-error-34292257895/`.
+Its empty-file checks did not execute; the later corrected run above supplies
+that evidence. Control CI
 `34292169465` passed. A prepared reheader expected-red test draft is excluded
 from the isolated corrected-oracle snapshot; see its README for staging.
 
@@ -135,11 +158,11 @@ index storage already grow densely before/alongside this code.
 
 ## Next gates
 
-1. Run the corrected full native oracle candidate, finish empty-file
-   bidirectional checks, and retain/verify the erroneous-expectation run.
+1. Preserve both the corrected full green and erroneous-expectation evidence;
+   the bounded empty/nonempty bidirectional gate is now verified.
 2. Keep the actual upstream `--all` crash distinct from product contracts and
    preserve zero-slot native regressions alongside HTSlib's three-slot case.
-3. Continue reheader extra-field expected-red verification and concat's
+3. Continue reheader extra-field repair verification and concat's
    remaining naive/oracle/performance gates in its design and audit documents.
 4. Before eventual owning-product exact-head CI, correct its inherited
    `bash -n benchmarks/*.sh` command: Bash treats later paths as arguments and

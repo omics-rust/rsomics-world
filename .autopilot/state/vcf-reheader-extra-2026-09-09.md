@@ -2,13 +2,21 @@
 
 Status: expected-red run `34293512685` fails the intended reheader step on
 all four native targets. Source-reviewed repair snapshot
-`vcf-reheader-extra-fix-2026-09-09` is ready for full four-native execution.
+`vcf-reheader-extra-fix-2026-09-09` is running full four-native verification
+as `34294546912`, world `8c45d22737fb5fb7899840a4dac0983d99584ea1`;
+control CI `34294508570` passed.
 
 World red head is `540a8094ef6b724a074f722cec4c9473bc8d2462`; control CI
 `34293413259` passed. The first Linux ARM assertion was read before source
 edits at KIOXIA `vcf-reheader-first-red-ViSxVG/linux-aarch64.log`: 18 groups
-pass, one fails, all 36 legal cases report ordinary-gzip rejection. Artifact
-identity and complete per-target evidence are being independently audited.
+pass, one fails, all 36 legal cases report ordinary-gzip rejection. The complete
+evidence has since been independently verified: all four ZIP API digests,
+sizes, CRCs, 60 extracted files, 174-source before/after checks, exact heads,
+native Rust and lock identities. Each target has exactly 36 unique failures
+(12 VCF, 24 BCF). Other focused suites pass; full debug/release, oracles and
+static/package steps were intentionally skipped. Permanent evidence is
+`/Volumes/Zane's HDD/rsomics-fixtures/evidence/vcf-index-selection-2026-09-09/reheader-extra-red-34293512685/`;
+all 71 retained files (3,300,651 bytes) match external scratch.
 
 The repair changes exactly four source files. Existing frame parsing owns
 the BC/XLEN contract; the classifier no longer requires a six-byte extra
