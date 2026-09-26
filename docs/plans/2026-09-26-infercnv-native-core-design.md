@@ -82,6 +82,8 @@ claim to reproduce every permissive upstream file parser.
 `gene_count()`, `cell_count()`, and `value(gene, cell)` accessors.
 `PreparedCounts::state()` borrows its state. Avoid public mutable buffers.
 `Stage::step() -> u8` returns the corresponding upstream checkpoint number.
+Gene/cell records support `Clone`, `Debug`, `PartialEq`, and `Eq`; stage supports
+`Copy`, `Clone`, `Debug`, `PartialEq`, and `Eq`; checked states support `Debug`.
 
 `run(&PreparedCounts, &PreprocessConfig) -> Result<CnvState>` is the normal
 entry. `run_with_observer` additionally accepts
