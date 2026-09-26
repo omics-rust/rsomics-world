@@ -2,6 +2,15 @@ name: inferCNV pinned oracle
 
 on:
   workflow_dispatch:
+    inputs:
+      dataset:
+        description: Oracle dataset
+        type: choice
+        required: true
+        default: synthetic
+        options:
+          - synthetic
+          - shipped
 
 permissions:
   contents: read
@@ -12,6 +21,7 @@ jobs:
     timeout-minutes: 240
     env:
       INFER_CNV_SOURCE_COMMIT: b421d9405c97a309b081ef86d455e976df93eae4
+      ORACLE_DATASET: ${{ inputs.dataset || 'synthetic' }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -26,8 +36,9 @@ jobs:
           export TMPDIR="$RUNNER_TEMP/tmp"
           export EVIDENCE_DIR="$RUNNER_TEMP/infercnv-oracle"
           export ORACLE_OUTPUT="$EVIDENCE_DIR/bundle"
-          printf 'R_LIBS_USER=%s\nR_USER_CACHE_DIR=%s\nXDG_CACHE_HOME=%s\nTMPDIR=%s\nEVIDENCE_DIR=%s\nORACLE_OUTPUT=%s\n' \
-            "$R_LIBS_USER" "$R_USER_CACHE_DIR" "$XDG_CACHE_HOME" "$TMPDIR" "$EVIDENCE_DIR" "$ORACLE_OUTPUT" >> "$GITHUB_ENV"
+          export SHIPPED_OUTPUT="$EVIDENCE_DIR/shipped-bundle"
+          printf 'R_LIBS_USER=%s\nR_USER_CACHE_DIR=%s\nXDG_CACHE_HOME=%s\nTMPDIR=%s\nEVIDENCE_DIR=%s\nORACLE_OUTPUT=%s\nSHIPPED_OUTPUT=%s\n' \
+            "$R_LIBS_USER" "$R_USER_CACHE_DIR" "$XDG_CACHE_HOME" "$TMPDIR" "$EVIDENCE_DIR" "$ORACLE_OUTPUT" "$SHIPPED_OUTPUT" >> "$GITHUB_ENV"
           mkdir -p "$R_LIBS_USER" "$R_USER_CACHE_DIR" "$XDG_CACHE_HOME" "$TMPDIR" "$EVIDENCE_DIR"
 
       - name: Test bundle validator
@@ -36,6 +47,8 @@ jobs:
           set -euo pipefail
           PYTHONDONTWRITEBYTECODE=1 python3 -B -m unittest discover -s scripts -p test_infercnv_oracle.py \
             2>&1 | tee "$EVIDENCE_DIR/checker-tests.log"
+          PYTHONDONTWRITEBYTECODE=1 python3 -B -m unittest discover -s scripts -p test_infercnv_shipped_oracle.py \
+            2>&1 | tee "$EVIDENCE_DIR/shipped-checker-tests.log"
 
       - uses: r-lib/actions/setup-r@v2
         with:
@@ -58,12 +71,14 @@ jobs:
           curl --fail --location --retry 3 \
             "https://github.com/bioconductor-source/infercnv/archive/$INFER_CNV_SOURCE_COMMIT.tar.gz" \
             --output "$archive"
+          printf '%s  %s\n' b2a1b6f8cc09dc04562513e3cd877b3c97a6efcd5ff92cb5e0763660905e3207 "$archive" | sha256sum --check -
           export INFER_CNV_SOURCE_SHA256="$(sha256sum "$archive" | cut -d' ' -f1)"
           printf 'commit\t%s\nsha256\t%s\nurl\t%s\n' \
             "$INFER_CNV_SOURCE_COMMIT" "$INFER_CNV_SOURCE_SHA256" \
             "https://github.com/bioconductor-source/infercnv/archive/$INFER_CNV_SOURCE_COMMIT.tar.gz" \
             > "$EVIDENCE_DIR/source-identity.tsv"
           printf 'INFER_CNV_SOURCE_SHA256=%s\n' "$INFER_CNV_SOURCE_SHA256" >> "$GITHUB_ENV"
+          printf 'INFER_CNV_SOURCE_ARCHIVE=%s\n' "$archive" >> "$GITHUB_ENV"
           tar -xzf "$archive" -C "$EVIDENCE_DIR"
           test "$(sed -n 's/^Version: //p' "$EVIDENCE_DIR/infercnv-$INFER_CNV_SOURCE_COMMIT/DESCRIPTION")" = '1.28.0'
 
@@ -111,19 +126,35 @@ jobs:
             stopifnot(as.character(BiocManager::version()) == "3.23")
           ' 2>&1 | tee "$EVIDENCE_DIR/installed-identity.log"
 
-      - name: Execute real infercnv through step 14
+      - name: Execute synthetic infercnv through step 14
         shell: bash
         run: |
           set -euo pipefail
           Rscript --vanilla scripts/infercnv_oracle.R "$ORACLE_OUTPUT" \
             2>&1 | tee "$EVIDENCE_DIR/oracle-run.log"
 
-      - name: Validate exports and create sorted manifest
+      - name: Validate synthetic exports and create sorted manifest
         shell: bash
         run: |
           set -euo pipefail
           PYTHONDONTWRITEBYTECODE=1 python3 -B scripts/validate_infercnv_oracle.py \
             "$ORACLE_OUTPUT" --manifest 2>&1 | tee "$EVIDENCE_DIR/validation.log"
+
+      - name: Execute shipped infercnv through step 14
+        if: env.ORACLE_DATASET == 'shipped'
+        shell: bash
+        run: |
+          set -euo pipefail
+          Rscript --vanilla scripts/infercnv_shipped_oracle.R "$SHIPPED_OUTPUT" \
+            2>&1 | tee "$EVIDENCE_DIR/shipped-oracle-run.log"
+
+      - name: Validate shipped exports and create sorted manifest
+        if: env.ORACLE_DATASET == 'shipped'
+        shell: bash
+        run: |
+          set -euo pipefail
+          PYTHONDONTWRITEBYTECODE=1 python3 -B scripts/validate_infercnv_shipped_oracle.py \
+            "$SHIPPED_OUTPUT" --manifest 2>&1 | tee "$EVIDENCE_DIR/shipped-validation.log"
 
       - name: Upload raw evidence even on failure
         if: always()
