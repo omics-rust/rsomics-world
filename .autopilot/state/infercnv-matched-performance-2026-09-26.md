@@ -177,6 +177,16 @@ Post-warm/post-call thread observations are a deferred minor for final review.
 Exact-head Control plane validation is pending, including checking whether the
 hosted job supplies the test suite's required TMPDIR.
 
+That integration risk reproduced in run `36228176083` at
+`238f0c5ee06144d106854db74ca4f69e8257aa53`: all 12 new tests failed in setup
+with `KeyError: TMPDIR`, before any assertions; the older 84 passed. Original
+run/jobs metadata and logs are retained in the matching external run directory.
+The original logs ZIP passed CRC, exact run/head/attempt and failure-text checks;
+SHA-256 `2fe946acbf6a26a056a1ac4be7a8ab0e85ace0e070391ce68dfb6d964171b6d4`.
+The bounded correction sets TMPDIR to runner.temp only on the Control plane
+unit-test step. It leaves all scripts, test assertions and the numerical contract
+unchanged; hosted green remains pending.
+
 Both new prerequisite receipts were independently checked against accepted
 original bytes and metadata with no discrepancy. They bind the accepted full
 input and the four-native-tested `green-7` source, not timing results. Actual R
