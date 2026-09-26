@@ -84,3 +84,8 @@ real-example benchmark, not representative large-cohort performance proof.
 Source pointers: `example/run.R`, `example/README.txt`, `R/data.R:16-20`,
 `R/inferCNV.R:133-180,200-328,352-427`,
 `R/inferCNV_ops.R:242-345,538-599,2114-2198`.
+
+Independent source review of this prospective timing boundary:
+`infercnv-performance-boundary-review-2026-09-26.md`. It makes wrapper costs,
+early-clustering exclusion, logging, full saving controls, library threading,
+warm-up lifetime and RSS interpretation explicit. No timing has run yet.

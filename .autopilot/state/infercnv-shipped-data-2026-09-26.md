@@ -45,3 +45,57 @@ Fresh storage check: boot APFS 97.86% (5,240,377,344 bytes free of
 target and TMPDIR resolve under the required KIOXIA paths. No local builds,
 dependency installs or R execution are permitted. Pure Python `-B` checker
 tests use external scratch only. No task is complete yet.
+
+Independent original-input review is recorded in
+`infercnv-shipped-input-review-2026-09-26.md`. It predicts exact stage-1/2
+ordered gene identities, all cell identities/order and chromosome counts
+without reading the implementer's files. Both cases include a retained gene
+with exactly three positive cells, but neither isolates rejection by the
+detection threshold. These predictions await comparison with actual R output.
+
+Task 1 source candidate is frozen in the six harness/workflow files, with
+hashes and a complete diff under this plan's `.superpowers/sdd/` workspace.
+The implementer recorded test-first failures and 13 new checker tests. The
+controller independently ran all 50 Python tests (1.108 s, clean), control-plane
+validation and `git diff --check`, then verified all six frozen file hashes.
+All three R scripts parse successfully under remote R 4.6.1 on `4090`, using
+`TMPDIR=/dev/shm`; only source bytes were streamed to `parse()`, without
+executing either generator, installation or remote source-file creation. No
+local R or Cargo ran.
+
+Task-scoped independent review: `/root/infercnv_shipped_task_review`.
+The real installed-R execution, raw bundle inspection and acceptance remain
+pending; the new native external-oracle task has not started.
+
+Task 1 initial review: needs fixes. Two Important findings: metadata file
+contents were not semantically checked, and negative tests did not change a
+retained stage-2 value or remove an artifact from a valid full-schema bundle.
+One Minor finding: a pre-existing sorted manifest was accepted without
+verification and could be overwritten. Fix round 1 includes all three because
+immutable preserved-bundle revalidation is the next operation. The original
+six-file candidate is retained in the plan workspace for a scoped fix diff.
+
+Task 1: fix round 1/5 (3 addressed, 1 new Important finding). The controller
+tested the new metadata check against actual accepted run `36216764707` and
+found legitimate duplicate package names: Matrix 1.7-6 in the runner library
+and Matrix 1.7-5 in `/opt/R/4.6.1/lib/R/library`. The check incorrectly rejected
+that original metadata. Scoped re-review confirmed the issue: uniqueness must
+use package-plus-library identity, while the loaded infercnv version remains
+checked separately. The v2 candidate is preserved before fix round 2.
+
+Task 1: fix round 2/5 (1 addressed, 0 open; scoped review clean). Distinct
+libraries are accepted, duplicate package/library identities still fail,
+installed-version row order does not change the verdict, and loaded infercnv
+1.28.0 remains required. The actual preserved R metadata now passes.
+
+Harness commit `424f2bae` contains only the six owned source/workflow files.
+Fresh controller verification on the frozen candidate: 62 Python tests passed
+in 1.706 s, control-plane validation and whitespace checks passed, and all
+six source hashes matched the reviewed candidate. R files are unchanged since
+the successful remote syntax check. Exact-head CI and actual installed-R
+execution are the next gates; Task 1 is not yet complete.
+
+Parallel source review of the future measurement contract is preserved in
+`infercnv-performance-boundary-review-2026-09-26.md`. It clarifies native wrapper
+costs, exclusion of early clustering, all save/plot controls, effective thread
+settings and warm-up/RSS accounting. This is not a performance result.

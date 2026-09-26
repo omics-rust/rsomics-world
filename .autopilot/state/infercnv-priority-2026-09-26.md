@@ -138,3 +138,17 @@ biological datasets.
 Native continuation: `docs/plans/2026-09-26-infercnv-native-core-plan.md` and
 `infercnv-native-core-2026-09-26.md`. Test-first source preparation has started;
 no native compatibility or implementation completion is claimed yet.
+
+The bounded prepared-counts native core subsequently passed independent
+review and four-native debug/release validation, including the subnormal
+median regression. Local product commit:
+`13961bf6a42cb4cbbf36c528331aafb98a52937b`. Acceptance and exclusions are in
+`infercnv-native-core-accepted-2026-09-26.md`; this supersedes the earlier
+implementation-start status, not the full-workflow gates above.
+
+Current work is the pinned shipped-example oracle and external native
+conformance, tracked in `infercnv-shipped-data-2026-09-26.md` and
+`docs/plans/2026-09-26-infercnv-shipped-data-plan.md`. Its harness is under
+independent review. Real-data native compatibility, matched performance and
+the downstream workflow remain unaccepted. The product is unpublished and
+library-only.

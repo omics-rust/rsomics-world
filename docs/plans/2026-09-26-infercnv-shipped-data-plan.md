@@ -57,19 +57,19 @@ and `full` case records, canonical/raw input mapping, the ten stage paths,
 actual dimensions and checkpoint identities. Each required artifact is an
 owned relative path. Keep source hash constants outside generated metadata.
 
-- [ ] Add checker tests first and demonstrate a real red before implementation.
+- [x] Add checker tests first and demonstrate a real red before implementation.
   Tiny focused fixtures may test parser/validator components; they are unit
   fixtures, not substitutes for the required installed-package real-data run.
   Include malformed original 184/185-column dialect, duplicate/missing IDs,
   wrong source/input hash, unsafe/missing paths, changed count/coordinate/group,
   wrong subset membership, nonfinite data, changed stage-1 raw value, changed
   stage-2 retained value, and wrong arithmetic relationships.
-- [ ] Implement the generator and checker. Join by gene/cell identity, verify
+- [x] Implement the generator and checker. Join by gene/cell identity, verify
   exact stage-1 values against canonical pinned inputs, and independently derive
   stage-2 membership and unchanged values. Validate stages pairwise or with
   compact numeric buffers. Save all ten original RDS checkpoints for each case.
   Record every relevant creation/run parameter and package/session information.
-- [ ] Extract only the two common R export helpers. Keep existing synthetic
+- [x] Extract only the two common R export helpers. Keep existing synthetic
   behavioral tests unchanged. Run all Python tests and control-plane validation.
   Controller supplies remote R syntax checking; no local R execution.
 - [ ] Independently review the harness and its diff. Fix material findings,
