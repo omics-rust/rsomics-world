@@ -226,3 +226,17 @@ It now uses accepted shipped evidence, explicit feature
 `RSOMICS_INFER_CNV_ORACLE_ROOT`. The controller is wiring the exact receipt
 into four-native CI, including an actual missing-configuration failure check.
 No shipped-data native result is claimed yet.
+
+Control plane run `36222234178` at `798986240b6798d47966f80927e869e7c4ec3f98`
+failed all 17 newly added verifier tests during setup: their hardcoded Mac
+temporary directory does not exist on hosted Linux. The other 67 tests passed.
+Original logs are preserved under external shipped evidence
+`control-36222234178/logs.zip`. Acquisition fix round 2 removes that hardcoded
+path and uses runtime `tempfile` selection; local commands still explicitly
+set KIOXIA TMPDIR. Independent scoped review is clean; 17 focused and 84 full
+tests pass locally. Fresh hosted CI recovery remains required.
+
+The candidate workflow review separately found Bash 3.2 empty-array expansion
+under `set -u` would break no-oracle mode on macOS. A focused local shell-only
+diagnostic reproduced exit 127. That integration fix is in progress; no local
+Cargo or build was invoked.

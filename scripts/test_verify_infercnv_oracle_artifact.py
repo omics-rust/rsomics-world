@@ -13,7 +13,6 @@ from pathlib import Path
 from verify_infercnv_oracle_artifact import verify_artifact
 
 
-TMP_ROOT = Path("/Volumes/KIOXIA/Developments/tmp")
 SHA = "a" * 40
 RUN_ID = 12345
 ARTIFACT_ID = 67890
@@ -25,7 +24,7 @@ def sha(data):
 
 class ArtifactVerifierTest(unittest.TestCase):
     def setUp(self):
-        self.temp = tempfile.TemporaryDirectory(dir=TMP_ROOT)
+        self.temp = tempfile.TemporaryDirectory()
         self.addCleanup(self.temp.cleanup)
         self.root = Path(self.temp.name)
         self.output = self.root / "extracted"
