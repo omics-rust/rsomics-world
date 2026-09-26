@@ -105,14 +105,14 @@ jobs:
         working-directory: ${{ runner.temp }}/sc-cnv-candidate
         run: |
           set -euo pipefail
-          cargo test --locked --all-targets 2>&1 | tee "$EVIDENCE/test-debug.log"
+          cargo test --locked --all-targets -- --nocapture 2>&1 | tee "$EVIDENCE/test-debug.log"
 
       - name: Test release
         if: ${{ !cancelled() && !inputs.expected_red && steps.metadata.outcome == 'success' }}
         working-directory: ${{ runner.temp }}/sc-cnv-candidate
         run: |
           set -euo pipefail
-          cargo test --locked --release --all-targets 2>&1 | tee "$EVIDENCE/test-release.log"
+          cargo test --locked --release --all-targets -- --nocapture 2>&1 | tee "$EVIDENCE/test-release.log"
 
       - name: Format and strict Clippy
         if: ${{ !cancelled() && !inputs.expected_red && steps.metadata.outcome == 'success' && matrix.target == 'linux-x86_64' }}

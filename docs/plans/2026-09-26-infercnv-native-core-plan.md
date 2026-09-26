@@ -84,7 +84,7 @@ indexed by step. `ExpectedStage` holds `Vec<Gene>`, `Vec<Cell>`, and column-majo
 the stage-1 record constructs the `PreparedCounts`. These helpers do no numeric
 transformation and do not belong in production source.
 
-- [ ] Write the contract/golden tests and package manifest before the core.
+- [x] Write the contract/golden tests and package manifest before the core.
   Copy fixtures from
   `/Volumes/Zane's HDD/rsomics-fixtures/evidence/infercnv-2026-09-26/run-36216764707/artifact/bundle`.
   Record original source commit, run/head, source hash, original bundle-manifest
@@ -148,7 +148,7 @@ transformation and do not belong in production source.
 
   Here `fixture` is the test-only loaded profile; final exact equality compares
   the native observer copy, not the R golden values.
-- [ ] Controller freezes the test-first source and runs a Linux x86_64 red
+- [x] Controller freezes the test-first source and runs a Linux x86_64 red
   snapshot remotely. Save terminal run identity, failure log, resolved
   lockfile, and source hashes. Verify failure is the intended missing core,
   not dependency/environment failure. No local Cargo command is permitted.
