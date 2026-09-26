@@ -90,7 +90,7 @@ Controller files: candidate CI workflow, immutable receipt/acquisition checker,
 source snapshots and durable execution ledger. Production CNV code changes
 only if actual evidence requires a separately diagnosed fix.
 
-- [ ] Generalize the test-only reader to an explicit root while preserving
+- [x] Generalize the test-only reader to an explicit root while preserving
   all checked-in synthetic behavior. Add malformed-input tests before the
   generalization and verify real failures remotely.
 - [ ] Add an explicitly selected external-oracle test path that fails on

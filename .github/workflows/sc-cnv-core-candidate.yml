@@ -11,9 +11,17 @@ on:
         description: Run the initial Linux-only test-first failure capture
         type: boolean
         default: false
+      oracle_receipt:
+        description: Explicit accepted external oracle; none runs only small fixtures
+        type: choice
+        default: none
+        options:
+          - none
+          - infercnv-shipped-2026-09-26
 
 permissions:
   contents: read
+  actions: read
 
 jobs:
   native:
@@ -28,6 +36,7 @@ jobs:
     env:
       SNAPSHOT_ID: ${{ inputs.snapshot }}
       EXPECT_RED: ${{ inputs.expected_red }}
+      ORACLE_RECEIPT: ${{ inputs.oracle_receipt }}
     defaults:
       run:
         shell: bash
@@ -73,6 +82,46 @@ jobs:
               "$CARGO_HOME" "$CARGO_TARGET_DIR" "$RUSTUP_HOME" "$TMPDIR"
           } | tee "$EVIDENCE/host.log"
 
+      - name: Acquire and verify pinned external oracle
+        if: ${{ inputs.oracle_receipt != 'none' }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          test "$ORACLE_RECEIPT" = infercnv-shipped-2026-09-26
+          mkdir "$EVIDENCE/oracle-acquisition"
+          receipt="$GITHUB_WORKSPACE/.autopilot/oracles/$ORACLE_RECEIPT.json"
+          cp "$receipt" "$EVIDENCE/oracle-acquisition/receipt.json"
+          python3 -B - "$receipt" > "$EVIDENCE/oracle-acquisition/selection.txt" <<'PY'
+          import json, sys
+          from pathlib import Path
+          receipt = json.loads(Path(sys.argv[1]).read_text())
+          assert receipt["repository"] == "omics-rust/rsomics-world"
+          for key in ("run_id", "artifact_id"):
+              assert type(receipt[key]) is int and receipt[key] > 0
+          print(receipt["run_id"], receipt["artifact_id"])
+          PY
+          read -r oracle_run oracle_artifact < "$EVIDENCE/oracle-acquisition/selection.txt"
+          gh api "repos/omics-rust/rsomics-world/actions/runs/$oracle_run" \
+            > "$EVIDENCE/oracle-acquisition/run.json"
+          gh api "repos/omics-rust/rsomics-world/actions/artifacts/$oracle_artifact" \
+            > "$EVIDENCE/oracle-acquisition/artifact.json"
+          gh api "repos/omics-rust/rsomics-world/actions/artifacts/$oracle_artifact/zip" \
+            > "$RUNNER_TEMP/infercnv-oracle.zip"
+          PYTHONDONTWRITEBYTECODE=1 python3 -B scripts/verify_infercnv_oracle_artifact.py \
+            --receipt "$receipt" \
+            --run-json "$EVIDENCE/oracle-acquisition/run.json" \
+            --artifact-json "$EVIDENCE/oracle-acquisition/artifact.json" \
+            --zip "$RUNNER_TEMP/infercnv-oracle.zip" \
+            --output-dir "$RUNNER_TEMP/infercnv-oracle-verified" \
+            2>&1 | tee "$EVIDENCE/oracle-acquisition/verification.log"
+          oracle_root="$RUNNER_TEMP/infercnv-oracle-verified/shipped-bundle"
+          PYTHONDONTWRITEBYTECODE=1 python3 -B scripts/validate_infercnv_shipped_oracle.py \
+            "$oracle_root" 2>&1 | tee "$EVIDENCE/oracle-acquisition/semantic-validation.log"
+          cp "$oracle_root/sha256-manifest.tsv" "$oracle_root/oracle.json" \
+            "$EVIDENCE/oracle-acquisition/"
+          printf 'RSOMICS_INFER_CNV_ORACLE_ROOT=%s\n' "$oracle_root" >> "$GITHUB_ENV"
+
       - name: Install Rust 1.91
         uses: dtolnay/rust-toolchain@1.91.0
         with:
@@ -100,19 +149,38 @@ jobs:
           PY
           cp Cargo.lock "$EVIDENCE/Cargo.lock"
 
+      - name: Require explicit external oracle configuration
+        if: ${{ inputs.oracle_receipt != 'none' && !inputs.expected_red && matrix.target == 'linux-x86_64' }}
+        working-directory: ${{ runner.temp }}/sc-cnv-candidate
+        run: |
+          set -euo pipefail
+          set +e
+          env -u RSOMICS_INFER_CNV_ORACLE_ROOT cargo test --locked \
+            --features external-infercnv-oracle --test cnv_external_oracle -- --nocapture \
+            > "$EVIDENCE/external-missing-root.log" 2>&1
+          test_rc=$?
+          set -e
+          test "$test_rc" -ne 0
+          grep -F 'RSOMICS_INFER_CNV_ORACLE_ROOT is required' "$EVIDENCE/external-missing-root.log"
+          grep -F 'test result: FAILED' "$EVIDENCE/external-missing-root.log"
+
       - name: Test debug
         if: ${{ !cancelled() && steps.metadata.outcome == 'success' }}
         working-directory: ${{ runner.temp }}/sc-cnv-candidate
         run: |
           set -euo pipefail
-          cargo test --locked --all-targets --no-fail-fast -- --nocapture 2>&1 | tee "$EVIDENCE/test-debug.log"
+          test_args=(test --locked --all-targets --no-fail-fast)
+          if [[ "$ORACLE_RECEIPT" != none ]]; then test_args+=(--features external-infercnv-oracle); fi
+          cargo "${test_args[@]}" -- --nocapture 2>&1 | tee "$EVIDENCE/test-debug.log"
 
       - name: Test release
         if: ${{ !cancelled() && !inputs.expected_red && steps.metadata.outcome == 'success' }}
         working-directory: ${{ runner.temp }}/sc-cnv-candidate
         run: |
           set -euo pipefail
-          cargo test --locked --release --all-targets --no-fail-fast -- --nocapture 2>&1 | tee "$EVIDENCE/test-release.log"
+          test_args=(test --locked --release --all-targets --no-fail-fast)
+          if [[ "$ORACLE_RECEIPT" != none ]]; then test_args+=(--features external-infercnv-oracle); fi
+          cargo "${test_args[@]}" -- --nocapture 2>&1 | tee "$EVIDENCE/test-release.log"
 
       - name: Format and strict Clippy
         if: ${{ !cancelled() && !inputs.expected_red && steps.metadata.outcome == 'success' && matrix.target == 'linux-x86_64' }}
@@ -120,7 +188,9 @@ jobs:
         run: |
           set -euo pipefail
           cargo fmt --all -- --check 2>&1 | tee "$EVIDENCE/format.log"
-          cargo clippy --locked --all-targets -- -D warnings 2>&1 | tee "$EVIDENCE/clippy.log"
+          clippy_args=(clippy --locked --all-targets)
+          if [[ "$ORACLE_RECEIPT" != none ]]; then clippy_args+=(--features external-infercnv-oracle); fi
+          cargo "${clippy_args[@]}" -- -D warnings 2>&1 | tee "$EVIDENCE/clippy.log"
 
       - name: Verify source remains unchanged
         if: ${{ always() && steps.snapshot.outcome == 'success' }}

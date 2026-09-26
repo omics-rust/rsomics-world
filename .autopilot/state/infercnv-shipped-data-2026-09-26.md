@@ -240,3 +240,24 @@ The candidate workflow review separately found Bash 3.2 empty-array expansion
 under `set -u` would break no-oracle mode on macOS. A focused local shell-only
 diagnostic reproduced exit 127. That integration fix is in progress; no local
 Cargo or build was invoked.
+
+Acquisition portability recovery is confirmed: world
+`7a7ec5d55fe861c07c4e124483c716b46bc6272c` passed exact-head Control plane
+run `36222384702`. The original failed run remains preserved.
+
+Task 2 product-only independent review is clean for all five changed/new
+files, including the generalized reader and opt-in external test. No source
+or test change was requested. The configured numeric budget exceeds the
+full case's 44,210,144-byte pipeline requirement. The candidate CI's Bash 3.2
+fix passed scoped review and actual shell-only argument checks for both
+receipt choices; no hosted native result is inferred from those diagnostics.
+
+Snapshot `green-5` preserves 139 verified source files. Compared with green-4,
+only Cargo.toml changes and the external test plus test README are added.
+Production code, lock and original fixtures remain unchanged. Archive SHA-256:
+`f55e431bef0bf9bb06176c34fe66e57c5f440ceb9b12142d198bb71a0fcd325d`.
+Source manifest SHA-256:
+`81c9366164eaf8eeee424f1b9c7e91afa62a09c6c4614d5abce0a58937e8c329`.
+The workflow now acquires the exact committed receipt, validates byte and
+semantic contracts, exercises missing configuration, and enables external
+conformance on all four native targets. Hosted execution is the next gate.
