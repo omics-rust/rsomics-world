@@ -72,7 +72,7 @@ owned relative path. Keep source hash constants outside generated metadata.
 - [x] Extract only the two common R export helpers. Keep existing synthetic
   behavioral tests unchanged. Run all Python tests and control-plane validation.
   Controller supplies remote R syntax checking; no local R execution.
-- [ ] Independently review the harness and its diff. Fix material findings,
+- [x] Independently review the harness and its diff. Fix material findings,
   then controller commits/pushes, verifies exact-head Control plane CI and
   dispatches the shipped-data oracle.
 - [ ] Inspect the actual upstream result and preserve original API metadata,

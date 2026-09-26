@@ -99,3 +99,29 @@ Parallel source review of the future measurement contract is preserved in
 `infercnv-performance-boundary-review-2026-09-26.md`. It clarifies native wrapper
 costs, exclusion of early clustering, all save/plot controls, effective thread
 settings and warm-up/RSS accounting. This is not a performance result.
+
+World head `68dcf7c4525a4e87581743f96e0e09dfb6d453d3` passed exact-head
+Control plane run `36220412157`. Shipped-data oracle run `36220439929` was
+dispatched at that exact head with `dataset=shipped`; it also reruns the four
+synthetic profiles before the two shipped cases. No output has been accepted.
+
+Ruling: overlap only Task 2's test-first reader preparation with the reviewed
+Task 1 harness's remote execution — the reader contract does not depend on
+unaccepted numerical values, and no production algorithm changes are needed —
+a schema discrepancy may require test rework, but no oracle or conformance
+claim is advanced. The test-first agent must freeze before reader
+implementation so the controller can capture an actual remote red. Native
+large-oracle acceptance still waits for the Task 1 receipt.
+
+Task 2 implementer: `/root/infercnv_external_reader_impl`, fresh context.
+Its initial freeze adds only `tests/cnv_fixture_reader.rs`: six malformed
+reader cases plus non-square explicit-root and checked-in entry-point positive
+controls. Snapshot `red-3` preserves all 137 source files, verified against
+its archive and manifest. The unchanged lock SHA-256 is
+`636ead1961f573b303be8c02f6068201acd11dde1d0cb9bab3d81ccf86bf5554`;
+new test SHA-256 is
+`b7eefe530334a6ef9bf4abb6e1a64a4557d58464937e5625a1b437427b476e54`.
+The missing explicit-root API should fail compilation remotely. This is an
+expected red, not yet an observed result; loader implementation is held until
+the actual failure is captured. Existing production and fixture bytes match
+the accepted product commit.
