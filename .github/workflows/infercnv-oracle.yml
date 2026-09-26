@@ -72,6 +72,10 @@ jobs:
         run: |
           set -euo pipefail
           Rscript --vanilla -e '
+            cran <- Sys.getenv("RSPM")
+            if (!nzchar(cran)) stop("setup-r did not provide RSPM")
+            options(repos=c(CRAN=cran))
+            print(getOption("repos"))
             install.packages("BiocManager", lib=Sys.getenv("R_LIBS_USER"))
             BiocManager::install(version="3.23", ask=FALSE, update=FALSE)
             desc <- read.dcf(file.path(Sys.getenv("EVIDENCE_DIR"),

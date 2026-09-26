@@ -74,6 +74,22 @@ context availability. The bounded correction initializes paths from
 matching the existing VCF workflow. No package installation or oracle output
 exists from this failed validation run.
 
+Path correction `debafe7b493f324859c5c01df6aa0856f638d79d` passed exact-head
+Control plane run `36216214651`. Dispatched oracle run `36216239022` accepted
+the workflow, installed R 4.6.1/JAGS and downloaded the exact source, then failed
+before installing BiocManager: `--vanilla` bypassed setup-r's startup-profile
+repository option, leaving `CRAN="@CRAN@"`. A remote R-only diagnostic reproduced
+that unset option and verified that explicitly using the action's exported
+`RSPM` resolves a concrete repository URL. The correction sets only that option;
+oracle execution keeps `--vanilla`.
+
+Failure evidence is retained under external fixtures:
+`evidence/infercnv-2026-09-26/run-36216239022/`. The original artifact ZIP passes
+CRC checks and matches GitHub's SHA-256
+`e3e049ef861d6cae1dcd67a4ba51c6346857bcebfc80f2611a803e2c13cf7612`.
+No real infercnv output was produced; the original source archive and install
+failure log are preserved, not substituted with synthetic output.
+
 - [x] Read-only source, upstream, product, and storage audit.
 - [x] Write design and oracle implementation plan.
 - [x] Independent spec review: make profile/reference and creation parameters
