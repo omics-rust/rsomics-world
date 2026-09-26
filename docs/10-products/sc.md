@@ -3,6 +3,12 @@
 Status: upstream-operation and historical-asset audit complete. The target
 repository has not been created, and no product release has been published.
 
+The user reprioritized inferCNV on 2026-09-26. Its implementation now proceeds
+before the broader counts-to-clusters slice, without changing product ownership
+or publishing an incomplete single-cell product. See the
+[pinned oracle design](../plans/2026-09-26-infercnv-oracle-design.md) and
+[execution plan](../plans/2026-09-26-infercnv-oracle-plan.md).
+
 ## Boundary
 
 `rsomics-sc` is one stateful single-cell expression-analysis product. It owns

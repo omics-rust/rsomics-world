@@ -249,10 +249,10 @@ in [`integration.md`](integration.md). Multimodal joint analysis is in
   - Quadrant: —
   - GPU-amenable: maybe — the moving-average smoothing and HMM steps are parallelizable
   - Upstream license: `BSD-3-Clause`
-  - Priority: `P1`
-  - Layer: `B` (tool — `rsomics-infercnv`)
-  - Consumes primitives: `anndata-rs` (count matrix IO), `rsomics-stats` (smoothing, HMM), `ndarray`
-  - Notes: Core algorithm: (1) normalize scRNA expression matrix, (2) order genes by genomic position, (3) smooth expression across genomic windows per cell, (4) subtract reference (normal cells) to reveal relative gains/losses, (5) optional HMM to call CNV states. The hot path is the per-cell sliding-window smoothing over the gene-position-ordered expression vector — O(cells × genes), embarrassingly parallel across cells. A Rust port with rayon would be a straightforward win over the R version. BSD-3-Clause allows source reading. Key challenge: gene-position annotation requires a GTF/GFF parser (use noodles-gff or rsomics-gff tools).
+  - Priority: `P1` (user-prioritized 2026-09-26)
+  - Layer: `subcommand-of-rsomics-sc` (`cnv`); do not revive `rsomics-infercnv`
+  - Consumes primitives: `rsomics-common` and `rsomics-help`; expression state, genomic ordering, smoothing and HMM policy remain product-local until a second concrete consumer justifies a foundation API
+  - Notes: Inputs are raw counts, cell/group annotations, and a four-column gene-order table. The old rsomics approximation is only a parser/fixture asset, not an accepted implementation. Pin Bioconductor 3.23 infercnv 1.28.0; first capture actual upstream preprocessing checkpoints, then validate clustering, denoising, expression-specific HMM/Bayesian filtering and reports separately. Neither performance nor biological validity follows from a Rust rewrite. See the [product dossier](../10-products/sc.md) and [oracle design](../plans/2026-09-26-infercnv-oracle-design.md).
 
 - [ ] **`CellTypist`** — automated cell-type annotation via logistic regression with pretrained models.
   - Reference impl: `Python` · [Teichmann lab / celltypist](https://github.com/Teichmann-Lab/celltypist) · `Apache-2.0`

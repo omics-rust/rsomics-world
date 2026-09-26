@@ -10,6 +10,11 @@ The [dossier index](docs/10-products/README.md) records per-product scope and
 release slices. A recorded first release does not complete the whole family,
 and a roadmap status is not a fresh registry or performance verification.
 
+Current user priority (2026-09-26): expression-derived inferCNV work inside
+`rsomics-sc cnv`, starting with a [pinned upstream oracle](docs/plans/2026-09-26-infercnv-oracle-plan.md).
+Earlier uncommitted VCF candidates remain preserved; priority changes do not
+close their gates or change the product-family map.
+
 ## Phase 0 — namespace and control-plane reset
 
 Status: in progress.
