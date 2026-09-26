@@ -10,6 +10,18 @@
 
 **Spec:** `docs/plans/2026-09-26-infercnv-matched-performance-design.md`.
 
+**Completion status (2026-09-26):** This bounded prepared-input measurement
+plan is complete and accepted in
+`../../.autopilot/state/infercnv-matched-performance-accepted-2026-09-26.md`.
+The whole inferCNV workflow, ingestion and downstream stages, broader scaling,
+biological validation, and publication remain unfinished. The user requested
+a pause “after finish the infercnv” and manual resumption; the controller
+conservatively chose and communicated a pause at this completed bounded
+checkpoint. The broader completion-scope clarification was unanswered, so
+that narrower boundary is not a user-confirmed definition of completion. It
+does not change the historical task instructions below or authorize a new
+implementation batch.
+
 ## Global constraints
 
 - Product root: `/Volumes/KIOXIA/Documents/omics-rust/rsomics-sc`; control root: `/Volumes/Zane's HDD/Documents/rsomics-world`.
@@ -120,9 +132,11 @@ The snippet shows ordering; private OS helper return types may be narrow structs
 
 ### Task 2: R trial, pinned input and checked alternating driver
 
-Source and review complete at `689b86aa`; exact-head Control plane run
-`36228377657` passed all 96 tests. The R tests below are implemented and syntax-
-checked, not executed against infercnv yet; that execution is the Task 3 gate.
+Source and review completed at `689b86aa`; exact-head Control plane run
+`36228377657` passed all 96 tests. At that point the R tests below were
+implemented and syntax-checked but not yet executed against infercnv. Task 3's
+later hosted run `36229683578` passed the installed-package preparation
+contracts before measurement.
 
 **Files:** Create `scripts/infercnv_matched.R`, `scripts/infercnv_matched_support.R`, `scripts/test_infercnv_matched.R`, `scripts/measure_infercnv.py`, `scripts/test_measure_infercnv.py`, and `.autopilot/oracles/infercnv-measurement-input-2026-09-26.json`.
 
@@ -178,12 +192,37 @@ for phase, pair, implementations in order:
 - Receipt binds repository/workflow, successful four-native run/head/attempt, four target names, snapshot name/archive SHA/manifest SHA/lock SHA and production-baseline manifest hashes. Native identity comes from Task 1 verified evidence, not a placeholder.
 - Existing oracle workflow gains optional string `matched_snapshot` (empty default), only accepted when dataset is shipped and equal to the trusted receipt's selector.
 
-- [ ] Write verifier negative tests first: wrong run/head/attempt/conclusion/workflow/target set, snapshot digest/manifest/lock mismatch, removed/extra source, changed production bytes, traversal/absolute/link/duplicate archive paths and preexisting destination. Verify expected failure, then implement using hashlib/tarfile/JSON/pathlib and explicit regular-file-only extraction; never trust archive extraction defaults.
-- [ ] Controller creates candidate receipt from actual verified Task 1 run. Workflow fetches live run/jobs metadata under actions:read, validates receipt and snapshot before installing/building Rust, preserves evidence, sets Cargo/Rustup/target/TMP paths under RUNNER_TEMP and uses Rust 1.91. Ordinary empty-selector oracle flow remains unchanged. Validate all dispatch inputs before expensive installation.
-- [ ] Build once with `cargo build --locked --release --features infercnv-measurement --bench cnv_matched --message-format=json`. Resolve the unique executable from compiler-artifact JSON, verify regular executable and hash it. Run existing synthetic/shipped generation and validators unchanged, then Task 2 R negative tests and actual smoke/seven pairs. Copy exact machine/compiler/environment/load/source/input/package information into measurement evidence. No additional task-owned workload runs concurrently on that host.
-- [ ] Always verify all extracted source/lock bytes after trials, preserve both source checks and all raw results in the existing oracle artifact. Failure leaves no accepted summary or performance claim. Workflow uses fail-loud pipefail and preserves partial evidence in its always-upload step.
-- [ ] Run controller tests, exact-head Control plane CI and fresh whole-change review before dispatch. Dispatch only after verifying main equals reviewed SHA; inspect the created run's head. Wait for actual R/measurement execution, download original artifact/API metadata/logs to external evidence, verify ZIP/API digests and every measurement path/output/pin. Compare original stdout with reported values; recompute summary independently from raw samples.
-- [ ] If all gates pass, commit scoped performance results with hardware/version/input/flags/timing distribution/RSS provenance and claim limits. If samples overlap or fail, record actual failure without weakening correctness/timing criteria, then fix the concrete cause or advance an unblocked task. No automatic publication; full workflow/representative scaling remain separate gates.
+- [x] Write verifier negative tests first: wrong run/head/attempt/conclusion/workflow/target set, snapshot digest/manifest/lock mismatch, removed/extra source, changed production bytes, traversal/absolute/link/duplicate archive paths and preexisting destination. Verify expected failure, then implement using hashlib/tarfile/JSON/pathlib and explicit regular-file-only extraction; never trust archive extraction defaults.
+- [x] Controller creates candidate receipt from actual verified Task 1 run. Workflow fetches live run/jobs metadata under actions:read, validates receipt and snapshot before installing/building Rust, preserves evidence, sets Cargo/Rustup/target/TMP paths under RUNNER_TEMP and uses Rust 1.91. Ordinary empty-selector oracle flow remains unchanged. Validate all dispatch inputs before expensive installation.
+- [x] Build once with `cargo build --locked --release --features infercnv-measurement --bench cnv_matched --message-format=json`. Resolve the unique executable from compiler-artifact JSON, verify regular executable and hash it. Run existing synthetic/shipped generation and validators unchanged, then Task 2 R negative tests and actual smoke/seven pairs. Copy exact machine/compiler/environment/load/source/input/package information into measurement evidence. No additional task-owned workload runs concurrently on that host.
+- [x] Always verify all extracted source/lock bytes after trials, preserve both source checks and all raw results in the existing oracle artifact. Failure leaves no accepted summary or performance claim. Workflow uses fail-loud pipefail and preserves partial evidence in its always-upload step.
+- [x] Run controller tests, exact-head Control plane CI and fresh whole-change review before dispatch. Dispatch only after verifying main equals reviewed SHA; inspect the created run's head. Wait for actual R/measurement execution, download original artifact/API metadata/logs to external evidence, verify ZIP/API digests and every measurement path/output/pin. Compare original stdout with reported values; recompute summary independently from raw samples.
+- [x] Record scoped performance results with hardware/version/input/flags/timing distribution/RSS provenance and claim limits in the bounded acceptance receipt. The controller owns review and commit of this documentation wave. No automatic publication; full workflow/representative scaling remain separate gates.
+
+The accepted run was `36229683578`/attempt 1 at reviewed world head
+`d1ba88173b5bc9fd4a591b8ee4dd7a370afdd67b`, after exact-head Control
+plane run `36229421479` passed 108 tests and architecture validation. One
+smoke pair and seven alternating measured pairs passed, and an independent
+audit recomputed all 16 trials and 25,047,552 final values. Rust's region-wall
+median was `0.349404364` s against infercnv's `14.456` s; every Rust measured
+region wall was below every infercnv measured region wall. This is a strict
+advantage for the prepared-input step-14 slice on this host and fixed example,
+not full inferCNV or ingestion. Whole-process wall and peak RSS have separate
+lifetimes; baseline current RSS is not subtracted from peak to claim kernel
+allocation. The raw audit is retained at
+`/Volumes/Zane's HDD/rsomics-fixtures/evidence/infercnv-matched-performance-2026-09-26/run-36229683578/controller-raw-audit.json`
+with SHA-256 `90a532d4de5dbb7e93d773a514d69508ee4fc5b53112caabcac5937ffab42431`.
+
+The three nonblocking Minor reporting findings are closed in documentation:
+all five native-library limits and infercnv `num_threads` were configured as
+`1`, but all eight R samples showed two OS threads before warm-up, not verified
+continuous one-thread execution; R preparation timing excludes package load,
+helper sourcing, and result-directory creation while Rust begins at trial
+entry, so no preparation-speed ratio is claimed; the product dossier now
+reflects executed R/driver work rather than calling it next. R `proc.time()`
+is not asserted equivalent to Rust `Instant`. Earlier resolver stderr remains
+in original Actions logs rather than a standalone artifact, without altering
+the historical snapshot.
 
 ## Controller self-review and handoff
 

@@ -2,23 +2,27 @@
 
 ## User-directed pause boundary
 
-The user now requests a pause after inferCNV is finished and will resume next
-Saturday. Do not advance unrelated product families or automatically resume,
-schedule or notify. A nonblocking clarification is pending about whether the
-completion boundary is the whole usable inferCNV workflow or the current
-prepared-input correctness/performance slice. Current measurement verification
-continues because both interpretations require it; a preprocessing-only result
-must never be labeled a completed inferCNV workflow.
+The user requested a pause “after finish the infercnv” and said they would
+manually resume next Saturday. The controller conservatively chose and
+communicated a pause at the completed prepared-input correctness/performance
+checkpoint. The broader completion-scope clarification was unanswered; the
+narrower stopping boundary is not a user-confirmed definition of completion.
+Do not begin a new ingestion, clustering, HMM, Bayes, or unrelated product
+implementation batch; do not automatically resume, schedule or notify. The
+whole inferCNV workflow remains unfinished, and this preprocessing-only result
+must never be labeled its completion.
 
 ## Current status
 
-Tasks 1 and 2 are accepted: private Rust measurement support is committed and
-verified on four native targets, and the R/Python measurement harness source
-passes review and control-plane CI. Task 3 source binding and workflow integration
-pass scoped review and 108 local Python tests; exact-head CI, whole-change
-review, actual R execution and paired measurements remain outstanding.
-No speed or memory advantage has been measured or accepted. This follows accepted
-shipped correctness, not another correctness reconstruction.
+The bounded matched prepared-input measurement is accepted and the current
+plan is complete. Tasks 1 and 2 passed source/native/control-plane gates;
+Task 3 passed exact-head Control plane CI, whole-change review, installed-R
+preparation tests, original-artifact acquisition, and independent recomputation
+of all 16 trials. Seven alternating measured pairs establish a strict region-
+wall advantage on the fixed shipped example and host. This follows accepted
+shipped correctness, not another correctness reconstruction. It is not a
+complete inferCNV workflow, release, or general scaling result. See the
+[bounded acceptance receipt](infercnv-matched-performance-accepted-2026-09-26.md).
 
 - Product baseline: `bdcc8a3a55596be8d46a774d39b0335845c75175`.
 - Accepted four-native shipped conformance: run `36222541338`, source head
@@ -33,9 +37,10 @@ shipped correctness, not another correctness reconstruction.
 
 ## Environment boundary
 
-Fresh preflight: boot APFS total 245107195904, free 5162151936 bytes
-(97.89% occupied), KIOXIA 59 GiB free, HDD 254 GiB free. Local Cargo/R/builds
-remain stopped; hosted native runners carry all compilation and measurement.
+The earlier preflight recorded boot APFS total 245107195904, free 5162151936
+bytes (97.89% occupied), KIOXIA 59 GiB free, HDD 254 GiB free. Local Cargo/R/
+builds remained stopped; hosted native runners carried compilation and
+measurement. This is a historical preflight snapshot, not current free space.
 Source, scratch and evidence remain on the prescribed external disks.
 
 ## Scope and decisions
@@ -222,3 +227,45 @@ Fresh boot APFS occupancy is 97.02% (7301025792 free of 245107195904 bytes).
 No local R/Cargo/build or dependency download occurred. Runtime acceptance is
 still pending; local test and source-review success do not establish a timing
 result or a complete inferCNV implementation.
+
+## Hosted measurement and bounded acceptance
+
+The reviewed world head `d1ba88173b5bc9fd4a591b8ee4dd7a370afdd67b`
+passed exact-head Control plane run `36229421479` with 108 tests and
+architecture validation. Oracle run `36229683578`, attempt 1, job
+`108370358299`, passed all substantive steps, including actual installed-R
+preparation tests, a smoke pair, seven alternating measured pairs, source-after
+verification and evidence upload. The original artifact/log identity and
+hashes are recorded in the local-only, non-Git acquisition report at
+`.superpowers/sdd/2026-09-26-infercnv-matched-performance-plan/matched-acquisition-report.md`
+(SHA-256 `d476ab749136dec31d5c7f6060ea214e3e67ca2a8cd4ba05a7801195918fa87f`);
+that supporting report is not assumed to exist in a fresh clone.
+The controller independently recomputed all 16 complete trials, 25,047,552
+numeric entries, identities, hashes, raw counters, GNU-time records, execution
+order and summary values. Its raw audit SHA-256 is
+`90a532d4de5dbb7e93d773a514d69508ee4fc5b53112caabcac5937ffab42431`.
+
+Region-wall medians were Rust `0.349404364` s (range
+`0.339628661–0.362700170`) and infercnv `14.456` s (range
+`14.041–15.248`), an infercnv/Rust median ratio of
+`41.37326687768559`; the complete distributions did not overlap.
+Whole-process wall medians were `1.23` and `46.76` s, and separate
+whole-process peak-RSS medians were `94,973,952` and `1,240,866,816`
+bytes. Baseline current RSS is not kernel allocation and was not subtracted
+from those lifetime high-water marks. Final-stage maximum absolute/scaled
+error was `1.9984014443252818e-15` / `0.0008477393156599713` under the
+unchanged `1e-12 + 1e-12*abs(expected)` criterion. Full per-trial counters,
+provenance and qualifications are in the [acceptance receipt](infercnv-matched-performance-accepted-2026-09-26.md).
+
+All five native-library limits and infercnv `num_threads` were configured as
+`1`, but all eight R process samples reported two OS threads before warm-up;
+continuous effective single-thread execution was not observed. R preparation
+time excludes package loading, helper sourcing and result-directory creation,
+whereas Rust preparation starts at trial entry; no preparation-speed claim is
+made. GNU-time lifetime wall includes startup, preparation, warm-up,
+validation/export and exit. The earlier resolver stderr remains in original
+Actions logs, not a standalone artifact; no historical snapshot was rewritten.
+The dossier's stale pending-R/driver status is corrected. The remaining
+[ingestion](infercnv-ingestion-source-audit-2026-09-26.md) and
+[downstream](infercnv-downstream-audit-2026-09-26.md) audits are future work
+after manual resume, not completed implementation or publication.

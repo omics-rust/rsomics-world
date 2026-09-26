@@ -33,16 +33,26 @@ was `1.2732925824820995e-10`, and maximum scaled difference was
 `../../.autopilot/state/infercnv-shipped-native-accepted-2026-09-26.md`.
 
 The [matched prepared-input measurement plan](../plans/2026-09-26-infercnv-matched-performance-plan.md)
-is in progress. Private Rust support at product `3715e55b` passed independent
-review and run `36226732979`: 39 ordinary plus 11 measurement tests per profile
-on all four native targets, with unchanged production bytes and checkpoint
-comparisons. The R trial and paired driver are next; no timing result or speed
-or memory advantage is accepted yet. Progress and the user-directed pause
-boundary are recorded in
-`../../.autopilot/state/infercnv-matched-performance-2026-09-26.md`.
-Full downstream CNV behavior,
-representative cohort scaling, biological validation and publication remain
-separate gates; the native core is still unpublished and library-only.
+is complete for its bounded scope. Private Rust support at product `3715e55b`
+passed independent review and run `36226732979`: 39 ordinary plus 11
+measurement tests per profile on all four native targets, with unchanged
+production bytes and checkpoint comparisons. The R trial and paired driver
+were implemented, reviewed and executed in original oracle run `36229683578`.
+The independent 16-trial audit accepted seven alternating measured pairs on
+the fixed shipped full example: prepared-input step-14 region-wall medians
+were Rust `0.349404364` s and infercnv `14.456` s, with every Rust measured
+sample below every infercnv sample. The exact evidence, whole-process metrics,
+thread/preparation qualifications and claim limits are in the
+[bounded acceptance receipt](../../.autopilot/state/infercnv-matched-performance-accepted-2026-09-26.md).
+This is not full inferCNV, ingestion, downstream CNV calling, representative
+cohort scaling, biological validation or a release. The user asked to pause
+“after finish the infercnv” and manually resume; the controller conservatively
+paused at this bounded checkpoint and communicated that interpretation, but
+the broader completion-scope clarification was unanswered. This boundary is
+not a user-confirmed definition of inferCNV completion. The distinction is
+recorded in the
+[execution ledger](../../.autopilot/state/infercnv-matched-performance-2026-09-26.md).
+The native core remains unpublished and library-only.
 
 ## Boundary
 
