@@ -261,3 +261,38 @@ Source manifest SHA-256:
 The workflow now acquires the exact committed receipt, validates byte and
 semantic contracts, exercises missing configuration, and enables external
 conformance on all four native targets. Hosted execution is the next gate.
+
+World `070dd67118745a50f31d08717b20ec1ea7e63609` passed exact-head Control
+plane run `36222470504`. Green-5 native run `36222541338` was dispatched with
+the explicit shipped receipt. GitHub rejects a commit-SHA dispatch ref, so
+the controller verified remote main equals that SHA, dispatched main, and
+verified the created run's exact head. No duplicate run was created by the
+rejected request. All four platforms acquired/validated the pinned oracle
+before reaching Rust setup/tests; completion remains pending.
+
+Final whole-change source review by `/root/infercnv_shipped_final_review`
+is clean: ten control-plane source/receipt files and all five product files,
+no Critical/Important/Minor findings, no fix wave. Full review remains in the
+preserved plan workspace as `final-review-report.md`. Its declined-to-judge
+items are accepted scope boundaries: pending native execution remains a real
+controller gate; unchanged core is not redundantly re-audited; RDS is hashed
+rather than independently decoded; trusted receipt/isolated-runner assumptions
+are explicit; arbitrary unverified roots are not authenticated by the test
+reader; downstream workflow, biological and performance claims remain excluded.
+These are not parked source defects or waived execution requirements.
+
+Task 2: complete (product `13961bf6`→`bdcc8a3a`, source review clean, green-5
+exact-head four-native evidence independently verified). Accepted record:
+`infercnv-shipped-native-accepted-2026-09-26.md`. Run `36222541338` passed 39
+tests per platform/profile, 40 synthetic and 20 shipped stage comparisons,
+missing-configuration failure, formatting and strict Clippy. All original
+artifact/API/source/lock/oracle pins and the corresponding raw Actions logs
+were reconciled. Maximum scaled shipped error is 0.010642098320408794; the
+criterion is unchanged. The verified product source was committed locally
+as `bdcc8a3a55596be8d46a774d39b0335845c75175` with a clean worktree.
+
+Both tasks are complete. This closes only the shipped-data correctness plan.
+No benchmark has run. The source-informed performance instrumentation note
+is preserved in the plan workspace; a separate measurement plan must settle
+benchmark-only dependency/metric choices before implementation. No plan
+workspace or prior evidence is deleted.

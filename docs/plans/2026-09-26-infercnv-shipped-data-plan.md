@@ -93,20 +93,20 @@ only if actual evidence requires a separately diagnosed fix.
 - [x] Generalize the test-only reader to an explicit root while preserving
   all checked-in synthetic behavior. Add malformed-input tests before the
   generalization and verify real failures remotely.
-- [ ] Add an explicitly selected external-oracle test path that fails on
+- [x] Add an explicitly selected external-oracle test path that fails on
   missing configuration/data. Default small-fixture tests remain self-contained;
   opting into the large test must not silently skip. Use a dedicated test
   feature or equivalent explicit target selection, recorded in CI and README.
-- [ ] Check all ten stages from one native execution per case, exact
+- [x] Check all ten stages from one native execution per case, exact
   identities/dimensions/returned state, unchanged raw input and fixed numerical
   tolerance. Report per-stage maximum absolute and scaled errors.
-- [ ] Extend CI to acquire only the pinned receipt's artifact into runner-temp,
+- [x] Extend CI to acquire only the pinned receipt's artifact into runner-temp,
   verify its exact head/status/digests and safe paths, then validate the manifest
   before invoking tests. Preserve acquisition and numerical logs. No large
   fixtures or R package code enters Git or the product package.
-- [ ] Freeze and validate source on Linux/macOS x86_64/aarch64 in debug/release,
+- [x] Freeze and validate source on Linux/macOS x86_64/aarch64 in debug/release,
   including all old tests, formatting and strict Clippy. Independently review
   source and evidence; diagnose disagreements without tolerance widening.
-- [ ] Commit verified product changes locally on main; commit/push control-plane
+- [x] Commit verified product changes locally on main; commit/push control-plane
   receipts and verify exact-head CI. Record the actual correctness scope and
   proceed to matched performance measurement and downstream workflow work.
