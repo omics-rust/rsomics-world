@@ -125,3 +125,35 @@ The missing explicit-root API should fail compilation remotely. This is an
 expected red, not yet an observed result; loader implementation is held until
 the actual failure is captured. Existing production and fixture bytes match
 the accepted product commit.
+
+World `77b595978a53dc4762cd7d14e120c225af6b30f3` passed Control plane
+run `36220765158`; expected-red Linux run `36220790633` then failed only
+`Test debug` with two E0599 errors for missing `Fixture::load_from_root`.
+The controller checked exact head/job/failed-step identity, all 137 source
+hashes before and after, unchanged Cargo.lock, artifact API digest, both ZIP
+CRCs and extracted bytes. The real failure permits test-only reader
+implementation; no product numerical change or oracle acceptance is implied.
+
+Raw evidence: external fixtures
+`evidence/infercnv-native-core-2026-09-26/run-36220790633/`.
+Artifact ZIP SHA-256:
+`d73629dedeeaa6c2b3d71c3c94610e08c68c328c7b577e51227afefc7b6909e3`.
+Full logs ZIP SHA-256:
+`335747d705e1783aa04c21e672ab1cae70ee1784e546e9a220d53340c7fbfefe`.
+
+The first shipped oracle run `36220439929` failed only the independent
+validator after both R cases completed. An independent entrywise audit and a
+separate R 4.6.1 diagnostic identified exactly five one-ULP decimal-parser
+differences among 1,902,192 original values. The complete evidence and reviewed
+canonical hashes are in `infercnv-shipped-parser-audit-2026-09-26.md`.
+The corrected contract isolates this input bridge and pins its entire
+canonical byte output; exact stage-1/2 checks and downstream tolerances remain.
+No complete shipped oracle is accepted yet. The Task 2 loader is frozen for
+later review and remote green; no production code has changed.
+
+Task 2 reader implementation candidate `green-4` is frozen for four-native
+verification. Compared with red-3, only `tests/support/mod.rs` changes among
+137 source files; archive and file hashes were verified. The original entry
+point delegates to an explicit-root loader with contextual parse/I/O errors,
+checked dimensions and finite numeric values. The eight reader tests remain
+unchanged. No large-oracle feature or production change is in this snapshot.
