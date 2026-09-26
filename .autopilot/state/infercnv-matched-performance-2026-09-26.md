@@ -1,5 +1,15 @@
 # inferCNV matched performance — execution ledger
 
+## User-directed pause boundary
+
+The user now requests a pause after inferCNV is finished and will resume next
+Saturday. Do not advance unrelated product families or automatically resume,
+schedule or notify. A nonblocking clarification is pending about whether the
+completion boundary is the whole usable inferCNV workflow or the current
+prepared-input correctness/performance slice. Current measurement verification
+continues because both interpretations require it; a preprocessing-only result
+must never be labeled a completed inferCNV workflow.
+
 ## Current status
 
 Design and implementation plan complete; Task 1 test-first snapshot ready. No speed or
