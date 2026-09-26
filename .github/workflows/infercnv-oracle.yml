@@ -12,12 +12,6 @@ jobs:
     timeout-minutes: 240
     env:
       INFER_CNV_SOURCE_COMMIT: b421d9405c97a309b081ef86d455e976df93eae4
-      R_LIBS_USER: ${{ runner.temp }}/R/library
-      R_USER_CACHE_DIR: ${{ runner.temp }}/R/cache
-      XDG_CACHE_HOME: ${{ runner.temp }}/xdg-cache
-      TMPDIR: ${{ runner.temp }}/tmp
-      ORACLE_OUTPUT: ${{ runner.temp }}/infercnv-oracle/bundle
-      EVIDENCE_DIR: ${{ runner.temp }}/infercnv-oracle
     steps:
       - uses: actions/checkout@v4
         with:
@@ -25,6 +19,15 @@ jobs:
 
       - name: Prepare runner-temp directories
         run: |
+          set -euo pipefail
+          export R_LIBS_USER="$RUNNER_TEMP/R/library"
+          export R_USER_CACHE_DIR="$RUNNER_TEMP/R/cache"
+          export XDG_CACHE_HOME="$RUNNER_TEMP/xdg-cache"
+          export TMPDIR="$RUNNER_TEMP/tmp"
+          export EVIDENCE_DIR="$RUNNER_TEMP/infercnv-oracle"
+          export ORACLE_OUTPUT="$EVIDENCE_DIR/bundle"
+          printf 'R_LIBS_USER=%s\nR_USER_CACHE_DIR=%s\nXDG_CACHE_HOME=%s\nTMPDIR=%s\nEVIDENCE_DIR=%s\nORACLE_OUTPUT=%s\n' \
+            "$R_LIBS_USER" "$R_USER_CACHE_DIR" "$XDG_CACHE_HOME" "$TMPDIR" "$EVIDENCE_DIR" "$ORACLE_OUTPUT" >> "$GITHUB_ENV"
           mkdir -p "$R_LIBS_USER" "$R_USER_CACHE_DIR" "$XDG_CACHE_HOME" "$TMPDIR" "$EVIDENCE_DIR"
 
       - name: Test bundle validator

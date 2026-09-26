@@ -65,6 +65,15 @@ reran all 37 Python tests and the architecture validator successfully. R syntax
 was checked with remote R 4.6.1, but real infercnv has not run. This acceptance
 applies to the harness only, not upstream outputs or native compatibility.
 
+Harness commit `367d54aa18dc6b0a26f8e2c6e114a76cebb07286` passed exact-head
+Control plane run `36216128459`. GitHub rejected the oracle workflow itself
+in run `36216127904` before creating any jobs: `runner.temp` is unavailable
+in job-level `env` (lines 15–20). Ordinary YAML parsing did not validate Actions
+context availability. The bounded correction initializes paths from
+`RUNNER_TEMP` inside the first shell step and persists them through `GITHUB_ENV`,
+matching the existing VCF workflow. No package installation or oracle output
+exists from this failed validation run.
+
 - [x] Read-only source, upstream, product, and storage audit.
 - [x] Write design and oracle implementation plan.
 - [x] Independent spec review: make profile/reference and creation parameters
