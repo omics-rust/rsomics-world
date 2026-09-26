@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "accepted_oracle_receipt_sha256": "be0342e7c3f701e98b2f4db5199230de542a6f9bbfb6ea3379c1958068094476",
+  "source_commit": "b421d9405c97a309b081ef86d455e976df93eae4",
+  "case": "full",
+  "incoming_genes": 9939,
+  "retained_genes": 8508,
+  "cells": 184,
+  "config": {
+    "cutoff": 1,
+    "min_cells_per_gene": 3,
+    "window_length": 101,
+    "max_centered_threshold": 3,
+    "reference_groups": [
+      "Microglia/Macrophage",
+      "Oligodendrocytes (non-malignant)"
+    ],
+    "num_threads": 1
+  },
+  "files": {
+    "full/01.tsv": "e8c488e7cbc21307ac8b39ba26dab43e2a04d7f2fdf3f158e244a65afa4a654b",
+    "full/01.genes.tsv": "8aad9e524e1be3f2538b01b11a0dc81dfac34e8b27690d64b2232c3944e7b2da",
+    "full/01.cells.tsv": "36ffde7c1e10dd025a6e2bedab785c9d1bc32f2c02dfd0570db4e7a8d1300e03",
+    "full/14.tsv": "9c1c54dc19febd6997e3b31b1352686315ba76ab3f09e194c622f2f116140320",
+    "full/14.genes.tsv": "06bccb684392d48d81068f2fb2b157d46c497b079b42774497fef2595a06d529",
+    "full/14.cells.tsv": "36ffde7c1e10dd025a6e2bedab785c9d1bc32f2c02dfd0570db4e7a8d1300e03"
+  }
+}

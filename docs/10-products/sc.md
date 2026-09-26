@@ -32,8 +32,15 @@ was `1.2732925824820995e-10`, and maximum scaled difference was
 `1e-12 + 1e-12*abs(expected)` criterion. The acceptance receipt is
 `../../.autopilot/state/infercnv-shipped-native-accepted-2026-09-26.md`.
 
-Next is [matched prepared-input measurement](../plans/2026-09-26-infercnv-matched-performance-plan.md).
-No speed or memory advantage is accepted yet. Full downstream CNV behavior,
+The [matched prepared-input measurement plan](../plans/2026-09-26-infercnv-matched-performance-plan.md)
+is in progress. Private Rust support at product `3715e55b` passed independent
+review and run `36226732979`: 39 ordinary plus 11 measurement tests per profile
+on all four native targets, with unchanged production bytes and checkpoint
+comparisons. The R trial and paired driver are next; no timing result or speed
+or memory advantage is accepted yet. Progress and the user-directed pause
+boundary are recorded in
+`../../.autopilot/state/infercnv-matched-performance-2026-09-26.md`.
+Full downstream CNV behavior,
 representative cohort scaling, biological validation and publication remain
 separate gates; the native core is still unpublished and library-only.
 

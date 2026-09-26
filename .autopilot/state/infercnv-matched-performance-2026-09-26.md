@@ -156,3 +156,29 @@ seven reviewed measurement/test/manifest files. Production bytes are unchanged.
 The unpublished product has no configured remote; no repository or release was
 created. The next task implements the actual R trial and paired driver. This
 acceptance is not an executed performance trial or a complete inferCNV product.
+
+## Task 2 implementation and review
+
+The five R/Python files are implemented. The controller independently verified
+94 passing Python tests and architecture consistency, and streamed all three R
+sources through existing R 4.6.1 syntax parsing on 4090 using RAM-backed
+`TMPDIR=/dev/shm`. No source was copied there, no package was installed, and
+infercnv is absent from that diagnostic runtime. Actual R semantics remain
+unverified until the pinned hosted package run.
+
+Independent review requested two corrections before acceptance: pass
+`bundle/full` to the Rust case reader (bundle root remains correct for R), and
+terminate the entire GNU-time/trial process group on timeout. Regression tests
+and both bounded fixes now pass scoped re-review. The controller independently
+reran all 12 focused tests successfully; the implementer reports all 96 Python
+tests and architecture checks passing. The plan explicitly substitutes owned
+`Popen` sessions and checked waits for its earlier `subprocess.run` prescription.
+Post-warm/post-call thread observations are a deferred minor for final review.
+Exact-head Control plane validation is pending, including checking whether the
+hosted job supplies the test suite's required TMPDIR.
+
+Both new prerequisite receipts were independently checked against accepted
+original bytes and metadata with no discrepancy. They bind the accepted full
+input and the four-native-tested `green-7` source, not timing results. Actual R
+negative tests, smoke, seven measured pairs and their original-artifact audit
+remain outstanding; nothing has been published or claimed faster.
