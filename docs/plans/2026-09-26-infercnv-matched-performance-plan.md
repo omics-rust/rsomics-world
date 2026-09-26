@@ -97,7 +97,7 @@ Also test RSS numeric overflow/trailing garbage/missing counter; a fixture direc
 
 - [x] Controller adds `measurement` and `resolve_measurement_lock` dispatch booleans. Resolution is allowed only for Linux expected-red with measurement enabled. Run `cargo metadata --all-features --format-version 1` against the existing lock once; use Python `tomllib` to compare the pre-resolution lock and reject changed/removed existing packages except root dependency edges. Retain both locks and logs. Source-after skips only this intentionally changed lock for the resolution run. Every subsequent run verifies it normally.
 - [x] Freeze red source, commit/push and wait for exact-head Control plane CI. Dispatch the Linux red run. Run ordinary tests plus `cargo test --locked --features infercnv-measurement --test cnv_measurement_contract -- --nocapture`; require the intended missing-support compile/test failure, not dependency or runner failure. Preserve source, logs and the mechanically resolved lock; inspect allowed lock changes before copying that generated lock into the product.
-- [ ] Implement the private support and trial. Use safe `nix::sys::resource::getrusage(UsageWho::RUSAGE_SELF)`, checked `Instant` wall time and unique `Rss` from `/proc/self/smaps_rollup`. Gate OS calls to Linux; keep pure parsers portable. No new production code.
+- [x] Implement the private support and trial. Use safe `nix::sys::resource::getrusage(UsageWho::RUSAGE_SELF)`, checked `Instant` wall time and unique `Rss` from `/proc/self/smaps_rollup`. Gate OS calls to Linux; keep pure parsers portable. No new production code.
 
 ```rust
 let input = PreparedCounts::new(first.genes().to_vec(), first.cells().to_vec(), first.values().to_vec())?;
@@ -115,8 +115,8 @@ let wall = end.checked_duration_since(start).ok_or("wall clock reversed")?;
 
 The snippet shows ordering; private OS helper return types may be narrow structs. Compute preparation wall before warm-up. Validate original input against stage 1 after timing by reloading it, avoiding an extra retained stage-1 copy during measurement. Load expected stage 14 only after timing, compare every identity/value, then export. Use buffered output and enough decimal precision to round-trip f64. Reject preexisting output dirs and propagate all errors to nonzero exit. Reference roles in export derive from the fixed accepted configuration; no guessed arbitrary profile support.
 
-- [ ] Format with external standalone rustfmt; freeze green source with the reviewed lock. All four native targets run old debug/release tests unchanged, explicit measurement test debug/release, and `cargo check --locked --all-features --bench cnv_matched`. Linux runs format/strict all-feature all-target Clippy. Never invoke a harness-free bench from `cargo test --all-targets --all-features`.
-- [ ] Independent task review covers both product and CI diffs. Controller verifies four jobs, original artifacts/logs, exact source hashes and unchanged production bytes; commit product only after acceptance as `test(sc): add private prepared-input measurement harness`. Record native run identity for Task 3; preserve all red/green artifacts.
+- [x] Format with external standalone rustfmt; freeze green source with the reviewed lock. All four native targets run old debug/release tests unchanged, explicit measurement test debug/release, and `cargo check --locked --all-features --bench cnv_matched`. Linux runs format/strict all-feature all-target Clippy. Never invoke a harness-free bench from `cargo test --all-targets --all-features`.
+- [x] Independent task review covers both product and CI diffs. Controller verifies four jobs, original artifacts/logs, exact source hashes and unchanged production bytes; commit product only after acceptance as `test(sc): add private prepared-input measurement harness`. Record native run identity for Task 3; preserve all red/green artifacts.
 
 ### Task 2: R trial, pinned input and checked alternating driver
 

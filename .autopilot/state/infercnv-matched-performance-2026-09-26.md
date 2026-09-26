@@ -12,9 +12,10 @@ must never be labeled a completed inferCNV workflow.
 
 ## Current status
 
-Design and implementation plan complete; Task 1 test-first snapshot ready. No speed or
-memory advantage has been measured or accepted. This follows accepted shipped
-correctness, not another correctness reconstruction.
+Task 1 is accepted: private Rust measurement support is committed and verified
+on four native targets. Task 2 (R trial and checked Python driver) is in progress.
+No speed or memory advantage has been measured or accepted. This follows accepted
+shipped correctness, not another correctness reconstruction.
 
 - Product baseline: `bdcc8a3a55596be8d46a774d39b0335845c75175`.
 - Accepted four-native shipped conformance: run `36222541338`, source head
@@ -93,3 +94,65 @@ Product implementation is now in progress; four-native green, R execution and
 actual performance measurement remain pending. The source-only R preparation
 review confirms ordered groups, exact count.data, NULL hidden spike, genuine
 run flags and accepted TSV pins; it is not an executed RDS/measurement result.
+
+## Native measurement harness and review correction
+
+Intermediate run `36226155239` at `f104fa7b97d5f19cc54fcb2a69c31bf1b6c8f7e9`
+passed all four native targets. Its original artifacts and Actions logs were
+preserved and independently verified: 39 ordinary and 7 measurement tests per
+profile and target; 142 source entries unchanged; all 60 checkpoint report lines
+identical to accepted conformance. This is retained intermediate evidence only.
+
+Independent product review found that malformed environment values could be
+misreported or corrupt runtime TSV provenance, plus a minor CPU sampling-order
+issue. Four regression tests preceded the fix. Expected-red run `36226422538`
+at `4b8f5665db4137a77b6f46bfe724dd84ebf79ecc` failed only with four missing
+`format_env_value` errors; 38 ordinary tests passed. Original artifact and log
+proof is preserved in the corresponding external evidence directory.
+
+The fix rejects non-UTF-8 and TSV separators, distinguishes absent values, and
+samples child CPU before self CPU. Scoped re-review approves both corrections
+with no new finding. Frozen `green-7` has 142 files, unchanged production and
+reviewed lock; the controller independently matched every current file and tar
+entry to its manifest and all eight production files to `bdcc8a3a`.
+
+- Archive SHA-256: `d8898fcc887a10c5e7aaba389bb1ce9f80a72f5b0a17926b83ee1de5ecc4e8e7`.
+- Manifest SHA-256: `7267ad15a96a84b34b1bdaae07350093ca0f55ce6d9dfed66a32097b89bc72dc`.
+- Native run: `36226732979`, attempt 1, head `a87d0e1544393612dd0a5214f14c8e583c862964`.
+- Exact-head Control plane run: `36226671941`, success.
+
+All four native jobs report success. Original Linux artifact 10901276804 has
+verified API/ZIP SHA-256
+`25227eda8e80b3835aac52fba888185b213067a75ea5b81c6f6014b955aa45b6`;
+11 measurement tests pass in debug and release, including all four regressions,
+with successful bench compilation, format and strict Clippy.
+
+## Task 1 accepted
+
+Final independent original-artifact verification and scoped product re-review
+are complete. Every target passed 39 ordinary and 11 measurement tests in each
+profile; all 142 source-before/after entries passed and all 60 checkpoint report
+lines match accepted conformance exactly. Numeric tolerance is unchanged:
+`1e-12 + 1e-12*abs(expected)`; maximum shipped absolute/scaled deltas remain
+`1.27329258248209953e-10` / `1.06420983204087941e-2`.
+
+| Target | Artifact ID | Original ZIP SHA-256 |
+| --- | --- | --- |
+| Linux x86_64 | 10901276804 | `25227eda8e80b3835aac52fba888185b213067a75ea5b81c6f6014b955aa45b6` |
+| Linux aarch64 | 10901167302 | `0615295c3481d18bf82a3d541751397c8dc286c3e62da407c3d07100c6365c91` |
+| macOS x86_64 | 10900164222 | `7eb9567b145cd4e92c8b82904234b7d1ffbd1723a20a879cfea3baedca3765a2` |
+| macOS aarch64 | 10901007788 | `01ce9ee7eb8236503197f21b5a32296565ddb5a3e591d092dabb8c57ca518486` |
+
+Evidence is retained at
+`/Volumes/Zane's HDD/rsomics-fixtures/evidence/infercnv-matched-performance-2026-09-26/run-36226732979/`.
+Original Actions logs SHA-256:
+`dea68daeef1c3d8f5f8fc734c75bf85193fd041b751b3f310d4e6857381e2ce6`.
+The four unchanged upload-artifact Node 20 deprecation annotations remain
+nonblocking; saved test logs contain no warnings. The deliberate Linux missing
+oracle-root error is a passing negative guard, not a hidden test failure.
+
+Product commit `3715e55b8c06c4bb6b1605f42942805da29a4de7` contains exactly
+seven reviewed measurement/test/manifest files. Production bytes are unchanged.
+The unpublished product has no configured remote; no repository or release was
+created. The next task implements the actual R trial and paired driver. This
+acceptance is not an executed performance trial or a complete inferCNV product.
