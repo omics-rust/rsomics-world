@@ -1,0 +1,139 @@
+name: Single-cell CNV core candidate
+
+on:
+  workflow_dispatch:
+    inputs:
+      snapshot:
+        description: Frozen snapshot directory, for example red-1 or green-1
+        type: string
+        required: true
+      expected_red:
+        description: Run the initial Linux-only test-first failure capture
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+jobs:
+  native:
+    name: ${{ matrix.target }}
+    runs-on: ${{ matrix.runner }}
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        include: >-
+          ${{ fromJSON(inputs.expected_red && '[{"target":"linux-x86_64","runner":"ubuntu-24.04","system":"Linux","arch":"x86_64"}]' || '[{"target":"linux-x86_64","runner":"ubuntu-24.04","system":"Linux","arch":"x86_64"},{"target":"linux-aarch64","runner":"ubuntu-24.04-arm","system":"Linux","arch":"aarch64"},{"target":"macos-x86_64","runner":"macos-15-intel","system":"Darwin","arch":"x86_64"},{"target":"macos-aarch64","runner":"macos-15","system":"Darwin","arch":"arm64"}]') }}
+    env:
+      SNAPSHOT_ID: ${{ inputs.snapshot }}
+      EXPECT_RED: ${{ inputs.expected_red }}
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+
+      - name: Verify and extract frozen source
+        id: snapshot
+        run: |
+          set -euo pipefail
+          [[ "$SNAPSHOT_ID" =~ ^(red|green)-[0-9]+$ ]]
+          test "$(uname -s)" = '${{ matrix.system }}'
+          test "$(uname -m)" = '${{ matrix.arch }}'
+          export CARGO_HOME="$RUNNER_TEMP/cargo-home"
+          export CARGO_TARGET_DIR="$RUNNER_TEMP/cargo-target"
+          export RUSTUP_HOME="$RUNNER_TEMP/rustup-home"
+          export TMPDIR="$RUNNER_TEMP/scratch"
+          export EVIDENCE="$RUNNER_TEMP/sc-cnv-evidence"
+          printf 'CARGO_HOME=%s\nCARGO_TARGET_DIR=%s\nRUSTUP_HOME=%s\nTMPDIR=%s\nEVIDENCE=%s\n' \
+            "$CARGO_HOME" "$CARGO_TARGET_DIR" "$RUSTUP_HOME" "$TMPDIR" "$EVIDENCE" >> "$GITHUB_ENV"
+          mkdir -p "$CARGO_HOME" "$CARGO_TARGET_DIR" "$RUSTUP_HOME" "$TMPDIR" "$EVIDENCE"
+          snapshot="$GITHUB_WORKSPACE/.autopilot/snapshots/sc-cnv-core-2026-09-26/$SNAPSHOT_ID"
+          (
+            cd "$snapshot"
+            shasum -a 256 --check checksums.sha256
+          ) | tee "$EVIDENCE/archive-verification.log"
+          mkdir "$RUNNER_TEMP/sc-cnv-candidate"
+          tar -xzf "$snapshot/source.tar.gz" -C "$RUNNER_TEMP/sc-cnv-candidate" --no-same-owner
+          cp "$snapshot/source.tar.gz" "$snapshot/files.sha256" \
+            "$snapshot/checksums.sha256" "$snapshot/README.md" "$EVIDENCE/"
+          (
+            cd "$RUNNER_TEMP/sc-cnv-candidate"
+            shasum -a 256 --check "$EVIDENCE/files.sha256"
+          ) | tee "$EVIDENCE/source-before.log"
+          {
+            git rev-parse HEAD
+            uname -a
+            df -h
+            printf 'snapshot=%s\nexpected_red=%s\n' "$SNAPSHOT_ID" "$EXPECT_RED"
+            printf 'CARGO_HOME=%s\nCARGO_TARGET_DIR=%s\nRUSTUP_HOME=%s\nTMPDIR=%s\n' \
+              "$CARGO_HOME" "$CARGO_TARGET_DIR" "$RUSTUP_HOME" "$TMPDIR"
+          } | tee "$EVIDENCE/host.log"
+
+      - name: Install Rust 1.91
+        uses: dtolnay/rust-toolchain@1.91.0
+        with:
+          components: clippy,rustfmt
+
+      - name: Verify dependency resolution and output path
+        id: metadata
+        working-directory: ${{ runner.temp }}/sc-cnv-candidate
+        run: |
+          set -euo pipefail
+          rustc -Vv | tee "$EVIDENCE/rustc.log"
+          cargo -V | tee "$EVIDENCE/cargo.log"
+          if [[ "$EXPECT_RED" == true ]]; then
+            cargo generate-lockfile 2>&1 | tee "$EVIDENCE/lock-resolution.log"
+          fi
+          cargo metadata --locked --format-version 1 > "$EVIDENCE/metadata.json"
+          python3 -B - <<'PY'
+          import json, os
+          from pathlib import Path
+          metadata = json.loads((Path(os.environ["EVIDENCE"]) / "metadata.json").read_text())
+          assert Path(metadata["target_directory"]).resolve() == Path(os.environ["CARGO_TARGET_DIR"]).resolve()
+          package = next(p for p in metadata["packages"] if p["name"] == "rsomics-sc")
+          assert package["publish"] == []
+          assert all("bin" not in target["kind"] for target in package["targets"])
+          PY
+          cp Cargo.lock "$EVIDENCE/Cargo.lock"
+
+      - name: Test debug
+        if: ${{ !cancelled() && steps.metadata.outcome == 'success' }}
+        working-directory: ${{ runner.temp }}/sc-cnv-candidate
+        run: |
+          set -euo pipefail
+          cargo test --locked --all-targets 2>&1 | tee "$EVIDENCE/test-debug.log"
+
+      - name: Test release
+        if: ${{ !cancelled() && !inputs.expected_red && steps.metadata.outcome == 'success' }}
+        working-directory: ${{ runner.temp }}/sc-cnv-candidate
+        run: |
+          set -euo pipefail
+          cargo test --locked --release --all-targets 2>&1 | tee "$EVIDENCE/test-release.log"
+
+      - name: Format and strict Clippy
+        if: ${{ !cancelled() && !inputs.expected_red && steps.metadata.outcome == 'success' && matrix.target == 'linux-x86_64' }}
+        working-directory: ${{ runner.temp }}/sc-cnv-candidate
+        run: |
+          set -euo pipefail
+          cargo fmt --all -- --check 2>&1 | tee "$EVIDENCE/format.log"
+          cargo clippy --locked --all-targets -- -D warnings 2>&1 | tee "$EVIDENCE/clippy.log"
+
+      - name: Verify source remains unchanged
+        if: ${{ always() && steps.snapshot.outcome == 'success' }}
+        working-directory: ${{ runner.temp }}/sc-cnv-candidate
+        run: |
+          set -euo pipefail
+          shasum -a 256 --check "$EVIDENCE/files.sha256" | tee "$EVIDENCE/source-after.log"
+
+      - name: Upload raw evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: sc-cnv-core-${{ github.run_id }}-${{ github.run_attempt }}-${{ matrix.target }}
+          path: ${{ runner.temp }}/sc-cnv-evidence/
+          if-no-files-found: error
+          retention-days: 30

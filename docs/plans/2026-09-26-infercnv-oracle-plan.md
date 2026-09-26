@@ -83,4 +83,4 @@ profile/checkpoint counts and scoped interpretation.
 - [x] If installation or execution fails, retain the raw failure and diagnose before editing the harness; never replace a missing oracle with local approximations.
 - [x] Retrieve the exact-run artifact to external storage, verify archive integrity, validate exported identities/numerics, and independently inspect depth normalization, log2/inverse relation, reference-mode differences and chromosome-boundary cases.
 - [x] Record what is proved and what is not: this establishes deterministic pre-clustering upstream evidence, not Rust compatibility, native-platform CI, performance, or release readiness.
-- [ ] Commit the evidence receipt, push, and verify exact-head control-plane CI. Proceed to the native numeric-core plan only after the inspected oracle is valid.
+- [x] Commit the evidence receipt, push, and verify exact-head control-plane CI. Proceed to the native numeric-core plan only after the inspected oracle is valid.

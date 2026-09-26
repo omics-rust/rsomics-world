@@ -133,4 +133,8 @@ biological datasets.
 - [x] Implement and independently review the real-package harness.
 - [x] Pass exact-head control-plane checks and run the remote oracle.
 - [x] Inspect artifacts and record numerical/provenance evidence.
-- [ ] Begin native implementation against accepted stage-level goldens.
+- [x] Begin native implementation against accepted stage-level goldens.
+
+Native continuation: `docs/plans/2026-09-26-infercnv-native-core-plan.md` and
+`infercnv-native-core-2026-09-26.md`. Test-first source preparation has started;
+no native compatibility or implementation completion is claimed yet.

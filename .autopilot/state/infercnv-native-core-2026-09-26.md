@@ -32,7 +32,16 @@ cost is a small amount of external-disk storage.
 
 ## Execution
 
-Task 1 is ready for a fresh implementer. Only product source and its report
-belong to that agent; the controller owns CI, source snapshots and Git.
-No product files or repository exist yet. Boot APFS remains above 80%, so no
-local Cargo build, test, or dependency resolution is permitted.
+Task 1 implementer: `/root/infercnv_native_core_impl`, fresh isolated context.
+Only product source and its report belong to that agent; the controller owns
+CI, source snapshots and Git. The local product repository was initialized on
+`main`, with no commit or remote; its first test-only source is being prepared.
+World plan head `30d26a4ae3ef9b2a9468f702eb664826be2ddc1c` passed Control plane
+run `36217732909`. Boot APFS remains above 80%, so no local Cargo build, test,
+or dependency resolution is permitted.
+
+The new candidate workflow passed YAML/Bash parsing and independent read-only
+CI review. It uses Linux-only expected-red and four-native green matrices,
+verifies immutable archive/source hashes, preserves lockfiles and raw errors,
+and rechecks source after tests. Actions validation and actual native execution
+are still pending; no source snapshot has been accepted yet.
