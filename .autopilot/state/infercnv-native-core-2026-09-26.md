@@ -189,3 +189,23 @@ Reviewer exclusions accepted: raw-state/downstream/CLI work and performance
 remain explicit future gates; the accepted upstream oracle is not re-audited
 in this implementation review; string/observer allocation is outside the
 numeric-workspace contract. None is silently promoted to a completed result.
+
+Regression snapshot `red-2` at world `651cebb5ae837cd83028e4288e14606de9866415`
+produced three real assertion failures in run `36218967725`: equal-smallest
+subnormal median bits 0 versus 1, adjacent-subnormal midpoint bits 1 versus 2,
+and public stage-3 depth bits 0 versus 1. The original 27 tests still passed,
+including all synthetic checkpoints. `--no-fail-fast` ensured both private
+and public test targets actually executed; the workflow kept a failure result.
+The controller verified production median bytes before the test module were
+unchanged from green-2, all 136 archive/source hashes, unchanged Cargo.lock,
+terminal identity, API artifact digest, ZIP CRCs and extracted bytes.
+
+Evidence: external fixtures
+`evidence/infercnv-native-core-2026-09-26/run-36218967725/`.
+Artifact ZIP SHA-256:
+`56ccac1b9f97665a4d37bd3f8d558b06a6bd7bbd602c81fc75bdc388b8279c03`;
+full logs ZIP SHA-256:
+`6c7327c9a449b863451a790072ec8e8576938c1defe1dee3736a3076e5daf2ab`.
+Control plane run `36218966727` passed at the same head. The implementer is
+now authorized to replace only the median midpoint and sorting operations,
+then freeze a new four-native candidate. Final scoped review remains pending.
