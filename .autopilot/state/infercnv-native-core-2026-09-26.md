@@ -84,3 +84,54 @@ is now authorized. Independent test-only review found two false-green gaps
 (unchecked lengths around zip assertions and unchecked returned identities),
 plus missing non-square accessor coverage. These were sent to the implementer
 for correction before the green candidate. Golden tolerances remain unchanged.
+
+## First native candidate
+
+The implementer froze `green-1` with seven focused CNV modules, 14 public
+contract tests, eight private kernel tests, and one four-profile golden test.
+The test-audit changes are present; formatting passed without local Cargo.
+The controller verified all 136 archive files against both source and manifest.
+The remote lockfile remains unchanged.
+
+Frozen candidate commit `cf55b05589719373890d9189e424d56fd4b0b954` dispatched
+run `36218401374` for Linux/macOS x86_64/aarch64 debug/release validation and
+strict static checks. Acceptance is pending. Independent task review by
+`/root/infercnv_native_task_review` is running alongside CI. The implementer
+flagged missing explicit arithmetic-overflow witness coverage; checked
+arithmetic exists, but this is not yet accepted as sufficient testing.
+
+Related control-plane heads: `0624b8d422c7dca30d73ec042825a2dc221e5d06`
+passed run `36218177756`; shipped-data preflight head
+`64b3387b53034018c3e9fc80c57c46cab5e39d31` passed run `36218341241`.
+
+### green-1 result and review
+
+Run `36218401374` completed at the frozen head. All four native targets passed
+23 tests in both debug and release, including all 40 stage comparisons each.
+Every target/mode reported maximum absolute delta
+`7.105427357601002e-15`. Formatting passed, but Linux x86_64 strict Clippy
+failed two `manual_is_multiple_of` diagnostics in `config.rs` and
+`normalize.rs`. The candidate is not accepted.
+
+Original run/jobs/artifact JSON, four artifact ZIPs and extracted files, and
+the run-log ZIP are preserved under external fixtures in
+`evidence/infercnv-native-core-2026-09-26/run-36218401374/`. The controller
+verified all API digests, ZIP CRCs, extracted bytes, frozen source archives,
+136 before/after source hashes per target, test counts and per-stage reports.
+The run-log ZIP SHA-256 is
+`3915199c77378ef6f21c78be6e65e342d8a1bf674515974cea8bae08285ec53f`.
+
+| Target artifact | ZIP SHA-256 |
+|---|---|
+| Linux x86_64 | `62aa7e22038d1f8f4a053915e1bd3cd9ae0475d8597f1de776e8bb6e5b8ea341` |
+| Linux aarch64 | `d4da409423bc3659af42bd253b31c9f65f67ca2079579c0268eedb5a067232ab` |
+| macOS x86_64 | `ded8de36ac0e5734fd59779bdd81655029717d1cd3fdec69506ebda92106fc49` |
+| macOS aarch64 | `6c71e115cd2816dcb366bdc010e2720121faf422f49e996909699bd94462c716` |
+
+Task review found no clear numerical/core-contract defect, but required three
+missing independent witnesses: successful post-filter depth normalization,
+budget arithmetic overflow via a private helper, and the 100-gene linear
+smoothing case. Fix round 1/5 bundles these with the two observed Clippy
+diagnostics; the original implementer owns all product changes. Golden
+tolerances and dependency lock remain fixed. Control plane run `36218400071`
+passed for `cf55b05589719373890d9189e424d56fd4b0b954`.
