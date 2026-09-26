@@ -29,6 +29,17 @@ field; each data row contains a gene ID plus 184 values. Parse that declared
 dialect, then write a canonical `gene`-headed TSV and record its derivation
 and hash. Subset by gene ID joined to coordinates, never row position.
 
+Canonical values are the pinned R runtime's interpretation of the original
+decimal text, not an assumption that R and Python round every input identically.
+The independently diagnosed five adjacent-representable-value conversions and
+both reviewed canonical byte hashes are recorded in
+`../../.autopilot/state/infercnv-shipped-parser-audit-2026-09-26.md`.
+Pin those canonical hashes outside generated JSON. Audit equality or numerical
+adjacency only at the original-to-canonical bridge; retain exact identities and
+all post-canonical value checks. A changed canonical hash requires a new review,
+not automatic acceptance of arbitrary one-ULP changes. No downstream numerical
+tolerance is widened.
+
 ## Bounded cases
 
 Generate independent R runs for two cases, retaining all 184 cells and the
