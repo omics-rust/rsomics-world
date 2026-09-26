@@ -9,9 +9,11 @@ text. Cases are exactly ``subset`` and ``full``; each records its input-count
 key, selected chromosomes, expected reference groups, and ten stage entries.
 Each stage 1,2,3,4,8,9,10,11,12,14 records owned expression, gene-order,
 cell-group and original RDS paths plus actual gene/cell dimensions. ``sha256``
-maps every referenced file path to its byte digest. Source and original input
-hashes are independently pinned here, outside generated metadata. TSV identity
-and numerical validation is streamed per stage pair using compact double
+maps every referenced file path to its byte digest. Source, original input and
+both R-canonical input hashes are independently pinned here, outside generated
+metadata. Only the original-decimal-to-pinned-canonical bridge audits equality
+or adjacent representable values; all later raw-state comparisons are exact.
+TSV identity and numerical validation is streamed per stage pair using compact double
 arrays; no ten-matrix Python-float collection is retained. RDS bytes are
 preserved and hashed, not parsed by this independent checker.
 """
@@ -36,6 +38,10 @@ ORIGINAL_SHA256 = {
     "original_counts": "7b7c618e6b03d589ea36979b074d0b83e127dcaa01e059ba38f73900e7609ba3",
     "original_annotations": "345493e0686d75418427e9c4401f3f7bbb55ae3f61deee074ccee8882dc4dc63",
     "original_gene_order": "4ec63e049ea8299948fb730c2f60ca5a038a798b77cec3bb918fda572b2dc52e",
+}
+CANONICAL_SHA256 = {
+    "canonical_full": "539ea675832047cc77dc550c648dd421f2f5370aa2e7b52e0907b7dc690237c5",
+    "canonical_subset": "c7da7dd19ef7cb7fce5ddf41d7624db58a482bc7bce5e011f402c8b90e0e2ca8",
 }
 STAGES = (1, 2, 3, 4, 8, 9, 10, 11, 12, 14)
 REFS = ("Microglia/Macrophage", "Oligodendrocytes (non-malignant)")
@@ -109,8 +115,11 @@ def read_canonical(path, expected_cells=184, allow_negative=False):
 
 
 def validate_canonical(original, canonical):
-    if original.cells != canonical.cells or original.genes != canonical.genes or original.rows != canonical.rows:
+    if original.cells != canonical.cells or original.genes != canonical.genes:
         raise ValueError("canonical count derivation differs from original gzip")
+    for left, right in zip(original.rows, canonical.rows):
+        if any(a != b and math.nextafter(a, b) != b for a, b in zip(left, right)):
+            raise ValueError("canonical count derivation exceeds adjacent conversion")
 
 
 def validate_subset(original, subset, expected_genes):
@@ -358,6 +367,9 @@ def validate_bundle(root):
             raise ValueError(f"pinned input SHA-256 mismatch: {key}")
     if hashes[inputs["source_archive"]] != SOURCE_SHA256:
         raise ValueError("pinned source SHA-256 mismatch")
+    for key, expected in CANONICAL_SHA256.items():
+        if hashes[inputs[key]] != expected:
+            raise ValueError(f"canonical input SHA-256 mismatch: {key}")
     actual = {p.relative_to(root).as_posix() for p in root.rglob("*") if p.is_file()}
     if actual != paths | {"oracle.json"} and actual != paths | {"oracle.json", "sha256-manifest.tsv"}:
         raise ValueError("unexpected or missing bundle artifact")
@@ -371,8 +383,8 @@ def validate_bundle(root):
     coords, chr_rank = _original_order(owned_file(root, inputs["original_gene_order"]))
     annotations = _annotations(owned_file(root, inputs["original_annotations"]), original.cells)
     subset = read_canonical(owned_file(root, inputs["canonical_subset"]))
-    subset_expected = tuple(g for g in original.genes if coords.get(g, (None,))[0] in {"chr1", "chr19", "chr21"})
-    validate_subset(original, subset, subset_expected)
+    subset_expected = tuple(g for g in full.genes if coords.get(g, (None,))[0] in {"chr1", "chr19", "chr21"})
+    validate_subset(full, subset, subset_expected)
     summaries = {}
     for name, case in cases.items():
         prepared = subset if name == "subset" else full
@@ -390,7 +402,7 @@ def validate_bundle(root):
                 raise ValueError("stage actual dimensions mismatch")
             _identities(root, stage, matrix, coords, annotations)
             if number == 1:
-                validate_stage1(original, matrix, expected_genes)
+                validate_stage1(prepared, matrix, expected_genes)
             elif number == 2:
                 validate_stage2(previous, matrix)
             else:

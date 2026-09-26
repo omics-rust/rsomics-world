@@ -74,6 +74,22 @@ class ShippedInputTests(unittest.TestCase):
             checker().validate_canonical(checker().read_original(self.original, 3),
                                          checker().read_canonical(self.canonical, 3))
 
+    def test_original_to_canonical_bridge_accepts_one_adjacent_value(self):
+        self.original.write_bytes(gzip.compress(b"c1\tc2\tc3\nG1\t0.076439\t2\t3\n"))
+        self.canonical.write_text("gene\tc1\tc2\tc3\nG1\t0.076439000000000007\t2\t3\n")
+        module = checker()
+        module.validate_canonical(module.read_original(self.original, 3),
+                                  module.read_canonical(self.canonical, 3))
+
+    def test_original_to_canonical_bridge_rejects_nonadjacent_value(self):
+        self.original.write_bytes(gzip.compress(b"c1\tc2\tc3\nG1\t0.076439\t2\t3\n"))
+        far = math.nextafter(math.nextafter(float("0.076439"), math.inf), math.inf)
+        self.canonical.write_text(f"gene\tc1\tc2\tc3\nG1\t{far!r}\t2\t3\n")
+        module = checker()
+        with self.assertRaisesRegex(ValueError, "canonical"):
+            module.validate_canonical(module.read_original(self.original, 3),
+                                      module.read_canonical(self.canonical, 3))
+
     def test_downstream_expression_accepts_finite_negative_centered_values(self):
         self.canonical.write_text("gene\tc1\tc2\tc3\nG1\t-0.5\t2\t0\n")
         self.assertEqual(checker().read_canonical(self.canonical, 3, allow_negative=True).rows[0][0], -0.5)
@@ -110,6 +126,20 @@ class ShippedInputTests(unittest.TestCase):
         stage2_file.write_text("gene\tc1\tc2\tc3\nKEEP\t2\t3\t4.1\n")
         with self.assertRaisesRegex(ValueError, "stage 2 retained value changed"):
             module.validate_stage2(stage1, module.read_canonical(stage2_file, 3))
+
+    def test_postcanonical_subset_stage1_stage2_reject_one_ulp_changes(self):
+        module = checker()
+        original = module.read_original(self.original, 3)
+        canonical = module.read_canonical(self.canonical, 3)
+        changed = self.root / "one-ulp.tsv"
+        changed.write_text("gene\tc1\tc2\tc3\nG1\t1.5000000000000002\t2\t0\nG2\t0\t3\t4\n")
+        shifted = module.read_canonical(changed, 3)
+        with self.assertRaisesRegex(ValueError, "subset"):
+            module.validate_subset(original, shifted, original.genes)
+        with self.assertRaisesRegex(ValueError, "stage 1"):
+            module.validate_stage1(canonical, shifted, canonical.genes)
+        with self.assertRaisesRegex(ValueError, "stage 2"):
+            module.validate_stage2(canonical, shifted, cutoff=0, min_cells=1)
 
     def test_subset_rejects_wrong_gene_membership(self):
         module = checker()
@@ -194,14 +224,13 @@ class ShippedBundleUnitTests(unittest.TestCase):
         (self.root / "oracle.json").write_text(json.dumps(self.record), encoding="utf-8")
 
     def _pins(self):
-        inputs = self.record["inputs"]
-        original = {key: self.record["sha256"][inputs[key]] for key in self.module.ORIGINAL_SHA256}
-        return (patch.object(self.module, "SOURCE_SHA256", self.record["sha256"][inputs["source_archive"]]),
-                patch.object(self.module, "ORIGINAL_SHA256", original))
+        return (patch.object(self.module, "SOURCE_SHA256", self.fixture_source_sha),
+                patch.object(self.module, "ORIGINAL_SHA256", self.fixture_original_sha),
+                patch.object(self.module, "CANONICAL_SHA256", self.fixture_canonical_sha, create=True))
 
     def _validate_fixture(self):
-        source_patch, original_patch = self._pins()
-        with source_patch, original_patch:
+        source_patch, original_patch, canonical_patch = self._pins()
+        with source_patch, original_patch, canonical_patch:
             return self.module.validate_bundle(self.root)
 
     def _build_bundle(self):
@@ -278,9 +307,32 @@ class ShippedBundleUnitTests(unittest.TestCase):
                        "run_settings": self.module.RUN_SETTINGS.copy(),
                        "cases": cases, "sha256": hashes}
         self._save_record()
+        self.fixture_source_sha = hashes[inputs["source_archive"]]
+        self.fixture_original_sha = {key: hashes[inputs[key]] for key in self.module.ORIGINAL_SHA256}
+        self.fixture_canonical_sha = {key: hashes[inputs[key]] for key in ("canonical_full", "canonical_subset")}
 
     def test_valid_unit_bundle_exercises_full_schema(self):
         self.assertEqual(self._validate_fixture()["subset"]["1"], [3, 184])
+
+    def test_trusted_adjacent_bridge_passes_full_schema(self):
+        adjacent = repr(math.nextafter(2.0, math.inf))
+        for rel in ("inputs/full.tsv", "inputs/subset.tsv",
+                    "subset/01.tsv", "subset/02.tsv", "full/01.tsv", "full/02.tsv"):
+            path = self.root / rel
+            path.write_text(path.read_text().replace("G01\t2\t", f"G01\t{adjacent}\t", 1))
+            self._rehash(rel)
+        inputs = self.record["inputs"]
+        self.fixture_canonical_sha = {key: self.record["sha256"][inputs[key]]
+                                      for key in ("canonical_full", "canonical_subset")}
+        self.assertEqual(self._validate_fixture()["subset"]["1"], [3, 184])
+
+    def test_self_reported_one_ulp_canonical_change_fails_trusted_pin(self):
+        rel = self.record["inputs"]["canonical_full"]
+        path = self.root / rel
+        path.write_text(path.read_text().replace("G01\t2\t", "G01\t2.0000000000000004\t", 1))
+        self._rehash(rel)
+        with self.assertRaisesRegex(ValueError, "canonical.*SHA-256"):
+            self._validate_fixture()
 
     def test_missing_checkpoint_from_valid_bundle_fails(self):
         rel = self.record["cases"]["subset"]["stages"]["14"]["checkpoint"]
@@ -341,7 +393,7 @@ class ShippedBundleUnitTests(unittest.TestCase):
     def test_real_source_and_input_pins_reject_unit_fixture(self):
         with self.assertRaisesRegex(ValueError, "pinned source/package identity"):
             self.module.validate_bundle(self.root)
-        source_patch, original_patch = self._pins()
+        source_patch, original_patch, canonical_patch = self._pins()
         with source_patch:
             with self.assertRaisesRegex(ValueError, "pinned input SHA-256"):
                 self.module.validate_bundle(self.root)
@@ -349,8 +401,8 @@ class ShippedBundleUnitTests(unittest.TestCase):
     def test_stale_existing_manifest_fails_without_overwrite(self):
         manifest = self.root / "sha256-manifest.tsv"
         manifest.write_text("stale manifest\n")
-        source_patch, original_patch = self._pins()
-        with source_patch, original_patch:
+        source_patch, original_patch, canonical_patch = self._pins()
+        with source_patch, original_patch, canonical_patch:
             with self.assertRaisesRegex(ValueError, "manifest"):
                 self.module.validate_bundle(self.root)
             with patch.object(sys, "argv", [str(SCRIPT), str(self.root), "--manifest"]):
@@ -360,8 +412,8 @@ class ShippedBundleUnitTests(unittest.TestCase):
         self.assertEqual(manifest.read_text(), "stale manifest\n")
 
     def test_manifest_byte_change_is_not_normalized_away(self):
-        source_patch, original_patch = self._pins()
-        with source_patch, original_patch:
+        source_patch, original_patch, canonical_patch = self._pins()
+        with source_patch, original_patch, canonical_patch:
             with patch.object(sys, "argv", [str(SCRIPT), str(self.root), "--manifest"]):
                 with redirect_stdout(io.StringIO()):
                     self.module.main()
