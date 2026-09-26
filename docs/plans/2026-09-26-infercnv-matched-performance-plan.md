@@ -120,6 +120,10 @@ The snippet shows ordering; private OS helper return types may be narrow structs
 
 ### Task 2: R trial, pinned input and checked alternating driver
 
+Source and review complete at `689b86aa`; exact-head Control plane run
+`36228377657` passed all 96 tests. The R tests below are implemented and syntax-
+checked, not executed against infercnv yet; that execution is the Task 3 gate.
+
 **Files:** Create `scripts/infercnv_matched.R`, `scripts/infercnv_matched_support.R`, `scripts/test_infercnv_matched.R`, `scripts/measure_infercnv.py`, `scripts/test_measure_infercnv.py`, and `.autopilot/oracles/infercnv-measurement-input-2026-09-26.json`.
 
 **Interfaces:**
@@ -128,7 +132,7 @@ The snippet shows ordering; private OS helper return types may be narrow structs
 - CLI: `python3 -B scripts/measure_infercnv.py --bundle BUNDLE --binary BINARY --output NEW_DIR --input-receipt RECEIPT --r-script SCRIPT`.
 - The input receipt binds accepted oracle receipt SHA, source commit, fixed full dimensions/config, and six relative-path SHA256 entries for full stage 1/14 expression/genes/cells. Controller derives them from already accepted bytes, not from a fresh unaccepted export.
 
-- [ ] Write Python tests first, observe missing implementation failure using external TMPDIR and `python3 -B -m unittest discover -s scripts -p test_measure_infercnv.py`. Use small explicit unit-only matrices, not purported upstream fixtures.
+- [x] Write Python tests first, observe missing implementation failure using external TMPDIR and `python3 -B -m unittest discover -s scripts -p test_measure_infercnv.py`. Use small explicit unit-only matrices, not purported upstream fixtures.
 
 ```python
 def test_missing_and_duplicate_samples_fail(self):
@@ -148,10 +152,10 @@ def test_smoke_is_not_a_measured_sample(self):
 
 Cover incorrect pins, finite/tolerance/identity/output failures, duplicate metric keys, missing/NaN/negative durations, nonzero child CPU, bad RSS, malformed GNU time, nonzero subprocess and timeout, exactly seven unique pairs, smoke exclusion, alternating order and overlapping/nonoverlapping distributions. Subprocess tests may invoke a tiny real Python child to exercise failure, clearly unit-only; no fake infercnv measurement.
 
-- [ ] Implement pin validation and R preparation. Verify fresh oracle.json full/stage-1 checkpoint path and hash within the validated bundle. Compare dense expression and count.data dimensions/names/values to pinned stage 1, gene coordinates, ordered reference/observation maps against cell table roles/groups, complete disjoint coverage and NULL `.hspike`. Capture those slots before calls and compare afterwards without repairing them. Reuse `infercnv_oracle_io.R` export helpers; do not copy oracle-generation logic.
-- [ ] R negative tests load the actual fresh stage-1 checkpoint after installation, prove baseline preparation passes, then mutate one group membership, hidden spike, count.data and gene coordinate at a time and require preparation failure before timing. Test malformed RSS and invalid clock deltas through pure support helpers. The hosted runner runs these before measurement; local R stays forbidden.
-- [ ] Implement `run_prepared` with exact flags from the source-reviewed design, including `save_rds=FALSE`, `save_final_rds=FALSE`, `write_expr_matrix=FALSE`, `write_phylo=FALSE`, `diagnostics=FALSE`, `inspect_subclusters=FALSE`, samples mode and `up_to_step=14`. Verify formal names against the pinned source. Pre-create separate warm/measured output dirs; release warm return, `gc(full=TRUE)`, sample baseline and proc.time, time the actual call, retain return and validate/export after timing. Report all exact arguments, package/session/BLAS/effective-thread information outside timing.
-- [ ] Driver sets OPENBLAS_NUM_THREADS, OMP_NUM_THREADS, MKL_NUM_THREADS, BLIS_NUM_THREADS and VECLIB_MAXIMUM_THREADS to `1` before every direct child. Own each GNU-time invocation and its descendants with `subprocess.Popen(start_new_session=True)`, argument lists, checked exit status, bounded wait, process-group termination on timeout, and raw output files; preserve partials on error. GNU time wraps the exact executable, not Cargo or a shell pipeline. Rust receives the full case directory; R receives the containing bundle directory.
+- [x] Implement pin validation and R preparation. Verify fresh oracle.json full/stage-1 checkpoint path and hash within the validated bundle. Compare dense expression and count.data dimensions/names/values to pinned stage 1, gene coordinates, ordered reference/observation maps against cell table roles/groups, complete disjoint coverage and NULL `.hspike`. Capture those slots before calls and compare afterwards without repairing them. Reuse `infercnv_oracle_io.R` export helpers; do not copy oracle-generation logic.
+- [x] R negative tests load the actual fresh stage-1 checkpoint after installation, prove baseline preparation passes, then mutate one group membership, hidden spike, count.data and gene coordinate at a time and require preparation failure before timing. Test malformed RSS and invalid clock deltas through pure support helpers. The hosted runner runs these before measurement; local R stays forbidden.
+- [x] Implement `run_prepared` with exact flags from the source-reviewed design, including `save_rds=FALSE`, `save_final_rds=FALSE`, `write_expr_matrix=FALSE`, `write_phylo=FALSE`, `diagnostics=FALSE`, `inspect_subclusters=FALSE`, samples mode and `up_to_step=14`. Verify formal names against the pinned source. Pre-create separate warm/measured output dirs; release warm return, `gc(full=TRUE)`, sample baseline and proc.time, time the actual call, retain return and validate/export after timing. Report all exact arguments, package/session/BLAS/effective-thread information outside timing.
+- [x] Driver sets OPENBLAS_NUM_THREADS, OMP_NUM_THREADS, MKL_NUM_THREADS, BLIS_NUM_THREADS and VECLIB_MAXIMUM_THREADS to `1` before every direct child. Own each GNU-time invocation and its descendants with `subprocess.Popen(start_new_session=True)`, argument lists, checked exit status, bounded wait, process-group termination on timeout, and raw output files; preserve partials on error. GNU time wraps the exact executable, not Cargo or a shell pipeline. Rust receives the full case directory; R receives the containing bundle directory.
 
 ```python
 order = [("smoke", 0, ("rust", "infercnv"))]
@@ -163,7 +167,7 @@ for phase, pair, implementations in order:
 ```
 
 `run_and_validate` is a private driver helper. Timeout is 1200 seconds per fresh process. GNU time format uses unique tab-separated wall/user/system seconds, maximum_rss_kib and exit_status. Store raw per-trial metrics, final hashes, finite maximum absolute/scaled errors and original execution order. Reject any wrong result before accepting its timings. Summaries record medians/ranges and R/Rust median wall ratio; clear advantage iff `max(rust) < min(infercnv)`. Baseline and peak have separate labels and no derived region allocation.
-- [ ] Run focused Python tests, all control-plane tests and validation; review R source and driver independently. R execution gate remains explicitly pending until Task 3's actual installed oracle job. Commit only reviewed scripts/pins; exact-head Control plane CI must pass.
+- [x] Run focused Python tests, all control-plane tests and validation; review R source and driver independently. R execution gate remains explicitly pending until Task 3's actual installed oracle job. Commit only reviewed scripts/pins; exact-head Control plane CI must pass.
 
 ### Task 3: Bind verified source and execute the real same-host measurement
 

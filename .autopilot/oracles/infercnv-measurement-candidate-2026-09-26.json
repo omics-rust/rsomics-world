@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "repository": "omics-rust/rsomics-world",
+  "workflow_path": ".github/workflows/sc-cnv-core-candidate.yml",
+  "run_id": 36226732979,
+  "run_attempt": 1,
+  "head_sha": "a87d0e1544393612dd0a5214f14c8e583c862964",
+  "targets": [
+    "linux-x86_64",
+    "linux-aarch64",
+    "macos-x86_64",
+    "macos-aarch64"
+  ],
+  "snapshot_name": "green-7",
+  "archive_sha256": "d8898fcc887a10c5e7aaba389bb1ce9f80a72f5b0a17926b83ee1de5ecc4e8e7",
+  "manifest_sha256": "7267ad15a96a84b34b1bdaae07350093ca0f55ce6d9dfed66a32097b89bc72dc",
+  "lock_sha256": "e469fc5d773632a5893adfd3156ea816204b2208a3090fbd432fc37112d11f46",
+  "production_sha256": {
+    "src/cnv/config.rs": "1679abdff83cfcc0fdddf983ef137bae3ebe23e83b82c1ef8df8adf9d6465381",
+    "src/cnv/mod.rs": "9c415b9254e2c34c3d75fcfc4b05bcf382e19f872309a66b20db2567e85b8fee",
+    "src/cnv/model.rs": "895480476995e97728b98ea273169a5b4f131c6da0c746fa18ee2696dc060294",
+    "src/cnv/normalize.rs": "eb6f8d1e6f66a9119bac0ee70d43e830a53a90f08c0a2686c1ceeee36e8fe09a",
+    "src/cnv/pipeline.rs": "e80d57e725afe3352c15d5f213439dcdebe17a5612745c3685ce0fd531361b21",
+    "src/cnv/reference.rs": "3a56b6e907e64d652cbff202a9318073a60efa3efc8231d144b697d9823c1973",
+    "src/cnv/smooth.rs": "2b8766a7ae6b9cbbf20dfc04e7ffee9a67fe0fe0aa0a9748b0a9077981a374af",
+    "src/lib.rs": "b0e30331973bdcc6e34270fd6a33369e0715f6b7c0afedb690ca946b34d2390a"
+  }
+}

@@ -11,9 +11,15 @@ on:
         options:
           - synthetic
           - shipped
+      matched_snapshot:
+        description: Optional verified measurement snapshot (shipped dataset only)
+        type: string
+        required: false
+        default: ''
 
 permissions:
   contents: read
+  actions: read
 
 jobs:
   oracle:
@@ -22,6 +28,7 @@ jobs:
     env:
       INFER_CNV_SOURCE_COMMIT: b421d9405c97a309b081ef86d455e976df93eae4
       ORACLE_DATASET: ${{ inputs.dataset || 'synthetic' }}
+      MATCHED_SNAPSHOT: ${{ inputs.matched_snapshot || '' }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -37,9 +44,49 @@ jobs:
           export EVIDENCE_DIR="$RUNNER_TEMP/infercnv-oracle"
           export ORACLE_OUTPUT="$EVIDENCE_DIR/bundle"
           export SHIPPED_OUTPUT="$EVIDENCE_DIR/shipped-bundle"
-          printf 'R_LIBS_USER=%s\nR_USER_CACHE_DIR=%s\nXDG_CACHE_HOME=%s\nTMPDIR=%s\nEVIDENCE_DIR=%s\nORACLE_OUTPUT=%s\nSHIPPED_OUTPUT=%s\n' \
-            "$R_LIBS_USER" "$R_USER_CACHE_DIR" "$XDG_CACHE_HOME" "$TMPDIR" "$EVIDENCE_DIR" "$ORACLE_OUTPUT" "$SHIPPED_OUTPUT" >> "$GITHUB_ENV"
+          export RUST_SOURCE="$EVIDENCE_DIR/verified-source"
+          export CARGO_HOME="$RUNNER_TEMP/cargo-home"
+          export RUSTUP_HOME="$RUNNER_TEMP/rustup-home"
+          export CARGO_TARGET_DIR="$RUNNER_TEMP/cargo-target"
+          printf 'R_LIBS_USER=%s\nR_USER_CACHE_DIR=%s\nXDG_CACHE_HOME=%s\nTMPDIR=%s\nEVIDENCE_DIR=%s\nORACLE_OUTPUT=%s\nSHIPPED_OUTPUT=%s\nRUST_SOURCE=%s\nCARGO_HOME=%s\nRUSTUP_HOME=%s\nCARGO_TARGET_DIR=%s\n' \
+            "$R_LIBS_USER" "$R_USER_CACHE_DIR" "$XDG_CACHE_HOME" "$TMPDIR" "$EVIDENCE_DIR" "$ORACLE_OUTPUT" "$SHIPPED_OUTPUT" "$RUST_SOURCE" "$CARGO_HOME" "$RUSTUP_HOME" "$CARGO_TARGET_DIR" >> "$GITHUB_ENV"
           mkdir -p "$R_LIBS_USER" "$R_USER_CACHE_DIR" "$XDG_CACHE_HOME" "$TMPDIR" "$EVIDENCE_DIR"
+
+      - name: Validate optional matched snapshot selector
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [[ -n "$MATCHED_SNAPSHOT" ]]; then
+            test "$ORACLE_DATASET" = shipped
+            python3 -B -c 'import json,os,pathlib; r=json.loads(pathlib.Path(".autopilot/oracles/infercnv-measurement-candidate-2026-09-26.json").read_text()); assert os.environ["MATCHED_SNAPSHOT"] == r["snapshot_name"]'
+            printf 'dataset=%s\nmatched_snapshot=%s\n' "$ORACLE_DATASET" "$MATCHED_SNAPSHOT" > "$EVIDENCE_DIR/matched-selection.tsv"
+          fi
+
+      - name: Fetch native run and verify frozen measurement source
+        if: env.MATCHED_SNAPSHOT != ''
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          receipt=.autopilot/oracles/infercnv-measurement-candidate-2026-09-26.json
+          read -r run_id run_attempt < <(python3 -B -c 'import json; r=json.load(open(".autopilot/oracles/infercnv-measurement-candidate-2026-09-26.json")); print(r["run_id"],r["run_attempt"])')
+          cp "$receipt" "$EVIDENCE_DIR/measurement-candidate-receipt.json"
+          gh api "repos/omics-rust/rsomics-world/actions/runs/$run_id" > "$EVIDENCE_DIR/native-run.json"
+          gh api "repos/omics-rust/rsomics-world/actions/runs/$run_id/attempts/$run_attempt/jobs?per_page=100" > "$EVIDENCE_DIR/native-jobs.json"
+          PYTHONDONTWRITEBYTECODE=1 python3 -B -m unittest discover -s scripts -p test_verify_infercnv_measurement_snapshot.py \
+            2>&1 | tee "$EVIDENCE_DIR/snapshot-verifier-tests.log"
+          PYTHONDONTWRITEBYTECODE=1 python3 -B scripts/verify_infercnv_measurement_snapshot.py \
+            --receipt "$receipt" --run-json "$EVIDENCE_DIR/native-run.json" \
+            --jobs-json "$EVIDENCE_DIR/native-jobs.json" \
+            --snapshot-dir ".autopilot/snapshots/sc-cnv-core-2026-09-26/$MATCHED_SNAPSHOT" \
+            --output-dir "$RUST_SOURCE" 2>&1 | tee "$EVIDENCE_DIR/snapshot-verification.log"
+          PYTHONDONTWRITEBYTECODE=1 python3 -B - "$receipt" ".autopilot/snapshots/sc-cnv-core-2026-09-26/$MATCHED_SNAPSHOT" "$RUST_SOURCE" <<'PY' > "$EVIDENCE_DIR/source-before.json"
+          import json, pathlib, sys
+          sys.path.insert(0, str(pathlib.Path("scripts").resolve()))
+          from verify_infercnv_measurement_snapshot import verify_extracted
+          print(json.dumps(verify_extracted(*sys.argv[1:]), sort_keys=True))
+          PY
 
       - name: Test bundle validator
         shell: bash
@@ -155,6 +202,117 @@ jobs:
           set -euo pipefail
           PYTHONDONTWRITEBYTECODE=1 python3 -B scripts/validate_infercnv_shipped_oracle.py \
             "$SHIPPED_OUTPUT" --manifest 2>&1 | tee "$EVIDENCE_DIR/shipped-validation.log"
+
+      - name: Validate fresh full-case measurement pins
+        if: env.MATCHED_SNAPSHOT != ''
+        shell: bash
+        run: |
+          set -euo pipefail
+          PYTHONDONTWRITEBYTECODE=1 python3 -B - "$SHIPPED_OUTPUT" <<'PY' > "$EVIDENCE_DIR/measurement-input-validation.json"
+          import json, pathlib, sys
+          sys.path.insert(0, str(pathlib.Path("scripts").resolve()))
+          from measure_infercnv import validate_pins
+          receipt = json.loads(pathlib.Path(".autopilot/oracles/infercnv-measurement-input-2026-09-26.json").read_text())
+          print(json.dumps(validate_pins(pathlib.Path(sys.argv[1]), receipt), sort_keys=True))
+          PY
+
+      - name: Test matched R preparation against installed infercnv
+        if: env.MATCHED_SNAPSHOT != ''
+        shell: bash
+        run: |
+          set -euo pipefail
+          Rscript --vanilla scripts/test_infercnv_matched.R "$SHIPPED_OUTPUT" \
+            2>&1 | tee "$EVIDENCE_DIR/matched-r-tests.log"
+
+      - name: Install Rust 1.91 and build exact matched bench
+        if: env.MATCHED_SNAPSHOT != ''
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$CARGO_HOME" "$RUSTUP_HOME" "$CARGO_TARGET_DIR"
+          rustup toolchain install 1.91.0 --profile minimal --no-self-update \
+            2>&1 | tee "$EVIDENCE_DIR/rust-install.log"
+          (
+            cd "$RUST_SOURCE"
+            cargo +1.91.0 build --locked --release --features infercnv-measurement \
+              --bench cnv_matched --message-format=json \
+              > "$EVIDENCE_DIR/cargo-build.jsonl" 2> "$EVIDENCE_DIR/cargo-build.stderr"
+          )
+          PYTHONDONTWRITEBYTECODE=1 python3 -B - "$EVIDENCE_DIR/cargo-build.jsonl" "$EVIDENCE_DIR/binary-identity.json" "$CARGO_TARGET_DIR" "$GITHUB_ENV" <<'PY'
+          import hashlib, json, os, pathlib, stat, sys
+          messages = [json.loads(line) for line in pathlib.Path(sys.argv[1]).read_text().splitlines()]
+          paths = [pathlib.Path(m["executable"]) for m in messages
+                   if m.get("reason") == "compiler-artifact" and
+                   m.get("target", {}).get("name") == "cnv_matched" and m.get("executable")]
+          if len(paths) != 1:
+              raise ValueError(f"expected one exact bench executable, found {len(paths)}")
+          binary = paths[0]
+          if (not stat.S_ISREG(binary.lstat().st_mode) or not os.access(binary, os.X_OK) or
+                  pathlib.Path(sys.argv[3]).resolve() not in binary.resolve().parents):
+              raise ValueError("bench executable is missing, linked, non-executable or outside target")
+          identity = {"path": str(binary.resolve()), "sha256": hashlib.sha256(binary.read_bytes()).hexdigest()}
+          pathlib.Path(sys.argv[2]).write_text(json.dumps(identity, indent=2) + "\n")
+          with open(sys.argv[4], "a") as env:
+              env.write(f"RUST_BINARY={binary.resolve()}\n")
+          PY
+
+      - name: Record matched runtime provenance
+        if: env.MATCHED_SNAPSHOT != ''
+        shell: bash
+        run: |
+          set -euo pipefail
+          uname -a > "$EVIDENCE_DIR/machine.txt"
+          lscpu > "$EVIDENCE_DIR/cpu.txt"
+          cat /proc/loadavg > "$EVIDENCE_DIR/load-before.txt"
+          rustc +1.91.0 -vV > "$EVIDENCE_DIR/rustc-version.txt"
+          cargo +1.91.0 -vV > "$EVIDENCE_DIR/cargo-version.txt"
+          /usr/bin/time --version > "$EVIDENCE_DIR/gnu-time-version.txt"
+          Rscript --vanilla -e 'cat(capture.output(sessionInfo()), sep="\n")' > "$EVIDENCE_DIR/r-session.txt"
+          printf 'OPENBLAS_NUM_THREADS=1\nOMP_NUM_THREADS=1\nMKL_NUM_THREADS=1\nBLIS_NUM_THREADS=1\nVECLIB_MAXIMUM_THREADS=1\n' > "$EVIDENCE_DIR/thread-limits.txt"
+          printf 'source=%s\nbinary=%s\nprofile=release\nfeatures=infercnv-measurement\nbench=cnv_matched\n' \
+            "$RUST_SOURCE" "$RUST_BINARY" > "$EVIDENCE_DIR/build-configuration.tsv"
+          sha256sum scripts/infercnv_matched.R scripts/infercnv_matched_support.R \
+            scripts/measure_infercnv.py scripts/verify_infercnv_measurement_snapshot.py \
+            .autopilot/oracles/infercnv-measurement-input-2026-09-26.json \
+            .autopilot/oracles/infercnv-measurement-candidate-2026-09-26.json \
+            "$RUST_BINARY" > "$EVIDENCE_DIR/measurement-code-sha256.txt"
+          printf 'CARGO_HOME=%s\nRUSTUP_HOME=%s\nCARGO_TARGET_DIR=%s\nTMPDIR=%s\nRUSTFLAGS=%s\n' \
+            "$CARGO_HOME" "$RUSTUP_HOME" "$CARGO_TARGET_DIR" "$TMPDIR" "${RUSTFLAGS:-}" \
+            > "$EVIDENCE_DIR/build-environment.tsv"
+
+      - name: Run same-host matched trials
+        if: env.MATCHED_SNAPSHOT != ''
+        shell: bash
+        run: |
+          set -euo pipefail
+          PYTHONDONTWRITEBYTECODE=1 python3 -B scripts/measure_infercnv.py \
+            --bundle "$SHIPPED_OUTPUT" --binary "$RUST_BINARY" \
+            --output "$EVIDENCE_DIR/matched-results" \
+            --input-receipt .autopilot/oracles/infercnv-measurement-input-2026-09-26.json \
+            --r-script scripts/infercnv_matched.R \
+            2>&1 | tee "$EVIDENCE_DIR/matched-driver.log"
+
+      - name: Verify measurement source after trials
+        if: ${{ always() && inputs.matched_snapshot != '' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          cat /proc/loadavg > "$EVIDENCE_DIR/load-after.txt"
+          if [[ -d "$RUST_SOURCE" ]]; then
+            PYTHONDONTWRITEBYTECODE=1 python3 -B - \
+              .autopilot/oracles/infercnv-measurement-candidate-2026-09-26.json \
+              ".autopilot/snapshots/sc-cnv-core-2026-09-26/$MATCHED_SNAPSHOT" \
+              "$RUST_SOURCE" "$EVIDENCE_DIR" <<'PY' 2>&1 | tee "$EVIDENCE_DIR/source-after.log"
+          import pathlib, sys
+          sys.path.insert(0, str(pathlib.Path("scripts").resolve()))
+          from verify_infercnv_measurement_snapshot import record_extracted_check
+          record_extracted_check(*sys.argv[1:])
+          PY
+          else
+            printf 'failed\n' > "$EVIDENCE_DIR/source-after.status"
+            printf 'verified source never created\n' > "$EVIDENCE_DIR/source-after.error.txt"
+            exit 1
+          fi
 
       - name: Upload raw evidence even on failure
         if: always()

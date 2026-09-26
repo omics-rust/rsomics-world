@@ -12,8 +12,11 @@ must never be labeled a completed inferCNV workflow.
 
 ## Current status
 
-Task 1 is accepted: private Rust measurement support is committed and verified
-on four native targets. Task 2 (R trial and checked Python driver) is in progress.
+Tasks 1 and 2 are accepted: private Rust measurement support is committed and
+verified on four native targets, and the R/Python measurement harness source
+passes review and control-plane CI. Task 3 source binding and workflow integration
+pass scoped review and 108 local Python tests; exact-head CI, whole-change
+review, actual R execution and paired measurements remain outstanding.
 No speed or memory advantage has been measured or accepted. This follows accepted
 shipped correctness, not another correctness reconstruction.
 
@@ -187,8 +190,35 @@ The bounded correction sets TMPDIR to runner.temp only on the Control plane
 unit-test step. It leaves all scripts, test assertions and the numerical contract
 unchanged; hosted green remains pending.
 
+Correction `689b86aa9056b62efd6b54dc694992e91641566f` passed exact-head
+Control plane run `36228377657`. Original job logs explicitly show
+`TMPDIR: /home/runner/work/_temp`, all 96 tests passing in 4.295 seconds and
+architecture consistency passing. Task 2 source/integration is now accepted;
+its actual installed-package R tests and measurements remain the next task.
+
 Both new prerequisite receipts were independently checked against accepted
 original bytes and metadata with no discrepancy. They bind the accepted full
 input and the four-native-tested `green-7` source, not timing results. Actual R
 negative tests, smoke, seven measured pairs and their original-artifact audit
 remain outstanding; nothing has been published or claimed faster.
+
+## Task 3 source review
+
+The optional matched-snapshot workflow now binds the timed source to the accepted
+four-native run, verifies the 142-file snapshot and locked dependencies, and
+rechecks the source after execution. Fresh oracle generation remains unchanged;
+measurement requires its six pinned input/output files and actual installed-R
+preparation tests before a smoke pair and seven alternating pairs.
+
+Independent review identified incomplete adversarial archive tests and missing
+artifact-local source-after failure diagnostics. Both were corrected and passed
+scoped re-review, together with stricter duplicate/completed-step metadata checks.
+The controller independently passed all 108 Python tests (5.195 seconds), the
+architecture validator and whitespace checks. The original accepted snapshot
+still passes extraction and recheck. Source-after failures now retain a failed
+status, error text, traceback and partial evidence while failing the job.
+
+Fresh boot APFS occupancy is 97.02% (7301025792 free of 245107195904 bytes).
+No local R/Cargo/build or dependency download occurred. Runtime acceptance is
+still pending; local test and source-review success do not establish a timing
+result or a complete inferCNV implementation.
