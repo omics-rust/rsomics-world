@@ -85,7 +85,7 @@ jobs:
           set -euo pipefail
           rustc -Vv | tee "$EVIDENCE/rustc.log"
           cargo -V | tee "$EVIDENCE/cargo.log"
-          if [[ "$EXPECT_RED" == true ]]; then
+          if [[ "$EXPECT_RED" == true && ! -f Cargo.lock ]]; then
             cargo generate-lockfile 2>&1 | tee "$EVIDENCE/lock-resolution.log"
           fi
           cargo metadata --locked --format-version 1 > "$EVIDENCE/metadata.json"
@@ -105,14 +105,14 @@ jobs:
         working-directory: ${{ runner.temp }}/sc-cnv-candidate
         run: |
           set -euo pipefail
-          cargo test --locked --all-targets -- --nocapture 2>&1 | tee "$EVIDENCE/test-debug.log"
+          cargo test --locked --all-targets --no-fail-fast -- --nocapture 2>&1 | tee "$EVIDENCE/test-debug.log"
 
       - name: Test release
         if: ${{ !cancelled() && !inputs.expected_red && steps.metadata.outcome == 'success' }}
         working-directory: ${{ runner.temp }}/sc-cnv-candidate
         run: |
           set -euo pipefail
-          cargo test --locked --release --all-targets -- --nocapture 2>&1 | tee "$EVIDENCE/test-release.log"
+          cargo test --locked --release --all-targets --no-fail-fast -- --nocapture 2>&1 | tee "$EVIDENCE/test-release.log"
 
       - name: Format and strict Clippy
         if: ${{ !cancelled() && !inputs.expected_red && steps.metadata.outcome == 'success' && matrix.target == 'linux-x86_64' }}

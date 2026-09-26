@@ -135,3 +135,57 @@ smoothing case. Fix round 1/5 bundles these with the two observed Clippy
 diagnostics; the original implementer owns all product changes. Golden
 tolerances and dependency lock remain fixed. Control plane run `36218400071`
 passed for `cf55b05589719373890d9189e424d56fd4b0b954`.
+
+### green-2 verified; task fix review clean
+
+Frozen `green-2`, world head `b9c5f33fb276e63f196f17f7d0c3ba4bda89973c`,
+changes only the four paths reviewed in fix round 1. Run `36218605570`
+completed success on all four native targets. Each passed 27 tests in debug
+and release (11 private, 15 public contract, one four-profile golden), with
+40 checkpoint reports per mode and maximum absolute delta
+`7.105427357601002e-15`. Format and strict Clippy passed without diagnostics.
+Control plane run `36218603731` also passed at that exact head.
+
+Preserved directory:
+`/Volumes/Zane's HDD/rsomics-fixtures/evidence/infercnv-native-core-2026-09-26/run-36218605570/`.
+The controller verified terminal head/jobs, every API artifact digest and ZIP
+CRC, extracted bytes, frozen archives, lockfile identity, all 136 before/after
+source hashes per target, actual test counts, 40 deltas per mode, and clean
+static logs. Original full logs ZIP SHA-256:
+`573aa0804e13210d4d64921756f1049781e5c71b836b1a1755344d32cc55f7f9`.
+
+| Target artifact | ZIP SHA-256 |
+|---|---|
+| Linux x86_64 | `3164ff62c894c94e107529556aa830f2b21a4c1ebfe19800d55508061ef43097` |
+| Linux aarch64 | `8f87e07c4b8cb2eee7e203938b11bd7baaf98c665689c212a4b01613fc2e106b` |
+| macOS x86_64 | `8a8608fe6a7ae3b45c99c5987d6ea3a0b7d5f887c185b1e71adb85d1dfa235ab` |
+| macOS aarch64 | `da5a96f237472ebe76d74965905029de29929888fe69d2b400ee72ff6aedd2f3` |
+
+Task 1: fix round 1/5 (all three review findings and both CI diagnostics
+addressed, zero open; snapshots green-1..green-2). Scoped independent review
+confirmed the new expected values and overflow paths, read the Linux debug,
+release, Clippy and formatting evidence, and found no new breakage. Its
+remaining cross-platform/provenance verification item is resolved by the
+controller's checks above. A fresh whole-change review is still required
+before the product's first local commit and final acceptance.
+
+## Final whole-change review: two important findings
+
+Fresh reviewer `/root/infercnv_native_final_review` found two concrete gaps
+despite green-2's passing ordinary-input tests. Even median uses `a/2+b/2`,
+which turns two smallest positive subnormal values into zero; this can silently
+zero a valid input's stage-3 depths. Stable `sort_by` also allocates hidden
+infallible numeric scratch, bypassing the promised fallible allocation path.
+The latter is not a demonstrated violation of the conservative byte ceiling.
+
+The single final fix wave first adds exact-equality private/public subnormal
+regressions with production behavior unchanged. The controller will capture
+real assertion failures before authorizing safe midpoint and allocation-free
+sorting changes. Numerical tolerances will not mask the subnormal defect.
+Expected-red workflows now generate Cargo.lock only if absent, preserving the
+already pinned lock in regression-red snapshots.
+
+Reviewer exclusions accepted: raw-state/downstream/CLI work and performance
+remain explicit future gates; the accepted upstream oracle is not re-audited
+in this implementation review; string/observer allocation is outside the
+numeric-workspace contract. None is silently promoted to a completed result.
