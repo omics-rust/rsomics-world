@@ -101,6 +101,19 @@ alone are insufficient readiness evidence. No oracle output was produced.
 Its artifact is retained in `evidence/infercnv-2026-09-26/run-36216425084/`,
 passes ZIP CRC checks, and matches GitHub SHA-256
 `618282a8de7a7933ac6135d5f0475bce41b8d3acc34f966add9f40ff7a15a194`.
+Both terminal execution runs also retain their full `run-logs.zip`, including
+the system package and runtime setup logs. SHA-256 values in run order are
+`e089ebb09204abd72beda1febd00a1dfc73d8d5160fafc6311a4087b13d1b45f`
+and `d36d7f7821585c76f49f8b14dce3cbface413dc421bba5b03c8bdadc36aa2b1e`;
+both pass ZIP CRC checks.
+
+Namespace-readiness correction `38625af42b55b089678a387b79adf4cc8d4e8a28`
+passed Control plane run `36216747712`; oracle run `36216764707` was dispatched
+at that head and completed successfully. The controller verified original
+ZIPs, extraction, manifest, source identity, and runtime metadata. Independent
+numerical review recomputed 185,536 entries with maximum absolute difference
+`8.881784197001252e-16`. The bounded pre-clustering oracle is now accepted;
+see `infercnv-oracle-accepted-2026-09-26.md` and its explicit coverage limits.
 
 Parallel source audit `infercnv-smoothing-audit-2026-09-26.md` was independently
 reviewed. It records chromosome/window boundary semantics and an unmeasured
@@ -118,6 +131,6 @@ biological datasets.
       require meaningful signal contrasts without rejecting legitimate unchanged
       singleton-chromosome smoothing.
 - [x] Implement and independently review the real-package harness.
-- [ ] Pass exact-head control-plane checks and run the remote oracle.
-- [ ] Inspect artifacts and record numerical/provenance evidence.
+- [x] Pass exact-head control-plane checks and run the remote oracle.
+- [x] Inspect artifacts and record numerical/provenance evidence.
 - [ ] Begin native implementation against accepted stage-level goldens.

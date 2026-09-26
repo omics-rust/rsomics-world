@@ -67,7 +67,7 @@ def test_rejects_nonfinite_expression(self):
 - [x] Implement the R driver using actual upstream checkpoint RDS files, not a hand-written replica of upstream formulas. Create inputs with the coverage in the spec, set every selected parameter explicitly, validate stage identity/finiteness, and export numeric values using 17-digit formatting. Record `sessionInfo()`, installed packages, seed, input and checkpoint artifacts. The actual R oracle must decide numerical goldens.
 - [x] Add a manually dispatched Linux workflow. Install R 4.6, JAGS and dependency requirements, obtain exact pinned source and record its SHA-256, install dependency packages without silently upgrading the oracle, assert `packageVersion("infercnv")`, and run driver plus checker. Evidence upload uses `if: always()` and includes install/run logs, source identity, input data, intermediate exports/RDS and package/session metadata. Use explicit runner-temp paths for all caches/scratch and no secrets.
 - [x] Self-review and provide TDD evidence, changed files, exact schema, and unresolved runtime risks in `.autopilot/state/infercnv-oracle-implementation-2026-09-26.md`. No claim of upstream execution until CI actually runs.
-- [ ] Controller obtains an independent spec/quality review, fixes defects through the implementer, commits only these files, pushes, and verifies exact-head control-plane CI.
+- [x] Controller obtains an independent spec/quality review, fixes defects through the implementer, commits only these files, pushes, and verifies exact-head control-plane CI.
 
 ## Task 2: Execute and inspect the pinned oracle
 
@@ -79,8 +79,8 @@ def test_rejects_nonfinite_expression(self):
 immutable run receipt with exact head, conclusion, archive hash, source hash,
 profile/checkpoint counts and scoped interpretation.
 
-- [ ] Dispatch `.github/workflows/infercnv-oracle.yml` at the pushed head and inspect the terminal job result.
-- [ ] If installation or execution fails, retain the raw failure and diagnose before editing the harness; never replace a missing oracle with local approximations.
-- [ ] Retrieve the exact-run artifact to external storage, verify archive integrity, validate exported identities/numerics, and independently inspect depth normalization, log2/inverse relation, reference-mode differences and chromosome-boundary cases.
-- [ ] Record what is proved and what is not: this establishes deterministic pre-clustering upstream evidence, not Rust compatibility, native-platform CI, performance, or release readiness.
+- [x] Dispatch `.github/workflows/infercnv-oracle.yml` at the pushed head and inspect the terminal job result.
+- [x] If installation or execution fails, retain the raw failure and diagnose before editing the harness; never replace a missing oracle with local approximations.
+- [x] Retrieve the exact-run artifact to external storage, verify archive integrity, validate exported identities/numerics, and independently inspect depth normalization, log2/inverse relation, reference-mode differences and chromosome-boundary cases.
+- [x] Record what is proved and what is not: this establishes deterministic pre-clustering upstream evidence, not Rust compatibility, native-platform CI, performance, or release readiness.
 - [ ] Commit the evidence receipt, push, and verify exact-head control-plane CI. Proceed to the native numeric-core plan only after the inspected oracle is valid.

@@ -9,6 +9,13 @@ or publishing an incomplete single-cell product. See the
 [pinned oracle design](../plans/2026-09-26-infercnv-oracle-design.md) and
 [execution plan](../plans/2026-09-26-infercnv-oracle-plan.md).
 
+The real-package pre-clustering oracle passed in run `36216764707` and was
+independently inspected: four reference profiles, 40 original checkpoints,
+and maximum recomputation discrepancy `8.881784197001252e-16`. This enables
+native core work; it does not complete the CNV workflow or its release gates.
+The acceptance receipt is
+`../../.autopilot/state/infercnv-oracle-accepted-2026-09-26.md`.
+
 ## Boundary
 
 `rsomics-sc` is one stateful single-cell expression-analysis product. It owns
