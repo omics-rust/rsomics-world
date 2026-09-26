@@ -184,3 +184,45 @@ large-oracle conformance remain open; product changes are still uncommitted.
 Fresh shipped oracle run `36221554790` is executing at exact fixed head
 `4afd7558a2407a5c43582ab473137d3271a9ad9f`. Its output must be inspected and
 accepted independently; the old failed run is not substituted for it.
+
+World documentation head `bf55c77adf7dd7d71f23ce7ce6a1626c70a95e5f` passed
+exact-head Control plane run `36221728812`. The fresh shipped oracle run
+`36221554790` completed successfully, including both real R cases and both
+bundle validators. Original API records and ZIPs are being preserved; success
+alone is not yet acceptance.
+
+Task 2 acquisition review found one Important integration defect: the offline
+verifier restricted all archive entries to `shipped-bundle`, although the
+workflow uploads the complete evidence directory. The original ZIP includes
+synthetic evidence, source and logs. Fix round 1 is required before live use.
+
+Ruling: validate and preserve the complete original ZIP, with manifest file-set
+equality scoped only to `shipped-bundle` — this matches the existing upload
+contract and retains the independently pinned original bytes — the cost is
+additional safe extraction of provenance files, not weaker bundle validation.
+
+Fresh storage check: boot APFS 97.89% (5,168,803,840 free of 245,107,195,904
+bytes), KIOXIA 59 GiB free, HDD 255 GiB free. No local builds, dependency
+installation or R execution; remote correctness work continues.
+
+Task 1: complete (harness commits `424f2bae` through `4afd7558`, scoped review
+clean, fresh successful upstream evidence independently accepted).
+Receipt: `infercnv-shipped-oracle-accepted-2026-09-26.md`; exact machine pin:
+`../oracles/infercnv-shipped-2026-09-26.json`. All original ZIP/extracted/manifest
+bytes and actual dimensions were checked, preserved validators passed, all
+60 shipped TSVs match independently diagnosed data, and all 120 synthetic
+TSVs match the previously accepted oracle. This is not native conformance.
+
+Task 2 acquisition fix round 1: original whole-ZIP scope finding addressed,
+no new breakage in scoped independent re-review. Controller verification:
+84 Python tests passed (2.170 s), control-plane validation and whitespace
+checks passed. The reviewed verifier also successfully processed the genuine
+accepted API records/original ZIP into a fresh external directory and checked
+the committed receipt's manifest. CI integration remains a separate gate.
+
+Task 2 product continuation is assigned to the original reader implementer.
+It now uses accepted shipped evidence, explicit feature
+`external-infercnv-oracle`, test target `cnv_external_oracle` and required
+`RSOMICS_INFER_CNV_ORACLE_ROOT`. The controller is wiring the exact receipt
+into four-native CI, including an actual missing-configuration failure check.
+No shipped-data native result is claimed yet.

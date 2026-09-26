@@ -75,7 +75,7 @@ owned relative path. Keep source hash constants outside generated metadata.
 - [x] Independently review the harness and its diff. Fix material findings,
   then controller commits/pushes, verifies exact-head Control plane CI and
   dispatches the shipped-data oracle.
-- [ ] Inspect the actual upstream result and preserve original API metadata,
+- [x] Inspect the actual upstream result and preserve original API metadata,
   logs, ZIP, source/raw input bytes, RDS, exports and sorted hashes externally.
   Re-run strict bundle checks from preserved data. Verify predicted dimensions
   against actual checkpoints and document discrepancies without substituting
