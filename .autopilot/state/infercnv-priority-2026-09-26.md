@@ -90,6 +90,27 @@ CRC checks and matches GitHub's SHA-256
 No real infercnv output was produced; the original source archive and install
 failure log are preserved, not substituted with synthetic output.
 
+Repository-option correction `2bf49e93404ee5fbbb4499e288ae9a6b7975c5c7`
+passed Control plane run `36216379718`. Oracle run `36216425084` was dispatched
+at that exact head. Dependency installation completed, but the exact source
+could not load because the downloaded `igraph` binary requires absent
+`libglpk.so.40`. The next bounded correction installs Ubuntu Noble's
+`libglpk-dev` (which depends on `libglpk40`) and tests namespace loading for
+every declared import before installing infercnv; installed package names
+alone are insufficient readiness evidence. No oracle output was produced.
+Its artifact is retained in `evidence/infercnv-2026-09-26/run-36216425084/`,
+passes ZIP CRC checks, and matches GitHub SHA-256
+`618282a8de7a7933ac6135d5f0475bce41b8d3acc34f966add9f40ff7a15a194`.
+
+Parallel source audit `infercnv-smoothing-audit-2026-09-26.md` was independently
+reviewed. It records chromosome/window boundary semantics and an unmeasured
+linear-time optimization hypothesis. The pinned source's existing example
+has 10,338 expression rows and 184 cells (42 reference, 142 malignant), as
+read directly from the retained count and annotation files. It is a possible
+real-data regression fixture, not representative large-data performance
+evidence; its explicitly example-only gene order must not be reused for new
+biological datasets.
+
 - [x] Read-only source, upstream, product, and storage audit.
 - [x] Write design and oracle implementation plan.
 - [x] Independent spec review: make profile/reference and creation parameters

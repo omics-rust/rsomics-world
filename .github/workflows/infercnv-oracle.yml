@@ -49,7 +49,7 @@ jobs:
             jags libcurl4-openssl-dev libssl-dev libxml2-dev \
             libfontconfig1-dev libfreetype6-dev libpng-dev libtiff-dev \
             libjpeg-dev libharfbuzz-dev libfribidi-dev libgit2-dev \
-            libudunits2-dev libhdf5-dev libgsl-dev
+            libudunits2-dev libhdf5-dev libgsl-dev libglpk-dev
 
       - name: Download pinned source and record byte identity
         run: |
@@ -87,6 +87,13 @@ jobs:
                                  dependencies=c("Depends", "Imports", "LinkingTo"))
             missing <- setdiff(imports, rownames(installed.packages()))
             if (length(missing)) stop("missing infercnv imports: ", paste(missing, collapse=", "))
+            unloadable <- vapply(c(imports, "jsonlite"), function(pkg) {
+              tryCatch({loadNamespace(pkg); ""}, error=function(e) conditionMessage(e))
+            }, character(1))
+            if (any(nzchar(unloadable))) {
+              print(unloadable[nzchar(unloadable)])
+              stop("installed dependencies failed namespace loading")
+            }
           ' 2>&1 | tee "$EVIDENCE_DIR/install-dependencies.log"
 
       - name: Install exact source and verify package
