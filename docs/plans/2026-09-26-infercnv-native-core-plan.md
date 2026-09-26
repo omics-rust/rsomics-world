@@ -152,13 +152,13 @@ transformation and do not belong in production source.
   snapshot remotely. Save terminal run identity, failure log, resolved
   lockfile, and source hashes. Verify failure is the intended missing core,
   not dependency/environment failure. No local Cargo command is permitted.
-- [ ] Implement the checked model and kernels from the spec. Keep numerical
+- [x] Implement the checked model and kernels from the spec. Keep numerical
   scratch reused and bounded; borrow observation snapshots. Add private
   direct-kernel tests for unequal group weights, saturation below/at/above
   thresholds, singleton/short/100/101/102 windows, cross-chromosome isolation,
   and global median. The two-gene window-101 witness is `[500/101,510/101]`.
   Expected-value code must not call or copy the kernel being tested.
-- [ ] Self-review, freeze source, and ask the controller to execute the green
+- [x] Self-review, freeze source, and ask the controller to execute the green
   candidate with the recovered lockfile. Exact commands on the hosted runner:
 
   ```sh
@@ -175,7 +175,7 @@ transformation and do not belong in production source.
   version, tests and static-check logs even on failure. Stop on manifest
   mismatch. Debug/release tests run on every target; format/Clippy may be one
   Linux x86_64 gate since they do not replace native execution.
-- [ ] Fresh task review receives spec, test evidence and full uncommitted
+- [x] Fresh task review receives spec, test evidence and full uncommitted
   product diff; fix correctness/quality findings through the implementer and
   revalidate changed code. Final whole-change review also covers the controller's
   CI/snapshot integration. Never silently increase numeric tolerances.

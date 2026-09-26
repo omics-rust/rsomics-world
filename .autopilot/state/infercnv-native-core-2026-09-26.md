@@ -209,3 +209,48 @@ full logs ZIP SHA-256:
 Control plane run `36218966727` passed at the same head. The implementer is
 now authorized to replace only the median midpoint and sorting operations,
 then freeze a new four-native candidate. Final scoped review remains pending.
+
+### Final corrected candidate: green-3
+
+World `fc512a97f0d97b42099a096ff1533878cb14a556` froze only the two median
+operation corrections on top of unchanged red-2 tests. Source hash comparison
+confirmed only `normalize.rs` changed from that regression-red snapshot.
+Control plane run `36219134955` passed; native run `36219136430` completed
+success on all four targets. Each passed 30 tests in debug and release
+(13 private, 16 contract, one oracle), including all three exact subnormal
+regressions and all 40 golden checkpoints. Maximum absolute delta remains
+`7.105427357601002e-15`; format and strict Clippy are clean.
+
+The controller verified terminal identity, all job results, four API artifact
+digests and ZIP CRCs, extracted bytes, frozen source/lock identity, 136
+before/after source hashes, actual test counts and named regressions, and
+per-stage deltas. Full evidence remains in external fixtures
+`evidence/infercnv-native-core-2026-09-26/run-36219136430/`.
+Run logs ZIP SHA-256:
+`4911273e759b8d51c2508afb8baf38b501ceb2ce58804d94f17de009ce3654fb`.
+
+| Target artifact | ZIP SHA-256 |
+|---|---|
+| Linux x86_64 | `1c62696b36a9da757f4e74e367e0239e0e2e89753e1f79b385baff1bd55ee9a5` |
+| Linux aarch64 | `fb1eb15e981500c9a60069be7c85dcca9b1488117acba40c408b44de8139c002` |
+| macOS x86_64 | `d5194d52572e6fc0a880650664dd7a176fb8d9a442a88e883cafce23ae784e94` |
+| macOS aarch64 | `a0443fd00a36e3435b7cdadf18220cdc866d1c8dfae2888db7e8d02055422b35` |
+
+The final scoped re-review is dispatched against the 132-line product/CI fix
+diff. No product commit or final acceptance has been made yet.
+
+## Accepted unpublished native core
+
+Final scoped review closed both Important findings and found no new code/CI
+issue. It independently read all four debug/release results and the regression
+red evidence. Two inaccurate historical-report descriptions were corrected:
+midpoint stabilized in Rust 1.85, and stable-sort's defect concerned fallible
+allocation handling rather than a demonstrated byte-ceiling breach.
+
+Task 1: complete (product initial commit
+`13961bf6a42cb4cbbf36c528331aafb98a52937b`, final review clean). The local
+product is on main, clean, unpublished, and has no remote. Its 136 source files
+match the verified green-3 snapshot; no public repo or crate was created.
+The acceptance scope and remaining gates are in
+`infercnv-native-core-accepted-2026-09-26.md`. Control-plane receipt push and
+its exact-head CI remain the controller's final documentation step.

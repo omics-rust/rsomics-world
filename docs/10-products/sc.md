@@ -17,11 +17,14 @@ native core work; it does not complete the CNV workflow or its release gates.
 The acceptance receipt is
 `../../.autopilot/state/infercnv-oracle-accepted-2026-09-26.md`.
 
-The [native core plan](../plans/2026-09-26-infercnv-native-core-plan.md) is
-in progress. Its frozen test-first candidate produced the intended absent-core
-Rust error in run `36218066698`; native correctness is not yet accepted. The
-next shipped-data fixture and matched benchmark boundary are recorded in
-`../../.autopilot/state/infercnv-real-data-preflight-2026-09-26.md`.
+The [native core plan](../plans/2026-09-26-infercnv-native-core-plan.md) produced
+an accepted unpublished prepared-counts core, local commit `13961bf`. Native
+run `36219136430` passed 30 tests in debug/release on all four targets, with
+40 checkpoint comparisons per mode and maximum absolute delta
+`7.105427357601002e-15`. The exact acceptance scope is
+`../../.autopilot/state/infercnv-native-core-accepted-2026-09-26.md`.
+Next is [shipped-data conformance](../plans/2026-09-26-infercnv-shipped-data-plan.md),
+before performance or complete downstream-workflow claims.
 
 ## Boundary
 
