@@ -1,7 +1,8 @@
 # SDD ledger — plan: docs/plans/2026-09-26-infercnv-shipped-data-plan.md
 
 Spec: `docs/plans/2026-09-26-infercnv-shipped-data-design.md`.
-Prepared continuation only; native core final acceptance precedes execution.
+Execution follows accepted native core commit
+`13961bf6a42cb4cbbf36c528331aafb98a52937b`; see its separate acceptance receipt.
 
 Independent source-informed design review identified and resolved original
 matrix dialect, gene-ID subset selection, independently pinned source/input
@@ -31,4 +32,16 @@ Ruling: Treat the shipped example as engineering evidence, not biological
 ground truth or large-cohort performance — provenance is limited to the pinned
 upstream distribution — any later claim needs its own stronger evidence.
 
-No task dispatched or complete yet.
+## Execution
+
+Task 1 implementer: `/root/infercnv_shipped_oracle_impl`, fresh context.
+World base `58044e6aab6d0b798eafea0bd0cbca33a76208d5` passed exact-head
+Control plane run `36219378654`. The agent owns only the named harness
+scripts and oracle workflow; the controller owns Git, plans, snapshots,
+remote execution and evidence. Product source remains unchanged.
+
+Fresh storage check: boot APFS 97.86% (5,240,377,344 bytes free of
+245,107,195,904); KIOXIA 59 GiB free; external HDD 256 GiB free. Cargo, rustup,
+target and TMPDIR resolve under the required KIOXIA paths. No local builds,
+dependency installs or R execution are permitted. Pure Python `-B` checker
+tests use external scratch only. No task is complete yet.

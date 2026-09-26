@@ -179,7 +179,7 @@ transformation and do not belong in production source.
   product diff; fix correctness/quality findings through the implementer and
   revalidate changed code. Final whole-change review also covers the controller's
   CI/snapshot integration. Never silently increase numeric tolerances.
-- [ ] Controller commits only verified product files on local `main`, records
+- [x] Controller commits only verified product files on local `main`, records
   the exact source manifest and all four native results, and commits/pushes the
   control-plane receipt. Verify exact-head Control plane CI after that push.
   Record this as an unpublished core, then advance to raw-state integration

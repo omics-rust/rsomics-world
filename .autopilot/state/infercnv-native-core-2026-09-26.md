@@ -254,3 +254,9 @@ match the verified green-3 snapshot; no public repo or crate was created.
 The acceptance scope and remaining gates are in
 `infercnv-native-core-accepted-2026-09-26.md`. Control-plane receipt push and
 its exact-head CI remain the controller's final documentation step.
+
+Acceptance receipt commit `f68d752e` and shipped-data plan commit
+`58044e6aab6d0b798eafea0bd0cbca33a76208d5` were pushed together. Exact-head
+Control plane run `36219378654` passed. The native-core plan is complete;
+the broader inferCNV workflow is not. No skill workspace or evidence was
+deleted. Continuation is tracked in `infercnv-shipped-data-2026-09-26.md`.
