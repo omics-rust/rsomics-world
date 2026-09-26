@@ -50,7 +50,7 @@ library, GitHub Actions.
 - Profile names: `single_reference`, `grouped_bounds`, `grouped_mean`, `no_reference`.
 - Each profile exports stages `[1, 2, 3, 4, 8, 9, 10, 11, 12, 14]` with expression, gene-order, and cell-group identity information.
 
-- [ ] Write behavior tests before the checker. Tests construct tiny independent valid bundles, then mutate one property per rejection case. For example:
+- [x] Write behavior tests before the checker. Tests construct tiny independent valid bundles, then mutate one property per rejection case. For example:
 
 ```python
 def test_rejects_nonfinite_expression(self):
@@ -62,11 +62,11 @@ def test_rejects_nonfinite_expression(self):
 ```
 
   Also cover wrong version/commit, missing profile/stage, duplicate IDs, gene or cell order mismatch, ragged rows, path traversal, absent referenced files, and a valid bundle. Fixture helpers are test-only and never imported by production scripts.
-- [ ] Run `python3 -B -m unittest discover -s scripts -p test_infercnv_oracle.py` with external `TMPDIR`; retain the expected pre-implementation failure.
-- [ ] Implement the checker, run focused tests, then `python3 -B -m unittest discover -s scripts -p 'test_*.py'`.
-- [ ] Implement the R driver using actual upstream checkpoint RDS files, not a hand-written replica of upstream formulas. Create inputs with the coverage in the spec, set every selected parameter explicitly, validate stage identity/finiteness, and export numeric values using 17-digit formatting. Record `sessionInfo()`, installed packages, seed, input and checkpoint artifacts. The actual R oracle must decide numerical goldens.
-- [ ] Add a manually dispatched Linux workflow. Install R 4.6, JAGS and dependency requirements, obtain exact pinned source and record its SHA-256, install dependency packages without silently upgrading the oracle, assert `packageVersion("infercnv")`, and run driver plus checker. Evidence upload uses `if: always()` and includes install/run logs, source identity, input data, intermediate exports/RDS and package/session metadata. Use explicit runner-temp paths for all caches/scratch and no secrets.
-- [ ] Self-review and provide TDD evidence, changed files, exact schema, and unresolved runtime risks in `.autopilot/state/infercnv-oracle-implementation-2026-09-26.md`. No claim of upstream execution until CI actually runs.
+- [x] Run `python3 -B -m unittest discover -s scripts -p test_infercnv_oracle.py` with external `TMPDIR`; retain the expected pre-implementation failure.
+- [x] Implement the checker, run focused tests, then `python3 -B -m unittest discover -s scripts -p 'test_*.py'`.
+- [x] Implement the R driver using actual upstream checkpoint RDS files, not a hand-written replica of upstream formulas. Create inputs with the coverage in the spec, set every selected parameter explicitly, validate stage identity/finiteness, and export numeric values using 17-digit formatting. Record `sessionInfo()`, installed packages, seed, input and checkpoint artifacts. The actual R oracle must decide numerical goldens.
+- [x] Add a manually dispatched Linux workflow. Install R 4.6, JAGS and dependency requirements, obtain exact pinned source and record its SHA-256, install dependency packages without silently upgrading the oracle, assert `packageVersion("infercnv")`, and run driver plus checker. Evidence upload uses `if: always()` and includes install/run logs, source identity, input data, intermediate exports/RDS and package/session metadata. Use explicit runner-temp paths for all caches/scratch and no secrets.
+- [x] Self-review and provide TDD evidence, changed files, exact schema, and unresolved runtime risks in `.autopilot/state/infercnv-oracle-implementation-2026-09-26.md`. No claim of upstream execution until CI actually runs.
 - [ ] Controller obtains an independent spec/quality review, fixes defects through the implementer, commits only these files, pushes, and verifies exact-head control-plane CI.
 
 ## Task 2: Execute and inspect the pinned oracle

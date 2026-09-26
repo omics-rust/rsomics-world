@@ -1,0 +1,121 @@
+name: inferCNV pinned oracle
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  oracle:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 240
+    env:
+      INFER_CNV_SOURCE_COMMIT: b421d9405c97a309b081ef86d455e976df93eae4
+      R_LIBS_USER: ${{ runner.temp }}/R/library
+      R_USER_CACHE_DIR: ${{ runner.temp }}/R/cache
+      XDG_CACHE_HOME: ${{ runner.temp }}/xdg-cache
+      TMPDIR: ${{ runner.temp }}/tmp
+      ORACLE_OUTPUT: ${{ runner.temp }}/infercnv-oracle/bundle
+      EVIDENCE_DIR: ${{ runner.temp }}/infercnv-oracle
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Prepare runner-temp directories
+        run: |
+          mkdir -p "$R_LIBS_USER" "$R_USER_CACHE_DIR" "$XDG_CACHE_HOME" "$TMPDIR" "$EVIDENCE_DIR"
+
+      - name: Test bundle validator
+        shell: bash
+        run: |
+          set -euo pipefail
+          PYTHONDONTWRITEBYTECODE=1 python3 -B -m unittest discover -s scripts -p test_infercnv_oracle.py \
+            2>&1 | tee "$EVIDENCE_DIR/checker-tests.log"
+
+      - uses: r-lib/actions/setup-r@v2
+        with:
+          r-version: '4.6.1'
+          use-public-rspm: true
+
+      - name: Install JAGS and system headers
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends \
+            jags libcurl4-openssl-dev libssl-dev libxml2-dev \
+            libfontconfig1-dev libfreetype6-dev libpng-dev libtiff-dev \
+            libjpeg-dev libharfbuzz-dev libfribidi-dev libgit2-dev \
+            libudunits2-dev libhdf5-dev libgsl-dev
+
+      - name: Download pinned source and record byte identity
+        run: |
+          set -euo pipefail
+          archive="$EVIDENCE_DIR/infercnv-source.tar.gz"
+          curl --fail --location --retry 3 \
+            "https://github.com/bioconductor-source/infercnv/archive/$INFER_CNV_SOURCE_COMMIT.tar.gz" \
+            --output "$archive"
+          export INFER_CNV_SOURCE_SHA256="$(sha256sum "$archive" | cut -d' ' -f1)"
+          printf 'commit\t%s\nsha256\t%s\nurl\t%s\n' \
+            "$INFER_CNV_SOURCE_COMMIT" "$INFER_CNV_SOURCE_SHA256" \
+            "https://github.com/bioconductor-source/infercnv/archive/$INFER_CNV_SOURCE_COMMIT.tar.gz" \
+            > "$EVIDENCE_DIR/source-identity.tsv"
+          printf 'INFER_CNV_SOURCE_SHA256=%s\n' "$INFER_CNV_SOURCE_SHA256" >> "$GITHUB_ENV"
+          tar -xzf "$archive" -C "$EVIDENCE_DIR"
+          test "$(sed -n 's/^Version: //p' "$EVIDENCE_DIR/infercnv-$INFER_CNV_SOURCE_COMMIT/DESCRIPTION")" = '1.28.0'
+
+      - name: Install R dependencies from Bioconductor 3.23
+        shell: bash
+        run: |
+          set -euo pipefail
+          Rscript --vanilla -e '
+            install.packages("BiocManager", lib=Sys.getenv("R_LIBS_USER"))
+            BiocManager::install(version="3.23", ask=FALSE, update=FALSE)
+            desc <- read.dcf(file.path(Sys.getenv("EVIDENCE_DIR"),
+                                       paste0("infercnv-", Sys.getenv("INFER_CNV_SOURCE_COMMIT")),
+                                       "DESCRIPTION"))
+            imports <- trimws(strsplit(desc[1, "Imports"], ",", fixed=TRUE)[[1]])
+            imports <- sub("[[:space:]]*\\(.*", "", imports)
+            BiocManager::install(c(imports, "jsonlite"), ask=FALSE, update=FALSE,
+                                 dependencies=c("Depends", "Imports", "LinkingTo"))
+            missing <- setdiff(imports, rownames(installed.packages()))
+            if (length(missing)) stop("missing infercnv imports: ", paste(missing, collapse=", "))
+          ' 2>&1 | tee "$EVIDENCE_DIR/install-dependencies.log"
+
+      - name: Install exact source and verify package
+        shell: bash
+        run: |
+          set -euo pipefail
+          R CMD INSTALL --library="$R_LIBS_USER" \
+            "$EVIDENCE_DIR/infercnv-$INFER_CNV_SOURCE_COMMIT" \
+            2>&1 | tee "$EVIDENCE_DIR/install-infercnv.log"
+          Rscript --vanilla -e '
+            stopifnot(as.character(packageVersion("infercnv")) == "1.28.0")
+            cat("infercnv_version\t", as.character(packageVersion("infercnv")), "\n", sep="")
+            cat("infercnv_path\t", system.file(package="infercnv"), "\n", sep="")
+            cat("Bioconductor_version\t", as.character(BiocManager::version()), "\n", sep="")
+            stopifnot(as.character(BiocManager::version()) == "3.23")
+          ' 2>&1 | tee "$EVIDENCE_DIR/installed-identity.log"
+
+      - name: Execute real infercnv through step 14
+        shell: bash
+        run: |
+          set -euo pipefail
+          Rscript --vanilla scripts/infercnv_oracle.R "$ORACLE_OUTPUT" \
+            2>&1 | tee "$EVIDENCE_DIR/oracle-run.log"
+
+      - name: Validate exports and create sorted manifest
+        shell: bash
+        run: |
+          set -euo pipefail
+          PYTHONDONTWRITEBYTECODE=1 python3 -B scripts/validate_infercnv_oracle.py \
+            "$ORACLE_OUTPUT" --manifest 2>&1 | tee "$EVIDENCE_DIR/validation.log"
+
+      - name: Upload raw evidence even on failure
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: infercnv-oracle-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/infercnv-oracle/
+          if-no-files-found: error
+          retention-days: 30

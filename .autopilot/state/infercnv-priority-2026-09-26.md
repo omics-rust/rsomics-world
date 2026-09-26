@@ -34,13 +34,36 @@ be merged as inferCNV and the accepted destination is `rsomics-sc cnv`.
   `.autopilot/state/vcf-naive-preflight-2026-09-09.md` edits and untracked `.csv`,
   `crlf.txt`, `floatreads.txt`, `ws.txt`. Do not stage them.
 - VCF run `34299936099` is now terminal success on all four native jobs at
-  `5e300ee1e0309beaf1cf783fc5415386f6183cb5`; new-turn artifact inspection has
-  not been performed.
+  `5e300ee1e0309beaf1cf783fc5415386f6183cb5`; its raw artifacts and the
+  expected-red run below were preserved and independently inspected. Receipt:
+  `vcf-final-run-receipts-2026-09-26.md`, committed as `d618c95`.
 - Expected-red VCF run `34300381682` is terminal failure on all four native jobs
   at `57a0ca26dd8fa3bb31f5875ed72d21f1a7fca46a`; no new naive production fix
   is claimed. InferCNV now takes priority without deleting that evidence.
 
 ## Progress
+
+Design/routing commit `9dbcc0e75161705c386cf852a77b769141911a82` was pushed.
+Exact-head control-plane run `36215221498` passed. The baseline control-plane
+suite had seven passing tests before adding the new oracle checker. The
+new checker first failed because its module did not exist; its implementation
+and independent review are in progress, not yet accepted upstream evidence.
+
+The first harness candidate passed 25 control-plane tests, independently rerun
+by the controller. A fresh review still found three important gaps: serialized
+signal/profile contrasts were not checked; cell-group and chromosome/coordinate
+identities could change while IDs stayed constant; and the fixture put gain and
+loss in different observation groups instead of the declared combined case.
+Fix round 1 adds negative tests and addresses all three before any accepted
+oracle dispatch. JSON parameter completeness is included in the same bounded
+fix. The candidate has not been committed, published, or called compatible.
+
+The final scoped review accepted the harness for commit and remote execution.
+Round 2 added explicit stage-12 gain/loss median checks, a counterexample test,
+and the two missing explicit argument records. The controller independently
+reran all 37 Python tests and the architecture validator successfully. R syntax
+was checked with remote R 4.6.1, but real infercnv has not run. This acceptance
+applies to the harness only, not upstream outputs or native compatibility.
 
 - [x] Read-only source, upstream, product, and storage audit.
 - [x] Write design and oracle implementation plan.
@@ -48,7 +71,7 @@ be merged as inferCNV and the accepted destination is `rsomics-sc cnv`.
       explicit, separate source pinning from environment reproducibility, and
       require meaningful signal contrasts without rejecting legitimate unchanged
       singleton-chromosome smoothing.
-- [ ] Implement and independently review the real-package harness.
+- [x] Implement and independently review the real-package harness.
 - [ ] Pass exact-head control-plane checks and run the remote oracle.
 - [ ] Inspect artifacts and record numerical/provenance evidence.
 - [ ] Begin native implementation against accepted stage-level goldens.

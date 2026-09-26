@@ -81,7 +81,8 @@ no-reference baseline. All use `cutoff=0.1`, `min_cells_per_gene=3`,
 `plot_steps=FALSE`, `no_plot=TRUE`, `no_prelim_plot=TRUE`, `save_rds=TRUE`,
 `remove_genes_at_chr_ends=FALSE`, `prune_outliers=FALSE`,
 `mask_nonDE_genes=FALSE`, `num_ref_groups=NULL`, `cluster_by_groups=TRUE`,
-`cluster_references=TRUE`, and `up_to_step=14`. Object creation uses
+`cluster_references=TRUE`, `tumor_subcluster_partition_method="leiden"`,
+`BayesMaxPNormal=0.5`, and `up_to_step=14`. Object creation uses
 `min_max_counts_per_cell=c(1, Inf)`, `chr_exclude=c("chrX", "chrY", "chrM")`,
 and `max_cells_per_group=NULL`. Unselected behavior is not declared compatible.
 
@@ -138,6 +139,25 @@ This is one-platform oracle preparation, not the four-native-platform release
 gate required for the eventual Rust product.
 
 ## Subsequent implementation gates
+
+The following hand-derived witnesses are independent checks for the future
+native core, not assertions that the oracle or Rust has already executed them:
+
+| Contract | Input and expected result |
+|---|---|
+| Log base and inverse | Two genes, normal counts `[1,3]`, observation `[3,1]`, no gene filtering, window 1: stage 8 observation `[1,-1]`, stage 14 normal `[1,1]` and observation `[2,0.5]` |
+| No-reference baseline | The same counts with no reference: stage 14 columns `[1/sqrt(2),sqrt(2)]` and its reciprocal |
+| Group means, not cell pooling | Reference values `[0]` and `[4,4,4]`, queried value `5`: bounds subtraction gives `1`; mean-of-group-means gives `3`; pooled-cell subtraction would incorrectly give `2` |
+| Post-filter depth | Gene rows `[2,4]` and `[2,0]`, minimum two positive cells: the second gene drops and the first normalizes to `[3,3]` |
+| Short chromosome smoothing | Two genes `[0,10]`, window 101: `[500/101,510/101]`; a one-gene chromosome is unchanged |
+| Global cell median | One cell with chromosome vectors `[-2,0]` and `[4,10]`: median `2`, yielding `[-4,-2]` and `[2,8]` |
+
+Upstream can produce nonfinite values if a cell retains counts only in genes
+removed at step 2. For example, gene rows `[100,100,100,0]` and
+`[0,0,0,100]` pass the default creation count gate, but a three-positive-cell
+minimum removes the second gene and leaves the fourth cell with zero total.
+The native boundary must reject that state before normalization. Preserve this
+as an explicit fail-loud divergence from upstream `NaN`, not a finite golden.
 
 1. Import a strictly validated raw-count matrix, cell/group annotations, and
    gene order into product-local identity-aligned state. Preserve raw counts.
