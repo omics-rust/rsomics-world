@@ -1,7 +1,8 @@
 # Single-cell product dossier
 
-Status: upstream-operation and historical-asset audit complete. The target
-repository has not been created, and no product release has been published.
+Status: upstream-operation and historical-asset audit complete. An unpublished
+local target repository now holds the test-first native CNV core work. No
+public target repository or product release has been created.
 
 The user reprioritized inferCNV on 2026-09-26. Its implementation now proceeds
 before the broader counts-to-clusters slice, without changing product ownership
@@ -15,6 +16,12 @@ and maximum recomputation discrepancy `8.881784197001252e-16`. This enables
 native core work; it does not complete the CNV workflow or its release gates.
 The acceptance receipt is
 `../../.autopilot/state/infercnv-oracle-accepted-2026-09-26.md`.
+
+The [native core plan](../plans/2026-09-26-infercnv-native-core-plan.md) is
+in progress. Its frozen test-first candidate produced the intended absent-core
+Rust error in run `36218066698`; native correctness is not yet accepted. The
+next shipped-data fixture and matched benchmark boundary are recorded in
+`../../.autopilot/state/infercnv-real-data-preflight-2026-09-26.md`.
 
 ## Boundary
 
