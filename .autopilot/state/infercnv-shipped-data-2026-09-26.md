@@ -157,3 +157,30 @@ verification. Compared with red-3, only `tests/support/mod.rs` changes among
 point delegates to an explicit-root loader with contextual parse/I/O errors,
 checked dimensions and finite numeric values. The eight reader tests remain
 unchanged. No large-oracle feature or production change is in this snapshot.
+
+Green-4 world head `0c96a8a9b1be882959cd5a784a1dc0c96fdf94e4` passed
+Control plane run `36221298670`. Four-native run `36221334797` was dispatched
+at that exact head; results and evidence review are pending.
+
+Task 1 parser fix round 3 passed scoped independent review. Controller reran
+all 67 Python tests (1.805 s), architecture validation, whitespace and reviewed
+file hashes successfully. Fix commit `4afd7558a2407a5c43582ab473137d3271a9ad9f`
+passed exact-head Control plane run `36221478265`. A fresh shipped oracle
+execution is being dispatched; the earlier failed run remains unchanged.
+
+Task 2 acquisition preparation is bounded to an offline byte/provenance
+verifier and its standard-library tests. It receives downloaded exact API
+records/ZIP plus a committed receipt; only the controller performs downloads,
+chooses the accepted receipt and changes CI. No placeholder real receipt may
+be created. The product reader remains frozen while this independent
+control-plane component is implemented.
+
+The reader candidate's four-native evidence has now been verified: all targets
+passed 38 tests in debug/release and all 40 synthetic comparisons, with the
+same maximum delta as the accepted core; formatting and strict Clippy passed.
+Receipt: `infercnv-external-reader-native-2026-09-26.md`. Full Task 2 review and
+large-oracle conformance remain open; product changes are still uncommitted.
+
+Fresh shipped oracle run `36221554790` is executing at exact fixed head
+`4afd7558a2407a5c43582ab473137d3271a9ad9f`. Its output must be inspected and
+accepted independently; the old failed run is not substituted for it.
