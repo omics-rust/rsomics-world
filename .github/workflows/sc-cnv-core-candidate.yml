@@ -11,6 +11,14 @@ on:
         description: Run the initial Linux-only test-first failure capture
         type: boolean
         default: false
+      measurement:
+        description: Test private measurement support and compile its opt-in bench
+        type: boolean
+        default: false
+      resolve_measurement_lock:
+        description: Resolve the measurement dev-dependency only in a test-first run
+        type: boolean
+        default: false
       oracle_receipt:
         description: Explicit accepted external oracle; none runs only small fixtures
         type: choice
@@ -37,6 +45,8 @@ jobs:
       SNAPSHOT_ID: ${{ inputs.snapshot }}
       EXPECT_RED: ${{ inputs.expected_red }}
       ORACLE_RECEIPT: ${{ inputs.oracle_receipt }}
+      MEASUREMENT: ${{ inputs.measurement }}
+      RESOLVE_MEASUREMENT_LOCK: ${{ inputs.resolve_measurement_lock }}
     defaults:
       run:
         shell: bash
@@ -50,6 +60,10 @@ jobs:
         run: |
           set -euo pipefail
           [[ "$SNAPSHOT_ID" =~ ^(red|green)-[0-9]+$ ]]
+          if [[ "$RESOLVE_MEASUREMENT_LOCK" == true ]]; then
+            test "$EXPECT_RED" = true
+            test "$MEASUREMENT" = true
+          fi
           test "$(uname -s)" = '${{ matrix.system }}'
           test "$(uname -m)" = '${{ matrix.arch }}'
           export CARGO_HOME="$RUNNER_TEMP/cargo-home"
@@ -77,7 +91,8 @@ jobs:
             git rev-parse HEAD
             uname -a
             df -h
-            printf 'snapshot=%s\nexpected_red=%s\n' "$SNAPSHOT_ID" "$EXPECT_RED"
+            printf 'snapshot=%s\nexpected_red=%s\nmeasurement=%s\nresolve_measurement_lock=%s\n' \
+              "$SNAPSHOT_ID" "$EXPECT_RED" "$MEASUREMENT" "$RESOLVE_MEASUREMENT_LOCK"
             printf 'CARGO_HOME=%s\nCARGO_TARGET_DIR=%s\nRUSTUP_HOME=%s\nTMPDIR=%s\n' \
               "$CARGO_HOME" "$CARGO_TARGET_DIR" "$RUSTUP_HOME" "$TMPDIR"
           } | tee "$EVIDENCE/host.log"
@@ -134,6 +149,43 @@ jobs:
           set -euo pipefail
           rustc -Vv | tee "$EVIDENCE/rustc.log"
           cargo -V | tee "$EVIDENCE/cargo.log"
+          if [[ "$RESOLVE_MEASUREMENT_LOCK" == true ]]; then
+            cp Cargo.lock "$EVIDENCE/Cargo.before.lock"
+            cargo metadata --all-features --format-version 1 > "$EVIDENCE/lock-resolution-metadata.json"
+            python3 -B - <<'PY' | tee "$EVIDENCE/lock-resolution.log"
+          import os, tomllib
+          from pathlib import Path
+          before = tomllib.loads((Path(os.environ["EVIDENCE"]) / "Cargo.before.lock").read_text())
+          after = tomllib.loads(Path("Cargo.lock").read_text())
+          assert before.keys() == after.keys() and before["version"] == after["version"]
+          def packages(document):
+              result = {}
+              for package in document["package"]:
+                  key = (package["name"], package["version"], package.get("source"))
+                  assert key not in result, "duplicate lock package"
+                  result[key] = package
+              return result
+          old, new = packages(before), packages(after)
+          assert old.keys() <= new.keys(), "existing lock package removed or changed"
+          for key, package in old.items():
+              if key[0] == "rsomics-sc":
+                  expected = dict(package)
+                  expected["dependencies"] = sorted(package["dependencies"] + ["nix"])
+                  assert new[key] == expected, "unexpected root dependency change"
+              else:
+                  assert new[key] == package, f"existing package changed: {key}"
+          added = [new[key] for key in new.keys() - old.keys()]
+          assert {p["name"] for p in added} == {"nix", "cfg_aliases"}
+          assert len(added) == 2
+          nix = next(p for p in added if p["name"] == "nix")
+          assert nix["version"] == "0.29.0"
+          assert nix["dependencies"] == ["bitflags", "cfg-if", "cfg_aliases", "libc"]
+          for package in sorted(added, key=lambda p: p["name"]):
+              assert package["source"] == "registry+https://github.com/rust-lang/crates.io-index"
+              print(package["name"], package["version"], package["checksum"])
+          print("Existing lock packages preserved; only measurement dependency nodes added.")
+          PY
+          fi
           if [[ "$EXPECT_RED" == true && ! -f Cargo.lock ]]; then
             cargo generate-lockfile 2>&1 | tee "$EVIDENCE/lock-resolution.log"
           fi
@@ -148,6 +200,24 @@ jobs:
           assert all("bin" not in target["kind"] for target in package["targets"])
           PY
           cp Cargo.lock "$EVIDENCE/Cargo.lock"
+
+      - name: Test measurement support debug
+        if: ${{ !cancelled() && inputs.measurement && steps.metadata.outcome == 'success' }}
+        working-directory: ${{ runner.temp }}/sc-cnv-candidate
+        run: |
+          set -euo pipefail
+          cargo test --locked --features infercnv-measurement --test cnv_measurement_contract \
+            -- --nocapture 2>&1 | tee "$EVIDENCE/measurement-debug.log"
+
+      - name: Test measurement support release and compile bench
+        if: ${{ !cancelled() && inputs.measurement && !inputs.expected_red && steps.metadata.outcome == 'success' }}
+        working-directory: ${{ runner.temp }}/sc-cnv-candidate
+        run: |
+          set -euo pipefail
+          cargo test --locked --release --features infercnv-measurement --test cnv_measurement_contract \
+            -- --nocapture 2>&1 | tee "$EVIDENCE/measurement-release.log"
+          cargo check --locked --all-features --bench cnv_matched \
+            2>&1 | tee "$EVIDENCE/measurement-bench-check.log"
 
       - name: Require explicit external oracle configuration
         if: ${{ inputs.oracle_receipt != 'none' && !inputs.expected_red && matrix.target == 'linux-x86_64' }}
@@ -189,7 +259,11 @@ jobs:
           set -euo pipefail
           cargo fmt --all -- --check 2>&1 | tee "$EVIDENCE/format.log"
           clippy_args=(clippy --locked --all-targets)
-          if [[ "$ORACLE_RECEIPT" != none ]]; then clippy_args+=(--features external-infercnv-oracle); fi
+          if [[ "$MEASUREMENT" == true ]]; then
+            clippy_args+=(--all-features)
+          elif [[ "$ORACLE_RECEIPT" != none ]]; then
+            clippy_args+=(--features external-infercnv-oracle)
+          fi
           cargo "${clippy_args[@]}" -- -D warnings 2>&1 | tee "$EVIDENCE/clippy.log"
 
       - name: Verify source remains unchanged
@@ -197,7 +271,12 @@ jobs:
         working-directory: ${{ runner.temp }}/sc-cnv-candidate
         run: |
           set -euo pipefail
-          shasum -a 256 --check "$EVIDENCE/files.sha256" | tee "$EVIDENCE/source-after.log"
+          if [[ "$RESOLVE_MEASUREMENT_LOCK" == true ]]; then
+            awk '$2 != "Cargo.lock"' "$EVIDENCE/files.sha256" > "$EVIDENCE/unchanged-files.sha256"
+            shasum -a 256 --check "$EVIDENCE/unchanged-files.sha256" | tee "$EVIDENCE/source-after.log"
+          else
+            shasum -a 256 --check "$EVIDENCE/files.sha256" | tee "$EVIDENCE/source-after.log"
+          fi
 
       - name: Upload raw evidence
         if: always()

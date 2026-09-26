@@ -2,7 +2,7 @@
 
 ## Current status
 
-Design and implementation plan complete; implementation pending. No speed or
+Design and implementation plan complete; Task 1 test-first snapshot ready. No speed or
 memory advantage has been measured or accepted. This follows accepted shipped
 correctness, not another correctness reconstruction.
 
@@ -37,3 +37,20 @@ Independent design review required and now confirms both: full RDS group/hidden
 state checks, and binding timed source/lock to verified four-native bytes.
 Routine design/execution decisions use the user's explicit delegation; no
 additional approval pause, destructive action or automatic publication.
+
+## Test-first candidate
+
+Plan commit `1f28ece08eab71d9fde6322c4e0647286b89d8fd` passed exact-head
+Control plane run `36223517522`. Local external-temp standard-library checks:
+84 tests passed and control-plane validation passed. All ten candidate workflow
+shell blocks passed Bash 3.2 syntax; independent CI review has no important
+finding. Resolver stderr must additionally be preserved from original Actions
+logs; artifact-only logging improvement is a deferred minor.
+
+Frozen `red-4` contains 140 files; only Cargo.toml and the new six-test
+measurement contract differ from baseline. Support implementation is absent.
+Production bytes and original lock remain unchanged. Archive SHA256:
+`33d91da411d1518688ffb0b318fdded730fe6b1340834fc921eac05c42bba02c`;
+manifest SHA256:
+`bb8f6e6ef31668fa62a5a62a2826a4f0ce3b330ff02cd7e13cc0312cdd12719d`.
+Hosted red/remote lock resolution remain pending; no measurement was run.
