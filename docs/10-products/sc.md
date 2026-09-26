@@ -23,8 +23,19 @@ run `36219136430` passed 30 tests in debug/release on all four targets, with
 40 checkpoint comparisons per mode and maximum absolute delta
 `7.105427357601002e-15`. The exact acceptance scope is
 `../../.autopilot/state/infercnv-native-core-accepted-2026-09-26.md`.
-Next is [shipped-data conformance](../plans/2026-09-26-infercnv-shipped-data-plan.md),
-before performance or complete downstream-workflow claims.
+The [shipped-data conformance plan](../plans/2026-09-26-infercnv-shipped-data-plan.md)
+is now complete at product `bdcc8a3a`. Run `36222541338` passed 39 tests in
+debug/release on all four native targets, including 20 shipped subset/full
+stage comparisons per mode. Stages 1/2 were exact; maximum absolute difference
+was `1.2732925824820995e-10`, and maximum scaled difference was
+`0.010642098320408794` under the unchanged
+`1e-12 + 1e-12*abs(expected)` criterion. The acceptance receipt is
+`../../.autopilot/state/infercnv-shipped-native-accepted-2026-09-26.md`.
+
+Next is [matched prepared-input measurement](../plans/2026-09-26-infercnv-matched-performance-plan.md).
+No speed or memory advantage is accepted yet. Full downstream CNV behavior,
+representative cohort scaling, biological validation and publication remain
+separate gates; the native core is still unpublished and library-only.
 
 ## Boundary
 

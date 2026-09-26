@@ -54,3 +54,32 @@ Production bytes and original lock remain unchanged. Archive SHA256:
 manifest SHA256:
 `bb8f6e6ef31668fa62a5a62a2826a4f0ce3b330ff02cd7e13cc0312cdd12719d`.
 Hosted red/remote lock resolution remain pending; no measurement was run.
+
+## Actual red and resolved lock accepted
+
+World head `c1530ace5c09b777c8536cead3eb2254a9a4abed` passed Control plane
+run `36223712402`. Native expected-red run `36223760183` failed only the new
+measurement-support debug compilation because `benches/support/mod.rs` is
+absent. The ordinary 38 tests passed. This is an intended missing-support
+compile failure, not an executed assertion failure or dependency/runner issue.
+
+Controller verified original run/jobs/artifact metadata, ZIP digest and CRC,
+extracted bytes, frozen source, 140 before/139 after source entries (the
+intentional lock update excepted), test counts and complete lock difference.
+Only `nix` 0.29.0 and `cfg_aliases` 0.2.2 were added; every prior package's
+version/checksum/dependencies remained unchanged and root gained only nix.
+The exact generated lock was copied into the product for locked green builds.
+
+Evidence directory:
+`/Volumes/Zane's HDD/rsomics-fixtures/evidence/infercnv-matched-performance-2026-09-26/run-36223760183/`.
+
+| Evidence | SHA-256 |
+| --- | --- |
+| Original artifact 10900295452 | `b06c043d5161ec2ab1489411413aa2bab55b2ad63bda8cd9590946c4090634ea` |
+| Original Actions logs | `663234e2154474a145d1e3d233de7cfebbc904c5eed9b4826160e22dc33a8cc7` |
+| Resolved Cargo.lock | `e469fc5d773632a5893adfd3156ea816204b2208a3090fbd432fc37112d11f46` |
+
+Product implementation is now in progress; four-native green, R execution and
+actual performance measurement remain pending. The source-only R preparation
+review confirms ordered groups, exact count.data, NULL hidden spike, genuine
+run flags and accepted TSV pins; it is not an executed RDS/measurement result.
