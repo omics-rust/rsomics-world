@@ -1,0 +1,34 @@
+# SDD ledger — plan: docs/plans/2026-09-26-infercnv-shipped-data-plan.md
+
+Spec: `docs/plans/2026-09-26-infercnv-shipped-data-design.md`.
+Prepared continuation only; native core final acceptance precedes execution.
+
+Independent source-informed design review identified and resolved original
+matrix dialect, gene-ID subset selection, independently pinned source/input
+hashes, preservation of synthetic semantics, bounded validator memory and
+exact-artifact delivery to four-native CI. A follow-up explicitly required
+stage-1 raw-value equality and unchanged retained stage-2 values; both are
+now binding spec requirements. No real-data R checkpoint is accepted yet.
+
+## Preflight
+
+| Task/interface | Producer and consumer | Check |
+|---|---|---|
+| Task 1 internal | Pinned originals → canonical cases → real R checkpoints → independent checker | Original dialect, gene/cell joins, original hashes and stage-1/2 numeric identity are explicit; predictions are not truth |
+| Task 1 shared exporter | Two common R writers → synthetic and shipped generators | Existing synthetic schema/settings/negative tests remain unchanged and actual synthetic oracle reruns after extraction |
+| Task 1 → Task 2 | Accepted run/head/artifact/manifest receipt → explicit external native test | No latest lookup or missing-data skip; large data stays outside Git and runner-temp acquisition is digest-checked |
+| Task 2 internal | One native execution per prepared case → all stages and returned state | Exact identities, fixed numerical gate, unchanged input and four-native debug/release evidence remain mandatory |
+
+Ruling: Retain independent repositories and direct main commits — these are
+the user's operating rules — a mistake is corrected through ordinary commits,
+not by altering unrelated history.
+
+Ruling: Keep source/evidence and skill workspace on external disks without
+cleanup — local compilation remains prohibited above 80% boot APFS — remote
+validation latency and small extra external-storage usage are accepted costs.
+
+Ruling: Treat the shipped example as engineering evidence, not biological
+ground truth or large-cohort performance — provenance is limited to the pinned
+upstream distribution — any later claim needs its own stronger evidence.
+
+No task dispatched or complete yet.
