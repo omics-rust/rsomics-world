@@ -140,6 +140,9 @@ jobs:
             --output-dir "$RUNNER_TEMP/infercnv-oracle-verified" \
             2>&1 | tee "$EVIDENCE/oracle-acquisition/verification.log"
           oracle_root="$RUNNER_TEMP/infercnv-oracle-verified/shipped-bundle"
+          PYTHONDONTWRITEBYTECODE=1 python3 -B scripts/validate_infercnv_oracle.py \
+            "$RUNNER_TEMP/infercnv-oracle-verified/bundle" \
+            2>&1 | tee "$EVIDENCE/oracle-acquisition/synthetic-semantic-validation.log"
           PYTHONDONTWRITEBYTECODE=1 python3 -B scripts/validate_infercnv_shipped_oracle.py \
             "$oracle_root" 2>&1 | tee "$EVIDENCE/oracle-acquisition/semantic-validation.log"
           cp "$oracle_root/sha256-manifest.tsv" "$oracle_root/oracle.json" \

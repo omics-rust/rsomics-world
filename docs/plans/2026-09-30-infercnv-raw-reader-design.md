@@ -29,6 +29,11 @@ All records are validated, even if later excluded. Duplicate IDs, empty
 fields, negative/nonfinite counts, invalid coordinates, malformed rows and
 unknown annotation cells fail with path and record context.
 
+Annotation IDs are literal: native ingestion retains a valid first cell named
+`V1` and errors if it is unknown. It deliberately does not reproduce upstream's
+unconditional first-`V1` annotation deletion. This strict headerless dialect
+must be explicit rather than silently treating a real cell as a header.
+
 Remove configured chromosome labels and `(0,0)` positions, then derive
 chromosome ranks from the entire remaining position table, including genes
 absent from counts. Join in expression-row order and stably sort by chromosome
