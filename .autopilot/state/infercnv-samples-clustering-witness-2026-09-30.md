@@ -193,3 +193,9 @@ uses remote installed-package execution and external-only controller scratch.
 Fresh independent repair review approved another actual-package dispatch and
 reran all 58 focused tests successfully. This is dispatch approval only;
 run `36703475039` remains incomplete-evidence NO-GO.
+
+The visible-name repair is committed at world
+`8ee2ed9301c347b970f59ee5646de197535b7db6`; exact-head control run
+`36707224867` passed. Replacement actual-package run `36707344893` is running
+with `dataset=shipped` and `samples_clustering=true`; its API head matches.
+Original-artifact acceptance remains pending, regardless of runner status.
