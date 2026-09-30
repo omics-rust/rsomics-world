@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "purpose": "canonical raw-ingestion inputs, not a measurement acceptance",
+  "accepted_original_run": 36707344893,
+  "accepted_original_artifact": 11092988090,
+  "accepted_artifact_sha256": "2481188b6f3d058d154bf16df9297a9eca261c6df84280e7d16569c92da28bd8",
+  "accepted_oracle_receipt_sha256": "41284ea567fd2c41a48e22eef3c9063a59944607828ebc9cdea8a3f6da82e526",
+  "source_commit": "b421d9405c97a309b081ef86d455e976df93eae4",
+  "source_archive_sha256": "b2a1b6f8cc09dc04562513e3cd877b3c97a6efcd5ff92cb5e0763660905e3207",
+  "raw_genes": 10338,
+  "created_genes": 9939,
+  "cells": 184,
+  "config": {
+    "reference_groups": ["Microglia/Macrophage", "Oligodendrocytes (non-malignant)"],
+    "excluded_chromosomes": ["chrX", "chrY", "chrM"],
+    "min_counts_per_cell": 1,
+    "max_counts_per_cell": "Inf",
+    "delimiter": "\t",
+    "max_cells_per_group": null
+  },
+  "plain": {
+    "path": "shipped-bundle/inputs/canonical-full.tsv",
+    "bytes": 36378958,
+    "sha256": "539ea675832047cc77dc550c648dd421f2f5370aa2e7b52e0907b7dc690237c5"
+  },
+  "gzip": {
+    "path": "ingestion-witness/shipped_full/counts.tsv.gz",
+    "bytes": 4407153,
+    "sha256": "489e4ea3ae98886eee1fbba5c01484b1ba0f10989d5e79b4c01873a0f1e15e12",
+    "decoded_bytes": 36378958,
+    "decoded_sha256": "539ea675832047cc77dc550c648dd421f2f5370aa2e7b52e0907b7dc690237c5"
+  },
+  "files": {
+    "shipped-bundle/inputs/gencode_downsampled.EXAMPLE_ONLY_DONT_REUSE.txt": "4ec63e049ea8299948fb730c2f60ca5a038a798b77cec3bb918fda572b2dc52e",
+    "shipped-bundle/inputs/oligodendroglioma_annotations_downsampled.txt": "345493e0686d75418427e9c4401f3f7bbb55ae3f61deee074ccee8882dc4dc63",
+    "shipped-bundle/full/01.tsv": "e8c488e7cbc21307ac8b39ba26dab43e2a04d7f2fdf3f158e244a65afa4a654b",
+    "shipped-bundle/full/01.genes.tsv": "8aad9e524e1be3f2538b01b11a0dc81dfac34e8b27690d64b2232c3944e7b2da",
+    "shipped-bundle/full/01.cells.tsv": "36ffde7c1e10dd025a6e2bedab785c9d1bc32f2c02dfd0570db4e7a8d1300e03",
+    "ingestion-witness/shipped_full/plain/maps.tsv": "2940452c0f4bf465670722eab85405add8fa7d101884ed6546638a02281b2500",
+    "shipped-bundle/full/upstream/01_incoming_data.infercnv_obj": "f5f1aa719152c87ad009189e4be0a6b20cf0c4c9dbedf528a0bbffa9fe681200"
+  },
+  "factory_source": {
+    "R/inferCNV.R": "2b25f5fdf9665f382073255e44729ff38cca32f3862c158f91ebf58d43e475a2",
+    "R/inferCNV_constants.R": "ba6293052b487156706be1f03c8a2ed793f548b037eabf22e58cab5a54b4c9e3"
+  },
+  "required_installed_functions": ["CreateInfercnvObject", ".order_reduce", "validate_infercnv_obj"]
+}

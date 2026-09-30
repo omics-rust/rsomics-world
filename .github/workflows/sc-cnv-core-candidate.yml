@@ -15,6 +15,10 @@ on:
         description: Test private measurement support and compile its opt-in bench
         type: boolean
         default: false
+      ingestion_measurement:
+        description: Test private exact raw-creation comparison and export support
+        type: boolean
+        default: false
       resolve_measurement_lock:
         description: Resolve the measurement dev-dependency only in a test-first run
         type: boolean
@@ -50,6 +54,7 @@ jobs:
       EXPECT_RED: ${{ inputs.expected_red }}
       ORACLE_RECEIPT: ${{ inputs.oracle_receipt }}
       MEASUREMENT: ${{ inputs.measurement }}
+      INGESTION_MEASUREMENT: ${{ inputs.ingestion_measurement }}
       RESOLVE_MEASUREMENT_LOCK: ${{ inputs.resolve_measurement_lock }}
       RESOLVE_INPUT_LOCK: ${{ inputs.resolve_input_lock }}
     defaults:
@@ -65,6 +70,9 @@ jobs:
         run: |
           set -euo pipefail
           [[ "$SNAPSHOT_ID" =~ ^(red|green)-[0-9]+$ ]]
+          if [[ "$INGESTION_MEASUREMENT" == true ]]; then
+            test "$MEASUREMENT" = true
+          fi
           if [[ "$RESOLVE_MEASUREMENT_LOCK" == true ]]; then
             test "$EXPECT_RED" = true
             test "$MEASUREMENT" = true
@@ -100,8 +108,8 @@ jobs:
             git rev-parse HEAD
             uname -a
             df -h
-            printf 'snapshot=%s\nexpected_red=%s\nmeasurement=%s\nresolve_measurement_lock=%s\n' \
-              "$SNAPSHOT_ID" "$EXPECT_RED" "$MEASUREMENT" "$RESOLVE_MEASUREMENT_LOCK"
+            printf 'snapshot=%s\nexpected_red=%s\nmeasurement=%s\ningestion_measurement=%s\nresolve_measurement_lock=%s\n' \
+              "$SNAPSHOT_ID" "$EXPECT_RED" "$MEASUREMENT" "$INGESTION_MEASUREMENT" "$RESOLVE_MEASUREMENT_LOCK"
             printf 'CARGO_HOME=%s\nCARGO_TARGET_DIR=%s\nRUSTUP_HOME=%s\nTMPDIR=%s\n' \
               "$CARGO_HOME" "$CARGO_TARGET_DIR" "$RUSTUP_HOME" "$TMPDIR"
           } | tee "$EVIDENCE/host.log"
@@ -218,6 +226,22 @@ jobs:
           assert all("bin" not in target["kind"] for target in package["targets"])
           PY
           cp Cargo.lock "$EVIDENCE/Cargo.lock"
+
+      - name: Test ingestion support debug
+        if: ${{ !cancelled() && inputs.ingestion_measurement && steps.metadata.outcome == 'success' }}
+        working-directory: ${{ runner.temp }}/sc-cnv-candidate
+        run: |
+          set -euo pipefail
+          cargo test --locked --features infercnv-measurement --test cnv_ingestion_measurement_contract \
+            -- --nocapture 2>&1 | tee "$EVIDENCE/ingestion-debug.log"
+
+      - name: Test ingestion support release
+        if: ${{ !cancelled() && inputs.ingestion_measurement && !inputs.expected_red && steps.metadata.outcome == 'success' }}
+        working-directory: ${{ runner.temp }}/sc-cnv-candidate
+        run: |
+          set -euo pipefail
+          cargo test --locked --release --features infercnv-measurement --test cnv_ingestion_measurement_contract \
+            -- --nocapture 2>&1 | tee "$EVIDENCE/ingestion-release.log"
 
       - name: Test measurement support debug
         if: ${{ !cancelled() && inputs.measurement && steps.metadata.outcome == 'success' }}
