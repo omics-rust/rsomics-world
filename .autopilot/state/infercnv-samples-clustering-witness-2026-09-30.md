@@ -1,6 +1,6 @@
 # inferCNV samples/Ward clustering witness
 
-Status: candidate; installed-package execution and artifact acceptance pending.
+Status: candidate dispatched; installed-package execution and artifact acceptance pending.
 
 The user explicitly resumed unattended work on 2026-09-30. InferCNV remains
 first; the goal tool's historical paused status does not override that request.
@@ -74,3 +74,12 @@ complete candidate, verify exact-head CI, dispatch the shipped dataset with
 `samples_clustering=true`, and preserve and independently inspect original
 logs/artifacts before accepting any witness. Only accepted evidence can
 justify a native clustering model or implementation.
+
+## Exact-source dispatch
+
+Fresh review approved dispatch after the corrected package-library regressions.
+Candidate world head `e38c5f3250748890f321dba0c9cfc85d07bba672` passed
+exact-head control-plane run `36701542024`. Installed-package oracle run
+`36701645992` was dispatched with `dataset=shipped` and
+`samples_clustering=true`; its API-reported head matches the candidate.
+No successful package outcome or artifact acceptance has yet been established.
