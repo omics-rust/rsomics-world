@@ -228,6 +228,24 @@ jobs:
           PYTHONDONTWRITEBYTECODE=1 python3 -B scripts/validate_infercnv_ingestion_witness.py \
             "${checker[@]}" 2>&1 | tee "$EVIDENCE_DIR/ingestion-witness-validation.log"
 
+      - name: Capture creation format and filter edge probes
+        if: env.ORACLE_DATASET == 'shipped'
+        shell: bash
+        run: |
+          set -euo pipefail
+          PYTHONDONTWRITEBYTECODE=1 python3 -B -m unittest discover -s scripts \
+            -p test_infercnv_creation_edges.py \
+            2>&1 | tee "$EVIDENCE_DIR/creation-edge-checker-tests.log"
+          sha256sum scripts/infercnv_creation_edges.R \
+            scripts/validate_infercnv_creation_edges.py scripts/test_infercnv_creation_edges.py \
+            > "$EVIDENCE_DIR/creation-edge-code-sha256.txt"
+          Rscript --vanilla scripts/infercnv_creation_edges.R \
+            "$SHIPPED_OUTPUT" "$EVIDENCE_DIR/creation-edges" \
+            2>&1 | tee "$EVIDENCE_DIR/creation-edges-run.log"
+          PYTHONDONTWRITEBYTECODE=1 python3 -B scripts/validate_infercnv_creation_edges.py \
+            "$SHIPPED_OUTPUT" "$EVIDENCE_DIR/creation-edges" \
+            2>&1 | tee "$EVIDENCE_DIR/creation-edges-validation.log"
+
       - name: Validate fresh full-case measurement pins
         if: env.MATCHED_SNAPSHOT != ''
         shell: bash
