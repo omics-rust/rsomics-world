@@ -92,12 +92,19 @@ jobs:
             "$CARGO_HOME" "$CARGO_TARGET_DIR" "$RUSTUP_HOME" "$TMPDIR" "$EVIDENCE" >> "$GITHUB_ENV"
           mkdir -p "$CARGO_HOME" "$CARGO_TARGET_DIR" "$RUSTUP_HOME" "$TMPDIR" "$EVIDENCE"
           snapshot="$GITHUB_WORKSPACE/.autopilot/snapshots/sc-cnv-core-2026-09-26/$SNAPSHOT_ID"
+          mkdir "$EVIDENCE/source-guard"
+          cp scripts/infercnv_source_snapshot.py scripts/test_infercnv_source_snapshot.py "$EVIDENCE/source-guard/"
           (
-            cd "$snapshot"
-            shasum -a 256 --check checksums.sha256
-          ) | tee "$EVIDENCE/archive-verification.log"
-          mkdir "$RUNNER_TEMP/sc-cnv-candidate"
-          tar -xzf "$snapshot/source.tar.gz" -C "$RUNNER_TEMP/sc-cnv-candidate" --no-same-owner
+            cd "$EVIDENCE/source-guard"
+            shasum -a 256 infercnv_source_snapshot.py test_infercnv_source_snapshot.py
+          ) > "$EVIDENCE/source-guard/checksums.sha256"
+          PYTHONDONTWRITEBYTECODE=1 python3 -B -m unittest discover \
+            -s scripts -p test_infercnv_source_snapshot.py \
+            2>&1 | tee "$EVIDENCE/source-guard-tests.log"
+          PYTHONDONTWRITEBYTECODE=1 python3 -B scripts/infercnv_source_snapshot.py \
+            --snapshot-dir "$snapshot" \
+            --output-dir "$RUNNER_TEMP/sc-cnv-candidate" \
+            2>&1 | tee "$EVIDENCE/archive-verification.log"
           cp "$snapshot/source.tar.gz" "$snapshot/files.sha256" \
             "$snapshot/checksums.sha256" "$snapshot/README.md" "$EVIDENCE/"
           (

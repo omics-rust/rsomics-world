@@ -1300,6 +1300,22 @@ mod tests {
 
 Keep Cargo.lock, old support/tests/bench and all `src/` bytes identical to baseline. Build the new immutable archive/manifest/checksums as in Task 1, with README stating private support only and no timed factory/performance claim. Test logs/source after the run must match this same archive, not a subsequent edited version.
 
+Root artifact audit of green-11 discovered a packaging defect: default macOS
+tar added 146 undeclared AppleDouble entries. Its code tests passed, but the
+archive cannot satisfy the existing strict source verifier. Preserve red-7
+and green-11 unchanged; freeze green-12 with identical source manifest using:
+
+```bash
+COPYFILE_DISABLE=1 tar --no-xattrs --format=ustar -czf "/Volumes/Zane's HDD/Documents/rsomics-world/.autopilot/snapshots/sc-cnv-core-2026-09-26/green-12/source.tar.gz" -T /Volumes/KIOXIA/Developments/tmp/rsomics-ingestion-support-proposal-20260930/green-11-files.list
+```
+
+From green-12, hash README.md, files.sha256 and source.tar.gz into the checksum
+file. Verify exactly 146 unique safe regular archive members, every manifest
+hash and no metadata extras before extraction. The separate source-freeze
+guard plan adds this same pre-extraction check to the candidate workflow;
+then use `snapshot=green-12` in the Task 3 dispatch. No source/test or numerical
+gate is changed; original uploads and failed packaging assertions remain.
+
 - [x] **Step 3: Root reviews complete source/test and requests a fresh independent code review of this owning-repo diff against e62fc960.**
 
 Review expected-role boundary, coverage/order, bit comparisons, 17e roundtrip, field preflight and every opening/write/flush error path. Resolve critical/important findings with failing regression then minimal fix; preserve all deviations in the measurement ledger. Review approves code only until native evidence arrives.

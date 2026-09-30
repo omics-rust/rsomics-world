@@ -344,6 +344,7 @@ jobs:
             "$RUST_SOURCE" "$RUST_BINARY" > "$EVIDENCE_DIR/build-configuration.tsv"
           sha256sum scripts/infercnv_matched.R scripts/infercnv_matched_support.R \
             scripts/measure_infercnv.py scripts/verify_infercnv_measurement_snapshot.py \
+            scripts/infercnv_source_snapshot.py \
             .autopilot/oracles/infercnv-measurement-input-2026-09-26.json \
             .autopilot/oracles/infercnv-measurement-candidate-2026-09-26.json \
             "$RUST_BINARY" > "$EVIDENCE_DIR/measurement-code-sha256.txt"

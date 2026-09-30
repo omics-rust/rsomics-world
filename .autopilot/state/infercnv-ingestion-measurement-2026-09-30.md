@@ -195,3 +195,77 @@ unchanged complete 223-test suite then passed, retained at external scratch
 `rsomics-ingestion-support-proposal-20260930/controller-green11-recheck.log`.
 No skip, weakened assertion or controller-code change was used. Architecture
 and whitespace checks pass; exact-head hosted CI is still required.
+
+## Native green-11 code tests pass; archive packaging rejected
+
+World `9bdf3952156f6ad6c108fbaffaa7019176b23c2f` passed control run
+`36717967981`. Native run `36718150977`, attempt 1, succeeded on Linux/macOS
+x86_64/aarch64. Each target/profile passed 55 private creation-support tests,
+11 old measurement tests and 72 ordinary tests including three full external
+oracle tests. Linux format/strict all-feature Clippy and missing-oracle failure
+check passed. Old bench checks passed on all targets.
+
+Root retained all four original artifact API replies/ZIPs, run/jobs APIs and
+original log ZIP externally under `run-36718150977`. ZIP API digests/sizes,
+safe unique inventories/CRCs, source before/after, actual archive/manifest/lock,
+native rustc 1.91 hosts and original successful test summaries were verified.
+Original logs SHA256:
+`f3a602b30be0d31ed195b34dd3d4d429944e4e6f11be07e0e046f34664c56bfb`.
+
+The subsequent strict tar inventory assertion failed: root's default macOS
+tar produced 292 regular members, 146 of them undeclared AppleDouble xattr
+metadata. red-7 similarly has 145 extra metadata entries; older green-10 and
+accepted measurement green-5 do not. Both new checksum files also omitted
+README.md, which the existing downstream snapshot verifier requires.
+This is root's source-packaging error, not a production algorithm failure or
+source hash disagreement. Do not accept green-11 as a downstream measurement
+archive or ignore extras in the strict verifier. Preserve both original
+snapshots/uploads; rebuild clean green-12 with identical 146 source bytes,
+authenticate all three snapshot files and add a regression-tested reusable
+pre-extraction source guard before fresh four-native dispatch/acceptance.
+
+## Shared source guard and clean green-12
+
+Root preserved genuine missing-module RED before adding the shared private
+guard. Focused GREEN passes 19 tests; the unchanged old verifier suite passes
+12; all 242 controller tests and architecture/whitespace checks pass. YAML
+and all 12/22 Bash blocks in the two modified workflows pass. Complete raw
+logs are retained under external scratch
+`rsomics-source-freeze-guard-proposal-20260930/root-*.log`.
+
+The candidate gate now verifies the same strict logical archive contract as
+the measured-source receipt verifier before Rust setup. It preserves copied
+guard/test bytes and hashes in the uploaded evidence. The oracle workflow
+also includes the new imported helper in its existing controller-code hashes.
+No receipt schema, timer, Cargo policy, production or numerical rule changes.
+
+Guard SHA256: `095ebb67a2d9a050c20b6e876f2b0c9cfd26fcbf8f0ce3601a8124b292b553f2`.
+Tests SHA256: `4034bd9fde999458c900a6e7d0eff72e1607e6f555bf869d4b68bbcde5baf2fe`.
+Root verified green-5 through the generic guard and the active accepted
+prepared receipt's green-7 through the full updated verify_snapshot entry,
+using original saved native-run/jobs APIs. Both pass unchanged. Original
+green-11 rejects its unsorted two-entry checksums; its original tar separately
+rejects undeclared logical members. The sorted two-entry mutation test proves
+missing README rejection without rewriting original evidence.
+
+Clean green-12 was packaged with COPYFILE_DISABLE=1, --no-xattrs and ustar.
+Its 146 manifest/source hashes are byte-identical to green-11; only archive
+representation and snapshot documentation/checksums differ. Archive SHA256:
+`a5dc9b50f9e521e70351d77506ed1de3ccc15b394475dd39f7a00f7c5a97fd90`.
+Manifest SHA256:
+`7c67f2b40cf30051539ca6250dae23b3af2912335d386801f47afc27f399adba`.
+README SHA256:
+`605bb074544fd8a2b1b618a523d9607cd0d2154a8e39aa17b63c927a910c55d3`.
+All three sorted checksum entries and exact 146 logical regular members pass
+the actual new guard. Fresh exact-head controller and four-native candidate
+gates remain pending; green-11 is not retroactively accepted.
+
+Independent proposal review found no critical/important defect. A minor
+coverage extension is deferred: PAX representation is tested with mtime,
+not a separate overridden final-path/long-path case; actual logical names
+are checked after tarfile resolution. This is not a physical-header audit.
+
+Fresh independent review of the actual owning-world integration also found
+no critical/important defect. It verified unchanged receipt/run/Cargo/
+post-trial ASTs, both workflow gates and exact clean archive/member bytes.
+Its approval is code-level only, not an executed native or performance gate.
