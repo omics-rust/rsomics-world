@@ -54,6 +54,14 @@ recorded in the
 [execution ledger](../../.autopilot/state/infercnv-matched-performance-2026-09-26.md).
 The native core remains unpublished and library-only.
 
+The user manually resumed work on 2026-09-30. The next
+[creation-witness design](../plans/2026-09-30-infercnv-ingestion-witness-design.md)
+and [plan](../plans/2026-09-30-infercnv-ingestion-witness-plan.md) establish
+canonical plain/gzip and ordered-group evidence before product raw ingestion.
+The candidate scripts have passed syntax/checker review; installed-package
+execution and evidence acceptance are pending in the
+[resumed ledger](../../.autopilot/state/infercnv-ingestion-witness-2026-09-30.md).
+
 ## Boundary
 
 `rsomics-sc` is one stateful single-cell expression-analysis product. It owns
