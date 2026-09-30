@@ -132,3 +132,66 @@ requires the existing measurement flag and runs the dedicated test in debug
 and release. YAML, all 12 Bash blocks and the actual four-case selector guard
 passed; all 223 controller tests and architecture checks passed. Native RED
 dispatch, original failure inspection and four-native GREEN remain pending.
+
+## Genuine remote RED accepted
+
+World `dc4a051e9a5a70f26ed15e42095ec0fff8267892` passed exact-head control run
+`36715756810`. Native test-first run `36715831817`, attempt 1, failed only the
+new ingestion-support debug step after valid Linux x86_64 source/dependency
+metadata. Ordinary debug tests passed 69 without the three external-oracle
+tests; old measurement support passed 11. Source-before/after, archive/lock,
+target-directory and upload steps succeeded. The helper is absent from the
+original 145-file source snapshot; new test bytes match the frozen hash.
+
+Original APIs, logs and ZIP are retained at
+`/Volumes/Zane's HDD/rsomics-fixtures/evidence/infercnv-ingestion-measurement-2026-09-30/run-36715831817/`.
+Artifact `11096815340` is 624,670 bytes, SHA256
+`b3699deaf56eb4d07191db2f233cf3a072ce6b1c289a34e7eb862e41ddd30cec`.
+Original logs SHA256:
+`447ae5fb3bc059f90c52b460e538d876838d7662075864476635a93d82e2a4f7`.
+Root verified API status/head/digest/size, CRC/safe unique ZIP paths, all source
+checks, archive/manifest/lock hashes and exact compiler diagnostic.
+
+Ruling: the plan predicted E0583, but the explicit Rust `#[path]` attribute
+produces `couldn't read tests/../benches/ingestion_support/mod.rs` with OS error
+2 instead. Accept only that exact missing-helper diagnostic plus the verified
+successful prerequisites, not a generic compilation failure. This corrects
+the plan's diagnostic spelling; no code, source or gate is waived. Cost if
+wrong would be accepting an unrelated compile failure, prevented by original
+path/location, one-error count, source and dependency checks. Original RED
+README and original upload remain preserved unchanged.
+
+Fresh independent complete-code review found no critical/important defect and
+approved code only. One minor test gap is deferred: existing regular-file
+output target is not a separate sentinel test, although `create_dir` rejects
+it before writing. Existing empty/nonempty directories, repeated export and
+missing-parent tests cover the known tested preservation paths. The injected
+callback error after a successful flush is not an OS flush-failure proof.
+Four-native GREEN and actual timing remain pending.
+
+## Private implementation frozen for native GREEN
+
+After accepting the exact missing-helper RED, root added only the reviewed
+private helper. External Rust 1.91 formatting passes for both new files.
+All green-10 source hashes excluding Cargo.toml still match. No local build,
+production change, old measurement change or Cargo.lock change occurred.
+
+Candidate `green-11` contains 146 source files. Archive SHA256:
+`cce4714dc2364f0747c7034e15e9cfc91f6d35a26f220df88011c53e0f93e54b`.
+Manifest SHA256:
+`7c67f2b40cf30051539ca6250dae23b3af2912335d386801f47afc27f399adba`.
+The new test and Cargo registration remain byte-identical to red-7; helper
+SHA256 is `62c66bd97dc855614fcbf906f3559316ca030e2fd556e7db277cf65d64252b60`.
+Archive/checksum verification passed. Independent code review covers these
+same helper/test bytes, not an untested subsequent edit. Native correctness,
+four-target strict Clippy/format gates and original artifact inspection are
+still pending; there is still no timed factory or performance claim.
+
+Controller recheck first passed 222 tests and failed the pre-existing wrapped
+descendant timeout test with macOS `killpg(SIGKILL)` PermissionError after
+termination. Root found no surviving named descendant, read the complete
+process cleanup/test path, and reran the unchanged test successfully. The
+unchanged complete 223-test suite then passed, retained at external scratch
+`rsomics-ingestion-support-proposal-20260930/controller-green11-recheck.log`.
+No skip, weakened assertion or controller-code change was used. Architecture
+and whitespace checks pass; exact-head hosted CI is still required.

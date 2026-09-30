@@ -881,7 +881,7 @@ The generated files are evidence/archive outputs, not hand-edited source.
 Snapshot README is the complete tracked `red-7/README.md`. Source lists must
 first be checked for only the two owned modifications and absent helper.
 
-- [ ] **Step 4: Verify controller tests, commit exact world plan/workflow/RED state, push and wait for exact-head Control plane CI.**
+- [x] **Step 4: Verify controller tests, commit exact world plan/workflow/RED state, push and wait for exact-head Control plane CI.**
 
 ```bash
 TMPDIR=/Volumes/KIOXIA/Developments/tmp PYTHONDONTWRITEBYTECODE=1 python3 -B -m unittest discover -s scripts -p 'test_*.py'
@@ -897,7 +897,14 @@ After exact-head CI passes dispatch:
 gh workflow run sc-cnv-core-candidate.yml --ref main -f snapshot=red-7 -f expected_red=true -f measurement=true -f ingestion_measurement=true -f oracle_receipt=none
 ```
 
-Expected: Linux x86_64 metadata/source/dependencies succeed; dedicated new test compilation fails specifically E0583 because `benches/ingestion_support/mod.rs` is absent. Original API/log/archive/CRC/path/source checks and ordinary tests must distinguish this intended RED from environment or syntax failure. Preserve the complete failure before implementation.
+Expected: Linux x86_64 metadata/source/dependencies succeed; dedicated new test
+compilation fails specifically because `tests/../benches/ingestion_support/mod.rs`
+is absent. The actual Rust 1.91 path-attribute diagnostic is `couldn't read`
+with `No such file or directory (os error 2)`, not E0583. Original
+API/log/archive/CRC/path/source checks and ordinary tests must distinguish
+this intended RED from environment or syntax failure. Preserve the complete
+failure before implementation. The original RED README's E0583 expectation
+remains historical; the exact diagnostic correction is ledgered, not hidden.
 
 ### Task 2: Implement the private helper against the observed RED
 
@@ -905,7 +912,7 @@ Expected: Linux x86_64 metadata/source/dependencies succeed; dedicated new test 
 
 **Interfaces:** consumes checked CreatedInput getters and trusted `ExpectedStage::load(full_dir, 1)`; produces exactly the test contract's private type/getter/functions. Roles derive from actual reference indices, not shipped reference-name constants.
 
-- [ ] **Step 1: Write this complete minimal implementation after the genuine RED.**
+- [x] **Step 1: Write this complete minimal implementation after the genuine RED.**
 
 ```rust
 #[allow(
@@ -1289,11 +1296,11 @@ mod tests {
 
 ```
 
-- [ ] **Step 2: Format the two new files using external Rust 1.91 rustfmt, and freeze green-11.**
+- [x] **Step 2: Format the two new files using external Rust 1.91 rustfmt, and freeze green-11.**
 
 Keep Cargo.lock, old support/tests/bench and all `src/` bytes identical to baseline. Build the new immutable archive/manifest/checksums as in Task 1, with README stating private support only and no timed factory/performance claim. Test logs/source after the run must match this same archive, not a subsequent edited version.
 
-- [ ] **Step 3: Root reviews complete source/test and requests a fresh independent code review of this owning-repo diff against e62fc960.**
+- [x] **Step 3: Root reviews complete source/test and requests a fresh independent code review of this owning-repo diff against e62fc960.**
 
 Review expected-role boundary, coverage/order, bit comparisons, 17e roundtrip, field preflight and every opening/write/flush error path. Resolve critical/important findings with failing regression then minimal fix; preserve all deviations in the measurement ledger. Review approves code only until native evidence arrives.
 
