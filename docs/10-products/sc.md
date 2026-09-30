@@ -77,9 +77,20 @@ tolerance. Its [acceptance receipt](../../.autopilot/state/infercnv-raw-reader-a
 and [ledger](../../.autopilot/state/infercnv-raw-reader-2026-09-30.md) retain
 source/API/archive proofs, the failed canonical-padding run and strict scope.
 No ingestion-speed, default inferCNV or product-release claim follows.
-Next, the [samples/Ward clustering witness](../plans/2026-09-30-infercnv-samples-clustering-witness-design.md)
-and [plan](../plans/2026-09-30-infercnv-samples-clustering-witness-plan.md) collect
-actual trees and ordered memberships before specifying native clustering.
+The [samples/Ward clustering witness](../plans/2026-09-30-infercnv-samples-clustering-witness-design.md)
+and [plan](../plans/2026-09-30-infercnv-samples-clustering-witness-plan.md) now have
+bounded installed-package acceptance in original run `36707344893`: 36 cases,
+52 routes, 160 groups and 152 trees. Namespace calls and actual stage-1-checkpoint
+through-step-15 runs agree. Zero-gene/tie/small-group/collision outcomes are
+preserved, while near-threshold genes remain unresolved. The
+[receipt](../../.autopilot/state/infercnv-samples-clustering-accepted-2026-09-30.md)
+does not accept native trees, new numerical tolerances, raw-to-tree performance
+or full inferCNV. Native clustering follows this evidence rather than the old
+generic wrappers. The independent
+[raw-ingestion measurement design](../plans/2026-09-30-infercnv-raw-ingestion-measurement-design.md)
+has a reviewed exact warm/measured export checker; actual trials and speed
+acceptance remain pending in its
+[ledger](../../.autopilot/state/infercnv-ingestion-measurement-2026-09-30.md).
 
 ## Boundary
 

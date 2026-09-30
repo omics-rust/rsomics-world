@@ -1,7 +1,7 @@
 # inferCNV samples/Ward clustering witness
 
-Status: replacement execution succeeded, but original artifact acceptance
-failed because two installed-function records were omitted during upload.
+Status: bounded installed-package witness accepted from original run
+`36707344893`. Previous locale failure and incomplete upload remain preserved.
 
 The user explicitly resumed unattended work on 2026-09-30. InferCNV remains
 first; the goal tool's historical paused status does not override that request.
@@ -196,6 +196,21 @@ run `36703475039` remains incomplete-evidence NO-GO.
 
 The visible-name repair is committed at world
 `8ee2ed9301c347b970f59ee5646de197535b7db6`; exact-head control run
-`36707224867` passed. Replacement actual-package run `36707344893` is running
+`36707224867` passed. Replacement actual-package run `36707344893` was dispatched
 with `dataset=shipped` and `samples_clustering=true`; its API head matches.
-Original-artifact acceptance remains pending, regardless of runner status.
+At dispatch, original-artifact acceptance remained pending regardless of runner status.
+
+## Original replacement artifact accepted
+
+Run `36707344893` succeeded at the exact visible-name repair head. Root and a
+fresh independent reviewer accepted the complete original uploaded bytes:
+all four installed-function records, all 939 inventoried hashes and exactly
+940 witness files including JSON. The offline checker passed all 36 cases;
+independent route checks covered 52 routes, 160 groups and 152 trees.
+
+The [acceptance record](infercnv-samples-clustering-accepted-2026-09-30.md)
+and [receipt](../oracles/infercnv-samples-clustering-witness-2026-09-30.json)
+retain original hashes, runtime/source bindings, results and exclusions.
+Near-threshold genes remain unresolved characterization. This accepts an
+installed-package witness, not native clustering, ingestion performance,
+full inferCNV or publication.

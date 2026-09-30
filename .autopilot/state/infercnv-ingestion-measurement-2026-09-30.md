@@ -1,7 +1,7 @@
 # Canonical raw-ingestion measurement ledger
 
-Status: exact controller helper implemented and independently reviewed;
-exact-head CI pending. No actual timed factory or speed/resource claim.
+Status: exact controller helper implemented, independently reviewed and
+accepted by exact-head CI. No actual timed factory or speed/resource claim.
 
 Design:
 `../../docs/plans/2026-09-30-infercnv-raw-ingestion-measurement-design.md`.
@@ -41,7 +41,7 @@ Frozen controller SHA256:
 
 Product `rsomics-sc` is still clean at
 `e62fc960aeeb9dc543298885213cda6a57196fe9`; production Rust, Cargo.lock and
-  old prepared measurement support have not changed. No local build is permitted
+old prepared measurement support have not changed. No local build is permitted
 while boot APFS remains above the 80% gate. Controller scratch stays external.
 
 Fresh independent code review approved this exact-state helper after reading
@@ -49,9 +49,13 @@ both complete files and independently passing 21 focused and 223 controller
 tests. Review accepted only the helper contract, not a source-pinned or timed
 measurement. Its frozen hashes remain unchanged.
 
+Controller commit `afb398e992664adfbeaa5a7b89c4cfb7a55e7800` is pushed to main.
+Exact-head Control plane run `36710205465` completed successfully. This gate
+accepts the helper alone, not a timed trial or product performance.
+
 ## Remaining gates
 
-1. Independent full helper review, main commit/push and exact-head controller CI.
+1. Complete: independent helper review, main push and exact-head controller CI.
 2. Private Rust creation comparison/export support with its own implementation
    plan, test-first failures and four-native debug/release gate.
 3. Actual installed-package factory trial, source/runtime pins, paired process

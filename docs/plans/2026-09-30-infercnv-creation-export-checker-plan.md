@@ -321,7 +321,7 @@ TMPDIR=/Volumes/KIOXIA/Developments/tmp PYTHONDONTWRITEBYTECODE=1 python3 -B -m 
 git diff --check
 ```
 
-- [ ] **Step 6: Commit only these files and the associated plan/state; push main
+- [x] **Step 6: Commit only these files and the associated plan/state; push main
   and wait for exact-head Control plane CI before using the checker in another
   gate.** `test(sc): validate exact ingestion factory exports` is the commit
   subject. Keep inherited VCF state and unrelated scratch unstaged.

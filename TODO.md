@@ -188,8 +188,10 @@ Rejected public boundary:
       integer-filter/error probes with immutable original-artifact receipts.
 - [x] Accept the strict explicit-header TSV/gzip reader at `rsomics-sc e62fc96`,
       with four-native 72-test profiles and independent source/artifact review.
-- [ ] Execute and accept samples/Ward.D2 clustering witnesses before native
-      tree/model implementation; exporter and independent checker are in progress.
+- [x] Execute and independently accept installed samples/Ward.D2 witnesses:
+      36 cases/52 routes, original run `36707344893`; no native/performance claim.
+- [ ] Implement native samples/Ward clustering with exact topology/order gates;
+      keep unresolved positive-filter boundary behavior explicitly separate.
 - [ ] Measure raw ingestion separately; do not extend prepared-only speed claims.
 - [ ] Resolve default Leiden, HMM i3/i6, Bayesian refinement, denoising/masking,
       output/report and unified `rsomics-help` CLI contracts before full-CNV claims.
