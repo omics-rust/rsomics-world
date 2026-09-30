@@ -504,7 +504,7 @@ python-bin/python3 alias and PATH for the second run. Preserve the original
 green.stdout/stderr and complete failed fixture; use green-2.stdout/stderr
 without changing any checker/R bytes. No software installation is needed.
 
-- [ ] **Step 3: Complete scope review and controller checks; commit only the two R files and owned plan/state.**
+- [x] **Step 3: Complete scope review and controller checks; commit only the two R files and owned plan/state.**
 
 Independent complete-source review already judged the frozen proposal suitable for integration. It explicitly did not execute R or accept timings. Root rereads actual integrated hashes/results and runs the unchanged 223 Python controller tests, architecture check and whitespace check with external TMPDIR. Commit subject: test(sc): verify exact R creation support. Push main and verify exact-head Control plane CI.
 

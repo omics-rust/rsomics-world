@@ -1,8 +1,9 @@
 # R exact creation helper gate
 
 Status: root inspected actual remote RED, parse and package-free GREEN.
-Independent complete-code review approved integration only. Main push and
-exact-head controller CI remain pending. Actual package/factory/trials are
+Independent complete-code review approved integration only. Commit
+`648637e7d8eed14e91c9e43f5383004b14efce0f` is pushed; exact-head Control plane
+run `36722524283` completed successfully. Actual package/factory/trials are
 not implemented or accepted by this helper gate.
 
 Plan: `../../docs/plans/2026-09-30-infercnv-r-exact-creation-support-plan.md`.
