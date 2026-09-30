@@ -393,7 +393,7 @@ class IntegrationTests(unittest.TestCase):
         for name, source in (("run", "R/inferCNV_ops.R"), (".get_relevant_args_list", "R/inferCNV_ops.R"),
                              ("define_signif_tumor_subclusters", "R/inferCNV_tumor_subclusters.R"),
                              (".single_tumor_subclustering", "R/inferCNV_tumor_subclusters.R")):
-            installed = name + ".function.txt"
+            installed = "function-" + name + ".txt"
             (self.witness / "metadata" / installed).write_bytes(b"installed text fixture")
             functions.append("\t".join([name, source, hashlib.sha256(self.source_payloads[source]).hexdigest(), installed,
                                          hashlib.sha256(b"installed text fixture").hexdigest()]))
@@ -506,6 +506,23 @@ class IntegrationTests(unittest.TestCase):
         path.write_text(text.replace(hashlib.sha256(self.source_payloads["R/inferCNV_ops.R"]).hexdigest(), "0" * 64))
         with self.assertRaisesRegex(ValueError, "function source hash"):
             self.validate()
+
+    def test_hidden_installed_function_text_is_rejected_before_upload(self):
+        path = self.witness / self.record["metadata"]["functions"]
+        old = "function-.single_tumor_subclustering.txt"
+        hidden = ".single_tumor_subclustering.function.txt"
+        (self.witness / "metadata" / old).rename(self.witness / "metadata" / hidden)
+        path.write_text(path.read_text().replace(old, hidden))
+        with self.assertRaisesRegex(ValueError, "hidden archive path"):
+            self.validate()
+
+    def test_upload_omission_cannot_pass_recorded_inventory(self):
+        self.validate()
+        omitted = self.witness / "metadata" / "function-.get_relevant_args_list.txt"
+        omitted.unlink()
+        with self.assertRaisesRegex(ValueError, "file inventory"):
+            self.checker.validate_witness(self.bundles["synthetic"][0],
+                                          self.bundles["shipped"][0], self.witness)
 
     def test_packages_metadata_cannot_disagree_with_runtime(self):
         path = self.witness / self.record["metadata"]["packages"]

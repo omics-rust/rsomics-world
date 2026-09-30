@@ -493,6 +493,8 @@ def validate_metadata(root, metadata, runtime):
         if len(set(names)) != len(names):
             raise ValueError("duplicate pinned archive member")
         for name, source, source_sha, installed_text, installed_sha in definitions[1:]:
+            if any(part.startswith(".") for part in (parent / installed_text).parts):
+                raise ValueError("installed function text uses hidden archive path")
             if sources[name] != source:
                 raise ValueError("function source path differs")
             path = "infercnv-" + SOURCE_COMMIT + "/" + source

@@ -1,6 +1,7 @@
 # inferCNV samples/Ward clustering witness
 
-Status: first dispatch failed before clustering; locale fix pending replacement run.
+Status: replacement execution succeeded, but original artifact acceptance
+failed because two installed-function records were omitted during upload.
 
 The user explicitly resumed unattended work on 2026-09-30. InferCNV remains
 first; the goal tool's historical paused status does not override that request.
@@ -82,7 +83,8 @@ Candidate world head `e38c5f3250748890f321dba0c9cfc85d07bba672` passed
 exact-head control-plane run `36701542024`. Installed-package oracle run
 `36701645992` was dispatched with `dataset=shipped` and
 `samples_clustering=true`; its API-reported head matches the candidate.
-No successful package outcome or artifact acceptance has yet been established.
+This first dispatch did not establish a successful package outcome or artifact
+acceptance.
 
 ## First actual failure and environment repair
 
@@ -116,3 +118,78 @@ R syntax still parses 33 top-level expressions. Replacement exporter SHA256:
 `5ee4c3f4b5b02750b4c719675e9e6c26670a4044092bc92570f396e90cafe3e9`.
 Python source hashes remain unchanged. Replacement package execution and
 original-artifact acceptance are still required.
+
+The locale repair at world `2b51418b28b16fd067ce81d14ebea7368c2b0e9e`
+passed all 200 controller tests and exact-head CI `36703413152`. Replacement
+oracle run `36703475039` was dispatched with the same shipped/sample-clustering
+arguments; its API-reported head matches that repair. Do not treat the parent
+failure's synthetic/shipped exports as replacement clustering evidence.
+
+## Successful execution, incomplete uploaded evidence
+
+Run `36703475039` succeeded, including all 16 workflows and 20 probes and the
+complete checker on the runner. Original APIs, logs and ZIP are retained under
+`/Volumes/Zane's HDD/rsomics-fixtures/evidence/infercnv-ingestion-2026-09-30/run-36703475039/`.
+The [incomplete-artifact receipt](../oracles/infercnv-samples-clustering-incomplete-2026-09-30.json)
+identifies original bytes only; it is not a samples-clustering acceptance.
+Artifact `11091785736` has 1,572,350,571 compressed bytes and SHA256
+`0f6144ad4ccd58d1db996569a941d5321211bca635dc1db8903ab1818b54af26`.
+Original logs SHA256 is
+`08f577b70aa7e0142d379dc569ef355e05f10ac4138e8e347786914e732f804b`.
+Witness JSON SHA256 is
+`177bae2d65e99eab71c6aa2c36bed16ca062c0554e5dd7cf9b12762781c42598`.
+
+The controller checked run/head/status, API digest/size, CRCs, unique safe ZIP
+paths and every synthetic/shipped manifest file before safe extraction. The
+offline witness checker then rejected the original file inventory. Two paths
+recorded in witness.json are absent from both ZIP and extraction:
+
+- `metadata/.get_relevant_args_list.function.txt`
+- `metadata/.single_tumor_subclustering.function.txt`
+
+The [uploader migration contract](https://github.com/actions/upload-artifact/blob/main/docs/MIGRATION.md#hidden-files)
+defaults to excluding hidden files. The exporter named installed
+function text directly from dot-prefixed R function names, so the two records
+existed for the runner's successful check but were not uploaded. Exactly 938
+witness files arrived, versus 940 expected including witness.json; there are
+no extra files. Do not reconstruct those texts from source, waive inventory,
+or label this green run accepted.
+
+The repair uses visible deterministic filenames, retaining the original
+semantic function column and all algorithm, source-pin and tolerance contracts.
+A controller regression rejects hidden installed-function paths before upload;
+another preserves rejection of an omitted file even if its inventory exists.
+Package-free R exercises the actual naming AST before and after the repair.
+Fresh exact-head CI, actual package execution and original-upload verification
+remain required. No native clustering or performance acceptance follows.
+
+Independent diagnostic review found all 937 physically present inventoried
+files hash-matched, and all 52 routes individually passed unchanged state,
+group/tree and Euclidean artifact checks: 160 traced groups, 152 actual trees.
+All 16 full routes logged step 15 and agreed with their isolated groups. All
+52 captured warning/error condition arrays were empty; original per-route
+logs remain separately retained, including logger advisories.
+Zero-gene positive-filter probes produced zero distances and tree heights;
+the boundary probe's genes 3 and 6 remain unresolved characterization. The
+pooled-name collision uses observation indices twice, matching actual source.
+These observations do not repair the incomplete original evidence inventory.
+
+The actual R filename AST regression failed on the old two hidden names and
+passed on all four visible unique names after the one-line repair. R 4.6.1
+syntax still parsed 33 top-level expressions. Replacement exporter SHA256:
+`2d437e9393e51c32dc49baefe1593300b94ff1cb9141fd7e08206c5bdf2de9bc`.
+The hidden-path controller regression failed before its guard and then all
+202 controller tests passed, including 58 focused witness tests. The strict
+offline inventory gate remains unchanged and still rejects omitted records.
+
+Replacement checker SHA256:
+`682d2a41bbe901a02b6687756e64cc1359fa1e3881d49af40eaa5fc725211222`;
+test SHA256:
+`8d53a373f261110d6b204ae0d62b139fcd724bffe90e5599603c8ab4455e7f8e`.
+Fresh boot APFS occupancy is 88.65% (25.91 GiB free), KIOXIA 41 GiB free,
+Zane's HDD 246 GiB free. The local-build gate still applies; the replacement
+uses remote installed-package execution and external-only controller scratch.
+
+Fresh independent repair review approved another actual-package dispatch and
+reran all 58 focused tests successfully. This is dispatch approval only;
+run `36703475039` remains incomplete-evidence NO-GO.

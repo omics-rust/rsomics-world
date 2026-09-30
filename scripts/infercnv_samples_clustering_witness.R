@@ -323,7 +323,7 @@ validate_installed_source <- function(ns, source_root, metadata_dir) {
             !identical(paste(deparse(body(installed)), collapse="\n"), paste(deparse(expected_body), collapse="\n"))) {
             stop("installed function differs from pinned source: ", name)
         }
-        text_path <- file.path(metadata_dir, paste0(name, ".function.txt"))
+        text_path <- file.path(metadata_dir, paste0("function-", name, ".txt"))
         writeLines(deparse(installed), text_path)
         lines <- c(lines, paste(name, source_files[[name]], hash_file(source_path),
                                basename(text_path), hash_file(text_path), sep="\t"))
