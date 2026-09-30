@@ -46,8 +46,8 @@ required-features = ["infercnv-measurement"]
 - [x] Add only the complete test below; helper/bench remain absent. Standalone external rustfmt may run, Cargo may not.
 - [x] Add default-false ingestion_trial workflow input/env; require ingestion_measurement=true and measurement=true. Preserve the source guard and all old selectors. Add dedicated debug/release trial target before old support tests; release and bench compile only for !expected_red.
 - [x] Freeze red-8 using COPYFILE_DISABLE=1 tar --no-xattrs --format=ustar and exact sorted README/manifest/archive checksums. Compare all previous files except Cargo.toml; only new test may be added. Generic source guard must pass before dispatch.
-- [ ] Commit only world workflow/plan/ledger/red-8; push and wait exact-head Control plane. Dispatch expected_red=true, measurement=true, ingestion_measurement=true, ingestion_trial=true, oracle_receipt=none.
-- [ ] Preserve run/jobs/artifact APIs, original ZIP/logs. Accept only the exact couldn't-read tests/../benches/ingestion_trial/mod.rs OS-error2 failure after source/dependency success. No generic failed compilation or failed packaging is RED.
+- [x] Commit only world workflow/plan/ledger/red-8; push and wait exact-head Control plane. Dispatch expected_red=true, measurement=true, ingestion_measurement=true, ingestion_trial=true, oracle_receipt=none.
+- [x] Preserve run/jobs/artifact APIs, original ZIP/logs. Accept only the exact couldn't-read tests/../benches/ingestion_trial/mod.rs OS-error2 failure after source/dependency success. No generic failed compilation or failed packaging is RED.
 
 Complete test:
 
@@ -486,8 +486,8 @@ test = false
 required-features = ["infercnv-measurement"]
 ```
 
-- [ ] Add exactly the complete helper/main below; external standalone Rust1.91 format. Recheck all production/old support/lock hashes.
-- [ ] Freeze clean green-13 with identical red-8 test bytes and only helper/main/Cargo bench additions. Three sorted snapshot checksums/exact tar manifest required. Independent complete-source review.
+- [x] Add exactly the complete helper/main below; external standalone Rust1.91 format. Recheck all production/old support/lock hashes.
+- [x] Freeze clean green-13 with identical red-8 test bytes and only helper/main/Cargo bench additions. Three sorted snapshot checksums/exact tar manifest required. Independent complete-source review.
 - [ ] Push owned world snapshot/ledger updates; wait exact-head Control plane; dispatch full four-native with all three measurement flags and accepted shipped oracle.
 - [ ] Dedicated trial target debug/release; compile new bench with cargo bench --locked --features infercnv-measurement --bench cnv_ingestion_matched --no-run. Preserve original logs. Exact expected collected trial counts are19 Linux/14 macOS from source inventory, not a prior test result.
 - [ ] Preserve the55 creation support,11 old support,72 ordinary/external tests per target/profile, format/strict Clippy and old bench. Correct any observed defects via narrow tests, fresh immutable snapshots and original failures; no waiver.
