@@ -65,6 +65,18 @@ further format/filter/error probes now follow the
 status and precise exclusions are recorded in the
 [resumed ledger](../../.autopilot/state/infercnv-ingestion-witness-2026-09-30.md).
 
+Actual run `36694464090` and independent original-artifact review also accepted
+seven bounded creation-edge probes: original shipped implicit-header gzip,
+integer post-reduction limits, minimum-zero/NULL behavior and three actual
+error branches. See the [creation-edge receipt](../../.autopilot/state/infercnv-creation-edges-accepted-2026-09-30.md).
+This does not grant native implicit-header support or arbitrary R decimal
+parity. The locked strict-TSV reader is still undergoing four-native checks;
+its [ledger](../../.autopilot/state/infercnv-raw-reader-2026-09-30.md) preserves
+the failed canonical numerical-padding run and the corrected candidate.
+Next, the [samples/Ward clustering witness](../plans/2026-09-30-infercnv-samples-clustering-witness-design.md)
+and [plan](../plans/2026-09-30-infercnv-samples-clustering-witness-plan.md) collect
+actual trees and ordered memberships before specifying native clustering.
+
 ## Boundary
 
 `rsomics-sc` is one stateful single-cell expression-analysis product. It owns
