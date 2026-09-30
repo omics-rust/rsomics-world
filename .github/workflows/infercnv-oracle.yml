@@ -203,6 +203,31 @@ jobs:
           PYTHONDONTWRITEBYTECODE=1 python3 -B scripts/validate_infercnv_shipped_oracle.py \
             "$SHIPPED_OUTPUT" --manifest 2>&1 | tee "$EVIDENCE_DIR/shipped-validation.log"
 
+      - name: Test ingestion witness checker
+        shell: bash
+        run: |
+          set -euo pipefail
+          PYTHONDONTWRITEBYTECODE=1 python3 -B -m unittest discover -s scripts \
+            -p test_infercnv_ingestion_witness.py \
+            2>&1 | tee "$EVIDENCE_DIR/ingestion-checker-tests.log"
+
+      - name: Capture creation-stage raw-input witnesses
+        shell: bash
+        run: |
+          set -euo pipefail
+          args=("$ORACLE_OUTPUT" "$EVIDENCE_DIR/ingestion-witness")
+          if [[ "$ORACLE_DATASET" == shipped ]]; then args+=("$SHIPPED_OUTPUT"); fi
+          sha256sum scripts/infercnv_ingestion_witness.R \
+            scripts/validate_infercnv_ingestion_witness.py \
+            scripts/test_infercnv_ingestion_witness.py \
+            > "$EVIDENCE_DIR/ingestion-code-sha256.txt"
+          Rscript --vanilla scripts/infercnv_ingestion_witness.R "${args[@]}" \
+            2>&1 | tee "$EVIDENCE_DIR/ingestion-witness-run.log"
+          checker=("$ORACLE_OUTPUT" "$EVIDENCE_DIR/ingestion-witness")
+          if [[ "$ORACLE_DATASET" == shipped ]]; then checker+=(--shipped "$SHIPPED_OUTPUT"); fi
+          PYTHONDONTWRITEBYTECODE=1 python3 -B scripts/validate_infercnv_ingestion_witness.py \
+            "${checker[@]}" 2>&1 | tee "$EVIDENCE_DIR/ingestion-witness-validation.log"
+
       - name: Validate fresh full-case measurement pins
         if: env.MATCHED_SNAPSHOT != ''
         shell: bash
