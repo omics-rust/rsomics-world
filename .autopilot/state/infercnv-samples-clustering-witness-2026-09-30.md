@@ -1,6 +1,6 @@
 # inferCNV samples/Ward clustering witness
 
-Status: candidate dispatched; installed-package execution and artifact acceptance pending.
+Status: first dispatch failed before clustering; locale fix pending replacement run.
 
 The user explicitly resumed unattended work on 2026-09-30. InferCNV remains
 first; the goal tool's historical paused status does not override that request.
@@ -46,7 +46,7 @@ passed with external TMPDIR. Ruby parsed the workflow YAML and Bash parsed all
 22 run blocks. The unchanged exporter passed R 4.6.1 syntax parsing on SSH
 4090 (33 top-level expressions); this is not package-execution evidence.
 
-Candidate source hashes:
+Original candidate source hashes:
 
 | File | SHA256 |
 | --- | --- |
@@ -83,3 +83,36 @@ exact-head control-plane run `36701542024`. Installed-package oracle run
 `36701645992` was dispatched with `dataset=shipped` and
 `samples_clustering=true`; its API-reported head matches the candidate.
 No successful package outcome or artifact acceptance has yet been established.
+
+## First actual failure and environment repair
+
+Run `36701645992` failed in `Capture samples-clustering witnesses` at the
+exporter's C-locale enforcement, before trace installation or any clustering
+case. The 56 checker tests and preceding package/source, synthetic, shipped,
+creation and edge-probe steps passed. This is not a clustering mismatch.
+
+Preserved original API metadata, logs and artifact:
+`/Volumes/Zane's HDD/rsomics-fixtures/evidence/infercnv-ingestion-2026-09-30/run-36701645992/`.
+Artifact `11090851598`, 291413181 compressed bytes:
+`238f21c15fdd39a11692b50b846e0fd8b490e70f6f0f40e4080fd7486b312089`.
+Logs SHA256:
+`2cd80a54e53b22efcf0c2440d9a8feaaa2e3013ca3186a34db88a8e03668ea55`.
+API digest/size, CRCs, unique safe paths and both source manifests were checked
+before extraction; 481 original files are retained. There is no
+`samples-clustering/witness.json`. The preserved exporter matches the original
+candidate hash above.
+
+Package-free R 4.6.1 on SSH 4090 reproduced the failure: setting `LC_ALL=C`
+left `LC_MESSAGES`, `LC_PAPER` and `LC_MEASUREMENT` at `C.UTF-8`, yielding a
+composite return rather than `C`. Explicitly setting these categories to C
+produces the actual `Sys.getlocale() == "C"`. The repair initializes LC_ALL,
+sets the three omitted categories individually and retains the final exact
+C hard gate. It changes no clustering algorithm, filtering, checker or
+comparison tolerance.
+
+The actual exporter locale AST block failed before the repair and passed
+afterward on R 4.6.1; all eight supported category queries returned C. Updated
+R syntax still parses 33 top-level expressions. Replacement exporter SHA256:
+`5ee4c3f4b5b02750b4c719675e9e6c26670a4044092bc92570f396e90cafe3e9`.
+Python source hashes remain unchanged. Replacement package execution and
+original-artifact acceptance are still required.

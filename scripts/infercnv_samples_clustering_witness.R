@@ -492,7 +492,11 @@ main <- function() {
         stop("cannot preserve source bundle manifests")
     }
     Sys.setenv(OMP_NUM_THREADS="1", OPENBLAS_NUM_THREADS="1", MKL_NUM_THREADS="1")
-    if (!identical(Sys.setlocale("LC_ALL", "C"), "C")) stop("cannot enforce C locale")
+    if (!nzchar(Sys.setlocale("LC_ALL", "C"))) stop("cannot initialize C locale")
+    for (category in c("LC_MESSAGES", "LC_PAPER", "LC_MEASUREMENT")) {
+        if (!identical(Sys.setlocale(category, "C"), "C")) stop("cannot enforce C locale category: ", category)
+    }
+    if (!identical(Sys.getlocale(), "C")) stop("cannot enforce C locale")
     seed <- 260930L
     context <- get("infercnv.env", envir=ns)
     context$GLOBAL_NUM_THREADS <- 1L
