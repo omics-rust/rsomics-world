@@ -93,8 +93,9 @@ create_case <- function(label, counts, positions, annotations_path, refs, limits
     declared <- options
     declared$ref_group_names <- as.list(refs)
     declared$chr_exclude <- as.list(options$chr_exclude)
-    declared$min_max_counts_per_cell <- if (is.null(limits)) NULL else
-        lapply(limits, function(value) if (is.infinite(value)) "Inf" else value)
+    declared["min_max_counts_per_cell"] <- list(if (is.null(limits)) NULL else
+        lapply(limits, function(value) if (is.infinite(value)) "Inf" else value))
+    if (!identical(names(declared), names(options))) stop("creation argument fields changed")
     paths <- options[c("raw_counts_matrix", "gene_order_file", "annotations_file")]
     result <- list(creation_arguments=declared, warnings=as.list(warnings),
                    input_sha256=lapply(paths, hash_file))
