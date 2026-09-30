@@ -16,6 +16,10 @@ on:
         type: string
         required: false
         default: ''
+      samples_clustering:
+        description: Execute samples Ward clustering witnesses (shipped dataset only)
+        type: boolean
+        default: false
 
 permissions:
   contents: read
@@ -29,6 +33,7 @@ jobs:
       INFER_CNV_SOURCE_COMMIT: b421d9405c97a309b081ef86d455e976df93eae4
       ORACLE_DATASET: ${{ inputs.dataset || 'synthetic' }}
       MATCHED_SNAPSHOT: ${{ inputs.matched_snapshot || '' }}
+      SAMPLES_CLUSTERING: ${{ inputs.samples_clustering || false }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -56,6 +61,9 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
+          if [[ "$SAMPLES_CLUSTERING" == true ]]; then
+            test "$ORACLE_DATASET" = shipped
+          fi
           if [[ -n "$MATCHED_SNAPSHOT" ]]; then
             test "$ORACLE_DATASET" = shipped
             python3 -B -c 'import json,os,pathlib; r=json.loads(pathlib.Path(".autopilot/oracles/infercnv-measurement-candidate-2026-09-26.json").read_text()); assert os.environ["MATCHED_SNAPSHOT"] == r["snapshot_name"]'
@@ -245,6 +253,26 @@ jobs:
           PYTHONDONTWRITEBYTECODE=1 python3 -B scripts/validate_infercnv_creation_edges.py \
             "$SHIPPED_OUTPUT" "$EVIDENCE_DIR/creation-edges" \
             2>&1 | tee "$EVIDENCE_DIR/creation-edges-validation.log"
+
+      - name: Capture samples-clustering witnesses
+        if: env.SAMPLES_CLUSTERING == 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$ORACLE_DATASET" = shipped
+          PYTHONDONTWRITEBYTECODE=1 python3 -B -m unittest discover -s scripts \
+            -p test_infercnv_samples_clustering_witness.py \
+            2>&1 | tee "$EVIDENCE_DIR/samples-clustering-checker-tests.log"
+          sha256sum scripts/infercnv_samples_clustering_witness.R \
+            scripts/validate_infercnv_samples_clustering_witness.py \
+            scripts/test_infercnv_samples_clustering_witness.py \
+            > "$EVIDENCE_DIR/samples-clustering-code-sha256.txt"
+          Rscript --vanilla scripts/infercnv_samples_clustering_witness.R \
+            "$ORACLE_OUTPUT" "$SHIPPED_OUTPUT" "$EVIDENCE_DIR/samples-clustering" \
+            2>&1 | tee "$EVIDENCE_DIR/samples-clustering-run.log"
+          PYTHONDONTWRITEBYTECODE=1 python3 -B scripts/validate_infercnv_samples_clustering_witness.py \
+            "$ORACLE_OUTPUT" "$SHIPPED_OUTPUT" "$EVIDENCE_DIR/samples-clustering" \
+            2>&1 | tee "$EVIDENCE_DIR/samples-clustering-validation.log"
 
       - name: Validate fresh full-case measurement pins
         if: env.MATCHED_SNAPSHOT != ''
