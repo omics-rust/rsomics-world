@@ -1,4 +1,10 @@
-# inferCNV raw reader — resumed candidate
+# inferCNV raw reader — accepted strict TSV slice
+
+Latest: strict explicit-header TSV/plain/gzip reader accepted at product
+`e62fc960aeeb9dc543298885213cda6a57196fe9`, following four-native run
+`36696131908` and independent original-artifact review. The
+[bounded receipt](infercnv-raw-reader-accepted-2026-09-30.md) defines current
+scope/exclusions. Historical candidate statuses below are preserved as history.
 
 Spec: `docs/plans/2026-09-30-infercnv-raw-reader-design.md`.
 The user explicitly resumed on 2026-09-30 at 16:35 CST. The earlier pause
@@ -33,7 +39,7 @@ Artifact `11084363788` has SHA-256
 original logs SHA-256 is
 `b05c38b7b42dcedd1f598a1b09747eee31c70c4b47ddcfd426b0285c4d30ea28`.
 
-## Current work
+## Initial resumed work
 
 The bounded product implementer resumed after red acceptance. The controller
 owns frozen source, dependency-lock resolution, Git and native CI. A separate
@@ -174,3 +180,14 @@ the external `run-36694720861` evidence directory.
 regressions over green-9; there are now 31 reader tests. The old discarded-row
 test replaces two now-valid padded numbers with actually invalid inputs.
 Independent review and replacement four-native execution remain pending.
+
+## Native acceptance
+
+`green-10` at world `2aee90ce` passed all four native targets in run
+`36696131908`. Each debug/release profile passed 72 ordinary tests and 11
+separate measurement contracts, with 40 raw and 20 prepared-shipped checkpoint
+comparisons. Source/lock/archive/API/CRC/log checks passed independently; no
+tolerance, numerical kernel or measurement-code bytes changed. The local
+product was committed only after fresh independent acceptance, at `e62fc96`.
+No remote/product release was created. Samples-clustering oracle exporter and
+checker now proceed with isolated ownership; no downstream claim follows yet.

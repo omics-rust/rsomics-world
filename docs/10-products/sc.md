@@ -70,9 +70,13 @@ seven bounded creation-edge probes: original shipped implicit-header gzip,
 integer post-reduction limits, minimum-zero/NULL behavior and three actual
 error branches. See the [creation-edge receipt](../../.autopilot/state/infercnv-creation-edges-accepted-2026-09-30.md).
 This does not grant native implicit-header support or arbitrary R decimal
-parity. The locked strict-TSV reader is still undergoing four-native checks;
-its [ledger](../../.autopilot/state/infercnv-raw-reader-2026-09-30.md) preserves
-the failed canonical numerical-padding run and the corrected candidate.
+parity. The strict-TSV reader is now accepted at local product `e62fc96` after
+run `36696131908`: 72 ordinary and 11 measurement-support tests per profile
+on all four native targets, with exact creation state and unchanged downstream
+tolerance. Its [acceptance receipt](../../.autopilot/state/infercnv-raw-reader-accepted-2026-09-30.md)
+and [ledger](../../.autopilot/state/infercnv-raw-reader-2026-09-30.md) retain
+source/API/archive proofs, the failed canonical-padding run and strict scope.
+No ingestion-speed, default inferCNV or product-release claim follows.
 Next, the [samples/Ward clustering witness](../plans/2026-09-30-infercnv-samples-clustering-witness-design.md)
 and [plan](../plans/2026-09-30-infercnv-samples-clustering-witness-plan.md) collect
 actual trees and ordered memberships before specifying native clustering.
