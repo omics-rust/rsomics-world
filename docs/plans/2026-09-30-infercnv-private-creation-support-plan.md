@@ -1326,7 +1326,7 @@ Review expected-role boundary, coverage/order, bit comparisons, 17e roundtrip, f
 
 **Interfaces:** consumes exact helper/tests and candidate selector; produces a hash-pinned private-support acceptance, not an actual measured executable or a product release.
 
-- [ ] **Step 1: Re-run controller checks, push only owned world candidate files and verify exact-head CI before dispatch.**
+- [x] **Step 1: Re-run controller checks, push only owned world candidate files and verify exact-head CI before dispatch.**
 
 Expected: unchanged 223 controller tests and architecture check pass. Then run:
 
@@ -1336,7 +1336,7 @@ gh workflow run sc-cnv-core-candidate.yml --ref main -f snapshot=green-11 -f exp
 
 Expected: four native target jobs each pass new helper tests and old measurement support in debug/release, ordinary and explicit external-oracle tests, old bench compile, source-before/after and Linux format/strict Clippy gates. Empty or skipped dedicated logs are not acceptance. Retain original run/jobs/artifact API responses, zipped logs/artifacts and hashes, verify safe inventories/CRCs, frozen archive/manifest/lock and unchanged production source; root audits actual named test results rather than trusting a green UI.
 
-- [ ] **Step 2: Commit only owning Cargo.toml, new test and helper on main.**
+- [x] **Step 2: Commit only owning Cargo.toml, new test and helper on main.**
 
 ```bash
 git add Cargo.toml tests/cnv_ingestion_measurement_contract.rs benches/ingestion_support/mod.rs

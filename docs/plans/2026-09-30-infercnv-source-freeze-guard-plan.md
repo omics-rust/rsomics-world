@@ -552,7 +552,7 @@ original tar independently fails the logical-member inventory. Originals remain
 unchanged. Root observed 19 focused, 12 old verifier and 242 total controller
 tests passing, plus YAML and all 12/22 Bash blocks in the two modified workflows.
 
-- [ ] **Step 2: Commit/push only owned guard/caller/plan/state/green-12 files and verify exact-head Control plane CI.**
+- [x] **Step 2: Commit/push only owned guard/caller/plan/state/green-12 files and verify exact-head Control plane CI.**
 
 Commit subject: fix(sc): enforce frozen source inventory. Preserve unrelated VCF/scratch and the uncommitted owning product. Dispatch only after pushed head succeeds:
 
@@ -560,6 +560,6 @@ Commit subject: fix(sc): enforce frozen source inventory. Preserve unrelated VCF
 gh workflow run sc-cnv-core-candidate.yml --repo omics-rust/rsomics-world --ref main -f snapshot=green-12 -f expected_red=false -f measurement=true -f ingestion_measurement=true -f oracle_receipt=infercnv-shipped-2026-09-26
 ```
 
-- [ ] **Step 3: Audit original four-native APIs/logs/artifacts before scoped Rust-support acceptance.**
+- [x] **Step 3: Audit original four-native APIs/logs/artifacts before scoped Rust-support acceptance.**
 
 Require the same unchanged 55 creation-support tests, 11 old measurement tests, 72 ordinary/external tests per debug/release/target, old bench checks and Linux format/strict Clippy. Require19 guard tests and exact copied guard hashes on each target, native host/rustc/output path, original safe ZIP/CRC/API hashes, exactly146 logical source members, three checksum hashes, source-before/after equality and unchanged lock/production. Preserve failed packaging runs as such. No factory timing, speed/resource result or whole inferCNV/public release follows this gate.

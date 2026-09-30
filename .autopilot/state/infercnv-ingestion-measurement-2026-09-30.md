@@ -1,7 +1,8 @@
 # Canonical raw-ingestion measurement ledger
 
-Status: exact controller helper implemented, independently reviewed and
-accepted by exact-head CI. No actual timed factory or speed/resource claim.
+Status: exact controller and private Rust creation/export helpers accepted,
+including clean-source four-native debug/release tests. No actual timed
+factory or speed/resource claim.
 
 Design:
 `../../docs/plans/2026-09-30-infercnv-raw-ingestion-measurement-design.md`.
@@ -56,8 +57,8 @@ accepts the helper alone, not a timed trial or product performance.
 ## Remaining gates
 
 1. Complete: independent helper review, main push and exact-head controller CI.
-2. Private Rust creation comparison/export support with its own implementation
-   plan, test-first failures and four-native debug/release gate.
+2. Complete: private Rust creation/export support, genuine missing-helper RED
+   and clean-source four-native debug/release gate.
 3. Actual installed-package factory trial, source/runtime pins, paired process
    driver, immutable input/candidate receipts and complete provenance tests.
 4. Thirty-two fresh processes yielding 64 checked factory outputs; 28 measured
@@ -269,3 +270,42 @@ Fresh independent review of the actual owning-world integration also found
 no critical/important defect. It verified unchanged receipt/run/Cargo/
 post-trial ASTs, both workflow gates and exact clean archive/member bytes.
 Its approval is code-level only, not an executed native or performance gate.
+
+## Clean green-12 private support accepted
+
+World `0513c35119a66ac2f927689ad6374c586c2de3ef` passed exact-head Control
+plane `36724645559`. Native run `36724853379`, attempt 1, completed
+successfully on all four targets. Each debug/release profile passes 55 private
+creation support, 11 old measurement and 72 ordinary/external tests. Every
+target passes the 19 shared source guard tests. Old bench checks and Linux
+format/strict all-feature Clippy/missing-oracle error gate pass.
+
+Root and an independent reviewer inspected original four ZIPs/logs: safe unique
+inventories and CRCs, API size/digest/run/head association, exact clean archive/
+README/manifest/three checksums, guard/test bytes, unchanged 146-file source
+before/after, lock, native Rust1.91 hosts and actual test summaries all match.
+Original log ZIP SHA256:
+`af0ec4355beb1cda9bbc57d66936a20b0b5784fd65e6682649bfece6312a4eda`.
+
+| Target | Artifact | ZIP bytes | SHA256 |
+| --- | --- | --- | --- |
+| linux-x86_64 | 11102173636 | 633200 | a11d877d32bf90f397c66a239cff9b0e1714879cad7b637c5a75fc6ed7c04bea |
+| linux-aarch64 | 11102503991 | 632079 | 15b08afedfddfa5945481be101a3446f74fff6435dcd93075429368661fb462b |
+| macos-x86_64 | 11102374946 | 632146 | 12429c45870333fe424901567f405858c968192999770c74b3055cf25d303df2 |
+| macos-aarch64 | 11101183947 | 632322 | 707ff48fa2e751085d383943af5aab6f90182e63ba4d17ad761e88bbea88f234 |
+
+All original APIs/ZIPs/logs are preserved externally under `run-36724853379`.
+Initial final-status jobs API and first recheck retained stale macOS pending/
+in-progress steps; the unchanged strict _run_jobs gate correctly rejected them.
+A fresh original per_page=100/filter=latest no-cache response is preserved as
+`jobs-recheck-2.json`: all four required steps completed successfully. The
+unchanged complete receipt/run/jobs/Cargo/source verifier then passes against
+the new [private support candidate receipt](../oracles/infercnv-ingestion-support-candidate-2026-09-30.json).
+No original API was overwritten, fabricated or weakened to reach acceptance.
+
+Only Cargo.toml/new test/private helper were committed in the owning product:
+`9e1e8d4b6774f5821ee8bf68cd66e96b0c8e0f06`. Its complete 146-file bytes
+match green-12. Product has no remote and remains private/unpublished; world
+snapshot/evidence delivery is separate. Polluted red-7/green-11 are not
+retroactively accepted. There is still no canonical timed factory, performance
+result, native clustering or public-release conclusion.
