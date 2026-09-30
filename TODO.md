@@ -174,6 +174,28 @@ Rejected public boundary:
 - [x] Publish the gate-complete coherent `rsomics-bam` first-release slice
       after the crates.io name cooldown.
 
+## P3 — stateful workflows; inferCNV prioritized by the user
+
+- [x] Reject the historical five-step approximation as an inferCNV replacement;
+      retain only useful parser/fixture assets in the single-cell dossier.
+- [x] Execute and independently audit the pinned real-package pre-clustering
+      oracle, synthetic and shipped data, rather than infer behavior from names.
+- [x] Accept the unpublished prepared-counts numerical core through step 14
+      on all four native targets with unchanged checkpoint tolerances.
+- [x] Measure the prepared-only region on a matched host. The bounded 41.37x
+      result excludes ingestion, clustering, CNV calling, reports and release.
+- [x] Accept canonical creation witnesses and seven actual original-gzip/
+      integer-filter/error probes with immutable original-artifact receipts.
+- [x] Accept the strict explicit-header TSV/gzip reader at `rsomics-sc e62fc96`,
+      with four-native 72-test profiles and independent source/artifact review.
+- [ ] Execute and accept samples/Ward.D2 clustering witnesses before native
+      tree/model implementation; exporter and independent checker are in progress.
+- [ ] Measure raw ingestion separately; do not extend prepared-only speed claims.
+- [ ] Resolve default Leiden, HMM i3/i6, Bayesian refinement, denoising/masking,
+      output/report and unified `rsomics-help` CLI contracts before full-CNV claims.
+- [ ] Apply full product/API/performance/release gates before publishing `sc`.
+      Current status and claim limits live in [the dossier](docs/10-products/sc.md).
+
 ## Durable evidence
 
 - Namespace allowlist:
