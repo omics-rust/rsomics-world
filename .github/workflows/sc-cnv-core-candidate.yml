@@ -26,6 +26,10 @@ on:
         options:
           - none
           - infercnv-shipped-2026-09-26
+      resolve_input_lock:
+        description: Resolve raw-input gzip nodes in a Linux test-first run
+        type: boolean
+        default: false
 
 permissions:
   contents: read
@@ -47,6 +51,7 @@ jobs:
       ORACLE_RECEIPT: ${{ inputs.oracle_receipt }}
       MEASUREMENT: ${{ inputs.measurement }}
       RESOLVE_MEASUREMENT_LOCK: ${{ inputs.resolve_measurement_lock }}
+      RESOLVE_INPUT_LOCK: ${{ inputs.resolve_input_lock }}
     defaults:
       run:
         shell: bash
@@ -63,6 +68,10 @@ jobs:
           if [[ "$RESOLVE_MEASUREMENT_LOCK" == true ]]; then
             test "$EXPECT_RED" = true
             test "$MEASUREMENT" = true
+            test "$RESOLVE_INPUT_LOCK" != true
+          fi
+          if [[ "$RESOLVE_INPUT_LOCK" == true ]]; then
+            test "$EXPECT_RED" = true
           fi
           test "$(uname -s)" = '${{ matrix.system }}'
           test "$(uname -m)" = '${{ matrix.arch }}'
@@ -149,6 +158,12 @@ jobs:
           set -euo pipefail
           rustc -Vv | tee "$EVIDENCE/rustc.log"
           cargo -V | tee "$EVIDENCE/cargo.log"
+          if [[ "$RESOLVE_INPUT_LOCK" == true ]]; then
+            cp Cargo.lock "$EVIDENCE/Cargo.before.lock"
+            cargo metadata --all-features --format-version 1 > "$EVIDENCE/lock-resolution-metadata.json"
+            python3 -B "$GITHUB_WORKSPACE/scripts/verify_infercnv_input_lock.py" \
+              "$EVIDENCE/Cargo.before.lock" Cargo.lock | tee "$EVIDENCE/lock-resolution.log"
+          fi
           if [[ "$RESOLVE_MEASUREMENT_LOCK" == true ]]; then
             cp Cargo.lock "$EVIDENCE/Cargo.before.lock"
             cargo metadata --all-features --format-version 1 > "$EVIDENCE/lock-resolution-metadata.json"
@@ -271,7 +286,7 @@ jobs:
         working-directory: ${{ runner.temp }}/sc-cnv-candidate
         run: |
           set -euo pipefail
-          if [[ "$RESOLVE_MEASUREMENT_LOCK" == true ]]; then
+          if [[ "$RESOLVE_MEASUREMENT_LOCK" == true || "$RESOLVE_INPUT_LOCK" == true ]]; then
             awk '$2 != "Cargo.lock"' "$EVIDENCE/files.sha256" > "$EVIDENCE/unchanged-files.sha256"
             shasum -a 256 --check "$EVIDENCE/unchanged-files.sha256" | tee "$EVIDENCE/source-after.log"
           else
