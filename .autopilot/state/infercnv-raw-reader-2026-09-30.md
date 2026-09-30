@@ -142,3 +142,35 @@ The null-field fix at world `3c1970b8` passed exact-head control run
 `36693720465`. Replacement actual-package run `36694464090` is queued at that
 exact source head; acceptance still requires its terminal success and an
 independent original-artifact audit.
+
+## Canonical numeric-padding failure
+
+World `a6311a51` passed control run `36694634041`. Actual four-native locked
+run `36694720861` then failed one external test in both profiles on every
+target: shipped canonical input record 2 contained ASCII-padded numeric tokens
+that native `f64::parse` rejects. The immutable accepted R exporter uses
+`formatC(..., digits=17, format="g")`; original bytes show seventeen spaces
+before zero. This is an input lexical gap, not changed numerical values or
+core tolerances. Ordinary reader tests, synthetic raw external cases, old
+prepared shipped cases, measurement support and strict Clippy passed.
+
+The next candidate accepts only ASCII-space padding around numerical fields.
+IDs, groups and coordinates stay literal; other whitespace, empty numerical
+fields and general R table heuristics stay rejected. Focused regression tests
+join the original canonical input test. No accepted artifact is rewritten.
+
+Replacement installed-package edge run `36694464090` completed successfully
+at world `3c1970b8`; original artifact acquisition and offline review are in
+progress. Its green status alone does not accept native raw creation.
+
+All four original failed native artifacts were independently checked against
+API size/digests, safe unique paths, CRCs and identical frozen source bytes.
+Both source checks verify 144 files on each target. Debug/release each confirm
+26 reader tests passing, the two other external cases passing and the same
+canonical-padding failure. Original artifacts and run/jobs/log JSON remain at
+the external `run-36694720861` evidence directory.
+
+`green-10` contains only the one-line numerical ASCII trim and five focused
+regressions over green-9; there are now 31 reader tests. The old discarded-row
+test replaces two now-valid padded numbers with actually invalid inputs.
+Independent review and replacement four-native execution remain pending.

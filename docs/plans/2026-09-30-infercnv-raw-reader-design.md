@@ -19,8 +19,10 @@ adjusting it to accommodate a reader.
 Counts are strict UTF-8 TSV with explicit gene-column header and unique,
 nonempty cell/gene IDs. CRLF and a final unterminated record are supported.
 The three input files may be plain or gzip; decoding must reach EOF and report
-truncation/checksum errors. Whitespace, comment and quoting transformations
-from R's general `read.table` dialect are not inferred. An implicit count
+truncation/checksum errors. Numeric fields accept surrounding ASCII spaces:
+the accepted R `formatC` canonical files contain fixed-width leading padding.
+Identity fields are never trimmed. Other whitespace, comment and quoting
+transformations from R's general `read.table` dialect are not inferred. An implicit count
 header is added only after a separate real-package probe.
 
 Positions have four headerless fields: gene ID, chromosome, unsigned start,
