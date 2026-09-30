@@ -48,6 +48,31 @@ def _indices(value):
     raise ValueError("invalid map indices")
 
 
+def validate_arguments(record: dict, source_name: str, counts: str, positions: str,
+                       annotations: str, references: list[str],
+                       checkpoint: str | None = None) -> None:
+    if checkpoint is not None and record.get("source_checkpoint") != checkpoint:
+        raise ValueError("source checkpoint path mismatch")
+    arguments = record.get("creation_arguments")
+    paths = {"raw_counts_matrix": counts, "gene_order_file": positions,
+             "annotations_file": annotations}
+    expected = {"ref_group_names": references, "delim": "\t",
+                "max_cells_per_group": None, "min_max_counts_per_cell": [1, "Inf"],
+                "chr_exclude": ["chrX", "chrY", "chrM"]}
+    if not isinstance(arguments, dict) or set(arguments) != set(paths) | set(expected) or \
+            any(arguments[key] != value for key, value in expected.items()):
+        raise ValueError("creation arguments mismatch")
+    for key, relative in paths.items():
+        value = arguments[key]
+        if not isinstance(value, str) or "\\" in value:
+            raise ValueError("creation input path mismatch")
+        path = PurePosixPath(value)
+        suffix = PurePosixPath(source_name, relative).parts
+        if not path.is_absolute() or str(path) != value or ".." in path.parts or \
+                path.parts[-len(suffix):] != suffix:
+            raise ValueError("creation input path mismatch")
+
+
 def validate_case(case_dir: Path, counts: Path, positions: Path, annotations: Path,
                   expected_expression: Path | None, record: dict, *,
                   expected_genes: Path | None = None,
@@ -185,6 +210,10 @@ def validate_witness(synthetic: Path, witness: Path, shipped: Path | None = None
         label = f"synthetic_{profile}"
         source = synthetic_record["profiles"][profile]["stages"]["1"]
         args = synthetic_record["inputs"]
+        validate_arguments(cases[label], "bundle", args["counts.tsv"],
+                           args["gene_order.tsv"], args["annotations.tsv"],
+                           synthetic_record["profiles"][profile]["settings"]["ref_group_names"],
+                           source["checkpoint"])
         if digest(checked_file(synthetic, source["checkpoint"])) != cases[label].get("stage1_sha256"):
             raise ValueError("stage-1 checkpoint hash mismatch")
         results[label] = validate_case(
@@ -203,6 +232,10 @@ def validate_witness(synthetic: Path, witness: Path, shipped: Path | None = None
         source = shipped_record["cases"]["full"]
         stage = source["stages"]["1"]
         args = shipped_record["inputs"]
+        validate_arguments(cases["shipped_full"], "shipped-bundle",
+                           args[source["input_counts"]], args["original_gene_order"],
+                           args["original_annotations"], source["reference_groups"],
+                           stage["checkpoint"])
         if digest(checked_file(shipped, stage["checkpoint"])) != cases["shipped_full"].get("stage1_sha256"):
             raise ValueError("shipped stage-1 checkpoint hash mismatch")
         results["shipped_full"] = validate_case(
@@ -215,6 +248,8 @@ def validate_witness(synthetic: Path, witness: Path, shipped: Path | None = None
         if cases["shipped_full"]["references"] != source["reference_groups"]:
             raise ValueError("reference names differ from shipped profile")
     small = witness / "small_inputs"
+    validate_arguments(cases["small"], "ingestion-witness/small_inputs",
+                       "counts.tsv", "positions.tsv", "annotations.tsv", ["z_ref", "a_ref"])
     results["small"] = validate_case(
         witness / "small", checked_file(small, "counts.tsv"),
         checked_file(small, "positions.tsv"),

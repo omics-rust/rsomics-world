@@ -58,8 +58,11 @@ The user manually resumed work on 2026-09-30. The next
 [creation-witness design](../plans/2026-09-30-infercnv-ingestion-witness-design.md)
 and [plan](../plans/2026-09-30-infercnv-ingestion-witness-plan.md) establish
 canonical plain/gzip and ordered-group evidence before product raw ingestion.
-The candidate scripts have passed syntax/checker review; installed-package
-execution and evidence acceptance are pending in the
+Installed-package run `36685366497` and offline artifact review accepted the
+bounded canonical TSV/gzip creation witnesses. Product raw ingestion and
+further format/filter/error probes now follow the
+[raw-reader design](../plans/2026-09-30-infercnv-raw-reader-design.md); their
+status and precise exclusions are recorded in the
 [resumed ledger](../../.autopilot/state/infercnv-ingestion-witness-2026-09-30.md).
 
 ## Boundary

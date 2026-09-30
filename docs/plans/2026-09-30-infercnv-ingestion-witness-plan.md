@@ -10,6 +10,16 @@
 
 **Spec:** `docs/plans/2026-09-30-infercnv-ingestion-witness-design.md`.
 
+**Outcome:** The bounded scope is complete and accepted in run `36685366497`.
+The ledger below preserves the original proposed sequence. The exporter,
+checker and workflow were instead committed together at `5b72d71a`: one
+witness feature with actual-package execution as its integration gate. The
+small fixture uses four retained genes/cells rather than the initial two/three
+sketch. The [receipt](../../.autopilot/state/infercnv-ingestion-witness-2026-09-30.md)
+supersedes the acquisition-pending checkboxes and records all final checks,
+independent offline acceptance and exclusions. Product raw ingestion follows
+a separate design and remains unaccepted.
+
 ## Global constraints
 
 - Work in `rsomics-world`; do not edit or publish `rsomics-sc` in this plan.

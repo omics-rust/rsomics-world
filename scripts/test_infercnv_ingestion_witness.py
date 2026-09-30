@@ -4,7 +4,9 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from validate_infercnv_ingestion_witness import checked_file, validate_case, validate_small
+from validate_infercnv_ingestion_witness import (
+    checked_file, validate_arguments, validate_case, validate_small,
+)
 
 
 def digest(path):
@@ -147,6 +149,45 @@ class SmallWitnessTests(unittest.TestCase):
         path.write_text("\n".join(rows) + "\n")
         with self.assertRaisesRegex(ValueError, "small gene"):
             validate_small(self.root)
+
+
+class ArgumentTests(unittest.TestCase):
+    def setUp(self):
+        self.record = {"source_checkpoint": "full/upstream/01.rds",
+                       "creation_arguments": {
+            "raw_counts_matrix": "/runner/shipped-bundle/inputs/counts.tsv",
+            "gene_order_file": "/runner/shipped-bundle/inputs/genes.tsv",
+            "annotations_file": "/runner/shipped-bundle/inputs/annotations.tsv",
+            "ref_group_names": ["normal"], "delim": "\t",
+            "max_cells_per_group": None, "min_max_counts_per_cell": [1, "Inf"],
+            "chr_exclude": ["chrX", "chrY", "chrM"],
+        }}
+
+    def check(self):
+        validate_arguments(self.record, "shipped-bundle", "inputs/counts.tsv",
+                           "inputs/genes.tsv", "inputs/annotations.tsv",
+                           ["normal"], "full/upstream/01.rds")
+
+    def test_accepts_recorded_arguments(self):
+        self.check()
+
+    def test_rejects_changed_checkpoint_path(self):
+        self.record["source_checkpoint"] = "full/upstream/other.rds"
+        with self.assertRaisesRegex(ValueError, "checkpoint path"):
+            self.check()
+
+    def test_rejects_changed_filter_arguments(self):
+        self.record["creation_arguments"]["min_max_counts_per_cell"] = [100, "Inf"]
+        with self.assertRaisesRegex(ValueError, "creation arguments"):
+            self.check()
+
+    def test_rejects_wrong_or_noncanonical_source_path(self):
+        for path in ("/runner/bundle/inputs/counts.tsv",
+                     "/runner/shipped-bundle/../shipped-bundle/inputs/counts.tsv"):
+            with self.subTest(path=path):
+                self.record["creation_arguments"]["raw_counts_matrix"] = path
+                with self.assertRaisesRegex(ValueError, "creation input path"):
+                    self.check()
 
 
 if __name__ == "__main__":
