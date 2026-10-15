@@ -236,11 +236,34 @@ class TrialProcessTests(unittest.TestCase):
             owner.kill()
             owner.wait()
 
-    def test_pre_readiness_fallback_cooperatively_cleans_known_trial(self):
-        launched = self.root / "launched.pid"
+    def wait_pid_witness(self, path, owner, timeout=5):
+        deadline = time.monotonic() + timeout
+        while owner.poll() is None:
+            try:
+                pid = int(path.read_text())
+                if pid > 1:
+                    return pid
+            except (OSError, ValueError):
+                pass
+            if time.monotonic() >= deadline:
+                break
+            time.sleep(0.01)
+        self.fail("owner did not publish a valid PID witness")
+
+    def pre_readiness_case(self, witness_kind="valid"):
+        launched = self.root / "launched.witness"
+        known = self.root / "known child.pid"
         ready = self.root / "never ready.pid"
+        publication = {
+            "valid": (
+                "  with open(" + repr(str(launched) + ".part") + ",'w') as output: output.write(str(proc.pid))\n"
+                "  os.replace(" + repr(str(launched) + ".part") + "," + repr(str(launched)) + ")\n"
+            ),
+            "partial": "  open(" + repr(str(launched)) + ",'w').close()\n",
+            "unreadable": "  os.mkdir(" + repr(str(launched)) + ")\n",
+        }[witness_kind]
         wrapper = (
-            "import signal,sys\n"
+            "import os,signal,sys\n"
             "from infercnv_trial_process import run_child,TrialInterrupted\n"
             "seen=False\n"
             "def trace(frame,event,arg):\n"
@@ -248,7 +271,9 @@ class TrialProcessTests(unittest.TestCase):
             " proc=frame.f_locals.get('proc')\n"
             " if not seen and event=='line' and frame.f_code.co_name=='run_child' and proc is not None:\n"
             "  seen=True\n"
-            "  open(" + repr(str(launched)) + ",'w').write(str(proc.pid))\n"
+            "  with open(" + repr(str(known) + ".part") + ",'w') as output: output.write(str(proc.pid))\n"
+            "  os.replace(" + repr(str(known) + ".part") + "," + repr(str(known)) + ")\n"
+            + publication +
             " return trace\n"
             "sys.settrace(trace)\n"
             "try: run_child(" + repr(self.command("import time; time.sleep(30)")) + ","
@@ -258,11 +283,10 @@ class TrialProcessTests(unittest.TestCase):
         owner = subprocess.Popen(self.command(wrapper), cwd=Path(__file__).parent)
         pgid = None
         try:
-            deadline = time.monotonic() + 5
-            while not launched.exists() and owner.poll() is None and time.monotonic() < deadline:
-                time.sleep(0.01)
-            self.assertTrue(launched.exists(), "owner did not launch its real child")
-            pgid = int(launched.read_text())
+            pgid = self.wait_pid_witness(known, owner)
+            self.assertEqual(self.wait_pid_witness(
+                launched, owner, timeout=5 if witness_kind == "valid" else 0.05
+            ), pgid)
             self.assertFalse(ready.exists())
             published_pid = None
             deadline = time.monotonic() + 5
@@ -278,11 +302,33 @@ class TrialProcessTests(unittest.TestCase):
             self.assertEqual(self.live_group_members(pgid), [])
             self.assertEqual(published_pid, pgid)
         finally:
-            if pgid is not None and self.live_group_members(pgid):
-                os.killpg(pgid, signal.SIGKILL)
-            if owner.poll() is None:
-                owner.kill()
-                owner.wait()
+            self.stop_signal_owner(owner, ready)
+            self.assertEqual(owner.returncode, 43)
+            if pgid is not None:
+                self.assertEqual(self.live_group_members(pgid), [])
+
+    def test_pre_readiness_fallback_cooperatively_cleans_known_trial(self):
+        self.pre_readiness_case()
+
+    def bad_witness_case(self, kind):
+        try:
+            with self.assertRaisesRegex(AssertionError, "valid PID witness"):
+                self.pre_readiness_case(kind)
+        finally:
+            known = self.root / "known child.pid"
+            if known.exists():
+                pgid = int(known.read_text())
+                if self.live_group_members(pgid):
+                    os.killpg(pgid, signal.SIGKILL)
+        report = self.report()
+        self.assertEqual(report["status"], "interrupted")
+        self.assertEqual(self.live_group_members(report["pid"]), [])
+
+    def test_partial_pid_witness_still_cooperatively_cleans_owner(self):
+        self.bad_witness_case("partial")
+
+    def test_pid_witness_read_error_still_cooperatively_cleans_owner(self):
+        self.bad_witness_case("unreadable")
 
     def late_finalization_signal_case(self, signum):
         wrapper = (
