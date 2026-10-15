@@ -143,9 +143,14 @@ jobs:
 
       - name: Select Python 3.12 for installed-creation contracts
         if: env.INGESTION_CONTRACTS == 'true'
-        uses: actions/setup-python@v6
-        with:
-          python-version: '3.12'
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -x /usr/bin/python3.12
+          /usr/bin/python3.12 -I -B -c 'import sys; assert sys.version_info[:2] == (3, 12)'
+          mkdir "$RUNNER_TEMP/ingestion-python"
+          ln -s /usr/bin/python3.12 "$RUNNER_TEMP/ingestion-python/python3"
+          printf '%s\n' "$RUNNER_TEMP/ingestion-python" >> "$GITHUB_PATH"
 
       - name: Verify original installed-creation artifact and raw inputs
         if: env.INGESTION_CONTRACTS == 'true'

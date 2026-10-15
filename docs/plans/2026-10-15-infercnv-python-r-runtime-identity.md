@@ -29,9 +29,9 @@ Hypothesis: R's ldpaths prepends the system library directory before toolcache's
 ## Task 1: Actual boundary RED
 
 - [x] Add the complete preflight below after setup-r and before Install JAGS/system headers in the workflow and its complete package-plan copy. Existing executable baseline capture moves here; later rechecks remain.
-- [ ] Validate YAML/Bash, run controller/architecture/whitespace checks; commit only workflow/owned plan/state, push and wait exact-head CI.
-- [ ] Dispatch ingestion-only shipped mode. Require the exact runtime mismatch after raw input and R setup prerequisites succeed; inspect actual R ldpaths and mapped library provenance. No factory rerun may precede that rejected boundary.
-- [ ] Preserve original run/jobs/artifact/logs externally. If hypothesis is wrong, investigate the actual loaded runtime rather than install another workaround.
+- [x] Validate YAML/Bash, run controller/architecture/whitespace checks; commit only workflow/owned plan/state, push and wait exact-head CI (539ab577,38698956363 success).
+- [x] Dispatch ingestion-only shipped mode. Exact runtime/library mismatch observed in38699064898 after successful raw input and R setup; source/executable postchecks succeed. No factory is run.
+- [x] Preserve original run/jobs/artifact/logs externally; actual hosted R ldpaths/maps confirms system libpython3.12.3 displaces toolcache3.12.15.
 
 ```yaml
       - name: Verify Python runtime identity across R launch
@@ -69,8 +69,8 @@ Hypothesis: R's ldpaths prepends the system library directory before toolcache's
 
 ## Task 2: Native interpreter GREEN
 
-- [ ] Only after hosted RED proves the runtime/library conflict, replace setup-python action with the complete conditional native selection below. It uses an explicit Ubuntu-system executable and prepends a symlink directory only to PATH; no R LD_LIBRARY_PATH changes.
-- [ ] Keep the boundary preflight unchanged; validate complete workflow/package-plan copy and all twelve code/receipt pins.
+- [x] Only after hosted RED proves the runtime/library conflict, replace setup-python action with the complete conditional native selection below. It uses an explicit Ubuntu-system executable and prepends a symlink directory only to PATH; no R LD_LIBRARY_PATH changes.
+- [x] Keep the boundary preflight unchanged; validate complete workflow/package-plan copy, all30 actual Bash blocks and all twelve code/receipt pins. Full283 controller tests and architecture/whitespace pass.
 - [ ] Full controller/YAML/Bash/architecture/whitespace; commit scoped fix, push and wait exact-head CI.
 - [ ] Dispatch the same ingestion-only mode. Require preflight identity agreement, actual package/factory tests, independent outputs/counters and source/executable postchecks all successful.
 - [ ] Authenticate original APIs/ZIP/CRC/safe inventory and recheck all four warm/measured states, parent plain/gzip states, twelve metrics, Python consistency and actual runtime/clock/code/source provenance. Update the installed-package acceptance ledger only after that.
