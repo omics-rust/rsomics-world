@@ -149,6 +149,7 @@ def run_child(argv, prefix, timeout=1200, env=None, cleanup_timeout=5):
                                         start_new_session=True)
                 report["pid"] = proc.pid
                 report["status"] = "running"
+                _save_report(report_file, report)
                 deadline = time.monotonic() + timeout
                 while True:
                     if pending_signal is not None:
@@ -218,8 +219,20 @@ def run_child(argv, prefix, timeout=1200, env=None, cleanup_timeout=5):
                 report["end_ns"] = time.monotonic_ns()
                 _save_report(report_file, report)
             finally:
-                for signum, handler in previous_handlers.items():
-                    signal.signal(signum, handler)
+                if previous_handlers:
+                    previous_mask = signal.pthread_sigmask(signal.SIG_BLOCK, previous_handlers)
+                    try:
+                        for signum, handler in previous_handlers.items():
+                            signal.signal(signum, handler)
+                        if pending_signal is not None and report["interrupted_signal"] != pending_signal:
+                            failure = TrialInterrupted(pending_signal)
+                            report["interrupted_signal"] = pending_signal
+                            report["status"] = "interrupted"
+                            report["error"] = f"{type(failure).__name__}: {failure}"
+                            report["end_ns"] = time.monotonic_ns()
+                            _save_report(report_file, report)
+                    finally:
+                        signal.pthread_sigmask(signal.SIG_SETMASK, previous_mask)
     if failure is not None:
         if isinstance(failure, (TrialProcessError, KeyboardInterrupt, SystemExit)):
             raise failure

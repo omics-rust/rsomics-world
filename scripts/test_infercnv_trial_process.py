@@ -187,10 +187,12 @@ class TrialProcessTests(unittest.TestCase):
             "import signal,sys\n"
             "from infercnv_trial_process import run_child,TrialInterrupted\n"
             "before={s:signal.getsignal(s) for s in (signal.SIGINT,signal.SIGTERM)}\n"
+            "before_mask=signal.pthread_sigmask(signal.SIG_BLOCK,[])\n"
             "try: run_child(" + repr(self.command(code)) + "," + repr(str(self.prefix)) + ",cleanup_timeout=0.5)\n"
             "except TrialInterrupted as exc:\n"
             " assert exc.signal_number == " + str(signum) + "\n"
             " assert all(signal.getsignal(s)==h for s,h in before.items())\n"
+            " assert signal.pthread_sigmask(signal.SIG_BLOCK,[])==before_mask\n"
             " sys.exit(43)\n"
             "sys.exit(9)\n"
         )
@@ -203,22 +205,120 @@ class TrialProcessTests(unittest.TestCase):
             os.kill(owner.pid, signum)
             self.assertEqual(owner.wait(timeout=4), 43)
         finally:
-            if owner.poll() is None:
-                if ready.exists():
-                    try:
-                        pgid = os.getpgid(int(ready.read_text()))
-                        if pgid > 1 and pgid != os.getpgrp():
-                            os.killpg(pgid, signal.SIGKILL)
-                    except ProcessLookupError:
-                        pass
-                owner.kill()
-                owner.wait()
+            self.stop_signal_owner(owner, ready)
         report = self.report()
         self.assertEqual(report["status"], "interrupted")
         self.assertEqual(report["interrupted_signal"], signum)
         self.assertEqual(report["returncode"], -signal.SIGKILL)
         self.assertEqual([item["signal"] for item in report["cleanup_actions"]], ["SIGTERM", "SIGKILL"])
         self.assertEqual(self.live_group_members(report["pid"]), [])
+
+    def stop_signal_owner(self, owner, ready):
+        if owner.poll() is None:
+            owner.send_signal(signal.SIGTERM)
+            try:
+                owner.wait(timeout=3)
+                return
+            except subprocess.TimeoutExpired:
+                pass
+            report = self.report()
+            pgid = report["pid"]
+            if pgid is None and ready.exists():
+                try:
+                    pgid = os.getpgid(int(ready.read_text()))
+                except ProcessLookupError:
+                    pass
+            if pgid is not None and pgid > 1 and pgid != os.getpgrp():
+                try:
+                    os.killpg(pgid, signal.SIGKILL)
+                except ProcessLookupError:
+                    pass
+            owner.kill()
+            owner.wait()
+
+    def test_pre_readiness_fallback_cooperatively_cleans_known_trial(self):
+        launched = self.root / "launched.pid"
+        ready = self.root / "never ready.pid"
+        wrapper = (
+            "import signal,sys\n"
+            "from infercnv_trial_process import run_child,TrialInterrupted\n"
+            "seen=False\n"
+            "def trace(frame,event,arg):\n"
+            " global seen\n"
+            " proc=frame.f_locals.get('proc')\n"
+            " if not seen and event=='line' and frame.f_code.co_name=='run_child' and proc is not None:\n"
+            "  seen=True\n"
+            "  open(" + repr(str(launched)) + ",'w').write(str(proc.pid))\n"
+            " return trace\n"
+            "sys.settrace(trace)\n"
+            "try: run_child(" + repr(self.command("import time; time.sleep(30)")) + ","
+            + repr(str(self.prefix)) + ",cleanup_timeout=0.5)\n"
+            "except TrialInterrupted: sys.exit(43)\n"
+        )
+        owner = subprocess.Popen(self.command(wrapper), cwd=Path(__file__).parent)
+        pgid = None
+        try:
+            deadline = time.monotonic() + 5
+            while not launched.exists() and owner.poll() is None and time.monotonic() < deadline:
+                time.sleep(0.01)
+            self.assertTrue(launched.exists(), "owner did not launch its real child")
+            pgid = int(launched.read_text())
+            self.assertFalse(ready.exists())
+            published_pid = None
+            deadline = time.monotonic() + 5
+            while published_pid is None and owner.poll() is None and time.monotonic() < deadline:
+                try:
+                    published_pid = self.report()["pid"]
+                except json.JSONDecodeError:
+                    pass
+                if published_pid is None:
+                    time.sleep(0.01)
+            self.stop_signal_owner(owner, ready)
+            self.assertEqual(owner.wait(timeout=4), 43)
+            self.assertEqual(self.live_group_members(pgid), [])
+            self.assertEqual(published_pid, pgid)
+        finally:
+            if pgid is not None and self.live_group_members(pgid):
+                os.killpg(pgid, signal.SIGKILL)
+            if owner.poll() is None:
+                owner.kill()
+                owner.wait()
+
+    def late_finalization_signal_case(self, signum):
+        wrapper = (
+            "import json,signal,sys\n"
+            "from infercnv_trial_process import run_child,TrialInterrupted\n"
+            "before={s:signal.getsignal(s) for s in (signal.SIGINT,signal.SIGTERM)}\n"
+            "before_mask=signal.pthread_sigmask(signal.SIG_BLOCK,[])\n"
+            "sent=False\n"
+            "def trace(frame,event,arg):\n"
+            " global sent\n"
+            " if not sent and event=='call' and frame.f_code.co_name=='_save_report' and frame.f_locals['report']['status']=='completed':\n"
+            "  sent=True\n"
+            "  signal.raise_signal(" + str(signum) + ")\n"
+            " return trace\n"
+            "sys.settrace(trace)\n"
+            "try: run_child(" + repr(self.command("pass")) + "," + repr(str(self.prefix)) + ")\n"
+            "except TrialInterrupted as exc:\n"
+            " assert sent and exc.signal_number == " + str(signum) + "\n"
+            " assert all(signal.getsignal(s)==h for s,h in before.items())\n"
+            " assert signal.pthread_sigmask(signal.SIG_BLOCK,[])==before_mask\n"
+            " sys.exit(43)\n"
+            "sys.exit(9)\n"
+        )
+        result = subprocess.run(self.command(wrapper), cwd=Path(__file__).parent, timeout=5)
+        self.assertEqual(result.returncode, 43)
+        report = self.report()
+        self.assertEqual(report["status"], "interrupted")
+        self.assertEqual(report["interrupted_signal"], signum)
+        self.assertEqual(report["returncode"], 0)
+        self.assertTrue(report["group_empty"])
+
+    def test_late_report_sigint_is_not_accepted_and_restores_handlers(self):
+        self.late_finalization_signal_case(signal.SIGINT)
+
+    def test_late_report_sigterm_is_not_accepted_and_restores_handlers(self):
+        self.late_finalization_signal_case(signal.SIGTERM)
 
     def test_sigint_cleans_parent_and_descendant_and_restores_handlers(self):
         self.signal_case(signal.SIGINT)
