@@ -2,8 +2,8 @@
 
 Status as of2026-10-15: private native trial accepted from green-14/run38688148869,
 all four native targets, strict Clippy and original evidence audited. Product
-5beb707e is committed and clean. No canonical timing executed. Installed R
-contracts are running under the separate2026-10-15 package ledger; paired
+5beb707e is committed and clean. No paired canonical campaign executed.
+Installed R contracts are accepted from38700520489 under the2026-10-15 ledger; paired
 campaign remains separate. Earlier phase entries below are historical.
 
 Plan: `../../docs/plans/2026-09-30-infercnv-native-creation-trial-plan.md`.

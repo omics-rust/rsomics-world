@@ -71,10 +71,10 @@ Hypothesis: R's ldpaths prepends the system library directory before toolcache's
 
 - [x] Only after hosted RED proves the runtime/library conflict, replace setup-python action with the complete conditional native selection below. It uses an explicit Ubuntu-system executable and prepends a symlink directory only to PATH; no R LD_LIBRARY_PATH changes.
 - [x] Keep the boundary preflight unchanged; validate complete workflow/package-plan copy, all30 actual Bash blocks and all twelve code/receipt pins. Full283 controller tests and architecture/whitespace pass.
-- [ ] Full controller/YAML/Bash/architecture/whitespace; commit scoped fix, push and wait exact-head CI.
-- [ ] Dispatch the same ingestion-only mode. Require preflight identity agreement, actual package/factory tests, independent outputs/counters and source/executable postchecks all successful.
-- [ ] Authenticate original APIs/ZIP/CRC/safe inventory and recheck all four warm/measured states, parent plain/gzip states, twelve metrics, Python consistency and actual runtime/clock/code/source provenance. Update the installed-package acceptance ledger only after that.
-- [ ] Fresh whole-change review of this workflow-only correction; ledger declined scope and any minor limits. Paired32/64 performance and full inferCNV/publication remain separate.
+- [x] Full controller/YAML/Bash/architecture/whitespace; commit scoped fix0aff9f8e, push and wait exact-head CI38700076464 success.
+- [x] Dispatch the same ingestion-only mode:38700520489 succeeds with preflight identity agreement, actual package/factory tests, independent outputs/counters and source/executable postchecks.
+- [x] Authenticate original APIs/ZIP/CRC/280-file safe inventory and recheck all four warm/measured states, parent plain/gzip states, twelve metrics, Python consistency and actual runtime/clock/code/source provenance. Original evidence and bounded acceptance are recorded in the runtime/package ledgers and frozen receipt. Later paired execution must rerun the full identity probe after dependency installation and around its campaign.
+- [x] Fresh whole-change review of this workflow-only correction; no Critical/Important findings. Minor historical checkpoint label clarified; declined hosted/evidence/performance scope is ledgered. Paired32/64 performance and full inferCNV/publication remain separate.
 
 ```yaml
       - name: Select Python 3.12 for installed-creation contracts

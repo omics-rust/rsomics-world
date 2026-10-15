@@ -2,8 +2,8 @@
 
 Status: exact controller and private Rust creation/export helpers accepted,
 including the actual native trial's green-14 four-native debug/release gate
-(run38688148869, product5beb707e). Installed-R package contracts are in
-progress: `infercnv-r-package-contracts-2026-10-15.md`. No authenticated
+(run38688148869, product5beb707e). Installed-R package contracts are accepted
+from38700520489: `infercnv-r-package-contracts-2026-10-15.md`. No authenticated
 canonical timed campaign or speed/resource claim. Earlier dated steps below
 retain their historical evidence and source identities.
 
@@ -62,8 +62,9 @@ accepts the helper alone, not a timed trial or product performance.
 1. Complete: independent helper review, main push and exact-head controller CI.
 2. Complete: private Rust creation/export support, genuine missing-helper RED
    and clean-source four-native debug/release gate.
-3. Actual installed-package factory trial, source/runtime pins, paired process
-   driver, immutable input/candidate receipts and complete provenance tests.
+3. Actual installed-package factory trial/source pins/receipts accepted with
+   bounded runtime scope. Remaining: paired process owner/driver, closed root
+   metadata gates and full post-dependency/runtime provenance tests.
 4. Thirty-two fresh processes yielding 64 checked factory outputs; 28 measured
    samples with frozen plain/gzip strict wall advantage criteria.
 5. Original artifact/log/metrics/source audit before any bounded performance

@@ -5,11 +5,12 @@ Spec: `../../docs/plans/2026-09-30-infercnv-raw-ingestion-measurement-design.md`
 Base world: deabf106f8c822b25673cb209e47b49d825c5043, exact-head Control
 plane38689473008 success. Product5beb707e is clean and private.
 
-Status as of2026-10-15: genuine missing-trial RED38695221700 accepted; actual
-factory candidate38696325035 succeeds and independent exact value/counter
-checks pass. Final runtime acceptance withheld: toolcache3.12.15 executable
-reports Python3.12.3 when launched from R. Continue the separate
-infercnv-python-r-runtime-identity-2026-10-15.md gate; no performance accepted.
+Status as of2026-10-15: genuine missing-trial RED38695221700 accepted; installed
+plain/gzip contracts accepted from independently authenticated38700520489 at
+0aff9f8e after actual runtime/library RED and native Python repair. Original
+candidate38696325035 remains preserved, not relabeled. See the runtime ledger
+and infercnv-installed-creation-contracts-2026-10-15.json receipt. No paired
+performance accepted; later launcher must repeat full identity after dependencies.
 Earlier phase entries below retain their historical source identities.
 
 Ruling: reuse the complete original-artifact verifier and existing installed
@@ -171,3 +172,15 @@ Python metadata reports3.12.3 at the3.12.15 toolcache binary path, while shell
 reports3.12.15. Do not label that runtime3.12.15 or accept exe hash alone as
 complete runtime identity. Original values/counters remain evidence, not a
 final runtime/paired gate. See the new complete runtime repair plan/ledger.
+
+## Bounded installed creation contracts accepted
+
+Native-selection run38700520489, exact0aff9f8e, completes all required steps.
+Root independently authenticates original APIs/ZIP/logs and all parent/4 fresh
+outputs, actual counters, source/function/code/runtime identities,5 rejected
+code mutations and fresh root inventories. Receipt and detailed evidence live
+in the runtime ledger; source review has no Critical/Important findings. Actual
+Python3.12.3 native executable/hash agrees outside/inside R and in both fresh
+factory records. This closes installed-package correctness/measurement-contract
+execution, not a paired32/64 performance run, actual single-thread guarantee,
+factory-peak RSS, arbitrary decimal dialect, CLI or full inferCNV release.
