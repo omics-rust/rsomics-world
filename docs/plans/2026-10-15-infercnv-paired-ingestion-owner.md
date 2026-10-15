@@ -118,7 +118,15 @@ retained JSON, not new network calls.
 Read actual Cargo `--message-format=json` build output, requiring one successful
 build-finished record and one matching `cnv_ingestion_matched` executable
 compiler-artifact from the admitted manifest, bench target, requested feature
-and optimized/test=false profile. Use that executable, canonical/regular/
+and optimized profile. Require target.test=false and profile.test=true for
+this fixed Cargo1.91 `cargo build --release --bench` route: these are distinct
+fields. The actual retained successful36229683578 Cargo JSONL line63 has
+target.test=false/profile.test=true for the identically configured cnv_matched
+bench; both frozen bench targets have harness=false/test=false. The earlier
+profile.test=false assumption was wrong and would reject real builds. Keep
+opt_level=3/debug_assertions=false, the exact feature/target and all source/
+executable gates; do not permissively accept either profile flag. Use that
+executable, canonical/regular/
 executable under cargo_target_dir; reject ambiguity, any compiler failure or
 caller-provided replacement path. Record source/build log/executable hashes,
 actual `rustc -vV` requiring release1.91.0 and hostx86_64-unknown-linux-gnu,
@@ -146,6 +154,16 @@ and bind their complete identity to the before profile. Request all seven
 THREAD_KEYS=1 and LC_ALL/LANG=C for actual children, preserve a usable PATH
 with the selected actual Python, and record only relevant environment fields,
 not secrets. The owner itself must already be Python3.12 under that identity.
+
+Review corrections: R system2 stdout/stderr must be empty strings to inherit
+the owned streams, not FALSE (which discards them). Direct exec/R --version
+requires R_HOME before option handling: query actual normalized R.home using
+admitted Rscript, bind its bin/exec/R to context.r_executable, and supply
+R_HOME only to that direct version child. Do not change parent/Rscript/factory
+loader environment. The opt-in RSOMICS_TEST_INSTALLED_R=1 test must exercise
+the real six-namespace identity route and direct R version with absent
+inherited R_HOME; no skip when explicitly enabled and prerequisites fail.
+Root wires this actual check after R dependency installation in native CI.
 
 Build r_profile from the untimed contract's runtime system/namespaces/blas/
 options_dput/measured options_dput plus full actual Python identity. Bind
