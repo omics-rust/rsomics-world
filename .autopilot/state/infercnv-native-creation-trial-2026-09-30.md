@@ -108,3 +108,49 @@ bytes; no critical/important defect identified. Four-native debug/release
 19Linux/14mac dedicated target, real bench compilation, prior55/11/72 gates
 and original API/artifact audit remain pending. This source freeze is not an
 actual authenticated canonical trial or performance acceptance.
+
+## Explicit resume and bench-scope repair — 2026-10-15
+
+The user explicitly resumed. Fresh checks find world main/local head still
+e172578b and owning product9e1e8d4 with exactly the inherited trial candidate
+changes. The old pause record is historical, not an instruction to auto-resume
+other jobs. No unrelated VCF/scratch is staged. Current boot APFS occupancy
+is93.21%; local compilation/R/install/dependency downloads remain prohibited.
+External target/home/tmp resolve to the allowed KIOXIA paths.
+
+Fresh GitHub read confirms green-13 run36730544730 failed. Original Linux log
+shows the new19-test target passed, then strict Clippy failed at the shared
+helper's test-module imports and NEXT under the harness-free bench. The
+function is excluded there while module-level imports/state remain. This is
+the concrete regression gate, not a factory correctness failure.
+
+Ruling: permit a test-scope-only change in the previously frozen creation
+helper — move its imports and counter into the existing writer-error test.
+This repairs the consuming bench without altering production/helper operations,
+test assertions/counts, timer, public API or lint policy. Cost if wrong: the
+bench still fails or test isolation changes; full four-native tests and the
+same strict Clippy command must disprove that. Preserve all old snapshots.
+
+Plan: `../../docs/plans/2026-10-15-infercnv-bench-test-scope-fix.md`.
+No native candidate is accepted and no product commit/publication occurs
+until the repaired candidate passes original evidence gates.
+
+Original green-13 run/job/artifact APIs, all4 ZIPs and full log ZIP were acquired
+and authenticated on resume under external `run-36730544730/resume-2026-10-15`.
+All original hashes/source-before/after/149-member archive match. Linux fails
+only Format and strict Clippy, with exactly the3 recorded diagnostics; other
+native jobs succeeded. Full log ZIP SHA256:
+`db4e491a691e5b3562a824c689bd1caa5ada302df5499f1639a890c74f9436b7`.
+
+Fresh independent whole-change review finds no Critical/Important Rust issue;
+it confirms unchanged helper prefix/test assertions and retained static lifetime.
+Root controller274 tests pass; external standalone Rust1.91 format passes.
+The repair changes only one of149 frozen files. Green-14 exact source guard
+passes with complete3-file checksums. Helper SHA256:
+`53f665f6e038954ef9b6599d877178f72ba91d6065ffde39bc1cfd9f07b9f2b5`.
+Archive SHA256:
+`a9e141432864837109ac8060cf3737b2044442ea04f69eff14f029090834d001`.
+Manifest SHA256:
+`0fc31a800507e0ee702ba37e76680921f874d93a25e196810333afe9998a5e16`.
+All src/, Cargo/lock, trial/timer and other148 source bytes are unchanged.
+Hosted four-native tests/strict Clippy and original evidence acceptance pending.
