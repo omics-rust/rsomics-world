@@ -21,6 +21,11 @@ on:
         type: boolean
         default: false
 
+      ingestion_contracts:
+        description: Validate installed raw-creation contracts, not paired performance
+        type: boolean
+        default: false
+
 permissions:
   contents: read
   actions: read
@@ -34,6 +39,7 @@ jobs:
       ORACLE_DATASET: ${{ inputs.dataset || 'synthetic' }}
       MATCHED_SNAPSHOT: ${{ inputs.matched_snapshot || '' }}
       SAMPLES_CLUSTERING: ${{ inputs.samples_clustering || false }}
+      INGESTION_CONTRACTS: ${{ inputs.ingestion_contracts || false }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -61,6 +67,15 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
+          if [[ "$INGESTION_CONTRACTS" == true ]]; then
+            test "$ORACLE_DATASET" = shipped
+            test -z "$MATCHED_SNAPSHOT"
+            test "$SAMPLES_CLUSTERING" = false
+            printf '%s\n' LC_ALL=C OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 \
+              MKL_NUM_THREADS=1 BLIS_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1 \
+              NUMEXPR_NUM_THREADS=1 RAYON_NUM_THREADS=1 PYTHONNOUSERSITE=1 \
+              PYTHONDONTWRITEBYTECODE=1 PYTHONSAFEPATH=1 >> "$GITHUB_ENV"
+          fi
           if [[ "$SAMPLES_CLUSTERING" == true ]]; then
             test "$ORACLE_DATASET" = shipped
           fi
@@ -94,6 +109,96 @@ jobs:
           sys.path.insert(0, str(pathlib.Path("scripts").resolve()))
           from verify_infercnv_measurement_snapshot import verify_extracted
           print(json.dumps(verify_extracted(*sys.argv[1:]), sort_keys=True))
+          PY
+
+      - name: Authenticate installed-creation contract code
+        if: env.INGESTION_CONTRACTS == 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          unset PYTHONPATH PYTHONHOME
+          test -z "$(find scripts -type f \( -name '*.pyc' -o -name '*.pyo' \) -print -quit)"
+          cat > "$EVIDENCE_DIR/ingestion-fixed.sha256" <<'PINS'
+          0d682071ce0b9096db174394453b03d20fb282c71c98fb5d2e63c7bb04b2d979  scripts/test_infercnv_ingestion_matched_package.R
+          bcbbd0e3b6a2d053562345cd9ee59a4ff3e9dc4c8d4e6e2a7db66097d5787418  scripts/infercnv_ingestion_runtime_support.R
+          d583b156e9a08f3422969697b4524469b8eb05bb92d6c65d41e2aa1df7990faa  scripts/infercnv_ingestion_matched_support.R
+          0c3870354e5ac5bafedbd018148492bb5f339714b5412c409866825b2e783956  scripts/infercnv_matched_support.R
+          5a01aeb620451d0254bbab775c53111a61eeefcaa32ac9b96ab142563ca5839d  scripts/infercnv_oracle_io.R
+          0fb1c968e46ff4dd041a42907ab70efaee9fae8beadf1254c81b1edf3c19cb36  scripts/validate_infercnv_ingestion_measurement.py
+          682d2a41bbe901a02b6687756e64cc1359fa1e3881d49af40eaa5fc725211222  scripts/validate_infercnv_samples_clustering_witness.py
+          212bf00ad68c59e652f220eacdf76350ca4e56d48752c3b1592fd46dba5c4dea  scripts/infercnv_ingestion_campaign.py
+          651ac3082d92f952bf026f134bfb0482f50b118dcfab367a497bbb0fe863571f  scripts/verify_infercnv_oracle_artifact.py
+          3bee1dc582a321f16cb173c757e955dc620a911a891f4051f8bae68dc856dc0b  .autopilot/oracles/infercnv-ingestion-measurement-input-2026-09-30.json
+          41284ea567fd2c41a48e22eef3c9063a59944607828ebc9cdea8a3f6da82e526  .autopilot/oracles/infercnv-samples-clustering-witness-2026-09-30.json
+          PINS
+          if [[ -e scripts/infercnv_ingestion_matched.R ]]; then
+            printf '%s\n' 'eb09009172c905363407f49c63bfa164da8d32a29ea8ec8a17a8701dc6e231d0  scripts/infercnv_ingestion_matched.R' >> "$EVIDENCE_DIR/ingestion-fixed.sha256"
+            printf 'present\n' > "$EVIDENCE_DIR/ingestion-trial-presence.txt"
+          else
+            test ! -L scripts/infercnv_ingestion_matched.R
+            printf 'absent; package contract must fail\n' > "$EVIDENCE_DIR/ingestion-trial-presence.txt"
+          fi
+          sha256sum --check "$EVIDENCE_DIR/ingestion-fixed.sha256" | tee "$EVIDENCE_DIR/ingestion-code-before.log"
+          git rev-parse HEAD > "$EVIDENCE_DIR/ingestion-controller-head.txt"
+
+      - name: Select Python 3.12 for installed-creation contracts
+        if: env.INGESTION_CONTRACTS == 'true'
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+
+      - name: Verify original installed-creation artifact and raw inputs
+        if: env.INGESTION_CONTRACTS == 'true'
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          unset PYTHONPATH PYTHONHOME
+          df -h "$RUNNER_TEMP" > "$EVIDENCE_DIR/ingestion-disk-before.txt"
+          test "$(df --output=avail -B1 "$RUNNER_TEMP" | tail -1)" -ge 12000000000
+          gh api repos/omics-rust/rsomics-world/actions/runs/36707344893 > "$EVIDENCE_DIR/ingestion-original-run.json"
+          gh api repos/omics-rust/rsomics-world/actions/artifacts/11092988090 > "$EVIDENCE_DIR/ingestion-original-artifact.json"
+          gh api repos/omics-rust/rsomics-world/actions/artifacts/11092988090/zip > "$RUNNER_TEMP/ingestion-original.zip"
+          python3 -I -B --version | tee "$EVIDENCE_DIR/ingestion-python-version.txt"
+          python3 -B -m unittest discover -s scripts -p test_verify_infercnv_oracle_artifact.py \
+            2>&1 | tee "$EVIDENCE_DIR/ingestion-artifact-verifier-tests.log"
+          python3 -B scripts/verify_infercnv_oracle_artifact.py \
+            --receipt .autopilot/oracles/infercnv-samples-clustering-witness-2026-09-30.json \
+            --run-json "$EVIDENCE_DIR/ingestion-original-run.json" \
+            --artifact-json "$EVIDENCE_DIR/ingestion-original-artifact.json" \
+            --zip "$RUNNER_TEMP/ingestion-original.zip" --output-dir "$RUNNER_TEMP/ingestion-original" \
+            2>&1 | tee "$EVIDENCE_DIR/ingestion-artifact-verification.log"
+          export INGESTION_ARTIFACT_ROOT="$RUNNER_TEMP/ingestion-original"
+          printf 'INGESTION_ARTIFACT_ROOT=%s\n' "$INGESTION_ARTIFACT_ROOT" >> "$GITHUB_ENV"
+          python3 -B - <<'PY' > "$EVIDENCE_DIR/ingestion-input-proof.json"
+          import gzip, hashlib, json, os, pathlib
+          root = pathlib.Path(os.environ["INGESTION_ARTIFACT_ROOT"])
+          receipt = json.loads(pathlib.Path(".autopilot/oracles/infercnv-ingestion-measurement-input-2026-09-30.json").read_text())
+          oracle = json.loads(pathlib.Path(".autopilot/oracles/infercnv-samples-clustering-witness-2026-09-30.json").read_text())
+          assert (receipt["accepted_original_run"], receipt["accepted_original_artifact"], receipt["accepted_artifact_sha256"]) == (oracle["run_id"], oracle["artifact_id"], oracle["artifact_sha256"])
+          def digest(path):
+              with path.open("rb") as stream:
+                  return hashlib.file_digest(stream, "sha256").hexdigest()
+          files = dict(receipt["files"])
+          files["infercnv-source.tar.gz"] = receipt["source_archive_sha256"]
+          for case in ("plain", "gzip"):
+              item = receipt[case]
+              path = root / item["path"]
+              assert path.stat().st_size == item["bytes"]
+              files[item["path"]] = item["sha256"]
+          for name, wanted in files.items():
+              path = root / name
+              assert path.is_file() and not path.is_symlink() and digest(path) == wanted, name
+          decoded = hashlib.sha256()
+          count = 0
+          with gzip.open(root / receipt["gzip"]["path"], "rb") as stream:
+              for chunk in iter(lambda: stream.read(1024 * 1024), b""):
+                  decoded.update(chunk)
+                  count += len(chunk)
+          assert count == receipt["gzip"]["decoded_bytes"] == receipt["plain"]["bytes"]
+          assert decoded.hexdigest() == receipt["gzip"]["decoded_sha256"] == receipt["plain"]["sha256"]
+          print(json.dumps({"verified_files": files, "decoded_bytes": count, "decoded_sha256": decoded.hexdigest()}, sort_keys=True))
           PY
 
       - name: Test bundle validator
@@ -181,7 +286,97 @@ jobs:
             stopifnot(as.character(BiocManager::version()) == "3.23")
           ' 2>&1 | tee "$EVIDENCE_DIR/installed-identity.log"
 
+      - name: Verify installed creation source and runtime prerequisites
+        if: env.INGESTION_CONTRACTS == 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          unset PYTHONPATH PYTHONHOME
+          scripts_dir="$(realpath scripts)"
+          receipt="$(realpath .autopilot/oracles/infercnv-ingestion-measurement-input-2026-09-30.json)"
+          source_root="$EVIDENCE_DIR/infercnv-$INFER_CNV_SOURCE_COMMIT"
+          mkdir "$EVIDENCE_DIR/ingestion-prerequisites"
+          sha256sum --check "$EVIDENCE_DIR/ingestion-fixed.sha256" > "$EVIDENCE_DIR/ingestion-code-prelaunch.log"
+          Rscript --vanilla - "$scripts_dir" "$INGESTION_ARTIFACT_ROOT" "$receipt" "$source_root" \
+            "$EVIDENCE_DIR/ingestion-prerequisites" <<'RS' 2>&1 | tee "$EVIDENCE_DIR/ingestion-prerequisites.log"
+          args <- commandArgs(trailingOnly=TRUE)
+          source(file.path(args[[1L]], "infercnv_ingestion_matched_support.R"))
+          source(file.path(args[[1L]], "infercnv_ingestion_runtime_support.R"))
+          for (package in c("infercnv", "digest", "jsonlite", "Matrix", "BiocManager", "BiocVersion")) {
+              stopifnot(requireNamespace(package, quietly=TRUE))
+          }
+          require_runtime_contract(list(R_version=as.character(getRversion()),
+              Bioconductor_version=as.character(BiocManager::version()),
+              infercnv_version=as.character(getNamespaceVersion("infercnv")),
+              system=Sys.info()[["sysname"]], architecture=Sys.info()[["machine"]],
+              locale_all=Sys.getlocale(),
+              locale=stats::setNames(vapply(locale_categories, Sys.getlocale, character(1)), locale_categories),
+              thread_environment=Sys.getenv(thread_keys)))
+          record <- load_creation_record(args[[2L]], "plain", args[[3L]], args[[4L]])
+          check_namespace_source(asNamespace("infercnv"), record, args[[5L]])
+          cat(capture.output(sessionInfo()), sep="\n")
+          cat("\nInstalled source/runtime/input prerequisites passed.\n")
+          RS
+          python3 -I -B -c 'import pathlib,sys; assert sys.version_info[:2] == (3,12); print(pathlib.Path(sys.executable).resolve())' > "$EVIDENCE_DIR/ingestion-python-executable.txt"
+          realpath "$(command -v Rscript)" > "$EVIDENCE_DIR/ingestion-rscript-executable.txt"
+          Rscript --vanilla -e 'cat(normalizePath(file.path(R.home("bin"), "exec", "R")), "\n", sep="")' > "$EVIDENCE_DIR/ingestion-r-executable.txt"
+          sha256sum "$(cat "$EVIDENCE_DIR/ingestion-python-executable.txt")" \
+            "$(cat "$EVIDENCE_DIR/ingestion-rscript-executable.txt")" \
+            "$(cat "$EVIDENCE_DIR/ingestion-r-executable.txt")" > "$EVIDENCE_DIR/ingestion-executables.sha256"
+          printf 'artifact_root=%s\nsource_root=%s\nreceipt=%s\nscripts_dir=%s\noutput=%s\n' \
+            "$INGESTION_ARTIFACT_ROOT" "$source_root" "$receipt" "$scripts_dir" "$EVIDENCE_DIR/ingestion-package" \
+            > "$EVIDENCE_DIR/ingestion-invocation.tsv"
+          sha256sum --check "$EVIDENCE_DIR/ingestion-executables.sha256" > "$EVIDENCE_DIR/ingestion-executables-before.log"
+
+      - name: Test installed plain and gzip creation factories
+        if: env.INGESTION_CONTRACTS == 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          unset PYTHONPATH PYTHONHOME
+          Rscript --vanilla scripts/test_infercnv_ingestion_matched_package.R \
+            "$INGESTION_ARTIFACT_ROOT" "$EVIDENCE_DIR/infercnv-$INFER_CNV_SOURCE_COMMIT" \
+            "$(realpath .autopilot/oracles/infercnv-ingestion-measurement-input-2026-09-30.json)" \
+            "$(realpath scripts)" "$EVIDENCE_DIR/ingestion-package" \
+            2>&1 | tee "$EVIDENCE_DIR/ingestion-package.log"
+
+      - name: Independently parse real creation counters and exports
+        if: env.INGESTION_CONTRACTS == 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          unset PYTHONPATH PYTHONHOME
+          python3 -B - <<'PY' > "$EVIDENCE_DIR/ingestion-real-results.json"
+          import dataclasses, json, os, pathlib, sys
+          sys.path.insert(0, str(pathlib.Path("scripts").resolve()))
+          from infercnv_ingestion_campaign import parse_region_metrics
+          from validate_infercnv_ingestion_measurement import validate_factory_results
+          root = pathlib.Path(os.environ["INGESTION_ARTIFACT_ROOT"])
+          output = pathlib.Path(os.environ["EVIDENCE_DIR"]) / "ingestion-package"
+          expected = root / "shipped-bundle/full"
+          maps = root / "ingestion-witness/shipped_full/plain/maps.tsv"
+          result = {}
+          for case in ("plain", "gzip"):
+              trial = output / ("fresh-" + case)
+              metrics = parse_region_metrics((trial / "metrics.tsv").read_bytes().decode("utf-8"))
+              assert metrics.input_case == case and metrics.implementation == "infercnv"
+              checks = validate_factory_results(trial, expected, maps)
+              result[case] = {"metrics": dataclasses.asdict(metrics), "checks": checks}
+          print(json.dumps(result, sort_keys=True))
+          PY
+
+      - name: Verify installed-creation code and executables after contracts
+        if: ${{ always() && inputs.ingestion_contracts }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          sha256sum --check "$EVIDENCE_DIR/ingestion-fixed.sha256" | tee "$EVIDENCE_DIR/ingestion-code-after.log"
+          sha256sum --check "$EVIDENCE_DIR/ingestion-executables.sha256" | tee "$EVIDENCE_DIR/ingestion-executables-after.log"
+          test -z "$(find scripts -type f \( -name '*.pyc' -o -name '*.pyo' \) -print -quit)"
+          df -h "$RUNNER_TEMP" > "$EVIDENCE_DIR/ingestion-disk-after.txt"
+
       - name: Execute synthetic infercnv through step 14
+        if: env.INGESTION_CONTRACTS != 'true'
         shell: bash
         run: |
           set -euo pipefail
@@ -189,6 +384,7 @@ jobs:
             2>&1 | tee "$EVIDENCE_DIR/oracle-run.log"
 
       - name: Validate synthetic exports and create sorted manifest
+        if: env.INGESTION_CONTRACTS != 'true'
         shell: bash
         run: |
           set -euo pipefail
@@ -196,7 +392,7 @@ jobs:
             "$ORACLE_OUTPUT" --manifest 2>&1 | tee "$EVIDENCE_DIR/validation.log"
 
       - name: Execute shipped infercnv through step 14
-        if: env.ORACLE_DATASET == 'shipped'
+        if: env.ORACLE_DATASET == 'shipped' && env.INGESTION_CONTRACTS != 'true'
         shell: bash
         run: |
           set -euo pipefail
@@ -204,7 +400,7 @@ jobs:
             2>&1 | tee "$EVIDENCE_DIR/shipped-oracle-run.log"
 
       - name: Validate shipped exports and create sorted manifest
-        if: env.ORACLE_DATASET == 'shipped'
+        if: env.ORACLE_DATASET == 'shipped' && env.INGESTION_CONTRACTS != 'true'
         shell: bash
         run: |
           set -euo pipefail
@@ -220,6 +416,7 @@ jobs:
             2>&1 | tee "$EVIDENCE_DIR/ingestion-checker-tests.log"
 
       - name: Capture creation-stage raw-input witnesses
+        if: env.INGESTION_CONTRACTS != 'true'
         shell: bash
         run: |
           set -euo pipefail
@@ -237,7 +434,7 @@ jobs:
             "${checker[@]}" 2>&1 | tee "$EVIDENCE_DIR/ingestion-witness-validation.log"
 
       - name: Capture creation format and filter edge probes
-        if: env.ORACLE_DATASET == 'shipped'
+        if: env.ORACLE_DATASET == 'shipped' && env.INGESTION_CONTRACTS != 'true'
         shell: bash
         run: |
           set -euo pipefail
