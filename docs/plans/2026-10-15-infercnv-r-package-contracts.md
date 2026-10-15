@@ -43,7 +43,7 @@
 - [x] Parse the actual new R test on4090 with existing R4.6.1, no package install/local R. Run all274 Python tests, architecture and whitespace checks with external TMPDIR/bytecode disabled.
 - [x] Commit only package test, workflow and this plan/ledger: test(sc): exercise installed creation contracts. Push main and wait exact-head Control plane CI (f42ec6a8,38689987652 success).
 - [x] Dispatch infercnv-oracle.yml dataset=shipped ingestion_contracts=true; other selectors empty/false (38690064479). Original run/jobs/artifact/log acquisition follows completion; no RED acceptance yet.
-- [ ] Accept RED only after original artifact/input proof, runtime and installed namespace prerequisites pass, every adjacent/reused file except trial matches its fixed hash and is readable, output fixture directories are writable, and stderr explicitly reports actual creation trial absent followed by the exact absolute infercnv_ingestion_matched.R path. Original generic-copy run38690064479 is not intended RED; installation/runtime failures are not RED.
+- [x] Accept RED only after original artifact/input proof, runtime and installed namespace prerequisites pass, every adjacent/reused file except trial matches its fixed hash and is readable, output fixture directories are writable, and stderr explicitly reports actual creation trial absent followed by the exact absolute infercnv_ingestion_matched.R path (38695221700, original API/ZIP/log audit). Original generic-copy run38690064479 is not intended RED; installation/runtime failures are not RED.
 - [x] Original run38690064479 emits only generic copy failure. Added explicit missing-component assertion to the package contract, updated fixed hash/complete plan and require a new proper RED; no waiver.
 
 ### Complete package test
@@ -253,8 +253,8 @@ cat("Actual package creation contracts passed; two fresh trials/four verified re
 
 **Interfaces:** Six positional arguments ARTIFACT_ROOT plain|gzip SOURCE_ROOT INPUT_RECEIPT EXISTING_SCRIPTS_DIR NEW_OUTPUT_DIR. Fresh output contains warm/measured exact four-file exports, twelve metrics, runtime/provenance, actual installed clock documentation, package/library inventory and raw lifetime IO.
 
-- [ ] Only after observed intended RED, add the complete trial below. Its SHA256 must be eb09009172c905363407f49c63bfa164da8d32a29ea8ec8a17a8701dc6e231d0; strengthened package test SHA256f5244184ae90276b7d2df27a3e8f9d149449702cffcd64f6036189544da25f83.
-- [ ] Parse actual R on4090; compare complete proposal/owning bytes. Run full controller/architecture/whitespace checks.
+- [x] Only after observed intended RED, add the complete trial below. Its SHA256 must be eb09009172c905363407f49c63bfa164da8d32a29ea8ec8a17a8701dc6e231d0; strengthened package test SHA256f5244184ae90276b7d2df27a3e8f9d149449702cffcd64f6036189544da25f83.
+- [x] Parse actual R on4090; compare complete proposal/owning bytes. Run full controller (283)/architecture/whitespace checks; all12 actual prelaunch code/receipt pins match.
 - [ ] Commit trial and owned ledger: test(sc): run actual installed raw creation trials. Push/wait exact-head controller CI; dispatch the same installed-creation route.
 - [ ] Require successful installed-package mutants and two actual fresh trial children, actual parent plain/gzip objects, independent warm/measured exact checks, literal counters and all provenance/clock/source/executable checks. No timer, scope or assertion weakening on failure.
 

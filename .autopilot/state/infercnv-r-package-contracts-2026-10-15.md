@@ -5,10 +5,10 @@ Spec: `../../docs/plans/2026-09-30-infercnv-raw-ingestion-measurement-design.md`
 Base world: deabf106f8c822b25673cb209e47b49d825c5043, exact-head Control
 plane38689473008 success. Product5beb707e is clean and private.
 
-Status as of2026-10-15: installed source/runtime/input prerequisites passed in
-run38690064479, but its generic fixture-copy failure is not intended RED.
-Strengthened missing-trial test is rerunning as38695221700; trial remains
-physically absent. Task1 in progress; no actual performance is accepted.
+Status as of2026-10-15: genuine installed-package missing-trial RED accepted
+from38695221700 after original evidence audit. Exact actual trial is now
+added and parsed; hosted factory GREEN remains pending. Task2 in progress;
+no actual performance is accepted.
 Earlier phase entries below retain their historical source identities.
 
 Ruling: reuse the complete original-artifact verifier and existing installed
@@ -99,3 +99,32 @@ Diagnostic commit e5c2aa8fcaee3e0f95641a8174d6764451013049 passes exact-head
 Control plane38695113069. New installed-oracle run38695221700 is dispatched
 at that head with the same shipped/ingestion-only selectors. Do not add the
 trial before the exact absent-trial failure and prerequisites are authenticated.
+
+## Genuine installed-package missing-trial RED accepted
+
+Run38695221700 at e5c2aa8f completes failure solely at the actual package
+contract. Original log names exactly the absent absolute
+`/home/runner/work/rsomics-world/rsomics-world/scripts/infercnv_ingestion_matched.R`.
+All original artifact/input/decoded-gzip, installed package/runtime/source
+function preflight,11 fixed code pins and3 executable before/after checks pass.
+Root authenticates original run/head/attempt/job/required steps, artifact API/
+listing equality, ZIP7811299 bytes/digest/CRC/155 safe unique regular entries,
+fixed pins against owning source and exact diagnostic. No other failure waived.
+
+Artifact11954063394 SHA256:
+`170d7faad80586964efe34226b3e6d7366e29cbb9851dac80da0c8d0c74b5636`.
+Full logs ZIP SHA256:
+`60479f30afccbcab7304f7d2d4c0d62078f7d945206adbccd3e6a965e3b1789d`.
+All original APIs/ZIP/logs retained externally under run-38695221700.
+The earlier generic failure remains preserved and unaccepted.
+
+Only after that audit, add the exact complete152-line actual trial from the
+plan, SHA256 eb09009172c905363407f49c63bfa164da8d32a29ea8ec8a17a8701dc6e231d0.
+No package test/helper/reused checker/timer/source pins change. Actual factory
+GREEN, independent results review and paired performance remain pending.
+
+Owning trial parses using existing4090 R4.6.1; independent parse artifact is
+preserved as trial-green.R, leaving earlier parse fixtures unchanged. All283
+controller tests, architecture/whitespace and both complete R plan/source
+identities pass. The actual workflow's12 prelaunch code/receipt pins match
+owning bytes, including the now-present unchanged152-line trial.
