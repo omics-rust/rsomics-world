@@ -42,14 +42,24 @@ native_version, r_profile. Paths are Paths; named path/hash collections are
 immutable-by-contract mappings. Validate their shape without pretending to
 authenticate caller-supplied expectations. r_profile has exactly8 keys: system,
 Python, namespaces, blas, options_dput, object_options_dput, clock_source,
-functions. Their shapes mirror corresponding R runtime fields; functions maps
-the3 names to expected installed-text hashes. This profile comes from an
+functions. Shapes mirror corresponding R fields except Python, which is the
+independent full7-field identity emitted by the existing shell/R probe, not
+the3-field trial projection. functions maps the3 names to expected installed-
+text hashes. This profile comes from an
 independent current-host preflight and frozen source proofs, never a timed
 trial chosen as its own oracle. Unit tests may inject small trusted profiles;
 integration must use actual admitted profiles. Result contains
 implementation/case, observed before/after thread counts, seven lifetime I/O
 counters and file hashes. Keep interfaces narrow; no CLI/network/launch/build
 or new format producer. The later owner supplies trust and process chronology.
+
+root is the local inspected/extracted directory. Binding paths describe the
+independently admitted original execution and may be on another host. Compare
+absolute lexically canonical recorded paths; never open/resolve/lstat those
+remote input/code/library/executable paths on the auditor's host, or require
+root == bindings.output_dir. Actual root/ancestors/output entries receive the
+filesystem checks. This permits offline original-artifact validation without
+weakening caller-owned physical input/source authentication on the live runner.
 
 Before opening any result file, recursively lstat the root, ancestors and all
 entries. Reject symlinks, missing/extra entries, FIFO/socket/device/special
