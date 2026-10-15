@@ -5,10 +5,11 @@ Spec: `../../docs/plans/2026-09-30-infercnv-raw-ingestion-measurement-design.md`
 Base world: deabf106f8c822b25673cb209e47b49d825c5043, exact-head Control
 plane38689473008 success. Product5beb707e is clean and private.
 
-Status as of2026-10-15: genuine installed-package missing-trial RED accepted
-from38695221700 after original evidence audit. Exact actual trial is now
-added and parsed; hosted factory GREEN remains pending. Task2 in progress;
-no actual performance is accepted.
+Status as of2026-10-15: genuine missing-trial RED38695221700 accepted; actual
+factory candidate38696325035 succeeds and independent exact value/counter
+checks pass. Final runtime acceptance withheld: toolcache3.12.15 executable
+reports Python3.12.3 when launched from R. Continue the separate
+infercnv-python-r-runtime-identity-2026-10-15.md gate; no performance accepted.
 Earlier phase entries below retain their historical source identities.
 
 Ruling: reuse the complete original-artifact verifier and existing installed
@@ -128,3 +129,45 @@ preserved as trial-green.R, leaving earlier parse fixtures unchanged. All283
 controller tests, architecture/whitespace and both complete R plan/source
 identities pass. The actual workflow's12 prelaunch code/receipt pins match
 owning bytes, including the now-present unchanged152-line trial.
+
+Trial commit56e70d79643af9408f0c5bd556e8a60276d725d9 is pushed and exact-head
+Control plane38696213008 succeeds. Actual installed-creation GREEN attempt
+38696325035 runs at that head, shipped/ingestion-only selectors unchanged.
+Fresh-context whole-component source review is running independently; actual
+factory/results/runtime acceptance still depends on original successful logs
+and all exact outputs, not source review or controller CI alone.
+
+Fresh-context whole-component review at56e70d79 reads actual trial/package,
+workflow and unchanged helper/checker chain; independently recalculates12
+fixed pins. No Critical/Important source defect found. It confirms warm/oracle
+release/GC, intrinsic factory timer and live RSS boundary, exact count/expr/
+identity/map checks and5 real bootstrap mutants. Reviewer performs no R run.
+
+Ruling on Minor: retain previously documented RSS argument-shape and
+non-atomic writer limits; this consumer passes parse_rss-validated scalars and
+new sequential single-writer directories. No present failure or race-safety
+claim. Cost if wrong: future malformed/concurrent callers are outside the
+accepted helper contract and must strengthen it before use.
+
+Ruling on declined review: hosted GREEN, exact-head/source/API/ZIP/original
+RED authenticity and actual outputs are root execution gates, still pending
+for GREEN; review-only assurance cannot close them. General R input dialect,
+paired32/64 performance, public release and unrelated changes remain excluded.
+
+## Actual factory candidate; runtime provenance repair required
+
+Original38696325035 API/job/all required steps succeed at56e70d79.
+Artifact11954931733 has34000792 bytes, SHA256
+`02b4ea3592c23a50b5c1e3d98d95eefd0d59b222817eaddf9c19539e15bd29d9`.
+Root authenticates original APIs/listing/head/attempt/size/digest/CRC and277
+safe unique regular entries; full logs ZIP SHA256
+`13beae660e67e327f2ac2cfcc1dce2c72c67b469e5e3c3058f8004b5949f421d`.
+Originals/extraction retained externally in run-38696325035.
+
+Root independently validates both parent plain/gzip and4 fresh warm/measured
+states against pinned original9939x184 stage1/maps, with exact count bits,
+identities/coordinates/roles/ordered maps and literal12 metrics. But child
+Python metadata reports3.12.3 at the3.12.15 toolcache binary path, while shell
+reports3.12.15. Do not label that runtime3.12.15 or accept exe hash alone as
+complete runtime identity. Original values/counters remain evidence, not a
+final runtime/paired gate. See the new complete runtime repair plan/ledger.

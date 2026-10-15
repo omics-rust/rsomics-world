@@ -255,7 +255,7 @@ cat("Actual package creation contracts passed; two fresh trials/four verified re
 
 - [x] Only after observed intended RED, add the complete trial below. Its SHA256 must be eb09009172c905363407f49c63bfa164da8d32a29ea8ec8a17a8701dc6e231d0; strengthened package test SHA256f5244184ae90276b7d2df27a3e8f9d149449702cffcd64f6036189544da25f83.
 - [x] Parse actual R on4090; compare complete proposal/owning bytes. Run full controller (283)/architecture/whitespace checks; all12 actual prelaunch code/receipt pins match.
-- [ ] Commit trial and owned ledger: test(sc): run actual installed raw creation trials. Push/wait exact-head controller CI; dispatch the same installed-creation route.
+- [x] Commit trial and owned ledger: test(sc): run actual installed raw creation trials (56e70d79). Exact-head controller38696213008 success; installed-creation run38696325035 dispatched with the same selectors.
 - [ ] Require successful installed-package mutants and two actual fresh trial children, actual parent plain/gzip objects, independent warm/measured exact checks, literal counters and all provenance/clock/source/executable checks. No timer, scope or assertion weakening on failure.
 
 ### Complete actual trial
@@ -422,7 +422,7 @@ write_metrics(file.path(output, "metrics.tsv"), metrics)
 - [ ] Fetch original run/jobs/artifact API replies, original ZIP and full logs externally; require exact head/attempt/repository/workflow and all intended steps success. Verify size/digest/CRC/safe unique REGTYPE paths before reading exports.
 - [ ] Independently authenticate all copied fixed pins against owning source, actual R/Python before/after hashes, raw/source input identities and decoded gzip proof. Review original installed package/version/library/function records and real clock documentation bytes.
 - [ ] Re-run the accepted literal metrics/export validators locally with external TMPDIR/bytecode off on the real four outputs; inspect parent plain/gzip and mutation failure records, observed storage types/options/Inf and raw lifetime-I/O labeling.
-- [ ] Fresh-context whole-change review (most capable available reviewer); root reproduces important issues through precise failing tests, records minor deferrals and rulings; never present review-only assurance as execution.
+- [x] Fresh-context whole-change review (most capable available reviewer) at56e70d79: no Critical/Important; existing helper Minor limits safely consumed and ledgered. Root original evidence/execution gates remain separate; review-only assurance is not execution.
 - [ ] Record accepted receipt/ledger/source/results with exact controller CI and continue the separately planned authenticated paired32-process/64-state launcher. No whole inferCNV/publication/speed/peak-RSS/cold-cache/general-R-parser claim.
 
 ## Complete pinned-oracle workflow
@@ -647,6 +647,37 @@ jobs:
           r-version: '4.6.1'
           use-public-rspm: true
 
+      - name: Verify Python runtime identity across R launch
+        if: env.INGESTION_CONTRACTS == 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          unset PYTHONPATH PYTHONHOME
+          python3 -I -B -c 'import pathlib,sys; assert sys.version_info[:2] == (3,12); print(pathlib.Path(sys.executable).resolve())' > "$EVIDENCE_DIR/ingestion-python-executable.txt"
+          realpath "$(command -v Rscript)" > "$EVIDENCE_DIR/ingestion-rscript-executable.txt"
+          Rscript --vanilla -e 'cat(normalizePath(file.path(R.home("bin"), "exec", "R")), "\n", sep="")' > "$EVIDENCE_DIR/ingestion-r-executable.txt"
+          sha256sum "$(cat "$EVIDENCE_DIR/ingestion-python-executable.txt")" \
+            "$(cat "$EVIDENCE_DIR/ingestion-rscript-executable.txt")" \
+            "$(cat "$EVIDENCE_DIR/ingestion-r-executable.txt")" > "$EVIDENCE_DIR/ingestion-executables.sha256"
+          sha256sum --check "$EVIDENCE_DIR/ingestion-executables.sha256" > "$EVIDENCE_DIR/ingestion-executables-preflight.log"
+          probe_code="import hashlib,json,pathlib,sys; libraries=sorted({line.split()[-1] for line in pathlib.Path('/proc/self/maps').read_text().splitlines() if 'libpython' in line}); hashes={name:hashlib.sha256(pathlib.Path(name).read_bytes()).hexdigest() for name in libraries}; executable=str(pathlib.Path(sys.executable).resolve()); print(json.dumps({'executable':executable,'executable_sha256':hashlib.sha256(pathlib.Path(executable).read_bytes()).hexdigest(),'version':sys.version,'prefix':sys.prefix,'base_prefix':sys.base_prefix,'stdlib_json':json.__file__,'libpython_sha256':hashes},sort_keys=True))"
+          python3 -I -B -c "$probe_code" > "$EVIDENCE_DIR/ingestion-python-shell-runtime.json"
+          Rscript --vanilla - "$probe_code" <<'RS' 2>&1 | tee "$EVIDENCE_DIR/ingestion-python-r-boundary.log"
+          python <- normalizePath(Sys.which("python3"), mustWork=TRUE)
+          expected <- readLines(file.path(Sys.getenv("EVIDENCE_DIR"), "ingestion-python-shell-runtime.json"), warn=FALSE)
+          cat("R LD_LIBRARY_PATH: ", Sys.getenv("LD_LIBRARY_PATH"), "\n", sep="")
+          cat("Actual R ldpaths configuration:\n")
+          cat(readLines(file.path(R.home("etc"), "ldpaths"), warn=FALSE), sep="\n")
+          observed <- system2(python, c("-I", "-B", "-c", shQuote(commandArgs(trailingOnly=TRUE)[[1L]])),
+                              stdout=TRUE, stderr=TRUE)
+          cat("\nShell Python identity:\n", expected, "\nR-child Python identity:\n", observed, "\n", sep="")
+          if (length(expected) != 1L || length(observed) != 1L || !is.null(attr(observed, "status")) ||
+              !identical(expected, observed)) {
+              stop("Python runtime identity differs across R launch")
+          }
+          cat("Python runtime identity agrees across shell and R launch.\n")
+          RS
+
       - name: Install JAGS and system headers
         run: |
           sudo apt-get update
@@ -749,12 +780,6 @@ jobs:
           cat(capture.output(sessionInfo()), sep="\n")
           cat("\nInstalled source/runtime/input prerequisites passed.\n")
           RS
-          python3 -I -B -c 'import pathlib,sys; assert sys.version_info[:2] == (3,12); print(pathlib.Path(sys.executable).resolve())' > "$EVIDENCE_DIR/ingestion-python-executable.txt"
-          realpath "$(command -v Rscript)" > "$EVIDENCE_DIR/ingestion-rscript-executable.txt"
-          Rscript --vanilla -e 'cat(normalizePath(file.path(R.home("bin"), "exec", "R")), "\n", sep="")' > "$EVIDENCE_DIR/ingestion-r-executable.txt"
-          sha256sum "$(cat "$EVIDENCE_DIR/ingestion-python-executable.txt")" \
-            "$(cat "$EVIDENCE_DIR/ingestion-rscript-executable.txt")" \
-            "$(cat "$EVIDENCE_DIR/ingestion-r-executable.txt")" > "$EVIDENCE_DIR/ingestion-executables.sha256"
           printf 'artifact_root=%s\nsource_root=%s\nreceipt=%s\nscripts_dir=%s\noutput=%s\n' \
             "$INGESTION_ARTIFACT_ROOT" "$source_root" "$receipt" "$scripts_dir" "$EVIDENCE_DIR/ingestion-package" \
             > "$EVIDENCE_DIR/ingestion-invocation.tsv"

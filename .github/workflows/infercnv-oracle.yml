@@ -215,6 +215,37 @@ jobs:
           r-version: '4.6.1'
           use-public-rspm: true
 
+      - name: Verify Python runtime identity across R launch
+        if: env.INGESTION_CONTRACTS == 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          unset PYTHONPATH PYTHONHOME
+          python3 -I -B -c 'import pathlib,sys; assert sys.version_info[:2] == (3,12); print(pathlib.Path(sys.executable).resolve())' > "$EVIDENCE_DIR/ingestion-python-executable.txt"
+          realpath "$(command -v Rscript)" > "$EVIDENCE_DIR/ingestion-rscript-executable.txt"
+          Rscript --vanilla -e 'cat(normalizePath(file.path(R.home("bin"), "exec", "R")), "\n", sep="")' > "$EVIDENCE_DIR/ingestion-r-executable.txt"
+          sha256sum "$(cat "$EVIDENCE_DIR/ingestion-python-executable.txt")" \
+            "$(cat "$EVIDENCE_DIR/ingestion-rscript-executable.txt")" \
+            "$(cat "$EVIDENCE_DIR/ingestion-r-executable.txt")" > "$EVIDENCE_DIR/ingestion-executables.sha256"
+          sha256sum --check "$EVIDENCE_DIR/ingestion-executables.sha256" > "$EVIDENCE_DIR/ingestion-executables-preflight.log"
+          probe_code="import hashlib,json,pathlib,sys; libraries=sorted({line.split()[-1] for line in pathlib.Path('/proc/self/maps').read_text().splitlines() if 'libpython' in line}); hashes={name:hashlib.sha256(pathlib.Path(name).read_bytes()).hexdigest() for name in libraries}; executable=str(pathlib.Path(sys.executable).resolve()); print(json.dumps({'executable':executable,'executable_sha256':hashlib.sha256(pathlib.Path(executable).read_bytes()).hexdigest(),'version':sys.version,'prefix':sys.prefix,'base_prefix':sys.base_prefix,'stdlib_json':json.__file__,'libpython_sha256':hashes},sort_keys=True))"
+          python3 -I -B -c "$probe_code" > "$EVIDENCE_DIR/ingestion-python-shell-runtime.json"
+          Rscript --vanilla - "$probe_code" <<'RS' 2>&1 | tee "$EVIDENCE_DIR/ingestion-python-r-boundary.log"
+          python <- normalizePath(Sys.which("python3"), mustWork=TRUE)
+          expected <- readLines(file.path(Sys.getenv("EVIDENCE_DIR"), "ingestion-python-shell-runtime.json"), warn=FALSE)
+          cat("R LD_LIBRARY_PATH: ", Sys.getenv("LD_LIBRARY_PATH"), "\n", sep="")
+          cat("Actual R ldpaths configuration:\n")
+          cat(readLines(file.path(R.home("etc"), "ldpaths"), warn=FALSE), sep="\n")
+          observed <- system2(python, c("-I", "-B", "-c", shQuote(commandArgs(trailingOnly=TRUE)[[1L]])),
+                              stdout=TRUE, stderr=TRUE)
+          cat("\nShell Python identity:\n", expected, "\nR-child Python identity:\n", observed, "\n", sep="")
+          if (length(expected) != 1L || length(observed) != 1L || !is.null(attr(observed, "status")) ||
+              !identical(expected, observed)) {
+              stop("Python runtime identity differs across R launch")
+          }
+          cat("Python runtime identity agrees across shell and R launch.\n")
+          RS
+
       - name: Install JAGS and system headers
         run: |
           sudo apt-get update
@@ -317,12 +348,6 @@ jobs:
           cat(capture.output(sessionInfo()), sep="\n")
           cat("\nInstalled source/runtime/input prerequisites passed.\n")
           RS
-          python3 -I -B -c 'import pathlib,sys; assert sys.version_info[:2] == (3,12); print(pathlib.Path(sys.executable).resolve())' > "$EVIDENCE_DIR/ingestion-python-executable.txt"
-          realpath "$(command -v Rscript)" > "$EVIDENCE_DIR/ingestion-rscript-executable.txt"
-          Rscript --vanilla -e 'cat(normalizePath(file.path(R.home("bin"), "exec", "R")), "\n", sep="")' > "$EVIDENCE_DIR/ingestion-r-executable.txt"
-          sha256sum "$(cat "$EVIDENCE_DIR/ingestion-python-executable.txt")" \
-            "$(cat "$EVIDENCE_DIR/ingestion-rscript-executable.txt")" \
-            "$(cat "$EVIDENCE_DIR/ingestion-r-executable.txt")" > "$EVIDENCE_DIR/ingestion-executables.sha256"
           printf 'artifact_root=%s\nsource_root=%s\nreceipt=%s\nscripts_dir=%s\noutput=%s\n' \
             "$INGESTION_ARTIFACT_ROOT" "$source_root" "$receipt" "$scripts_dir" "$EVIDENCE_DIR/ingestion-package" \
             > "$EVIDENCE_DIR/ingestion-invocation.tsv"
