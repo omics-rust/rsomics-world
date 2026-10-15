@@ -234,6 +234,53 @@ class AdmissionTests(ExternalFixture):
         self.assertIn('stdout="",stderr=""', routes[1][3])
         self.assertEqual((output / "inherited-python-R.stderr").read_text(), "retained diagnostic\n")
 
+    def version_fixture(self):
+        home = self.root / "verified R home"
+        executable = home / "bin/exec/R"
+        executable.parent.mkdir(parents=True)
+        context = {"python": str(Path(sys.executable).resolve()), "r_executable": str(executable)}
+        programs = {"R": executable, "Rscript": self.root / "Rscript", "rustc": self.root / "rustc", "gnu_time": self.root / "time"}
+        for name, path in programs.items():
+            script = (f"#!{sys.executable}\nimport json,os,pathlib,sys\nname={name!r}\nhome={str(home)!r}\n"
+                      f"root=pathlib.Path({str(self.root)!r})\n"
+                      "mode='home' if '-e' in sys.argv else 'version'\n"
+                      "(root/(name+'-'+mode+'.json')).write_text(json.dumps({'argv':sys.argv,'R_HOME':os.environ.get('R_HOME')}))\n"
+                      "if name=='R':\n"
+                      " assert os.environ.get('R_HOME')==home, 'R_HOME missing or unbound'\n"
+                      " assert sys.argv[1:]==['--version']\n"
+                      " print('R version 4.6.1 (test)')\n"
+                      "else:\n"
+                      " assert 'R_HOME' not in os.environ, 'unrelated probe environment changed'\n"
+                      " if name=='Rscript': print(home if mode=='home' else 'Rscript (R) version 4.6.1 (test)')\n"
+                      " elif name=='rustc': print('rustc 1.91.0\\nrelease: 1.91.0\\nhost: x86_64-unknown-linux-gnu')\n"
+                      " else: print('GNU time')\n")
+            path.write_text(script)
+            path.chmod(0o700)
+        context.update(rscript=str(programs["Rscript"]), rustc=str(programs["rustc"]), gnu_time=str(programs["gnu_time"]))
+        env = owner._environment(context)
+        env.pop("R_HOME", None)
+        return context, env, home
+
+    def test_direct_r_version_gets_only_bound_home_without_changing_other_probes(self):
+        context, env, home = self.version_fixture()
+        original_env, parent_env = dict(env), dict(os.environ)
+        result = owner._versions(context, self.root, "bound", env)
+        self.assertEqual(result["R"], "R version 4.6.1 (test)\n")
+        self.assertEqual(owner._read_json(self.root / "R-version.json")["R_HOME"], str(home))
+        for name, mode in (("rustc", "version"), ("Rscript", "version"), ("Rscript", "home"), ("gnu_time", "version")):
+            self.assertIsNone(owner._read_json(self.root / f"{name}-{mode}.json")["R_HOME"])
+        self.assertEqual(env, original_env)
+        self.assertEqual(dict(os.environ), parent_env)
+
+    def test_direct_r_version_rejects_a_home_bound_to_another_executable(self):
+        context, env, home = self.version_fixture()
+        replacement = self.root / "different executable"
+        replacement.write_text("not the R executable under the reported home")
+        context["r_executable"] = str(replacement)
+        with self.assertRaises(ValueError):
+            owner._versions(context, self.root, "mismatch", env)
+        self.assertFalse((self.root / "R-version.json").exists())
+
 
 @unittest.skipUnless(os.environ.get("RSOMICS_TEST_INSTALLED_R") == "1",
                      "set RSOMICS_TEST_INSTALLED_R=1 to require the installed R boundary")
@@ -248,6 +295,7 @@ class InstalledRBoundaryTests(ExternalFixture):
                    "code_sha256": {"scripts/infercnv_python_identity.py":
                                     owner.FIXED_CODE["scripts/infercnv_python_identity.py"]}}
         env = owner._environment(context)
+        env.pop("R_HOME", None)
         home_prefix = self.root / "installed-R-home"
         owner._command([rscript, "--vanilla", "-e",
                         'cat(normalizePath(file.path(R.home(),"bin","exec","R"),mustWork=TRUE),"\\n",sep="")'],
@@ -256,6 +304,8 @@ class InstalledRBoundaryTests(ExternalFixture):
         self.assertEqual(len(r_home_output.splitlines()), 1)
         context["r_executable"] = str(Path(r_home_output.rstrip("\n")).resolve(strict=True))
         self.assertEqual(r_home_output, context["r_executable"] + "\n")
+        self.assertRegex(owner._r_version(context, self.root, "installed", env), r"^R version 4\.6\.1(?:\s|$)")
+        self.assertNotIn("R_HOME", env)
         actual = owner._module("infercnv_python_identity").capture_identity()
         result = owner._runtime_probes(context, self.root, "installed", env)
         self.assertEqual(result, {key: actual for key in ("Python", "shell", "R")})

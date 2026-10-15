@@ -354,6 +354,25 @@ def _runtime_probes(c, output, phase, env, expected=None):
     return result
 
 
+def _r_version(c, output, phase, env):
+    prefix = output / f"{phase}-version-R-home"
+    code = ('home <- normalizePath(R.home(),mustWork=TRUE);'
+            'exe <- normalizePath(file.path(home,"bin","exec","R"),mustWork=TRUE);'
+            f'if (!identical(exe,{json.dumps(c["r_executable"])})) stop("R home/executable binding differs");'
+            'cat(home,"\\n",sep="")')
+    _command([c["rscript"], "--vanilla", "-e", code], prefix, env)
+    text = _stdout(prefix)
+    _require(text.endswith("\n") and len(text.splitlines()) == 1, "R home probe must return one path line")
+    home = _physical(text[:-1], directory=True)
+    _require((home / "bin/exec/R").resolve(strict=True) == _physical(c["r_executable"]),
+             "R home/executable binding differs")
+    version_prefix = output / f"{phase}-version-R"
+    _command([c["r_executable"], "--version"], version_prefix, dict(env, R_HOME=str(home)))
+    version = _stdout(version_prefix)
+    _require(re.match(r"R version 4\.6\.1(?:\s|$)", version), "actual R version differs")
+    return version
+
+
 def _versions(c, output, phase, env):
     result, failures = {}, []
     commands = {"rustc": [c["rustc"], "-vV"], "Rscript": [c["rscript"], "--version"],
@@ -361,8 +380,11 @@ def _versions(c, output, phase, env):
     for key, argv in commands.items():
         prefix = output / f"{phase}-version-{key}"
         try:
-            _command(argv, prefix, env)
-            result[key] = _stdout(prefix)
+            if key == "R":
+                result[key] = _r_version(c, output, phase, env)
+            else:
+                _command(argv, prefix, env)
+                result[key] = _stdout(prefix)
         except Exception as exc:
             failures.append(f"{key}: {type(exc).__name__}: {exc}")
     _require(not failures, "version probes failed: " + "; ".join(failures))
