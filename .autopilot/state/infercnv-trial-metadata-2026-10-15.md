@@ -1,9 +1,9 @@
 # SDD ledger — plan: docs/plans/2026-10-15-infercnv-trial-metadata.md
 
 Spec: docs/plans/2026-09-30-infercnv-raw-ingestion-measurement-design.md.
-Status: task1 source accepted through3f0da499 after task/scoped reviews and
-both actual R plain/gzip offline rechecks.17 focused/318 full local tests
-pass; root push/exact-head Linux CI pending. No paired campaign accepted.
+Status: task1 accepted through3f0da499 and root1912eb9c, exact-head Linux
+CI38706864188 successful.17 focused/318 full local tests and318 Linux tests
+pass, both actual R plain/gzip offline rechecks pass. No paired campaign accepted.
 
 | Task/interface | Producer/consumer | Preflight finding |
 | --- | --- | --- |
@@ -84,3 +84,12 @@ exact-head Linux CI, offline paired owner/runtime/profile admission, actual
 32-process/64-state campaign, original evidence audit and aggregate review.
 Neither source review nor these original R metadata checks prove native
 metadata production, launch chronology, full Python identity or performance.
+
+Root pushes1912eb9c64e63e60dcdcb7dcd1567c9c7f661626; exact-head Control
+plane38706864188 succeeds. Original run/jobs/log ZIP are retained externally
+at run-38706864188-metadata-ci. Root authenticates head/event/path/successful
+unique test/architecture steps, log CRC and actual318 tests/22.981seconds/OK,
+without FAILED or ResourceWarning. Original full logs SHA256:
+`fcffa139fbf03c03e212367872c40799a7a14e8ab16965227320365aab5cdf35`.
+Next: a shared actual Python identity capture for post-dependency/campaign
+inside/outside-R probes, then offline paired owner and workflow integration.
