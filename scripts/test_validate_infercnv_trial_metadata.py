@@ -318,6 +318,49 @@ class MetadataTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             f.check()
 
+    def test_raw_profile_paths_reject_normalized_away_components(self):
+        f = self.fixture()
+        original = f.bindings
+        for key in ("executable", "prefix", "base_prefix", "stdlib_json"):
+            for value in ("/usr//", "/usr//python", "/usr/./python", "/usr/python/", "//usr/python"):
+                profile = copy.deepcopy(original.r_profile)
+                profile["Python"][key] = value
+                f.bindings = replace(original, r_profile=profile)
+                if key == "executable":
+                    f.runtime["Python"]["executable"] = value
+                f.save()
+                with self.subTest(field=key, value=value), self.assertRaises(ValueError):
+                    f.check()
+                f.runtime["Python"]["executable"] = original.r_profile["Python"]["executable"]
+        for name, record in original.r_profile["namespaces"].items():
+            for value in ("/library/.", "/library//x", "/library/", "//library"):
+                profile = copy.deepcopy(original.r_profile)
+                profile["namespaces"][name]["library_path"] = value
+                f.bindings = replace(original, r_profile=profile)
+                f.runtime["namespaces"] = profile["namespaces"]
+                f.save()
+                old_row = f"{name}\t{record['version']}\t/library"
+                new_row = f"{name}\t{record['version']}\t{value}"
+                (f.root / "packages.tsv").write_text(f.packages.replace(old_row, new_row))
+                with self.subTest(namespace=name, library=value), self.assertRaises(ValueError):
+                    f.check()
+        for value in ("/usr//lib/libpython.so", "/usr/./libpython.so", "/usr/libpython.so/", "//usr/libpython.so"):
+            profile = copy.deepcopy(original.r_profile)
+            profile["Python"]["libpython_sha256"] = {value: "e" * 64}
+            f.bindings = replace(original, r_profile=profile)
+            f.runtime["namespaces"] = original.r_profile["namespaces"]
+            f.save()
+            (f.root / "packages.tsv").write_text(f.packages)
+            with self.subTest(mapped_library=value), self.assertRaises(ValueError):
+                f.check()
+        profile = copy.deepcopy(original.r_profile)
+        profile["Python"]["libpython_sha256"] = {"/usr/lib/libpython.so": "e" * 64}
+        f.bindings = replace(original, r_profile=profile)
+        f.runtime["namespaces"] = original.r_profile["namespaces"]
+        f.save()
+        (f.root / "packages.tsv").write_text(f.packages)
+        f.check()
+
     def test_r_every_leaf_and_nested_inventory_is_checked(self):
         f = self.fixture()
         def leaves(value, prefix=()):

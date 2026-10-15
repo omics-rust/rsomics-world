@@ -120,6 +120,13 @@ def _path(value, label):
     _require(value.is_absolute() and not raw.startswith("//") and ".." not in value.parts, f"noncanonical {label}")
 
 
+def _profile_path(value, label):
+    _text(value, label)
+    path = Path(value)
+    _require(str(path) == value, f"noncanonical {label}")
+    _path(path, label)
+
+
 def _hash(value, label):
     _require(type(value) is str and re.fullmatch("[0-9a-f]{64}", value) is not None, f"invalid {label} hash")
 
@@ -149,22 +156,19 @@ def _profile(profile):
     python = profile["Python"]
     _keys(python, ("executable", "executable_sha256", "version", "prefix", "base_prefix", "stdlib_json", "libpython_sha256"), "full Python identity")
     for key in ("executable", "prefix", "base_prefix", "stdlib_json"):
-        _text(python[key], f"Python {key}")
-        _path(Path(python[key]), f"Python {key}")
+        _profile_path(python[key], f"Python {key}")
     _hash(python["executable_sha256"], "Python executable")
     _require(type(python["version"]) is str and re.match(r"3\.12\.[0-9]+(?:\s|$)", python["version"]) is not None,
              "Python full version differs")
     _require(isinstance(python["libpython_sha256"], Mapping), "invalid libpython mapping")
     for path, digest in python["libpython_sha256"].items():
-        _require(type(path) is str, "libpython path must be string")
-        _path(Path(path), "libpython")
+        _profile_path(path, "libpython")
         _hash(digest, "libpython")
     _keys(profile["namespaces"], NAMESPACES, "profile namespaces")
     for package, record in profile["namespaces"].items():
         _keys(record, ("version", "library_path"), f"namespace {package}")
         _text(record["version"], "namespace version")
-        _text(record["library_path"], "namespace library")
-        _path(Path(record["library_path"]), "namespace library")
+        _profile_path(record["library_path"], "namespace library")
     _require(profile["namespaces"]["infercnv"]["version"] == "1.28.0", "infercnv profile version differs")
     _text(profile["blas"], "BLAS")
     for key in ("options_dput", "object_options_dput"):
