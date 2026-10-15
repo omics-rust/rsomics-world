@@ -2,8 +2,9 @@
 
 Spec: docs/plans/2026-09-30-infercnv-raw-ingestion-measurement-design.md.
 Base world0aff9f8eca362b93be734758a5ecfd2f1208ab57.
-Status: task1 source/fix reviews pass through761e3eeb.18 focused/301 full
-stdlib tests pass locally; root push/exact-head Linux CI pending. This is not
+Status: task1 accepted through761e3eeb and root58dd7922, exact-head Linux
+CI38704356107 successful.18 focused/301 full stdlib tests pass locally and
+all301 pass on Linux. This is not
 the complete paired launcher or a performance acceptance.
 
 | Task/interface | Producer/consumer | Preflight finding |
@@ -68,3 +69,16 @@ samples, and test cleanup no longer relies on file existence as complete PID.
 Root accepts task source after these reviews; Linux exact-head execution and
 the later aggregate launcher review remain distinct. No escaped-session
 containment, all-platform release or actual campaign claim is made.
+
+Root pushes58dd79223c1e89562bb75bf6122e8fa4d460f37d; exact-head Control
+plane38704356107 succeeds. Original run/jobs and full log ZIP are retained
+externally at run-38704356107-process-owner-ci. Root verifies head/event/path,
+successful unique test/architecture steps and log CRC; actual Linux log says
+301 tests/21.640seconds/OK without FAILED or ResourceWarning. Logs SHA256:
+`d4503c28f080c818a9e3aa49bb76c6d9f4f4a6f651f000f4a7525066d7da268a`.
+Accepted source SHA256:
+37c1d558524ebc6ec48dd90d16dc36d231ccece431e894e2a534a69f088b2444
+(process owner),
+59171af29413f0f911886ef5f6504f2920a50796846c4e65cfdc1941bffa3b90
+(tests). Source is accepted only for documented trusted process-group scope;
+metadata/paired launcher/integration and whole-launcher review remain open.
