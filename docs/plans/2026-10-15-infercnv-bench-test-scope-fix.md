@@ -19,12 +19,17 @@ The same original job passes19 dedicated trial tests before linting.
   no lint allowance, visibility change, numerical code or timer change.
 - [x] Freeze new immutable green-14. Only the shared helper hash may differ
   from green-13; require all149 exact source members and three checksums.
-- [ ] External standalone formatting and controller tests, fresh independent
+- [x] External standalone formatting and controller tests, fresh independent
   review, scoped world commit/push and exact-head Control plane success.
-- [ ] Run all four native classes with trial/support flags and original oracle;
+- [x] Run all four native classes with trial/support flags and original oracle;
   require strict Clippy,19Linux/14mac trial tests,55 creation/11 old support/
   72 ordinary tests per profile, both benches, unchanged source and lock.
-- [ ] Audit original APIs/ZIPs/logs before committing owning product changes.
+- [x] Audit original APIs/ZIPs/logs before committing owning product changes.
+
+Accepted run38688148869 at36299d7f: all four native classes pass. Original
+APIs, artifact ZIPs and full logs are retained externally; the strict receipt
+verifier and owning149-file comparison pass. Product repair4a62135c precedes
+trial5beb707e. See the execution ledger for digests and bounded acceptance.
 
 The existing real Clippy invocation is the regression test: green-13 fails;
 the identical invocation on green-14 must pass. Do not add a source-text test

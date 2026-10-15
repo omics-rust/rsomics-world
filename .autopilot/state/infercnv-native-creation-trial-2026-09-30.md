@@ -154,3 +154,41 @@ Manifest SHA256:
 `0fc31a800507e0ee702ba37e76680921f874d93a25e196810333afe9998a5e16`.
 All src/, Cargo/lock, trial/timer and other148 source bytes are unchanged.
 Hosted four-native tests/strict Clippy and original evidence acceptance pending.
+
+## Green-14 private native trial accepted — 2026-10-15
+
+World36299d7f5a516af50c08287b97fc2bce5daefd5e passes exact-head Control
+plane38688021631. Native run38688148869 attempt1 passes all four native
+Linux/macOS x86_64/aarch64 jobs. Root authenticated original run/jobs/artifact
+API records, ZIP sizes/digests/CRC/safe unique regular entries, copied source
+archives and all3 checksums,149-member source-before/after identity, guard19,
+native Rust1.91/compiler/target paths, locked resolution and unchanged src/.
+
+Every target/profile passes55 creation,11 prior measurement,72 ordinary/
+external tests and19 Linux or14 macOS dedicated trial tests, zero ignored or
+failed. The new release bench compiles; old bench check, Linux formatting,
+strict Clippy and missing-oracle diagnostic remain successful and unweakened.
+
+Original evidence: external
+`evidence/infercnv-ingestion-measurement-2026-09-30/run-38688148869/`.
+
+| Native target | Artifact | ZIP bytes | Original SHA256 |
+|---|---:|---:|---|
+| Linux x86_64 |11950054415|643290|26afbd15cee1406e813b6ffc955c50ef0dabfd5dceb4d4735f03d94d5254cd92|
+| Linux aarch64 |11949954407|642181|4a54a046b1d0017fa5ea165d806ea67b6ebd7926cb0d792392b8c34383f87101|
+| macOS x86_64 |11951360231|641978|27036570ac8250ee3d66ec6468adf65ca319be07db2c105ab39c1142ef5d221c|
+| macOS aarch64 |11950714737|642137|7044ecfc0ef27f7be74d7e4d0e953b198689aa6d2f8aa68106859c5ecf59bb1f|
+
+Full original logs ZIP SHA256:
+`05a258615600c0a874d74f06285e4297874ba2d9df8a2c9ca312c432ce40a3d5`.
+New receipt: `../oracles/infercnv-ingestion-trial-candidate-2026-10-15.json`.
+The unchanged strict source/run verifier accepts it and a fresh external
+extraction; all149 logical files match the owning product byte-for-byte.
+
+Only after that audit, product commits4a62135c079cd035e6396a25e7d769895adbddcb
+(test-scope fix) and5beb707e74c625f6663c257dd6445a39e93d537e (four trial paths)
+are recorded. Product worktree is clean; it has no remote and remains private.
+No public repository, registry release, canonical timed fresh-process trial,
+paired32/64 performance, general R parser parity or full inferCNV follows.
+Next: installed-R factory/package contracts, externally authenticated before
+launch and after, independently checked against the original plain/gzip inputs.

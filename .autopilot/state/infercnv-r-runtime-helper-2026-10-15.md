@@ -1,8 +1,9 @@
 # R runtime helper resumed acceptance
 
 Plan: `../../docs/plans/2026-09-30-infercnv-r-runtime-helper-plan.md`.
-Status: source review and fresh package-free Linux execution pass; exact-head
-controller delivery pending. No installed infercnv or canonical factory run.
+Status: source review, fresh package-free Linux execution and controller
+delivery pass. Commit1a364674 is included in exact-head36299d7f Control plane
+run38688021631, success. No installed infercnv or canonical factory run.
 
 Root's pre-pause missing-helper RED was preserved on4090 under
 `/dev/shm/rsomics-ingestion-runtime-root-20260930.Rycrpc`. It explicitly names

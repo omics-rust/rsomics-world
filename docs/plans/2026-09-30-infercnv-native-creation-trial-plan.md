@@ -488,9 +488,9 @@ required-features = ["infercnv-measurement"]
 
 - [x] Add exactly the complete helper/main below; external standalone Rust1.91 format. Recheck all production/old support/lock hashes.
 - [x] Freeze clean green-13 with identical red-8 test bytes and only helper/main/Cargo bench additions. Three sorted snapshot checksums/exact tar manifest required. Independent complete-source review.
-- [ ] Push owned world snapshot/ledger updates; wait exact-head Control plane; dispatch full four-native with all three measurement flags and accepted shipped oracle.
-- [ ] Dedicated trial target debug/release; compile new bench with cargo bench --locked --features infercnv-measurement --bench cnv_ingestion_matched --no-run. Preserve original logs. Exact expected collected trial counts are19 Linux/14 macOS from source inventory, not a prior test result.
-- [ ] Preserve the55 creation support,11 old support,72 ordinary/external tests per target/profile, format/strict Clippy and old bench. Correct any observed defects via narrow tests, fresh immutable snapshots and original failures; no waiver.
+- [x] Push owned world snapshot/ledger updates; wait exact-head Control plane; dispatch full four-native with all three measurement flags and accepted shipped oracle.
+- [x] Dedicated trial target debug/release; compile new bench with cargo bench --locked --features infercnv-measurement --bench cnv_ingestion_matched --no-run. Preserve original logs. Actual collected trial counts are19 Linux/14 macOS in accepted run38688148869.
+- [x] Preserve the55 creation support,11 old support,72 ordinary/external tests per target/profile, format/strict Clippy and old bench. Correct any observed defects via narrow tests, fresh immutable snapshots and original failures; no waiver. Green-13 lint failure remains preserved; green-14 changes only the shared helper's test scope, as recorded in the2026-10-15 repair plan.
 
 Complete helper:
 
@@ -1096,8 +1096,8 @@ fn main() {
 
 ### Task 3: Original artifact acceptance and product commit
 
-- [ ] Root authenticates exact run/head/attempt/native jobs, original artifact API digest/size/ZIP CRC/safe names and source/guard bytes. Archive exact inventory and all3 checksums, before/after source, native Rust1.91, lock and production unchanged. Inspect actual test summaries and new bench artifacts.
-- [ ] Only after four-native success/audit, commit owning product's4 new/changed paths (Cargo.toml, new trial test/helper/bench) with test(sc): measure actual raw creation boundaries. Do not include other files or force-stage inherited work.
+- [x] Root authenticates exact run/head/attempt/native jobs, original artifact API digest/size/ZIP CRC/safe names and source/guard bytes. Archive exact inventory and all3 checksums, before/after source, native Rust1.91, lock and production unchanged. Inspect actual test summaries and new bench artifacts.
+- [x] Only after four-native success/audit, commit owning product's4 new/changed paths (Cargo.toml, new trial test/helper/bench) with test(sc): measure actual raw creation boundaries. Product5beb707e follows separately scoped test repair4a62135c; no unrelated changes.
 - [ ] Record exact accepted gate in tracked world ledger/receipt and push with exact-head control CI.
 
 ## Separate subsequent acceptance
