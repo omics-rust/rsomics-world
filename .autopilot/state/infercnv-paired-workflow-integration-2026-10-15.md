@@ -31,6 +31,12 @@ The byte-equality test caught it. Replaced chomp with explicit single final-LF
 removal and reran the actual test: one test, OK. No executable workflow bytes
 were affected by that documentation-only intermediate failure.
 
+Root also parsed actual YAML with the existing system stdlib YAML parser
+(37 oracle steps at this worktree stage) and compared every30 previous named
+step body except the deliberately extended selector to accepted e1f6fdb9:
+all were byte-identical modulo trailing whitespace. Current source remains
+uncommitted pending final reviewed literal controller pin and complete suite.
+
 Before local stdlib tests: APFSContainerSize245107195904,
 APFSContainerFree18627567616 (92.40% occupied), external KIOXIA40GiB/HDD54GiB.
 No local Cargo/R/build/install/download. Tests use bytecode disabled/external
