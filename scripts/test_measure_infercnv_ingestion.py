@@ -114,11 +114,14 @@ class AdmissionTests(ExternalFixture):
         executable.parent.mkdir(parents=True)
         executable.write_text("artifact")
         executable.chmod(0o700)
-        record = {"reason": "compiler-artifact", "manifest_path": str(Path(c["native_source_root"]) / "Cargo.toml"),
+        record = {"reason": "compiler-artifact", "package_id": "path+file:///admitted-source#rsomics-sc@0.1.0",
+                  "manifest_path": str(Path(c["native_source_root"]) / "Cargo.toml"),
                   "target": {"name": "cnv_ingestion_matched", "kind": ["bench"],
-                             "crate_types": ["bin"], "src_path": str(Path(c["native_source_root"]) / "benches/cnv_ingestion_matched.rs")},
-                  "features": ["infercnv-measurement"], "profile": {"opt_level": "3", "test": False, "debug_assertions": False},
-                  "executable": str(executable), "filenames": [str(executable)]}
+                             "crate_types": ["bin"], "src_path": str(Path(c["native_source_root"]) / "benches/cnv_ingestion_matched.rs"),
+                             "edition": "2024", "required-features": ["infercnv-measurement"], "doc": False, "doctest": False, "test": False},
+                  "features": ["infercnv-measurement"], "profile": {"opt_level": "3", "debuginfo": 0,
+                      "test": True, "debug_assertions": False, "overflow_checks": False},
+                  "executable": str(executable), "filenames": [str(executable)], "fresh": False}
         return c, record, executable
 
     def write_cargo(self, c, records):
@@ -132,7 +135,7 @@ class AdmissionTests(ExternalFixture):
         mutations = [{"target": dict(record["target"], kind=["bin"])},
                      {"target": dict(record["target"], name="cnv_matched")},
                      {"features": []}, {"manifest_path": str(self.root / "Cargo.toml")},
-                     {"profile": dict(record["profile"], test=True)},
+                     {"profile": dict(record["profile"], test=False)},
                      {"profile": dict(record["profile"], opt_level="0")},
                      {"profile": dict(record["profile"], debug_assertions=True)},
                      {"executable": str(Path(c["python"]))}]
@@ -146,6 +149,21 @@ class AdmissionTests(ExternalFixture):
             self.write_cargo(c, records)
             with self.subTest(records=records), self.assertRaises(ValueError):
                 owner._cargo_executable(c)
+
+    def test_real_cargo_bench_shape_requires_distinct_target_and_profile_test_flags(self):
+        context, record, executable = self.cargo()
+        finish = {"reason": "build-finished", "success": True}
+        self.write_cargo(context, [record, finish])
+        self.assertEqual(owner._cargo_executable(context), executable)
+        for field, value in (("target", True), ("profile", False), ("target", None), ("profile", None)):
+            changed = copy.deepcopy(record)
+            if value is None:
+                del changed[field]["test"]
+            else:
+                changed[field]["test"] = value
+            self.write_cargo(context, [changed, finish])
+            with self.subTest(field=field, value=value), self.assertRaises(ValueError):
+                owner._cargo_executable(context)
 
     def test_full_identity_catches_same_executable_different_library_and_every_other_field(self):
         identity = Fixture.profile()["Python"]

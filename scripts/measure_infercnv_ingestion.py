@@ -260,7 +260,7 @@ def _cargo_executable(c):
     _require(row.get("manifest_path") == str(source / "Cargo.toml") and target.get("kind") == ["bench"] and
              target.get("crate_types") == ["bin"] and target.get("src_path") == str(source / "benches/cnv_ingestion_matched.rs") and
              row.get("features") == ["infercnv-measurement"] and profile.get("opt_level") == "3" and
-             profile.get("test") is False and profile.get("debug_assertions") is False,
+             target.get("test") is False and profile.get("test") is True and profile.get("debug_assertions") is False,
              "Cargo artifact target/features/profile differs")
     executable = _physical(row.get("executable"))
     _require(executable.is_relative_to(Path(c["cargo_target_dir"])) and os.access(executable, os.X_OK) and
