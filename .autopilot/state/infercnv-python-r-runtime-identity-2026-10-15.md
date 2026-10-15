@@ -143,3 +143,10 @@ paired launcher must repeat full shell/R identity after dependencies and
 around campaign execution; this accepted bounded package test does not waive
 continuous runtime/source authentication for that new campaign. Frozen receipt:
 infercnv-installed-creation-contracts-2026-10-15.json.
+
+The same receipt now explicitly carries installed_source_proofs: actual clock
+document/primitive identity and3 installed-function text hashes. Root rehashes
+the immutable original ZIP and both fresh plain/gzip proof sets before adding
+these fields; no artifact/run/source identity changes. Later current-host
+untimed preflight profiles must match these independently admitted proofs,
+rather than accept a timed result's self-consistent replacement document.

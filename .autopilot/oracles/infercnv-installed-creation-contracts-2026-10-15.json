@@ -36,6 +36,18 @@
     ".autopilot/oracles/infercnv-samples-clustering-witness-2026-09-30.json": "41284ea567fd2c41a48e22eef3c9063a59944607828ebc9cdea8a3f6da82e526",
     "scripts/infercnv_ingestion_matched.R": "eb09009172c905363407f49c63bfa164da8d32a29ea8ec8a17a8701dc6e231d0"
   },
+  "installed_source_proofs": {
+    "clock_source": {
+      "path": "clock-proc-time.txt",
+      "sha256": "09efec79c3b4ef0d1df8667e4fa026ec17ca5c425f08b4db7d774628bdcbaf3f",
+      "function_text": [".Primitive(\"proc.time\")"]
+    },
+    "functions": {
+      "CreateInfercnvObject": "506a4072fe0381943465c636de3509897cf1295d4a92edad6b45aee8a233adfa",
+      ".order_reduce": "44c7d20d1d95827a2e7dd5e298020cc23e4bdc81a9457182eb00ac510172c7b8",
+      "validate_infercnv_obj": "760fc8f5f0a900d8f72e44c2177ae650f60c7025002e55332ddf2adc36528570"
+    }
+  },
   "validated_parent_results": 2,
   "validated_fresh_processes": 2,
   "validated_fresh_results": 4,
