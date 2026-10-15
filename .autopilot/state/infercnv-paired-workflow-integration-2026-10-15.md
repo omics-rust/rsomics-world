@@ -25,6 +25,12 @@ separate from the delegated owner's two files. Its full-suite run is being
 coordinated to avoid treating this known temporary integration RED as a
 regression in its isolated owner.
 
+Copy synchronization check: the first mechanical command added an extra LF
+because Perl's input separator was locally undef and chomp removed nothing.
+The byte-equality test caught it. Replaced chomp with explicit single final-LF
+removal and reran the actual test: one test, OK. No executable workflow bytes
+were affected by that documentation-only intermediate failure.
+
 Before local stdlib tests: APFSContainerSize245107195904,
 APFSContainerFree18627567616 (92.40% occupied), external KIOXIA40GiB/HDD54GiB.
 No local Cargo/R/build/install/download. Tests use bytecode disabled/external
