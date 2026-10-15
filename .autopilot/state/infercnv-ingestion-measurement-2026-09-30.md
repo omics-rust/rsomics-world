@@ -7,6 +7,14 @@ from38700520489: `infercnv-r-package-contracts-2026-10-15.md`. No authenticated
 canonical timed campaign or speed/resource claim. Earlier dated steps below
 retain their historical evidence and source identities.
 
+Current resumed work (2026-10-15): private process lifecycle, closed trial
+metadata and actual Python identity capture are independently reviewed and
+accepted with exact-head Linux controller CI; latest334-test gate38708622261.
+The real paired owner is being implemented and workflow integration is in
+progress. See `infercnv-paired-ingestion-owner-2026-10-15.md` and
+`infercnv-paired-workflow-integration-2026-10-15.md`. These prerequisites do not
+constitute a32-process campaign or a speed/resource result.
+
 Design:
 `../../docs/plans/2026-09-30-infercnv-raw-ingestion-measurement-design.md`.
 First independently testable controller step:
@@ -62,9 +70,10 @@ accepts the helper alone, not a timed trial or product performance.
 1. Complete: independent helper review, main push and exact-head controller CI.
 2. Complete: private Rust creation/export support, genuine missing-helper RED
    and clean-source four-native debug/release gate.
-3. Actual installed-package factory trial/source pins/receipts accepted with
-   bounded runtime scope. Remaining: paired process owner/driver, closed root
-   metadata gates and full post-dependency/runtime provenance tests.
+3. Actual installed-package factory/source contracts, private process owner,
+   closed trial metadata and actual Python capture accepted within their
+   bounded scopes. Remaining: integrated paired driver and full after-
+   dependency/runtime provenance tests in that actual campaign.
 4. Thirty-two fresh processes yielding 64 checked factory outputs; 28 measured
    samples with frozen plain/gzip strict wall advantage criteria.
 5. Original artifact/log/metrics/source audit before any bounded performance
