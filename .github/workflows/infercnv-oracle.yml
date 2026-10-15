@@ -119,7 +119,7 @@ jobs:
           unset PYTHONPATH PYTHONHOME
           test -z "$(find scripts -type f \( -name '*.pyc' -o -name '*.pyo' \) -print -quit)"
           cat > "$EVIDENCE_DIR/ingestion-fixed.sha256" <<'PINS'
-          0d682071ce0b9096db174394453b03d20fb282c71c98fb5d2e63c7bb04b2d979  scripts/test_infercnv_ingestion_matched_package.R
+          f5244184ae90276b7d2df27a3e8f9d149449702cffcd64f6036189544da25f83  scripts/test_infercnv_ingestion_matched_package.R
           bcbbd0e3b6a2d053562345cd9ee59a4ff3e9dc4c8d4e6e2a7db66097d5787418  scripts/infercnv_ingestion_runtime_support.R
           d583b156e9a08f3422969697b4524469b8eb05bb92d6c65d41e2aa1df7990faa  scripts/infercnv_ingestion_matched_support.R
           0c3870354e5ac5bafedbd018148492bb5f339714b5412c409866825b2e783956  scripts/infercnv_matched_support.R

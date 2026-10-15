@@ -41,10 +41,10 @@
 - [x] Add the complete package test below with apply_patch; trial stays physically absent.
 - [x] Apply the complete workflow below. Validate YAML and every actual Bash block with bash -n; execute selector matrix (2 datasets ×2 matched presence ×2 clustering ×2 ingestion) and compare observable exit status with the approved truth table.
 - [x] Parse the actual new R test on4090 with existing R4.6.1, no package install/local R. Run all274 Python tests, architecture and whitespace checks with external TMPDIR/bytecode disabled.
-- [ ] Commit only package test, workflow and this plan/ledger: test(sc): exercise installed creation contracts. Push main and wait exact-head Control plane CI.
-- [ ] Dispatch infercnv-oracle.yml dataset=shipped ingestion_contracts=true; other selectors empty/false. Keep original run/jobs/artifact/logs.
-- [ ] Accept RED only after original artifact/input proof, runtime and installed namespace prerequisites pass, every adjacent/reused file except trial matches its fixed hash and is readable, output fixture directories are writable, and stderr names the exact absent infercnv_ingestion_matched.R with No such file plus cannot copy bootstrap fixture. A generic copy/install/runtime/environment failure is NOT intended RED.
-- [ ] If R does not emit the precise missing-source diagnostic, add an explicit missing-component assertion to the package contract, update reviewed hash/plan and obtain the proper RED; do not waive.
+- [x] Commit only package test, workflow and this plan/ledger: test(sc): exercise installed creation contracts. Push main and wait exact-head Control plane CI (f42ec6a8,38689987652 success).
+- [x] Dispatch infercnv-oracle.yml dataset=shipped ingestion_contracts=true; other selectors empty/false (38690064479). Original run/jobs/artifact/log acquisition follows completion; no RED acceptance yet.
+- [ ] Accept RED only after original artifact/input proof, runtime and installed namespace prerequisites pass, every adjacent/reused file except trial matches its fixed hash and is readable, output fixture directories are writable, and stderr explicitly reports actual creation trial absent followed by the exact absolute infercnv_ingestion_matched.R path. Original generic-copy run38690064479 is not intended RED; installation/runtime failures are not RED.
+- [x] Original run38690064479 emits only generic copy failure. Added explicit missing-component assertion to the package contract, updated fixed hash/complete plan and require a new proper RED; no waiver.
 
 ### Complete package test
 
@@ -89,6 +89,8 @@ fails <- function(action, message) {
         stop("expected package rejection absent: ", message)
     }
 }
+trial_path <- file.path(proposal_dir, "infercnv_ingestion_matched.R")
+if (!file.exists(trial_path)) stop("actual creation trial absent: ", trial_path)
 for (target in c("creation_support", "counter_support", "oracle_io", "creation_checker", "imported_validator")) {
     fixture <- file.path(output, paste0("bad-code-", target))
     adjacent <- file.path(fixture, "trial-scripts")
@@ -251,7 +253,7 @@ cat("Actual package creation contracts passed; two fresh trials/four verified re
 
 **Interfaces:** Six positional arguments ARTIFACT_ROOT plain|gzip SOURCE_ROOT INPUT_RECEIPT EXISTING_SCRIPTS_DIR NEW_OUTPUT_DIR. Fresh output contains warm/measured exact four-file exports, twelve metrics, runtime/provenance, actual installed clock documentation, package/library inventory and raw lifetime IO.
 
-- [ ] Only after observed intended RED, add the complete trial below. Its SHA256 must be eb09009172c905363407f49c63bfa164da8d32a29ea8ec8a17a8701dc6e231d0; unchanged package test SHA2560d682071ce0b9096db174394453b03d20fb282c71c98fb5d2e63c7bb04b2d979.
+- [ ] Only after observed intended RED, add the complete trial below. Its SHA256 must be eb09009172c905363407f49c63bfa164da8d32a29ea8ec8a17a8701dc6e231d0; strengthened package test SHA256f5244184ae90276b7d2df27a3e8f9d149449702cffcd64f6036189544da25f83.
 - [ ] Parse actual R on4090; compare complete proposal/owning bytes. Run full controller/architecture/whitespace checks.
 - [ ] Commit trial and owned ledger: test(sc): run actual installed raw creation trials. Push/wait exact-head controller CI; dispatch the same installed-creation route.
 - [ ] Require successful installed-package mutants and two actual fresh trial children, actual parent plain/gzip objects, independent warm/measured exact checks, literal counters and all provenance/clock/source/executable checks. No timer, scope or assertion weakening on failure.
@@ -549,7 +551,7 @@ jobs:
           unset PYTHONPATH PYTHONHOME
           test -z "$(find scripts -type f \( -name '*.pyc' -o -name '*.pyo' \) -print -quit)"
           cat > "$EVIDENCE_DIR/ingestion-fixed.sha256" <<'PINS'
-          0d682071ce0b9096db174394453b03d20fb282c71c98fb5d2e63c7bb04b2d979  scripts/test_infercnv_ingestion_matched_package.R
+          f5244184ae90276b7d2df27a3e8f9d149449702cffcd64f6036189544da25f83  scripts/test_infercnv_ingestion_matched_package.R
           bcbbd0e3b6a2d053562345cd9ee59a4ff3e9dc4c8d4e6e2a7db66097d5787418  scripts/infercnv_ingestion_runtime_support.R
           d583b156e9a08f3422969697b4524469b8eb05bb92d6c65d41e2aa1df7990faa  scripts/infercnv_ingestion_matched_support.R
           0c3870354e5ac5bafedbd018148492bb5f339714b5412c409866825b2e783956  scripts/infercnv_matched_support.R

@@ -38,6 +38,8 @@ fails <- function(action, message) {
         stop("expected package rejection absent: ", message)
     }
 }
+trial_path <- file.path(proposal_dir, "infercnv_ingestion_matched.R")
+if (!file.exists(trial_path)) stop("actual creation trial absent: ", trial_path)
 for (target in c("creation_support", "counter_support", "oracle_io", "creation_checker", "imported_validator")) {
     fixture <- file.path(output, paste0("bad-code-", target))
     adjacent <- file.path(fixture, "trial-scripts")
