@@ -5,9 +5,11 @@ Spec: `../../docs/plans/2026-09-30-infercnv-raw-ingestion-measurement-design.md`
 Base world: deabf106f8c822b25673cb209e47b49d825c5043, exact-head Control
 plane38689473008 success. Product5beb707e is clean and private.
 
-Status: package contract and separate default-false oracle route added;
-actual trial remains physically absent. No installed package execution yet.
-Task1 is in progress. No intended RED or actual performance is accepted.
+Status as of2026-10-15: installed source/runtime/input prerequisites passed in
+run38690064479, but its generic fixture-copy failure is not intended RED.
+Strengthened missing-trial test is rerunning as38695221700; trial remains
+physically absent. Task1 in progress; no actual performance is accepted.
+Earlier phase entries below retain their historical source identities.
 
 Ruling: reuse the complete original-artifact verifier and existing installed
 oracle job rather than introduce an acquisition helper or public component.
@@ -92,3 +94,8 @@ failed. This audit confirms why the generic failure is inadequate, not a pass.
 The strengthened owning196-line test parses on4090 with the original parse
 fixture preserved separately;283 controller tests, architecture/whitespace,
 28 actual Bash blocks and exact complete plan/source/workflow equality pass.
+
+Diagnostic commit e5c2aa8fcaee3e0f95641a8174d6764451013049 passes exact-head
+Control plane38695113069. New installed-oracle run38695221700 is dispatched
+at that head with the same shipped/ingestion-only selectors. Do not add the
+trial before the exact absent-trial failure and prerequisites are authenticated.

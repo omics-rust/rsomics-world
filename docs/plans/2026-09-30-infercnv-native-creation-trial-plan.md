@@ -1098,7 +1098,7 @@ fn main() {
 
 - [x] Root authenticates exact run/head/attempt/native jobs, original artifact API digest/size/ZIP CRC/safe names and source/guard bytes. Archive exact inventory and all3 checksums, before/after source, native Rust1.91, lock and production unchanged. Inspect actual test summaries and new bench artifacts.
 - [x] Only after four-native success/audit, commit owning product's4 new/changed paths (Cargo.toml, new trial test/helper/bench) with test(sc): measure actual raw creation boundaries. Product5beb707e follows separately scoped test repair4a62135c; no unrelated changes.
-- [ ] Record exact accepted gate in tracked world ledger/receipt and push with exact-head control CI.
+- [x] Record exact accepted gate in tracked world ledger/receipt and push with exact-head control CI (deabf106,38689473008 success).
 
 ## Separate subsequent acceptance
 

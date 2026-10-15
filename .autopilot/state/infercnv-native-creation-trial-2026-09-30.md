@@ -1,8 +1,10 @@
 # Native actual-creation trial gate
 
-Status: genuine remote RED accepted; private native implementation frozen for
-four-native GREEN. No canonical timing executed. Installed R/paired campaign
-remain separate.
+Status as of2026-10-15: private native trial accepted from green-14/run38688148869,
+all four native targets, strict Clippy and original evidence audited. Product
+5beb707e is committed and clean. No canonical timing executed. Installed R
+contracts are running under the separate2026-10-15 package ledger; paired
+campaign remains separate. Earlier phase entries below are historical.
 
 Plan: `../../docs/plans/2026-09-30-infercnv-native-creation-trial-plan.md`.
 Spec: `../../docs/plans/2026-09-30-infercnv-raw-ingestion-measurement-design.md`.
@@ -23,7 +25,7 @@ later external driver must verify original artifact, code/import chain and
 binary before launch/after, all64 exports,32 fresh processes and strict
 independent plain/gzip wall advantage. No source or performance waiver.
 
-Current product changes only Cargo registration and new contract test. New
+At the initial RED preparation, product changes only Cargo registration and new contract test. New
 helper/bench remain absent. Standalone external Rust1.91 formatting passed;
 no local Cargo/R/build/dependency download. Production/lock/old support/test/
 bench and accepted creation helper remain byte-identical to green-12.

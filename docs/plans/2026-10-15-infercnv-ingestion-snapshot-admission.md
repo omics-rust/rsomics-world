@@ -209,7 +209,7 @@ if __name__ == "__main__":
 - [x] After actual RED, add complete wrapper below; require all9 tests plus the old verifier suite pass.
 - [x] Run full controller suite (283), architecture/whitespace, and the new CLI on original green-14 receipt/run/jobs to a fresh external directory; require149 exact source files and original four-native steps.
 - [x] Fresh-context whole-change review; reproduce Important issues with specific RED/GREEN tests, ledger minor deferrals. Commit only new test/wrapper and this plan/ledger: test(sc): require raw-creation native source evidence.
-- [ ] Push main and wait exact-head Control plane CI. Do not dispatch a duplicate installed R run; its original f42ec6a8 head remains valid.
+- [x] Push main and wait exact-head Control plane CI (57721add,38690986186 success). No duplicate installed R run was dispatched for this component; R test diagnostics have their separate original failure and rerun ledger.
 
 ```python
 """Verify four-native raw-creation tests and the frozen private trial source."""

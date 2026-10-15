@@ -206,6 +206,6 @@ env LC_ALL=C TMPDIR=REMOTE_GATE PYTHONDONTWRITEBYTECODE=1 /usr/bin/Rscript --van
 
 - [x] Fresh complete owning source/results review. Commit only2 new R files and owned plan/state: test(sc): validate R creation runtime contracts (1a364674).
 - [x] Push main; wait exact-head Control plane CI and record actual hashes/run (38688021631, exact head36299d7f includes1a364674).
-- [ ] Continue separate installed-package/source/trial/bootstrap/workflow plan without an automatic pause.
+- [x] Continue separate installed-package/source/trial/bootstrap/workflow plan without an automatic pause (2026-10-15-infercnv-r-package-contracts.md; running38690064479).
 
 Pure gate is not infercnv execution, actual runtime authentication, clock-documentation verification, factory performance or complete root inventory. Revised real trial152lines/package194lines remain scratch-only until their own complete plan. That gate must authenticate original accepted artifact and code/imports BEFORE launch/after, pin runtime/namespace/source functions/digest, preserve actual clock docs/warnings/Inf options/lifetime IO and independently check real plain/gzip warm/measured states. Paired32-process/64-state performance, native Ward/HMM/Leiden and public delivery remain separate.

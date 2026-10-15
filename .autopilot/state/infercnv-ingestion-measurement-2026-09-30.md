@@ -1,8 +1,11 @@
 # Canonical raw-ingestion measurement ledger
 
 Status: exact controller and private Rust creation/export helpers accepted,
-including clean-source four-native debug/release tests. No actual timed
-factory or speed/resource claim.
+including the actual native trial's green-14 four-native debug/release gate
+(run38688148869, product5beb707e). Installed-R package contracts are in
+progress: `infercnv-r-package-contracts-2026-10-15.md`. No authenticated
+canonical timed campaign or speed/resource claim. Earlier dated steps below
+retain their historical evidence and source identities.
 
 Design:
 `../../docs/plans/2026-09-30-infercnv-raw-ingestion-measurement-design.md`.
@@ -40,7 +43,7 @@ Frozen controller SHA256:
 | `scripts/validate_infercnv_ingestion_measurement.py` | `0fb1c968e46ff4dd041a42907ab70efaee9fae8beadf1254c81b1edf3c19cb36` |
 | `scripts/test_validate_infercnv_ingestion_measurement.py` | `da5f3d79593cabbe8b0c9337f4fdb6fbe7a05efb28fef40768a4f382cebae879` |
 
-Product `rsomics-sc` is still clean at
+At checker acceptance, product `rsomics-sc` was clean at
 `e62fc960aeeb9dc543298885213cda6a57196fe9`; production Rust, Cargo.lock and
 old prepared measurement support have not changed. No local build is permitted
 while boot APFS remains above the 80% gate. Controller scratch stays external.

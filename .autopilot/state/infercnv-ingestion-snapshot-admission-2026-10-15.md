@@ -26,7 +26,9 @@ evidence or a new performance result. New fixture reuses the original archive
 builder through composition, without collecting duplicated old TestCases.
 
 No production Rust, old verifier, receipt schema or installed-R test changes.
-Architecture/whitespace checks pass. Exact-head delivery remains pending.
+Architecture/whitespace checks pass. Final complete suite283 tests passes.
+Commit57721addaf1aa6d8af2e4ca516b48499bf01f7c9 is pushed; exact-head
+Control plane38690986186 completed success. Raw admission delivery complete.
 
 Fresh reviewer independently passes20 old/new focused tests and additionally
 rejects both raw test targets with duplicate registrations/wrong features.
