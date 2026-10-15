@@ -335,7 +335,7 @@ def _runtime_probes(c, output, phase, env, expected=None):
             f'if (!identical(normalizePath(file.path(R.home(),"bin","exec","R"),mustWork=TRUE),{quote(c["r_executable"])})) stop("R executable differs");'
             'p <- Sys.which("python3"); if (!nzchar(p)) stop("python3 absent");'
             f'p <- normalizePath(p,mustWork=TRUE); if (!identical(p,{quote(c["python"])})) stop("Python executable differs");'
-            f's <- system2(p,c("-I","-B",shQuote({quote(str(script))})),stdout=FALSE,stderr=FALSE);'
+            f's <- system2(p,c("-I","-B",shQuote({quote(str(script))})),stdout="",stderr="");'
             'if (!identical(s,0L)) stop("Python identity child failed");')
     r_prefix = output / (phase + "-python-R")
     for key, argv, prefix in (("shell", [c["python"], "-I", "-B", script], shell_prefix),

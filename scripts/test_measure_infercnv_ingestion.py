@@ -5,6 +5,7 @@ import hashlib
 import json
 import os
 from pathlib import Path
+import shutil
 import sys
 import tempfile
 import unittest
@@ -213,6 +214,58 @@ class AdmissionTests(ExternalFixture):
         self.assertEqual(calls[0], [c["python"], "-I", "-B", owner.SCRIPTS / "infercnv_python_identity.py"])
         self.assertEqual(calls[1][:3], [c["rscript"], "--vanilla", "-e"])
         self.assertTrue((output / "after-python-R.stdout").is_file())
+
+    def test_generated_r_probe_inherits_owned_stdout_and_stderr(self):
+        _, c = self.context()
+        identity = Fixture.profile()["Python"]
+        c["python"] = identity["executable"]
+        output = self.root / "inherited probe streams"
+        output.mkdir()
+        routes = []
+        command = owner._command
+        def actual_probe(argv, prefix, env):
+            routes.append(argv)
+            code = f"import sys;print({json.dumps(identity, sort_keys=True)!r});print('retained diagnostic',file=sys.stderr)"
+            return command([str(Path(sys.executable).resolve()), "-B", "-c", code], prefix, env)
+        with patch.object(owner._module("infercnv_python_identity"), "capture_identity", return_value=identity), \
+                patch.object(owner, "_command", actual_probe):
+            owner._runtime_probes(c, output, "inherited", owner._environment(c))
+        self.assertEqual(routes[1][:3], [c["rscript"], "--vanilla", "-e"])
+        self.assertIn('stdout="",stderr=""', routes[1][3])
+        self.assertEqual((output / "inherited-python-R.stderr").read_text(), "retained diagnostic\n")
+
+
+@unittest.skipUnless(os.environ.get("RSOMICS_TEST_INSTALLED_R") == "1",
+                     "set RSOMICS_TEST_INSTALLED_R=1 to require the installed R boundary")
+class InstalledRBoundaryTests(ExternalFixture):
+    def test_real_six_namespace_r_probe_retains_full_python_identity_and_raw_streams(self):
+        owner._check_host()
+        python = str(Path(sys.executable).resolve(strict=True))
+        selected_rscript = shutil.which("Rscript")
+        self.assertIsNotNone(selected_rscript, "installed Rscript is required when the boundary test is enabled")
+        rscript = str(Path(selected_rscript).resolve(strict=True))
+        context = {"python": python, "rscript": rscript,
+                   "code_sha256": {"scripts/infercnv_python_identity.py":
+                                    owner.FIXED_CODE["scripts/infercnv_python_identity.py"]}}
+        env = owner._environment(context)
+        home_prefix = self.root / "installed-R-home"
+        owner._command([rscript, "--vanilla", "-e",
+                        'cat(normalizePath(file.path(R.home(),"bin","exec","R"),mustWork=TRUE),"\\n",sep="")'],
+                       home_prefix, env)
+        r_home_output = owner._stdout(home_prefix)
+        self.assertEqual(len(r_home_output.splitlines()), 1)
+        context["r_executable"] = str(Path(r_home_output.rstrip("\n")).resolve(strict=True))
+        self.assertEqual(r_home_output, context["r_executable"] + "\n")
+        actual = owner._module("infercnv_python_identity").capture_identity()
+        result = owner._runtime_probes(context, self.root, "installed", env)
+        self.assertEqual(result, {key: actual for key in ("Python", "shell", "R")})
+        self.assertEqual(set(actual), {"executable", "executable_sha256", "version", "prefix",
+                                       "base_prefix", "stdlib_json", "libpython_sha256"})
+        for surface in ("shell", "R"):
+            prefix = self.root / ("installed-python-" + surface)
+            self.assertEqual(owner._stdout(prefix), json.dumps(actual, sort_keys=True) + "\n")
+            for suffix in (".stdout", ".stderr", ".process.json"):
+                self.assertTrue(Path(str(prefix) + suffix).is_file())
 
 
 @unittest.skipIf(owner is None, "owner not yet implemented")
