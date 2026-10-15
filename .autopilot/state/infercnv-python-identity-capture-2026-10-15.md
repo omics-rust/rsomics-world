@@ -2,7 +2,8 @@
 
 Spec: docs/plans/2026-09-30-infercnv-raw-ingestion-measurement-design.md.
 Status: implementation b62a8fbbf8e0c9bfad908c70aa96c9ceb82c3c32 reviewed
-clean; exact-head controller Linux CI pending. Metadata predecessor CI38706864188
+clean; exact-head controller Linux CI38708622261 passed at
+e1f6fdb90c99891a7e4cd9bd6c8798f860a7a41e. Metadata predecessor CI38706864188
 passed at1912eb9c64e63e60dcdcb7dcd1567c9c7f661626.
 
 | Task/interface | Producer/consumer | Preflight finding |
@@ -43,3 +44,19 @@ This establishes only the real base-R launch plumbing on4090/Python3.10, not
 the campaign's required Python3.12, installed infercnv namespace context or
 after-dependency/campaign-wide identity gates. No remote packages installed,
 no originals removed; remote scratch is retained and ephemeral across reboot.
+
+Root independently checked the original run/jobs JSON and log ZIP for
+CI38708622261: exact pushed head, push event, workflow path/repository,
+successful unique controller/architecture steps, ZIP CRC,334 tests in22.975s,
+OK(skipped=1), no FAILED/ResourceWarning. On Linux the sole skip is the
+absent-procfs failure test; actual-success capture cannot skip merely because
+procfs is absent. Original API/log files are retained under
+`/Volumes/Zane's HDD/rsomics-fixtures/evidence/infercnv-ingestion-measurement-2026-09-30/run-38708622261-python-identity-ci/`.
+Log ZIP SHA256:
+`cdc0a2622fe126d1a4f529988498996c2f5e5c38ef0e9e103fffde23435701fe`.
+Implementation source SHA256 remains
+`654cd3aede60d5aff366b96ad85cd5ecc0a8e6130a35905c752e973f99eb07ab`;
+test SHA256 remains
+`7e71f47c2c1f82679068908b4563be63993d2285044da3f1c5f654b3dd47fd74`.
+This component is accepted within its bounded scope, not paired performance
+acceptance. The real owner is now delegated under its separate tracked plan.
