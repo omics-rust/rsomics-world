@@ -1,8 +1,11 @@
 # Paired ingestion workflow integration ledger
 
 Plan: docs/plans/2026-10-15-infercnv-paired-workflow-integration.md.
-Status: root implementation in progress alongside isolated two-file owner
-implementation. No full campaign dispatched or performance result claimed.
+Status (2026-10-22): implemented/reviewed/pushed with exact-head controller CI
+39748655273. Native run39748832071 rejects installed-R version loading before
+timing. Current fix/evidence/gates: infercnv-paired-resume-2026-10-22.md.
+No accepted full campaign or performance result. Earlier notes below retain
+their historical worktree scope.
 
 Genuine workflow regression RED before editing YAML: six tests ran,
 17 failures/one error. The real old selector accepted11 forbidden nonempty

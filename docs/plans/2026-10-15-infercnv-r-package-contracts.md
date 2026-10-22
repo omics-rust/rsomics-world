@@ -580,7 +580,7 @@ jobs:
           654cd3aede60d5aff366b96ad85cd5ecc0a8e6130a35905c752e973f99eb07ab  scripts/infercnv_python_identity.py
           095ebb67a2d9a050c20b6e876f2b0c9cfd26fcbf8f0ce3601a8124b292b553f2  scripts/infercnv_source_snapshot.py
           37c1d558524ebc6ec48dd90d16dc36d231ccece431e894e2a534a69f088b2444  scripts/infercnv_trial_process.py
-          14120b5101acd502ea2a37ce6a33f704e5428f7225d749d0c52bc2fc162df531  scripts/measure_infercnv_ingestion.py
+          96f4be2478f6b99f75b85bdbc4f3d8fdf31b075c79d24793fcefd1182ff86267  scripts/measure_infercnv_ingestion.py
           0fb1c968e46ff4dd041a42907ab70efaee9fae8beadf1254c81b1edf3c19cb36  scripts/validate_infercnv_ingestion_measurement.py
           682d2a41bbe901a02b6687756e64cc1359fa1e3881d49af40eaa5fc725211222  scripts/validate_infercnv_samples_clustering_witness.py
           2a2b5dd64169aab03b9ba3c4e987144497de2433091a035ddc3fd7811e59e771  scripts/validate_infercnv_trial_metadata.py
@@ -589,7 +589,7 @@ jobs:
           651ac3082d92f952bf026f134bfb0482f50b118dcfab367a497bbb0fe863571f  scripts/verify_infercnv_oracle_artifact.py
           PINS
           cat > "$EVIDENCE_DIR/ingestion-paired-tests.sha256" <<'PINS'
-          e13a385e40cdabe1f4205d6faa0e6f8c3ae68af79acbab5667bd2df86c0db6f6  scripts/test_measure_infercnv_ingestion.py
+          c6b600a0f50e25689c50bfbe887b12ae498e84aa5217c7a375c4c83113c0117c  scripts/test_measure_infercnv_ingestion.py
           c0e387d5b9a11ce3ffdc5ae7a3780314e5266ca3c21d2c0fbba5409d5fbee6f0  scripts/test_infercnv_ingestion_campaign.py
           a544bcdfd57780bb1a5626e6fb6f8dc50a2e9481f6becb525636b5985cdbea07  scripts/test_validate_infercnv_trial_metadata.py
           PINS
@@ -1296,6 +1296,7 @@ jobs:
         with:
           name: infercnv-oracle-${{ github.run_id }}-${{ github.run_attempt }}
           path: ${{ runner.temp }}/infercnv-oracle/
+          include-hidden-files: true
           if-no-files-found: error
           retention-days: 30
 ```

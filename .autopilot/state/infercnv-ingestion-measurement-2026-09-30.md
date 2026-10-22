@@ -7,13 +7,16 @@ from38700520489: `infercnv-r-package-contracts-2026-10-15.md`. No authenticated
 canonical timed campaign or speed/resource claim. Earlier dated steps below
 retain their historical evidence and source identities.
 
-Current resumed work (2026-10-15): private process lifecycle, closed trial
-metadata and actual Python identity capture are independently reviewed and
-accepted with exact-head Linux controller CI; latest334-test gate38708622261.
-The real paired owner is being implemented and workflow integration is in
-progress. See `infercnv-paired-ingestion-owner-2026-10-15.md` and
-`infercnv-paired-workflow-integration-2026-10-15.md`. These prerequisites do not
-constitute a32-process campaign or a speed/resource result.
+Current resumed work (2026-10-22): reviewed paired owner and authenticated
+workflow integration were pushed at e083fa34; exact-head controller
+run39748655273 passes383 tests. First native run39748832071 failed the real
+installed-R version boundary before any timer/sample/build: direct exec/R
+cannot load libR.so without R's natural launcher. The original failure is
+preserved and independently audited. A scoped launcher fix and hidden-receipt
+retention regression are under verification; mandatory real-R acceptance
+remains open. See `infercnv-paired-resume-2026-10-22.md` for current hashes,
+evidence and gates; earlier dated owner/integration notes remain historical.
+These prerequisites do not constitute a32-process campaign or speed result.
 
 Design:
 `../../docs/plans/2026-09-30-infercnv-raw-ingestion-measurement-design.md`.

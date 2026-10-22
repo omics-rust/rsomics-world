@@ -125,13 +125,16 @@ python3 -B -c 'import pathlib,runpy,sys; script=pathlib.Path("scripts/measure_in
   Record an independent six-executable baseline immediately after the actual
   bench is built: Python/Rscript/R/native/rustc/GNUtime. Check it in the always
   path even if context generation or owner admission never starts.
-- [ ] Run selector/Bash/copy tests, full stdlib controller suite once, scoped
+  Real-run correction: upload hidden files beneath the existing evidence
+  directory so the four authenticated .autopilot receipts survive. Never
+  broaden the upload to the checkout or credentials; retain failed originals.
+- [x] Run selector/Bash/copy tests, full stdlib controller suite once, scoped
   independent review including owner integration and production hot path.
   Commit scoped files, push, verify exact-head controller CI before dispatch.
 
 ## Task 3: Real campaign acceptance, not implementation self-report
 
-- [ ] Dispatch dataset=shipped, ingestion_contracts=true,
+- [x] Dispatch dataset=shipped, ingestion_contracts=true,
   ingestion_snapshot=green-14, matched_snapshot empty, samples_clustering=false.
 - [ ] Fetch original exact-head run/jobs/artifact/listing/full logs externally;
   verify attempt/repository/workflow/required unique successful steps,

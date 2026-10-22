@@ -123,6 +123,12 @@ class IngestionWorkflowTests(unittest.TestCase):
         self.assertIn('verify_extracted', post)
         self.assertIn('if: always()', self.steps['Upload raw evidence even on failure'])
 
+    def test_upload_retains_hidden_authenticated_receipts_only_from_evidence_directory(self):
+        upload = self.steps['Upload raw evidence even on failure']
+        self.assertIn('include-hidden-files: true', upload)
+        self.assertIn('path: ${{ runner.temp }}/infercnv-oracle/', upload)
+        self.assertNotIn('${{ github.workspace }}', upload)
+
     def test_real_r_boundary_gate_is_opted_in_after_installation_and_retained(self):
         name = 'Test actual installed R boundary'
         self.assertTrue(name in self.steps, name)
