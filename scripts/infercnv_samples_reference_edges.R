@@ -123,7 +123,11 @@ capture_route <- function(id, obj, parameters, ns, root, seed) {
 }
 
 initialize_samples_locale <- function() {
-    if (!nzchar(Sys.setlocale("LC_ALL", "C")) || !identical(Sys.getlocale(), "C")) stop("cannot enforce C locale")
+    if (!nzchar(Sys.setlocale("LC_ALL", "C"))) stop("cannot initialize C locale")
+    for (category in c("LC_MESSAGES", "LC_PAPER", "LC_MEASUREMENT")) {
+        if (!identical(Sys.setlocale(category, "C"), "C")) stop("cannot enforce C locale category: ", category)
+    }
+    if (!identical(Sys.getlocale(), "C")) stop("cannot enforce C locale")
 }
 
 main <- function() {
