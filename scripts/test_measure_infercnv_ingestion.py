@@ -299,10 +299,33 @@ class AdmissionTests(ExternalFixture):
             owner._versions(context, self.root, "mismatch", env)
         self.assertFalse((self.root / "R-version.json").exists())
 
+    def test_explicit_installed_boundary_evidence_survives_cleanup_and_refuses_existing_output(self):
+        destination = self.root / "retained installed boundary"
+        case = InstalledRBoundaryTests("test_real_six_namespace_r_probe_retains_full_python_identity_and_raw_streams")
+        self.addCleanup(case.doCleanups)
+        with patch.dict(os.environ, {"RSOMICS_TEST_EVIDENCE_DIR": str(destination)}):
+            case.setUp()
+            self.assertEqual(case.root, destination)
+            marker = case.root / "failed-or-successful-probe.stdout"
+            marker.write_text("raw evidence is retained")
+            case.doCleanups()
+            self.assertEqual(marker.read_text(), "raw evidence is retained")
+            with self.assertRaises(ValueError):
+                case.setUp()
+        self.assertEqual(marker.read_text(), "raw evidence is retained")
+
 
 @unittest.skipUnless(os.environ.get("RSOMICS_TEST_INSTALLED_R") == "1",
                      "set RSOMICS_TEST_INSTALLED_R=1 to require the installed R boundary")
 class InstalledRBoundaryTests(ExternalFixture):
+    def setUp(self):
+        destination = os.environ.get("RSOMICS_TEST_EVIDENCE_DIR")
+        if destination is None:
+            super().setUp()
+        else:
+            self.root = owner._physical(destination, new=True)
+            self.root.mkdir()
+
     def test_real_six_namespace_r_probe_retains_full_python_identity_and_raw_streams(self):
         owner._check_host()
         python = str(Path(sys.executable).resolve(strict=True))
