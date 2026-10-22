@@ -84,3 +84,10 @@ docs/plans/2026-10-22-infercnv-native-filter-{design,plan}.md. Fresh builder
 check approved Task1, incorporating precise candidate-domain/native-selected
 tree/full-state binding clarifications. The reference-only native oracle
 remains independent.
+
+Actual accepted reference-only run39789882345 now retains the base-R numeric
+probe, SHA256c3f6237c2ac85dd042766550bd4d6ae0af8fd229f2dea6e02a3319be83a9eb98.
+Current R4.6.1 x86_64 Linux reports double53bits/longdouble64bits/storage16bytes.
+This does not retroactively identify Sept30 binaries or other platforms, nor
+upgrade the finite-sum f64 diagnostic to arbitrary-input equivalence. Native
+candidate acceptance remains exact fixture-scoped and separately unexecuted.

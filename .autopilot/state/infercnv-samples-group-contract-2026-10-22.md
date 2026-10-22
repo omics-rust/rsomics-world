@@ -1,5 +1,13 @@
 # Read-only samples group contract inventory
 
+Current edge gate is resolved: independently admitted actual39789882345 has
+both reference-only modes success, typed second=NULL and only ref/ref_s1,
+members3,1,2 named cell3,cell1,cell2. No empty all_observations output is
+created. See infercnv-reference-only-accepted-2026-10-22.md; older pending
+notes below are historical. Native groups remain unimplemented. This one
+four-gene/three-reference-cell/filter0 case does not establish all other empty
+input shapes or filter domains.
+
 Next workflow scope, not implementation or acceptance. Source root:
 `/Volumes/Zane's HDD/rsomics-fixtures/evidence/infercnv-ingestion-2026-09-30/run-36707344893/artifact/samples-clustering`.
 Pinned infercnv commit b421d9405c97a309b081ef86d455e976df93eae4, metadata/source.txt.

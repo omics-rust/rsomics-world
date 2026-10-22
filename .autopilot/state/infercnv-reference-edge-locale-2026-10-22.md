@@ -1,5 +1,9 @@
 # Reference-only oracle locale failure
 
+Resolved: actual39789882345 passes the unchanged native regression and both
+reference-only calls. See infercnv-reference-only-accepted-2026-10-22.md.
+The history below preserves both intended failures and intermediate status.
+
 Actual failed run39781233583/attempt1, source b3691d50b50c884f4753390d6db07ce7bfd79ea7:
 canonical capture/validation passed,17 new checker tests passed0.408s, then
 new Rscript stopped `cannot enforce C locale`, exit1 at locale initialization.
@@ -106,3 +110,11 @@ to system/package dependencies. This is native step GREEN as reported by API,
 not yet original-byte acceptance: locale before/after/.Machine and actual edge
 outcomes still await completed logs/compact official artifact. No result is
 filled from the expected regression, and the failed originals stay retained.
+
+Terminal parent now completed success at14:44:36Z; whole-run logs match the
+completed job log. Independent audit and root original-byte/structure checks
+admit the bounded reference-only outcomes in the separate accepted record.
+The full raw canonical artifact is not downloaded/admitted by this acceptance.
+Exact-head controller39795994590 passes d0fec79f:432tests46.290s OK(skip2),
+architecture consistent; root retains original APIs/logs ZIP SHA256
+04a47bb9b274a95e1a8524ef017833e219ebdb0903a42cd4cef91457788015ef.

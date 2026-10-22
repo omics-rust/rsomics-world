@@ -6,12 +6,13 @@ remain open. Recovery began at bef20f6489db9137f249641e528b8f010ad2a983;
 earlier checkpoint statements below retain their historical scope.
 
 Current next gate: private Ward and computed-distance kernels are accepted;
-see infercnv-native-distance-accepted-2026-10-22.md. Reference-only oracle
-39789882345 is active at bf1cd1512e0d2071591a4b52850a21d86cc41a7d after
-authenticated native locale RED and the separately reviewed category fix.
-See infercnv-reference-edge-locale-2026-10-22.md for original failed-launch
-and current-run provenance. Native filtering/groups/full step15, performance
-and release remain open. Do not interpret earlier active-run notes as current.
+see infercnv-native-distance-accepted-2026-10-22.md. Separate reference-only
+oracle39789882345 is accepted atbf1cd151; see
+infercnv-reference-only-accepted-2026-10-22.md. The native filter test freeze
+ce64fd41 and red-11 source archive are prepared, not executed; see
+infercnv-native-filter-2026-10-22.md. Native filtering/groups/full step15,
+performance and release remain open. Do not interpret earlier active-run
+notes as current.
 
 ## Recovery and source scope
 

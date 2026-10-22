@@ -3,6 +3,9 @@
 Builder check approved. Native distance was independently accepted at
 5346f213; this separate reference-only oracle is now the active edge gate.
 It does not change the distance candidate, source verifiers or fixtures.
+Now accepted from actual39789882345; see
+`.autopilot/state/infercnv-reference-only-accepted-2026-10-22.md`.
+No native group/filter or full-step15 acceptance follows.
 
 ## Decision and scope
 
@@ -122,13 +125,21 @@ native GREEN and both edge outcomes remain pending. Detailed provenance:
   oracle option with other optional contracts/snapshots off. No local R/build.
   Controller39789572225 passes bf1cd151; actual39789882345/attempt1 runs that
   exact head. Dispatch and in-progress setup are not outcome acceptance.
-- [ ] Authenticate original run/jobs/ZIP/log/source/runtime/record bytes and
+- [x] Authenticate original run/jobs/ZIP/log/source/runtime/record bytes and
   raw RDS presence; inspect complete actual outcomes independently. Preserve
   failed launches. Schema-validator success is not oracle acceptance.
-- [ ] Pin observed status/shape and record reference-only contract without
+- [x] Pin observed status/shape and record reference-only contract without
   generalizing to filtering, whole step15 or performance. Only then implement
   groups against both original36 cases and this separate edge. Continue with
   unblocked product-local work if external setup is unavailable.
+
+Actual run39789882345/attempt1 completed success atbf1cd151. Compact original
+artifact12434330334,3900325bytes,26 safe CRC-valid members and16 inventoried
+files are authenticated independently and by root. Both routes succeed with
+typed second=NULL, only ref/ref_s1, global indices3,1,2 and no empty pooled
+observation entry. Original RDS/readback assertions and whole logs are retained.
+The parent aggregation delay resolved; failed launches and404 responses are
+preserved. Receipt and detailed scope are in the linked accepted record.
 
 The user already decided pooled reference-name collision all_observations
 must fail early as a known incompatibility. This edge does not reopen or

@@ -108,8 +108,11 @@ Gene filtering and product group integration remain open. The input matrices
 are R-selected, including positive-filter cases; this does not accept native
 selection, integrated step15 or clustering performance. No public linkage
 foundation is introduced. Pooled reference-name collision all_observations
-will fail explicitly under the user's decision, a known upstream difference;
-separate reference-only edge evidence is being acquired before group work.
+will fail explicitly under the user's decision, a known upstream difference.
+Separate [reference-only evidence](../../.autopilot/state/infercnv-reference-only-accepted-2026-10-22.md)
+now accepts actual grouped/pooled calls on one four-gene/three-reference-cell
+object: only ref/ref_s1, no fabricated empty observation result. This remains
+installed-package characterization, not native groups or full step15.
 
 ## Boundary
 

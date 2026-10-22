@@ -1,0 +1,93 @@
+{
+  "schema_version": 1,
+  "evidence_kind": "separate-reference-only-installed-package-witness",
+  "repository": "omics-rust/rsomics-world",
+  "workflow_path": ".github/workflows/infercnv-oracle.yml",
+  "run_id": 39789882345,
+  "run_attempt": 1,
+  "job_id": 119862798656,
+  "head_sha": "bf1cd1512e0d2071591a4b52850a21d86cc41a7d",
+  "status": "completed",
+  "conclusion": "success",
+  "controller_run_id": 39789572225,
+  "artifact_id": 12434330334,
+  "artifact_name": "infercnv-reference-edges-39789882345-1",
+  "artifact_bytes": 3900325,
+  "artifact_sha256": "9589ca1a4927228b7fd9a39d6d4e1a0dde69ed5ff1f5463aef5babfe11110568",
+  "safe_unique_crc_members": 26,
+  "witness_path": "samples-reference-edges/witness.json",
+  "witness_sha256": "66427aa29160e7acdd2a1a8192b8c2e3008afb40385c6b188f919ce73977d96b",
+  "witness_inventory_files": 16,
+  "job_log_sha256": "fcd91f31a85cffb221365edd52f0288684d4b2d68ef6b1f2cf7d2b956ee31dbf",
+  "run_logs_sha256": "306518a4f2fc82a58e410ec95705ca382cf6fa6d9d4c60be1ecca75a7b0a6de3",
+  "terminal_run_json_sha256": "465b66da6c7185f372f9a0abb053b7e8d012fd4c4d3006d60e6c4cc68c5fbd27",
+  "independent_audit_sha256": "52ba4d241bb9b876597481a39d2a376b87fcf5318776509e57d2dd41d4ccb0ea",
+  "package": {
+    "name": "infercnv",
+    "version": "1.28.0",
+    "source_commit": "b421d9405c97a309b081ef86d455e976df93eae4",
+    "source_archive_sha256": "b2a1b6f8cc09dc04562513e3cd877b3c97a6efcd5ff92cb5e0763660905e3207",
+    "source_file_sha256": "68ceb769fc96f12d16ef73f7c0c8beac7e1e32c21bd057355ce0c23bbdf6f9fb",
+    "function_sha256": [
+      "01e4c43a8d8f6b39f8b7f4a0e58c0415b87a74713f9ad3c2f45931817d3b734c",
+      "f795c8debc72b0d7fe9c3c181607dc14341447a34087d0f6319c1c8d282659ee"
+    ]
+  },
+  "exporter_sha256": "e98088fd90338280949f22058b4c2c9bbe0021dbfbacc06e32fd562e6994415b",
+  "io_sha256": "5a01aeb620451d0254bbab775c53111a61eeefcaa32ac9b96ab142563ca5839d",
+  "input": {
+    "genes": 4,
+    "cells": 3,
+    "reference_groups": ["ref"],
+    "observation_groups": [],
+    "input_rds_bytes": 589,
+    "input_rds_sha256": "b02918925a96949187734076681613c146d335c14d84a8cebd4c770b0d0d837c"
+  },
+  "routes": [
+    {
+      "id": "grouped",
+      "status": "success",
+      "warnings": [],
+      "unchanged_state": true,
+      "raw_rds_bytes": 1247,
+      "raw_rds_sha256": "9119d4c3ea2276c64ec47e65426142f7d64ca071e08a0237c8b869cde6e4db20"
+    },
+    {
+      "id": "pooled",
+      "status": "success",
+      "warnings": [],
+      "unchanged_state": true,
+      "raw_rds_bytes": 1246,
+      "raw_rds_sha256": "0ad799954a5c43665a976537756e9ca1aab6acb3d20e76a2f24adc44cedae515"
+    }
+  ],
+  "common_result": {
+    "shape_sha256_sorted_canonical_json": "0e927f3cc26c08bf9cced7387f09dd5765115c3efc26aec45a174fdff8fd4faa",
+    "second_type": "NULL",
+    "tree_groups": ["ref"],
+    "subcluster_groups": ["ref"],
+    "subcluster_name": "ref_s1",
+    "global_indices_1based": [3, 1, 2],
+    "global_index_names": ["cell3", "cell1", "cell2"],
+    "merge_rows_1based": [[-1, -2], [-3, 1]],
+    "heights_literal": ["1", "1.7320508075688772"],
+    "empty_all_observations_entry": false
+  },
+  "runtime": {
+    "system": "Linux",
+    "architecture": "x86_64",
+    "R": "4.6.1",
+    "locale": "C",
+    "seed": 260930,
+    "requested_threads": 1,
+    "double_digits": 53,
+    "longdouble_digits": 64,
+    "sizeof_longdouble": 16,
+    "numeric_runtime_sha256": "c3f6237c2ac85dd042766550bd4d6ae0af8fd229f2dea6e02a3319be83a9eb98",
+    "locale_regression_sha256": "0958c8a99712622a908a3d0ef15583c6717079ccc5cd0931259d7e478471eb9e",
+    "locale_log_sha256": "18e7d4468870f7efd6b15f85e3e8ec752f7f7ec45e11cd5f4ce1dd1018574cfd"
+  },
+  "failed_runs_preserved": [39781233583, 39785979929],
+  "scope": "One genuine references-only object, grouped/pooled with filter0; not native groups/filter, arbitrary-input parity, full inferCNV, performance or release",
+  "full_canonical_artifact_downloaded_or_accepted": false
+}
