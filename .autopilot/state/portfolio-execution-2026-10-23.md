@@ -14,11 +14,14 @@ fresh review at integrated workflow/release boundaries. This changes execution
 cost, not the architecture, fail-fast behavior, four-native release gate or
 prohibition on advertised placeholders.
 
-Current: accepted raw input/preprocessing, computed distances and Ward kernels;
-native filter tests frozen and actual RED39801195710 confirms missing filter.rs
-after valid source/oracle/target setup. Implement filter, ordered grouped/pooled
-samples ownership and a real rsomics-help CLI. Then measure the complete slice
-and optimize matrix/distance hot paths with deterministic parallel work.
+Current: accepted raw input/preprocessing, computed distances, Ward and native
+filter (green17/run39815910744; productbe35e65). Ordered grouped/pooled samples,
+a real rsomics-help CLI and deterministic parallel distance chunks are now
+implemented in the integrated working candidate; their native execution is
+pending. One fresh-context whole-workflow review found no Critical/Important
+issue. Controller433 tests pass54.116s (two existing native-only skips).
+Next validate green18, then measure the complete slice and optimize based on
+actual throughput/memory and serial/parallel behavior.
 HMM/denoise/reporting and broader single-cell operations remain unfinished;
 a working samples/Ward slice must not be called complete inferCNV.
 

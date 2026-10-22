@@ -1,5 +1,14 @@
 # Private samples filter candidate
 
+Accepted2026-10-23: green17/run39815910744 completed successfully at exact
+world4316e07f70507fad2341bc1cc573dcf8928840e6, all four native classes.
+Each of eight debug/release profiles passes99 tests (including11 filter
+contracts),52 original routes and152 composed trees/107331 pairs. Source/
+oracle checks and Linux strict Clippy pass. Productbe35e65 commits only the
+two exact native-tested filter/accessor files. This is filter correctness,
+not integrated CLI or performance acceptance. See
+infercnv-native-filter-accepted-2026-10-23.md; earlier pending notes are history.
+
 Current2026-10-23: actual native RED39801195710 at767a11c1 is confirmed;
 source/oracle/target admission passed, compilation failed only for the absent
 filter.rs (exit101). Original log SHA8eb23e666f0b1f293cb813d9eb24b649ced8e93cc211c8778cad788114300017

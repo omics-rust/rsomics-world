@@ -258,7 +258,8 @@ jobs:
           assert Path(metadata["target_directory"]).resolve() == Path(os.environ["CARGO_TARGET_DIR"]).resolve()
           package = next(p for p in metadata["packages"] if p["name"] == "rsomics-sc")
           assert package["publish"] == []
-          assert all("bin" not in target["kind"] for target in package["targets"])
+          binaries = [target["name"] for target in package["targets"] if "bin" in target["kind"]]
+          assert binaries in ([], ["rsomics-sc"])
           PY
           cp Cargo.lock "$EVIDENCE/Cargo.lock"
 

@@ -156,6 +156,28 @@ class SamplesCandidateWorkflowTests(unittest.TestCase):
                                         text=True, timeout=15)
                 self.assertEqual(result.returncode, 0, result.stderr)
 
+    def test_metadata_admits_only_private_product_and_optional_single_binary(self):
+        body = bash_body(self.steps['Verify dependency resolution and output path'])
+        program = re.findall(r"python3 -B - <<'PY'\n(.*?)\nPY", body, re.DOTALL)[-1]
+        for binaries, publish, accepted in [([], [], True), (['rsomics-sc'], [], True),
+                                             (['other'], [], False),
+                                             (['rsomics-sc', 'other'], [], False),
+                                             (['rsomics-sc'], None, False)]:
+            with self.subTest(binaries=binaries, publish=publish), tempfile.TemporaryDirectory() as directory:
+                root = Path(directory)
+                metadata = {
+                    'target_directory': str(root / 'target'),
+                    'packages': [{'name': 'rsomics-sc', 'publish': publish,
+                                  'targets': [{'name': 'rsomics_sc', 'kind': ['lib']}] +
+                                  [{'name': name, 'kind': ['bin']} for name in binaries]}],
+                }
+                (root / 'metadata.json').write_text(json.dumps(metadata))
+                result = subprocess.run(['python3', '-B', '-c', program],
+                                        env=dict(os.environ, EVIDENCE=str(root),
+                                                 CARGO_TARGET_DIR=str(root / 'target')),
+                                        capture_output=True, text=True, timeout=15)
+                self.assertEqual(result.returncode == 0, accepted, result.stderr)
+
 
 if __name__ == '__main__':
     unittest.main()
