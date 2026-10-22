@@ -3,20 +3,20 @@
 Status: exact controller and private Rust creation/export helpers accepted,
 including the actual native trial's green-14 four-native debug/release gate
 (run38688148869, product5beb707e). Installed-R package contracts are accepted
-from38700520489: `infercnv-r-package-contracts-2026-10-15.md`. No authenticated
-canonical timed campaign or speed/resource claim. Earlier dated steps below
-retain their historical evidence and source identities.
+from38700520489: `infercnv-r-package-contracts-2026-10-15.md`. Canonical warm
+raw creation is now independently accepted from run39752041192, with strict
+plain/gzip wall advantage on that one Linuxx86_64 shipped example. This is not
+full inferCNV or release acceptance. Earlier dated steps below retain their
+historical evidence and source identities.
 
-Current resumed work (2026-10-22): reviewed paired owner and authenticated
-workflow integration were pushed at e083fa34; exact-head controller
-run39748655273 passes383 tests. First native run39748832071 failed the real
-installed-R version boundary before any timer/sample/build: direct exec/R
-cannot load libR.so without R's natural launcher. The original failure is
-preserved and independently audited. A scoped launcher fix and hidden-receipt
-retention regression are under verification; mandatory real-R acceptance
-remains open. See `infercnv-paired-resume-2026-10-22.md` for current hashes,
-evidence and gates; earlier dated owner/integration notes remain historical.
-These prerequisites do not constitute a32-process campaign or speed result.
+Current result (2026-10-22): b7d021d5 controller CI39751828975 passes385 tests;
+native39752041192 and five independent audits pass32actual serial processes,
+64exact states/117041664 binary64 comparisons and28measured samples. Median
+ratios are6.83x plain/5.89x gzip; both satisfy max7Rust<min7R. See
+`infercnv-ingestion-accepted-2026-10-22.md` and its immutable receipt for scope,
+raw distributions and provenance. First run39748832071 remains rejected and
+preserved. `infercnv-paired-resume-2026-10-22.md` retains recovery/fix history.
+Next: product-local samples/Ward, not a speculative foundation or release.
 
 Design:
 `../../docs/plans/2026-09-30-infercnv-raw-ingestion-measurement-design.md`.

@@ -136,14 +136,14 @@ python3 -B -c 'import pathlib,runpy,sys; script=pathlib.Path("scripts/measure_in
 
 - [x] Dispatch dataset=shipped, ingestion_contracts=true,
   ingestion_snapshot=green-14, matched_snapshot empty, samples_clustering=false.
-- [ ] Fetch original exact-head run/jobs/artifact/listing/full logs externally;
+- [x] Fetch original exact-head run/jobs/artifact/listing/full logs externally;
   verify attempt/repository/workflow/required unique successful steps,
   artifact size/digest/CRC/safe unique regular paths before extraction.
-- [ ] Independently audit actual32serial processes,64exact f64/identity/map
+- [x] Independently audit actual32serial processes,64exact f64/identity/map
   exports, closed metadata, source/input/code/build/executable/Python/R proofs,
   pilots and28 measured samples. Recompute both strict range decisions and
   distributions from raw metrics. No self-issued summary substitutes for this.
-- [ ] Record bounded result/failed gate and remaining full-infercnv gaps in
+- [x] Record bounded result/failed gate and remaining full-infercnv gaps in
   durable tracked ledgers. Never claim representative cohorts, cold-cache,
   original implicit-header dialect, factory peak memory, whole-workflow speed
   or release readiness from this single canonical warm-ingestion experiment.

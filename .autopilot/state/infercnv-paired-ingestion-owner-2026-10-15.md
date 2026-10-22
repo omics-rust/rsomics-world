@@ -1,11 +1,12 @@
 # Paired raw-ingestion owner — durable task ledger
 
 Plan: docs/plans/2026-10-15-infercnv-paired-ingestion-owner.md.
-Status (2026-10-22): owner implemented/reviewed and integrated; first real run
-39748832071 fails physical R version loading before timing. Current root-cause
-fix, fresh hashes and native gates are in infercnv-paired-resume-2026-10-22.md.
-No paired campaign or speed advantage yet. Earlier implementation notes below
-retain their historical scope and review status.
+Status (2026-10-22): owner implemented/reviewed/integrated and actual native
+run39752041192 independently accepted for canonical warm raw creation. First
+run39748832071 remains a preserved pre-timing failure. Current receipt/result:
+infercnv-ingestion-accepted-2026-10-22.md; recovery/fixes:
+infercnv-paired-resume-2026-10-22.md. Full inferCNV/release remain open. Earlier
+implementation notes below retain their historical scope and review status.
 
 Candidate e25e96f54209092724408aabb3844f00d98865bf implements only the
 owner/test. Root read both complete files/report; fresh independent full

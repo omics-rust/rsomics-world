@@ -216,20 +216,20 @@ CLI exits nonzero; no RSS fallback, rerun or changed threshold.
 
 ### TDD and verification
 
-- [ ] Write failing tests first; retain a genuine missing-module RED.
-- [ ] Test closed JSON/types/pins/path aliases/old outputs and symlink parents;
+- [x] Write failing tests first; retain a genuine missing-module RED.
+- [x] Test closed JSON/types/pins/path aliases/old outputs and symlink parents;
   Cargo multiple/missing/wrong target/profile/failedbuild/outside-target cases;
   full Python mismatch (including same exe/differentlib) and profile anchoring.
-- [ ] Use tiny real fixture exports and harmless actual subprocesses to test
+- [x] Use tiny real fixture exports and harmless actual subprocesses to test
   all32 ordered routes/64 outputs, literal space-containing argv, metadata/
   counter failure, no-next-slot, postcheck failure and original-error
   preservation. Test substitutions must stay inside tests; no fake CLI mode.
   Reuse existing process-owner tests rather than reimplementing its lifecycle.
-- [ ] Test pilots retained but excluded, overlap/equality fail, both cases
+- [x] Test pilots retained but excluded, overlap/equality fail, both cases
   independently pass, context/code/input/executable drift and postprobe
   mismatch, malformed counters and missing exports. Tiny fixture timing is
   orchestration evidence only, never infercnv performance evidence.
-- [ ] Iterate focused tests; run full controller suite once after self-review.
+- [x] Iterate focused tests; run full controller suite once after self-review.
   Record exact commands, RED/GREEN, changed paths and integration assumptions
   in the task report. Commit only two files, no push. Root independently
   reviews and verifies Linux CI; actual full campaign remains an integration

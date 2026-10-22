@@ -1,8 +1,9 @@
 # Paired raw-ingestion recovery — 2026-10-22
 
-Status: recovered interrupted worktree at bef20f6489db9137f249641e528b8f010ad2a983.
-No real32-process campaign or performance claim. Completing existing owner
-and workflow plans, not changing production Rust/R or public boundaries.
+Status: canonical warm raw creation independently accepted from39752041192.
+Result/scope: infercnv-ingestion-accepted-2026-10-22.md. Full inferCNV/release
+remain open. Recovery began at bef20f6489db9137f249641e528b8f010ad2a983;
+earlier checkpoint statements below retain their historical scope.
 
 ## Recovery and source scope
 
@@ -97,7 +98,7 @@ success and explicit installed R. Control-plane validator and diff whitespace
 checks pass. Owner and installed-boundary test hashes remain unchanged.
 No re-review loop or new public component is introduced.
 
-## Remaining gates
+## Recovery gates at first push
 
 1. One actual installed-R/native paired run with original artifact retention.
 2. Independent original API/ZIP/log/source/32process/64state/distribution audit.
@@ -175,5 +176,95 @@ Full integrated suite after both fixes:385 tests in52.178s, OK(skipped=2),
 no exclusions. Architecture validator and whitespace checks pass. These are
 controller regressions only, not a claim that real installed R now succeeds.
 
+## Plumbing-corrected exact-head launch
+
+Commits256afde7 (physical version through admitted launcher) and b7d021d5
+(reviewed pins/hidden receipt retention) are pushed. Remote main matches
+b7d021d5454236f942f764b0e13814cc4ef22122. Exact-head controller39751828975
+passes385 tests in38.758s, OK(skipped=2), and the architecture validator.
+Original API/jobs/logs are retained under external controller-39751828975.
+
+New native run39752041192/attempt1 was dispatched at2026-10-22T09:00:19Z
+against b7d021d5 with the same fixed shipped/contracts/green14 selection.
+At this checkpoint original input/source/Python checks pass and dependency
+installation is still running. No real-R or sample acceptance is inferred.
+
+Separate documentation-only private product commit0acf5a98c571b9a66b6367af92da93bade0838d4
+corrects README.md/tests/README.md stale raw-input and external-oracle claims.
+Only those two Markdown files change; production and frozen green14 source
+remain unchanged. Product still has no remote and publish=false; no new CI,
+public API, binary or release claim follows from this documentation commit.
+
+## Second native run complete; independent acceptance in progress
+
+Run39752041192 succeeds, including actual installed-R test1 in7.754s with
+zero skips, installed plain/gzip output checks, actual optimized native build,
+one real owner completion at09:29:33Z, both always-postchecks and upload.
+Original API/log audit confirms17 required unique successful steps; selectors
+and head match. Logs SHA2d06299afd37c6e96f2c7fc01fa8e482c79cdc3985e6adadb1b506b8920666df.
+Artifact12416076849 is335222656bytes, official SHA
+bae4bb02e26e52d4d1439309bfba13eba63b898b0fca0b35bf4fde3a0632e324.
+Both complete primary download and exact HTTP-range assembly match that SHA;
+all1268 safe regular unique paths/CRCs and every extracted member hash pass.
+Uncompressed bytes2663452658; hidden receipts are now present,23/23 sources.
+Transport probes/chunks/first atime-guard partial are preserved separately;
+an expected access-time change was not treated as a content mismatch.
+
+Root independently validates all32 actual process records: unique PIDs,
+serial nonoverlap, zero exits, empty groups, exact factory/GNUtime argv,
+literal whole-process counters and controller/output hashes. All149 source
+files, actual Cargo optimized artifact profile/feature/target, six executable
+baselines and nine postchecks match. process-build-audit.json retains results;
+it does not rehash executable bytes that are not packaged in the artifact.
+
+Independent metadata-runtime-audit.json SHA
+cfc1fb1b7697b6c61b0e5b651937b515e479f7cc47c7aa6076a7136a0187403a
+passes all32 typed metadata/544 file hashes using unchanged remote bindings,
+same-run untimed R profile and frozen function/clock proofs. Real shell/R
+Python identities agree; three actual physical R version probes succeed via
+the admitted launcher. Observed threads: Rust1/R2, no single-thread claim.
+
+Two independent raw-metric recomputations agree: measured medians plain
+Rust0.126565323s/R0.864s, gzip Rust0.164049422s/R0.967s. Both complete ranges
+satisfy max7Rust<min7R, but this is not accepted performance until all64 exact
+states pass. At this checkpoint48/64 fresh independent states are verified.
+One local plain audit was externally SIGTERM'd (143); its partial in-memory
+results are not used. Fresh bounded single-worker batches recheck all plain
+trials and persist actual results/hashes; original campaign is not rerun or
+modified. Cause of SIGTERM unknown, not presumed OOM or data mismatch.
+
+Latest read-only host diagnostic:8GiB physical RAM,13.57GiB encrypted swap
+used, boot free10863173632bytes. No extra matrix concurrency/local build/R;
+all project data/logs remain external. No user/OS files are deleted.
+
+## Final independent acceptance
+
+Final frozen state-metrics-audit.json SHA
+a656d6c697ef8270a23d6a62fbb0c88bb35833e44472e0e4d23176790f6a9dac
+is complete/passed:32trials,64unique warm/measured states,256 output files,
+117041664 exact binary64 scalar comparisons, all9939×184. Fresh plain batches
+and complete gzip shard all exit zero; interrupted partial results are not
+used. All audit processes exit. Root independently verifies exact32slot/64
+phase coverage and associations to accepted raw output hashes.
+
+All eight metric distributions were recomputed before summary comparison;
+every field agrees. Root's second wall recomputation matches. Strict ranges:
+plain Rust[0.125936527,0.138761204]s vs R[0.8580000000000005,0.8719999999999999]s;
+gzip Rust[0.163210061,0.165036864]s vs R[0.9130000000000003,1.100999999999999]s.
+Median ratios6.826514399998783/5.894565114651866; both strict gates pass.
+
+The immutable infercnv-ingestion-campaign-2026-10-22.json receipt binds five
+external audit hashes, original API/ZIP/log/head, exact source/runtime, counts,
+distributions and scope. The accepted result ledger records failures/exclusions
+and next Ward gate. No production Rust/public API/foundation/release change.
+
 Preserved inherited VCF state edit and untracked .csv/crlf.txt/floatreads.txt/
 ws.txt. No publication, registry mutation, repository deletion or automation.
+
+Fresh independent acceptance-record review approves the receipt, ledgers,
+plan completion marks and private product documentation with no Critical or
+Important finding. Private product documentation commit
+dbb2c4f959c2e3156da2ab9b9c4a7afb63c7b8cf records the bounded accepted result.
+Across both documentation commits only README.md/tests/README.md differ from
+the accepted native source; nine production-file hashes and Cargo.lock still
+match green14. The private product worktree is clean and has no remote.
