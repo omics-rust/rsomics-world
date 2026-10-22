@@ -271,6 +271,22 @@ class ReferenceEdgesTests(unittest.TestCase):
         self.assertIn("if: env.SAMPLES_CLUSTERING == 'true'", step)
         self.assertIn('set -euo pipefail', step)
         self.assertIn('Rscript --vanilla scripts/test_infercnv_samples_reference_locale.R', step)
+        self.assertIn('dput(list(R=R.version, machine=.Machine))', step)
+
+    def test_compact_artifact_is_independent_and_contains_only_edge_evidence(self):
+        workflow = (ROOT / ".github/workflows/infercnv-oracle.yml").read_text()
+        start = workflow.index('      - name: Upload reference-only evidence')
+        step = workflow[start:workflow.index('\n      - name:', start + 1)] if '\n      - name:' in workflow[start + 1:] else workflow[start:]
+        self.assertIn("always() && env.SAMPLES_CLUSTERING == 'true'", step)
+        self.assertIn('uses: actions/upload-artifact@v4', step)
+        self.assertIn('name: infercnv-reference-edges-${{ github.run_id }}-${{ github.run_attempt }}', step)
+        for name in ['samples-reference-edges/', 'samples-locale-contract/',
+                     'samples-reference-edges-checker-tests.log', 'samples-reference-edges-code-sha256.txt',
+                     'samples-reference-edges-run.log', 'samples-reference-edges-validation.log']:
+            self.assertIn('${{ runner.temp }}/infercnv-oracle/' + name, step)
+        self.assertNotIn('shipped-bundle', step)
+        self.assertNotIn('include-hidden-files: true', step)
+        self.assertIn('if-no-files-found: warn', step)
 
     def test_workflow_uses_existing_opt_in_and_adjacent_order(self):
         workflow = (ROOT / ".github/workflows/infercnv-oracle.yml").read_text()

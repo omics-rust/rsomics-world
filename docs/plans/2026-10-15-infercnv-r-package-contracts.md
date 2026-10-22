@@ -747,6 +747,8 @@ jobs:
             "$EVIDENCE_DIR/samples-locale-contract/"
           sha256sum scripts/infercnv_samples_reference_edges.R scripts/test_infercnv_samples_reference_locale.R \
             > "$EVIDENCE_DIR/samples-locale-contract/code-sha256.txt"
+          Rscript --vanilla -e 'dput(list(R=R.version, machine=.Machine))' \
+            > "$EVIDENCE_DIR/samples-locale-contract/numeric-runtime.txt"
           Rscript --vanilla scripts/test_infercnv_samples_reference_locale.R \
             2>&1 | tee "$EVIDENCE_DIR/samples-locale-contract/test.log"
 
@@ -1321,6 +1323,21 @@ jobs:
             printf 'verified source never created\n' > "$EVIDENCE_DIR/source-after.error.txt"
             exit 1
           fi
+
+      - name: Upload reference-only evidence
+        if: ${{ always() && env.SAMPLES_CLUSTERING == 'true' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: infercnv-reference-edges-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            ${{ runner.temp }}/infercnv-oracle/samples-reference-edges/
+            ${{ runner.temp }}/infercnv-oracle/samples-locale-contract/
+            ${{ runner.temp }}/infercnv-oracle/samples-reference-edges-checker-tests.log
+            ${{ runner.temp }}/infercnv-oracle/samples-reference-edges-code-sha256.txt
+            ${{ runner.temp }}/infercnv-oracle/samples-reference-edges-run.log
+            ${{ runner.temp }}/infercnv-oracle/samples-reference-edges-validation.log
+          if-no-files-found: warn
+          retention-days: 30
 
       - name: Upload raw evidence even on failure
         if: always()

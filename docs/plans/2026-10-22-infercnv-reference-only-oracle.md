@@ -1,8 +1,8 @@
 # Separate reference-only samples oracle
 
-Builder check approved. Native distance acceptance is still the active gate;
-separate oracle implementation may proceed concurrently without touching its
-candidate, source verifiers or fixtures.
+Builder check approved. Native distance was independently accepted at
+5346f213; this separate reference-only oracle is now the active edge gate.
+It does not change the distance candidate, source verifiers or fixtures.
 
 ## Decision and scope
 
@@ -110,6 +110,13 @@ The witness itself is not part of its nonrecursive files inventory.
   independent R/source/validator/workflow review before push/admission.
 
 ### Task 2: Run and admit actual separate evidence
+
+Full launch39781233583 and intended early locale RED39785979929 are retained
+as failed evidence, not edge outcomes. Repair3b65144e resets the three
+previously omitted locale categories without changing the regression or
+strict C predicate. Fresh scoped review and424 controller tests pass; actual
+native GREEN and both edge outcomes remain pending. Detailed provenance:
+`.autopilot/state/infercnv-reference-edge-locale-2026-10-22.md`.
 
 - [ ] Require exact-head Control plane CI; dispatch existing shipped samples
   oracle option with other optional contracts/snapshots off. No local R/build.

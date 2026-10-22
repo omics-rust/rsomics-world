@@ -41,3 +41,50 @@ Critical/Important finding. Coherent controller suite423tests48.979s passes,
 two existing skips; architecture/whitespace pass. Native early-step RED will
 be dispatched only after exact-head controller CI; a non-C setup failure or
 parser error does not count as the intended initializer failure.
+
+Exact-head controller39785772947 passes72cdbf8fc95d6f6787adaead5fb2ca41fac25518.
+Live locale RED39785979929/attempt1 at that head is active, job119849185911;
+it intentionally runs the unchanged old initializer. Current progress setup-r,
+not a test outcome. Root's working compact-artifact/numeric-machine diagnostic
+additions are NOT in that run. Their focused tests first fail absent hook/
+artifact, then pass20tests after implementation; no locale category fix yet.
+
+Failed full launch39781233583 is now completely retained:1576253509bytes
+matches API SHA,1423 unique safe ZIP members pass CRC. Edge folder has only
+six pre-factory source/function/exporter/io files, no witness/input/route RDS
+or calls. Original logs ZIP SHA
+c0a9443312dbef96bbc9db1e67e78c24aa863c206fd196176836eb03d418382c;
+independent external audit also stream-verifies all939 new-run canonical
+witness file pins. This separate new canonical output is not substituted for
+the accepted Sept30 receipt or152 fixture.
+
+## Authenticated native RED and bounded repair
+
+Run39785979929/attempt1 at72cdbf8fc95d6f6787adaead5fb2ca41fac25518
+completed the intended early native RED. Setup and non-C seed preconditions
+passed. Actual before/after output shows LC_MESSAGES/PAPER/MEASUREMENT stayed
+C.UTF-8 after the old initializer, while the other five categories were C;
+the unchanged strict predicate raised cannot enforce C locale, exit1.
+Original artifact12429033624,6445bytes,SHA256
+a31b04bd79b63b4db12cfbb980d174213d7bbd2731ee19edf2b39de36745011b
+matches API metadata; all six safe unique members pass CRC, copied source
+and regression match exact head. Original logs ZIP SHA256
+8eb4c9ba3bb043de99fb9db220490afaecfac8caf4801104258feb5c0c6ebf4c.
+Independent audit and originals remain in external run39785979929/.
+Neither failed launch observed a grouped or pooled edge outcome.
+
+Repair3b65144e40ec786ca9b4fd2317997268ae5f63c3 changes only the initializer:
+explicitly reset the three canonical categories after LC_ALL, retaining the
+strict final all-C assertion. Native regression bytes remain unchanged,
+SHA2560958c8a99712622a908a3d0ef15583c6717079ccc5cd0931259d7e478471eb9e.
+Fresh independent review approves the repair and root's separate compact
+evidence upload/base-R R.version/.Machine diagnostic, with no important
+finding. Full raw upload, canonical exporter/I/O helper and literal pins
+remain unchanged; embedded workflow remains byte-identical.
+
+Fresh focused20 tests pass1.691s; coherent full424 tests pass52.166s with two
+existing native-only skips. Architecture and whitespace checks pass. These
+are controller checks, not native locale GREEN or reference-edge acceptance.
+APFS boot occupancy81.84% still prohibits local R/Cargo/build/install;
+Python -B tests use explicit external cargo home/target/TMPDIR. Push exact
+head, require controller CI, then dispatch one new full native oracle.
