@@ -268,3 +268,29 @@ dbb2c4f959c2e3156da2ab9b9c4a7afb63c7b8cf records the bounded accepted result.
 Across both documentation commits only README.md/tests/README.md differ from
 the accepted native source; nine production-file hashes and Cargo.lock still
 match green14. The private product worktree is clean and has no remote.
+
+## Subsequent native clustering components
+
+Ward supplied-distance acceptance: native39768888842, private4c9e789;
+all152 exact trees on four real classes/debug-release. Distance acceptance:
+native39777465667, private15e731128baa8fe54577cf8dec7d6559333f1076;
+all107331 original distance bits and152 computed-vector trees per mode,
+87tests/mode, source159pre/postchecks. The independent audit and root second
+verification agree. Full receipts/limits are infercnv-native-{ward,distance}-
+accepted-2026-10-22.md. Positive-filter matrices are already R-selected;
+native filter/groups/performance/fullstep15 remain unaccepted.
+
+World b3691d50b50c884f4753390d6db07ce7bfd79ea7 has exact-head Control plane
+39780963588 success. Separate reference-only oracle implementation d7d80803
+and mirror synchronization have fresh independent review and coherent
+421tests64.227s OK(skip2). Actual R run39781233583/attempt1 is active at that
+world head, datasetshipped/samples_clusteringtrue, other optional contracts
+and snapshots off. Edge originals belong outside the unchanged canonical
+36-case witness. No edge outcome is yet accepted. See current plan
+docs/plans/2026-10-22-infercnv-reference-only-oracle.md and group-contract
+state. Native private product is clean/no remote; no local build/R/install.
+
+User20:08 CST resolved pooled reference all_observations collision: early
+explicit failure, documented known upstream incompatibility, not duplicated
+observation lookup. Original math witnesses remain unchanged. References-only
+empty-observation output shape is being captured rather than invented.
