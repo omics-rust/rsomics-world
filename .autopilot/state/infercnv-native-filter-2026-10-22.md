@@ -46,3 +46,35 @@ Python -B uses explicit external cargo home/target/tmp. Reference-only oracle
 39789882345 remains separate: API reports locale step success, but original
 raw locale/.Machine/grouped/pooled bytes are not yet admitted. No release,
 public foundation, remote repository, deletion or automation is introduced.
+
+## Frozen native tests and prepared RED
+
+Productce64fd41a9ced9f6578d384eecedc34820163b07 adds only two test files,
+11 unit contracts and the distinct all52-route native-selection/152-tree
+composition. Fresh independent Task2 review approves, no Important finding.
+Source original scalar whitespace is trimmed only by the test reader; product
+input parsing is unchanged. Old external test reconstructs exact prior bytes,
+SHA076b57aa27497905cf71d3b79b3af15902df0805a4cf89b6d1f3c344015366ac.
+Frozen unit SHAe4cfcc671ca1cb056d4495c4ad3fd706934a2b2a9d7830a02e4e07851001bedc;
+external SHA1224dcb16281a5e182a4605877f8635bd005195123a0d97a5d566ffda5c711d7.
+No production file or lock changes. All three original fixture hashes remain
+unchanged. Standalone Rust1.91 parsing/formatting and whitespace checks pass;
+compilation, type checking and test outcomes are still unknown.
+
+Prepared red-11 source archive161regularfiles/8134664uncompressedbytes:
+SHAde5085113323028b61fe8965628f7e6323d0e439b3fa709a46f018e65b126778,
+manifest19b2468eabf51cf858a5515e552d181c62f87689a457ec58a01d0b274535e7e5.
+Existing source guard verifies/extracts all161 files into external scratch.
+Missing filter.rs is intentional; no stub is added. Root will require exact
+controller CI then real native source/metadata admission and the expected
+compile failure before writing production code. No expected value is changed.
+
+Reference-only actual39789882345 is now separately accepted, including terminal
+parent success. Controller39795994590 passes d0fec79f432tests46.290s(skip2);
+originalAPI/logs retained externally. These facts do not execute this candidate.
+
+Fresh coherent controller run after receipt/snapshot preparation passes432
+tests52.329s, two existing skips; architecture and whitespace pass. Root's
+reference-only receipt receives fresh original-byte review with no Important
+discrepancy. Native RED still requires the next exact-head push/CI and actual
+upstream/source/target admission; static or formatter success is not RED.

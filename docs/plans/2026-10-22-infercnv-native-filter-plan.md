@@ -55,11 +55,11 @@ CellProfiles accessor change, Cargo dependency/feature or workflow edit yet.
 Use private filter::select_genes and filter::required_workspace as specified
 in the design. Root owns native snapshot, exact-head CI, dispatch and admission.
 
-- [ ] Extend the existing external samples test to consume all52 actual
+- [x] Extend the existing external samples test to consume all52 actual
   unfiltered matrices/maps, compare exact selection/null/empty behavior and
   filtered values/order, and retain all152 computed-tree comparisons.
   Every tree must use native-selected rows, not the old R-filtered input path.
-- [ ] Retain CellProfiles shape/finiteness boundary coverage; add ordinary
+- [x] Retain CellProfiles shape/finiteness boundary coverage; add ordinary
   filter unit contracts for reference range and
   duplicates, guard values, constant/sample-size behavior, explicit arithmetic
   domain rejections and exact/minus-one requested workspace budgets.
@@ -74,6 +74,15 @@ in the design. Root owns native snapshot, exact-head CI, dispatch and admission.
   filter.rs as a real native failure after authenticated source/target setup;
   parser, source-fetch or unrelated failure is not the intended RED.
 - [ ] Fresh review of test coverage and actual RED before implementation.
+
+Tests frozen productce64fd41; fresh independent review approves without
+Critical/Important findings. Standalone1.91 formatting/parser checks pass;
+no local Rust execution. Root red-11 archives all161 regular source files,
+SHAde5085113323028b61fe8965628f7e6323d0e439b3fa709a46f018e65b126778;
+manifest19b2468eabf51cf858a5515e552d181c62f87689a457ec58a01d0b274535e7e5.
+Existing source guard verifies/extracts all161 before dispatch. Genuine native
+missing-filter.rs RED remains pending; no kernel implementation is authorized
+by static test approval alone.
 
 ## Task 3 — Private candidate and four-native admission
 
