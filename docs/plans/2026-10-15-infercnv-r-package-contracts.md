@@ -1178,6 +1178,25 @@ jobs:
             "$ORACLE_OUTPUT" "$SHIPPED_OUTPUT" "$EVIDENCE_DIR/samples-clustering" \
             2>&1 | tee "$EVIDENCE_DIR/samples-clustering-validation.log"
 
+      - name: Capture reference-only samples edges
+        if: env.SAMPLES_CLUSTERING == 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          PYTHONDONTWRITEBYTECODE=1 python3 -B -m unittest discover -s scripts \
+            -p test_infercnv_samples_reference_edges.py \
+            2>&1 | tee "$EVIDENCE_DIR/samples-reference-edges-checker-tests.log"
+          sha256sum scripts/infercnv_samples_reference_edges.R \
+            scripts/validate_infercnv_samples_reference_edges.py \
+            scripts/test_infercnv_samples_reference_edges.py \
+            > "$EVIDENCE_DIR/samples-reference-edges-code-sha256.txt"
+          Rscript --vanilla scripts/infercnv_samples_reference_edges.R \
+            "$EVIDENCE_DIR/infercnv-$INFER_CNV_SOURCE_COMMIT" "$EVIDENCE_DIR/samples-reference-edges" \
+            2>&1 | tee "$EVIDENCE_DIR/samples-reference-edges-run.log"
+          PYTHONDONTWRITEBYTECODE=1 python3 -B scripts/validate_infercnv_samples_reference_edges.py \
+            "$EVIDENCE_DIR/samples-reference-edges" \
+            2>&1 | tee "$EVIDENCE_DIR/samples-reference-edges-validation.log"
+
       - name: Validate fresh full-case measurement pins
         if: env.MATCHED_SNAPSHOT != ''
         shell: bash
