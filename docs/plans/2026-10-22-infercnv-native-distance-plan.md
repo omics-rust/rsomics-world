@@ -32,6 +32,8 @@
 
 ### Task 1: Hash-bound profile metadata beside existing tree fixtures
 
+Completed: 730ace2d; fresh task review approved, coherent full404-test run passed; c8c81dc3 exact-head Control plane39776104734 passed. Original checkbox steps below are the execution specification; this status records their completed gate.
+
 **Files:** world scripts/{extract_infercnv_ward_fixtures.py,test_extract_infercnv_ward_fixtures.py}; product tests/fixtures/infercnv-1.28.0/ward/{profiles.tsv,README.md}.
 
 **Interfaces:**
@@ -47,6 +49,8 @@
 
 ### Task 2: Add one authenticated native witness selector
 
+Completed: c8c81dc3; fresh admission review approved and actual RED39776437129 authenticated missing condensed.rs only after source/metadata success. All157 pre/postchecks match.
+
 **Files:** world .github/workflows/sc-cnv-core-candidate.yml; new scripts/test_infercnv_samples_candidate_workflow.py; product Cargo.toml and new tests/cnv_{samples_distance,external_samples_oracle}.rs; world immutable red-10 snapshot/state.
 
 **Interfaces:**
@@ -61,6 +65,8 @@
 - [ ] Verify controller suites and actual script syntax/YAML. Freeze red-10 from owning source using the unchanged exact logical-file guard, with new distance/condensed modules absent. Commit/push controller/snapshot changes and wait exact-head CI; dispatch `snapshot=red-10 expected_red=true oracle_receipt=none`. Authenticate original actual missing-module failure after successful metadata/source/path steps; no network or unrelated compiler failure counts as RED.
 
 ### Task 3: Private native distance kernel and complete original-vector execution
+
+Implementation and fresh static review complete, frozen green-16. Native GREEN, original-artifact audit and final owning-product/acceptance commits remain pending.
 
 **Files:** product src/cnv/samples/{condensed.rs,distance.rs,ward.rs}; existing/new private Rust test targets and fixture metadata; world immutable green-16 snapshot/state/result receipt.
 
@@ -84,5 +90,6 @@ kernel tasks. Feature names, selector, roots, TSV columns and signatures match
 across tasks. Each Review Focus condition has an explicit owning test. The
 existing source/ZIP guards remain unchanged; two-lane source inference is not
 confused with binary proof. No production code precedes actual tests. User
-routine-approval opt-out remains in force; only the separately pending collision
-policy question needs their input before that public workflow choice.
+routine-approval opt-out remains in force. At20:08 CST the user chose explicit
+failure for the pooled all_observations reference-name collision as a known
+incompatibility. Original distance witnesses remain unchanged.
