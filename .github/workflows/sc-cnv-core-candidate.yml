@@ -34,6 +34,7 @@ on:
         options:
           - none
           - infercnv-shipped-2026-09-26
+          - infercnv-samples-clustering-witness-2026-09-30
       resolve_input_lock:
         description: Resolve raw-input gzip nodes in a Linux test-first run
         type: boolean
@@ -69,6 +70,17 @@ jobs:
       - uses: actions/checkout@v6
         with:
           persist-credentials: false
+
+      - name: Validate oracle selection
+        run: |
+          set -euo pipefail
+          case "$ORACLE_RECEIPT" in
+            none) feature= ;;
+            infercnv-shipped-2026-09-26) feature=external-infercnv-oracle ;;
+            infercnv-samples-clustering-witness-2026-09-30) feature=external-infercnv-samples-oracle ;;
+            *) printf 'Unknown oracle receipt: %s\n' "$ORACLE_RECEIPT" >&2; exit 1 ;;
+          esac
+          printf 'ORACLE_FEATURES=%s\n' "$feature" >> "$GITHUB_ENV"
 
       - name: Verify and extract frozen source
         id: snapshot
@@ -136,7 +148,6 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           set -euo pipefail
-          test "$ORACLE_RECEIPT" = infercnv-shipped-2026-09-26
           mkdir "$EVIDENCE/oracle-acquisition"
           receipt="$GITHUB_WORKSPACE/.autopilot/oracles/$ORACLE_RECEIPT.json"
           cp "$receipt" "$EVIDENCE/oracle-acquisition/receipt.json"
@@ -172,6 +183,14 @@ jobs:
           cp "$oracle_root/sha256-manifest.tsv" "$oracle_root/oracle.json" \
             "$EVIDENCE/oracle-acquisition/"
           printf 'RSOMICS_INFER_CNV_ORACLE_ROOT=%s\n' "$oracle_root" >> "$GITHUB_ENV"
+          if [[ "$ORACLE_RECEIPT" == infercnv-samples-clustering-witness-2026-09-30 ]]; then
+            PYTHONDONTWRITEBYTECODE=1 python3 -B scripts/validate_infercnv_samples_clustering_witness.py \
+              "$RUNNER_TEMP/infercnv-oracle-verified/bundle" "$oracle_root" \
+              "$RUNNER_TEMP/infercnv-oracle-verified/samples-clustering" \
+              2>&1 | tee "$EVIDENCE/oracle-acquisition/samples-semantic-validation.log"
+            printf 'RSOMICS_INFER_CNV_SAMPLES_ROOT=%s\n' \
+              "$RUNNER_TEMP/infercnv-oracle-verified/samples-clustering" >> "$GITHUB_ENV"
+          fi
 
       - name: Install Rust 1.91
         uses: dtolnay/rust-toolchain@1.91.0
@@ -310,13 +329,28 @@ jobs:
           grep -F 'RSOMICS_INFER_CNV_ORACLE_ROOT is required' "$EVIDENCE/external-missing-root.log"
           grep -F 'test result: FAILED' "$EVIDENCE/external-missing-root.log"
 
+      - name: Require explicit samples oracle configuration
+        if: ${{ inputs.oracle_receipt == 'infercnv-samples-clustering-witness-2026-09-30' && !inputs.expected_red && matrix.target == 'linux-x86_64' }}
+        working-directory: ${{ runner.temp }}/sc-cnv-candidate
+        run: |
+          set -euo pipefail
+          set +e
+          env -u RSOMICS_INFER_CNV_SAMPLES_ROOT cargo test --locked \
+            --features external-infercnv-samples-oracle --test cnv_external_samples_oracle -- --nocapture \
+            > "$EVIDENCE/samples-external-missing-root.log" 2>&1
+          test_rc=$?
+          set -e
+          test "$test_rc" -ne 0
+          grep -F 'RSOMICS_INFER_CNV_SAMPLES_ROOT is required' "$EVIDENCE/samples-external-missing-root.log"
+          grep -F 'test result: FAILED' "$EVIDENCE/samples-external-missing-root.log"
+
       - name: Test debug
         if: ${{ !cancelled() && steps.metadata.outcome == 'success' }}
         working-directory: ${{ runner.temp }}/sc-cnv-candidate
         run: |
           set -euo pipefail
           test_args=(test --locked --all-targets --no-fail-fast)
-          if [[ "$ORACLE_RECEIPT" != none ]]; then test_args+=(--features external-infercnv-oracle); fi
+          if [[ -n "$ORACLE_FEATURES" ]]; then test_args+=(--features "$ORACLE_FEATURES"); fi
           cargo "${test_args[@]}" -- --nocapture 2>&1 | tee "$EVIDENCE/test-debug.log"
 
       - name: Test release
@@ -325,7 +359,7 @@ jobs:
         run: |
           set -euo pipefail
           test_args=(test --locked --release --all-targets --no-fail-fast)
-          if [[ "$ORACLE_RECEIPT" != none ]]; then test_args+=(--features external-infercnv-oracle); fi
+          if [[ -n "$ORACLE_FEATURES" ]]; then test_args+=(--features "$ORACLE_FEATURES"); fi
           cargo "${test_args[@]}" -- --nocapture 2>&1 | tee "$EVIDENCE/test-release.log"
 
       - name: Format and strict Clippy
@@ -337,8 +371,8 @@ jobs:
           clippy_args=(clippy --locked --all-targets)
           if [[ "$MEASUREMENT" == true ]]; then
             clippy_args+=(--all-features)
-          elif [[ "$ORACLE_RECEIPT" != none ]]; then
-            clippy_args+=(--features external-infercnv-oracle)
+          elif [[ -n "$ORACLE_FEATURES" ]]; then
+            clippy_args+=(--features "$ORACLE_FEATURES")
           fi
           cargo "${clippy_args[@]}" -- -D warnings 2>&1 | tee "$EVIDENCE/clippy.log"
 

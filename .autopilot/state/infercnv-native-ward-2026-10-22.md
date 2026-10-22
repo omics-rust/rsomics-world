@@ -119,6 +119,18 @@ rejects a446-gene synthetic matrix before comparisons; corrected explicit
 epsilon or actual expected value changed. Positive-filter genes3/6 and both
 R-step14/current-Rust-step14 full workflow tests remain separate gates.
 
+Accepted records are committed/pushed at world
+f8383d573083427b385306c33926a3f17780e9c1; exact-head Control plane39771308104
+passes. Original run/jobs/logs are retained externally. The kernel plan is
+complete for its bounded scope; next active work is the private distance
+component and full original-distance native tests, then workflow integration.
+
+A nonblocking user question asks whether pooled reference-name collision
+`all_observations` should fail clearly or reproduce the upstream observed
+observation-cell substitution. No answer or public policy is presumed.
+Distance tests use the actually captured input-index vectors and do not make
+this workflow policy choice; positive filtering also remains independent.
+
 Boot APFS remains above80%; no local Cargo/R/build/dependency installation.
 Only bounded no-bytecode stdlib tests/extraction and standalone external
 rustfmt run locally. All project inputs, scratch, downloads and logs remain

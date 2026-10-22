@@ -75,7 +75,7 @@
 - [x] Test exact workspace equality/minus-one using the actual size_of of raw temporary merges and named buffer counts. Retain dynamic-range and long-chain edge tests; no hardcoded oracle answers in the kernel, no epsilon or special case for fixture IDs.
 - [x] Freeze green-15 with existing lock, README and new notice. Use standalone external rustfmt only. Commit frozen candidate in world, push and verify exact-head CI; dispatch `snapshot=green-15 expected_red=false oracle_receipt=none`. Default all-targets executes the private tree test on all four native classes without new workflow inputs or APIs.
 - [x] Authenticate four original artifacts/run/jobs/logs: exact snapshot bytes/host/architecture/Rust version, all152-tree debug/release comparisons, format/strict Clippy, existing tests and source postchecks. One fresh implementation/spec review, fix actual findings and reverify affected gates; do not loop unbounded whole reviews.
-- [ ] Commit verified product files directly to local main (`feat(sc): add private Ward.D2 tree kernel`), update durable world result/remaining distance/group gates, commit/push and verify exact-head CI. No product remote/release/public API is created. Continue the next unblocked samples integration work afterward.
+- [x] Commit verified product files directly to local main (`feat(sc): add private Ward.D2 tree kernel`), update durable world result/remaining distance/group gates, commit/push and verify exact-head CI. No product remote/release/public API is created. Continue the next unblocked samples integration work afterward.
 
 ## Plan self-review
 
