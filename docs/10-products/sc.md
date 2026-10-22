@@ -95,10 +95,14 @@ complete-range separation. This accepts one shipped-example warm factory
 region, not cohort scaling, cold I/O, whole inferCNV or a release; see the
 [bounded result](../../.autopilot/state/infercnv-ingestion-accepted-2026-10-22.md).
 The next [private native Ward kernel design](../plans/2026-10-22-infercnv-native-ward-design.md)
-and [plan](../plans/2026-10-22-infercnv-native-ward-plan.md) compare all152 real
-trees from their original captured distances before implementing distance
-reduction, gene filtering or product group integration. This does not yet
-accept native clustering or introduce a public linkage foundation.
+and [plan](../plans/2026-10-22-infercnv-native-ward-plan.md) now accept the
+supplied-distance kernel at private product4c9e789: all152 original trees
+match exact merges/order/binary64 heights in native debug/release on all four
+targets(run39768888842). See the
+[bounded result](../../.autopilot/state/infercnv-native-ward-accepted-2026-10-22.md).
+Distance reduction, gene filtering and product group integration remain
+open. This does not accept integrated native clustering or introduce a public
+linkage foundation.
 
 ## Boundary
 

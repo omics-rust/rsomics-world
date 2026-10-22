@@ -78,6 +78,47 @@ source-literal lint). Original production/lock/default API remain unchanged.
 Archive SHA404f7733f1b6a980e25ab50fbc33c86d71062028802c64f23b007698bf957464,
 manifest SHA7b9d8f4c5fa24aa77e67293d52f6b33c7b853792a57a97b506ac7d059f102b03.
 
+## Bounded native acceptance
+
+World48a45006 exact-head Control plane39768668207 passes392tests in47.948s,
+OK(skipped=2), and architecture validation. Native39768888842/attempt1 passes
+all four actual target classes with green-15. Independent original runtime
+audit and root verification accept154 source files, all official ZIP hashes/
+CRCs/types, native hosts/Rust1.91,76tests per profile(69old+7new), exact152
+trees per profile, strict Clippy/format and unchanged-source postchecks.
+Totals608 test passes/1216 logical tree comparisons. Three original Linux
+release log messages are interleaved; all actual tokens remain readable and
+no values/logs are reconstructed. Full scope/qualifications:
+infercnv-native-ward-accepted-2026-10-22.md and immutable matching JSON receipt.
+
+Private owning product commit4c9e78929fa97ef164fac205a28c153f21c221e1 records
+the real kernel/fixture/tests/notice and bounded documentation. Worktree is
+clean; no remote, public API or binary. Root checks all152 non-documentation
+snapshot files remain byte-identical; only two Markdown docs differ.
+
+## Next distance and workflow evidence
+
+Fresh RcppArmadillo15.6.0-1 primary CRAN source tag resolves to
+53d3f54dccfd1ef706adb999349637191da77bd7, Armadillo15.6.0. External original
+archive1027536bytes, SHAa4afb3031e8541240446a612482e160f4b403cc43bcf90766f4d97f1e4413a36;
+785 safe members/6624016expanded bytes. Root reads actual minus/square/Proxy/
+accu element paths. Non-fast-math expression reduction has even/odd double
+accumulators, sums them then square-roots; empty feature input gives zero.
+This is a candidate mathematical model, not proof of captured binary flags.
+Original install-dependencies.log explicitly installs both parallelDist and
+RcppArmadillo as Posit binaries, so loaded package version does not identify
+the headers/flags used to compile the former.
+
+Bounded Python diagnostic on original already-R-filtered synthetic/probe
+matrices:36routes/80treegroups/747distances; two-lane multiplication/sum/sqrt
+has0bit differences, single-lane has284. All accessed matrix hashes match
+the pinned witness. This is not native distance acceptance, does not include
+shipped matrices and does not test native filtering. Initial <=100row bound
+rejects a446-gene synthetic matrix before comparisons; corrected explicit
+<=1000bound follows observed sizes and retains all non-shipped cases. No
+epsilon or actual expected value changed. Positive-filter genes3/6 and both
+R-step14/current-Rust-step14 full workflow tests remain separate gates.
+
 Boot APFS remains above80%; no local Cargo/R/build/dependency installation.
 Only bounded no-bytecode stdlib tests/extraction and standalone external
 rustfmt run locally. All project inputs, scratch, downloads and logs remain
