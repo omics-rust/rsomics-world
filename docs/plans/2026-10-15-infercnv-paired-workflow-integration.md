@@ -45,15 +45,15 @@ Rust1.91.0/native Linuxx86_64. No local builds/R/install/download.
 
 ## Task 1: Selector and route regression tests
 
-- [ ] Add stdlib tests reading the actual workflow. Extract indented Bash
+- [x] Add stdlib tests reading the actual workflow. Extract indented Bash
   run blocks and require `bash -n` for each. Execute only the selector block
   with fake scalar environment/current small real receipts and external
   temporary GITHUB_ENV/EVIDENCE_DIR; never execute install/build blocks.
-- [ ] Assert the new input is optional string/default empty, environment
+- [x] Assert the new input is optional string/default empty, environment
   wiring exists, all added execution steps have nonempty-selector guards,
   the fixed snapshot receipt/verifier/build target/CLI are the raw ones, and
   always-postchecks/upload remain present. Full embedded YAML equals actual.
-- [ ] Retain RED on the absent selector before changing the workflow. Run the
+- [x] Retain RED on the absent selector before changing the workflow. Run the
   full dataset×prepared×clustering×contracts×raw-empty/green14/unknown matrix:
 
 ```python
@@ -66,7 +66,7 @@ valid = old_valid and (not raw or raw == 'green-14' and dataset == 'shipped'
 
 ## Task 2: Exact source/build/context/owner integration
 
-- [ ] Add optional input and environment:
+- [x] Add optional input and environment:
 
 ```yaml
 ingestion_snapshot:
@@ -76,19 +76,19 @@ ingestion_snapshot:
   default: ''
 ```
 
-- [ ] Extend the selector early gate, requiring raw snapshot_name from
+- [x] Extend the selector early gate, requiring raw snapshot_name from
   `.autopilot/oracles/infercnv-ingestion-trial-candidate-2026-10-15.json`
   after checking that receipt's frozen hash. Preserve existing input behavior.
-- [ ] Add guarded raw source acquisition: original native run/attempt jobs
+- [x] Add guarded raw source acquisition: original native run/attempt jobs
   API replies into EVIDENCE_DIR, copy receipt, invoke the accepted raw snapshot
   verifier with green14 snapshot and new RUST_SOURCE, save source-before.
   No network calls inside the paired owner.
-- [ ] Freeze literal SHA256 values for reviewed owner/import closure and its
+- [x] Freeze literal SHA256 values for reviewed owner/import closure and its
   four accepted receipts in a dedicated workflow heredoc. Read that literal
   mapping into the context only after `sha256sum --check`. Do not generate
   authenticity pins from arbitrary checked-out bytes. Existing12 contract
   pins remain unchanged; retain controller HEAD and relevant source/scripts.
-- [ ] After successful untimed installed-package contracts, install Rust1.91.0
+- [x] After successful untimed installed-package contracts, install Rust1.91.0
   in runner-temp and build only the authenticated exact raw bench:
 
 ```sh
@@ -100,25 +100,31 @@ cargo +1.91.0 build --locked --release --features infercnv-measurement \
   using `rustup which --toolchain 1.91.0 rustc`. Verify Cargo's resolved target
   dir and all runner-temp storage variables before building. No path deps or
   production edits. The owner selects the sole actual executable from JSONL.
-- [ ] Generate the exact closed context defined in the owner plan with
+- [x] Generate the exact closed context defined in the owner plan with
   absolute originalAPI/ZIP/extract/native/R/Cargo/toolchain paths,
   `contract_root=$EVIDENCE_DIR/ingestion-package/fresh-plain`, reviewed code
   pins, actual selected Python/Rscript/R executable and GNUtime. Record
   actual machine/CPU/load/cargo version/build env outside factory timers.
-- [ ] Invoke the real owner exactly once:
+- [x] Invoke the real owner exactly once:
 
 ```sh
-python3 -B scripts/measure_infercnv_ingestion.py \
+python3 -B -c 'import pathlib,runpy,sys; script=pathlib.Path("scripts/measure_infercnv_ingestion.py").resolve(strict=True); sys.path.insert(0,str(script.parent)); runpy.run_path(str(script),run_name="__main__")' \
   --context "$EVIDENCE_DIR/ingestion-context.json" \
   --output-dir "$EVIDENCE_DIR/ingestion-campaign"
 ```
 
   Preserve exit status through pipefail/tee. A complete slower campaign is
   evidence with a failed speed gate, not a reason to change the metric.
-- [ ] Add always guarded raw source/code/executable postchecks and record
+  Final review ruling: keep PYTHONSAFEPATH=1; run the raw verifier and owner
+  through an explicit authenticated absolute scripts-directory bootstrap.
+  Direct script execution omits sibling imports under that environment.
+- [x] Add always guarded raw source/code/executable postchecks and record
   failures even if build/context was never created. Existing always-upload
   retains complete evidence. Sync the complete workflow copy in the package
   plan using an explicit mechanical replacement, not independent editing.
+  Record an independent six-executable baseline immediately after the actual
+  bench is built: Python/Rscript/R/native/rustc/GNUtime. Check it in the always
+  path even if context generation or owner admission never starts.
 - [ ] Run selector/Bash/copy tests, full stdlib controller suite once, scoped
   independent review including owner integration and production hot path.
   Commit scoped files, push, verify exact-head controller CI before dispatch.

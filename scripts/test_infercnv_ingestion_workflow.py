@@ -4,6 +4,7 @@ import json
 import os
 from pathlib import Path
 import re
+import shlex
 import subprocess
 import tempfile
 import unittest
@@ -29,6 +30,14 @@ def bash_body(step):
         raise ValueError('missing literal Bash block')
     return ''.join(line[10:] if line.startswith('          ') else line
                    for line in match[1].splitlines(keepends=True))
+
+
+def entry_argv(step, filename):
+    lines = [line for line in bash_body(step).splitlines()
+             if line.startswith('python3 ') and filename in line]
+    if len(lines) != 1:
+        raise ValueError('ambiguous Python entrypoint')
+    return shlex.split(lines[0].removesuffix('\\').strip())
 
 
 class IngestionWorkflowTests(unittest.TestCase):
@@ -130,6 +139,125 @@ class IngestionWorkflowTests(unittest.TestCase):
                         self.text.index('- name: ' + name))
         self.assertLess(self.text.index('- name: ' + name),
                         self.text.index('- name: Run real paired raw-ingestion campaign'))
+
+    def test_raw_entrypoint_loads_authenticated_siblings_under_safe_path(self):
+        argv = entry_argv(self.steps['Fetch native raw-ingestion source'],
+                          'verify_infercnv_ingestion_snapshot.py')
+        env = dict(os.environ, PYTHONSAFEPATH='1', PYTHONDONTWRITEBYTECODE='1')
+        env.pop('PYTHONPATH', None)
+        env.pop('PYTHONHOME', None)
+        result = subprocess.run([*argv, '--help'], cwd=ROOT, env=env,
+                                capture_output=True, text=True, timeout=15)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertIn('--receipt', result.stdout)
+
+    def test_owner_entrypoint_loads_real_fallback_process_owner_under_safe_path(self):
+        import test_measure_infercnv_ingestion as fixtures
+        fixture = fixtures.ExternalFixture('runTest')
+        fixture.setUp()
+        self.addCleanup(fixture.doCleanups)
+        context, _ = fixture.context()
+        output = fixture.root / 'failed admission evidence'
+        argv = entry_argv(self.steps['Run real paired raw-ingestion campaign'],
+                          'measure_infercnv_ingestion.py')
+        env = dict(os.environ, PYTHONSAFEPATH='1', PYTHONDONTWRITEBYTECODE='1')
+        env.pop('PYTHONPATH', None)
+        env.pop('PYTHONHOME', None)
+        result = subprocess.run([*argv, '--context', str(context), '--output-dir', str(output)],
+                                cwd=ROOT, env=env, capture_output=True, text=True, timeout=30)
+        self.assertNotEqual(result.returncode, 0)
+        failure = json.loads((output / 'failure.json').read_text())
+        self.assertNotIn('ModuleNotFoundError', json.dumps(failure))
+        self.assertTrue((output / 'after-python-shell.process.json').is_file())
+
+    def postcheck_fixture(self):
+        directory = tempfile.TemporaryDirectory(prefix='rsomics-fallback-')
+        self.addCleanup(directory.cleanup)
+        root = Path(directory.name).resolve() / 'retained build evidence'
+        root.mkdir()
+        auth = bash_body(self.steps['Authenticate paired ingestion controller'])
+        for name in ('ingestion-paired-fixed.sha256', 'ingestion-paired-tests.sha256'):
+            literal = re.search(re.escape(f'cat > "$EVIDENCE_DIR/{name}"') +
+                                r" <<'PINS'\n(.*?)\nPINS\n", auth, re.DOTALL)
+            self.assertIsNotNone(literal)
+            (root / name).write_text(literal[1] + '\n')
+        from infercnv_source_snapshot import verify_and_extract
+        source = root / 'verified source'
+        verify_and_extract(ROOT / '.autopilot/snapshots/sc-cnv-core-2026-09-26/green-14', source)
+        target = root / 'target'
+        native = target / 'release/deps/cnv_ingestion_matched-fixture'
+        native.parent.mkdir(parents=True)
+        paths = dict(native=native, rustc=root / 'rustc', python=root / 'python',
+                     rscript=root / 'Rscript', r=root / 'R')
+        for path in paths.values():
+            path.write_bytes(b'controlled executable identity; never executed\n')
+            path.chmod(0o700)
+        paths['time'] = Path('/usr/bin/time').resolve(strict=True)
+        names = dict(python='python', rscript='rscript', r='r', rustc='rustc')
+        for key, record_name in names.items():
+            (root / f'ingestion-{record_name}-executable.txt').write_text(str(paths[key]) + '\n')
+        artifact = dict(reason='compiler-artifact', package_id=f'path+file://{source}#rsomics-sc@0.1.0',
+            manifest_path=str(source / 'Cargo.toml'),
+            target=dict(kind=['bench'], crate_types=['bin'], name='cnv_ingestion_matched',
+                        src_path=str(source / 'benches/cnv_ingestion_matched.rs'), edition='2024',
+                        doc=False, doctest=False, test=False, **{'required-features': ['infercnv-measurement']}),
+            profile=dict(opt_level='3', debuginfo=0, debug_assertions=False, overflow_checks=False, test=True),
+            features=['infercnv-measurement'], filenames=[str(native)], executable=str(native), fresh=False)
+        (root / 'ingestion-cargo-build.jsonl').write_text(json.dumps(artifact) + '\n' +
+                                                      json.dumps(dict(reason='build-finished', success=True)) + '\n')
+        def manifest(keys):
+            return ''.join(hashlib.sha256(paths[key].read_bytes()).hexdigest() + '  ' + str(paths[key]) + '\n'
+                           for key in keys)
+        (root / 'ingestion-executables.sha256').write_text(manifest(('python', 'rscript', 'r')))
+        (root / 'ingestion-native-executables.sha256').write_text(manifest(paths))
+        env = dict(os.environ, EVIDENCE_DIR=str(root), RUST_SOURCE=str(source),
+                   CARGO_TARGET_DIR=str(target), INGESTION_SNAPSHOT='green-14',
+                   PYTHONSAFEPATH='1', PYTHONDONTWRITEBYTECODE='1')
+        env.pop('PYTHONPATH', None)
+        env.pop('PYTHONHOME', None)
+        return root, env, paths
+
+    def test_build_identity_capture_uses_actual_cargo_artifact_and_all_six_executables(self):
+        body = bash_body(self.steps['Build exact raw-ingestion bench'])
+        code = re.search(r"^python3 -B - <<'PY' > \"\$EVIDENCE_DIR/ingestion-native-executables.sha256\"\n(.*?)^PY$",
+                         body, re.MULTILINE | re.DOTALL)
+        self.assertIsNotNone(code, 'independent built-executable identity capture is missing')
+        root, env, paths = self.postcheck_fixture()
+        result = subprocess.run(['python3', '-B', '-'], input=code[1], cwd=ROOT, env=env,
+                                capture_output=True, text=True, timeout=15)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        actual = dict((name, digest) for digest, name in
+                      (line.split('  ', 1) for line in result.stdout.splitlines()))
+        self.assertEqual(actual, {str(path): hashlib.sha256(path.read_bytes()).hexdigest()
+                                  for path in paths.values()})
+
+    def test_fallback_catches_native_and_rustc_drift_when_owner_never_started(self):
+        body = bash_body(self.steps['Verify paired ingestion source after campaign'])
+        for key in ('native', 'rustc'):
+            with self.subTest(executable=key):
+                root, env, paths = self.postcheck_fixture()
+                paths[key].write_bytes(b'changed after successful build, before context creation\n')
+                result = subprocess.run(['bash', '-c', body], cwd=ROOT, env=env,
+                                        capture_output=True, text=True, timeout=20)
+                self.assertNotEqual(result.returncode, 0)
+                log = root / 'ingestion-native-executables-after.log'
+                self.assertTrue(log.is_file(), 'native fallback postcheck was omitted')
+                self.assertIn(str(paths[key]) + ': FAILED', log.read_text())
+                self.assertTrue((root / 'ingestion-source-after.json').is_file())
+                self.assertEqual(json.loads((root / 'ingestion-source-after.json').read_text())['verified_files'], 149)
+
+    def test_missing_native_identity_baseline_fails_without_skipping_source_and_old_checks(self):
+        root, env, _ = self.postcheck_fixture()
+        baseline = root / 'ingestion-native-executables.sha256'
+        baseline.rename(root / 'preserved-before-unavailability.sha256')
+        result = subprocess.run(['bash', '-c', bash_body(self.steps['Verify paired ingestion source after campaign'])],
+                                cwd=ROOT, env=env, capture_output=True, text=True, timeout=20)
+        self.assertNotEqual(result.returncode, 0)
+        log = root / 'ingestion-native-executables-after.log'
+        self.assertTrue(log.is_file(), 'unavailable native baseline was not recorded')
+        self.assertIn('ingestion-native-executables.sha256', log.read_text())
+        self.assertTrue((root / 'ingestion-paired-executables-after.log').is_file())
+        self.assertEqual(json.loads((root / 'ingestion-source-after.json').read_text())['verified_files'], 149)
 
     def test_all_literal_bash_blocks_parse(self):
         for name, step in self.steps.items():

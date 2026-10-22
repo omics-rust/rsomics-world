@@ -616,7 +616,7 @@ jobs:
           cp "$receipt" "$EVIDENCE_DIR/ingestion-native-receipt.json"
           gh api "repos/omics-rust/rsomics-world/actions/runs/$run_id" > "$EVIDENCE_DIR/ingestion-native-run.json"
           gh api "repos/omics-rust/rsomics-world/actions/runs/$run_id/attempts/$run_attempt/jobs?per_page=100" > "$EVIDENCE_DIR/ingestion-native-jobs.json"
-          python3 -B scripts/verify_infercnv_ingestion_snapshot.py \
+          python3 -B -c 'import pathlib,runpy,sys; script=pathlib.Path("scripts/verify_infercnv_ingestion_snapshot.py").resolve(strict=True); sys.path.insert(0,str(script.parent)); runpy.run_path(str(script),run_name="__main__")' \
             --receipt "$receipt" --run-json "$EVIDENCE_DIR/ingestion-native-run.json" \
             --jobs-json "$EVIDENCE_DIR/ingestion-native-jobs.json" \
             --snapshot-dir ".autopilot/snapshots/sc-cnv-core-2026-09-26/$INGESTION_SNAPSHOT" \
@@ -935,6 +935,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
+          unset PYTHONPATH PYTHONHOME
           mkdir -p "$CARGO_HOME" "$RUSTUP_HOME" "$CARGO_TARGET_DIR"
           python3 -I -B - <<'PY' > "$EVIDENCE_DIR/ingestion-build-storage.json"
           import json, os, pathlib, shutil
@@ -968,6 +969,25 @@ jobs:
               > "$EVIDENCE_DIR/ingestion-cargo-build.jsonl" 2> "$EVIDENCE_DIR/ingestion-cargo-build.stderr"
           )
           rustup which --toolchain 1.91.0 rustc > "$EVIDENCE_DIR/ingestion-rustc-executable.txt"
+          python3 -B - <<'PY' > "$EVIDENCE_DIR/ingestion-native-executables.sha256"
+          import os, pathlib, sys
+          sys.path.insert(0, str(pathlib.Path("scripts").resolve(strict=True)))
+          from measure_infercnv_ingestion import _cargo_executable, _sha256
+          evidence = pathlib.Path(os.environ["EVIDENCE_DIR"]).resolve(strict=True)
+          paths = []
+          for name in ("python", "rscript", "r", "rustc"):
+              record = (evidence / f"ingestion-{name}-executable.txt").read_text()
+              if not record.endswith("\n") or len(record.splitlines()) != 1:
+                  raise ValueError("executable path record differs")
+              paths.append(pathlib.Path(record[:-1]).resolve(strict=True))
+          native = _cargo_executable(dict(cargo_artifacts=str(evidence / "ingestion-cargo-build.jsonl"),
+              native_source_root=os.environ["RUST_SOURCE"], cargo_target_dir=os.environ["CARGO_TARGET_DIR"]))
+          paths.extend((native, pathlib.Path("/usr/bin/time").resolve(strict=True)))
+          for path in sorted(paths):
+              if not os.access(path, os.X_OK):
+                  raise ValueError(f"nonexecutable built identity: {path}")
+              print(f"{_sha256(path)}  {path}")
+          PY
           rustc +1.91.0 -vV > "$EVIDENCE_DIR/ingestion-rustc-version.txt"
           cargo +1.91.0 -vV > "$EVIDENCE_DIR/ingestion-cargo-version.txt"
           uname -a > "$EVIDENCE_DIR/ingestion-machine.txt"
@@ -1022,7 +1042,7 @@ jobs:
               installed_contract_receipt=path(repo / ".autopilot/oracles/infercnv-installed-creation-contracts-2026-10-15.json"))
           print(json.dumps(context, sort_keys=True))
           PY
-          python3 -B scripts/measure_infercnv_ingestion.py \
+          python3 -B -c 'import pathlib,runpy,sys; script=pathlib.Path("scripts/measure_infercnv_ingestion.py").resolve(strict=True); sys.path.insert(0,str(script.parent)); runpy.run_path(str(script),run_name="__main__")' \
             --context "$EVIDENCE_DIR/ingestion-context.json" \
             --output-dir "$EVIDENCE_DIR/ingestion-campaign" \
             2>&1 | tee "$EVIDENCE_DIR/ingestion-paired-driver.log"
@@ -1040,6 +1060,8 @@ jobs:
             > "$EVIDENCE_DIR/ingestion-paired-tests-after.log" 2>&1 || rc=1
           sha256sum --check "$EVIDENCE_DIR/ingestion-executables.sha256" \
             > "$EVIDENCE_DIR/ingestion-paired-executables-after.log" 2>&1 || rc=1
+          sha256sum --check "$EVIDENCE_DIR/ingestion-native-executables.sha256" \
+            > "$EVIDENCE_DIR/ingestion-native-executables-after.log" 2>&1 || rc=1
           python3 -B - \
             .autopilot/oracles/infercnv-ingestion-trial-candidate-2026-10-15.json \
             ".autopilot/snapshots/sc-cnv-core-2026-09-26/$INGESTION_SNAPSHOT" "$RUST_SOURCE" <<'PY' > "$EVIDENCE_DIR/ingestion-source-after.json" 2> "$EVIDENCE_DIR/ingestion-source-after.stderr" || rc=1

@@ -54,14 +54,54 @@ Bash blocks; existing YAML parser reads39 steps. Complete integrated suite
 passes378 tests in50.583s, OK(skipped=2): actual Linux procfs success and the
 explicit installed-R test are unavailable on this Mac. No file was excluded.
 The expected nonadvantage CLI diagnostic comes from its negative fixture,
-not a real campaign or a failing test. Fresh whole-source review remains open.
+not a real campaign or a failing test.
+
+## Final whole-launcher review and one fix pass
+
+Fresh whole review of e1f6fdb9..aa3df1e7 found no Critical/Minor, two Important:
+
+1. PYTHONSAFEPATH=1 removes implicit sibling imports from direct script
+   entrypoints. Two fresh actual subprocess regressions failed under that
+   environment: raw verifier --help and owner's failed-admission cleanup.
+   The workflow now inserts only the authenticated absolute scripts directory
+   before runpy executes each unchanged entrypoint. Both regressions pass;
+   the old route's safety environment and all20 source pins remain unchanged.
+2. If context preparation failed after build, the workflow's old three-file
+   executable postcheck omitted native bench/rustc/GNUtime. Missing-baseline,
+   native/rustc drift and build-identity regressions failed before the fix.
+   The build now records six physical executable identities independently,
+   using the actual admitted Cargo artifact; the always-step checks this
+   baseline independently even when the owner never ran. Source/old/code/test
+   checks still run if it is missing or mismatched. Tests execute actual shell
+   postchecks and real149-file snapshot verification; no R/Cargo executes.
+
+Ruling: explicit trusted-directory bootstrap rather than disabling safe-path
+or modifying accepted helper files — preserves existing environment and pins;
+cost if wrong: fresh subprocess/native CI must reject before any sample.
+
+Ruling: preserve historical input bytes once in the existing external archive
+and reference its immutable digest/receipt, rather than duplicate its1.5GB ZIP
+and2.5GB extraction in every new upload — the CI verifies original API/size/
+digest/CRC/manifest and all timed inputs before/after; independent acceptance
+must recheck retained original bytes. Cost if wrong: no accepted campaign until
+the original archive can be independently authenticated; no originals deleted.
+
+Other reviewer set-asides remain explicit gates: actual installed R/performance
+requires native CI; unchanged production Rust retains its prior four-native
+scope, not a new general algorithm claim; malicious process escape/filesystem
+races/full OS supply chain are outside the documented trusted-child model.
+Reported378-test result was freshly run by root, not inferred by reviewer.
+Final complete-suite rerun after this one fix pass passes383 tests in49.311s,
+OK(skipped=2), with no exclusions. The two skips remain native Linux procfs
+success and explicit installed R. Control-plane validator and diff whitespace
+checks pass. Owner and installed-boundary test hashes remain unchanged.
+No re-review loop or new public component is introduced.
 
 ## Remaining gates
 
-1. Complete integrated stdlib suite and fresh whole-launcher/workflow review.
-2. Scoped commits/push and exact-head controller CI, no unrelated staging.
-3. One actual installed-R/native paired run with original artifact retention.
-4. Independent original API/ZIP/log/source/32process/64state/distribution audit.
+1. Scoped commits/push and exact-head controller CI, no unrelated staging.
+2. One actual installed-R/native paired run with original artifact retention.
+3. Independent original API/ZIP/log/source/32process/64state/distribution audit.
 
 Preserved inherited VCF state edit and untracked .csv/crlf.txt/floatreads.txt/
 ws.txt. No publication, registry mutation, repository deletion or automation.
