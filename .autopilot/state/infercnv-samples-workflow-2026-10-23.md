@@ -1,5 +1,26 @@
 # Integrated samples/Ward candidate
 
+Latest: green19/run39819012036 now passes dependency metadata and compiles.
+Its canonical CLI test fails at the newly written literal group count:
+actual Microglia/Macrophage19 vs mistaken expected23. Earlier assertions
+already establish8508 genes/184 cells/6187 selected/2321 outliers. Root reads
+the actual accepted maps.tsv and shipped full01.cells.tsv: Microglia19,
+Oligodendrocytes23, observations142. Original reference order is Microglia
+then Oligodendrocytes, independent of global cell-column order.
+
+Correct only this new test's hand-entered reversed cardinalities, and bind
+each expected count to its literal group name. No production behavior,
+old oracle fixture, numerical tolerance or frozen comparison is changed.
+Green20 differs from19 only in tests/cnv_cli.rs and repeats integrated native
+validation. The first full 1/4-worker equality assertion has not yet executed
+successfully; do not claim it from the passed earlier assertions.
+
+Actual green19 terminal detail: Linuxx86/Linuxarm/macOSarm debug/release
+reach that CLI assertion; original standalone filter/tree totals pass.
+macOSx86 instead fails before Rust at oracle download, TCP read timeout.
+Whole-log ZIP SHA0bfcb19c4117f4da585f8f95f9aabf88bd5b31d9ce2a0edf0a80ac81d3090537;
+original APIs/logs are external under the corresponding run directory.
+
 Current productbasebe35e65; integrated source is working-tree-only until its
 native checks pass. One overall static review found no Critical/Important
 defect; CLI fixture cleanup minor was fixed. Root standalone Rust1.91
