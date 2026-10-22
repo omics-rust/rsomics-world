@@ -100,9 +100,16 @@ supplied-distance kernel at private product4c9e789: all152 original trees
 match exact merges/order/binary64 heights in native debug/release on all four
 targets(run39768888842). See the
 [bounded result](../../.autopilot/state/infercnv-native-ward-accepted-2026-10-22.md).
-Distance reduction, gene filtering and product group integration remain
-open. This does not accept integrated native clustering or introduce a public
-linkage foundation.
+The private distance component now also passes native run39777465667: all
+107331 original distance bits and152 computed-vector trees per debug/release
+mode on all four targets, with authenticated original/source artifacts.
+See the [bounded result](../../.autopilot/state/infercnv-native-distance-accepted-2026-10-22.md).
+Gene filtering and product group integration remain open. The input matrices
+are R-selected, including positive-filter cases; this does not accept native
+selection, integrated step15 or clustering performance. No public linkage
+foundation is introduced. Pooled reference-name collision all_observations
+will fail explicitly under the user's decision, a known upstream difference;
+separate reference-only edge evidence is being acquired before group work.
 
 ## Boundary
 
