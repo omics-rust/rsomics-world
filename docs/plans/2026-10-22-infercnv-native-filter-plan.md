@@ -1,8 +1,12 @@
 # Private inferCNV samples filter implementation plan
 
-Use executing-plans and subagent-driven-development: one bounded implementation
-agent at a time, fresh review per task, root owns admission and durable state.
-User authorizes routine decisions and direct main commits without PRs.
+Execution update (2026-10-23): implement inline using executing-plans; use
+parallel agents for independent inventories or isolated work. The user
+explicitly prioritizes functioning workflows, speed and useful parallelism
+over exhaustive per-component gates. Preserve the already-frozen tests and
+use the existing native workflow, without another small-part RED campaign or
+fresh review after each helper. Review the integrated workflow before release.
+Routine decisions and direct main commits without PRs remain authorized.
 
 Spec: 2026-10-22-infercnv-native-filter-design.md.
 Status: fresh builder check approved Task1 with no Critical/Important blocker.
@@ -70,19 +74,21 @@ in the design. Root owns native snapshot, exact-head CI, dispatch and admission.
   budget peaks, including exact/minus-one. Do not assert allocator capacity or
   process memory. Native external tests emit separate complete route/tree
   markers and52/152 totals, proving original-input-to-native-filter execution.
-- [ ] Preserve current distance/Ward tests and expectations. Capture missing
+- [x] Preserve current distance/Ward tests and expectations. Capture missing
   filter.rs as a real native failure after authenticated source/target setup;
   parser, source-fetch or unrelated failure is not the intended RED.
-- [ ] Fresh review of test coverage and actual RED before implementation.
+- [x] Fresh review of test coverage and actual RED before implementation.
 
 Tests frozen productce64fd41; fresh independent review approves without
 Critical/Important findings. Standalone1.91 formatting/parser checks pass;
 no local Rust execution. Root red-11 archives all161 regular source files,
 SHAde5085113323028b61fe8965628f7e6323d0e439b3fa709a46f018e65b126778;
 manifest19b2468eabf51cf858a5515e552d181c62f87689a457ec58a01d0b274535e7e5.
-Existing source guard verifies/extracts all161 before dispatch. Genuine native
-missing-filter.rs RED remains pending; no kernel implementation is authorized
-by static test approval alone.
+Existing source guard verifies/extracts all161 before dispatch. Actual native
+run39801195710 at767a11c1 completed with the intended missing-filter.rs
+compiler error (exit101), after source, oracle and target-path admission.
+Original job log SHA8eb23e666f0b1f293cb813d9eb24b649ced8e93cc211c8778cad788114300017;
+original API/log files are retained externally. Task3 can proceed.
 
 ## Task 3 — Private candidate and four-native admission
 
@@ -101,12 +107,13 @@ boundary; no distance arithmetic or public export changes.
   max(R*sizeof(usize),(active?2:1)*G*sizeof(usize)). Each output reserves G,
   including empty logical lists. Test both competing-peak budget boundaries.
 - [ ] Keep native test/fixture bytes unchanged from authenticated RED.
-- [ ] Fresh source/API/hot-path review; formatting, strict Clippy and all tests
+- [ ] Formatting, strict Clippy and all tests
   in debug/release on Linux/macOS x86_64/aarch64 using the existing candidate
   workflow and exact original artifact verifier.
-- [ ] Independently authenticate original run/API/logs/artifacts/source snapshots,
-  all52 exact selections/filtered matrices and152 exact computed trees per
-  profile/target. Preserve failures; no inferred or repaired success markers.
+- [ ] Use the existing automated source/oracle checks and original native logs
+  to establish all52 selections/filtered matrices and152 computed trees per
+  profile/target. Preserve failures; do not duplicate the automated audit or
+  infer/repair success markers.
 - [ ] Root records the bounded result or concrete failure and updates current
   product/durable status. No performance, full-workflow or release claim.
 
@@ -114,8 +121,9 @@ boundary; no distance arithmetic or public export changes.
 
 - [ ] Use independently admitted reference-only outcomes before choosing its
   empty/NULL mapping. Honor explicit pooled collision rejection.
-- [ ] Write/review the private group-owner plan against actual CellGroup and
-  CnvState consumers, ordered maps, <=2 bypass validation and aggregate memory.
+- [ ] Integrate a private group owner against actual CellGroup and CnvState
+  consumers, ordered maps, <=2 bypass validation and aggregate memory, then
+  wire a functioning samples/Ward CLI through mandatory rsomics-help.
 - [ ] Keep frozen-R and current-Rust preprocessing checks distinct; do not
   change existing tolerances in response to a tree/selection mismatch.
 - [ ] Continue to group integration and measured hot-path performance before

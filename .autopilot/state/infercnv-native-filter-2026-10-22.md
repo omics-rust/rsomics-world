@@ -1,5 +1,14 @@
 # Private samples filter candidate
 
+Current2026-10-23: actual native RED39801195710 at767a11c1 is confirmed;
+source/oracle/target admission passed, compilation failed only for the absent
+filter.rs (exit101). Original log SHA8eb23e666f0b1f293cb813d9eb24b649ced8e93cc211c8778cad788114300017
+and APIs are retained under external evidence/infercnv-native-filter-2026-10-22/
+run-39801195710/. Root is implementing the frozen private filter contract.
+No GREEN or full samples/workflow claim yet. The execution ruling in
+portfolio-execution-2026-10-23.md supersedes the old per-task review/audit
+rituals below; their completed evidence is preserved, not repeated.
+
 Status: Task1 fixture extraction accepted; native tests/implementation and
 four-native admission remain open. No native filtering or full-step15 claim.
 Design/plan: docs/plans/2026-10-22-infercnv-native-filter-{design,plan}.md.

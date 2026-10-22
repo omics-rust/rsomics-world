@@ -3,6 +3,15 @@
 This is the executable control-plane checklist. Product-specific operation
 maps belong in their dossiers under `docs/`.
 
+Current execution ruling (2026-10-23): the active goal covers the whole
+portfolio, not only inferCNV. Prioritize functioning integrated workflows,
+then measured throughput, memory and useful parallelism. Retain existing
+tests and critical compatibility/error checks, but consolidate validation and
+fresh review at workflow/release boundaries rather than starting a separate
+RED campaign, provenance audit and review for every small component. The
+four-native release gate, storage rules and no-placeholder rule still apply.
+See [current execution state](.autopilot/state/portfolio-execution-2026-10-23.md).
+
 ## P0.1 — finish the architecture reset
 
 - [x] Freeze the 30-product and nine-foundation allowlist after rejecting the
