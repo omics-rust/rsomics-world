@@ -88,9 +88,17 @@ does not accept native trees, new numerical tolerances, raw-to-tree performance
 or full inferCNV. Native clustering follows this evidence rather than the old
 generic wrappers. The independent
 [raw-ingestion measurement design](../plans/2026-09-30-infercnv-raw-ingestion-measurement-design.md)
-has a reviewed exact warm/measured export checker; actual trials and speed
-acceptance remain pending in its
-[ledger](../../.autopilot/state/infercnv-ingestion-measurement-2026-09-30.md).
+has now passed the fixed canonical warm raw-creation campaign in native run
+`39752041192`, with independent32-process/64-state/28-measured-sample audits.
+Plain/gzip region-wall median ratios are6.83x/5.89x, each satisfying strict
+complete-range separation. This accepts one shipped-example warm factory
+region, not cohort scaling, cold I/O, whole inferCNV or a release; see the
+[bounded result](../../.autopilot/state/infercnv-ingestion-accepted-2026-10-22.md).
+The next [private native Ward kernel design](../plans/2026-10-22-infercnv-native-ward-design.md)
+and [plan](../plans/2026-10-22-infercnv-native-ward-plan.md) compare all152 real
+trees from their original captured distances before implementing distance
+reduction, gene filtering or product group integration. This does not yet
+accept native clustering or introduce a public linkage foundation.
 
 ## Boundary
 

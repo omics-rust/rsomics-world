@@ -52,6 +52,32 @@ Integrated controller suite:392tests in89.314s, OK(skipped=2), no exclusions;
 architecture and whitespace validators pass. Seven added extractor tests and
 all385 prior tests remain included. Fresh scoped extractor review approves.
 
+World bd52311d7f9fb69f54d6395b87240df5a8faac06 passes exact-head Control plane
+39766854623:392tests in47.283s, OK(skipped=2). Original logs SHA
+7fa521a20aaf2722fe98584719abc83b4d4ec4704479bd50562b0478b7130329.
+Native RED39767102778/attempt1 reaches actual Rust1.91 compilation and fails
+only at `couldn't read tests/../src/cnv/samples/ward.rs`, exit101. Source guard,
+metadata/output-path, source postcheck and upload succeed; no wrong error code
+is inferred. Original artifact12421145215,1591409bytes, SHA
+faf7f9ae531865ac173ec6998da2b8ffdb65dd25a9d45d91ddeac9fec816357d;
+17 unique safe files pass CRC and packaged source archive equals frozen red-9.
+Original logs SHA91f10827d9efbd920b7a0c70eeedf02fc20f26b9ce23358bec271ae3ca994352.
+Original APIs/logs/ZIP remain in the external native-ward evidence directory.
+
+The private kernel is now implemented and externally rustfmt'd, with complete
+original BSD text verified against the pinned source LICENSE (BOM excluded).
+Fresh independent static implementation/spec review approves with no
+Critical/Important finding. No product module is exported or declared in
+cnv/mod.rs yet; the integration test compiles the actual internal file.
+Real four-native GREEN execution and runtime acceptance are still pending.
+
+Frozen green-15 has154files; only the kernel/notice are added to red-9, and
+the six-leaf test changes two numeric source literals to parsing the original
+captured strings (same asserted binary64 values, avoiding excess-precision
+source-literal lint). Original production/lock/default API remain unchanged.
+Archive SHA404f7733f1b6a980e25ab50fbc33c86d71062028802c64f23b007698bf957464,
+manifest SHA7b9d8f4c5fa24aa77e67293d52f6b33c7b853792a57a97b506ac7d059f102b03.
+
 Boot APFS remains above80%; no local Cargo/R/build/dependency installation.
 Only bounded no-bytecode stdlib tests/extraction and standalone external
 rustfmt run locally. All project inputs, scratch, downloads and logs remain
