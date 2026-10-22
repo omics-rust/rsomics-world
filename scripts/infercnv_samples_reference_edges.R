@@ -122,6 +122,10 @@ capture_route <- function(id, obj, parameters, ns, root, seed) {
     result
 }
 
+initialize_samples_locale <- function() {
+    if (!nzchar(Sys.setlocale("LC_ALL", "C")) || !identical(Sys.getlocale(), "C")) stop("cannot enforce C locale")
+}
+
 main <- function() {
     args <- commandArgs(trailingOnly=TRUE)
     if (length(args) != 2L) stop("usage: infercnv_samples_reference_edges.R SOURCE_ROOT NEW_OUTPUT_DIR")
@@ -173,7 +177,7 @@ main <- function() {
     preserve(script, file.path(root, "exporter.R"))
     preserve(file.path(script_dir, "infercnv_oracle_io.R"), file.path(root, "io.R"))
     Sys.setenv(OMP_NUM_THREADS="1", OPENBLAS_NUM_THREADS="1", MKL_NUM_THREADS="1")
-    if (!nzchar(Sys.setlocale("LC_ALL", "C")) || !identical(Sys.getlocale(), "C")) stop("cannot enforce C locale")
+    initialize_samples_locale()
     context <- get("infercnv.env", envir=ns)
     context$GLOBAL_NUM_THREADS <- 1L
     seed <- 260930L
@@ -209,4 +213,4 @@ main <- function() {
                          null="null", na="null", digits=NA)
 }
 
-main()
+if (sys.nframe() == 0L) main()

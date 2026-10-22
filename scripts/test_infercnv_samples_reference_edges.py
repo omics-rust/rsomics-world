@@ -247,6 +247,31 @@ class ReferenceEdgesTests(unittest.TestCase):
         self.assertNotIn('source(file.path(script_dir, "infercnv_samples_clustering_witness.R")', source)
         self.assertIn('matrix(seq_len(12L)/8+1, 4L, 3L)', source)
 
+    def test_locale_initializer_is_sourceable_without_capture(self):
+        source = SOURCE.read_text()
+        self.assertIn('initialize_samples_locale <- function()', source)
+        self.assertIn('    initialize_samples_locale()', source)
+        self.assertTrue(source.rstrip().endswith('if (sys.nframe() == 0L) main()'))
+        regression = SOURCE.with_name('test_infercnv_samples_reference_locale.R').read_text()
+        self.assertIn('source(file.path(dirname(script), "infercnv_samples_reference_edges.R"), local=capture)', regression)
+        self.assertIn('capture$initialize_samples_locale()', regression)
+        self.assertIn('"4.6.1"', regression)
+        self.assertIn('"C.UTF-8"', regression)
+        for category in ('LC_MESSAGES', 'LC_PAPER', 'LC_MEASUREMENT'):
+            self.assertIn(f'"{category}"', regression)
+
+    def test_workflow_routes_locale_regression_before_dependencies(self):
+        workflow = (ROOT / ".github/workflows/infercnv-oracle.yml").read_text()
+        setup = workflow.index('      - uses: r-lib/actions/setup-r@v2')
+        start = workflow.index('      - name: Test samples locale contract')
+        self.assertLess(setup, start)
+        self.assertLess(start, workflow.index('      - name: Install JAGS and system headers'))
+        self.assertLess(start, workflow.index('      - name: Download pinned source and record byte identity'))
+        step = workflow[start:workflow.index('\n      - name:', start + 1)]
+        self.assertIn("if: env.SAMPLES_CLUSTERING == 'true'", step)
+        self.assertIn('set -euo pipefail', step)
+        self.assertIn('Rscript --vanilla scripts/test_infercnv_samples_reference_locale.R', step)
+
     def test_workflow_uses_existing_opt_in_and_adjacent_order(self):
         workflow = (ROOT / ".github/workflows/infercnv-oracle.yml").read_text()
         start = workflow.index('      - name: Capture reference-only samples edges')
