@@ -356,18 +356,20 @@ def _runtime_probes(c, output, phase, env, expected=None):
 
 def _r_version(c, output, phase, env):
     prefix = output / f"{phase}-version-R-home"
-    code = ('home <- normalizePath(R.home(),mustWork=TRUE);'
-            'exe <- normalizePath(file.path(home,"bin","exec","R"),mustWork=TRUE);'
-            f'if (!identical(exe,{json.dumps(c["r_executable"])})) stop("R home/executable binding differs");'
-            'cat(home,"\\n",sep="")')
-    _command([c["rscript"], "--vanilla", "-e", code], prefix, env)
+    binding = ('home <- normalizePath(R.home(),mustWork=TRUE);'
+               'exe <- normalizePath(file.path(home,"bin","exec","R"),mustWork=TRUE);'
+               f'if (!identical(exe,{json.dumps(c["r_executable"])})) stop("R executable binding differs");')
+    _command([c["rscript"], "--vanilla", "-e", binding + 'cat(home,"\\n",sep="")'], prefix, env)
     text = _stdout(prefix)
     _require(text.endswith("\n") and len(text.splitlines()) == 1, "R home probe must return one path line")
     home = _physical(text[:-1], directory=True)
     _require((home / "bin/exec/R").resolve(strict=True) == _physical(c["r_executable"]),
              "R home/executable binding differs")
     version_prefix = output / f"{phase}-version-R"
-    _command([c["r_executable"], "--version"], version_prefix, dict(env, R_HOME=str(home)))
+    code = (binding + f'if (!identical(home,{json.dumps(str(home))})) stop("R home differs");'
+            'status <- system2(exe,"--version",stdout="",stderr="");'
+            'if (!identical(status,0L)) quit(save="no",status=status,runLast=FALSE);')
+    _command([c["rscript"], "--vanilla", "-e", code], version_prefix, env)
     version = _stdout(version_prefix)
     _require(re.match(r"R version 4\.6\.1(?:\s|$)", version), "actual R version differs")
     return version

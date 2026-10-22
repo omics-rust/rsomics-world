@@ -156,13 +156,16 @@ with the selected actual Python, and record only relevant environment fields,
 not secrets. The owner itself must already be Python3.12 under that identity.
 
 Review corrections: R system2 stdout/stderr must be empty strings to inherit
-the owned streams, not FALSE (which discards them). Direct exec/R --version
-requires R_HOME before option handling: query actual normalized R.home using
-admitted Rscript, bind its bin/exec/R to context.r_executable, and supply
-R_HOME only to that direct version child. Do not change parent/Rscript/factory
-loader environment. The opt-in RSOMICS_TEST_INSTALLED_R=1 test must exercise
-the real six-namespace identity route and direct R version with absent
-inherited R_HOME; no skip when explicitly enabled and prerequisites fail.
+the owned streams, not FALSE (which discards them). Query normalized R.home
+using admitted Rscript and bind its bin/exec/R to context.r_executable. Launch
+that physical executable's --version through the same Rscript via synchronous
+system2, bind home/executable again, inherit owned streams and propagate a
+nonzero child status. Direct shell exec/R lacks R's natural loader setup:
+run39748832071 failed with libR.so missing even with bound R_HOME. Do not
+synthesize loader paths or change parent/Rscript/factory environments.
+The opt-in RSOMICS_TEST_INSTALLED_R=1 test must exercise the real six-namespace
+identity route and physical R version with absent inherited R_HOME; no skip
+when explicitly enabled and prerequisites fail.
 Root wires this actual check after R dependency installation in native CI.
 
 Build r_profile from the untimed contract's runtime system/namespaces/blas/

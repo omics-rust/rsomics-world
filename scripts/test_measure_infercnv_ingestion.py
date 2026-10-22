@@ -259,16 +259,24 @@ class AdmissionTests(ExternalFixture):
         context = {"python": str(Path(sys.executable).resolve()), "r_executable": str(executable)}
         programs = {"R": executable, "Rscript": self.root / "Rscript", "rustc": self.root / "rustc", "gnu_time": self.root / "time"}
         for name, path in programs.items():
-            script = (f"#!{sys.executable}\nimport json,os,pathlib,sys\nname={name!r}\nhome={str(home)!r}\n"
+            script = (f"#!{sys.executable}\nimport json,os,pathlib,subprocess,sys\nname={name!r}\nhome={str(home)!r}\n"
                       f"root=pathlib.Path({str(self.root)!r})\n"
                       "mode='home' if '-e' in sys.argv else 'version'\n"
-                      "(root/(name+'-'+mode+'.json')).write_text(json.dumps({'argv':sys.argv,'R_HOME':os.environ.get('R_HOME')}))\n"
+                      "(root/(name+'-'+mode+'.json')).write_text(json.dumps({'argv':sys.argv,'R_HOME':os.environ.get('R_HOME'),'LD_LIBRARY_PATH':os.environ.get('LD_LIBRARY_PATH')}))\n"
                       "if name=='R':\n"
                       " assert os.environ.get('R_HOME')==home, 'R_HOME missing or unbound'\n"
+                      " assert os.environ.get('LD_LIBRARY_PATH')==str(pathlib.Path(home)/'lib'), 'natural launcher loader environment missing'\n"
                       " assert sys.argv[1:]==['--version']\n"
                       " print('R version 4.6.1 (test)')\n"
+                      " sys.exit(7 if (root/'version-child-failure').exists() else 0)\n"
                       "else:\n"
                       " assert 'R_HOME' not in os.environ, 'unrelated probe environment changed'\n"
+                      " if name=='Rscript' and mode=='home' and 'system2(' in sys.argv[-1]:\n"
+                      "  code=sys.argv[-1]\n"
+                      "  assert 'normalizePath' in code and 'R executable' in code and 'identical' in code\n"
+                      "  assert 'stdout=\"\",stderr=\"\"' in code and '\"--version\"' in code and 'status=status' in code\n"
+                      "  child_env=dict(os.environ,R_HOME=home,LD_LIBRARY_PATH=str(pathlib.Path(home)/'lib'))\n"
+                      "  sys.exit(subprocess.call([str(pathlib.Path(home)/'bin/exec/R'),'--version'],env=child_env))\n"
                       " if name=='Rscript': print(home if mode=='home' else 'Rscript (R) version 4.6.1 (test)')\n"
                       " elif name=='rustc': print('rustc 1.91.0\\nrelease: 1.91.0\\nhost: x86_64-unknown-linux-gnu')\n"
                       " else: print('GNU time')\n")
@@ -279,16 +287,28 @@ class AdmissionTests(ExternalFixture):
         env.pop("R_HOME", None)
         return context, env, home
 
-    def test_direct_r_version_gets_only_bound_home_without_changing_other_probes(self):
+    def test_r_version_uses_bound_launcher_without_changing_other_probe_environments(self):
         context, env, home = self.version_fixture()
         original_env, parent_env = dict(env), dict(os.environ)
         result = owner._versions(context, self.root, "bound", env)
         self.assertEqual(result["R"], "R version 4.6.1 (test)\n")
         self.assertEqual(owner._read_json(self.root / "R-version.json")["R_HOME"], str(home))
+        self.assertEqual(owner._read_json(self.root / "R-version.json")["LD_LIBRARY_PATH"], str(home / "lib"))
         for name, mode in (("rustc", "version"), ("Rscript", "version"), ("Rscript", "home"), ("gnu_time", "version")):
-            self.assertIsNone(owner._read_json(self.root / f"{name}-{mode}.json")["R_HOME"])
+            record = owner._read_json(self.root / f"{name}-{mode}.json")
+            self.assertIsNone(record["R_HOME"])
+            self.assertEqual(record["LD_LIBRARY_PATH"], original_env.get("LD_LIBRARY_PATH"))
         self.assertEqual(env, original_env)
         self.assertEqual(dict(os.environ), parent_env)
+
+    def test_r_version_propagates_failed_physical_child_without_accepting_version_text(self):
+        context, env, _ = self.version_fixture()
+        (self.root / "version-child-failure").write_text("exit seven after printing version")
+        with self.assertRaises(owner._module("infercnv_trial_process").TrialProcessError):
+            owner._r_version(context, self.root, "failed-child", env)
+        process = owner._read_json(self.root / "failed-child-version-R.process.json")
+        self.assertEqual(process["returncode"], 7)
+        self.assertIn("R version 4.6.1", (self.root / "failed-child-version-R.stdout").read_text())
 
     def test_direct_r_version_rejects_a_home_bound_to_another_executable(self):
         context, env, home = self.version_fixture()
