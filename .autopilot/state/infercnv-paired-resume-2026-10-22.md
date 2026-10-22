@@ -5,6 +5,14 @@ Result/scope: infercnv-ingestion-accepted-2026-10-22.md. Full inferCNV/release
 remain open. Recovery began at bef20f6489db9137f249641e528b8f010ad2a983;
 earlier checkpoint statements below retain their historical scope.
 
+Current next gate: private Ward and computed-distance kernels are accepted;
+see infercnv-native-distance-accepted-2026-10-22.md. Reference-only oracle
+39789882345 is active at bf1cd1512e0d2071591a4b52850a21d86cc41a7d after
+authenticated native locale RED and the separately reviewed category fix.
+See infercnv-reference-edge-locale-2026-10-22.md for original failed-launch
+and current-run provenance. Native filtering/groups/full step15, performance
+and release remain open. Do not interpret earlier active-run notes as current.
+
 ## Recovery and source scope
 
 Read current AGENTS.md, both paired plans/spec and durable task reports.

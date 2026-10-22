@@ -118,8 +118,10 @@ strict C predicate. Fresh scoped review and424 controller tests pass; actual
 native GREEN and both edge outcomes remain pending. Detailed provenance:
 `.autopilot/state/infercnv-reference-edge-locale-2026-10-22.md`.
 
-- [ ] Require exact-head Control plane CI; dispatch existing shipped samples
+- [x] Require exact-head Control plane CI; dispatch existing shipped samples
   oracle option with other optional contracts/snapshots off. No local R/build.
+  Controller39789572225 passes bf1cd151; actual39789882345/attempt1 runs that
+  exact head. Dispatch and in-progress setup are not outcome acceptance.
 - [ ] Authenticate original run/jobs/ZIP/log/source/runtime/record bytes and
   raw RDS presence; inspect complete actual outcomes independently. Preserve
   failed launches. Schema-validator success is not oracle acceptance.

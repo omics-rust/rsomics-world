@@ -88,3 +88,21 @@ are controller checks, not native locale GREEN or reference-edge acceptance.
 APFS boot occupancy81.84% still prohibits local R/Cargo/build/install;
 Python -B tests use explicit external cargo home/target/TMPDIR. Push exact
 head, require controller CI, then dispatch one new full native oracle.
+
+Exact-head controller39789572225/job119861673079 passes
+bf1cd1512e0d2071591a4b52850a21d86cc41a7d:424tests35.784s, OK(skip2),
+architecture consistent. Independent original run/jobs/logs are retained in
+external controller-39789572225; logs ZIP SHA256
+2f44e9dae0f0cc46298940345a4706633387838bc6ffeb850199c47beb41da72.
+Root dispatched39789882345/attempt1 at2026-10-22T13:46:47Z, same exact head,
+datasetshipped/samples_clusteringtrue/ingestion_contractsfalse, snapshots
+blank. Live API authenticates workflow_dispatch and job119862798656.
+At this checkpoint setup-r is active; no native GREEN or edge status is
+inferred. Independent collector will bind executed selectors from logs and
+audit the new compact official artifact without replacing accepted evidence.
+
+Later live job API reports Test samples locale contract success and advances
+to system/package dependencies. This is native step GREEN as reported by API,
+not yet original-byte acceptance: locale before/after/.Machine and actual edge
+outcomes still await completed logs/compact official artifact. No result is
+filled from the expected regression, and the failed originals stay retained.
