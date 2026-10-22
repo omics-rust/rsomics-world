@@ -1,8 +1,11 @@
 import copy
 import hashlib
+import io
 import json
 from pathlib import Path
 import tempfile
+import subprocess
+import sys
 import unittest
 from unittest.mock import patch
 
@@ -40,6 +43,121 @@ def document():
 
 
 class WardFixtures(unittest.TestCase):
+    def profile_fixture(self, root, features=2):
+        doc = document()
+        files = {
+            "cells.tsv": "cell\tgroup\trole\n" + "".join(
+                f"c{i}\tg\tobservation\n" for i in range(1, 8)),
+            "genes.tsv": "gene\tchr\tstart\tstop\ng1\t1\t1\t2\ng2\t1\t3\t4\n",
+            "matrix.tsv": "gene\t" + "\t".join(f"c{i}" for i in range(1, 8)) + "\n"
+                + "".join(f"g{i}\t" + "\t".join(["0"] * 7) + "\n"
+                          for i in range(1, features + 1)),
+        }
+        doc["files"] = {}
+        for name, data in files.items():
+            (root / name).write_text(data)
+            doc["files"][name] = hashlib.sha256(data.encode()).hexdigest()
+        for case in doc["cases"].values():
+            for route in ("isolated", "full_run"):
+                if route in case:
+                    case[route]["state"] = {"cells": "cells.tsv", "genes": "genes.tsv"}
+                    case[route]["diagnostic"] = {
+                        "filtered_expression": "matrix.tsv",
+                        "selected_gene_indices": list(range(1, features + 1)),
+                    }
+                    case[route]["groups"][0]["declared_indices"] = [1, 2, 3]
+        return doc
+
+    def run_profiles(self, root, doc, counts=True):
+        raw = json.dumps(doc).encode()
+        source = root / "witness.json"
+        source.write_bytes(raw)
+        expected = {"cases": 2, "routes": 3, "groups": 3,
+                    "trees": 3, "pairs": 9, "max_leaves": 3}
+        with patch.object(ward, "WITNESS_SHA256", hashlib.sha256(raw).hexdigest()):
+            with patch.object(ward, "EXPECTED_COUNTS", expected if counts else ward.EXPECTED_COUNTS):
+                return ward.extract_profiles(source, root / "profiles.tsv")
+
+    def test_profiles_actual_order_global_dimensions_and_zero_features(self):
+        for features in (0, 2):
+            with tempfile.TemporaryDirectory() as directory:
+                root = Path(directory)
+                doc = self.profile_fixture(root, features)
+                result = self.run_profiles(root, doc)
+                data = (root / "profiles.tsv").read_bytes()
+                self.assertEqual(data.decode().splitlines(), [
+                    "tree\tmatrix\tfeatures\tcells\tindices",
+                    *[f"{name}\tmatrix.tsv\t{features}\t7\t4,2,3" for name in (
+                        "a_probe/isolated/0", "z_workflow/isolated/0", "z_workflow/full_run/0")]])
+                self.assertEqual(result["fixture_sha256"], hashlib.sha256(data).hexdigest())
+                with self.assertRaises(FileExistsError):
+                    self.run_profiles(root, doc)
+
+    def test_profiles_reject_before_output(self):
+        for mutation in ("hash", "path", "symlink", "header", "selection", "boolean",
+                         "duplicate", "bounds", "counts", "cells", "columns", "witness"):
+            with self.subTest(mutation=mutation), tempfile.TemporaryDirectory() as directory:
+                root = Path(directory)
+                doc = self.profile_fixture(root)
+                route = doc["cases"]["a_probe"]["isolated"]
+                if mutation == "hash":
+                    doc["files"]["matrix.tsv"] = "0" * 64
+                elif mutation == "path":
+                    route["diagnostic"]["filtered_expression"] = "../matrix.tsv"
+                elif mutation == "symlink":
+                    (root / "link.tsv").symlink_to(root / "matrix.tsv")
+                    route["diagnostic"]["filtered_expression"] = "link.tsv"
+                elif mutation in ("header", "cells"):
+                    name = "matrix.tsv" if mutation == "header" else "cells.tsv"
+                    path = root / name
+                    path.write_text(path.read_text().replace("c1", "wrong", 1))
+                    doc["files"][name] = hashlib.sha256(path.read_bytes()).hexdigest()
+                elif mutation == "columns":
+                    path = root / "cells.tsv"
+                    path.write_text("".join(line + "\textra\n" for line in path.read_text().splitlines()))
+                    doc["files"]["cells.tsv"] = hashlib.sha256(path.read_bytes()).hexdigest()
+                elif mutation == "selection":
+                    route["diagnostic"]["selected_gene_indices"] = [1, 3]
+                elif mutation in ("boolean", "duplicate"):
+                    route["diagnostic"]["selected_gene_indices"] = (
+                        [True] if mutation == "boolean" else [1, 1])
+                elif mutation == "bounds":
+                    route["groups"][0]["input_indices"] = [8, 3, 4]
+                with self.assertRaises(ValueError):
+                    if mutation == "witness":
+                        (root / "witness.json").write_text(json.dumps(doc))
+                        ward.extract_profiles(root / "witness.json", root / "profiles.tsv")
+                    else:
+                        self.run_profiles(root, doc, counts=mutation != "counts")
+                self.assertFalse((root / "profiles.tsv").exists())
+
+    def test_cli_requires_exactly_one_output(self):
+        for outputs in ([], ["--output", "a", "--profiles-output", "b"]):
+            result = subprocess.run([sys.executable, "-B", str(Path(ward.__file__)),
+                                     "--witness", "missing", *outputs], capture_output=True)
+            self.assertEqual(result.returncode, 2)
+
+    def test_cli_preserves_old_output_and_selects_profiles(self):
+        for option in ("--output", "--profiles-output"):
+            with tempfile.TemporaryDirectory() as directory:
+                root = Path(directory)
+                doc = self.profile_fixture(root)
+                raw = json.dumps(doc).encode()
+                source, target = root / "witness.json", root / "output.tsv"
+                source.write_bytes(raw)
+                counts = {"cases": 2, "routes": 3, "groups": 3,
+                          "trees": 3, "pairs": 9, "max_leaves": 3}
+                with patch.object(ward, "WITNESS_SHA256", hashlib.sha256(raw).hexdigest()), \
+                        patch.object(ward, "EXPECTED_COUNTS", counts), \
+                        patch.object(sys, "argv", ["extract", "--witness", str(source),
+                                                   option, str(target)]), \
+                        patch("sys.stdout", new_callable=io.StringIO) as output:
+                    ward.main()
+                    self.assertEqual(json.loads(output.getvalue())["counts"], counts)
+                prefix = "tree\ta_probe/isolated/0\t3\n" if option == "--output" else (
+                    "tree\tmatrix\tfeatures\tcells\tindices\n")
+                self.assertTrue(target.read_text().startswith(prefix))
+
     def test_preserves_scalar_strings_and_source_order(self):
         records = ward._records(document())
         self.assertEqual([r[0] for r in records], [

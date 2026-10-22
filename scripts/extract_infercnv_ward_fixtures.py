@@ -7,6 +7,8 @@ import math
 from pathlib import Path
 import re
 
+from validate_infercnv_samples_clustering_witness import checked_file, table
+
 
 WITNESS_SHA256 = "26333ff388b0916d79736c7b3370b9f907fb943ca918a92ef5529a4d8bdfd304"
 EXPECTED_COUNTS = {"cases": 36, "routes": 52, "groups": 160,
@@ -101,7 +103,7 @@ def _records(document):
         raise ValueError("malformed witness") from exc
 
 
-def extract(witness_path: Path, output_path: Path) -> dict:
+def _accepted(witness_path):
     raw = witness_path.read_bytes()
     if hashlib.sha256(raw).hexdigest() != WITNESS_SHA256:
         raise ValueError("witness hash differs from accepted original")
@@ -115,6 +117,11 @@ def extract(witness_path: Path, output_path: Path) -> dict:
               "max_leaves": max((r[1] for r in records), default=0)}
     if counts != EXPECTED_COUNTS:
         raise ValueError("witness counts differ from accepted original")
+    return document, records, counts
+
+
+def extract(witness_path: Path, output_path: Path) -> dict:
+    _, records, counts = _accepted(witness_path)
     lines = []
     for name, n, distances, merge, height, order in records:
         lines.extend((f"tree\t{name}\t{n}", "distances\t" + "\t".join(distances),
@@ -128,13 +135,76 @@ def extract(witness_path: Path, output_path: Path) -> dict:
             "fixture_sha256": hashlib.sha256(data).hexdigest(), "fixture_bytes": len(data)}
 
 
+def extract_profiles(witness_path: Path, output_path: Path) -> dict:
+    document, records, counts = _accepted(witness_path)
+    root, verified, routes = witness_path.parent, {}, {}
+
+    def source(relative):
+        path = checked_file(root, relative)
+        if relative not in verified:
+            expected = document["files"].get(relative)
+            with path.open("rb") as handle:
+                actual = hashlib.file_digest(handle, "sha256").hexdigest()
+            if actual != expected:
+                raise ValueError("source file hash differs: " + relative)
+            verified[relative] = path
+        return verified[relative]
+
+    lines = ["tree\tmatrix\tfeatures\tcells\tindices"]
+    try:
+        for identity, *_ in records:
+            name, route_name, index = identity.split("/")
+            route = document["cases"][name][route_name]
+            route_id = (name, route_name)
+            if route_id not in routes:
+                cells = table(source(route["state"]["cells"]), ("cell", "group", "role"))
+                if cells[0] != ["cell", "group", "role"]:
+                    raise ValueError("invalid state cell columns")
+                names = [row[0] for row in cells[1:]]
+                if not names or len(set(names)) != len(names) or any(not n for n in names):
+                    raise ValueError("invalid state cell identities")
+                genes = table(source(route["state"]["genes"]), ("gene", "chr", "start", "stop"))
+                if genes[0] != ["gene", "chr", "start", "stop"]:
+                    raise ValueError("invalid state gene columns")
+                selected = route["diagnostic"]["selected_gene_indices"]
+                if not isinstance(selected, list) or any(
+                    not _integer(i) or i < 1 or i >= len(genes) for i in selected
+                ) or selected != sorted(set(selected)):
+                    raise ValueError("invalid selected gene indices")
+                matrix = route["diagnostic"]["filtered_expression"]
+                with source(matrix).open(encoding="utf-8", newline="") as handle:
+                    header = handle.readline()
+                if header != "gene\t" + "\t".join(names) + "\n":
+                    raise ValueError("matrix header differs from state cell order")
+                routes[route_id] = matrix, len(selected), names
+            matrix, features, names = routes[route_id]
+            group = route["groups"][int(index)]
+            indices = group["input_indices"]
+            if any(i > len(names) for i in indices) or group["tree"]["labels"] != [
+                names[i - 1] for i in indices
+            ]:
+                raise ValueError("actual input indices differ from state cells")
+            lines.append(f"{identity}\t{matrix}\t{features}\t{len(names)}\t"
+                         + ",".join(str(i - 1) for i in indices))
+    except (KeyError, TypeError, IndexError) as exc:
+        raise ValueError("malformed profile metadata") from exc
+    data = ("\n".join(lines) + "\n").encode("utf-8")
+    with output_path.open("xb") as target:
+        target.write(data)
+    return {"counts": counts, "witness_sha256": WITNESS_SHA256,
+            "fixture_sha256": hashlib.sha256(data).hexdigest(), "fixture_bytes": len(data)}
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--witness", type=Path, required=True)
-    parser.add_argument("--output", type=Path, required=True)
+    outputs = parser.add_mutually_exclusive_group(required=True)
+    outputs.add_argument("--output", type=Path)
+    outputs.add_argument("--profiles-output", type=Path)
     args = parser.parse_args()
     try:
-        print(json.dumps(extract(args.witness, args.output), sort_keys=True))
+        extractor = extract_profiles if args.profiles_output else extract
+        print(json.dumps(extractor(args.witness, args.profiles_output or args.output), sort_keys=True))
     except (OSError, ValueError) as exc:
         parser.exit(1, f"Ward fixture extraction failed: {exc}\n")
 
