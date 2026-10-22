@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "purpose": "accepted canonical shipped-example warm raw-creation campaign, not full inferCNV acceptance",
+  "repository": "omics-rust/rsomics-world",
+  "workflow_path": ".github/workflows/infercnv-oracle.yml",
+  "run_id": 39752041192,
+  "run_attempt": 1,
+  "head_sha": "b7d021d5454236f942f764b0e13814cc4ef22122",
+  "artifact_id": 12416076849,
+  "artifact_name": "infercnv-oracle-39752041192-1",
+  "artifact_bytes": 335222656,
+  "artifact_sha256": "bae4bb02e26e52d4d1439309bfba13eba63b898b0fca0b35bf4fde3a0632e324",
+  "logs_sha256": "2d06299afd37c6e96f2c7fc01fa8e482c79cdc3985e6adadb1b506b8920666df",
+  "artifact_regular_files": 1268,
+  "artifact_uncompressed_bytes": 2663452658,
+  "native_snapshot": "green-14",
+  "native_correctness_run": 38688148869,
+  "native_receipt_sha256": "4be244bb087c074171d05e1dc02904c891957ab96d90523e03ccf26a79f2fbb1",
+  "input_receipt_sha256": "3bee1dc582a321f16cb173c757e955dc620a911a891f4051f8bae68dc856dc0b",
+  "installed_contract_receipt_sha256": "8785cb31c96d7b09497bb5b7af1a73ee9d4b2406d8940e4a9cc9bbf27470ee4a",
+  "controller_sha256": "96f4be2478f6b99f75b85bdbc4f3d8fdf31b075c79d24793fcefd1182ff86267",
+  "controller_test_sha256": "c6b600a0f50e25689c50bfbe887b12ae498e84aa5217c7a375c4c83113c0117c",
+  "platform": {
+    "runner": "ubuntu-24.04",
+    "architecture": "x86_64",
+    "logical_cpus": 4,
+    "rustc": "1.91.0",
+    "R": "4.6.1",
+    "infercnv": "1.28.0",
+    "Bioconductor": "3.23",
+    "Python": "3.12.3",
+    "observed_threads": {"rust": 1, "infercnv": 2}
+  },
+  "schedule": {
+    "serial_processes": 32,
+    "pilot_processes": 4,
+    "measured_samples": 28,
+    "measured_samples_per_case_implementation": 7,
+    "exact_warm_measured_states": 64,
+    "genes_per_state": 9939,
+    "cells_per_state": 184,
+    "exact_phase_output_files": 256,
+    "exact_binary64_scalar_comparisons": 117041664
+  },
+  "strict_wall_rule": "max(all seven measured Rust region_wall_seconds) < min(all seven measured infercnv region_wall_seconds), separately for plain and gzip",
+  "cases": {
+    "plain": {
+      "rust_seconds": {"minimum": 0.125936527, "median": 0.126565323, "maximum": 0.138761204},
+      "infercnv_seconds": {"minimum": 0.8580000000000005, "median": 0.8639999999999972, "maximum": 0.8719999999999999},
+      "median_ratio": 6.826514399998783,
+      "strict_wall_advantage": true
+    },
+    "gzip": {
+      "rust_seconds": {"minimum": 0.163210061, "median": 0.164049422, "maximum": 0.165036864},
+      "infercnv_seconds": {"minimum": 0.9130000000000003, "median": 0.9670000000000023, "maximum": 1.100999999999999},
+      "median_ratio": 5.894565114651866,
+      "strict_wall_advantage": true
+    }
+  },
+  "independent_audit_sha256": {
+    "api-log-audit.json": "53a6ce14bbb0d86e0f27698b443183a955e936afadcf7c201c94c4f8cb560ba5",
+    "original-integrity-audit.json": "88e03937467db00f4dab728d051196e615430ac8620dd246bf76d6f0ca25be62",
+    "process-build-audit.json": "a80ca59037d1d6eaf370f073e5648a5b5060432bc03a4a5f4daabbd646d26d03",
+    "metadata-runtime-audit.json": "cfc1fb1b7697b6c61b0e5b651937b515e479f7cc47c7aa6076a7136a0187403a",
+    "state-metrics-audit.json": "a656d6c697ef8270a23d6a62fbb0c88bb35833e44472e0e4d23176790f6a9dac"
+  },
+  "external_evidence_root": "/Volumes/Zane's HDD/rsomics-fixtures/evidence/infercnv-ingestion-measurement-2026-09-30/run-39752041192",
+  "preserved_rejected_native_run": 39748832071,
+  "scope_limits": [
+    "One canonical shipped-example input, warm filesystem/allocation factory region; not representative cohorts or cold-cache I/O",
+    "Original implicit count headers, arbitrary R decimal/threshold equivalence, general R table/locale behavior, RDS/sparse inputs and sampling remain excluded",
+    "Not downstream preprocessing, samples clustering, CNV calling, complete inferCNV, biological validity or release acceptance",
+    "Requested thread environment limits are one; observed Rust/R threads differ, so no both-single-thread claim",
+    "Baseline/returned RSS snapshots and whole-process maximum RSS are not factory or aggregate-descendant peaks; no factory peak-memory claim",
+    "Executable identities rely on the authenticated original CI build/probe/postcheck records; executable files are not packaged for later rehash"
+  ]
+}
