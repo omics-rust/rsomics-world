@@ -737,6 +737,19 @@ jobs:
           r-version: '4.6.1'
           use-public-rspm: true
 
+      - name: Test samples locale contract
+        if: env.SAMPLES_CLUSTERING == 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir "$EVIDENCE_DIR/samples-locale-contract"
+          cp scripts/infercnv_samples_reference_edges.R scripts/test_infercnv_samples_reference_locale.R \
+            "$EVIDENCE_DIR/samples-locale-contract/"
+          sha256sum scripts/infercnv_samples_reference_edges.R scripts/test_infercnv_samples_reference_locale.R \
+            > "$EVIDENCE_DIR/samples-locale-contract/code-sha256.txt"
+          Rscript --vanilla scripts/test_infercnv_samples_reference_locale.R \
+            2>&1 | tee "$EVIDENCE_DIR/samples-locale-contract/test.log"
+
       - name: Verify Python runtime identity across R launch
         if: env.INGESTION_CONTRACTS == 'true'
         shell: bash

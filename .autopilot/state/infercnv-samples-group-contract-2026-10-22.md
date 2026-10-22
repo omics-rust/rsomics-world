@@ -24,6 +24,12 @@ Implementation is now committed at d7d808039e213840a63df0673074403e0940ca93, fre
 
 Exact-head controller39780963588 passes b3691d50b50c884f4753390d6db07ce7bfd79ea7. Real R oracle39781233583/attempt1 dispatched with datasetshipped,samples_clusteringtrue,ingestion_contractsfalse and blank snapshots. Independent bounded collector retains originals externally under infercnv-reference-only-2026-10-22/run-39781233583; actual capture/status/shape admission remains pending. No canonical old receipt or152-tree fixture changes.
 
+That real run failed in the new script's locale initialization before creating
+the object or calling either route. No grouped/pooled outcome exists yet.
+Failure/debug/live-R regression record is
+infercnv-reference-edge-locale-2026-10-22.md. Canonical capture and17 checker
+tests passed before this failure; their success is not edge admission.
+
 ## Next private boundary and memory checks
 
 Read-only type/budget audit: CellGroup has private fields/no public constructor
