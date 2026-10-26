@@ -11,6 +11,10 @@ on:
         description: Run the initial Linux-only test-first failure capture
         type: boolean
         default: false
+      samples_benchmark:
+        description: Linux-only canonical CLI worker benchmark; not the four-native release gate
+        type: boolean
+        default: false
       measurement:
         description: Test private measurement support and compile its opt-in bench
         type: boolean
@@ -53,10 +57,11 @@ jobs:
       fail-fast: false
       matrix:
         include: >-
-          ${{ fromJSON(inputs.expected_red && '[{"target":"linux-x86_64","runner":"ubuntu-24.04","system":"Linux","arch":"x86_64"}]' || '[{"target":"linux-x86_64","runner":"ubuntu-24.04","system":"Linux","arch":"x86_64"},{"target":"linux-aarch64","runner":"ubuntu-24.04-arm","system":"Linux","arch":"aarch64"},{"target":"macos-x86_64","runner":"macos-15-intel","system":"Darwin","arch":"x86_64"},{"target":"macos-aarch64","runner":"macos-15","system":"Darwin","arch":"arm64"}]') }}
+          ${{ fromJSON((inputs.expected_red || inputs.samples_benchmark) && '[{"target":"linux-x86_64","runner":"ubuntu-24.04","system":"Linux","arch":"x86_64"}]' || '[{"target":"linux-x86_64","runner":"ubuntu-24.04","system":"Linux","arch":"x86_64"},{"target":"linux-aarch64","runner":"ubuntu-24.04-arm","system":"Linux","arch":"aarch64"},{"target":"macos-x86_64","runner":"macos-15-intel","system":"Darwin","arch":"x86_64"},{"target":"macos-aarch64","runner":"macos-15","system":"Darwin","arch":"arm64"}]') }}
     env:
       SNAPSHOT_ID: ${{ inputs.snapshot }}
       EXPECT_RED: ${{ inputs.expected_red }}
+      SAMPLES_BENCHMARK: ${{ inputs.samples_benchmark }}
       ORACLE_RECEIPT: ${{ inputs.oracle_receipt }}
       MEASUREMENT: ${{ inputs.measurement }}
       INGESTION_MEASUREMENT: ${{ inputs.ingestion_measurement }}
@@ -81,6 +86,18 @@ jobs:
             *) printf 'Unknown oracle receipt: %s\n' "$ORACLE_RECEIPT" >&2; exit 1 ;;
           esac
           printf 'ORACLE_FEATURES=%s\n' "$feature" >> "$GITHUB_ENV"
+
+      - name: Validate samples benchmark selection
+        if: ${{ inputs.samples_benchmark }}
+        run: |
+          set -euo pipefail
+          test "$ORACLE_RECEIPT" = infercnv-samples-clustering-witness-2026-09-30
+          test "$EXPECT_RED" = false
+          test "$MEASUREMENT" = false
+          test "$INGESTION_MEASUREMENT" = false
+          test "$INGESTION_TRIAL" = false
+          test "$RESOLVE_MEASUREMENT_LOCK" = false
+          test "$RESOLVE_INPUT_LOCK" = false
 
       - name: Verify and extract frozen source
         id: snapshot
@@ -138,6 +155,7 @@ jobs:
             df -h
             printf 'snapshot=%s\nexpected_red=%s\nmeasurement=%s\ningestion_measurement=%s\ningestion_trial=%s\nresolve_measurement_lock=%s\n' \
               "$SNAPSHOT_ID" "$EXPECT_RED" "$MEASUREMENT" "$INGESTION_MEASUREMENT" "$INGESTION_TRIAL" "$RESOLVE_MEASUREMENT_LOCK"
+            printf 'samples_benchmark=%s\n' "$SAMPLES_BENCHMARK"
             printf 'CARGO_HOME=%s\nCARGO_TARGET_DIR=%s\nRUSTUP_HOME=%s\nTMPDIR=%s\n' \
               "$CARGO_HOME" "$CARGO_TARGET_DIR" "$RUSTUP_HOME" "$TMPDIR"
           } | tee "$EVIDENCE/host.log"
@@ -376,6 +394,32 @@ jobs:
             clippy_args+=(--features "$ORACLE_FEATURES")
           fi
           cargo "${clippy_args[@]}" -- -D warnings 2>&1 | tee "$EVIDENCE/clippy.log"
+
+      - name: Measure canonical samples CLI worker scaling
+        if: ${{ inputs.samples_benchmark && !inputs.expected_red && matrix.target == 'linux-x86_64' }}
+        working-directory: ${{ runner.temp }}/sc-cnv-candidate
+        run: |
+          set -euo pipefail
+          cargo build --locked --release --features external-infercnv-samples-oracle --bin rsomics-sc \
+            2>&1 | tee "$EVIDENCE/samples-benchmark-build.log"
+          mkdir "$EVIDENCE/samples-benchmark-controller"
+          for name in measure_infercnv_samples_cli.py infercnv_trial_process.py \
+                      measure_infercnv.py validate_infercnv_shipped_oracle.py \
+                      test_measure_infercnv_samples_cli.py; do
+            cp "$GITHUB_WORKSPACE/scripts/$name" "$EVIDENCE/samples-benchmark-controller/"
+          done
+          lscpu > "$EVIDENCE/samples-benchmark-cpu.txt"
+          mkdir "$EVIDENCE/samples-benchmark-binary"
+          cp "$CARGO_TARGET_DIR/release/rsomics-sc" \
+            "$EVIDENCE/samples-benchmark-binary/rsomics-sc-linux-x86_64"
+          sha256sum "$CARGO_TARGET_DIR/release/rsomics-sc" \
+            "$EVIDENCE/samples-benchmark-binary/rsomics-sc-linux-x86_64" \
+            > "$EVIDENCE/samples-benchmark-binary.sha256"
+          python3 -B "$GITHUB_WORKSPACE/scripts/measure_infercnv_samples_cli.py" \
+            --bundle "$RSOMICS_INFER_CNV_ORACLE_ROOT" \
+            --binary "$EVIDENCE/samples-benchmark-binary/rsomics-sc-linux-x86_64" \
+            --output "$EVIDENCE/samples-cli-benchmark" \
+            2>&1 | tee "$EVIDENCE/samples-benchmark.log"
 
       - name: Verify source remains unchanged
         if: ${{ always() && steps.snapshot.outcome == 'success' }}

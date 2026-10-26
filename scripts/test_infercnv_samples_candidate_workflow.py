@@ -140,7 +140,7 @@ class SamplesCandidateWorkflowTests(unittest.TestCase):
     def test_native_matrix_postchecks_and_upload_are_preserved(self):
         for target in ['linux-x86_64', 'linux-aarch64', 'macos-x86_64', 'macos-aarch64']:
             self.assertIn('"target":"' + target + '"', self.text)
-        self.assertIn('inputs.expected_red &&', self.text)
+        self.assertIn('inputs.expected_red || inputs.samples_benchmark', self.text)
         self.assertIn("if: ${{ always() && steps.snapshot.outcome == 'success' }}",
                       self.steps['Verify source remains unchanged'])
         self.assertIn('if: always()', self.steps['Upload raw evidence'])
@@ -177,6 +177,48 @@ class SamplesCandidateWorkflowTests(unittest.TestCase):
                                                  CARGO_TARGET_DIR=str(root / 'target')),
                                         capture_output=True, text=True, timeout=15)
                 self.assertEqual(result.returncode == 0, accepted, result.stderr)
+
+    def test_benchmark_selector_rejects_unbound_or_mixed_measurements(self):
+        body = bash_body(self.steps['Validate samples benchmark selection'])
+        base = dict(os.environ, ORACLE_RECEIPT=WITNESS, EXPECT_RED='false',
+                    MEASUREMENT='false', INGESTION_MEASUREMENT='false', INGESTION_TRIAL='false',
+                    RESOLVE_MEASUREMENT_LOCK='false', RESOLVE_INPUT_LOCK='false')
+        for change in [{}, {'ORACLE_RECEIPT': 'none'}, {'EXPECT_RED': 'true'},
+                       {'MEASUREMENT': 'true'}, {'INGESTION_MEASUREMENT': 'true'},
+                       {'INGESTION_TRIAL': 'true'}, {'RESOLVE_INPUT_LOCK': 'true'},
+                       {'RESOLVE_MEASUREMENT_LOCK': 'true'}]:
+            with self.subTest(change=change):
+                result = subprocess.run(['bash', '-c', body], env=dict(base, **change),
+                                        capture_output=True, text=True, timeout=15)
+                self.assertEqual(result.returncode == 0, not change, result.stderr)
+
+    def test_failed_benchmark_retains_the_exact_binary_before_invocation(self):
+        body = bash_body(self.steps['Measure canonical samples CLI worker scaling'])
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            evidence = root / 'evidence'
+            evidence.mkdir()
+            (root / 'target/release').mkdir(parents=True)
+            binary = root / 'target/release/rsomics-sc'
+            binary.write_bytes(b'exact candidate bytes')
+            (root / 'scripts').mkdir()
+            for name in ['measure_infercnv_samples_cli.py', 'infercnv_trial_process.py',
+                         'measure_infercnv.py', 'validate_infercnv_shipped_oracle.py',
+                         'test_measure_infercnv_samples_cli.py']:
+                (root / 'scripts' / name).write_text('fixture\n')
+            commands = ('cargo() { :; }; lscpu() { :; }; python3() { return 47; };\n'
+                        'sha256sum() { shasum -a 256 "$@"; };\n')
+            result = subprocess.run(['bash', '-c', commands + body], cwd=root,
+                                    env=dict(os.environ, EVIDENCE=str(evidence),
+                                             GITHUB_WORKSPACE=str(root),
+                                             CARGO_TARGET_DIR=str(root / 'target'),
+                                             RSOMICS_INFER_CNV_ORACLE_ROOT=str(root / 'oracle')),
+                                    capture_output=True, text=True, timeout=15)
+            self.assertEqual(result.returncode, 47, result.stderr)
+            retained = evidence / 'samples-benchmark-binary/rsomics-sc-linux-x86_64'
+            self.assertEqual(retained.read_bytes(), b'exact candidate bytes')
+            self.assertTrue((evidence / 'samples-benchmark-binary.sha256').is_file())
+            self.assertFalse((evidence / 'samples-cli-benchmark/summary.json').exists())
 
 
 if __name__ == '__main__':
