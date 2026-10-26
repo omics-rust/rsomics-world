@@ -4,6 +4,18 @@ Status: upstream-operation and historical-asset audit complete. An unpublished
 local target repository now holds the test-first native CNV core work. No
 public target repository or product release has been created.
 
+Current2026-10-23: native reference filtering now also passes four-native
+debug/release at productbe35e65 (52 routes/152 trees). Actual grouped/pooled
+ownership, rsomics-help CLI and deterministic parallel distances pass native
+green20/run39820518598 on all four targets,114 tests per debug/release profile.
+The canonical raw-input CLI retains8508 genes/184 cells/6187 selected genes
+and produces identical1/4-worker reports. Product f8a10a0 remains unpublished.
+The current plan is [the functioning samples workflow](../plans/2026-10-23-infercnv-samples-workflow.md)
+and the [resume state](../../.autopilot/state/infercnv-samples-workflow-2026-10-23.md).
+The user explicitly chose workflow-first execution and consolidated validation,
+not repeated per-helper audit campaigns. Full-path speed, full inferCNV and
+publication remain open; older bounded checkpoints below are historical.
+
 The user reprioritized inferCNV on 2026-09-26. Its implementation now proceeds
 before the broader counts-to-clusters slice, without changing product ownership
 or publishing an incomplete single-cell product. See the

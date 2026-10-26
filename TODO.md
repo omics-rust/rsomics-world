@@ -199,9 +199,18 @@ Rejected public boundary:
       with four-native 72-test profiles and independent source/artifact review.
 - [x] Execute and independently accept installed samples/Ward.D2 witnesses:
       36 cases/52 routes, original run `36707344893`; no native/performance claim.
-- [ ] Implement native samples/Ward clustering with exact topology/order gates;
-      keep unresolved positive-filter boundary behavior explicitly separate.
-- [ ] Measure raw ingestion separately; do not extend prepared-only speed claims.
+- [x] Accept native reference-gene selection, distances and Ward from original
+      frozen R states:52 routes/152 trees on four native targets, including
+      positive-filter edge semantics. No current-Rust-to-R tree claim follows.
+- [x] Validate the integrated raw-to-samples CLI and grouped/pooled ownership;
+      green20/run39820518598 passes all four native targets, including real
+      1/4-worker execution and a canonical8508-gene/184-cell full-path check. See the
+      [current workflow state](.autopilot/state/infercnv-samples-workflow-2026-10-23.md).
+- [x] Measure canonical warm raw creation separately from prepared numerical
+      preprocessing: exact outputs and strict wall-time advantage accepted on
+      one Linuxx86 shipped case. Cold/cohort/full-path performance stays open.
+- [ ] Measure the integrated slice's throughput/memory and useful parallelism;
+      do not infer replacement speed from kernel benchmarks or thread count.
 - [ ] Resolve default Leiden, HMM i3/i6, Bayesian refinement, denoising/masking,
       output/report and unified `rsomics-help` CLI contracts before full-CNV claims.
 - [ ] Apply full product/API/performance/release gates before publishing `sc`.

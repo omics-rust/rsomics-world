@@ -1,5 +1,10 @@
 # Functioning samples/Ward workflow
 
+Status2026-10-26: integrated correctness accepted in actual native
+green20/run39820518598 on all four platform classes; product f8a10a0 is clean.
+Each debug/release profile passes114 tests and canonical1/4-worker equality.
+Performance, larger cohorts and remaining inferCNV operations stay open.
+
 Implement a real unpublished rsomics-sc slice, not another public micro-crate:
 strict raw count/position/annotation TSV (plain or gzip) to ordered typed input,
 existing preprocessing through step14, temporary reference-gene filtering,
@@ -57,7 +62,7 @@ or exactly one private rsomics-sc binary; publish=false remains required.
 
 The one fresh-context overall review found no Critical/Important issue.
 Its minor temporary-fixture leak is repaired before the integrated snapshot.
-Compilation/runtime results remain pending; static review is not acceptance.
+Compilation/runtime acceptance now comes from actual green20, not that review.
 Rulings on review limits: arbitrary-input R precision, exact current-Rust-to-R
 tree equality, full inferCNV, clinical meaning and release readiness remain
 unclaimed. Requested-buffer limits intentionally exclude RSS/thread stacks.

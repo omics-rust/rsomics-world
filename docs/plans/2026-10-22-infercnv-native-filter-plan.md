@@ -9,6 +9,11 @@ fresh review after each helper. Review the integrated workflow before release.
 Routine decisions and direct main commits without PRs remain authorized.
 
 Spec: 2026-10-22-infercnv-native-filter-design.md.
+Current2026-10-23: Tasks1-3 are complete; green17/run39815910744 passes the
+frozen filter composition on all four native classes, productbe35e65. Task4
+has become the integrated samples/Ward CLI plan dated2026-10-23. Its green20
+native run39820518598 passed all four platforms; do not restart completed
+helper gates. The next work is integrated performance and remaining inferCNV.
 Status: fresh builder check approved Task1 with no Critical/Important blocker.
 Its native-test composition, active <=1 rejection, true-constant-only zero SD
 and four-state-path/streaming clarifications are incorporated. No implementation
@@ -97,7 +102,7 @@ distance.rs: read-only feature_count/cell_count plus crate-private unchanged
 column. Existing validated CellProfiles is the concrete typed consumer
 boundary; no distance arithmetic or public export changes.
 
-- [ ] Implement the private source-ordered f64 candidate and checked workspace
+- [x] Implement the private source-ordered f64 candidate and checked workspace
   contract. Reproduce the specified finite domain and deliberate edge semantics;
   reject unsupported arithmetic clearly. No new epsilon or public contract.
   Contract: select_genes(&CellProfiles, &[usize], f64, usize) returns private
@@ -106,22 +111,22 @@ boundary; no distance arithmetic or public export changes.
   either output Vec; requested peak is
   max(R*sizeof(usize),(active?2:1)*G*sizeof(usize)). Each output reserves G,
   including empty logical lists. Test both competing-peak budget boundaries.
-- [ ] Keep native test/fixture bytes unchanged from authenticated RED.
-- [ ] Formatting, strict Clippy and all tests
+- [x] Keep native test/fixture bytes unchanged from authenticated RED.
+- [x] Formatting, strict Clippy and all tests
   in debug/release on Linux/macOS x86_64/aarch64 using the existing candidate
   workflow and exact original artifact verifier.
-- [ ] Use the existing automated source/oracle checks and original native logs
+- [x] Use the existing automated source/oracle checks and original native logs
   to establish all52 selections/filtered matrices and152 computed trees per
   profile/target. Preserve failures; do not duplicate the automated audit or
   infer/repair success markers.
-- [ ] Root records the bounded result or concrete failure and updates current
+- [x] Root records the bounded result or concrete failure and updates current
   product/durable status. No performance, full-workflow or release claim.
 
 ## Task 4 — Continue coherent samples ownership
 
-- [ ] Use independently admitted reference-only outcomes before choosing its
+- [x] Use independently admitted reference-only outcomes before choosing its
   empty/NULL mapping. Honor explicit pooled collision rejection.
-- [ ] Integrate a private group owner against actual CellGroup and CnvState
+- [x] Integrate a private group owner against actual CellGroup and CnvState
   consumers, ordered maps, <=2 bypass validation and aggregate memory, then
   wire a functioning samples/Ward CLI through mandatory rsomics-help.
 - [ ] Keep frozen-R and current-Rust preprocessing checks distinct; do not

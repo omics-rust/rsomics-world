@@ -1,5 +1,26 @@
 # Integrated samples/Ward candidate
 
+Accepted2026-10-26 after resume: actual green20/run39820518598 is terminal
+success at a3f63a1a9ccbc9fd44da7de97c6ff8293012b6ef, all four native jobs.
+Each debug/release profile passes114 tests, including the real canonical
+raw-input CLI case:8508 genes/184 cells/6187 selected genes and identical
+1/4-worker reports. Existing52 filter routes/152 trees/107331 pairs and
+Linux formatting/strict Clippy pass. Source/oracle/postchecks pass.
+
+The accepted source is committed in the owning product: f863f2c distance
+workers,1bf0bb3 samples ownership,59928ae CLI; current f8a10a0 adds only the
+acceptance README. Working tree is clean. The product remains unpublished,
+publish=false, with no remote. Whole-slice throughput/memory, upstream speed
+advantage, larger-cohort behavior, HMM/denoise/full inferCNV and release are
+not accepted by these correctness results.
+
+Original terminal APIs/logs/summary remain external under
+evidence/infercnv-samples-workflow-2026-10-23/run-39820518598/.
+Whole-log SHA d03e08cc9e60ecbfe258de505b8e8b60f102ebdb8b73a3acc63fb4678af9a2ab.
+Archive green20 SHA0a74f8324f99242eb8c9518d1cbcf40977ecf117575628c4f8fe4eba9c3c8d38,
+manifest b851c7c6c46dbb0c99f52f48e37c6c38f7b5704cac6add24efd16641acf400f8.
+Earlier pending/failure notes below are preserved history, not current gates.
+
 Latest: green19/run39819012036 now passes dependency metadata and compiles.
 Its canonical CLI test fails at the newly written literal group count:
 actual Microglia/Macrophage19 vs mistaken expected23. Earlier assertions
