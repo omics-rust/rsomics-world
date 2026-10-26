@@ -211,6 +211,10 @@ Rejected public boundary:
       one Linuxx86 shipped case. Cold/cohort/full-path performance stays open.
 - [ ] Measure the integrated slice's throughput/memory and useful parallelism;
       do not infer replacement speed from kernel benchmarks or thread count.
+      Canonical warm-input CLI is now measured:0.64/0.62s at1/4 workers and
+      about57.6MiB peak RSS; the small difference has overlapping ranges.
+      Profile the serial matrix path, then verify larger-cohort and equivalent
+      upstream comparisons. See the [actual measurements](.autopilot/state/infercnv-samples-performance-2026-10-26.md).
 - [ ] Resolve default Leiden, HMM i3/i6, Bayesian refinement, denoising/masking,
       output/report and unified `rsomics-help` CLI contracts before full-CNV claims.
 - [ ] Apply full product/API/performance/release gates before publishing `sc`.

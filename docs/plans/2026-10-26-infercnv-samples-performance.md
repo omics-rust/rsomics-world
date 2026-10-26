@@ -45,9 +45,16 @@ f8a10a0. No local Rust/R build while APFS boot remains over80%.
   mixed measurement modes, reuses source/oracle admission and native tests,
   then measures the real binary. Normal runs retain all four native targets.
   Retain the actual executable with benchmark evidence for subsequent work.
-- [ ] Run controller verification and one overall review, push exact source,
+- [x] Run controller verification and one overall review, push exact source,
   wait for exact-head CI, execute the actual hosted benchmark, inspect raw
   output/metrics and record the real result. Do not infer speed from tests.
+
+Actual run40301640764 at7cb53b59 succeeds. Five measured pairs give median
+whole-CLI wall0.64s serial versus0.62s at4 workers, about57.6MiB peak RSS each.
+Ranges overlap; there is no strict separation or demonstrated material
+end-to-end gain. All12 actual child/output records are retained and checked.
+The next action is the serial matrix path and a larger real cohort, not a
+claim that internal thread count satisfies the upstream performance gate.
 
 ## Review focus and continuation
 

@@ -25,6 +25,13 @@ pass54.116s (two existing native-only skips). Resume verified this live on
 Next measure the complete slice and optimize based on actual throughput/
 memory and serial/parallel behavior; upstream replacement performance and
 larger-cohort evidence remain separate required work.
+
+Update2026-10-26: actual Linux benchmark40301640764 now measures the canonical
+whole CLI at median0.64/0.62s (1/4 workers), about57.6MiB peak RSS each, with
+identical outputs but overlapping timings. Four distance workers do not yet
+give a material whole-path advantage. The next optimization target to inspect
+is serial matrix preprocessing, alongside a genuinely larger input and the
+equivalent upstream comparison; none of those is silently accepted here.
 HMM/denoise/reporting and broader single-cell operations remain unfinished;
 a working samples/Ward slice must not be called complete inferCNV.
 
