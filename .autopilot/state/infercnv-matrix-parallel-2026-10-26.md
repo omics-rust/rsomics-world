@@ -21,6 +21,8 @@ feature check, not another exhaustive per-helper RED campaign.
 Product commit 7495e3eb59aecd9323c67c4a9f4626a387463ecd contains exactly the
 168 source files frozen/tested by green-21. No code changes after review
 or native verification. The following README acceptance update is docs-only.
+Current product HEAD83ef7c869c13817f1bb23931ba268c54c713c04b adds only that
+README update and is clean, still publish=false with no configured remote.
 Exact-head world controller 40307694168 passed at
 38200aba8be7073a71d945a81707225585d2c47c. Linux correctness/benchmark run
 40307961363/attempt1 passed on that head: 116 tests each in debug/release,

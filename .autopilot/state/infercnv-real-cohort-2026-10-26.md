@@ -59,6 +59,19 @@ load219.45/236.64/237.07 at start; a later2s sample shows pinned CPU0-3 busy
 and alternating trials, retain this as loaded-host computational evidence,
 not a dedicated/idle-host or release performance advantage. Do not tune away
 slow samples, compare these times to hosted CI, or infer CNV validity.
+The successful report actually retains9,465 genes/4,103 cells, selects all
+9,465 genes and returns one all_observations tree with4,102 merge rows.
+Four-worker warmup succeeds52.68s at the same peak RSS. Initial measured
+pair1 is131.53/53.93s; these are partial observations, not final medians.
+Output fingerprints remain identical so far. Do not summarize until all
+five predeclared pairs complete.
+
+Upstream-comparison preflight:4090 has R4.6.1 and Docker, but its default R
+libraries lack infercnv/fastcluster/parallelDist (Matrix1.7.5 is installed).
+No installation or existing library was changed. Existing source-pinned
+oracle/measurement CI remains available for the equivalent upstream work;
+do not interpret a missing package query as a portfolio blocker or restart
+the already accepted parser/kernel campaigns.
 Results are pending. Preserve any failure/partial logs, never fabricate a
 complete summary. Collect the original remote records to external fixtures
 after completion; remote scratch is not the sole durable copy of inputs.
