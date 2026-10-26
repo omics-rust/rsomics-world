@@ -42,6 +42,26 @@ retained, not cleaned destructively. Only public source data, the retained
 green-21 Linux binary and existing Python controllers are being transferred.
 The measured selection will be 1/4 workers on four affinity-pinned CPUs;
 this is a different host, never a direct timing ratio against hosted CI.
+Remote preparation completed with identical counts/positions/annotations
+SHA-256 to the external local preparation. Existing native binary executes
+on glibc2.35 and its SHA agrees with the retained CI binary. World controller
+40310284331 passed at 236641bd4a2568bc06aca898e6073d30fb5c1964.
+Actual measurement is now running in the original remote scratch under
+gbm-cli-benchmark/, using taskset CPUs0-3, five alternating measured pairs
+after two warmups, 1800s per-child timeout. Owner is the Python command
+measure_infercnv_samples_cli.py --case gbm-4103; do not launch a duplicate.
+The observed owner PID is2320170 (verify argv/ownership before signaling).
+First actual serial warmup succeeds: whole CLI130.64s, maximum RSS
+2,335,039,488 bytes, all4,103 cells pass the report contract. This is a warmup,
+not one of the five measured serial trials. The driver found the host busy:
+load219.45/236.64/237.07 at start; a later2s sample shows pinned CPU0-3 busy
+100/93/92/95%. Other jobs are untouched. Keep the original predeclared affinity
+and alternating trials, retain this as loaded-host computational evidence,
+not a dedicated/idle-host or release performance advantage. Do not tune away
+slow samples, compare these times to hosted CI, or infer CNV validity.
+Results are pending. Preserve any failure/partial logs, never fabricate a
+complete summary. Collect the original remote records to external fixtures
+after completion; remote scratch is not the sole durable copy of inputs.
 
 Original GTF URL (HTTPS variant of the official build-notes URL):
 https://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/release_32/gencode.v32.primary_assembly.annotation.gtf.gz

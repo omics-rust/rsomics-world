@@ -35,6 +35,21 @@ equivalent upstream comparison; none of those is silently accepted here.
 HMM/denoise/reporting and broader single-cell operations remain unfinished;
 a working samples/Ward slice must not be called complete inferCNV.
 
+Further update2026-10-26: product7495e3e adds actual column-parallel smoothing
+through the existing CLI worker selection, sharing product-local dispatch
+with distances. No public foundation/dependency or numeric matrix is added.
+Green21/run40309311228 passes116 tests per debug/release on all four native
+classes, including complete expression equality; one whole-feature review
+finds no Critical/Important issue. Canonical whole-CLI medians0.39/0.31s at
+1/4 workers show a preliminary1.26x median gain but still overlap, not a strict
+replacement-speed gate. The real36,601-gene/4,103-cell GBM fixture now has
+count-preserving TSV and all gene coordinates matched. Its actual CLI run
+is active on4090, no Mac build; initial serial warmup succeeds130.64s at
+2,335,039,488bytes peak RSS. Host load is high, so retain loaded-host scope.
+Do not rerun already accepted kernel/oracle campaigns. Finish the real case,
+equivalent upstream comparison and remaining inferCNV operations, then keep
+advancing the whole portfolio rather than stopping at this optimization.
+
 Continue portfolio work after this priority. The30 dossiers already exist;
 do not restart their initial inventory. Revalidate pending corrections and
 candidate release gates before delivery. The next coherent new workflow is

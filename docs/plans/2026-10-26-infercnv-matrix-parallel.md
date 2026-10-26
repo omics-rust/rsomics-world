@@ -38,13 +38,24 @@ this is a concrete high-work candidate, not a measured-exclusive hotspot.
 - [x] Implement shared internal dispatch and smoothing/CLI config wiring;
   update existing config literals and private test-module imports only where
   necessary. Do not add a new dependency, feature selector or CLI command.
-- [ ] Freeze an actual candidate and run existing Linux native benchmark mode
+- [x] Freeze an actual candidate and run existing Linux native benchmark mode
   for correctness and same-host1/4-worker whole-process measurement. No local
   Rust/R build while boot exceeds80%. If benefit is not useful, investigate
   before adding more parallel complexity; do not merge merely to show activity.
-- [ ] One fresh whole-feature review; final four-native debug/release and
+- [x] One fresh whole-feature review; final four-native debug/release and
   strict Clippy before acceptance/commit. Record actual metrics and unchanged
   output evidence. No publication or full-inferCNV claim follows.
+
+Linux green-21/run40307961363 passes 116 tests per debug/release profile,
+strict Clippy and full canonical expression equality. Same-host whole-CLI
+median wall is 0.39/0.31s (1/4 workers), ratio 1.258065; ranges overlap, so
+strict separation is false. Retain this useful preliminary median benefit
+without a general performance claim. One whole-feature static review found
+no Critical/Important issue. Four-native run40309311228/attempt1 passes
+116 tests per profile on all four target classes with complete expression
+equality. Product code committed7495e3e, with no post-verification code edit.
+The real 4,103-cell case is prepared with unchanged counts and running on
+4090 with the same binary, pinned CPUs0-3 and owned 1/4-worker trials.
 
 Review focus: disjoint slices, partial columns, launch/join errors, unchanged
 chromosome/neighbor order, memory overlap, zero-worker config and requested
