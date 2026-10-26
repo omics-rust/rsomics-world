@@ -1,14 +1,11 @@
-# Larger real-input scaling source
+# Real GBM CLI worker scaling
 
-Update: the fixture-only converter scripts/prepare_infercnv_10x_fixture.py
-is implemented and the real conversion completed. One integrated witness
-passes, including exact
-row/column count placement, version-normalized gene coordinates, unchanged
-barcodes and explicit unclassified annotations. The existing coherent
-controller suite passes 440 tests in 48.205s, with two native-only skips.
-The matching GENCODE v32 GTF and derived data remain on the fixture HDD.
-This does not add native
-10x ingestion or inferred normal-cell identities to the product.
+Status: complete count-preserving preparation and actual whole-CLI scaling
+measurement. The five predeclared alternating pairs all completed. This is
+loaded-host computational evidence, not R-comparison or biological validation.
+The fixture-only converter has one integrated sparse-to-TSV witness; matching
+GENCODE v32 data and derived files remain on the fixture HDD. No native10x
+product support or normal-cell identity is inferred from this conversion.
 
 The real conversion validates all 12,410,405 positive integer entries and
 preserves all 36,601 rows/4,103 barcodes, total 54,032,413 UMIs. Every gene
@@ -21,8 +18,9 @@ expression filters remain separate and must be reported during execution.
 Counts SHA ffa286fe314011bf0e4998fe9cbc631d08e0cc19457da2e68d4e6580e400b4f8.
 Positions SHA 3a6fb0f3cebf38350917c08e91b781b3b1752fc51e3e88a044480d3ce524a145.
 Annotations SHA 372845bcf2512bf37db5cff70d1ddbf07754fed96de92c86c58b44c8e71fbb17.
-All annotations are explicitly gbm_unclassified. CLI execution and actual
-large-cohort timing/RSS are still unmeasured, not inferred from conversion.
+All annotations are explicitly gbm_unclassified. Actual CLI execution retains
+9,465 genes/4,103 cells, selects all9,465 genes and produces a single
+all_observations tree with4,102 merge rows, without reference outliers.
 
 The existing samples measurement driver now has an explicit gbm-4103 case,
 not a weakened canonical expectation. It uses all-cells reference, cutoff0.1,
@@ -39,32 +37,49 @@ Remote 4090 is reachable: native Linux x86_64, glibc2.35, Python3.10.12,
 296GiB free (84% used); no compiler/install/dependency download is requested.
 Private scratch was created as /tmp/rsomics-cnv-20261026.U4Wbro and must be
 retained, not cleaned destructively. Only public source data, the retained
-green-21 Linux binary and existing Python controllers are being transferred.
-The measured selection will be 1/4 workers on four affinity-pinned CPUs;
+green-21 Linux binary and existing Python controllers were transferred.
+The measured selection was1/4 workers on four affinity-pinned CPUs;
 this is a different host, never a direct timing ratio against hosted CI.
 Remote preparation completed with identical counts/positions/annotations
 SHA-256 to the external local preparation. Existing native binary executes
 on glibc2.35 and its SHA agrees with the retained CI binary. World controller
 40310284331 passed at 236641bd4a2568bc06aca898e6073d30fb5c1964.
-Actual measurement is now running in the original remote scratch under
-gbm-cli-benchmark/, using taskset CPUs0-3, five alternating measured pairs
-after two warmups, 1800s per-child timeout. Owner is the Python command
-measure_infercnv_samples_cli.py --case gbm-4103; do not launch a duplicate.
-The observed owner PID is2320170 (verify argv/ownership before signaling).
-First actual serial warmup succeeds: whole CLI130.64s, maximum RSS
-2,335,039,488 bytes, all4,103 cells pass the report contract. This is a warmup,
-not one of the five measured serial trials. The driver found the host busy:
-load219.45/236.64/237.07 at start; a later2s sample shows pinned CPU0-3 busy
-100/93/92/95%. Other jobs are untouched. Keep the original predeclared affinity
-and alternating trials, retain this as loaded-host computational evidence,
-not a dedicated/idle-host or release performance advantage. Do not tune away
-slow samples, compare these times to hosted CI, or infer CNV validity.
-The successful report actually retains9,465 genes/4,103 cells, selects all
-9,465 genes and returns one all_observations tree with4,102 merge rows.
-Four-worker warmup succeeds52.68s at the same peak RSS. Initial measured
-pair1 is131.53/53.93s; these are partial observations, not final medians.
-Output fingerprints remain identical so far. Do not summarize until all
-five predeclared pairs complete.
+Measurement completed in gbm-cli-benchmark/, using taskset CPUs0-3, five
+alternating measured pairs after two warmups,1800s per-child timeout. The
+former owner2320170 has exited; it is not a live process handle. Do not
+duplicate this completed campaign or signal an old PID without ownership.
+
+Actual measured one-worker wall times:131.53,131.72,131.03,132.51,131.50s.
+Four-worker times:53.93,52.86,53.32,54.60,52.61s. Medians131.53/53.32s,
+ratio2.466804; complete-range separation holds (parallel max54.60 < serial
+min131.03). Median max RSS is2,335,035,392bytes for both selections (2.17GiB).
+Median user CPU129.04/135.04s and system2.50/2.26s. Four workers reduce wall
+time while using slightly more CPU work, not less total computation.
+Warmups130.64/52.68s are retained but excluded from measured statistics.
+
+All12 distinct owned child records exit zero with empty process groups.
+Retained actual time files, report hashes/fingerprints, source scripts and
+binary hash agree; root recomputed statistics from the ten measured records.
+Every report has fingerprint
+320f476a87363a1d1e88caa8f741980f9752b69e228c335bdb4cd38dcc0c86a8.
+The measured retained binary SHA is
+50dd80358e80f4e9b6d10a4828cdc12303f7d95d7ca09240ae9482c9da178320.
+The controller SHA is
+bb8febe17ef125808d09fce883953b4de98b4ecf2ec35b72c71a971f452f2331.
+Original reports, stdout/stderr, time/process records, provenance, summary,
+host CPU output, preparation manifest, executed scripts and binary are
+copied externally to evidence/infercnv-gbm-scaling-2026-10-26/4090-U4Wbro/.
+Its71-file collected-evidence.sha256 has SHA
+7ba7b32e17bba1438c53f2af1eac427b8e2e62f2a21a92dfefb735795f18e5c0.
+
+Host: Intel Xeon Gold6238R, two28-core sockets/112 logical CPUs, Linux6.8,
+glibc2.35, Python3.10.12, GNU time. Quota unavailable, not proven unlimited.
+The host was busy: load219.45/236.64/237.07 before,262.28/240.53/237.70 after;
+a2s sample showed pinned CPUs0-3 busy100/93/92/95%. Other jobs were untouched.
+Predeclared affinity/trials were not changed and no slow sample was removed.
+This establishes useful scaling on this loaded host, not a dedicated/idle-host
+or upstream replacement-speed gate. Never ratio these times against hosted
+CI or infer CNV validity from successful computation.
 
 Upstream-comparison preflight:4090 has R4.6.1 and Docker, but its default R
 libraries lack infercnv/fastcluster/parallelDist (Matrix1.7.5 is installed).
@@ -72,9 +87,8 @@ No installation or existing library was changed. Existing source-pinned
 oracle/measurement CI remains available for the equivalent upstream work;
 do not interpret a missing package query as a portfolio blocker or restart
 the already accepted parser/kernel campaigns.
-Results are pending. Preserve any failure/partial logs, never fabricate a
-complete summary. Collect the original remote records to external fixtures
-after completion; remote scratch is not the sole durable copy of inputs.
+No registry publication, deletion, Mac compilation or system-library change
+occurred. Both original inputs and completed outputs have external copies.
 
 Original GTF URL (HTTPS variant of the official build-notes URL):
 https://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/release_32/gencode.v32.primary_assembly.annotation.gtf.gz
@@ -101,7 +115,7 @@ Archive46,963,441bytes,SHA
 Actual barcode/feature/header inspection establishes36,601 features,
 4,103 cells and12,410,405 nonzero integer entries. Features use Ensembl IDs
 and Gene Expression type; no matrix replication or synthetic cells are used.
-This is header/cardinality inspection, not yet complete count validation.
+The converter subsequently validates all entries and count conservation.
 
 The retained web-summary.html SHA is
 eafccc013cc014992d74b8e3e702b99158e1fd83fe8feb8f105cc9aed6f0ca05.
@@ -109,9 +123,7 @@ The portal's direct HTML request returned429 and produced no file; its public
 dataset metadata was read through the web source, and the published CDN
 matrix/web-summary requests succeeded. No account or access control was bypassed.
 
-Next: execute the existing strict-TSV CLI with the explicitly documented
-all-cells/no-inferred-reference scaling configuration and a numeric budget
-large enough for the actual dense matrices. The previous184-cell benchmark
-driver remains canonical-only; do not feed this cohort through its fixed
-assertions or invent expected outputs. Full larger-input execution and
-equivalent upstream comparison remain open.
+Next: equivalent upstream whole-workflow comparison and the remaining
+inferCNV denoise/HMM/reporting work, then the rest of the portfolio. Keep
+the existing canonical case assertions and the distinct gbm-4103 contract.
+Do not rerun accepted per-helper oracle or artifact campaigns.

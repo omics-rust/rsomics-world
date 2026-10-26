@@ -21,8 +21,9 @@ feature check, not another exhaustive per-helper RED campaign.
 Product commit 7495e3eb59aecd9323c67c4a9f4626a387463ecd contains exactly the
 168 source files frozen/tested by green-21. No code changes after review
 or native verification. The following README acceptance update is docs-only.
-Current product HEAD83ef7c869c13817f1bb23931ba268c54c713c04b adds only that
-README update and is clean, still publish=false with no configured remote.
+Current product HEAD3a43638ebfbe5be9a914044ec85f4867bb75f7b3 adds only README
+acceptance/scaling updates after the code commit and is clean, still
+publish=false with no configured remote.
 Exact-head world controller 40307694168 passed at
 38200aba8be7073a71d945a81707225585d2c47c. Linux correctness/benchmark run
 40307961363/attempt1 passed on that head: 116 tests each in debug/release,
@@ -89,8 +90,10 @@ Decision: retain the simple product-local optimization and shared execution
 plumbing. It preserves accepted outputs, exercises actual Rust workers, adds
 no numeric matrices/dependencies and has a useful preliminary median benefit.
 Do not treat overlapping small-case timings as a strict performance gate.
-The 4,103-cell real cohort is now running on4090 under the same retained
-binary; host load is high and explicitly recorded. Equivalent upstream
+The 4,103-cell real cohort completes on4090 under the same retained binary:
+five-pair medians131.53/53.32s at1/4 workers, strict range separation and
+identical reports, both2.17GiB median peak RSS. Host load is high and explicitly
+recorded; see infercnv-real-cohort-2026-10-26.md. Equivalent upstream
 performance, denoise/HMM/reporting, full inferCNV and the remaining products
 are still open. This bounded acceptance is not publication readiness;
 publish=false and no remote remain intact.

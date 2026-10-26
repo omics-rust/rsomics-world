@@ -54,8 +54,10 @@ without a general performance claim. One whole-feature static review found
 no Critical/Important issue. Four-native run40309311228/attempt1 passes
 116 tests per profile on all four target classes with complete expression
 equality. Product code committed7495e3e, with no post-verification code edit.
-The real 4,103-cell case is prepared with unchanged counts and running on
-4090 with the same binary, pinned CPUs0-3 and owned 1/4-worker trials.
+The real 4,103-cell case completes with unchanged counts on4090 using the
+same binary, pinned CPUs0-3 and owned1/4-worker trials: five-pair medians
+131.53/53.32s (2.47x), strict range separation and identical reports. This
+is loaded-host scaling only; equivalent upstream comparison remains open.
 
 Review focus: disjoint slices, partial columns, launch/join errors, unchanged
 chromosome/neighbor order, memory overlap, zero-worker config and requested

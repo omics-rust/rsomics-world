@@ -43,11 +43,13 @@ classes, including complete expression equality; one whole-feature review
 finds no Critical/Important issue. Canonical whole-CLI medians0.39/0.31s at
 1/4 workers show a preliminary1.26x median gain but still overlap, not a strict
 replacement-speed gate. The real36,601-gene/4,103-cell GBM fixture now has
-count-preserving TSV and all gene coordinates matched. Its actual CLI run
-is active on4090, no Mac build; initial serial warmup succeeds130.64s at
-2,335,039,488bytes peak RSS. Host load is high, so retain loaded-host scope.
-Do not rerun already accepted kernel/oracle campaigns. Finish the real case,
-equivalent upstream comparison and remaining inferCNV operations, then keep
+count-preserving TSV and all gene coordinates matched. Its actual CLI now
+retains9,465 genes and passes all12 runs on4090: five-pair medians131.53/53.32s
+at1/4 workers (2.47x), strict range separation, same2,335,035,392byte median
+peak RSS and identical reports. Raw outputs/scripts/binary are copied to
+external fixtures. Host load is high, so retain loaded-host scope, not an R
+comparison or biological claim. Do not rerun accepted kernel/oracle campaigns.
+Continue equivalent upstream comparison and remaining inferCNV operations, then
 advancing the whole portfolio rather than stopping at this optimization.
 
 Continue portfolio work after this priority. The30 dossiers already exist;

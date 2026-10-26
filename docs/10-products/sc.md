@@ -6,7 +6,7 @@ public target repository or product release has been created.
 
 Current2026-10-26: grouped/pooled samples, native reference selection and the
 unified rsomics-help CLI now include deterministic parallel smoothing and
-distances. Product code7495e3e (docs83ef7c8) passes green21/run40309311228 on
+distances. Product code7495e3e (docs3a43638) passes green21/run40309311228 on
 all four native targets,116 tests per debug/release profile. The canonical
 raw CLI retains8508 genes/184 cells/6187 selected genes and produces identical
 1/4-worker reports including the full expression matrix. No oracle tolerance,
@@ -15,9 +15,11 @@ medians are0.39/0.31s; ranges overlap, so this is not a strict replacement
 performance result. See the [matrix-worker plan](../plans/2026-10-26-infercnv-matrix-parallel.md)
 and [accepted state](../../.autopilot/state/infercnv-matrix-parallel-2026-10-26.md).
 The real4,103-cell GBM fixture has unchanged counts and all36,601 genes joined
-to matching GENCODE32 coordinates. Actual samples CLI execution succeeds;
-five paired scaling trials are running on a busy4090 host, not an idle or
-biological-validation benchmark. See the [real-cohort state](../../.autopilot/state/infercnv-real-cohort-2026-10-26.md).
+to matching GENCODE32 coordinates. Actual samples CLI retains9,465 genes;
+five paired trials give131.53/53.32s medians at1/4 workers (2.47x), with
+complete timing separation and identical reports. This is a busy4090 host,
+not an idle, upstream-R or biological-validation benchmark. See the
+[real-cohort state](../../.autopilot/state/infercnv-real-cohort-2026-10-26.md).
 The user explicitly chose workflow-first execution and consolidated validation,
 not repeated per-helper audit campaigns. Full-path speed, full inferCNV and
 publication remain open; older bounded checkpoints below are historical.
