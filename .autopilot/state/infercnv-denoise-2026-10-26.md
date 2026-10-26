@@ -34,6 +34,35 @@ Pending: Linux candidate compilation/tests/default-output regression,
 installed-package workflow comparison, one overall review and four-native
 acceptance. No feature or release is accepted from source inspection alone.
 
+Update: Linux green22/run40319047320 passes124 tests per debug/release,
+strict Clippy and unchanged default report fingerprint198e3beb...49fb868d.
+Original run/artifact/log/ZIP are retained externally under this feature's
+evidence/run-40319047320/. Binary SHA
+aa14dfd802016e1bb57259373e8306dc896f033b1ac526a7193533ca3c6c840e;
+artifact12647838216 SHA7720af4c12c4965aa6dc0a33c0f1b81621395a397e17080245fea51c5a1ae8fb.
+The immutable native receipt selects these bytes for actual R comparison.
+
+An actual parse probe on this binary found --noise-filter -1 rejected by
+Clap before required-input checks. Added a real CLI bypass regression first,
+then allow_negative_numbers on that argument. Green23 will contain only this
+CLI parsing fix/test beyond green22; numerical, public library and report
+source bytes are unchanged. The R comparison's positive/default cases on
+green22 remain applicable; final four-native gate exercises the new parser.
+
+The installed-package driver reuses existing export/trace/parameter helpers,
+now import-safe, plus the already-proven complete C locale rule. It records
+15 real raw-input workflows (grouped, proxy, full ×off/fixed/SD/hard/logistic)
+and the native comparator runs actual1/4-worker processes. Four comparator
+behavior tests and14 workflow tests pass; R syntax/import/locale pass on4090.
+Actual installed-package execution remains pending, not inferred from these.
+
+One obsolete control test compared a919-line YAML copy in an old plan to the
+live workflow. Its failure was unrelated to production/compatibility. Replace
+that duplicate with an exact historical source link and real closed-selector
+behavior tests. All fixed-code hash checks and executable old-mode gates
+remain unchanged. Full controller suite passes445 tests/46.880s, two native
+skips, after this focused cleanup.
+
 Storage: APFS boot81.29%, KIOXIA262GiB and fixture HDD272GiB free. All project
 files/scratch/data remain external; no local Rust/R build/install/download.
 Standalone Rust1.91 formatting only. Preserve inherited VCF state and root

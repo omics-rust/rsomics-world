@@ -32,6 +32,14 @@ on:
         required: false
         default: ''
 
+      denoise_native_receipt:
+        description: Compare actual raw samples/denoise workflows with a retained native candidate
+        type: choice
+        default: none
+        options:
+          - none
+          - infercnv-denoise-candidate-2026-10-26
+
 permissions:
   contents: read
   actions: read
@@ -47,6 +55,7 @@ jobs:
       SAMPLES_CLUSTERING: ${{ inputs.samples_clustering || false }}
       INGESTION_CONTRACTS: ${{ inputs.ingestion_contracts || false }}
       INGESTION_SNAPSHOT: ${{ inputs.ingestion_snapshot || '' }}
+      DENOISE_NATIVE_RECEIPT: ${{ inputs.denoise_native_receipt || 'none' }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -74,6 +83,14 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
+          if [[ "${DENOISE_NATIVE_RECEIPT:-none}" != none ]]; then
+            test "$DENOISE_NATIVE_RECEIPT" = infercnv-denoise-candidate-2026-10-26
+            test "$ORACLE_DATASET" = shipped
+            test -z "$MATCHED_SNAPSHOT"
+            test -z "$INGESTION_SNAPSHOT"
+            test "$INGESTION_CONTRACTS" = false
+            test "$SAMPLES_CLUSTERING" = false
+          fi
           if [[ -n "$INGESTION_SNAPSHOT" ]]; then
             test "$ORACLE_DATASET" = shipped
             test "$INGESTION_CONTRACTS" = true
@@ -698,6 +715,7 @@ jobs:
             "$SHIPPED_OUTPUT" --manifest 2>&1 | tee "$EVIDENCE_DIR/shipped-validation.log"
 
       - name: Test ingestion witness checker
+        if: env.DENOISE_NATIVE_RECEIPT == 'none'
         shell: bash
         run: |
           set -euo pipefail
@@ -706,7 +724,7 @@ jobs:
             2>&1 | tee "$EVIDENCE_DIR/ingestion-checker-tests.log"
 
       - name: Capture creation-stage raw-input witnesses
-        if: env.INGESTION_CONTRACTS != 'true'
+        if: env.INGESTION_CONTRACTS != 'true' && env.DENOISE_NATIVE_RECEIPT == 'none'
         shell: bash
         run: |
           set -euo pipefail
@@ -724,7 +742,7 @@ jobs:
             "${checker[@]}" 2>&1 | tee "$EVIDENCE_DIR/ingestion-witness-validation.log"
 
       - name: Capture creation format and filter edge probes
-        if: env.ORACLE_DATASET == 'shipped' && env.INGESTION_CONTRACTS != 'true'
+        if: env.ORACLE_DATASET == 'shipped' && env.INGESTION_CONTRACTS != 'true' && env.DENOISE_NATIVE_RECEIPT == 'none'
         shell: bash
         run: |
           set -euo pipefail
@@ -740,6 +758,71 @@ jobs:
           PYTHONDONTWRITEBYTECODE=1 python3 -B scripts/validate_infercnv_creation_edges.py \
             "$SHIPPED_OUTPUT" "$EVIDENCE_DIR/creation-edges" \
             2>&1 | tee "$EVIDENCE_DIR/creation-edges-validation.log"
+
+      - name: Acquire retained native denoise candidate
+        if: env.DENOISE_NATIVE_RECEIPT != 'none'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          candidate="$EVIDENCE_DIR/native-candidate"
+          mkdir "$candidate"
+          receipt="$GITHUB_WORKSPACE/.autopilot/oracles/$DENOISE_NATIVE_RECEIPT.json"
+          cp "$receipt" "$candidate/receipt.json"
+          python3 -B - "$receipt" > "$candidate/selection.txt" <<'PY'
+          import json,sys
+          from pathlib import Path
+          r=json.loads(Path(sys.argv[1]).read_text())
+          assert r['repository']=='omics-rust/rsomics-world'
+          assert type(r['run_id']) is int and r['run_id']>0
+          assert type(r['artifact_id']) is int and r['artifact_id']>0
+          print(r['run_id'],r['artifact_id'])
+          PY
+          read -r native_run native_artifact < "$candidate/selection.txt"
+          gh api "repos/omics-rust/rsomics-world/actions/runs/$native_run" > "$candidate/original-run.json"
+          gh api "repos/omics-rust/rsomics-world/actions/artifacts/$native_artifact" > "$candidate/original-artifact.json"
+          gh api "repos/omics-rust/rsomics-world/actions/artifacts/$native_artifact/zip" > "$candidate/original-artifact.zip"
+          python3 -B - "$candidate" <<'PY'
+          from pathlib import Path
+          import hashlib,json,zipfile
+          root=Path(__import__('sys').argv[1]);r=json.loads((root/'receipt.json').read_text())
+          run=json.loads((root/'original-run.json').read_text());artifact=json.loads((root/'original-artifact.json').read_text())
+          assert run['id']==r['run_id'] and run['conclusion']=='success' and run['head_sha']==r['head_sha'] and run['run_attempt']==r['run_attempt']
+          assert artifact['id']==r['artifact_id'] and artifact['name']==r['artifact_name'] and not artifact['expired']
+          data=(root/'original-artifact.zip').read_bytes()
+          assert len(data)==r['artifact_size'] and hashlib.sha256(data).hexdigest()==r['artifact_sha256']
+          assert artifact['digest']=='sha256:'+r['artifact_sha256']
+          with zipfile.ZipFile(root/'original-artifact.zip') as archive:
+              assert hashlib.sha256(archive.read('files.sha256')).hexdigest()==r['source_manifest_sha256']
+              binary=archive.read('samples-benchmark-binary/rsomics-sc-linux-x86_64')
+          assert hashlib.sha256(binary).hexdigest()==r['binary_sha256']
+          path=root/'rsomics-sc';path.write_bytes(binary);path.chmod(0o755)
+          PY
+          printf 'DENOISE_NATIVE_BINARY=%s\n' "$candidate/rsomics-sc" >> "$GITHUB_ENV"
+
+      - name: Compare actual raw samples and denoise workflows
+        if: env.DENOISE_NATIVE_RECEIPT != 'none'
+        shell: bash
+        run: |
+          set -euo pipefail
+          PYTHONDONTWRITEBYTECODE=1 python3 -B -m unittest discover -s scripts \
+            -p test_compare_infercnv_denoise_workflow.py \
+            2>&1 | tee "$EVIDENCE_DIR/denoise-comparison-tests.log"
+          Rscript --vanilla scripts/infercnv_denoise_workflow.R \
+            "$ORACLE_OUTPUT" "$SHIPPED_OUTPUT" "$EVIDENCE_DIR/denoise-workflows" \
+            2>&1 | tee "$EVIDENCE_DIR/denoise-workflows.log"
+          mkdir "$EVIDENCE_DIR/denoise-native-controller"
+          for name in compare_infercnv_denoise_workflow.py infercnv_trial_process.py \
+                      measure_infercnv.py measure_infercnv_samples_cli.py \
+                      validate_infercnv_shipped_oracle.py; do
+            cp "$GITHUB_WORKSPACE/scripts/$name" "$EVIDENCE_DIR/denoise-native-controller/"
+          done
+          PYTHONDONTWRITEBYTECODE=1 python3 -B scripts/compare_infercnv_denoise_workflow.py \
+            --synthetic "$ORACLE_OUTPUT" --shipped "$SHIPPED_OUTPUT" \
+            --witness "$EVIDENCE_DIR/denoise-workflows" --binary "$DENOISE_NATIVE_BINARY" \
+            --output "$EVIDENCE_DIR/denoise-native-comparison" \
+            2>&1 | tee "$EVIDENCE_DIR/denoise-native-comparison.log"
 
       - name: Capture samples-clustering witnesses
         if: env.SAMPLES_CLUSTERING == 'true'

@@ -1,0 +1,14 @@
+{
+  "repository": "omics-rust/rsomics-world",
+  "run_id": 40319047320,
+  "run_attempt": 1,
+  "head_sha": "f1ddece4d4eb83a8d2916cb5073e10f8fe2d74b7",
+  "snapshot": "green-22",
+  "source_archive_sha256": "4dd1d980953e5e7153b82f6aed8f9da47acb147e296390ccb1a0abd41fdd7da9",
+  "source_manifest_sha256": "88d22341eaa78909a542624ee45ef41328b831727123732da1751f95648c9e1d",
+  "artifact_id": 12647838216,
+  "artifact_name": "sc-cnv-core-40319047320-1-linux-x86_64",
+  "artifact_size": 4608535,
+  "artifact_sha256": "7720af4c12c4965aa6dc0a33c0f1b81621395a397e17080245fea51c5a1ae8fb",
+  "binary_sha256": "aa14dfd802016e1bb57259373e8306dc896f033b1ac526a7193533ca3c6c840e"
+}

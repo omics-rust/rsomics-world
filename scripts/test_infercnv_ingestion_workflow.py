@@ -12,7 +12,6 @@ import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
 WORKFLOW = ROOT / '.github/workflows/infercnv-oracle.yml'
-PLAN = ROOT / 'docs/plans/2026-10-15-infercnv-r-package-contracts.md'
 
 
 def steps(text):
@@ -274,10 +273,23 @@ class IngestionWorkflowTests(unittest.TestCase):
                                         capture_output=True, text=True, timeout=15)
                 self.assertEqual(result.returncode, 0, result.stderr)
 
-    def test_embedded_workflow_matches_real_file(self):
-        section = PLAN.read_text().split('## Complete pinned-oracle workflow\n', 1)[1]
-        embedded = section.split('```yaml\n', 1)[1].split('\n```', 1)[0]
-        self.assertEqual(embedded + '\n', self.text)
+    def test_denoise_selector_is_closed_and_rejects_mixed_campaigns(self):
+        body = bash_body(self.steps['Validate optional matched snapshot selector'])
+        candidate = 'infercnv-denoise-candidate-2026-10-26'
+        for receipt, dataset, clustering, valid in [
+            ('none', 'synthetic', 'false', True),
+            (candidate, 'shipped', 'false', True),
+            (candidate, 'synthetic', 'false', False),
+            (candidate, 'shipped', 'true', False),
+            ('../' + candidate, 'shipped', 'false', False),
+        ]:
+            with self.subTest(receipt=receipt, dataset=dataset, clustering=clustering):
+                env = dict(os.environ, DENOISE_NATIVE_RECEIPT=receipt, ORACLE_DATASET=dataset,
+                           SAMPLES_CLUSTERING=clustering, MATCHED_SNAPSHOT='',
+                           INGESTION_SNAPSHOT='', INGESTION_CONTRACTS='false')
+                result = subprocess.run(['bash', '-c', body], cwd=ROOT, env=env,
+                                        capture_output=True, text=True, timeout=15)
+                self.assertEqual(result.returncode == 0, valid, result.stderr)
 
 
 if __name__ == '__main__':

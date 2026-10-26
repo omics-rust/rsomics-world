@@ -1,6 +1,13 @@
 #!/usr/bin/env Rscript
 
 hash_file <- function(path) digest::digest(path, algo="sha256", file=TRUE)
+enforce_samples_locale <- function() {
+    if (!nzchar(Sys.setlocale("LC_ALL", "C"))) stop("cannot initialize C locale")
+    for (category in c("LC_MESSAGES", "LC_PAPER", "LC_MEASUREMENT")) {
+        if (!identical(Sys.setlocale(category, "C"), "C")) stop("cannot enforce C locale category: ", category)
+    }
+    if (!identical(Sys.getlocale(), "C")) stop("cannot enforce C locale")
+}
 array <- function(value) unname(as.list(value))
 nullable_array <- function(value) if (is.null(value)) NULL else array(value)
 numeric17 <- function(value) array(sprintf("%.17g", as.numeric(value)))
@@ -492,11 +499,7 @@ main <- function() {
         stop("cannot preserve source bundle manifests")
     }
     Sys.setenv(OMP_NUM_THREADS="1", OPENBLAS_NUM_THREADS="1", MKL_NUM_THREADS="1")
-    if (!nzchar(Sys.setlocale("LC_ALL", "C"))) stop("cannot initialize C locale")
-    for (category in c("LC_MESSAGES", "LC_PAPER", "LC_MEASUREMENT")) {
-        if (!identical(Sys.setlocale(category, "C"), "C")) stop("cannot enforce C locale category: ", category)
-    }
-    if (!identical(Sys.getlocale(), "C")) stop("cannot enforce C locale")
+    enforce_samples_locale()
     seed <- 260930L
     context <- get("infercnv.env", envir=ns)
     context$GLOBAL_NUM_THREADS <- 1L
@@ -584,4 +587,4 @@ main <- function() {
     cat("Exported 16 workflow comparisons and 20 function-only probes; installed-package acceptance requires independent artifact validation.\n")
 }
 
-main()
+if (sys.nframe() == 0L) main()
