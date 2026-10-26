@@ -1,5 +1,54 @@
 # Larger real-input scaling source
 
+Update: the fixture-only converter scripts/prepare_infercnv_10x_fixture.py
+is implemented and the real conversion completed. One integrated witness
+passes, including exact
+row/column count placement, version-normalized gene coordinates, unchanged
+barcodes and explicit unclassified annotations. The existing coherent
+controller suite passes 440 tests in 48.205s, with two native-only skips.
+The matching GENCODE v32 GTF and derived data remain on the fixture HDD.
+This does not add native
+10x ingestion or inferred normal-cell identities to the product.
+
+The real conversion validates all 12,410,405 positive integer entries and
+preserves all 36,601 rows/4,103 barcodes, total 54,032,413 UMIs. Every gene
+matches the version-normalized GENCODE v32 coordinates; unmatched count zero.
+Exported gene totals, barcode totals and nonzero cardinality agree with the
+original sparse source. No counts are filtered or normalized by conversion.
+prepared-v1/ contains counts.tsv, positions.tsv, annotations.tsv, manifest.json
+and the retained little-endian row-major u32 intermediate. CLI chromosome/
+expression filters remain separate and must be reported during execution.
+Counts SHA ffa286fe314011bf0e4998fe9cbc631d08e0cc19457da2e68d4e6580e400b4f8.
+Positions SHA 3a6fb0f3cebf38350917c08e91b781b3b1752fc51e3e88a044480d3ce524a145.
+Annotations SHA 372845bcf2512bf37db5cff70d1ddbf07754fed96de92c86c58b44c8e71fbb17.
+All annotations are explicitly gbm_unclassified. CLI execution and actual
+large-cohort timing/RSS are still unmeasured, not inferred from conversion.
+
+The existing samples measurement driver now has an explicit gbm-4103 case,
+not a weakened canonical expectation. It uses all-cells reference, cutoff0.1,
+4GiB requested numeric budget, one unclassified observations tree covering
+all 4,103 cells and no invented expected post-filter gene count. All retained
+genes must be selected, outlier map null; reports must remain equal across
+workers/repetitions. It reuses the same owned child/timing/RSS mechanism.
+The five driver tests pass, including this distinct fixture contract.
+Final coherent controller suite: 441 tests pass in 47.452s with the two
+existing native-only skips. No local Rust/R build was run.
+
+Remote 4090 is reachable: native Linux x86_64, glibc2.35, Python3.10.12,
+112 affinity-visible CPUs and about959GiB available RAM. Its root NVMe has
+296GiB free (84% used); no compiler/install/dependency download is requested.
+Private scratch was created as /tmp/rsomics-cnv-20261026.U4Wbro and must be
+retained, not cleaned destructively. Only public source data, the retained
+green-21 Linux binary and existing Python controllers are being transferred.
+The measured selection will be 1/4 workers on four affinity-pinned CPUs;
+this is a different host, never a direct timing ratio against hosted CI.
+
+Original GTF URL (HTTPS variant of the official build-notes URL):
+https://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/release_32/gencode.v32.primary_assembly.annotation.gtf.gz
+GTF SHA 0c36c37abb0c88637b04a8e401c93f0199a65bbdd0702c9e13bdfbadc053fe1e.
+An initial timeout/restart was replaced by a resumable transfer; no partial
+download was used for conversion and no source/intermediate was deleted.
+
 Selected a public single-donor GBM count matrix for computational scaling,
 not clinical validation or a source of inferred normal-cell labels.
 
@@ -27,11 +76,9 @@ The portal's direct HTML request returned429 and produced no file; its public
 dataset metadata was read through the web source, and the published CDN
 matrix/web-summary requests succeeded. No account or access control was bypassed.
 
-Not ready as a benchmark yet: obtain/join the matching gene coordinates,
-convert the sparse source to the currently supported strict TSV without
-changing counts or claiming native10x support, and explicitly document the
-all-cells/no-inferred-reference scaling configuration. Keep identity/row join
-statistics and realistic resource limits. The previous184-cell benchmark
+Next: execute the existing strict-TSV CLI with the explicitly documented
+all-cells/no-inferred-reference scaling configuration and a numeric budget
+large enough for the actual dense matrices. The previous184-cell benchmark
 driver remains canonical-only; do not feed this cohort through its fixed
 assertions or invent expected outputs. Full larger-input execution and
 equivalent upstream comparison remain open.

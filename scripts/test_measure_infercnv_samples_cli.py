@@ -1,7 +1,7 @@
 import copy
 import unittest
 
-from measure_infercnv_samples_cli import report_fingerprint, summarize
+from measure_infercnv_samples_cli import report_fingerprint, summarize, validate_report
 
 
 def trial(threads, wall, rss, phase="measured"):
@@ -11,6 +11,19 @@ def trial(threads, wall, rss, phase="measured"):
 
 
 class SamplesCliMeasurementTests(unittest.TestCase):
+    def test_gbm_case_checks_real_cell_coverage_without_inventing_filtered_gene_counts(self):
+        cells = 4103
+        report = dict(schema="rsomics-sc.cnv.samples.v1", genes=[{"id": "a"}, {"id": "b"}],
+                      cells=[{"id": str(i)} for i in range(cells)],
+                      selected_gene_indices=[0, 1], outlier_gene_indices=None,
+                      groups=[dict(name="all_observations", member_indices=list(range(cells)),
+                                   tree=dict(merge=[[-1, -2]] + [[i, -i - 2] for i in range(1, cells - 1)],
+                                             order=list(range(cells))))])
+        validate_report(report, "gbm-4103")
+        report["selected_gene_indices"] = [1, 0]
+        with self.assertRaises(ValueError):
+            validate_report(report, "gbm-4103")
+
     def test_only_thread_provenance_is_ignored_without_mutating_the_report(self):
         serial = {"settings": {"threads": 1, "cutoff": 1.0},
                   "genes": [{"id": "A"}], "groups": [{"member_indices": [2, 0, 1]}]}

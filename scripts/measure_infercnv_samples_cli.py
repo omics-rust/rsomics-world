@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Measure canonical raw-to-samples CLI lifetime and worker scaling on Linux."""
+"""Measure raw-to-samples CLI lifetime and worker scaling on Linux fixtures."""
 
 import argparse
 import hashlib
@@ -29,17 +29,29 @@ def report_fingerprint(report, threads):
     return hashlib.sha256(data.encode()).hexdigest()
 
 
-def validate_report(report):
-    if (report["schema"] != "rsomics-sc.cnv.samples.v1"
-            or len(report["genes"]) != 8508 or len(report["cells"]) != 184
-            or len(report["selected_gene_indices"]) != 6187
-            or len(report["outlier_gene_indices"]) != 2321):
-        raise ValueError("report differs from the canonical input/selection contract")
-    expected = [("all_observations", 142), (REFERENCES[0], 19), (REFERENCES[1], 23)]
+def validate_report(report, case="canonical"):
+    if report["schema"] != "rsomics-sc.cnv.samples.v1":
+        raise ValueError("unexpected samples report schema")
+    if case == "canonical":
+        if (len(report["genes"]) != 8508 or len(report["cells"]) != 184
+                or len(report["selected_gene_indices"]) != 6187
+                or len(report["outlier_gene_indices"]) != 2321):
+            raise ValueError("report differs from the canonical input/selection contract")
+        expected = [("all_observations", 142), (REFERENCES[0], 19), (REFERENCES[1], 23)]
+        cells = 184
+    elif case == "gbm-4103":
+        genes, cells = len(report["genes"]), 4103
+        if (genes == 0 or len(report["cells"]) != cells
+                or report["outlier_gene_indices"] is not None
+                or report["selected_gene_indices"] != list(range(genes))):
+            raise ValueError("report differs from the unclassified GBM scaling contract")
+        expected = [("all_observations", cells)]
+    else:
+        raise ValueError("unknown fixture case")
     groups = report["groups"]
     if [(g["name"], len(g["member_indices"])) for g in groups] != expected:
         raise ValueError("report group names/cardinalities differ")
-    if sorted(i for g in groups for i in g["member_indices"]) != list(range(184)):
+    if sorted(i for g in groups for i in g["member_indices"]) != list(range(cells)):
         raise ValueError("report groups do not cover cells exactly once")
     for group, (_, count) in zip(groups, expected):
         if (len(group["tree"]["merge"]) != count - 1
@@ -71,16 +83,25 @@ def read_optional(path):
     return path.read_text().strip() if path.is_file() else None
 
 
-def run_measurement(bundle, binary, output, repeats=5):
+def run_measurement(bundle, binary, output, repeats=5, case="canonical"):
     bundle, binary = Path(bundle).resolve(strict=True), Path(binary).resolve(strict=True)
     output = Path(output).absolute()
     if platform.system() != "Linux" or not os.access(binary, os.X_OK):
         raise ValueError("an executable native Linux binary is required")
     if repeats < 1:
         raise ValueError("repeats must be positive")
-    inputs = [bundle / "inputs" / name for name in (
-        "canonical-full.tsv", "gencode_downsampled.EXAMPLE_ONLY_DONT_REUSE.txt",
-        "oligodendroglioma_annotations_downsampled.txt")]
+    if case == "canonical":
+        inputs = [bundle / "inputs" / name for name in (
+            "canonical-full.tsv", "gencode_downsampled.EXAMPLE_ONLY_DONT_REUSE.txt",
+            "oligodendroglioma_annotations_downsampled.txt")]
+        reference_args = [flag for name in REFERENCES for flag in ("--reference", name)]
+        extra_args, cutoff, timeout = [], "1", 300
+    elif case == "gbm-4103":
+        inputs = [bundle / name for name in ("counts.tsv", "positions.tsv", "annotations.tsv")]
+        reference_args, cutoff, timeout = [], "0.1", 1800
+        extra_args = ["--max-numeric-bytes", str(4 * 1024**3)]
+    else:
+        raise ValueError("unknown fixture case")
     input_hashes = {str(path): file_sha256(path) for path in inputs}
     binary_hash = file_sha256(binary)
     output.mkdir(parents=True, exist_ok=False)
@@ -88,8 +109,10 @@ def run_measurement(bundle, binary, output, repeats=5):
     controller = Path(__file__).resolve()
     provenance = dict(
         scope="whole fresh CLI process: plain raw input through default samples JSON report",
+        case=case,
         excludes=["compilation", "report validation", "cold I/O", "R comparison",
-                  "larger cohort", "HMM", "denoise", "plots"],
+                  "HMM", "denoise", "plots", "biological CNV accuracy"]
+                 + (["larger cohort"] if case == "canonical" else []),
         warmup="one fresh process per worker count; warm OS input/page cache",
         timing="GNU time process lifetime; owner_wall_seconds also includes observer overhead",
         binary=str(binary), binary_sha256=binary_hash, input_sha256=input_hashes,
@@ -114,15 +137,15 @@ def run_measurement(bundle, binary, output, repeats=5):
             time_path = prefix.with_suffix(".time.tsv")
             command = [str(binary), "cnv", "samples", "--counts", str(inputs[0]),
                        "--positions", str(inputs[1]), "--annotations", str(inputs[2]),
-                       "--reference", REFERENCES[0], "--reference", REFERENCES[1],
-                       "--cutoff", "1", "--threads", str(threads), "--output", str(report_path)]
+                       *reference_args, "--cutoff", cutoff, "--threads", str(threads),
+                       "--output", str(report_path), *extra_args]
             completed = run_child(["/usr/bin/time", "-f", TIME_FORMAT, "-o", str(time_path),
-                                   *command], prefix, timeout=300)
+                                   *command], prefix, timeout=timeout)
             metrics = _parse_time_file(time_path.read_text())
             if metrics["wall_seconds"] <= 0:
                 raise ValueError("GNU time wall duration must be positive")
             report = json.loads(report_path.read_text())
-            validate_report(report)
+            validate_report(report, case)
             fingerprint = report_fingerprint(report, threads)
             if baseline is not None and fingerprint != baseline:
                 raise ValueError("CLI output changed between worker counts or repetitions")
@@ -140,7 +163,7 @@ def run_measurement(bundle, binary, output, repeats=5):
     result = dict(schema_version=1, status="complete", **summarize(trials),
                   report_fingerprint=baseline, measured_trials=2 * repeats,
                   load_after=read_optional("/proc/loadavg"),
-                  claim="canonical warm-input CLI scaling only; no R replacement-speed claim")
+                  claim=f"{case} warm-input CLI scaling only; no R replacement-speed or CNV-accuracy claim")
     (output / "summary.json").write_text(json.dumps(result, indent=2) + "\n")
     return result
 
@@ -151,8 +174,9 @@ def main():
     parser.add_argument("--binary", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--repeats", type=int, default=5)
+    parser.add_argument("--case", choices=("canonical", "gbm-4103"), default="canonical")
     args = parser.parse_args()
-    result = run_measurement(args.bundle, args.binary, args.output, args.repeats)
+    result = run_measurement(args.bundle, args.binary, args.output, args.repeats, args.case)
     print(json.dumps(result, indent=2))
 
 
