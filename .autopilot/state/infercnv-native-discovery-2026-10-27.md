@@ -80,3 +80,21 @@ The normal snapshot verifier passes; it is not yet native acceptance.
 The singleton regression covers both NULL and consumed-zero root edges;
 the search report explicitly declares eight independent starts. The source
 quality/graph/PCA criterion remains unchanged.
+
+Normal four-native run40539911278 is dispatched at
+world1bb60fc63c332d4da69b3aa7fb6ba890ec6f35ef after controller40539676980
+passes. Linux/macOS aarch64 pass149 debug/release tests and strict Clippy,
+all four k20 calls and both k5 PCA1/4-worker calls (103 native subclusters).
+The tree-state repair and PCA objective gate pass. Their k5 simple call
+fails objective89.104106190676561<90.266000941679266. Linux x86_64 also
+ends failure; macOS x86_64 is still running at this record. No platform or
+whole discovery acceptance is claimed. Do not blindly increase starts or
+relax quality. A bounded read-only algorithm/local-optimum diagnosis is
+running alongside the independent RNA-seq QC whole-report gate.
+
+Original Linux aarch64 artifact12750396602 is retained at
+rsomics-fixtures/evidence/infercnv-discovery-native-2026-10-28/
+run-40539911278/linux-aarch64/. ZIP92964962 bytes, SHA
+5cc0be4cbcef1aee843d35b420c9e2606177ccd184415f4850578fe6a5917641;
+API size/digest, ZIP CRC and safe paths pass. Raw reports remain available
+for diagnosis; the failed result is not rewritten into an accepted witness.
