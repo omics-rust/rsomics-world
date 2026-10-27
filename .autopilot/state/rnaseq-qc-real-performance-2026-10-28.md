@@ -2,6 +2,27 @@
 
 ## Current state
 
+The private source-query implementation now matches the complete original
+source metrics at one/four workers locally:9,810,963 records,58,384 TIN rows,
+45,052 eligible,100 coverage bins and total13,624,401. Report bytes match
+across workers, SHA70d947d7c5e3181a2ddec7114c73bba46452ee25e0b2f39b58bda20fc9215836.
+Initial final candidate819d38554d39f2714d1c80c2cff5ae4426511385b7d4f17259ee647f8b6eede2
+has observed38.86/17.78s wall time, not measured distributions or a performance
+acceptance. Evidence is
+`/Volumes/KIOXIA/Developments/tmp/rnaseq-query-contexts-20261028.qA5lZz/`.
+
+One fresh whole-workflow review finds only query sweeping on placed-unmapped
+coordinates. It is corrected with an early unmapped skip before all query
+state, covered by an out-of-order1/4-worker regression;11 tests pass and the
+scoped re-review passes. The final boundary run adopts producer93986e after
+its actual HTSlib mapped/proper guard correction. That exact source still
+needs fresh four-native acceptance and complete same-host CPU/RSS/I/O trials.
+Do not rerun R for diagnosis, use an old binary for new timings, or claim the
+old chr21 advantage transfers automatically. Registry publication is separately
+blocked by authentication (see shared-pileup state); the goal remains active.
+
+## Resolved global-context diagnosis
+
 Fixed producer1bc989e25a42ce6c0c76e3572b41d4da283e74f2 now has accepted
 four-native CI40579417757. The complete native1-worker report (binary
 9ab7d65e48705fb314130f744059e2f59ae711a51c13d9c75a2adcad164531b9,
@@ -18,8 +39,8 @@ Do not rerun R or weaken numerical gates. Implement product-local independent
 query contexts over one physical BAM read for rseqc-5.0.5, preserving canonical
 global behavior/no-index input and original metrics/output contracts. See
 docs/plans/2026-10-28-rnaseq-query-contexts.md and
-rnaseq-query-context-task-2026-10-28.md. This implementation is active; no new
-complete consumer or performance acceptance is claimed. The shared library
+rnaseq-query-context-task-2026-10-28.md. The complete consumer comparison now
+passes locally as above; no formal performance acceptance is claimed. The shared library
 patch may ship on its own validated engine contract; the RNA product remains
 unpublished until this separate source-policy gate and its measurements pass.
 

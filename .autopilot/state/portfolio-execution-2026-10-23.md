@@ -25,31 +25,40 @@ process peak RSS5.48x lower; four-worker scaling is small, not a strong claim.
 The required whole9810963-record/58384-annotation workflow40558683154 is
 terminal FAILURE: three metric groups match, but coverage and13 TIN rows do
 not. Its original inputs/source outputs and full failed artifact are retained.
-A demonstrated filtered-record overlap-state defect is fixed in the existing
-rsomics-pileup at424d157d (version0.9.1); exact-head four-native CI40572161578
-passes, but its whole consumer rerun leaves those differences unchanged. A
-single-gene original-data trace identifies HTSlib QName-keyed overlap expiry
-as a second lifecycle mismatch. Producer1bc989e2 now passes exact-head
-four-native CI40579417757 and fixes those original differences. Two remaining
-TIN rows/six coverage bins are a confirmed product query-context issue: actual
-per-query native/samtools agrees with R, global samtools agrees with global
-native. Product-local query framing over one physical BAM read is actively
-implemented; no tolerance/workload relaxation or new public foundation API.
+A demonstrated filtered-record overlap defect and HTSlib QName-keyed expiry
+mismatch are corrected in the existing pileup foundation. Producer1bc989e2
+passes four-native CI40579417757; final mapped/proper removal guard93986e17
+passes local27 units/actualsamtools/Clippy/format and scoped review, with
+exact-head four-native CI40588249664 SUCCESS. Two remaining TIN/six-bin differences are
+proven product query contexts, not a reason to change numerical tolerances.
+Product-local source query framing now passes all original whole-data metrics
+at one/four workers, with deterministic reports and one physical BAM read.
+Eleven tests and the fresh whole-feature review/scoped fix pass; final producer
+adoption, four-native gate and formal whole performance remain next. No new
+public foundation API or workload relaxation is introduced.
 See rnaseq-qc-real-performance-2026-10-28.md and
-rnaseq-pileup-filter-fix-2026-10-28.md; publication remains pending.
+rnaseq-pileup-filter-fix-2026-10-28.md. Publish40583646680 failed registry
+authentication after successful packaging; official API still reports0.9.0.
+User secret update is requested. Hold affected publication only, not the goal.
 
 Next-family DESeq2 actual fitted-workflow40561801963 is now terminal SUCCESS
 and its original artifact/full55-file witness passes independent retention
 and raw-table checks. Exact source89ece7f4/controller40561524398 SUCCESS.
 The real14599x7 fit, reload, contrasts, normalized-count and VST exports are
-accepted as a source witness, not a native or four-platform/performance claim.
-See deseq-first-workflow-2026-10-28.md. No second broad donor survey or public
-foundation expansion is performed.
+accepted as a source witness. New private native localmain718f12a2 now passes
+the complete fixed witness at1/4 workers, seven tests, strict Clippy and format.
+Fresh review's mixed-sign contrast and JSON I/O findings are fixed and scoped
+follow-up passes. Green1 freezes19 source files; hosted four-native wrapper
+reuses the retained source witness, not a new R fit. Remaining formula,
+normalization, Cook replacement, low-df/trend and formal performance gates
+keep this publish=false, not a complete DESeq2 replacement. See
+deseq-native-fitted-workflow-2026-10-28.md. No speculative public foundation
+expansion or second broad donor survey is performed.
 
 The sections below retain the historical execution ledger, not current pending
-instructions. Fresh storage check is boot APFS76.65% occupied, KIOXIA245GiB
-and fixture HDD256GiB free. All project paths remain external; use hosted
-runner-temp for the currently planned acquisition/measurements.
+instructions. Latest local guard records boot APFS about77.15% occupied and
+KIOXIA242GiB free. Recheck before every build/test/download; all project paths
+remain external. Hosted gates and measurements use runner-temp.
 
 ## Historical execution ledger
 

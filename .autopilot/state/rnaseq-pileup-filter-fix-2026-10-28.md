@@ -2,13 +2,28 @@
 
 ## Current state
 
-Producer1bc989e25a42ce6c0c76e3572b41d4da283e74f2 is accepted for the
-small library correctness patch. Exact-head CI40579417757 is SUCCESS on
-Linux/macOS x86_64/aarch64; local27 units, three actualsamtools oracle modes,
-strict Clippy and format pass, and the fresh scoped review's one issue is
-resolved. API shape is unchanged. Repository/docs/license metadata and live
-main/registry0.9.0 are verified. Publish0.9.1 is dispatched as run40583646680
-at the same1bc989e head, not yet confirmed.
+Producer main is now93986e17f4c3a62716b0b6434737c3f46368478a, still
+unpublished0.9.1. It adds the actual HTSlib mapped/proper-pair guard to overlap
+removal; a placed-unmapped same-name record must not erase a pending mate.
+The parameterized regression first fails old code; all27 units, three actual
+samtools oracle modes, strict Clippy and format then pass in the clean external
+archive. A scoped source review passes. No public item or allocation changes.
+Exact-head four-native CI40588249664 is SUCCESS on all four native classes;
+earlier1bc989e acceptance (40579417757 SUCCESS) is retained history, not the
+new head's gate. Owning main and inherited lock hash are rechecked.
+
+Publish40583646680 at1bc989e is terminal FAILURE: packaging passes but registry
+upload returns403 authentication failed. Fresh official registry API still
+reports0.9.0 after this failure. Do not claim0.9.1 published or reuse the revoked
+plaintext token. The user has been asked to update the existing organization
+Actions secret CARGO_REGISTRY_TOKEN without sending a token in chat. Hold
+registry publication/adoption only; implementation, reviews and CI continue.
+Recheck registry and exact-head CI before any retry with the corrected secret.
+
+RNA-seq and BAM consumers temporarily pin the exact93986e Git revision for
+private verification; replace those Git pins with the immutable registry
+release before product publication. The inherited pileup Cargo.lock remains
+untracked and byte-identical (0086aa04b6bb4e1d75c7ac1d60410679f94fefd74a04ed8a7570d9bd0ef6530a).
 
 The existing30x/250x synthetic engine/partial-BAQ benchmark is refreshed with
 one warmup and three measured runs per mode. All commands/counts/process
@@ -20,14 +35,16 @@ claim. Performance decision: publish the API-preserving correctness patch
 with existing hot-path evidence/no new performance promise; require the actual
 complete consumer performance gate before the new RNA product is published.
 
-The fixed complete global RNA report now removes all original13 TIN/18-bin
+The1bc989e complete global RNA report removes all original13 TIN/18-bin
 differences. Its remaining2 TIN/6-bin differences are a product query-context
 contract, not evidence that the shared engine still disagrees with its actual
 samtools input stream. Actual per-query source/native equals R; whole-chr10
 samtools equals global native. Correct sorted source bounds are confirmed in
 rnaseq-qc-remaining-chr10-2_vxlhi5/sorted-bounds-result.json. The RNA-specific
-framing implementation is separately active under
-docs/plans/2026-10-28-rnaseq-query-contexts.md; its publication remains held.
+framing implementation now passes the complete original source comparison at
+one/four workers locally, with byte-identical reports. Its final93986e boundary
+check, new four-native gate and formal performance decision remain separate.
+See docs/plans/2026-10-28-rnaseq-query-contexts.md; publication remains held.
 
 ## Diagnosis history
 
