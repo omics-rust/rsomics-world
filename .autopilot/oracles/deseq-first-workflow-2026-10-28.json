@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "repository": "omics-rust/rsomics-world",
+  "workflow_path": ".github/workflows/deseq-oracle.yml",
+  "run_id": 40561801963,
+  "run_attempt": 1,
+  "artifact_id": 12761202566,
+  "head_sha": "89ece7f45e59517cf7631e9c5931a48c4a7760c1",
+  "artifact_name": "deseq-oracle-40561801963-1",
+  "artifact_sha256": "6adaf380cccd55829c0b7d4d022d1d405f31f8f4345971f10f7ab961a8b2e7a5",
+  "size_in_bytes": 26172835,
+  "manifest_sha256": "423e585319836ceb0b7c54a47bb2a42431e97dff9929301e9273195ddf3270f8",
+  "witness_sha256": "8f2dc0a7b0377a22c2e1afda549003842577aa4dea24c9a675af5293bcb94bd7",
+  "bundle_path": "workflow"
+}

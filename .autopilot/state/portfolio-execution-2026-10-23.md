@@ -27,9 +27,11 @@ at7f1e7c1e after replacing a blocked public download with the first campaign's
 verified immutable full original. Source/algorithm/cohort are unchanged. See
 rnaseq-qc-real-performance-2026-10-28.md; publication still pending.
 
-Next-family DESeq2 actual fitted-workflow40561801963 is also live, exact source
-89ece7f4 and controller40561524398 SUCCESS. It is a real released-R source
-witness, not a native implementation or four-platform/performance claim.
+Next-family DESeq2 actual fitted-workflow40561801963 is now terminal SUCCESS
+and its original artifact/full55-file witness passes independent retention
+and raw-table checks. Exact source89ece7f4/controller40561524398 SUCCESS.
+The real14599x7 fit, reload, contrasts, normalized-count and VST exports are
+accepted as a source witness, not a native or four-platform/performance claim.
 See deseq-first-workflow-2026-10-28.md. No second broad donor survey or public
 foundation expansion is performed.
 
