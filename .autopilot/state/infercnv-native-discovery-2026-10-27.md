@@ -45,3 +45,10 @@ Mac APFS is above80% (latest91.92%); no local compilation/install/dependency
 download. Read-only4090 has Rust1.99.1 but root filesystem84%; no dependency
 resolution or build was attempted there. Hosted runner-temp is the chosen
 build/lock path. Preserve the unrelated inherited VCF/root scratch dirt.
+
+World9b094a2912105d0c6f7c4d67fe1ef4560301c948 controller40535970176 passes.
+The whole-feature Linux dependency bootstrap is dispatched as40537142945,
+job122305353876, at that exact head with green28/discovery_workflows=true/
+bootstrap_dependencies=true. Dependency resolution succeeds; actual k20/k5
+source acquisition and the full compile/functional gate are still running.
+Do not treat a generated lock or source-only adapter check as native acceptance.
