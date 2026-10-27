@@ -20,10 +20,26 @@ Actions secret CARGO_REGISTRY_TOKEN without sending a token in chat. Hold
 registry publication/adoption only; implementation, reviews and CI continue.
 Recheck registry and exact-head CI before any retry with the corrected secret.
 
+Read-only secret metadata check: selected visibility, updated2026-09-08;
+failed publisher logs confirm a nonempty masked secret reached the command.
+This is not simply an absent environment variable. No value is read, copied,
+printed or changed; do not change secret visibility or invent token scopes.
+
 RNA-seq and BAM consumers temporarily pin the exact93986e Git revision for
 private verification; replace those Git pins with the immutable registry
 release before product publication. The inherited pileup Cargo.lock remains
 untracked and byte-identical (0086aa04b6bb4e1d75c7ac1d60410679f94fefd74a04ed8a7570d9bd0ef6530a).
+
+BAM temporary adoption now has5 release mpileup tests passing, including the
+new same-name filtered-pair regression; selected lock update changes only the
+product version and pileup source. Evidence is
+/Volumes/KIOXIA/Developments/tmp/bam-pileup-adoption-20261028.kwLtWn/.
+Strict all-target/all-feature Clippy and rustfmt now pass. The independent
+BAM hosted-storage guards are committed/pushed at
+debc170f44c434089237fc51a8c2c20009cf48ca; exact-head CI40592301741 is running.
+That committed concern uses existing registry dependencies; local Git-pinned
+pileup adoption/regression/version files are still uncommitted pending the
+producer's registry publication. Do not conflate its CI with an adopted release.
 
 The existing30x/250x synthetic engine/partial-BAQ benchmark is refreshed with
 one warmup and three measured runs per mode. All commands/counts/process

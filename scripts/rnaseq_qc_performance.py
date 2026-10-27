@@ -23,12 +23,12 @@ from rnaseq_qc_oracle import SCRIPTS, parse_coverage, parse_stdout, sha256
 from verify_infercnv_oracle_artifact import _archive_name, _artifact, _extract, _run
 
 
-NATIVE = dict(repository="omics-rust/rsomics-world", run_id=40546148508, run_attempt=1,
-              head_sha="1224fbf18d7af1b4b76869fc6e41b1611d7bb43b",
-              workflow_path=".github/workflows/rnaseq-qc-candidate.yml", artifact_id=12751813613,
-              artifact_name="rnaseq-qc-40546148508-1-linux-x86_64",
-              artifact_sha256="3e8130c10199aa0828a63ba964709cef9810713facc0d9e1bd3751e96d967d11")
-BINARY_SHA = "ae968a1a490433086b6e50867a15b9797bea47e903faf032967b5a3b377fa840"
+NATIVE = dict(repository="omics-rust/rsomics-world", run_id=40590326515, run_attempt=1,
+              head_sha="49f310a3ecdae1201a428c759b6b1eb30ca64f45",
+              workflow_path=".github/workflows/rnaseq-qc-candidate.yml", artifact_id=12773004319,
+              artifact_name="rnaseq-qc-40590326515-1-linux-x86_64",
+              artifact_sha256="a23442262d757508c1db067b666c324a014f0ac639b351e023b547e4f539cc6a")
+BINARY_SHA = "48091abdb22d5d91e18a733848798b8a9ae3dd83d3d8117dd77feca08fd13707"
 WHEEL_SHA = "a1fca6d455886b19bc2d58aa1e13b233977a2c835f676ef93bd0c6f4099b8452"
 SOURCE_SHA = "8c9d34c208bf7852f147dd365312a43a546148d1bf76581c5c0ede73fdb254b8"
 REAL_INPUT = dict(repository="omics-rust/rsomics-world", run_id=40556139574, run_attempt=1,
@@ -88,9 +88,9 @@ def prepare_runtime(acquisition):
         extract_native(zipped, acquisition / "artifact")
     root = acquisition / "artifact"
     for name, digest in {
-        "source.tar.gz": "a451612a20af21f1d73e15fadb60f039f18ef9c613a16a1652ba3f7c9177ddb0",
-        "files.sha256": "a7449cb79fc889a3d2fcc4fd6fb8a56813d2c21a70d91481d2332af55f50a562",
-        "Cargo.lock": "c09dea6b5397ca673d7052042d403fa55d2663e45c99672dc6f5ea6f51f308e2",
+        "source.tar.gz": "6129ee493f40818a5b9287f7c4e87ccd735ee0d48c0895588fc03817c74bcdaf",
+        "files.sha256": "db19a2af787e30700d9c699ed095b0760b049ebce6f5389d4998d395b797a5bb",
+        "Cargo.lock": "a6ec5961981e2f95070cec067e52c91cff9dc4b86da7f726256e504521086a84",
         "native-binary/rsomics-rnaseq-qc-linux-x86_64": BINARY_SHA,
     }.items():
         check(sha256(root / name) == digest, f"accepted native identity differs: {name}")

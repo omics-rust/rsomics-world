@@ -71,9 +71,9 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           set -euo pipefail
-          gh api repos/omics-rust/rsomics-world/actions/runs/40546148508 > "$EVIDENCE/acquisition/run.json"
-          gh api repos/omics-rust/rsomics-world/actions/artifacts/12751813613 > "$EVIDENCE/acquisition/artifact.json"
-          gh api repos/omics-rust/rsomics-world/actions/artifacts/12751813613/zip > "$EVIDENCE/acquisition/artifact.zip"
+          gh api repos/omics-rust/rsomics-world/actions/runs/40590326515 > "$EVIDENCE/acquisition/run.json"
+          gh api repos/omics-rust/rsomics-world/actions/artifacts/12773004319 > "$EVIDENCE/acquisition/artifact.json"
+          gh api repos/omics-rust/rsomics-world/actions/artifacts/12773004319/zip > "$EVIDENCE/acquisition/artifact.zip"
           python3 -B scripts/rnaseq_qc_performance.py prepare-runtime --acquisition "$EVIDENCE/acquisition" \
             2>&1 | tee "$EVIDENCE/acquisition/verification.log"
 

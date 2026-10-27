@@ -42,8 +42,8 @@ class WholeReportMeasurementTests(unittest.TestCase):
     def test_hosted_workflow_reuses_the_accepted_binary_and_propagates_failures(self):
         workflow = Path(__file__).resolve().parents[1] / ".github/workflows/rnaseq-qc-performance.yml"
         text = workflow.read_text()
-        self.assertIn("40546148508", text)
-        self.assertIn("12751813613", text)
+        self.assertIn("40590326515", text)
+        self.assertIn("12773004319", text)
         self.assertIn("if: always()", text)
         self.assertNotIn("continue-on-error", text)
         self.assertNotIn("cargo build", text)

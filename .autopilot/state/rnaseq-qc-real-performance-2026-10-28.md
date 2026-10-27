@@ -23,8 +23,25 @@ identities pass post-build/post-comparison checks. Owning localmain is
 6129ee493f40818a5b9287f7c4e87ccd735ee0d48c0895588fc03817c74bcdaf,
 manifestdb19a2af787e30700d9c699ed095b0760b049ebce6f5389d4998d395b797a5bb
 freeze19files; lockSHAa6ec5961981e2f95070cec067e52c91cff9dc4b86da7f726256e504521086a84.
-That exact source still needs fresh four-native acceptance and complete
-same-host CPU/RSS/I/O trials.
+Controller40589840035 at49f310a3ecdae1201a428c759b6b1eb30ca64f45 passes.
+Green5 four-native candidate40590326515 at that exact source is terminal
+SUCCESS on all four classes:11 tests per debug/release, strict Clippy/format
+and16 complete source comparisons. Original API/ZIP/job-log evidence is
+retained and verified under external evidence/rnaseq-qc-native-2026-10-28/
+run-40590326515/. All19 source/lock/archive identities match green5, with
+byte-identical report outputs across workers and platforms. The accepted
+Linux artifact12773004319 ZIP SHA is
+a23442262d757508c1db067b666c324a014f0ac639b351e023b547e4f539cc6a;
+binary48091abdb22d5d91e18a733848798b8a9ae3dd83d3d8117dd77feca08fd13707.
+
+Performance controller now pins this exact accepted artifact/source/lock/binary,
+not old green4. Its offline prepare-runtime path passes on the actual retained
+API/ZIP chain, including unchanged RSeQC wheel/source/dependency freeze;
+scratch /Volumes/KIOXIA/Developments/tmp/rnaseq-green5-runtime.bZFvxO/.
+Only native provenance pins change; original input cache, metrics, source
+commands, tolerances, trial counts and measurement/advantage logic do not.
+Next push/verify exact controller and dispatch profile=whole once. The earlier
+chr21 measurement remains historical; it is not this candidate's performance.
 Do not rerun R for diagnosis, use an old binary for new timings, or claim the
 old chr21 advantage transfers automatically. Registry publication is separately
 blocked by authentication (see shared-pileup state); the goal remains active.
