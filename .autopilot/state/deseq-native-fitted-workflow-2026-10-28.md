@@ -66,8 +66,17 @@ HomebrewPython3.15. The initial Apple3.9 invocation fails due to unsupported
 Python APIs; its log is retained, not treated as a product defect or repaired
 through unrelated code changes. Exact-head control-plane40589407371 at
 60111087e49136e46a5e0460bd14b3f4845fed28 passes. Four-native candidate
-40589627680 is dispatched at that source with green1; native acceptance is
-pending, not inferred from local results.
+40589627680 at that source with green1 is terminal SUCCESS on all four native
+classes. All four original API/ZIP/job-log artifacts are retained and verified
+under `/Volumes/Zane's HDD/rsomics-fixtures/evidence/deseq-native-2026-10-28/run-40589627680/`.
+Each source/archive/lock identity matches green1;55 oracle files/19 source
+files, both complete1/4-worker comparisons,144 mixed-zero rows, unchanged
+source and deterministic outputs pass. Top-level verification.json records
+the four original ZIP/binary identities. Linux artifact12773187129 ZIP
+984aaa3dd19b3d42557197b1fc91941a3b79706187d78ff9bc030b5a45fe0558,
+binaryb2923bc2fed4f248cce09a00128fe1cec25efd6d6d6bda970f5c6f1266149966.
+This accepts the bounded checkpoint, not complete DESeq2 replacement or formal
+performance. New schema2 general-design work follows the separate plan below.
 Evidence: /Volumes/KIOXIA/Developments/tmp/deseq-native-ci-check-2m2__eg9/.
 
 Current private checkpoint explicitly rejects residual df<=3, design cells
@@ -78,3 +87,7 @@ Iteration-path differences are retained diagnostics, not a reason to widen
 numeric bounds or declare exact optimizer trace equivalence. Do not publish
 this private checkpoint or expose placeholder commands. Continue coherent
 workflow work after its native gate rather than stopping at this boundary.
+
+Next plan: docs/plans/2026-10-28-deseq-design-normalization.md. Its source
+case driver and private product implementation proceed in differentiated
+files. Preserve green1/schema1 artifacts while extending the new checkpoint.
