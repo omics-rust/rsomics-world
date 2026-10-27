@@ -165,3 +165,13 @@ complete output before creating the new Bayesian receipt and dispatching
 green26's integrated four-native comparison. Source code/driver tests are
 not native compatibility acceptance. The Ward question is pending user input;
 it blocks only that grouping policy, not Bayesian or the full active goal.
+
+Continuation head05e5814e6d500a89a4fbf008357554a8240a99ff passes exact-head
+controller40499382976. Corrected oracle40499067515/job122171875675 is live;
+last observed step is setup-r, not a Bayesian failure. Its source remains
+9dd9dfc6 even as documentation advances. The parallel next-product inventory
+is now durable in rnaseq-qc-next-slice-2026-10-27.md; do not repeat that initial
+inventory or claim it is an implemented report. Only the inherited VCF/root
+scratch dirt remains outside owned control-plane edits. Product7853e922 has
+the explicitly owned local Bayesian integration and its green26 backup;
+do not discard it or stage unrelated files.

@@ -22,13 +22,13 @@ All sources are under /Volumes/KIOXIA/Documents/omics-rust/.
 
 | Asset and pinned commit | Reuse and necessary changes |
 |---|---|
-| bam-mapstat36a21482b2e76b03147d829469c4fd63b1e87aab | Refactor driver; retain category counters/precedence and flag-diverse golden. Feed mapping before other metric exclusions. |
-| bam-strandedness6e4e20b08fcd649d6578eb9c906433476d219c2f | Refactor accumulator/finalizer; preserve first-N eligible gene-overlapping sampling and query-length overlap. |
-| bam-read-dist2f39541572ebe2b795cba10275498f17333080ca | Preferred midpoint/priority donor; replace readers, annotation parsing and scan wiring. Not yet accepted against the wheel. |
-| read-distributione169e6c9b5ab8f1b6af64ea633134931102d1e58 | Tests, fixtures and benchmarks only; do not merge its competing majority-overlap classifier. |
-| genebody-coverage1813f1f6e7504be12c4dcd8e8d6f6e9d180ff482 | Retain percentile/minus-strand formulas and goldens; replace direct noodles reads and per-transcript indexed scans. |
-| tin5e9fa05942c1ee999d87d475d3226638fa402c1a | Refactor and reconcile entropy, summary eligibility, short-transcript sampling and background policy. Retain fixtures, not the entire driver. |
-| rnaseq-metricsbb2f79492a3a5a4d8eec4f2d42542fd5f0235d51 | Retain Picard refFlat/rRNA/count/bias models and goldens for later complete profiles. Current metrics/bias passes are not a shared-scan report. |
+| `rsomics-bam-mapstat` `36a21482b2e76b03147d829469c4fd63b1e87aab` | Refactor driver; retain category counters/precedence and flag-diverse golden. Feed mapping before other metric exclusions. |
+| `rsomics-bam-strandedness` `6e4e20b08fcd649d6578eb9c906433476d219c2f` | Refactor accumulator/finalizer; preserve first-N eligible gene-overlapping sampling and query-length overlap. |
+| `rsomics-bam-read-dist` `2f39541572ebe2b795cba10275498f17333080ca` | Preferred midpoint/priority donor; replace readers, annotation parsing and scan wiring. Not yet accepted against the wheel. |
+| `rsomics-read-distribution` `e169e6c9b5ab8f1b6af64ea633134931102d1e58` | Tests, fixtures and benchmarks only; do not merge its competing majority-overlap classifier. |
+| `rsomics-genebody-coverage` `1813f1f6e7504be12c4dcd8e8d6f6e9d180ff482` | Retain percentile/minus-strand formulas and goldens; replace direct noodles reads and per-transcript indexed scans. |
+| `rsomics-tin` `5e9fa05942c1ee999d87d475d3226638fa402c1a` | Refactor and reconcile entropy, summary eligibility, short-transcript sampling and background policy. Retain fixtures, not the entire driver. |
+| `rsomics-rnaseq-metrics` `bb2f79492a3a5a4d8eec4f2d42542fd5f0235d51` | Retain Picard refFlat/rRNA/count/bias models and goldens for later complete profiles. Current metrics/bias passes are not a shared-scan report. |
 
 The remaining14 donors stay in later junction/fragment/bias/duplication/
 saturation dossier slices. No historical micro-crate is revived.
@@ -57,10 +57,10 @@ executed compatibility test of the separately pinned5.0.5 wheel.
 
 ## Foundations and fixture boundary
 
-Existing foundations suffice: bamio0.8.4@30459c78951fae406bd362854e7b80e42665a5c0,
-common0.12.3@77ff148b6b66089260be6a2896980185bdbcd4d2,
-help0.4.0@61dd6f2ce0cef6d9b4e349af5f96f96a7c95a013,
-intervals0.4.0@cda29c88b67882b63e1710a22aa480e905d4423f. Concrete reader/CIGAR
+Existing foundations suffice: `bamio 0.8.4` at30459c78951fae406bd362854e7b80e42665a5c0,
+`common 0.12.3` at77ff148b6b66089260be6a2896980185bdbcd4d2,
+`help 0.4.0` at61dd6f2ce0cef6d9b4e349af5f96f96a7c95a013,
+`intervals 0.4.0` atcda29c88b67882b63e1710a22aa480e905d4423f. Concrete reader/CIGAR
 consumers include count/src/alignment.rs:110/163 and bam/src/to_bed/mod.rs:227;
 transactional output is used in count/src/count.rs:217. Current count/BAM CLI
 use rsomics_help::parse. Transcript/category/filter policy remains internal.
@@ -68,7 +68,7 @@ No new public API or foundation is justified by this inventory.
 
 Previously documented HDD100k performance fixtures were checked absent, not
 proven deleted. Existing KIOXIA/Developments/rsomics-fixtures assets are
-bench_3M.bam170283804bytes and gene_model_chr12.bed125450292bytes. Historical
+`bench_3M.bam` (170,283,804bytes) and `gene_model_chr12.bed12` (5,450,292bytes). Historical
 TIN speed notes include conda startup; Picard notes admit output differences.
 Neither establishes shared-report correctness or representative speed/RSS.
 The next implementation must pass one complete workflow gate and one fresh
