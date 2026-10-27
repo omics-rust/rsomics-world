@@ -337,6 +337,22 @@ class IngestionWorkflowTests(unittest.TestCase):
                      'Capture creation format and filter edge probes'):
             self.assertIn("env.HMM_WORKFLOWS != 'true'", self.steps[name])
 
+    def test_bayesian_only_rerun_skips_completed_ward_and_exports_actual_mc_diagnostics(self):
+        body = bash_body(self.steps['Validate optional matched snapshot selector'])
+        base = dict(os.environ, ORACLE_DATASET='shipped', SAMPLES_CLUSTERING='false',
+                    DENOISE_NATIVE_RECEIPT='none', MATCHED_SNAPSHOT='', INGESTION_SNAPSHOT='',
+                    INGESTION_CONTRACTS='false', HMM_WORKFLOWS='false', BAYES_ONLY='true')
+        for extension, accepted in [('true', True), ('false', False)]:
+            result = subprocess.run(['bash', '-c', body], cwd=ROOT,
+                                    env=dict(base, HMM_EXTENSION_WORKFLOWS=extension),
+                                    capture_output=True, text=True, timeout=15)
+            self.assertEqual(result.returncode == 0, accepted, result.stderr)
+        self.assertIn("env.BAYES_ONLY != 'true'", self.steps['Capture actual Ward-subcluster HMM workflows'])
+        bayes = self.steps['Capture actual Bayesian post-HMM workflows']
+        self.assertIn('infercnv_bayes_uncertainty.R', bayes)
+        self.assertIn('source_witness_sha256', bayes)
+        self.assertIn('reducer_sha256', bayes)
+
 
 if __name__ == '__main__':
     unittest.main()

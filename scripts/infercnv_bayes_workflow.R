@@ -53,6 +53,12 @@ bayes_posterior_record <- function(cell_gene, cnv_probabilities, cell_probabilit
     result
 }
 
+bayes_calibration_record <- function(mu, precision) {
+    if (length(mu) != 6L || length(precision) != 6L || any(!is.finite(mu)) ||
+        any(!is.finite(precision) | precision <= 0)) stop("invalid actual raw-spike calibration")
+    data.frame(state=seq_len(6L), mu=unname(mu), raw_spike_precision=unname(precision))
+}
+
 bayes_filter_record <- function(posterior, final_cell_gene, original_states, final_states, threshold) {
     before <- posterior$regions
     after_ids <- vapply(final_cell_gene, function(join) as.character(join$cnv_regions), character(1))
@@ -284,11 +290,8 @@ bayes_workflow_main <- function() {
             }
             write.table(filter$regions, file.path(directory, "filter-regions.tsv"), sep="\t", quote=FALSE, row.names=FALSE)
             saveRDS(list(posterior=posterior, filter=filter), file.path(directory, "posterior-and-filter-record.rds"))
-            calibration <- data.frame(state=seq_len(6L), state_name=names(mcmc@mu),
-                                      mu=unname(mcmc@mu), raw_spike_precision=unname(mcmc@sig))
+            calibration <- bayes_calibration_record(mcmc@mu, mcmc@sig)
             write.table(calibration, file.path(directory, "calibration.tsv"), sep="\t", quote=FALSE, row.names=FALSE)
-            if (length(mcmc@mu) != 6L || length(mcmc@sig) != 6L ||
-                any(!is.finite(mcmc@mu)) || any(!is.finite(mcmc@sig) | mcmc@sig <= 0)) stop("invalid actual raw-spike calibration")
             list(posterior=posterior, filter=filter, final=final, mcmc=mcmc,
                  sampled_wall=sampled_wall, filtered_wall=filtered_wall)
         }, warning=function(condition) {

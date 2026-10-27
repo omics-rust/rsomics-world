@@ -148,7 +148,7 @@ class SamplesCandidateWorkflowTests(unittest.TestCase):
 
     def test_hmm_runs_the_complete_real_workflow_on_each_native_target(self):
         acquire = self.steps['Acquire actual HMM workflow evidence']
-        self.assertIn('if: ${{ inputs.hmm_workflows }}', acquire)
+        self.assertIn('if: ${{ inputs.hmm_workflows || inputs.bayes_workflows }}', acquire)
         body = bash_body(acquire)
         self.assertIn('test "$EXPECT_RED" = false', body)
         self.assertIn('infercnv-hmm-workflow-2026-10-27.json', body)
@@ -162,6 +162,37 @@ class SamplesCandidateWorkflowTests(unittest.TestCase):
         self.assertIn('$CARGO_TARGET_DIR/release/rsomics-sc', body)
         self.assertLess(list(self.steps).index('Test release'),
                         list(self.steps).index('Compare complete native HMM workflows'))
+
+    def test_bayesian_selector_rejects_mixed_campaigns_before_source_or_downloads(self):
+        selection = self.text.split('      bayes_workflows:\n', 1)[1].split('      measurement:', 1)[0]
+        self.assertIn('        default: false\n', selection)
+        name = 'Validate Bayesian workflow selection'
+        body = bash_body(self.steps[name])
+        self.assertLess(list(self.steps).index(name), list(self.steps).index('Verify and extract frozen source'))
+        base = dict(os.environ, ORACLE_RECEIPT='none', EXPECT_RED='false', SAMPLES_BENCHMARK='false',
+                    HMM_WORKFLOWS='false', MEASUREMENT='false', INGESTION_MEASUREMENT='false',
+                    INGESTION_TRIAL='false', RESOLVE_MEASUREMENT_LOCK='false', RESOLVE_INPUT_LOCK='false')
+        for change in [{}, {'EXPECT_RED': 'true'}, {'HMM_WORKFLOWS': 'true'}, {'ORACLE_RECEIPT': WITNESS}]:
+            with self.subTest(change=change):
+                result = subprocess.run(['bash', '-c', body], env=dict(base, **change),
+                                        capture_output=True, text=True, timeout=15)
+                self.assertEqual(result.returncode == 0, not change, result.stderr)
+
+    def test_bayesian_campaign_verifies_actual_replay_and_runs_each_native_binary(self):
+        acquire = self.steps['Acquire actual Bayesian workflow evidence']
+        self.assertIn('if: ${{ inputs.bayes_workflows }}', acquire)
+        body = bash_body(acquire)
+        self.assertIn('infercnv-bayes-workflow-2026-10-27.json', body)
+        self.assertIn('verify_infercnv_oracle_artifact.py', body)
+        compare = self.steps['Compare complete native Bayesian workflow']
+        self.assertNotIn('matrix.target ==', compare)
+        body = bash_body(compare)
+        self.assertIn('compare_infercnv_bayes_workflow.py', body)
+        for argument in ['--shipped', '--hmm', '--bayes', '--uncertainty', '--binary', '--output']:
+            self.assertIn(argument, body)
+        self.assertIn('$CARGO_TARGET_DIR/release/rsomics-sc', body)
+        self.assertLess(list(self.steps).index('Test release'),
+                        list(self.steps).index('Compare complete native Bayesian workflow'))
 
     def test_all_bash_blocks_parse(self):
         for name, step in self.steps.items():

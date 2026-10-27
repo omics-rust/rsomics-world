@@ -55,3 +55,9 @@ bad[3L, 1L] <- 2L
 failure <- tryCatch(bayes_filter_record(posterior, final_joins, original, bad, 0.5), error=identity)
 stopifnot(inherits(failure, "error"))
 cat("Observed filtering records strict-threshold removal and actual neutral reassignment, rejecting wrong rectangles\n")
+
+calibration <- bayes_calibration_record(c(0.01, 0.5, 1, 1.5, 2, 3), rep(100, 6L))
+stopifnot(identical(names(calibration), c("state", "mu", "raw_spike_precision")),
+          identical(calibration$state, seq_len(6L)), nrow(calibration) == 6L,
+          identical(calibration$mu, c(0.01, 0.5, 1, 1.5, 2, 3)))
+cat("Calibration evidence does not require names on actual MCMC vectors\n")

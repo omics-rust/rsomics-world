@@ -50,6 +50,11 @@ on:
         type: boolean
         default: false
 
+      bayes_only:
+        description: Run only Bayesian repetitions within the extension campaign, retaining completed Ward evidence separately
+        type: boolean
+        default: false
+
 permissions:
   contents: read
   actions: read
@@ -68,6 +73,7 @@ jobs:
       DENOISE_NATIVE_RECEIPT: ${{ inputs.denoise_native_receipt || 'none' }}
       HMM_WORKFLOWS: ${{ inputs.hmm_workflows || false }}
       HMM_EXTENSION_WORKFLOWS: ${{ inputs.hmm_extension_workflows || false }}
+      BAYES_ONLY: ${{ inputs.bayes_only || false }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -95,6 +101,9 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
+          if [[ "${BAYES_ONLY:-false}" == true ]]; then
+            test "${HMM_EXTENSION_WORKFLOWS:-false}" = true
+          fi
           if [[ "${HMM_EXTENSION_WORKFLOWS:-false}" == true ]]; then
             test "$ORACLE_DATASET" = shipped
             test "${HMM_WORKFLOWS:-false}" = false
@@ -896,7 +905,7 @@ jobs:
             2>&1 | tee "$EVIDENCE_DIR/hmm-workflows.log"
 
       - name: Capture actual Ward-subcluster HMM workflows
-        if: env.HMM_EXTENSION_WORKFLOWS == 'true'
+        if: env.HMM_EXTENSION_WORKFLOWS == 'true' && env.BAYES_ONLY != 'true'
         shell: bash
         run: |
           set -euo pipefail
@@ -916,6 +925,31 @@ jobs:
           Rscript --vanilla scripts/infercnv_bayes_workflow.R \
             "$ACCEPTED_HMM_ROOT" "$EVIDENCE_DIR/bayes-workflows" \
             2>&1 | tee "$EVIDENCE_DIR/bayes-workflows.log"
+          Rscript --vanilla scripts/test_infercnv_bayes_uncertainty.R \
+            2>&1 | tee "$EVIDENCE_DIR/bayes-uncertainty-tests.log"
+          mkdir "$EVIDENCE_DIR/bayes-uncertainty"
+          cp scripts/infercnv_bayes_uncertainty.R scripts/test_infercnv_bayes_uncertainty.R \
+            "$EVIDENCE_DIR/bayes-uncertainty/"
+          for case_id in full_repeat1 full_repeat2; do
+            Rscript --vanilla scripts/infercnv_bayes_uncertainty.R \
+              "$EVIDENCE_DIR/bayes-workflows/cases/$case_id/samples" \
+              "$EVIDENCE_DIR/bayes-uncertainty/$case_id.tsv" \
+              2>&1 | tee "$EVIDENCE_DIR/bayes-uncertainty-$case_id.log"
+          done
+          python3 -B - <<'PY'
+          import hashlib, json, os
+          from pathlib import Path
+          root = Path(os.environ['EVIDENCE_DIR'])
+          folder = root / 'bayes-uncertainty'
+          def sha(path):
+              return hashlib.sha256(path.read_bytes()).hexdigest()
+          record = dict(schema_version=1,
+              source_witness_sha256=sha(root / 'bayes-workflows/witness.json'),
+              reducer_sha256=sha(folder / 'infercnv_bayes_uncertainty.R'),
+              method='six chains; 20 nonoverlapping batches of 50 draws per chain; descriptive MCSE, not convergence proof',
+              files={path.name: sha(path) for path in sorted(folder.iterdir())})
+          (folder / 'manifest.json').write_text(json.dumps(record, indent=2) + '\n')
+          PY
 
       - name: Capture samples-clustering witnesses
         if: env.SAMPLES_CLUSTERING == 'true'

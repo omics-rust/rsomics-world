@@ -96,3 +96,23 @@ posterior contract. This refines the earlier oracle-first ruling without
 committing other products to an uncertain abstraction. Cost if interpretation
 is wrong: refactor the unpublished private candidate. Ward membership policy
 remains on hold pending actual source outputs and any required user decision.
+
+## Predeclared whole-workflow comparison
+
+Before executing the native candidate, compare each region/state mixture mean
+to each of the two actual JAGS repetitions using
+`0.002 + 6*sqrt(R_batch_MCSE^2 + native_chain_SE^2)`. R MCSE uses120
+nonoverlapping50-draw batch means over the six1000-draw chains; native SE is
+the sample SD of six chain means divided by sqrt(6). These are descriptive
+Monte Carlo diagnostics, not proofs of convergence. Preserve the original
+samples and require their reduced means to agree with the recorded actual
+posterior tables. Cell-state frequencies use a fixed absolute0.05 tolerance.
+
+Require exact removals, reassigned states, original rectangle IDs, filtered
+state matrices and both adjusted report projections against both repetitions
+on this fixture. Also compare the unmodified expression/HMM outputs using the
+accepted grouped witness. If stochastic decisions disagree, diagnose the
+actual uncertainty rather than silently weakening a gate. Native1/4-worker
+reports must be identical apart from the recorded thread setting. None of
+this claims JAGS/native bit streams, arbitrary-input parity or biological
+validation.

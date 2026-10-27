@@ -87,3 +87,70 @@ Next: inspect real Ward memberships and posterior/coda/filter outputs from
 the functioning native Bayesian API/CLI/report and its whole-flow comparison.
 Four-native runtime/statistical/performance gates and one final feature review
 remain open. The goal is not complete, narrowed, paused or blocked.
+
+## Continuation ruling
+
+Goal is freshly confirmed active with the full30-family reconstruction
+objective; no replacement goal or scope change is needed. Oracle40491608980
+is still running its Ward step, not failed or re-dispatched.
+
+Ruling: finish the complete Bayesian API/CLI/report in the unpublished local
+candidate while the installed oracle runs. The pinned BUGS model and source
+already determine its operation; no published consumer is locked to the
+candidate. This replaces the overly serial public-wiring wait, not the
+requirement for actual posterior acceptance, four-native execution or fresh
+whole-feature review before committing a stable product slice. Cost if wrong:
+refactor uncommitted local wiring. Ambiguous Ward membership stays on hold.
+
+The private sampler now scales likelihoods once per cell/state; sweeps use
+likelihood*(other_count+1) without repeated log/exp calls. Its target and
+one-draw-per-update protocol are unchanged. Existing analytic tests remain
+uncompiled. A base-R reducer for retained actual coda samples now records
+per-variable chain means and50-sweep batch MCSEs without infercnv installation.
+Its critical record/identity test passes on existing4090 R4.6.1; this does not
+assert convergence or real posterior compatibility before the oracle finishes.
+
+## Actual outcome and collector correction
+
+Run40491608980 is terminal failure, not pending. Its Ward step succeeded:
+pheight produced166 subclusters with a partition mismatch in malignant_97;
+qnorm produced23 with mismatches in all six parent groups. The actual
+three-cell call returns indices[2,1] and[3] despite cut labels[1,2,1]. Native
+Ward policy is held for the user's requested compatibility decision; Bayesian
+work is independent. No Ward rerun is needed to rediscover this result.
+
+The first real Bayesian call, filtering and report adjustment completed and
+retained82 sampler RDS files plus posterior/filter tables and original/final
+objects. The collector then failed when it combined six numeric calibration
+values with names(mcmc@mu), which is NULL. This is our collector bug, not an
+infercnv/JAGS failure. The calibration helper test observes RED then GREEN on
+existing4090 R4.6.1 after removing the unsupported names assumption. Actual
+posterior/filter behavior is unchanged. Independent uncertainty tests also
+pass there. No Mac build, installation or dependency download occurred.
+
+Original failed run API, job122146656947 logs,823964462-byte artifact and safe
+extraction are retained at fixture evidence/infercnv-extensions-2026-10-27/
+run-40491608980. Artifact12731490994/API/ZIP SHA256 is
+847ea91f16c05c13447bf376a1983218cc92549d70d60d7c64b5216b00548a81.
+Do not create a successful-oracle receipt for that failed combined run.
+
+Ruling: rerun only the Bayesian repetitions after the collector correction,
+skipping the completed Ward profiles. Keep both repetitions in one complete
+unmodified-package witness rather than adding one-off recovery branches and
+missing-timing policies to the driver. The failed first call remains original
+evidence, never overwritten or accepted retroactively. New output also retains
+actual batch-uncertainty summaries and their source/witness hashes.
+
+Local candidate now wires the usable API, CLI and separate Bayesian report,
+including original-region/cell posterior joins. It is uncompiled, uncommitted
+in the product, unaccepted and unpublished. Frozen whole-feature snapshot is
+green26; never mistake its name or parser checks for a native result.
+Whole-flow comparison and new native selector pass their critical tests;
+Final controller suite passes456 tests47.897s, two existing native-only skips;
+architecture validation and diff whitespace checks pass. Frozen snapshot
+verification passes182 files, archive SHA
+93e0e287bebdf8dfb0e804eccc9cf32e97b2634e49becbc55f276daefd945d22,
+manifest2392df2566f1b45bac147fb55ac834a98656f8ae5aa5a716d8ae1703c1076b24.
+Four-native posterior/state/report execution, performance and one whole-feature
+review remain open. Dispatch corrected Bayesian-only witness after exact-head
+controller success; do not repeat the completed Ward or accepted HMM runs.
