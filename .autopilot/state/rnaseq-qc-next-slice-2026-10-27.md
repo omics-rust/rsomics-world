@@ -73,3 +73,28 @@ TIN speed notes include conda startup; Picard notes admit output differences.
 Neither establishes shared-report correctness or representative speed/RSS.
 The next implementation must pass one complete workflow gate and one fresh
 whole-feature review, not a series of per-helper campaigns.
+
+## Existing oracle availability
+
+Bounded metadata/script/header lookup, not analysis execution: local
+`/Volumes/KIOXIA/Developments/conda/envs/rs-rseqc` is RSeQC5.0.4,
+Python3.10.20/pysam0.24.0/NumPy2.2.6. Existing4090
+`/home/liangjy/miniforge3/envs/rs-up` is also RSeQC5.0.4,
+Python3.14.5/pysam0.24.0/NumPy2.4.6. Both have the five scripts, all declaring
+5.0.4. They recover historical context, not pinned5.0.5 acceptance. No5.0.5
+wheel/source was found in the targeted external scratch/fixture lookup;
+other caches and environments remain unverified. Do not blindly reinstall,
+overwrite, or treat the current GitHub tag as the installed wheel.
+
+Pinned Picard3.4.0 exists at
+`/Volumes/KIOXIA/Developments/conda/envs/rs-up-x64/bin/picard`, verified from
+its JAR manifest. Bare Homebrew picard is3.5.0, so use the explicit pinned path.
+No Picard executable was present at the checked remote rs-up/bin/picard path;
+other remote environments were not searched.
+
+Local samtools/htslib are1.24;4090 is samtools1.21/htslib1.21-1-g4dc620e5.
+The retained BAM header declares coordinate sorting and chr1/chr2 lengths
+300,000,000. Its BAI is316,608bytes. BED12 has29,900 records per contig within
+that dictionary. This is a structurally sensible synthetic stress pair, not a
+representative RNA-seq cohort; actual sorting, splice/pair/overlap/coverage
+behavior remains unverified. No full BAM scan, test, install or build occurred.
