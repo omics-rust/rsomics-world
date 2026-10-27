@@ -45,6 +45,11 @@ on:
         type: boolean
         default: false
 
+      hmm_extension_workflows:
+        description: Capture real Ward-subcluster and Bayesian post-HMM workflows
+        type: boolean
+        default: false
+
 permissions:
   contents: read
   actions: read
@@ -62,6 +67,7 @@ jobs:
       INGESTION_SNAPSHOT: ${{ inputs.ingestion_snapshot || '' }}
       DENOISE_NATIVE_RECEIPT: ${{ inputs.denoise_native_receipt || 'none' }}
       HMM_WORKFLOWS: ${{ inputs.hmm_workflows || false }}
+      HMM_EXTENSION_WORKFLOWS: ${{ inputs.hmm_extension_workflows || false }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -89,6 +95,15 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
+          if [[ "${HMM_EXTENSION_WORKFLOWS:-false}" == true ]]; then
+            test "$ORACLE_DATASET" = shipped
+            test "${HMM_WORKFLOWS:-false}" = false
+            test -z "$MATCHED_SNAPSHOT"
+            test -z "$INGESTION_SNAPSHOT"
+            test "$INGESTION_CONTRACTS" = false
+            test "$SAMPLES_CLUSTERING" = false
+            test "${DENOISE_NATIVE_RECEIPT:-none}" = none
+          fi
           if [[ "${HMM_WORKFLOWS:-false}" == true ]]; then
             test "$ORACLE_DATASET" = shipped
             test -z "$MATCHED_SNAPSHOT"
@@ -131,6 +146,36 @@ jobs:
             python3 -B -c 'import json,os,pathlib; r=json.loads(pathlib.Path(".autopilot/oracles/infercnv-measurement-candidate-2026-09-26.json").read_text()); assert os.environ["MATCHED_SNAPSHOT"] == r["snapshot_name"]'
             printf 'dataset=%s\nmatched_snapshot=%s\n' "$ORACLE_DATASET" "$MATCHED_SNAPSHOT" > "$EVIDENCE_DIR/matched-selection.tsv"
           fi
+
+      - name: Acquire accepted HMM replay for extension workflows
+        id: extension_hmm
+        if: env.HMM_EXTENSION_WORKFLOWS == 'true'
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          mkdir "$EVIDENCE_DIR/extension-hmm-acquisition"
+          receipt="$GITHUB_WORKSPACE/.autopilot/oracles/infercnv-hmm-workflow-2026-10-27.json"
+          cp "$receipt" "$EVIDENCE_DIR/extension-hmm-acquisition/receipt.json"
+          python3 -B - "$receipt" > "$EVIDENCE_DIR/extension-hmm-acquisition/selection.txt" <<'PY'
+          import json, sys
+          from pathlib import Path
+          receipt = json.loads(Path(sys.argv[1]).read_text())
+          assert receipt['repository'] == 'omics-rust/rsomics-world'
+          assert type(receipt['run_id']) is int and type(receipt['artifact_id']) is int
+          print(receipt['run_id'], receipt['artifact_id'])
+          PY
+          read -r run artifact < "$EVIDENCE_DIR/extension-hmm-acquisition/selection.txt"
+          gh api "repos/omics-rust/rsomics-world/actions/runs/$run" > "$EVIDENCE_DIR/extension-hmm-acquisition/run.json"
+          gh api "repos/omics-rust/rsomics-world/actions/artifacts/$artifact" > "$EVIDENCE_DIR/extension-hmm-acquisition/artifact.json"
+          gh api "repos/omics-rust/rsomics-world/actions/artifacts/$artifact/zip" > "$RUNNER_TEMP/accepted-hmm.zip"
+          python3 -B scripts/verify_infercnv_oracle_artifact.py --receipt "$receipt" \
+            --run-json "$EVIDENCE_DIR/extension-hmm-acquisition/run.json" \
+            --artifact-json "$EVIDENCE_DIR/extension-hmm-acquisition/artifact.json" \
+            --zip "$RUNNER_TEMP/accepted-hmm.zip" --output-dir "$RUNNER_TEMP/accepted-hmm" \
+            2>&1 | tee "$EVIDENCE_DIR/extension-hmm-acquisition/verification.log"
+          printf 'ACCEPTED_HMM_ROOT=%s\n' "$RUNNER_TEMP/accepted-hmm/hmm-workflows" >> "$GITHUB_ENV"
 
       - name: Fetch native run and verify frozen measurement source
         if: env.MATCHED_SNAPSHOT != ''
@@ -439,6 +484,7 @@ jobs:
           ' 2>&1 | tee "$EVIDENCE_DIR/install-dependencies.log"
 
       - name: Install exact source and verify package
+        id: installed_infercnv
         shell: bash
         run: |
           set -euo pipefail
@@ -729,7 +775,7 @@ jobs:
             "$SHIPPED_OUTPUT" --manifest 2>&1 | tee "$EVIDENCE_DIR/shipped-validation.log"
 
       - name: Test ingestion witness checker
-        if: env.DENOISE_NATIVE_RECEIPT == 'none' && env.HMM_WORKFLOWS != 'true'
+        if: env.DENOISE_NATIVE_RECEIPT == 'none' && env.HMM_WORKFLOWS != 'true' && env.HMM_EXTENSION_WORKFLOWS != 'true'
         shell: bash
         run: |
           set -euo pipefail
@@ -738,7 +784,7 @@ jobs:
             2>&1 | tee "$EVIDENCE_DIR/ingestion-checker-tests.log"
 
       - name: Capture creation-stage raw-input witnesses
-        if: env.INGESTION_CONTRACTS != 'true' && env.DENOISE_NATIVE_RECEIPT == 'none' && env.HMM_WORKFLOWS != 'true'
+        if: env.INGESTION_CONTRACTS != 'true' && env.DENOISE_NATIVE_RECEIPT == 'none' && env.HMM_WORKFLOWS != 'true' && env.HMM_EXTENSION_WORKFLOWS != 'true'
         shell: bash
         run: |
           set -euo pipefail
@@ -756,7 +802,7 @@ jobs:
             "${checker[@]}" 2>&1 | tee "$EVIDENCE_DIR/ingestion-witness-validation.log"
 
       - name: Capture creation format and filter edge probes
-        if: env.ORACLE_DATASET == 'shipped' && env.INGESTION_CONTRACTS != 'true' && env.DENOISE_NATIVE_RECEIPT == 'none' && env.HMM_WORKFLOWS != 'true'
+        if: env.ORACLE_DATASET == 'shipped' && env.INGESTION_CONTRACTS != 'true' && env.DENOISE_NATIVE_RECEIPT == 'none' && env.HMM_WORKFLOWS != 'true' && env.HMM_EXTENSION_WORKFLOWS != 'true'
         shell: bash
         run: |
           set -euo pipefail
@@ -848,6 +894,28 @@ jobs:
           Rscript --vanilla scripts/infercnv_hmm_workflow.R \
             "$ORACLE_OUTPUT" "$SHIPPED_OUTPUT" "$EVIDENCE_DIR/hmm-workflows" \
             2>&1 | tee "$EVIDENCE_DIR/hmm-workflows.log"
+
+      - name: Capture actual Ward-subcluster HMM workflows
+        if: env.HMM_EXTENSION_WORKFLOWS == 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          Rscript --vanilla scripts/test_infercnv_subclusters_workflow.R \
+            2>&1 | tee "$EVIDENCE_DIR/subcluster-workflow-tests.log"
+          Rscript --vanilla scripts/infercnv_subclusters_workflow.R \
+            "$SHIPPED_OUTPUT" "$EVIDENCE_DIR/subcluster-workflows" \
+            2>&1 | tee "$EVIDENCE_DIR/subcluster-workflows.log"
+
+      - name: Capture actual Bayesian post-HMM workflows
+        if: ${{ !cancelled() && env.HMM_EXTENSION_WORKFLOWS == 'true' && steps.extension_hmm.outcome == 'success' && steps.installed_infercnv.outcome == 'success' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          Rscript --vanilla scripts/test_infercnv_bayes_workflow.R \
+            2>&1 | tee "$EVIDENCE_DIR/bayes-workflow-tests.log"
+          Rscript --vanilla scripts/infercnv_bayes_workflow.R \
+            "$ACCEPTED_HMM_ROOT" "$EVIDENCE_DIR/bayes-workflows" \
+            2>&1 | tee "$EVIDENCE_DIR/bayes-workflows.log"
 
       - name: Capture samples-clustering witnesses
         if: env.SAMPLES_CLUSTERING == 'true'

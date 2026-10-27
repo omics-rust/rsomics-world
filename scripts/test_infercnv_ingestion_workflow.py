@@ -310,6 +310,23 @@ class IngestionWorkflowTests(unittest.TestCase):
                                         capture_output=True, text=True, timeout=15)
                 self.assertEqual(result.returncode == 0, valid, result.stderr)
 
+    def test_extension_selector_rejects_unrelated_campaigns_before_installing(self):
+        body = bash_body(self.steps['Validate optional matched snapshot selector'])
+        for dataset, hmm, clustering, valid in [
+            ('shipped', 'false', 'false', True),
+            ('synthetic', 'false', 'false', False),
+            ('shipped', 'true', 'false', False),
+            ('shipped', 'false', 'true', False),
+        ]:
+            with self.subTest(selection=(dataset, hmm, clustering)):
+                env = dict(os.environ, HMM_EXTENSION_WORKFLOWS='true', HMM_WORKFLOWS=hmm,
+                           ORACLE_DATASET=dataset, SAMPLES_CLUSTERING=clustering,
+                           DENOISE_NATIVE_RECEIPT='none', MATCHED_SNAPSHOT='',
+                           INGESTION_SNAPSHOT='', INGESTION_CONTRACTS='false')
+                result = subprocess.run(['bash', '-c', body], cwd=ROOT, env=env,
+                                        capture_output=True, text=True, timeout=15)
+                self.assertEqual(result.returncode == 0, valid, result.stderr)
+
     def test_hmm_workflow_uses_real_r_and_skips_unrelated_ingestion_probes(self):
         self.assertTrue('Capture integrated i6 HMM workflows' in self.steps,
                         'missing integrated HMM step')
