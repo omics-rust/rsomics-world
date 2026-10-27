@@ -175,3 +175,29 @@ inventory or claim it is an implemented report. Only the inherited VCF/root
 scratch dirt remains outside owned control-plane edits. Product7853e922 has
 the explicitly owned local Bayesian integration and its green26 backup;
 do not discard it or stage unrelated files.
+
+## Single whole-feature review and current candidate
+
+World5077d6bd64d3694c2f4bd6718f65d2483bb9bd0c passes exact-head controller
+40499994570. Fresh read-only Bayesian whole-feature review is complete; its
+findings, one fix pass and all declined-to-judge rulings are retained in
+infercnv-bayesian-review-2026-10-27.md. Do not request a second review of the
+same feature or treat this conditional static verdict as native acceptance.
+
+The fix candidate adds the upstream globally-single-state skip before active
+workspace sizing, a regression that also keeps distinct constant groups active,
+and explicit zero-disables help with an actual-command-tree assertion. Source
+predicate checks pass in existing4090 R4.6.1, formatting/parser checks pass;
+native Rust tests are still unrun. No per-helper native RED campaign was added.
+
+Current snapshot is green27, superseding green26 for the first integrated
+native gate. Its182-file manifest SHA is
+bb92aeb6c7d04119c63735c7886e0fa1f533303b5f6d73d528baac747b5c15a5,
+archive dc13d219dc63b5cda894ed6751706b369f28696f37a9efe6cfbf9e16f07c909c.
+Frozen snapshot verification passes. The actual corrected R witness is still
+40499067515/job122171875675 on9dd9dfc6; do not re-dispatch or narrow the goal.
+After it completes: retain original API/log/ZIP, inspect both real repetitions
+and Ward choice, add a successful Bayesian receipt only if justified, then
+dispatch green27's whole-feature four-native comparison. Diagnose any genuine
+posterior near-tie variability rather than calling random disagreement an
+algorithm defect or silently relaxing the predeclared gate.
