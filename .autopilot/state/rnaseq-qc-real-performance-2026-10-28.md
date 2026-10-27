@@ -24,6 +24,14 @@ and BED gzip from immutable artifact12758010802; no public data request is
 needed. Both original identity and API/ZIP chain are checked. Native/source
 algorithms, input cohort, flags, thresholds and numerical tolerances are
 unchanged. Whole acceptance and publication remain pending.
+The cache-route exact-head controller40558375098 at
+7f1e7c1e0857feeb5f69ee1ccba67101cff5d6c1 is SUCCESS. Whole retry
+40558683154/job122381526636 runs at that head and is authoritatively live
+in Measure the real complete report after the verified cache/runtime steps.
+Local actual input-artifact extraction/full-original MD5+SHA checks and all16
+RNA-focused control tests pass. No algorithm/input population change is used
+to make the previous acquisition failure disappear. Poll this same live run,
+not failed40556744875, before deciding the next action.
 
 ## Accepted bounded chr21 result
 
