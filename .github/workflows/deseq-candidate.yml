@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       snapshot:
-        description: Frozen schema2 source directory under deseq-core-2026-10-28, for example green-2
+        description: Frozen schema3 source directory under deseq-core-2026-10-28, for example green-3
         type: string
         required: true
 
@@ -282,7 +282,8 @@ jobs:
               --output "$EVIDENCE/comparison/workers-$workers" --workers "$workers" \
               2>&1 | tee "$EVIDENCE/comparison/workers-$workers.log"
             python3 -B "$EVIDENCE/controller/check-design-workflows.py" \
-              --witness "$DESIGN_ORACLE_ROOT" --binary "$binary" --include-disabled-cook \
+              --witness "$DESIGN_ORACLE_ROOT" --binary "$binary" \
+              --include-disabled-cook --include-default-cook \
               --output "$EVIDENCE/design-comparison/workers-$workers" --workers "$workers" \
               2>&1 | tee "$EVIDENCE/design-comparison/workers-$workers.log"
           done
@@ -301,7 +302,7 @@ jobs:
           root = Path(os.environ['EVIDENCE'])
           def compare(first, fourth, names):
               fitted = [json.loads((out / 'fit.json').read_text()) for out in (first, fourth)]
-              assert all(fit['schema'] == 2 for fit in fitted), 'candidate is not the schema2 checkpoint'
+              assert all(fit['schema'] == 3 for fit in fitted), 'candidate is not the schema3 checkpoint'
               assert [fit.pop('workers') for fit in fitted] == [1, 4], 'recorded worker counts differ'
               assert fitted[0] == fitted[1], 'worker count changed fitted state'
               exports = {}
@@ -317,18 +318,17 @@ jobs:
           general = ['interaction-ratio-formula', 'interaction-ratio-matrix', 'interaction-sf-formula',
                      'interaction-nf-formula', 'interaction-sf-nf-formula', 'nointercept-sf-formula',
                      'intercept-sf-formula']
-          included = general + [f'cook-{size}-disabled-{route}'
-                                for size in ('7x7', '7x3') for route in ('formula', 'matrix')]
-          excluded = [f'cook-{size}-default-{route}'
-                      for size in ('7x7', '7x3') for route in ('formula', 'matrix')]
-          assert all(contract['cases'] == included and contract['excluded_cases'] == excluded for contract in contracts), \
-              'native design scope differs from seven general and four disabled-replacement cases'
+          included = general + [f'cook-{size}-{replacement}-{route}'
+                                for size in ('7x7', '7x3')
+                                for replacement in ('default', 'disabled')
+                                for route in ('formula', 'matrix')]
+          assert all(contract['cases'] == included and contract['excluded_cases'] == [] for contract in contracts), \
+              'native design scope differs from seven general and eight Cook cases'
           design = {}
           for case in included:
               exports = names if case == 'intercept-sf-formula' else names + ['mixed.tsv']
               design[case] = compare(first / case, fourth / case, exports)
-          record = dict(passed=True, compared_workers=[1, 4], pasilla=pasilla, design_cases=design,
-                        positive_replacement_cases_not_implemented_or_accepted=excluded)
+          record = dict(passed=True, compared_workers=[1, 4], pasilla=pasilla, design_cases=design)
           (root / 'worker-determinism.json').write_text(json.dumps(record, sort_keys=True) + '\n')
           print(json.dumps(record, sort_keys=True))
           PY
