@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "repository": "omics-rust/rsomics-world",
+  "workflow_path": ".github/workflows/infercnv-oracle.yml",
+  "run_id": 40515941483,
+  "run_attempt": 1,
+  "artifact_id": 12739478209,
+  "head_sha": "c48b6c86b85f6d257cfd0d813a5e941abcf38977",
+  "artifact_name": "infercnv-oracle-40515941483-1",
+  "artifact_sha256": "c95ac463415233dcedb1e5751cc83294fc3b1034523e56fd93228dfa952d2717",
+  "manifest_sha256": "342d1a68c294443ab9b422ef7cff88f3d8d7cc68d9f6b971ec9ac9e2ffbdcb56",
+  "bundle_path": "shipped-bundle"
+}

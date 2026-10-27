@@ -103,3 +103,16 @@ at13:52:35UTC and is now terminal SUCCESS. Original870099036-byte artifact
 c95ac463415233dcedb1e5751cc83294fc3b1034523e56fd93228dfa952d2717,
 is being retained before actual partition inspection. Success is not yet a
 claim of nontrivial partition or native compatibility. Do not duplicate it.
+
+Root now retains and fully verifies the original k5 ZIP/API/head/manifest,
+not merely its range preview. Verified artifact root is
+rsomics-fixtures/evidence/infercnv-leiden-k5-2026-10-27/run-40515941483/artifact/.
+Its witness SHA is7f00c01e6cb26f1c473b7509137af914621001a7b09ffffd455b4205aff3680b;
+Leiden manifest863c9c92f0f4d7c3a3458afd57ccc26fc2a64704d1256c74d9277ea5003aa960.
+Both raw profiles complete: six genuine PCA groups produce104 clusters
+(23/13/14/18/18/18); simple produces65 (13/10/11/10/10/11). No source
+membership mismatch. The slow serial download was stopped and kept as
+artifact.partial-serial-20261027.zip; a range-acquired original ZIP passed
+the exact API SHA and standard verifier before replacement. Nothing deleted.
+Do not rerun k20/k5. Native implementation/qualification is tracked in
+infercnv-native-discovery-2026-10-27.md, not claimed by these source results.
