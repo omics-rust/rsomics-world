@@ -108,11 +108,18 @@ Monte Carlo diagnostics, not proofs of convergence. Preserve the original
 samples and require their reduced means to agree with the recorded actual
 posterior tables. Cell-state frequencies use a fixed absolute0.05 tolerance.
 
-Require exact removals, reassigned states, original rectangle IDs, filtered
-state matrices and both adjusted report projections against both repetitions
-on this fixture. Also compare the unmodified expression/HMM outputs using the
-accepted grouped witness. If stochastic decisions disagree, diagnose the
-actual uncertainty rather than silently weakening a gate. Native1/4-worker
-reports must be identical apart from the recorded thread setting. None of
-this claims JAGS/native bit streams, arbitrary-input parity or biological
-validation.
+Require exact removals and original rectangle IDs, memberships, coordinates
+and report order against both repetitions. Reassigned states, filtered paths
+and adjusted-table state columns are exact where the actual source resolves
+one maximum. Source-indeterminate maxima are classified from R alone using
+interval radius0.002+6*R_batch_MCSE: a state is admissible only when its upper
+bound reaches the largest lower bound. Require the native posterior's actual
+maximum to lie in that set, explicitly label the region and both choices,
+and do not claim exact report equality there. All unchanged posterior/error
+criteria still apply. The source-only evidence/ruling is retained in
+infercnv-bayesian-statistical-contract-2026-10-27.md before any native comparison.
+
+Also compare unmodified expression/HMM outputs using the accepted grouped
+witness. Native1/4-worker reports must be identical apart from their recorded
+thread setting. These descriptive intervals do not establish convergence,
+JAGS/native bit streams, arbitrary-input parity or biological validation.

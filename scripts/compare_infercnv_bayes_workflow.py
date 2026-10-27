@@ -25,6 +25,10 @@ def probabilities(values):
           and abs(sum(values) - 1) < 1e-10, "invalid six-state posterior probabilities")
 
 
+def compatible_state(actual, expected, admissible=()):
+    return actual == expected or actual in admissible and expected in admissible
+
+
 def compare_bayesian(report, reference, uncertainty, states, tables):
     result = report["bayesian"]
     check((result["step"], result["model"], result["sampler"], result["applied"],
@@ -43,6 +47,9 @@ def compare_bayesian(report, reference, uncertainty, states, tables):
     maximum = cell_maximum = 0.0
     removed = 0
     seen = set()
+    ambiguous = []
+    ambiguous_regions = {}
+    ambiguous_genes = {}
     for posterior in result["posteriors"]:
         key = posterior["group_index"], posterior["region_index"]
         check(key in regions and key not in seen, "posterior original-region identity differs")
@@ -58,6 +65,7 @@ def compare_bayesian(report, reference, uncertainty, states, tables):
         check(len(chains) == 6, "native Bayesian chain count differs")
         for chain in chains:
             probabilities(chain)
+        source_bounds = []
         for state, value in enumerate(mixture, 1):
             means = [chain[state - 1] for chain in chains]
             close(statistics.mean(means), value, 1e-12, "native mixture and chain means disagree")
@@ -69,6 +77,8 @@ def compare_bayesian(report, reference, uncertainty, states, tables):
             tolerance = MIXTURE_FLOOR + MC_STANDARD_ERRORS * math.sqrt(
                 standard_error ** 2 + statistics.variance(means) / len(means))
             maximum = max(maximum, close(value, oracle, tolerance, f"mixture posterior differs for {name}/{state}"))
+            radius = MIXTURE_FLOOR + MC_STANDARD_ERRORS * standard_error
+            source_bounds.append((oracle - radius, oracle + radius))
         members = group["member_indices"]
         check(len(posterior["cell_probabilities"]) == len(members), "posterior cell count differs")
         for cell, values in zip(members, posterior["cell_probabilities"]):
@@ -79,12 +89,25 @@ def compare_bayesian(report, reference, uncertainty, states, tables):
         filtered = mixture[2] > threshold
         final = 3 if filtered else max(range(6), key=mixture.__getitem__) + 1
         check(posterior["removed"] == filtered == expected["removed"]
-              and posterior["final_state"] == final == expected["final_state"],
+              and posterior["final_state"] == final,
               f"actual filtering or reassignment differs for {name}")
         removed += filtered
         start, end = region["gene_range"]
         expected_states[key[0]][start:end] = [final] * (end - start)
-        if not filtered:
+        if filtered:
+            check(expected["final_state"] == 3, "actual removed CNV is not neutral")
+        else:
+            largest_lower = max(lower for lower, _ in source_bounds)
+            admissible = [state for state, (_, upper) in enumerate(source_bounds, 1)
+                          if upper >= largest_lower]
+            check(final in admissible and expected["final_state"] in admissible,
+                  f"reassigned state falls outside actual posterior support for {name}")
+            if len(admissible) > 1:
+                ambiguous.append(dict(region=name, admissible_states=admissible,
+                                      native_state=final, observed_state=expected["final_state"]))
+                ambiguous_regions[name] = admissible
+                for gene in range(start, end):
+                    ambiguous_genes[(key[0], gene)] = admissible
             expected_regions[key[0]].append(dict(region, state=final))
     check(len(result["groups"]) == len(originals), "filtered HMM group count differs")
     check(states.genes == tuple(gene["id"] for gene in report["genes"])
@@ -96,7 +119,9 @@ def compare_bayesian(report, reference, uncertainty, states, tables):
               and actual["states"] == expected_states[index] and actual["regions"] == expected_regions[index],
               "filtered groups, paths or original region identities differ")
         for gene, row in enumerate(states.rows):
-            check(all(row[cell] == actual["states"][gene] for cell in actual["member_indices"]),
+            admissible = ambiguous_genes.get((index, gene), ())
+            check(all(compatible_state(actual["states"][gene], row[cell], admissible)
+                      for cell in actual["member_indices"]),
                   f"actual Bayesian state matrix differs for {actual['name']} at gene {gene}")
         for region in actual["regions"]:
             projected["pred_cnv_regions"].append((actual["name"], region["name"], region["state"],
@@ -106,9 +131,15 @@ def compare_bayesian(report, reference, uncertainty, states, tables):
                                                  gene["id"], gene["chromosome"], gene["start"], gene["end"])
                                                 for gene in report["genes"][start:end])
     for name, rows in projected.items():
-        check(rows == tables[name], f"actual adjusted {name} report differs")
+        check(len(rows) == len(tables[name]), f"actual adjusted {name} row count differs")
+        for actual, expected in zip(rows, tables[name]):
+            check(actual[:2] == expected[:2] and actual[3:] == expected[3:]
+                  and compatible_state(actual[2], expected[2], ambiguous_regions.get(actual[1], ())),
+                  f"actual adjusted {name} report differs")
     return dict(regions=len(regions), removed=removed, retained=len(regions) - removed,
-                max_posterior_scaled_error=maximum, max_cell_scaled_error=cell_maximum)
+                max_posterior_scaled_error=maximum, max_cell_scaled_error=cell_maximum,
+                ambiguous_reassignments=ambiguous,
+                reassignment_differences=sum(row["native_state"] != row["observed_state"] for row in ambiguous))
 
 
 def rows(root, path):
@@ -212,7 +243,7 @@ def run_comparison(shipped, hmm, bayes, uncertainty, binary, output):
                    binary_sha256=binary_hash, witness_sha256=file_sha256(bayes / "witness.json"), results=results,
                    tolerance=dict(mixture_floor=MIXTURE_FLOOR, MC_standard_errors=MC_STANDARD_ERRORS,
                                   cell_absolute=CELL_TOLERANCE),
-                   scope="actual grouped-i6 Bayesian posterior/rectangle/report compatibility on one real fixture",
+                   scope="actual grouped-i6 Bayesian posterior/stable-state/structural-report compatibility; source-indeterminate reassignments explicitly labeled",
                    timing="native process observations; not paired R performance or biological validation")
     (output / "summary.json").write_text(json.dumps(summary, indent=2) + "\n")
     return summary

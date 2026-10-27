@@ -74,6 +74,29 @@ class BayesianComparisonTests(unittest.TestCase):
             with self.subTest(mutation=mutation), self.assertRaises(ValueError):
                 compare_bayesian(*arguments)
 
+    def test_source_indeterminate_maximum_is_labeled_without_losing_structural_checks(self):
+        arguments = example()
+        report, reference, uncertainty, states, tables = arguments
+        name = "chr1-region_5"
+        values = reference["probabilities"][name]
+        values[2], values[5] = values[5], values[2]
+        reference["regions"][name]["final_state"] = 6
+        for state in range(1, 7):
+            uncertainty[(name, state)]["mean"] = values[state - 1]
+        for state in (3, 6):
+            uncertainty[(name, state)]["standard_error"] = .01
+        for cell in range(12):
+            states.rows[2][cell] = 6
+        tables["pred_cnv_regions"][1] = ("obs.obs_s1", name, 6, "chr1", 3, 3)
+        tables["pred_cnv_genes"][1] = ("obs.obs_s1", name, 6, "g2", "chr1", 3, 3)
+        result = compare_bayesian(*arguments)
+        self.assertEqual(result["ambiguous_reassignments"], [dict(
+            region=name, admissible_states=[3, 6], native_state=3, observed_state=6)])
+        self.assertEqual(result["reassignment_differences"], 1)
+        reference["regions"][name]["final_state"] = 2
+        with self.assertRaises(ValueError):
+            compare_bayesian(*arguments)
+
 
 if __name__ == "__main__":
     unittest.main()

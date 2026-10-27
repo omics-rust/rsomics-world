@@ -201,3 +201,21 @@ and Ward choice, add a successful Bayesian receipt only if justified, then
 dispatch green27's whole-feature four-native comparison. Diagnose any genuine
 posterior near-tie variability rather than calling random disagreement an
 algorithm defect or silently relaxing the predeclared gate.
+
+## Current source-only statistical ruling
+
+Continuation starts from6315bb005b37bd4e54b9a2168678e001e92a7404, whose
+exact-head controller40501372325 passes. Same oracle40499067515 is confirmed
+live; setup-r completed12:08:53UTC, JAGS installation completed, and actual R
+dependency installation began12:19:08UTC. No duplicate run was dispatched.
+
+The first retained call now has an actual base-R reduction of all82 coda
+files: all492 theta means match the original posterior table to5.56e-16.
+Source-only uncertainty identifies three unresolved state3/4 maxima. The old
+requirement to reproduce every noisy maximum exactly is therefore replaced
+before native comparison by the explicit statistical contract in
+infercnv-bayesian-statistical-contract-2026-10-27.md. Posterior numeric limits,
+strict removals and structural identity gates remain unchanged; ambiguities
+are labeled, never reported as exact output equality. Critical comparison
+test observes RED then GREEN; native code/protocol/API and green27 are
+unchanged. Ward's pending user choice remains independent of Bayesian gates.
