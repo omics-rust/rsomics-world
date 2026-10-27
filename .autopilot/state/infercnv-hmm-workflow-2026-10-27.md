@@ -33,11 +33,46 @@ inherited VCF/root scratch and all evidence. No deletion or automation.
 
 World2ba75b48e1b2ff15578ef4a8cb7d32c40e46295a was pushed. Exact-head control
 run40468399041 passes controller tests and architecture validation. Real HMM
-oracle run40468601684 is confirmed in progress on that head, job122069956538,
-currently installing its pinned R/Bioconductor dependencies. This is the live
-handle to resume, not a reason to dispatch another run. Source commit/archive
+oracle run40468601684 was dispatched on that head, job122069956538,
+initially installing its pinned R/Bioconductor dependencies. Its terminal
+failure and root cause are recorded below; it is no longer live. Source commit/archive
 pins and the old executable compatibility/measurement gates are unchanged.
 
 Denoise collection is complete; exec session46488 has exited successfully and
 must not be treated as live. Its full original archive and summary are verified
 in the denoise ledger. Productc5db7c74 is clean after codeab5465ac plus README.
+
+Run40468601684/attempt1 fails in the first synthetic grouped raw workflow at
+step3, before any HMM decoder invocation. Original run/artifact API, job.log
+and ZIP are retained under external evidence/infercnv-hmm-2026-10-27/
+run-40468601684/. Artifact12717453408 is270039658 bytes; verified ZIP SHA
+4548eecaa388e865a6a68175324a0e4af880db1872b5102fb91c440f76eb4af7.
+Its actual failure.json and call.log report "smoothing parameter value too
+small" at smooth.spline(logv~logm). No HMM parity or successful calibration
+follows from that failed execution.
+
+Root reproduced this error using the original stage3 object and unmodified
+source .get_mean_var_table plus actual stats::smooth.spline in R4.6.1 on4090:
+1784 mean/variance rows,16 unique log means, x IQR0.09820742. Read-only copied
+assets remain in /tmp/rsomics-hmm-20261027.P1SX57 and external scratch
+hmm-spline-diagnosis-20261027/. No package was installed or source patched.
+
+Ruling: keep that verified synthetic error as an explicit negative case.
+Three required positive real-count workflows now cover default reference
+groups, all-cells proxy and aggregated simulated normals. An unrelated
+message/call, unexpected positive failure or missing result still aborts.
+This changes fixture suitability, not the upstream algorithm or acceptance
+tolerance. The R outcome regression first failed on the non-import-safe
+driver, then passes after the guarded entry point and strict outcome policy;
+it rejects unexpected success and unrelated error messages/calls.
+Full controller suite again passes447 tests/51.738s, two existing skips;
+architecture validation passes. The real example has two distinct normal
+groups (19 microglia/macrophage and23 non-malignant oligodendrocytes), so
+default-versus-aggregated calibration exercises real multiple-reference
+handling, not duplicate single-group cases.
+
+Fresh boot APFS92.17%, KIOXIA247GiB and fixture HDD272GiB free. Local builds,
+installs and dependency downloads remain prohibited; all project artifacts
+and scratch are external. No deletion is authorized or performed. Parallel
+read-only work now resolves exact spline/GCV and seeded-calibration contracts
+for the native implementation, not a duplicate overall HMM inventory/review.

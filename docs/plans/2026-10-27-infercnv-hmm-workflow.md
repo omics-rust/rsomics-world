@@ -55,8 +55,10 @@ implementation. Preserve provenance/attribution when adapting selected code.
 ## Execution
 
 - [ ] Capture real installed-package raw HMM workflows using the existing
-  pinned R4.6.1 environment. Cover synthetic grouped references, no-reference
-  proxy and a real shipped full input. Retain expression/state identities,
+  pinned R4.6.1 environment. Cover the real shipped full input with grouped
+  references, no-reference proxy and aggregated simulated normals. Retain the
+  synthetic grouped input as the verified upstream spline-failure case, not
+  a fabricated successful calibration. Retain expression/state identities,
   transformed-spike calibration, fitted coefficients and actual step17 tables.
 - [ ] Characterize the actual pooled-HMM branch separately: its source uses
   c(all_observations=unlist(obs),refs), unlike step15's list-wrapped group.
@@ -77,3 +79,15 @@ implementation. Preserve provenance/attribution when adapting selected code.
 Mac boot APFS currently exceeds80%. All files, fixtures, Cargo/TMP paths and
 scratch remain external. No local compile, package installation or dependency
 download; reuse native hosted runners. Preserve existing scratch/evidence.
+
+Ruling after run40468601684: the synthetic preprocessing fixture is not a
+successful i6 calibration fixture. Actual infercnv fails in
+smooth.spline(logv~logm), before decoding, with "smoothing parameter value too
+small". The same actual stage3 object and source mean/variance-table function
+reproduce the error in R4.6.1 on4090 (1784 rows,16 unique log means). Preserve
+that exact error/call as a negative case; unrelated errors still fail the
+workflow. Move positive proxy/aggregation coverage to the real shipped counts,
+without changing meanvar, spline settings, decoding, source pins or numerical
+criteria. Cost: the hand-designed synthetic input does not supply successful
+HMM state goldens; its existing creation/preprocessing/denoise evidence remains
+unchanged. Full native HMM and all remaining products are still required.

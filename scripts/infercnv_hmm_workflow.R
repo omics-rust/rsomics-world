@@ -22,6 +22,17 @@ hmm_groups <- function(groups) {
     }))
 }
 
+hmm_call_outcome <- function(result, expected_error=NULL) {
+    if (is.null(expected_error)) {
+        if (result$status == "success") return("success")
+        stop("actual raw HMM workflow failed: ", result$error$message)
+    }
+    if (result$status == "error" &&
+        identical(result$error$message, expected_error$message) &&
+        identical(result$error$call, expected_error$call)) return("expected_error")
+    stop("actual HMM outcome differs from the recorded upstream failure")
+}
+
 hmm_workflow_main <- function() {
     args <- commandArgs(trailingOnly=TRUE)
     if (length(args) != 3L) stop("usage: infercnv_hmm_workflow.R SYNTHETIC SHIPPED OUTPUT")
@@ -40,7 +51,8 @@ hmm_workflow_main <- function() {
     if (!dir.exists(root)) stop("cannot create output directory")
     metadata <- file.path(root, "metadata")
     dir.create(metadata)
-    for (name in c("infercnv_hmm_workflow.R", "infercnv_samples_clustering_witness.R", "infercnv_oracle_io.R")) {
+    for (name in c("infercnv_hmm_workflow.R", "test_infercnv_hmm_workflow.R",
+                   "infercnv_samples_clustering_witness.R", "infercnv_oracle_io.R")) {
         if (!file.copy(file.path(script_dir, name), file.path(metadata, name))) stop("cannot retain script")
     }
     writeLines(capture.output(sessionInfo()), file.path(metadata, "session.txt"))
@@ -56,9 +68,12 @@ hmm_workflow_main <- function() {
     trace(predictor, where=ns, print=FALSE,
           exit=quote(get(".hmm_workflow_exit", .GlobalEnv)(environment(), returnValue())))
     on.exit(untrace(predictor, where=ns))
-    sources <- list(grouped=list(bundle=synthetic, kind="synthetic", profile="grouped_bounds"),
-                    proxy=list(bundle=synthetic, kind="synthetic", profile="no_reference"),
-                    full=list(bundle=shipped, kind="shipped", profile="full"))
+    sources <- list(grouped=list(bundle=synthetic, kind="synthetic", profile="grouped_bounds",
+                                 expected_error=list(message="smoothing parameter value too small",
+                                                     call="smooth.spline(logv ~ logm)")),
+                    full=list(bundle=shipped, kind="shipped", profile="full"),
+                    proxy=list(bundle=shipped, kind="shipped", profile="full", reference_free=TRUE),
+                    aggregated=list(bundle=shipped, kind="shipped", profile="full", aggregate_normals=TRUE))
     seed <- 261027L
     cases <- list()
     for (id in names(sources)) {
@@ -69,6 +84,7 @@ hmm_workflow_main <- function() {
         if (source$kind == "synthetic") settings$ref_subtract_use_mean_bounds <- entry$settings$ref_subtract_use_mean_bounds
         refs <- if (source$kind == "synthetic") entry$settings$ref_group_names else entry$reference_groups
         refs <- as.character(unlist(refs, use.names=FALSE))
+        if (isTRUE(source$reference_free)) refs <- character()
         inputs <- if (source$kind == "synthetic") {
             list(counts=bundle$record$inputs[["counts.tsv"]], positions=bundle$record$inputs[["gene_order.tsv"]],
                  annotations=bundle$record$inputs[["annotations.tsv"]])
@@ -84,6 +100,7 @@ hmm_workflow_main <- function() {
         run_args$HMM_type <- "i6"
         run_args$HMM_report_by <- "subcluster"
         run_args$BayesMaxPNormal <- 0
+        run_args$hspike_aggregate_normals <- isTRUE(source$aggregate_normals)
         create_args <- list(raw_counts_matrix=bundle_file(bundle$root, inputs$counts),
                             gene_order_file=bundle_file(bundle$root, inputs$positions),
                             annotations_file=bundle_file(bundle$root, inputs$annotations),
@@ -92,6 +109,7 @@ hmm_workflow_main <- function() {
                             chr_exclude=c("chrX", "chrY", "chrM"))
         capture$hmm <- NULL
         capture$hmm_calls <- 0L
+        cat("Running actual raw i6 workflow: ", id, "\n", sep="")
         started <- proc.time()[["elapsed"]]
         result <- capture_call(function() {
             obj <- do.call(infercnv::CreateInfercnvObject, create_args)
@@ -100,7 +118,14 @@ hmm_workflow_main <- function() {
         wall <- proc.time()[["elapsed"]] - started
         if (result$status != "success") {
             jsonlite::write_json(result, file.path(directory, "failure.json"), auto_unbox=TRUE, pretty=TRUE, null="null")
-            stop("actual raw HMM workflow failed: ", id)
+        }
+        outcome <- hmm_call_outcome(result, source$expected_error)
+        if (outcome == "expected_error") {
+            cases[[id]] <- list(status=outcome, error=result$error, warnings=result$warnings,
+                inputs=c(list(bundle=source$kind, references=array(refs)), inputs), run_parameters=run_args,
+                raw_create_to_return_wall_seconds=wall)
+            cat("Confirmed recorded upstream HMM failure: ", id, ": ", result$error$message, "\n", sep="")
+            next
         }
         hmm <- capture$hmm
         if (capture$hmm_calls != 1L || is.null(hmm) || is.null(hmm$input@.hspike) ||
@@ -138,6 +163,8 @@ hmm_workflow_main <- function() {
     files <- stats::setNames(lapply(paths, function(path) hash_file(file.path(root, path))), paths)
     record <- list(schema_version=1L, status="complete", package=pin,
         scope="actual raw-to-i6 grouped samples, calibrated states and stage17 reports; no Bayesian or native acceptance",
+        successful_cases=names(Filter(function(case) case$status == "success", cases)),
+        expected_error_cases=names(Filter(function(case) case$status == "expected_error", cases)),
         seed=seed, rng_kind=array(RNGkind()), timing="in-process raw create through return including trace; not paired performance",
         source_bundles=list(synthetic=synthetic$manifest_sha256, shipped=shipped$manifest_sha256),
         cases=cases, files=files)
@@ -145,4 +172,4 @@ hmm_workflow_main <- function() {
                          null="null", na="null", digits=17)
 }
 
-hmm_workflow_main()
+if (sys.nframe() == 0L) hmm_workflow_main()
