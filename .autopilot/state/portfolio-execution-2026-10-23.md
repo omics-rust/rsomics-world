@@ -19,6 +19,20 @@ whole-report plan at docs/plans/2026-10-28-rnaseq-qc-real-performance.md;
 the required separate whole-input profile must not be replaced by chr21-only
 timings. No speculative Layer A API or empty product is introduced.
 
+Real chr21 complete-report40556139574 is now accepted with102098 records,
+all5 source metrics/worker outputs matching, serial median47x faster and
+process peak RSS5.48x lower; four-worker scaling is small, not a strong claim.
+The required whole9810963-record/58384-annotation workflow40558683154 is live
+at7f1e7c1e after replacing a blocked public download with the first campaign's
+verified immutable full original. Source/algorithm/cohort are unchanged. See
+rnaseq-qc-real-performance-2026-10-28.md; publication still pending.
+
+Next-family DESeq2 actual fitted-workflow40561801963 is also live, exact source
+89ece7f4 and controller40561524398 SUCCESS. It is a real released-R source
+witness, not a native implementation or four-platform/performance claim.
+See deseq-first-workflow-2026-10-28.md. No second broad donor survey or public
+foundation expansion is performed.
+
 The sections below retain the historical execution ledger, not current pending
 instructions. Fresh storage check is boot APFS76.65% occupied, KIOXIA245GiB
 and fixture HDD256GiB free. All project paths remain external; use hosted
