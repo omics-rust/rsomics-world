@@ -1,0 +1,118 @@
+name: DESeq2 actual design and Cook workflows
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  oracle:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    env:
+      PYTHONDONTWRITEBYTECODE: '1'
+      OMP_NUM_THREADS: '1'
+      OPENBLAS_NUM_THREADS: '1'
+      MKL_NUM_THREADS: '1'
+      DESEQ2_SOURCE_COMMIT: 16aeab6d6158bd8cbb8e98764c2f33399b1a3fd3
+      DESEQ2_SOURCE_SHA256: 8c91699286336350e66eec132ce6fdf5bb4af78e2a4d015a5a61224f62a95984
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+
+      - name: Prepare hosted source and library storage
+        run: |
+          set -euo pipefail
+          export EVIDENCE="$RUNNER_TEMP/deseq-design-oracle"
+          export TMPDIR="$RUNNER_TEMP/scratch"
+          export R_LIBS_USER="$RUNNER_TEMP/R/library"
+          export R_USER_CACHE_DIR="$RUNNER_TEMP/R/cache"
+          export XDG_CACHE_HOME="$RUNNER_TEMP/cache"
+          export CARGO_HOME="$RUNNER_TEMP/cargo-home"
+          export CARGO_TARGET_DIR="$RUNNER_TEMP/cargo-target"
+          export DESEQ2_SOURCE_ARCHIVE="$EVIDENCE/DESeq2_1.52.0.tar.gz"
+          mkdir -p "$EVIDENCE/controller" "$TMPDIR" "$R_LIBS_USER" "$R_USER_CACHE_DIR" "$XDG_CACHE_HOME" "$CARGO_HOME" "$CARGO_TARGET_DIR"
+          printf 'EVIDENCE=%s\nTMPDIR=%s\nR_LIBS_USER=%s\nR_USER_CACHE_DIR=%s\nXDG_CACHE_HOME=%s\nCARGO_HOME=%s\nCARGO_TARGET_DIR=%s\nDESEQ2_SOURCE_ARCHIVE=%s\n' \
+            "$EVIDENCE" "$TMPDIR" "$R_LIBS_USER" "$R_USER_CACHE_DIR" "$XDG_CACHE_HOME" "$CARGO_HOME" "$CARGO_TARGET_DIR" "$DESEQ2_SOURCE_ARCHIVE" >> "$GITHUB_ENV"
+          python3 -B - <<'PY'
+          import json, os, shutil
+          from pathlib import Path
+          runner = Path(os.environ['RUNNER_TEMP']).resolve(strict=True)
+          paths = {name: Path(os.environ[name]).resolve(strict=True) for name in
+                   ('EVIDENCE', 'TMPDIR', 'R_LIBS_USER', 'R_USER_CACHE_DIR', 'XDG_CACHE_HOME', 'CARGO_HOME', 'CARGO_TARGET_DIR')}
+          assert all(path.is_relative_to(runner) for path in paths.values()), 'storage escapes runner-temp'
+          usage = shutil.disk_usage(runner)
+          assert usage.free > 8 * 2**30, 'insufficient oracle storage'
+          (paths['EVIDENCE'] / 'storage.json').write_text(json.dumps(dict(paths={key: str(value) for key, value in paths.items()},
+              disk_total=usage.total, disk_free=usage.free), indent=2) + '\n')
+          PY
+          git rev-parse HEAD > "$EVIDENCE/head.sha"
+          uname -a > "$EVIDENCE/host.txt"
+          df -h >> "$EVIDENCE/host.txt"
+
+      - uses: r-lib/actions/setup-r@v2
+        with:
+          r-version: '4.6.1'
+          use-public-rspm: true
+
+      - name: Acquire the exact released source
+        run: |
+          set -euo pipefail
+          curl --fail --location --retry 3 \
+            https://bioconductor.org/packages/3.23/bioc/src/contrib/DESeq2_1.52.0.tar.gz \
+            --output "$DESEQ2_SOURCE_ARCHIVE"
+          printf '%s  %s\n' "$DESEQ2_SOURCE_SHA256" "$DESEQ2_SOURCE_ARCHIVE" | sha256sum --check - \
+            | tee "$EVIDENCE/source-verification.log"
+          tar -xzf "$DESEQ2_SOURCE_ARCHIVE" -C "$EVIDENCE"
+          test "$(sed -n 's/^Version: //p' "$EVIDENCE/DESeq2/DESCRIPTION")" = '1.52.0'
+          cp "$EVIDENCE/DESeq2/DESCRIPTION" "$EVIDENCE/source-DESCRIPTION"
+
+      - name: Install release dependencies and the exact source
+        run: |
+          set -euo pipefail
+          Rscript --vanilla - <<'RS' 2>&1 | tee "$EVIDENCE/install-dependencies.log"
+          stopifnot(as.character(getRversion()) == '4.6.1')
+          cran <- Sys.getenv('RSPM')
+          if (!nzchar(cran)) stop('setup-r did not provide RSPM')
+          options(repos=c(CRAN=cran))
+          install.packages('BiocManager', lib=Sys.getenv('R_LIBS_USER'))
+          BiocManager::install(version='3.23', ask=FALSE, update=FALSE)
+          desc <- read.dcf(file.path(Sys.getenv('EVIDENCE'), 'DESeq2', 'DESCRIPTION'))
+          names <- c('Depends', 'Imports', 'LinkingTo')
+          deps <- trimws(unlist(strsplit(paste(desc[1, names], collapse=','), ',', fixed=TRUE)))
+          deps <- unique(sub('[[:space:]]*\\(.*', '', deps))
+          deps <- setdiff(deps, c('R', rownames(installed.packages(priority='base'))))
+          BiocManager::install(c(deps, 'digest', 'jsonlite'), ask=FALSE, update=FALSE,
+                               dependencies=c('Depends', 'Imports', 'LinkingTo'), Ncpus=2L)
+          missing <- setdiff(c(deps, 'digest', 'jsonlite'), rownames(installed.packages()))
+          if (length(missing)) stop('missing oracle dependencies: ', paste(missing, collapse=', '))
+          RS
+          R CMD INSTALL --preclean --clean --library="$R_LIBS_USER" "$EVIDENCE/DESeq2" \
+            2>&1 | tee "$EVIDENCE/install-DESeq2.log"
+          Rscript --vanilla -e 'stopifnot(as.character(packageVersion("DESeq2")) == "1.52.0", as.character(BiocManager::version()) == "3.23"); library(DESeq2)'
+
+      - name: Capture general design and Cook workflows
+        run: |
+          set -euo pipefail
+          cp scripts/deseq_workflow_oracle.R scripts/deseq_design_workflows.R "$EVIDENCE/controller/"
+          (
+            cd "$EVIDENCE/controller"
+            sha256sum *.R
+          ) > "$EVIDENCE/controller/checksums.sha256"
+          Rscript --vanilla scripts/deseq_design_workflows.R "$EVIDENCE/DESeq2" "$EVIDENCE/workflows" \
+            2>&1 | tee "$EVIDENCE/workflows.log"
+
+      - name: Retain original source and all workflow evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: deseq-design-oracle-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ env.EVIDENCE }}
+          if-no-files-found: error
+          include-hidden-files: true
+          retention-days: 90
