@@ -4,7 +4,9 @@ Status: joint boundary, upstream-operation, and historical-source audit
 complete. DESeq now has a private fitted-workflow checkpoint under local
 rsomics-deseq; it is not published or release-complete. Its current gates are
 recorded in `.autopilot/state/deseq-native-fitted-workflow-2026-10-28.md`.
-The edgeR and limma targets have not started implementation.
+The edgeR target now has a current-source preflight and a hosted first-workflow
+oracle prepared; no native implementation is claimed. The limma product has
+not started implementation.
 
 ## Portfolio decision
 
@@ -28,13 +30,20 @@ Shared numerical code may move to `rsomics-stats` only after at least two of
 these products exercise the same policy-free contract. The products never
 depend on one another.
 
-The current upstream anchors reviewed on 2026-07-31 are:
+The historical upstream anchors reviewed on 2026-07-31 are:
 
 | Product | Oracle | Reviewed release | Recognizable workflow |
 |---|---|---:|---|
 | `rsomics-deseq` | [DESeq2](https://bioconductor.org/packages/release/bioc/html/DESeq2.html) | 1.52.0, Bioconductor 3.23 | integer counts and sample metadata → size factors → dispersion model → negative-binomial GLM → Wald or LRT results → optional effect shrinkage and transforms |
 | `rsomics-edger` | [edgeR](https://bioconductor.org/packages/release/bioc/html/edgeR.html) | 4.10.1, Bioconductor 3.23 | count matrix and library metadata → expression filtering → normalization factors → quasi-likelihood or classic NB model → contrasts and result tables |
 | `rsomics-limma` | [limma](https://bioconductor.org/packages/release/bioc/html/limma.html) | 3.68.4, Bioconductor 3.23 | log-expression or RNA-seq counts → linear model or voom precision model → empirical-Bayes moderation → contrasts, threshold tests, diagnostics, and gene-set analysis |
+
+For new work on2026-10-28, source-qualified release anchors are DESeq2 1.52.0,
+edgeR4.10.7 and limma3.68.5 under Bioconductor3.23/R4.6.1. Exact source pins,
+original inputs, modern QL defaults and exclusions for the new edgeR witness
+are in [its source-oracle plan](../plans/2026-10-28-edger-first-workflow-oracle.md).
+The historical legacy-QL donor is not the modern workflow skeleton. These
+pins do not by themselves establish native compatibility or publication readiness.
 
 This dossier treats package documentation and the DESeq2, edgeR, and limma
 user guides as the behavior source. Historical rsomics READMEs are evidence
