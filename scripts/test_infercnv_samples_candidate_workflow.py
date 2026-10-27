@@ -146,6 +146,23 @@ class SamplesCandidateWorkflowTests(unittest.TestCase):
         self.assertIn('if: always()', self.steps['Upload raw evidence'])
         self.assertIn('path: ${{ runner.temp }}/sc-cnv-evidence/', self.steps['Upload raw evidence'])
 
+    def test_hmm_runs_the_complete_real_workflow_on_each_native_target(self):
+        acquire = self.steps['Acquire actual HMM workflow evidence']
+        self.assertIn('if: ${{ inputs.hmm_workflows }}', acquire)
+        body = bash_body(acquire)
+        self.assertIn('test "$EXPECT_RED" = false', body)
+        self.assertIn('infercnv-hmm-workflow-2026-10-27.json', body)
+        self.assertIn('verify_infercnv_oracle_artifact.py', body)
+        compare = self.steps['Compare complete native HMM workflows']
+        self.assertNotIn("matrix.target ==", compare)
+        body = bash_body(compare)
+        self.assertIn('compare_infercnv_hmm_workflow.py', body)
+        for argument in ['--synthetic', '--shipped', '--witness', '--binary', '--output']:
+            self.assertIn(argument, body)
+        self.assertIn('$CARGO_TARGET_DIR/release/rsomics-sc', body)
+        self.assertLess(list(self.steps).index('Test release'),
+                        list(self.steps).index('Compare complete native HMM workflows'))
+
     def test_all_bash_blocks_parse(self):
         for name, step in self.steps.items():
             if '        run: |\n' not in step:

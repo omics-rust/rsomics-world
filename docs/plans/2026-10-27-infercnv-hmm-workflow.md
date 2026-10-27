@@ -54,16 +54,16 @@ implementation. Preserve provenance/attribution when adapting selected code.
 
 ## Execution
 
-- [ ] Capture real installed-package raw HMM workflows using the existing
+- [x] Capture real installed-package raw HMM workflows using the existing
   pinned R4.6.1 environment. Cover the real shipped full input with grouped
   references, no-reference proxy and aggregated simulated normals. Retain the
   synthetic grouped input as the verified upstream spline-failure case, not
   a fabricated successful calibration. Retain expression/state identities,
   transformed-spike calibration, fitted coefficients and actual step17 tables.
-- [ ] Characterize the actual pooled-HMM branch separately: its source uses
+- [x] Characterize the actual pooled-HMM branch separately: its source uses
   c(all_observations=unlist(obs),refs), unlike step15's list-wrapped group.
   Record actual errors/group membership rather than assume equivalence.
-- [ ] Record the seeded calibration/RNG contract from that evidence before
+- [x] Record the seeded calibration/RNG contract from that evidence before
   exposing a public model format. Do not claim cross-language seed parity
   merely because both implementations accept a seed.
 - [ ] Implement calibration plus mirrored preprocessing, adjusted decoding
@@ -120,3 +120,10 @@ Keep these implementations in src/cnv/hmm/ of the owning product. No new
 dependency, public foundation, persisted model format or unfinished CLI flag
 is justified by the primitive work. Wire and validate the complete raw-input
 calibration/state/region operation before calling native HMM accepted.
+
+Real R witness40477088139 is now successful and retained with pinned original
+API/ZIP evidence. It confirms three real positives, the exact known synthetic
+negative and the pooled branch's singleton-observation behavior. The native
+grouped-samples implementation is now fully wired as an unpublished candidate;
+runtime/compatibility and one whole-feature review remain open. Use green24's
+single integrated four-native gate rather than per-helper validation runs.

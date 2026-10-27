@@ -112,3 +112,38 @@ hook test and corrected whole R execution still require hosted execution.
 Controller suite passes447 tests/42.159s, two existing native skips, and
 architecture validation. Native candidate source/remaining wiring is recorded
 in infercnv-hmm-native-2026-10-27.md, explicitly uncompiled/unaccepted.
+
+Worldfd0215e0470543436f516b3e1e66f788c9218c00 is pushed. Exact-head controller
+run40476697638 passes. Corrected real-R run40477088139 is now success on
+that exact head. No duplicate R run or automatic notification is scheduled.
+
+## Verified real R witness
+
+Original run/artifact API, job log and ZIP are retained at external
+evidence/infercnv-hmm-2026-10-27/run-40477088139/. Artifact12721768541 has
+528452677 bytes and verified SHA
+2472798ee90ad14ba5cbec7e29c05d81973ef31f0658eaa7b5749a50f2a1107c.
+The existing artifact verifier confirms the exact run/head/API digest and
+extracts/validates the shipped bundle. A tracked oracle receipt pins this
+archive and its manifest342d1a68c294443ab9b422ef7cff88f3d8d7cc68d9f6b971ec9ac9e2ffbdcb56.
+
+The complete witness records seed261027, MT/Inversion/Rejection and the
+actual installed R4.6.1 package. All three positives retain8508 genes,
+184 cells and six grouped-sample predictions. Original table parsing yields:
+full82 regions/9213 predicted gene rows; proxy56/5984; aggregated39/5810.
+All have184 cell-group rows and8508 genes_used rows. The exact synthetic
+spline error remains the single expected negative. The real-object hook
+regression runs successfully before the three complete workflows.
+
+Actual pooled calls return success, but do not pool observations: full and
+aggregated each return142 singleton observations plus two normal groups
+(144 groups); proxy returns184 singleton observations. This is the source
+c(all_observations=unlist(obs),refs) behavior, not the ordinary step15 pooled
+workflow. The first native HMM slice therefore explicitly requires grouped
+samples; it does not silently advertise or reinterpret this pooled route.
+
+R raw-create-to-return in-process timings are174.677/114.813/113.594 seconds
+for full/proxy/aggregated. They include trace/report work and are not paired
+native performance evidence. Native compatibility, worker consistency,
+four-platform runtime acceptance and the single whole-feature review remain
+open. The native candidate/controller are in infercnv-hmm-native-2026-10-27.md.

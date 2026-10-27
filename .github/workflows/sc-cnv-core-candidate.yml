@@ -15,6 +15,10 @@ on:
         description: Linux-only canonical CLI worker benchmark; not the four-native release gate
         type: boolean
         default: false
+      hmm_workflows:
+        description: Compare the complete native i6 workflow with retained real-R states and reports
+        type: boolean
+        default: false
       measurement:
         description: Test private measurement support and compile its opt-in bench
         type: boolean
@@ -68,6 +72,7 @@ jobs:
       INGESTION_TRIAL: ${{ inputs.ingestion_trial }}
       RESOLVE_MEASUREMENT_LOCK: ${{ inputs.resolve_measurement_lock }}
       RESOLVE_INPUT_LOCK: ${{ inputs.resolve_input_lock }}
+      HMM_WORKFLOWS: ${{ inputs.hmm_workflows }}
     defaults:
       run:
         shell: bash
@@ -214,6 +219,41 @@ jobs:
         uses: dtolnay/rust-toolchain@1.91.0
         with:
           components: clippy,rustfmt
+
+      - name: Acquire actual HMM workflow evidence
+        if: ${{ inputs.hmm_workflows }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          test "$EXPECT_RED" = false
+          test "$SAMPLES_BENCHMARK" = false
+          test "$MEASUREMENT" = false
+          test "$INGESTION_MEASUREMENT" = false
+          test "$INGESTION_TRIAL" = false
+          test "$RESOLVE_MEASUREMENT_LOCK" = false
+          test "$RESOLVE_INPUT_LOCK" = false
+          mkdir "$EVIDENCE/hmm-acquisition"
+          receipt="$GITHUB_WORKSPACE/.autopilot/oracles/infercnv-hmm-workflow-2026-10-27.json"
+          cp "$receipt" "$EVIDENCE/hmm-acquisition/receipt.json"
+          python3 -B - "$receipt" > "$EVIDENCE/hmm-acquisition/selection.txt" <<'PY'
+          import json, sys
+          from pathlib import Path
+          receipt = json.loads(Path(sys.argv[1]).read_text())
+          assert receipt['repository'] == 'omics-rust/rsomics-world'
+          assert type(receipt['run_id']) is int and type(receipt['artifact_id']) is int
+          print(receipt['run_id'], receipt['artifact_id'])
+          PY
+          read -r run artifact < "$EVIDENCE/hmm-acquisition/selection.txt"
+          gh api "repos/omics-rust/rsomics-world/actions/runs/$run" > "$EVIDENCE/hmm-acquisition/run.json"
+          gh api "repos/omics-rust/rsomics-world/actions/artifacts/$artifact" > "$EVIDENCE/hmm-acquisition/artifact.json"
+          gh api "repos/omics-rust/rsomics-world/actions/artifacts/$artifact/zip" > "$RUNNER_TEMP/hmm-oracle.zip"
+          python3 -B "$GITHUB_WORKSPACE/scripts/verify_infercnv_oracle_artifact.py" \
+            --receipt "$receipt" --run-json "$EVIDENCE/hmm-acquisition/run.json" \
+            --artifact-json "$EVIDENCE/hmm-acquisition/artifact.json" \
+            --zip "$RUNNER_TEMP/hmm-oracle.zip" --output-dir "$RUNNER_TEMP/hmm-oracle" \
+            2>&1 | tee "$EVIDENCE/hmm-acquisition/verification.log"
+          printf 'HMM_ORACLE_ROOT=%s\n' "$RUNNER_TEMP/hmm-oracle" >> "$GITHUB_ENV"
 
       - name: Verify dependency resolution and output path
         id: metadata
@@ -420,6 +460,22 @@ jobs:
             --binary "$EVIDENCE/samples-benchmark-binary/rsomics-sc-linux-x86_64" \
             --output "$EVIDENCE/samples-cli-benchmark" \
             2>&1 | tee "$EVIDENCE/samples-benchmark.log"
+
+      - name: Compare complete native HMM workflows
+        if: ${{ inputs.hmm_workflows && !inputs.expected_red }}
+        working-directory: ${{ runner.temp }}/sc-cnv-candidate
+        run: |
+          set -euo pipefail
+          mkdir "$EVIDENCE/hmm-native-binary"
+          cp "$CARGO_TARGET_DIR/release/rsomics-sc" "$EVIDENCE/hmm-native-binary/rsomics-sc-${{ matrix.target }}"
+          shasum -a 256 "$EVIDENCE/hmm-native-binary/rsomics-sc-${{ matrix.target }}" \
+            > "$EVIDENCE/hmm-native-binary/checksums.sha256"
+          python3 -B "$GITHUB_WORKSPACE/scripts/compare_infercnv_hmm_workflow.py" \
+            --synthetic "$HMM_ORACLE_ROOT/bundle" --shipped "$HMM_ORACLE_ROOT/shipped-bundle" \
+            --witness "$HMM_ORACLE_ROOT/hmm-workflows" \
+            --binary "$EVIDENCE/hmm-native-binary/rsomics-sc-${{ matrix.target }}" \
+            --output "$EVIDENCE/hmm-native-comparison" \
+            2>&1 | tee "$EVIDENCE/hmm-native-comparison.log"
 
       - name: Verify source remains unchanged
         if: ${{ always() && steps.snapshot.outcome == 'success' }}
