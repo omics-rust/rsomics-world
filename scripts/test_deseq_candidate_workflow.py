@@ -11,6 +11,13 @@ from test_infercnv_ingestion_workflow import bash_body, steps
 
 ROOT = Path(__file__).resolve().parents[1]
 WORKFLOW = ROOT / '.github/workflows/deseq-candidate.yml'
+GENERAL = ['interaction-ratio-formula', 'interaction-ratio-matrix', 'interaction-sf-formula',
+           'interaction-nf-formula', 'interaction-sf-nf-formula', 'nointercept-sf-formula',
+           'intercept-sf-formula']
+DESIGN_CASES = GENERAL + [f'cook-{size}-disabled-{route}'
+                          for size in ('7x7', '7x3') for route in ('formula', 'matrix')]
+EXCLUDED = [f'cook-{size}-default-{route}'
+            for size in ('7x7', '7x3') for route in ('formula', 'matrix')]
 
 
 class DeseqCandidateWorkflowTests(unittest.TestCase):
@@ -36,6 +43,9 @@ class DeseqCandidateWorkflowTests(unittest.TestCase):
         self.assertIn('for workers in 1 4', body)
         self.assertIn('scripts/check-workflow.py', body)
         self.assertIn('scripts/check-bundle-contract.py', body)
+        self.assertIn('scripts/check-design-workflows.py', body)
+        self.assertIn('--include-disabled-cook', body)
+        self.assertIn('--witness "$DESIGN_ORACLE_ROOT"', body)
         self.assertIn('if: always()', self.steps['Upload raw evidence'])
         self.assertNotIn('continue-on-error', self.text)
         for name, step in self.steps.items():
@@ -56,9 +66,23 @@ class DeseqCandidateWorkflowTests(unittest.TestCase):
                 out = root / 'comparison' / f'workers-{workers}'
                 out.mkdir(parents=True)
                 (out / 'fit.json').write_text(json.dumps(
-                    dict(workers=workers, genes=[dict(beta=[0.25, -0.5])], schema=1)))
+                    dict(workers=workers, genes=[dict(beta=[0.25, -0.5])], schema=2)))
                 for name in ('forward.tsv', 'reverse.tsv', 'normalized-counts.tsv', 'vst.tsv'):
                     (out / name).write_text('gene\tvalue\ng1\t0.25\n')
+                design = root / 'design-comparison' / f'workers-{workers}'
+                design.mkdir(parents=True)
+                (design / 'comparison-contract.json').write_text(json.dumps(
+                    dict(workers=workers, cases=DESIGN_CASES, excluded_cases=EXCLUDED)))
+                for case in DESIGN_CASES:
+                    target = design / case
+                    target.mkdir()
+                    (target / 'fit.json').write_text(json.dumps(
+                        dict(workers=workers, genes=[dict(beta=[0.25, -0.5])], schema=2)))
+                    exports = ['forward.tsv', 'reverse.tsv', 'normalized-counts.tsv', 'vst.tsv']
+                    if case != 'intercept-sf-formula':
+                        exports.append('mixed.tsv')
+                    for name in exports:
+                        (target / name).write_text('gene\tvalue\ng1\t0.25\n')
             env = dict(os.environ, EVIDENCE=str(root))
 
             def execute():
@@ -72,11 +96,15 @@ class DeseqCandidateWorkflowTests(unittest.TestCase):
             changed.write_text('gene\tvalue\ng1\t0.75\n')
             self.assertNotEqual(execute().returncode, 0, 'changed numeric export was accepted')
             changed.write_text('gene\tvalue\ng1\t0.25\n')
-            bundle = root / 'comparison/workers-4/fit.json'
+            changed = root / 'design-comparison/workers-4/cook-7x3-disabled-formula/mixed.tsv'
+            changed.write_text('gene\tvalue\ng1\t0.75\n')
+            self.assertNotEqual(execute().returncode, 0, 'changed design/Cook export was accepted')
+            changed.write_text('gene\tvalue\ng1\t0.25\n')
+            bundle = root / 'design-comparison/workers-4/interaction-nf-formula/fit.json'
             fit = json.loads(bundle.read_text())
             fit['genes'][0]['beta'][1] = 1.0
             bundle.write_text(json.dumps(fit))
-            self.assertNotEqual(execute().returncode, 0, 'changed fitted covariance state was accepted')
+            self.assertNotEqual(execute().returncode, 0, 'changed design fitted state was accepted')
 
 
 if __name__ == '__main__':

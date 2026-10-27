@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       snapshot:
-        description: Frozen source directory under deseq-core-2026-10-28, for example green-1
+        description: Frozen schema2 source directory under deseq-core-2026-10-28, for example green-2
         type: string
         required: true
 
@@ -94,89 +94,115 @@ jobs:
         run: |
           set -euo pipefail
           mkdir "$EVIDENCE/oracle-acquisition"
-          cp "$GITHUB_WORKSPACE/.autopilot/oracles/deseq-first-workflow-2026-10-28.json" \
-            "$EVIDENCE/oracle-acquisition/receipt.json"
-          gh api repos/omics-rust/rsomics-world/actions/runs/40561801963 \
-            > "$EVIDENCE/oracle-acquisition/run.json"
-          gh api repos/omics-rust/rsomics-world/actions/artifacts/12761202566 \
-            > "$EVIDENCE/oracle-acquisition/artifact.json"
-          gh api repos/omics-rust/rsomics-world/actions/artifacts/12761202566/zip \
-            > "$EVIDENCE/oracle-acquisition/artifact.zip"
           cp "$GITHUB_WORKSPACE/scripts/verify_infercnv_oracle_artifact.py" \
             "$EVIDENCE/oracle-acquisition/verification-controller.py"
           shasum -a 256 "$EVIDENCE/oracle-acquisition/verification-controller.py" \
             > "$EVIDENCE/oracle-acquisition/verification-controller.sha256"
           python3 -B - <<'PY'
-          import csv, json, os, stat, sys, zipfile
+          import csv, json, os, shutil, stat, subprocess, sys, zipfile
           from pathlib import Path
           sys.path.insert(0, str(Path(os.environ['GITHUB_WORKSPACE']) / 'scripts'))
           from verify_infercnv_oracle_artifact import (
               HEX64, _archive_name, _artifact, _extract, _load_json, _run, _sha256)
-          acquisition = Path(os.environ['EVIDENCE']) / 'oracle-acquisition'
-          receipt = _load_json(acquisition / 'receipt.json', 'receipt')
-          required = dict(schema_version=1, repository='omics-rust/rsomics-world',
-                          workflow_path='.github/workflows/deseq-oracle.yml',
-                          run_id=40561801963, run_attempt=1, artifact_id=12761202566,
-                          head_sha='89ece7f45e59517cf7631e9c5931a48c4a7760c1',
-                          artifact_name='deseq-oracle-40561801963-1', bundle_path='workflow')
-          assert all(receipt.get(key) == value for key, value in required.items()), 'unexpected oracle receipt'
-          _run(acquisition / 'run.json', receipt)
-          zipped = acquisition / 'artifact.zip'
-          _artifact(acquisition / 'artifact.json', receipt, zipped)
-          assert zipped.stat().st_size == receipt['size_in_bytes'], 'receipt compressed size differs'
-          assert _sha256(zipped) == receipt['artifact_sha256'], 'ZIP digest differs from receipt/API'
-          source = acquisition / 'source'
-          with zipfile.ZipFile(zipped) as archive:
-              seen, files = set(), set()
-              for member in archive.infolist():
-                  directory = member.is_dir()
-                  name = _archive_name(member.filename, directory)
-                  kind = stat.S_IFMT(member.external_attr >> 16) if member.create_system == 3 else 0
-                  assert member.orig_filename == member.filename and not member.flag_bits & 1, 'invalid ZIP member'
-                  assert kind in (0, stat.S_IFDIR if directory else stat.S_IFREG), 'special ZIP member'
-                  assert name not in seen, 'duplicate ZIP member'
-                  seen.add(name)
-                  if not directory:
-                      files.add(name)
-              assert all('/'.join(name.split('/')[:index]) not in files
-                         for name in seen for index in range(1, len(name.split('/')))), 'ZIP path collision'
-              assert archive.testzip() is None, 'ZIP CRC differs'
-              _extract(archive, source)
-          oracle = source / receipt['bundle_path']
-          manifest = oracle / 'sha256-manifest.tsv'
-          assert _sha256(manifest) == receipt['manifest_sha256'], 'workflow manifest digest differs'
-          recorded = {}
-          with manifest.open(newline='') as stream:
-              rows = csv.reader(stream, delimiter='\t')
-              assert next(rows) == ['sha256', 'path'], 'invalid workflow manifest header'
-              previous = ''
-              for row in rows:
-                  assert len(row) == 2 and HEX64.fullmatch(row[0]), 'invalid workflow manifest row'
-                  digest, name = row
-                  _archive_name(name, False)
-                  assert name > previous and name != 'sha256-manifest.tsv', 'duplicate/unsorted manifest path'
-                  recorded[name] = digest
-                  previous = name
-          actual = {name.removeprefix('workflow/') for name in files if name.startswith('workflow/')}
-          assert actual == set(recorded) | {'sha256-manifest.tsv'}, 'workflow inventory differs'
-          assert all(_sha256(oracle / name) == digest for name, digest in recorded.items()), 'workflow file digest differs'
-          assert _sha256(oracle / 'witness.json') == receipt['witness_sha256'], 'witness digest differs'
-          witness = _load_json(oracle / 'witness.json', 'witness')
-          assert witness['status'] == 'complete', 'source workflow incomplete'
-          assert witness['package'] == dict(
-              name='DESeq2', version='1.52.0', bioconductor='3.23',
-              source_commit='16aeab6d6158bd8cbb8e98764c2f33399b1a3fd3',
-              source_archive_sha256='8c91699286336350e66eec132ce6fdf5bb4af78e2a4d015a5a61224f62a95984'), \
-              'DESeq2 source differs'
-          assert witness['files'] == {name: digest for name, digest in recorded.items() if name != 'witness.json'}, \
-              'witness file inventory differs'
-          record = dict(run=receipt['run_id'], head=receipt['head_sha'], artifact=receipt['artifact_id'],
-                        artifact_sha256=receipt['artifact_sha256'], manifest_sha256=receipt['manifest_sha256'],
-                        witness_sha256=receipt['witness_sha256'], verified_files=len(recorded))
-          (acquisition / 'verification.json').write_text(json.dumps(record, sort_keys=True) + '\n')
-          print(json.dumps(record, sort_keys=True))
+          workspace = Path(os.environ['GITHUB_WORKSPACE'])
+          base = Path(os.environ['EVIDENCE']) / 'oracle-acquisition'
+          pins = [
+              ('pasilla', 'deseq-first-workflow-2026-10-28.json', 'ORACLE_ROOT',
+               dict(workflow_path='.github/workflows/deseq-oracle.yml', run_id=40561801963,
+                    artifact_id=12761202566, head_sha='89ece7f45e59517cf7631e9c5931a48c4a7760c1',
+                    artifact_name='deseq-oracle-40561801963-1', bundle_path='workflow')),
+              ('design', 'deseq-design-workflows-2026-10-28.json', 'DESIGN_ORACLE_ROOT',
+               dict(workflow_path='.github/workflows/deseq-design-oracle.yml', run_id=40592944209,
+                    artifact_id=12774339794, head_sha='5fcb3820198c8fe8fd3e463a609b276df7ae590a',
+                    artifact_name='deseq-design-oracle-40592944209-1', bundle_path='workflows'))]
+          for label, filename, environment, identity in pins:
+              acquisition = base / label
+              acquisition.mkdir()
+              shutil.copyfile(workspace / '.autopilot/oracles' / filename, acquisition / 'receipt.json')
+              receipt = _load_json(acquisition / 'receipt.json', 'receipt')
+              required = dict(schema_version=1, repository='omics-rust/rsomics-world', run_attempt=1, **identity)
+              assert all(receipt.get(key) == value for key, value in required.items()), 'unexpected oracle receipt'
+              for endpoint, output in ((f"actions/runs/{receipt['run_id']}", 'run.json'),
+                                       (f"actions/artifacts/{receipt['artifact_id']}", 'artifact.json'),
+                                       (f"actions/artifacts/{receipt['artifact_id']}/zip", 'artifact.zip')):
+                  with (acquisition / output).open('xb') as stream:
+                      subprocess.run(['gh', 'api', 'repos/omics-rust/rsomics-world/' + endpoint],
+                                     stdout=stream, check=True)
+              _run(acquisition / 'run.json', receipt)
+              zipped = acquisition / 'artifact.zip'
+              _artifact(acquisition / 'artifact.json', receipt, zipped)
+              assert zipped.stat().st_size == receipt['size_in_bytes'], 'receipt compressed size differs'
+              assert _sha256(zipped) == receipt['artifact_sha256'], 'ZIP digest differs from receipt/API'
+              source = acquisition / 'source'
+              with zipfile.ZipFile(zipped) as archive:
+                  seen, files = set(), set()
+                  for member in archive.infolist():
+                      directory = member.is_dir()
+                      name = _archive_name(member.filename, directory)
+                      kind = stat.S_IFMT(member.external_attr >> 16) if member.create_system == 3 else 0
+                      assert member.orig_filename == member.filename and not member.flag_bits & 1, 'invalid ZIP member'
+                      assert kind in (0, stat.S_IFDIR if directory else stat.S_IFREG), 'special ZIP member'
+                      assert name not in seen, 'duplicate ZIP member'
+                      seen.add(name)
+                      if not directory:
+                          files.add(name)
+                  assert all('/'.join(name.split('/')[:index]) not in files
+                             for name in seen for index in range(1, len(name.split('/')))), 'ZIP path collision'
+                  assert archive.testzip() is None, 'ZIP CRC differs'
+                  _extract(archive, source)
+              oracle = source / receipt['bundle_path']
+              manifest = oracle / 'sha256-manifest.tsv'
+              assert _sha256(manifest) == receipt['manifest_sha256'], 'workflow manifest digest differs'
+              recorded = {}
+              with manifest.open(newline='') as stream:
+                  rows = csv.reader(stream, delimiter='\t')
+                  assert next(rows) == ['sha256', 'path'], 'invalid workflow manifest header'
+                  previous = ''
+                  for row in rows:
+                      assert len(row) == 2 and HEX64.fullmatch(row[0]), 'invalid workflow manifest row'
+                      digest, name = row
+                      _archive_name(name, False)
+                      assert name > previous and name != 'sha256-manifest.tsv', 'duplicate/unsorted manifest path'
+                      recorded[name] = digest
+                      previous = name
+              prefix = receipt['bundle_path'] + '/'
+              actual = {name.removeprefix(prefix) for name in files if name.startswith(prefix)}
+              assert actual == set(recorded) | {'sha256-manifest.tsv'}, 'workflow inventory differs'
+              assert all(_sha256(oracle / name) == digest for name, digest in recorded.items()), 'workflow file digest differs'
+              assert _sha256(oracle / 'witness.json') == receipt['witness_sha256'], 'witness digest differs'
+              witness = _load_json(oracle / 'witness.json', 'witness')
+              assert witness['status'] == 'complete' and witness.get('failed_cases', []) == [], 'source workflow incomplete'
+              assert witness['package'] == dict(
+                  name='DESeq2', version='1.52.0', bioconductor='3.23',
+                  source_commit='16aeab6d6158bd8cbb8e98764c2f33399b1a3fd3',
+                  source_archive_sha256='8c91699286336350e66eec132ce6fdf5bb4af78e2a4d015a5a61224f62a95984'), \
+                  'DESeq2 source differs'
+              assert witness['files'] == {name: digest for name, digest in recorded.items() if name != 'witness.json'}, \
+                  'witness file inventory differs'
+              record = dict(run=receipt['run_id'], head=receipt['head_sha'], artifact=receipt['artifact_id'],
+                            artifact_sha256=receipt['artifact_sha256'], manifest_sha256=receipt['manifest_sha256'],
+                            witness_sha256=receipt['witness_sha256'], verified_files=len(recorded))
+              if label == 'design':
+                  assert (witness['case_count'], witness['general_case_count'], witness['cook_case_count']) == (15, 7, 8), \
+                      'source case inventory differs'
+                  assert all(case['status'] == 'complete' for case in witness['cases'].values()), 'source case failed'
+                  qualification = witness['cook_qualification']
+                  assert qualification['complete'] is True and qualification['uncovered'] == [] \
+                      and len(qualification['observed']) == 8 and all(value is True for value in qualification['observed'].values()), \
+                      'Cook source branches are not qualified'
+                  frozen = oracle / 'metadata/input-freeze.json'
+                  assert witness['inputs_frozen_before_first_fit'] is True \
+                      and _sha256(frozen) == witness['input_freeze_sha256'], 'prefit input freeze differs'
+                  freeze = _load_json(frozen, 'prefit input freeze')
+                  assert freeze['status'] == 'frozen-before-first-fit' \
+                      and all(recorded.get(name) == digest for name, digest in freeze['files'].items()), \
+                      'frozen input inventory differs'
+                  record.update(source_cases=15, source_qualified_cook_branches=8, frozen_input_files=len(freeze['files']))
+              (acquisition / 'verification.json').write_text(json.dumps(record, sort_keys=True) + '\n')
+              with Path(os.environ['GITHUB_ENV']).open('a') as stream:
+                  stream.write(environment + '=' + str(oracle) + '\n')
+              print(json.dumps(dict(oracle=label, **record), sort_keys=True))
           PY
-          printf 'ORACLE_ROOT=%s\n' "$EVIDENCE/oracle-acquisition/source/workflow" >> "$GITHUB_ENV"
 
       - name: Verify frozen dependencies
         id: metadata
@@ -241,11 +267,11 @@ jobs:
         run: |
           set -euo pipefail
           cargo build --locked --release --bin rsomics-deseq 2>&1 | tee "$EVIDENCE/build-release.log"
-          mkdir "$EVIDENCE/native-binary" "$EVIDENCE/controller" "$EVIDENCE/comparison"
+          mkdir "$EVIDENCE/native-binary" "$EVIDENCE/controller" "$EVIDENCE/comparison" "$EVIDENCE/design-comparison"
           binary="$EVIDENCE/native-binary/rsomics-deseq-${{ matrix.target }}"
           cp "$CARGO_TARGET_DIR/release/rsomics-deseq" "$binary"
           shasum -a 256 "$binary" > "$EVIDENCE/native-binary/checksums.sha256"
-          cp scripts/check-workflow.py scripts/check-bundle-contract.py "$EVIDENCE/controller/"
+          cp scripts/check-workflow.py scripts/check-bundle-contract.py scripts/check-design-workflows.py "$EVIDENCE/controller/"
           (
             cd "$EVIDENCE/controller"
             shasum -a 256 *.py
@@ -255,6 +281,10 @@ jobs:
               --witness "$ORACLE_ROOT" --binary "$binary" \
               --output "$EVIDENCE/comparison/workers-$workers" --workers "$workers" \
               2>&1 | tee "$EVIDENCE/comparison/workers-$workers.log"
+            python3 -B "$EVIDENCE/controller/check-design-workflows.py" \
+              --witness "$DESIGN_ORACLE_ROOT" --binary "$binary" --include-disabled-cook \
+              --output "$EVIDENCE/design-comparison/workers-$workers" --workers "$workers" \
+              2>&1 | tee "$EVIDENCE/design-comparison/workers-$workers.log"
           done
           python3 -B "$EVIDENCE/controller/check-bundle-contract.py" --binary "$binary" \
             --bundle "$EVIDENCE/comparison/workers-1/fit.json" \
@@ -269,17 +299,36 @@ jobs:
           import hashlib, json, os
           from pathlib import Path
           root = Path(os.environ['EVIDENCE'])
-          first = root / 'comparison/workers-1'
-          fourth = root / 'comparison/workers-4'
-          fitted = [json.loads((out / 'fit.json').read_text()) for out in (first, fourth)]
-          assert [fit.pop('workers') for fit in fitted] == [1, 4], 'recorded worker counts differ'
-          assert fitted[0] == fitted[1], 'worker count changed fitted state'
-          exports = {}
-          for name in ('forward.tsv', 'reverse.tsv', 'normalized-counts.tsv', 'vst.tsv'):
-              data = (first / name).read_bytes()
-              assert data == (fourth / name).read_bytes(), 'worker count changed ' + name
-              exports[name] = hashlib.sha256(data).hexdigest()
-          record = dict(passed=True, compared_workers=[1, 4], fitted_state_equal=True, exports_sha256=exports)
+          def compare(first, fourth, names):
+              fitted = [json.loads((out / 'fit.json').read_text()) for out in (first, fourth)]
+              assert all(fit['schema'] == 2 for fit in fitted), 'candidate is not the schema2 checkpoint'
+              assert [fit.pop('workers') for fit in fitted] == [1, 4], 'recorded worker counts differ'
+              assert fitted[0] == fitted[1], 'worker count changed fitted state'
+              exports = {}
+              for name in names:
+                  data = (first / name).read_bytes()
+                  assert data == (fourth / name).read_bytes(), 'worker count changed ' + str(first / name)
+                  exports[name] = hashlib.sha256(data).hexdigest()
+              return dict(fitted_state_equal=True, exports_sha256=exports)
+          names = ['forward.tsv', 'reverse.tsv', 'normalized-counts.tsv', 'vst.tsv']
+          pasilla = compare(root / 'comparison/workers-1', root / 'comparison/workers-4', names)
+          first, fourth = [root / 'design-comparison' / f'workers-{workers}' for workers in (1, 4)]
+          contracts = [json.loads((out / 'comparison-contract.json').read_text()) for out in (first, fourth)]
+          general = ['interaction-ratio-formula', 'interaction-ratio-matrix', 'interaction-sf-formula',
+                     'interaction-nf-formula', 'interaction-sf-nf-formula', 'nointercept-sf-formula',
+                     'intercept-sf-formula']
+          included = general + [f'cook-{size}-disabled-{route}'
+                                for size in ('7x7', '7x3') for route in ('formula', 'matrix')]
+          excluded = [f'cook-{size}-default-{route}'
+                      for size in ('7x7', '7x3') for route in ('formula', 'matrix')]
+          assert all(contract['cases'] == included and contract['excluded_cases'] == excluded for contract in contracts), \
+              'native design scope differs from seven general and four disabled-replacement cases'
+          design = {}
+          for case in included:
+              exports = names if case == 'intercept-sf-formula' else names + ['mixed.tsv']
+              design[case] = compare(first / case, fourth / case, exports)
+          record = dict(passed=True, compared_workers=[1, 4], pasilla=pasilla, design_cases=design,
+                        positive_replacement_cases_not_implemented_or_accepted=excluded)
           (root / 'worker-determinism.json').write_text(json.dumps(record, sort_keys=True) + '\n')
           print(json.dumps(record, sort_keys=True))
           PY
