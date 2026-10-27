@@ -1,0 +1,318 @@
+name: DESeq fitted-workflow candidate
+
+on:
+  workflow_dispatch:
+    inputs:
+      snapshot:
+        description: Frozen source directory under deseq-core-2026-10-28, for example green-1
+        type: string
+        required: true
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  native:
+    name: ${{ matrix.target }}
+    runs-on: ${{ matrix.runner }}
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        include: >-
+          ${{ fromJSON('[{"target":"linux-x86_64","runner":"ubuntu-24.04","system":"Linux","arch":"x86_64"},{"target":"linux-aarch64","runner":"ubuntu-24.04-arm","system":"Linux","arch":"aarch64"},{"target":"macos-x86_64","runner":"macos-15-intel","system":"Darwin","arch":"x86_64"},{"target":"macos-aarch64","runner":"macos-15","system":"Darwin","arch":"arm64"}]') }}
+    env:
+      SNAPSHOT_ID: ${{ inputs.snapshot }}
+      PYTHONDONTWRITEBYTECODE: '1'
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+
+      - name: Verify and extract frozen source
+        id: snapshot
+        run: |
+          set -euo pipefail
+          [[ "$SNAPSHOT_ID" =~ ^green-[0-9]+$ ]]
+          test "$(uname -s)" = '${{ matrix.system }}'
+          test "$(uname -m)" = '${{ matrix.arch }}'
+          export CARGO_HOME="$RUNNER_TEMP/cargo-home"
+          export CARGO_TARGET_DIR="$RUNNER_TEMP/cargo-target"
+          export RUSTUP_HOME="$RUNNER_TEMP/rustup-home"
+          export TMPDIR="$RUNNER_TEMP/scratch"
+          export EVIDENCE="$RUNNER_TEMP/deseq-evidence"
+          printf 'CARGO_HOME=%s\nCARGO_TARGET_DIR=%s\nRUSTUP_HOME=%s\nTMPDIR=%s\nEVIDENCE=%s\n' \
+            "$CARGO_HOME" "$CARGO_TARGET_DIR" "$RUSTUP_HOME" "$TMPDIR" "$EVIDENCE" >> "$GITHUB_ENV"
+          mkdir -p "$CARGO_HOME" "$CARGO_TARGET_DIR" "$RUSTUP_HOME" "$TMPDIR" "$EVIDENCE/source-guard"
+          python3 -B - <<'PY'
+          import json, os, shutil
+          from pathlib import Path
+          runner = Path(os.environ['RUNNER_TEMP']).resolve(strict=True)
+          locations = {name: Path(os.environ[name]).resolve(strict=True)
+                       for name in ('CARGO_HOME', 'CARGO_TARGET_DIR', 'RUSTUP_HOME', 'TMPDIR', 'EVIDENCE')}
+          assert all(path.is_relative_to(runner) for path in locations.values()), 'storage escapes runner-temp'
+          usage = shutil.disk_usage(runner)
+          assert usage.free > 0, 'runner-temp is full'
+          record = dict(runner_temp=str(runner), paths={name: str(path) for name, path in locations.items()},
+                        disk_total=usage.total, disk_used=usage.used, disk_free=usage.free)
+          (locations['EVIDENCE'] / 'storage.json').write_text(json.dumps(record, indent=2) + '\n')
+          PY
+          cp scripts/infercnv_source_snapshot.py scripts/test_infercnv_source_snapshot.py "$EVIDENCE/source-guard/"
+          (
+            cd "$EVIDENCE/source-guard"
+            shasum -a 256 *.py
+          ) > "$EVIDENCE/source-guard/checksums.sha256"
+          snapshot="$GITHUB_WORKSPACE/.autopilot/snapshots/deseq-core-2026-10-28/$SNAPSHOT_ID"
+          python3 -B scripts/infercnv_source_snapshot.py \
+            --snapshot-dir "$snapshot" --output-dir "$RUNNER_TEMP/deseq-candidate" \
+            2>&1 | tee "$EVIDENCE/archive-verification.log"
+          cp "$snapshot/source.tar.gz" "$snapshot/files.sha256" \
+            "$snapshot/checksums.sha256" "$snapshot/README.md" "$EVIDENCE/"
+          (
+            cd "$RUNNER_TEMP/deseq-candidate"
+            shasum -a 256 --check "$EVIDENCE/files.sha256"
+          ) | tee "$EVIDENCE/source-before.log"
+          {
+            git rev-parse HEAD
+            uname -a
+            df -h
+            printf 'snapshot=%s\n' "$SNAPSHOT_ID"
+          } | tee "$EVIDENCE/host.log"
+
+      - name: Install Rust 1.91
+        uses: dtolnay/rust-toolchain@1.91.0
+        with:
+          components: clippy,rustfmt
+
+      - name: Acquire and verify actual DESeq2 evidence
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          mkdir "$EVIDENCE/oracle-acquisition"
+          cp "$GITHUB_WORKSPACE/.autopilot/oracles/deseq-first-workflow-2026-10-28.json" \
+            "$EVIDENCE/oracle-acquisition/receipt.json"
+          gh api repos/omics-rust/rsomics-world/actions/runs/40561801963 \
+            > "$EVIDENCE/oracle-acquisition/run.json"
+          gh api repos/omics-rust/rsomics-world/actions/artifacts/12761202566 \
+            > "$EVIDENCE/oracle-acquisition/artifact.json"
+          gh api repos/omics-rust/rsomics-world/actions/artifacts/12761202566/zip \
+            > "$EVIDENCE/oracle-acquisition/artifact.zip"
+          cp "$GITHUB_WORKSPACE/scripts/verify_infercnv_oracle_artifact.py" \
+            "$EVIDENCE/oracle-acquisition/verification-controller.py"
+          shasum -a 256 "$EVIDENCE/oracle-acquisition/verification-controller.py" \
+            > "$EVIDENCE/oracle-acquisition/verification-controller.sha256"
+          python3 -B - <<'PY'
+          import csv, json, os, stat, sys, zipfile
+          from pathlib import Path
+          sys.path.insert(0, str(Path(os.environ['GITHUB_WORKSPACE']) / 'scripts'))
+          from verify_infercnv_oracle_artifact import (
+              HEX64, _archive_name, _artifact, _extract, _load_json, _run, _sha256)
+          acquisition = Path(os.environ['EVIDENCE']) / 'oracle-acquisition'
+          receipt = _load_json(acquisition / 'receipt.json', 'receipt')
+          required = dict(schema_version=1, repository='omics-rust/rsomics-world',
+                          workflow_path='.github/workflows/deseq-oracle.yml',
+                          run_id=40561801963, run_attempt=1, artifact_id=12761202566,
+                          head_sha='89ece7f45e59517cf7631e9c5931a48c4a7760c1',
+                          artifact_name='deseq-oracle-40561801963-1', bundle_path='workflow')
+          assert all(receipt.get(key) == value for key, value in required.items()), 'unexpected oracle receipt'
+          _run(acquisition / 'run.json', receipt)
+          zipped = acquisition / 'artifact.zip'
+          _artifact(acquisition / 'artifact.json', receipt, zipped)
+          assert zipped.stat().st_size == receipt['size_in_bytes'], 'receipt compressed size differs'
+          assert _sha256(zipped) == receipt['artifact_sha256'], 'ZIP digest differs from receipt/API'
+          source = acquisition / 'source'
+          with zipfile.ZipFile(zipped) as archive:
+              seen, files = set(), set()
+              for member in archive.infolist():
+                  directory = member.is_dir()
+                  name = _archive_name(member.filename, directory)
+                  kind = stat.S_IFMT(member.external_attr >> 16) if member.create_system == 3 else 0
+                  assert member.orig_filename == member.filename and not member.flag_bits & 1, 'invalid ZIP member'
+                  assert kind in (0, stat.S_IFDIR if directory else stat.S_IFREG), 'special ZIP member'
+                  assert name not in seen, 'duplicate ZIP member'
+                  seen.add(name)
+                  if not directory:
+                      files.add(name)
+              assert all('/'.join(name.split('/')[:index]) not in files
+                         for name in seen for index in range(1, len(name.split('/')))), 'ZIP path collision'
+              assert archive.testzip() is None, 'ZIP CRC differs'
+              _extract(archive, source)
+          oracle = source / receipt['bundle_path']
+          manifest = oracle / 'sha256-manifest.tsv'
+          assert _sha256(manifest) == receipt['manifest_sha256'], 'workflow manifest digest differs'
+          recorded = {}
+          with manifest.open(newline='') as stream:
+              rows = csv.reader(stream, delimiter='\t')
+              assert next(rows) == ['sha256', 'path'], 'invalid workflow manifest header'
+              previous = ''
+              for row in rows:
+                  assert len(row) == 2 and HEX64.fullmatch(row[0]), 'invalid workflow manifest row'
+                  digest, name = row
+                  _archive_name(name, False)
+                  assert name > previous and name != 'sha256-manifest.tsv', 'duplicate/unsorted manifest path'
+                  recorded[name] = digest
+                  previous = name
+          actual = {name.removeprefix('workflow/') for name in files if name.startswith('workflow/')}
+          assert actual == set(recorded) | {'sha256-manifest.tsv'}, 'workflow inventory differs'
+          assert all(_sha256(oracle / name) == digest for name, digest in recorded.items()), 'workflow file digest differs'
+          assert _sha256(oracle / 'witness.json') == receipt['witness_sha256'], 'witness digest differs'
+          witness = _load_json(oracle / 'witness.json', 'witness')
+          assert witness['status'] == 'complete', 'source workflow incomplete'
+          assert witness['package'] == dict(
+              name='DESeq2', version='1.52.0', bioconductor='3.23',
+              source_commit='16aeab6d6158bd8cbb8e98764c2f33399b1a3fd3',
+              source_archive_sha256='8c91699286336350e66eec132ce6fdf5bb4af78e2a4d015a5a61224f62a95984'), \
+              'DESeq2 source differs'
+          assert witness['files'] == {name: digest for name, digest in recorded.items() if name != 'witness.json'}, \
+              'witness file inventory differs'
+          record = dict(run=receipt['run_id'], head=receipt['head_sha'], artifact=receipt['artifact_id'],
+                        artifact_sha256=receipt['artifact_sha256'], manifest_sha256=receipt['manifest_sha256'],
+                        witness_sha256=receipt['witness_sha256'], verified_files=len(recorded))
+          (acquisition / 'verification.json').write_text(json.dumps(record, sort_keys=True) + '\n')
+          print(json.dumps(record, sort_keys=True))
+          PY
+          printf 'ORACLE_ROOT=%s\n' "$EVIDENCE/oracle-acquisition/source/workflow" >> "$GITHUB_ENV"
+
+      - name: Verify frozen dependencies
+        id: metadata
+        working-directory: ${{ runner.temp }}/deseq-candidate
+        run: |
+          set -euo pipefail
+          rustc -Vv | tee "$EVIDENCE/rustc.log"
+          cargo -V | tee "$EVIDENCE/cargo.log"
+          cargo metadata --locked --no-deps --format-version 1 > "$EVIDENCE/metadata-preflight.json"
+          python3 -B - <<'PY'
+          import json, os, shutil
+          from pathlib import Path
+          metadata = json.loads((Path(os.environ['EVIDENCE']) / 'metadata-preflight.json').read_text())
+          assert Path(metadata['target_directory']).resolve() == Path(os.environ['CARGO_TARGET_DIR']).resolve(), \
+              'Cargo target directory differs before dependency acquisition'
+          assert shutil.disk_usage(os.environ['CARGO_TARGET_DIR']).free > 0, 'Cargo target is full'
+          PY
+          cargo metadata --locked --all-features --format-version 1 > "$EVIDENCE/metadata.json"
+          python3 -B - <<'PY'
+          import json, os
+          from pathlib import Path
+          metadata = json.loads((Path(os.environ['EVIDENCE']) / 'metadata.json').read_text())
+          assert Path(metadata['target_directory']).resolve() == Path(os.environ['CARGO_TARGET_DIR']).resolve(), \
+              'Cargo target directory differs from runner-temp'
+          package = next(item for item in metadata['packages'] if item['name'] == 'rsomics-deseq')
+          assert package['publish'] == [], 'candidate must remain private'
+          assert [target['name'] for target in package['targets'] if 'bin' in target['kind']] == ['rsomics-deseq'], \
+              'candidate binary identity differs'
+          assert [item['name'] for item in metadata['packages'] if item['source'] is None] == ['rsomics-deseq'], \
+              'candidate has a local path dependency'
+          PY
+          cp Cargo.lock "$EVIDENCE/Cargo.lock"
+
+      - name: Format and strict Clippy
+        if: ${{ !cancelled() && steps.metadata.outcome == 'success' }}
+        working-directory: ${{ runner.temp }}/deseq-candidate
+        run: |
+          set -euo pipefail
+          cargo fmt --all -- --check 2>&1 | tee "$EVIDENCE/format.log"
+          cargo clippy --locked --all-targets --all-features -- -D warnings 2>&1 | tee "$EVIDENCE/clippy.log"
+
+      - name: Test debug
+        if: ${{ !cancelled() && steps.metadata.outcome == 'success' }}
+        working-directory: ${{ runner.temp }}/deseq-candidate
+        run: |
+          set -euo pipefail
+          cargo test --locked --all-features --all-targets --no-fail-fast -- --nocapture \
+            2>&1 | tee "$EVIDENCE/test-debug.log"
+
+      - name: Test release
+        if: ${{ !cancelled() && steps.metadata.outcome == 'success' }}
+        working-directory: ${{ runner.temp }}/deseq-candidate
+        run: |
+          set -euo pipefail
+          cargo test --locked --release --all-features --all-targets --no-fail-fast -- --nocapture \
+            2>&1 | tee "$EVIDENCE/test-release.log"
+
+      - name: Compare complete fitted workflow
+        id: comparison
+        if: ${{ !cancelled() && steps.metadata.outcome == 'success' }}
+        working-directory: ${{ runner.temp }}/deseq-candidate
+        run: |
+          set -euo pipefail
+          cargo build --locked --release --bin rsomics-deseq 2>&1 | tee "$EVIDENCE/build-release.log"
+          mkdir "$EVIDENCE/native-binary" "$EVIDENCE/controller" "$EVIDENCE/comparison"
+          binary="$EVIDENCE/native-binary/rsomics-deseq-${{ matrix.target }}"
+          cp "$CARGO_TARGET_DIR/release/rsomics-deseq" "$binary"
+          shasum -a 256 "$binary" > "$EVIDENCE/native-binary/checksums.sha256"
+          cp scripts/check-workflow.py scripts/check-bundle-contract.py "$EVIDENCE/controller/"
+          (
+            cd "$EVIDENCE/controller"
+            shasum -a 256 *.py
+          ) > "$EVIDENCE/controller/checksums.sha256"
+          for workers in 1 4; do
+            python3 -B "$EVIDENCE/controller/check-workflow.py" \
+              --witness "$ORACLE_ROOT" --binary "$binary" \
+              --output "$EVIDENCE/comparison/workers-$workers" --workers "$workers" \
+              2>&1 | tee "$EVIDENCE/comparison/workers-$workers.log"
+          done
+          python3 -B "$EVIDENCE/controller/check-bundle-contract.py" --binary "$binary" \
+            --bundle "$EVIDENCE/comparison/workers-1/fit.json" \
+            --output "$EVIDENCE/reload-contract" \
+            2>&1 | tee "$EVIDENCE/reload-contract.log"
+
+      - name: Check worker determinism
+        if: ${{ !cancelled() && steps.comparison.outcome == 'success' }}
+        run: |
+          set -euo pipefail
+          python3 -B - <<'PY'
+          import hashlib, json, os
+          from pathlib import Path
+          root = Path(os.environ['EVIDENCE'])
+          first = root / 'comparison/workers-1'
+          fourth = root / 'comparison/workers-4'
+          fitted = [json.loads((out / 'fit.json').read_text()) for out in (first, fourth)]
+          assert [fit.pop('workers') for fit in fitted] == [1, 4], 'recorded worker counts differ'
+          assert fitted[0] == fitted[1], 'worker count changed fitted state'
+          exports = {}
+          for name in ('forward.tsv', 'reverse.tsv', 'normalized-counts.tsv', 'vst.tsv'):
+              data = (first / name).read_bytes()
+              assert data == (fourth / name).read_bytes(), 'worker count changed ' + name
+              exports[name] = hashlib.sha256(data).hexdigest()
+          record = dict(passed=True, compared_workers=[1, 4], fitted_state_equal=True, exports_sha256=exports)
+          (root / 'worker-determinism.json').write_text(json.dumps(record, sort_keys=True) + '\n')
+          print(json.dumps(record, sort_keys=True))
+          PY
+
+      - name: Verify source remains unchanged
+        if: ${{ always() && steps.snapshot.outcome == 'success' }}
+        working-directory: ${{ runner.temp }}/deseq-candidate
+        run: |
+          set -euo pipefail
+          python3 -B - <<'PY'
+          import json, os, sys
+          from pathlib import Path
+          sys.path.insert(0, str(Path(os.environ['GITHUB_WORKSPACE']) / 'scripts'))
+          from infercnv_source_snapshot import _hash_file, _manifest, _regular
+          recorded = _manifest((Path(os.environ['EVIDENCE']) / 'files.sha256').read_bytes())
+          actual = set()
+          for path in Path.cwd().rglob('*'):
+              if not path.is_dir() or path.is_symlink():
+                  _regular(path)
+                  actual.add(path.relative_to(Path.cwd()).as_posix())
+          assert actual == set(recorded), 'source file inventory changed'
+          assert all(_hash_file(name) == digest for name, digest in recorded.items()), 'source bytes changed'
+          record = dict(unchanged_files=len(recorded))
+          (Path(os.environ['EVIDENCE']) / 'source-after.json').write_text(json.dumps(record, sort_keys=True) + '\n')
+          print(json.dumps(record, sort_keys=True))
+          PY
+
+      - name: Upload raw evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: deseq-${{ github.run_id }}-${{ github.run_attempt }}-${{ matrix.target }}
+          path: ${{ runner.temp }}/deseq-evidence/
+          if-no-files-found: error
+          include-hidden-files: true
+          retention-days: 30
