@@ -1,5 +1,31 @@
 # Active portfolio execution
 
+## Current position, 2026-10-28
+
+Full30-family goal is active and unchanged. Grouped-i6 Bayes has accepted
+four-native semantics and bounded whole-path performance; do not rerun those
+campaigns. Complete native inferCNV discovery compiles/tests on all four
+classes but remains unaccepted: one simple-Leiden parent reaches a different
+stochastic local optimum below the selected R run. The async quality-contract
+decision is pending; do not fit seeds or silently relax its gate. See
+infercnv-native-discovery-2026-10-27.md for the authoritative held contract.
+
+RNA-seq QC green4 run40546148508 now passes format, strict Clippy,8 tests per
+debug/release profile and all16 complete five-metric comparisons across four
+native classes and1/4 workers. Original evidence is retained/verified, with
+byte-identical per-layout reports. This is synthetic semantic acceptance,
+not representative performance or a publication decision. Advance the real
+whole-report plan at docs/plans/2026-10-28-rnaseq-qc-real-performance.md;
+the required separate whole-input profile must not be replaced by chr21-only
+timings. No speculative Layer A API or empty product is introduced.
+
+The sections below retain the historical execution ledger, not current pending
+instructions. Fresh storage check is boot APFS76.65% occupied, KIOXIA245GiB
+and fixture HDD256GiB free. All project paths remain external; use hosted
+runner-temp for the currently planned acquisition/measurements.
+
+## Historical execution ledger
+
 The user resumed the existing goal; get_goal confirms active on2026-10-23.
 Its objective still covers all30 coherent product families and necessary
 consumer-driven foundations. inferCNV is the current priority, not the

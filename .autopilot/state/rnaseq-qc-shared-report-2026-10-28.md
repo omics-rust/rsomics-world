@@ -2,19 +2,40 @@
 
 ## Current state
 
-The full five-metric private implementation compiles and passes all8 Rust
-tests in debug/release on the first Linux bootstrap. Two test-only lint
-initializations are rewritten without changing behavior; final lint is still
-pending. The generated lock is imported. Normal four-native green3 run40544150761 is dispatched at
-world79605bf198f5ca5622e67796c0167e3a05a159e4 after exact-head controller
-40543807453 passes. Completed Linux x86_64/aarch64 jobs pass all four actual
-single/paired1/4-worker five-metric comparisons, but Clippy also flags the
-singleton array inside Vec::from. Green4 changes only those test expressions
-to std::iter::once(range).collect(); production source/lock are unchanged.
-No full successful native gate, representative performance or release is
-accepted yet. Sources remain private,
-publish=false, with no public repo or product commit. Below is the historical
-source/execution ledger, not an instruction to repeat earlier bootstraps.
+Green4 run40546148508 at world1224fbf18d7af1b4b76869fc6e41b1611d7bb43b
+is terminal SUCCESS on Linux/macOS x86_64/aarch64. Every platform passes
+format, strict Clippy, all8 debug/release tests and four complete source
+comparisons. All16 native calls match the actual five-metric RSeQC outputs;
+single and paired reports are each byte-identical across workers/platforms.
+Original API/ZIP/log/source/binary/report evidence is retained and verified at
+`/Volumes/Zane's HDD/rsomics-fixtures/evidence/rnaseq-qc-native-2026-10-28/run-40546148508/`.
+This accepts the complete bounded synthetic semantic workflow, not general
+depth-cap equivalence, representative performance or publication readiness.
+Sources remain private, publish=false, with no public repo. The next real
+input/performance plan is docs/plans/2026-10-28-rnaseq-qc-real-performance.md.
+Below is the historical ledger, not an instruction to repeat bootstraps.
+The owning source is committed locally as6fdda78 (initial main commit);
+all17 non-documentation frozen files remain exactly green4. Only README and
+the merge record add the measured native acceptance and pending release scope.
+
+| Platform | Artifact | Original ZIP SHA-256 |
+| --- | --- | --- |
+| Linux x86_64 | 12751813613 | 3e8130c10199aa0828a63ba964709cef9810713facc0d9e1bd3751e96d967d11 |
+| Linux aarch64 | 12752269619 | a70edc73c1094fa606f055956dcca10793e29d15dac8aa0600b51e7ed4bf2dca |
+| macOS x86_64 | 12752793988 | 9f099a716d06664f475a1bc4a308247e01486baff7dd37b6070e7afcebc06d36 |
+| macOS aarch64 | 12752008584 | 710414a29604c3c65d5e3d72a91770d84f6358fbe1660eb11f32f0e8d5bbcf21 |
+
+The Linux x86_64 binary SHA is
+ae968a1a490433086b6e50867a15b9797bea47e903faf032967b5a3b377fa840.
+Report SHA: single d5dbd31436e5fab4d971a40217439104a070477a95c8d3010ec905c6d762512b;
+paired d42c3128578f6380c06b1e1030140c6d2a88d79e243eac2aef1643a9c6409f74.
+Source/lock identities remain the green4 archive/manifest and imported lock
+listed below. Frozen manifests retain the candidate's earlier maturity text;
+the exact-run evidence here supersedes that text, not the numerical limits.
+
+Fresh2026-10-28 storage check: boot APFS76.65% occupied,53.30GiB free;
+KIOXIA245GiB and HDD256GiB free. No local build/dependency install is needed;
+all project source/data/scratch remains on external storage or hosted runners.
 
 ## Source and execution ledger
 
