@@ -1,5 +1,11 @@
 # RNA-seq query-context implementation task
 
+Status: implemented and reviewed; owning localmain59f50135425702ce10f9dbc38fd8dc113b5b5fd6.
+Final producer93986e passes local11tests/strictClippy/smallsource/whole1/4 checks,
+with byte-identical whole reports. Parent metadata is current; green5 freezes
+the exact19sourcefiles for the next four-native gate. The brief below retains
+the original task, not an instruction to revert the final producer pin.
+
 Read this first; it is your complete bounded task. Own only
 `/Volumes/KIOXIA/Documents/omics-rust/rsomics-rnaseq-qc/` implementation files
 needed for source query contexts: src/metrics/sampling.rs, src/report.rs,
@@ -24,7 +30,7 @@ Current native binary9ab7d65e... at the original complete input leaves6
 coverage bins +7total and2 TIN rows at chr10:5029966; exact failed outputs are
 `/Volumes/KIOXIA/Developments/tmp/rnaseq-whole-name-expiry-20261028.9yY1vQ/`.
 The source-vs-query proof is
-`/Volumes/KIOXIA/Developments/tmp/rnaseq-qc-remaining-chr10-2_vxlhi5/result.json`.
+`/Volumes/KIOXIA/Developments/tmp/rnaseq-qc-remaining-chr10-2_vxlhi5/sorted-bounds-result.json`.
 Actual full BAM/BED/source metrics are under
 `/Volumes/Zane's HDD/rsomics-fixtures/evidence/rnaseq-qc-real-performance-2026-10-28/run-40558683154/artifact/benchmark/`.
 Use existing scripts/compare_rnaseq_qc_workflow.py compare_report/verify_outputs

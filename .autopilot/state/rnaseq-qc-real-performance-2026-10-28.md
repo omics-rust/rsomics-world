@@ -14,9 +14,17 @@ acceptance. Evidence is
 One fresh whole-workflow review finds only query sweeping on placed-unmapped
 coordinates. It is corrected with an early unmapped skip before all query
 state, covered by an out-of-order1/4-worker regression;11 tests pass and the
-scoped re-review passes. The final boundary run adopts producer93986e after
-its actual HTSlib mapped/proper guard correction. That exact source still
-needs fresh four-native acceptance and complete same-host CPU/RSS/I/O trials.
+scoped re-review passes. The final boundary run against producer93986e passes,
+including retained actual single/paired cases and full original input at1/4workers.
+Final Mac binary2387e126d4a708c23786edf37f601d3171d4fcdd70c695b87e96181d15b304a5;
+observed36.2802/18.1206s are validation observations only. All executed source
+identities pass post-build/post-comparison checks. Owning localmain is
+59f50135425702ce10f9dbc38fd8dc113b5b5fd6. Green5 archive
+6129ee493f40818a5b9287f7c4e87ccd735ee0d48c0895588fc03817c74bcdaf,
+manifestdb19a2af787e30700d9c699ed095b0760b049ebce6f5389d4998d395b797a5bb
+freeze19files; lockSHAa6ec5961981e2f95070cec067e52c91cff9dc4b86da7f726256e504521086a84.
+That exact source still needs fresh four-native acceptance and complete
+same-host CPU/RSS/I/O trials.
 Do not rerun R for diagnosis, use an old binary for new timings, or claim the
 old chr21 advantage transfers automatically. Registry publication is separately
 blocked by authentication (see shared-pileup state); the goal remains active.
