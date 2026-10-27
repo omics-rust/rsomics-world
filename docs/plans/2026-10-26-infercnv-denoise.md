@@ -62,16 +62,16 @@ tests/cnv_cli.rs and the product README/THIRD_PARTY_NOTICES when verified.
 Move report-only serialization into the CLI child module as part of this
 feature; it can read private arguments without exposing them publicly.
 
-- [ ] Write the integrated CLI test first. Observe its missing --denoise
+- [x] Write the integrated CLI test first. Observe its missing --denoise
   behavior on the retained accepted Linux binary on4090; do not create a
   separate per-helper RED/native campaign. No production edit before this.
-- [ ] Add critical numeric tests with independent literal expectations:
+- [x] Add critical numeric tests with independent literal expectations:
   pooled global center/open bounds, SD axis, logistic midpoint/tails,
   fixed bypass versus SD-zero logistic, deterministic workers and real
   configuration/budget failures. Trivial getters earn no separate tests.
-- [ ] Implement the typed operation and CLI report wiring. Preserve step14
+- [x] Implement the typed operation and CLI report wiring. Preserve step14
   values and trees; persist step22 values even without --include-expression.
-- [ ] Freeze green-22 and run existing Linux correctness/benchmark mode,
+- [x] Freeze green-22 and run existing Linux correctness/benchmark mode,
   confirming unchanged default report fingerprint and actual new CLI behavior.
 
 ## Task 2: installed-package workflow evidence
@@ -80,20 +80,20 @@ Files: scripts/infercnv_denoise_workflow.R,
 scripts/compare_infercnv_denoise_workflow.py, focused behavior tests and
 .github/workflows/infercnv-oracle.yml; one immutable native candidate receipt.
 
-- [ ] Reuse the existing exact-source R installation. An explicit opt-in
+- [x] Reuse the existing exact-source R installation. An explicit opt-in
   denoise mode runs raw-input samples workflow comparisons for off, fixed,
   SD and logistic configurations; skip unrelated old ingestion probes.
-- [ ] Compare actual native CLI outputs to actual installed infercnv results,
+- [x] Compare actual native CLI outputs to actual installed infercnv results,
   with exact IDs/order/selections/merges and existing numerical criteria for
   expression/heights. Keep actual outputs, timings, errors and source/config
   provenance. Do not replace the namespace with copied equations or mocks.
-- [ ] Include a real full input, grouped references and no-reference data.
+- [x] Include a real full input, grouped references and no-reference data.
   Retain small resulting goldens for four-native default tests where useful;
   large fixtures stay external. Do not infer success from source inspection.
 
 ## Task 3: integrated acceptance
 
-- [ ] One fresh whole-feature review, formatting/strict Clippy, all existing
+- [x] One fresh whole-feature review, formatting/strict Clippy, all existing
   tests and final four-native debug/release checks. No old oracle weakening.
 - [ ] Verify output/memory/throughput in proportion to this value transform;
   commit only the owning product files and scoped control-plane evidence.

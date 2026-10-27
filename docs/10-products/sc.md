@@ -24,6 +24,19 @@ The user explicitly chose workflow-first execution and consolidated validation,
 not repeated per-helper audit campaigns. Full-path speed, full inferCNV and
 publication remain open; older bounded checkpoints below are historical.
 
+Integrated denoise is implemented at private productab5465ac. Real pinned-R
+run40324825110 passes15 raw-input configurations and30 native1/4-worker CLI
+comparisons, including grouped references, no-reference proxies and the full
+shipped example. The existing numerical criterion is unchanged; identities,
+selection and tree structure match. Denoise has separate step22 output while
+step14 expression and clustering remain unchanged. Green23/run40324825127
+passes125 tests per debug/release profile on all four native platforms.
+See the [denoise state](../../.autopilot/state/infercnv-denoise-2026-10-26.md).
+This is not full inferCNV, a paired denoise speed result or a public release.
+The next [integrated HMM plan](../plans/2026-10-27-infercnv-hmm-workflow.md)
+connects early hidden-spike calibration to separate state/region outputs;
+it does not append an unrelated generic decoder after denoise.
+
 The user reprioritized inferCNV on 2026-09-26. Its implementation now proceeds
 before the broader counts-to-clusters slice, without changing product ownership
 or publishing an incomplete single-cell product. See the
