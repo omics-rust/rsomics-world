@@ -83,7 +83,8 @@ quality/graph/PCA criterion remains unchanged.
 
 Normal four-native run40539911278 is dispatched at
 world1bb60fc63c332d4da69b3aa7fb6ba890ec6f35ef after controller40539676980
-passes. Linux/macOS aarch64 pass149 debug/release tests and strict Clippy,
+passes. Linux/macOS aarch64 pass149 debug/release tests; formatting and
+strict Clippy run only on Linux x86_64 in this SC workflow,
 all four k20 calls and both k5 PCA1/4-worker calls (103 native subclusters).
 The tree-state repair and PCA objective gate pass. Their k5 simple call
 fails objective89.104106190676561<90.266000941679266. Linux x86_64 also
@@ -98,3 +99,20 @@ run-40539911278/linux-aarch64/. ZIP92964962 bytes, SHA
 5cc0be4cbcef1aee843d35b420c9e2606177ccd184415f4850578fe6a5917641;
 API size/digest, ZIP CRC and safe paths pass. Raw reports remain available
 for diagnosis; the failed result is not rewritten into an accepted witness.
+
+The differentiated bounded diagnosis finds every simple graph exact and
+native CPM higher in five of six parents. Only malignant_MGH36 is lower;
+both have11 communities, but native/source ARI is0.4761. Native admits no
+improving node move, whole-community merge, pairwise swap or connected
+proper-subset relocation. Reference CPM increments, parent-constrained
+refinement, beta sampling, aggregation masses/loops and projection semantics
+show no concrete transfer bug in the bounded check. This is evidence for a
+legitimate stochastic basin, not proof of biological equivalence. Other
+partitions are not generally stationary after just two iterations.
+
+Hold only the strict per-parent quality acceptance contract. A user question
+is sent asynchronously: accept explicitly recorded random-partition/quality
+differences under the same model/graph/reproducibility contract, or retain
+the hard no-lower-than-this-R-run gate. Do not silently relax the gate or
+escalate seeds to fit this fixture. No further discovery campaign is started
+while this decision is pending. Continue the unblocked RNA-seq QC report.
