@@ -63,7 +63,34 @@ setting changes. Primary contract:
 https://stat.ethz.ch/R-manual/R-devel/library/base/html/Version.html.
 Raw failed artifact12779307285 is5490873bytes, SHA
 18138ec736606d9dd34fdf55a35a4cb3f5a21bbffa6879cff3a0dcee8817ae06;
-full failed evidence retention is in progress. This is a controller metadata
+full failed evidence retention now verifies all154 original files under
+/Volumes/Zane's HDD/rsomics-fixtures/evidence/deseq-low-df-2026-10-28/run-40602110279/.
+Qualification contains32 metadata files only, with no runtime JSON, inputs,
+freeze, outcomes, witness or manifest. This is a controller metadata
 failure, not a rejected operator or uncovered prior result. No source workflow
 outcome exists yet. Run a fresh qualification after the one-line fix passes
-the exact-head controller gate; retain the failed run unchanged.
+the exact-head controller gate; retain the failed run unchanged. Controller
+40603137886 at1f3f7a002ac2d6ac10016eb9a68536657b1367e4 passes; fresh source
+qualification40603312183 at that exact corrected head is terminal SUCCESS.
+
+The original20350457-byte artifact12780580470, ZIP
+b5323154769ee97fe524b0c4e6a016fbcaa160dbeac0e8690286f7b799ac9cb1,
+is freshly API/ZIP/CRC/safe-path/full284-file/input-freeze verified at
+/Volumes/Zane's HDD/rsomics-fixtures/evidence/deseq-low-df-2026-10-28/run-40603312183/.
+Receipt: .autopilot/oracles/deseq-low-df-2026-10-28.json.
+Manifest43318049466200c3521858daefca65a378c8707daced0f803dc5339826953919;
+witness0421f6dc922ab6a5ef1898399ec16c07f6fa2df7de5ff48059980a21d5f4efa4.
+All four1200-gene mean-trend fits/reloads complete with betaConvTRUE. All five
+independent probes and basis invariants pass; max probe absolute error1.78e-15.
+All3 MC reference counts/densities/KL reproduce source, predictions satisfy
+the unchanged bound and exact first-min indices52/96/134 agree. Actual priors
+are .4084084084/.7607607608/1.0650650651; df4 ordinary prior1.4531364674.
+These are evidence outputs only, never production lookup values. RNG state
+is preserved and every source case remains unchanged.
+
+This qualifies version/profile-pinned algorithm constants, not universal
+bitwise R equivalence. Native consumer implementation is now authorized by
+docs/plans/2026-10-28-deseq-mean-low-df-native.md; its actual histogram/KL/
+prediction/minimum and complete fitted workflow must still pass source and
+four-native gates. The source artifact's adopted=FALSE is immutable provenance,
+not a claim of current native adoption. No public foundation API is introduced.

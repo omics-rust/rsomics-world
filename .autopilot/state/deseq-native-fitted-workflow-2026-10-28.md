@@ -2,6 +2,28 @@
 
 ## Current state
 
+Owning localmain8bb14ad5964ac505d0755509244141463b0b23d1 is clean/private,
+publish=false. Schema2 green2/run40597122905 at exactworldec72d1ba passes all
+four native classes; original APIs, ZIPs, binaries,23 source files and both
+complete source witnesses are independently retained/verified. Final receipt:
+/Volumes/Zane's HDD/rsomics-fixtures/evidence/deseq-native-2026-10-28/run-40597122905/verification-final.json,
+SHAfb69144f9be90a364363002bf5c9d2016c00587ab10e160860bb669d2e138e7f.
+This accepts seven general plus four disabled-Cook cases, not positive refit.
+
+New schema3 green3 implements positive Cook replacement/refit, preserving
+original assays and explicit final state. All15 source workflows pass locally
+at1/4,11 tests/strict checks/fresh whole-feature review and bounded P2 fix pass.
+Exact four-native40602456359 atc598ffaf is SUCCESS and original evidence is
+retained/verified; see deseq-cook-refit-2026-10-28.md. Low-df source40603312183
+at1f3f7a00 is also SUCCESS with all284 manifest entries, independent probes and
+three positive MC priors qualified. Native mean/low-df implementation now
+follows docs/plans/2026-10-28-deseq-mean-low-df-native.md, not yet accepted.
+Local trends/fallback and formal performance remain release gates. The green3
+performance harness is prepared against its immutable accepted Linux binary;
+it must not measure the later worktree. Full30-family goal stays active.
+
+## Initial schema1 checkpoint
+
 Owning repository `/Volumes/KIOXIA/Documents/omics-rust/rsomics-deseq` has
 clean local main718f12a2815157755118dd435e65c76dd18565c8, publish=false,
 no public remote. The full30-family goal remains active, not inferCNV-only.
@@ -51,7 +73,7 @@ three-variable path uses true bounded Cauchy/subspace optimization; production
 checks convergence status rather than treating every Ok as convergence. No R
 optimizer source is vendored and no independent legal certification is claimed.
 
-## Next gates
+## Historical schema1 gates
 
 Frozen green1 has19 source files, archive
 e39cbf72e89d084dc804461fcca1bc5894562d155c63433e9cf9a59cd3c9b67a,
@@ -79,7 +101,7 @@ This accepts the bounded checkpoint, not complete DESeq2 replacement or formal
 performance. New schema2 general-design work follows the separate plan below.
 Evidence: /Volumes/KIOXIA/Developments/tmp/deseq-native-ci-check-2m2__eg9/.
 
-Current private checkpoint explicitly rejects residual df<=3, design cells
+Initial schema1 checkpoint explicitly rejects residual df<=3, design cells
 size>=7 and unsuccessful parametric trends. Formula coding, supplied
 normalization, positive Cook replacement, low-df and nonparametric trend paths,
 broader compatibility and same-host formal performance remain release work.
@@ -88,6 +110,6 @@ numeric bounds or declare exact optimizer trace equivalence. Do not publish
 this private checkpoint or expose placeholder commands. Continue coherent
 workflow work after its native gate rather than stopping at this boundary.
 
-Next plan: docs/plans/2026-10-28-deseq-design-normalization.md. Its source
+Following-wave plan: docs/plans/2026-10-28-deseq-design-normalization.md. Its source
 case driver and private product implementation proceed in differentiated
 files. Preserve green1/schema1 artifacts while extending the new checkpoint.

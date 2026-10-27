@@ -35,8 +35,17 @@ manifestdd67c410ff5d902272f0481b4db58c2a3b7a883ae54ab82634d9872f1e6c8aab.
 The existing snapshot verifier confirms the exact27 regular-file inventory.
 The updated wrapper requires schema3 and all15 cases, including positive Cook
 replacement, with both unchanged source receipts and1/4-worker determinism.
-Its two compact integration/Bash checks pass. Exact four-native dispatch is
-next; this is not yet four-native or representative-performance acceptance.
+Its two compact integration/Bash checks pass. Exact controller40602332374
+atc598ffaf0c44c6b79b1c362ad6d75b4effd91907 passes; four-native40602456359
+is terminal SUCCESS on all four classes. Original APIs/ZIPs/logs and exact27
+owning source files/lock/binaries, both complete source manifests and all15
+plus pasilla reports1/4 are retained and independently verified. Positive
+default-vs-disabled original dataset/genes/dispersions remain identical, with
+refits kept separately. Authoritative verification.json SHA is
+79c6462118f6cb6331fd77b6a01a5ec934805b966f68b6b0e2e1fac0474493f6 under
+/Volumes/Zane's HDD/rsomics-fixtures/evidence/deseq-native-2026-10-28/run-40602456359/.
+This accepts the bounded schema3 workflow, not representative performance or
+complete DESeq2 scope. The next mean/low-df implementation has a separate plan.
 Mean/local trends, low-df prior and formal whole-workflow performance keep
 publish=false; continue the full portfolio in parallel with source-qualified
 edgeR work, not a speculative shared statistical API.

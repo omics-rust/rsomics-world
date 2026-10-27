@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "repository": "omics-rust/rsomics-world",
+  "workflow_path": ".github/workflows/edger-oracle.yml",
+  "run_id": 40603806303,
+  "run_attempt": 1,
+  "artifact_id": 12779298937,
+  "head_sha": "1bc92a1eee3b9941276fa97af07bd19935f04edc",
+  "artifact_name": "edger-oracle-40603806303-1",
+  "artifact_sha256": "a5685a6c012a5b4494cd75c4d0be06da67168c2e5854e624842da0cefc47f3ff",
+  "size_in_bytes": 43901911,
+  "manifest_sha256": "db6a6e6be77d8b65a4fb0a9aeb3afb21f562b83ec5d7e1b1c28a55dc130c1ce3",
+  "witness_sha256": "0fbc8a249f286367713cb375bf48b9f954eff46410c079fdd7936aeaf18d052f",
+  "bundle_path": "workflow"
+}

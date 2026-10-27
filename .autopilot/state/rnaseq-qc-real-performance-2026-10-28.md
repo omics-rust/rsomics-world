@@ -57,9 +57,16 @@ CLI conduit, existing regression and README change; Cargo/lock/sampling/report
 bytes, available-core default and requested runtime workers are unchanged.
 Local11 tests/strict Clippy/format/release and scoped root review pass. Green6
 freezes19files, archived000d7578b836c9b9ec9220611715a485be8cec79adc5af886b1b713365a8a50,
-manifestfd456556f8eb25a6893bfbfb7e90df6c604b8955107bbf5fd4d2d77e72a60aa4;
-its fresh four-native gate is next. No new source/BAM/performance campaign
-was run for that logical conduit. Keep measurements attributed to immutable
+manifestfd456556f8eb25a6893bfbfb7e90df6c604b8955107bbf5fd4d2d77e72a60aa4.
+Its run40597129172 at exactec72d1ba passes all four classes and original API/
+ZIP/log/binary/source/71-file oracle retention verifies. Authoritative receipt:
+/Volumes/Zane's HDD/rsomics-fixtures/evidence/rnaseq-qc-native-2026-10-28/run-40597129172/verification-final.json,
+SHA5cebfb46876768aa36bac52eee292cd2e1fcc5fc7eb9132c65f44914a4e236eb.
+Actual single/paired reports match source and previous green5 per-layout
+hashes, not the unrelated real-BAM report70d947...; acquisition bookkeeping
+failures are retained and corrected only in a fresh final receipt. No product
+disagreement, new source/BAM/performance campaign or native rerun is involved
+for that logical conduit. Keep measurements attributed to immutable
 green5, not the new Mac binary39dc3e339ef434370bf926c0f6dd9889601fb60ad5b91a92573af1c23bb118fb.
 
 ## Resolved global-context diagnosis

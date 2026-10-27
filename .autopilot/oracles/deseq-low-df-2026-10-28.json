@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "repository": "omics-rust/rsomics-world",
+  "workflow_path": ".github/workflows/deseq-low-df-oracle.yml",
+  "run_id": 40603312183,
+  "run_attempt": 1,
+  "artifact_id": 12780580470,
+  "head_sha": "1f3f7a002ac2d6ac10016eb9a68536657b1367e4",
+  "artifact_name": "deseq-low-df-oracle-40603312183-1",
+  "artifact_sha256": "b5323154769ee97fe524b0c4e6a016fbcaa160dbeac0e8690286f7b799ac9cb1",
+  "size_in_bytes": 20350457,
+  "manifest_sha256": "43318049466200c3521858daefca65a378c8707daced0f803dc5339826953919",
+  "witness_sha256": "0421f6dc922ab6a5ef1898399ec16c07f6fa2df7de5ff48059980a21d5f4efa4",
+  "bundle_path": "qualification"
+}

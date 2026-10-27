@@ -2,8 +2,14 @@
 
 Current: schema2 green2/run40597122905 at exact worldec72d1ba is terminal
 SUCCESS on all four native classes. Original artifact retention/verification
-is in progress, not inferred from job status alone. Positive Cook/refit now
-has a separate schema3 candidate; see deseq-cook-refit-2026-10-28.md. The
+passes all four original API/ZIP/binary identities,23 source files and complete
+55+705-file source manifests. Authoritative final receipt SHA is
+fb69144f9be90a364363002bf5c9d2016c00587ab10e160860bb669d2e138e7f at
+/Volumes/Zane's HDD/rsomics-fixtures/evidence/deseq-native-2026-10-28/run-40597122905/verification-final.json.
+Earlier acquisition bookkeeping failures remain; finalizer corrects receipts
+only without executing native/R. This is accepted bounded schema2 evidence.
+Positive Cook/refit now
+has a separately accepted schema3 checkpoint; see deseq-cook-refit-2026-10-28.md. The
 remaining entries below record the schema2 implementation and frozen scope.
 
 Plan: docs/plans/2026-10-28-deseq-design-normalization.md. The schema1/green1
@@ -68,9 +74,9 @@ fitted/export determinism. Its two integration tests and actual retained
 55+705-file acquirer/determinism checks pass; that local acquirer selftest uses
 retained original API bytes, not a fresh network claim. All487 control tests
 pass with two existing skips. Native run40597122905 now passes on all four
-classes; original artifacts are being retained before final evidence acceptance.
+classes; original artifacts are now independently retained and accepted.
 
-Next: finish original green2 evidence retention and validate the completed
-positive replacement/refit lifecycle against the same source cases. Keep
+Next: validate the completed positive replacement/refit lifecycle against the
+same source cases in schema3/run40602456359; original green2 remains immutable. Keep
 publish=false and preserve every earlier failed/successful witness. Continue
 the same coherent lifecycle toward Cook refit/trends/low-df, not new helpers.

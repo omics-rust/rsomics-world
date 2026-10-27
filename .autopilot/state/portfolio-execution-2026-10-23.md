@@ -37,7 +37,9 @@ Whole native source compatibility and four-native acceptance now pass.
 Formal whole performance40592936910 runs at world5fcb3820 on the exact
 accepted Linux binary, not the old failing candidate. Current owningb7287f2
 also replaces duplicated thread parsing with existing Layer A ThreadArgs;
-green6 freezes that CLI-only conduit for its native gate. No numerical/runtime
+green6/run40597129172 passes all four native classes for that CLI-only conduit;
+original API/ZIP/log/source/binary/oracle evidence is retained and verified.
+No numerical/runtime
 policy or new public foundation API is introduced. Registry adoption remains held.
 See rnaseq-qc-real-performance-2026-10-28.md and
 rnaseq-pileup-filter-fix-2026-10-28.md. Publish40583646680 failed registry
@@ -53,11 +55,33 @@ classes. New owninga3274cc/green2 implements typed general designs, supplied
 SF/NF priority and shared ThreadArgs. All7 general plus4 disabled-Cook workflows
 pass actual source at1/4 workers,10 tests/strict Clippy/format, determinism and
 one fresh whole-feature review. Actual source40592944209 also qualifies all
-four positive replacement cases for the next coherent refit wave. Green2
-four-native acceptance is next. Remaining positive Cook replacement, low-df/
-trend and formal performance gates keep publish=false, not a complete DESeq2
-replacement. See deseq-design-normalization-2026-10-28.md. No speculative public
-foundation expansion or second broad donor survey is performed.
+four positive replacement cases. Green2/run40597122905 now passes all four
+native classes, with original artifact retention independently verified.
+Owning8bb14ad
+implements positive Cook/refit in schema3/green3; all15 cases pass at1/4 locally,
+11 tests/strict checks and whole-feature review plus the bounded P2 fix pass.
+Its new four-native gate40602456359 is SUCCESS at exactc598ffaf after controller
+40602332374 SUCCESS; all four original artifacts and27 owning source files,
+full source manifests/reports/determinism are retained and verified. Initial
+low-df source40602110279 fails only on runtime
+JSON before inputs/fits; original154-file artifact is retained. Fresh corrected
+qualification40603312183 is SUCCESS at1f3f7a00 after controller40603137886
+SUCCESS, with284 verified files, all5 probes and three positive MC priors
+qualified. Native mean/low-df work now follows its own complete-workflow plan;
+source adopted=FALSE provenance remains immutable. Local trends/fallback and
+formal performance still keep this
+private, not a complete DESeq2 replacement. Current edgeR4.10.7/limma3.68.5
+source review now prepares its modern QL first-workflow oracle, not the old
+legacy-QL donor or a placeholder native crate. Initial source40602956264 has
+a case-sensitive controller source-path failure before fitting; all698 files
+remain retained, and corrected40603806303 is SUCCESS at1bc92a1e after controller
+40603400276 SUCCESS. Original88-file source artifact is verified:8066 kept
+genes, modernQL fit, full saved-state/reload and exports pass. No native edgeR
+acceptance exists yet. Current limma count-workflow preflight identifies actual
+edgeR::voomLmFit -> limma contrasts/moderation as its separate product lifecycle;
+no native/public API exists yet. See deseq-cook-refit-2026-10-28.md
+and edger-source-preflight-2026-10-28.md. No speculative public foundation
+expansion or second broad donor survey is performed.
 
 The sections below retain the historical execution ledger, not current pending
 instructions. Latest local guard records boot APFS about77.15% occupied and

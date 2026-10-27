@@ -1,8 +1,11 @@
 # Current edgeR source preflight
 
-Read-only next-family qualification is complete; no edgeR R/native execution,
-product repository, publication or performance evidence yet. Plan:
+Current source witness40603806303 is SUCCESS, with all88 files retained and
+verified; modern QL/save/reload/exports pass on actual raw pasilla data. No
+native product, publication or performance acceptance exists yet. Plan:
 docs/plans/2026-10-28-edger-first-workflow-oracle.md.
+
+The entries below retain source preflight and execution provenance in order.
 
 Official current edgeR4.10.7 and limma3.68.5 replace the dossier's historical
 4.10.1/3.68.4 anchors for new work. Bioc3.23/R4.6.1 are retained. Exact source
@@ -53,4 +56,23 @@ Correct only that source-file mapping, retaining the same file SHA and actual
 function bodies. No model/options/input/output/bound changes occur. Artifact
 12778584754 is17521047bytes, SHA
 a7a960067718d79415d6a73bd0fb1a0325634fb01192d27c43dbd0038316ecb4;
-original failed evidence is being retained, not labelled native/math failure.
+all698 original files are retained/verified under
+/Volumes/Zane's HDD/rsomics-fixtures/evidence/edger-oracle-2026-10-28/run-40602956264/.
+The two-entry partial manifest verifies; witness remainsfailed with no fitted
+outcomes. This is not labelled a native/math failure. Controller40603400276
+at1bc92a1eee3b9941276fa97af07bd19935f04edc passes; fresh source run40603806303
+is terminal SUCCESS at that corrected head with unchanged source calls/options.
+
+Its43901911-byte artifact12779298937, ZIP
+a5685a6c012a5b4494cd75c4d0be06da67168c2e5854e624842da0cefc47f3ff,
+is freshly API/ZIP/CRC/safe-path/full88-file/input-freeze verified under
+/Volumes/Zane's HDD/rsomics-fixtures/evidence/edger-oracle-2026-10-28/run-40603806303/.
+Receipt: .autopilot/oracles/edger-first-workflow-2026-10-28.json.
+Manifestdb6a6e6be77d8b65a4fb0a9aeb3afb21f562b83ec5d7e1b1c28a55dc130c1ce3;
+witness0fbc8a249f286367713cb375bf48b9f954eff46410c079fdd7936aeaf18d052f.
+Actual design filtering keeps8066 of14599 genes, filters6533; TMM/current QL
+and full saved-state/reloaded forward/reverse contrasts/CPM exports pass all
+state, order, byte and frozen-input checks. Actual solver failures0, iterations
+2..22;1152 rows per direction have FDR<=.05. These numerical source outputs
+are not biological conclusions or native acceptance. The next implementation
+must consume this real modern QL lifecycle, not the retired legacy skeleton.
