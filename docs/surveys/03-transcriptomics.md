@@ -23,8 +23,10 @@ workflows:
 | `bam2wig`, `normalize_bigwig`, `overlay_bigwig` | `rsomics-signal` | signal-generation and arithmetic assets |
 | four `sc_*` scripts | `rsomics-sc` | single-cell source pool |
 
-`geneBody_coverage2` is the multi-input form of gene-body coverage, not a
-separate product operation. Two historical implementations target
+[`geneBody_coverage2`](https://github.com/liguowang/RSeQC/blob/0d2e017723c5c4b41eb3b938e1631692d187de1f/scripts/geneBody_coverage2.py)
+uses bigWig input, not a multi-BAM interface. `geneBody_coverage` itself
+supports multiple BAM inputs. These are input profiles of one coverage
+operation, not separate products. Two historical implementations target
 `read_distribution`; they must be reconciled against 5.0.5 rather than both
 merged.
 

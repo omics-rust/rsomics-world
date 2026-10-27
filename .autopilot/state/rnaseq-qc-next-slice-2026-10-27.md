@@ -1,0 +1,75 @@
+# RNA-seq QC next-slice source recheck
+
+Bounded parallel inventory while inferCNV remains the priority. No product
+implementation, build, installation, deletion or release occurred. All21
+historical clones are clean at the dossier-pinned revisions. No local
+rsomics-rnaseq-qc clone or shared-scan candidate was found; live repository and
+registry existence were not checked. Do not mistake a dossier for a product.
+
+## Coherent next operation
+
+Use the existing five-metric report contract: one BAM plus validated BED12,
+mapping/strandedness/distribution/100-point coverage/per-transcript and sample
+TIN, one shared traversal with metric-specific eligibility policies, and a
+transactional JSON/TSV/manifest output set. Focused commands select the same
+engine. Defer BigWig, Picard/refFlat/rRNA and other unfinished profiles rather
+than inserting approximations. Coverage/TIN still need actual pileup oracles;
+one traversal alone does not prove the metrics equivalent.
+
+## Source-asset dispositions
+
+All sources are under /Volumes/KIOXIA/Documents/omics-rust/.
+
+| Asset and pinned commit | Reuse and necessary changes |
+|---|---|
+| bam-mapstat36a21482b2e76b03147d829469c4fd63b1e87aab | Refactor driver; retain category counters/precedence and flag-diverse golden. Feed mapping before other metric exclusions. |
+| bam-strandedness6e4e20b08fcd649d6578eb9c906433476d219c2f | Refactor accumulator/finalizer; preserve first-N eligible gene-overlapping sampling and query-length overlap. |
+| bam-read-dist2f39541572ebe2b795cba10275498f17333080ca | Preferred midpoint/priority donor; replace readers, annotation parsing and scan wiring. Not yet accepted against the wheel. |
+| read-distributione169e6c9b5ab8f1b6af64ea633134931102d1e58 | Tests, fixtures and benchmarks only; do not merge its competing majority-overlap classifier. |
+| genebody-coverage1813f1f6e7504be12c4dcd8e8d6f6e9d180ff482 | Retain percentile/minus-strand formulas and goldens; replace direct noodles reads and per-transcript indexed scans. |
+| tin5e9fa05942c1ee999d87d475d3226638fa402c1a | Refactor and reconcile entropy, summary eligibility, short-transcript sampling and background policy. Retain fixtures, not the entire driver. |
+| rnaseq-metricsbb2f79492a3a5a4d8eec4f2d42542fd5f0235d51 | Retain Picard refFlat/rRNA/count/bias models and goldens for later complete profiles. Current metrics/bias passes are not a shared-scan report. |
+
+The remaining14 donors stay in later junction/fragment/bias/duplication/
+saturation dossier slices. No historical micro-crate is revived.
+
+## Demonstrated source discrepancies
+
+Root verified the current v5.05 GitHub tag resolves to commit
+0d2e017723c5c4b41eb3b938e1631692d187de1f. This source inspection is not an
+executed compatibility test of the separately pinned5.0.5 wheel.
+
+- [read_distribution.py](https://github.com/liguowang/RSeQC/blob/0d2e017723c5c4b41eb3b938e1631692d187de1f/scripts/read_distribution.py#L281)
+  assigns blocks by midpoint and priority. Actual donors disagree at
+  bam-read-dist/src/driver.rs:74 and read-distribution/src/lib.rs:407. Both
+  contain the same basic soft-clip/=/X projection quirks. Keep any required
+  legacy projection separate from canonical alignment blocks.
+- [geneBody_coverage2.py](https://github.com/liguowang/RSeQC/blob/0d2e017723c5c4b41eb3b938e1631692d187de1f/scripts/geneBody_coverage2.py#L29)
+  consumes BigWig. The survey's multi-input description was wrong; ordinary
+  geneBody_coverage supports multiple BAM inputs.
+- [tin.py](https://github.com/liguowang/RSeQC/blob/0d2e017723c5c4b41eb3b938e1631692d187de1f/scripts/tin.py#L397)
+  returns100*exp(entropy)/sampled_length for nonempty positive coverage,
+  including entropy zero. The donor score.rs:263 instead returns zero.
+  Upstream process_bam includes eligible zero scores in its summary;
+  donor stats.rs:9 excludes every zero. Background and sampled-length policy
+  also need actual wheel reconciliation. Misleading donor comments are not
+  compatibility evidence.
+
+## Foundations and fixture boundary
+
+Existing foundations suffice: bamio0.8.4@30459c78951fae406bd362854e7b80e42665a5c0,
+common0.12.3@77ff148b6b66089260be6a2896980185bdbcd4d2,
+help0.4.0@61dd6f2ce0cef6d9b4e349af5f96f96a7c95a013,
+intervals0.4.0@cda29c88b67882b63e1710a22aa480e905d4423f. Concrete reader/CIGAR
+consumers include count/src/alignment.rs:110/163 and bam/src/to_bed/mod.rs:227;
+transactional output is used in count/src/count.rs:217. Current count/BAM CLI
+use rsomics_help::parse. Transcript/category/filter policy remains internal.
+No new public API or foundation is justified by this inventory.
+
+Previously documented HDD100k performance fixtures were checked absent, not
+proven deleted. Existing KIOXIA/Developments/rsomics-fixtures assets are
+bench_3M.bam170283804bytes and gene_model_chr12.bed125450292bytes. Historical
+TIN speed notes include conda startup; Picard notes admit output differences.
+Neither establishes shared-report correctness or representative speed/RSS.
+The next implementation must pass one complete workflow gate and one fresh
+whole-feature review, not a series of per-helper campaigns.

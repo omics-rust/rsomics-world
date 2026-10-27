@@ -169,10 +169,16 @@ Five formerly routed assets were corrected during this audit:
 
 ### Existing implementation problems
 
-- The same RSeQC `read_distribution` operation has two implementations with
-  different CIGAR narratives. Neither becomes canonical until both are tested
-  against 5.0.5, including soft clips, `=`, `X`, insertions, deletions, and
-  splices.
+- The two `read_distribution` assets disagree on midpoint/priority versus
+  majority-overlap assignment, despite sharing basic CIGAR quirks. Current
+  upstream source supports midpoint/priority; neither donor is accepted until
+  the pinned5.0.5 wheel oracle covers boundary-crossing reads, soft clips, `=`,
+  `X`, insertions, deletions and splices. See the
+  [source recheck](../../.autopilot/state/rnaseq-qc-next-slice-2026-10-27.md).
+- The TIN donor maps zero entropy to zero TIN and excludes every zero score
+  from summaries. Current upstream source differs on both contracts. Sampling,
+  pileup and eligible-transcript summary policy require reconciliation before
+  migrating the whole integrity operation.
 - Metric crates repeat BAM opening, BED12 parsing, filtering, CLI plumbing,
   error formatting, and output naming. Installing all of them does not produce
   a coherent report.
@@ -224,6 +230,10 @@ complete operations. Each operation must pass:
 Later slices add junctions, fragments, bias, duplication, and saturation only
 when each advertised mode passes the same gate. An incomplete metric is absent
 from help and presets.
+
+The first BAM report excludes `geneBody_coverage2`'s bigWig input and any
+unfinished Picard/refFlat/rRNA profile. These are explicit later profiles,
+not approximations silently included in the five-metric preset.
 
 The release requires strict formatting and Clippy, tests, exact-head CI on
 native Linux and macOS for `x86_64` and `aarch64`, API and hot-path review, and
