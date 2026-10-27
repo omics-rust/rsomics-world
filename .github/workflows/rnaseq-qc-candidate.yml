@@ -237,6 +237,7 @@ jobs:
             2>&1 | tee "$EVIDENCE/test-release.log"
 
       - name: Compare complete native reports
+        if: ${{ !cancelled() && steps.metadata.outcome == 'success' }}
         working-directory: ${{ runner.temp }}/rnaseq-qc-candidate
         run: |
           set -euo pipefail

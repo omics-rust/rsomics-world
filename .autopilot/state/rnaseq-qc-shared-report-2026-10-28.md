@@ -50,6 +50,32 @@ No algorithm or dependency changes; generic snapshot verification passes.
 Controller40541903549 at worldc8472c59315a11238adf2c9e82e3e6e2e984aaa5
 passes. Do not claim native compilation or source agreement from it.
 
+Worlda2bd1398f49c9de47340953317c4cbc479421d05 controller40542330116 passes.
+The first complete Linux bootstrap is dispatched as40542614508 at that
+exact head with green2/bootstrap_dependencies=true. Generated dependencies,
+compilation, all authored tests, strict Clippy and actual five-metric report
+comparisons run together; results are pending. No public release occurs.
+
+Bootstrap40542614508 is terminal FAILURE only at strict Clippy: two test-only
+single-range Vec literals. Actual Rust compilation and all8 tests pass in
+both debug/release. The default comparison step was skipped after the lint
+failure, not a passing or failing numerical comparison. Both literals are
+corrected with Vec::from arrays, without disabling a lint or changing logic.
+The complete comparison now runs whenever metadata succeeds, even after an
+independent lint/test failure. Four focused controller tests still apply.
+
+Original artifact12751616253 is1970677 bytes, ZIP SHA
+8e0352ac3912c833a2d9cad86e214bd22abbfbc9c69d27b8572fe7e6d0930a26;
+API exact-head/size/digest, ZIP CRC and safe paths pass. Original run/API/logs/
+ZIP/extraction are under rsomics-fixtures/evidence/rnaseq-qc-native-2026-10-28/
+run-40542614508/. Import Cargo.lock SHA
+c09dea6b5397ca673d7052042d403fa55d2663e45c99672dc6f5ea6f51f308e2.
+New green3 freezes19 regular files: archive
+aa98668517064301e709ac127ac4a9a6c738deb5fe58aea8443164bf17c34152,
+manifest7d58990a5471408748b6c4826292703ee289b44efb3d3f0ff9e862c9c107f27c.
+Normal four-native mode, not another lock bootstrap, is next. No actual
+five-metric native upstream acceptance or representative speed is claimed.
+
 Mac APFS92.8%, KIOXIA245GiB free. No local Cargo/build/install/download;
 project sources, snapshots, fixtures and scratch remain external. Preserve
 unrelated inherited world VCF and root scratch changes.
