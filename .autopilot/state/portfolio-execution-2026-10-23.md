@@ -22,10 +22,21 @@ timings. No speculative Layer A API or empty product is introduced.
 Real chr21 complete-report40556139574 is now accepted with102098 records,
 all5 source metrics/worker outputs matching, serial median47x faster and
 process peak RSS5.48x lower; four-worker scaling is small, not a strong claim.
-The required whole9810963-record/58384-annotation workflow40558683154 is live
-at7f1e7c1e after replacing a blocked public download with the first campaign's
-verified immutable full original. Source/algorithm/cohort are unchanged. See
-rnaseq-qc-real-performance-2026-10-28.md; publication still pending.
+The required whole9810963-record/58384-annotation workflow40558683154 is
+terminal FAILURE: three metric groups match, but coverage and13 TIN rows do
+not. Its original inputs/source outputs and full failed artifact are retained.
+A demonstrated filtered-record overlap-state defect is fixed in the existing
+rsomics-pileup at424d157d (version0.9.1); exact-head four-native CI40572161578
+passes, but its whole consumer rerun leaves those differences unchanged. A
+single-gene original-data trace identifies HTSlib QName-keyed overlap expiry
+as a second lifecycle mismatch. Producer1bc989e2 now passes exact-head
+four-native CI40579417757 and fixes those original differences. Two remaining
+TIN rows/six coverage bins are a confirmed product query-context issue: actual
+per-query native/samtools agrees with R, global samtools agrees with global
+native. Product-local query framing over one physical BAM read is actively
+implemented; no tolerance/workload relaxation or new public foundation API.
+See rnaseq-qc-real-performance-2026-10-28.md and
+rnaseq-pileup-filter-fix-2026-10-28.md; publication remains pending.
 
 Next-family DESeq2 actual fitted-workflow40561801963 is now terminal SUCCESS
 and its original artifact/full55-file witness passes independent retention

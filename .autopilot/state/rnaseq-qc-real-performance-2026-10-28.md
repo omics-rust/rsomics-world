@@ -2,6 +2,69 @@
 
 ## Current state
 
+Fixed producer1bc989e25a42ce6c0c76e3572b41d4da283e74f2 now has accepted
+four-native CI40579417757. The complete native1-worker report (binary
+9ab7d65e48705fb314130f744059e2f59ae711a51c13d9c75a2adcad164531b9,
+reportd0177d03b07fa921554f9d08a2eba2e3ee8f3b782d1c07c1ec1860d91637fdfe)
+fixes every original13 TIN/18-bin difference but leaves2 other TIN rows and
+six coverage bins totalling+7. Full diagnostics/process/output remain at
+`/Volumes/KIOXIA/Developments/tmp/rnaseq-whole-name-expiry-20261028.9yY1vQ/`.
+Those two TIN rows are proven source query-context differences: actualsamtools
+on whole chr10 equals native global; per-query native and actualsamtools both
+equal original RSeQC. Correct executed sorted min/max bounds are independently
+checked in rnaseq-qc-remaining-chr10-2_vxlhi5/sorted-bounds-result.json.
+
+Do not rerun R or weaken numerical gates. Implement product-local independent
+query contexts over one physical BAM read for rseqc-5.0.5, preserving canonical
+global behavior/no-index input and original metrics/output contracts. See
+docs/plans/2026-10-28-rnaseq-query-contexts.md and
+rnaseq-query-context-task-2026-10-28.md. This implementation is active; no new
+complete consumer or performance acceptance is claimed. The shared library
+patch may ship on its own validated engine contract; the RNA product remains
+unpublished until this separate source-policy gate and its measurements pass.
+
+## Original whole-data failure and diagnosis
+
+Whole retry40558683154/job122381526636 at7f1e7c1e is terminal FAILURE at
+the actual numerical comparison, not acquisition or CLI execution. All five
+source warmups and the first native report complete. Source/original full
+inputs match. Mapping, strandedness and distribution pass, but coverage and
+TIN do not. Stop whole performance/publication acceptance; do not relax
+tolerances, filter the workload or rerun the33-minute full source report.
+The demonstrated filtered-record bug fix in the existing shared pileup library
+is committed at424d157d74c4fcf31356a45047cff11f2c21a9eb (version0.9.1);
+exact-head CI40572161578 passes all four native classes, but its complete
+consumer rerun still has the original18-bin/13-row differences. An original
+single-gene subset and per-position trace now identify a second mismatch:
+HTSlib's QName-keyed expiry versus Rust's node-index-only cache cleanup.
+The corrected expiry and admitted-record emission watermark are committed in
+the same unpublished producer0.9.1 at1bc989e25a42ce6c0c76e3572b41d4da283e74f2.
+Local27 units/actualsamtools three-mode oracle/fmt/strict Clippy pass;
+exact-head four-native CI40579417757 is in progress. Compare the final
+consumer directly with the retained source metrics; do not rerun R for this
+diagnosis. Producer publication and whole acceptance remain pending;
+see rnaseq-pileup-filter-fix-2026-10-28.md. No contract change or tolerance
+relaxation is made. Other families, including the accepted DESeq2 source
+oracle, remain unblocked. The full goal is not paused or narrowed.
+
+Original456299076byte artifact12762302741 SHA
+061191666861bd5f0c25c6e942f2dc16d9c98ab1607f507dfc5f7c1a6b7c7481
+and original API/log/258 files pass head/size/digest/CRC/safe-path checks at
+`/Volumes/Zane's HDD/rsomics-fixtures/evidence/rnaseq-qc-real-performance-2026-10-28/run-40558683154/`.
+retention-verification.json records the complete numerical differences.
+Coverage has82 exact bins;18 native bins are lower, sum13624360 versus
+13624401 (delta−41). Source/native range10696..199979 is the same.
+TIN identities, order, eligibility and denominators match all58384 rows,
+45052 eligible including1041 eligible-zero, but13 scores fail. Maximum
+absolute score difference0.4568933108157296 is NR_024457.2 at
+chr12:130518356-130526887 (native34.63553779228533/source34.1786444814696).
+Mean and population-SD also fail; median matches. No4-worker or repeated
+whole trial runs and no performance summary exist. Warmup timings1923.28s
+source/24.49s native are not accepted performance because outputs disagree.
+
+The historical route/chr21 ledger below retains prior states, not instructions
+to poll failed runs as if live.
+
 Controller40555913726 at58a926c944f39e4538edf089bf299d59dd3a5ce6 passes:
 483 tests, two existing skips, architecture validation. At this exact source,
 chr21 run40556139574/job122372589460 is terminal SUCCESS. The
