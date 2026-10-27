@@ -171,7 +171,7 @@ def parse_integrity(tin, summary):
 def parse_stdout(metric, text, profile):
     if metric == "mapping":
         values = {match[1].strip(): int(match[2]) for line in text.splitlines()
-                  if (match := re.fullmatch(r"(.+?\S)\s+(\d+)\s*", line))}
+                  if (match := re.fullmatch(r"(.+?(?:\s+|:))(\d+)\s*", line))}
         if values.get("Total records:", 0) <= 0 or "mapq >= mapq_cut (unique):" not in values:
             raise ValueError("missing informative actual mapping statistics")
         return values

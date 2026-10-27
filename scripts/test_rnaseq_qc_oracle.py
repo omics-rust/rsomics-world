@@ -29,6 +29,13 @@ class RnaSeqOracleTests(unittest.TestCase):
             self.assertEqual(lengths["soft-clip"], 80)
             self.assertEqual(lengths["eqx"], 50)
 
+    def test_mapping_keeps_counters_whose_fixed_width_label_reaches_the_value(self):
+        text = ("Total records: 88\nmapq >= mapq_cut (unique): 82\n"
+                "Non primary hits 1\nProper-paired reads map to different chrom:0\n")
+        values = self.oracle().parse_stdout("mapping", text, "single")
+        self.assertEqual(values["Proper-paired reads map to different chrom:"], 0)
+        self.assertEqual(values["Non primary hits"], 1)
+
     def test_numeric_capture_rejects_empty_success_and_keeps_eligible_zero_in_mean(self):
         oracle = self.oracle()
         coverage = "Percentile\t" + "\t".join(map(str, range(1, 101))) + "\n"
