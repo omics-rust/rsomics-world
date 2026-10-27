@@ -12,8 +12,12 @@ All55 manifest file identities pass. The production receipt is
 `.autopilot/oracles/deseq-first-workflow-2026-10-28.json`.
 Witness SHA8f2dc0a7b0377a22c2e1afda549003842577aa4dea24c9a675af5293bcb94bd7;
 manifest423e585319836ceb0b7c54a47bb2a42431e97dff9929301e9273195ddf3270f8.
-This is not native implementation, four-platform/performance or biological
-acceptance. The full30-product goal remains active and unchanged.
+This accepts the actual source witness, not four-platform/performance or
+biological acceptance. A new private native fitted workflow is now committed
+locally at718f12a2815157755118dd435e65c76dd18565c8 and passes the complete
+fixed witness at one/four workers on Mac. Its separate implementation/gate
+state is deseq-native-fitted-workflow-2026-10-28.md. The full30-product goal
+remains active and unchanged.
 
 Independent raw-table checks confirm unfiltered14599x7 counts/identity join,
 2240 all-zero rows,7x3 rank3 model and actual parametric fit. All12359 nonzero
@@ -58,9 +62,25 @@ exports, derives the reverse contrast without a new DESeq fit, and retains
 full-precision tables/raw RDS/provenance/NA/convergence/filter state. Complete
 witness/manifest are emitted only after the calls and reload checks finish.
 
-Next use this accepted actual fitted state to shape the private native
-dataset/analysis contract before numerical migration, retaining the already
-audited donor dispositions rather than another broad inventory. No new target repo or
-public foundation API exists yet; no placeholder product is published.
+The next private native plan is now
+docs/plans/2026-10-28-deseq-native-fitted-workflow.md. It fixes the complete
+dataset/fitted-analysis/results contract and numerical bounds before any
+native fit. The target repo now exists as a real private checkpoint; no public
+foundation API or placeholder product is introduced.
+
+A bounded five-donor/source recheck selects team-owned size-factor/VST/general
+GLM/dispersion kernels for refactor, not their CLI/parser/state models. Real
+pasilla source state exposes active grid-fallback and72 dispersion-outlier
+paths: raw MAP and final dispersion must remain separate. Legacy GLM misses
+the natural-log ridge conversion; legacy Cook's uses two-group policy/p=2,
+not the actual full-design grouping/p=3. Legacy results LOWESS selects the
+wrong rejection-grid index17, while R selects16. The existing team-owned
+voom/lowess.rs kernel, used with f=.2/nsteps=3/delta=.01*range, reproduces the
+actual R rejection curve to2.73e-12 in an independent Python translation and
+selects16; prefer this existing seed over a new implementation. This is a
+source/algorithm selection result, not a Rust execution or native acceptance.
+Use the existing rsomics-stats BH API with caller-owned NA handling; no new
+speculative numerical foundation is planned.
+
 This real design does not positively test Cook's masking/replacement or all
 general design/contrast classes. Keep the dossier's full release promise.

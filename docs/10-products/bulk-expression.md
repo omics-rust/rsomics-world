@@ -1,7 +1,10 @@
 # Bulk-expression product dossiers
 
 Status: joint boundary, upstream-operation, and historical-source audit
-complete. No target repository has been created.
+complete. DESeq now has a private fitted-workflow checkpoint under local
+rsomics-deseq; it is not published or release-complete. Its current gates are
+recorded in `.autopilot/state/deseq-native-fitted-workflow-2026-10-28.md`.
+The edgeR and limma targets have not started implementation.
 
 ## Portfolio decision
 
