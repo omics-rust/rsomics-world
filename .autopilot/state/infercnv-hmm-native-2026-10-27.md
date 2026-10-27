@@ -134,3 +134,28 @@ and archive correctness, not native HMM acceptance. The native candidate
 workflow now accepts an explicit HMM selector, verifies the pinned real-R
 artifact, and runs the complete 1/4-worker comparison on all four platforms.
 No new R installation/workflow rerun is needed for these comparisons.
+
+World9c7e4477df2ede03a598d924bfed3bce59736b29 passes exact-head controller
+run40483779152. Integrated native run40483939601 is on that head with HMM
+enabled and green24. Linux aarch64 and macOS aarch64 pass the full feature;
+each runs all three real cases at1/4 workers, with exact integer states,
+memberships, four report projections and worker fingerprints. The Linux
+aarch64 maximum calibration scaled errors are1.8539e-6/1.55792e-6/1.11008e-6
+against the fixed abs1e-9+rel1e-8 criterion; expression14 keeps its existing
+criterion. These are fractions of the allowed tolerance, not raw differences.
+
+Linux x86_64 debug/release tests and formatting pass, but strict Clippy
+rejects one collapsible else/if in spline.rs and one excessive-precision
+reference-test literal. It has not run the actual HMM comparison because that
+step follows lint. There is no numerical/state failure in that job. Original
+job logs are external at evidence/infercnv-hmm-native-2026-10-27/run-40483939601/.
+macOS x86_64 is still in its complete workflow comparison at this entry.
+
+Green25 corrects only those two style issues in spline.rs, retaining the same
+binary64 test value and identical operations/draws. Existing snapshot guards
+will verify the180-file manifest; new manifest SHA
+d2ad2aa0532ebdb9dd9446914828d941dca7a0910626d71f3ef40321b39313ac,
+archive51ddcb7577ba551afa0d21845ea9f3cc48b2871586be98bedcfe1a21bcf70a9a.
+No tolerance/dependency/test-scope change or per-helper campaign. All-four
+acceptance, single final feature review and the owning-product commit remain
+open until the corrected integrated gate passes.
