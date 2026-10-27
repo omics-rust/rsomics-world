@@ -40,11 +40,27 @@ API/ZIP chain, including unchanged RSeQC wheel/source/dependency freeze;
 scratch /Volumes/KIOXIA/Developments/tmp/rnaseq-green5-runtime.bZFvxO/.
 Only native provenance pins change; original input cache, metrics, source
 commands, tolerances, trial counts and measurement/advantage logic do not.
-Next push/verify exact controller and dispatch profile=whole once. The earlier
-chr21 measurement remains historical; it is not this candidate's performance.
+Exact controller40592727977 at5fcb3820198c8fe8fd3e463a609b276df7ae590a
+passes. Whole-input performance40592936910 is active at that source, already
+past acquisition/runtime/input verification and measuring the actual report.
+Wait for this exact run; do not rerun unchanged source campaigns or borrow
+the earlier chr21 advantage. Raw original inputs and all numerical gates are
+unchanged. The four-source-workflow measurement includes a warmup plus three
+timed repetitions and can take a few hours; independent product work continues.
 Do not rerun R for diagnosis, use an old binary for new timings, or claim the
 old chr21 advantage transfers automatically. Registry publication is separately
 blocked by authentication (see shared-pileup state); the goal remains active.
+
+Owning localmainb7287f26d8d6f1d6e46bf580e850eb639d8a0ed0 subsequently
+reuses published common ThreadArgs instead of its duplicated parser. Only
+CLI conduit, existing regression and README change; Cargo/lock/sampling/report
+bytes, available-core default and requested runtime workers are unchanged.
+Local11 tests/strict Clippy/format/release and scoped root review pass. Green6
+freezes19files, archived000d7578b836c9b9ec9220611715a485be8cec79adc5af886b1b713365a8a50,
+manifestfd456556f8eb25a6893bfbfb7e90df6c604b8955107bbf5fd4d2d77e72a60aa4;
+its fresh four-native gate is next. No new source/BAM/performance campaign
+was run for that logical conduit. Keep measurements attributed to immutable
+green5, not the new Mac binary39dc3e339ef434370bf926c0f6dd9889601fb60ad5b91a92573af1c23bb118fb.
 
 ## Resolved global-context diagnosis
 
