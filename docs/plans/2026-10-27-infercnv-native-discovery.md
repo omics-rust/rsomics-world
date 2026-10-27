@@ -125,3 +125,25 @@ The fresh whole-feature code review and internal model tests also remain
 required. Where memberships agree modulo labels, compare source parent-tree
 clades/heights by global cell identity; otherwise validate the native tree
 against its own complete partition and the retained Ward/kernel contract.
+
+## First complete execution and optimization
+
+Linux bootstrap40537142945 preserves all existing lock pins/checksums and
+passes debug/release tests plus strict Clippy. All four raw k20 processes
+pass. Retained k5 PCA output independently matches every parent's ordered
+2000 features, PCA geometry and exact graph. Two observed issues prevent
+acceptance: singleton stitching fails to carry ape's consumed root-edge
+state, and one native two-iteration local optimum has CPM61.047143529770906
+versus source61.066181137916452. Neither a single-node move nor a whole-
+community merge improves that local optimum; this is not a graph mismatch.
+
+Retain the original failed artifact, numerical tolerances and quality gate.
+Repair the exact tree-state semantics. Before the next native execution,
+use eight deterministic independent starts, each retaining the same two
+outer iterations/beta.01, and choose the highest original-graph CPM quality.
+The first start remains the previous seed; other starts use a fixed derived
+seed schedule. This is a general objective-guided search improvement, not a
+fixture-specific partition, source-label injection or chosen passing seed.
+Report restarts=8 explicitly, distinguish it from upstream's one start,
+retain deterministic worker identity and measure its eventual whole-path cost.
+The source/public model and exact RNG streams are still not claimed identical.

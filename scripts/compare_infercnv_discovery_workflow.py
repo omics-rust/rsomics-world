@@ -288,8 +288,9 @@ def compare_report(report, case, expression, genes, cells, references):
     discovery = report["discovery"]
     method, k = case["run_parameters"]["leiden_method"], case["run_parameters"]["k_nn"]
     check((discovery["step"], discovery["method"], discovery["partition_method"], discovery["k_nn"],
-           discovery["seed"], discovery["objective_function"], discovery["beta"], discovery["iterations"])
-          == (15, method, "leiden", k, 0, "CPM", .01, 2), "native discovery model/parameters differ")
+           discovery["seed"], discovery["objective_function"], discovery["beta"], discovery["iterations"],
+           discovery["restarts"])
+          == (15, method, "leiden", k, 0, "CPM", .01, 2, 8), "native discovery model/parameters differ")
     check(len(discovery["groups"]) == len(references), "native parent count differs")
     parents = [compare_group(actual, expected, k) for actual, expected in zip(discovery["groups"], references)]
     expected_flat = [(parent["name"], subgroup) for parent in discovery["groups"] for subgroup in parent["subclusters"]]

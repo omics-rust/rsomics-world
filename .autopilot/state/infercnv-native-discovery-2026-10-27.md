@@ -52,3 +52,31 @@ job122305353876, at that exact head with green28/discovery_workflows=true/
 bootstrap_dependencies=true. Dependency resolution succeeds; actual k20/k5
 source acquisition and the full compile/functional gate are still running.
 Do not treat a generated lock or source-only adapter check as native acceptance.
+
+That bootstrap is now terminal FAILURE. The retained original artifact is
+68366540 bytes, ID12749551344, ZIP SHA
+f302103c823af809f0f3c701e756f829ec2d3dc6ad8dbeb114a5608413ea14a5.
+Original API/ZIP/logs/extraction are under
+rsomics-fixtures/evidence/infercnv-discovery-native-2026-10-28/run-40537142945/;
+API exact-head/size, ZIP digest/CRC and safe paths verify. Debug/release tests,
+strict Clippy and all four raw k20 comparisons PASS. k5 is not accepted:
+tree singleton-root state differs, and one native PCA local optimum has CPM
+0.019037608145545448 below the source. All six k5 PCA feature orders,
+geometry and exact graphs independently pass the retained-report projection.
+
+Import the qualified Cargo.lock SHA
+967fb7ffdb1b2f47f224b3442df02b3c48ab19d2c2e19ec49728f9e3a7c2fa1d;
+it preserves every old package version/checksum. Only new dependency nodes,
+unambiguous version-qualified edges and the new own-package deps are added.
+Do not rerun lock bootstrap. Tree repair and eight independent two-iteration
+objective-guided starts are recorded in the plan before the next native call.
+The source graph/geometry/CPM thresholds are unchanged. Freeze a fresh source
+and run normal discovery_workflows across all four native targets.
+
+Fresh green29 freezes193 regular files after those repairs and the imported
+lock: archiveafbc787e81048091ce562394fa39768eb324705a9ff0d115a593f1a010d09ab9,
+manifest4bf67c4c022af5863c70d04fe8a0f99e69ed176ff5f6f32c9d98424b9ef76335.
+The normal snapshot verifier passes; it is not yet native acceptance.
+The singleton regression covers both NULL and consumed-zero root edges;
+the search report explicitly declares eight independent starts. The source
+quality/graph/PCA criterion remains unchanged.
