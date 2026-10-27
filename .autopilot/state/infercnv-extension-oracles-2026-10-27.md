@@ -219,3 +219,23 @@ strict removals and structural identity gates remain unchanged; ambiguities
 are labeled, never reported as exact output equality. Critical comparison
 test observes RED then GREEN; native code/protocol/API and green27 are
 unchanged. Ward's pending user choice remains independent of Bayesian gates.
+
+## Current completed witness and upcoming native gate
+
+World5b4f81cc5e6775da7700c454cbd4b25abbbcf256 passes exact-head controller
+40503605837. Corrected Bayesian run40499067515 is now terminal SUCCESS, not
+pending. Original902489696-byte artifact12735046764 passes the normal
+successful-artifact verifier and is retained/extracted on the fixture HDD.
+The new Bayesian receipt and actual outcomes are recorded in
+infercnv-bayes-witness-2026-10-27.md; never re-dispatch this completed run.
+Both R repetitions remove the same1 region and reassign16, with all492 theta
+means numerically distinct and actual raw samples different. Their same three
+source-indeterminate state3/4 regions remain explicitly classified.
+
+Next dispatch is green27/bayes_workflows=true on all four native targets
+after the owning controller head passes; no native Bayesian acceptance is yet
+claimed. In parallel, the complete default Leiden/PCA capture is prepared in
+its own script pair and default-false route, with independent source/record
+checks, not actual package/PCA evidence. Its separate plan/state are linked
+from infercnv-leiden-oracle-2026-10-27.md. These do not change the native
+candidate or the Bayesian source receipt. The full portfolio goal stays active.
