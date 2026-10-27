@@ -95,3 +95,11 @@ pass, including default20/selected5 assertions and unchanged mapping/error
 capture tests. Root log is external tmp/rsomics-leiden-k5-record-20261027.log.
 This is not installed package or multi-partition evidence yet. Hosted k5
 dispatch follows its exact-head controller gate; do not repeat completed k20.
+
+Controller40515356262 on worldc48b6c86b85f6d257cfd0d813a5e941abcf38977
+passes. Labeled k5 run40515941483/job122229796511 was dispatched once
+at13:52:35UTC and is now terminal SUCCESS. Original870099036-byte artifact
+12739478209, ZIP SHA
+c95ac463415233dcedb1e5751cc83294fc3b1034523e56fd93228dfa952d2717,
+is being retained before actual partition inspection. Success is not yet a
+claim of nontrivial partition or native compatibility. Do not duplicate it.
