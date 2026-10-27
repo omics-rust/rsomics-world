@@ -85,3 +85,30 @@ sgram/sbart/sslvrg sources confirm the spline/GCV details. The plan records
 the internal R-aligned profile and independent native spline architecture.
 MIT AS241 and original permissively licensed MT references are read before
 adapting selected numerical assets; no GPL source is mechanically imported.
+
+World5ddc3dcdd6324921acda444ce234b8eeda592357 passed exact-head controller
+run40473014716. Replacement R run40473486230/attempt1, job122085950218,
+is now terminal failure, not live. It confirms the exact known synthetic
+negative, then the actual real-count full workflow succeeds through step17
+and writes all four reports. The collector then fails its expression/state
+contract, so this is not a complete accepted witness.
+
+Original API/job.log and artifact12720142658 are retained under external
+evidence/infercnv-hmm-2026-10-27/run-40473486230/. Verified ZIP270309513 bytes,
+SHA86092064fc12004d8cd33781481da0a20ae1ecd1692a419f480b5267bf2e0973.
+The actual full call.log reaches HMM prediction, all six reporting groups,
+the four table writes and "Reached up_to_step". Upstream succeeds; collector
+validation does not. Do not relabel this as an upstream HMM failure.
+
+Root cause: the predictor replaces its local infercnv_obj@expr.data before
+returning (pinned HMM.R:561), so reading that argument in an exit trace captures
+the state matrix rather than its original expression input. Capture the
+object on function entry and retain fitted models/groups on exit. Existing
+whole-workflow assertions detected this; do not weaken them. A small installed
+real-object hook regression now checks preservation across mutation before
+the expensive raw workflows. Base policy tests pass on4090; the installed
+hook test and corrected whole R execution still require hosted execution.
+
+Controller suite passes447 tests/42.159s, two existing native skips, and
+architecture validation. Native candidate source/remaining wiring is recorded
+in infercnv-hmm-native-2026-10-27.md, explicitly uncompiled/unaccepted.

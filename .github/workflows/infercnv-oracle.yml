@@ -843,7 +843,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          Rscript --vanilla scripts/test_infercnv_hmm_workflow.R \
+          Rscript --vanilla scripts/test_infercnv_hmm_workflow.R --installed \
             2>&1 | tee "$EVIDENCE_DIR/hmm-workflow-tests.log"
           Rscript --vanilla scripts/infercnv_hmm_workflow.R \
             "$ORACLE_OUTPUT" "$SHIPPED_OUTPUT" "$EVIDENCE_DIR/hmm-workflows" \

@@ -6,11 +6,16 @@ script_dir <- dirname(normalizePath(sub("^--file=", "", script)))
 source(file.path(script_dir, "infercnv_samples_clustering_witness.R"))
 source(file.path(script_dir, "infercnv_oracle_io.R"))
 
+.hmm_workflow_enter <- function(frame) {
+    capture <- get(".hmm_workflow_capture", envir=.GlobalEnv)
+    capture$hmm_input <- get("infercnv_obj", frame)
+}
+
 .hmm_workflow_exit <- function(frame, value) {
     if (!methods::is(value, "infercnv")) return(invisible(NULL))
     capture <- get(".hmm_workflow_capture", envir=.GlobalEnv)
     capture$hmm_calls <- capture$hmm_calls + 1L
-    capture$hmm <- list(input=get("infercnv_obj", frame), states=value,
+    capture$hmm <- list(input=capture$hmm_input, states=value,
                         means=get("cnv_mean_sd", frame),
                         fits=get("cnv_level_to_mean_sd_fit", frame),
                         groups=get("tumor_samples", frame))
@@ -66,6 +71,7 @@ hmm_workflow_main <- function() {
     assign(".hmm_workflow_capture", capture, envir=.GlobalEnv)
     predictor <- "predict_CNV_via_HMM_on_whole_tumor_samples"
     trace(predictor, where=ns, print=FALSE,
+          tracer=quote(get(".hmm_workflow_enter", .GlobalEnv)(environment())),
           exit=quote(get(".hmm_workflow_exit", .GlobalEnv)(environment(), returnValue())))
     on.exit(untrace(predictor, where=ns))
     sources <- list(grouped=list(bundle=synthetic, kind="synthetic", profile="grouped_bounds",
