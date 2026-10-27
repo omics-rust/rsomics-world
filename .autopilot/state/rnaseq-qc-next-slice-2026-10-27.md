@@ -98,3 +98,34 @@ The retained BAM header declares coordinate sorting and chr1/chr2 lengths
 that dictionary. This is a structurally sensible synthetic stress pair, not a
 representative RNA-seq cohort; actual sorting, splice/pair/overlap/coverage
 behavior remains unverified. No full BAM scan, test, install or build occurred.
+
+## Current release delta and oracle choice
+
+Primary PyPI metadata independently confirms5.0.5 released2026-07-27 and
+5.0.6 released2026-10-19. The5.0.5 wheel SHA is
+a1fca6d455886b19bc2d58aa1e13b233977a2c835f676ef93bd0c6f4099b8452;
+sdist c3f757e5f384004678c10cbc830355e841f5d5db850fc5b131c2e872afe9d516.
+The5.0.6 wheel SHA is
+b88ff92dece63619a86522710b633fb6f957bf2420d91a7e42b72e7f980ce461;
+sdist b361a45ef4a9bb90e926d19abc7801b840897ccad4627f41750972d8cf18cad7.
+See [5.0.5](https://pypi.org/project/RSeQC/5.0.5/) and
+[5.0.6](https://pypi.org/project/RSeQC/5.0.6/). Neither release has a PyPI
+provenance attestation; no wheel was downloaded or inspected in this lookup.
+
+GitHub annotated tag v5.0.6 has object425109e505547617287d523d1066e91d5745c5dd,
+resolving to da6e8687f64373fea75fc8a8f79adec9e202acc2. The
+[exact source comparison](https://github.com/liguowang/RSeQC/compare/0d2e017723c5c4b41eb3b938e1631692d187de1f...da6e8687f64373fea75fc8a8f79adec9e202acc2)
+does not change the five metric algorithms or bam_cigar projection. It changes
+getBamFiles discovery used by coverage/TIN: both BAI naming forms, user-path
+expansion, list-relative fallback, sorted discovery, string deduplication and
+reported list errors. Symlink-directory equivalence is not established.
+Packaging adds pandas/matplotlib; version strings now depend on installed
+distribution metadata and cannot prove a separately supplied script's commit.
+
+Ruling: retain the declared5.0.5 numerical-oracle baseline for the first
+single-BAM report, with wheel/dependency acquisition still pending on hosted
+compute. Record5.0.6's discovery behavior before implementing multi-input
+profiles, not as a reason to silently change the dossier or compare against
+installed5.0.4. Cost if wrong: a later explicit discovery-profile update; no
+metric algorithm fix in this bounded comparison requires changing the current
+numerical target. Wheel-to-repository byte equivalence remains unverified.
