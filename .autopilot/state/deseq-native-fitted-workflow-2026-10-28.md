@@ -64,7 +64,10 @@ passes against the actual complete one/four-worker fits. Two compact workflow
 tests and all486 control tests pass (two existing skips), using the configured
 HomebrewPython3.15. The initial Apple3.9 invocation fails due to unsupported
 Python APIs; its log is retained, not treated as a product defect or repaired
-through unrelated code changes. Native dispatch is next, not yet accepted.
+through unrelated code changes. Exact-head control-plane40589407371 at
+60111087e49136e46a5e0460bd14b3f4845fed28 passes. Four-native candidate
+40589627680 is dispatched at that source with green1; native acceptance is
+pending, not inferred from local results.
 Evidence: /Volumes/KIOXIA/Developments/tmp/deseq-native-ci-check-2m2__eg9/.
 
 Current private checkpoint explicitly rejects residual df<=3, design cells
