@@ -79,3 +79,22 @@ partition acceptance. See infercnv-leiden-oracle-2026-10-27.md for k5 next
 witness and internal-native contract. The full30-family goal remains active,
 not paused, narrowed or complete. Next-product RNA-seq QC source/version
 inventory is durable; do not redo its broad initial survey.
+
+Update2026-10-28: full raw grouped-i6 Bayesian performance40514973287 passes
+the bounded same-host replacement gate, with R-public/native-whole-CLI
+medians402.619/1.38s (serial) and1.08s (four workers), observed serial process
+peak RSS15.48x lower. Source-indeterminate maxima remain labeled, not exact
+stochastic parity. See infercnv-bayes-performance-accepted-2026-10-28.md.
+Actual default/nondefault Leiden source witnesses are retained, including
+k5's104 PCA and65 simple subclusters. First native whole discovery source
+green28 is unaccepted; Linux bootstrap40537142945 at world9b094a29 is running.
+Do not rerun accepted prior HMM/Bayesian helper campaigns.
+
+The next family advances in parallel: actual RSeQC5.0.5 source40520155303
+provides ten valid five-metric single/paired calls. Its complete-source and
+pileup-policy findings are in rnaseq-qc-first-oracle-2026-10-27.md. The private
+shared-report implementation follows docs/plans/2026-10-28-rnaseq-qc-shared-report.md;
+it reuses existing bamio/pileup/common/help, adds no public foundation and
+does not advertise later dossier metrics. Whole-workflow testing and one
+feature review remain the validation unit. Mac boot APFS>80% still forbids
+local compile/install/dependency downloads; use hosted runner-temp.

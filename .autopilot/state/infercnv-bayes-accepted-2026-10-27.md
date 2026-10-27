@@ -54,9 +54,13 @@ review or per-helper campaign is needed. The remaining declined-to-judge
 boundaries and stochastic limits stay in infercnv-bayesian-review-2026-10-27.md
 and infercnv-bayesian-statistical-contract-2026-10-27.md.
 
-Linux x86_64 native owner wall observations are1.409/1.101s with about
-104.4/104.6MiB peak RSS at1/4 workers. These are not paired/distribution-based
-replacement-performance evidence. Next: same-host full raw R/native grouped
-i6+Bayesian timing and memory, actual default Leiden/PCA source inspection,
-and the remaining CNV/product-family work. Ward membership policy is held
-only for its pending user choice; the full portfolio goal remains active.
+The later same-host full raw R/native campaign40514973287 now passes the
+bounded replacement-performance gate: R public Create+run19 median402.619s,
+native complete CLI1/4-worker medians1.38/1.08s, strictly separated timing
+ranges, observed serial process peak RSS15.48x lower. See
+infercnv-bayes-performance-accepted-2026-10-28.md for exact scope, original
+artifact, distribution and source-indeterminate state differences. This does
+not establish large-cohort Bayesian performance or a full inferCNV release.
+Next: the whole native PCA/simple discovery gate and remaining CNV/product-
+family work. Ward membership policy is held only for its pending user choice;
+the full portfolio goal remains active.
