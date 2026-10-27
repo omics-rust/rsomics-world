@@ -1,5 +1,9 @@
 # Integrated denoise execution
 
+Status: accepted integrated non-HMM denoise, private/unpublished product.
+All native and real-package workflow gates below pass. Full inferCNV and the
+whole portfolio objective remain incomplete and active.
+
 Previous goal turn: progress. Product7495e3e implements accepted matrix
 workers, docs3a43638 is clean at this turn's start. Four-native run40309311228
 passes; real GBM whole-CLI five-pair scaling is131.53/53.32s at1/4 workers,
@@ -30,9 +34,10 @@ Actual source reviewed includes R/inferCNV_heatmap.R:2783-2810 and
 R/SplatterScrape.R:210-212: logistic is1/(1+exp(-20*(deviation-width))).
 BSD3 attribution/conditions are retained in THIRD_PARTY_NOTICES.
 
-Pending: Linux candidate compilation/tests/default-output regression,
+Initial gates were Linux candidate compilation/tests/default-output regression,
 installed-package workflow comparison, one overall review and four-native
-acceptance. No feature or release is accepted from source inspection alone.
+acceptance. They are now resolved below; source inspection alone was not used
+as acceptance.
 
 Update: Linux green22/run40319047320 passes124 tests per debug/release,
 strict Clippy and unchanged default report fingerprint198e3beb...49fb868d.
@@ -90,13 +95,13 @@ One whole-feature fresh-context read-only review found no actionable Critical,
 Important or material minor issue. It checked the exact green23 source,
 upstream math, config/CLI/report integration, deterministic workers and real-R
 comparison. Do not repeat that review. Runtime installed-package evidence,
-not review confidence, remains the outstanding feature gate.
+not review confidence, was the final outstanding feature gate and now passes.
 
-Actual R run40324825110/attempt1 is in progress on the same world head, using
+Actual R run40324825110/attempt1 completes on the same world head, using
 the retained green22 numerical/report bytes and actual infercnv1.28.0. The
 only green23 differences are negative-number CLI parsing and its regression.
-Synthetic/shipped base exports are complete; actual raw step15/22 comparison
-has started. Do not infer pass or rerun merely because observation times out.
+Synthetic/shipped base exports and actual raw step15/22 comparisons pass.
+Do not rerun merely because an observation times out.
 
 The full portfolio goal was verified active with all30 products still in
 scope. No objective narrowing or new goal is needed. Parallel HMM work is
@@ -122,9 +127,21 @@ full inferCNV acceptance is implied.
 Original run/jobs/artifact API and job.log are retained externally in
 run-40324825110/. Artifact12651626826 is608616250 bytes, API ZIP digest
 5686bc3c362b42ffa74a8644ab5a8b4df5298acfc057f7de5a6575012157d977.
-The original ZIP download remains active under exec session46488; full-byte
-digest/summary inspection is pending. Do not mistake that collection wait
-for a failed R workflow, rerun CI or overwrite its partial file.
+The original ZIP is now fully retained and its byte count/SHA matches the
+API. Its718 files total1725727128 uncompressed bytes. Direct inspection of
+the complete summary/witness confirms the binary/source identities,15 cases,
+30 processes and equality of all15 worker pairs. Witness SHA
+60f50167c166f98a745d4da68fdb2271ed0695615281ef251d018723c41c2ad8.
+Maximum before/after expression scaled errors are0.0008477393156599713 and
+0.0013405626739539781. The original job log and actual summary agree.
+
+Single correctness-run full-case native wall times are0.54/0.44s without
+denoise and0.64-0.65/0.53-0.55s with denoise at1/4 workers. All denoise modes
+include the additional complete step22 JSON matrix; peak RSS is60383232-
+60661760 bytes. This is proportional overhead/provenance, not repeated paired
+performance or an R speed comparison. The one additional value vector and
+existing worker plumbing require no new dependency/foundation. No further
+helper benchmark campaign is needed for this acceptance.
 
 Previous goal turn: progress, not a blocker. Native gates, real R outputs,
 verified source identity and owning-product commits changed authoritative

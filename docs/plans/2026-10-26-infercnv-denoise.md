@@ -95,7 +95,7 @@ scripts/compare_infercnv_denoise_workflow.py, focused behavior tests and
 
 - [x] One fresh whole-feature review, formatting/strict Clippy, all existing
   tests and final four-native debug/release checks. No old oracle weakening.
-- [ ] Verify output/memory/throughput in proportion to this value transform;
+- [x] Verify output/memory/throughput in proportion to this value transform;
   commit only the owning product files and scoped control-plane evidence.
 - [ ] Keep publish=false until complete release gates. Continue equivalent
   upstream performance, HMM/subclusters/Bayesian/reporting and other products.

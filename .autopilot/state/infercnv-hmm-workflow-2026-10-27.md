@@ -30,3 +30,14 @@ performance or release readiness.
 Boot APFS remains above80%; no local Rust/R compile, package installation or
 dependency download. All project paths/fixtures/scratch stay external. Preserve
 inherited VCF/root scratch and all evidence. No deletion or automation.
+
+World2ba75b48e1b2ff15578ef4a8cb7d32c40e46295a was pushed. Exact-head control
+run40468399041 passes controller tests and architecture validation. Real HMM
+oracle run40468601684 is confirmed in progress on that head, job122069956538,
+currently installing its pinned R/Bioconductor dependencies. This is the live
+handle to resume, not a reason to dispatch another run. Source commit/archive
+pins and the old executable compatibility/measurement gates are unchanged.
+
+Denoise collection is complete; exec session46488 has exited successfully and
+must not be treated as live. Its full original archive and summary are verified
+in the denoise ledger. Productc5db7c74 is clean after codeab5465ac plus README.
