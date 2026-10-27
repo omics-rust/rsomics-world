@@ -1,0 +1,15 @@
+{
+  "repository": "omics-rust/rsomics-world",
+  "run_id": 40510071393,
+  "run_attempt": 1,
+  "head_sha": "92e21b3983e6563193a1f3f2e46a4fab17ef2dd4",
+  "snapshot": "green-27",
+  "source_archive_sha256": "dc13d219dc63b5cda894ed6751706b369f28696f37a9efe6cfbf9e16f07c909c",
+  "source_manifest_sha256": "bb92aeb6c7d04119c63735c7886e0fa1f533303b5f6d73d528baac747b5c15a5",
+  "artifact_id": 12737096223,
+  "artifact_name": "sc-cnv-core-40510071393-1-linux-x86_64",
+  "artifact_size": 26311126,
+  "artifact_sha256": "cce5f5902e7cd6b9068422258c63d4be266972e9c27584b152f096cdb60e7637",
+  "binary_path": "bayes-native-binary/rsomics-sc-linux-x86_64",
+  "binary_sha256": "1c28b34984934199fe35451ec811e528da7226a17da3d621a923ef620be8cbe6"
+}

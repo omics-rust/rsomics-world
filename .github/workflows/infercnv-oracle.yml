@@ -60,6 +60,11 @@ on:
         type: boolean
         default: false
 
+      bayes_performance:
+        description: Measure full raw grouped-i6 Bayesian R/native workflows on the same host
+        type: boolean
+        default: false
+
 permissions:
   contents: read
   actions: read
@@ -80,6 +85,7 @@ jobs:
       HMM_EXTENSION_WORKFLOWS: ${{ inputs.hmm_extension_workflows || false }}
       BAYES_ONLY: ${{ inputs.bayes_only || false }}
       LEIDEN_WORKFLOWS: ${{ inputs.leiden_workflows || false }}
+      BAYES_PERFORMANCE: ${{ inputs.bayes_performance || false }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -107,6 +113,18 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
+          if [[ "${BAYES_PERFORMANCE:-false}" == true ]]; then
+            test "$ORACLE_DATASET" = shipped
+            test "${HMM_WORKFLOWS:-false}" = false
+            test "${HMM_EXTENSION_WORKFLOWS:-false}" = false
+            test "${BAYES_ONLY:-false}" = false
+            test "${LEIDEN_WORKFLOWS:-false}" = false
+            test -z "$MATCHED_SNAPSHOT"
+            test -z "$INGESTION_SNAPSHOT"
+            test "$INGESTION_CONTRACTS" = false
+            test "$SAMPLES_CLUSTERING" = false
+            test "${DENOISE_NATIVE_RECEIPT:-none}" = none
+          fi
           if [[ "${LEIDEN_WORKFLOWS:-false}" == true ]]; then
             test "$ORACLE_DATASET" = shipped
             test "${HMM_WORKFLOWS:-false}" = false
@@ -175,7 +193,7 @@ jobs:
 
       - name: Acquire accepted HMM replay for extension workflows
         id: extension_hmm
-        if: env.HMM_EXTENSION_WORKFLOWS == 'true'
+        if: env.HMM_EXTENSION_WORKFLOWS == 'true' || env.BAYES_PERFORMANCE == 'true'
         shell: bash
         env:
           GH_TOKEN: ${{ github.token }}
@@ -801,7 +819,7 @@ jobs:
             "$SHIPPED_OUTPUT" --manifest 2>&1 | tee "$EVIDENCE_DIR/shipped-validation.log"
 
       - name: Test ingestion witness checker
-        if: env.DENOISE_NATIVE_RECEIPT == 'none' && env.HMM_WORKFLOWS != 'true' && env.HMM_EXTENSION_WORKFLOWS != 'true' && env.LEIDEN_WORKFLOWS != 'true'
+        if: env.DENOISE_NATIVE_RECEIPT == 'none' && env.HMM_WORKFLOWS != 'true' && env.HMM_EXTENSION_WORKFLOWS != 'true' && env.LEIDEN_WORKFLOWS != 'true' && env.BAYES_PERFORMANCE != 'true'
         shell: bash
         run: |
           set -euo pipefail
@@ -810,7 +828,7 @@ jobs:
             2>&1 | tee "$EVIDENCE_DIR/ingestion-checker-tests.log"
 
       - name: Capture creation-stage raw-input witnesses
-        if: env.INGESTION_CONTRACTS != 'true' && env.DENOISE_NATIVE_RECEIPT == 'none' && env.HMM_WORKFLOWS != 'true' && env.HMM_EXTENSION_WORKFLOWS != 'true' && env.LEIDEN_WORKFLOWS != 'true'
+        if: env.INGESTION_CONTRACTS != 'true' && env.DENOISE_NATIVE_RECEIPT == 'none' && env.HMM_WORKFLOWS != 'true' && env.HMM_EXTENSION_WORKFLOWS != 'true' && env.LEIDEN_WORKFLOWS != 'true' && env.BAYES_PERFORMANCE != 'true'
         shell: bash
         run: |
           set -euo pipefail
@@ -828,7 +846,7 @@ jobs:
             "${checker[@]}" 2>&1 | tee "$EVIDENCE_DIR/ingestion-witness-validation.log"
 
       - name: Capture creation format and filter edge probes
-        if: env.ORACLE_DATASET == 'shipped' && env.INGESTION_CONTRACTS != 'true' && env.DENOISE_NATIVE_RECEIPT == 'none' && env.HMM_WORKFLOWS != 'true' && env.HMM_EXTENSION_WORKFLOWS != 'true' && env.LEIDEN_WORKFLOWS != 'true'
+        if: env.ORACLE_DATASET == 'shipped' && env.INGESTION_CONTRACTS != 'true' && env.DENOISE_NATIVE_RECEIPT == 'none' && env.HMM_WORKFLOWS != 'true' && env.HMM_EXTENSION_WORKFLOWS != 'true' && env.LEIDEN_WORKFLOWS != 'true' && env.BAYES_PERFORMANCE != 'true'
         shell: bash
         run: |
           set -euo pipefail
@@ -978,6 +996,60 @@ jobs:
           Rscript --vanilla scripts/infercnv_leiden_workflow.R \
             "$SHIPPED_OUTPUT" "$EVIDENCE_DIR/leiden-workflows" \
             2>&1 | tee "$EVIDENCE_DIR/leiden-workflows.log"
+
+      - name: Measure complete raw Bayesian workflows
+        if: env.BAYES_PERFORMANCE == 'true'
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          candidate="$EVIDENCE_DIR/bayes-performance-candidate"
+          mkdir "$candidate"
+          receipt="$GITHUB_WORKSPACE/.autopilot/oracles/infercnv-bayes-candidate-2026-10-27.json"
+          cp "$receipt" "$candidate/receipt.json"
+          read -r native_run native_artifact < <(python3 -B -c 'import json,sys; r=json.load(open(sys.argv[1])); print(r["run_id"], r["artifact_id"])' "$receipt")
+          gh api "repos/omics-rust/rsomics-world/actions/runs/$native_run" > "$candidate/run.json"
+          gh api "repos/omics-rust/rsomics-world/actions/artifacts/$native_artifact" > "$candidate/artifact.json"
+          gh api "repos/omics-rust/rsomics-world/actions/artifacts/$native_artifact/zip" > "$RUNNER_TEMP/bayes-native.zip"
+          python3 -B - "$candidate" "$RUNNER_TEMP/bayes-native.zip" <<'PY'
+          from pathlib import Path
+          import hashlib,json,sys,zipfile
+          root=Path(sys.argv[1]);r=json.loads((root/'receipt.json').read_text())
+          run=json.loads((root/'run.json').read_text());artifact=json.loads((root/'artifact.json').read_text())
+          assert r['repository']=='omics-rust/rsomics-world'
+          assert run['id']==r['run_id'] and run['status']=='completed' and run['conclusion']=='success'
+          assert run['head_sha']==r['head_sha'] and run['run_attempt']==r['run_attempt']
+          assert artifact['id']==r['artifact_id'] and artifact['name']==r['artifact_name'] and not artifact['expired']
+          assert artifact['workflow_run']['id']==r['run_id'] and artifact['workflow_run']['head_sha']==r['head_sha']
+          data=Path(sys.argv[2]).read_bytes()
+          assert len(data)==r['artifact_size']==artifact['size_in_bytes']
+          assert hashlib.sha256(data).hexdigest()==r['artifact_sha256']
+          assert artifact['digest']=='sha256:'+r['artifact_sha256']
+          with zipfile.ZipFile(sys.argv[2]) as archive:
+              assert hashlib.sha256(archive.read('files.sha256')).hexdigest()==r['source_manifest_sha256']
+              assert hashlib.sha256(archive.read('source.tar.gz')).hexdigest()==r['source_archive_sha256']
+              binary=archive.read(r['binary_path'])
+              assert hashlib.sha256(binary).hexdigest()==r['binary_sha256']
+              (root/'rsomics-sc').write_bytes(binary);(root/'rsomics-sc').chmod(0o755)
+              for source,target in [('bayes-native-comparison/full-threads-1.report.json','baseline.json'),
+                                    ('bayes-native-comparison/summary.json','summary.json')]:
+                  (root/target).write_bytes(archive.read(source))
+          PY
+          Rscript --vanilla scripts/test_infercnv_bayes_performance.R \
+            2>&1 | tee "$EVIDENCE_DIR/bayes-performance-R-tests.log"
+          mkdir "$EVIDENCE_DIR/bayes-performance-controller"
+          cp scripts/measure_infercnv_bayes_workflow.py scripts/compare_infercnv_hmm_workflow.py \
+            scripts/compare_infercnv_denoise_workflow.py scripts/infercnv_trial_process.py \
+            scripts/measure_infercnv.py scripts/measure_infercnv_samples_cli.py \
+            scripts/validate_infercnv_shipped_oracle.py \
+            scripts/infercnv_bayes_performance.R scripts/test_infercnv_bayes_performance.R \
+            scripts/infercnv_bayes_workflow.R scripts/infercnv_samples_clustering_witness.R scripts/infercnv_oracle_io.R \
+            "$EVIDENCE_DIR/bayes-performance-controller/"
+          python3 -B scripts/measure_infercnv_bayes_workflow.py \
+            --shipped "$SHIPPED_OUTPUT" --hmm "$ACCEPTED_HMM_ROOT" \
+            --native-evidence "$candidate" --output "$EVIDENCE_DIR/bayes-performance" \
+            2>&1 | tee "$EVIDENCE_DIR/bayes-performance.log"
 
       - name: Capture samples-clustering witnesses
         if: env.SAMPLES_CLUSTERING == 'true'

@@ -374,6 +374,27 @@ class IngestionWorkflowTests(unittest.TestCase):
                      'Capture creation format and filter edge probes'):
             self.assertIn("env.LEIDEN_WORKFLOWS != 'true'", self.steps[name])
 
+    def test_bayesian_performance_route_is_standalone_and_uses_accepted_binary(self):
+        body = bash_body(self.steps['Validate optional matched snapshot selector'])
+        base = dict(os.environ, BAYES_PERFORMANCE='true', ORACLE_DATASET='shipped',
+                    SAMPLES_CLUSTERING='false', DENOISE_NATIVE_RECEIPT='none',
+                    MATCHED_SNAPSHOT='', INGESTION_SNAPSHOT='', INGESTION_CONTRACTS='false',
+                    HMM_WORKFLOWS='false', HMM_EXTENSION_WORKFLOWS='false', BAYES_ONLY='false',
+                    LEIDEN_WORKFLOWS='false')
+        for change in [{}, {'HMM_WORKFLOWS': 'true'}, {'LEIDEN_WORKFLOWS': 'true'},
+                       {'ORACLE_DATASET': 'synthetic'}]:
+            with self.subTest(change=change):
+                result = subprocess.run(['bash', '-c', body], cwd=ROOT, env=dict(base, **change),
+                                        capture_output=True, text=True, timeout=15)
+                self.assertEqual(result.returncode == 0, not change, result.stderr)
+        step = self.steps['Measure complete raw Bayesian workflows']
+        self.assertIn('measure_infercnv_bayes_workflow.py', step)
+        self.assertIn('infercnv-bayes-candidate-2026-10-27.json', step)
+        self.assertIn('binary_sha256', step)
+        for name in ('Test ingestion witness checker', 'Capture creation-stage raw-input witnesses',
+                     'Capture creation format and filter edge probes'):
+            self.assertIn("env.BAYES_PERFORMANCE != 'true'", self.steps[name])
+
 
 if __name__ == '__main__':
     unittest.main()
