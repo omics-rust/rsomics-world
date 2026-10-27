@@ -302,7 +302,7 @@ low_df_workflows_main <- function() {
     rng_profile <- c("Mersenne-Twister", "Inversion", "Rejection")
     lib_r <- file.path(R.home("lib"), paste0("libR", .Platform$dynlib.ext))
     dll <- getLoadedDLLs()[["DESeq2"]][["path"]]
-    runtime <- list(R=as.character(getRversion()), R_version=as.list(R.version),
+    runtime <- list(R=as.character(getRversion()), R_version=unclass(R.version),
         Bioconductor=as.character(BiocManager::version()), DESeq2=as.character(utils::packageVersion("DESeq2")),
         system=as.list(Sys.info()), BLAS_LAPACK=capture.output(La_library()),
         library_paths=array(.libPaths()), DESeq2_dll=dll, DESeq2_dll_sha256=deseq_hash(dll),

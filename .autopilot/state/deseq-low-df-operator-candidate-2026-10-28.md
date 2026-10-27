@@ -53,3 +53,17 @@ guard. No local R has run. Actual source fits, functional probes, non-floor
 prior coverage and exact argmin remain pending the first hosted qualification.
 Actual installed R function bodies are retained; unavailable optional official
 tag bodies are not falsely reported as independently AST-matched.
+
+First hosted qualification40602110279 at exactc616d48e is terminal FAILURE
+before input freeze or any fit. Exact package installation/body checks pass;
+runtime JSON serialization stops on R.version's documented simple.list class,
+which as.list preserves. Change only that metadata value to unclass(R.version),
+preserving all named version fields; no statistical code, input, bound or RNG
+setting changes. Primary contract:
+https://stat.ethz.ch/R-manual/R-devel/library/base/html/Version.html.
+Raw failed artifact12779307285 is5490873bytes, SHA
+18138ec736606d9dd34fdf55a35a4cb3f5a21bbffa6879cff3a0dcee8817ae06;
+full failed evidence retention is in progress. This is a controller metadata
+failure, not a rejected operator or uncovered prior result. No source workflow
+outcome exists yet. Run a fresh qualification after the one-line fix passes
+the exact-head controller gate; retain the failed run unchanged.
