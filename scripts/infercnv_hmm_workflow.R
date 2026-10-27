@@ -163,8 +163,8 @@ hmm_workflow_main <- function() {
     files <- stats::setNames(lapply(paths, function(path) hash_file(file.path(root, path))), paths)
     record <- list(schema_version=1L, status="complete", package=pin,
         scope="actual raw-to-i6 grouped samples, calibrated states and stage17 reports; no Bayesian or native acceptance",
-        successful_cases=names(Filter(function(case) case$status == "success", cases)),
-        expected_error_cases=names(Filter(function(case) case$status == "expected_error", cases)),
+        successful_cases=array(names(Filter(function(case) case$status == "success", cases))),
+        expected_error_cases=array(names(Filter(function(case) case$status == "expected_error", cases))),
         seed=seed, rng_kind=array(RNGkind()), timing="in-process raw create through return including trace; not paired performance",
         source_bundles=list(synthetic=synthetic$manifest_sha256, shipped=shipped$manifest_sha256),
         cases=cases, files=files)

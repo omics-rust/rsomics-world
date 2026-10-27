@@ -76,3 +76,12 @@ installs and dependency downloads remain prohibited; all project artifacts
 and scratch are external. No deletion is authorized or performed. Parallel
 read-only work now resolves exact spline/GCV and seeded-calibration contracts
 for the native implementation, not a duplicate overall HMM inventory/review.
+
+World090049142b2e75b2c6edd8f6d94a71b6b4a769e9 is pushed; exact-head controller
+run40471422874 passes. No replacement R workflow has yet been dispatched.
+The two bounded implementation-research tasks completed. Live4090 R4.6.1
+confirms MT/Inversion/Rejection and the mixed stream; official R4.6.1-tagged
+sgram/sbart/sslvrg sources confirm the spline/GCV details. The plan records
+the internal R-aligned profile and independent native spline architecture.
+MIT AS241 and original permissively licensed MT references are read before
+adapting selected numerical assets; no GPL source is mechanically imported.

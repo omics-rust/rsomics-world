@@ -91,3 +91,32 @@ without changing meanvar, spline settings, decoding, source pins or numerical
 criteria. Cost: the hand-designed synthetic input does not supply successful
 HMM state goldens; its existing creation/preprocessing/denoise evidence remains
 unchanged. Full native HMM and all remaining products are still required.
+
+## Native calibration contract
+
+Ruling: use an internal R4.6.1-aligned MT/Inversion/Rejection profile, not
+Numba seeding or an unrelated native seed stream. Configuration validates
+the R integer seed range. Reuse the team-owned MT twist/tempering asset,
+implement state initialization from its mathematical recurrence, and use
+MIT-licensed AS241 ordinary-probability coefficients with attribution.
+Exact uniform/index streams are required; normal values use numerical
+comparison. Cross-language/four-platform seeded HMM parity is not yet proven.
+
+Draw order is part of calibration: gene IDs once; each reference group's
+normal matrix then spike matrix; normals cell-major/gene-minor; dropout only
+after a matrix is complete, gene-major/cell-minor, even for existing zeros.
+Zero-SD normals consume no draw; singleton index sampling still consumes one.
+Keep upstream bootstrap rowMeans and ncells=1 NA omission in the regression.
+
+Private spline fitting uses independently implemented cubic B-splines,
+banded Cholesky/selected inverse and GCV search. R4.6.1 tagged sources confirm
+rounded x-buckets, count weights/within-bucket residuals, default knot subsets,
+the historical0.3330 roughness coefficient, restricted trace ratio, right-end
+leverage displacement and last-trial coefficient retention. Preserve these
+numerical rules and linear extrapolation; do not add jitter or retry away a
+failed fit. Do not mechanically translate GPL R implementation code.
+
+Keep these implementations in src/cnv/hmm/ of the owning product. No new
+dependency, public foundation, persisted model format or unfinished CLI flag
+is justified by the primitive work. Wire and validate the complete raw-input
+calibration/state/region operation before calling native HMM accepted.
