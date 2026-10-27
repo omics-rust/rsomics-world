@@ -31,6 +31,11 @@ NATIVE = dict(repository="omics-rust/rsomics-world", run_id=40546148508, run_att
 BINARY_SHA = "ae968a1a490433086b6e50867a15b9797bea47e903faf032967b5a3b377fa840"
 WHEEL_SHA = "a1fca6d455886b19bc2d58aa1e13b233977a2c835f676ef93bd0c6f4099b8452"
 SOURCE_SHA = "8c9d34c208bf7852f147dd365312a43a546148d1bf76581c5c0ede73fdb254b8"
+REAL_INPUT = dict(repository="omics-rust/rsomics-world", run_id=40556139574, run_attempt=1,
+                  head_sha="58a926c944f39e4538edf089bf299d59dd3a5ce6",
+                  workflow_path=".github/workflows/rnaseq-qc-performance.yml", artifact_id=12758010802,
+                  artifact_name="rnaseq-qc-performance-chr21-40556139574-1",
+                  artifact_sha256="de578dfd196a822cbe981d38d8f9f741bb44e45bb021a5b49a6313e224247e87")
 TIME_FORMAT = ('{"wall_seconds":%e,"user_seconds":%U,"system_seconds":%S,"max_rss_kib":%M,'
                '"filesystem_inputs":%I,"filesystem_outputs":%O,"major_faults":%F,"minor_faults":%R,"exit_status":%x}')
 
@@ -45,7 +50,7 @@ def source_acquisition(acquisition):
     return Path(acquisition) / "artifact/oracle-acquisition/source/acquisition"
 
 
-def extract_native(archive, output):
+def extract_native(archive, output, required_file="comparison/summary.json"):
     files, seen = set(), set()
     for member in archive.infolist():
         name = _archive_name(member.filename, member.is_dir())
@@ -58,8 +63,19 @@ def extract_native(archive, output):
             files.add(name)
     check(all('/'.join(name.split('/')[:index]) not in files
               for name in seen for index in range(1, len(name.split('/')))), "native ZIP path collision")
-    check("comparison/summary.json" in files and archive.testzip() is None, "native ZIP lacks complete evidence or has bad CRC")
+    check(required_file in files and archive.testzip() is None, "ZIP lacks required evidence or has bad CRC")
     _extract(archive, output)
+
+
+def prepare_input_cache(acquisition):
+    acquisition = Path(acquisition).resolve(strict=True)
+    archive = acquisition / "artifact.zip"
+    _run(acquisition / "run.json", REAL_INPUT)
+    _artifact(acquisition / "artifact.json", REAL_INPUT, archive)
+    check(sha256(archive) == REAL_INPUT["artifact_sha256"], "retained real-input ZIP differs")
+    with zipfile.ZipFile(archive) as zipped:
+        extract_native(zipped, acquisition / "artifact", required_file="benchmark/inputs/qualification.json")
+    save(acquisition / "verification.json", dict(input_artifact=REAL_INPUT))
 
 
 def prepare_runtime(acquisition):
@@ -253,7 +269,7 @@ def performance_decision(stats):
                 median_four_worker_speedup=serial_wall["median"] / stats["native"]["4"]["wall_seconds"]["median"])
 
 
-def run_benchmark(acquisition, profile, output):
+def run_benchmark(acquisition, profile, output, input_cache):
     check(platform.system() == "Linux" and platform.machine() == "x86_64", "benchmark requires native Linux x86_64")
     allowed = sorted(os.sched_getaffinity(0))
     check(len(allowed) >= 4, "four available CPUs are required for the declared worker comparison")
@@ -270,8 +286,16 @@ def run_benchmark(acquisition, profile, output):
                                    cpu_affinity=list(os.sched_getaffinity(0)), cores=cores,
                                    cpuinfo=Path("/proc/cpuinfo").read_text(), load_average=os.getloadavg(),
                                    time_format=TIME_FORMAT, runtime=runtime, native=NATIVE, binary_sha256=BINARY_SHA))
-    inputs = prepare_inputs(output / "inputs", profile)
+    inputs = prepare_inputs(output / "inputs", profile,
+                            source_cache=Path(input_cache) / "artifact/benchmark/inputs/originals")
+    inputs["source"]["cache_receipt"] = json.loads((Path(input_cache) / "verification.json").read_text())
     save(output / "inputs.json", inputs)
+    save(output / "artifact-inputs.json", dict(
+        measured_bam="inputs/paired.bam", measured_annotation="inputs/genes.bed12",
+        original_bam_sha256=inputs["source"]["bam"]["sha256"], original_input_artifact=REAL_INPUT,
+        retention="Retain measured BAM/BAI, original annotation gzip, derived BED and all receipts/results. "
+                  "Omit duplicate cache extraction/ZIP and original BAM alias; the first input artifact retains the full original. "
+                  "For whole, measured paired.bam is itself the unchanged full original."))
     eligibility = trace_eligibility(tools["integrity"], inputs, output / "source-eligibility.json")
     expected, _ = source_trial(output / "source-warmup", inputs, tools, cores, eligibility)
     baseline, _ = native_trial(output / "native-warmup-1", inputs, binary, cores, 1, expected)
@@ -309,16 +333,21 @@ def main():
     sub = parser.add_subparsers(dest="command", required=True)
     runtime = sub.add_parser("prepare-runtime")
     runtime.add_argument("--acquisition", type=Path, required=True)
+    cache = sub.add_parser("prepare-input-cache")
+    cache.add_argument("--acquisition", type=Path, required=True)
     run = sub.add_parser("run")
     run.add_argument("--acquisition", type=Path, required=True)
     run.add_argument("--output", type=Path, required=True)
+    run.add_argument("--input-cache", type=Path, required=True)
     run.add_argument("--profile", choices=("chr21", "whole"), required=True)
     args = parser.parse_args()
     try:
         if args.command == "prepare-runtime":
             prepare_runtime(args.acquisition)
+        elif args.command == "prepare-input-cache":
+            prepare_input_cache(args.acquisition)
         else:
-            run_benchmark(args.acquisition, args.profile, args.output)
+            run_benchmark(args.acquisition, args.profile, args.output, args.input_cache)
     except (OSError, ValueError, KeyError, TrialProcessError) as error:
         parser.exit(1, f"RNA-seq QC real complete-report measurement failed: {error}\n")
 

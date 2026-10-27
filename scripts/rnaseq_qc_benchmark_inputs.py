@@ -18,6 +18,7 @@ BAM_URL = "https://data.cyverse.org/dav-anon/iplant/home/liguow/RSeQC/Pairend_no
 BED_URL = "https://master.dl.sourceforge.net/project/rseqc/BED/Human_Homo_sapiens/hg19_RefSeq.bed.gz"
 BAM_BYTES = 437662663
 BAM_MD5 = "ba014f6b397b8a29c456b744237a12de"
+BAM_SHA256 = "38174082a8f36ae76a6852b9b970fcb334ab5c8186c133993a0fd652d1d147cd"
 BED_BYTES = 2567192
 BED_MD5 = "b7df344f3787415eaa4f24c23f498632"
 BED_SHA256 = "eb7070cfb52b9011c132346fd27baffb8a7acf3c034ebf996cebd52fbb52aa19"
@@ -81,6 +82,19 @@ def download(url, output, expected_bytes, expected_md5, expected_sha256=None):
     finally:
         save_json(Path(str(output) + ".http.json"), record)
     return record
+
+
+def reuse_download(source, output, expected_bytes, expected_md5, expected_sha256):
+    identity = file_identity(source)
+    if (identity["bytes"], identity["md5"], identity["sha256"]) != (expected_bytes, expected_md5, expected_sha256):
+        raise ValueError(f"retained original identity differs: {identity}")
+    with Path(str(source) + ".http.json").open() as stream:
+        original = json.load(stream)
+    os.link(source, output)
+    result = dict(identity, path=str(output), source_kind="verified_retained_original",
+                  source_path=str(source), original_acquisition=original, identity_verified=True)
+    save_json(Path(str(output) + ".http.json"), result)
+    return result
 
 
 def derive_annotation(original, references, genes, exclusions, profile):
@@ -155,7 +169,7 @@ def ordered_counts(counts):
             for name, value in counts.items()}
 
 
-def prepare_inputs(output: Path, profile: str) -> dict:
+def prepare_inputs(output: Path, profile: str, source_cache=None) -> dict:
     if profile not in ("chr21", "whole"):
         raise ValueError(f"unknown benchmark profile: {profile}")
     output = Path(output).resolve()
@@ -169,8 +183,13 @@ def prepare_inputs(output: Path, profile: str) -> dict:
     originals = output / "originals"
     originals.mkdir()
     original_bam, original_bed = originals / "official.bam", originals / "hg19_RefSeq.bed.gz"
-    bam_receipt = download(BAM_URL, original_bam, BAM_BYTES, BAM_MD5)
-    bed_receipt = download(BED_URL, original_bed, BED_BYTES, BED_MD5, BED_SHA256)
+    if source_cache is None:
+        bam_receipt = download(BAM_URL, original_bam, BAM_BYTES, BAM_MD5, BAM_SHA256)
+        bed_receipt = download(BED_URL, original_bed, BED_BYTES, BED_MD5, BED_SHA256)
+    else:
+        source_cache = Path(source_cache).resolve(strict=True)
+        bam_receipt = reuse_download(source_cache / "official.bam", original_bam, BAM_BYTES, BAM_MD5, BAM_SHA256)
+        bed_receipt = reuse_download(source_cache / "hg19_RefSeq.bed.gz", original_bed, BED_BYTES, BED_MD5, BED_SHA256)
     bam, genes = output / "paired.bam", output / "genes.bed12"
     source_counts, selected_counts = empty_record_counts(), empty_record_counts()
     previous = None

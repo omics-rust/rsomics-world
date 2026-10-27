@@ -84,6 +84,18 @@ jobs:
           python3 -m pip freeze > "$EVIDENCE/installed-freeze.txt"
           python3 -m pip inspect > "$EVIDENCE/installed-inspect.json"
 
+      - name: Acquire verified complete original inputs
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          mkdir "$EVIDENCE/input-cache"
+          gh api repos/omics-rust/rsomics-world/actions/runs/40556139574 > "$EVIDENCE/input-cache/run.json"
+          gh api repos/omics-rust/rsomics-world/actions/artifacts/12758010802 > "$EVIDENCE/input-cache/artifact.json"
+          gh api repos/omics-rust/rsomics-world/actions/artifacts/12758010802/zip > "$EVIDENCE/input-cache/artifact.zip"
+          python3 -B scripts/rnaseq_qc_performance.py prepare-input-cache --acquisition "$EVIDENCE/input-cache" \
+            2>&1 | tee "$EVIDENCE/input-cache/verification.log"
+
       - name: Measure the real complete report
         run: |
           set -euo pipefail
@@ -97,14 +109,19 @@ jobs:
             sha256sum *.py
           ) > "$EVIDENCE/controller/checksums.sha256"
           python3 -B scripts/rnaseq_qc_performance.py run --acquisition "$EVIDENCE/acquisition" \
-            --profile "$PROFILE" --output "$EVIDENCE/benchmark" 2>&1 | tee "$EVIDENCE/benchmark.log"
+            --input-cache "$EVIDENCE/input-cache" --profile "$PROFILE" --output "$EVIDENCE/benchmark" \
+            2>&1 | tee "$EVIDENCE/benchmark.log"
 
       - name: Retain original measurements and inputs
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: rnaseq-qc-performance-${{ inputs.profile }}-${{ github.run_id }}-${{ github.run_attempt }}
-          path: ${{ env.EVIDENCE }}
+          path: |
+            ${{ env.EVIDENCE }}
+            !${{ env.EVIDENCE }}/input-cache/artifact.zip
+            !${{ env.EVIDENCE }}/input-cache/artifact/**
+            !${{ env.EVIDENCE }}/benchmark/inputs/originals/official.bam
           include-hidden-files: true
           if-no-files-found: error
           retention-days: 90

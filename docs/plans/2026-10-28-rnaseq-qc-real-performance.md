@@ -44,6 +44,18 @@ decompression, indexing, input scans and source eligibility tracing are untimed.
 The first campaign may use chr21 to establish a nontrivial real-data contract;
 it cannot substitute for the separately required whole-input measurement.
 
+The first chr21 campaign40556139574 acquires and fully verifies the complete
+original BAM and BED gzip. Subsequent profiles use that immutable Actions
+artifact12758010802, independently API/ZIP-verified and rehashed before use,
+instead of requesting the public data endpoint again. That endpoint returned
+an IP-unblock/Turnstile HTML page to first whole run40556744875; no challenge
+is handled or bypassed. The failed response and original receipt are retained.
+The source/input provenance chain remains explicit. Avoid uploading duplicate
+cache ZIP/extractions and BAM hardlink aliases: each new artifact retains its
+actual measured BAM/BAI, original BED gzip, derived annotation, complete source
+and native outputs, cache API/verification and original HTTP receipts. The
+first input artifact and verified external copy retain the complete originals.
+
 ## Whole operation
 
 Use exact installed RSeQC5.0.5 script bodies and the dependency versions from

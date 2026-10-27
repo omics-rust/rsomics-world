@@ -6,7 +6,7 @@ from pathlib import Path
 import tempfile
 import unittest
 
-from rnaseq_qc_benchmark_inputs import derive_annotation, write_payload
+from rnaseq_qc_benchmark_inputs import derive_annotation, reuse_download, write_payload
 
 
 class RealInputTests(unittest.TestCase):
@@ -18,6 +18,14 @@ class RealInputTests(unittest.TestCase):
                                    hashlib.md5(payload).hexdigest(), hashlib.sha256(payload).hexdigest())
             self.assertEqual(target.read_bytes(), b"actual\nbytes\n")
             self.assertEqual(result["bytes"], 13)
+            Path(str(target) + ".http.json").write_text(json.dumps(dict(status=200, identity_verified=True)))
+            copy = Path(directory) / "retained.bam"
+            receipt = reuse_download(target, copy, len(payload), result["md5"], result["sha256"])
+            self.assertEqual(copy.read_bytes(), payload)
+            self.assertEqual(receipt["source_kind"], "verified_retained_original")
+            self.assertEqual(receipt["original_acquisition"]["status"], 200)
+            with self.assertRaisesRegex(ValueError, "retained original identity"):
+                reuse_download(target, Path(directory) / "wrong-cache.bam", len(payload), result["md5"], "0" * 64)
             for name, data, size, digest in [("corrupt", b"changed\nbytes\n", 14, hashlib.md5(payload).hexdigest()),
                                               ("truncated", b"actual\n", 13, hashlib.md5(payload).hexdigest())]:
                 with self.subTest(name=name), self.assertRaises(ValueError):
