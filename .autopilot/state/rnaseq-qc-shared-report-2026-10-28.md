@@ -41,6 +41,15 @@ Green1 freezes18 regular source files: archive SHA
 manifestc69ada7b9ecc6b88591d3f7d1ddb27713e2a503d85b4d6ed295e5b141703ccf2.
 The generic snapshot verifier passes. No generated lock is included yet.
 
+Before the first native dispatch, root aligns the successful operation's
+manifest status to complete; publish=false still describes product maturity.
+Unexecuted green1 is preserved, not modified. Executable candidate source is
+green2,18 files: archive3393ce593a0f12c776629240511112ddf8b570abfb63cc651b5e249b49c1d0db,
+manifestea5362ee64d0fd75657433702836261fba9004e79dd9721f89ce0d7be1117441.
+No algorithm or dependency changes; generic snapshot verification passes.
+Controller40541903549 at worldc8472c59315a11238adf2c9e82e3e6e2e984aaa5
+passes. Do not claim native compilation or source agreement from it.
+
 Mac APFS92.8%, KIOXIA245GiB free. No local Cargo/build/install/download;
 project sources, snapshots, fixtures and scratch remain external. Preserve
 unrelated inherited world VCF and root scratch changes.
