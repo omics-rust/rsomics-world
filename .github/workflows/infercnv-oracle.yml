@@ -40,6 +40,11 @@ on:
           - none
           - infercnv-denoise-candidate-2026-10-26
 
+      hmm_workflows:
+        description: Capture actual raw-input i6 HMM calibration, states and region reports
+        type: boolean
+        default: false
+
 permissions:
   contents: read
   actions: read
@@ -56,6 +61,7 @@ jobs:
       INGESTION_CONTRACTS: ${{ inputs.ingestion_contracts || false }}
       INGESTION_SNAPSHOT: ${{ inputs.ingestion_snapshot || '' }}
       DENOISE_NATIVE_RECEIPT: ${{ inputs.denoise_native_receipt || 'none' }}
+      HMM_WORKFLOWS: ${{ inputs.hmm_workflows || false }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -83,6 +89,14 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
+          if [[ "${HMM_WORKFLOWS:-false}" == true ]]; then
+            test "$ORACLE_DATASET" = shipped
+            test -z "$MATCHED_SNAPSHOT"
+            test -z "$INGESTION_SNAPSHOT"
+            test "$INGESTION_CONTRACTS" = false
+            test "$SAMPLES_CLUSTERING" = false
+            test "${DENOISE_NATIVE_RECEIPT:-none}" = none
+          fi
           if [[ "${DENOISE_NATIVE_RECEIPT:-none}" != none ]]; then
             test "$DENOISE_NATIVE_RECEIPT" = infercnv-denoise-candidate-2026-10-26
             test "$ORACLE_DATASET" = shipped
@@ -715,7 +729,7 @@ jobs:
             "$SHIPPED_OUTPUT" --manifest 2>&1 | tee "$EVIDENCE_DIR/shipped-validation.log"
 
       - name: Test ingestion witness checker
-        if: env.DENOISE_NATIVE_RECEIPT == 'none'
+        if: env.DENOISE_NATIVE_RECEIPT == 'none' && env.HMM_WORKFLOWS != 'true'
         shell: bash
         run: |
           set -euo pipefail
@@ -724,7 +738,7 @@ jobs:
             2>&1 | tee "$EVIDENCE_DIR/ingestion-checker-tests.log"
 
       - name: Capture creation-stage raw-input witnesses
-        if: env.INGESTION_CONTRACTS != 'true' && env.DENOISE_NATIVE_RECEIPT == 'none'
+        if: env.INGESTION_CONTRACTS != 'true' && env.DENOISE_NATIVE_RECEIPT == 'none' && env.HMM_WORKFLOWS != 'true'
         shell: bash
         run: |
           set -euo pipefail
@@ -742,7 +756,7 @@ jobs:
             "${checker[@]}" 2>&1 | tee "$EVIDENCE_DIR/ingestion-witness-validation.log"
 
       - name: Capture creation format and filter edge probes
-        if: env.ORACLE_DATASET == 'shipped' && env.INGESTION_CONTRACTS != 'true' && env.DENOISE_NATIVE_RECEIPT == 'none'
+        if: env.ORACLE_DATASET == 'shipped' && env.INGESTION_CONTRACTS != 'true' && env.DENOISE_NATIVE_RECEIPT == 'none' && env.HMM_WORKFLOWS != 'true'
         shell: bash
         run: |
           set -euo pipefail
@@ -823,6 +837,15 @@ jobs:
             --witness "$EVIDENCE_DIR/denoise-workflows" --binary "$DENOISE_NATIVE_BINARY" \
             --output "$EVIDENCE_DIR/denoise-native-comparison" \
             2>&1 | tee "$EVIDENCE_DIR/denoise-native-comparison.log"
+
+      - name: Capture integrated i6 HMM workflows
+        if: env.HMM_WORKFLOWS == 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          Rscript --vanilla scripts/infercnv_hmm_workflow.R \
+            "$ORACLE_OUTPUT" "$SHIPPED_OUTPUT" "$EVIDENCE_DIR/hmm-workflows" \
+            2>&1 | tee "$EVIDENCE_DIR/hmm-workflows.log"
 
       - name: Capture samples-clustering witnesses
         if: env.SAMPLES_CLUSTERING == 'true'

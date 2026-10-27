@@ -291,6 +291,35 @@ class IngestionWorkflowTests(unittest.TestCase):
                                         capture_output=True, text=True, timeout=15)
                 self.assertEqual(result.returncode == 0, valid, result.stderr)
 
+    def test_hmm_selector_requires_shipped_inputs_and_an_unmixed_workflow(self):
+        body = bash_body(self.steps['Validate optional matched snapshot selector'])
+        candidate = 'infercnv-denoise-candidate-2026-10-26'
+        for dataset, clustering, denoise, contracts, valid in [
+            ('shipped', 'false', 'none', 'false', True),
+            ('synthetic', 'false', 'none', 'false', False),
+            ('shipped', 'true', 'none', 'false', False),
+            ('shipped', 'false', candidate, 'false', False),
+            ('shipped', 'false', 'none', 'true', False),
+        ]:
+            with self.subTest(selection=(dataset, clustering, denoise, contracts)):
+                env = dict(os.environ, HMM_WORKFLOWS='true', DENOISE_NATIVE_RECEIPT=denoise,
+                           ORACLE_DATASET=dataset, SAMPLES_CLUSTERING=clustering,
+                           MATCHED_SNAPSHOT='', INGESTION_SNAPSHOT='',
+                           INGESTION_CONTRACTS=contracts)
+                result = subprocess.run(['bash', '-c', body], cwd=ROOT, env=env,
+                                        capture_output=True, text=True, timeout=15)
+                self.assertEqual(result.returncode == 0, valid, result.stderr)
+
+    def test_hmm_workflow_uses_real_r_and_skips_unrelated_ingestion_probes(self):
+        self.assertTrue('Capture integrated i6 HMM workflows' in self.steps,
+                        'missing integrated HMM step')
+        step = self.steps['Capture integrated i6 HMM workflows']
+        self.assertIn("if: env.HMM_WORKFLOWS == 'true'", step)
+        self.assertIn('Rscript --vanilla scripts/infercnv_hmm_workflow.R', step)
+        for name in ('Test ingestion witness checker', 'Capture creation-stage raw-input witnesses',
+                     'Capture creation format and filter edge probes'):
+            self.assertIn("env.HMM_WORKFLOWS != 'true'", self.steps[name])
+
 
 if __name__ == '__main__':
     unittest.main()
