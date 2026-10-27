@@ -353,6 +353,27 @@ class IngestionWorkflowTests(unittest.TestCase):
         self.assertIn('source_witness_sha256', bayes)
         self.assertIn('reducer_sha256', bayes)
 
+    def test_default_leiden_route_is_real_standalone_and_skips_unrelated_probes(self):
+        body = bash_body(self.steps['Validate optional matched snapshot selector'])
+        base = dict(os.environ, LEIDEN_WORKFLOWS='true', ORACLE_DATASET='shipped',
+                    SAMPLES_CLUSTERING='false', DENOISE_NATIVE_RECEIPT='none',
+                    MATCHED_SNAPSHOT='', INGESTION_SNAPSHOT='', INGESTION_CONTRACTS='false',
+                    HMM_WORKFLOWS='false', HMM_EXTENSION_WORKFLOWS='false', BAYES_ONLY='false')
+        for change in [{}, {'ORACLE_DATASET': 'synthetic'}, {'HMM_WORKFLOWS': 'true'},
+                       {'HMM_EXTENSION_WORKFLOWS': 'true'}]:
+            with self.subTest(change=change):
+                result = subprocess.run(['bash', '-c', body], cwd=ROOT, env=dict(base, **change),
+                                        capture_output=True, text=True, timeout=15)
+                self.assertEqual(result.returncode == 0, not change, result.stderr)
+        step = self.steps['Capture actual default Leiden workflows']
+        self.assertIn("if: env.LEIDEN_WORKFLOWS == 'true'", step)
+        self.assertIn('test_infercnv_leiden_workflow.R', step)
+        self.assertIn('scripts/infercnv_leiden_workflow.R', step)
+        self.assertIn('"$SHIPPED_OUTPUT"', step)
+        for name in ('Test ingestion witness checker', 'Capture creation-stage raw-input witnesses',
+                     'Capture creation format and filter edge probes'):
+            self.assertIn("env.LEIDEN_WORKFLOWS != 'true'", self.steps[name])
+
 
 if __name__ == '__main__':
     unittest.main()

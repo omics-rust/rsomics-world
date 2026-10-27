@@ -55,6 +55,11 @@ on:
         type: boolean
         default: false
 
+      leiden_workflows:
+        description: Capture actual default PCA and alternative simple Leiden graph/discovery workflows
+        type: boolean
+        default: false
+
 permissions:
   contents: read
   actions: read
@@ -74,6 +79,7 @@ jobs:
       HMM_WORKFLOWS: ${{ inputs.hmm_workflows || false }}
       HMM_EXTENSION_WORKFLOWS: ${{ inputs.hmm_extension_workflows || false }}
       BAYES_ONLY: ${{ inputs.bayes_only || false }}
+      LEIDEN_WORKFLOWS: ${{ inputs.leiden_workflows || false }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -101,6 +107,17 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
+          if [[ "${LEIDEN_WORKFLOWS:-false}" == true ]]; then
+            test "$ORACLE_DATASET" = shipped
+            test "${HMM_WORKFLOWS:-false}" = false
+            test "${HMM_EXTENSION_WORKFLOWS:-false}" = false
+            test "${BAYES_ONLY:-false}" = false
+            test -z "$MATCHED_SNAPSHOT"
+            test -z "$INGESTION_SNAPSHOT"
+            test "$INGESTION_CONTRACTS" = false
+            test "$SAMPLES_CLUSTERING" = false
+            test "${DENOISE_NATIVE_RECEIPT:-none}" = none
+          fi
           if [[ "${BAYES_ONLY:-false}" == true ]]; then
             test "${HMM_EXTENSION_WORKFLOWS:-false}" = true
           fi
@@ -784,7 +801,7 @@ jobs:
             "$SHIPPED_OUTPUT" --manifest 2>&1 | tee "$EVIDENCE_DIR/shipped-validation.log"
 
       - name: Test ingestion witness checker
-        if: env.DENOISE_NATIVE_RECEIPT == 'none' && env.HMM_WORKFLOWS != 'true' && env.HMM_EXTENSION_WORKFLOWS != 'true'
+        if: env.DENOISE_NATIVE_RECEIPT == 'none' && env.HMM_WORKFLOWS != 'true' && env.HMM_EXTENSION_WORKFLOWS != 'true' && env.LEIDEN_WORKFLOWS != 'true'
         shell: bash
         run: |
           set -euo pipefail
@@ -793,7 +810,7 @@ jobs:
             2>&1 | tee "$EVIDENCE_DIR/ingestion-checker-tests.log"
 
       - name: Capture creation-stage raw-input witnesses
-        if: env.INGESTION_CONTRACTS != 'true' && env.DENOISE_NATIVE_RECEIPT == 'none' && env.HMM_WORKFLOWS != 'true' && env.HMM_EXTENSION_WORKFLOWS != 'true'
+        if: env.INGESTION_CONTRACTS != 'true' && env.DENOISE_NATIVE_RECEIPT == 'none' && env.HMM_WORKFLOWS != 'true' && env.HMM_EXTENSION_WORKFLOWS != 'true' && env.LEIDEN_WORKFLOWS != 'true'
         shell: bash
         run: |
           set -euo pipefail
@@ -811,7 +828,7 @@ jobs:
             "${checker[@]}" 2>&1 | tee "$EVIDENCE_DIR/ingestion-witness-validation.log"
 
       - name: Capture creation format and filter edge probes
-        if: env.ORACLE_DATASET == 'shipped' && env.INGESTION_CONTRACTS != 'true' && env.DENOISE_NATIVE_RECEIPT == 'none' && env.HMM_WORKFLOWS != 'true' && env.HMM_EXTENSION_WORKFLOWS != 'true'
+        if: env.ORACLE_DATASET == 'shipped' && env.INGESTION_CONTRACTS != 'true' && env.DENOISE_NATIVE_RECEIPT == 'none' && env.HMM_WORKFLOWS != 'true' && env.HMM_EXTENSION_WORKFLOWS != 'true' && env.LEIDEN_WORKFLOWS != 'true'
         shell: bash
         run: |
           set -euo pipefail
@@ -950,6 +967,17 @@ jobs:
               files={path.name: sha(path) for path in sorted(folder.iterdir())})
           (folder / 'manifest.json').write_text(json.dumps(record, indent=2) + '\n')
           PY
+
+      - name: Capture actual default Leiden workflows
+        if: env.LEIDEN_WORKFLOWS == 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          Rscript --vanilla scripts/test_infercnv_leiden_workflow.R \
+            2>&1 | tee "$EVIDENCE_DIR/leiden-workflow-tests.log"
+          Rscript --vanilla scripts/infercnv_leiden_workflow.R \
+            "$SHIPPED_OUTPUT" "$EVIDENCE_DIR/leiden-workflows" \
+            2>&1 | tee "$EVIDENCE_DIR/leiden-workflows.log"
 
       - name: Capture samples-clustering witnesses
         if: env.SAMPLES_CLUSTERING == 'true'
