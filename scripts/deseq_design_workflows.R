@@ -147,7 +147,16 @@ design_prepare_case <- function(spec, input, root) {
     if (qr(matrix)$rank != ncol(matrix) || nrow(matrix) <= ncol(matrix)) stop("source design is not full rank")
     forward <- stats::setNames(rep(0, ncol(matrix)), colnames(matrix))
     mixed <- forward
-    if (spec$formula == "~1") {
+    if (!is.null(spec$contrasts)) {
+        align <- function(weights) {
+            if (!is.numeric(weights) || any(!is.finite(weights)) || is.null(names(weights)) ||
+                anyDuplicated(names(weights)) || !setequal(names(weights), colnames(matrix)) ||
+                !any(weights != 0)) stop("explicit contrast must name every model column once")
+            weights[colnames(matrix)]
+        }
+        forward <- align(spec$contrasts$forward)
+        mixed <- if (is.null(spec$contrasts$mixed)) NULL else align(spec$contrasts$mixed)
+    } else if (spec$formula == "~1") {
         forward[["(Intercept)"]] <- 1
         mixed <- NULL
     } else if (spec$formula == "~0+group+batch+x") {
@@ -264,7 +273,7 @@ design_cook_state <- function(fit, forward, unmasked, spec, input, directory) {
         low_count_exemptions=array(rownames(counts)[low_exempt]), original_counts_preserved=TRUE)
 }
 
-design_run_case <- function(prepared, observe) {
+design_run_case <- function(prepared, observe, fit_type="parametric") {
     spec <- prepared$spec
     input <- prepared$input
     directory <- prepared$directory
@@ -280,7 +289,7 @@ design_run_case <- function(prepared, observe) {
     if (spec$normalization %in% c("nf", "sf-nf")) {
         DESeq2::normalizationFactors(dataset) <- input$nf[rownames(dataset), colnames(dataset), drop=FALSE]
     }
-    fit <- call("DESeq", DESeq2::DESeq(dataset, test="Wald", fitType="parametric", sfType="ratio",
+    fit <- call("DESeq", DESeq2::DESeq(dataset, test="Wald", fitType=fit_type, sfType="ratio",
         betaPrior=FALSE, minReplicatesForReplace=if (spec$replacement == "disabled") Inf else 7L,
         useT=FALSE, minmu=0.5, parallel=FALSE))
     before <- deseq_fit_state(fit)
