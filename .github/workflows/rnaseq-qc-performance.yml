@@ -1,0 +1,110 @@
+name: RNA-seq QC real complete-report performance
+
+on:
+  workflow_dispatch:
+    inputs:
+      profile:
+        description: Predeclared real input; chr21 does not substitute for whole-input acceptance
+        type: choice
+        options:
+          - chr21
+          - whole
+        default: chr21
+        required: true
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  performance:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 240
+    env:
+      PYTHONDONTWRITEBYTECODE: '1'
+      PROFILE: ${{ inputs.profile }}
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+
+      - name: Prepare hosted storage
+        run: |
+          set -euo pipefail
+          export EVIDENCE="$RUNNER_TEMP/rnaseq-qc-performance"
+          export TMPDIR="$RUNNER_TEMP/scratch"
+          export CARGO_HOME="$RUNNER_TEMP/cargo-home"
+          export CARGO_TARGET_DIR="$RUNNER_TEMP/cargo-target"
+          export PIP_CACHE_DIR="$RUNNER_TEMP/pip-cache"
+          export MPLCONFIGDIR="$RUNNER_TEMP/matplotlib"
+          mkdir -p "$EVIDENCE/acquisition" "$EVIDENCE/controller" "$TMPDIR" "$CARGO_HOME" "$CARGO_TARGET_DIR" "$PIP_CACHE_DIR" "$MPLCONFIGDIR"
+          printf 'EVIDENCE=%s\nTMPDIR=%s\nCARGO_HOME=%s\nCARGO_TARGET_DIR=%s\nPIP_CACHE_DIR=%s\nMPLCONFIGDIR=%s\n' \
+            "$EVIDENCE" "$TMPDIR" "$CARGO_HOME" "$CARGO_TARGET_DIR" "$PIP_CACHE_DIR" "$MPLCONFIGDIR" >> "$GITHUB_ENV"
+          python3 -B - <<'PY'
+          import json, os, shutil
+          from pathlib import Path
+          runner = Path(os.environ['RUNNER_TEMP']).resolve(strict=True)
+          paths = {name: Path(os.environ[name]).resolve(strict=True)
+                   for name in ('EVIDENCE', 'TMPDIR', 'CARGO_HOME', 'CARGO_TARGET_DIR', 'PIP_CACHE_DIR', 'MPLCONFIGDIR')}
+          assert all(path.is_relative_to(runner) for path in paths.values()), 'storage escapes runner-temp'
+          usage = shutil.disk_usage(runner)
+          assert usage.free > 8 * 2**30, 'insufficient measurement storage'
+          (paths['EVIDENCE'] / 'storage.json').write_text(json.dumps(dict(paths={key: str(value) for key, value in paths.items()},
+              disk_total=usage.total, disk_used=usage.used, disk_free=usage.free), indent=2) + '\n')
+          PY
+          git rev-parse HEAD > "$EVIDENCE/head.sha"
+          uname -a > "$EVIDENCE/host.txt"
+          df -h >> "$EVIDENCE/host.txt"
+          /usr/bin/time --version >> "$EVIDENCE/host.txt"
+          python3 -m venv "$RUNNER_TEMP/rnaseq-qc-venv"
+          printf '%s\n' "$RUNNER_TEMP/rnaseq-qc-venv/bin" >> "$GITHUB_PATH"
+
+      - name: Acquire the accepted four-native candidate
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          gh api repos/omics-rust/rsomics-world/actions/runs/40546148508 > "$EVIDENCE/acquisition/run.json"
+          gh api repos/omics-rust/rsomics-world/actions/artifacts/12751813613 > "$EVIDENCE/acquisition/artifact.json"
+          gh api repos/omics-rust/rsomics-world/actions/artifacts/12751813613/zip > "$EVIDENCE/acquisition/artifact.zip"
+          python3 -B scripts/rnaseq_qc_performance.py prepare-runtime --acquisition "$EVIDENCE/acquisition" \
+            2>&1 | tee "$EVIDENCE/acquisition/verification.log"
+
+      - name: Install the exact accepted source runtime
+        run: |
+          set -euo pipefail
+          python3 -m pip install --only-binary=:all: -r "$EVIDENCE/acquisition/requirements.lock.txt"
+          python3 -m pip freeze > "$EVIDENCE/installed-freeze.txt"
+          python3 -m pip inspect > "$EVIDENCE/installed-inspect.json"
+
+      - name: Measure the real complete report
+        run: |
+          set -euo pipefail
+          for name in rnaseq_qc_performance.py test_rnaseq_qc_performance.py rnaseq_qc_benchmark_inputs.py \
+                      test_rnaseq_qc_benchmark_inputs.py compare_rnaseq_qc_workflow.py rnaseq_qc_oracle.py \
+                      infercnv_trial_process.py verify_infercnv_oracle_artifact.py validate_infercnv_shipped_oracle.py; do
+            cp "scripts/$name" "$EVIDENCE/controller/"
+          done
+          (
+            cd "$EVIDENCE/controller"
+            sha256sum *.py
+          ) > "$EVIDENCE/controller/checksums.sha256"
+          python3 -B scripts/rnaseq_qc_performance.py run --acquisition "$EVIDENCE/acquisition" \
+            --profile "$PROFILE" --output "$EVIDENCE/benchmark" 2>&1 | tee "$EVIDENCE/benchmark.log"
+
+      - name: Retain original measurements and inputs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: rnaseq-qc-performance-${{ inputs.profile }}-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ env.EVIDENCE }}
+          include-hidden-files: true
+          if-no-files-found: error
+          retention-days: 90
