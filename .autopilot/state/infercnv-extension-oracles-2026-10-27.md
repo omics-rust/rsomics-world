@@ -154,3 +154,14 @@ manifest2392df2566f1b45bac147fb55ac834a98656f8ae5aa5a716d8ae1703c1076b24.
 Four-native posterior/state/report execution, performance and one whole-feature
 review remain open. Dispatch corrected Bayesian-only witness after exact-head
 controller success; do not repeat the completed Ward or accepted HMM runs.
+
+World9dd9dfc6e96fb9358a4639fbf9072679c2178db0 is committed/pushed;
+exact-head controller40498908419 passes. Corrected Bayesian-only oracle
+40499067515 was dispatched once on that exact head at11:49:50UTC and is
+confirmed in progress. Follow this run, do not dispatch another because a
+turn ends. It skips Ward, runs both actual JAGS repetitions and retains
+actual uncertainty summaries in the same original artifact. Wait for that
+complete output before creating the new Bayesian receipt and dispatching
+green26's integrated four-native comparison. Source code/driver tests are
+not native compatibility acceptance. The Ward question is pending user input;
+it blocks only that grouping policy, not Bayesian or the full active goal.
