@@ -1,5 +1,19 @@
 # Whole native discovery candidate
 
+## Current state
+
+Whole four-native run40539911278 is terminal FAILURE under the original
+strict per-parent CPM gate. The source is real and compiled; k20 PCA/simple
+and k5 PCA now pass. All simple graphs also match exactly; one parent has
+a lower stochastic optimum, without a concrete algorithm-transfer bug in
+the bounded independent diagnosis. Only the stochastic-quality acceptance
+contract is held for the async user decision. No seed escalation, threshold
+change or further discovery campaign is underway. Continue RNA-seq QC and
+the full portfolio, not a globally blocked or narrowed goal. Below is the
+source/execution ledger; old pending statements describe earlier checkpoints.
+
+## Source and execution ledger
+
 Plan: docs/plans/2026-10-27-infercnv-native-discovery.md. Full30-family goal
 is active, not narrowed to CNV and not complete. Ward's source-corruption
 choice is independently held for the user's existing answer.
