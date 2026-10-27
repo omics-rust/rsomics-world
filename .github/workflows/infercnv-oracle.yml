@@ -60,6 +60,14 @@ on:
         type: boolean
         default: false
 
+      leiden_knn:
+        description: Default k20 graph evidence or labeled non-default k5 partition witness
+        type: choice
+        default: '20'
+        options:
+          - '20'
+          - '5'
+
       bayes_performance:
         description: Measure full raw grouped-i6 Bayesian R/native workflows on the same host
         type: boolean
@@ -85,6 +93,7 @@ jobs:
       HMM_EXTENSION_WORKFLOWS: ${{ inputs.hmm_extension_workflows || false }}
       BAYES_ONLY: ${{ inputs.bayes_only || false }}
       LEIDEN_WORKFLOWS: ${{ inputs.leiden_workflows || false }}
+      LEIDEN_KNN: ${{ inputs.leiden_knn || '20' }}
       BAYES_PERFORMANCE: ${{ inputs.bayes_performance || false }}
     steps:
       - uses: actions/checkout@v4
@@ -994,7 +1003,7 @@ jobs:
           Rscript --vanilla scripts/test_infercnv_leiden_workflow.R \
             2>&1 | tee "$EVIDENCE_DIR/leiden-workflow-tests.log"
           Rscript --vanilla scripts/infercnv_leiden_workflow.R \
-            "$SHIPPED_OUTPUT" "$EVIDENCE_DIR/leiden-workflows" \
+            "$SHIPPED_OUTPUT" "$EVIDENCE_DIR/leiden-workflows" "$LEIDEN_KNN" \
             2>&1 | tee "$EVIDENCE_DIR/leiden-workflows.log"
 
       - name: Measure complete raw Bayesian workflows

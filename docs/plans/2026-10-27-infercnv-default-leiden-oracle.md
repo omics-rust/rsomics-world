@@ -76,3 +76,18 @@ scope and does not select a new public model. One isolated file pair avoids
 shared writes while root follows the active Bayesian run. Do not install,
 dispatch CI, stage, commit, delete or publish from the worker. User preference
 for one whole-feature review supersedes generic per-task reviewer rituals.
+
+## Follow-through after actual default evidence
+
+Actual40510078823 completes both profiles, including five genuine PCA routes,
+but all source parents return a single cluster. The default-k20 small-group
+SNN graphs are complete, including loops. Keep this accepted graph evidence;
+do not mistake it for nontrivial multi-partition coverage or rerun it.
+
+Reuse the same raw full184 inputs/capture for one labeled non-default k5
+campaign. Add an optional5/20 oracle argument/hosted choice, retaining20 as
+the default and unchanged source calls. Record actual k in the witness and
+scope label. This is a supported upstream setting, not artificial labels,
+a new public interface/foundation or permission to implement an always-one
+cluster placeholder. Source outcomes determine whether it adds useful
+partition evidence; the later4103/default profile stays a separate requirement.

@@ -387,9 +387,17 @@ leiden_validate_source <- function(ns, source_root, metadata) {
     invisible(NULL)
 }
 
+leiden_knn_argument <- function(args) {
+    if (length(args) == 2L) return(20L)
+    if (length(args) != 3L || !args[[3L]] %in% c("5", "20")) {
+        stop("usage: infercnv_leiden_workflow.R SHIPPED OUTPUT [5|20]")
+    }
+    as.integer(args[[3L]])
+}
+
 leiden_workflow_main <- function() {
     args <- commandArgs(trailingOnly=TRUE)
-    if (length(args) != 2L) stop("usage: infercnv_leiden_workflow.R SHIPPED OUTPUT")
+    k_nn <- leiden_knn_argument(args)
     pin <- list(name="infercnv", version="1.28.0",
         source_commit="b421d9405c97a309b081ef86d455e976df93eae4",
         source_archive_sha256="b2a1b6f8cc09dc04562513e3cd877b3c97a6efcd5ff92cb5e0763660905e3207")
@@ -453,7 +461,7 @@ leiden_workflow_main <- function() {
         parameters <- run_parameters(bundle$record$run_settings, TRUE, 0.8, file.path(directory, "upstream"))
         parameters$analysis_mode <- "subclusters"
         parameters$tumor_subcluster_partition_method <- "leiden"
-        parameters$k_nn <- 20L
+        parameters$k_nn <- k_nn
         parameters$leiden_method <- method
         parameters$leiden_function <- "CPM"
         parameters$leiden_resolution <- "auto"
@@ -514,7 +522,8 @@ leiden_workflow_main <- function() {
     failures <- names(Filter(function(case) case$status != "success" || length(case$partition_mismatch_groups) > 0L, cases))
     record <- list(schema_version=1L, status=if (length(failures)) "captured_with_failures" else "complete",
         package=pin, index_base=1L,
-        scope="actual raw-input full184 default PCA and simple Leiden workflows through step15; not native acceptance",
+        scope=sprintf("actual raw-input full184 PCA and simple Leiden workflows, k%d%s, through step15; not native acceptance",
+                      k_nn, if (k_nn == 20L) " (default)" else " (non-default)"),
         source_bundles=list(shipped_manifest=bundle$manifest_sha256, shipped_oracle=bundle$oracle_sha256),
         runtime=list(R_version=as.character(getRversion()), seed=seed, rng_kind=array(RNGkind()), locale=Sys.getlocale(),
             requested_threads=1L, package_versions=stats::setNames(lapply(packages,
@@ -522,7 +531,7 @@ leiden_workflow_main <- function() {
             package_library_paths=stats::setNames(lapply(packages,
                 function(package) getNamespaceInfo(asNamespace(package), "path")), packages),
             thread_environment=as.list(Sys.getenv(c("OMP_NUM_THREADS", "OPENBLAS_NUM_THREADS", "MKL_NUM_THREADS")))),
-        protocol=list(wrapper_frames="entry and exit of pinned discovery, single-group, PCA and simple functions",
+        protocol=list(k_nn=k_nn, wrapper_frames="entry and exit of pinned discovery, single-group, PCA and simple functions",
             creation=list(delim="\t", max_cells_per_group=NULL, min_max_counts_per_cell=array(c(1, Inf)),
                 chr_exclude=array(c("chrX", "chrY", "chrM"))),
             imported_method_tracing=FALSE, unchanged_source_validated_before_tracing=TRUE,

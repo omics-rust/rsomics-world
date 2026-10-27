@@ -5,6 +5,8 @@ script_dir <- dirname(normalizePath(sub("^--file=", "", script)))
 driver <- file.path(script_dir, "infercnv_leiden_workflow.R")
 if (file.exists(driver)) source(driver)
 if (!exists("leiden_partition_record", mode="function")) stop("Leiden vertex/global-cell recorder is missing")
+stopifnot(leiden_knn_argument(c("bundle", "output")) == 20L,
+          leiden_knn_argument(c("bundle", "output", "5")) == 5L)
 
 indices <- c(cellB=7L, cellC=4L, cellA=12L, cellD=3L)
 vertices <- c("cellD", "cellB", "cellA", "cellC")

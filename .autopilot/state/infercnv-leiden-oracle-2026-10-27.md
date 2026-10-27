@@ -85,3 +85,13 @@ completed k20 evidence and never rerun it for the same claim. Sparse graphs
 may expose real partitions but the source must decide. A real4103/default-k20
 profile remains later representative evidence, not substituted by k5. Ward's
 independent source-membership decision is still held only for user input.
+
+## Labeled k5 continuation
+
+The oracle driver now takes optional5/20, retaining20 unchanged as default;
+the hosted LEIDEN_KNN choice is explicit and the witness records the actual
+k and default/non-default scope. Existing4090 R4.6.1 source/record checks
+pass, including default20/selected5 assertions and unchanged mapping/error
+capture tests. Root log is external tmp/rsomics-leiden-k5-record-20261027.log.
+This is not installed package or multi-partition evidence yet. Hosted k5
+dispatch follows its exact-head controller gate; do not repeat completed k20.
