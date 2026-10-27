@@ -194,6 +194,109 @@ class SamplesCandidateWorkflowTests(unittest.TestCase):
         self.assertLess(list(self.steps).index('Test release'),
                         list(self.steps).index('Compare complete native Bayesian workflow'))
 
+    def test_discovery_selector_admits_only_complete_standalone_and_bootstrap_campaigns(self):
+        for option in ['discovery_workflows', 'bootstrap_dependencies']:
+            self.assertRegex(self.text, rf'      {option}:\n(?:        .*\n)*?        default: false\n')
+        matrix = re.search(r"fromJSON\(\((.*?)\) && '(.*?)' \|\| '(.*?)'\)", self.text)
+        self.assertEqual(matrix[1], 'inputs.expected_red || inputs.samples_benchmark || inputs.bootstrap_dependencies')
+        self.assertEqual([target['target'] for target in json.loads(matrix[2])], ['linux-x86_64'])
+        self.assertEqual([target['target'] for target in json.loads(matrix[3])],
+                         ['linux-x86_64', 'linux-aarch64', 'macos-x86_64', 'macos-aarch64'])
+        name = 'Validate discovery workflow selection'
+        self.assertIn(name, self.steps)
+        body = bash_body(self.steps[name])
+        self.assertLess(list(self.steps).index(name), list(self.steps).index('Verify and extract frozen source'))
+        base = dict(os.environ, ORACLE_RECEIPT='none', EXPECT_RED='false', SAMPLES_BENCHMARK='false',
+                    HMM_WORKFLOWS='false', BAYES_WORKFLOWS='false', MEASUREMENT='false',
+                    INGESTION_MEASUREMENT='false', INGESTION_TRIAL='false',
+                    RESOLVE_MEASUREMENT_LOCK='false', RESOLVE_INPUT_LOCK='false',
+                    DISCOVERY_WORKFLOWS='true', BOOTSTRAP_DEPENDENCIES='false')
+        for change, accepted in [({}, True), ({'BOOTSTRAP_DEPENDENCIES': 'true'}, True),
+                                 ({'DISCOVERY_WORKFLOWS': 'false', 'BOOTSTRAP_DEPENDENCIES': 'true'}, False),
+                                 ({'EXPECT_RED': 'true'}, False), ({'HMM_WORKFLOWS': 'true'}, False),
+                                 ({'BAYES_WORKFLOWS': 'true'}, False), ({'MEASUREMENT': 'true'}, False),
+                                 ({'SAMPLES_BENCHMARK': 'true'}, False), ({'ORACLE_RECEIPT': WITNESS}, False)]:
+            with self.subTest(change=change):
+                result = subprocess.run(['bash', '-c', body], env=dict(base, **change),
+                                        capture_output=True, text=True, timeout=15)
+                self.assertEqual(result.returncode == 0, accepted, result.stderr)
+
+    def test_bootstrap_reports_new_nodes_and_rejects_changed_existing_pins(self):
+        name = 'Bootstrap discovery dependency lock'
+        self.assertIn(name, self.steps)
+        body = bash_body(self.steps[name])
+        self.assertIn('cargo metadata --all-features --format-version 1', body)
+        self.assertNotIn('cargo update', body)
+        self.assertNotIn('cargo generate-lockfile', body)
+        self.assertIn('"${BOOTSTRAP_DEPENDENCIES:-false}" == true',
+                      bash_body(self.steps['Verify source remains unchanged']))
+        program = re.findall(r"python3 -B - <<'PY'\n(.*?)\nPY", body, re.DOTALL)[0]
+        before = ('version = 4\n[[package]]\nname = "rsomics-sc"\nversion = "0.1.0"\n'
+                  'dependencies = ["clap"]\n[[package]]\nname = "clap"\nversion = "4.6.7"\n'
+                  'source = "registry+https://github.com/rust-lang/crates.io-index"\nchecksum = "aaa"\n')
+        after = before.replace('["clap"]', '["clap", "cc"]') + (
+            '[[package]]\nname = "cc"\nversion = "1.2.63"\n'
+            'source = "registry+https://github.com/rust-lang/crates.io-index"\nchecksum = "bbb"\n')
+        for mutation, accepted in [('', True), ('checksum', False), ('version', False)]:
+            with self.subTest(mutation=mutation), tempfile.TemporaryDirectory() as directory:
+                root = Path(directory)
+                own = after.replace('checksum = "aaa"', 'checksum = "changed"') if mutation == 'checksum' else after
+                if mutation == 'version':
+                    own = own.replace('version = "4.6.7"', 'version = "4.6.8"')
+                (root / 'Cargo.before.lock').write_text(before)
+                (root / 'Cargo.lock').write_text(own)
+                result = subprocess.run(['python3', '-B', '-c', program], cwd=root,
+                                        env=dict(os.environ, EVIDENCE=str(root)),
+                                        capture_output=True, text=True, timeout=15)
+                self.assertEqual(result.returncode == 0, accepted, result.stderr)
+                summary = json.loads((root / 'lock-resolution-summary.json').read_text())
+                self.assertEqual([package['name'] for package in summary['added_packages']],
+                                 ['cc'] if mutation != 'version' else ['cc', 'clap'])
+                self.assertEqual(summary['preserved_existing_pins'], accepted)
+
+    def test_discovery_acquisition_keeps_both_actual_receipts_and_same_native_binary(self):
+        name = 'Acquire actual discovery workflow evidence'
+        self.assertIn(name, self.steps)
+        body = bash_body(self.steps[name])
+        for fail in [False, True]:
+            with self.subTest(fail=fail), tempfile.TemporaryDirectory() as directory:
+                root = Path(directory)
+                (root / 'scripts').mkdir()
+                (root / '.autopilot/oracles').mkdir(parents=True)
+                (root / 'evidence').mkdir()
+                for name, run in [('infercnv-leiden-workflow-2026-10-27', 20),
+                                  ('infercnv-leiden-k5-workflow-2026-10-27', 5)]:
+                    (root / '.autopilot/oracles' / (name + '.json')).write_text(json.dumps({
+                        'repository': 'omics-rust/rsomics-world', 'run_id': run, 'artifact_id': run + 1}))
+                (root / 'scripts/verify_infercnv_oracle_artifact.py').write_text(
+                    'import os,sys\nfrom pathlib import Path\n'
+                    'out = Path(sys.argv[sys.argv.index("--output-dir") + 1])\n'
+                    'with open(os.environ["TRACE"], "a") as trace: trace.write(out.name + "\\n")\n'
+                    'if os.environ["FAIL"] == "1": sys.exit(23)\n'
+                    '(out/"shipped-bundle").mkdir(parents=True)\n'
+                    '(out/"leiden-workflows").mkdir()\n'
+                    'for path in ["shipped-bundle/sha256-manifest.tsv", "leiden-workflows/witness.json", '
+                    '"leiden-workflows/sha256-manifest.tsv"]: (out/path).touch()\n')
+                environment = root / 'environment'
+                result = subprocess.run(['bash', '-c', 'gh() { printf "{}"; };\n' + body], cwd=root,
+                                        env=dict(os.environ, EVIDENCE=str(root / 'evidence'),
+                                                 GITHUB_WORKSPACE=str(root), RUNNER_TEMP=str(root),
+                                                 GITHUB_ENV=str(environment), TRACE=str(root / 'trace'),
+                                                 FAIL=str(int(fail))), capture_output=True, text=True, timeout=15)
+                self.assertEqual(result.returncode, 23 if fail else 0, result.stderr)
+                exports = environment.read_text() if environment.exists() else ''
+                self.assertEqual('DISCOVERY_K20_ROOT=' in exports, not fail)
+                self.assertEqual('DISCOVERY_K5_ROOT=' in exports, not fail)
+                self.assertEqual((root / 'trace').read_text().splitlines(),
+                                 ['discovery-k20'] if fail else ['discovery-k20', 'discovery-k5'])
+        compare = self.steps['Compare complete native discovery workflows']
+        self.assertNotIn('matrix.target ==', compare)
+        self.assertIn('compare_infercnv_discovery_workflow.py', compare)
+        self.assertIn('for profile in k20 k5', compare)
+        self.assertIn('$CARGO_TARGET_DIR/release/rsomics-sc', compare)
+        self.assertLess(list(self.steps).index('Test release'),
+                        list(self.steps).index('Compare complete native discovery workflows'))
+
     def test_all_bash_blocks_parse(self):
         for name, step in self.steps.items():
             if '        run: |\n' not in step:

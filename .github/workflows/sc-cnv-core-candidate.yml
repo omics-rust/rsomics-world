@@ -23,6 +23,14 @@ on:
         description: Compare the complete grouped-i6 Bayesian workflow with two real JAGS repetitions
         type: boolean
         default: false
+      discovery_workflows:
+        description: Compare complete raw PCA/simple discovery at k20 and k5 on all native targets
+        type: boolean
+        default: false
+      bootstrap_dependencies:
+        description: Linux-only discovery dependency-lock bootstrap; not the four-native release gate
+        type: boolean
+        default: false
       measurement:
         description: Test private measurement support and compile its opt-in bench
         type: boolean
@@ -65,7 +73,7 @@ jobs:
       fail-fast: false
       matrix:
         include: >-
-          ${{ fromJSON((inputs.expected_red || inputs.samples_benchmark) && '[{"target":"linux-x86_64","runner":"ubuntu-24.04","system":"Linux","arch":"x86_64"}]' || '[{"target":"linux-x86_64","runner":"ubuntu-24.04","system":"Linux","arch":"x86_64"},{"target":"linux-aarch64","runner":"ubuntu-24.04-arm","system":"Linux","arch":"aarch64"},{"target":"macos-x86_64","runner":"macos-15-intel","system":"Darwin","arch":"x86_64"},{"target":"macos-aarch64","runner":"macos-15","system":"Darwin","arch":"arm64"}]') }}
+          ${{ fromJSON((inputs.expected_red || inputs.samples_benchmark || inputs.bootstrap_dependencies) && '[{"target":"linux-x86_64","runner":"ubuntu-24.04","system":"Linux","arch":"x86_64"}]' || '[{"target":"linux-x86_64","runner":"ubuntu-24.04","system":"Linux","arch":"x86_64"},{"target":"linux-aarch64","runner":"ubuntu-24.04-arm","system":"Linux","arch":"aarch64"},{"target":"macos-x86_64","runner":"macos-15-intel","system":"Darwin","arch":"x86_64"},{"target":"macos-aarch64","runner":"macos-15","system":"Darwin","arch":"arm64"}]') }}
     env:
       SNAPSHOT_ID: ${{ inputs.snapshot }}
       EXPECT_RED: ${{ inputs.expected_red }}
@@ -78,6 +86,8 @@ jobs:
       RESOLVE_INPUT_LOCK: ${{ inputs.resolve_input_lock }}
       HMM_WORKFLOWS: ${{ inputs.hmm_workflows }}
       BAYES_WORKFLOWS: ${{ inputs.bayes_workflows }}
+      DISCOVERY_WORKFLOWS: ${{ inputs.discovery_workflows }}
+      BOOTSTRAP_DEPENDENCIES: ${{ inputs.bootstrap_dependencies }}
     defaults:
       run:
         shell: bash
@@ -108,6 +118,8 @@ jobs:
           test "$INGESTION_TRIAL" = false
           test "$RESOLVE_MEASUREMENT_LOCK" = false
           test "$RESOLVE_INPUT_LOCK" = false
+          test "${DISCOVERY_WORKFLOWS:-false}" = false
+          test "${BOOTSTRAP_DEPENDENCIES:-false}" = false
 
       - name: Validate Bayesian workflow selection
         if: ${{ inputs.bayes_workflows }}
@@ -116,6 +128,24 @@ jobs:
           test "$EXPECT_RED" = false
           test "$SAMPLES_BENCHMARK" = false
           test "$HMM_WORKFLOWS" = false
+          test "$MEASUREMENT" = false
+          test "$INGESTION_MEASUREMENT" = false
+          test "$INGESTION_TRIAL" = false
+          test "$RESOLVE_MEASUREMENT_LOCK" = false
+          test "$RESOLVE_INPUT_LOCK" = false
+          test "$ORACLE_RECEIPT" = none
+          test "${DISCOVERY_WORKFLOWS:-false}" = false
+          test "${BOOTSTRAP_DEPENDENCIES:-false}" = false
+
+      - name: Validate discovery workflow selection
+        if: ${{ inputs.discovery_workflows || inputs.bootstrap_dependencies }}
+        run: |
+          set -euo pipefail
+          test "${DISCOVERY_WORKFLOWS:-false}" = true
+          test "$EXPECT_RED" = false
+          test "$SAMPLES_BENCHMARK" = false
+          test "$HMM_WORKFLOWS" = false
+          test "$BAYES_WORKFLOWS" = false
           test "$MEASUREMENT" = false
           test "$INGESTION_MEASUREMENT" = false
           test "$INGESTION_TRIAL" = false
@@ -180,6 +210,8 @@ jobs:
             printf 'snapshot=%s\nexpected_red=%s\nmeasurement=%s\ningestion_measurement=%s\ningestion_trial=%s\nresolve_measurement_lock=%s\n' \
               "$SNAPSHOT_ID" "$EXPECT_RED" "$MEASUREMENT" "$INGESTION_MEASUREMENT" "$INGESTION_TRIAL" "$RESOLVE_MEASUREMENT_LOCK"
             printf 'samples_benchmark=%s\n' "$SAMPLES_BENCHMARK"
+            printf 'discovery_workflows=%s\nbootstrap_dependencies=%s\n' \
+              "${DISCOVERY_WORKFLOWS:-false}" "${BOOTSTRAP_DEPENDENCIES:-false}"
             printf 'CARGO_HOME=%s\nCARGO_TARGET_DIR=%s\nRUSTUP_HOME=%s\nTMPDIR=%s\n' \
               "$CARGO_HOME" "$CARGO_TARGET_DIR" "$RUSTUP_HOME" "$TMPDIR"
           } | tee "$EVIDENCE/host.log"
@@ -238,6 +270,89 @@ jobs:
         uses: dtolnay/rust-toolchain@1.91.0
         with:
           components: clippy,rustfmt
+
+      - name: Bootstrap discovery dependency lock
+        if: ${{ inputs.bootstrap_dependencies }}
+        working-directory: ${{ runner.temp }}/sc-cnv-candidate
+        run: |
+          set -euo pipefail
+          cp Cargo.lock "$EVIDENCE/Cargo.before.lock"
+          cargo metadata --all-features --format-version 1 > "$EVIDENCE/lock-resolution-metadata.json"
+          cp Cargo.lock "$EVIDENCE/Cargo.lock"
+          python3 -B - <<'PY'
+          import json, os, tomllib
+          from pathlib import Path
+          evidence = Path(os.environ['EVIDENCE'])
+          before = tomllib.loads((evidence / 'Cargo.before.lock').read_text())
+          after = tomllib.loads(Path('Cargo.lock').read_text())
+          def packages(document):
+              return {(package['name'], package['version'], package.get('source', '')): package
+                      for package in document['package']}
+          old, new = packages(before), packages(after)
+          shared = sorted(old.keys() & new.keys())
+          removed = [old[key] for key in sorted(old.keys() - new.keys())]
+          checksum_changes = [dict(name=key[0], version=key[1], source=key[2],
+                                   before=old[key].get('checksum'), after=new[key].get('checksum'))
+                              for key in shared if old[key].get('checksum') != new[key].get('checksum')]
+          dependency_changes = [dict(name=key[0], version=key[1], source=key[2],
+                                     before=old[key].get('dependencies', []),
+                                     after=new[key].get('dependencies', []))
+                                for key in shared
+                                if old[key].get('dependencies', []) != new[key].get('dependencies', [])]
+          summary = dict(added_packages=[new[key] for key in sorted(new.keys() - old.keys())],
+                         removed_packages=removed, checksum_changes=checksum_changes,
+                         dependency_changes=dependency_changes,
+                         preserved_existing_pins=not removed and not checksum_changes)
+          report = json.dumps(summary, indent=2, sort_keys=True) + '\n'
+          (evidence / 'lock-resolution-summary.json').write_text(report)
+          print(report, end='')
+          if not summary['preserved_existing_pins']:
+              raise SystemExit('Bootstrap changed existing dependency versions or checksums; explicit review required.')
+          PY
+
+      - name: Acquire actual discovery workflow evidence
+        if: ${{ inputs.discovery_workflows }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          mkdir "$EVIDENCE/discovery-acquisition"
+          for profile in k20 k5; do
+            case "$profile" in
+              k20) receipt_name=infercnv-leiden-workflow-2026-10-27 ;;
+              k5) receipt_name=infercnv-leiden-k5-workflow-2026-10-27 ;;
+            esac
+            acquisition="$EVIDENCE/discovery-acquisition/$profile"
+            mkdir "$acquisition"
+            receipt="$GITHUB_WORKSPACE/.autopilot/oracles/$receipt_name.json"
+            cp "$receipt" "$acquisition/receipt.json"
+            python3 -B - "$receipt" > "$acquisition/selection.txt" <<'PY'
+          import json, sys
+          from pathlib import Path
+          receipt = json.loads(Path(sys.argv[1]).read_text())
+          assert receipt['repository'] == 'omics-rust/rsomics-world'
+          for key in ('run_id', 'artifact_id'):
+              assert type(receipt[key]) is int and receipt[key] > 0
+          print(receipt['run_id'], receipt['artifact_id'])
+          PY
+            read -r run artifact < "$acquisition/selection.txt"
+            gh api "repos/omics-rust/rsomics-world/actions/runs/$run" > "$acquisition/run.json"
+            gh api "repos/omics-rust/rsomics-world/actions/artifacts/$artifact" > "$acquisition/artifact.json"
+            gh api "repos/omics-rust/rsomics-world/actions/artifacts/$artifact/zip" > "$RUNNER_TEMP/discovery-$profile.zip"
+            oracle_root="$RUNNER_TEMP/discovery-$profile"
+            python3 -B "$GITHUB_WORKSPACE/scripts/verify_infercnv_oracle_artifact.py" \
+              --receipt "$receipt" --run-json "$acquisition/run.json" \
+              --artifact-json "$acquisition/artifact.json" \
+              --zip "$RUNNER_TEMP/discovery-$profile.zip" --output-dir "$oracle_root" \
+              2>&1 | tee "$acquisition/verification.log"
+            cp "$oracle_root/leiden-workflows/witness.json" "$acquisition/witness.json"
+            cp "$oracle_root/leiden-workflows/sha256-manifest.tsv" "$acquisition/witness-manifest.tsv"
+            cp "$oracle_root/shipped-bundle/sha256-manifest.tsv" "$acquisition/shipped-manifest.tsv"
+            case "$profile" in
+              k20) printf 'DISCOVERY_K20_ROOT=%s\n' "$oracle_root" >> "$GITHUB_ENV" ;;
+              k5) printf 'DISCOVERY_K5_ROOT=%s\n' "$oracle_root" >> "$GITHUB_ENV" ;;
+            esac
+          done
 
       - name: Acquire actual HMM workflow evidence
         if: ${{ inputs.hmm_workflows || inputs.bayes_workflows }}
@@ -541,12 +656,48 @@ jobs:
             --output "$EVIDENCE/bayes-native-comparison" \
             2>&1 | tee "$EVIDENCE/bayes-native-comparison.log"
 
+      - name: Compare complete native discovery workflows
+        if: ${{ inputs.discovery_workflows && !inputs.expected_red }}
+        working-directory: ${{ runner.temp }}/sc-cnv-candidate
+        run: |
+          set -euo pipefail
+          cargo build --locked --release --bin rsomics-sc \
+            2>&1 | tee "$EVIDENCE/discovery-native-build.log"
+          mkdir "$EVIDENCE/discovery-native-binary" "$EVIDENCE/discovery-native-controller"
+          binary="$EVIDENCE/discovery-native-binary/rsomics-sc-${{ matrix.target }}"
+          cp "$CARGO_TARGET_DIR/release/rsomics-sc" "$binary"
+          shasum -a 256 "$binary" > "$EVIDENCE/discovery-native-binary/checksums.sha256"
+          for name in compare_infercnv_discovery_workflow.py test_compare_infercnv_discovery_workflow.py \
+                      compare_infercnv_denoise_workflow.py compare_infercnv_hmm_workflow.py \
+                      measure_infercnv_samples_cli.py measure_infercnv.py infercnv_trial_process.py \
+                      validate_infercnv_shipped_oracle.py; do
+            cp "$GITHUB_WORKSPACE/scripts/$name" "$EVIDENCE/discovery-native-controller/"
+          done
+          (
+            cd "$EVIDENCE/discovery-native-controller"
+            shasum -a 256 *.py
+          ) > "$EVIDENCE/discovery-native-controller/checksums.sha256"
+          status=0
+          for profile in k20 k5; do
+            case "$profile" in
+              k20) oracle_root="$DISCOVERY_K20_ROOT" ;;
+              k5) oracle_root="$DISCOVERY_K5_ROOT" ;;
+            esac
+            if ! python3 -B "$GITHUB_WORKSPACE/scripts/compare_infercnv_discovery_workflow.py" \
+              --shipped "$oracle_root/shipped-bundle" --oracle "$oracle_root/leiden-workflows" \
+              --binary "$binary" --output "$EVIDENCE/discovery-native-comparison-$profile" \
+              2>&1 | tee "$EVIDENCE/discovery-native-comparison-$profile.log"; then
+              status=1
+            fi
+          done
+          exit "$status"
+
       - name: Verify source remains unchanged
         if: ${{ always() && steps.snapshot.outcome == 'success' }}
         working-directory: ${{ runner.temp }}/sc-cnv-candidate
         run: |
           set -euo pipefail
-          if [[ "$RESOLVE_MEASUREMENT_LOCK" == true || "$RESOLVE_INPUT_LOCK" == true ]]; then
+          if [[ "$RESOLVE_MEASUREMENT_LOCK" == true || "$RESOLVE_INPUT_LOCK" == true || "${BOOTSTRAP_DEPENDENCIES:-false}" == true ]]; then
             awk '$2 != "Cargo.lock"' "$EVIDENCE/files.sha256" > "$EVIDENCE/unchanged-files.sha256"
             shasum -a 256 --check "$EVIDENCE/unchanged-files.sha256" | tee "$EVIDENCE/source-after.log"
           else
