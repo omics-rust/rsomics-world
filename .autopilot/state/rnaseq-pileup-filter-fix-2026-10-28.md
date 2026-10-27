@@ -36,7 +36,8 @@ product version and pileup source. Evidence is
 /Volumes/KIOXIA/Developments/tmp/bam-pileup-adoption-20261028.kwLtWn/.
 Strict all-target/all-feature Clippy and rustfmt now pass. The independent
 BAM hosted-storage guards are committed/pushed at
-debc170f44c434089237fc51a8c2c20009cf48ca; exact-head CI40592301741 is running.
+debc170f44c434089237fc51a8c2c20009cf48ca; exact-head CI40592301741 is SUCCESS
+on all four native classes.
 That committed concern uses existing registry dependencies; local Git-pinned
 pileup adoption/regression/version files are still uncommitted pending the
 producer's registry publication. Do not conflate its CI with an adopted release.

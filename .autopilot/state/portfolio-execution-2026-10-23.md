@@ -10,7 +10,7 @@ stochastic local optimum below the selected R run. The async quality-contract
 decision is pending; do not fit seeds or silently relax its gate. See
 infercnv-native-discovery-2026-10-27.md for the authoritative held contract.
 
-RNA-seq QC green4 run40546148508 now passes format, strict Clippy,8 tests per
+RNA-seq QC green5 run40590326515 now passes format, strict Clippy,11 tests per
 debug/release profile and all16 complete five-metric comparisons across four
 native classes and1/4 workers. Original evidence is retained/verified, with
 byte-identical per-layout reports. This is synthetic semantic acceptance,
@@ -33,9 +33,12 @@ exact-head four-native CI40588249664 SUCCESS. Two remaining TIN/six-bin differen
 proven product query contexts, not a reason to change numerical tolerances.
 Product-local source query framing now passes all original whole-data metrics
 at one/four workers, with deterministic reports and one physical BAM read.
-Eleven tests and the fresh whole-feature review/scoped fix pass; final producer
-adoption, four-native gate and formal whole performance remain next. No new
-public foundation API or workload relaxation is introduced.
+Whole native source compatibility and four-native acceptance now pass.
+Formal whole performance40592936910 runs at world5fcb3820 on the exact
+accepted Linux binary, not the old failing candidate. Current owningb7287f2
+also replaces duplicated thread parsing with existing Layer A ThreadArgs;
+green6 freezes that CLI-only conduit for its native gate. No numerical/runtime
+policy or new public foundation API is introduced. Registry adoption remains held.
 See rnaseq-qc-real-performance-2026-10-28.md and
 rnaseq-pileup-filter-fix-2026-10-28.md. Publish40583646680 failed registry
 authentication after successful packaging; official API still reports0.9.0.
@@ -45,19 +48,20 @@ Next-family DESeq2 actual fitted-workflow40561801963 is now terminal SUCCESS
 and its original artifact/full55-file witness passes independent retention
 and raw-table checks. Exact source89ece7f4/controller40561524398 SUCCESS.
 The real14599x7 fit, reload, contrasts, normalized-count and VST exports are
-accepted as a source witness. New private native localmain718f12a2 now passes
-the complete fixed witness at1/4 workers, seven tests, strict Clippy and format.
-Fresh review's mixed-sign contrast and JSON I/O findings are fixed and scoped
-follow-up passes. Green1 freezes19 source files; hosted four-native wrapper
-reuses the retained source witness, not a new R fit. Remaining formula,
-normalization, Cook replacement, low-df/trend and formal performance gates
-keep this publish=false, not a complete DESeq2 replacement. See
-deseq-native-fitted-workflow-2026-10-28.md. No speculative public foundation
-expansion or second broad donor survey is performed.
+accepted as a source witness. Private green1 native40589627680 passes all four
+classes. New owninga3274cc/green2 implements typed general designs, supplied
+SF/NF priority and shared ThreadArgs. All7 general plus4 disabled-Cook workflows
+pass actual source at1/4 workers,10 tests/strict Clippy/format, determinism and
+one fresh whole-feature review. Actual source40592944209 also qualifies all
+four positive replacement cases for the next coherent refit wave. Green2
+four-native acceptance is next. Remaining positive Cook replacement, low-df/
+trend and formal performance gates keep publish=false, not a complete DESeq2
+replacement. See deseq-design-normalization-2026-10-28.md. No speculative public
+foundation expansion or second broad donor survey is performed.
 
 The sections below retain the historical execution ledger, not current pending
 instructions. Latest local guard records boot APFS about77.15% occupied and
-KIOXIA242GiB free. Recheck before every build/test/download; all project paths
+KIOXIA240GiB free. Recheck before every build/test/download; all project paths
 remain external. Hosted gates and measurements use runner-temp.
 
 ## Historical execution ledger
