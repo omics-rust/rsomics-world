@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "repository": "omics-rust/rsomics-world",
+  "workflow_path": ".github/workflows/rnaseq-qc-oracle.yml",
+  "run_id": 40520155303,
+  "run_attempt": 1,
+  "artifact_id": 12740753197,
+  "head_sha": "64a323edcde7a289192abd288987cf3655a14bae",
+  "artifact_name": "rnaseq-qc-oracle-40520155303-1",
+  "artifact_sha256": "b54f52612cd1bc8f0ea94f622ba24cba7379c9432c9914e78e185f2bc6ca1a97",
+  "size_in_bytes": 897158,
+  "manifest_sha256": "bd13fd167c7fd3cc8813e00dfd7ba45dd96dd60b93f55215064a91af82f965ea",
+  "witness_sha256": "05affe2124a41813500e16b5b19afc319a1fdf7c52d422f3027a29ad190b307a",
+  "bundle_path": "workflows"
+}
