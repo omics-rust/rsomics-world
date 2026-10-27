@@ -44,3 +44,13 @@ Actual source outcomes, prior degrees of freedom and retained feature counts
 are pending the first hosted run, not filled with predicted values. No native
 product or public numerical API exists yet. Source-task report:
 /Volumes/KIOXIA/Developments/tmp/edger-workflow-source-20261028.0XaUNy/REPORT.md.
+
+First hosted source run40602956264 at exactfcc8c003 fails before any fit:
+both exact source builds install successfully, but the identity check spells
+R/glmfit.R as R/glmFit.R. The actual archive uses lowercase f; case-insensitive
+Mac reads hid the spelling error, while Linux correctly reports missing file.
+Correct only that source-file mapping, retaining the same file SHA and actual
+function bodies. No model/options/input/output/bound changes occur. Artifact
+12778584754 is17521047bytes, SHA
+a7a960067718d79415d6a73bd0fb1a0325634fb01192d27c43dbd0038316ecb4;
+original failed evidence is being retained, not labelled native/math failure.
