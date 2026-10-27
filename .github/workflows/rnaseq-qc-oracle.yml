@@ -1,0 +1,105 @@
+name: RNA-seq QC pinned oracle
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  oracle:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+
+      - name: Prepare runner-temp storage
+        shell: bash
+        run: |
+          set -euo pipefail
+          export EVIDENCE="$RUNNER_TEMP/rnaseq-qc-oracle"
+          mkdir -p "$EVIDENCE/acquisition" "$RUNNER_TEMP/tmp" "$RUNNER_TEMP/pip-cache"
+          printf 'EVIDENCE=%s\nTMPDIR=%s\nPIP_CACHE_DIR=%s\nPYTHONPYCACHEPREFIX=%s\nMPLCONFIGDIR=%s\nCARGO_HOME=%s\nCARGO_TARGET_DIR=%s\n' \
+            "$EVIDENCE" "$RUNNER_TEMP/tmp" "$RUNNER_TEMP/pip-cache" "$RUNNER_TEMP/pycache" \
+            "$RUNNER_TEMP/matplotlib" "$RUNNER_TEMP/cargo-home" "$RUNNER_TEMP/cargo-target" >> "$GITHUB_ENV"
+          python3 -m venv "$RUNNER_TEMP/rnaseq-qc-venv"
+          printf '%s\n' "$RUNNER_TEMP/rnaseq-qc-venv/bin" >> "$GITHUB_PATH"
+          uname -a > "$EVIDENCE/host.txt"
+          df -h >> "$EVIDENCE/host.txt"
+
+      - name: Acquire exact RSeQC wheel and source
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd "$EVIDENCE/acquisition"
+          curl -fL --retry 3 https://pypi.org/pypi/RSeQC/5.0.5/json -o pypi.json
+          curl -fL --retry 3 https://files.pythonhosted.org/packages/3e/ab/006316611cf2b28e62b79057ed6bad311443616513e4bb5a0d308e029a53/rseqc-5.0.5-py3-none-any.whl -o rseqc-5.0.5-py3-none-any.whl
+          printf '%s\n' 'a1fca6d455886b19bc2d58aa1e13b233977a2c835f676ef93bd0c6f4099b8452  rseqc-5.0.5-py3-none-any.whl' | sha256sum --check -
+          curl -fL --retry 3 https://codeload.github.com/liguowang/RSeQC/tar.gz/0d2e017723c5c4b41eb3b938e1631692d187de1f -o rseqc-source.tar.gz
+          python3 -m pip install 'numpy==2.2.6' 'pysam==0.24.0' ./rseqc-5.0.5-py3-none-any.whl
+          python3 -m pip freeze > installed-freeze.txt
+          python3 -m pip inspect > installed-inspect.json
+
+      - name: Record actual installed script identities
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -B - <<'PY'
+          import hashlib,importlib.metadata,json,os,sys,sysconfig,tarfile,zipfile
+          from pathlib import Path
+          root=Path(os.environ['EVIDENCE'])/'acquisition'
+          wheel=root/'rseqc-5.0.5-py3-none-any.whl'
+          sha=lambda data:hashlib.sha256(data).hexdigest()
+          body=lambda data:data.split(b'\n',1)[1] if data.startswith(b'#!') else data
+          names=['bam_stat.py','infer_experiment.py','read_distribution.py','geneBody_coverage.py','tin.py']
+          assert importlib.metadata.version('RSeQC')=='5.0.5'
+          records=[]
+          with zipfile.ZipFile(wheel) as archive,tarfile.open(root/'rseqc-source.tar.gz') as source:
+              inventory={name:sha(archive.read(name)) for name in archive.namelist() if not name.endswith('/')}
+              (root/'wheel-files.json').write_text(json.dumps(inventory,indent=2)+'\n')
+              for name in names:
+                  matches=[item for item in archive.namelist() if item.endswith('/scripts/'+name)]
+                  assert len(matches)==1
+                  packaged=archive.read(matches[0])
+                  installed=Path(sysconfig.get_path('scripts'))/name
+                  actual=installed.read_bytes()
+                  assert body(actual)==body(packaged),name+' installed body differs from pinned wheel'
+                  original=source.extractfile('RSeQC-0d2e017723c5c4b41eb3b938e1631692d187de1f/scripts/'+name).read()
+                  records.append(dict(name=name,installed_path=str(installed),installed_sha256=sha(actual),
+                      wheel_member=matches[0],wheel_sha256=sha(packaged),github_sha256=sha(original),
+                      normalized_installed_matches_wheel=True,normalized_wheel_matches_github=body(packaged)==body(original)))
+          record=dict(schema_version=1,package='RSeQC',version='5.0.5',python=sys.version,
+              wheel=str(wheel),wheel_sha256=sha(wheel.read_bytes()),
+              github_commit='0d2e017723c5c4b41eb3b938e1631692d187de1f',
+              github_archive=str(root/'rseqc-source.tar.gz'),github_archive_sha256=sha((root/'rseqc-source.tar.gz').read_bytes()),
+              scripts=records,dependencies={name:importlib.metadata.version(name) for name in ['numpy','pysam','bx-python','pyBigWig','logomaker']})
+          (root/'acquisition.json').write_text(json.dumps(record,indent=2)+'\n')
+          PY
+
+      - name: Capture actual five-metric workflows
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -B -m unittest discover -s scripts -p test_rnaseq_qc_oracle.py \
+            2>&1 | tee "$EVIDENCE/driver-tests.log"
+          mkdir "$EVIDENCE/driver"
+          cp scripts/rnaseq_qc_oracle.py scripts/test_rnaseq_qc_oracle.py scripts/infercnv_trial_process.py "$EVIDENCE/driver/"
+          python3 -B scripts/rnaseq_qc_oracle.py --output "$EVIDENCE/workflows" \
+            --acquisition "$EVIDENCE/acquisition/acquisition.json" \
+            2>&1 | tee "$EVIDENCE/workflows.log"
+
+      - name: Retain original source and workflow evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: rnaseq-qc-oracle-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ env.EVIDENCE }}
+          if-no-files-found: error
+          include-hidden-files: true
+          retention-days: 90
