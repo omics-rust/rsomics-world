@@ -4,6 +4,17 @@ Status: upstream-operation and historical-asset audit complete. An unpublished
 local target repository now holds the test-first native CNV core work. No
 public target repository or product release has been created.
 
+Current2026-10-27: grouped-sample i6 HMM now runs from raw counts through
+hidden-spike calibration to separate states and CNV regions. Product40c3e446
+(docs7853e922) passes green25/run40484702873 on all four native platform
+classes:131 tests per debug/release profile, strict Clippy and24 real-R
+workflow comparisons at1/4 workers. State paths, memberships and the four
+original report projections match for ordinary references, no-reference
+proxy and aggregated normals. Expression14 and denoise22 remain separate.
+One whole-feature review passes. See the [bounded acceptance](../../.autopilot/state/infercnv-hmm-accepted-2026-10-27.md).
+Subclusters, Bayesian filtering, default Leiden/PCA and the remaining inferCNV
+profiles are still required; this is not full inferCNV or a public release.
+
 Current2026-10-26: grouped/pooled samples, native reference selection and the
 unified rsomics-help CLI now include deterministic parallel smoothing and
 distances. Product code7495e3e (docs3a43638) passes green21/run40309311228 on

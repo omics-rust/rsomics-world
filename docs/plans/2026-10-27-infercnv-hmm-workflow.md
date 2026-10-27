@@ -66,10 +66,10 @@ implementation. Preserve provenance/attribution when adapting selected code.
 - [x] Record the seeded calibration/RNG contract from that evidence before
   exposing a public model format. Do not claim cross-language seed parity
   merely because both implementations accept a seed.
-- [ ] Implement calibration plus mirrored preprocessing, adjusted decoding
+- [x] Implement calibration plus mirrored preprocessing, adjusted decoding
   and regions as one usable product operation, keeping HMM states separate
   from unmodified expression and later denoise output.
-- [ ] Compare actual raw native workflows to the retained real package,
+- [x] Compare actual raw native workflows to the retained real package,
   exercise critical group/chromosome/state/report boundaries and worker
   consistency, then run four-native acceptance and relevant whole-path
   timing/RSS. Review once and commit the owning files.
@@ -127,3 +127,11 @@ negative and the pooled branch's singleton-observation behavior. The native
 grouped-samples implementation is now fully wired as an unpublished candidate;
 runtime/compatibility and one whole-feature review remain open. Use green24's
 single integrated four-native gate rather than per-helper validation runs.
+
+The integrated first slice is accepted at product40c3e446/docs7853e922,
+green25/run40484702873: all four native targets, exact state/report results
+for three real workflows at1/4 workers, strict Clippy and one feature review.
+See the accepted state for original archive identities and bounded numeric
+criteria. Native timing/RSS observations are retained, but paired performance
+qualification remains open. The final continuation item and full portfolio
+goal are not completed by this slice.

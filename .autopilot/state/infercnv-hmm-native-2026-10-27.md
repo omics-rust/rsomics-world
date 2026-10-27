@@ -159,3 +159,15 @@ archive51ddcb7577ba551afa0d21845ea9f3cc48b2871586be98bedcfe1a21bcf70a9a.
 No tolerance/dependency/test-scope change or per-helper campaign. All-four
 acceptance, single final feature review and the owning-product commit remain
 open until the corrected integrated gate passes.
+
+## Accepted first slice
+
+Corrected run40484702873 passes on exact worlda133ad5d, all four native
+jobs. All original ZIPs are externally retained/verified/extracted. Each
+platform passes131 tests per debug/release profile and six actual raw HMM
+comparisons; Linux x86_64 strict Clippy/formatting pass. One whole-feature
+review finds no Critical/Important issues. Code40c3e446 and docs7853e922 are
+committed in the clean owning product. No publication or full-inferCNV claim.
+Authoritative bounded receipt: infercnv-hmm-accepted-2026-10-27.md.
+Continue the full goal using infercnv-next-workflow-contract-2026-10-27.md;
+do not resume any terminal green24/25 run or redo accepted denoise.
