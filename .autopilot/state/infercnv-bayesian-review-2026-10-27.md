@@ -92,3 +92,14 @@ No second reviewer is requested; root owns one fix-pass runtime verification.
 
 Final code verdict: with the above fixes, conditional on root's outstanding
 runtime/statistical/performance gates. This is not native acceptance or release.
+
+## Runtime follow-through
+
+Integrated native40510071393 on92e21b3983e6563193a1f3f2e46a4fab17ef2dd4
+passes136 debug/release tests per platform on all four native targets,
+including both fix regressions, plus eight full raw-workflow comparisons
+against two successful real JAGS repetitions. Root's acceptance record is
+infercnv-bayes-accepted-2026-10-27.md. The statistical/functional runtime
+conditions are met within that bounded scope. Paired representative
+performance, convergence/general-edge claims and public release remain open;
+no repeated code-review campaign was introduced.

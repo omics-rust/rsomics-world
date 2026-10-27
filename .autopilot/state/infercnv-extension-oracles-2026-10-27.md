@@ -239,3 +239,21 @@ its own script pair and default-false route, with independent source/record
 checks, not actual package/PCA evidence. Its separate plan/state are linked
 from infercnv-leiden-oracle-2026-10-27.md. These do not change the native
 candidate or the Bayesian source receipt. The full portfolio goal stays active.
+
+## Completed native Bayesian gate
+
+Green27 native40510071393 on92e21b3983e6563193a1f3f2e46a4fab17ef2dd4 is
+terminal SUCCESS on all four native targets. Root retained/checked original
+API/ZIP/source/binary identities and actual comparison summaries:136 tests
+per debug/release profile, eight raw native processes against both actual
+JAGS repetitions, all filtering and final states agree, predeclared numeric
+limits pass, and1/4 workers agree within each platform. See the new bounded
+acceptance record infercnv-bayes-accepted-2026-10-27.md; do not rerun this gate.
+Commit the matching owning product implementation/documentation. Paired
+full-workflow performance remains open, not inferred from native observations.
+
+Default Leiden oracle40510078823, also on92e21b3, is terminal SUCCESS;
+artifact12738226331 is being retained/inspected before any positive PCA or
+native-default claim. Do not re-dispatch. Ward policy alone remains held for
+the existing user choice. Full goal is active, unchanged and unbounded across
+all30 families; inferCNV acceptance does not complete or narrow it.

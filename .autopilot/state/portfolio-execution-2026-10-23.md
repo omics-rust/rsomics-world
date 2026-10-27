@@ -64,3 +64,18 @@ Storage check2026-10-26: APFS boot81.27%, external KIOXIA266GiB and fixture HDD2
 available. No local Rust/R builds, installations or dependency downloads;
 use existing remote native CI. Project scratch, source snapshots and evidence
 remain on external disks. Preserve inherited VCF and root scratch changes.
+
+Update2026-10-27: grouped-i6 Bayesian refinement is now functionally accepted
+on all four native targets (40510071393,136 tests per debug/release profile),
+eight full raw CLI processes against two actual JAGS repetitions. Product
+42988589ac4708c560407649d9a1c86f8b6a47be is committed/clean, unpublished.
+See infercnv-bayes-accepted-2026-10-27.md. The predeclared stochastic contract
+passes without tolerance changes; paired whole-path speed remains open.
+The same-host raw Create+run19 campaign now has a bounded plan and isolated
+R driver, not another per-helper acceptance loop. Actual default Leiden/PCA
+40510078823 also completes, but all groups are singletons at cluster level
+(one cluster per parent); positive PCA/graph evidence is not nontrivial
+partition acceptance. See infercnv-leiden-oracle-2026-10-27.md for k5 next
+witness and internal-native contract. The full30-family goal remains active,
+not paused, narrowed or complete. Next-product RNA-seq QC source/version
+inventory is durable; do not redo its broad initial survey.
