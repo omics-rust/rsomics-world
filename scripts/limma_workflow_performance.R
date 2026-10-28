@@ -245,7 +245,10 @@ limma_performance_inspect <- function(trial, output, qualification, witness) {
         }
         if (name %in% c("logCPM", "weights")) {
             stored <- if (name == "logCPM") bundle$base$EList$E else bundle$base$EList$weights
-            if (!isTRUE(all.equal(as.matrix(actual), stored, tolerance=0, check.attributes=TRUE))) fail(name, "timed export differs from actual base observation state")
+            colnames(stored) <- colnames(bundle$normalized$counts)
+            copy <- file.path(output, paste0(name, ".tsv"))
+            deseq_write_table(stored, copy, rownames(bundle$base$coefficients))
+            if (!identical(deseq_hash(copy), deseq_hash(file.path(trial, paste0(name, ".tsv"))))) fail(name, "timed export differs from serialized base observation state")
         }
     }
     edger_json(failures, file.path(output, "failures.json"))

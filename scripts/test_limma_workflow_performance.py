@@ -48,6 +48,10 @@ class LimmaWorkflowPerformanceTests(unittest.TestCase):
         self.assertNotIn('limma_write_derived(', timed)
         self.assertNotIn('limma_write_fit(', timed)
         self.assertIn('saveRDS(derived$tests[[name]]', timed)
+        inspection = driver.split('limma_performance_inspect <- function', 1)[1]
+        self.assertIn('colnames(stored) <- colnames(bundle$normalized$counts)', inspection)
+        self.assertIn('deseq_write_table(stored, copy, rownames(bundle$base$coefficients))', inspection)
+        self.assertNotIn('all.equal(as.matrix(actual), stored', inspection)
 
     def test_retained_admission_rejects_missing_or_partial_native_gate(self):
         from limma_workflow_performance import (NATIVE, SOURCE, BOUNDS, OUTPUTS, STATES,
