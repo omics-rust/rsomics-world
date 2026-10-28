@@ -1,6 +1,44 @@
 # DESeq complete real-workflow performance gate
 
-## Accepted baseline measurement
+## Current accepted green5 measurement
+
+Fresh run40614312003 at exact12d615548c52092a7f325e8138cd75e85a1f9e0e
+passes all unchanged strict source-inner throughput, process-RSS and worker
+scaling gates for owningc9f99b7/green5 only. Original artifact/API/log/controller
+and2900 files are retained/verified; all16 full comparisons,81 process records,
+80 output manifests and244 immutability monitors pass. No measurement was rerun
+during retention. The concurrent schema5/local worktree is not this executable.
+
+Median[min,max] seconds: source whole11.38[11.32,11.45], source inner complete
+workflow5.495[5.453,5.540], native1 1.05[1.04,1.05], native4 .80[.80,.80].
+Source-inner/native ratios5.23x/6.87x exclude package startup while native still
+pays all five CLI processes. Whole-process10.84x/14.23x are separately labelled.
+Strict1/4 ranges separate, median1.3125x, not linear scaling. Source/native
+process RSS medians870584/35880/36168KiB give95.88% lower serial RSS; runtime/
+package memory is included, not a claim about algorithmic memory complexity.
+Native4 uses more CPU; output blocks52824 exceed source27184. No I/O win.
+
+Actual new machine is AMD EPYC7763 model, four guest logical CPUs on two
+guest-visible cores, fixed affinity0..3, Linuxx86_64/R4.6.1/Bioc3.23/DESeq1.52.0,
+warm cache/BLAS1. It is not the old EPYC9V74 VM or old R-inner4.454s. Fit/save
+stage medians.52/.28s; four repeated reload/export processes remain.12-.14s.
+RDS4965252bytes versus uncompressed JSON20218362bytes, no encoding-size benefit.
+All1330 discovery IDs/2240 allzero/5800 missing-padj rows and deterministic
+full state/four exports match. Source conditions/iterations remain diagnostic
+and unmodified, including its named DataFrame conversion warnings.
+
+Evidence:
+/Volumes/Zane's HDD/rsomics-fixtures/evidence/deseq-real-workflow-performance-2026-10-28/run-40614312003/.
+Artifact12784822601,965496834bytes, ZIP
+10fbf20434dac10053562265ab7d67730deefa2c876771739453b26a648562b1.
+verification.json SHA31c6da8517f44c26ac827be5b153e29f3778e270954bfb7eb348fbe06329436e;
+REPORT.md SHA010eaa0011aec95226c6de355e3ca608f909a49c9056546b5f9f8927956ace2d.
+Accepted native receiptc86fec10... binds binary630431e494e5fcba34eb175c7cfe4a68ff071afd249e29619e2385ab7c061059,
+36 source files/schema4/all20 workflows. The local padded-NA audit parser
+failure is preserved and corrected only in the read-only verifier. Final
+scope/current-code/native4/publication gates remain separate.
+
+## Historical green3 baseline measurement
 
 Run40605899832 at exact22f5927e541087fc86c723594d7b96a74691746f is
 SUCCESS. Complete compatibility/determinism and the predeclared process-RSS

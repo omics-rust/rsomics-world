@@ -51,7 +51,16 @@ Its36-file/schema4/20-workflow admission passes on the real retained artifact.
 Three compact tests/Bash syntax pass; parent reads the full scoped diff and
 confirms source driver, inputs, flags, bounds, trials, timing and decision
 remain unchanged. Full495 control tests pass with two existing skips.
-Next after controller CI: fresh source/native same-host formal measurement,
-not a claim that the old hosted VM or measurements are reused.
+Controller40614101382 is SUCCESS at exact
+12d615548c52092a7f325e8138cd75e85a1f9e0e. Fresh performance40614312003 is
+dispatched at that head against the accepted green5 executable and is now
+SUCCESS, with original2900-file artifact retained/verified. Fresh R-inner
+median5.495s versus native1/4 1.05/.80s passes strict throughput (5.23x/6.87x),
+strict process RSS and1/4 scaling (1.3125x). No I/O advantage. Actual host is
+EPYC7763, not the older VM; no old timing is reused. Authoritative receipt
+SHA31c6da8517f44c26ac827be5b153e29f3778e270954bfb7eb348fbe06329436e,
+under evidence/deseq-real-workflow-performance-2026-10-28/run-40614312003/.
+See deseq-real-workflow-performance-2026-10-28.md. Do not reattribute this
+C9/schema4 result to concurrent schema5/local changes or rerun unchanged fits.
 Old green3 performance/green4 native evidence remain immutable. Local trend
 coverage and publication remain separate gates; continue the full portfolio.
