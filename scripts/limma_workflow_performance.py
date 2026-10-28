@@ -198,6 +198,16 @@ def output_manifest(output, source=False):
             for name in (*names, *OUTPUTS)}
 
 
+def verify_reused_outputs(output, validation, original):
+    for name in ("fit.json", *OUTPUTS):
+        check(_sha256(validation / name) == original[name]["sha256"],
+              f"untimed reuse changed fitted state/table: {name}")
+    for name in STATES:
+        check(_load_json(validation / name, "reused contrast state") ==
+              _load_json(output / name, "timed contrast state"),
+              f"untimed reuse changed complete contrast values: {name}")
+
+
 def native_trial(directory, witness, binary, checker, workers, cores, accepted):
     directory.mkdir()
     output = directory / "output"
@@ -222,8 +232,7 @@ def native_trial(directory, witness, binary, checker, workers, cores, accepted):
                "--output", str(validation), "--workers", str(workers), "--reuse"], directory / "validation-process", timeout=1800)
     check(_load_json(validation / "comparison.json", "measured native source comparison")["passed"] is True,
           "measured native compatibility failed")
-    check(all(_sha256(validation / name) == original[name]["sha256"] for name in original),
-          "untimed reuse validation disagreed with actual timed states/tables")
+    verify_reused_outputs(output, validation, original)
     check(output_manifest(output) == original, "native validation changed actual timed outputs")
     result = aggregate_native(rows)
     result.update(workers=workers, outputs=original, comparison_passed=True,

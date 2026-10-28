@@ -113,7 +113,23 @@ class LimmaWorkflowPerformanceTests(unittest.TestCase):
                 verify_native_workflow(evidence, binary)
 
     def test_eight_process_units_and_fixed_advantage_decision(self):
-        from limma_workflow_performance import aggregate_native, performance_decision
+        from limma_workflow_performance import (aggregate_native, performance_decision, output_manifest,
+                                               verify_reused_outputs, OUTPUTS, STATES)
+        with tempfile.TemporaryDirectory(prefix='limma-actual-state-') as temporary:
+            output, validation = [Path(temporary) / name for name in ('output', 'validation')]
+            output.mkdir()
+            validation.mkdir()
+            for name in ('fit.json', *OUTPUTS):
+                for directory in (output, validation):
+                    (directory / name).write_text('unchanged stored bytes\n')
+            for name in STATES:
+                (output / name).write_text('{"contrast":[0.0,0.0,-1.0],"values":[1.25]}')
+                (validation / name).write_text('{"contrast":[-0.0,-0.0,-1.0],"values":[1.25]}')
+            original = output_manifest(output)
+            verify_reused_outputs(output, validation, original)
+            (validation / 'reverse.json').write_text('{"contrast":[0.0,0.0,-1.0],"values":[1.250001]}')
+            with self.assertRaisesRegex(ValueError, 'complete contrast values: reverse.json'):
+                verify_reused_outputs(output, validation, original)
         row = dict(wall_seconds=1, user_seconds=.5, system_seconds=.2, max_rss_kib=100,
                    filesystem_inputs=2, filesystem_outputs=3, major_faults=4, minor_faults=5,
                    owner_wall_seconds=1.1, exit_status=0)

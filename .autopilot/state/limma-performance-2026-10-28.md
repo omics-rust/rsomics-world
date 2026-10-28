@@ -2,6 +2,36 @@
 
 ## Dispatched complete workflow
 
+After corrected untimed export consistency and exact push controller40634314251
+SUCCESS at worlde712975eceec6ac8120fa84ac617498016a12221, fresh performance
+40634590605 attempt1 runs the unchanged native binary/timed source. It passes
+source warmup/complete source comparison, then stops on native untimed reuse
+state/table byte consistency. Original source and native failure lists are
+empty; no timed repetitions/result accepted. Original run/logs/artifact metadata
+and selected diagnostics are retained at
+/Volumes/KIOXIA/Developments/tmp/limma-performance-current-20261028.8iqzT4/.
+Artifact12793320835/614640250bytes/API digest7ddce063...; no full local ZIP claim.
+Investigate actual differing output members before any further change/rerun.
+
+Actual outer ZIP member size/CRC pairs show fit.json, forward/mixed JSON and
+ALL7 TSVs identical between timed output and untimed reuse. Only reverse.json
+differs; both complete parsed JSON values are EXACTLY equal. Retained actual
+states prove the sole representation difference: timed contrast[0,0,-1] versus
+source-checker[-0,-0,-1], since original contrasts.tsv preserves R's -forward
+signed zeros. Original numerical/source checks pass, not a product mismatch.
+Fix only this untimed check: fit/TSV bytes remain exact; complete contrast
+JSON values must be structurally equal, no tolerance. Same-host native trial/
+worker full-state/three-JSON/seven-TSV byte determinism remains unchanged.
+One compact existing test covers signed-zero equality and rejects a real
+1e-6 value mutation. Native/timed command flags, source, bounds and decisions
+are unchanged; no prior failed run/result is relabelled accepted.
+
+Corrected stable tree passes502 local controller tests54.442s/two existing
+skips plus architecture/diff, log
+/Volumes/KIOXIA/Developments/tmp/limma-signed-zero-controller-20261028.RXwNN7/checks.log.
+Fresh boot79.0792%, all build paths external and235GiB KIOXIA free. Exact-head
+push CI precedes the next full measurement; no local scientific/native run.
+
 Performance40632499406 is dispatched once at world
 a3ca756d6f088678bcc44468d872ad4634bc578b after exact-head push controller
 40632350223 SUCCESS. It consumes the retained green1 Linux binary; no native
