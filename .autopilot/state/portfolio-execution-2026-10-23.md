@@ -2,6 +2,24 @@
 
 ## Current native-gate scheduling
 
+DESeq final green7 two-real-path performance40632494429 is accepted after
+parent reads the original summary/distributions and immutable core2ec95e3c...
+(170 original selected members, actual CI/source/native comparisons; whole
+ZIP mirror supplemental/pending). Full14599×7 parametric/local R-inner
+medians5.264/5.375s versus native1=1.02/1.05s, native4=.79/.81s. Both strict
+throughput AND process-RSS pass; actual worker gain~1.29x with disjoint ranges,
+not4x. No startup-inflated primary speed or smaller-storage claim.
+
+Limma's corrected source serialization check passes in new40634590605; its
+next auxiliary byte check fails only reverse JSON signed-zero encoding. Actual
+complete JSON values equal, fit/forward/mixed/all7 TSV bytes match. Parent
+retains only value-level exactness for untimed regenerated contrast JSON,
+without altering actual timed output/worker-byte determinism, source bands,
+native/timed code/options or performance rules. Local502 tests pass54.442s.
+Ecology source40634594900 is SUCCESS at exacte712975e; original142.7MB artifact
+is being retained. Full-study table/metadata/selected-tree originals are now
+acquired externally; actual BIOM/tip/depth qualification remains pending.
+
 Complete DESeq default/local performance40632494429 attempt1 passes at
 worlda3ca756d6f088678bcc44468d872ad4634bc578b after exact push controller40632350223
 SUCCESS; retained-core result verification is in progress. Limma40632499406

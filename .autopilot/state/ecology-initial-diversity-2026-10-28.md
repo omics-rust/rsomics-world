@@ -1,5 +1,26 @@
 # Ecology diversity source qualification
 
+Hosted source40634594900 attempt1 is SUCCESS at
+worlde712975eceec6ac8120fa84ac617498016a12221 after exact push controller40634314251
+SUCCESS. Actual original artifact12792734146/142733553bytes/API digest51a14cfb...
+is now being retained/verified; no native acceptance or runtime profile is
+inferred before reading the original witness. User distance-boundary choice
+remains pending.
+
+Preferred full-study originals are now acquired at
+/Volumes/Zane's HDD/rsomics-fixtures/ecology/gut-to-soil-15390940/.
+Parent reads full52-line acquisition report; ACQUISITION.json SHA
+2be127f7c05dde582e3286d22be52f1069d25bddecb58d2bc758fcd895ca82ad,
+/Volumes/KIOXIA/Developments/tmp/ecology-gut-to-soil-acquisition-20261028.oOkb5T/.
+Original count4,241,367bytes and metadata356,035bytes match publisher MD5 and
+local SHA; selected original rooted-tree5,100,101bytes is extracted through
+8 exact206 ranges/outerCRC with all internal QZA CRCs. Only5.176MB of the
+15.6GB containing ZIP is read; that whole archive/publisher checksum remains
+UNVERIFIED, not silently claimed retained. Original QZA/provenance/payloads
+remain unchanged. Shape/nnz/counts/zeros/sample/feature-tip matches/depth still
+require later hosted scientific qualification; no normalization/subset/tree
+regeneration or benchmark has occurred.
+
 Parent read the complete471-line dossier and bounded initial-contract report:
 /Volumes/KIOXIA/Developments/tmp/ecology-initial-contract-20261028.dMwcNN/REPORT.md,
 SHA7b6574edc8f629851f6755b3f23313748d7822f6afb2da4a4f9572acaeb3a102.
