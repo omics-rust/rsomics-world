@@ -18,6 +18,7 @@ DESIGN_CASES = GENERAL + [f'cook-{size}-{replacement}-{route}'
                           for size in ('7x7', '7x3')
                           for replacement in ('default', 'disabled')
                           for route in ('formula', 'matrix')]
+LOW_DF_CASES = ['df-1', 'df-2', 'df-3', 'df-4']
 
 
 class DeseqCandidateWorkflowTests(unittest.TestCase):
@@ -47,6 +48,8 @@ class DeseqCandidateWorkflowTests(unittest.TestCase):
         self.assertIn('--include-disabled-cook', body)
         self.assertIn('--include-default-cook', body)
         self.assertIn('--witness "$DESIGN_ORACLE_ROOT"', body)
+        self.assertIn('--witness "$LOW_DF_ORACLE_ROOT"', body)
+        self.assertIn('--low-df', body)
         self.assertIn('if: always()', self.steps['Upload raw evidence'])
         self.assertNotIn('continue-on-error', self.text)
         for name, step in self.steps.items():
@@ -67,23 +70,24 @@ class DeseqCandidateWorkflowTests(unittest.TestCase):
                 out = root / 'comparison' / f'workers-{workers}'
                 out.mkdir(parents=True)
                 (out / 'fit.json').write_text(json.dumps(
-                    dict(workers=workers, genes=[dict(beta=[0.25, -0.5])], schema=3)))
+                    dict(workers=workers, genes=[dict(beta=[0.25, -0.5])], schema=4)))
                 for name in ('forward.tsv', 'reverse.tsv', 'normalized-counts.tsv', 'vst.tsv'):
                     (out / name).write_text('gene\tvalue\ng1\t0.25\n')
-                design = root / 'design-comparison' / f'workers-{workers}'
-                design.mkdir(parents=True)
-                (design / 'comparison-contract.json').write_text(json.dumps(
-                    dict(workers=workers, cases=DESIGN_CASES, excluded_cases=[])))
-                for case in DESIGN_CASES:
-                    target = design / case
-                    target.mkdir()
-                    (target / 'fit.json').write_text(json.dumps(
-                        dict(workers=workers, genes=[dict(beta=[0.25, -0.5])], schema=3)))
-                    exports = ['forward.tsv', 'reverse.tsv', 'normalized-counts.tsv', 'vst.tsv']
-                    if case != 'intercept-sf-formula':
-                        exports.append('mixed.tsv')
-                    for name in exports:
-                        (target / name).write_text('gene\tvalue\ng1\t0.25\n')
+                for directory, cases in (('design-comparison', DESIGN_CASES), ('low-df-comparison', LOW_DF_CASES)):
+                    family = root / directory / f'workers-{workers}'
+                    family.mkdir(parents=True)
+                    (family / 'comparison-contract.json').write_text(json.dumps(
+                        dict(workers=workers, cases=cases, excluded_cases=[])))
+                    for case in cases:
+                        target = family / case
+                        target.mkdir()
+                        (target / 'fit.json').write_text(json.dumps(
+                            dict(workers=workers, genes=[dict(beta=[0.25, -0.5])], schema=4)))
+                        exports = ['forward.tsv', 'reverse.tsv', 'normalized-counts.tsv', 'vst.tsv']
+                        if case != 'intercept-sf-formula':
+                            exports.append('mixed.tsv')
+                        for name in exports:
+                            (target / name).write_text('gene\tvalue\ng1\t0.25\n')
             env = dict(os.environ, EVIDENCE=str(root))
 
             def execute():
@@ -95,6 +99,8 @@ class DeseqCandidateWorkflowTests(unittest.TestCase):
             report = json.loads((root / 'worker-determinism.json').read_text())
             self.assertTrue(report['passed'])
             self.assertEqual(set(report['design_cases']), set(DESIGN_CASES))
+            self.assertEqual(set(report['low_df_cases']), set(LOW_DF_CASES))
+            self.assertEqual(report['compared_workflows'], 20)
             changed = root / 'comparison/workers-4/vst.tsv'
             changed.write_text('gene\tvalue\ng1\t0.75\n')
             self.assertNotEqual(execute().returncode, 0, 'changed numeric export was accepted')
@@ -105,6 +111,17 @@ class DeseqCandidateWorkflowTests(unittest.TestCase):
                 self.assertNotEqual(execute().returncode, 0,
                                     f'changed {replacement}-Cook export was accepted')
                 changed.write_text('gene\tvalue\ng1\t0.25\n')
+            changed = root / 'low-df-comparison/workers-4/df-2/mixed.tsv'
+            changed.write_text('gene\tvalue\ng1\t0.75\n')
+            self.assertNotEqual(execute().returncode, 0, 'changed low-df export was accepted')
+            changed.write_text('gene\tvalue\ng1\t0.25\n')
+            bundle = root / 'low-df-comparison/workers-4/df-3/fit.json'
+            fit = json.loads(bundle.read_text())
+            fit['genes'][0]['beta'][1] = 1.0
+            bundle.write_text(json.dumps(fit))
+            self.assertNotEqual(execute().returncode, 0, 'changed low-df fitted state was accepted')
+            fit['genes'][0]['beta'][1] = -0.5
+            bundle.write_text(json.dumps(fit))
             bundle = root / 'design-comparison/workers-4/interaction-nf-formula/fit.json'
             fit = json.loads(bundle.read_text())
             fit['genes'][0]['beta'][1] = 1.0

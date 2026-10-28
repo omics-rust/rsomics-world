@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       snapshot:
-        description: Frozen schema3 source directory under deseq-core-2026-10-28, for example green-3
+        description: Frozen schema4 source directory under deseq-core-2026-10-28, for example green-4
         type: string
         required: true
 
@@ -114,7 +114,11 @@ jobs:
               ('design', 'deseq-design-workflows-2026-10-28.json', 'DESIGN_ORACLE_ROOT',
                dict(workflow_path='.github/workflows/deseq-design-oracle.yml', run_id=40592944209,
                     artifact_id=12774339794, head_sha='5fcb3820198c8fe8fd3e463a609b276df7ae590a',
-                    artifact_name='deseq-design-oracle-40592944209-1', bundle_path='workflows'))]
+                    artifact_name='deseq-design-oracle-40592944209-1', bundle_path='workflows')),
+              ('low-df', 'deseq-low-df-2026-10-28.json', 'LOW_DF_ORACLE_ROOT',
+               dict(workflow_path='.github/workflows/deseq-low-df-oracle.yml', run_id=40603312183,
+                    artifact_id=12780580470, head_sha='1f3f7a002ac2d6ac10016eb9a68536657b1367e4',
+                    artifact_name='deseq-low-df-oracle-40603312183-1', bundle_path='qualification'))]
           for label, filename, environment, identity in pins:
               acquisition = base / label
               acquisition.mkdir()
@@ -190,14 +194,42 @@ jobs:
                   assert qualification['complete'] is True and qualification['uncovered'] == [] \
                       and len(qualification['observed']) == 8 and all(value is True for value in qualification['observed'].values()), \
                       'Cook source branches are not qualified'
+                  assert witness['inputs_frozen_before_first_fit'] is True, 'source inputs were not frozen before fitting'
+                  record.update(source_cases=15, source_qualified_cook_branches=8)
+              elif label == 'low-df':
+                  case_ids = ['df-1', 'df-2', 'df-3', 'df-4']
+                  workflows = witness['source_workflows']
+                  assert workflows['complete'] is True and list(workflows['cases']) == case_ids \
+                      and all(case['status'] == 'complete' and case['actual_dispersion_fit'] == 'mean'
+                              for case in workflows['cases'].values()), 'mean/low-df source workflows incomplete'
+                  qualification = witness['operator_qualification']
+                  assert witness['prior_function_released_body_matched'] is True \
+                      and qualification['complete'] is True and qualification['mathematical_checks_passed'] is True \
+                      and all(value is True for value in qualification['basis_invariants'].values()), \
+                      'low-df operator qualification incomplete'
+                  probes = qualification['probes']
+                  assert probes['passed'] is True and len(probes['probes']) == 5 \
+                      and all(value['passed'] is True and value['failed_points'] == [] for value in probes['probes'].values()), \
+                      'independent low-df probes incomplete'
+                  replays = qualification['workflows']
+                  assert list(replays) == case_ids and all(replays[name]['passed'] is True \
+                      and replays[name]['df'] == index for index, name in enumerate(case_ids, 1)), 'low-df replay incomplete'
+                  positive = [name for name in case_ids[:3] if replays[name]['unmodified_source_prior'] > 0.25]
+                  assert positive and qualification['positive_prior_covered'] is True \
+                      and qualification['positive_nonfloor_MC_cases'] == positive, 'positive low-df prior coverage incomplete'
+                  assert _sha256(oracle / 'constants/manifest.json') == witness['constants_manifest_sha256'], \
+                      'low-df constants manifest differs'
+                  record.update(source_cases=4, qualified_probes=5, positive_nonfloor_MC_cases=positive)
+              if label in ('design', 'low-df'):
                   frozen = oracle / 'metadata/input-freeze.json'
-                  assert witness['inputs_frozen_before_first_fit'] is True \
-                      and _sha256(frozen) == witness['input_freeze_sha256'], 'prefit input freeze differs'
+                  assert _sha256(frozen) == witness['input_freeze_sha256'], 'prefit input freeze differs'
                   freeze = _load_json(frozen, 'prefit input freeze')
-                  assert freeze['status'] == 'frozen-before-first-fit' \
+                  expected = 'frozen-before-first-fit' if label == 'design' else \
+                      'all inputs, options and independent probes frozen before any fit/outcome'
+                  assert freeze['status'] == expected \
                       and all(recorded.get(name) == digest for name, digest in freeze['files'].items()), \
                       'frozen input inventory differs'
-                  record.update(source_cases=15, source_qualified_cook_branches=8, frozen_input_files=len(freeze['files']))
+                  record['frozen_input_files'] = len(freeze['files'])
               (acquisition / 'verification.json').write_text(json.dumps(record, sort_keys=True) + '\n')
               with Path(os.environ['GITHUB_ENV']).open('a') as stream:
                   stream.write(environment + '=' + str(oracle) + '\n')
@@ -267,7 +299,7 @@ jobs:
         run: |
           set -euo pipefail
           cargo build --locked --release --bin rsomics-deseq 2>&1 | tee "$EVIDENCE/build-release.log"
-          mkdir "$EVIDENCE/native-binary" "$EVIDENCE/controller" "$EVIDENCE/comparison" "$EVIDENCE/design-comparison"
+          mkdir "$EVIDENCE/native-binary" "$EVIDENCE/controller" "$EVIDENCE/comparison" "$EVIDENCE/design-comparison" "$EVIDENCE/low-df-comparison"
           binary="$EVIDENCE/native-binary/rsomics-deseq-${{ matrix.target }}"
           cp "$CARGO_TARGET_DIR/release/rsomics-deseq" "$binary"
           shasum -a 256 "$binary" > "$EVIDENCE/native-binary/checksums.sha256"
@@ -286,6 +318,10 @@ jobs:
               --include-disabled-cook --include-default-cook \
               --output "$EVIDENCE/design-comparison/workers-$workers" --workers "$workers" \
               2>&1 | tee "$EVIDENCE/design-comparison/workers-$workers.log"
+            python3 -B "$EVIDENCE/controller/check-design-workflows.py" \
+              --witness "$LOW_DF_ORACLE_ROOT" --binary "$binary" --low-df \
+              --output "$EVIDENCE/low-df-comparison/workers-$workers" --workers "$workers" \
+              2>&1 | tee "$EVIDENCE/low-df-comparison/workers-$workers.log"
           done
           python3 -B "$EVIDENCE/controller/check-bundle-contract.py" --binary "$binary" \
             --bundle "$EVIDENCE/comparison/workers-1/fit.json" \
@@ -302,7 +338,7 @@ jobs:
           root = Path(os.environ['EVIDENCE'])
           def compare(first, fourth, names):
               fitted = [json.loads((out / 'fit.json').read_text()) for out in (first, fourth)]
-              assert all(fit['schema'] == 3 for fit in fitted), 'candidate is not the schema3 checkpoint'
+              assert all(fit['schema'] == 4 for fit in fitted), 'candidate is not the schema4 checkpoint'
               assert [fit.pop('workers') for fit in fitted] == [1, 4], 'recorded worker counts differ'
               assert fitted[0] == fitted[1], 'worker count changed fitted state'
               exports = {}
@@ -328,7 +364,14 @@ jobs:
           for case in included:
               exports = names if case == 'intercept-sf-formula' else names + ['mixed.tsv']
               design[case] = compare(first / case, fourth / case, exports)
-          record = dict(passed=True, compared_workers=[1, 4], pasilla=pasilla, design_cases=design)
+          first, fourth = [root / 'low-df-comparison' / f'workers-{workers}' for workers in (1, 4)]
+          contracts = [json.loads((out / 'comparison-contract.json').read_text()) for out in (first, fourth)]
+          case_ids = ['df-1', 'df-2', 'df-3', 'df-4']
+          assert all(contract['cases'] == case_ids and contract['excluded_cases'] == [] for contract in contracts), \
+              'native mean/low-df scope differs from four complete workflows'
+          low_df = {case: compare(first / case, fourth / case, names + ['mixed.tsv']) for case in case_ids}
+          record = dict(passed=True, compared_workers=[1, 4], compared_workflows=1 + len(design) + len(low_df),
+                        pasilla=pasilla, design_cases=design, low_df_cases=low_df)
           (root / 'worker-determinism.json').write_text(json.dumps(record, sort_keys=True) + '\n')
           print(json.dumps(record, sort_keys=True))
           PY
