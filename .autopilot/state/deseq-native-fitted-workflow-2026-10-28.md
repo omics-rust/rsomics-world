@@ -2,10 +2,13 @@
 
 ## Current state
 
-Current clean private main is ef72e3c1302ad45feb368c4b959661b5de20a120,
+Current clean private main is f53f7136f9a8563bddd6273768efce856717ea43,
 publish=false. Schema5/local trends and source-faithful local VST are complete
-locally; see deseq-local-trend-native-2026-10-28.md. Green6 freezes all47 source
-files for the new four-native gate. No current-feature performance or release
+locally; see deseq-local-trend-native-2026-10-28.md. Green6/all47 files now
+passes all four native classes, with original evidence retained/verified.
+Final green7/all49 files closes accidental public modules, rehomes tests and
+adds project licenses/private complete-case reuse, without math/schema/runtime
+CLI changes. Its final native gate is pending. No current-feature performance or release
 acceptance is inferred from the earlier green5 result.
 Previous C9 adds only buffered fitted-bundle save to schema4/1401149;
 see deseq-buffered-save-2026-10-28.md. Green5/run40611588271 at exact42f378fe

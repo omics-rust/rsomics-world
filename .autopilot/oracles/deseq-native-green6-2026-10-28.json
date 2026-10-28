@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "repository": "omics-rust/rsomics-world",
+  "workflow_path": ".github/workflows/deseq-candidate.yml",
+  "run_id": 40623248458,
+  "run_attempt": 1,
+  "head_sha": "916161a820fd95cde5fb15ad5182689dc076c212",
+  "artifact_id": 12788357833,
+  "artifact_name": "deseq-40623248458-1-linux-x86_64",
+  "size_in_bytes": 492071787,
+  "artifact_sha256": "12db1567f86c1cb4aa899ab84dc418cde57e7098e684e54968d4d8ed4f1719a0",
+  "binary_sha256": "51c2bd3789ceffce7b5d2b83ae0f3b2e3e8c179c3db3b7bff15f6cc175e250b8",
+  "snapshot": "green-6",
+  "source_archive_sha256": "2d22aaa04d075ff2bb03fcfa64e72d832a27fe329db1e54a5ed9c1932274d196",
+  "source_manifest_sha256": "a1cebf68f596a2db94e8bdebd330e34c976669c6170eeae22e1a1f0a06bb748a",
+  "lock_sha256": "501544e3615498b7f26c06bb5ea36c4d027b61f7366cce4a11b6efcbfc82e241",
+  "source_file_count": 47,
+  "fit_schema": 5,
+  "workflow_count": 24,
+  "workers": [
+    1,
+    4
+  ],
+  "native_targets": [
+    "linux-x86_64",
+    "linux-aarch64",
+    "macos-x86_64",
+    "macos-aarch64"
+  ],
+  "verification_sha256": "6db38ee33ed2160622596676b83b689497b23dd377eed0011bb8a79887655daf"
+}
