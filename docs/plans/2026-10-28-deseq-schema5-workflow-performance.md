@@ -1,5 +1,13 @@
 # Current saved-trend complete-workflow performance
 
+Pre-timing execution-budget ruling: all four actual native classes must pass
+at the exact source/controller head, with original run/job/step/raw-log evidence.
+Deeply verify the selected Linux ZIP/source/binary and complete source outputs.
+Other original platform archives continue external mirroring; redundant local
+replay is supplemental, not a blocker for using the accepted Linux executable.
+The immutable core receipt explicitly states this scope and pending mirrors,
+without claiming them verified. No native, test or numerical gate is waived.
+
 Adopted before measurement for owning ef72e3c1302ad45feb368c4b959661b5de20a120,
 schema5/green6. Source snapshot archive
 2d22aaa04d075ff2bb03fcfa64e72d832a27fe329db1e54a5ed9c1932274d196,
@@ -96,8 +104,12 @@ re-homes existing tests, adds licenses and private complete-case reuse. Its
 manifestb8d2fb2eb056f07a78025b39e65d916366a71c19b5c861e755f0cbd7a99badce.
 No math/schema/runtime CLI, inputs, source, bounds, trials or decisions change.
 The prepared harness now pins the final green7 source/archive/49-file contract
-and requires its still-absent retained receipt. Actual run/head/artifact/binary
+and requires its retained receipt. Actual run/head/artifact/binary
 IDs come from that tracked receipt, checked against fresh four-job APIs and
 the exact archive; no guessed future IDs or green6 fallback exist. Create the
-receipt only after green7 passes and is retained. No intermediate performance
-campaign or timing has occurred under this two-case plan.
+receipt only after green7 passes and is retained. This is now satisfied by
+run40629123490 at world9118ba79, all four native jobs/steps/raw logs and the
+complete Linux retained core761cd570...; the tracked receipt binds the exact
+Linux executable6baa1f89... . Non-Linux local archive mirrors are explicitly
+supplemental. No intermediate performance campaign or timing has occurred
+under this two-case plan.
