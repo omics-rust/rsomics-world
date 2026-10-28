@@ -36,6 +36,19 @@ copy, no nested replay and unchanged core2ec95e3c... . Parent reads that
 separate completion record. The tracked original core receipt remains its
 historical acceptance scope; no core overwrite/requalification/rerun occurs.
 
+Final-native supplementary archive retention is also complete. Both Linux
+copies were already size/digest/CRC checked; Mac x86 is separately verified
+by c274dce854b1b2f5a7e0626a1db78680dedccb0bf0090490dd8c9b6769945da0.
+The old Mac ARM transport process was absent, with three completed ranges
+and one preserved67108864-byte middle prefix. Only its missing55880335-byte
+suffix was fetched; new491956793-byte assembly matches the original API
+2db86e89b740dee7cab8a3d17092f483f09dd3f54e101f884d9723bf935d792f
+and all2826members pass safe-path/type/CRC checks. Parent reads the full
+supplemental report and proof c5856f2bd8096400879fdc23ce12b7994aaa994b0bc895165b330d98e12e9a49
+in run-40629123490/supplemental-transport/. Old partials/reports and native
+core761cd570... are unchanged, no scientific replay or new math claim, and
+no transport process remains. This closes retention, not public release.
+
 ## Dispatched complete workflow
 
 Performance40632494429 is dispatched once at world
