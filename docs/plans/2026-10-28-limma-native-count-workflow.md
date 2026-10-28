@@ -162,3 +162,17 @@ The source receipt documents the original read-only state; the adoption here
 now authorizes creation of the absent owning repository and implementation.
 The edgeR source failure is unaffected by this adoption.
 
+Implementation ruling before final native freeze: `results` may explicitly
+accept `--state JSON` with its table output to retain the required complete
+derived contrast/moderation diagnostics. Use the existing common atomic pair
+and alias contract; no implicit sidecars, large stdout dump or hidden full fit.
+This completes the specified saved-state lifecycle, not a new statistical mode.
+
+First release supports the CLI/artifact/table contract, not accidental public
+solver/model/cache modules. Keep internals crate-private, exposing only a
+run_cli binary bootstrap if needed; do not invent a Rust analysis facade or
+hide a still-public tree with doc(hidden). Existing lifecycle tests inspect
+the public files or run inside the crate where appropriate. Supply the full
+team-standard project license texts. These surface/packaging rules do not
+change any numerical bounds, source inputs, math, state schema or CLI results.
+

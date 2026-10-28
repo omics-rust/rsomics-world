@@ -1,0 +1,330 @@
+name: Current voom fitted-workflow candidate
+
+on:
+  workflow_dispatch:
+    inputs:
+      snapshot:
+        description: Frozen current-voom source directory under limma-core-2026-10-28 (green-N)
+        type: string
+        required: true
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  native:
+    name: ${{ matrix.target }}
+    runs-on: ${{ matrix.runner }}
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        include: >-
+          ${{ fromJSON('[{"target":"linux-x86_64","runner":"ubuntu-24.04","system":"Linux","arch":"x86_64"},{"target":"linux-aarch64","runner":"ubuntu-24.04-arm","system":"Linux","arch":"aarch64"},{"target":"macos-x86_64","runner":"macos-15-intel","system":"Darwin","arch":"x86_64"},{"target":"macos-aarch64","runner":"macos-15","system":"Darwin","arch":"arm64"}]') }}
+    env:
+      SNAPSHOT_ID: ${{ inputs.snapshot }}
+      TARGET: ${{ matrix.target }}
+      PYTHONDONTWRITEBYTECODE: '1'
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+
+      - name: Verify and extract frozen source
+        id: snapshot
+        run: |
+          set -euo pipefail
+          [[ "$SNAPSHOT_ID" =~ ^green-[0-9]+$ ]]
+          test "$(uname -s)" = '${{ matrix.system }}'
+          test "$(uname -m)" = '${{ matrix.arch }}'
+          export CARGO_HOME="$RUNNER_TEMP/cargo-home"
+          export CARGO_TARGET_DIR="$RUNNER_TEMP/cargo-target"
+          export RUSTUP_HOME="$RUNNER_TEMP/rustup-home"
+          export TMPDIR="$RUNNER_TEMP/scratch"
+          export EVIDENCE="$RUNNER_TEMP/limma-evidence"
+          printf 'CARGO_HOME=%s\nCARGO_TARGET_DIR=%s\nRUSTUP_HOME=%s\nTMPDIR=%s\nEVIDENCE=%s\n' \
+            "$CARGO_HOME" "$CARGO_TARGET_DIR" "$RUSTUP_HOME" "$TMPDIR" "$EVIDENCE" >> "$GITHUB_ENV"
+          mkdir -p "$CARGO_HOME" "$CARGO_TARGET_DIR" "$RUSTUP_HOME" "$TMPDIR" "$EVIDENCE/source-guard"
+          python3 -B - <<'PY'
+          import json, os, shutil
+          from pathlib import Path
+          runner = Path(os.environ['RUNNER_TEMP']).resolve(strict=True)
+          locations = {name: Path(os.environ[name]).resolve(strict=True)
+                       for name in ('CARGO_HOME', 'CARGO_TARGET_DIR', 'RUSTUP_HOME', 'TMPDIR', 'EVIDENCE')}
+          assert all(path.is_relative_to(runner) for path in locations.values()), 'storage escapes runner-temp'
+          usage = shutil.disk_usage(runner)
+          assert usage.free > 0, 'runner-temp is full'
+          record = dict(runner_temp=str(runner), paths={name: str(path) for name, path in locations.items()},
+                        disk_total=usage.total, disk_used=usage.used, disk_free=usage.free)
+          (locations['EVIDENCE'] / 'storage.json').write_text(json.dumps(record, indent=2) + '\n')
+          PY
+          cp scripts/infercnv_source_snapshot.py scripts/test_infercnv_source_snapshot.py "$EVIDENCE/source-guard/"
+          (
+            cd "$EVIDENCE/source-guard"
+            shasum -a 256 *.py
+          ) > "$EVIDENCE/source-guard/checksums.sha256"
+          snapshot="$GITHUB_WORKSPACE/.autopilot/snapshots/limma-core-2026-10-28/$SNAPSHOT_ID"
+          python3 -B scripts/infercnv_source_snapshot.py \
+            --snapshot-dir "$snapshot" --output-dir "$RUNNER_TEMP/limma-candidate" \
+            2>&1 | tee "$EVIDENCE/archive-verification.log"
+          cp "$snapshot/source.tar.gz" "$snapshot/files.sha256" \
+            "$snapshot/checksums.sha256" "$snapshot/README.md" "$EVIDENCE/"
+          (
+            cd "$RUNNER_TEMP/limma-candidate"
+            shasum -a 256 --check "$EVIDENCE/files.sha256"
+          ) | tee "$EVIDENCE/source-before.log"
+          {
+            git rev-parse HEAD
+            uname -a
+            df -h
+            printf 'snapshot=%s\n' "$SNAPSHOT_ID"
+          } | tee "$EVIDENCE/host.log"
+
+      - name: Install Rust 1.91
+        uses: dtolnay/rust-toolchain@1.91.0
+        with:
+          components: clippy,rustfmt
+
+      - name: Acquire and verify actual current-voom evidence
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          mkdir "$EVIDENCE/oracle-acquisition"
+          cp "$GITHUB_WORKSPACE/scripts/verify_infercnv_oracle_artifact.py" "$EVIDENCE/oracle-acquisition/verification-controller.py"
+          python3 -B - <<'PY'
+          import csv, json, os, shutil, stat, subprocess, sys, zipfile
+          from pathlib import Path
+          sys.path.insert(0, str(Path(os.environ['GITHUB_WORKSPACE']) / 'scripts'))
+          from verify_infercnv_oracle_artifact import (
+              HEX64, _archive_name, _artifact, _extract, _load_json, _run, _sha256)
+          workspace = Path(os.environ['GITHUB_WORKSPACE'])
+          base = Path(os.environ['EVIDENCE']) / 'oracle-acquisition'
+          shutil.copyfile(workspace / '.autopilot/oracles/limma-first-workflow-2026-10-28.json', base / 'receipt.json')
+          receipt = _load_json(base / 'receipt.json', 'receipt')
+          expected = dict(schema_version=1, repository='omics-rust/rsomics-world', run_attempt=1,
+              workflow_path='.github/workflows/limma-oracle.yml', run_id=40606516204,
+              artifact_id=12780957275, head_sha='d5e136a87c681e53095293638441a5a26c4dc503',
+              artifact_name='limma-oracle-40606516204-1', size_in_bytes=84976843,
+              artifact_sha256='fac61c690c3f742335446c141ac2ad78c84fe3df33d20df8e0181cc31e43f5a2',
+              bundle_path='workflow',
+              manifest_sha256='af682fed901644550411e6ae74e22b6bda45a7e567ca15e2dddc2c6b17027e97',
+              witness_sha256='091f476ca726487d23e83de7d62b5bffa7cea9021b533a4dda2043c89289a577')
+          assert receipt == expected, 'unexpected current-voom source receipt'
+          for endpoint, filename in (
+              (f"actions/runs/{receipt['run_id']}", 'run.json'),
+              (f"actions/artifacts/{receipt['artifact_id']}", 'artifact.json'),
+              (f"actions/artifacts/{receipt['artifact_id']}/zip", 'artifact.zip')):
+              with (base / filename).open('xb') as stream:
+                  subprocess.run(['gh', 'api', 'repos/omics-rust/rsomics-world/' + endpoint], stdout=stream, check=True)
+          _run(base / 'run.json', receipt)
+          zipped = base / 'artifact.zip'
+          _artifact(base / 'artifact.json', receipt, zipped)
+          assert zipped.stat().st_size == receipt['size_in_bytes'] and _sha256(zipped) == receipt['artifact_sha256']
+          source = base / 'source'
+          with zipfile.ZipFile(zipped) as archive:
+              seen, files = set(), set()
+              for member in archive.infolist():
+                  directory = member.is_dir()
+                  name = _archive_name(member.filename, directory)
+                  kind = stat.S_IFMT(member.external_attr >> 16) if member.create_system == 3 else 0
+                  assert member.orig_filename == member.filename and not member.flag_bits & 1
+                  assert kind in (0, stat.S_IFDIR if directory else stat.S_IFREG) and name not in seen
+                  seen.add(name)
+                  if not directory:
+                      files.add(name)
+              assert all('/'.join(name.split('/')[:i]) not in files for name in seen for i in range(1, len(name.split('/'))))
+              assert archive.testzip() is None, 'source ZIP CRC differs'
+              _extract(archive, source)
+          oracle = source / receipt['bundle_path']
+          manifest = oracle / 'sha256-manifest.tsv'
+          assert _sha256(manifest) == receipt['manifest_sha256']
+          with manifest.open(newline='') as stream:
+              rows = list(csv.reader(stream, delimiter='\t'))
+          assert rows.pop(0) == ['sha256', 'path'] and len(rows) == 203
+          recorded = {}
+          for digest, name in rows:
+              _archive_name(name, False)
+              assert HEX64.fullmatch(digest) and name not in recorded
+              recorded[name] = digest
+          assert list(recorded) == sorted(recorded)
+          actual = {name.removeprefix('workflow/') for name in files if name.startswith('workflow/')}
+          assert actual == set(recorded) | {'sha256-manifest.tsv'}
+          assert all(_sha256(oracle / name) == digest for name, digest in recorded.items())
+          assert _sha256(oracle / 'witness.json') == receipt['witness_sha256']
+          witness = _load_json(oracle / 'witness.json', 'source witness')
+          assert witness['status'] == 'complete' and witness['failure'] is None and all(witness['checks'].values())
+          assert witness['files'] == {name: digest for name, digest in recorded.items() if name != 'witness.json'}
+          assert witness['packages']['edgeR'] == dict(name='edgeR', version='4.10.7', bioconductor='3.23',
+              source_commit='27ba7b39d819e68df2ecdea9f32a4b6039b2a0b5',
+              source_archive_sha256='a3cc0f66be29f1a61a74021f9848ec940794e653905c4332327a719dd9ad8393')
+          assert witness['packages']['limma'] == dict(name='limma', version='3.68.5', bioconductor='3.23',
+              source_commit='825d1c8330d024adb6c54af66d79b0f4ec258530',
+              source_archive_sha256='40b1d2059a76ad98db4bf80139760acf8e8bae92a8265aaaf16ac199831533f4')
+          coverage = witness['branch_coverage']
+          assert coverage['observed'] == dict(structural_zero_residual_df_loss=True, unequal_positive_residual_df=True)
+          assert coverage['selected_moderation'] == 'fitFDistUnequalDF1' and coverage['uncovered'] == []
+          record = dict(run=receipt['run_id'], head=receipt['head_sha'], artifact=receipt['artifact_id'],
+                        artifact_sha256=receipt['artifact_sha256'], manifest_sha256=receipt['manifest_sha256'],
+                        witness_sha256=receipt['witness_sha256'], verified_files=len(recorded))
+          (base / 'verification.json').write_text(json.dumps(record, sort_keys=True) + '\n')
+          with Path(os.environ['GITHUB_ENV']).open('a') as stream:
+              stream.write('ORACLE_ROOT=' + str(oracle) + '\n')
+          print(json.dumps(record, sort_keys=True))
+          PY
+
+      - name: Verify frozen dependencies
+        id: metadata
+        working-directory: ${{ runner.temp }}/limma-candidate
+        run: |
+          set -euo pipefail
+          rustc -Vv | tee "$EVIDENCE/rustc.log"
+          cargo -V | tee "$EVIDENCE/cargo.log"
+          cargo metadata --locked --no-deps --format-version 1 > "$EVIDENCE/metadata-preflight.json"
+          python3 -B - <<'PY'
+          import json, os, shutil
+          from pathlib import Path
+          metadata = json.loads((Path(os.environ['EVIDENCE']) / 'metadata-preflight.json').read_text())
+          assert Path(metadata['target_directory']).resolve() == Path(os.environ['CARGO_TARGET_DIR']).resolve(), \
+              'Cargo target directory differs before dependency acquisition'
+          assert shutil.disk_usage(os.environ['CARGO_TARGET_DIR']).free > 0, 'Cargo target is full'
+          PY
+          cargo metadata --locked --all-features --format-version 1 > "$EVIDENCE/metadata.json"
+          python3 -B - <<'PY'
+          import json, os
+          from pathlib import Path
+          metadata = json.loads((Path(os.environ['EVIDENCE']) / 'metadata.json').read_text())
+          assert Path(metadata['target_directory']).resolve() == Path(os.environ['CARGO_TARGET_DIR']).resolve(), \
+              'Cargo target directory differs from runner-temp'
+          package = next(item for item in metadata['packages'] if item['name'] == 'rsomics-limma')
+          assert package['publish'] == [], 'candidate must remain private'
+          assert [target['name'] for target in package['targets'] if 'bin' in target['kind']] == ['rsomics-limma'], \
+              'candidate binary identity differs'
+          assert [item['name'] for item in metadata['packages'] if item['source'] is None] == ['rsomics-limma'], \
+              'candidate has a local path dependency'
+          PY
+          cp Cargo.lock "$EVIDENCE/Cargo.lock"
+
+      - name: Format and strict Clippy
+        if: ${{ !cancelled() && steps.metadata.outcome == 'success' }}
+        working-directory: ${{ runner.temp }}/limma-candidate
+        run: |
+          set -euo pipefail
+          cargo fmt --all -- --check 2>&1 | tee "$EVIDENCE/format.log"
+          cargo clippy --locked --all-targets --all-features -- -D warnings 2>&1 | tee "$EVIDENCE/clippy.log"
+
+      - name: Test debug
+        if: ${{ !cancelled() && steps.metadata.outcome == 'success' }}
+        working-directory: ${{ runner.temp }}/limma-candidate
+        run: |
+          set -euo pipefail
+          cargo test --locked --all-features --all-targets --no-fail-fast -- --nocapture \
+            2>&1 | tee "$EVIDENCE/test-debug.log"
+
+      - name: Test release
+        if: ${{ !cancelled() && steps.metadata.outcome == 'success' }}
+        working-directory: ${{ runner.temp }}/limma-candidate
+        run: |
+          set -euo pipefail
+          cargo test --locked --release --all-features --all-targets --no-fail-fast -- --nocapture \
+            2>&1 | tee "$EVIDENCE/test-release.log"
+
+      - name: Compare complete fitted workflow
+        id: comparison
+        if: ${{ !cancelled() && steps.metadata.outcome == 'success' }}
+        working-directory: ${{ runner.temp }}/limma-candidate
+        run: |
+          set -euo pipefail
+          cargo build --locked --release --bin rsomics-limma 2>&1 | tee "$EVIDENCE/build-release.log"
+          mkdir "$EVIDENCE/native-binary" "$EVIDENCE/controller" "$EVIDENCE/comparison"
+          binary="$EVIDENCE/native-binary/rsomics-limma-${{ matrix.target }}"
+          cp "$CARGO_TARGET_DIR/release/rsomics-limma" "$binary"
+          shasum -a 256 "$binary" > "$EVIDENCE/native-binary/checksums.sha256"
+          cp scripts/check-workflow.py "$EVIDENCE/controller/"
+          shasum -a 256 "$EVIDENCE/controller/check-workflow.py" > "$EVIDENCE/controller/checksums.sha256"
+          for workers in 1 4; do
+            python3 -B "$EVIDENCE/controller/check-workflow.py" \
+              --witness "$ORACLE_ROOT" --binary "$binary" \
+              --output "$EVIDENCE/comparison/workers-$workers" --workers "$workers" \
+              2>&1 | tee "$EVIDENCE/comparison/workers-$workers.log"
+          done
+
+      - name: Check worker determinism
+        if: ${{ !cancelled() && steps.comparison.outcome == 'success' }}
+        run: |
+          set -euo pipefail
+          python3 -B - <<'PY'
+          import hashlib, json, os
+          from pathlib import Path
+          root = Path(os.environ['EVIDENCE'])
+          outputs = [root / 'comparison' / f'workers-{n}' for n in (1, 4)]
+          fitted = [json.loads((out / 'fit.json').read_text()) for out in outputs]
+          assert all(fit['schema'] == 1 and fit['product'] == 'rsomics-limma' for fit in fitted)
+          assert [fit.pop('workers') for fit in fitted] == [1, 4]
+          assert fitted[0] == fitted[1], 'worker count changed complete fitted state'
+          binary_sha = hashlib.sha256((root / 'native-binary' / ('rsomics-limma-' + os.environ['TARGET'])).read_bytes()).hexdigest()
+          bounds = dict(tmm=[1e-10, 1e-10], library=[1e-8, 1e-10], expression=[1e-10, 1e-10],
+                        linear=[1e-7, 1e-6], trend=[1e-7, 1e-6], weights=[1e-6, 1e-5],
+                        eb=[1e-6, 1e-4], df=[1e-3, 1e-4], odds=[1e-5, 5e-4], probability=[1e-12, 5e-4])
+          for workers, out in zip((1, 4), outputs):
+              contract = json.loads((out / 'comparison-contract.json').read_text())
+              report = json.loads((out / 'comparison.json').read_text())
+              assert contract['workers'] == workers and contract['binary_sha256'] == binary_sha
+              assert contract['bounds'] == bounds and contract['positive_probability_log_bound'] == 1e-3
+              assert report['passed'] is True and report['failure_count'] == 0 and report['bounds'] == bounds
+              assert report['raw_genes'] == 14599 and report['kept_genes'] == 8066
+              assert json.loads((out / 'failures.json').read_text()) == []
+              assert report['native_bundle_sha256'] == hashlib.sha256((out / 'fit.json').read_bytes()).hexdigest()
+              commands = json.loads((out / 'commands.json').read_text())
+              assert len(commands) == 8 and all(row['exit'] == 0 for row in commands)
+          names = ['forward.tsv', 'reverse.tsv', 'mixed.tsv', 'logCPM.tsv', 'weights.tsv', 'fitted.tsv', 'residuals.tsv',
+                   'forward.json', 'reverse.json', 'mixed.json']
+          exports = {}
+          for name in names:
+              data = (outputs[0] / name).read_bytes()
+              assert data == (outputs[1] / name).read_bytes(), 'worker count changed ' + name
+              exports[name] = hashlib.sha256(data).hexdigest()
+          record = dict(passed=True, compared_workers=[1, 4], compared_workflows=1,
+                        fitted_state_equal=True, complete_contrast_states=3, export_tables=7,
+                        binary_sha256=binary_sha, exports_sha256=exports)
+          (root / 'worker-determinism.json').write_text(json.dumps(record, sort_keys=True) + '\n')
+          print(json.dumps(record, sort_keys=True))
+          PY
+
+      - name: Verify source remains unchanged
+        if: ${{ always() && steps.snapshot.outcome == 'success' }}
+        working-directory: ${{ runner.temp }}/limma-candidate
+        run: |
+          set -euo pipefail
+          python3 -B - <<'PY'
+          import json, os, sys
+          from pathlib import Path
+          sys.path.insert(0, str(Path(os.environ['GITHUB_WORKSPACE']) / 'scripts'))
+          from infercnv_source_snapshot import _hash_file, _manifest, _regular
+          recorded = _manifest((Path(os.environ['EVIDENCE']) / 'files.sha256').read_bytes())
+          actual = set()
+          for path in Path.cwd().rglob('*'):
+              if not path.is_dir() or path.is_symlink():
+                  _regular(path)
+                  actual.add(path.relative_to(Path.cwd()).as_posix())
+          assert actual == set(recorded), 'source file inventory changed'
+          assert all(_hash_file(name) == digest for name, digest in recorded.items()), 'source bytes changed'
+          record = dict(unchanged_files=len(recorded))
+          (Path(os.environ['EVIDENCE']) / 'source-after.json').write_text(json.dumps(record, sort_keys=True) + '\n')
+          print(json.dumps(record, sort_keys=True))
+          PY
+
+      - name: Upload raw evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: limma-${{ github.run_id }}-${{ github.run_attempt }}-${{ matrix.target }}
+          path: ${{ runner.temp }}/limma-evidence/
+          if-no-files-found: error
+          include-hidden-files: true
+          retention-days: 30
+
