@@ -40,10 +40,12 @@ versus54.94/28.95s native1/4,28.34x serial speed and21.11% lower process RSS.
 Observed worker gain1.90x has separated ranges. All original5 metrics and
 all trials pass, with521 original artifact files retained and independently
 verified. Linux/Mac real-whole reports differ only by63 TIN rounding scalars
-within unchanged bounds, not cross-platform byte identity. Current owningb7287f2
+within unchanged bounds, not cross-platform byte identity. Owningb7287f2
 also replaces duplicated thread parsing with existing Layer A ThreadArgs;
 green6/run40597129172 passes all four native classes for that CLI-only conduit;
 original API/ZIP/log/source/binary/oracle evidence is retained and verified.
+Current owning91ba1d3 only records these accepted proofs in README/MERGE_RECORD;
+no runtime/Cargo/lock change is attributed to that documentation commit.
 No numerical/runtime
 policy or new public foundation API is introduced. Registry adoption remains held.
 See rnaseq-qc-real-performance-2026-10-28.md and
@@ -82,9 +84,20 @@ immutable. Baseline schema3 whole-performance40605899832 passes compatibility
 and strict process-RSS advantage (about24x), not strict source-inner speed
 or scaling; all2393 original files are retained/verified. A measured two-line
 save fixc9f99b7 reuses existing common buffering, with byte-identical local A/B;
-green5/native40611588271 at42f378fe runs separately from that accepted baseline.
-Local trends/fallback and declared scope still keep this private, not a
-complete DESeq2 replacement. Current edgeR4.10.7/limma3.68.5
+green5/native40611588271 at42f378fe is now SUCCESS and its four original
+artifacts are retained/verified, receiptc86fec10a22f4b69a6470b99562f0bdc8d4de12496e488c227a69d962b767bf4.
+Fresh exact-pinned performance40614312003 at12d61554 now passes strict
+source-inner throughput/RSS/scaling:5.495s source versus1.05/.80s native1/4,
+5.23x/6.87x and95.88% lower serial process RSS. No I/O win. Its original2900
+files are retained/verified, separate from the earlier baseline. Four-case
+local-trend source40614317043 also passes at that head, with508 files/102 frozen
+inputs and all9 branch observations/fresh reloads retained/verified. New clean
+owningef72e3c/schema5 implements local/default-fallback/pure saved curve/FMM/VST
+and inspection; all24 complete workflows pass locally at1/4,13 tests/strict
+checks and one fresh complete-feature review pass. Green6 freezes47 source
+files for its separate four-native gate; current-feature performance is not
+inferred from green5. Declared scope/publication still keep this private, not
+a complete DESeq2 replacement. Current edgeR4.10.7/limma3.68.5
 source review now prepares its modern QL first-workflow oracle, not the old
 legacy-QL donor or a placeholder native crate. Initial source40602956264 has
 a case-sensitive controller source-path failure before fitting; all698 files
@@ -95,7 +108,17 @@ acceptance exists yet. Current limma count-workflow preflight identifies actual
 edgeR::voomLmFit -> limma contrasts/moderation as its separate product lifecycle.
 Actual limma source40606516204 is now SUCCESS at exactd5e136a8;203 original
 files are retained/verified,8066 kept genes and unequal-df moderation with
-complete save/reload/contrast/exports pass. No native/public API exists yet.
+complete save/reload/contrast/exports pass. Limma has no native/public API yet.
+Private edgeR main3a97e8f now completes modernQL/full saved workflow, all source
+discovery identities and1/4 determinism,4 tests/strict checks/fresh review. Its
+ORIGINAL numerical gate is still FAILED:2283 small P/FDR discrepancies per run.
+Independent PMF checks identify about.079% source approximation-weight differences
+at the largest failing rows; no source tables or bounds are fitted. The human
+numerical-contract choice is pending. Hold only that affected acceptance;
+see edger-native-ql-2026-10-28.md. Limma now follows the adopted before-native
+contract docs/plans/2026-10-28-limma-native-count-workflow.md in its newly created
+private owning repository, one isolated whole-workflow implementer. No new
+foundation/micro-crate or native acceptance is inferred from work in progress.
 See deseq-cook-refit-2026-10-28.md
 and edger-source-preflight-2026-10-28.md. No speculative public foundation
 expansion or second broad donor survey is performed.
