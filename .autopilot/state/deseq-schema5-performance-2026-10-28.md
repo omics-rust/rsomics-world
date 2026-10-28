@@ -1,5 +1,35 @@
 # Prepared final-code two-path performance
 
+## Accepted final-code result
+
+Performance40632494429/attempt1 at worlda3ca756d6f088678bcc44468d872ad4634bc578b
+is SUCCESS. Parent reads actual summary/distributions and full34-line report;
+immutable retained core2ec95e3c8d8f2f05af6387f9ba4e2141ea9bea8c35e16489766a97897eb76c40
+and tracked performance receipt bind exact final green7 binary6baa1f89... .
+Evidence: /Volumes/Zane's HDD/rsomics-fixtures/evidence/deseq-schema5-performance-2026-10-28/run-40632494429/.
+
+| Real14599×7 complete path | R inner median/range s | Native1 median/range s | Native4 median/range s |
+|---|---|---|---|
+| parametric/default |5.264/5.251–5.275|1.02/1.02–1.03|0.79/0.78–0.79|
+| explicit local |5.375/5.329–5.382|1.05/1.05–1.05|0.81/0.81–0.83|
+
+Both independently pass strict source-inner throughput AND process-RSS at1/4.
+Conservative median speedups5.16/6.66x and5.12/6.64x exclude R package startup;
+source whole-process medians are11.02/11.07s. Process-RSS medians are23.34–24.44x
+lower, not pure-kernel/aggregate-memory claims. Worker1→4 gain1.291/1.296x has
+disjoint ranges, not linear scaling. Same EPYC9V74/affinity0–3/BLAS1, fixed
+warmups/trials/inputs/bands/decisions. RDS4.965/5.471MB versus native JSON20.218/
+20.340MB: no smaller-storage claim. All source/native trials pass unchanged
+full-state/output contracts; this is a bounded small-real-cohort workflow.
+
+170 original metadata/measurement/representative comparison/process records
+are retained through exact HTTP206+CRC. Full1.876GB ZIP/API expected digest
+3a385377... is separately streaming in session66870/PID6628. The immutable
+core explicitly does not claim a completed local whole-ZIP digest; supplemental
+completion cannot overwrite it. No native/R rerun or exhaustive local replay.
+Public metadata/repository/registry authorization remain separate release
+work; this is not full upstream-package or publication approval.
+
 ## Dispatched complete workflow
 
 Performance40632494429 is dispatched once at world
