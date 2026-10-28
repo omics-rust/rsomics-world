@@ -1,0 +1,138 @@
+name: DESeq2 actual local-trend workflow witness
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  oracle:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    env:
+      PYTHONDONTWRITEBYTECODE: '1'
+      OMP_NUM_THREADS: '1'
+      OPENBLAS_NUM_THREADS: '1'
+      MKL_NUM_THREADS: '1'
+      DESEQ2_SOURCE_COMMIT: 16aeab6d6158bd8cbb8e98764c2f33399b1a3fd3
+      DESEQ2_SOURCE_SHA256: 8c91699286336350e66eec132ce6fdf5bb4af78e2a4d015a5a61224f62a95984
+      LOCFIT_SOURCE_SHA256: fa31b9d407f3557a6fcb7105cbd7b16a32a6fb868a7c60bc38a3e33cb7a39343
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+
+      - name: Prepare hosted source and library storage
+        run: |
+          set -euo pipefail
+          export EVIDENCE="$RUNNER_TEMP/deseq-local-trend-oracle"
+          export TMPDIR="$RUNNER_TEMP/scratch"
+          export R_LIBS_USER="$RUNNER_TEMP/R/library"
+          export R_USER_CACHE_DIR="$RUNNER_TEMP/R/cache"
+          export XDG_CACHE_HOME="$RUNNER_TEMP/cache"
+          export CARGO_HOME="$RUNNER_TEMP/cargo-home"
+          export CARGO_TARGET_DIR="$RUNNER_TEMP/cargo-target"
+          export DESEQ2_SOURCE_ARCHIVE="$EVIDENCE/DESeq2_1.52.0.tar.gz"
+          export LOCFIT_SOURCE_ARCHIVE="$EVIDENCE/locfit_1.5-9.12.tar.gz"
+          mkdir -p "$EVIDENCE/controller" "$TMPDIR" "$R_LIBS_USER" "$R_USER_CACHE_DIR" "$XDG_CACHE_HOME" "$CARGO_HOME" "$CARGO_TARGET_DIR"
+          printf 'EVIDENCE=%s\nTMPDIR=%s\nR_LIBS_USER=%s\nR_USER_CACHE_DIR=%s\nXDG_CACHE_HOME=%s\nCARGO_HOME=%s\nCARGO_TARGET_DIR=%s\nDESEQ2_SOURCE_ARCHIVE=%s\nLOCFIT_SOURCE_ARCHIVE=%s\n' \
+            "$EVIDENCE" "$TMPDIR" "$R_LIBS_USER" "$R_USER_CACHE_DIR" "$XDG_CACHE_HOME" "$CARGO_HOME" "$CARGO_TARGET_DIR" "$DESEQ2_SOURCE_ARCHIVE" "$LOCFIT_SOURCE_ARCHIVE" >> "$GITHUB_ENV"
+          python3 -B - <<'PY'
+          import json, os, shutil
+          from pathlib import Path
+          runner = Path(os.environ['RUNNER_TEMP']).resolve(strict=True)
+          names = ('EVIDENCE', 'TMPDIR', 'R_LIBS_USER', 'R_USER_CACHE_DIR', 'XDG_CACHE_HOME', 'CARGO_HOME', 'CARGO_TARGET_DIR')
+          paths = {name: Path(os.environ[name]).resolve(strict=True) for name in names}
+          assert all(path.is_relative_to(runner) for path in paths.values()), 'storage escapes runner-temp'
+          usage = shutil.disk_usage(runner)
+          assert usage.free > 8 * 2**30, 'insufficient oracle storage'
+          (paths['EVIDENCE'] / 'storage.json').write_text(json.dumps(dict(paths={key: str(value) for key, value in paths.items()},
+              disk_total=usage.total, disk_free=usage.free), indent=2) + '\n')
+          PY
+          printf '%s\n' "$GITHUB_SHA" > "$EVIDENCE/head.sha"
+          uname -a > "$EVIDENCE/host.txt"
+          df -h >> "$EVIDENCE/host.txt"
+
+      - uses: r-lib/actions/setup-r@v2
+        with:
+          r-version: '4.6.1'
+          use-public-rspm: true
+
+      - name: Acquire both exact released source archives
+        run: |
+          set -euo pipefail
+          curl -q --fail --location --retry 3 --proto '=https' --proto-redir '=https' \
+            https://bioconductor.org/packages/3.23/bioc/src/contrib/DESeq2_1.52.0.tar.gz \
+            --dump-header "$EVIDENCE/DESeq2-source.headers" --output "$DESEQ2_SOURCE_ARCHIVE"
+          curl -q --fail --location --retry 3 --proto '=https' --proto-redir '=https' \
+            https://cran.r-project.org/src/contrib/locfit_1.5-9.12.tar.gz \
+            --dump-header "$EVIDENCE/locfit-source.headers" --output "$LOCFIT_SOURCE_ARCHIVE"
+          printf '%s  %s\n%s  %s\n' "$DESEQ2_SOURCE_SHA256" "$DESEQ2_SOURCE_ARCHIVE" \
+            "$LOCFIT_SOURCE_SHA256" "$LOCFIT_SOURCE_ARCHIVE" | sha256sum --check - | tee "$EVIDENCE/source-verification.log"
+          test "$(stat -c %s "$LOCFIT_SOURCE_ARCHIVE")" -eq 207112
+          tar -xzf "$DESEQ2_SOURCE_ARCHIVE" -C "$EVIDENCE"
+          tar -xzf "$LOCFIT_SOURCE_ARCHIVE" -C "$EVIDENCE"
+          test "$(sed -n 's/^Version: //p' "$EVIDENCE/DESeq2/DESCRIPTION")" = '1.52.0'
+          test "$(sed -n 's/^Version: //p' "$EVIDENCE/locfit/DESCRIPTION")" = '1.5-9.12'
+          test -f "$EVIDENCE/locfit/R/locfit.r"
+          cp "$EVIDENCE/DESeq2/DESCRIPTION" "$EVIDENCE/DESeq2-source-DESCRIPTION"
+          cp "$EVIDENCE/locfit/DESCRIPTION" "$EVIDENCE/locfit-source-DESCRIPTION"
+
+      - name: Install dependencies and both exact source packages
+        run: |
+          set -euo pipefail
+          Rscript --vanilla - <<'RS' 2>&1 | tee "$EVIDENCE/install-dependencies.log"
+          stopifnot(as.character(getRversion()) == '4.6.1')
+          cran <- Sys.getenv('RSPM')
+          if (!nzchar(cran)) stop('setup-r did not provide RSPM')
+          options(repos=c(CRAN=cran))
+          install.packages('BiocManager', lib=Sys.getenv('R_LIBS_USER'))
+          BiocManager::install(version='3.23', ask=FALSE, update=FALSE)
+          desc <- read.dcf(file.path(Sys.getenv('EVIDENCE'), 'DESeq2', 'DESCRIPTION'))
+          fields <- c('Depends', 'Imports', 'LinkingTo')
+          deps <- trimws(unlist(strsplit(paste(desc[1, fields], collapse=','), ',', fixed=TRUE)))
+          deps <- unique(sub('[[:space:]]*\\(.*', '', deps))
+          deps <- setdiff(deps, c('R', 'locfit', rownames(installed.packages(priority='base'))))
+          BiocManager::install(c(deps, 'lattice', 'digest', 'jsonlite'), ask=FALSE, update=FALSE,
+                               dependencies=c('Depends', 'Imports', 'LinkingTo'), Ncpus=2L)
+          missing <- setdiff(c(deps, 'lattice', 'digest', 'jsonlite'), rownames(installed.packages()))
+          if (length(missing)) stop('missing oracle dependencies: ', paste(missing, collapse=', '))
+          RS
+          R CMD INSTALL --preclean --clean --library="$R_LIBS_USER" "$EVIDENCE/locfit" \
+            2>&1 | tee "$EVIDENCE/install-locfit.log"
+          R CMD INSTALL --preclean --clean --library="$R_LIBS_USER" "$EVIDENCE/DESeq2" \
+            2>&1 | tee "$EVIDENCE/install-DESeq2.log"
+          Rscript --vanilla -e 'stopifnot(as.character(packageVersion("DESeq2")) == "1.52.0", packageDescription("locfit", fields="Version") == "1.5-9.12", as.character(BiocManager::version()) == "3.23"); library(DESeq2)'
+
+      - name: Fit frozen cases and reload in a fresh R process
+        run: |
+          set -euo pipefail
+          cp scripts/deseq_workflow_oracle.R scripts/deseq_design_workflows.R scripts/deseq_local_trend_workflows.R "$EVIDENCE/controller/"
+          (
+            cd "$EVIDENCE/controller"
+            sha256sum *.R
+          ) > "$EVIDENCE/controller/checksums.sha256"
+          set +e
+          Rscript --vanilla "$EVIDENCE/controller/deseq_local_trend_workflows.R" fit "$EVIDENCE/DESeq2" "$EVIDENCE/locfit" "$EVIDENCE/local" \
+            2>&1 | tee "$EVIDENCE/fit.log"
+          fit_status=$?
+          Rscript --vanilla "$EVIDENCE/controller/deseq_local_trend_workflows.R" reload "$EVIDENCE/DESeq2" "$EVIDENCE/locfit" "$EVIDENCE/local" \
+            2>&1 | tee "$EVIDENCE/reload.log"
+          reload_status=$?
+          set -e
+          printf 'fit\t%s\nreload\t%s\n' "$fit_status" "$reload_status" > "$EVIDENCE/process-status.tsv"
+          if (( fit_status != 0 || reload_status != 0 )); then exit 1; fi
+
+      - name: Retain complete source and failed-case evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: deseq-local-trend-oracle-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ env.EVIDENCE }}
+          if-no-files-found: error
+          include-hidden-files: true
+          retention-days: 90
