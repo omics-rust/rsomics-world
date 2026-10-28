@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "repository": "omics-rust/rsomics-world",
+  "workflow_path": ".github/workflows/ecology-diversity-oracle.yml",
+  "run_id": 40634594900,
+  "run_attempt": 1,
+  "head_sha": "e712975eceec6ac8120fa84ac617498016a12221",
+  "artifact_id": 12792734146,
+  "artifact_name": "ecology-diversity-oracle-40634594900-1",
+  "size_in_bytes": 142733553,
+  "artifact_sha256": "51a14cfbbc64b6cd7c07d7a61788d224924a44a3de02ae51c593a3a4d3e792fe",
+  "bundle_path": "witness",
+  "manifest_sha256": "34b96bfccadb55f6a2ff57e443c8089a1b3636171bea7be6b89c4d86ef727439",
+  "witness_sha256": "b6eb9045c2dceba4754821f90c8c553a3da221f04405364bbd0639fd4fd146a1",
+  "verification_sha256": "2d99ce956ac4dbc0bbee0775f650e5fe7f1ce32efabc8509c39e4b394b0894ae",
+  "manifest_files": 654,
+  "runtime": {"numpy": "2.5.4", "scipy": "1.18.1", "scikit-bio": "0.7.3", "biom-format": "2.1.17"},
+  "required_driver_calls": 46,
+  "verification_scope": "Original whole ZIP digest/CRC/safe paths and source/runtime/wheel/function/witness records; required source lifecycle and explicit boundary observations. No native compatibility, scientific replay, performance or pending native-policy acceptance."
+}

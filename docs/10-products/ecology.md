@@ -1,7 +1,12 @@
 # Community ecology product dossier
 
-Status: source and upstream-operation audit complete. The target repository has
-not been created.
+Status: source and upstream-operation audit complete. The hosted0.7.3 diversity
+workflow and original real community table/tree are qualified. One private
+unpublished ecology repository has a reviewed, source-matching sparse alpha
+path at main01c9089; beta/rarefy public boundary decisions remain pending.
+See `.autopilot/state/ecology-initial-diversity-2026-10-28.md` and
+`../plans/2026-10-28-ecology-sparse-alpha-native.md`. No native4/performance or
+complete first-release claim exists yet.
 
 ## Boundary
 

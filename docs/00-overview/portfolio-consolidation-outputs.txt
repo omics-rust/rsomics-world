@@ -2,6 +2,7 @@
 rsomics-annotation
 rsomics-bed
 rsomics-deseq
+rsomics-ecology
 rsomics-edger
 rsomics-fastq-preprocess
 rsomics-limma
