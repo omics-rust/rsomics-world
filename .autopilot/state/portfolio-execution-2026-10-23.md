@@ -2,10 +2,26 @@
 
 ## Current native-gate scheduling
 
+Complete DESeq default/local performance40632494429 attempt1 passes at
+worlda3ca756d6f088678bcc44468d872ad4634bc578b after exact push controller40632350223
+SUCCESS; retained-core result verification is in progress. Limma40632499406
+attempt1 fails before timing on Bioconductor config timeout; same-head retry2
+installs correctly, then its source warmup inspection fails one invalid
+stored-matrix-versus-labelled-TSV equality check. All fixed numeric/discovery
+checks pass. Parent corrects only untimed reserialization consistency; source,
+native executable/timed code/bounds/decision unchanged. See respective states.
+
+TMM read-only review confirms one identical149-line kernel with two real
+edgeR/limma consumers; no public item/product change yet. Preserve the inherited
+stats lock, finish baselines before isolated candidate/adoption. Ecology next
+count-table alpha/beta/rarefy source workflow is prepared using existing
+common/help/phylo-tree, no new foundation. Undefined-distance native rule is
+held for the async user choice; source capture/other products continue.
+
 World9118ba796783e5099048de5ec3256d6440d5f479 is pushed and exact controller
 40628937275 passes. Final DESeq green7/run40629123490 and limma green1/
 run40629128374 both actually pass all four native classes. Retention is in
-progress; performance has not yet run. Preserve exact-head four-job/step/raw
+progress; completed/running performance is recorded above. Preserve exact-head four-job/step/raw
 logs and deeply verify the selected Linux artifact/source/binary/full outputs.
 The immutable core receipt explicitly distinguishes that proof from pending
 non-Linux archive mirrors. Continue external full mirroring as supplemental;

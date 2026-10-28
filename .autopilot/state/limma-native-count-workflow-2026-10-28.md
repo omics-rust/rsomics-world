@@ -17,6 +17,13 @@ supplemental mirroring at core creation. No cross-platform floating byte
 identity or all-four-local-archive claim is made. Complete performance and
 release gates remain separate; do not rerun accepted native CI.
 
+Supplemental local retention is now complete on all four classes; full
+verification SHA df89792831c424ddffdd1721f6abc5948c67fb47f53d45eb7348431c820ba2ef,
+same evidence root/REPORT.md. All8 complete workflows/64 commands/9,098,992
+numeric points pass; original source bands and worker-state/export rules
+unchanged. Immutable core57581e43... remains unchanged and continues to bind
+the performance receipt. This completion is not a new native or source run.
+
 ## Current completed private implementation
 
 Clean private main abb4a01cfc074caab53c47336953039f6ada2e60 contains the

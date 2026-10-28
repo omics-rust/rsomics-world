@@ -1,5 +1,12 @@
 # Prepared final-code two-path performance
 
+## Dispatched complete workflow
+
+Performance40632494429 is dispatched once at world
+a3ca756d6f088678bcc44468d872ad4634bc578b after exact-head push controller
+40632350223 SUCCESS. It consumes the retained final green7 Linux binary;
+no native compile/fallback or source-contract change. Result pending.
+
 Final green7 native40629123490 passes all four actual native classes at
 world9118ba796783e5099048de5ec3256d6440d5f479; exact push controller40628937275
 passes497 tests/two existing skips. All four required-step APIs and original
