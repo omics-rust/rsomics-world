@@ -34,8 +34,13 @@ proven product query contexts, not a reason to change numerical tolerances.
 Product-local source query framing now passes all original whole-data metrics
 at one/four workers, with deterministic reports and one physical BAM read.
 Whole native source compatibility and four-native acceptance now pass.
-Formal whole performance40592936910 runs at world5fcb3820 on the exact
-accepted Linux binary, not the old failing candidate. Current owningb7287f2
+Formal whole performance40592936910 now passes at world5fcb3820 on the exact
+accepted green5 Linux binary, not the old failing candidate:1557.27s source
+versus54.94/28.95s native1/4,28.34x serial speed and21.11% lower process RSS.
+Observed worker gain1.90x has separated ranges. All original5 metrics and
+all trials pass, with521 original artifact files retained and independently
+verified. Linux/Mac real-whole reports differ only by63 TIN rounding scalars
+within unchanged bounds, not cross-platform byte identity. Current owningb7287f2
 also replaces duplicated thread parsing with existing Layer A ThreadArgs;
 green6/run40597129172 passes all four native classes for that CLI-only conduit;
 original API/ZIP/log/source/binary/oracle evidence is retained and verified.
@@ -67,10 +72,18 @@ low-df source40602110279 fails only on runtime
 JSON before inputs/fits; original154-file artifact is retained. Fresh corrected
 qualification40603312183 is SUCCESS at1f3f7a00 after controller40603137886
 SUCCESS, with284 verified files, all5 probes and three positive MC priors
-qualified. Native mean/low-df work now follows its own complete-workflow plan;
-source adopted=FALSE provenance remains immutable. Local trends/fallback and
-formal performance still keep this
-private, not a complete DESeq2 replacement. Current edgeR4.10.7/limma3.68.5
+qualified. Owning1401149/schema4 implements explicit mean trends and actual
+low-df fixed-reference prior runtime evaluation; all20 complete workflows
+pass at1/4 workers locally and one fresh feature review passes. Frozen green4
+four-native40609417746 is now terminal SUCCESS at exact3768a323; original
+artifact retention is in progress. Source adopted=FALSE provenance remains
+immutable. Baseline schema3 whole-performance40605899832 passes compatibility
+and strict process-RSS advantage (about24x), not strict source-inner speed
+or scaling; all2393 original files are retained/verified. A measured two-line
+save fix reuses existing common buffering, with byte-identical local A/B;
+new native/measurement gates are separate from that accepted baseline.
+Local trends/fallback and declared scope still keep this private, not a
+complete DESeq2 replacement. Current edgeR4.10.7/limma3.68.5
 source review now prepares its modern QL first-workflow oracle, not the old
 legacy-QL donor or a placeholder native crate. Initial source40602956264 has
 a case-sensitive controller source-path failure before fitting; all698 files
@@ -78,8 +91,11 @@ remain retained, and corrected40603806303 is SUCCESS at1bc92a1e after controller
 40603400276 SUCCESS. Original88-file source artifact is verified:8066 kept
 genes, modernQL fit, full saved-state/reload and exports pass. No native edgeR
 acceptance exists yet. Current limma count-workflow preflight identifies actual
-edgeR::voomLmFit -> limma contrasts/moderation as its separate product lifecycle;
-no native/public API exists yet. See deseq-cook-refit-2026-10-28.md
+edgeR::voomLmFit -> limma contrasts/moderation as its separate product lifecycle.
+Actual limma source40606516204 is now SUCCESS at exactd5e136a8;203 original
+files are retained/verified,8066 kept genes and unequal-df moderation with
+complete save/reload/contrast/exports pass. No native/public API exists yet.
+See deseq-cook-refit-2026-10-28.md
 and edger-source-preflight-2026-10-28.md. No speculative public foundation
 expansion or second broad donor survey is performed.
 

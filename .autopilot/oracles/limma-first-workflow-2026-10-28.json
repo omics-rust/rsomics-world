@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "repository": "omics-rust/rsomics-world",
+  "run_attempt": 1,
+  "workflow_path": ".github/workflows/limma-oracle.yml",
+  "run_id": 40606516204,
+  "artifact_id": 12780957275,
+  "head_sha": "d5e136a87c681e53095293638441a5a26c4dc503",
+  "artifact_name": "limma-oracle-40606516204-1",
+  "size_in_bytes": 84976843,
+  "artifact_sha256": "fac61c690c3f742335446c141ac2ad78c84fe3df33d20df8e0181cc31e43f5a2",
+  "bundle_path": "workflow",
+  "manifest_sha256": "af682fed901644550411e6ae74e22b6bda45a7e567ca15e2dddc2c6b17027e97",
+  "witness_sha256": "091f476ca726487d23e83de7d62b5bffa7cea9021b533a4dda2043c89289a577"
+}

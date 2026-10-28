@@ -2,6 +2,44 @@
 
 ## Current state
 
+Whole-input run40592936910 is terminal SUCCESS at exact world
+5fcb3820198c8fe8fd3e463a609b276df7ae590a. Original artifact/API/logs and all
+521 files are retained and independently verified. Both strict serial
+throughput and process-RSS advantages pass for the immutable green5 binary.
+This replaces the prior pending status, not the earlier failed whole campaign.
+
+Full9,810,963-record BAM/58,384-annotation report, median[min,max] seconds:
+five actual RSeQC scripts1557.27[1538.23,1586.01], native1
+54.94[54.27,56.23], native4 28.95[28.56,29.41]. Warm-cache source has3 timed
+trials, native5 per worker setting, plus fixed warmups. Serial speed28.3449x;
+four-worker speed53.7917x versus source; observed worker gain1.89775x with
+strict range separation. Process peak RSS medians885276/698436/704704KiB:
+serial21.1053% lower, not the old chr21 ratio. Native4 uses more total CPU;
+output-block counts are higher and input blocks zero, so no I/O advantage.
+Host is AMD EPYC9V74 Linux x86_64, fixed four logical CPUs, not80 allocated
+cores. All32 measured commands exit0 with no leftover child/timeout.
+
+All5 source metric gates pass on all4 source workflows. Coverage100 bins is
+exact, sum13624401; all58384 ordered TIN rows/45052 eligible/1041 eligible-zero
+match. Linux TIN error is actually zero against each source table. All12
+native report directories/7 TSVs are byte-identical across workers/trials.
+Linux real-report SHA8ce96492da5b184e961bb702cbf4d5de913db3f478aeb8045b09bcc447b4aebf
+differs from the earlier Mac70d947... only in63 TIN scalars, maximum
+2.842170943040401e-14, inside the unchanged1e-9+1e-9*abs bound. No other
+field/summary/population changes. Do not claim real-whole cross-platform bytes.
+
+Evidence:
+/Volumes/Zane's HDD/rsomics-fixtures/evidence/rnaseq-qc-real-performance-2026-10-28/run-40592936910/.
+Artifact12781035705,492933159bytes, ZIP SHA
+2072ae441c3a2fca21a160db385b612c5596dfb594c50e0cd649edf68c3284a7;
+verification.json SHA
+fdee7132f239d321aa29363337739fd48eefba54daa430a30a3641ba103d405c.
+REPORT.md records original versions, inputs, flags, raw distributions, units,
+binary/source/lock bindings and limitations. No R/native measurement was rerun
+during retention. Publication remains held by registry authorization.
+
+## Implementation and native-gate history
+
 The private source-query implementation now matches the complete original
 source metrics at one/four workers locally:9,810,963 records,58,384 TIN rows,
 45,052 eligible,100 coverage bins and total13,624,401. Report bytes match
@@ -41,12 +79,9 @@ scratch /Volumes/KIOXIA/Developments/tmp/rnaseq-green5-runtime.bZFvxO/.
 Only native provenance pins change; original input cache, metrics, source
 commands, tolerances, trial counts and measurement/advantage logic do not.
 Exact controller40592727977 at5fcb3820198c8fe8fd3e463a609b276df7ae590a
-passes. Whole-input performance40592936910 is active at that source, already
-past acquisition/runtime/input verification and measuring the actual report.
-Wait for this exact run; do not rerun unchanged source campaigns or borrow
-the earlier chr21 advantage. Raw original inputs and all numerical gates are
-unchanged. The four-source-workflow measurement includes a warmup plus three
-timed repetitions and can take a few hours; independent product work continues.
+passes. Whole-input performance40592936910 subsequently passes as recorded
+above. Do not rerun unchanged source campaigns or borrow the earlier chr21
+advantage. Raw original inputs and all numerical gates remain unchanged.
 Do not rerun R for diagnosis, use an old binary for new timings, or claim the
 old chr21 advantage transfers automatically. Registry publication is separately
 blocked by authentication (see shared-pileup state); the goal remains active.
@@ -88,7 +123,7 @@ query contexts over one physical BAM read for rseqc-5.0.5, preserving canonical
 global behavior/no-index input and original metrics/output contracts. See
 docs/plans/2026-10-28-rnaseq-query-contexts.md and
 rnaseq-query-context-task-2026-10-28.md. The complete consumer comparison now
-passes locally as above; no formal performance acceptance is claimed. The shared library
+passed locally at that checkpoint; formal performance was not yet claimed. The shared library
 patch may ship on its own validated engine contract; the RNA product remains
 unpublished until this separate source-policy gate and its measurements pass.
 
