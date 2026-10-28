@@ -9,3 +9,4 @@ rsomics-limma
 rsomics-rnaseq-qc
 rsomics-sc
 rsomics-seq
+rsomics-structure

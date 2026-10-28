@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "repository": "omics-rust/rsomics-world",
+  "workflow_path": ".github/workflows/structure-first-workflow-oracle.yml",
+  "run_id": 40644150133,
+  "run_attempt": 1,
+  "head_sha": "d709ad00973dd60f1c16c340fc5a4c37474bf13f",
+  "controller_run_id": 40643918864,
+  "artifact_id": 12796383806,
+  "artifact_name": "structure-first-workflow-oracle-40644150133-1",
+  "size_in_bytes": 67499749,
+  "artifact_sha256": "0ceccb563c3efdd7ad0136ed034c915065a67f4250389f834bd95c388688439e",
+  "artifact_digest_verified_locally": true,
+  "manifest_sha256": "3ecb8144ee1358082609c59505c1291f979a27930fc462032dffd577a02a2de6",
+  "verification_sha256": "de8e5f1c793c16fba00d9bb61064af8c1c51452c2df4adf6ee81459683c82a24",
+  "bundle_path": "witness",
+  "manifest_files": 460,
+  "runtime": {"biopython": "1.87", "gemmi": "0.7.3", "numpy": "2.3.4", "threadpoolctl": "3.6.0"},
+  "observations": {"returned": 69, "allowed_exceptions": 2, "warnings": 148},
+  "historical_golden_byte_matches": 17,
+  "native_degenerate_torsion_policy": "pending explicit user decision; source returns finite minus pi with two warnings",
+  "verification_scope": "Complete original ZIP/CRC/safe paths, exact-head controller/run/step/log/source/wheel/runtime/provenance and all source request-observation records. No local scientific replay, native compatibility, numerical-band adoption, performance or publication acceptance."
+}

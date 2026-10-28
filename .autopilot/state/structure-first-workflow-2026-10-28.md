@@ -1,5 +1,62 @@
 # Structure first-workflow source qualification
 
+## Accepted source and current native gate
+
+Exact-head controller40643918864 passes at worldd709ad00973dd60f1c16c340fc5a4c37474bf13f
+(504tests/two skips). First source40644150133/attempt1 is SUCCESS there. Parent
+reads the full original-source REPORT.md and immutable core
+de8e5f1c793c16fba00d9bb61064af8c1c51452c2df4adf6ee81459683c82a24,
+/Volumes/Zane's HDD/rsomics-fixtures/evidence/structure-first-workflow-oracle-2026-10-28/run-40644150133/.
+Complete67499749-byte ZIP matches API0ceccb56...;461files/460manifest entries,
+all source/runtime/wheel/compiled-module bindings and71observations are retained.
+Actual69returns/two predeclared exceptions and17/17byte-equal historical goldens
+are verified; no local scientific import/reexecution or native result is inferred.
+
+Four complete selection/write/reload/analysis chains distinguish raw CIF from
+lossful Structure views. Integrated46→22source atom rows retain dual IDs and
+null/literal states, versus15selected/22unpacked analysis atoms. Contacts are
+inclusive at3Angstrom while HSE is strict; operation-specific conformer and
+float32 geometry profiles remain distinct. Full source warnings are retained.
+
+The explicitly observed collinear calc_dihedral return is finite -pi, with
+two scalar-divide RuntimeWarnings, NOT NaN. Parent reads that original record
+and actual constructor/PDB-limit exceptions. Async user choice now holds only
+native degenerate-torsion representation: typed unavailable/known incompatibility
+versus retained -pi+warning. Do not decide by silence or relabel source output.
+
+Adopted docs/plans/2026-10-28-structure-native-io-fitness.md authorizes one
+private external mmcif-cif0.3.1 harness against these actual raw source records.
+Parent now reads the full private I/O REPORT.md and613-line harness at
+/Volumes/KIOXIA/Developments/tmp/structure-native-io-20261028.QwxQW1/,
+reportSHA c4190f92314a14300fe6a666baad20b0b475e912cd1bb44d111fba938e2d6cd0,
+manifest09d3839dffcee5d7a577be161f4438de68bba84e68ff90506abd173723416033.
+The one integrated Rust test passes46→22authored/7categories/964cells and
+644→556real/60categories/19973cells, complete original/selected category and
+null/text/absence/row identity comparisons, zero source-token differences.
+Full-document write/reload equality, direct pinned format and strict Clippy pass.
+Actual .crate27655046... and VCS72419bac... are retained. No local scientific
+replay or numerical policy was introduced. This admits only the narrow raw
+parser/writer candidate, not the diagnostic map-heavy harness as production.
+
+Production must retain one raw document with compact typed coordinate/identity
+handles, not clone each diagnostic Cell into document/categories/atom maps.
+The admitted profile is single-block/single atom-site coordinate table; source
+span/cell limits and unsupported deposition/mixed-loop/save-frame policies stay
+explicit. Neither admitted input contains anisotrop, so that branch remains
+unqualified rather than silently advertised. No coordinate foundation, native
+numeric bands/complete workflow/native4/performance or public release exists.
+
+Fresh local target absence and GitHub404 permit one private owning main at
+/Volumes/KIOXIA/Documents/omics-rust/rsomics-structure (no remote). Adopted
+docs/plans/2026-10-28-structure-private-io-product.md assigns the actual shared
+PDB/CIF spine and working inspect/select/split slice. Only those commands may
+be present, no future operation stubs/public model. The complete planned
+first product still includes real analyses afterward. Parent owns world/Git/
+review/adoption; the worker owns this isolated new product only. Historical
+inventory excludes the new consolidation output, preserving source-pool totals.
+
+## Producer and assessment history
+
 The producer is now complete, stable and parent-read in full: workflow134lines,
 helper769lines and two compact standard-library tests75lines. Seed archive
 1d22709c635f6427cb5da4843a3e98225329c35cc653d4a51a9c471f999752ec

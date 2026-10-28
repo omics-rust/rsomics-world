@@ -1,7 +1,12 @@
 # Protein-structure product dossier
 
 Status: boundary, upstream-operation, and historical-source audit complete.
-The target repository does not yet exist.
+The complete pinned first-workflow source is qualified at run40644150133;
+private raw mmCIF I/O fitness passes the admitted identity contract. A private
+unpublished owner is now implementing the shared PDB/CIF spine and actual
+inspect/select commands. Native degenerate-torsion representation is held for an
+explicit compatibility choice; no native4/performance or release is claimed.
+See `.autopilot/state/structure-first-workflow-2026-10-28.md`.
 
 ## Portfolio decision
 
@@ -19,7 +24,8 @@ The upstream contracts reviewed on 2026-07-31 are:
 | Contract | Reviewed source | Role |
 |---|---|---|
 | Coordinate formats | [wwPDB PDB format 3.3](https://www.wwpdb.org/documentation/file-format-content/format33/v3.3.html) and [PDBx/mmCIF dictionaries](https://mmcif.wwpdb.org/) | format semantics |
-| Rust coordinate IO | [`pdbtbx` 0.12.0](https://docs.rs/pdbtbx/0.12.0/pdbtbx/) | external PDB/mmCIF parser and writer candidate |
+| Rust coordinate IO | [`pdbtbx` 0.12.0](https://docs.rs/pdbtbx/0.12.0/pdbtbx/) | historical candidate rejected as authoritative model: loses dual IDs/null kinds |
+| Raw mmCIF IO | [`mmcif-cif` 0.3.1](https://docs.rs/mmcif-cif/0.3.1/mmcif_cif/) | narrow private parser/writer candidate passes actual original/selected field contracts; broader production support still gated |
 | Biopython structure analysis | [Biopython 1.87 Bio.PDB guide](https://biopython.org/docs/latest/Tutorial/chapter_pdb.html) | geometry, contacts, HSE, dihedral, and fixed-correspondence superposition oracle |
 | DSSP | [`mkdssp` 4.5.8](https://github.com/PDB-REDO/dssp/releases/tag/v4.5.8) and the [DSSP 4 format description](https://pdb-redo.eu/dssp/about) | secondary-structure and annotation oracle |
 | FreeSASA | [FreeSASA 2.1.3](https://github.com/mittinatten/freesasa/releases/tag/2.1.3) and its [CLI contract](https://freesasa.github.io/doxygen/CLI.html) | SASA algorithms, classifiers, and output oracle |
