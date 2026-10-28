@@ -1,62 +1,49 @@
 # Active portfolio execution
 
-## Current native-gate scheduling
+## Current position
 
-DESeq final green7 two-real-path performance40632494429 is accepted after
-parent reads the original summary/distributions and immutable core2ec95e3c...
-(170 original selected members, actual CI/source/native comparisons; whole
-ZIP mirror supplemental/pending). Full14599×7 parametric/local R-inner
-medians5.264/5.375s versus native1=1.02/1.05s, native4=.79/.81s. Both strict
-throughput AND process-RSS pass; actual worker gain~1.29x with disjoint ranges,
-not4x. No startup-inflated primary speed or smaller-storage claim.
+Full30-family goal is active and unchanged. Prior accepted controller head
+18bf36d3 passes40635888758 (502tests/two existing skips). Current integration
+passes architecture validation and504tests55.376s/two existing skips; exact
+push-head CI is still required. The gates below supersede the historical
+execution narrative further down.
 
-Limma's corrected source serialization check passes in new40634590605; its
-next auxiliary byte check fails only reverse JSON signed-zero encoding. Actual
-complete JSON values equal, fit/forward/mixed/all7 TSV bytes match. Parent
-retains only value-level exactness for untimed regenerated contrast JSON,
-without altering actual timed output/worker-byte determinism, source bands,
-native/timed code/options or performance rules. Local502 tests pass54.442s.
-Ecology source40634594900 is SUCCESS at exacte712975e; original142.7MB artifact
-is being retained. Full-study table/metadata/selected-tree originals are now
-acquired externally; actual BIOM/tip/depth qualification remains pending.
+| Workstream | Verified current position | Next affected gate |
+|---|---|---|
+| DESeq | final green7/native40629123490 passes all4classes; default/local performance40632494429 accepted, core2ec95e3c... | release metadata/registry authorization, not more native/source campaigns |
+| limma | green1/native40629128374 all4classes; complete voom performance40636288327 accepted, core146f0296... | release metadata/registry authorization; no scaling-win claim |
+| edgeR | complete private QL workflow; original P/FDR gate remains failed | explicit numerical-contract decision; no band tuning |
+| ecology | source40634594900 fully retained/qualified; whole real table/tree/IDs pass raw checks; reviewed private sparse-alpha committed01c9089, 50 calls/594 values pass | undefined beta/depth-zero rarefy choices hold only those adapters; full product/native4/performance unearned |
+| structure | actual parser/asset/selection assessment and source producer complete; independent whole-producer review passes | exact-head controller and hosted source qualification then real private model/I/O; no new coordinate foundation |
+| shared TMM | identical149-line kernel with two actual edgeR/limma consumers; bounded stats0.2.5 candidate underway | isolated candidate/two consumer contracts; preserve inherited stats lock; no public item yet |
 
-Complete DESeq default/local performance40632494429 attempt1 passes at
-worlda3ca756d6f088678bcc44468d872ad4634bc578b after exact push controller40632350223
-SUCCESS; retained-core result verification is in progress. Limma40632499406
-attempt1 fails before timing on Bioconductor config timeout; same-head retry2
-installs correctly, then its source warmup inspection fails one invalid
-stored-matrix-versus-labelled-TSV equality check. All fixed numeric/discovery
-checks pass. Parent corrects only untimed reserialization consistency; source,
-native executable/timed code/bounds/decision unchanged. See respective states.
+DESeq full14599×7 parametric/local R-inner medians5.264/5.375s versus native1
+1.02/1.05s and native4 .79/.81s. Both strict throughput AND process-RSS pass;
+worker gain~1.29x has disjoint ranges, not4x. Limma R-inner1.889s versus native1
+.57s/native4 .60s: both strict throughput AND RSS pass, but worker scaling
+FAILS (overlapping ranges, median ratio.95). No startup-inflated primary speed,
+pure-kernel/aggregate-memory or universally smaller-storage claim.
 
-TMM read-only review confirms one identical149-line kernel with two real
-edgeR/limma consumers; no public item/product change yet. Preserve the inherited
-stats lock, finish baselines before isolated candidate/adoption. Ecology next
-count-table alpha/beta/rarefy source workflow is prepared using existing
-common/help/phylo-tree, no new foundation. Undefined-distance native rule is
-held for the async user choice; source capture/other products continue.
+Native four-job/required-step/raw-log gates stay mandatory. Selected Linux
+source/binary/full workflows are deeply retained; other archive mirroring is
+supplemental, not another mathematical replay/campaign. DESeq performance
+whole ZIP is complete/digest-verified separately without changing its core;
+limma performance whole ZIP is also complete/digest-verified separately. Prior
+failed harness runs remain failed.
+Their representation-only fixes change no native/timed code, bounds or rules.
 
-World9118ba796783e5099048de5ec3256d6440d5f479 is pushed and exact controller
-40628937275 passes. Final DESeq green7/run40629123490 and limma green1/
-run40629128374 both actually pass all four native classes. Retention is in
-progress; completed/running performance is recorded above. Preserve exact-head four-job/step/raw
-logs and deeply verify the selected Linux artifact/source/binary/full outputs.
-The immutable core receipt explicitly distinguishes that proof from pending
-non-Linux archive mirrors. Continue external full mirroring as supplemental;
-do not block the next workflow on redundant local replays or rerun native CI.
-All source/numeric/test/four-native gates remain unchanged. This implements
-the user's workflow-level, lower-defensive-cost execution preference.
+Ecology entire real41328×1105 table has0.6887%nonzeros; use a shared sparse
+model, not dense edge×sample arrays. No-drop uniform rarefaction depth<=3;
+never label a higher-depth subset full input. Existing common/help/phylo-tree
+are sufficient; no matrix/count/RNG foundation. Source/runtime/input proofs,
+raw qualification and public-policy acceptance are distinct.
 
-Limma performance follows docs/plans/2026-10-28-limma-real-workflow-performance.md;
-its four-file harness is complete and parent-reviewed. Both actual retained
-core receipts now exist: DESeq761cd570... and limma57581e43..., binding final
-Linux ZIP/source/binary/complete workflows and all four job/step/raw logs.
-The other-platform archive mirrors are explicitly supplemental. No fake
-receipt, native ID, R fit or measurement is substituted. Registry
-authorization remains held separately: latest secret metadata is unchanged
-at2026-09-08T20:26:08Z; no secret value is read or failed publish retried.
+Registry authorization remains held separately: secret metadata last checked
+unchanged at2026-09-08T20:26:08Z. Never read its value or retry the unchanged
+failed publication. Relevant family states/receipts own detailed gates and
+pending human decisions; do not pause the portfolio at a phase boundary.
 
-## Current position, 2026-10-28
+## Prior gates and held contracts, 2026-10-28
 
 Full30-family goal is active and unchanged. Grouped-i6 Bayes has accepted
 four-native semantics and bounded whole-path performance; do not rerun those
