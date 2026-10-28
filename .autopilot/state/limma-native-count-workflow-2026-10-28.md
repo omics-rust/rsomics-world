@@ -1,5 +1,22 @@
 # Private current voom/limma native workflow
 
+## Accepted four-native execution and retained core
+
+Final green1/run40629128374 passes all four native classes at exact world
+9118ba796783e5099048de5ec3256d6440d5f479 after push controller40628937275
+passes497 tests/two existing skips. All11 required steps and original raw job
+logs pass/bind on each platform. Linux x86_64 original187949543-byte ZIP,
+all29 source files/binary and complete1/4 source/state/export checks pass.
+Immutable core SHA57581e430795ed6df5f506abe5ef4751c48e36eb53687626527cead870af2f7f,
+REPORT SHAd4056c51d823af2a12ac69da9688d6206878067b6b783d25d5dab00f77ceb9a2,
+/Volumes/Zane's HDD/rsomics-fixtures/evidence/limma-native-2026-10-28/run-40629128374/.
+Tracked green1 receipt binds artifact12790905881/ZIP894658c5... and binary
+fb1f65486c0cda3553f8e22d56fa157b5fa45bb1c7d5180628f36a6f22a271ba.
+Linux aarch64 also passes full local retention; both Mac archives remain
+supplemental mirroring at core creation. No cross-platform floating byte
+identity or all-four-local-archive claim is made. Complete performance and
+release gates remain separate; do not rerun accepted native CI.
+
 ## Current completed private implementation
 
 Clean private main abb4a01cfc074caab53c47336953039f6ada2e60 contains the
