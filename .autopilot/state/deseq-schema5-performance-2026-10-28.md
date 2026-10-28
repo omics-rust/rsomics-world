@@ -30,6 +30,12 @@ completion cannot overwrite it. No native/R rerun or exhaustive local replay.
 Public metadata/repository/registry authorization remain separate release
 work; this is not full upstream-package or publication approval.
 
+Supplemental whole ZIP is now complete: full-zip-verification.json reports
+original1876191146bytes and matching3a385377... digest, one preserved original
+copy, no nested replay and unchanged core2ec95e3c... . Parent reads that
+separate completion record. The tracked original core receipt remains its
+historical acceptance scope; no core overwrite/requalification/rerun occurs.
+
 ## Dispatched complete workflow
 
 Performance40632494429 is dispatched once at world
