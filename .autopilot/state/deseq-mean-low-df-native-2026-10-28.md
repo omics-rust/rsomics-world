@@ -1,6 +1,6 @@
 # Native mean-trend/low-df execution
 
-Owning clean localmain140114900b37557673368494b6a4f4cb1a43b985 implements
+Owning committed140114900b37557673368494b6a4f4cb1a43b985 implements
 schema4 explicit --fit-type mean, typed actual trend and analytic/fixed-reference
 prior through the existing fit/refit pipeline and one Rayon pool. Default
 parametric remains unchanged; unsupported local fallback still fails clearly.
@@ -38,7 +38,10 @@ and full1/4-worker state/exports. Two compact routing/determinism/Bash tests
 and one actual retained-data acquirer replay pass; the replay is explicitly
 fresh_api=false and executes no R/native fit.
 
-Exact four-native gate is next, not yet accepted. Prior green3 and its running
+Exact four-native40609417746 at world3768a323 is terminal SUCCESS on all four
+classes. Original artifact retention/verification is in progress. Subsequent
+owningc9f99b7 changes only buffered save, frozen separately as green5; this
+green4 run does not attest it. Prior green3 and its completed resource-only
 performance40605899832 remain bound to their original source/binary; this wave
 does not inherit that measurement as if it were its own. Local trends/default
 fallback, final whole-path performance and publication gates remain. Keep

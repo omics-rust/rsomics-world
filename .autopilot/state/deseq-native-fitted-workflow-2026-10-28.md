@@ -2,8 +2,12 @@
 
 ## Current state
 
-Owning localmain8bb14ad5964ac505d0755509244141463b0b23d1 is clean/private,
-publish=false. Schema2 green2/run40597122905 at exactworldec72d1ba passes all
+Owning localmainc9f99b70c191c6ed29d42c8d4cd49ed151b573b7 is clean/private,
+publish=false. It adds only buffered fitted-bundle save to schema4/1401149;
+see deseq-buffered-save-2026-10-28.md. Green5 is frozen for the next native
+gate; no mathematical/schema/dependency change is involved in this sink fix.
+
+Schema2 green2/run40597122905 at exactworldec72d1ba passes all
 four native classes; original APIs, ZIPs, binaries,23 source files and both
 complete source witnesses are independently retained/verified. Final receipt:
 /Volumes/Zane's HDD/rsomics-fixtures/evidence/deseq-native-2026-10-28/run-40597122905/verification-final.json,
@@ -16,11 +20,16 @@ at1/4,11 tests/strict checks/fresh whole-feature review and bounded P2 fix pass.
 Exact four-native40602456359 atc598ffaf is SUCCESS and original evidence is
 retained/verified; see deseq-cook-refit-2026-10-28.md. Low-df source40603312183
 at1f3f7a00 is also SUCCESS with all284 manifest entries, independent probes and
-three positive MC priors qualified. Native mean/low-df implementation now
-follows docs/plans/2026-10-28-deseq-mean-low-df-native.md, not yet accepted.
-Local trends/fallback and formal performance remain release gates. The green3
-performance harness is prepared against its immutable accepted Linux binary;
-it must not measure the later worktree. Full30-family goal stays active.
+three positive MC priors qualified. Native mean/low-df1401149/schema4 now
+passes all20 full workflows at1/4 locally,12 tests/strict checks and one fresh
+feature review. Four-native green4/run40609417746 is SUCCESS at exact3768a323;
+original evidence retention is in progress. See
+docs/plans/2026-10-28-deseq-mean-low-df-native.md.
+The completed green3 performance40605899832 accepts a strict process-RSS
+advantage, not strict source-inner throughput/scaling. Its original binary
+attribution is immutable. Fresh green5 native/benchmark gates follow the
+measured save fix. Local trends/fallback and declared scope remain release
+gates; no complete DESeq2 replacement is claimed. Full30-family goal stays active.
 
 ## Initial schema1 checkpoint
 
