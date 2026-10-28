@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "repository": "omics-rust/rsomics-world",
+  "workflow_path": ".github/workflows/limma-performance.yml",
+  "run_id": 40636288327,
+  "run_attempt": 1,
+  "head_sha": "18bf36d3a21c5ce93b0aecf356e57b1f11bb3958",
+  "artifact_id": 12793168409,
+  "artifact_name": "limma-performance-40636288327-1",
+  "size_in_bytes": 929065418,
+  "artifact_sha256": "c9b5c6af27ef2998fc773dc75bbeae4a0b7e60004353391395b54fb2bb0575d7",
+  "artifact_digest_verified_locally": false,
+  "supplemental_full_zip": {
+    "digest_verified_locally": true,
+    "verification_sha256": "b27f4a3320b4b6cfb98bc1d459f41be286fa431df5d83d9dbc9c49042b3e7a60",
+    "core_modified": false
+  },
+  "selected_members_verified": 117,
+  "binary_sha256": "fb1f65486c0cda3553f8e22d56fa157b5fa45bb1c7d5180628f36a6f22a271ba",
+  "native_run_id": 40629128374,
+  "native_verification_sha256": "57581e430795ed6df5f506abe5ef4751c48e36eb53687626527cead870af2f7f",
+  "fit_schema": 1,
+  "workers": [1, 4],
+  "strict_throughput_and_process_rss": true,
+  "strict_worker_scaling": false,
+  "verification_sha256": "146f02963d7f2f7920f3805e20560aca72fbd5e3591194b501e23801f59d8bdf",
+  "verification_scope": "At immutable core creation: exact-head successful performance/controller APIs and raw logs, 117 CRC-verified original selected metadata/measurement/comparison/process records; whole local ZIP digest was not yet verified. Separate supplemental proof now verifies the complete original ZIP without changing that core. No scientific replay/nested source campaign or scaling-win claim."
+}

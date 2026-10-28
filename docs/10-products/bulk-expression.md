@@ -10,10 +10,11 @@ release-complete. See `.autopilot/state/deseq-schema5-performance-2026-10-28.md`
 The edgeR target has a complete private native modern-QL workflow, but its
 original P/FDR compatibility gate remains failed pending an explicit numerical
 contract decision; see `.autopilot/state/edger-native-ql-2026-10-28.md`.
-The limma target has an accepted current count-workflow source witness and a
-complete private implementation with a passing local whole-workflow gate and
-fresh review and four-native acceptance; formal performance and publication
-remain pending. See
+The limma target has a complete reviewed private current-voom count workflow,
+four-native acceptance and accepted whole-workflow performance: R inner median
+1.889s versus native1/4 medians0.57/0.60s, with lower process RSS. Worker scaling
+does not pass; four workers are slightly slower on this fixture. Publication
+remains pending. See `.autopilot/state/limma-performance-2026-10-28.md` and
 `../plans/2026-10-28-limma-native-count-workflow.md`.
 
 ## Portfolio decision

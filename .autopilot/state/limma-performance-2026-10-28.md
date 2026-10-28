@@ -1,5 +1,36 @@
 # Prepared complete current-voom performance
 
+## Accepted final result
+
+Run40636288327/attempt1 at world18bf36d3a21c5ce93b0aecf356e57b1f11bb3958
+is SUCCESS after exact push controller40635888758 passes502 tests/two skips.
+Parent reads the full report and adopts immutable core
+146f02963d7f2f7920f3805e20560aca72fbd5e3591194b501e23801f59d8bdf,
+/Volumes/Zane's HDD/rsomics-fixtures/evidence/limma-performance-2026-10-28/run-40636288327/.
+Tracked performance receipt binds the same finalfb1f6548... executable and
+green1 native proof, not a rebuilt or intermediate binary.
+
+Serial R-inner median1.889s/range1.867–1.955 versus full eight-CLI native1
+.57s/.52–.63 and native4 .60s/.49–.75. Both strict throughput AND process-RSS
+pass; conservative source-inner speedups3.314/3.148x. RSS medians197876KiB R
+versus17696/18236KiB native, ratios11.182/10.851x. R whole-process2.30s is
+separate; RSS is max individual native process, not a sum or kernel-only claim.
+Worker scaling FAILS: .95 median ratio and overlapping ranges. Four workers
+are slightly slower here; no linear/scaling claim or retuned rule.
+
+Original14599×7/8066kept, same EPYC9V74/affinity0–3/BLAS1, fixed warmups and
+3source/5perworker native trials. All source/full-state/discovery/output gates
+and1117immutables pass. Source default-compressed RDS versus native portable
+JSON and actual bytes are explicitly retained, not called identical encodings.
+117 original selected records/CRC bind the core without scientific replay.
+The separate original 929065418-byte ZIP mirror is now complete. Parent reads
+full-zip-verification.json: local digest c9b5c6af27ef2998fc773dc75bbeae4a0b7e60004353391395b54fb2bb0575d7
+matches the API, one original copy is retained and no nested source/native
+archive was replayed. This supplemental completion does not alter the immutable
+core or its historical selected-member-only acceptance scope.
+All earlier failed runs remain failed and immutable. Publication/metadata/
+registry authorization are separate, still unearned gates.
+
 ## Dispatched complete workflow
 
 After corrected untimed export consistency and exact push controller40634314251
