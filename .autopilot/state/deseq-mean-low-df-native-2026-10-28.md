@@ -39,7 +39,15 @@ and one actual retained-data acquirer replay pass; the replay is explicitly
 fresh_api=false and executes no R/native fit.
 
 Exact four-native40609417746 at world3768a323 is terminal SUCCESS on all four
-classes. Original artifact retention/verification is in progress. Subsequent
+classes, and original evidence is now retained/verified. Per platform all12
+debug/release tests,20 full workflows at1/4,236 ordinary commands and7128530
+numeric comparisons pass; all20 full states agree except workers and98 exports
+match bytes. Low-df indices52/96/134 are exact. The three accepted55/705/284
+source witnesses are bound without reopening their nested ZIPs. Receipt:
+/Volumes/Zane's HDD/rsomics-fixtures/evidence/deseq-native-2026-10-28/run-40609417746/verification.json,
+SHA2e2e8f94589814d23059b2d571a69d236bfe15be0f4b12d1293e197094b96a88.
+Report49d12bd74bd049b510eceb1e5674b4ef17a9c539ad5e2f3a88e5089c859cb82f
+records all four original API/ZIP/log/source/binary identities. Subsequent
 owningc9f99b7 changes only buffered save, frozen separately as green5; this
 green4 run does not attest it. Prior green3 and its completed resource-only
 performance40605899832 remain bound to their original source/binary; this wave

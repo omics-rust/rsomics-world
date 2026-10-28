@@ -34,7 +34,10 @@ f72b71c96bfed743ce13756ce6265f7745d8dadf1be2bacc8a8ee68d0c5ea8c8,
 manifestb75297f3621a8e18864daee09005fec0814dd8dd013f60cadd6b2951ebaddc1e.
 Existing exact-byte snapshot guard and two compact native-wrapper/Bash tests
 pass. Evidence scratch: /Volumes/KIOXIA/Developments/tmp/deseq-green5-check.tY5vju/.
-Next: exact-head controller and unchanged four-native complete-workflow gate;
-then bind a fresh formal same-host benchmark to its accepted Linux executable.
+Controller40611403553 is SUCCESS at exact
+42f378fe633649b7234c5cedaf424d0d4ab62da5. Unchanged four-native complete-workflow
+run40611588271 is dispatched at that exact head against green5. Wait for this
+run and retain its original evidence; then bind a fresh formal same-host
+benchmark to its accepted Linux executable.
 Old green3 performance/green4 native evidence remain immutable. Local trend
 coverage and publication remain separate gates; continue the full portfolio.

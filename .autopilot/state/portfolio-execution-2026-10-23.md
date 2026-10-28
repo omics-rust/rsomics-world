@@ -76,12 +76,13 @@ qualified. Owning1401149/schema4 implements explicit mean trends and actual
 low-df fixed-reference prior runtime evaluation; all20 complete workflows
 pass at1/4 workers locally and one fresh feature review passes. Frozen green4
 four-native40609417746 is now terminal SUCCESS at exact3768a323; original
-artifact retention is in progress. Source adopted=FALSE provenance remains
+four API/ZIP/log/source/binary artifacts are retained/verified. All20 workflow
+states/98 exports are worker-deterministic on every native platform. Source adopted=FALSE provenance remains
 immutable. Baseline schema3 whole-performance40605899832 passes compatibility
 and strict process-RSS advantage (about24x), not strict source-inner speed
 or scaling; all2393 original files are retained/verified. A measured two-line
-save fix reuses existing common buffering, with byte-identical local A/B;
-new native/measurement gates are separate from that accepted baseline.
+save fixc9f99b7 reuses existing common buffering, with byte-identical local A/B;
+green5/native40611588271 at42f378fe runs separately from that accepted baseline.
 Local trends/fallback and declared scope still keep this private, not a
 complete DESeq2 replacement. Current edgeR4.10.7/limma3.68.5
 source review now prepares its modern QL first-workflow oracle, not the old

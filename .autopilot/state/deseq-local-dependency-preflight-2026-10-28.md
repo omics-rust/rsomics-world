@@ -1,5 +1,31 @@
 # Local-fit dependency qualification
 
+## Current decision
+
+The Rust candidate below remains unadopted; its opaque fitted state still
+needs a real no-refit persistence solution. Official locfit1.5-9.12 source is
+now qualified at https://cran.r-project.org/src/contrib/locfit_1.5-9.12.tar.gz:
+207112bytes, SHAfa31b9d407f3557a6fcb7105cbd7b16a32a6fb868a7c60bc38a3e33cb7a39343.
+MD5358f4fde91d135b36ec2a2331d75393b matches CRAN PACKAGES. The analogous
+Archive URL is404; use the verified release URL/hash. Actual R member is
+locfit/R/locfit.r, not a capitalized .R filename.
+
+Parent read the complete official-source report and actual formula/default/
+returned-state/prediction code. Full report:
+/Volumes/KIOXIA/Developments/tmp/locfit-official-source-20261028.pWLEjE/REPORT.md.
+The old oracle records installed version/library root, not the loaded locfit
+DLL hash; do not retroactively claim binary authentication. A bounded four-case
+source workflow will record actual runtime identity, frozen inputs/queries,
+local-VST/FMM state and one fresh-process no-refit reload. Parametric fallback
+must actually occur or remain uncovered; no seed search is authorized.
+
+Mean/low-df native work is now implemented separately, not pending a new RNG
+dependency: see deseq-mean-low-df-native-2026-10-28.md. It uses its qualified
+fixed-reference profile plus real runtime observations, not an unimplemented
+general R RNG. No new locfit foundation or public API is justified.
+
+## Initial candidate inspection
+
 A bounded read-only qualification identifies rcompat-locfit0.1.5 as a candidate,
 not an adopted or certified dependency. Official registry reports non-yanked,
 MIT, MSRV1.70, ownerdeminden and no runtime dependencies. Streamed169033-byte

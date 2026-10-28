@@ -104,6 +104,12 @@ disagreement, new source/BAM/performance campaign or native rerun is involved
 for that logical conduit. Keep measurements attributed to immutable
 green5, not the new Mac binary39dc3e339ef434370bf926c0f6dd9889601fb60ad5b91a92573af1c23bb118fb.
 
+Owning91ba1d38156e09d878e04fcdf8600404551abdc0 subsequently updates only
+README/MERGE_RECORD with these accepted gates/limits. Runtime/CLI/Cargo/lock
+are unchanged fromb7287f2. It does not create a fresh measurement or replace
+the immutable green5/green6 code identities. Registry adoption and final
+publication review remain held; no numerical campaign is repeated for prose.
+
 ## Resolved global-context diagnosis
 
 Fixed producer1bc989e25a42ce6c0c76e3572b41d4da283e74f2 now has accepted

@@ -23,7 +23,11 @@ at1f3f7a00 is also SUCCESS with all284 manifest entries, independent probes and
 three positive MC priors qualified. Native mean/low-df1401149/schema4 now
 passes all20 full workflows at1/4 locally,12 tests/strict checks and one fresh
 feature review. Four-native green4/run40609417746 is SUCCESS at exact3768a323;
-original evidence retention is in progress. See
+original evidence is retained/verified, all20 workflows at1/4 pass on every
+platform. Authoritative verification SHA
+2e2e8f94589814d23059b2d571a69d236bfe15be0f4b12d1293e197094b96a88, under
+/Volumes/Zane's HDD/rsomics-fixtures/evidence/deseq-native-2026-10-28/run-40609417746/.
+See
 docs/plans/2026-10-28-deseq-mean-low-df-native.md.
 The completed green3 performance40605899832 accepts a strict process-RSS
 advantage, not strict source-inner throughput/scaling. Its original binary
