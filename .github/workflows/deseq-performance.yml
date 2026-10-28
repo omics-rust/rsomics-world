@@ -41,10 +41,12 @@ jobs:
           export R_USER_CACHE_DIR="$RUNNER_TEMP/R/cache"
           export XDG_CACHE_HOME="$RUNNER_TEMP/cache"
           export DESEQ2_SOURCE_ARCHIVE="$EVIDENCE/acquisition/source/artifact/DESeq2_1.52.0.tar.gz"
-          mkdir -p "$EVIDENCE/acquisition/native" "$EVIDENCE/acquisition/source" "$EVIDENCE/controller" \
+          export LOCFIT_SOURCE_ARCHIVE="$EVIDENCE/acquisition/local-source/artifact/locfit_1.5-9.12.tar.gz"
+          mkdir -p "$EVIDENCE/acquisition/native" "$EVIDENCE/acquisition/source" "$EVIDENCE/acquisition/local-source" "$EVIDENCE/controller" \
             "$EVIDENCE/runtime" "$TMPDIR" "$CARGO_HOME" "$CARGO_TARGET_DIR" "$R_LIBS_USER" "$R_USER_CACHE_DIR" "$XDG_CACHE_HOME"
           printf 'EVIDENCE=%s\nTMPDIR=%s\nCARGO_HOME=%s\nCARGO_TARGET_DIR=%s\nR_LIBS_USER=%s\nR_USER_CACHE_DIR=%s\nXDG_CACHE_HOME=%s\nDESEQ2_SOURCE_ARCHIVE=%s\n' \
             "$EVIDENCE" "$TMPDIR" "$CARGO_HOME" "$CARGO_TARGET_DIR" "$R_LIBS_USER" "$R_USER_CACHE_DIR" "$XDG_CACHE_HOME" "$DESEQ2_SOURCE_ARCHIVE" >> "$GITHUB_ENV"
+          printf 'LOCFIT_SOURCE_ARCHIVE=%s\n' "$LOCFIT_SOURCE_ARCHIVE" >> "$GITHUB_ENV"
           python3 -B - <<'PY'
           import json, os, shutil
           from pathlib import Path
@@ -68,9 +70,18 @@ jobs:
         run: |
           set -euo pipefail
           native="$EVIDENCE/acquisition/native"
-          gh api repos/omics-rust/rsomics-world/actions/runs/40611588271 > "$native/run.json"
-          gh api 'repos/omics-rust/rsomics-world/actions/runs/40611588271/attempts/1/jobs?per_page=100' > "$native/jobs.json"
-          gh api 'repos/omics-rust/rsomics-world/actions/runs/40611588271/artifacts?per_page=100' > "$native/artifacts.json"
+          cp .autopilot/oracles/deseq-native-green7-2026-10-28.json "$native/receipt.json"
+          native_run=$(python3 -B - <<'PY'
+          import sys
+          sys.path.insert(0, 'scripts')
+          from deseq_workflow_performance import load_native_receipt
+          print(load_native_receipt()['run_id'])
+          PY
+          )
+          [[ "$native_run" =~ ^[0-9]+$ ]]
+          gh api "repos/omics-rust/rsomics-world/actions/runs/$native_run" > "$native/run.json"
+          gh api "repos/omics-rust/rsomics-world/actions/runs/$native_run/attempts/1/jobs?per_page=100" > "$native/jobs.json"
+          gh api "repos/omics-rust/rsomics-world/actions/runs/$native_run/artifacts?per_page=100" > "$native/artifacts.json"
           artifact_id=$(python3 -B scripts/deseq_workflow_performance.py select-native --acquisition "$native")
           [[ "$artifact_id" =~ ^[0-9]+$ ]]
           gh api "repos/omics-rust/rsomics-world/actions/artifacts/$artifact_id" > "$native/artifact.json"
@@ -86,10 +97,17 @@ jobs:
           gh api repos/omics-rust/rsomics-world/actions/runs/40561801963 > "$source/run.json"
           gh api repos/omics-rust/rsomics-world/actions/artifacts/12761202566 > "$source/artifact.json"
           gh api repos/omics-rust/rsomics-world/actions/artifacts/12761202566/zip > "$source/artifact.zip"
+          source="$EVIDENCE/acquisition/local-source"
+          cp .autopilot/oracles/deseq-local-trend-2026-10-28.json "$source/receipt.json"
+          gh api repos/omics-rust/rsomics-world/actions/runs/40614317043 > "$source/run.json"
+          gh api repos/omics-rust/rsomics-world/actions/artifacts/12783892999 > "$source/artifact.json"
+          gh api repos/omics-rust/rsomics-world/actions/artifacts/12783892999/zip > "$source/artifact.zip"
           python3 -B scripts/deseq_workflow_performance.py prepare-runtime --acquisition "$EVIDENCE/acquisition" \
             2>&1 | tee "$EVIDENCE/acquisition/verification.log"
           printf '%s  %s\n' "$DESEQ2_SOURCE_SHA256" "$DESEQ2_SOURCE_ARCHIVE" | sha256sum --check -
           tar -xzf "$DESEQ2_SOURCE_ARCHIVE" -C "$EVIDENCE/runtime"
+          printf '%s  %s\n' fa31b9d407f3557a6fcb7105cbd7b16a32a6fb868a7c60bc38a3e33cb7a39343 "$LOCFIT_SOURCE_ARCHIVE" | sha256sum --check -
+          tar -xzf "$LOCFIT_SOURCE_ARCHIVE" -C "$EVIDENCE/runtime"
 
       - uses: r-lib/actions/setup-r@v2
         with:
@@ -116,20 +134,23 @@ jobs:
           fields <- intersect(c('Depends', 'Imports', 'LinkingTo'), colnames(desc))
           deps <- trimws(unlist(strsplit(paste(desc[1, fields], collapse=','), ',', fixed=TRUE)))
           deps <- unique(sub('[[:space:]]*\\(.*', '', deps))
-          deps <- setdiff(deps, c('R', rownames(installed.packages(priority='base'))))
+          deps <- setdiff(deps, c('R', 'locfit', rownames(installed.packages(priority='base'))))
           BiocManager::install(c(deps, 'digest', 'jsonlite'), ask=FALSE, update=FALSE,
                                dependencies=c('Depends', 'Imports', 'LinkingTo'), Ncpus=2L)
           missing <- setdiff(c(deps, 'digest', 'jsonlite'), rownames(installed.packages()))
           if (length(missing)) stop('missing source dependencies: ', paste(missing, collapse=', '))
           RS
+          R CMD INSTALL --preclean --clean --library="$R_LIBS_USER" "$EVIDENCE/runtime/locfit" \
+            2>&1 | tee "$EVIDENCE/install-locfit.log"
           R CMD INSTALL --preclean --clean --library="$R_LIBS_USER" "$EVIDENCE/runtime/DESeq2" \
             2>&1 | tee "$EVIDENCE/install-DESeq2.log"
-          Rscript --vanilla -e 'stopifnot(as.character(packageVersion("DESeq2")) == "1.52.0", as.character(BiocManager::version()) == "3.23"); library(DESeq2)'
+          Rscript --vanilla -e 'stopifnot(as.character(packageVersion("DESeq2")) == "1.52.0", packageDescription("locfit", fields="Version") == "1.5-9.12", as.character(BiocManager::version()) == "3.23"); library(DESeq2)'
 
-      - name: Measure the original complete count-to-export workflow
+      - name: Measure both complete count-to-export workflows
         run: |
           set -euo pipefail
           for name in deseq_workflow_performance.py deseq_workflow_performance.R deseq_workflow_oracle.R \
+                      deseq_design_workflows.R deseq_local_trend_workflows.R \
                       test_deseq_workflow_performance.py infercnv_source_snapshot.py infercnv_trial_process.py \
                       verify_infercnv_oracle_artifact.py; do
             cp "scripts/$name" "$EVIDENCE/controller/"

@@ -5,11 +5,14 @@ deseq_performance_setup <- function() {
     if (length(script) != 1L) stop("cannot identify measurement driver")
     script <- normalizePath(sub("^--file=", "", script), mustWork=TRUE)
     base::source(file.path(dirname(script), "deseq_workflow_oracle.R"), local=.GlobalEnv)
-    for (package in c("DESeq2", "digest", "jsonlite", "BiocManager")) {
+    base::source(file.path(dirname(script), "deseq_design_workflows.R"), local=.GlobalEnv)
+    base::source(file.path(dirname(script), "deseq_local_trend_workflows.R"), local=.GlobalEnv)
+    for (package in c("DESeq2", "locfit", "digest", "jsonlite", "BiocManager")) {
         if (!requireNamespace(package, quietly=TRUE)) stop("required installed package absent: ", package)
     }
     if (as.character(getRversion()) != "4.6.1" || as.character(BiocManager::version()) != "3.23" ||
-        as.character(utils::packageVersion("DESeq2")) != "1.52.0") stop("measurement package/runtime identity differs")
+        as.character(utils::packageVersion("DESeq2")) != "1.52.0" ||
+        utils::packageDescription("locfit", fields="Version") != "1.5-9.12") stop("measurement package/runtime identity differs")
     options(digits=17, scipen=0, warn=1, contrasts=c("contr.treatment", "contr.poly"))
     if (!identical(Sys.setlocale("LC_COLLATE", "C"), "C") || !identical(Sys.setlocale("LC_NUMERIC", "C"), "C")) stop("cannot establish comparison locale")
     script
@@ -20,13 +23,19 @@ deseq_performance_qualify <- function(source, output, script) {
         !identical(deseq_hash(Sys.getenv("DESEQ2_SOURCE_ARCHIVE")),
             "8c91699286336350e66eec132ce6fdf5bb4af78e2a4d015a5a61224f62a95984")) stop("released source acquisition differs")
     if (!dir.create(output)) stop("qualification output already exists or cannot be created")
-    identity <- deseq_source_identity(source, output)
+    identity <- local_source_identity(source, file.path(dirname(source), "locfit"), output)
     installed <- system.file(package="DESeq2", mustWork=TRUE)
     files <- sort(list.files(installed, recursive=TRUE, all.files=TRUE, no..=TRUE), method="radix")
     write.table(data.frame(sha256=vapply(file.path(installed, files), deseq_hash, character(1)), path=files),
         file.path(output, "installed-DESeq2-sha256.tsv"), sep="\t", row.names=FALSE, quote=FALSE)
     dll <- getLoadedDLLs()[["DESeq2"]][["path"]]
     if (!file.copy(dll, file.path(output, basename(dll))) || !file.copy(script, file.path(output, basename(script)))) stop("cannot retain loaded driver/DLL")
+    locfit_path <- system.file(package="locfit", mustWork=TRUE)
+    locfit_files <- local_hashes(locfit_path)
+    write.table(data.frame(sha256=unname(locfit_files), path=names(locfit_files)),
+        file.path(output, "installed-locfit-sha256.tsv"), sep="\t", row.names=FALSE, quote=FALSE)
+    locfit_dll <- getLoadedDLLs()[["locfit"]][["path"]]
+    if (!file.copy(locfit_dll, file.path(output, basename(locfit_dll)))) stop("cannot retain loaded locfit DLL")
     writeLines(capture.output(sessionInfo()), file.path(output, "session.txt"))
     packages <- utils::installed.packages()[, c("Package", "Version", "LibPath"), drop=FALSE]
     write.table(packages[order(packages[, "Package"], method="radix"), , drop=FALSE],
@@ -34,6 +43,8 @@ deseq_performance_qualify <- function(source, output, script) {
     runtime <- list(R=as.character(getRversion()), Bioconductor=as.character(BiocManager::version()),
         DESeq2=as.character(utils::packageVersion("DESeq2")), platform=R.version$platform,
         installed_path=installed, installed_dll=dll, installed_dll_sha256=deseq_hash(dll), source=identity,
+        locfit=list(version=utils::packageDescription("locfit", fields="Version"), installed_path=locfit_path,
+            installed_dll=locfit_dll, installed_dll_sha256=deseq_hash(locfit_dll)),
         BLAS_LAPACK=capture.output(La_library()), locale=Sys.getlocale(), external_software=as.list(extSoftVersion()),
         thread_environment=as.list(Sys.getenv(c("OMP_NUM_THREADS", "OPENBLAS_NUM_THREADS", "MKL_NUM_THREADS"))))
     deseq_write_json(runtime, file.path(output, "runtime.json"))
@@ -44,38 +55,45 @@ deseq_performance_runtime <- function(qualification) {
     dll <- getLoadedDLLs()[["DESeq2"]][["path"]]
     if (!identical(qualified$R, as.character(getRversion())) ||
         !identical(qualified$installed_path, system.file(package="DESeq2", mustWork=TRUE)) ||
-        !identical(qualified$installed_dll_sha256, deseq_hash(dll))) stop("loaded measurement runtime differs from qualification")
+        !identical(qualified$installed_dll_sha256, deseq_hash(dll)) ||
+        !identical(qualified$locfit$installed_path, system.file(package="locfit", mustWork=TRUE)) ||
+        !identical(qualified$locfit$installed_dll_sha256, deseq_hash(getLoadedDLLs()[["locfit"]][["path"]]))) {
+        stop("loaded measurement runtime differs from qualification")
+    }
 }
 
-deseq_performance_run <- function(witness, output, qualification) {
+deseq_performance_run <- function(witness, output, qualification, mode) {
     deseq_performance_runtime(qualification)
     if (!dir.create(output)) stop("trial output already exists or cannot be created")
     started <- proc.time()
-    counts <- as.matrix(read.delim(file.path(witness, "inputs/pasilla_gene_counts.tsv.gz"), row.names="gene_id", check.names=FALSE))
-    annotation <- read.csv(file.path(witness, "inputs/pasilla_sample_annotation.csv"), row.names=1L, check.names=FALSE)
+    inputs <- file.path(witness, if (mode == "local") "inputs/pasilla" else "inputs")
+    counts <- as.matrix(read.delim(file.path(inputs, "pasilla_gene_counts.tsv.gz"), row.names="gene_id", check.names=FALSE))
+    annotation <- read.csv(file.path(inputs, "pasilla_sample_annotation.csv"), row.names=1L, check.names=FALSE)
     mapped <- sub("fb$", "", rownames(annotation))
     if (!identical(dim(counts), c(14599L, 7L)) || !is.integer(counts) || anyDuplicated(mapped) ||
         !setequal(mapped, colnames(counts))) stop("original pasilla identities differ")
     rownames(annotation) <- mapped
-    samples <- annotation[colnames(counts), c("condition", "type"), drop=FALSE]
+    samples <- annotation[colnames(counts), if (mode == "local") c("type", "condition") else c("condition", "type"), drop=FALSE]
     samples$condition <- factor(samples$condition, levels=c("untreated", "treated"))
     samples$type <- factor(samples$type, levels=c("paired-end", "single-read"))
     design <- stats::as.formula("~ type + condition", env=baseenv())
     dataset <- DESeq2::DESeqDataSetFromMatrix(countData=counts, colData=samples, design=design)
-    fit <- DESeq2::DESeq(dataset, test="Wald", fitType="parametric", sfType="ratio", betaPrior=FALSE,
+    fit <- DESeq2::DESeq(dataset, test="Wald", fitType=mode, sfType="ratio", betaPrior=FALSE,
         minReplicatesForReplace=7L, useT=FALSE, minmu=0.5, parallel=FALSE)
-    initial <- DESeq2::results(fit, contrast=c("condition", "treated", "untreated"), alpha=0.1,
+    contrast <- if (mode == "local") c(0, 0, 1) else c("condition", "treated", "untreated")
+    reverse_contrast <- if (mode == "local") c(0, 0, -1) else c("condition", "untreated", "treated")
+    initial <- DESeq2::results(fit, contrast=contrast, alpha=0.1,
         independentFiltering=TRUE, pAdjustMethod="BH", parallel=FALSE)
     analysis <- list(fit=fit, initial_results=initial, schema_version=1L,
-        parameters=list(design="~type+condition", test="Wald", fitType="parametric with actual source fallback",
+        parameters=list(design="~type+condition", test="Wald", fitType=mode,
             sfType="ratio", betaPrior=FALSE, minReplicatesForReplace=7L, useT=FALSE, minmu=0.5,
             alpha=0.1, independentFiltering=TRUE, pAdjustMethod="BH", parallel=FALSE, blind=FALSE))
     saveRDS(analysis, file.path(output, "fit.rds"))
     rm(analysis, initial, fit)
     reloaded <- readRDS(file.path(output, "fit.rds"))
-    forward <- DESeq2::results(reloaded$fit, contrast=c("condition", "treated", "untreated"), alpha=0.1,
+    forward <- DESeq2::results(reloaded$fit, contrast=contrast, alpha=0.1,
         independentFiltering=TRUE, pAdjustMethod="BH", parallel=FALSE)
-    reverse <- DESeq2::results(reloaded$fit, contrast=c("condition", "untreated", "treated"), alpha=0.1,
+    reverse <- DESeq2::results(reloaded$fit, contrast=reverse_contrast, alpha=0.1,
         independentFiltering=TRUE, pAdjustMethod="BH", parallel=FALSE)
     normalized <- DESeq2::counts(reloaded$fit, normalized=TRUE)
     vst <- DESeq2::varianceStabilizingTransformation(reloaded$fit, blind=FALSE)
@@ -93,19 +111,44 @@ deseq_performance_run <- function(witness, output, qualification) {
         file.path(output, "inner-timing.json"))
 }
 
-deseq_performance_inspect <- function(trial, output, qualification) {
+deseq_performance_state <- function(fit) {
+    state <- local_state(fit)
+    if (!is.null(state$locfit)) {
+        state$locfit$evaluation_class <- class(state$locfit$eva)
+        state$locfit$eva <- unclass(state$locfit$eva)
+        state$locfit$evaluation_spec_class <- class(state$locfit$eva$ev)
+        state$locfit$eva$ev <- unclass(state$locfit$eva$ev)
+    }
+    state
+}
+
+deseq_performance_inspect <- function(trial, output, qualification, witness, mode) {
     deseq_performance_runtime(qualification)
     if (!dir.create(output)) stop("inspection output already exists or cannot be created")
     analysis <- readRDS(file.path(trial, "fit.rds"))
     fit <- analysis$fit
     deseq_write_table(S4Vectors::mcols(fit), file.path(output, "row-diagnostics.tsv"), rownames(fit))
     deseq_write_table(stats::coef(fit), file.path(output, "coefficients.tsv"), rownames(fit))
-    deseq_write_table(data.frame(size_factor=DESeq2::sizeFactors(fit)), file.path(output, "size-factors.tsv"), colnames(fit), "sample")
+    factors <- data.frame(DESeq2::sizeFactors(fit))
+    names(factors) <- if (mode == "local") "factor" else "size_factor"
+    deseq_write_table(factors, file.path(output, "size-factors.tsv"), colnames(fit), "sample")
     deseq_write_table(attr(fit, "modelMatrix"), file.path(output, "model-matrix.tsv"), colnames(fit), "sample")
     for (name in names(SummarizedExperiment::assays(fit))) {
         deseq_write_table(SummarizedExperiment::assay(fit, name), file.path(output, paste0("assay-", name, ".tsv")), rownames(fit))
     }
     deseq_write_json(S4Vectors::metadata(analysis$initial_results), file.path(output, "filter-and-result-metadata.json"))
+    reference <- if (mode == "local") file.path(witness, "cases/pasilla-local-ratio") else witness
+    expected <- readRDS(file.path(reference, "fit/DESeqDataSet.rds"))
+    deseq_write_json(deseq_performance_state(fit), file.path(output, "complete-state.json"))
+    deseq_write_json(deseq_performance_state(expected), file.path(output, "reference-complete-state.json"))
+    deseq_write_json(attributes(DESeq2::dispersionFunction(expected)), file.path(output, "reference-dispersion-attributes.json"))
+    if (mode == "local") {
+        queries <- read.delim(file.path(reference, "results/trend-queries.tsv"), check.names=FALSE)
+        queries$dispersion <- DESeq2::dispersionFunction(fit)(queries$mean)
+        model <- get("fit", environment(DESeq2::dispersionFunction(fit)), inherits=FALSE)
+        queries$predicted_log_dispersion <- stats::predict(model, data.frame(logMeans=log(queries$mean)))
+        deseq_write_table(queries, file.path(output, "trend-queries.tsv"))
+    }
     deseq_write_json(list(genes=nrow(fit), samples=ncol(fit), results_names=array(DESeq2::resultsNames(fit)),
         actual_dispersion_fit=attr(DESeq2::dispersionFunction(fit), "fitType"),
         dispersion_attributes=attributes(DESeq2::dispersionFunction(fit)),
@@ -120,11 +163,11 @@ deseq_workflow_performance_main <- function() {
     script <- deseq_performance_setup()
     if (length(args) == 3L && args[[1L]] == "qualify") {
         deseq_performance_qualify(args[[2L]], args[[3L]], script)
-    } else if (length(args) == 4L && args[[1L]] == "run") {
-        deseq_performance_run(args[[2L]], args[[3L]], args[[4L]])
-    } else if (length(args) == 4L && args[[1L]] == "inspect") {
-        deseq_performance_inspect(args[[2L]], args[[3L]], args[[4L]])
-    } else stop("usage: deseq_workflow_performance.R qualify SOURCE OUTPUT | run WITNESS OUTPUT QUALIFICATION | inspect TRIAL OUTPUT QUALIFICATION")
+    } else if (length(args) == 5L && args[[1L]] == "run" && args[[5L]] %in% c("parametric", "local")) {
+        deseq_performance_run(args[[2L]], args[[3L]], args[[4L]], args[[5L]])
+    } else if (length(args) == 6L && args[[1L]] == "inspect" && args[[6L]] %in% c("parametric", "local")) {
+        deseq_performance_inspect(args[[2L]], args[[3L]], args[[4L]], args[[5L]], args[[6L]])
+    } else stop("usage: deseq_workflow_performance.R qualify SOURCE OUTPUT | run WITNESS OUTPUT QUALIFICATION parametric|local | inspect TRIAL OUTPUT QUALIFICATION WITNESS parametric|local")
 }
 
 if (sys.nframe() == 0L) deseq_workflow_performance_main()
