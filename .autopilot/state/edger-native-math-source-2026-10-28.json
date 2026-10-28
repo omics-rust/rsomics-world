@@ -1,0 +1,51 @@
+{
+  "source_root": "/Volumes/KIOXIA/Developments/tmp/edger-source-preflight-20261028.sDtAJY",
+  "archives": {
+    "edgeR_4.10.7.tar.gz": "a3cc0f66be29f1a61a74021f9848ec940794e653905c4332327a719dd9ad8393",
+    "limma_3.68.5.tar.gz": "40b1d2059a76ad98db4bf80139760acf8e8bae92a8265aaaf16ac199831533f4"
+  },
+  "source_files": {
+    "edgeR/R/glmfit.R": "ebdc2f8fb338b79a1a0fce7b978f6399a9105c14bacd951b6f988a52f35fdb98",
+    "edgeR/R/mglmLevenberg.R": "7743c75f75e7bf844eede263e0365fbcd03a18c974f1f9e7331b45c7c0c6b3de",
+    "edgeR/R/mglmOneWay.R": "2d0c413cadd17786c154fc36ff53bb55ae3dc5aaddaf16c39c698b00d3fdb77e",
+    "edgeR/R/mglmOneGroup.R": "8acce36770b409a7d7df12c0284881412ee434c391aacf4e8239b8d89dccd2e3",
+    "edgeR/R/predFC.R": "2ccb23081b33ecea67ca82a784b45e3a7588c0615b9d9a3d9c49895c4a3e7810",
+    "edgeR/R/addPriorCount.R": "d1e2e064b633954f6f82105657df553bb0237958ecccd067451f109e1f68de59",
+    "edgeR/R/glmQLFTest.R": "693b7c70bdb246532cf9088f8fcbb1af9bd93c337c0e38ba34bd43b98c0de269",
+    "edgeR/R/adjustedProfileLik.R": "3c65fdfb57e5d4f0fbf4f671afb6684e8b9461e0660ff17e5f77f874bc638535",
+    "edgeR/R/dispCoxReid.R": "2445afd31b4ae4e6f353fcb8a3a84c990c85850ef41cfafd8a19dc0772b41571",
+    "edgeR/R/estimateGLMCommonDisp.R": "019c2aeb60b54dbce40d07da9e3071eccbaf24db4f6b07dcbc201264b7701878",
+    "edgeR/R/aveLogCPM.R": "7a3ad33840ee2e41e1ff210d796212911d602e59d3e41de380b1641f2fd56659",
+    "edgeR/src/glm.c": "b3662748b5fed05d3f7d5b11a17f98e01be928a38ef6a1a6c8ea8a9975efdb4d",
+    "edgeR/src/compute_nbdev.c": "e6285f00ec06f93efb35adc907fb0ffe9cf68347a0a30fbd848b0bed31bef97b",
+    "edgeR/src/compute_apl.c": "742daa33811fe5bc160557cbf0bc7c7374278acd20d99a1d1883a282ce4e1139",
+    "edgeR/src/add_prior_count.c": "5ba17b97130496ee6bdbf98ee699c22aaf3f5f83d4942af89634cc97c47f4f5d",
+    "edgeR/src/ql_glm.c": "90fa2c6d4bd36d0cb2cbb32d08343139e3e3786711ed300373080e62a92d246b",
+    "edgeR/src/ql_weights.c": "4a2ad18c8793f96ea5ff9f7a53277244f49af8ea5202473425be38d505258e47",
+    "edgeR/src/clowess.c": "622f073c44ab39cfdd063bf5d3365daa00b4ffb1acfecd724890e5dca5408eaf",
+    "limma/R/fitFDistUnequalDF1.R": "4749ecc1fa0d5a48d991542faaf74d17c045f3ca0da2594c6774301a203f9c9c",
+    "limma/R/squeezeVar.R": "237d96decee3360c552080276711ccbb720501829f96cea9b4e0cb1e3209f3d5",
+    "limma/R/loessFit.R": "ae3403e10e0d8e832e02e9e9b04856d10966670a1f75de50a3bd1a06ca648329",
+    "limma/R/weightedLowess.R": "76ded7ec8bde5e2bca2082d678f5a1f3a8bc0f28dcf438308beb6adecb4898fd",
+    "limma/R/chooseLowessSpan.R": "2a970a8c8746498fc280e00619901bb20a153d3152c7a503bd34a111f0ec0406",
+    "limma/src/weighted_lowess.c": "ab50869bda95101baf63e6caad23e1fbfbca7dfbf328e0611310d425ec4a7703"
+  },
+  "statmod": {
+    "url": "https://cran.r-project.org/src/contrib/statmod_1.5.2.tar.gz",
+    "size_bytes": 93227,
+    "sha256": "5f83d82043c5e26f1048fc0139580da1b7e40becf95fb4cb26ed3afcd46a581d",
+    "digamma_R_sha256": "25edf5966d37dad5f92e95e59100811fbaa34b12cf03aab158f658efef007995"
+  },
+  "primary_method": {
+    "doi": "10.1093/nar/gkaf018",
+    "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11754124/",
+    "accessed": "2026-10-28",
+    "sections": [
+      "Summary of the edgeR distributional model",
+      "Quasi-likelihood",
+      "Correcting quasi-likelihood for bias",
+      "Larger datasets"
+    ]
+  },
+  "owning_repo_exists": false
+}
