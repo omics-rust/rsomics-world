@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       snapshot:
-        description: Frozen schema4 source directory under deseq-core-2026-10-28, for example green-4
+        description: Frozen schema5 source directory under deseq-core-2026-10-28 (green-N)
         type: string
         required: true
 
@@ -118,7 +118,11 @@ jobs:
               ('low-df', 'deseq-low-df-2026-10-28.json', 'LOW_DF_ORACLE_ROOT',
                dict(workflow_path='.github/workflows/deseq-low-df-oracle.yml', run_id=40603312183,
                     artifact_id=12780580470, head_sha='1f3f7a002ac2d6ac10016eb9a68536657b1367e4',
-                    artifact_name='deseq-low-df-oracle-40603312183-1', bundle_path='qualification'))]
+                    artifact_name='deseq-low-df-oracle-40603312183-1', bundle_path='qualification')),
+              ('local', 'deseq-local-trend-2026-10-28.json', 'LOCAL_ORACLE_ROOT',
+               dict(workflow_path='.github/workflows/deseq-local-trend-oracle.yml', run_id=40614317043,
+                    artifact_id=12783892999, head_sha='12d615548c52092a7f325e8138cd75e85a1f9e0e',
+                    artifact_name='deseq-local-trend-oracle-40614317043-1', bundle_path='local'))]
           for label, filename, environment, identity in pins:
               acquisition = base / label
               acquisition.mkdir()
@@ -176,13 +180,24 @@ jobs:
               assert _sha256(oracle / 'witness.json') == receipt['witness_sha256'], 'witness digest differs'
               witness = _load_json(oracle / 'witness.json', 'witness')
               assert witness['status'] == 'complete' and witness.get('failed_cases', []) == [], 'source workflow incomplete'
-              assert witness['package'] == dict(
-                  name='DESeq2', version='1.52.0', bioconductor='3.23',
-                  source_commit='16aeab6d6158bd8cbb8e98764c2f33399b1a3fd3',
-                  source_archive_sha256='8c91699286336350e66eec132ce6fdf5bb4af78e2a4d015a5a61224f62a95984'), \
-                  'DESeq2 source differs'
-              assert witness['files'] == {name: digest for name, digest in recorded.items() if name != 'witness.json'}, \
-                  'witness file inventory differs'
+              if label == 'local':
+                  provenance = witness['source']
+                  assert provenance['archives'] == dict(
+                      DESEQ2_SOURCE_ARCHIVE='8c91699286336350e66eec132ce6fdf5bb4af78e2a4d015a5a61224f62a95984',
+                      LOCFIT_SOURCE_ARCHIVE='fa31b9d407f3557a6fcb7105cbd7b16a32a6fb868a7c60bc38a3e33cb7a39343'), \
+                      'local trend source archives differ'
+                  assert provenance['runtime'] == 'R4.6.1/Bioc3.23' \
+                      and provenance['locfit']['version'] == '1.5-9.12' \
+                      and provenance['local_source_modified'] is False and len(recorded) == 508, \
+                      'local trend source identity/inventory differs'
+              else:
+                  assert witness['package'] == dict(
+                      name='DESeq2', version='1.52.0', bioconductor='3.23',
+                      source_commit='16aeab6d6158bd8cbb8e98764c2f33399b1a3fd3',
+                      source_archive_sha256='8c91699286336350e66eec132ce6fdf5bb4af78e2a4d015a5a61224f62a95984'), \
+                      'DESeq2 source differs'
+                  assert witness['files'] == {name: digest for name, digest in recorded.items() if name != 'witness.json'}, \
+                      'witness file inventory differs'
               record = dict(run=receipt['run_id'], head=receipt['head_sha'], artifact=receipt['artifact_id'],
                             artifact_sha256=receipt['artifact_sha256'], manifest_sha256=receipt['manifest_sha256'],
                             witness_sha256=receipt['witness_sha256'], verified_files=len(recorded))
@@ -220,16 +235,44 @@ jobs:
                   assert _sha256(oracle / 'constants/manifest.json') == witness['constants_manifest_sha256'], \
                       'low-df constants manifest differs'
                   record.update(source_cases=4, qualified_probes=5, positive_nonfloor_MC_cases=positive)
-              if label in ('design', 'low-df'):
+              elif label == 'local':
+                  case_ids = ['pasilla-local-ratio', 'increasing-default-ratio',
+                              'increasing-local-nf', 'increasing-local-sf-nf']
+                  assert witness['case_count'] == 4 and list(witness['fits']) == case_ids \
+                      and list(witness['reloads']) == case_ids, 'local source case inventory differs'
+                  assert all(case['status'] == 'complete' and case['actual_fit'] == 'local'
+                             and case['requested_fit'] == ('parametric' if name == 'increasing-default-ratio' else 'local')
+                             and case['local_VST_trace'] is True and case['nonfinite_trend_queries'] == 0
+                             and case['omitted_plain_diagnostics'] == []
+                             for name, case in witness['fits'].items()), 'local source fits incomplete'
+                  assert witness['fresh_process'] is True \
+                      and witness['fit_process_id'] != witness['reload_process_id'] \
+                      and all(case['status'] == 'complete' and case['full_state_identical'] is True
+                              and case['all_derived_outputs_identical'] is True and case['saved_model_bytes_unchanged'] is True
+                              and case['fitting_calls'] is False and case['input_regeneration'] is False
+                              for case in witness['reloads'].values()), 'local fresh-process reloads incomplete'
+                  qualification = witness['qualification']
+                  branches = ['all_four_fits', 'all_four_fresh_reloads', 'explicit_local', 'actual_default_fallback',
+                              'NF_priority_same_inference', 'NF_only_VST_proxy', 'supplied_SF_VST_preference',
+                              'VST_xim_distinct', 'finite_VST_values_distinct']
+                  assert qualification['complete'] is True and qualification['uncovered'] == [] \
+                      and qualification['observed'] == dict.fromkeys(branches, True) \
+                      and qualification['fallback_message_observed'] is True \
+                      and qualification['retuning_performed'] is False, 'local source qualification incomplete'
+                  assert witness['all_inputs_frozen_before_fitting'] is True, 'local inputs not frozen before fitting'
+                  record.update(source_cases=4, source_qualified_local_branches=len(branches), fresh_reload_cases=4)
+              if label in ('design', 'low-df', 'local'):
                   frozen = oracle / 'metadata/input-freeze.json'
                   assert _sha256(frozen) == witness['input_freeze_sha256'], 'prefit input freeze differs'
                   freeze = _load_json(frozen, 'prefit input freeze')
-                  expected = 'frozen-before-first-fit' if label == 'design' else \
+                  expected = 'frozen-before-first-fit' if label in ('design', 'local') else \
                       'all inputs, options and independent probes frozen before any fit/outcome'
                   assert freeze['status'] == expected \
                       and all(recorded.get(name) == digest for name, digest in freeze['files'].items()), \
                       'frozen input inventory differs'
                   record['frozen_input_files'] = len(freeze['files'])
+                  if label == 'local':
+                      assert len(freeze['files']) == 102, 'local frozen input count differs'
               (acquisition / 'verification.json').write_text(json.dumps(record, sort_keys=True) + '\n')
               with Path(os.environ['GITHUB_ENV']).open('a') as stream:
                   stream.write(environment + '=' + str(oracle) + '\n')
@@ -299,7 +342,7 @@ jobs:
         run: |
           set -euo pipefail
           cargo build --locked --release --bin rsomics-deseq 2>&1 | tee "$EVIDENCE/build-release.log"
-          mkdir "$EVIDENCE/native-binary" "$EVIDENCE/controller" "$EVIDENCE/comparison" "$EVIDENCE/design-comparison" "$EVIDENCE/low-df-comparison"
+          mkdir "$EVIDENCE/native-binary" "$EVIDENCE/controller" "$EVIDENCE/comparison" "$EVIDENCE/design-comparison" "$EVIDENCE/low-df-comparison" "$EVIDENCE/local-comparison"
           binary="$EVIDENCE/native-binary/rsomics-deseq-${{ matrix.target }}"
           cp "$CARGO_TARGET_DIR/release/rsomics-deseq" "$binary"
           shasum -a 256 "$binary" > "$EVIDENCE/native-binary/checksums.sha256"
@@ -322,6 +365,10 @@ jobs:
               --witness "$LOW_DF_ORACLE_ROOT" --binary "$binary" --low-df \
               --output "$EVIDENCE/low-df-comparison/workers-$workers" --workers "$workers" \
               2>&1 | tee "$EVIDENCE/low-df-comparison/workers-$workers.log"
+            python3 -B "$EVIDENCE/controller/check-design-workflows.py" \
+              --witness "$LOCAL_ORACLE_ROOT" --binary "$binary" --local \
+              --output "$EVIDENCE/local-comparison/workers-$workers" --workers "$workers" \
+              2>&1 | tee "$EVIDENCE/local-comparison/workers-$workers.log"
           done
           python3 -B "$EVIDENCE/controller/check-bundle-contract.py" --binary "$binary" \
             --bundle "$EVIDENCE/comparison/workers-1/fit.json" \
@@ -338,7 +385,7 @@ jobs:
           root = Path(os.environ['EVIDENCE'])
           def compare(first, fourth, names):
               fitted = [json.loads((out / 'fit.json').read_text()) for out in (first, fourth)]
-              assert all(fit['schema'] == 4 for fit in fitted), 'candidate is not the schema4 checkpoint'
+              assert all(fit['schema'] == 5 for fit in fitted), 'candidate is not the schema5 checkpoint'
               assert [fit.pop('workers') for fit in fitted] == [1, 4], 'recorded worker counts differ'
               assert fitted[0] == fitted[1], 'worker count changed fitted state'
               exports = {}
@@ -370,8 +417,23 @@ jobs:
           assert all(contract['cases'] == case_ids and contract['excluded_cases'] == [] for contract in contracts), \
               'native mean/low-df scope differs from four complete workflows'
           low_df = {case: compare(first / case, fourth / case, names + ['mixed.tsv']) for case in case_ids}
-          record = dict(passed=True, compared_workers=[1, 4], compared_workflows=1 + len(design) + len(low_df),
-                        pasilla=pasilla, design_cases=design, low_df_cases=low_df)
+          first, fourth = [root / 'local-comparison' / f'workers-{workers}' for workers in (1, 4)]
+          contracts = [json.loads((out / 'comparison-contract.json').read_text()) for out in (first, fourth)]
+          case_ids = ['pasilla-local-ratio', 'increasing-default-ratio',
+                      'increasing-local-nf', 'increasing-local-sf-nf']
+          assert all(contract['cases'] == case_ids and contract['excluded_cases'] == [] for contract in contracts), \
+              'native local scope differs from four complete workflows'
+          local = {}
+          for case in case_ids:
+              for out in (first / case, fourth / case):
+                  assert (out / 'trend-first.tsv').read_bytes() == (out / 'trend-reload.tsv').read_bytes(), \
+                      'fresh CLI reload changed trend inspection'
+              local[case] = compare(first / case, fourth / case,
+                                    names + ['mixed.tsv', 'queries.tsv', 'trend-first.tsv', 'trend-reload.tsv'])
+          count = 1 + len(design) + len(low_df) + len(local)
+          assert count == 24, 'native fitted workflow count differs'
+          record = dict(passed=True, compared_workers=[1, 4], compared_workflows=count,
+                        pasilla=pasilla, design_cases=design, low_df_cases=low_df, local_cases=local)
           (root / 'worker-determinism.json').write_text(json.dumps(record, sort_keys=True) + '\n')
           print(json.dumps(record, sort_keys=True))
           PY

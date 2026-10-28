@@ -19,6 +19,8 @@ DESIGN_CASES = GENERAL + [f'cook-{size}-{replacement}-{route}'
                           for replacement in ('default', 'disabled')
                           for route in ('formula', 'matrix')]
 LOW_DF_CASES = ['df-1', 'df-2', 'df-3', 'df-4']
+LOCAL_CASES = ['pasilla-local-ratio', 'increasing-default-ratio',
+               'increasing-local-nf', 'increasing-local-sf-nf']
 
 
 class DeseqCandidateWorkflowTests(unittest.TestCase):
@@ -50,6 +52,12 @@ class DeseqCandidateWorkflowTests(unittest.TestCase):
         self.assertIn('--witness "$DESIGN_ORACLE_ROOT"', body)
         self.assertIn('--witness "$LOW_DF_ORACLE_ROOT"', body)
         self.assertIn('--low-df', body)
+        self.assertIn('--witness "$LOCAL_ORACLE_ROOT"', body)
+        self.assertIn('--local', body)
+        acquisition = bash_body(self.steps['Acquire and verify actual DESeq2 evidence'])
+        self.assertIn('deseq-local-trend-2026-10-28.json', acquisition)
+        self.assertIn('run_id=40614317043', acquisition)
+        self.assertIn('artifact_id=12783892999', acquisition)
         self.assertIn('if: always()', self.steps['Upload raw evidence'])
         self.assertNotIn('continue-on-error', self.text)
         for name, step in self.steps.items():
@@ -59,6 +67,8 @@ class DeseqCandidateWorkflowTests(unittest.TestCase):
                     result = subprocess.run(['bash', '-n'], input=body,
                                             capture_output=True, text=True, timeout=15)
                     self.assertEqual(result.returncode, 0, result.stderr)
+                    for program in re.findall(r"python3 -B - <<'PY'\n(.*?)\nPY", body, re.DOTALL):
+                        compile(program, name, 'exec')
 
     def test_worker_comparison_rejects_changed_exports_or_fitted_state(self):
         self.assertIn('Check worker determinism', self.steps, 'missing worker-output comparison')
@@ -70,10 +80,12 @@ class DeseqCandidateWorkflowTests(unittest.TestCase):
                 out = root / 'comparison' / f'workers-{workers}'
                 out.mkdir(parents=True)
                 (out / 'fit.json').write_text(json.dumps(
-                    dict(workers=workers, genes=[dict(beta=[0.25, -0.5])], schema=4)))
+                    dict(workers=workers, genes=[dict(beta=[0.25, -0.5])], schema=5)))
                 for name in ('forward.tsv', 'reverse.tsv', 'normalized-counts.tsv', 'vst.tsv'):
                     (out / name).write_text('gene\tvalue\ng1\t0.25\n')
-                for directory, cases in (('design-comparison', DESIGN_CASES), ('low-df-comparison', LOW_DF_CASES)):
+                for directory, cases in (('design-comparison', DESIGN_CASES),
+                                         ('low-df-comparison', LOW_DF_CASES),
+                                         ('local-comparison', LOCAL_CASES)):
                     family = root / directory / f'workers-{workers}'
                     family.mkdir(parents=True)
                     (family / 'comparison-contract.json').write_text(json.dumps(
@@ -82,10 +94,12 @@ class DeseqCandidateWorkflowTests(unittest.TestCase):
                         target = family / case
                         target.mkdir()
                         (target / 'fit.json').write_text(json.dumps(
-                            dict(workers=workers, genes=[dict(beta=[0.25, -0.5])], schema=4)))
+                            dict(workers=workers, genes=[dict(beta=[0.25, -0.5])], schema=5)))
                         exports = ['forward.tsv', 'reverse.tsv', 'normalized-counts.tsv', 'vst.tsv']
                         if case != 'intercept-sf-formula':
                             exports.append('mixed.tsv')
+                        if case in LOCAL_CASES:
+                            exports.extend(['queries.tsv', 'trend-first.tsv', 'trend-reload.tsv'])
                         for name in exports:
                             (target / name).write_text('gene\tvalue\ng1\t0.25\n')
             env = dict(os.environ, EVIDENCE=str(root))
@@ -100,7 +114,8 @@ class DeseqCandidateWorkflowTests(unittest.TestCase):
             self.assertTrue(report['passed'])
             self.assertEqual(set(report['design_cases']), set(DESIGN_CASES))
             self.assertEqual(set(report['low_df_cases']), set(LOW_DF_CASES))
-            self.assertEqual(report['compared_workflows'], 20)
+            self.assertEqual(set(report['local_cases']), set(LOCAL_CASES))
+            self.assertEqual(report['compared_workflows'], 24)
             changed = root / 'comparison/workers-4/vst.tsv'
             changed.write_text('gene\tvalue\ng1\t0.75\n')
             self.assertNotEqual(execute().returncode, 0, 'changed numeric export was accepted')
@@ -121,6 +136,17 @@ class DeseqCandidateWorkflowTests(unittest.TestCase):
             bundle.write_text(json.dumps(fit))
             self.assertNotEqual(execute().returncode, 0, 'changed low-df fitted state was accepted')
             fit['genes'][0]['beta'][1] = -0.5
+            bundle.write_text(json.dumps(fit))
+            changed = root / 'local-comparison/workers-4/increasing-local-sf-nf/trend-reload.tsv'
+            changed.write_text('gene\tvalue\ng1\t0.75\n')
+            self.assertNotEqual(execute().returncode, 0, 'changed local inspection was accepted')
+            changed.write_text('gene\tvalue\ng1\t0.25\n')
+            bundle = root / 'local-comparison/workers-4/increasing-default-ratio/fit.json'
+            fit = json.loads(bundle.read_text())
+            fit['trend'] = dict(local_curve=[0.75])
+            bundle.write_text(json.dumps(fit))
+            self.assertNotEqual(execute().returncode, 0, 'changed saved local trend was accepted')
+            del fit['trend']
             bundle.write_text(json.dumps(fit))
             bundle = root / 'design-comparison/workers-4/interaction-nf-formula/fit.json'
             fit = json.loads(bundle.read_text())

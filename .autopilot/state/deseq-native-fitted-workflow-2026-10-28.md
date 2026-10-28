@@ -2,8 +2,12 @@
 
 ## Current state
 
-Owning localmainc9f99b70c191c6ed29d42c8d4cd49ed151b573b7 is clean/private,
-publish=false. It adds only buffered fitted-bundle save to schema4/1401149;
+Current clean private main is ef72e3c1302ad45feb368c4b959661b5de20a120,
+publish=false. Schema5/local trends and source-faithful local VST are complete
+locally; see deseq-local-trend-native-2026-10-28.md. Green6 freezes all47 source
+files for the new four-native gate. No current-feature performance or release
+acceptance is inferred from the earlier green5 result.
+Previous C9 adds only buffered fitted-bundle save to schema4/1401149;
 see deseq-buffered-save-2026-10-28.md. Green5/run40611588271 at exact42f378fe
 now passes all four native classes and20 full workflows; original evidence is
 retained/verified, receiptc86fec10a22f4b69a6470b99562f0bdc8d4de12496e488c227a69d962b767bf4.
@@ -34,7 +38,11 @@ docs/plans/2026-10-28-deseq-mean-low-df-native.md.
 The completed green3 performance40605899832 accepts a strict process-RSS
 advantage, not strict source-inner throughput/scaling. Its original binary
 attribution is immutable. Fresh green5 benchmarking follows its accepted
-native gate and measured save fix. Local trends/fallback and declared scope remain release
+native gate and measured save fix:40614312003 now passes strict source-inner
+throughput/RSS/scaling, with original evidence retained/verified. Actual local
+source40614317043 also passes all four cases. Native schema5 now passes all24
+workflows locally at1/4 workers and fresh whole-feature review; its four-native
+and current-feature performance gates remain. Declared scope remains a release
 gates; no complete DESeq2 replacement is claimed. Full30-family goal stays active.
 
 ## Initial schema1 checkpoint

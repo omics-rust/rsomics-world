@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "repository": "omics-rust/rsomics-world",
+  "run_attempt": 1,
+  "workflow_path": ".github/workflows/deseq-local-trend-oracle.yml",
+  "run_id": 40614317043,
+  "artifact_id": 12783892999,
+  "head_sha": "12d615548c52092a7f325e8138cd75e85a1f9e0e",
+  "artifact_name": "deseq-local-trend-oracle-40614317043-1",
+  "size_in_bytes": 68575971,
+  "artifact_sha256": "24c9221e52af2eeea4de60914ed5314c7e7eb68bc7fa6189b3f224d2137661fd",
+  "bundle_path": "local",
+  "manifest_sha256": "a9999583f32ffaf8921145d61dc7beb17f62bcb5b9c47e4f196ed77ec903bc0d",
+  "witness_sha256": "acc5be2133911b51e03ca8c7b35b9c48ecbcfd7fab8312cd18462fbea9eaf37d"
+}
