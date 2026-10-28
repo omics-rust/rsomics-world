@@ -25,14 +25,14 @@ operation will ship. It records:
 | `rsomics-cnv` | 2 | [released 0.1.0](variant.md#rsomics-cnv) |
 | `rsomics-composition` | 10 | [released 0.1.0](composition.md) |
 | `rsomics-count` | 4 | [released 0.1.0](count-gate-2026-08-02.md) |
-| `rsomics-deseq` | 12 | [audited](bulk-expression.md#rsomics-deseq) |
+| `rsomics-deseq` | 12 | [private Wald/VST candidate; final native/performance gate pending](bulk-expression.md#rsomics-deseq) |
 | `rsomics-ecology` | 19 | [audited](ecology.md) |
-| `rsomics-edger` | 17 | [audited](bulk-expression.md#rsomics-edger) |
+| `rsomics-edger` | 17 | [private modern QL workflow; numerical contract held](bulk-expression.md#rsomics-edger) |
 | `rsomics-fastq-preprocess` | 12 | [released 0.1.1](fastq-preprocess-gate-2026-07-30.md) |
 | `rsomics-fastq-qc` | 1 | [released 0.1.0](fastq-qc-gate-2026-08-02.md) |
 | `rsomics-index` | 5 | [held: raw performance evidence unavailable; storage and credential gates open](interval-annotation-index.md#rsomics-index) |
 | `rsomics-liftover` | 1 | [released 0.1.0](liftover.md) |
-| `rsomics-limma` | 16 | [audited](bulk-expression.md#rsomics-limma) |
+| `rsomics-limma` | 16 | [private current-voom candidate; native/performance gate pending](bulk-expression.md#rsomics-limma) |
 | `rsomics-metagenomics` | 5 | [released 0.1.0](metagenomics-gate-2026-08-02.md) |
 | `rsomics-methyl` | 1 | [released 0.1.0](methyl.md) |
 | `rsomics-minimap2` | 1 | [audited](minimap2.md); legacy release requires reconstruction |
@@ -40,8 +40,8 @@ operation will ship. It records:
 | `rsomics-phylo` | 11 | [released 0.1.0](phylo.md#first-release-evidence) |
 | `rsomics-plink` | 42 | [audited](genotype-popgen.md#rsomics-plink) |
 | `rsomics-popgen` | 14 | [audited](genotype-popgen.md#rsomics-popgen) |
-| `rsomics-rnaseq-qc` | 21 | [audited](rnaseq-qc-signal.md#rsomics-rnaseq-qc) |
-| `rsomics-sc` | 29 | [audited](sc.md) |
+| `rsomics-rnaseq-qc` | 21 | [qualified first slice; registry adoption held](rnaseq-qc-signal.md#rsomics-rnaseq-qc) |
+| `rsomics-sc` | 29 | [private inferCNV candidate; discovery contract held](sc.md) |
 | `rsomics-seq` | 34 | [released 0.2.0](sequence-fastq.md#rsomics-seq) |
 | `rsomics-signal` | 15 | [audited](rnaseq-qc-signal.md#rsomics-signal) |
 | `rsomics-sketch` | 1 | [released 0.1.0](sketch-gate-2026-08-02.md) |

@@ -4,10 +4,13 @@ Status: joint boundary, upstream-operation, and historical-source audit
 complete. DESeq now has a private fitted-workflow checkpoint under local
 rsomics-deseq; it is not published or release-complete. Its current gates are
 recorded in `.autopilot/state/deseq-native-fitted-workflow-2026-10-28.md`.
-The edgeR target now has a current-source preflight and a hosted first-workflow
-oracle accepted; no native implementation is claimed. The limma target has a
-current count-workflow preflight and hosted source oracle prepared, not a
-native product or compatibility claim.
+The edgeR target has a complete private native modern-QL workflow, but its
+original P/FDR compatibility gate remains failed pending an explicit numerical
+contract decision; see `.autopilot/state/edger-native-ql-2026-10-28.md`.
+The limma target has an accepted current count-workflow source witness and a
+complete private implementation with a passing local whole-workflow gate and
+fresh review; four-native, formal performance and publication remain pending. See
+`../plans/2026-10-28-limma-native-count-workflow.md`.
 
 ## Portfolio decision
 

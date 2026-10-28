@@ -94,9 +94,14 @@ local-trend source40614317043 also passes at that head, with508 files/102 frozen
 inputs and all9 branch observations/fresh reloads retained/verified. New clean
 owningef72e3c/schema5 implements local/default-fallback/pure saved curve/FMM/VST
 and inspection; all24 complete workflows pass locally at1/4,13 tests/strict
-checks and one fresh complete-feature review pass. Green6 freezes47 source
-files for its separate four-native gate; current-feature performance is not
-inferred from green5. Declared scope/publication still keep this private, not
+checks and one fresh complete-feature review pass. Green6/all47 files now
+passes four-native40623248458 at916161a8; original artifacts are retained and
+independently verified (receipt6db38ee3...). Final owningf53f713/green7 closes
+accidental public internals and adds only private one-case reuse; all13 test
+intents/strict checks remain, math/schema/runtime CLI unchanged. All49 final
+source files are frozen for a final native gate before the prepared two-case
+performance campaign. No intermediate green6 performance was dispatched and
+current-feature speed is not inferred from green5. Declared scope/publication still keep this private, not
 a complete DESeq2 replacement. Current edgeR4.10.7/limma3.68.5
 source review now prepares its modern QL first-workflow oracle, not the old
 legacy-QL donor or a placeholder native crate. Initial source40602956264 has
@@ -115,18 +120,26 @@ ORIGINAL numerical gate is still FAILED:2283 small P/FDR discrepancies per run.
 Independent PMF checks identify about.079% source approximation-weight differences
 at the largest failing rows; no source tables or bounds are fitted. The human
 numerical-contract choice is pending. Hold only that affected acceptance;
-see edger-native-ql-2026-10-28.md. Limma now follows the adopted before-native
-contract docs/plans/2026-10-28-limma-native-count-workflow.md in its newly created
-private owning repository, one isolated whole-workflow implementer. No new
-foundation/micro-crate or native acceptance is inferred from work in progress.
+see edger-native-ql-2026-10-28.md. Limma private mainabb4a01 now completes its
+current count-to-voom/contrast/EB/full-state lifecycle under the frozen plan.
+Real1/4 fits pass1,137,374 source points each, exact discovery sets and full
+state/three contrast/seven-table determinism. Final CLI-only surface passes
+both full-source --reuse checks and one fresh independent feature review; no
+new math/schema or source gate tuning. Green1 freezes29 files and a new bounded
+four-native wrapper is ready. No platform/performance/publication acceptance
+is inferred yet. No new foundation/micro-crate is introduced.
 See deseq-cook-refit-2026-10-28.md
 and edger-source-preflight-2026-10-28.md. No speculative public foundation
 expansion or second broad donor survey is performed.
 
 The sections below retain the historical execution ledger, not current pending
-instructions. Latest local guard records boot APFS about77.15% occupied and
-KIOXIA240GiB free. Recheck before every build/test/download; all project paths
+instructions. Latest local guard records boot APFS about78.1% occupied and
+KIOXIA235GiB free. Recheck before every build/test/download; all project paths
 remain external. Hosted gates and measurements use runner-temp.
+Full497 controller tests/architecture pass54.243s/two existing skips. Five
+actual new product outputs (deseq/edger/limma/rnaseq-qc/sc), verified absent from
+the frozen622-source baseline, are added to the generated-inventory exclusion
+list. Historical source-pool rows are not regenerated or discarded.
 
 ## Historical execution ledger
 
