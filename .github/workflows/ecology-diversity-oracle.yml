@@ -1,0 +1,140 @@
+name: Ecology actual count-table diversity oracle
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  oracle:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    env:
+      PYTHONDONTWRITEBYTECODE: '1'
+      PIP_DISABLE_PIP_VERSION_CHECK: '1'
+      PIP_NO_INPUT: '1'
+      OMP_NUM_THREADS: '1'
+      OPENBLAS_NUM_THREADS: '1'
+      MKL_NUM_THREADS: '1'
+      SKBIO_SOURCE_COMMIT: a3beaa632077a532330343d5db0d8e30e58b6705
+      BIOM_SOURCE_COMMIT: 2b81a013aae29004d9b82d13847450b27fd6b161
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+
+      - name: Prepare hosted source and package storage
+        run: |
+          set -euo pipefail
+          export EVIDENCE="$RUNNER_TEMP/ecology-diversity-oracle"
+          export TMPDIR="$RUNNER_TEMP/scratch"
+          export XDG_CACHE_HOME="$RUNNER_TEMP/cache"
+          export PIP_CACHE_DIR="$RUNNER_TEMP/cache/pip"
+          export MPLCONFIGDIR="$RUNNER_TEMP/cache/matplotlib"
+          export PYTHONUSERBASE="$RUNNER_TEMP/python-user"
+          export CARGO_HOME="$RUNNER_TEMP/cargo-home"
+          export CARGO_TARGET_DIR="$RUNNER_TEMP/cargo-target"
+          for name in EVIDENCE TMPDIR XDG_CACHE_HOME PIP_CACHE_DIR MPLCONFIGDIR PYTHONUSERBASE CARGO_HOME CARGO_TARGET_DIR; do
+            mkdir -p "${!name}"
+            printf '%s=%s\n' "$name" "${!name}" >> "$GITHUB_ENV"
+          done
+          mkdir -p "$EVIDENCE/controller" "$EVIDENCE/sources" "$EVIDENCE/wheels"
+          python3 -B - <<'PY'
+          import json, os, shutil
+          from pathlib import Path
+          runner = Path(os.environ['RUNNER_TEMP']).resolve(strict=True)
+          names = ('EVIDENCE', 'TMPDIR', 'XDG_CACHE_HOME', 'PIP_CACHE_DIR', 'MPLCONFIGDIR',
+                   'PYTHONUSERBASE', 'CARGO_HOME', 'CARGO_TARGET_DIR')
+          paths = {name: Path(os.environ[name]).resolve(strict=True) for name in names}
+          assert all(path.is_relative_to(runner) for path in paths.values()), 'project storage escapes runner-temp'
+          usage = shutil.disk_usage(runner)
+          assert usage.free > 8 * 2**30, 'insufficient source witness storage'
+          (paths['EVIDENCE'] / 'storage.json').write_text(json.dumps(dict(
+              paths={name: str(path) for name, path in paths.items()}, disk=usage._asdict()), indent=2) + '\n')
+          PY
+          git rev-parse HEAD > "$EVIDENCE/head.sha"
+          uname -a > "$EVIDENCE/host.txt"
+          df -h >> "$EVIDENCE/host.txt"
+          python3 --version >> "$EVIDENCE/host.txt"
+          python3 -m venv "$RUNNER_TEMP/ecology-python"
+          printf 'ECOLOGY_PYTHON=%s\n' "$RUNNER_TEMP/ecology-python/bin/python" >> "$GITHUB_ENV"
+
+      - name: Retain exact upstream release sources
+        run: |
+          set -euo pipefail
+          curl --fail --location --retry 3 \
+            "https://codeload.github.com/scikit-bio/scikit-bio/tar.gz/$SKBIO_SOURCE_COMMIT" \
+            --output "$EVIDENCE/sources/scikit-bio.tar.gz"
+          curl --fail --location --retry 3 \
+            "https://codeload.github.com/biocore/biom-format/tar.gz/$BIOM_SOURCE_COMMIT" \
+            --output "$EVIDENCE/sources/biom-format.tar.gz"
+          python3 -B - <<'PY'
+          import hashlib, json, os, tarfile
+          from pathlib import Path
+          root = Path(os.environ['EVIDENCE']) / 'sources'
+          selected = {'scikit-bio': ['LICENSE.txt', 'skbio/diversity/_driver.py', 'skbio/diversity/_util.py',
+              'skbio/diversity/alpha/_base.py', 'skbio/diversity/alpha/_chao1.py', 'skbio/diversity/alpha/_pd.py',
+              'skbio/diversity/beta/_unifrac.py', 'skbio/diversity/_phylogenetic.pyx',
+              'skbio/stats/_subsample.py', 'skbio/tree/_utils.py', 'skbio/tree/_tree.py', 'skbio/util/_misc.py'],
+              'biom-format': ['COPYING.txt', 'biom/_subsample.pyx']}
+          records = {}
+          for package, paths in selected.items():
+              commit = os.environ['SKBIO_SOURCE_COMMIT' if package == 'scikit-bio' else 'BIOM_SOURCE_COMMIT']
+              archive = root / (package + '.tar.gz')
+              records[package] = dict(commit=commit, sha256=hashlib.sha256(archive.read_bytes()).hexdigest(), files={})
+              with tarfile.open(archive) as source:
+                  for name in paths:
+                      member = source.getmember(f'{package}-{commit}/{name}')
+                      assert member.isfile(), 'expected regular selected source member'
+                      contents = source.extractfile(member).read()
+                      destination = root / package / name
+                      destination.parent.mkdir(parents=True, exist_ok=True)
+                      destination.write_bytes(contents)
+                      records[package]['files'][name] = hashlib.sha256(contents).hexdigest()
+          (root / 'source-archives.json').write_text(json.dumps(records, indent=2) + '\n')
+          PY
+
+      - name: Qualify released wheels and retain the resolved environment
+        run: |
+          set -euo pipefail
+          "$ECOLOGY_PYTHON" -m pip download --only-binary=:all: --dest "$EVIDENCE/wheels" \
+            'scikit-bio==0.7.3' 'biom-format==2.1.17' threadpoolctl \
+            2>&1 | tee "$EVIDENCE/download-wheels.log"
+          "$ECOLOGY_PYTHON" -m pip install --no-index --find-links "$EVIDENCE/wheels" \
+            --report "$EVIDENCE/install-report.json" 'scikit-bio==0.7.3' 'biom-format==2.1.17' threadpoolctl \
+            2>&1 | tee "$EVIDENCE/install-wheels.log"
+          "$ECOLOGY_PYTHON" -m pip freeze --all > "$EVIDENCE/pip-freeze.txt"
+          "$ECOLOGY_PYTHON" -m pip inspect --local > "$EVIDENCE/pip-inspect.json"
+          sha256sum "$EVIDENCE"/wheels/*.whl > "$EVIDENCE/wheels.sha256"
+
+      - name: Capture one complete alpha beta rarefy source lifecycle
+        run: |
+          set -euo pipefail
+          ulimit -c 0
+          cp scripts/ecology_diversity_oracle.py scripts/test_ecology_diversity_oracle.py "$EVIDENCE/controller/"
+          cp .github/workflows/ecology-diversity-oracle.yml "$EVIDENCE/controller/"
+          (
+            cd "$EVIDENCE/controller"
+            sha256sum *.py *.yml
+          ) > "$EVIDENCE/controller/checksums.sha256"
+          "$ECOLOGY_PYTHON" -B scripts/ecology_diversity_oracle.py --output "$EVIDENCE/witness" \
+            --skbio-source "$EVIDENCE/sources/scikit-bio" --biom-source "$EVIDENCE/sources/biom-format" \
+            2>&1 | tee "$EVIDENCE/capture.log"
+
+      - name: Retain source inputs, runtime identities and all observations
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ecology-diversity-oracle-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/ecology-diversity-oracle/
+          include-hidden-files: true
+          if-no-files-found: error
+          retention-days: 90
