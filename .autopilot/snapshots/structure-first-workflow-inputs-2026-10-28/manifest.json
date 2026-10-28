@@ -1,0 +1,668 @@
+{
+  "schema": "rsomics.structure.historical-seed.v1",
+  "created": "2026-10-28",
+  "archive": "historical-inputs.tar.gz",
+  "archive_sha256": "1d22709c635f6427cb5da4843a3e98225329c35cc653d4a51a9c471f999752ec",
+  "archive_size_bytes": 416526,
+  "assets": {
+    "rsomics-pdb-chain": {
+      "commit": "91ee3115f9467ef215962e44d4d232e329d2cb3d",
+      "original_local_repository": "/Volumes/KIOXIA/Documents/omics-rust/rsomics-pdb-chain",
+      "ownership": "team-owned; user approved direct reuse",
+      "disposition": "refactor then merge; do not revive historical micro-repositories"
+    },
+    "rsomics-pdb-geometry": {
+      "commit": "efc99601e1f9e6b5c449d491134c262309310441",
+      "original_local_repository": "/Volumes/KIOXIA/Documents/omics-rust/rsomics-pdb-geometry",
+      "ownership": "team-owned; user approved direct reuse",
+      "disposition": "refactor then merge; do not revive historical micro-repositories"
+    },
+    "rsomics-pdb-dihedrals": {
+      "commit": "91b1d7c6cc8182261d3466dfa227c277be715e95",
+      "original_local_repository": "/Volumes/KIOXIA/Documents/omics-rust/rsomics-pdb-dihedrals",
+      "ownership": "team-owned; user approved direct reuse",
+      "disposition": "refactor then merge; do not revive historical micro-repositories"
+    },
+    "rsomics-pdb-contacts": {
+      "commit": "e79e2ae68bf5b7439228573deefdb4e6bc6bd5eb",
+      "original_local_repository": "/Volumes/KIOXIA/Documents/omics-rust/rsomics-pdb-contacts",
+      "ownership": "team-owned; user approved direct reuse",
+      "disposition": "refactor then merge; do not revive historical micro-repositories"
+    },
+    "rsomics-pdb-hsexposure": {
+      "commit": "2f52a2e42df262ea713190664d5cec0573169076",
+      "original_local_repository": "/Volumes/KIOXIA/Documents/omics-rust/rsomics-pdb-hsexposure",
+      "ownership": "team-owned; user approved direct reuse",
+      "disposition": "refactor then merge; do not revive historical micro-repositories"
+    },
+    "rsomics-pdb-superpose": {
+      "commit": "b09b5f12e8580d0d95ddb35b3b423fd868a20cfc",
+      "original_local_repository": "/Volumes/KIOXIA/Documents/omics-rust/rsomics-pdb-superpose",
+      "ownership": "team-owned; user approved direct reuse",
+      "disposition": "refactor then merge; do not revive historical micro-repositories"
+    },
+    "rsomics-pdb-core": {
+      "commit": "7452a78326384fc9307e5234f40cc2362d9fb2be",
+      "original_local_repository": "/Volumes/KIOXIA/Documents/omics-rust/rsomics-pdb-core",
+      "ownership": "team-owned; user approved direct reuse",
+      "disposition": "refactor then merge; do not revive historical micro-repositories"
+    }
+  },
+  "files": {
+    "rsomics-pdb-chain/Cargo.toml": {
+      "sha256": "7237bafe6e041a8b5e5397912cce60decf88bf13b5acf8267db8ea55d8bdae72",
+      "size_bytes": 750,
+      "asset": "rsomics-pdb-chain",
+      "original_path": "Cargo.toml",
+      "role": "historical-source-provenance"
+    },
+    "rsomics-pdb-chain/src/cli.rs": {
+      "sha256": "8920904d128fcffde48af9f86ac3388d19f48b8311314ab04c646c1adde27ac9",
+      "size_bytes": 3563,
+      "asset": "rsomics-pdb-chain",
+      "original_path": "src/cli.rs",
+      "role": "historical-source-provenance"
+    },
+    "rsomics-pdb-chain/src/lib.rs": {
+      "sha256": "474dae40a3d5c95a1a698eb278ee3cb5a28745f042d352e90d9ac1499f010098",
+      "size_bytes": 2954,
+      "asset": "rsomics-pdb-chain",
+      "original_path": "src/lib.rs",
+      "role": "historical-source-provenance"
+    },
+    "rsomics-pdb-chain/src/main.rs": {
+      "sha256": "57bf2bd5e9a716d8bc78cdd22f57cead217493abe5a60408ba464315a55308a4",
+      "size_bytes": 422,
+      "asset": "rsomics-pdb-chain",
+      "original_path": "src/main.rs",
+      "role": "historical-source-provenance"
+    },
+    "rsomics-pdb-chain/tests/compat.rs": {
+      "sha256": "ba80775cff51458d34e88f58fe76293cbc6f0c08ab6c3cdbf390733a382a7458",
+      "size_bytes": 1133,
+      "asset": "rsomics-pdb-chain",
+      "original_path": "tests/compat.rs",
+      "role": "historical-source-provenance"
+    },
+    "rsomics-pdb-chain/tests/golden/small.pdb": {
+      "sha256": "e8c45433d86253f74169836595bb739b9f0e389fb95cc61d11e13d7058ac1f2b",
+      "size_bytes": 266,
+      "asset": "rsomics-pdb-chain",
+      "original_path": "tests/golden/small.pdb",
+      "role": "fixture-or-golden"
+    },
+    "rsomics-pdb-chain/tests/smoke.rs": {
+      "sha256": "f006eafdb9384d65afffe235be0d490609f9198efdff321dff4a323196d9fab2",
+      "size_bytes": 926,
+      "asset": "rsomics-pdb-chain",
+      "original_path": "tests/smoke.rs",
+      "role": "historical-source-provenance"
+    },
+    "rsomics-pdb-geometry/Cargo.toml": {
+      "sha256": "caf2aaf74dfc43bfe53d8b0ecc46ac0df9378a6e38a4cfcac7b9bbf5982504a3",
+      "size_bytes": 770,
+      "asset": "rsomics-pdb-geometry",
+      "original_path": "Cargo.toml",
+      "role": "historical-source-provenance"
+    },
+    "rsomics-pdb-geometry/README.md": {
+      "sha256": "57dc9501be1870c716dad658a35b36420222461240dba3c885a97c019e9b7ae1",
+      "size_bytes": 4022,
+      "asset": "rsomics-pdb-geometry",
+      "original_path": "README.md",
+      "role": "historical-source-provenance"
+    },
+    "rsomics-pdb-geometry/src/cli.rs": {
+      "sha256": "09bcc12a666c3277581165f6afb5ece3739b81f04b206345bff8e0d14119f53d",
+      "size_bytes": 2161,
+      "asset": "rsomics-pdb-geometry",
+      "original_path": "src/cli.rs",
+      "role": "historical-source-provenance"
+    },
+    "rsomics-pdb-geometry/src/geom.rs": {
+      "sha256": "fb1c4a38fab26a4dfb2450e21d65d467ab83bad29c58eee64744ef1d26f1e246",
+      "size_bytes": 8058,
+      "asset": "rsomics-pdb-geometry",
+      "original_path": "src/geom.rs",
+      "role": "historical-source-provenance"
+    },
+    "rsomics-pdb-geometry/src/lib.rs": {
+      "sha256": "f7f649d2aa20d79fefa534d7d6b82c01c6bae0f313428f17a5c7b821e9cc4871",
+      "size_bytes": 1334,
+      "asset": "rsomics-pdb-geometry",
+      "original_path": "src/lib.rs",
+      "role": "historical-source-provenance"
+    },
+    "rsomics-pdb-geometry/src/main.rs": {
+      "sha256": "b77e6a5e3b897c66f3d6d641cec2f9104e52aadb185bba66c85f10b442b851f9",
+      "size_bytes": 2582,
+      "asset": "rsomics-pdb-geometry",
+      "original_path": "src/main.rs",
+      "role": "historical-source-provenance"
+    },
+    "rsomics-pdb-geometry/src/mass.rs": {
+      "sha256": "fc9213f45661e39dcc60b241561369b5edd240e3983c44f8d1bfef2e1cd3bee6",
+      "size_bytes": 6783,
+      "asset": "rsomics-pdb-geometry",
+      "original_path": "src/mass.rs",
+      "role": "historical-source-provenance"
+    },
+    "rsomics-pdb-geometry/src/pdb.rs": {
+      "sha256": "fa3af5270c06a96f5277e9cc2b1c977b6de5b4285a592954a9886a92064324cf",
+      "size_bytes": 3898,
+      "asset": "rsomics-pdb-geometry",
+      "original_path": "src/pdb.rs",
+      "role": "historical-source-provenance"
+    },
+    "rsomics-pdb-geometry/tests/compat.rs": {
+      "sha256": "73b1982482689bb5c90d968ab6516ede14a40d29915da855ac2212c956925984",
+      "size_bytes": 9121,
+      "asset": "rsomics-pdb-geometry",
+      "original_path": "tests/compat.rs",
+      "role": "historical-source-provenance"
+    },
+    "rsomics-pdb-geometry/tests/golden/1a2p.geom.tsv": {
+      "sha256": "2897212ef84b83d07959414d6c8cb7a16679a3ef09b92d5d26c2e9a803dd7457",
+      "size_bytes": 348,
+      "asset": "rsomics-pdb-geometry",
+      "original_path": "tests/golden/1a2p.geom.tsv",
+      "role": "fixture-or-golden"
+    },
+    "rsomics-pdb-geometry/tests/golden/1a2p.pdb": {
+      "sha256": "f666c1dc491d6994a859f647953c7c8bc9546fdaa4a9be6dfb520955ffbbf903",
+      "size_bytes": 531198,
+      "asset": "rsomics-pdb-geometry",
+      "original_path": "tests/golden/1a2p.pdb",
+      "role": "fixture-or-golden"
+    },
+    "rsomics-pdb-geometry/tests/golden/1ubq.geom.tsv": {
+      "sha256": "2c15b941b0cbb6c81d3592977502e9d2d0660702d1227f2068e36389597e13ea",
+      "size_bytes": 346,
+      "asset": "rsomics-pdb-geometry",
+      "original_path": "tests/golden/1ubq.geom.tsv",
+      "role": "fixture-or-golden"
+    },
+    "rsomics-pdb-geometry/tests/golden/1ubq.pdb": {
+      "sha256": "d4a6812d8951cf6594e6a0763f089e35f5a80b62acb3c117b2c5565228a7b161",
+      "size_bytes": 78570,
+      "asset": "rsomics-pdb-geometry",
+      "original_path": "tests/golden/1ubq.pdb",
+      "role": "fixture-or-golden"
+    },
+    "rsomics-pdb-geometry/tests/golden/3nir.ca.geom.tsv": {
+      "sha256": "845cdfc4fbd651e0b6d2e1dc964130d0a6cb097b3a1a955b551ae685451d8023",
+      "size_bytes": 349,
+      "asset": "rsomics-pdb-geometry",
+      "original_path": "tests/golden/3nir.ca.geom.tsv",
+      "role": "fixture-or-golden"
+    },
+    "rsomics-pdb-geometry/tests/golden/3nir.geom.tsv": {
+      "sha256": "c50ee4308a00034011950dddefb42a7d563de21bcd92284388746a57e06563d6",
+      "size_bytes": 352,
+      "asset": "rsomics-pdb-geometry",
+      "original_path": "tests/golden/3nir.geom.tsv",
+      "role": "fixture-or-golden"
+    },
+    "rsomics-pdb-geometry/tests/golden/3nir.heavy.geom.tsv": {
+      "sha256": "9cb5cd10ce17b655ce2db8dabfeffed81b3a4d43c0bed17a9159093c2b95359e",
+      "size_bytes": 352,
+      "asset": "rsomics-pdb-geometry",
+      "original_path": "tests/golden/3nir.heavy.geom.tsv",
+      "role": "fixture-or-golden"
+    },
+    "rsomics-pdb-geometry/tests/golden/3nir.pdb": {
+      "sha256": "b1ecd8b00fe1b0e2a3cb8f71609d2fe5177a8f3be699d30c58e4109d5e4e5ab5",
+      "size_bytes": 163701,
+      "asset": "rsomics-pdb-geometry",
+      "original_path": "tests/golden/3nir.pdb",
+      "role": "fixture-or-golden"
+    },
+    "rsomics-pdb-dihedrals/Cargo.toml": {
+      "sha256": "14ee1744948199fa0933a2685427b93d894b40a10ac069409ee6ce74b5611f8e",
+      "size_bytes": 813,
+      "asset": "rsomics-pdb-dihedrals",
+      "original_path": "Cargo.toml",
+      "role": "historical-source-provenance"
+    },
+    "rsomics-pdb-dihedrals/README.md": {
+      "sha256": "73458f48e4daba1f04487dd9002538b71031e9c7c25bc664c8943aea10e27d5e",
+      "size_bytes": 2041,
+      "asset": "rsomics-pdb-dihedrals",
+      "original_path": "README.md",
+      "role": "historical-source-provenance"
+    },
+    "rsomics-pdb-dihedrals/src/chi.rs": {
+      "sha256": "a82f8df56a775e02cae066b3aaef3971c8c040cdb4b626c08e14f067fa170bcf",
+      "size_bytes": 1952,
+      "asset": "rsomics-pdb-dihedrals",
+      "original_path": "src/chi.rs",
+      "role": "historical-source-provenance"
+    },
+    "rsomics-pdb-dihedrals/src/cli.rs": {
+      "sha256": "9edc741a9c2749792306f604a2ead8ebe20c8712e239c89a8133a70c9b5a8de3",
+      "size_bytes": 2008,
+      "asset": "rsomics-pdb-dihedrals",
+      "original_path": "src/cli.rs",
+      "role": "historical-source-provenance"
+    },
+    "rsomics-pdb-dihedrals/src/dihedral.rs": {
+      "sha256": "07a4e5785999450afba39824d808346cdbc5755e4ae87cbe39a47e09ed79d456",
+      "size_bytes": 1584,
+      "asset": "rsomics-pdb-dihedrals",
+      "original_path": "src/dihedral.rs",
+      "role": "historical-source-provenance"
+    },
+    "rsomics-pdb-dihedrals/src/lib.rs": {
+      "sha256": "13c6f48aa78a67f51c698f8ed97948b59b24f152054d684c190b1e30870d4907",
+      "size_bytes": 3846,
+      "asset": "rsomics-pdb-dihedrals",
+      "original_path": "src/lib.rs",
+      "role": "historical-source-provenance"
+    },
+    "rsomics-pdb-dihedrals/src/main.rs": {
+      "sha256": "31b9a6f1469689533b56065c712f26c7d9ca4d8b0576ff1f5a3b4e6a0ed68b4f",
+      "size_bytes": 145,
+      "asset": "rsomics-pdb-dihedrals",
+      "original_path": "src/main.rs",
+      "role": "historical-source-provenance"
+    },
+    "rsomics-pdb-dihedrals/src/pdb.rs": {
+      "sha256": "5cc782ddd6522064aa086d0658b3d448a8ac0da3184a26177463e39af14c2417",
+      "size_bytes": 2521,
+      "asset": "rsomics-pdb-dihedrals",
+      "original_path": "src/pdb.rs",
+      "role": "historical-source-provenance"
+    },
+    "rsomics-pdb-dihedrals/tests/compat.rs": {
+      "sha256": "3d197fe67b2a73ea08fc84aa554279eac2952a943c6652740473e5988a0b7b86",
+      "size_bytes": 7308,
+      "asset": "rsomics-pdb-dihedrals",
+      "original_path": "tests/compat.rs",
+      "role": "historical-source-provenance"
+    },
+    "rsomics-pdb-dihedrals/tests/golden/1crn.dihedrals.tsv": {
+      "sha256": "a4c90e5b2772fe7067252f1f95c94bb19760e3434d34ed351f3c5a861a6965f6",
+      "size_bytes": 2778,
+      "asset": "rsomics-pdb-dihedrals",
+      "original_path": "tests/golden/1crn.dihedrals.tsv",
+      "role": "fixture-or-golden"
+    },
+    "rsomics-pdb-dihedrals/tests/golden/1crn.pdb": {
+      "sha256": "42199a30a0701864a2a5cc76cd7f35cc544cd0e65fbcf63e03c166543249b811",
+      "size_bytes": 49491,
+      "asset": "rsomics-pdb-dihedrals",
+      "original_path": "tests/golden/1crn.pdb",
+      "role": "fixture-or-golden"
+    },
+    "rsomics-pdb-dihedrals/tests/golden/altloc.dihedrals.tsv": {
+      "sha256": "332517c6d3b66dd22adbbf83befc81cd4d63b1496f945d3b931d4ed7356b56f4",
+      "size_bytes": 134,
+      "asset": "rsomics-pdb-dihedrals",
+      "original_path": "tests/golden/altloc.dihedrals.tsv",
+      "role": "fixture-or-golden"
+    },
+    "rsomics-pdb-dihedrals/tests/golden/altloc.pdb": {
+      "sha256": "141d462b2b1d5f37afb771be05be90c1fc05d4144e359f427b8c54b6b19cd521",
+      "size_bytes": 952,
+      "asset": "rsomics-pdb-dihedrals",
+      "original_path": "tests/golden/altloc.pdb",
+      "role": "fixture-or-golden"
+    },
+    "rsomics-pdb-contacts/Cargo.toml": {
+      "sha256": "b96cabcfa81d570e1d3a30f3e7bc9630c5e8525eb96bbe69745b4fb974602a5d",
+      "size_bytes": 1091,
+      "asset": "rsomics-pdb-contacts",
+      "original_path": "Cargo.toml",
+      "role": "historical-source-provenance"
+    },
+    "rsomics-pdb-contacts/README.md": {
+      "sha256": "2789e9830825a19d29097091852bd10c9478d8d3fca0aaf0ec87ec15237acec7",
+      "size_bytes": 2301,
+      "asset": "rsomics-pdb-contacts",
+      "original_path": "README.md",
+      "role": "historical-source-provenance"
+    },
+    "rsomics-pdb-contacts/src/cell_list.rs": {
+      "sha256": "0576f54ff9d6795f8b9d348d4993818902b84800a48c6dbee5daee02ec9df4d5",
+      "size_bytes": 7445,
+      "asset": "rsomics-pdb-contacts",
+      "original_path": "src/cell_list.rs",
+      "role": "historical-source-provenance"
+    },
+    "rsomics-pdb-contacts/src/cli.rs": {
+      "sha256": "aba6ef39e1dced4653ba1ac7f5c8b9be1e6298fd98d51500993384da94b40719",
+      "size_bytes": 2618,
+      "asset": "rsomics-pdb-contacts",
+      "original_path": "src/cli.rs",
+      "role": "historical-source-provenance"
+    },
+    "rsomics-pdb-contacts/src/contacts.rs": {
+      "sha256": "a2cd0b9675449488ae86c5d3b1124e15e783a050c2fa20959c12c9bf04096d8f",
+      "size_bytes": 9266,
+      "asset": "rsomics-pdb-contacts",
+      "original_path": "src/contacts.rs",
+      "role": "historical-source-provenance"
+    },
+    "rsomics-pdb-contacts/src/lib.rs": {
+      "sha256": "88ae7922efca1b433fbbe09f8d5cb7337a3712e16c866fa2c81a445d6cd69d20",
+      "size_bytes": 171,
+      "asset": "rsomics-pdb-contacts",
+      "original_path": "src/lib.rs",
+      "role": "historical-source-provenance"
+    },
+    "rsomics-pdb-contacts/src/main.rs": {
+      "sha256": "a82d6906333aa5dc862769f983791285dfa2ce85b6713aa9ff481a6cee813f09",
+      "size_bytes": 234,
+      "asset": "rsomics-pdb-contacts",
+      "original_path": "src/main.rs",
+      "role": "historical-source-provenance"
+    },
+    "rsomics-pdb-contacts/src/output.rs": {
+      "sha256": "84792f7a788548c13498603c8bfa52b1dacdb19f3efd7947e5c3feaf0b1a1728",
+      "size_bytes": 1578,
+      "asset": "rsomics-pdb-contacts",
+      "original_path": "src/output.rs",
+      "role": "historical-source-provenance"
+    },
+    "rsomics-pdb-contacts/src/pdb.rs": {
+      "sha256": "c9b7f40159f0783447ad7d8753b63de308389e658c496b45be9c139698f66eb4",
+      "size_bytes": 4441,
+      "asset": "rsomics-pdb-contacts",
+      "original_path": "src/pdb.rs",
+      "role": "historical-source-provenance"
+    },
+    "rsomics-pdb-contacts/tests/compat.rs": {
+      "sha256": "23bd6d3500660799ae4554b6958b7a6e02302a788c6879741dbb3ca07a38623e",
+      "size_bytes": 7926,
+      "asset": "rsomics-pdb-contacts",
+      "original_path": "tests/compat.rs",
+      "role": "historical-source-provenance"
+    },
+    "rsomics-pdb-contacts/tests/contacts_oracle.py": {
+      "sha256": "507915a2885f0e491d6ff2c17e11a43d83f3b60aa9a52fe1a871931bff91a69b",
+      "size_bytes": 4518,
+      "asset": "rsomics-pdb-contacts",
+      "original_path": "tests/contacts_oracle.py",
+      "role": "historical-source-provenance"
+    },
+    "rsomics-pdb-contacts/tests/golden/1crn.atom_4.0.tsv": {
+      "sha256": "e3752e93bb86011f2e01074aaf6c89af108c1ce0523b884c7f89eb9e88b4918f",
+      "size_bytes": 44807,
+      "asset": "rsomics-pdb-contacts",
+      "original_path": "tests/golden/1crn.atom_4.0.tsv",
+      "role": "fixture-or-golden"
+    },
+    "rsomics-pdb-contacts/tests/golden/1crn.atom_ca_boundary.tsv": {
+      "sha256": "83663efdcb107d2a3ffb735b4afb5714a443679ab28678b56359940f3e393824",
+      "size_bytes": 3895,
+      "asset": "rsomics-pdb-contacts",
+      "original_path": "tests/golden/1crn.atom_ca_boundary.tsv",
+      "role": "fixture-or-golden"
+    },
+    "rsomics-pdb-contacts/tests/golden/1crn.pdb": {
+      "sha256": "42199a30a0701864a2a5cc76cd7f35cc544cd0e65fbcf63e03c166543249b811",
+      "size_bytes": 49491,
+      "asset": "rsomics-pdb-contacts",
+      "original_path": "tests/golden/1crn.pdb",
+      "role": "fixture-or-golden"
+    },
+    "rsomics-pdb-contacts/tests/golden/1crn.residue_8.0.tsv": {
+      "sha256": "8e0aaa22f3a137c97c4851fd7db4db443dfd4591916f1f57d74f6962280c3aa3",
+      "size_bytes": 7188,
+      "asset": "rsomics-pdb-contacts",
+      "original_path": "tests/golden/1crn.residue_8.0.tsv",
+      "role": "fixture-or-golden"
+    },
+    "rsomics-pdb-contacts/tests/golden/1crn.residue_ca_8.0_sep2.tsv": {
+      "sha256": "e7b16465bd7cb5c135edc9990b6d62fe4f019c85530f5c5c1e3601fb63e53b1d",
+      "size_bytes": 2815,
+      "asset": "rsomics-pdb-contacts",
+      "original_path": "tests/golden/1crn.residue_ca_8.0_sep2.tsv",
+      "role": "fixture-or-golden"
+    },
+    "rsomics-pdb-contacts/tests/golden/altloc.atom_ca_3.0.tsv": {
+      "sha256": "56fb0d809625bd3d4cd9d0d5b83b189367db06d6ee745a49972a2ddff635f0ff",
+      "size_bytes": 120,
+      "asset": "rsomics-pdb-contacts",
+      "original_path": "tests/golden/altloc.atom_ca_3.0.tsv",
+      "role": "fixture-or-golden"
+    },
+    "rsomics-pdb-contacts/tests/golden/altloc.pdb": {
+      "sha256": "150db7b718e3f896440f865ffeb4ef64e3438a3b2fe4531ec547b224837f4846",
+      "size_bytes": 320,
+      "asset": "rsomics-pdb-contacts",
+      "original_path": "tests/golden/altloc.pdb",
+      "role": "fixture-or-golden"
+    },
+    "rsomics-pdb-hsexposure/Cargo.toml": {
+      "sha256": "97d6c035ac28cb8e504239350edb4ce5ed41a47d67af0b1006d6012f7e6eae16",
+      "size_bytes": 721,
+      "asset": "rsomics-pdb-hsexposure",
+      "original_path": "Cargo.toml",
+      "role": "historical-source-provenance"
+    },
+    "rsomics-pdb-hsexposure/README.md": {
+      "sha256": "c8d15c707c42ee5e14a12d5464ae4d57c9ad6b25ecc818070c2b063cde4cdb9d",
+      "size_bytes": 2160,
+      "asset": "rsomics-pdb-hsexposure",
+      "original_path": "README.md",
+      "role": "historical-source-provenance"
+    },
+    "rsomics-pdb-hsexposure/src/cli.rs": {
+      "sha256": "da1e3c6afa07b82cd2cad61925973b36e1eadaa16240f85801f97e89779fc907",
+      "size_bytes": 2522,
+      "asset": "rsomics-pdb-hsexposure",
+      "original_path": "src/cli.rs",
+      "role": "historical-source-provenance"
+    },
+    "rsomics-pdb-hsexposure/src/hse.rs": {
+      "sha256": "63db48cb5a8e125053762a05e65b23c989c5816c0bf0d6464ef995017f0bfb30",
+      "size_bytes": 5988,
+      "asset": "rsomics-pdb-hsexposure",
+      "original_path": "src/hse.rs",
+      "role": "historical-source-provenance"
+    },
+    "rsomics-pdb-hsexposure/src/lib.rs": {
+      "sha256": "27b3848eed9f5983383a5126579c4959ea0cab63f0deaac738c94cd99ec2d87b",
+      "size_bytes": 121,
+      "asset": "rsomics-pdb-hsexposure",
+      "original_path": "src/lib.rs",
+      "role": "historical-source-provenance"
+    },
+    "rsomics-pdb-hsexposure/src/main.rs": {
+      "sha256": "e1f6d60ff28d7023c6bfe510af3ce75303268b0e301a7faddbf41b329a106342",
+      "size_bytes": 1960,
+      "asset": "rsomics-pdb-hsexposure",
+      "original_path": "src/main.rs",
+      "role": "historical-source-provenance"
+    },
+    "rsomics-pdb-hsexposure/src/pdb.rs": {
+      "sha256": "5851b79fb6ca9b18a0fcc0832d0bcf46f32bcab57eb1dad69a8e58bdbd4ba934",
+      "size_bytes": 5073,
+      "asset": "rsomics-pdb-hsexposure",
+      "original_path": "src/pdb.rs",
+      "role": "historical-source-provenance"
+    },
+    "rsomics-pdb-hsexposure/tests/compat.rs": {
+      "sha256": "1826bac5c06ee6320038979610bf1cbdc4f508689bc939e90095a97f2c576788",
+      "size_bytes": 4433,
+      "asset": "rsomics-pdb-hsexposure",
+      "original_path": "tests/compat.rs",
+      "role": "historical-source-provenance"
+    },
+    "rsomics-pdb-hsexposure/tests/golden/1crn.pdb": {
+      "sha256": "42199a30a0701864a2a5cc76cd7f35cc544cd0e65fbcf63e03c166543249b811",
+      "size_bytes": 49491,
+      "asset": "rsomics-pdb-hsexposure",
+      "original_path": "tests/golden/1crn.pdb",
+      "role": "fixture-or-golden"
+    },
+    "rsomics-pdb-hsexposure/tests/golden/1crn.r12.expected.tsv": {
+      "sha256": "cf28bf913584631cb21c4adc47c5f7ab9052befff218a01a0a6d261d5bbd8f14",
+      "size_bytes": 1078,
+      "asset": "rsomics-pdb-hsexposure",
+      "original_path": "tests/golden/1crn.r12.expected.tsv",
+      "role": "fixture-or-golden"
+    },
+    "rsomics-pdb-hsexposure/tests/golden/1crn.r13.expected.tsv": {
+      "sha256": "aaebb0dc370829949fe2e985d5154ccc454a1e5f93fcb896c1f49fc0c61c0c54",
+      "size_bytes": 1087,
+      "asset": "rsomics-pdb-hsexposure",
+      "original_path": "tests/golden/1crn.r13.expected.tsv",
+      "role": "fixture-or-golden"
+    },
+    "rsomics-pdb-hsexposure/tests/golden/4hhb.pdb": {
+      "sha256": "c62774ac679a220a493aab5d177ab34248ab700235dc6d941f5f3cbefde334ed",
+      "size_bytes": 473769,
+      "asset": "rsomics-pdb-hsexposure",
+      "original_path": "tests/golden/4hhb.pdb",
+      "role": "fixture-or-golden"
+    },
+    "rsomics-pdb-hsexposure/tests/golden/4hhb.r13.expected.tsv": {
+      "sha256": "f22e58970662e90387bdd598f9b12ab8b6e8b1a692c5a073972af5349e721f75",
+      "size_bytes": 13629,
+      "asset": "rsomics-pdb-hsexposure",
+      "original_path": "tests/golden/4hhb.r13.expected.tsv",
+      "role": "fixture-or-golden"
+    },
+    "rsomics-pdb-hsexposure/tests/golden/altloc.pdb": {
+      "sha256": "3e834566c0349f5e29dd67ae08f65b7ecdd602f9ab27a6ae3ccc5f48c745d093",
+      "size_bytes": 4055,
+      "asset": "rsomics-pdb-hsexposure",
+      "original_path": "tests/golden/altloc.pdb",
+      "role": "fixture-or-golden"
+    },
+    "rsomics-pdb-hsexposure/tests/golden/altloc.r10.expected.tsv": {
+      "sha256": "4be9abe522f1d77bfd046c3ea5dd74115c207c40f2207740415d509528fd86ae",
+      "size_bytes": 284,
+      "asset": "rsomics-pdb-hsexposure",
+      "original_path": "tests/golden/altloc.r10.expected.tsv",
+      "role": "fixture-or-golden"
+    },
+    "rsomics-pdb-hsexposure/tests/golden/altloc.r13.expected.tsv": {
+      "sha256": "014f6772013ddbd85e69ffcd9abbe1b46f8466eaabab0c8897dc997aab425331",
+      "size_bytes": 292,
+      "asset": "rsomics-pdb-hsexposure",
+      "original_path": "tests/golden/altloc.r13.expected.tsv",
+      "role": "fixture-or-golden"
+    },
+    "rsomics-pdb-superpose/Cargo.toml": {
+      "sha256": "6beca1ded2d4f6a0017a4e71da064434858355fab7930463a280305c71a5cf27",
+      "size_bytes": 839,
+      "asset": "rsomics-pdb-superpose",
+      "original_path": "Cargo.toml",
+      "role": "historical-source-provenance"
+    },
+    "rsomics-pdb-superpose/README.md": {
+      "sha256": "34d0e9bb09fa3f11d02e945182ab46ebe9fb3771c5787ae6a89dc9e9491bc02b",
+      "size_bytes": 2989,
+      "asset": "rsomics-pdb-superpose",
+      "original_path": "README.md",
+      "role": "historical-source-provenance"
+    },
+    "rsomics-pdb-superpose/src/cli.rs": {
+      "sha256": "1cb59bc304e46c6db234b012b53eddadde9732ae4eb959e8700ace25d928ffe2",
+      "size_bytes": 2856,
+      "asset": "rsomics-pdb-superpose",
+      "original_path": "src/cli.rs",
+      "role": "historical-source-provenance"
+    },
+    "rsomics-pdb-superpose/src/lib.rs": {
+      "sha256": "6321c6d0252761b5e0933349ac66c6b6c11ea436b01207e19d6e779415702d03",
+      "size_bytes": 4377,
+      "asset": "rsomics-pdb-superpose",
+      "original_path": "src/lib.rs",
+      "role": "historical-source-provenance"
+    },
+    "rsomics-pdb-superpose/src/main.rs": {
+      "sha256": "19ac00558352ab3972db7d5fd85132702a1cca98190941ec576c4f88cd0c483d",
+      "size_bytes": 262,
+      "asset": "rsomics-pdb-superpose",
+      "original_path": "src/main.rs",
+      "role": "historical-source-provenance"
+    },
+    "rsomics-pdb-superpose/src/pdb.rs": {
+      "sha256": "addd55e7b55ab8c32838ff12c271a1265bd15495eeb192cb59977c8f168fc720",
+      "size_bytes": 1663,
+      "asset": "rsomics-pdb-superpose",
+      "original_path": "src/pdb.rs",
+      "role": "historical-source-provenance"
+    },
+    "rsomics-pdb-superpose/src/superpose.rs": {
+      "sha256": "787e53b8374adf62a8f21695f3e79536871d3029c838e5624e3857b18624a503",
+      "size_bytes": 12150,
+      "asset": "rsomics-pdb-superpose",
+      "original_path": "src/superpose.rs",
+      "role": "historical-source-provenance"
+    },
+    "rsomics-pdb-superpose/tests/compat.rs": {
+      "sha256": "1af9de89385af95f959a0cc977325b8402c9f91b0802097d3f850e430c3ab0c4",
+      "size_bytes": 7052,
+      "asset": "rsomics-pdb-superpose",
+      "original_path": "tests/compat.rs",
+      "role": "historical-source-provenance"
+    },
+    "rsomics-pdb-superpose/tests/golden/main.golden.tsv": {
+      "sha256": "09ff72ab38311e93af11dedf9da342209806d8ddeb0148ce6e9f6a1b445fd8c9",
+      "size_bytes": 389,
+      "asset": "rsomics-pdb-superpose",
+      "original_path": "tests/golden/main.golden.tsv",
+      "role": "fixture-or-golden"
+    },
+    "rsomics-pdb-superpose/tests/golden/mov.pdb": {
+      "sha256": "aee3fc98d8e044936d72e799630eaf6d3719dd9f915a6b130805137068c298cd",
+      "size_bytes": 3164,
+      "asset": "rsomics-pdb-superpose",
+      "original_path": "tests/golden/mov.pdb",
+      "role": "fixture-or-golden"
+    },
+    "rsomics-pdb-superpose/tests/golden/ref.pdb": {
+      "sha256": "30ea116597af0d14ba142b95ee91c12082aa1ed73df58d4bdb1a92ca0262c829",
+      "size_bytes": 3164,
+      "asset": "rsomics-pdb-superpose",
+      "original_path": "tests/golden/ref.pdb",
+      "role": "fixture-or-golden"
+    },
+    "rsomics-pdb-superpose/tests/golden/refl.golden.tsv": {
+      "sha256": "b35b53014aa62e914f79ea0ba2bab6af38e40512e4252236b69c7e05c28958a1",
+      "size_bytes": 388,
+      "asset": "rsomics-pdb-superpose",
+      "original_path": "tests/golden/refl.golden.tsv",
+      "role": "fixture-or-golden"
+    },
+    "rsomics-pdb-superpose/tests/golden/refl_mov.pdb": {
+      "sha256": "c75f06db5417089618aa6df4061f5406a4026f0a098e8a4abff73da4bea17dec",
+      "size_bytes": 1900,
+      "asset": "rsomics-pdb-superpose",
+      "original_path": "tests/golden/refl_mov.pdb",
+      "role": "fixture-or-golden"
+    },
+    "rsomics-pdb-superpose/tests/golden/refl_ref.pdb": {
+      "sha256": "18f19c90afc109a1ffaf5daf3179784f8ce44798963656c232f08aa1bcac3d3e",
+      "size_bytes": 1900,
+      "asset": "rsomics-pdb-superpose",
+      "original_path": "tests/golden/refl_ref.pdb",
+      "role": "fixture-or-golden"
+    },
+    "rsomics-pdb-core/Cargo.toml": {
+      "sha256": "4de58ed8a84c9352b890d14ed9fa59c541e08c2f5e395adb95f9a2652bc462cb",
+      "size_bytes": 483,
+      "asset": "rsomics-pdb-core",
+      "original_path": "Cargo.toml",
+      "role": "historical-source-provenance"
+    },
+    "rsomics-pdb-core/src/lib.rs": {
+      "sha256": "b716ec8bbbb4f6e42c225b1642231e6416adddac3a922d7918a03097fa0467ce",
+      "size_bytes": 18804,
+      "asset": "rsomics-pdb-core",
+      "original_path": "src/lib.rs",
+      "role": "historical-source-provenance"
+    }
+  },
+  "not_claimed": [
+    "new source outputs",
+    "current compatibility qualification",
+    "native implementation",
+    "native performance"
+  ]
+}

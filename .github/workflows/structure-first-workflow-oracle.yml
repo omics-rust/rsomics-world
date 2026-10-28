@@ -1,0 +1,134 @@
+name: Structure first complete workflow source witness
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  source-witness:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    env:
+      PYTHONDONTWRITEBYTECODE: '1'
+      PIP_DISABLE_PIP_VERSION_CHECK: '1'
+      PIP_NO_INPUT: '1'
+      OMP_NUM_THREADS: '1'
+      OPENBLAS_NUM_THREADS: '1'
+      MKL_NUM_THREADS: '1'
+      BLIS_NUM_THREADS: '1'
+      VECLIB_MAXIMUM_THREADS: '1'
+      NUMEXPR_NUM_THREADS: '1'
+      BIOPYTHON_SOURCE_COMMIT: 7a9c76cce8c6a58db791be2b12a135af210cedf2
+      GEMMI_SOURCE_COMMIT: 6b9910a51c3f41bda204012bed9329aa01ba2442
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+
+      - name: Prepare hosted storage and preserve exact controller
+        run: |
+          set -euo pipefail
+          export EVIDENCE="$RUNNER_TEMP/structure-first-workflow-oracle"
+          export TMPDIR="$RUNNER_TEMP/structure-scratch"
+          export XDG_CACHE_HOME="$RUNNER_TEMP/structure-cache"
+          export PIP_CACHE_DIR="$RUNNER_TEMP/structure-cache/pip"
+          export PYTHONUSERBASE="$RUNNER_TEMP/structure-python-user"
+          for name in EVIDENCE TMPDIR XDG_CACHE_HOME PIP_CACHE_DIR PYTHONUSERBASE; do
+            mkdir -p "${!name}"
+            printf '%s=%s\n' "$name" "${!name}" >> "$GITHUB_ENV"
+          done
+          mkdir -p "$EVIDENCE/controller" "$EVIDENCE/sources" "$EVIDENCE/wheels" "$EVIDENCE/seed"
+          cp scripts/structure_first_workflow_oracle.py scripts/test_structure_first_workflow_oracle.py "$EVIDENCE/controller/"
+          cp .github/workflows/structure-first-workflow-oracle.yml "$EVIDENCE/controller/"
+          cp .autopilot/snapshots/structure-first-workflow-inputs-2026-10-28/manifest.json \
+             .autopilot/snapshots/structure-first-workflow-inputs-2026-10-28/historical-inputs.tar.gz "$EVIDENCE/seed/"
+          python3 -B - <<'PY'
+          import json, os, shutil
+          from pathlib import Path
+          runner = Path(os.environ['RUNNER_TEMP']).resolve(strict=True)
+          names = ('EVIDENCE', 'TMPDIR', 'XDG_CACHE_HOME', 'PIP_CACHE_DIR', 'PYTHONUSERBASE')
+          paths = {name: Path(os.environ[name]).resolve(strict=True) for name in names}
+          assert all(path.is_relative_to(runner) for path in paths.values()), 'source storage escapes RUNNER_TEMP'
+          disk = shutil.disk_usage(runner)
+          assert disk.free > 5 * 2**30, 'insufficient source witness storage'
+          (paths['EVIDENCE'] / 'storage.json').write_text(json.dumps(dict(
+              paths={name: str(path) for name, path in paths.items()}, disk=disk._asdict()), indent=2) + '\n')
+          PY
+          git rev-parse HEAD > "$EVIDENCE/head.sha"
+          uname -a > "$EVIDENCE/host.txt"
+          df -h >> "$EVIDENCE/host.txt"
+          python3 --version >> "$EVIDENCE/host.txt"
+          python3 -m venv "$RUNNER_TEMP/structure-python"
+          printf 'STRUCTURE_PYTHON=%s\n' "$RUNNER_TEMP/structure-python/bin/python" >> "$GITHUB_ENV"
+
+      - name: Preserve immutable upstream source archives
+        run: |
+          set -euo pipefail
+          curl --fail --location --retry 3 \
+            "https://codeload.github.com/biopython/biopython/tar.gz/$BIOPYTHON_SOURCE_COMMIT" \
+            --output "$EVIDENCE/sources/biopython.tar.gz"
+          curl --fail --location --retry 3 \
+            "https://codeload.github.com/project-gemmi/gemmi/tar.gz/$GEMMI_SOURCE_COMMIT" \
+            --output "$EVIDENCE/sources/gemmi.tar.gz"
+          sha256sum "$EVIDENCE"/sources/*.tar.gz > "$EVIDENCE/source-archives.sha256"
+
+      - name: Retain exact released wheels and environment
+        run: |
+          set -euo pipefail
+          "$STRUCTURE_PYTHON" -m pip download --only-binary=:all: --dest "$EVIDENCE/wheels" \
+            'biopython==1.87' 'gemmi==0.7.3' 'numpy==2.3.4' 'threadpoolctl==3.6.0' \
+            2>&1 | tee "$EVIDENCE/download-wheels.log"
+          "$STRUCTURE_PYTHON" -m pip install --no-index --find-links "$EVIDENCE/wheels" \
+            --report "$EVIDENCE/install-report.json" \
+            'biopython==1.87' 'gemmi==0.7.3' 'numpy==2.3.4' 'threadpoolctl==3.6.0' \
+            2>&1 | tee "$EVIDENCE/install-wheels.log"
+          "$STRUCTURE_PYTHON" -m pip freeze --all > "$EVIDENCE/pip-freeze.txt"
+          "$STRUCTURE_PYTHON" -m pip inspect --local > "$EVIDENCE/pip-inspect.json"
+          sha256sum "$EVIDENCE"/wheels/*.whl > "$EVIDENCE/wheels.sha256"
+
+      - name: Capture the complete source selection and analysis lifecycle
+        run: |
+          set -euo pipefail
+          ulimit -c 0
+          "$STRUCTURE_PYTHON" -B scripts/structure_first_workflow_oracle.py \
+            --seed "$EVIDENCE/seed" --sources "$EVIDENCE/sources" --output "$EVIDENCE/witness" \
+            2>&1 | tee "$EVIDENCE/capture.log"
+
+      - name: Bind all retained evidence even when a required source call fails
+        if: always()
+        run: |
+          set -euo pipefail
+          export EVIDENCE="$RUNNER_TEMP/structure-first-workflow-oracle"
+          mkdir -p "$EVIDENCE"
+          python3 -B - <<'PY'
+          import hashlib, json, os
+          from pathlib import Path
+          root = Path(os.environ['EVIDENCE'])
+          records = {str(path.relative_to(root)): dict(size_bytes=path.stat().st_size,
+              sha256=hashlib.sha256(path.read_bytes()).hexdigest()) for path in sorted(root.rglob('*'))
+              if path.is_file() and path.name != 'artifact-manifest.json'}
+          manifest = dict(schema='rsomics.structure.hosted-source-artifact.v1',
+              head=os.environ['GITHUB_SHA'], run_id=os.environ['GITHUB_RUN_ID'],
+              run_attempt=os.environ['GITHUB_RUN_ATTEMPT'], files=records,
+              completeness='read witness/run.json and step outcome; presence of an artifact is not success')
+          (root / 'artifact-manifest.json').write_text(json.dumps(manifest, indent=2) + '\n')
+          PY
+
+      - name: Retain complete source witness including failures
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: structure-first-workflow-oracle-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/structure-first-workflow-oracle/
+          include-hidden-files: true
+          if-no-files-found: error
+          retention-days: 90
