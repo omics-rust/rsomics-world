@@ -4,8 +4,10 @@
 
 Owning localmainc9f99b70c191c6ed29d42c8d4cd49ed151b573b7 is clean/private,
 publish=false. It adds only buffered fitted-bundle save to schema4/1401149;
-see deseq-buffered-save-2026-10-28.md. Green5 is frozen for the next native
-gate; no mathematical/schema/dependency change is involved in this sink fix.
+see deseq-buffered-save-2026-10-28.md. Green5/run40611588271 at exact42f378fe
+now passes all four native classes and20 full workflows; original evidence is
+retained/verified, receiptc86fec10a22f4b69a6470b99562f0bdc8d4de12496e488c227a69d962b767bf4.
+No mathematical/schema/dependency change is involved in this sink fix.
 
 Schema2 green2/run40597122905 at exactworldec72d1ba passes all
 four native classes; original APIs, ZIPs, binaries,23 source files and both
@@ -31,8 +33,8 @@ See
 docs/plans/2026-10-28-deseq-mean-low-df-native.md.
 The completed green3 performance40605899832 accepts a strict process-RSS
 advantage, not strict source-inner throughput/scaling. Its original binary
-attribution is immutable. Fresh green5 native/benchmark gates follow the
-measured save fix. Local trends/fallback and declared scope remain release
+attribution is immutable. Fresh green5 benchmarking follows its accepted
+native gate and measured save fix. Local trends/fallback and declared scope remain release
 gates; no complete DESeq2 replacement is claimed. Full30-family goal stays active.
 
 ## Initial schema1 checkpoint

@@ -21,19 +21,19 @@ from verify_infercnv_oracle_artifact import HEX64, _archive_name, _artifact, _ex
 
 
 ROOT = Path(__file__).resolve().parents[1]
-NATIVE = dict(repository="omics-rust/rsomics-world", run_id=40602456359, run_attempt=1,
-              head_sha="c598ffaf0c44c6b79b1c362ad6d75b4effd91907", workflow_path=".github/workflows/deseq-candidate.yml",
-              artifact_id=12778884240, artifact_name="deseq-40602456359-1-linux-x86_64", size_in_bytes=275786601,
-              artifact_sha256="61d64d72c53989ddee0e54a650764f9ec6c766a78131b2baabaa7d95e1bb87be")
-BINARY_SHA = "5e0c5f7f98e0ff791c5217aa3d3ed8f42b9ec1927f1f0ca43cdd98b1e81ca36e"
+NATIVE = dict(repository="omics-rust/rsomics-world", run_id=40611588271, run_attempt=1,
+              head_sha="42f378fe633649b7234c5cedaf424d0d4ab62da5", workflow_path=".github/workflows/deseq-candidate.yml",
+              artifact_id=12782868065, artifact_name="deseq-40611588271-1-linux-x86_64", size_in_bytes=325788430,
+              artifact_sha256="037b9c76ecda311280ecadaebccce244da78e2490be28bf366c1bcd775d9ba9b")
+BINARY_SHA = "630431e494e5fcba34eb175c7cfe4a68ff071afd249e29619e2385ab7c061059"
 SOURCE = dict(schema_version=1, repository="omics-rust/rsomics-world", run_id=40561801963, run_attempt=1,
               workflow_path=".github/workflows/deseq-oracle.yml", head_sha="89ece7f45e59517cf7631e9c5931a48c4a7760c1",
               artifact_id=12761202566, artifact_name="deseq-oracle-40561801963-1", size_in_bytes=26172835,
               artifact_sha256="6adaf380cccd55829c0b7d4d022d1d405f31f8f4345971f10f7ab961a8b2e7a5",
               manifest_sha256="423e585319836ceb0b7c54a47bb2a42431e97dff9929301e9273195ddf3270f8",
               witness_sha256="8f2dc0a7b0377a22c2e1afda549003842577aa4dea24c9a675af5293bcb94bd7", bundle_path="workflow")
-ARCHIVE_SHA = "66cbf540ec369169da7df9dccdf2dda516ee6c6276a670d3e864e58e028d7749"
-MANIFEST_SHA = "dd67c410ff5d902272f0481b4db58c2a3b7a883ae54ab82634d9872f1e6c8aab"
+ARCHIVE_SHA = "f72b71c96bfed743ce13756ce6265f7745d8dadf1be2bacc8a8ee68d0c5ea8c8"
+MANIFEST_SHA = "b75297f3621a8e18864daee09005fec0814dd8dd013f60cadd6b2951ebaddc1e"
 LOCK_SHA = "501544e3615498b7f26c06bb5ea36c4d027b61f7366cce4a11b6efcbfc82e241"
 SOURCE_ARCHIVE_SHA = "8c91699286336350e66eec132ce6fdf5bb4af78e2a4d015a5a61224f62a95984"
 TARGETS = {"linux-x86_64", "linux-aarch64", "macos-x86_64", "macos-aarch64"}
@@ -99,6 +99,43 @@ def select_native(acquisition):
     return selection
 
 
+def verify_native_workflows(root, binary_sha):
+    general = ["interaction-ratio-formula", "interaction-ratio-matrix", "interaction-sf-formula",
+               "interaction-nf-formula", "interaction-sf-nf-formula", "nointercept-sf-formula", "intercept-sf-formula"]
+    groups = [("design", general + [f"cook-{size}-{mode}-{route}" for size in ("7x7", "7x3")
+                                    for mode in ("default", "disabled") for route in ("formula", "matrix")]),
+              ("low-df", ["df-1", "df-2", "df-3", "df-4"])]
+    determinism = _load_json(root / "worker-determinism.json", "native determinism")
+    check(determinism["passed"] is True and determinism["compared_workers"] == [1, 4] and
+          determinism["compared_workflows"] == 20 and determinism["pasilla"]["fitted_state_equal"] is True,
+          "accepted native workflow inventory is incomplete")
+    for group, cases in groups:
+        records = determinism[group.replace("-", "_") + "_cases"]
+        check(set(records) == set(cases) and all(row["fitted_state_equal"] is True for row in records.values()),
+              "accepted native workflow determinism is incomplete")
+    for workers in (1, 4):
+        comparison = root / "comparison" / f"workers-{workers}"
+        contract = _load_json(comparison / "comparison-contract.json", "native comparison contract")
+        result = _load_json(comparison / "comparison.json", "native comparison result")
+        check(contract["binary_sha256"] == binary_sha and contract["workers"] == workers and
+              result["passed"] is True and result["failure_count"] == 0,
+              "accepted complete native fit was not made by this executable")
+        check(_load_json(comparison / "fit.json", "accepted fitted state")["schema"] == 4,
+              "accepted state is not schema4")
+        for group, cases in groups:
+            comparison = root / f"{group}-comparison" / f"workers-{workers}"
+            contract = _load_json(comparison / "comparison-contract.json", "native workflow contract")
+            result = _load_json(comparison / "summary.json", "native workflow summary")
+            check(contract["binary_sha256"] == binary_sha and contract["workers"] == workers and
+                  contract["cases"] == cases and contract["excluded_cases"] == [] and result["passed"] is True and
+                  [row["case"] for row in result["cases"]] == cases and
+                  all(row["passed"] is True and row["failure_count"] == 0 for row in result["cases"]),
+                  "accepted native workflow coverage is incomplete")
+            check(all(_load_json(comparison / case / "fit.json", "accepted workflow state")["schema"] == 4
+                      for case in cases), "accepted workflow state is not schema4")
+    return dict(schema=4, workflow_count=20, workers=[1, 4])
+
+
 def prepare_runtime(acquisition):
     acquisition = Path(acquisition).resolve(strict=True)
     native, source = acquisition / "native", acquisition / "source"
@@ -110,26 +147,17 @@ def prepare_runtime(acquisition):
     extract_zip(native / "artifact.zip", native / "artifact", "worker-determinism.json")
     root = native / "artifact"
     for name, digest in {"source.tar.gz": ARCHIVE_SHA, "files.sha256": MANIFEST_SHA, "Cargo.lock": LOCK_SHA}.items():
-        check(_sha256(root / name) == digest, f"accepted green3 identity differs: {name}")
+        check(_sha256(root / name) == digest, f"accepted green5 identity differs: {name}")
     files = verify_and_extract(root, native / "candidate")
-    check(len(files) == 27 and files["Cargo.lock"] == LOCK_SHA, "green3 source inventory/lock differs")
+    check(len(files) == 36 and files["Cargo.lock"] == LOCK_SHA, "green5 source inventory/lock differs")
     binary = root / "native-binary/rsomics-deseq-linux-x86_64"
     line = (binary.parent / "checksums.sha256").read_text().strip()
     digest, name = line.split("  ", 1)
     check(digest == BINARY_SHA and Path(name).name == binary.name and _sha256(binary) == digest,
           "accepted executable checksum differs")
     check((root / "host.log").read_text().splitlines()[0] == NATIVE["head_sha"] and
-          "snapshot=green-3" in (root / "host.log").read_text(), "native source snapshot/head binding differs")
-    determinism = _load_json(root / "worker-determinism.json", "native determinism")
-    check(determinism["passed"] is True and determinism["compared_workers"] == [1, 4] and
-          len(determinism["design_cases"]) == 15, "accepted native workflow inventory is incomplete")
-    for workers in (1, 4):
-        comparison = root / "comparison" / f"workers-{workers}"
-        contract = _load_json(comparison / "comparison-contract.json", "native comparison contract")
-        result = _load_json(comparison / "comparison.json", "native comparison result")
-        check(contract["binary_sha256"] == digest and contract["workers"] == workers and result["passed"] is True,
-              "accepted complete native fit was not made by this executable")
-        check(json.loads((comparison / "fit.json").read_text())["schema"] == 3, "accepted state is not schema3")
+          "snapshot=green-5" in (root / "host.log").read_text(), "native source snapshot/head binding differs")
+    coverage = verify_native_workflows(root, digest)
     checker = native / "candidate/scripts/check-workflow.py"
     check(_sha256(root / "controller/check-workflow.py") == files["scripts/check-workflow.py"], "accepted comparator differs")
     spec = importlib.util.spec_from_file_location("accepted_deseq_comparator", checker)
@@ -162,7 +190,7 @@ def prepare_runtime(acquisition):
     binary.chmod(0o755)
     save(acquisition / "verification.json", dict(native=selected, binary_sha256=digest,
         archive_sha256=ARCHIVE_SHA, manifest_sha256=MANIFEST_SHA, lock_sha256=LOCK_SHA,
-        native_source_files=files, source=SOURCE, source_files=recorded,
+        native_source_files=files, native_workflows=coverage, source=SOURCE, source_files=recorded,
         checker_sha256=_sha256(checker), bounds=BOUNDS))
 
 
@@ -302,7 +330,7 @@ def native_trial(directory, witness, binary, checker, workers, cores):
     result.update(workers=workers, outputs=original, comparison_passed=True)
     save(directory / "measurement.json", result)
     fitted = json.loads(bundle.read_text())
-    check(fitted.pop("workers") == workers and fitted["schema"] == 3, "measured native state identity differs")
+    check(fitted.pop("workers") == workers and fitted["schema"] == 4, "measured native state identity differs")
     return fitted, result
 
 

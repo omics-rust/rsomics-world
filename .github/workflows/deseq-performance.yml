@@ -68,9 +68,9 @@ jobs:
         run: |
           set -euo pipefail
           native="$EVIDENCE/acquisition/native"
-          gh api repos/omics-rust/rsomics-world/actions/runs/40602456359 > "$native/run.json"
-          gh api 'repos/omics-rust/rsomics-world/actions/runs/40602456359/attempts/1/jobs?per_page=100' > "$native/jobs.json"
-          gh api 'repos/omics-rust/rsomics-world/actions/runs/40602456359/artifacts?per_page=100' > "$native/artifacts.json"
+          gh api repos/omics-rust/rsomics-world/actions/runs/40611588271 > "$native/run.json"
+          gh api 'repos/omics-rust/rsomics-world/actions/runs/40611588271/attempts/1/jobs?per_page=100' > "$native/jobs.json"
+          gh api 'repos/omics-rust/rsomics-world/actions/runs/40611588271/artifacts?per_page=100' > "$native/artifacts.json"
           artifact_id=$(python3 -B scripts/deseq_workflow_performance.py select-native --acquisition "$native")
           [[ "$artifact_id" =~ ^[0-9]+$ ]]
           gh api "repos/omics-rust/rsomics-world/actions/artifacts/$artifact_id" > "$native/artifact.json"

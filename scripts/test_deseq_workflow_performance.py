@@ -12,12 +12,12 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 class DeseqWorkflowPerformanceTests(unittest.TestCase):
-    def test_hosted_workflow_reuses_green3_and_keeps_failed_measurements(self):
+    def test_hosted_workflow_reuses_green5_and_keeps_failed_measurements(self):
         workflow = ROOT / '.github/workflows/deseq-performance.yml'
         self.assertTrue(workflow.is_file(), 'missing whole DESeq performance workflow')
         self.assertTrue((ROOT / 'scripts/deseq_workflow_performance.R').is_file())
         text = workflow.read_text()
-        self.assertIn('40602456359', text)
+        self.assertIn('40611588271', text)
         self.assertIn('if: always()', text)
         self.assertNotIn('continue-on-error', text)
         self.assertNotIn('cargo build', text)
@@ -57,8 +57,8 @@ class DeseqWorkflowPerformanceTests(unittest.TestCase):
         self.assertTrue(decision['advantage_passed'])
         self.assertTrue(decision['strict_worker_scaling'])
 
-    def test_native_gate_rejects_incomplete_platform_evidence_before_selection(self):
-        from deseq_workflow_performance import NATIVE, select_native
+    def test_native_gate_rejects_incomplete_platform_and_schema4_workflow_evidence(self):
+        from deseq_workflow_performance import NATIVE, select_native, verify_native_workflows
 
         with tempfile.TemporaryDirectory(prefix='deseq-performance-gate-') as temporary:
             root = Path(temporary)
@@ -79,6 +79,51 @@ class DeseqWorkflowPerformanceTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, 'unfinished'):
                 select_native(root)
             self.assertFalse((root / 'selection.json').exists())
+
+            evidence = root / 'native-evidence'
+            binary = '0' * 64
+            general = ['interaction-ratio-formula', 'interaction-ratio-matrix', 'interaction-sf-formula',
+                       'interaction-nf-formula', 'interaction-sf-nf-formula', 'nointercept-sf-formula',
+                       'intercept-sf-formula']
+            design = general + ['cook-7x7-default-formula', 'cook-7x7-default-matrix',
+                                'cook-7x7-disabled-formula', 'cook-7x7-disabled-matrix',
+                                'cook-7x3-default-formula', 'cook-7x3-default-matrix',
+                                'cook-7x3-disabled-formula', 'cook-7x3-disabled-matrix']
+            low_df = ['df-1', 'df-2', 'df-3', 'df-4']
+
+            def write(name, value):
+                path = evidence / name
+                path.parent.mkdir(parents=True, exist_ok=True)
+                path.write_text(json.dumps(value))
+
+            write('worker-determinism.json', dict(passed=True, compared_workers=[1, 4], compared_workflows=20,
+                pasilla=dict(fitted_state_equal=True),
+                design_cases={case: dict(fitted_state_equal=True) for case in design},
+                low_df_cases={case: dict(fitted_state_equal=True) for case in low_df}))
+            for workers in (1, 4):
+                prefix = f'comparison/workers-{workers}'
+                write(prefix + '/comparison-contract.json', dict(binary_sha256=binary, workers=workers))
+                write(prefix + '/comparison.json', dict(passed=True, failure_count=0))
+                write(prefix + '/fit.json', dict(schema=4))
+                for group, cases in [('design', design), ('low-df', low_df)]:
+                    prefix = f'{group}-comparison/workers-{workers}'
+                    write(prefix + '/comparison-contract.json', dict(binary_sha256=binary, workers=workers,
+                        cases=cases, excluded_cases=[]))
+                    write(prefix + '/summary.json', dict(passed=True,
+                        cases=[dict(case=case, passed=True, failure_count=0) for case in cases]))
+                    for case in cases:
+                        write(prefix + '/' + case + '/fit.json', dict(schema=4))
+            self.assertEqual(verify_native_workflows(evidence, binary),
+                             dict(schema=4, workflow_count=20, workers=[1, 4]))
+            write('low-df-comparison/workers-4/summary.json', dict(passed=True,
+                cases=[dict(case=case, passed=True, failure_count=0) for case in low_df[:3]]))
+            with self.assertRaisesRegex(ValueError, 'incomplete'):
+                verify_native_workflows(evidence, binary)
+            write('low-df-comparison/workers-4/summary.json', dict(passed=True,
+                cases=[dict(case=case, passed=True, failure_count=0) for case in low_df]))
+            write('low-df-comparison/workers-4/df-4/fit.json', dict(schema=3))
+            with self.assertRaisesRegex(ValueError, 'schema4'):
+                verify_native_workflows(evidence, binary)
 
 
 if __name__ == '__main__':

@@ -81,3 +81,24 @@ local source/evidence/scratch is external and freshly APFS/path guarded.
 This benchmark is a bounded workflow performance decision, not broad DESeq2
 scope completion or publication acceptance. Low-df/trends remain separate
 compatibility work, with no speculative public numerical API.
+
+## Buffered-save follow-up
+
+Original run40605899832 passes compatibility and strict process-RSS advantage,
+not strict source-inner throughput/scaling. Keep all original evidence and its
+schema3/green3 binary attribution. Measured cost is initial save system CPU,
+not later reloads. Owningc9f99b7 replaces only the sink with published common
+buffering; same-Mac native A/B is byte-identical with sharply lower system CPU.
+
+Green5/run40611588271 at exact42f378fe633649b7234c5cedaf424d0d4ab62da5
+now passes all four native classes and20 full workflows. Its retained receipt
+is c86fec10a22f4b69a6470b99562f0bdc8d4de12496e488c227a69d962b767bf4.
+Measure only accepted Linux artifact12782868065/binary
+630431e494e5fcba34eb175c7cfe4a68ff071afd249e29619e2385ab7c061059,
+36-file schema4/archivef72b71c96bfed743ce13756ce6265f7745d8dadf1be2bacc8a8ee68d0c5ea8c8,
+manifestb75297f3621a8e18864daee09005fec0814dd8dd013f60cadd6b2951ebaddc1e.
+The harness admission now requires all20 source workflows at1/4, not merely
+old schema3 coverage. All original source/data/flags/numeric bounds, timing
+regions/encodings, warmups/trials and performance decisions above remain fixed.
+New R and Rust measurements share one fresh host; do not assume that host is
+the earlier runner or infer a cross-run speedup from unlike machines.

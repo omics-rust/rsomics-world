@@ -36,8 +36,22 @@ Existing exact-byte snapshot guard and two compact native-wrapper/Bash tests
 pass. Evidence scratch: /Volumes/KIOXIA/Developments/tmp/deseq-green5-check.tY5vju/.
 Controller40611403553 is SUCCESS at exact
 42f378fe633649b7234c5cedaf424d0d4ab62da5. Unchanged four-native complete-workflow
-run40611588271 is dispatched at that exact head against green5. Wait for this
-run and retain its original evidence; then bind a fresh formal same-host
-benchmark to its accepted Linux executable.
+run40611588271 at that exact head against green5 is SUCCESS on all four
+platforms. Original APIs/ZIPs/logs/source/binaries and20 whole-workflow gates
+are retained/verified; source diff to green4 is exactly the two save lines.
+Receipt:
+/Volumes/Zane's HDD/rsomics-fixtures/evidence/deseq-native-2026-10-28/run-40611588271/verification.json,
+SHAc86fec10a22f4b69a6470b99562f0bdc8d4de12496e488c227a69d962b767bf4.
+
+The existing performance harness now pins that accepted Linux artifact
+12782868065,325788430bytes, ZIP
+037b9c76ecda311280ecadaebccce244da78e2490be28bf366c1bcd775d9ba9b,
+binary630431e494e5fcba34eb175c7cfe4a68ff071afd249e29619e2385ab7c061059.
+Its36-file/schema4/20-workflow admission passes on the real retained artifact.
+Three compact tests/Bash syntax pass; parent reads the full scoped diff and
+confirms source driver, inputs, flags, bounds, trials, timing and decision
+remain unchanged. Full495 control tests pass with two existing skips.
+Next after controller CI: fresh source/native same-host formal measurement,
+not a claim that the old hosted VM or measurements are reused.
 Old green3 performance/green4 native evidence remain immutable. Local trend
 coverage and publication remain separate gates; continue the full portfolio.
