@@ -558,6 +558,26 @@ and result policies do not enter a public foundation.
 
 ## Consumer-driven foundation work
 
+### Concrete consumers, 2026-10-28
+
+The completed private workflows make the following reuse decisions concrete.
+This is a call-site map, not authorization for new public items or packages.
+
+| Component | Actual consumers/call sites | Decision |
+|---|---|---|
+| existing common process/errors/threads/aliases/output | all three products' `src/cli.rs`; DESeq/limma `src/artifact.rs` | consume current common0.12.3; no second wrapper layer |
+| existing unified help adapter | all three `cli::run` calls to `rsomics_help::parse` | keep one help0.4 presentation contract |
+| existing BH/chi-square tails | all three `src/results.rs`; limma Inf-F tail | consume stats0.2.4; keep method-specific missingness/result policy local |
+| TMM | edgeR `normalization::tmm/tmm_pair`; limma's same named functions | strongest next stats API review candidate after consumer acceptance; filter/held abundance/voom expression remain outside it |
+| exact identity joins | edgeR `input::align/unique`; limma input | consider only lexical alignment; integer/fractional, design and bundle policy remain product-owned |
+| ordinary LOWESS | DESeq filtering; edgeR QL update; limma no-zero path | align actual sort/delta/tie contracts before promotion; limma's current source witness exercises weighted instead |
+| weighted smoothing/EB | edgeR one-pass trend; limma four-pass voom and scalar EB | do not share their policy wrappers or full fitted objects |
+| saved local regression/FMM | DESeq `local`/`vst` | single actual product consumer; keep internal |
+
+All future public items still need two consumer-side contracts and API/hot-path
+review. No shared full Dataset, generic expression facade, formula crate or
+new statistical micro-crate is introduced by this map.
+
 The three products are concrete consumers for a limited `rsomics-stats`
 review:
 

@@ -1,5 +1,27 @@
 # Active portfolio execution
 
+## Current native-gate scheduling
+
+World9118ba796783e5099048de5ec3256d6440d5f479 is pushed and exact controller
+40628937275 passes. Final DESeq green7/run40629123490 and limma green1/
+run40629128374 both actually pass all four native classes. Retention is in
+progress; performance has not yet run. Preserve exact-head four-job/step/raw
+logs and deeply verify the selected Linux artifact/source/binary/full outputs.
+The immutable core receipt explicitly distinguishes that proof from pending
+non-Linux archive mirrors. Continue external full mirroring as supplemental;
+do not block the next workflow on redundant local replays or rerun native CI.
+All source/numeric/test/four-native gates remain unchanged. This implements
+the user's workflow-level, lower-defensive-cost execution preference.
+
+Limma performance follows docs/plans/2026-10-28-limma-real-workflow-performance.md;
+its four-file harness is complete and parent-reviewed. Both actual retained
+core receipts now exist: DESeq761cd570... and limma57581e43..., binding final
+Linux ZIP/source/binary/complete workflows and all four job/step/raw logs.
+The other-platform archive mirrors are explicitly supplemental. No fake
+receipt, native ID, R fit or measurement is substituted. Registry
+authorization remains held separately: latest secret metadata is unchanged
+at2026-09-08T20:26:08Z; no secret value is read or failed publish retried.
+
 ## Current position, 2026-10-28
 
 Full30-family goal is active and unchanged. Grouped-i6 Bayes has accepted
