@@ -8,6 +8,7 @@ import re
 import sys
 import subprocess
 import tempfile
+from types import SimpleNamespace
 import unittest
 from unittest.mock import patch
 
@@ -84,6 +85,13 @@ class PeakRealPreparation(unittest.TestCase):
             self.assertEqual(real.loader_providers(loader, '/lib64/ld-linux-x86-64.so.2'), {
                 'libc.so.6': '/lib/x86_64-linux-gnu/libc.so.6',
                 'ld-linux-x86-64.so.2': '/lib64/ld-linux-x86-64.so.2'})
+            expression = next(line.removeprefix('extensions=') for line in
+                              (ROOT / 'scripts/peak_real_performance.py').read_text().splitlines()
+                              if line.startswith('extensions='))
+            namespace = SimpleNamespace(modules={
+                'namespace': SimpleNamespace(__file__=None),
+                'native': SimpleNamespace(__file__='/runtime/native.so')})
+            self.assertEqual(eval(expression, {'sys': namespace}), {'native': '/runtime/native.so'})
             prefix = root / 'runner/peak-first-workflow-oracle'
             prefix.parent.mkdir()
             self.assertEqual(real.admit_old_prefix(prefix, prefix.parent), prefix)

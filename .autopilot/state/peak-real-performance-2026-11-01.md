@@ -1,5 +1,43 @@
 # Fixed real-input Peak performance gate
 
+## Third failure is nullable inventory metadata; scientific code unchanged
+
+Actual41240347352/attempt1 atb6c17201 is terminal FAILURE before real-provider
+acquisition/materialization/timing. Root reads complete46-line REPORT
+c14900d7a71a7bc8853dd296958447d95a5bafd52ad4fec04b6338d2766ea49f
+in peak-real-third-failure-20261101.gZdG1F and actual raw FIRST error, complete
+runtime-python request/stderr/process and native ELF admission. The previous
+loader boundary now actually passes with physical provider hashes. Python's
+probe instead calls endswith on a loaded module whose __file__ is None.
+No specific offending package is guessed; version/origin JSON never printed.
+
+Useful ORIGINAL13056948613 is4528506B SHA
+b79c0beb3b414f78d898e64caa7d02369c475819471dc7d832e6a639e5739178;
+all394 manifest bodies and16 exact-head controller bodies verify. The separate
+2908542749B acquisition artifact13057391515 remains unmirrored locally, not
+claimed fully retained. Its original source/native carriers are already fully
+retained under the prior accepted authorities; no cleanup/deletion occurs.
+
+Root strengthens the SAME preparation test by evaluating the actual inventory
+expression against one namespace(None)/native-extension fixture: actual RED
+AttributeError0.295s, then GREEN1/0.222s after changing only the nullable path
+expression. Logs remain in peak-python-probe-fix-20261101.0wYjhm. No real local
+scientific import, environment/version/input/threshold/budget change or new
+helper-test ladder. Another attempt requires this correction's exact-head CI.
+
+## Second failure's complete acquisition originals now retained
+
+Root reads the full89-line final REPORT and complete receipt in
+peak-real-retry-failure-20261101.J00Xkm. REPORT SHA
+61d67ba8bd40e09ad95e2a0ea772a173791aff29d1980ae7fc14e8ae7bfed5cb,
+receipteda702fe17956989a2157af63198d1777d24e6eb49228c71ea3983f6443b0a8e.
+Both useful and2908542749B acquisition originals are complete, with all21665
+large-carrier members/CRC/SHA and four embedded original carriers verified.
+Restored21378 source/R bodies plus1 alias and272 native files match their
+original authorities. All sessions finished; no active downloads. This
+supersedes the explicitly pending status in the earlier small handoff below,
+without changing that handoff or relabelling the failed run scientific success.
+
 ## Second hosted failure is loader-list grammar, not a proven ABI mismatch
 
 Actual retry41239000161/attempt1 at2a30bf48 fails before native --version or

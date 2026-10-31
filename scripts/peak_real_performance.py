@@ -321,7 +321,7 @@ from pathlib import Path
 modules={name:importlib.import_module(name) for name in ('MACS3','pysam','numpy','scipy')}
 for name in ('MACS3.Commands.callpeak_cmd','MACS3.IO.Parser','MACS3.Signal.PeakModel','MACS3.Signal.PeakDetect'):
     importlib.import_module(name)
-extensions={name:module.__file__ for name,module in sys.modules.items() if getattr(module,'__file__','').endswith('.so')}
+extensions={name:module.__file__ for name,module in sys.modules.items() if (getattr(module,'__file__',None) or '').endswith('.so')}
 mapped=sorted({line.split()[-1] for line in Path('/proc/self/maps').read_text().splitlines() if line.split()[-1].startswith('/')})
 print(json.dumps(dict(executable=sys.executable,prefix=sys.prefix,base_prefix=sys.base_prefix,path=sys.path,
 versions={name:module.__version__ for name,module in modules.items()},modules={name:module.__file__ for name,module in modules.items()},
