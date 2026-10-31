@@ -1,0 +1,100 @@
+name: Private HGDP PLINK whole-workflow qualification
+
+on:
+  workflow_dispatch:
+    inputs:
+      native_receipt:
+        description: Committed actual PLINK native-four/source adoption JSON
+        required: true
+        type: string
+      runner_labels:
+        description: Explicit JSON labels including self-hosted for a separately admitted private Linux host
+        required: true
+        type: string
+      private_storage:
+        description: Existing owner-only persistent non-boot mount; Docker state must use that device
+        required: true
+        type: string
+      cpus:
+        description: Four explicitly allocated otherwise-idle logical CPU IDs
+        required: true
+        type: string
+      idle_host_confirmed:
+        description: Operator freshly confirms the separately admitted host is otherwise idle
+        required: true
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+  actions: read
+
+concurrency:
+  group: plink-private-real-performance
+  cancel-in-progress: false
+
+jobs:
+  private-performance:
+    runs-on: ${{ fromJSON(inputs.runner_labels) }}
+    timeout-minutes: 720
+    env:
+      PRIVATE_STORAGE: ${{ inputs.private_storage }}
+      ALLOCATED_CPUS: ${{ inputs.cpus }}
+      NATIVE_RECEIPT: ${{ inputs.native_receipt }}
+      IDLE_CONFIRMED: ${{ inputs.idle_host_confirmed }}
+      PYTHONDONTWRITEBYTECODE: '1'
+      PYTHONNOUSERSITE: '1'
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+
+      - name: Admit existing private storage and already present immutable image
+        run: |
+          set -euo pipefail
+          umask 077
+          test "$IDLE_CONFIRMED" = true
+          test "$RUNNER_ENVIRONMENT" = self-hosted
+          test "$(uname -s)" = Linux
+          test "$(uname -m)" = x86_64
+          python3 -B scripts/plink_real_performance.py setup --storage-root "$PRIVATE_STORAGE" \
+            --cpus "$ALLOCATED_CPUS" --idle-host-confirmed
+          printf 'PRIVATE_CAMPAIGN=%s/plink-%s-%s\n' "$PRIVATE_STORAGE" "$GITHUB_RUN_ID" "$GITHUB_RUN_ATTEMPT" >> "$GITHUB_ENV"
+          ulimit -c 0
+
+      - name: Run only inside admitted image with private persistent retention
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          umask 077
+          test -d "$PRIVATE_CAMPAIGN"
+          case "$PRIVATE_STORAGE,$GITHUB_WORKSPACE" in *$'\n'*|*',,'*) exit 1;; esac
+          python3 -B - <<'PY'
+          import os
+          from pathlib import Path
+          for name in ('PRIVATE_STORAGE', 'GITHUB_WORKSPACE'):
+              value = os.environ[name]
+              assert ',' not in value and '\n' not in value and Path(value).is_absolute()
+          PY
+          image=gcc:14.3.0-bookworm@sha256:a689e29bc3adf4663ef9a141d23081252764d1319c63f591a027bd6fd676f4c1
+          inner="/rsomics-private/plink-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
+          docker run --pull never --network bridge \
+            --user "$(id -u):$(id -g)" --cpuset-cpus "$ALLOCATED_CPUS" --cpus 4 --memory 8g --memory-swap 8g \
+            --mount "type=bind,src=$PRIVATE_STORAGE,dst=/rsomics-private" \
+            --mount "type=bind,src=$GITHUB_WORKSPACE,dst=/world,readonly" --workdir /world \
+            --env GH_TOKEN --env GITHUB_ACTIONS --env GITHUB_REPOSITORY --env GITHUB_SHA \
+            --env GITHUB_RUN_ID --env GITHUB_RUN_ATTEMPT --env RUNNER_ENVIRONMENT \
+            --env RUNNER_TEMP=/rsomics-private --env PRIVATE_STORAGE_ROOT=/rsomics-private \
+            --env PRIVATE_RETENTION=owner-only-persistent-no-upload \
+            --env PLINK_CONTAINER_DIGEST=sha256:a689e29bc3adf4663ef9a141d23081252764d1319c63f591a027bd6fd676f4c1 \
+            --env PYTHONDONTWRITEBYTECODE=1 --env PYTHONNOUSERSITE=1 \
+            --env OMP_NUM_THREADS=1 --env OPENBLAS_NUM_THREADS=1 --env MKL_NUM_THREADS=1 \
+            --env BLIS_NUM_THREADS=1 --env NUMEXPR_NUM_THREADS=1 \
+            "$image" python3 -B scripts/plink_real_performance.py run \
+              --root "$inner" --world /world --native-receipt "$NATIVE_RECEIPT" --cpus "$ALLOCATED_CPUS" \
+              > "$PRIVATE_CAMPAIGN/controller.stdout" 2> "$PRIVATE_CAMPAIGN/controller.stderr"
+          printf '%s\n' 'Private run finished; all originals and reports remain in operator-owned storage.'

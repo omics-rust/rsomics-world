@@ -1,0 +1,51 @@
+{
+  "schema": "rsomics.plink.real-input.v1",
+  "status": "fixed profile; genotype bodies unacquired; no execution admission",
+  "cohort": "HGDP-CEPH WGS 20190516 all929",
+  "assembly": "GRCh38",
+  "sample_count": 929,
+  "sample_ids_sha256": "5c27a41a3c80339af8c896c8dd153cfae95ebe5d37f6e01cd1b39d82a930c400",
+  "psam": {
+    "url": "https://www.dropbox.com/s/0zg57558fqpj3w1/hgdp.psam?dl=1",
+    "bytes": 35450,
+    "sha256": "d4ffa5e1307303858ad0a420b2a6682e71bb00cd057791d8a5a872143f738cc5"
+  },
+  "metadata": {
+    "url": "https://ngs.sanger.ac.uk/production/hgdp/hgdp_wgs.20190516/metadata/hgdp_wgs.20190516.metadata.txt",
+    "bytes": 109538,
+    "sha256": "da83551d80ae3ac189db620534a61a0534c052dfceedaba5b84613bb1b083e78"
+  },
+  "terms": {
+    "url": "https://ngs.sanger.ac.uk/production/hgdp/hgdp_wgs.20190516/README.data-access.hgdp_wgs.20190516.txt",
+    "bytes": 1294,
+    "sha256": "6e818587a3434bc58d32d61dc6ee4a2103054555644068a2f169fcf5fce082e4"
+  },
+  "objects": [
+    {"chromosome":"19","kind":"pgen","url":"https://www.dropbox.com/s/pebddq6zeno6r1k/hgdp_chr19.pgen.zst?dl=1","bytes":70612461,"etag":"1653191727353959d","sha256":null},
+    {"chromosome":"19","kind":"pvar","url":"https://www.dropbox.com/s/3jeaoao20rkc7st/hgdp_chr19_noannot.pvar.zst?dl=1","bytes":13828331,"etag":"1653187933627654d","sha256":null},
+    {"chromosome":"20","kind":"pgen","url":"https://www.dropbox.com/s/0fbpz9vcyl5hsdc/hgdp_chr20.pgen.zst?dl=1","bytes":64025870,"etag":"1653191712491045d","sha256":null},
+    {"chromosome":"20","kind":"pvar","url":"https://www.dropbox.com/s/pn9xj1aytjgcn1s/hgdp_chr20_noannot.pvar.zst?dl=1","bytes":14065389,"etag":"1653187936501899d","sha256":null},
+    {"chromosome":"21","kind":"pgen","url":"https://www.dropbox.com/s/rdka9h8g3prlvkb/hgdp_chr21.pgen.zst?dl=1","bytes":41481346,"etag":"1653191654126458d","sha256":null},
+    {"chromosome":"21","kind":"pvar","url":"https://www.dropbox.com/s/bakfoxw8jwgpjcr/hgdp_chr21_noannot.pvar.zst?dl=1","bytes":8526596,"etag":"1653187930193013d","sha256":null},
+    {"chromosome":"22","kind":"pgen","url":"https://www.dropbox.com/s/da131l31nfhl7nd/hgdp_chr22.pgen.zst?dl=1","bytes":52337025,"etag":"1653191684048418d","sha256":null},
+    {"chromosome":"22","kind":"pvar","url":"https://www.dropbox.com/s/eaolme36sc9lmpz/hgdp_chr22_noannot.pvar.zst?dl=1","bytes":9279666,"etag":"1653187931901898d","sha256":null}
+  ],
+  "chromosomes": ["19","20","21","22"],
+  "start_inclusive": 20000001,
+  "end_inclusive": 22000000,
+  "application_memory_mib": 2048,
+  "mind": 0.125,
+  "geno": 0.125,
+  "maf_nonmajor": 0.05,
+  "hwe_filter": null,
+  "pair_window_variants": 1000000,
+  "pair_window_bp": 500000,
+  "pair_min_r2": 0.2,
+  "prune_step": 1,
+  "prune_r2": 0.2,
+  "prune_order": 2,
+  "private_retention_required": true,
+  "public_redistribution_admitted": false,
+  "citation": "Bergstrom et al. 2020 Science, doi:10.1126/science.aay5012; acknowledge CEPH",
+  "terms_scope": "Released data analyses unrestricted per retained README; no invented CC0 or redistribution license; physical-DNA policy is distinct"
+}
