@@ -1,0 +1,78 @@
+name: Verified oracle text projection
+
+on:
+  workflow_dispatch:
+    inputs:
+      run_id:
+        description: Original completed run ID
+        required: true
+        type: string
+      run_attempt:
+        description: Original current completed attempt
+        required: true
+        type: string
+      head_sha:
+        description: Exact original world commit
+        required: true
+        type: string
+      artifact_id:
+        description: Original artifact ID
+        required: true
+        type: string
+      artifact_sha256:
+        description: Expected complete original ZIP SHA256
+        required: true
+        type: string
+      root_prefix:
+        description: Exact TAR root including trailing slash
+        required: true
+        type: string
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  text-projection:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    env:
+      PYTHONDONTWRITEBYTECODE: '1'
+      PYTHONNOUSERSITE: '1'
+      ORIGINAL_RUN: ${{ inputs.run_id }}
+      ORIGINAL_ATTEMPT: ${{ inputs.run_attempt }}
+      ORIGINAL_HEAD: ${{ inputs.head_sha }}
+      ORIGINAL_ARTIFACT: ${{ inputs.artifact_id }}
+      ORIGINAL_DIGEST: ${{ inputs.artifact_sha256 }}
+      ORIGINAL_PREFIX: ${{ inputs.root_prefix }}
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+
+      - name: Verify original carrier and project bounded diagnostics without source execution
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          export PROJECTION_WORK="$RUNNER_TEMP/oracle-text-projection"
+          export TMPDIR="$PROJECTION_WORK/scratch"
+          export XDG_CACHE_HOME="$PROJECTION_WORK/cache"
+          export XDG_CONFIG_HOME="$PROJECTION_WORK/config"
+          export XDG_DATA_HOME="$PROJECTION_WORK/data"
+          mkdir -p "$TMPDIR" "$XDG_CACHE_HOME" "$XDG_CONFIG_HOME" "$XDG_DATA_HOME"
+          python3 -B scripts/oracle_text_projection.py \
+            --run-id "$ORIGINAL_RUN" --attempt "$ORIGINAL_ATTEMPT" --head-sha "$ORIGINAL_HEAD" \
+            --artifact-id "$ORIGINAL_ARTIFACT" --artifact-sha256 "$ORIGINAL_DIGEST" \
+            --root-prefix "$ORIGINAL_PREFIX" --work "$PROJECTION_WORK"
+
+      - name: Retain only text projection and verification proofs, including partial failure diagnostics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: oracle-text-projection-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/oracle-text-projection/delivery
+          if-no-files-found: error
+          include-hidden-files: true
+          retention-days: 90
