@@ -1,5 +1,40 @@
 # Native ordinary-expression lifecycle
 
+## Exact-head native4 and retained Linux core accepted
+
+Run41191571424/attempt1 is terminal SUCCESS at world
+98d7537d61174d236ef583f98d95dacd1abfed92 after exact controller41191438575.
+All4 actual native jobs and12 required steps pass. Parent retains original
+run/jobs/artifact APIs, complete full-log ZIP and all4 raw job logs, and deeply
+verifies the selected Linux x86_64 original ZIP/CRC/all2416 extracted files,
+strict31-file green-2 snapshot/lock and measured native ELF. No source/native
+workflow is repeated locally. Actual artifact13039320685/310637261bytes,
+ZIP129010a52a18910dd184677c031f439b4bbd960ae91b474d46ea80f6c3b25ba1,
+binary926da17363eb37c469b075361c36930471c0a1425fc214ac881f3340cbbcac80.
+
+Complete count1/4/schema1 fixed source/bounds/full state/3states/7TSVs and
+all5 ordinary casesx1/4/schema2 pass. Ordinary source827files/capture/reload
+are exact;62 commands/1,752,660 finite comparisons pass with all10 failure
+arrays empty. Complete worker states and result/export bytes match. This is
+within-platform worker equivalence, not cross-platform floating bit equality.
+
+Immutable core4fe8cd133b8d4aa835ccd59b23536494dfaf9e09e3eef38a11947539a18d2857
+and REPORTbfd7b3c006620bd85fdbf9abd205705f2ad9a085f5055fc7416dbc2fe7c1c17c
+are retained at
+/Volumes/Zane's HDD/rsomics-fixtures/evidence/limma-native-logexpression-2026-10-31/run-41191571424/.
+Actual .autopilot/oracles/limma-native-green2-2026-10-31.json admits only this
+Linux measured binary for the adopted performance plan. Other3 original ZIP
+mirrors remain supplemental/pending, now assigned separately; all4 job logs
+are already complete. No all-four-local-archive claim is made.
+
+Retained local gh ANSI-output routing and old29-versus-new31 metadata-checker
+failures are diagnosed, not native/source failures. The final private combined
+verification keeps old numerical/state/output rules and requires31 unchanged
+files, without changing historical helpers or production/source code. Final
+guarded retention exits0. Whole supplied-E performance/RSS remains unearned;
+its coherent harness is being prepared, with only private checker reuse
+factoring permitted after the frozen native production commit.
+
 ## Reviewed corrected implementation adopted; native4 pending
 
 Private owning main8c26abfb5cde9da1f01dec87ff73432ad747482b is clean,

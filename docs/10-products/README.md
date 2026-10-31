@@ -32,7 +32,7 @@ operation will ship. It records:
 | `rsomics-fastq-qc` | 1 | [released 0.1.0](fastq-qc-gate-2026-08-02.md) |
 | `rsomics-index` | 5 | [held: raw performance evidence unavailable; storage and credential gates open](interval-annotation-index.md#rsomics-index) |
 | `rsomics-liftover` | 1 | [released 0.1.0](liftover.md) |
-| `rsomics-limma` | 16 | [qualified count lifecycle; reviewed ordinary extension awaits native4/performance](bulk-expression.md#rsomics-limma) |
+| `rsomics-limma` | 16 | [qualified count lifecycle; ordinary native4 accepted, performance pending](bulk-expression.md#rsomics-limma) |
 | `rsomics-metagenomics` | 5 | [released 0.1.0](metagenomics-gate-2026-08-02.md) |
 | `rsomics-methyl` | 1 | [released 0.1.0](methyl.md) |
 | `rsomics-minimap2` | 1 | [audited](minimap2.md); legacy release requires reconstruction |

@@ -15,7 +15,7 @@ See [current execution state](.autopilot/state/portfolio-execution-2026-10-23.md
 Current frontier (2026-10-31): DESeq's owning package/native4 gate is accepted
 and publication remains credential-held; limma's count lifecycle is qualified,
 its ordinary-expression source/reload and reviewed local extension are accepted,
-with green-2 native4 passed and retained-core adoption pending; structure's
+with green-2 native4/core accepted and ordinary performance preparation active; structure's
 reviewed private analysis passes native4, with public
 torsion/performance still held or unearned. Ecology has reviewed alpha and
 rarefaction while beta policy is held. Signal's first six-operation hosted run

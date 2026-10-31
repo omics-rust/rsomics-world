@@ -30,8 +30,10 @@ E as supplied input, not weighted count fits as answers. The actual native
 ordinary lifecycle is locally accepted after one whole-feature review and one
 concentrated numerical correction, at clean private owning8c26abf/green-2.
 All five ordinary cases at1/4 and a cached count regression pass unchanged
-source contracts. New-path native4, whole-workflow performance and release
-remain pending; old count timings do not qualify this new executable. See
+source contracts. New-path native4 passes run41191571424, with the original
+four-host logs and deeply verified Linux core accepted. Complete supplied-E
+performance and release remain pending; old count timings do not qualify this
+new executable. See
 `../plans/2026-10-31-limma-native-logexpression.md` and
 `.autopilot/state/limma-native-logexpression-2026-10-31.md`.
 
