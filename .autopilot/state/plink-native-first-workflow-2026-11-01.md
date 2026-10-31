@@ -1,5 +1,27 @@
 # Native PLINK first coherent workflow active
 
+## Final green-2 four-native and same-native source accepted
+
+Actual41246273033/attempt1 at5af1ccfa47d32ac5be53749c611ba8a13cf60ce9
+passes all four native classes and the source/official consumer. Root reuses
+the full original-collection and scientific-binding verifiers against the
+actual new run/head/source identities: all FIVE original ZIPs/TARs, every
+manifest body, all ten immutable-head controllers and five raw job logs verify.
+All302 source bodies in each native artifact equal owner1d199b54/green-2;
+debug and release each pass4lib+1whole/zero ignored/36 generations/74878 cells.
+Source/official then read those SAME new Linux generations:36 raw commands,
+224 reports, all protected native/runtime/image/controller identities unchanged.
+
+Tracked adoption is plink-native-2026-11-01-green-2.json, with the actual ten
+controller SHA map for explicit historical-artifact admission, not fake GHA
+environment markers. Historical green-1 receipt stays unchanged. Full originals
+and completed verification729c15cb601561bfb0332f1d915b5c9a94fd2064e1c296d2fe08e9dcac340154
+are retained in plink-final-native-adoption-20261101.6Kb8sP; no sessions remain.
+Linux final ELF50a33c292c684a1e6c795308071156bfdcc4a70a9d21d1aa33c353939b2d0f2e
+is actually byte-identical to green-1, but source/run/artifact bindings are new.
+Target Bookworm ABI admission, real HGDP, final offline source/relink delivery
+and public installation/release remain separate; no local science executes.
+
 ## Final source gate dispatched
 
 Exact-head Control plane41245604707 passes at

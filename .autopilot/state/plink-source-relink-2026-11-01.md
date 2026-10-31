@@ -1,5 +1,15 @@
 # Private offline source and replace-codec delivery
 
+## Final native/source prerequisite now independently accepted
+
+Actual final native/source41246273033 is fully accepted in the new explicit
+green-2 receipt; all five original carriers and raw logs verify independently.
+The final-delivery implementation's exact Control plane41246951279 passes at
+8fa95d85506c4334c60a1f6d652e489a09f59584. After recording this acceptance and
+its exact-head control CI, the same existing manual offline replacement gate
+may run with bundle=private-green-2 and native_run=41246273033. This does not
+pre-accept its actual new build/relink result or a public release.
+
 ## Final guard-only source delivery prepared separately
 
 Root makes the two existing private selectors explicit in the bundle and
