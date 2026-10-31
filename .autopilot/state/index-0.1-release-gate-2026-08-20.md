@@ -15,7 +15,8 @@ identities and the exact index target, then --exec true succeeds; a boot path
 and --target-dir override are rejected. An actual macOS Bash3 empty-array
 failure was corrected before the successful preflight. No product build,
 upstream execution, benchmark or reference download occurred. Exact-head
-four-native CI41253010155 is queued, not yet accepted by this entry.
+four-native CI41253010155 subsequently succeeds on all four target classes,
+including existing debug/release and actual Linux HTSlib1.24 oracle checks.
 
 The historical raw benchmark bundle remains missing and publication held.
 The new FASTA→FAI/GZI→ordered-region→SAM-dictionary workflow is being prepared
