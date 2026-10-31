@@ -239,6 +239,7 @@ def extract_artifact(archive_path, destination):
             if name in files:
                 check(item.size == files[name]['bytes'] and digest.hexdigest() == files[name]['sha256'],
                       'native artifact body differs: ' + name)
+            target.chmod(item.mode & 0o777)
     return manifest
 
 

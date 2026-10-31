@@ -53,6 +53,7 @@ jobs:
           mkdir -m 700 "$campaign"
           mkdir -m 700 "$campaign/private" "$campaign/delivery"
           printf 'PRIVATE_CAMPAIGN=%s\n' "$campaign/private" >> "$GITHUB_ENV"
+          printf 'PRIVATE_DELIVERY=%s\n' "$campaign/delivery" >> "$GITHUB_ENV"
           printf 'Admitting hosted encrypted retention.\n'
           python3 -B scripts/plink_real_performance.py setup --root "$campaign/private" \
             --world "$GITHUB_WORKSPACE" --native-receipt "$NATIVE_RECEIPT" \
@@ -97,8 +98,8 @@ jobs:
         with:
           name: plink-real-encrypted-${{ github.run_id }}-${{ github.run_attempt }}
           path: |
-            ${{ runner.temp }}/plink-real-${{ github.run_id }}-${{ github.run_attempt }}/delivery/hgdp.tar.age
-            ${{ runner.temp }}/plink-real-${{ github.run_id }}-${{ github.run_attempt }}/delivery/receipt.json
+            ${{ env.PRIVATE_DELIVERY }}/hgdp.tar.age
+            ${{ env.PRIVATE_DELIVERY }}/receipt.json
           retention-days: 90
           compression-level: 0
           if-no-files-found: error

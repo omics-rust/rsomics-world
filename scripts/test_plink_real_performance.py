@@ -35,6 +35,18 @@ class PlinkRealPreparation(unittest.TestCase):
         self.assertEqual(spec['sample_count'], 929)
         with tempfile.TemporaryDirectory(prefix='plink-real-preparation-', dir=os.environ['TMPDIR']) as name:
             root = Path(name)
+            executable_body = b'transport permission fixture, not an executable program\n'
+            files = {'candidate/binary-release': dict(bytes=len(executable_body),
+                     sha256=hashlib.sha256(executable_body).hexdigest())}
+            native_archive = root / 'native.tar'
+            with tarfile.open(native_archive, 'w') as archive:
+                for relative, body, mode in [('candidate/binary-release', executable_body, 0o755),
+                        ('artifact-manifest.json', json.dumps(dict(schema=real.source.SCHEMA, files=files)).encode(), 0o644)]:
+                    entry = tarfile.TarInfo('plink-evidence/' + relative)
+                    entry.size, entry.mode = len(body), mode
+                    archive.addfile(entry, io.BytesIO(body))
+            real.source.extract_artifact(native_archive, root / 'restored-native')
+            self.assertEqual((root / 'restored-native/candidate/binary-release').stat().st_mode & 0o777, 0o755)
             private = root / 'private'; private.mkdir(mode=0o700)
             self.assertEqual(real.private_directory(private), private.resolve())
             private.chmod(0o755)
@@ -177,8 +189,9 @@ class PlinkRealPreparation(unittest.TestCase):
             self.assertNotIn('private_storage:', workflow)
             upload = steps(workflow)['Upload encrypted originals only']
             paths = upload.split('path: |', 1)[1].split('retention-days:', 1)[0]
-            self.assertIn('/delivery/hgdp.tar.age', paths)
-            self.assertIn('/delivery/receipt.json', paths)
+            self.assertIn('${{ env.PRIVATE_DELIVERY }}/hgdp.tar.age', paths)
+            self.assertIn('${{ env.PRIVATE_DELIVERY }}/receipt.json', paths)
+            self.assertNotIn('runner.temp', paths)
             self.assertNotIn('.stderr', paths)
             self.assertNotIn('*', paths)
             self.assertNotRegex(workflow.split('permissions:', 1)[0], r'\n  (push|pull_request|schedule):')

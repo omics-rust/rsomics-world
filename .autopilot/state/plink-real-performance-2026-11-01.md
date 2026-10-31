@@ -1,5 +1,47 @@
 # Fixed private HGDP whole-workflow gate
 
+## First real startup/custody failures corrected narrowly
+
+Root reads the complete REPORT/diagnosis at
+plink-hosted-failure-adoption-20261101.hKSooM. Full age authentication and all
+2339 private-manifest entries recover;2341 TAR members are2037 regular files
+and304 directories, no links. The original native TAR has0755 binary-release;
+the authenticated runner manifest has identical SHA/3082688B but0600 after
+restoration under umask077. source.extract_artifact omitted executable modes.
+Native program never starts; no provider/cohort/observer/graph/trial is reached.
+Static ELF architecture/providers/interpreter/loader and source versions pass.
+
+Root strengthens the SAME ONE preparation with a literal transport file0755:
+actual RED restored0644, then GREEN1/0.518s after honoring the original TAR's
+rwx bits (not setuid/special bits). No binary/source/scientific change. Upload
+now uses PRIVATE_DELIVERY derived inside the actual container and exported by
+setup, rather than host runner.temp paths. Only ciphertext/receipt remain
+allowed; no plaintext fallback. Actual two-file delivery still needs a new run.
+
+Original ZIP lacked receipt.json; explicit same-run raw-log receipt salvage is
+not relabelled as intended delivery success. No HGDP rows were acquired or
+exposed. Diagnosis88badd3ad54fba5ec091609443bc9c612b4cce2c84b192c17e34cbb3c44cd01d;
+REPORT019ecc27875717ca3324432f064406dd855867f4e4f7a08c0151334b42945cc8.
+Operator identity was used only by official age CLI, never printed/copied/hashed.
+
+## Actual first hosted cohort attempt and encrypted recovery
+
+Exact-head Control plane41248536045 passes atb51a1813. Actual manual run
+41248787492/1 fails in early run, after successful setup. Full encrypted
+original recovery/manifest/first-error diagnosis is active. Uploaded artifact
+13060237983 is397605485B ZIP
+b4c22b863d285b2648d069434d0e55cc2e6a186f5626bff678a7318ee2cbbb87.
+Its ZIP contains the ciphertext but omits receipt.json: actual upload inputs
+use host runner.temp paths while runtime uses /__w/_temp, and log reports
+LCA=/ plus one file. The same original raw log contains the complete public
+receipt; explicit salvage verifies it against the ciphertext and full age
+authentication. This is not acceptance of the two-file delivery contract.
+
+Recovered first traceback is PermissionError executing restored binary-release;
+provider/loader checks already pass. Actual original/restored mode evidence is
+being finalized before a narrow fix; no cohort/numeric/performance conclusion
+or threshold change follows from this engineering failure.
+
 ## Root final integration review
 
 Root reads the full750-line six-file diff and complete REPORT
