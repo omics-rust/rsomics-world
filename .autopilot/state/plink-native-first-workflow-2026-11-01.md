@@ -1,5 +1,13 @@
 # Native PLINK first coherent workflow active
 
+## Final source gate dispatched
+
+Exact-head Control plane41245604707 passes at
+5af1ccfa47d32ac5be53749c611ba8a13cf60ce9. Root dispatches the existing
+plink-candidate.yml with snapshot=green-2: actual run41246273033 is active.
+Its final guard-only source results and complete originals still require
+independent adoption; the green-1 acceptance below remains historical.
+
 ## Ordinary Mac build fixed; actual green-2 source frozen
 
 Root reads the full install-contract report and exact three-file diff, then
