@@ -271,7 +271,7 @@ inspection remains in `rsomics-bam`.
 | `summarize` | `multiBamSummary`, `multiBigwigSummary` | bins or regions by sample matrix with stable labels and raw export |
 | `matrix` | `computeMatrix` | reference-point or scale-regions matrix over multiple samples and region groups |
 | `matrix-ops` | `computeMatrixOperations` | inspect, subset, relabel, filter, sort, and bind compatible matrices |
-| `filter` | `alignmentSieve` | alignment filters, shift/ATAC shift, and BAM or BEDPE output |
+| `filter` | `alignmentSieve` | alignment filters, shift/ATAC shift, and BAM or MACS2-style three-column fragment BED output |
 | `gc-bias` | `computeGCBias`, `correctGCBias` | measured bias table/plot and corrected alignment output |
 | `fingerprint` | `plotFingerprint` | cumulative coverage, inequality, Jensen-Shannon, CHANCE, and raw data |
 | `coverage-qc` | `plotCoverage` | deterministic sampled coverage distribution and raw counts |
@@ -289,15 +289,56 @@ compatibility artifact. Stable tabular or typed matrix outputs are primary;
 an upstream-compatible archive is emitted only when a real downstream
 consumer requires it.
 
+### Pinned first-six source qualification
+
+The2026-10-31 primary-source assessment binds deepTools3.5.6 to commit
+ea0f68bb4a1587d713dacb3791861308751ef7d0 and the original source archive
+2daf06abc8cf2df42f7e0ecacb3784ee95de1db4dd887f69f22a29f27e202369.
+It is a pinned profile, not a claim to cover the latest upstream. Parent reads
+the full REPORT6bd7b1cdab68b261a72401316d52a71dc2d8304b6dda43df37883f2f38f2fa11
+and relevant actual writer, normalization, blacklist, summary and filter bodies.
+Evidence is retained at
+`/Volumes/KIOXIA/Developments/tmp/signal-upstream-contract-20261031.TtuUdJ/`;
+source-evidence.jsonf3eb890a20f74a89235705f1066db3dfa10fe47444aae830b75d193415856850
+binds144 source/metadata files, including51 Git-identical deepTools files.
+No source runtime, native result or performance has been earned yet.
+
+Meaningful source profiles must not be flattened into one coverage policy:
+unextended reads use aligned blocks, while extension and offset modes differ;
+BAM and BW dictionaries, missing values, blacklist populations and output
+run finalization are operation-specific. BAM/BW summaries and multi-sample,
+multi-group reference/scale matrices remain required first-release behavior.
+alignmentSieve's MACS2 fragment BED is not conventional six/ten-column BEDPE.
+
+The source-only integrated witness must retain source behavior before native
+policy choices for BPM's CPM-equivalent implementation despite different help,
+signed-cancellation skipZeroOverZero, omitted trailing zero runs, nonfinite
+serialization, summary zoom-dependent means and shift metadata/sort validity.
+BW arithmetic/matrix use full values; default multiBigwigSummary uses stats
+without exact=True. Equal full-resolution output alone does not establish
+equal downstream summary defaults. Original BW headers/zooms and default plus
+exact diagnostic statistics therefore belong in the witness. These are
+qualification questions, not silently adopted bugs or compatibility fixes.
+
+The codec decision remains private. Published bigtools0.5.6 requires
+libdeflater0.13 while current bamio0.8.4 requires libdeflater1; their sys crates
+both declare links=libdeflate, so an independent repository layout does not
+remove the single-binary dependency conflict. Qualify a compatible external
+codec or narrow dependency update, or refactor the old checked/streaming BBI
+implementation with independent interoperability. No new public foundation,
+bamio bypass or unsafe parser adoption follows from this assessment.
+
 ### Data and execution model
 
-- Signal intervals are ordered, finite, checked half-open ranges associated
-  with a declared chromosome dictionary.
+- Signal coordinates are ordered, checked half-open ranges associated with a
+  declared chromosome dictionary. Numeric missing/nonfinite states follow an
+  explicit operation and serialization policy, not a blanket finite shortcut.
 - BAM-derived coverage distinguishes aligned blocks, reference spans, paired
   fragments, extensions, centers, and ATAC-shifted fragments. The CLI cannot
   accept one model while computing another.
-- Blacklists exclude complete chunks according to a pinned upstream contract;
-  they are not treated as ordinary zero-valued signal.
+- Blacklist spans are subtracted from source task ranges, potentially restarting
+  bin grids. Counting, read-start assignment and normalization use different
+  populations; do not substitute universal read-overlap or whole-chunk rejection.
 - Normalization uses explicit denominators and effective-genome assumptions.
   CPM, BPM, RPKM, RPGC, read-count scaling, SES, and user factors are distinct
   types and appear in execution reports.
@@ -353,11 +394,11 @@ foundation.
 
 | Asset and revision | Disposition |
 |---|---|
-| `rsomics-alignment-sieve` `d65a23fbac4caba831b28b7b89c322129f76950d` | Refactor then merge into `filter`; inspect the inherited `Cargo.lock` diff, then add shift and BEDPE modes |
+| `rsomics-alignment-sieve` `d65a23fbac4caba831b28b7b89c322129f76950d` | Refactor then merge into `filter`; inspect the inherited `Cargo.lock` diff, then add shift and MACS2 fragment-BED modes |
 | `rsomics-atac-shift` `6dbd1c30d99ac8233cbeb01a738e789ee22ee5cb` | Merge tested shift semantics into `filter --atac-shift`; do not keep a second command |
 | `rsomics-bam-compare` `5fea94174d64d46ae0d35661604a38af2e69ca02` | Refactor then merge into `compare --input bam` |
 | `rsomics-bam-fingerprint` `f771ac80fe0b5a12a637839d6cd4f0f1605001aa` | Refactor then merge into `fingerprint`; extend statistical outputs |
-| `rsomics-bam-signal` `78921394417918cd2d5c1af8b22a15eb3a31cd9e` | Coverage and normalization seed for `track`; bedGraph-only shell is incomplete |
+| `rsomics-bam-signal` `78921394417918cd2d5c1af8b22a15eb3a31cd9e` | Coverage/normalization and existing BW-writer seed for `track`; reconcile counting and source profiles before reuse |
 | `rsomics-bigwig-average` `c6e1f55c7c9ec14d0541d3f2707f8fce6a2ee47f` | Refactor then merge into `average`; inspect the inherited `Cargo.lock` diff |
 | `rsomics-bigwig-compare` `5ddcf9db6ecd72920fc0fdd19c61dde752bf4ad7` | Refactor then merge into `compare --input bigwig` |
 | `rsomics-compute-gc-bias` `356ecb3d6fcfd0345d2b53f4f91574bdd4ddb24a` | Refactor then merge into `gc-bias compute` |
@@ -378,8 +419,9 @@ Two historical Layer A candidates are internalized:
 
 ### Existing implementation problems
 
-- `bam-signal`, `bam-compare`, `bigwig-compare`, and `bigwig-average` emit
-  bedGraph only even where bigWig is the normal upstream contract.
+- `bam-signal` and `bam-compare` already include BW writers; the older blanket
+  bedGraph-only assessment was incorrect. This does not qualify their complete
+  upstream behavior, codec safety or third-party interoperability.
 - Coverage, filtering, normalization, missing-data, blacklist, paired-fragment,
   region, smoothing, and strand options are incomplete or inconsistent.
 - `compute-matrix` supports one bigWig and one region group, excluding the
@@ -388,7 +430,7 @@ Two historical Layer A candidates are internalized:
   vectors. The writer is now substantial, but it has only one product consumer
   and has not passed a complete third-party interoperability and memory gate.
 - `alignment-sieve` and ATAC shift are split despite being one upstream
-  operation. The former explicitly omitted shift and BEDPE behavior.
+  operation. The former explicitly omitted shift and MACS2 fragment-BED behavior.
 - Summary tools omit the stable binary matrix contract; downstream
   correlation, PCA, heatmap, profile, enrichment, matrix operations, and
   filtering-estimate operations are absent.
@@ -404,8 +446,9 @@ Two historical Layer A candidates are internalized:
 
 ### Foundations
 
-- `rsomics-common` owns errors, execution reports, normalization metadata,
-  progress policy, and transactional output publication.
+- `rsomics-common` owns errors, generic execution reports, progress policy,
+  and transactional output publication. Signal normalization metadata and
+  sampling policy remain product-owned.
 - `rsomics-help` is mandatory for the subcommand hierarchy, shared input and
   output sections, normalization explanations, examples, and terminal style.
 - `rsomics-bamio` owns checked alignment reading. BAM, call, count, RNA-seq QC,
@@ -435,7 +478,8 @@ The first release slice contains complete `track`, `compare`, `average`,
 - BAM and bigWig comparison modes cover zero, missing, pseudocount, scale,
   non-finite, and unequal-dictionary cases;
 - the filter path matches alignmentSieve for flags, MAPQ, duplicates,
-  fragments, regions, shifts, ATAC shifts, and BEDPE;
+  fragments, regions, shifts, ATAC shifts, and MACS2 fragment BED, with any
+  metadata/sorting compatibility exceptions explicit;
 - representative BAM-to-bigWig, bigWig arithmetic, summary, and matrix
   benchmarks record wall time, CPU, peak RSS, I/O, version, machine, input,
   flags, and timing distribution;

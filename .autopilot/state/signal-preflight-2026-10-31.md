@@ -1,5 +1,30 @@
 # Signal next-family retained-source assessment
 
+## Pinned primary-source contract adopted
+
+Parent reads full76-line REPORT6bd7b1cdab68b261a72401316d52a71dc2d8304b6dda43df37883f2f38f2fa11
+at /Volumes/KIOXIA/Developments/tmp/signal-upstream-contract-20261031.TtuUdJ/,
+plus actual normalization/writer/blacklist/summary/filter and dependency
+manifest bodies. Source-evidence.jsonf3eb890a20f74a89235705f1066db3dfa10fe47444aae830b75d193415856850
+binds144 files; deepTools3.5.6 commit ea0f68bb4a1587d713dacb3791861308751ef7d0
+matches51 packaged Git blobs and original archive2daf06abc8cf2df42f7e0ecacb3784ee95de1db4dd887f69f22a29f27e202369.
+This is source inspection, not a qualified installed runtime or source oracle.
+
+Dossier now corrects old bedGraph-only, whole-chunk blacklist and conventional
+BEDPE claims. Full six-operation scope stays. Named upstream behavior requiring
+actual source capture includes BPM/CPM identity, signed-cancellation skips,
+trailing-zero/nonfinite output, zoom-dependent summary means and shift metadata/
+sort/index validity. Do not silently fix or emulate those quirks, narrow scope,
+or infer deterministic upstream summary row order across worker counts.
+
+Bigtools0.5.6/libdeflater0.13 still conflicts with bamio0.8.4/libdeflater1
+because both sys packages declare links=libdeflate. A flat repository does not
+solve a single binary's native link graph. No Cargo solve/build, codec choice,
+new foundation, owning repository, implementation or release is made here.
+Next unblocked source work is one input-only integrated first-six lifecycle
+witness, retaining original BW bytes/headers/zooms and exact diagnostic stats
+alongside source defaults. Keep native public policy holds explicit.
+
 Parent reads complete82-line read-only REPORT.md
 538c690e73a50db34af712d5234abc8db536467aeb4d7b140e1ea544807fe853,
 /Volumes/KIOXIA/Developments/tmp/signal-family-assessment-20261031.Kscbd6/.
