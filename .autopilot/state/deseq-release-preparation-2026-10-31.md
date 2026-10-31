@@ -1,5 +1,33 @@
 # DESeq release preparation, not publication
 
+## Owning four-native/package gate accepted
+
+Exact owning636e25987f7543a68c4a35cf07bd74a52850c9f6 run41180255242 is
+terminal SUCCESS. Parent freshly checks all four actual native host identities
+and required-step statuses, not only the run conclusion. Linux x86_64 job
+124476012811, Linux aarch64124476012948, macOS x86_64124476012942 and macOS
+aarch64124476012921 each pass all13test intents in debug and release. Linux
+x86_64 also passes formatting, strict all-target/all-feature Clippy, warnings-
+as-errors rustdoc, clean source package/list/build and its unpacked13tests.
+The original no-job failure41180144974 remains failed, not silently retried as
+the same qualified head. The focused workflow correction has its own commit.
+
+Complete API JSON and full original run logs are retained in the external
+preparation root as owning-ci-41180255242.json / owning-ci-41180255242-full.log,
+SHAf0810edfb88c414c17420de812e30bd990c077a8390b59cf3a612e5a2d4f5ee1 /
+2182976cbbe59c48adb89ea867fbf5a58c922eb3d0fe7fb8bf49df5e1edc00f8.
+No CI binary or package artifact was uploaded by this workflow; do not invent
+downloaded bytes/digests or call local --allow-dirty candidates registry files.
+This owning gate complements the already-retained24full-source comparisons
+and representative scientific/performance gates; it is not a new math replay.
+
+Owner remains clean/public-repo-only/publish=false. Registry identified-client
+GET404 and unchanged failed credential hold actual publication; never read the
+secret value or retry it unchanged. This family no longer needs another local
+test/native/source/performance campaign for this unchanged accepted slice.
+Eventual publication must validate its actual clean release artifact and
+authorization; advance other products meanwhile. Full30-family goal is active.
+
 ## Adopted preparation and owning CI, 2026-10-31
 
 Fresh scoped reviewe082d045cea4a946662bea26d2f83ad3da67ec2dab43df8532e0f886337094dc

@@ -16,7 +16,7 @@ No deletion or migration of project/shared application/user data occurred.
 
 | Workstream | Verified current position | Next affected gate |
 |---|---|---|
-| DESeq | accepted green7/native4/performance; reviewed package/example preparation pushed636e259 to real owner; exact owning CI41180255242 active | wait all four owning native jobs/package gates; registry authorization held, no more source/science campaign |
+| DESeq | accepted green7/native4/performance; real owning636e259 passes exact native4/debug/release/strict/package/unpacked run41180255242; real package example passes | registry authorization/actual clean publication artifact held; no more unchanged-slice source/native/performance campaigns |
 | limma | accepted count native4/performance; ordinary log-expression source-contract report adopted and new witness task active | qualify actual ordinary shared-QR/equal-df lifecycle before native extension; no count replay, scope narrowing or scaling-win claim |
 | edgeR | complete private QL workflow; original P/FDR gate remains failed | explicit numerical-contract decision; no band tuning |
 | ecology | source40634594900 fully retained/qualified; real table/tree/IDs pass raw checks; reviewed sparse-alpha01c9089 plus actual sparse rarefactione1b03cb;984exact count cells/594alpha checks pass | undefined beta choice holds only that adapter; full product/native4/performance unearned |
