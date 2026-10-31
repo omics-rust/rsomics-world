@@ -58,6 +58,19 @@ class PeakSourcePreparationTest(unittest.TestCase):
                                          {'codetools': {'Depends': 'R (>= 4.7)'}})
             oracle.check_constraints({'R': '4.6.1', 'codetools': '0.2.20'},
                                      {'codetools': {'Depends': 'R (>= 3.5)'}})
+            self.assertTrue(callable(getattr(oracle, 'macs_build_environment', None)),
+                            'MACS build must bind existing image compilers without changing other stages')
+            original_environment = {'PATH': '/image/bin', 'CC': 'clang -pthread',
+                                    'CXX': 'clang++ -pthread', 'LDSHARED': 'existing-linker-override'}
+            build_environment = oracle.macs_build_environment(
+                original_environment, '/usr/bin/gcc', '/usr/bin/g++')
+            self.assertEqual(build_environment['CC'], '/usr/bin/gcc')
+            self.assertEqual(build_environment['CXX'], '/usr/bin/g++')
+            self.assertEqual(build_environment['LDSHARED'], 'existing-linker-override')
+            self.assertEqual(original_environment['CC'], 'clang -pthread')
+            self.assertEqual(set(build_environment), set(original_environment))
+            with self.assertRaisesRegex(ValueError, 'bare absolute'):
+                oracle.macs_build_environment(original_environment, '/usr/bin/gcc -pthread', '/usr/bin/g++')
             rows = [['chrA', '10', '20', 'duplicate', '0', '+']] * 2
             oracle.write_rows(root / 'rows', [('diagnostic', rows)])
             ledger = (root / 'rows/workflow-rows.tsv').read_text().splitlines()
@@ -75,6 +88,9 @@ class PeakSourcePreparationTest(unittest.TestCase):
             self.assertEqual([statuses[n]['status'] for n in ['fails', 'dependent', 'independent']],
                              ['failed', 'blocked', 'returned'])
             self.assertEqual(statuses['fails']['returncode'], 7)
+            captured_environment = json.loads((root / 'execution/calls/fails/request.json').read_text())['env']
+            self.assertTrue({'CC', 'CXX', 'LDSHARED', 'LDCXXSHARED', 'CFLAGS', 'CXXFLAGS', 'LDFLAGS'}
+                            <= set(captured_environment))
             self.assertEqual((root / 'execution/calls/fails/stdout.txt').read_text(), 'original failure\n')
             self.assertFalse((root / 'execution/calls/dependent/stdout.txt').exists())
             oracle.bind_evidence(root / 'execution')

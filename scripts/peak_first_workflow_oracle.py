@@ -69,6 +69,8 @@ def capture(target, argv, cwd=None, env=None):
                    env={name: (env or os.environ).get(name) for name in
                         (*THREADS, 'PATH', 'TMPDIR', 'R_LIBS_USER', 'R_LIBS_SITE',
                          'R_USER_CACHE_DIR', 'R_ENVIRON_USER', 'R_PROFILE_USER',
+                         'CC', 'CXX', 'LDSHARED', 'LDCXXSHARED', 'LD', 'AR',
+                         'CFLAGS', 'CXXFLAGS', 'CPPFLAGS', 'LDFLAGS',
                          'PEAK_R_MODE', 'PEAK_SEACR_SOURCE_R', 'PEAK_SEACR_CAPTURE')},
                    started_utc=time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime()))
     save(target / 'request.json', request)
@@ -306,6 +308,47 @@ def pinned_requirements(packages, names, path, replacement=None):
     path.write_text('\n'.join(lines) + '\n')
 
 
+def macs_build_environment(original, gcc, gxx):
+    for executable in (gcc, gxx):
+        if not Path(executable).is_absolute() or any(character.isspace() for character in executable):
+            raise ValueError('MACS compiler must be a bare absolute executable path')
+    return dict(original, CC=str(gcc), CXX=str(gxx))
+
+
+def prepare_macs_compilers(runtime):
+    hosted(runtime)
+    import sysconfig
+    names = ('CC', 'CXX', 'LDSHARED', 'LDCXXSHARED', 'CCSHARED', 'CFLAGS',
+             'CXXFLAGS', 'CPPFLAGS', 'LDFLAGS', 'CONFIG_ARGS')
+    original = {name: sysconfig.get_config_var(name) for name in names}
+    compilers = {}
+    for name in ('gcc', 'g++'):
+        located = shutil.which(name)
+        if not located:
+            save(runtime / 'compiler-selection-failure.json', dict(status='failed', missing=name,
+                 Python_compiler_configuration=original, compiler_install_attempted=False))
+            raise RuntimeError('required existing image compiler absent: ' + name)
+        resolved = Path(located).resolve(strict=True)
+        if not resolved.is_file() or not os.access(resolved, os.X_OK):
+            raise RuntimeError('existing image compiler is not executable: ' + str(resolved))
+        target = runtime / 'calls' / ('macs-compiler-' + name.replace('+', 'x'))
+        require(target, [resolved, '--version'])
+        compilers[name] = dict(discovered_path=located, resolved_path=str(resolved),
+            sha256=sha256(resolved), version_stdout=(target / 'stdout.txt').read_text(),
+            version_stderr=(target / 'stderr.txt').read_text(),
+            process_sha256=sha256(target / 'process.json'))
+    environment = macs_build_environment(os.environ, compilers['gcc']['resolved_path'],
+                                         compilers['g++']['resolved_path'])
+    save(runtime / 'macs-compiler-binding.json', dict(status='existing image compilers bound before MACS build',
+         Python_compiler_configuration=original, compilers=compilers,
+         inherited_overrides={name: os.environ.get(name) for name in
+             ('CC', 'CXX', 'LDSHARED', 'LDCXXSHARED', 'LD', 'AR', 'CFLAGS', 'CXXFLAGS', 'CPPFLAGS', 'LDFLAGS')},
+         build_overrides={name: environment[name] for name in ('CC', 'CXX')},
+         scope='MACS wheel build child only; later stages retain original environment',
+         compiler_install_attempted=False))
+    return environment
+
+
 def install(lock_path, output):
     runtime = hosted(output)
     lock = json.loads(Path(lock_path).read_text())
@@ -327,8 +370,10 @@ def install(lock_path, output):
         require(runtime / 'calls' / ('python-' + label), [*installer, '-r', file])
     wheels = runtime / 'built-wheels'
     wheels.mkdir()
+    build_environment = prepare_macs_compilers(runtime)
     require(runtime / 'calls/macs-build', [python, '-m', 'pip', 'wheel', '--no-index', '--no-deps',
-        '--no-build-isolation', '--no-cache-dir', '--wheel-dir', wheels, downloads / packages['macs3']['filename']])
+        '--no-build-isolation', '--no-cache-dir', '--wheel-dir', wheels, downloads / packages['macs3']['filename']],
+        env=build_environment)
     built = list(wheels.glob('*.whl'))
     if len(built) != 1:
         raise RuntimeError('MACS build must produce one retained wheel')

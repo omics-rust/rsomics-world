@@ -1,5 +1,53 @@
 # Peak next-product source qualification
 
+## Actual compiler failure retained; build-only compiler binding adopted
+
+Parent reads the full original REPORT
+c408882c583512f129c0d774b9b776e784119634ec7144357bac1101a65f5db2
+and verificationd508bb8cfedaca75b430f82ab26c915ce30fb23d647ecc24860674639d8cbaaa
+at /Volumes/Zane's HDD/rsomics-fixtures/evidence/peak-first-workflow-oracle-2026-10-31/run-41197783094/.
+Actual macs-build exits1 because portable Python invokes absent clang.
+Parent reads actual stderr/process/sysconfig, MACS setup and setuptools
+compiler-selection bodies. Existing image GCC is supported; no scientific
+disagreement or source change is involved.
+
+Complete artifact13041835433/632779581bytes has API/actual ZIP SHA
+45cacd13b1f3b50cae26405736f73e27b310841f31f9a8f83d47a9524bb8db87,
+freshly hashed by parent. Its one original TAR/1120942080bytes has SHA
+7ebb10519467b8f16c64e102c0e94d872398718ef0461e4208e687296c4301e2;
+all13786 manifest entries match,0 missing/changed/unlisted. Preserve1052
+links/33 casefold groups virtually, not Mac link extraction. The actual ZIP
+has no sidecar; no original hash/content is invented or transport repair made.
+
+One authorized two-file correction binds/records existing image gcc/g++
+absolute paths/SHA/version and original Python compiler configuration BEFORE
+MACS build, passing CC/CXX only to that child. Later R/tools environment,
+source/runtime/input pins and source compiler flags remain unchanged. Parent
+reads full correction REPORT4e78b6ec8ded5097a900750a8d366ef910a5c386f9efd7f40640a135f8c1cd3e
+at /Volumes/KIOXIA/Developments/tmp/peak-compiler-binding-correction-20261031.Nd86fc/,
+the complete diff and verifies all14 delivery bindings. Producer
+3d196bc9e4ab48aba4197819e8854198ad10410167f66f0ce82aa47890b17100
+and test4a003eba1997847a23ec7e3509ed1666ed5e984f49e46c735d6b99611b59c6b1
+are the only code changes. Existing focused route test passes again for the
+parent:1test/0.225s, log63cc4d60c3eda990caad9ea1b69945f552e4467d8a52ca62ad37e52b7b885de9
+at /Volumes/KIOXIA/Developments/tmp/peak-compiler-parent-20261031.sdMnGh/.
+
+No local compiler/sysconfig query/R/science/build/install or additional review
+campaign. Full exact-head controller CI then one real hosted retry remain
+mandatory; build binding has not yet run there, and source capture remains
+unqualified. Original failed evidence and earlier review packets stay exact.
+
+## First hosted run fails during installation; original retention active
+
+Run41197783094/attempt1 is terminal FAILURE at exact world
+05186bc76baf8aa551a44f2b578c3902b34d0015 after controller41197655653 SUCCESS.
+Single Linux source job124527357815 reports image/preflight/acquisition-
+admission success, then installation failure; scientific capture is skipped.
+Binding, tar creation and artifact upload succeed. Original retention and
+actual child-error diagnosis are now complete as recorded above. Source/runtime
+qualification, native compatibility and performance are not earned by the
+successful preparation/admission steps.
+
 ## Reviewed full-four hosted source producer adopted
 
 The source producer completes the preparation graph under
