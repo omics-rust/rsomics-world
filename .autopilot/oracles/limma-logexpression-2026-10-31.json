@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "repository": "omics-rust/rsomics-world",
+  "run_attempt": 1,
+  "workflow_path": ".github/workflows/limma-logexpression-oracle.yml",
+  "run_id": 41184814043,
+  "artifact_id": 13036282988,
+  "head_sha": "06837d86ee46203cb6e5cafc9cef89f08e3f42df",
+  "artifact_name": "limma-logexpression-oracle-41184814043-1",
+  "size_in_bytes": 54571680,
+  "artifact_sha256": "6460f37c81d0ec62144a38526e05756917702f0629f3e0479bae50d4fef8d7f0",
+  "bundle_path": "workflow",
+  "manifest_sha256": "c374d2be76ce0d0ee25aae2eeb14548ddb02d9866a0266e814bd39c5dec5c19f",
+  "capture_witness_sha256": "ee4a903ce605ac51d059469d738020fb31e02ac45332156ce30ead5abaece4ab",
+  "reload_witness_sha256": "87ca32ca6d0a199c7b6c729ae99096242fcc223e5ef8eee94bde3e5ae922af5f"
+}

@@ -27,10 +27,12 @@ adopted product boundary, not fabricated finite outputs or voom state.
 
 Parent authorizes one coherent native implementation under
 docs/plans/2026-10-31-limma-native-logexpression.md in the private owner.
-Implementation is active, not accepted. No new public foundation, source
+The corrected implementation is now locally accepted at clean private8c26abf
+after one whole-feature review and one bounded fix wave; see
+limma-native-logexpression-2026-10-31.md. No new public foundation, source
 mutation, count science/performance replay, numerical band change or release.
-Native compatibility/new-path native4/performance and whole-feature review
-remain gates. The complete old failed run41182610397 stays unchanged.
+New-path native4/performance remain gates. The complete old failed
+run41182610397 stays unchanged.
 
 ## Corrected hosted run in progress
 

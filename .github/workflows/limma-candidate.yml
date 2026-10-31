@@ -1,12 +1,17 @@
-name: Current voom fitted-workflow candidate
+name: Count voom and opt-in ordinary-expression candidate
 
 on:
   workflow_dispatch:
     inputs:
       snapshot:
-        description: Frozen current-voom source directory under limma-core-2026-10-28 (green-N)
+        description: Frozen limma candidate directory under limma-core-2026-10-28 (green-N)
         type: string
         required: true
+      ordinary:
+        description: Also compare all five accepted ordinary-expression cases at one/four workers
+        type: boolean
+        required: false
+        default: false
 
 permissions:
   contents: read
@@ -24,6 +29,7 @@ jobs:
           ${{ fromJSON('[{"target":"linux-x86_64","runner":"ubuntu-24.04","system":"Linux","arch":"x86_64"},{"target":"linux-aarch64","runner":"ubuntu-24.04-arm","system":"Linux","arch":"aarch64"},{"target":"macos-x86_64","runner":"macos-15-intel","system":"Darwin","arch":"x86_64"},{"target":"macos-aarch64","runner":"macos-15","system":"Darwin","arch":"arm64"}]') }}
     env:
       SNAPSHOT_ID: ${{ inputs.snapshot }}
+      ORDINARY: ${{ inputs.ordinary }}
       TARGET: ${{ matrix.target }}
       PYTHONDONTWRITEBYTECODE: '1'
     defaults:
@@ -177,6 +183,76 @@ jobs:
           print(json.dumps(record, sort_keys=True))
           PY
 
+      - name: Acquire and verify actual ordinary-expression evidence
+        if: env.ORDINARY == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          mkdir "$EVIDENCE/ordinary-oracle-acquisition"
+          cp "$GITHUB_WORKSPACE/scripts/verify_infercnv_oracle_artifact.py" "$EVIDENCE/ordinary-oracle-acquisition/verification-controller.py"
+          cp "$GITHUB_WORKSPACE/.autopilot/oracles/limma-logexpression-2026-10-31.json" "$EVIDENCE/ordinary-oracle-acquisition/receipt.json"
+          shasum -a 256 "$EVIDENCE/ordinary-oracle-acquisition/verification-controller.py" \
+            "$EVIDENCE/ordinary-oracle-acquisition/receipt.json" > "$EVIDENCE/ordinary-oracle-acquisition/checksums.sha256"
+          python3 -B - <<'PY'
+          import json, os, stat, subprocess, sys, zipfile
+          from pathlib import Path
+          sys.path.insert(0, str(Path(os.environ['GITHUB_WORKSPACE']) / 'scripts'))
+          from verify_infercnv_oracle_artifact import _archive_name, _artifact, _extract, _load_json, _run, _sha256
+          base = Path(os.environ['EVIDENCE']) / 'ordinary-oracle-acquisition'
+          receipt = _load_json(base / 'receipt.json', 'ordinary receipt')
+          expected = dict(schema_version=1, repository='omics-rust/rsomics-world', run_attempt=1,
+              workflow_path='.github/workflows/limma-logexpression-oracle.yml', run_id=41184814043,
+              artifact_id=13036282988, head_sha='06837d86ee46203cb6e5cafc9cef89f08e3f42df',
+              artifact_name='limma-logexpression-oracle-41184814043-1', size_in_bytes=54571680,
+              artifact_sha256='6460f37c81d0ec62144a38526e05756917702f0629f3e0479bae50d4fef8d7f0',
+              bundle_path='workflow',
+              manifest_sha256='c374d2be76ce0d0ee25aae2eeb14548ddb02d9866a0266e814bd39c5dec5c19f',
+              capture_witness_sha256='ee4a903ce605ac51d059469d738020fb31e02ac45332156ce30ead5abaece4ab',
+              reload_witness_sha256='87ca32ca6d0a199c7b6c729ae99096242fcc223e5ef8eee94bde3e5ae922af5f')
+          assert receipt == expected, 'unexpected ordinary source receipt'
+          for endpoint, filename in (
+              (f"actions/runs/{receipt['run_id']}", 'run.json'),
+              (f"actions/artifacts/{receipt['artifact_id']}", 'artifact.json'),
+              (f"actions/artifacts/{receipt['artifact_id']}/zip", 'artifact.zip')):
+              with (base / filename).open('xb') as stream, (base / (filename + '.stderr')).open('xb') as error:
+                  subprocess.run(['gh', 'api', 'repos/omics-rust/rsomics-world/' + endpoint],
+                                 stdout=stream, stderr=error, check=True)
+          _run(base / 'run.json', receipt)
+          zipped = base / 'artifact.zip'
+          _artifact(base / 'artifact.json', receipt, zipped)
+          assert zipped.stat().st_size == receipt['size_in_bytes'] and _sha256(zipped) == receipt['artifact_sha256']
+          source = base / 'source'
+          with zipfile.ZipFile(zipped) as archive:
+              seen, files = set(), set()
+              for member in archive.infolist():
+                  directory = member.is_dir()
+                  name = _archive_name(member.filename, directory)
+                  kind = stat.S_IFMT(member.external_attr >> 16) if member.create_system == 3 else 0
+                  assert member.orig_filename == member.filename and not member.flag_bits & 1
+                  assert kind in (0, stat.S_IFDIR if directory else stat.S_IFREG) and name not in seen
+                  seen.add(name)
+                  if not directory:
+                      files.add(name)
+              assert all('/'.join(name.split('/')[:i]) not in files for name in seen for i in range(1, len(name.split('/'))))
+              assert archive.testzip() is None, 'ordinary source ZIP CRC differs'
+              _extract(archive, source)
+          oracle = source / receipt['bundle_path']
+          assert _sha256(oracle / 'sha256-manifest.tsv') == receipt['manifest_sha256']
+          assert _sha256(oracle / 'witness.json') == receipt['capture_witness_sha256']
+          assert _sha256(oracle / 'reload-process/witness.json') == receipt['reload_witness_sha256']
+          record = dict(run=receipt['run_id'], attempt=receipt['run_attempt'], head=receipt['head_sha'],
+              workflow=receipt['workflow_path'], artifact=receipt['artifact_id'], artifact_name=receipt['artifact_name'],
+              size_in_bytes=zipped.stat().st_size, artifact_sha256=receipt['artifact_sha256'],
+              manifest_sha256=receipt['manifest_sha256'], capture_witness_sha256=receipt['capture_witness_sha256'],
+              reload_witness_sha256=receipt['reload_witness_sha256'], archive_files=len(files),
+              contents_gate='frozen owner check-logexpression.py qualifies all827 workflow members and independent reload')
+          (base / 'verification.json').write_text(json.dumps(record, sort_keys=True) + '\n')
+          with Path(os.environ['GITHUB_ENV']).open('a') as stream:
+              stream.write('ORDINARY_ORACLE_ROOT=' + str(oracle) + '\n')
+          print(json.dumps(record, sort_keys=True))
+          PY
+
       - name: Verify frozen dependencies
         id: metadata
         working-directory: ${{ runner.temp }}/limma-candidate
@@ -245,13 +321,22 @@ jobs:
           cp "$CARGO_TARGET_DIR/release/rsomics-limma" "$binary"
           shasum -a 256 "$binary" > "$EVIDENCE/native-binary/checksums.sha256"
           cp scripts/check-workflow.py "$EVIDENCE/controller/"
-          shasum -a 256 "$EVIDENCE/controller/check-workflow.py" > "$EVIDENCE/controller/checksums.sha256"
+          if [[ "$ORDINARY" == true ]]; then
+            cp scripts/check-logexpression.py "$EVIDENCE/controller/"
+          fi
+          shasum -a 256 "$EVIDENCE/controller/"*.py > "$EVIDENCE/controller/checksums.sha256"
           for workers in 1 4; do
             python3 -B "$EVIDENCE/controller/check-workflow.py" \
               --witness "$ORACLE_ROOT" --binary "$binary" \
               --output "$EVIDENCE/comparison/workers-$workers" --workers "$workers" \
               2>&1 | tee "$EVIDENCE/comparison/workers-$workers.log"
           done
+          if [[ "$ORDINARY" == true ]]; then
+            python3 -B "$EVIDENCE/controller/check-logexpression.py" \
+              --witness "$ORDINARY_ORACLE_ROOT" --binary "$binary" \
+              --output "$EVIDENCE/ordinary-comparison" \
+              2>&1 | tee "$EVIDENCE/ordinary-comparison.log"
+          fi
 
       - name: Check worker determinism
         if: ${{ !cancelled() && steps.comparison.outcome == 'success' }}

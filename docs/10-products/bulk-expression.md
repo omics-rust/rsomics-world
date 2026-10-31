@@ -27,8 +27,13 @@ The ordinary unweighted log-expression source witness passes run41184814043,
 including separate no-refit reload, under
 `../plans/2026-10-31-limma-logexpression-oracle.md`. It uses retained derived-real
 E as supplied input, not weighted count fits as answers. The actual native
-ordinary lifecycle now proceeds under
-`../plans/2026-10-31-limma-native-logexpression.md`; it is not yet accepted.
+ordinary lifecycle is locally accepted after one whole-feature review and one
+concentrated numerical correction, at clean private owning8c26abf/green-2.
+All five ordinary cases at1/4 and a cached count regression pass unchanged
+source contracts. New-path native4, whole-workflow performance and release
+remain pending; old count timings do not qualify this new executable. See
+`../plans/2026-10-31-limma-native-logexpression.md` and
+`.autopilot/state/limma-native-logexpression-2026-10-31.md`.
 
 ## Portfolio decision
 
@@ -353,8 +358,8 @@ behavior rather than exposed one-for-one.
 
 | Upstream contract | Target surface | Decision |
 |---|---|---|
-| log-expression matrix and named design | `run --input log-expression` | general linear model with optional contrasts |
-| RNA-seq count matrix and library metadata | `run --input counts` | current `voomLmFit`-compatible path |
+| log-expression matrix and named design | `run --expression` | general linear model with named contrasts |
+| RNA-seq count matrix and library metadata | `run --counts` | current `voomLmFit`-compatible path |
 | `lmFit`, `contrasts.fit`, `eBayes`, `topTable` | `run` and `results` | first-release fitted lifecycle |
 | `treat`, `topTreat`, `decideTests` | `results` options and decision export | threshold semantics remain explicit |
 | `voomLmFit`, voom trend, sample weights | count-input fit and diagnostics | current behavior first; legacy composition only as a pinned mode if needed |

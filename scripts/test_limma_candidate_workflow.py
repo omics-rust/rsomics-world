@@ -21,6 +21,9 @@ class LimmaCandidateWorkflowTests(unittest.TestCase):
         self.assertEqual([(r['target'], r['system'], r['arch']) for r in json.loads(matrix[1])],
                          [('linux-x86_64', 'Linux', 'x86_64'), ('linux-aarch64', 'Linux', 'aarch64'),
                           ('macos-x86_64', 'Darwin', 'x86_64'), ('macos-aarch64', 'Darwin', 'arm64')])
+        self.assertRegex(text, r'(?m)^      ordinary:\n        description: [^\n]+\n'
+                         r'        type: boolean\n        required: false\n        default: false$')
+        self.assertIn('ORDINARY: ${{ inputs.ordinary }}', text)
         routed = steps(text)
         order = list(routed)
         for name in ('Verify frozen dependencies', 'Format and strict Clippy', 'Test debug', 'Test release'):
@@ -37,6 +40,18 @@ class LimmaCandidateWorkflowTests(unittest.TestCase):
         self.assertNotIn('Rscript', comparison)
         self.assertIn('if: always()', routed['Upload raw evidence'])
         self.assertNotIn('continue-on-error', text)
+        ordinary = routed['Acquire and verify actual ordinary-expression evidence']
+        self.assertIn("if: env.ORDINARY == 'true'", ordinary)
+        self.assertLess(order.index('Acquire and verify actual ordinary-expression evidence'),
+                        order.index('Compare complete fitted workflow'))
+        receipt = json.loads((ROOT / '.autopilot/oracles/limma-logexpression-2026-10-31.json').read_text())
+        self.assertEqual((receipt['run_id'], receipt['run_attempt'], receipt['artifact_id'],
+                          receipt['head_sha'], receipt['artifact_name'], receipt['size_in_bytes'],
+                          receipt['artifact_sha256'], receipt['workflow_path'], receipt['bundle_path']),
+                         (41184814043, 1, 13036282988, '06837d86ee46203cb6e5cafc9cef89f08e3f42df',
+                          'limma-logexpression-oracle-41184814043-1', 54571680,
+                          '6460f37c81d0ec62144a38526e05756917702f0629f3e0479bae50d4fef8d7f0',
+                          '.github/workflows/limma-logexpression-oracle.yml', 'workflow'))
         for name, step in routed.items():
             if '        run: |\n' in step:
                 with self.subTest(step=name):
@@ -46,6 +61,66 @@ class LimmaCandidateWorkflowTests(unittest.TestCase):
                     self.assertEqual(result.returncode, 0, result.stderr)
                     for program in re.findall(r"python3 -B - <<'PY'\n(.*?)\nPY", bash, re.DOTALL):
                         compile(program, name, 'exec')
+        with tempfile.TemporaryDirectory(prefix='limma-ordinary-acquisition-route-') as directory:
+            root = Path(directory)
+            (root / 'bin').mkdir()
+            gh = root / 'bin/gh'
+            gh.write_text('#!/bin/bash\nprintf partial-api-body\nprintf offline-failure >&2\nexit 23\n')
+            gh.chmod(0o755)
+            env = dict(os.environ, EVIDENCE=str(root), GITHUB_WORKSPACE=str(ROOT),
+                       GITHUB_ENV=str(root / 'environment'), PATH=str(root / 'bin') + os.pathsep + os.environ['PATH'])
+            failed = subprocess.run(['bash', '-c', bash_body(ordinary)], env=env,
+                                    text=True, capture_output=True, timeout=15)
+            self.assertNotEqual(failed.returncode, 0)
+            retained = root / 'ordinary-oracle-acquisition'
+            self.assertEqual((retained / 'run.json').read_text(), 'partial-api-body')
+            self.assertEqual((retained / 'run.json.stderr').read_text(), 'offline-failure')
+            self.assertEqual(json.loads((retained / 'receipt.json').read_text()), receipt)
+            self.assertTrue((retained / 'verification-controller.py').is_file())
+            self.assertTrue((retained / 'checksums.sha256').is_file())
+            self.assertFalse((retained / 'source').exists())
+            self.assertFalse((retained / 'verification.json').exists())
+        for enabled, failure in [('false', False), ('true', False), ('true', True)]:
+            with self.subTest(ordinary=enabled, controller_failure=failure), tempfile.TemporaryDirectory(prefix='limma-comparison-route-') as directory:
+                root = Path(directory)
+                candidate, tools, evidence = (root / name for name in ('candidate', 'bin', 'evidence'))
+                for path in (candidate / 'scripts', tools, evidence, root / 'target/release'):
+                    path.mkdir(parents=True)
+                (root / 'target/release/rsomics-limma').write_bytes(b'not-executed-route-fixture')
+                (candidate / 'scripts/check-workflow.py').write_text('count route fixture\n')
+                if enabled == 'true':
+                    (candidate / 'scripts/check-logexpression.py').write_text('ordinary route fixture\n')
+                for name, content in [('cargo', '#!/bin/bash\nexit 0\n'),
+                                      ('python3', '#!/bin/bash\nprintf "%s\\0" "$@" >> "$ROUTE_CALLS"\nprintf "\\n" >> "$ROUTE_CALLS"\nif [[ "$*" == *check-logexpression.py* && "$FAIL_ORDINARY" == true ]]; then printf retained-failure; exit 17; fi\n')]:
+                    executable = tools / name
+                    executable.write_text(content)
+                    executable.chmod(0o755)
+                env = dict(os.environ, EVIDENCE=str(evidence), ORDINARY=enabled,
+                           ORACLE_ROOT=str(root / 'count-source'), ORDINARY_ORACLE_ROOT=str(root / 'ordinary-source'),
+                           CARGO_TARGET_DIR=str(root / 'target'), ROUTE_CALLS=str(root / 'calls'),
+                           FAIL_ORDINARY=str(failure).lower(), PATH=str(tools) + os.pathsep + os.environ['PATH'])
+                body = re.sub(r'\$\{\{.*?\}\}', 'linux-x86_64', comparison)
+                result = subprocess.run(['bash', '-c', body], cwd=candidate, env=env,
+                                        text=True, capture_output=True, timeout=15)
+                self.assertEqual(result.returncode == 0, not failure, result.stderr)
+                calls = [[value.decode() for value in line.split(b'\0') if value]
+                         for line in (root / 'calls').read_bytes().splitlines()]
+                self.assertEqual(len(calls), 3 if enabled == 'true' else 2)
+                for workers, call in zip(('1', '4'), calls[:2]):
+                    self.assertEqual(call, ['-B', str(evidence / 'controller/check-workflow.py'),
+                                           '--witness', env['ORACLE_ROOT'], '--binary', str(evidence / 'native-binary/rsomics-limma-linux-x86_64'),
+                                           '--output', str(evidence / 'comparison' / ('workers-' + workers)), '--workers', workers])
+                if enabled == 'true':
+                    self.assertEqual(calls[2], ['-B', str(evidence / 'controller/check-logexpression.py'),
+                                               '--witness', env['ORDINARY_ORACLE_ROOT'], '--binary', str(evidence / 'native-binary/rsomics-limma-linux-x86_64'),
+                                               '--output', str(evidence / 'ordinary-comparison')])
+                    self.assertTrue((evidence / 'ordinary-comparison.log').is_file())
+                    if failure:
+                        self.assertIn('retained-failure', (evidence / 'ordinary-comparison.log').read_text())
+                self.assertEqual((evidence / 'controller/check-logexpression.py').exists(), enabled == 'true')
+                for row in (evidence / 'controller/checksums.sha256').read_text().splitlines():
+                    digest, filename = row.split('  ', 1)
+                    self.assertEqual(digest, hashlib.sha256(Path(filename).read_bytes()).hexdigest())
 
     def test_worker_gate_checks_full_state_contrast_state_and_exports(self):
         program = re.findall(r"python3 -B - <<'PY'\n(.*?)\nPY",
