@@ -356,9 +356,13 @@ operation passes its own compatibility and performance gates.
 
 ## Compatibility gates
 
-- Pin MACS3 3.0.4, SEACR 1.3, ChIPseeker 1.46.1 for the retained annotation
-  contract, and bedtools 2.31 initially. Review current upstream changes before
-  publication.
+- Current full-four source preparation pins MACS3 3.1.0, SEACR 1.3,
+  ChIPseeker 1.48.0 with txdbmaker 1.8.0/Bioc3.23, and bedtools 2.31.1.
+  Exact source identities and integrated casebook are in
+  `../plans/2026-10-31-peak-first-workflow-oracle.md`. Complete runtime locks,
+  valid shared inputs and actual source execution remain gates. MACS3.0.4/
+  ChIPseeker1.46.1 stay historical; their old goldens do not become current
+  defaults or block a separately qualified current workflow.
 - Compare complete MACS output sets for single and pooled treatments, with and
   without controls, single-end and paired-end input, model and no-model paths,
   duplicate modes, p- and q-value cutoffs, and track output.
@@ -406,8 +410,12 @@ operation passes its own compatibility and performance gates.
 The retained Rust code and fixtures are team-owned and remain MIT OR
 Apache-2.0.
 
-MACS3 is BSD-3-Clause, ChIPseeker is Artistic-2.0, bedtools is MIT, and the
-current SEACR repository declares GPL-2.0. The historical SEACR README and help
+MACS3 is BSD-3-Clause, ChIPseeker/txdbmaker are Artistic-2.0, and the current
+SEACR repository declares GPL-2.0. Bedtools2.31.1's root license is MIT, but its
+actual multicov component header says GPL-2.0; preserve both and review
+component-specific reuse before copying newly inspected upstream source.
+Oracle execution and source inspection are not a code-reuse decision.
+The historical SEACR README and help
 incorrectly say GPL-3.0 and must be corrected. No upstream code contamination
 is presumed, but every source-informed algorithm retains accurate project,
 version, method, and license provenance before publication.
