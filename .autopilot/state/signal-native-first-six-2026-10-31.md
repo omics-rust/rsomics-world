@@ -1,5 +1,26 @@
 # Whole-first-six native signal implementation
 
+## Fresh4090 feasibility: static ABI feasible, timing not launched
+
+Parent reads the sealed host inventory/follow-up and ELF report. Ordinary
+Linux4090 has glibc2.35,112 logical/56 physical cores, about886GiB currently
+available RAM and289GiB free ext4/tmp, but quotas/writable-workdir/auth and
+actual ELF execution are not qualified. Twenty-second follow-up observes
+4.91/6.52% global CPU and even least-busy same-socket core groups4.3–6% busy;
+no host-idle/exclusive-core claim or performance launch follows. No shared
+task is killed, reserved or reconfigured. Other product work continues.
+
+Host reportc54cc94cadaa4efd809a4019ef131b4f9da901e86ad62e4a6c1941a81078d832:
+`/Volumes/KIOXIA/Developments/tmp/signal-host-feasibility-20261101.3yVxzM/`.
+Follow-upbb430d42d3466cb5b285b18a110b6dc852291204c03e99f4035d2484fb53baba:
+`/Volumes/KIOXIA/Developments/tmp/signal-host-quiet-followup-20261101.z4GUze/`.
+Static ELF reportd8f475d1a3554bf30b7551ee4af778a30a4f557b054583a024d48b87bbe3fff7:
+`/Volumes/KIOXIA/Developments/tmp/signal-elf-feasibility-20261101.rnui5op5/`.
+Actual accepted virtual ELF has maximum GLIBC_2.34, no GLIBCXX/CXXABI or
+libstdc++ dependency, standard loader/libc/libm/libgcc_s needs. Thus no static
+glibc-version obstacle is established; actual host/ISA/loading remains a gate.
+All read-only probes are finished, not an installed runner or recurring job.
+
 ## Green-3 native/source acceptance adopted; performance not yet run
 
 Parent reads the complete original report
