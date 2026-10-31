@@ -1,5 +1,47 @@
 # Whole-first-six native signal implementation
 
+## Green-3 native/source acceptance adopted; performance not yet run
+
+Parent reads the complete original report
+246bf76357a05737416cfb5cde1f1b9965cd447f1c19a58d23619ecf47f3164c,
+freshly hashes the416751609B original ZIP0bf923a6ca68e565e34b6db38b994f16745caaa266387b25b1c13ab3534fcda8,
+and verifies6 final proof files/2 reports/8 archived controllers, actual
+ELF64 x86_64 release binary and worker/integrity/source qualification bodies.
+All30408 original manifest entries match; four native class logs/APIs and
+all6 same-native BW observations plus both summaries/both matrices qualify.
+No numerical/header/cardinality tolerance was widened for the empty repair.
+
+Evidence: `/Volumes/Zane's HDD/rsomics-fixtures/evidence/signal-native-2026-10-31/run-41217009133/`.
+Successful verification11c7f37407af8a59cbd69c17f3b198e667dacd016f257207f5bbcb242ebecc9d;
+DELIVERY854770a065a5c19fbd021798284777abc5e30806e183543ecd423e5eac63d370.
+Parent adopts actual receipt `.autopilot/oracles/signal-native-2026-10-31.json`.
+Its fields derive from those originals; the performance loader must still
+verify committed HEAD/blob membership and current APIs/carrier/binary.
+This receipt admits four-native and whole-source interoperability only.
+
+One initially slow transfer is preserved as an incomplete16924672B prefix;
+one authorized fresh HTTP1 request completes/hash-matches the original.
+No parallel full mirror, source replay, deleted partial or fabricated sidecar.
+Performance-host ABI/idle/resource qualification, all representative timings,
+strict advantages, optional sortedBED policy and public delivery remain gates.
+
+## Actual green-3 native-four and source consumers succeed; original retention active
+
+World5e5ce2e05b98aa1b676583f40835e878505804b3 passes controller41216809068.
+Actual green-3 run41217009133/attempt1 is terminal SUCCESS on all four native
+target classes. Linux source log executes empty full/default reads and all
+four later source summary/matrix processes successfully, after all nonempty
+profiles. Parent independently refreshes the exact run/head/four job verdicts.
+This is an actual hosted result, not a prepared snapshot claim.
+
+Full original Linux artifact13047817850/416751609B has API digest
+0bf923a6ca68e565e34b6db38b994f16745caaa266387b25b1c13ab3534fcda8.
+One original transfer/full-manifest/source/runtime/binary/controller verification
+is active. No admission/performance receipt is generated before that completes
+and parent adopts its sealed evidence. Representative performance, optional
+sortedBED public policy and publication remain unearned. Old failures remain
+failed and unchanged.
+
 ## Actual empty-file source representation corrected in green-3
 
 Green-2 run41214999273/attempt1 atad249d0d is terminal FAILED. All four
