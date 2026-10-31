@@ -1,5 +1,18 @@
 # Signal whole-workflow performance contract
 
+## Execution capacity discovered in the actual qualification
+
+Actual hosted run41227066387 exposes a valid F-order NPZ that the checker
+incorrectly rejects; the narrow checker fix preserves all scientific policies.
+Its retained main/1 observations also project warmup+five pairs alone to11.24h,
+before qualification/checkers/other cases. This is not a performance verdict.
+The job is actually standard GitHub-hosted ubuntu-24.04; its configured1440min
+timeout cannot override the official six-hour maximum documented at
+https://docs.github.com/en/actions/reference/limits. Do not re-run the unchanged
+single-job campaign. First adopt a viable bounded schedule with explicit
+machine/pair provenance, full unchanged graph/data and original acceptance
+criteria. A multi-host schedule must never be reported as one idle machine.
+
 ## Scope and evidence
 
 Adopted before preparing performance derivatives or observing signal timings.

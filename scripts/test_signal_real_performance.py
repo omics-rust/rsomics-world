@@ -134,8 +134,8 @@ class SignalPerformanceTests(unittest.TestCase):
             def read(self,size=-1):
                 if size<0 or size>1024*1024: raise AssertionError('unbounded read')
                 return super().read(size)
-        def npy(values,shape):
-            text=str(dict(descr='<f8',fortran_order=False,shape=shape)).encode()+b'\n'
+        def npy(values,shape,fortran=False):
+            text=str(dict(descr='<f8',fortran_order=fortran,shape=shape)).encode()+b'\n'
             return b'\x93NUMPY\1\0'+struct.pack('<H',len(text))+text+b''.join(struct.pack('<d',v) for v in values)
         header=checker.npy_header(Bounded(npy([1.0],(1,1))))
         self.assertEqual(header['shape'],(1,1))
@@ -143,12 +143,13 @@ class SignalPerformanceTests(unittest.TestCase):
         self.assertFalse(checker.equal(float('inf'),-float('inf')))
         with tempfile.TemporaryDirectory(prefix='signal-perf-numbers-') as directory:
             root=Path(directory)
-            def container(name,values):
+            def container(name,values,shape=(2,2),fortran=False):
                 path=root/name
                 with zipfile.ZipFile(path,'w',compression=zipfile.ZIP_DEFLATED) as out:
-                    out.writestr('matrix.npy',npy(values,(2,2)))
-                    text=b"{'descr': '<U2', 'fortran_order': False, 'shape': (2,), }\n"
-                    out.writestr('labels.npy',b'\x93NUMPY\1\0'+struct.pack('<H',len(text))+text+'P0P1'.encode('utf-32-le'))
+                    out.writestr('matrix.npy',npy(values,shape,fortran))
+                    text=str(dict(descr='<U2',fortran_order=False,shape=(shape[1],))).encode()+b'\n'
+                    labels=''.join('P'+str(index) for index in range(shape[1])).encode('utf-32-le')
+                    out.writestr('labels.npy',b'\x93NUMPY\1\0'+struct.pack('<H',len(text))+text+labels)
                 return path
             a=container('a.npz',[1.0,float('nan'),2.0,float('inf')])
             b=container('b.npz',[1.0,float('nan'),2.0,float('inf')])
@@ -156,6 +157,22 @@ class SignalPerformanceTests(unittest.TestCase):
             bad=container('bad.npz',[1.0,0.0,2.0,float('inf')])
             with self.assertRaises(ValueError): checker.compare_npz(a,bad)
             with self.assertRaises(ValueError): checker.compare_npz(a,bad,io.StringIO(),0)
+            c=container('c.npz',[1,2,3,4,5,6],(2,3))
+            f=container('f.npz',[1,4,2,5,3,6],(2,3),True)
+            with checker.Npz(f) as matrix:
+                self.assertEqual(list(matrix.values()),[1,2,3,4,5,6])
+            self.assertEqual(checker.compare_npz(c,f)['cells'],6)
+            changed=container('changed-f.npz',[1,4,2,5,99,6],(2,3),True)
+            with self.assertRaises(ValueError): checker.compare_npz(c,changed)
+            differences=io.StringIO()
+            self.assertEqual(checker.compare_npz(c,changed,differences,2)['attributed_difference_cells'],1)
+            self.assertEqual(json.loads(differences.getvalue())['index'],2)
+            for name,values in [('short',[1,4,2,5,3]),('extra',[1,4,2,5,3,6,7])]:
+                with self.assertRaises(ValueError):
+                    checker.compare_npz(c,container(name+'.npz',values,(2,3),True))
+            empty_c=container('empty-c.npz',[],(0,3))
+            empty_f=container('empty-f.npz',[],(0,3),True)
+            self.assertEqual(checker.compare_npz(empty_c,empty_f)['cells'],0)
             one=root/'one.tsv'; two=root/'two.tsv'
             one.write_text("#coordinates\nchr1\t0\t10\t0.0\n")
             two.write_text("#coordinates\nchr1\t1\t10\t0.0\n")

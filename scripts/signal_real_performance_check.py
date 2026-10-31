@@ -8,11 +8,13 @@ import hashlib
 import itertools
 import json
 import math
+import mmap
 import os
 from pathlib import Path
 import sqlite3
 import struct
 import sys
+import tempfile
 import zipfile
 
 from infercnv_source_snapshot import _hash_file
@@ -95,29 +97,49 @@ def npy_header(stream):
     size=int.from_bytes(exact(stream,width),'little')
     check(size<=65536,'NPY header exceeds64KiB')
     header=ast.literal_eval(exact(stream,size).decode('utf8' if version==(3,0) else 'latin1').strip())
-    check(header['fortran_order'] is False and isinstance(header['shape'],tuple) and
+    check(type(header['fortran_order']) is bool and isinstance(header['shape'],tuple) and
           all(type(n) is int and n>=0 for n in header['shape']),'NPY shape/layout differs')
     return header
 
 
 class Npz:
     def __init__(self,path):
-        self.stack=ExitStack()
-        archive=self.stack.enter_context(zipfile.ZipFile(path))
-        check(len(archive.namelist())==2 and set(archive.namelist())=={'matrix.npy','labels.npy'},'NPZ schema differs')
-        self.stream=self.stack.enter_context(archive.open('matrix.npy'))
-        self.header=npy_header(self.stream)
-        check(self.header['descr']=='<f8' and len(self.header['shape'])==2,'summary must be row-major f64 matrix')
-        with archive.open('labels.npy') as stream:
-            labels=npy_header(stream)
-            check(len(labels['shape'])==1 and labels['shape'][0]==self.header['shape'][1],'summary label shape differs')
-            import re
-            check(re.fullmatch('<U[0-9]+',labels['descr']),'summary label dtype differs')
-            width=int(labels['descr'][2:])*4
-            check(width<=4096 and labels['shape'][0]<=4096,'label allocation bound exceeded')
-            self.labels=[exact(stream,width).decode('utf-32-le').rstrip('\0') for _ in range(labels['shape'][0])]
-            check(stream.read(1)==b'','extra NPY label bytes')
+        with ExitStack() as stack:
+            archive=stack.enter_context(zipfile.ZipFile(path))
+            check(len(archive.namelist())==2 and set(archive.namelist())=={'matrix.npy','labels.npy'},'NPZ schema differs')
+            self.stream=stack.enter_context(archive.open('matrix.npy'))
+            self.header=npy_header(self.stream)
+            check(self.header['descr']=='<f8' and len(self.header['shape'])==2,'summary must be f64 matrix')
+            self.mapped=None
+            if self.header['fortran_order']:
+                size=math.prod(self.header['shape'])*8
+                temporary=stack.enter_context(tempfile.TemporaryFile())
+                remaining=size
+                while remaining:
+                    count=min(remaining,CHUNK)
+                    temporary.write(exact(self.stream,count))
+                    remaining-=count
+                check(self.stream.read(1)==b'','extra NPY matrix bytes')
+                temporary.flush()
+                if size:
+                    self.mapped=stack.enter_context(mmap.mmap(temporary.fileno(),size,access=mmap.ACCESS_READ))
+            with archive.open('labels.npy') as stream:
+                labels=npy_header(stream)
+                check(len(labels['shape'])==1 and labels['shape'][0]==self.header['shape'][1],'summary label shape differs')
+                import re
+                check(re.fullmatch('<U[0-9]+',labels['descr']),'summary label dtype differs')
+                width=int(labels['descr'][2:])*4
+                check(width<=4096 and labels['shape'][0]<=4096,'label allocation bound exceeded')
+                self.labels=[exact(stream,width).decode('utf-32-le').rstrip('\0') for _ in range(labels['shape'][0])]
+                check(stream.read(1)==b'','extra NPY label bytes')
+            self.stack=stack.pop_all()
     def values(self):
+        if self.header['fortran_order']:
+            rows,columns=self.header['shape']
+            for row in range(rows):
+                for column in range(columns):
+                    yield struct.unpack_from('<d',self.mapped,8*(column*rows+row))[0]
+            return
         remaining=math.prod(self.header['shape'])
         while remaining:
             count=min(remaining,8192)
@@ -132,7 +154,7 @@ class Npz:
 def compare_npz(first,second,differences=None,allowed_column=None):
     compared=different=0
     with Npz(first) as a,Npz(second) as b:
-        check(a.header==b.header and a.labels==b.labels,'NPZ dtype/shape/labels differ')
+        check(dict(a.header,fortran_order=False)==dict(b.header,fortran_order=False) and a.labels==b.labels,'NPZ dtype/shape/labels differ')
         columns=a.header['shape'][1]
         for index,(left,right) in enumerate(zip(a.values(),b.values(),strict=True)):
             compared+=1
