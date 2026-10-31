@@ -1,5 +1,30 @@
 # Private offline source and replace-codec delivery
 
+## Actual offline rebuild and codec replacement accepted
+
+Run41241225963/attempt1 atbea97511999178710fc923e2dd8aa95ceda0ae51 is
+terminal SUCCESS after exact controller41240963530. Root reads complete62-line
+REPORT and86-line completed receipt at plink-source-relink-adoption-20261101.7N0yh2,
+the actual raw baseline/modified test outputs, full semantic verification and
+original workflow receipt. Parent freshly verifies all13 sealed files, including
+whole original ZIP/TAR/source delivery archive and complete raw joblog.
+Tracked adoption is .autopilot/oracles/plink-source-relink-2026-11-01.json.
+
+Both original and modified builds use separate fresh Cargo homes/targets and
+Cargo --locked --offline. Each passes the existing4lib+1whole, zero ignored,
+36 own generations/74878 cells/1+4 profiles. The sole dated PgrInit marker
+changes actual reader.o/static codec archive/ELF bytes, with the marker only
+in modified objects. All336 original scientific files are independently exact
+between both retained graphs. Original source and85 dependencies remain bound;
+the derivative changes only its declared codec path. No helper/case/answer or
+source option is added for this proof.
+
+This accepts private Linux offline-Cargo source/relink only, not OS network
+isolation, byte-reproducible builds, real HGDP/performance, ordinary Mac install,
+legal clearance or public release. The separately rebuilt ELF is NOT substituted
+for the already accepted native-four binary. Public guard/install correction,
+final release source/binary binding and real-cohort gates remain unearned.
+
 ## Complete preparation adopted; real hosted rebuild not yet executed
 
 Root reads all650 final controller/workflow/preparation lines, delivery
