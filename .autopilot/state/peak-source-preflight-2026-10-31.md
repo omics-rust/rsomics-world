@@ -1,12 +1,43 @@
 # Peak next-product source qualification
 
-## Corrected hosted retry active
+## Inventory-framing failure diagnosed; narrow correction adopted
 
-Run41201586593/attempt1 is active at exact world
+Run41201586593/attempt1 is terminal FAILURE at exact world
 a005dcab6b65a3feaf3b45a66aceae61ca8006b8 after controller41201196043 SUCCESS.
-Source job124538289750 passes image/preflight/acquisition-admission and is
-installing the pinned runtime. Compiler binding/source cases are not yet
-qualified by terminal retained evidence; no source success is claimed.
+Source job124538289750 passes image/preflight/acquisition-admission and all
+installation subprocesses, then fails the final Python inventory comparison.
+Scientific case capture is skipped; complete original retention remains active.
+No source success or fully qualified runtime is inferred from package installs.
+
+Individually retained primary files show the actual Biostrings2.80.2 installation
+is correct. The R inventory writes multiline DESCRIPTION Depends/Imports as
+unquoted TSV; a cigarillo continuation becomes a fake Biostrings row with
+Version=stats/LibPath=None. The last-wins map then overwrites the actual version.
+First-wins would instead preserve a fabricated httr2 row; library precedence,
+package upgrades and version-check suppression are not fixes.
+
+Parent reads the actual original TSV, fresh SHA
+aa5ffd467e35b13caed98640d411db1990b37d18636cc1294102bad153edae44,
+and pinned R4.6.1 write.table source
+5257b906e439c593487236091d3e075a1ac1be9d34c5c64c008ae94c806b4605.
+These identify individual retained files, not full original ZIP qualification.
+One narrow three-file correction quotes ONLY inventory with quote=TRUE and
+qmethod=double, and parses strict CSV framing/exact seven-column rows with
+contextual errors. Field values/order, package/library/compiler selection,
+all scientific defaults, source pins, inputs and comparison rules stay fixed.
+
+The complete correction report is
+`/Volumes/KIOXIA/Developments/tmp/peak-inventory-framing-correction-20261031.L4tUTa/report.md`,
+SHA dd4b5027f4195c151f05f8771ae9d4680b7760067f4e8dbb42e87f228c6b736d.
+Parent reads the full report/diff and verifies all9 old/new/live bindings;
+the existing whole-producer preparation test records focused RED then GREEN.
+R65d7b61af13faa45c665b819b937b6090ad8c32026eb79f192bad98cc7141141,
+Python1ed1ffff8ae95a8e97d2ee90367cc219de256954de1f90179ce19c2b01253400
+and testf33151fba754573b55bd6f32dd524738ce63f8672badf74b9822c99286c1e2a0
+are the only code changes. No local R/scientific import/install/replay, new
+review campaign or repeated full local controller suite is performed.
+Exact-head controller CI and complete original failure retention precede the
+next real hosted retry. Earlier compiler failure and review records stay exact.
 
 ## Actual compiler failure retained; build-only compiler binding adopted
 

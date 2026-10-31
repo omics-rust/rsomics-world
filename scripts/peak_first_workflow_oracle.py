@@ -214,8 +214,24 @@ def r_inventory(runtime, name):
     destination = runtime / name
     require(runtime / 'calls' / name, ['Rscript', '--vanilla', ROOT / 'peak_first_workflow_oracle.R',
                                      'inventory', destination])
-    with (destination / 'installed.tsv').open() as stream:
-        return list(csv.DictReader(stream, delimiter='\t'))
+    path = destination / 'installed.tsv'
+    fields = ['Package', 'Version', 'Priority', 'LibPath', 'Depends', 'Imports', 'LinkingTo']
+    with path.open(newline='') as stream:
+        reader = csv.reader(stream, delimiter='\t', strict=True)
+        record = 0
+        try:
+            if next(reader, None) != fields:
+                raise ValueError(f'R inventory {path}: schema differs from the seven-column snapshot')
+            rows = []
+            for record, values in enumerate(reader, 1):
+                if len(values) != len(fields):
+                    raise ValueError(f'R inventory {path}: record {record} at physical line '
+                                     f'{reader.line_num} has {len(values)} fields; expected {len(fields)}')
+                rows.append(dict(zip(fields, values)))
+        except csv.Error as error:
+            raise ValueError(f'R inventory {path}: malformed record after {record} completed records '
+                             f'at physical line {reader.line_num}: {error}') from error
+    return rows
 
 
 def verify_registry_image(lock, runtime):

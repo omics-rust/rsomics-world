@@ -8,6 +8,7 @@ import sys
 import tarfile
 import tempfile
 import unittest
+from unittest import mock
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -24,6 +25,43 @@ class PeakSourcePreparationTest(unittest.TestCase):
         lock = json.loads((ROOT / 'assets/peak-first-runtime-20261031.json').read_text())
         with tempfile.TemporaryDirectory(prefix='peak-producer-check-', dir=os.environ['TMPDIR']) as directory:
             root = Path(directory)
+            inventory_header = 'Package\tVersion\tPriority\tLibPath\tDepends\tImports\tLinkingTo\n'
+            inventory_text = (
+                '"Package"\t"Version"\t"Priority"\t"LibPath"\t"Depends"\t"Imports"\t"LinkingTo"\n'
+                '"Biostrings"\t"2.80.2"\t""\t"/R-library"\t"R (>= 4.1.0),\n'
+                'S4Vectors"\t"methods"\t"S4Vectors, IRanges"\n'
+                '"cigarillo"\t"1.2.1"\t""\t"/R-library"\t"IRanges,\n'
+                'Biostrings"\t"stats\tutils, ""quoted"""\t"S4Vectors, IRanges"\n')
+
+            def inventory_process(target, argv):
+                self.assertEqual(argv, ['Rscript', '--vanilla',
+                                       oracle.ROOT / 'peak_first_workflow_oracle.R',
+                                       'inventory', root / 'runtime/inventory'])
+                destination = Path(argv[-1])
+                destination.mkdir(parents=True, exist_ok=True)
+                (destination / 'installed.tsv').write_text(inventory_text, newline='')
+
+            with mock.patch.object(oracle, 'require', side_effect=inventory_process):
+                self.assertEqual(oracle.r_inventory(root / 'runtime', 'inventory'), [
+                    {'Package': 'Biostrings', 'Version': '2.80.2', 'Priority': '',
+                     'LibPath': '/R-library', 'Depends': 'R (>= 4.1.0),\nS4Vectors',
+                     'Imports': 'methods', 'LinkingTo': 'S4Vectors, IRanges'},
+                    {'Package': 'cigarillo', 'Version': '1.2.1', 'Priority': '',
+                     'LibPath': '/R-library', 'Depends': 'IRanges,\nBiostrings',
+                     'Imports': 'stats\tutils, "quoted"', 'LinkingTo': 'S4Vectors, IRanges'}])
+                malformed_inventories = {
+                    'schema': 'Package\tVersion\nBiostrings\t2.80.2\n',
+                    'short': inventory_header + 'Biostrings\tstats\tS4Vectors, IRanges\n',
+                    'overflow': inventory_header + 'a\t1\t\t/R-library\t\t\t\textra\n',
+                    'old-unquoted': inventory_header +
+                        'Biostrings\t2.80.2\t\t/R-library\tR (>= 4.1.0)\tmethods\t\n'
+                        'cigarillo\t1.2.1\t\t/R-library\tIRanges,\n'
+                        'Biostrings\tstats\tS4Vectors, IRanges\n',
+                    'quote': inventory_header + '"Biostrings\t2.80.2\n'}
+                for name, inventory_text in malformed_inventories.items():
+                    with self.subTest(inventory=name):
+                        with self.assertRaisesRegex(ValueError, r'R inventory .*installed\.tsv.*(?:schema|record)'):
+                            oracle.r_inventory(root / 'runtime', 'inventory')
             plan = oracle.case_plan(root / 'inputs', root / 'runtime', root / 'witness')
             self.assertEqual(len({job['name'] for job in plan}), len(plan))
             self.assertEqual({family: sum(job['family'] == family for job in plan)

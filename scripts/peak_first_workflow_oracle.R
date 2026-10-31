@@ -27,7 +27,7 @@ snapshot <- function(output) {
     packages <- installed.packages(fields=c("Priority", "Depends", "Imports", "LinkingTo"))
     fields <- c("Package", "Version", "Priority", "LibPath", "Depends", "Imports", "LinkingTo")
     write.table(packages[, fields, drop=FALSE], file.path(output, "installed.tsv"),
-                sep="\t", quote=FALSE, row.names=FALSE, na="")
+                sep="\t", quote=TRUE, qmethod="double", row.names=FALSE, na="")
 }
 
 capture_state <- function(environment, output) {
