@@ -1,5 +1,25 @@
 # Fixed real-input Peak performance gate
 
+## Pinned MACS3 wheel does not expose a module-version attribute
+
+Before another dispatch, root reads the ACTUAL retained built wheel from the
+fully verified original source TAR, without importing or running it locally.
+Wheel4668591B SHA6a44e78957c425cf3b203e9e93c8f8eba2c34fbb1222de9da1c509e4a01b6048
+contains MACS3/__init__.py with only __all__, no __version__; its own METADATA
+declares MACS3/3.1.0. Thus the existing probe's next version-expression would
+also fail, independently of the nullable extension inventory. This is an
+observed package contract, not a guessed new hosted failure.
+
+Only the inventory's version read now uses standard importlib.metadata for the
+same four installed distributions, preserving all expected pins/module-origin/
+extension/library checks. The SAME integrated preparation evaluates its actual
+version expression with a MACS3-shaped module lacking __version__: RED0.223s,
+then GREEN1/0.438s. Both raw logs remain in peak-python-probe-fix-20261101.0wYjhm.
+No package install, wheel rewrite, source mutation or science is performed.
+The nullable-only173e8593 exact controller41241437272 passes, but no new Peak
+run was dispatched from that incomplete probe correction; wait for the final
+version-read correction's exact-head CI instead.
+
 ## Third failure is nullable inventory metadata; scientific code unchanged
 
 Actual41240347352/attempt1 atb6c17201 is terminal FAILURE before real-provider

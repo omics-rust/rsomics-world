@@ -92,6 +92,13 @@ class PeakRealPreparation(unittest.TestCase):
                 'namespace': SimpleNamespace(__file__=None),
                 'native': SimpleNamespace(__file__='/runtime/native.so')})
             self.assertEqual(eval(expression, {'sys': namespace}), {'native': '/runtime/native.so'})
+            version_expression = next(line.removeprefix('versions=').split(',modules=', 1)[0]
+                                      for line in (ROOT / 'scripts/peak_real_performance.py').read_text().splitlines()
+                                      if line.startswith('versions='))
+            metadata = SimpleNamespace(metadata=SimpleNamespace(version=lambda name: '3.1.0'))
+            self.assertEqual(eval(version_expression, {
+                'modules': {'MACS3': SimpleNamespace(__all__=['Commands', 'Utilities', 'IO', 'Signal'])},
+                'importlib': metadata}), {'MACS3': '3.1.0'})
             prefix = root / 'runner/peak-first-workflow-oracle'
             prefix.parent.mkdir()
             self.assertEqual(real.admit_old_prefix(prefix, prefix.parent), prefix)
