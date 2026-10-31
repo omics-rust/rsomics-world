@@ -2,8 +2,8 @@
 
 ## Current position
 
-Full30-family goal is active and unchanged. Exact pushed head7615d280 passes
-controller41179963210. Prior source-controllerd709ad00 passes40643918864
+Full30-family goal is active and unchanged. Exact pushed head0792353f passes
+controller41182421821. Prior source-controllerd709ad00 passes40643918864
 (504tests/two existing skips). Its structure source
 run40644150133 is also SUCCESS and completely retained/qualified. The gates
 below supersede the historical execution narrative further down.
@@ -17,10 +17,10 @@ No deletion or migration of project/shared application/user data occurred.
 | Workstream | Verified current position | Next affected gate |
 |---|---|---|
 | DESeq | accepted green7/native4/performance; real owning636e259 passes exact native4/debug/release/strict/package/unpacked run41180255242; real package example passes | registry authorization/actual clean publication artifact held; no more unchanged-slice source/native/performance campaigns |
-| limma | accepted count native4/performance; ordinary log-expression source-contract report adopted and new witness task active | qualify actual ordinary shared-QR/equal-df lifecycle before native extension; no count replay, scope narrowing or scaling-win claim |
+| limma | accepted count native4/performance; reviewed/fixed ordinary source witness dispatched41182610397 at0792353f | retain/qualify actual source before native extension; no count replay, scope narrowing or scaling-win claim |
 | edgeR | complete private QL workflow; original P/FDR gate remains failed | explicit numerical-contract decision; no band tuning |
 | ecology | source40634594900 fully retained/qualified; real table/tree/IDs pass raw checks; reviewed sparse-alpha01c9089 plus actual sparse rarefactione1b03cb;984exact count cells/594alpha checks pass | undefined beta choice holds only that adapter; full product/native4/performance unearned |
-| structure | source40644150133 qualified; reviewed actual PDB/CIF inspect/select/split committed d7309d5 after one namespace fix; full integrated checks pass | implement full remaining selectors/analysis engines; degenerate-torsion public choice holds only that adapter; no coordinate foundation |
+| structure | source40644150133 qualified; reviewed actual selectors/four CLI analyses/private torsion committed2aee715 after two view fixes; all8local tests/strict checks pass | four-native exact checkpoint task active; public torsion/full7/performance remain held or unearned; no coordinate foundation |
 | shared TMM | reviewed stats0.2.5 pushed at00a1819; real edgeR/limma contracts, persistent nonunit source regression and exact-head native4 run40648343214 all pass; primitive cost+2.53% | inherited working lock preserved; registry publication/adoption held |
 
 DESeq full14599×7 parametric/local R-inner medians5.264/5.375s versus native1

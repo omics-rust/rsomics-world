@@ -1,5 +1,59 @@
 # Structure first-workflow source qualification
 
+## Reviewed analysis adopted; four-native gate next
+
+Owning clean private main2aee715c91bcf5f748e45409f9e689ae78f399e7 now commits
+the complete real analysis/selector extension, publish=false/no remote. Parent
+reads independent review0128e453ad00672c5a2732ea5abb8613ec96dbc091b7f0b961c397e552e5569a
+and actual retained parser/hierarchy source. Two Important findings are closed
+in one RED/GREEN pass through the existing integrated tests: raw null-label
+waters no longer falsely merge; analysis model/chain hierarchy order is exact,
+including existing full4hhb source observations. Raw collapse uses deposited
+dual IDs without label substitution; label analysis follows the Bio parser's
+inapplicable-residue skip, preserving all raw rows separately. Existing full
+1A8O now checks644raw rows/nulls versus556label-analysis rows. No source/fixture
+or tolerance changed. Extra O(n) row-order workspace is real, not a memory win.
+
+Closure72c73ed1fcb263f326673de4ab59be0664db2c80e2586ac1fc239736c6728c81,
+/Volumes/KIOXIA/Developments/tmp/structure-view-review-fix-20261031.V1HJJE/REVIEW-CLOSURE.md,
+retains actual RED, compile/bookkeeping failures, final all8tests exit0 and
+strict Clippy/format. No second review/per-helper campaign. Original frozen
+author snapshot remains immutable. Staged code/docs whitespace check excludes
+only verbatim notices and original fixed-column coordinate fixtures, whose
+bytes/hashes must be preserved; no PDB padding is reformatted to satisfy lint.
+
+Minor M1 is deferred before stable release: operation-local ca_only/minimum-
+author-separation flags are absent from JSON policy provenance. Public
+degenerate-torsion representation/full7/performance/publication remain held
+or unearned, not decided by silence. Adopted plan
+docs/plans/2026-10-31-structure-native-four.md now prepares the exact private
+source checkpoint for genuine four-native execution and full worker model
+comparisons, not another upstream source run or a public empty repository.
+
+## Frozen analysis candidate; independent review active
+
+Author final candidate is frozen, not committed or release-accepted. Parent
+reads complete compact REPORT1a18dcb98733aaff65d630d9bfbd6b15f7e2574d8081746fdba64d5b188bce1c
+and verifies all122owner files against handoff/manifest.json
+c8358256acc684fb653e805f4934d8226ded0f5cb28380ce7c5890add978fb4a,
+/Volumes/KIOXIA/Developments/tmp/structure-native-analysis-20261031.inmvQH/resume-20261031.HSeH9K/.
+Current58493baf3f94bd9dec2c7f4e4ed1596b1e1346e6 only commits the separately
+authorized storage guard; analysis base remainsd7309d5. Original interrupted
+logs remain incomplete, while final-workflow.log passes3unit+2native workflow+
+2original I/O+1doctest,8total. Strict Clippy/format pass;106final command records
+include98success and8expected negatives. Two author model fixes have actual
+RED/GREEN: residue numbers parsed only in the selected heavy-AA domain, and
+water identity distinguished from a hetero residue literally named W.
+
+Full literal selectors and actual geometry/contacts/exposure/explicit-fit CLI
+share the existing raw spine and private operation views; no public foundation
+or second parser is added. Ordinary torsion is private/typed only; its public
+degenerate representation remains held. Parent spot-reads actual views/selector/
+PDB/CIF capability changes and all spatial/SVD/geometry/contact/exposure engines.
+One fresh whole-feature review now checks the complete frozen scope and source
+identity/conformer/precision/namespace behavior before adoption. No native4,
+whole-product performance, full7 completion or public release is inferred.
+
 ## Accepted source and current native gate
 
 Private I/O is now adopted on owning main

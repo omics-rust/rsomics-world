@@ -1,5 +1,12 @@
 # Ordinary log-expression source-witness preparation
 
+## Actual hosted execution dispatched
+
+World0792353f565995788b7389c617186b4a8dfe2061 passes exact controller41182421821.
+Parent dispatches the actual workflow at that head as41182610397; it is active,
+not accepted. Original evidence must be fully retained/verified after terminal
+execution. No native result or performance is inferred from dispatch/setup.
+
 Plan: docs/plans/2026-10-31-limma-logexpression-oracle.md. Parent reads full
 source assessmentaff0cb0645cb6f9c1dec8855ad6d0bdffa089d3293f923cca34c0947a74a6bd7,
 actual retained source functions, complete329-line initial driver/153-line
