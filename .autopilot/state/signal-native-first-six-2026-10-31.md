@@ -1,5 +1,37 @@
 # Whole-first-six native signal implementation
 
+## First hosted worker gate failure retained; one-field comparator corrected
+
+Actual green-1 run41210632592/attempt1 at exacte96361e0 reaches worker
+comparison on Linux x86/ARM and Mac ARM, then fails. Mac Intel remains in
+progress at the last observation; its terminal result is not inferred.
+The original selected Linux artifact13045314648/24430325B ZIP
+46c30e58e56ccabf46a40114fb812ecf80d313264dd2e34189bb45c0fb40f128
+and94494720B TAR8ed801a7f6f77fa32846b7f43b90e2099e269fb425a39324ff2e1879fbe49e45
+are retained intact, with all38 source and34 native worker command bindings
+verified. Every worker native command exits0; the subsequent Python comparator
+fails. Source-runtime/source-on-native lanes are skipped and unearned.
+
+Parent reads full REPORT128508afcb9fb0bf1580512eb17ca80ebe36f9ff8f396bbaa2018b7bb9f4a37c
+at the external evidence run directory, the actual matrix diff and product
+serializer. Both original reference4x30/scale4x68 pairs have identical other
+headers, row IDs and serialized values; ONLY truthful proc number1/4 differs.
+Parent freshly hashes the original ZIP/TAR/report/seals and independently
+checks both retained original pairs with the corrected comparator.
+
+The narrow two-script fix validates recorded proc number equals the requested
+integer worker count, then removes ONLY that execution field for worker
+equality. All remaining metadata/scientific fields/bands are unchanged. The
+existing whole-gate preparation test passes1/0.641s with wrong-worker and
+changed-bin-header rejection. Actual failed CI supplies RED, not another
+native/helper review campaign. Correction packet:
+`/Volumes/KIOXIA/Developments/tmp/signal-worker-metadata-correction-20261031.57z59E/`.
+Candidate controllera6e9c2782553919ed70939c4cdad6fcdd8f7bd889ed63ab96b2db82dc34f9712;
+testdb99843b7c670c8958b89e21395e11ffd6ba6e6844560bf95c2ea1d62f1f47a7.
+Owning code200a8eee and green-1 source/runtime/fixture/lock/policy remain
+byte-identical. Exact-head controller CI then real hosted retry are required;
+this correction is not a native-four or source interoperability pass.
+
 ## Reviewed corrected candidate frozen for actual hosted qualification
 
 Owning38-file source is committed locally at

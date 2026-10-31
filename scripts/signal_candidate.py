@@ -338,6 +338,14 @@ def matrix_model(path):
     return dict(header=header, identities=[r[:6] for r in rows], values=[float(v) for r in rows for v in r[6:]])
 
 
+def worker_matrix_model(path, workers):
+    model = matrix_model(path)
+    observed = model['header'].pop('proc number', None)
+    if type(observed) is not int or observed != workers:
+        raise ValueError('matrix processor metadata differs from requested workers')
+    return model
+
+
 def bam_model(path):
     """Record payloads and reference dictionary, excluding truthful path-dependent PG/CL text."""
     with gzip.open(path, 'rb') as stream:
@@ -435,7 +443,7 @@ def workers(root):
                 raise ValueError('sample labels differ')
             compare_model(av['matrix'], bv['matrix'])
         elif a.suffix == '.gz':
-            compare_model(matrix_model(a), matrix_model(b), matrix=True)
+            compare_model(worker_matrix_model(a, 1), worker_matrix_model(b, 4), matrix=True)
         elif a.suffix == '.bam':
             if bam_model(a) != bam_model(b):
                 raise ValueError('BAM record semantics differ')

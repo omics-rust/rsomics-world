@@ -1,6 +1,7 @@
 """Stdlib-only preparation tests; these do not qualify scientific outputs."""
 
 import ast
+import gzip
 import importlib
 import io
 import json
@@ -80,6 +81,22 @@ class SignalCandidateTests(unittest.TestCase):
             matrix = candidate.matrix_model(fixture / 'results/matrix-reference.gz')
             self.assertEqual(matrix['header']['sample_boundaries'], [0, 15, 30])
             self.assertEqual(len(matrix['identities']), 4)
+            header, rows = gzip.decompress((fixture / 'results/matrix-reference.gz').read_bytes()).split(b'\n', 1)
+            header = json.loads(header[1:])
+            worker_files = []
+            for workers in (1, 4):
+                header['proc number'] = workers
+                output = root / f'matrix-workers-{workers}.gz'
+                output.write_bytes(gzip.compress(b'@' + json.dumps(header).encode() + b'\n' + rows))
+                worker_files.append(output)
+            models = [candidate.worker_matrix_model(path, workers)
+                      for path, workers in zip(worker_files, (1, 4))]
+            candidate.compare_model(*models, matrix=True)
+            with self.assertRaisesRegex(ValueError, 'processor metadata'):
+                candidate.worker_matrix_model(worker_files[0], 4)
+            models[1]['header']['bin size'] = [999, 999]
+            with self.assertRaisesRegex(ValueError, 'schema/identity'):
+                candidate.compare_model(*models, matrix=True)
             self.assertEqual(len(candidate.bam_model(fixture / 'results/a.excluded.bam')['records']), 4)
             candidate.compare_model(dict(values=[1.0, float('nan')], shape=[2]),
                                     dict(values=[1.0, float('nan')], shape=[2]))
