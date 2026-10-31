@@ -186,7 +186,7 @@ def observe_native_bw(root, output, name, bw, run_args):
         if [z['reduction'] for z in observation['raw_zoom_headers']] != [80, 320]:
             raise ValueError('rollover zoom level population differs')
     if name == 'empty':
-        if bw.stat().st_size != 217 or observation['header']['nBasesCovered'] != 0 or \
+        if observation['header']['nBasesCovered'] != 0 or \
                 any(r['intervals'] for r in observation['data'].values()):
             raise ValueError('legitimate empty dictionary-only BW contract differs')
     full = stem.with_suffix('.full.npz')
@@ -288,7 +288,7 @@ def run(root, runtime, lock, output):
         save(output / 'qualification.json', dict(passed=failure is None, failure=failure, observed=observed,
              source_run=41192955170, repeated_accepted_source_observations=False,
              scope='Linux x86_64 pinned source reads actual connected native BWs; native full/default public summaries, '
-                   'separate pinned writer of native quantized run streams, 12000-interval rollover and empty217B, '
+                   'separate pinned writer of native quantized run streams, 12000-interval rollover and dictionary-only empty BW, '
                    'multiBigwigSummary bins/BED plus computeMatrix reference/scale. No private native statistics API.',
              approved_deltas=['SIGNAL-356-ARITHMETIC-LOSS', 'SIGNAL-356-ZERO-TAIL', 'SIGNAL-356-FILTER-BED-REJECTED'],
              delta_policy='Source consumers see corrected native input bytes; source producers are not rerun to replace native graph. '

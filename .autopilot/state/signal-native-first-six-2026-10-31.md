@@ -1,5 +1,37 @@
 # Whole-first-six native signal implementation
 
+## Actual empty-file source representation corrected in green-3
+
+Green-2 run41214999273/attempt1 atad249d0d is terminal FAILED. All four
+native component gates pass. Source full/default/expanded checks succeed for
+a,b,compare,average and12000-interval rollover, then empty minVal differs.
+Parent reads full REPORT6f2711359bee6bdb1ee79aad6234a1bf9e0c5fe75c6b928858bcf60b72f02f93
+and freshly verifies full416700759B ZIP6aed7ea5fe4a6caf7e35cd796300a031b75efde170dcf9677355579c9c6b73f0
+plus19 final metadata/seal bindings. Original TAR1036318720B and30361
+original manifest entries verify; links/casefold trees stay virtual.
+Evidence: `/Volumes/Zane's HDD/rsomics-fixtures/evidence/signal-native-2026-10-31/run-41214999273/`.
+
+Actual raw proof and pinned source establish TWO linked empty-representation
+differences: zero extrema versus DBL_MAX/DBL_MIN, and an empty index versus
+indexOffset0. The latter changes pyBigWig full values from131NaNs to[];
+header-only repair is insufficient. Dictionary/no intervals/missing means
+already agree. No scientific band or value-cardinality tolerance is widened.
+
+Owning main eb6c38327e9aa8ad56a2f3a0b1b0e805194bfbd5 aligns both private
+encoding fields and bounded empty-reader handling. The unused52-byte index
+is removed; one-chromosome native encoding is165B. The hosted check drops
+only its217-byte encoding-size assumption, retaining strict source header,
+interval, full-value shape/class and default/exact comparisons. The existing
+Rust regression observes RED, then all10 library/1 connected-workflow tests,
+fmt and strict Clippy pass. No second whole-feature review is opened.
+
+New38-file green-3 archiveb6ba14f12e8c05a22bb4aa83aa04e9b2457eda290759a0e550f45c34ea4c3466
+and manifest3e97a7f3c1c94528996ce4cf7213a51ea582eb9c61e3271ee56d9003c5017d89
+preserve unchanged lock/nonempty semantics. Packet:
+`/Volumes/KIOXIA/Developments/tmp/signal-empty-header-correction-20261031.YOZSFM/`.
+Native4, empty source queries and source summary/matrix consumers remain
+required on a genuinely new run; previous failures stay failed.
+
 ## Whole-workflow performance harness reviewed; execution still gated
 
 Parent reads all1707 initial controller/checker/test/workflow lines and complete
