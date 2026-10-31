@@ -1,0 +1,132 @@
+name: Signal qualified real whole-workflow performance
+
+on:
+  workflow_dispatch:
+    inputs:
+      native_receipt:
+        description: Actual root-adopted native-four and source-on-native receipt under .autopilot/oracles; absent receipt fails
+        type: string
+        required: true
+      runner_labels:
+        description: Explicit JSON runner labels for an actually eligible ordinary Linux x86_64 host; no runner installation
+        type: string
+        required: true
+      cpus:
+        description: Four explicit allocated otherwise-idle logical CPU IDs, comma separated
+        type: string
+        required: true
+      idle_host_confirmed:
+        description: Operator confirmed the selected host is otherwise idle; capability inventory is not launch authority
+        type: boolean
+        required: true
+        default: false
+
+permissions:
+  contents: read
+  actions: read
+
+concurrency:
+  group: signal-real-performance
+  cancel-in-progress: false
+
+jobs:
+  performance:
+    runs-on: ${{ fromJSON(inputs.runner_labels) }}
+    timeout-minutes: 1440
+    env:
+      NATIVE_RECEIPT: ${{ inputs.native_receipt }}
+      ALLOCATED_CPUS: ${{ inputs.cpus }}
+      IDLE_CONFIRMED: ${{ inputs.idle_host_confirmed }}
+      CONTROLLER_COMMIT: ${{ github.sha }}
+      PYTHONDONTWRITEBYTECODE: '1'
+      PYTHONNOUSERSITE: '1'
+      PIP_DISABLE_PIP_VERSION_CHECK: '1'
+      PIP_NO_INPUT: '1'
+      PIP_CONFIG_FILE: /dev/null
+      OMP_NUM_THREADS: '1'
+      OPENBLAS_NUM_THREADS: '1'
+      MKL_NUM_THREADS: '1'
+      BLIS_NUM_THREADS: '1'
+      VECLIB_MAXIMUM_THREADS: '1'
+      NUMEXPR_NUM_THREADS: '1'
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+
+      - name: Qualify explicit ordinary Linux storage and CPU routes
+        run: |
+          set -euo pipefail
+          test "$IDLE_CONFIRMED" = true
+          export PERFORMANCE_ROOT="$RUNNER_TEMP/signal-real-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
+          python3 -B scripts/signal_real_performance.py setup --root "$PERFORMANCE_ROOT" --cpus "$ALLOCATED_CPUS"
+          source "$PERFORMANCE_ROOT/environment.sh"
+          printf 'PERFORMANCE_ROOT=%s\n' "$PERFORMANCE_ROOT" >> "$GITHUB_ENV"
+          for name in RUNNER_TEMP EVIDENCE TMPDIR XDG_CACHE_HOME PIP_CACHE_DIR PYTHONUSERBASE MPLCONFIGDIR CARGO_HOME CARGO_TARGET_DIR RUSTUP_HOME; do
+            printf '%s=%s\n' "$name" "${!name}" >> "$GITHUB_ENV"
+          done
+          mkdir "$EVIDENCE/controller"
+          for name in signal_real_performance.py signal_real_performance_check.py test_signal_real_performance.py signal_candidate.py signal_source_on_native.py signal_first_workflow_oracle.py infercnv_source_snapshot.py verify_infercnv_oracle_artifact.py; do
+            cp "scripts/$name" "$EVIDENCE/controller/"
+          done
+          cp .github/workflows/signal-real-performance.yml assets/signal-first-runtime-20261031.json "$EVIDENCE/controller/"
+          printf '%s\n' "$CONTROLLER_COMMIT" > "$EVIDENCE/controller/head.sha"
+          (
+            cd "$EVIDENCE/controller"
+            sha256sum *.py *.yml *.json head.sha
+          ) > "$EVIDENCE/controller/checksums.sha256"
+
+      - name: Admit actual native receipt and acquire existing immutable inputs and runtime
+        id: admission
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          python3 -B scripts/signal_real_performance.py acquire --root "$PERFORMANCE_ROOT" --world "$GITHUB_WORKSPACE" --native-receipt "$NATIVE_RECEIPT" \
+            2>&1 | tee "$EVIDENCE/acquisition.log"
+
+      - name: Install only the existing pinned source runtime
+        id: runtime
+        run: |
+          set -euo pipefail
+          "$PERFORMANCE_ROOT/runtime/python/bin/python3" -B scripts/signal_first_workflow_oracle.py --install \
+            --runtime-lock assets/signal-first-runtime-20261031.json --output "$PERFORMANCE_ROOT/runtime" \
+            2>&1 | tee "$EVIDENCE/runtime-install.log"
+
+      - name: Exact three-way QNAME and rich strand-group qualification
+        id: inputs
+        run: |
+          set -euo pipefail
+          "$PERFORMANCE_ROOT/runtime/venv/bin/python" -B scripts/signal_real_performance.py prepare \
+            --root "$PERFORMANCE_ROOT" --world "$GITHUB_WORKSPACE" 2>&1 | tee "$EVIDENCE/input-preparation.log"
+
+      - name: Qualify resources and every product before warmup and five alternating pairs
+        run: |
+          set -euo pipefail
+          "$PERFORMANCE_ROOT/runtime/venv/bin/python" -B scripts/signal_real_performance.py campaign \
+            --root "$PERFORMANCE_ROOT" --world "$GITHUB_WORKSPACE" --native-receipt "$NATIVE_RECEIPT" --idle-host-confirmed \
+            2>&1 | tee "$EVIDENCE/campaign.log"
+
+      - name: Bind all retained products and failures
+        if: always()
+        run: |
+          set -euo pipefail
+          if [[ -n "${PERFORMANCE_ROOT:-}" && -d "$PERFORMANCE_ROOT/evidence" ]]; then
+            python3 -B scripts/signal_real_performance.py finalize --root "$PERFORMANCE_ROOT"
+          fi
+
+      - name: Retain complete useful outputs and original acquisition failure evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: signal-real-performance-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            ${{ env.PERFORMANCE_ROOT }}
+            !${{ env.PERFORMANCE_ROOT }}/runtime/venv/**
+            !${{ env.PERFORMANCE_ROOT }}/runtime/python/**
+          include-hidden-files: true
+          if-no-files-found: error
+          retention-days: 90

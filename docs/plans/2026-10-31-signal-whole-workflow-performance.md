@@ -137,10 +137,16 @@ Missing counters are unavailable, not zero. Retain complete useful outputs,
 hashes and byte counts. Stable-storage durability requires an identical timed
 publication/fsync barrier; otherwise do not make that claim.
 
-Functional/source correspondence is mandatory. The fixed strict criterion is
-native maximum wall below source minimum wall, or strict peak-resource range
-separation with genuinely matched scope. Report all five samples, medians and
-ranges, each worker setting, full graph and per-stage distributions. The graph
-must have a material strict advantage. A losing replacement hot path remains
-an optimization gate; do not hide it by averaging over faster operations.
+Functional/source correspondence is mandatory. Before any timing, the root
+explicitly fixes the whole-graph criterion as native maximum wall below source
+minimum wall, or strict peak-resource range separation with genuinely matched
+exact whole-graph cgroup scope when available. Replacement-stage acceptance is
+strictly WALL-ONLY: native maximum wall must be below source minimum wall for
+every replacement stage. Exact stage memory is unmeasured/N/A; never assign a
+whole-graph cgroup peak to a stage. No per-stage cgroup architecture or privileged
+host setup is required. This narrower internal gate does not broaden the public
+release rule. Report all five samples, medians and ranges, each worker setting,
+full graph and per-stage distributions. The graph must have a material strict
+advantage. A losing replacement hot path remains an optimization gate; do not
+hide it by averaging over faster operations.
 Four-platform correctness and existing RSeQC performance are separate gates.

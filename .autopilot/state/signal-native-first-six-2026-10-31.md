@@ -1,6 +1,37 @@
 # Whole-first-six native signal implementation
 
+## Whole-workflow performance harness reviewed; execution still gated
+
+Parent reads all1707 initial controller/checker/test/workflow lines and complete
+REPORT25fe26a49746f17532bab6580f493097acbf0bd54ef05b46c38f15016c596f40.
+One whole-feature review64bf5826854ab24f629b5477bda47419ff70442964bb455eedde2ad01def5bf3
+finds two P2 issues. One concentrated214-line correction requires actual
+committed HEAD/blob receipt adoption before acquisition/campaign, and records
+the root's explicit pre-timing policy: per-replacement-stage strict wall-only;
+optional matched exact cgroup memory alternative is whole-graph-only.
+Unavailable stage memory stays N/A; graph peaks never become stage peaks.
+
+Corrected packet:
+`/Volumes/KIOXIA/Developments/tmp/signal-real-performance-correction-20261031.M8gG4P/`.
+REPORT161d8c53f46392337c855401df1fc1aff56e7f57f0cd8667026acd9196e4e35e;
+bindingscd40cb53e3c4074d9ee6103b5e3775d2645314788b48694dc677f6f8370119b3.
+Parent reads complete correction/report, freshly verifies7 artifacts, all5
+live/archive files and11 source-reference bindings. Existing focused stdlib
+suite passes6/6 for parent under external guard. The18-stage independent
+source/native graph plus whole-track/ATAC branches remains unchanged; actual
+same-native source consumers, strict zero-tail attribution, one/four workers
+and five alternating pairs remain mandatory. No actual accepted native receipt,
+scientific/performance execution, host-idle assertion or timing is fabricated.
+No runner installation/privileged cgroup setup; ssh4090 inventory only shows
+potential capability. Optional sortedBED policy remains pending.
+
 ## Source-header accumulation corrected; new candidate requires a real gate
+
+The green-2 freeze is worldad249d0d564764926fba7cacc3a6db41b023e83f;
+exact-head controller41214906573 is SUCCESS. Actual new native-four/source
+run41214999273/attempt1 is dispatched at that exact head with green-2.
+All four jobs start and verify/extract the real new source. Qualification
+is in progress, not inferred from preparation or the previous native pass.
 
 Actual corrected-controller run41212042509/attempt1 atbc744fb9 is terminal
 FAILED only in Linux x86 source-on-native. All four native debug/release/worker
