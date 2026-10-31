@@ -1,4 +1,5 @@
 import json
+import os
 from pathlib import Path
 import re
 import subprocess
@@ -12,6 +13,58 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 class LimmaWorkflowPerformanceTests(unittest.TestCase):
+    def test_ordinary_seven_process_admission_reuse_and_source_symmetry(self):
+        from limma_logexpression_performance import native_commands, load_native_receipt, check_validation_files, OUTPUTS, STATES
+        commands = native_commands(Path('/source'), Path('/output'))
+        self.assertEqual([row[0] for row in commands], ['run', 'results', 'results', 'results', 'export', 'export', 'export'])
+        self.assertEqual(commands[0][commands[0].index('--expression') + 1], Path('/source/inputs/real/expression.tsv'))
+        self.assertEqual(len(OUTPUTS), 6)
+        self.assertEqual(STATES, ('forward.json', 'reverse.json', 'mixed.json'))
+        for command, state in zip(commands[1:4], STATES):
+            self.assertEqual(command[command.index('--state') + 1], Path('/output') / state)
+        with tempfile.TemporaryDirectory(prefix='limma-ordinary-performance-') as temporary:
+            with self.assertRaises(OSError):
+                load_native_receipt(Path(temporary) / 'missing-admission.json')
+        admitted = {'src/model.rs': 'a', 'Cargo.lock': 'b', 'scripts/check-logexpression.py': 'c'}
+        changed = dict(admitted, **{'scripts/check-logexpression.py': 'd'})
+        check_validation_files(admitted, changed)
+        changed['src/model.rs'] = 'e'
+        with self.assertRaisesRegex(ValueError, 'production'):
+            check_validation_files(admitted, changed)
+        text = (ROOT / '.github/workflows/limma-performance.yml').read_text()
+        self.assertRegex(text, r'(?m)^      ordinary:\n        description: [^\n]+\n        type: boolean\n        required: false\n        default: false$')
+        self.assertIn('validation_snapshot:', text)
+        self.assertIn('limma_logexpression_performance.py', text)
+        self.assertIn('VALIDATION_SNAPSHOT', text)
+        self.assertNotIn('cargo build', text)
+        for name, step in steps(text).items():
+            if '        run: |\n' in step:
+                body = re.sub(r'\$\{\{.*?\}\}', 'stub', bash_body(step))
+                result = subprocess.run(['bash', '-n'], input=body, text=True, capture_output=True, timeout=15)
+                self.assertEqual(result.returncode, 0, name + ': ' + result.stderr)
+                for program in re.findall(r"python3 -B - <<'PY'\n(.*?)\nPY", body, re.DOTALL):
+                    compile(program, name, 'exec')
+        selector = 'controller=' + bash_body(steps(text)['Prepare hosted source and measurement storage']).split('controller=', 1)[1]
+        with tempfile.TemporaryDirectory(prefix='limma-ordinary-selector-') as temporary:
+            for ordinary, snapshot, valid in [('false', '', True), ('true', '', False), ('true', '../green-2', False), ('false', 'green-2', False)]:
+                env_file = Path(temporary) / (ordinary + '-' + str(valid) + '-environment')
+                result = subprocess.run(['bash', '-euc', selector], cwd=ROOT,
+                    env=dict(os.environ, ORDINARY=ordinary, VALIDATION_SNAPSHOT=snapshot,
+                             GITHUB_WORKSPACE=str(ROOT), GITHUB_ENV=str(env_file)), text=True, capture_output=True, timeout=15)
+                self.assertEqual(result.returncode == 0, valid, f'{ordinary=} {snapshot=}: {result.stderr}')
+        driver = (ROOT / 'scripts/limma_logexpression_performance.R').read_text()
+        timed = driver.split('ordinary_performance_run <- function', 1)[1].split('ordinary_performance_inspect <- function', 1)[0]
+        self.assertEqual(timed.count('limma::lmFit('), 1)
+        self.assertLess(timed.index('ordinary_test(bundle, "forward")'), timed.index('saveRDS(bundle'))
+        self.assertLess(timed.index('saveRDS(bundle'), timed.index('reloaded <- readRDS('))
+        self.assertNotIn('logexpression_derive(', timed)
+        self.assertNotIn('logexpression_write_fit(', timed)
+        self.assertNotIn('squeezeVar(', timed)
+        self.assertIn('ordinary_no_refit()', timed)
+        inspector = driver.split('ordinary_performance_inspect <- function', 1)[1]
+        self.assertNotIn('ordinary_test(', inspector)
+        self.assertNotIn('limma::lmFit(', inspector)
+
     def test_complete_trial_routing_and_hosted_shells(self):
         workflow = ROOT / '.github/workflows/limma-performance.yml'
         self.assertTrue(workflow.is_file(), 'missing complete limma performance workflow')

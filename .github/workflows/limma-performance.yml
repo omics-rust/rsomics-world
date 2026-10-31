@@ -1,7 +1,18 @@
-name: limma real complete count-to-export performance
+name: limma real complete lifecycle performance
 
 on:
   workflow_dispatch:
+    inputs:
+      ordinary:
+        description: Measure admitted supplied-expression lifecycle instead of the default count lifecycle
+        type: boolean
+        required: false
+        default: false
+      validation_snapshot:
+        description: Ordinary-only parent-adopted green-N checker-reuse snapshot under limma-core-2026-10-28
+        type: string
+        required: false
+        default: ''
 
 permissions:
   contents: read
@@ -13,6 +24,8 @@ jobs:
     timeout-minutes: 120
     env:
       PYTHONDONTWRITEBYTECODE: '1'
+      ORDINARY: ${{ inputs.ordinary }}
+      VALIDATION_SNAPSHOT: ${{ inputs.validation_snapshot }}
       OMP_NUM_THREADS: '1'
       OPENBLAS_NUM_THREADS: '1'
       MKL_NUM_THREADS: '1'
@@ -67,6 +80,21 @@ jobs:
           uname -a > "$EVIDENCE/host.txt"
           df -h >> "$EVIDENCE/host.txt"
           /usr/bin/time --version >> "$EVIDENCE/host.txt"
+          controller=limma_workflow_performance
+          native_receipt=.autopilot/oracles/limma-native-green1-2026-10-28.json
+          if [[ "$ORDINARY" == true ]]; then
+            if ! [[ "$VALIDATION_SNAPSHOT" =~ ^green-[0-9]+$ ]]; then
+              printf 'ordinary measurement requires an explicit green-N validation snapshot\n' >&2
+              exit 1
+            fi
+            test -d "$GITHUB_WORKSPACE/.autopilot/snapshots/limma-core-2026-10-28/$VALIDATION_SNAPSHOT"
+            controller=limma_logexpression_performance
+            native_receipt=.autopilot/oracles/limma-native-green2-2026-10-31.json
+          else
+            test -z "$VALIDATION_SNAPSHOT"
+          fi
+          test -f "$native_receipt"
+          printf 'PERFORMANCE_CONTROLLER=%s\nNATIVE_RECEIPT=%s\n' "$controller" "$native_receipt" >> "$GITHUB_ENV"
 
       - name: Acquire the exact accepted four-native executable
         env:
@@ -74,19 +102,18 @@ jobs:
         run: |
           set -euo pipefail
           native="$EVIDENCE/acquisition/native"
-          cp .autopilot/oracles/limma-native-green1-2026-10-28.json "$native/receipt.json"
+          cp "$NATIVE_RECEIPT" "$native/receipt.json"
           native_run=$(python3 -B - <<'PY'
-          import sys
+          import importlib, os, sys
           sys.path.insert(0, 'scripts')
-          from limma_workflow_performance import load_native_receipt
-          print(load_native_receipt()['run_id'])
+          print(importlib.import_module(os.environ['PERFORMANCE_CONTROLLER']).load_native_receipt()['run_id'])
           PY
           )
           [[ "$native_run" =~ ^[0-9]+$ ]]
           gh api "repos/omics-rust/rsomics-world/actions/runs/$native_run" > "$native/run.json"
           gh api "repos/omics-rust/rsomics-world/actions/runs/$native_run/attempts/1/jobs?per_page=100" > "$native/jobs.json"
           gh api "repos/omics-rust/rsomics-world/actions/runs/$native_run/artifacts?per_page=100" > "$native/artifacts.json"
-          artifact_id=$(python3 -B scripts/limma_workflow_performance.py select-native --acquisition "$native")
+          artifact_id=$(python3 -B "scripts/$PERFORMANCE_CONTROLLER.py" select-native --acquisition "$native")
           [[ "$artifact_id" =~ ^[0-9]+$ ]]
           gh api "repos/omics-rust/rsomics-world/actions/artifacts/$artifact_id" > "$native/artifact.json"
           gh api "repos/omics-rust/rsomics-world/actions/artifacts/$artifact_id/zip" > "$native/artifact.zip"
@@ -97,19 +124,29 @@ jobs:
         run: |
           set -euo pipefail
           source="$EVIDENCE/acquisition/source"
-          cp .autopilot/oracles/limma-first-workflow-2026-10-28.json "$source/receipt.json"
-          gh api repos/omics-rust/rsomics-world/actions/runs/40606516204 > "$source/run.json"
-          gh api repos/omics-rust/rsomics-world/actions/artifacts/12780957275 > "$source/artifact.json"
-          gh api repos/omics-rust/rsomics-world/actions/artifacts/12780957275/zip > "$source/artifact.zip"
-          python3 -B scripts/limma_workflow_performance.py prepare-runtime --acquisition "$EVIDENCE/acquisition" \
-            2>&1 | tee "$EVIDENCE/acquisition/verification.log"
+          if [[ "$ORDINARY" == true ]]; then
+            cp .autopilot/oracles/limma-logexpression-2026-10-31.json "$source/receipt.json"
+            gh api repos/omics-rust/rsomics-world/actions/runs/41184814043 > "$source/run.json"
+            gh api repos/omics-rust/rsomics-world/actions/artifacts/13036282988 > "$source/artifact.json"
+            gh api repos/omics-rust/rsomics-world/actions/artifacts/13036282988/zip > "$source/artifact.zip"
+            python3 -B "scripts/$PERFORMANCE_CONTROLLER.py" prepare-runtime --acquisition "$EVIDENCE/acquisition" \
+              --validation-snapshot "$GITHUB_WORKSPACE/.autopilot/snapshots/limma-core-2026-10-28/$VALIDATION_SNAPSHOT" \
+              2>&1 | tee "$EVIDENCE/acquisition/verification.log"
+          else
+            cp .autopilot/oracles/limma-first-workflow-2026-10-28.json "$source/receipt.json"
+            gh api repos/omics-rust/rsomics-world/actions/runs/40606516204 > "$source/run.json"
+            gh api repos/omics-rust/rsomics-world/actions/artifacts/12780957275 > "$source/artifact.json"
+            gh api repos/omics-rust/rsomics-world/actions/artifacts/12780957275/zip > "$source/artifact.zip"
+            python3 -B scripts/limma_workflow_performance.py prepare-runtime --acquisition "$EVIDENCE/acquisition" \
+              2>&1 | tee "$EVIDENCE/acquisition/verification.log"
+          fi
 
       - uses: r-lib/actions/setup-r@v2
         with:
           r-version: '4.6.1'
           use-public-rspm: true
 
-      - name: Install only both exact released analysis sources
+      - name: Install only the selected exact released analysis sources
         run: |
           set -euo pipefail
           {
@@ -125,7 +162,8 @@ jobs:
           options(repos=c(CRAN=cran))
           install.packages('BiocManager', lib=Sys.getenv('R_LIBS_USER'))
           BiocManager::install(version='3.23', ask=FALSE, update=FALSE)
-          deps <- unlist(lapply(c('limma', 'edgeR'), function(package) {
+          packages <- if (identical(Sys.getenv('ORDINARY'), 'true')) 'limma' else c('limma', 'edgeR')
+          deps <- unlist(lapply(packages, function(package) {
               desc <- read.dcf(file.path(Sys.getenv('EVIDENCE'), 'acquisition/source-tree', package, 'DESCRIPTION'))
               fields <- intersect(c('Depends', 'Imports', 'LinkingTo'), colnames(desc))
               trimws(unlist(strsplit(paste(desc[1, fields], collapse=','), ',', fixed=TRUE)))
@@ -139,11 +177,15 @@ jobs:
           RS
           R CMD INSTALL --preclean --clean --library="$R_LIBS_USER" "$EVIDENCE/acquisition/source-tree/limma" \
             2>&1 | tee "$EVIDENCE/install-limma.log"
-          R CMD INSTALL --preclean --clean --library="$R_LIBS_USER" "$EVIDENCE/acquisition/source-tree/edgeR" \
-            2>&1 | tee "$EVIDENCE/install-edgeR.log"
-          Rscript --vanilla -e 'stopifnot(as.character(packageVersion("edgeR")) == "4.10.7", as.character(packageVersion("limma")) == "3.68.5", as.character(BiocManager::version()) == "3.23"); library(edgeR); stopifnot(!"DESeq2" %in% loadedNamespaces())'
+          if [[ "$ORDINARY" == true ]]; then
+            Rscript --vanilla -e 'stopifnot(as.character(packageVersion("limma")) == "3.68.5", as.character(BiocManager::version()) == "3.23"); library(limma); stopifnot(!any(c("DESeq2", "edgeR") %in% loadedNamespaces()))'
+          else
+            R CMD INSTALL --preclean --clean --library="$R_LIBS_USER" "$EVIDENCE/acquisition/source-tree/edgeR" \
+              2>&1 | tee "$EVIDENCE/install-edgeR.log"
+            Rscript --vanilla -e 'stopifnot(as.character(packageVersion("edgeR")) == "4.10.7", as.character(packageVersion("limma")) == "3.68.5", as.character(BiocManager::version()) == "3.23"); library(edgeR); stopifnot(!"DESeq2" %in% loadedNamespaces())'
+          fi
 
-      - name: Measure the complete current-voom lifecycle
+      - name: Measure the selected complete lifecycle
         run: |
           set -euo pipefail
           for name in limma_workflow_performance.py limma_workflow_performance.R limma_workflow_oracle.R \
@@ -152,12 +194,19 @@ jobs:
                       verify_infercnv_oracle_artifact.py; do
             cp "scripts/$name" "$EVIDENCE/controller/"
           done
+          if [[ "$ORDINARY" == true ]]; then
+            for name in limma_logexpression_performance.py limma_logexpression_performance.R limma_logexpression_oracle.R; do
+              cp "scripts/$name" "$EVIDENCE/controller/"
+            done
+            cp "$EVIDENCE/acquisition/native/validation-candidate/scripts/check-logexpression.py" \
+              "$EVIDENCE/acquisition/native/validation-candidate/scripts/check-workflow.py" "$EVIDENCE/controller/"
+          fi
           cp .github/workflows/limma-performance.yml "$EVIDENCE/controller/"
           (
             cd "$EVIDENCE/controller"
             sha256sum *.py *.R *.yml
           ) > "$EVIDENCE/controller/checksums.sha256"
-          python3 -B scripts/limma_workflow_performance.py run --acquisition "$EVIDENCE/acquisition" \
+          python3 -B "scripts/$PERFORMANCE_CONTROLLER.py" run --acquisition "$EVIDENCE/acquisition" \
             --source-tree "$EVIDENCE/acquisition/source-tree" --output "$EVIDENCE/benchmark" \
             2>&1 | tee "$EVIDENCE/benchmark.log"
 
