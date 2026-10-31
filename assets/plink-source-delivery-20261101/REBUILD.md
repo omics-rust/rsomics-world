@@ -1,4 +1,4 @@
-# Private green1 offline rebuild
+# Private offline rebuild
 
 This is an engineering delivery candidate, not a public release or legal
 clearance. Original Rust is MIT OR Apache-2.0. The shim/pgenlib is LGPL-3.0-or-later;
@@ -28,11 +28,14 @@ The one production executable is CARGO_TARGET_DIR/release/rsomics-plink.
 Keep actual compiler/target/flags, complete build logs and resulting identities;
 this is not a promise of bit-for-bit equality across toolchains or platforms.
 
-Public-install limitation: frozen private green1 build.rs requires our development
-guard for ordinary local macOS compilation. This candidate is NOT a downstream
-Mac cargo-build/install contract. A public release must remove that global host
-policy in a new owner revision, retain explicit guarded-OUT_DIR validation,
-and pass actual four-native exact-head checks on that final revision. Our own
-Mac-mini operations always retain the external-disk guard. Linux replacement
-success does not qualify Mac installation. No public binary/source pair has
-been published by preparing this source bundle.
+Historical private-green-1 requires our development guard for ordinary local
+macOS compilation. Private-green-2 includes the owning guard-policy correction:
+downstream builds no longer need our SSD paths or guard marker, while explicit
+guarded-OUT_DIR validation remains. bundle.json identifies the exact source
+authority; do not substitute one revision's acceptance for another.
+
+Our own Mac-mini operations always retain the external-disk guard. Linux
+replacement success alone does not qualify Mac installation of this delivery;
+final four-native source/binary binding and public installation/release checks
+remain separate. No public binary/source pair has been published by preparing
+this source bundle.

@@ -8,6 +8,10 @@ its current exact body and every vendor original are bound by bundle.json.
 complete locked dependency closure and separately attributed original notice
 supplements. Application/source checksums are not relabelled or rewritten.
 
+2026-11-01: private-green-2 binds owning revision1d199b54 with the ordinary
+macOS guard-policy correction. The historical private-green-1 delivery and its
+original instructions remain preserved in that immutable archive.
+
 The hosted replacement experiment, when authorized and actually executed,
 records its distinct dated PgrInit-only derivative and build/output identities
 in replacement.json. No such successful experiment is asserted by this file.

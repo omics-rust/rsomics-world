@@ -14,8 +14,10 @@ import tomllib
 from plink_candidate import (SNAPSHOTS, check, file_identity, load, portable_names,
                              prepare_source, read_snapshot_manifest, save, tree_manifest)
 
-ASSET = 'assets/plink-source-private-green-1-20261101'
-SELECTOR = 'private-green-1'
+BUNDLES = {
+    'private-green-1': ('assets/plink-source-private-green-1-20261101', 'green-1'),
+    'private-green-2': ('assets/plink-source-private-green-2-20261101', 'green-2'),
+}
 SCHEMA = 'rsomics.plink.private-offline-source.v1'
 SUPPLEMENTS = 'assets/plink-source-delivery-20261101'
 
@@ -32,7 +34,8 @@ def source_tree(root):
 def verify_original(root):
     root = Path(root)
     model = load(root / 'bundle.json')
-    check(model['schema'] == SCHEMA and model['selector'] == SELECTOR and
+    check(model['schema'] == SCHEMA and model['selector'] in BUNDLES and
+          model['snapshot'] == BUNDLES[model['selector']][1] and
           model['public_release'] is False, 'private source bundle identity differs')
     actual = source_tree(root)
     actual.pop('bundle.json', None)
@@ -58,10 +61,11 @@ def verify_original(root):
 
 
 def unpack_bundle(world, selector, output):
-    check(selector == SELECTOR, 'unknown private source-bundle selector')
+    check(selector in BUNDLES, 'unknown private source-bundle selector')
+    asset, snapshot = BUNDLES[selector]
     world, output = Path(world), Path(output)
-    receipt = load(world / (ASSET + '.json'))
-    archive = world / (ASSET + '.tar.gz')
+    receipt = load(world / (asset + '.json'))
+    archive = world / (asset + '.tar.gz')
     check(receipt['selector'] == selector and file_identity(archive) == receipt['archive'],
           'delivered source archive differs')
     check(not output.exists() and not output.is_symlink(), 'fresh delivery restoration required')
@@ -84,18 +88,21 @@ def unpack_bundle(world, selector, output):
                 shutil.copyfileobj(source, dest)
             target.chmod(item.mode & 0o777)
     model = verify_original(output)
-    authority = world / SNAPSHOTS / 'green-1'
+    check(model['selector'] == selector, 'delivered source selector differs')
+    authority = world / SNAPSHOTS / snapshot
     check(model['owner_files'] == read_snapshot_manifest(authority) and
           model['source_archive_sha256'] == file_identity(authority / 'source.tar.gz')['sha256'] and
           model['source_manifest_sha256'] == file_identity(authority / 'files.sha256')['sha256'],
-          'delivered owner differs from actual frozen green1 authority')
+          'delivered owner differs from actual frozen authority')
     check(model['source_archive_sha256'] == receipt['source_archive_sha256'] and
           model['source_manifest_sha256'] == receipt['source_manifest_sha256'],
           'source authority binding differs')
     return model
 
 
-def pack(world, cache, work):
+def pack(world, cache, work, selector):
+    check(selector in BUNDLES, 'unknown private source-bundle selector')
+    asset, snapshot = BUNDLES[selector]
     world, cache, work = Path(world).resolve(strict=True), Path(cache).resolve(strict=True), Path(work)
     check(os.environ.get('RSOMICS_GUARDED_TARGET_DIR') and
           cache == Path(os.environ['CARGO_HOME']).resolve(strict=True), 'owning external guard is required')
@@ -103,7 +110,7 @@ def pack(world, cache, work):
           'new external packaging directory required')
     work.mkdir()
     authority = work / 'frozen'
-    owner = prepare_source(world, authority, 'green-1')
+    owner = prepare_source(world, authority, snapshot)
     root = work / 'bundle'; root.mkdir()
     shutil.copytree(authority / 'source', root / 'code')
     (root / 'authority').mkdir()
@@ -112,7 +119,7 @@ def pack(world, cache, work):
     shutil.copy2(root / 'code/Cargo.lock', root / 'authority/lock.copy')
     lock = tomllib.loads((root / 'code/Cargo.lock').read_text())
     packages = [p for p in lock['package'] if 'source' in p]
-    check(len(packages) == 85, 'private green1 locked dependency population differs')
+    check(len(packages) == 85, 'private locked dependency population differs')
     for package in packages:
         paths = list((cache / 'registry/cache').glob(f"*/{package['name']}-{package['version']}.crate"))
         check(len(paths) == 1 and file_identity(paths[0])['sha256'] == package['checksum'],
@@ -167,8 +174,8 @@ def pack(world, cache, work):
                                  checksum=package['checksum'], directory=stem,
                                  archive='archives/' + original.name, archived_only=archived_only,
                                  license=data.get('license'), notices=notices))
-    model = dict(schema=SCHEMA, selector=SELECTOR, scope='private-green-1; not public-install qualified',
-                 public_release=False, snapshot='green-1', owner_files=owner, dependencies=dependencies,
+    model = dict(schema=SCHEMA, selector=selector, scope=selector + '; not public-install qualified',
+                 public_release=False, snapshot=snapshot, owner_files=owner, dependencies=dependencies,
                  source_archive_sha256=file_identity(authority / 'source.tar.gz')['sha256'],
                  source_manifest_sha256=file_identity(authority / 'files.sha256')['sha256'],
                  public_holds=['ordinary downstream macOS install contract', 'final public owner exact-head native-four',
@@ -176,7 +183,7 @@ def pack(world, cache, work):
                  files=source_tree(root))
     save(root / 'bundle.json', model)
     verify_original(root)
-    output = world / (ASSET + '.tar.gz')
+    output = world / (asset + '.tar.gz')
     check(not output.exists(), 'do not replace an existing source bundle')
     with output.open('xb') as stream, gzip.GzipFile(fileobj=stream, mode='wb', mtime=0, filename='') as gz:
         with tarfile.open(fileobj=gz, mode='w', format=tarfile.PAX_FORMAT) as archive:
@@ -185,7 +192,7 @@ def pack(world, cache, work):
                 item.size = path.stat().st_size; item.mode = 0o755 if path.stat().st_mode & 0o111 else 0o644
                 with path.open('rb') as source: archive.addfile(item, source)
     check(output.stat().st_size < 50 * 2**20, 'source bundle exceeds ordinary tracked-asset limit')
-    save(world / (ASSET + '.json'), dict(selector=SELECTOR, scope=model['scope'], archive=file_identity(output),
+    save(world / (asset + '.json'), dict(selector=selector, scope=model['scope'], archive=file_identity(output),
          source_archive_sha256=model['source_archive_sha256'],
          source_manifest_sha256=model['source_manifest_sha256'], public_release=False))
     return dict(files=len(model['files']), dependencies=len(dependencies), archive=file_identity(output))
@@ -196,8 +203,9 @@ def main():
     parser.add_argument('--world', type=Path, default=Path(__file__).resolve().parents[1])
     parser.add_argument('--cache', type=Path, required=True)
     parser.add_argument('--work', type=Path, required=True)
+    parser.add_argument('--bundle', choices=sorted(BUNDLES), required=True)
     args = parser.parse_args()
-    print(json.dumps(pack(args.world, args.cache, args.work), sort_keys=True))
+    print(json.dumps(pack(args.world, args.cache, args.work, args.bundle), sort_keys=True))
 
 
 if __name__ == '__main__':

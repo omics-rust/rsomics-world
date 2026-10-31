@@ -15,7 +15,7 @@ import urllib.request
 import zipfile
 
 import plink_candidate as native
-from plink_source_bundle import (SELECTOR, check, file_identity, load, save,
+from plink_source_bundle import (check, file_identity, load, save,
                                  source_tree, unpack_bundle, verify_original)
 from plink_source_on_native import NoRedirect, extract_artifact
 
@@ -158,7 +158,7 @@ def admit(world, selector, run_id, work, evidence):
     extract_artifact(work / 'native.tar', work / 'native')
     candidate = work / 'native/candidate'
     selection = load(candidate / 'selection.json')
-    check(selection['target'] == 'linux-x86_64' and selection['snapshot'] == 'green-1' and
+    check(selection['target'] == 'linux-x86_64' and selection['snapshot'] == model['snapshot'] and
           selection['controller_commit'] == run['head_sha'] and
           selection['source_archive_sha256'] == model['source_archive_sha256'] and
           selection['source_manifest_sha256'] == model['source_manifest_sha256'] and

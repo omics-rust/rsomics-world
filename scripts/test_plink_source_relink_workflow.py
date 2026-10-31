@@ -41,8 +41,9 @@ class PlinkSourceRelinkPreparationTest(unittest.TestCase):
             (right / 'counts.tsv').write_text('ID\tN\nx\t3\n')
             with self.assertRaises(ValueError): gate.compare_scientific(left, right, ['counts.tsv'])
             original = root / 'original'
-            model = gate.unpack_bundle(ROOT, 'private-green-1', original)
-            self.assertEqual(model['scope'], 'private-green-1; not public-install qualified')
+            model = gate.unpack_bundle(ROOT, 'private-green-2', original)
+            self.assertEqual(model['scope'], 'private-green-2; not public-install qualified')
+            self.assertEqual(model['snapshot'], 'green-2')
             self.assertEqual(len(model['dependencies']), 85)
             self.assertEqual(len(model['owner_files']), 302)
             self.assertEqual((original / 'code/Cargo.lock').read_bytes(),

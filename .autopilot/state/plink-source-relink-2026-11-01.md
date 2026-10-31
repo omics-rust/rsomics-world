@@ -1,5 +1,29 @@
 # Private offline source and replace-codec delivery
 
+## Final guard-only source delivery prepared separately
+
+Root makes the two existing private selectors explicit in the bundle and
+relink controllers; archive/source identity must match the selected authority.
+Historical private-green-1 and its accepted originals remain unchanged. New
+private-green-2 includes all302 exact green-2 owner bodies,85 original locked
+archives/offline sources/terms and current rebuild/change instructions.
+It is not a relabel of the former guard-rejecting source bundle.
+
+Actual final gzip23866729B SHA
+5485184aefab85dbe917dc613336baddeca88a7ffe17d583f85c5f917a4eea29;
+4847 regular payload files plus bundle.json, unchanged dependency population.
+Existing ONE preparation is RED at unknown selector, then GREEN1/6.522s;
+full delivered-source verification and controlled derivative checks pass.
+No build/oracle/science executes during this preparation. Initial export
+retained stale guard text; its complete archive/receipt remain preserved as
+superseded-guard-text.* in plink-final-source-delivery-20261101.iCI9Cu, not
+published or claimed final. Final export uses corrected revision-aware text.
+
+The actual final native-four/source gate41246273033 is still active. After its
+successful independent adoption and exact-head control CI, repeat the SAME
+offline original/modified graph proof with private-green-2. No new benchmark
+case, numeric policy, compiler/dependency change or publication claim.
+
 ## Actual offline rebuild and codec replacement accepted
 
 Run41241225963/attempt1 atbea97511999178710fc923e2dd8aa95ceda0ae51 is

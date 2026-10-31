@@ -1,5 +1,17 @@
 # PLINK offline source and replace-codec delivery
 
+## Final guard revision delivery
+
+The ordinary Mac guard correction is now actual owner1d199b54, frozen green-2.
+Prepare a separate private-green-2 source delivery using the same85 immutable
+dependency archives and notices. Preserve the historical green-1 archive and
+acceptance. Select the exact authority explicitly; do not relabel an old bundle
+or admit it against the new native source. After the actual final native/source
+gate passes, repeat the same single offline original/modified whole-workflow
+proof for this final source. No new scientific case, threshold or compiler/
+dependency policy. Ordinary Mac install of the delivered bundle and public
+release remain distinct from its local owner-build proof.
+
 Parent reads/adopts the complete72-line proposal, full report, actual source
 bindings and complete local LGPL text at plink-source-relink-design-20261101.bpytTM.
 PLAN SHA190d8064be51d5c794f72daccba49d9578147dda3f222987f4f460713a39398b.
