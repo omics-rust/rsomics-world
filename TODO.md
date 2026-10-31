@@ -19,8 +19,10 @@ with green-2 native4/core accepted and ordinary performance preparation active; 
 reviewed private analysis passes native4, with public
 torsion/performance still held or unearned. Ecology has reviewed alpha and
 rarefaction while beta policy is held. Signal's corrected six-operation source
-lifecycle is accepted with complete original evidence; its native handling of
-clear upstream arithmetic/data-loss defects awaits one consolidated decision.
+lifecycle is accepted with complete original evidence; the user approves native
+repairs for confirmed arithmetic/data-loss and filtering defects, with named
+incompatibilities. Full-six native design is active; normal source semantics
+are unchanged.
 Peak's current full-four source casebook, inputs and reviewed/corrected hosted
 producer are adopted; actual runtime admission/source capture remain gates.
 Exact gates and original receipts live in each product dossier/state file.

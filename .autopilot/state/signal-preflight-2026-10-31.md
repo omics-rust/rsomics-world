@@ -1,6 +1,6 @@
 # Signal next-family retained-source assessment
 
-## Successful first-six source lifecycle accepted; native policy question open
+## Successful first-six source lifecycle accepted; native correction policy approved
 
 Corrected run41192955170/attempt1 at world93572f5464d8b89211ae97f754f71ba73abe8773
 is terminal SUCCESS after controller41192740323 passes at that exact head.
@@ -40,14 +40,24 @@ means, alias/dictionary and normalization semantics are recorded separately.
 
 Material observed defects: signed arithmetic can return entirely empty output;
 explicit trailing zeros/all-zero contig intervals disappear; the named filtered
-BED boundary raises convertBED TypeError. Parent asks ONE consolidated async
-human decision: native default fixes these clear data-loss/error defects with
-recorded incompatibilities, or strictly reproduces them. No answer yet. This
-holds the affected public arithmetic/boundary contract, not the entire goal.
-Normal approximate statistics/normalization/alias rules and intentional shifted
-alignment metadata policy are not silently changed by that question. Continue
-unaffected work/limma performance/peak preparation, with no speculative public
-foundation or native policy selection. Original failed41190638374 stays exact.
+BED boundary raises convertBED TypeError. On2026-10-31 the user explicitly
+chooses native default repairs, with recorded known incompatibilities:
+
+- retain valid signed arithmetic instead of the source cancellation/empty-
+  output defect;
+- flush computed explicit zero runs, including trailing runs and all-zero
+  chromosomes, without silently replacing genuinely missing data by zero;
+- make the BED plus rejected-read output path function rather than reproducing
+  the source TypeError, with explicit output-format contracts.
+
+This resolves the affected native policy hold. Normal approximate/zoom
+statistics, normalization, chromosome aliases and intentional shifted-alignment
+metadata semantics remain separate and unchanged. Legitimate NaN/Inf classes
+are not blanket-sanitized. Original source outputs, defects and failed run
+41190638374 remain exact; native corrected expectations must be separately
+named, not installed as replacement source goldens. Whole-six native design
+and implementation may proceed with existing public foundations and private
+BBI/operation policy. No native acceptance, speed or release is yet earned.
 
 ## Bootstrap and archive correction adopted; corrected hosted run pending
 

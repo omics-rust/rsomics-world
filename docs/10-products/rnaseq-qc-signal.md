@@ -310,9 +310,14 @@ installed runtime/source/controller/input bindings and no source/input changes.
 See `.autopilot/state/signal-preflight-2026-10-31.md` and retained REPORT
 9b520a38db6aa2426ded5ebefc7004966b663fd8064b3b4165fff9ffea65adca.
 Native Rust implementation, codec/build qualification and performance remain
-unearned. A single consolidated human choice is pending for the native default
-handling of clear signed-arithmetic/trailing-zero data loss and the TypeError
-boundary; normal approximation/normalization/alias semantics are separate.
+unearned. On2026-10-31 the user explicitly approves native default repairs for
+the confirmed signed-arithmetic empty-output defect, lost explicit trailing
+zeros/all-zero chromosomes and BED plus rejected-read TypeError boundary.
+Record these as named known upstream incompatibilities; preserve original
+source evidence and separately test corrected expectations. Explicit computed
+zero is not missing data, and legitimate NaN/Inf is not silently sanitized.
+Normal approximate/zoom statistics, normalization, chromosome-alias and
+intentional shift-metadata behavior are not changed by this approval.
 
 Meaningful source profiles must not be flattened into one coverage policy:
 unextended reads use aligned blocks, while extension and offset modes differ;
