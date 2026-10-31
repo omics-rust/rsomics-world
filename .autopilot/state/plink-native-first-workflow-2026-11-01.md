@@ -1,5 +1,27 @@
 # Native PLINK first coherent workflow active
 
+## Four native targets and same-native upstream comparison accepted
+
+Actual run41237806705/attempt1 at8931edd31110b57554c3f29d74ed59b3ed22561d
+passes all four native Linux/macOS x86_64/aarch64 jobs and the pinned source job.
+Every target passes4lib+1connected in debug AND release, zero ignored; all302
+source bodies match the actual clean owner commita1c50116. Each mode checks36
+own I/F/P generations and74878 raw cells at1/4 workers. Source and official
+engines then read those SAME new Linux generations:224 successful report
+commands plus36 raw bridge commands, unchanged comparison/expected contracts.
+Source/official commit correspondence remains unproven; no native ELF was
+executed in that source lane's older Bookworm image.
+
+Root reads the full123-line final REPORT in plink-native-adoption-20261101.EDgY0m
+and its complete receipt, independently verifies all35 sealed delivery files,
+and checks actual run/jobs/original artifact metadata. All5 full original ZIPs,
+TARs, every manifest body and all5 raw logs are retained; no active downloads.
+The tracked acceptance is .autopilot/oracles/plink-native-2026-11-01.json.
+Actual Linux release ELF50a33c292c684a1e6c795308071156bfdcc4a70a9d21d1aa33c353939b2d0f2e
+has bound static ABI requirements, NOT yet admitted target-image providers or
+real-input performance. HGDP and offline source/relink preparation proceed
+independently; public installation/source distribution and release remain gated.
+
 ## Concentrated corrections verified; real post-review source frozen
 
 Root reads the complete material-wave report/closure and all changed production
