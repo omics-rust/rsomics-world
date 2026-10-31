@@ -1,0 +1,188 @@
+name: Private signal native-four and same-native-file source gate
+
+on:
+  workflow_dispatch:
+    inputs:
+      snapshot:
+        description: Reviewed real signal source under signal-native-2026-10-31 (green-N); absent snapshots fail
+        type: string
+        required: true
+
+permissions:
+  contents: read
+
+jobs:
+  native:
+    name: ${{ matrix.target }}
+    runs-on: ${{ matrix.runner }}
+    timeout-minutes: 55
+    strategy:
+      fail-fast: false
+      matrix:
+        include: >-
+          ${{ fromJSON('[{"target":"linux-x86_64","runner":"ubuntu-24.04","system":"Linux","arch":"x86_64","host":"x86_64-unknown-linux-gnu"},{"target":"linux-aarch64","runner":"ubuntu-24.04-arm","system":"Linux","arch":"aarch64","host":"aarch64-unknown-linux-gnu"},{"target":"macos-x86_64","runner":"macos-15-intel","system":"Darwin","arch":"x86_64","host":"x86_64-apple-darwin"},{"target":"macos-aarch64","runner":"macos-15","system":"Darwin","arch":"arm64","host":"aarch64-apple-darwin"}]') }}
+    env:
+      SNAPSHOT_ID: ${{ inputs.snapshot }}
+      TARGET: ${{ matrix.target }}
+      EXPECTED_SYSTEM: ${{ matrix.system }}
+      EXPECTED_ARCH: ${{ matrix.arch }}
+      EXPECTED_HOST: ${{ matrix.host }}
+      CONTROLLER_COMMIT: ${{ github.sha }}
+      RUSTUP_TOOLCHAIN: '1.91.0'
+      CARGO_BUILD_JOBS: '2'
+      CARGO_INCREMENTAL: '0'
+      PYTHONDONTWRITEBYTECODE: '1'
+      PYTHONNOUSERSITE: '1'
+      PIP_DISABLE_PIP_VERSION_CHECK: '1'
+      PIP_NO_INPUT: '1'
+      PIP_CONFIG_FILE: /dev/null
+      OMP_NUM_THREADS: '1'
+      OPENBLAS_NUM_THREADS: '1'
+      MKL_NUM_THREADS: '1'
+      BLIS_NUM_THREADS: '1'
+      VECLIB_MAXIMUM_THREADS: '1'
+      NUMEXPR_NUM_THREADS: '1'
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+
+      - name: Prepare hosted storage
+        run: |
+          set -euo pipefail
+          export EVIDENCE="$RUNNER_TEMP/signal-evidence"
+          export CANDIDATE="$EVIDENCE/candidate"
+          export CARGO_HOME="$RUNNER_TEMP/cargo-home"
+          export CARGO_TARGET_DIR="$RUNNER_TEMP/cargo-target"
+          export RUSTUP_HOME="$RUNNER_TEMP/rustup-home"
+          export TMPDIR="$RUNNER_TEMP/scratch"
+          export XDG_CACHE_HOME="$RUNNER_TEMP/signal-cache"
+          export PIP_CACHE_DIR="$RUNNER_TEMP/signal-cache/pip"
+          export PYTHONUSERBASE="$RUNNER_TEMP/signal-python-user"
+          export MPLCONFIGDIR="$RUNNER_TEMP/signal-cache/matplotlib"
+          for name in EVIDENCE CARGO_HOME CARGO_TARGET_DIR RUSTUP_HOME TMPDIR XDG_CACHE_HOME PIP_CACHE_DIR PYTHONUSERBASE MPLCONFIGDIR; do
+            mkdir -p "${!name}"
+            printf '%s=%s\n' "$name" "${!name}" >> "$GITHUB_ENV"
+          done
+          printf 'CANDIDATE=%s\n' "$CANDIDATE" >> "$GITHUB_ENV"
+          python3 -B -c 'import os, sys; from pathlib import Path; sys.path.insert(0, "scripts"); import signal_candidate as c; c.save(Path(os.environ["EVIDENCE"]) / "storage.json", c.storage())'
+          mkdir "$EVIDENCE/controller"
+          cp scripts/signal_candidate.py scripts/signal_source_on_native.py \
+            scripts/test_signal_candidate_workflow.py scripts/infercnv_source_snapshot.py \
+            scripts/signal_first_workflow_oracle.py .github/workflows/signal-candidate.yml \
+            assets/signal-native-fixtures-20261031.json assets/signal-first-runtime-20261031.json \
+            "$EVIDENCE/controller/"
+          python3 -B -c 'import os, sys; from pathlib import Path; sys.path.insert(0, "scripts"); import signal_candidate as c; root = Path(os.environ["EVIDENCE"]); c.save(root / "controller-checksums.json", c.tree_manifest(root / "controller"))'
+          {
+            printf 'controller_commit=%s\nsnapshot=%s\ntarget=%s\n' "$CONTROLLER_COMMIT" "$SNAPSHOT_ID" "$TARGET"
+            uname -a
+            df -h "$RUNNER_TEMP"
+          } > "$EVIDENCE/host.log"
+          ulimit -c 0
+
+      - name: Verify and extract frozen source
+        id: snapshot
+        run: |
+          set -euo pipefail
+          python3 -B scripts/signal_candidate.py prepare --snapshot "$SNAPSHOT_ID" --output "$CANDIDATE" \
+            2>&1 | tee "$EVIDENCE/prepare.log"
+          cp -R "$EVIDENCE/controller" "$CANDIDATE/controller"
+
+      - name: Install native Rust 1.91
+        if: ${{ !cancelled() && steps.snapshot.outcome == 'success' }}
+        uses: dtolnay/rust-toolchain@1.91.0
+        with:
+          components: clippy,rustfmt
+
+      - name: Verify native compiler and locked dependency routes
+        id: metadata
+        if: ${{ !cancelled() && steps.snapshot.outcome == 'success' }}
+        run: |
+          set -euo pipefail
+          python3 -B scripts/signal_candidate.py metadata --output "$CANDIDATE" \
+            2>&1 | tee "$EVIDENCE/metadata.log"
+
+      - name: Format and strict all-target Clippy
+        if: ${{ !cancelled() && steps.metadata.outcome == 'success' }}
+        working-directory: ${{ runner.temp }}/signal-evidence/candidate/source
+        run: |
+          set -euo pipefail
+          cargo fmt --all -- --check 2>&1 | tee "$EVIDENCE/format.log"
+          cargo clippy --locked --all-targets -- -D warnings 2>&1 | tee "$EVIDENCE/clippy.log"
+
+      - name: Test debug
+        if: ${{ !cancelled() && steps.metadata.outcome == 'success' }}
+        run: |
+          set -euo pipefail
+          python3 -B scripts/signal_candidate.py tests --mode debug --output "$CANDIDATE" \
+            2>&1 | tee "$EVIDENCE/debug.log"
+
+      - name: Test release
+        id: release
+        if: ${{ !cancelled() && steps.metadata.outcome == 'success' }}
+        run: |
+          set -euo pipefail
+          python3 -B scripts/signal_candidate.py tests --mode release --output "$CANDIDATE" \
+            2>&1 | tee "$EVIDENCE/release.log"
+
+      - name: Actual one-four worker graph and semantic determinism
+        id: workers
+        if: ${{ !cancelled() && steps.release.outcome == 'success' }}
+        run: |
+          set -euo pipefail
+          python3 -B scripts/signal_candidate.py workers --output "$CANDIDATE" \
+            2>&1 | tee "$EVIDENCE/workers.log"
+
+      - name: Acquire and install source runtime on Linux only
+        id: runtime
+        if: ${{ !cancelled() && steps.workers.outcome == 'success' && matrix.target == 'linux-x86_64' }}
+        run: |
+          set -euo pipefail
+          python3 -B scripts/signal_first_workflow_oracle.py --acquire \
+            --runtime-lock assets/signal-first-runtime-20261031.json --output "$EVIDENCE/runtime" \
+            2>&1 | tee "$EVIDENCE/runtime-acquisition.log"
+          "$EVIDENCE/runtime/python/bin/python3" -B scripts/signal_first_workflow_oracle.py --install \
+            --runtime-lock assets/signal-first-runtime-20261031.json --output "$EVIDENCE/runtime" \
+            2>&1 | tee "$EVIDENCE/runtime-install.log"
+
+      - name: Pinned source on the same native files
+        if: ${{ !cancelled() && steps.runtime.outcome == 'success' && matrix.target == 'linux-x86_64' }}
+        run: |
+          set -euo pipefail
+          "$EVIDENCE/runtime/venv/bin/python" -B scripts/signal_source_on_native.py \
+            --candidate "$CANDIDATE" --runtime "$EVIDENCE/runtime" \
+            --lock assets/signal-first-runtime-20261031.json --output "$EVIDENCE/source-on-native" \
+            2>&1 | tee "$EVIDENCE/source-on-native.log"
+
+      - name: Bind unchanged source and all retained evidence
+        if: always()
+        run: |
+          set -euo pipefail
+          status=0
+          if [[ -d "$CANDIDATE" ]]; then
+            python3 -B scripts/signal_candidate.py finalize --output "$CANDIDATE" \
+              2>&1 | tee "$EVIDENCE/integrity.log" || status=$?
+          fi
+          python3 -B scripts/signal_first_workflow_oracle.py --manifest --output "$EVIDENCE"
+          exit "$status"
+
+      - name: Package originals and failures
+        if: always()
+        run: |
+          set -euo pipefail
+          test ! -e "$RUNNER_TEMP/signal-evidence.tar"
+          test ! -L "$RUNNER_TEMP/signal-evidence.tar"
+          tar -cf "$RUNNER_TEMP/signal-evidence.tar" -C "$RUNNER_TEMP" signal-evidence
+
+      - name: Retain complete original evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: signal-native-${{ github.run_id }}-${{ github.run_attempt }}-${{ matrix.target }}
+          path: ${{ runner.temp }}/signal-evidence.tar
+          include-hidden-files: true
+          if-no-files-found: error
+          retention-days: 90

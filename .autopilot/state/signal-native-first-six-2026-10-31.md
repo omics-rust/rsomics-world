@@ -1,21 +1,67 @@
 # Whole-first-six native signal implementation
 
-## Integrated native graph progresses; optional BED policy held
+## One whole-feature review complete; concentrated correction active
 
 The actual private dependency graph builds with bigtools0.5.8/bamio0.8.4 and
-one libdeflate-sys1.26.1. The coordinating implementer reports a real connected
-six-command CLI check passing, including explicit Rust test-only sort/index,
-independent retained source matrix/NPZ/track values, the three approved repairs
-and meaningful native zoom rollover. This is local implementation progress,
-not parent-adopted whole-feature/native4/performance/source-on-native proof.
-Final frozen source/report and one whole-feature review are still required.
+one libdeflate-sys1.26.1. Parent reads the final integrated report and freshly
+verifies all37 live source bindings and the regular-only frozen archive.
+The final packet is
+`/Volumes/KIOXIA/Developments/tmp/signal-native-first-six-20261031.zhWKIf/`:
+REPORTf5087c6dd2746c42ea930ec37033f637e4100afa9fff8143f419a9cc0f4c673c;
+archivefab78d203675328b9b1175911dbf8f33cf68eb1007672ed6b70d56a302ded1c0;
+manifest10e70819f550eb2d30f1b2db4b6c16aa5dc88a8c242f53c60808faecdc7e6489.
+Actual local logs show9 library tests, one connected six-command CLI workflow,
+formatting and strict all-target Clippy passing. The connected retained set
+contains183 regular files and42 successful plus3 intentionally failing CLI
+calls, with explicit Rust test-only sort/index and native outputs passed into
+later native steps. These are local implementation results, not native4,
+same-file upstream interoperability or representative performance acceptance.
+The one fresh whole-feature review is complete:
+`/Volumes/KIOXIA/Developments/tmp/signal-whole-feature-review-20261031.Ux2Axy/REPORT.md`,
+SHA3600f3fa1eabcdef905b3736148b87ee8cd3fb4ddf7ba75d9df326fab452a880.
+Parent reads the complete report, checks affected code and primary profile
+bodies, and adopts its nine established findings: normalization names removed
+from output, BAM missingness ordering, region task/bin rules, boundary-specific
+aliases, incomplete spaced BAM samples, repeated/wrong-population geometry,
+quadratic annotation indexing, whole-summary residency and file-controlled BBI
+allocation admission. The coordinator handles these existing seams in one
+concentrated correction wave before a new actual snapshot is frozen. No second
+reviewer, helper-level campaign, widened band or new public API is authorized.
 
 A complete BAM/count/normalization/filter partition and C region/matrix
 partition are integrated; natural tests/strict checks have actual logs.
 The private writer reproduces the pinned source's observed zoom-buffer quirks
 without changing full-resolution values or silently choosing exact summaries.
-Legitimate empty-BW encoding is an actual remaining codec integration edge;
-no fabricated zero or sentinel interval is accepted as an output substitute.
+A minimal legitimate empty-BW path is implemented and locally read back with
+the declared chromosome dictionary, no intervals and zero covered bases; no
+fabricated zero or sentinel interval substitutes for empty output. Actual
+pinned pyBigWig reading of that same native file remains a hosted gate.
+
+The parent adopts the representative workload in
+docs/plans/2026-10-31-signal-whole-workflow-performance.md before preparation or
+timing: one retained9.81M-record public BAM, three exact-QNAME engineering
+partitions,58,384 rich annotation rows/two strand groups and the full connected
+six-operation graph at1/4 workers. It is one biological specimen, not three
+replicates. Source/native input/output/resource qualification precedes timing;
+no signal performance observation or release decision has been made.
+
+The native4/same-file hosted gate is parent-read and adopted as preparation,
+not as an executed result. Parent reads the complete501-line native controller,
+312-line source consumer,129-line preparation test and188-line workflow plus
+REPORT/DELIVERY in
+`/Volumes/KIOXIA/Developments/tmp/signal-hosted-gates-20261031.cmAh5X/`.
+REPORT0ef752038b72732d3dfc680f88312c83e62530f705ad4b340de1f93ec6ede0a2;
+DELIVERY8988888cfbc971e43d65939de91b6c1aa34c335324647a26843e299c34fec1fa.
+All six delivered files, unchanged source producer/runtime lock and948 portable
+fixture members verify freshly. The actual final control suite passes512 tests
+with2 existing skips; the initial wrong-Python3.9 failures stay retained.
+The selector requires a real reviewed source snapshot under
+`.autopilot/snapshots/signal-native-2026-10-31/green-N`; none exists yet.
+Four native jobs and Linux-only pinned source reads of the same native BW,
+zoom/empty/rollover, NPZ and matrix files remain unexecuted. The separate pinned
+writer receives the native quantized run stream only as a diagnostic comparator,
+never as a replacement connected input. No source replay or success receipt
+is inferred from passing controller preparation tests.
 
 One NEW optional-output policy choice is pending separately: actual source
 save_BED truncates its joined starts to the first character before subtraction.
