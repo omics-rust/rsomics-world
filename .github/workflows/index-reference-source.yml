@@ -1,0 +1,64 @@
+name: Index reference workflow source preflight
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  source-casebook:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 75
+    container:
+      image: gcc:14.3.0-bookworm@sha256:a689e29bc3adf4663ef9a141d23081252764d1319c63f591a027bd6fd676f4c1
+      options: --cpus 4 --memory 8g --memory-swap 8g
+    defaults:
+      run:
+        shell: bash
+    env:
+      INDEX_CONTAINER_DIGEST: sha256:a689e29bc3adf4663ef9a141d23081252764d1319c63f591a027bd6fd676f4c1
+      PYTHONDONTWRITEBYTECODE: '1'
+      PYTHONNOUSERSITE: '1'
+      PYTHONPATH: ''
+      CC: /usr/local/bin/gcc
+      CXX: /usr/local/bin/g++
+      OMP_NUM_THREADS: '1'
+      OPENBLAS_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+
+      - name: Create isolated runtime and source evidence routes
+        run: |
+          set -euo pipefail
+          umask 077
+          ulimit -c 0
+          python3 -B scripts/index_reference_source.py init
+
+      - name: Admit official runtime and run the connected source casebook
+        run: |
+          set -euo pipefail
+          umask 077
+          ulimit -c 0
+          python3 -B scripts/index_reference_source.py execute > "$INDEX_SESSION/controller.stdout" 2> "$INDEX_SESSION/controller.stderr"
+
+      - name: Bind every available original and source observation
+        if: always()
+        run: |
+          set -euo pipefail
+          umask 077
+          ulimit -c 0
+          python3 -B scripts/index_reference_source.py finalize
+
+      - name: Retain public source originals even after failure
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: index-reference-source-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ env.INDEX_CARRIER }}
+          include-hidden-files: true
+          if-no-files-found: error
+          retention-days: 90
