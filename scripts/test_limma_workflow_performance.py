@@ -5,6 +5,7 @@ import re
 import subprocess
 import tempfile
 import unittest
+from unittest.mock import patch
 
 from test_infercnv_ingestion_workflow import bash_body, steps
 
@@ -13,6 +14,53 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 class LimmaWorkflowPerformanceTests(unittest.TestCase):
+    def test_qr_matrix_routing_and_untimed_inspection_failure_preserve_contract(self):
+        import limma_logexpression_performance as ordinary
+        from infercnv_trial_process import TrialProcessError
+        driver = (ROOT / 'scripts/limma_logexpression_performance.R').read_text()
+        classifier = driver.split('selected_kind <- function(path)', 1)[1].split('numeric_class <-', 1)[0]
+        rule = re.search(r'if \(grepl\("([^"]+)", path\)\) return\("linear"\)', classifier)
+        problems = []
+        if rule is None:
+            problems.append('continuous QR matrix falls through to exact comparison')
+        else:
+            self.assertEqual(rule[1], '/qr/qr$')
+            for prefix in ('bundle/base', 'initial/contrast', 'initial/moderated',
+                           *(f'results/{name}/{stage}' for name in ('forward', 'reverse', 'mixed') for stage in ('contrast', 'moderated'))):
+                self.assertRegex(prefix + '/qr/qr', rule[1])
+            for field in ('qraux', 'rank', 'pivot', 'tol'):
+                self.assertNotRegex('bundle/base/qr/' + field, rule[1])
+        walker = driver.split('walk <- function(actual, expected, path)', 1)[1]
+        for guard in ('!identical(typeof(actual), typeof(expected))', '!identical(attributes(actual), attributes(expected))',
+                      'length(actual) != length(expected)'):
+            self.assertLess(walker.index(guard), walker.index('kind <- if'))
+        with tempfile.TemporaryDirectory(prefix='limma-inspection-context-') as temporary:
+            directory = Path(temporary) / 'source-warmup'
+            marker = b'opaque protocol output; not decoded as RDS\n'
+            def completed_source(command, prefix, cores):
+                output = Path(command[-2])
+                output.mkdir()
+                for name in ('fit.rds', 'forward.rds', 'reverse.rds', 'mixed.rds', *ordinary.OUTPUTS):
+                    (output / name).write_bytes(marker)
+                (output / 'inner-timing.json').write_text(json.dumps(dict(inner_elapsed_seconds=0,
+                    inner_user_seconds=0, inner_system_seconds=0)))
+                return {}
+            original = TrialProcessError('trial exited with status 1')
+            with patch.object(ordinary, 'measured', side_effect=completed_source), patch.object(ordinary, 'run_child', side_effect=original):
+                try:
+                    ordinary.source_trial(directory, Path('/unread-reference'), Path('/unread-qualification'), '0,1,2,3')
+                except TrialProcessError as error:
+                    if 'untimed source inspection' not in str(error) or str(directory / 'inspection-process.stderr') not in str(error):
+                        problems.append('untimed source inspection phase/path context is absent')
+                    if error.__cause__ is not original:
+                        problems.append('original inspection failure is not retained as the cause')
+                else:
+                    problems.append('inspection failure was swallowed')
+            self.assertTrue(all((directory / 'output' / name).read_bytes() == marker
+                for name in ('fit.rds', 'forward.rds', 'reverse.rds', 'mixed.rds', *ordinary.OUTPUTS)))
+            self.assertTrue((directory / 'timed-output-manifest.json').is_file())
+        self.assertEqual(problems, [])
+
     def test_ordinary_seven_process_admission_reuse_and_source_symmetry(self):
         from limma_logexpression_performance import native_commands, load_native_receipt, check_validation_files, OUTPUTS, STATES
         commands = native_commands(Path('/source'), Path('/output'))

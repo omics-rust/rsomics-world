@@ -252,8 +252,12 @@ def source_trial(directory, witness, qualification, cores):
         check(type(timing[name]) in (int, float) and math.isfinite(timing[name]) and timing[name] >= 0, 'invalid source inner timing')
         row[name] = timing[name]
     validation = directory / 'validation'
-    run_child(['Rscript', '--vanilla', str(driver), 'inspect', str(output), str(validation), str(qualification), str(witness)],
-              directory / 'inspection-process', timeout=1800)
+    try:
+        run_child(['Rscript', '--vanilla', str(driver), 'inspect', str(output), str(validation), str(qualification), str(witness)],
+                  directory / 'inspection-process', timeout=1800)
+    except TrialProcessError as error:
+        raise TrialProcessError(f'source trial {directory.name}: untimed source inspection failed ({error}); '
+            f'stderr={directory / "inspection-process.stderr"}; failures={validation / "failures.json"}') from error
     report = _load_json(validation / 'comparison.json', 'actual measured source comparison')
     check(report['passed'] is True and report['bounds'] == {key: list(pair) for key, pair in BOUNDS.items()} and
           report['positive_probability_log_bound'] == 1e-3, 'measured source compatibility failed')

@@ -1,5 +1,31 @@
 # Native ordinary-expression lifecycle
 
+## All four original platform archives retained
+
+Supplemental retention for run41191571424/attempt1 is complete. All four
+original ZIPs and their source/binary bindings are now verified locally;
+the original core and native-admission receipt remain unchanged. This is
+archive completion, not another scientific run or a performance result.
+
+The first supplemental report72ca3cc6e575d27074c56db21d693bc35d4b12ec853ffd00db735f564d495c86
+and verification5a2698827030a6b1a1a3911b0047852f2862f6e075708ca656bf51785541b040
+qualify Linux ARM and macOS Intel. The final Mac ARM completion report
+e40f2c8dcb1457acdfd04f30172e6fb5e41c8cbae9c3c6c9f95d96712fc7bf39
+and verification775f330d95f6d9f456c6810dea24b949c53f97881c46749aa487b8e227c8400b
+are retained beside the immutable core in the evidence directory below.
+Actual Mac ARM artifact13039655132/310538816bytes has ZIP
+2b11eea31874446d542df86c6846a4c4ef47abd33a44ddab123070f9e163c8d4
+and Mach-O executable6f0b60db027e15c662329b72c961bb0b45e6409d29cce5b9dbc01fb40665b84e.
+All2416 members,31 source files, count1/4 and all5 ordinary casesx1/4 pass
+the existing qualifiers;62 ordinary commands and1,752,660 finite comparisons
+pass. No bounds, original outputs or cross-platform floating-point claims
+change. All7364 pre-existing evidence files remain byte-identical.
+
+Parent reads both supplemental reports and freshly checks their hashes and
+verification/completion seals. Earlier sections retain their historical
+pending-archive status at core creation; this section supersedes that status
+only. Whole-workflow performance and registry authorization remain separate.
+
 ## Exact-head native4 and retained Linux core accepted
 
 Run41191571424/attempt1 is terminal SUCCESS at world

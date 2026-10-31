@@ -94,6 +94,7 @@ ordinary_performance_inspect <- function(trial, output, qualification, witness) 
     fail <- function(path, reason, details=NULL) failures[[length(failures)+1L]] <<- list(path=path, reason=reason, details=details)
     selected_kind <- function(path) {
         if (grepl("/parameters(/|$)|/input_kind$|/expression$|/samples(/|$)|/design(/|$)|/contrasts(/|$)|/df.residual$", path)) return(NULL)
+        if (grepl("/qr/qr$", path)) return("linear")
         slot <- tail(strsplit(path, "/", fixed=TRUE)[[1L]], 1L)
         if (slot %in% c("Amean", "AveExpr", "E")) return("expression")
         if (slot %in% c("coefficients", "stdev.unscaled", "cov.coefficients", "logFC", "sigma")) return("linear")
