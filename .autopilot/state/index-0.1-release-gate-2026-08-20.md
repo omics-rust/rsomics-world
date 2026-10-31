@@ -1,5 +1,28 @@
 # rsomics-index 0.1 release gate
 
+## Current storage contract — 2026-11-01
+
+Owner c7a8f8d52c00feb405a5c968f48d425668dd3219 supersedes the historical
+boot-occupancy stop, without changing Rust code, Cargo.lock or the13-lane
+benchmark contract. Its new local guard checks actual mounted external
+devices, resolved paths, Cargo's offline/locked target, Rustup and caches;
+the old harness checks binary/oracle/reference/result paths before writes.
+External headroom remains mandatory; unrelated boot usage does not stop work.
+The obsolete default boot-disk oracle path is no longer accepted.
+
+Actual local shell syntax passes. The guard resolves both external device
+identities and the exact index target, then --exec true succeeds; a boot path
+and --target-dir override are rejected. An actual macOS Bash3 empty-array
+failure was corrected before the successful preflight. No product build,
+upstream execution, benchmark or reference download occurred. Exact-head
+four-native CI41253010155 is queued, not yet accepted by this entry.
+
+The historical raw benchmark bundle remains missing and publication held.
+The new FASTA→FAI/GZI→ordered-region→SAM-dictionary workflow is being prepared
+inside this existing product; no micro-crate or public foundation is created.
+The dated September and August entries below are provenance, not current
+storage instructions or fresh registry status.
+
 ## Current state — 2026-09-08
 
 Publication remains held. The previous handoff below is historical, not the

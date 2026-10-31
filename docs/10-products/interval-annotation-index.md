@@ -315,9 +315,12 @@ The replacement harness records and checks the clean Git head, release-binary
 SHA-256, `Cargo.lock` SHA-256, toolchain, binary path, and build time before
 correctness or timing work. It also rejects nonempty result directories, and
 the summary command verifies the complete evidence manifest before rendering.
-The September repair also checks physical APFS container occupancy rather than
-the read-only system-volume `df /` percentage. The live Mac and Linux build
-hosts exceed the storage threshold. The
+The November storage contract removes the obsolete boot-occupancy stop.
+The owner's guard verifies physically mounted external devices, resolved build,
+Rustup, scratch/cache paths, Cargo's actual target and external headroom; the
+benchmark also checks oracle/reference/result paths before writing. Unrelated
+boot usage does not block externally routed work. This does not restore the
+missing raw benchmark bundle or qualify new performance. The
 [release state](../../.autopilot/state/index-0.1-release-gate-2026-08-20.md)
 tracks this gate, the missing raw evidence, exact-head CI, and the separate
 registry-credential access gate.
