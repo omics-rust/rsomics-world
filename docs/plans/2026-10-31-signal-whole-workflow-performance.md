@@ -1,5 +1,28 @@
 # Signal whole-workflow performance contract
 
+## Additional shared-host execution route, selected before new results
+
+The original otherwise-idle performance gate remains unearned. A single
+persistent Docker execution on the existing4090 SSH host may instead produce
+explicitly shared/non-exclusive evidence. CPU affinity limits our work but
+does not reserve CPUs or exclude other users. Do not describe its results as
+idle-host acceptance or isolated scalability, even if the strict ranges pass.
+
+Retain the identical data, complete graphs,1/4 workers, warmups/five pairs,
+numerical/strict whole-stage rules and storage limits below. Restore the
+accepted scientific runtime unchanged at its original absolute prefix. Bind
+the original GitHub source/native authorities separately from the real SSH
+execution ID/controller Git identity/image/container/providers. No fictitious
+GHA flags, token inside the scientific container, runner registration, package
+patching/rebuild or interference with other jobs. Admit actual ABI/provider
+closure and complete qualification on the new context before timing; absence
+of delegated per-trial cgroups keeps exact aggregate memory N/A.
+
+The selected narrow design is retained at
+`/Volumes/KIOXIA/Developments/tmp/signal-ssh-context-proposal-20261101.sbxzmjru/PROPOSAL.md`,
+SHA256`8db12809ef4eeb283bbad4ed42ad916b67dde2a97577bcff02d9554bdd93d8b2`.
+This is an execution plan, not an acquired image, source result or release gate.
+
 ## Execution capacity discovered in the actual qualification
 
 Actual hosted run41227066387 exposes a valid F-order NPZ that the checker

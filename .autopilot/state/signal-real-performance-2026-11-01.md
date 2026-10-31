@@ -1,5 +1,24 @@
 # Real signal campaign
 
+## Additional shared-host route selected before any new measurement
+
+Root reads the complete narrow SSH proposal at
+signal-ssh-context-proposal-20261101.sbxzmjru/PROPOSAL.md,
+SHA8db12809ef4eeb283bbad4ed42ad916b67dde2a97577bcff02d9554bdd93d8b2.
+Prepare one persistent4090 Docker context, explicitly shared/non-exclusive.
+This is additional bounded evidence, not admission of the original idle-host
+or isolated-scaling gate. Do not register a runner, fabricate GHA identity,
+interfere with other users or rebuild/patch scientific packages to fit a host.
+
+Keep complete source/native graphs, fixed data,1/4 workers, all qualification,
+warmups/five alternating pairs, numerical and strict whole/stage thresholds,
+160GiB retention/32GiB headroom unchanged. Preserve original runtime bytes at
+their original absolute prefix; separately admit pinned image/system providers
+and record genuine SSH/controller/execution identities. Until that ABI and
+prefix qualification passes, no new science or performance result is earned.
+No remote directory/image/container/runtime mutation has happened in the
+read-only feasibility work. The68-job hosted design is not selected.
+
 ## Fresh 4090 read-only feasibility does not admit an idle benchmark
 
 Root reads ssh-4090-signal-feasibility-20261101.0DpHC6 REPORT
