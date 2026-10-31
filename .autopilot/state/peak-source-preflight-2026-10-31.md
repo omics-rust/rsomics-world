@@ -1,5 +1,45 @@
 # Peak next-product source qualification
 
+## Actual targeted source supplement accepted
+
+Run41228249024/attempt1 at7b14e338453cf4114747da6d121ff29e144bdedc is
+SUCCESS after exact controller41227749541. Parent retains the full original
+artifact13052618072 ZIP2765326243B,
+SHA c754936a89b64bc499e72c0b0e0b0fe8e8e8d55571976b99a35804ff5a2a702d,
+and its full5300643840B TAR
+41cf17871413a340d297ad86d9cff1214b135b49d93f16bacd433e0c177d39da.
+This is actual local full retention, not only the earlier hosted diagnostic
+projection. All21838 regular bodies plus1 virtual alias match all21839
+manifest identities, SHA427f931fd47f962d03f3e08487e6488a909344826306a393ca66dc723e096241.
+Every ZIP stream passes CRC; source/runtime links stay virtual, not materialized.
+
+Evidence is /Volumes/KIOXIA/Developments/tmp/peak-addon-success-retention-20261101.5aSfyF/.
+The exact6 captured controllers match the current unchanged7b14e338 controller
+bytes. Parent reads qualification.json, all3 complete10-row annotation tables,
+the complete16-row count inputs and all5 count matrices/effect observations.
+Source qualification is complete:3 annotations,5 counts,1 fresh reload;
+all11 count branch predicates are true. Both strands actually exhibit promoter,
+5UTR, exon, intron and3UTR categories under narrow TSS, contrasted to the actual
+default promoter labels while nearest transcript/signed distance stay fixed.
+All claimed observations are actual raw source outputs, not generated intent.
+No native correctness, performance or publication follows from source success.
+
+Parent adopts this supplement as additional source authority alongside unchanged
+original38-case41209740891. The local raw-text selection keeps source bodies
+unchanged; full original carriers and all RDS models remain retained without
+local R/scientific execution. Full local verification/raw selection proof SHA
+a0cf912c415f8a9ce2cc4993f711f5c58d96aa9a76faeed5fa8248d0fc3a3984.
+
+Use the actual10 small regular input/answer files to strengthen the EXISTING
+whole-operation annotation/count tests before the first frozen native snapshot.
+No new test functions, source campaign, Cartesian edge expansion, tolerance,
+public policy/default or additional review ladder is needed. The portable
+fixture closure becomes69 files, adding addon/inputs/{annotation,count}.bed,
+addon/calls/{A-gtf-narrow,A-gff3-narrow,A-gtf-default}/annotation.tsv and
+addon/calls/{C-default,C-q20,C-proper,C-include,C-split}/stdout.txt. Preserve
+two explicit original provenance blocks; do not pretend all69 derive from
+the older manifest or mutate the original protected selected59 source tree.
+
 ## Verified original text identifies an R-loader context mismatch
 
 Actual failed addon41224174210 ated0f71c8504ad0a5ed39d30352a9fe89030ffcf2
