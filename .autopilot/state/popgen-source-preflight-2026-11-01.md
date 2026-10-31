@@ -1,5 +1,30 @@
 # Popgen connected source workflow
 
+## Second actual attempt passes runtime setup; closure adapter corrected
+
+Actual41250505334/1 at a6012d90 passes the symlink venv, explicit ensurepip,
+all wheel installs/pip checks, vcftools build/version and NumPy/allel/Dask import.
+All57 retained child statuses return0. The controller nevertheless rejects
+isolated ldd of an already-loaded internal libgfortran because it lacks its
+NumPy extension parent's RPATH context. The same actual import map and parent
+ldd7/9 show gfortran/openblas/quadmath successfully resolved with matching SHA.
+This is not an upstream scientific error; casebook/real data remain unreached.
+
+Root reads the complete second REPORT and original anchors, then separates
+actual executable entrypoints from observed Python-loaded DSOs. Executable
+ldd still rejects missing dependencies; every observed ELF retains static
+header/dynamic/version records and body capture, with its identity rechecked
+against the successful real import. Internal DSOs are not reinterpreted as
+standalone programs. No library/package/data/numeric-policy change or blanket
+missing-library exemption; actual next-run acceptance remains pending.
+
+Full two-file ZIP933389118B, authenticated TAR932874240B,9382 exact members/
+7685 regular bodies/1052 metadata-only links are retained safely in
+popgen-second-hosted-failure-20261101.y_mzjcio. REPORT
+d493b9133d1077ea1a9d4bd82bd7d5bf5530b58b599e5850b35460712ee3fd58;
+completed690bfe6e12cee2e5fb8070ff348aef3103b76a9670de0d20c5db71ed87d43ecd.
+No local scientific execution or secret-byte handling occurs.
+
 ## Authenticated first failure is a copied-interpreter layout mismatch
 
 Root reads the complete recovered report and original failure anchors in

@@ -390,9 +390,11 @@ def runtime_probe(output: Path) -> None:
     numpy.show_config()
 
 
-def library_closure(root: Path, executables: list[Path]) -> None:
+def library_closure(root: Path, executables: list[Path], loaded_file_identities: dict) -> None:
+    entrypoints = {path.resolve() for path in executables}
+    imported = {Path(name).resolve(): expected for name, expected in loaded_file_identities.items()}
     libraries = {}
-    for i, executable in enumerate(sorted(set(path.resolve() for path in executables))):
+    for i, executable in enumerate(sorted(entrypoints | imported.keys())):
         with executable.open('rb') as source:
             header = source.read(20)
         if header[:4] != b'\x7fELF':
@@ -400,21 +402,27 @@ def library_closure(root: Path, executables: list[Path]) -> None:
         if header[4:6] != b'\x02\x01' or int.from_bytes(header[18:20], 'little') != 62:
             raise ValueError('actual loaded ELF is not little-endian64-bit x86_64')
         capture(root, f'elf-{i}', ['readelf', '--file-header', '--program-headers', '--dynamic', '--version-info', executable])
-        call = capture(root, f'ldd-{i}', ['ldd', executable], allowed=(0, 1))
-        text = (call / 'stdout.txt').read_text() + (call / 'stderr.txt').read_text()
-        static = re.search(r'not a dynamic executable|statically linked', text)
-        if 'not found' in text or (json.loads((call / 'status.json').read_text())['returncode'] and not static):
-            raise ValueError('observed ELF dependency resolution failed')
-        for token in [str(executable), *re.findall(r'(?:=>\s*)?(/[^\s]+)', text)]:
+        paths = {str(executable)}
+        if executable in entrypoints:
+            call = capture(root, f'ldd-{i}', ['ldd', executable], allowed=(0, 1))
+            text = (call / 'stdout.txt').read_text() + (call / 'stderr.txt').read_text()
+            static = re.search(r'not a dynamic executable|statically linked', text)
+            if 'not found' in text or (json.loads((call / 'status.json').read_text())['returncode'] and not static):
+                raise ValueError('observed ELF dependency resolution failed')
+            paths.update(re.findall(r'(?:=>\s*)?(/[^\s]+)', text))
+        for token in sorted(paths):
             path = Path(token)
             if not path.is_file():
                 continue
             actual = identity(path.resolve())
+            if path.resolve() in imported and actual != imported[path.resolve()]:
+                raise ValueError('actual imported library changed after the runtime probe')
             target = root / 'loaded-libraries' / (actual['sha256'] + '-' + path.name)
             target.parent.mkdir(exist_ok=True)
             if not target.exists():
                 shutil.copy2(path.resolve(), target)
-            libraries[token] = dict(realpath=str(path.resolve()), retained=str(target.relative_to(root)), **actual)
+            libraries[token] = dict(realpath=str(path.resolve()), retained=str(target.relative_to(root)),
+                                   actual_import=path.resolve() in imported, **actual)
     save(root / 'loaded-libraries.json', libraries)
 
 
@@ -494,8 +502,8 @@ def prepare_runtime(private: Path) -> tuple[Path, Path]:
         raise ValueError('installed vcftools executable version differs')
     capture(private, 'runtime-import', [python, '-B', Path(__file__), 'runtime-probe', '--output', runtime / 'actual-import.json'])
     observed = json.loads((runtime / 'actual-import.json').read_text())
-    loaded = [Path(path) for path in observed['loaded_files'] if Path(path).is_file()]
-    library_closure(private, [python, executable, Path('/usr/local/bin/gcc'), Path('/usr/local/bin/g++'), *loaded])
+    library_closure(private, [python, executable, Path('/usr/local/bin/gcc'), Path('/usr/local/bin/g++')],
+                    observed['loaded_file_identities'])
     save(runtime / 'installed-runtime-members.json', archive_inventory(runtime))
     save(runtime / 'admitted-runtime.json', dict(python=str(python), python_identity=identity(python),
          vcftools=str(executable), vcftools_identity=identity(executable), imported=observed,
