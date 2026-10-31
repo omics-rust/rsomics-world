@@ -1,5 +1,45 @@
 # Native peak first-four construction
 
+## Reviewed real source and69-file native gate frozen
+
+The one fresh whole-product review reports three materialP2 issues and no
+architecture rewrite: prospective case-folding output aliases, orphan GFF3
+Dbxref/geneID precedence and ordinary negative --shift syntax. Root closes all
+three in one wave; actual existing count workflow reproduces aliasing first.
+Case-sensitive names remain valid. Common's underlying fix independently earns
+all four native CI classes; Peak keeps its local preflight while registry0.12.3
+remains immutable. No speculative foundation or path dependency is introduced.
+
+Actual final baseline suite passes lib6/count3/connected nativeCLI1 in both
+debug and release, all full source comparisons retained. The newly accepted
+supplement then strengthens ONLY two existing tests: old3×20561 plus new3×10
+annotations and old4 plus new5×16 count views, each at1/4 workers. Both strengthened
+tests pass release, and final strict all-target Clippy passes; no source answer,
+case/profile, numeric band or algorithm changed to obtain these results.
+The test population remains6+3+1. Root reads all changes and final raw logs.
+
+Private owner is committed on main9431627255dc282992bd1380a41e0a5d729b9edc,
+34 source files, no public remote and publish=false. Green1 source snapshot
+archive71638B SHAa81429be4ba60e490ccd5854451191f8cd67e63d12410aca2201f47095a74793,
+manifest464928e40e9359375faf4293fe54db1d317e30d76695f19035fb4ec33f244729,
+four-file sealf5f0d2078cf27e6ca63690b3124680ed0943c9dd01216a52a7458665d8464972.
+The unchanged exact-byte snapshot guard extracts all34 bodies freshly.
+
+The deterministic portable derivative contains69 regular bodies/128885275B
+from TWO accepted originals. Actual gzip carrier35000679B, SHA
+99bfccd7b23faa97c2f73ecff914cea2c554475eb6bcc24cad72762f0b459465, below50MiB.
+Parent runs actual fixture extraction/complete body comparison after packing;
+all69 match. Old protected source fixtures are not modified. No RDS/runtime
+or copied old huge carrier is part of this asset.
+
+Parent reads ALL1267 lines of the five new workflow/controller/R/preparation
+files. Parent preparation passes1/0.387s; helper's full523-test control suite
+passes with2 existing skips. The actual same-file source gate is not earned:
+new native-four/source workflow still needs exact-head controller CI and dispatch.
+Source consumers will read new native tracks/rows, not substitute source peaks;
+native and runtime identity checks survive failures. Performance, public metadata,
+authentication and publication remain future gates, not phase-boundary stops.
+
 ## Complete local CLI graph and one whole-product review
 
 Root wires all four genuinely functioning operations: call, call-sparse,
