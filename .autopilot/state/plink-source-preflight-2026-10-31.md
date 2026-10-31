@@ -1,5 +1,36 @@
 # PLINK next-workflow source preflight
 
+## Actual whole-six source oracle adopted
+
+Run41221033473/attempt1 at ebec87abd1339f9706ce65cdc690d343f879cea3 is
+terminal SUCCESS after exact controller41220880309. Parent reads complete
+78-line REPORT5b7f4c88d1b028ebfa8190d4351c39c6b79993e3c5557830ffbaa96aa2eb4556,
+freshly hashes full45934499B ZIP0e3ab523c286d573010212841e7c26f57482731af4de957c1359d92fc83db729
+and verifies all4675 delivery bindings (seal3fa4a6375fa667ff65dfabea6e5d4bca52a37d9a015526e9518b9d21b9fac425).
+Evidence: `/Volumes/Zane's HDD/rsomics-fixtures/evidence/plink-first-workflow-oracle-2026-11-01/run-41221033473/`.
+Actual133447680B TAR96ae9afd4631528378625ddc3d982a95d05f5b168dd8b0dd420812e38b784707
+contains all6360 verified CAPTURE entries; no top uploaded sidecar is invented.
+All1402 source blobs match both representations; six exact-head controllers,
+26 inputs, compiled source/helper and library closure qualify. Source NL and
+dated official LM version24Oct2026 are independently observed; their commit
+correspondence remains unproven. SFX and explicit math.h preinclude are captured.
+
+Both source/official x1/4-requested-worker graphs qualify six lanes through
+materialized I/F/P, raw hardcall/phase/dosage/dphase and actual principal
+QC/LD/pruning outputs. Three profile/worker comparisons and all24 actual
+fresh-process P reloads match. All558 captured result/stream records classify:
+505 returned,48 expected negative failures,4 observed DS-cardinality accepts,
+and1 recognized static-official ldd nonzero. No hidden blocked science call.
+HDS expected raw presence/absence/units/orientation are independently checked;
+shared phase loss cannot pass merely through profile agreement.
+
+This adopts a compact SYNTHETIC source oracle only. HWE underflow is not
+reached; raw PGEN cannot certify unmanifested names; malformed DS accept
+diagnostic has no adopted native policy. No production codec, native owner,
+real-cohort validity, representative performance, four-native or release claim
+follows. Earlier failed originals remain immutable and failed. The portfolio
+continues with native peak construction and other unblocked families.
+
 ## Actual compilation failure adopted; standard-header preinclude selected
 
 Source retry41219915856 at7642deb5 is FAILED: dry-run now returns0, actual
