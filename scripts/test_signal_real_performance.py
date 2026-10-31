@@ -166,6 +166,23 @@ class SignalPerformanceTests(unittest.TestCase):
 
     def test_resource_scope_and_strict_ranges(self):
         module=importlib.import_module('signal_real_performance')
+        with tempfile.TemporaryDirectory(prefix='signal-perf-live-files-') as directory:
+            root=Path(directory)
+            (root/'stable').write_bytes(b'abc')
+            transient=root/'source-temporary.bam'; transient.write_bytes(b'temporary')
+            (root/'link').symlink_to(root/'stable')
+            original_stat=Path.stat
+            original_lstat=Path.lstat
+            def disappearing(path,*args,**kwargs):
+                if path==transient:
+                    path.unlink(missing_ok=True)
+                return original_stat(path,*args,**kwargs)
+            def disappearing_lstat(path,*args,**kwargs):
+                if path==transient:
+                    path.unlink(missing_ok=True)
+                return original_lstat(path,*args,**kwargs)
+            with mock.patch.object(Path,'stat',disappearing),mock.patch.object(Path,'lstat',disappearing_lstat):
+                self.assertEqual(module.tree_bytes(root),3)
         self.assertEqual(module.resource_plan([2,3,4,5],range(8),{'MemAvailable':2*2**30},40*2**30)['memory_abort_bytes'],16*2**30)
         for cpus,memory,free in [([0,1,2,9],{'MemAvailable':2*2**30},40*2**30),([0,1,2,3],{'MemAvailable':0},40*2**30),([0,1,2,3],{'MemAvailable':2*2**30},2**30)]:
             with self.assertRaises(ValueError): module.resource_plan(cpus,range(8),memory,free)

@@ -93,7 +93,15 @@ def manifest(root):
 
 
 def tree_bytes(root):
-    return sum(p.stat().st_size for p in Path(root).rglob('*') if p.is_file() and not p.is_symlink())
+    total=0
+    for path in Path(root).rglob('*'):
+        try:
+            observed=path.lstat()
+        except FileNotFoundError:
+            continue
+        if stat.S_ISREG(observed.st_mode):
+            total+=observed.st_size
+    return total
 
 
 def checked_paths(root):
