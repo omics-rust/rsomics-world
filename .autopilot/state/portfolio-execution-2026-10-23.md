@@ -2,18 +2,19 @@
 
 ## Current position
 
-Full30-family goal is active and unchanged. Exact pushed headd709ad00 passes
-controller40643918864 (504tests/two existing skips). Its structure source
+Full30-family goal is active and unchanged. Exact pushed headb117266b passes
+controller41176588300. Prior source-controllerd709ad00 passes40643918864
+(504tests/two existing skips). Its structure source
 run40644150133 is also SUCCESS and completely retained/qualified. The gates
 below supersede the historical execution narrative further down.
 
 | Workstream | Verified current position | Next affected gate |
 |---|---|---|
 | DESeq | final green7/native40629123490 passes all4classes; default/local performance40632494429 accepted, core2ec95e3c... | release metadata/registry authorization, not more native/source campaigns |
-| limma | green1/native40629128374 all4classes; complete voom performance40636288327 accepted, core146f0296... | release metadata/registry authorization; no scaling-win claim |
+| limma | green1/native40629128374 all4classes; complete count-voom performance40636288327 accepted, core146f0296... | original dossier log-expression path still required before full first-release completion; no scope narrowing or scaling-win claim |
 | edgeR | complete private QL workflow; original P/FDR gate remains failed | explicit numerical-contract decision; no band tuning |
 | ecology | source40634594900 fully retained/qualified; whole real table/tree/IDs pass raw checks; reviewed private sparse-alpha committed01c9089, 50 calls/594 values pass; user chooses depth-zero zeros bug fix | implement sparse rarefaction; undefined beta choice holds only that adapter; full product/native4/performance unearned |
-| structure | source40644150133 qualified; private raw I/O fitness passes full fields; actual PDB/CIF inspect/select/split delivered for whole-slice review | adopt reviewed IO then implement analyses; degenerate-torsion choice holds that boundary only; no coordinate foundation |
+| structure | source40644150133 qualified; reviewed actual PDB/CIF inspect/select/split committed d7309d5 after one namespace fix; full integrated checks pass | implement full remaining selectors/analysis engines; degenerate-torsion public choice holds only that adapter; no coordinate foundation |
 | shared TMM | reviewed stats0.2.5 pushed at00a1819; real edgeR/limma contracts, persistent nonunit source regression and exact-head native4 run40648343214 all pass; primitive cost+2.53% | inherited working lock preserved; registry publication/adoption held |
 
 DESeq full14599×7 parametric/local R-inner medians5.264/5.375s versus native1
@@ -37,8 +38,8 @@ never label a higher-depth subset full input. Existing common/help/phylo-tree
 are sufficient; no matrix/count/RNG foundation. Source/runtime/input proofs,
 raw qualification and public-policy acceptance are distinct.
 
-Registry authorization remains held separately: secret metadata last checked
-unchanged at2026-09-08T20:26:08Z. Never read its value or retry the unchanged
+Registry authorization remains held separately: secret metadata freshly checked
+on2026-10-31 is still updated_at2026-09-08T20:26:08Z. Never read its value or retry the unchanged
 failed publication. Relevant family states/receipts own detailed gates and
 pending human decisions; do not pause the portfolio at a phase boundary.
 
