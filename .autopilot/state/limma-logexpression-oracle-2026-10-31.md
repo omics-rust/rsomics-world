@@ -1,5 +1,45 @@
 # Ordinary log-expression source-witness preparation
 
+## Corrected source capture and independent reload accepted
+
+Run41184814043 at world06837d86ee46203cb6e5cafc9cef89f08e3f42df, attempt1,
+is terminal SUCCESS. Parent reads full REPORT2f5f036f854b869089db5164b10449cf96a573d119cec999f2bb7cad1a73e302
+and verificationb53102719eb74b3c0d52a23838ba97f5046a2890a59177e5cf22957de9b0f9fa
+under /Volumes/Zane's HDD/rsomics-fixtures/evidence/limma-logexpression-oracle-2026-10-31/run-41184814043/.
+Parent freshly rehashes seven originals, verifies ZIP CRC/all1164member bytes
+and directly reads capture/reload summaries and no-refit guards. Artifact
+13036282988 is54571680bytes, SHA6460f37c81d0ec62144a38526e05756917702f0629f3e0479bae50d4fef8d7f0.
+All827workflow-manifest entries bind; manifestc374d2be76ce0d0ee25aae2eeb14548ddb02d9866a0266e814bd39c5dec5c19f.
+
+All5cases complete. Captureee4a903ce605ac51d059469d738020fb31e02ac45332156ce30ead5abaece4ab
+retains its original captured-awaiting-independent-reload status; separate
+reload87ca32ca6d0a199c7b6c729ae99096242fcc223e5ef8eee94bde3e5ae922af5f
+is complete. Distinct processes5544/5557 have fitting/preprocessing guards;
+all324result/reload pairs, including195TSVs, match byte-for-byte. Both bundle
+bytes and full saved state remain unchanged. Original input/controller/source/
+runtime/DLL/stats bindings pass; source is not locally re-executed or RDS decoded.
+
+Actual equalvar prior dfInf, tiny prior df0, one-zero NaN t/P/B/F/F-P and the
+coefficient-prior fallback warning are preserved. Single-row source null names
+and table row1 map positionally to suppliedg1 without repairing raw source.
+Native stable input IDs and explicit nonfinite representations follow the
+adopted product boundary, not fabricated finite outputs or voom state.
+
+Parent authorizes one coherent native implementation under
+docs/plans/2026-10-31-limma-native-logexpression.md in the private owner.
+Implementation is active, not accepted. No new public foundation, source
+mutation, count science/performance replay, numerical band change or release.
+Native compatibility/new-path native4/performance and whole-feature review
+remain gates. The complete old failed run41182610397 stays unchanged.
+
+## Corrected hosted run in progress
+
+World06837d86ee46203cb6e5cafc9cef89f08e3f42df passes exact-head controller
+41184335582. Parent dispatches corrected source run41184814043 at that head,
+attempt1. Live API verifies workflow_dispatch and the exact head; acceptance
+remains false pending terminal original-artifact retention and separate
+capture/reload witnesses. Original failed run41182610397 is unchanged.
+
 ## Original failure retained; narrow capture fix ready
 
 Run41182610397 is terminal FAILURE, not accepted. Complete original retention

@@ -23,9 +23,12 @@ remains pending, and the original first-release named log-expression path is
 still required. The private count-only plan does not narrow that dossier scope.
 See `.autopilot/state/limma-performance-2026-10-28.md` and
 `../plans/2026-10-28-limma-native-count-workflow.md`.
-The ordinary unweighted log-expression source witness now proceeds separately
-under `../plans/2026-10-31-limma-logexpression-oracle.md`, using retained
-derived-real E as supplied input, not reusing weighted count fits as answers.
+The ordinary unweighted log-expression source witness passes run41184814043,
+including separate no-refit reload, under
+`../plans/2026-10-31-limma-logexpression-oracle.md`. It uses retained derived-real
+E as supplied input, not weighted count fits as answers. The actual native
+ordinary lifecycle now proceeds under
+`../plans/2026-10-31-limma-native-logexpression.md`; it is not yet accepted.
 
 ## Portfolio decision
 
