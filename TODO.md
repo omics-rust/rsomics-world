@@ -18,6 +18,8 @@ its ordinary-expression source/reload and reviewed local extension are accepted,
 with green-2 native4 and all four original archives accepted. Corrected ordinary
 performance passes the fixed resource gate and four-worker throughput gate;
 strict serial throughput and worker scaling fail, with the slow sample retained.
+Its populated owning repositoryf8c8f42 now passes exact native4/package/unpacked
+CI41207239669; source delivery is available while registry authorization is held.
 Structure's
 reviewed private analysis passes native4, with public
 torsion/performance still held or unearned. Ecology has reviewed alpha and

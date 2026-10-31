@@ -15,12 +15,12 @@ Registry authorization and the actual clean publication artifact remain gates. S
 The edgeR target has a complete private native modern-QL workflow, but its
 original P/FDR compatibility gate remains failed pending an explicit numerical
 contract decision; see `.autopilot/state/edger-native-ql-2026-10-28.md`.
-The limma target has a complete reviewed private current-voom count workflow,
+The limma target has a complete reviewed current-voom count workflow,
 four-native acceptance and accepted whole-workflow performance: R inner median
 1.889s versus native1/4 medians0.57/0.60s, with lower process RSS. Worker scaling
 does not pass; four workers are slightly slower on this fixture. Publication
-remains pending, and the original first-release named log-expression path is
-still required. The private count-only plan does not narrow that dossier scope.
+remains pending. The count-only plan does not narrow the original first-release
+named log-expression scope, now implemented and qualified separately below.
 See `.autopilot/state/limma-performance-2026-10-28.md` and
 `../plans/2026-10-28-limma-native-count-workflow.md`.
 The ordinary unweighted log-expression source witness passes run41184814043,
@@ -31,9 +31,15 @@ ordinary lifecycle is locally accepted after one whole-feature review and one
 concentrated numerical correction, at clean private owning8c26abf/green-2.
 All five ordinary cases at1/4 and a cached count regression pass unchanged
 source contracts. New-path native4 passes run41191571424, with the original
-four-host logs and deeply verified Linux core accepted. Complete supplied-E
-performance and release remain pending; old count timings do not qualify this
-new executable. See
+four-host logs and all four original archives accepted. Corrected supplied-E
+performance41199697947 passes the fixed process-RSS1/4 and throughput4 gates;
+strict serial throughput and worker scaling fail, with the slow sample and
+larger output retained. Old count timings do not qualify this path.
+The populated [owning source repository](https://github.com/omics-rust/rsomics-limma)
+at f8c8f42 passes exact native-four/package/unpacked CI41207239669. Source
+metadata/README/CI changes leave the qualified statistical code and lock
+unchanged. The real local/Linux source packages match; registry publication
+remains authorization-held with publish=false. See
 `../plans/2026-10-31-limma-native-logexpression.md` and
 `.autopilot/state/limma-native-logexpression-2026-10-31.md`.
 

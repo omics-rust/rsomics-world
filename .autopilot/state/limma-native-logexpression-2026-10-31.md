@@ -1,5 +1,29 @@
 # Native ordinary-expression lifecycle
 
+## Owning source/package delivery accepted
+
+The populated public repository https://github.com/omics-rust/rsomics-limma
+is now clean mainf8c8f422ef8532701e3c70bbb019c72471b1a98d. That one delivery
+commit adds only Cargo metadata, scoped README and native-four owning CI;
+src/tests/Cargo.lock remain byte-identical to1d6d04e. No statistical change,
+dependency upgrade, source replay or retiming is needed or performed.
+
+Exact owning CI41207239669/attempt1 is terminal SUCCESS. Linux x86/ARM and
+macOS x86/ARM verify actual native Rust1.91 host and run full debug/release
+tests; Linux x86 also passes fmt/strict Clippy/doc, clean source package and
+unpacked workflow tests. The actual local and Linux34-file source packages
+have identical SHA2ba86e30f519b43c743c46c42ad6749fe6ea4ce36141d1617a298bb640bf6523.
+This is source-package identity, not cross-platform executable/numeric bits.
+
+Parent retains original run/jobs APIs and all48-member CRC-verified job logs,
+local guarded checks and the real clean package in
+`/Volumes/KIOXIA/Developments/tmp/limma-owner-delivery-20261031.OXfPgp/REPORT.md`.
+REPORT SHA c8743a3c0d71f4ec6c6e07cdf8d09ec575e58c59553b000864d25cce1ab091da.
+The scoped count/ordinary CLI and saved JSON/tables remain the public interface;
+statistical internals remain private. No crate is published: publish=false,
+registry authorization hold, no secret-value read or unchanged-token retry.
+Original source/native/performance receipts below remain separate and immutable.
+
 ## All four original platform archives retained
 
 Supplemental retention for run41191571424/attempt1 is complete. All four
