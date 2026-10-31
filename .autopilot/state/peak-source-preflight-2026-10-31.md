@@ -1,5 +1,24 @@
 # Peak next-product source qualification
 
+## Targeted annotation/count view adopted; producer preparation active
+
+Parent reads the complete473-line native proposal and107-line report in
+`/Volumes/KIOXIA/Developments/tmp/peak-native-design-20261031.MCyvMC/`, verifies
+all55 read anchors and5 delivery files, and adopts ONLY the targeted source
+view in docs/plans/2026-11-01-peak-annotation-count-view.md. The existing real
+TxDb/BAM/runtime objects support3annotation calls,1fresh combined reload and
+5spatial count calls without MACS/SEACR replay, input rebuild or stack reinstall.
+Source restoration is a real hosted gate, not presumed from a saved venv.
+
+Bounded new producer preparation is assigned; no product owner is created by
+this action. The whole-native proposal remains unimplemented. Its base-R
+density/MACS used-dispatch source reads remain coding prerequisites. One
+necessary async human question addresses SEACR default repair vs explicit
+compatibility; SIGNAL's defect policy is not transferred. The declared
+multicov-compatible first-release unit is alignment, with fragment mode
+excluded, not another routine approval. Original38-case source authority and
+all earlier failed originals remain immutable.
+
 ## Actual full-four source casebook adopted with explicit coverage limits
 
 Run41209740891/attempt1 atb92eb0404aad1a0222ad580c2a81c5431ff42957
