@@ -1,5 +1,24 @@
 # Peak next-product source qualification
 
+## Complete addon failure originals adopted; source retry authorized
+
+Parent reads the complete REPORT18c4a64dd562844b533f5e006e9fe02ce6f3be0e3ed539e9c64d9005b5b79432,
+verifies23 small packet/final bindings and freshly verifies all88 retained
+original/metadata files INCLUDING full2764849052B ZIP3a59ea58dee67d53cb851950d9d3ad11f51a1a9df73cd44d7c3056ae14a904f4
+and5298831360B TAR3fc1ae4ed791d719a80408084a8d0b9180aac521d5f93cf93b1b8e9b7329f4aa.
+Evidence: `/Volumes/Zane's HDD/rsomics-fixtures/evidence/peak-annotation-count-view-2026-11-01/run-41220226878/`.
+Scratch DELIVERY3fb3337068b351bb75c19b8e6a9ef28614089a76e6a03fe62f90d65d4d1508ff;
+retained-files SHA256ef6f5a940715289cb1e08aae5d68aede851c8766df7ef15ab7e1bde7a37aa6a9.
+All21414 manifest entries match; nested original38-case carriers are unchanged.
+No new annotation/count input/call/qualification exists; later DLL/ELF gate
+was not reached. The stopped6307840B HTTP2 prefix remains recoverable; one
+authorized HTTP1 retry matched the API digest, no parallel mirror/deletion.
+
+Narrow version-component correction764884b120820962ac93af1dd72a176d65daba94
+passes exact controller41222287845. Actual targeted source retry41222823649
+is dispatched at that same remote head; only metadata comparison changed.
+All actual source answers/library bytes/data and comparisons remain immutable.
+
 ## Actual namespace spelling failure; component comparison corrected
 
 Targeted run41220226878 at35af65ef is FAILED before the new annotation/count
