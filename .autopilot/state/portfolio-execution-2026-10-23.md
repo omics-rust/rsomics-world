@@ -2,11 +2,17 @@
 
 ## Current position
 
-Full30-family goal is active and unchanged. Exact pushed headb117266b passes
-controller41176588300. Prior source-controllerd709ad00 passes40643918864
+Full30-family goal is active and unchanged. Exact pushed head2fe51534 passes
+controller41177407552. Prior source-controllerd709ad00 passes40643918864
 (504tests/two existing skips). Its structure source
 run40644150133 is also SUCCESS and completely retained/qualified. The gates
 below supersede the historical execution narrative further down.
+
+The user resolves the2026-10-31 storage stop: keep all project data/builds/
+scratch/caches physically external, but do not stop for unrelated total boot
+occupancy. AGENTS.md and five active guards reflect this policy. Interrupted
+structure/DESeq checks resume in fresh logs, never converted into passes.
+No deletion or migration of project/shared application/user data occurred.
 
 | Workstream | Verified current position | Next affected gate |
 |---|---|---|

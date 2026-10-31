@@ -1,5 +1,45 @@
 # Local storage stop gate
 
+## Resolution: external project storage, no global occupancy gate
+
+The user explicitly authorizes changing this requirement and continuing while
+keeping project files off the internal disk. The boot-container80% threshold
+below is historical and no longer blocks work. AGENTS.md and the five active
+owning guards now verify physical external Cargo home/resolved target/rustup/
+toolchain/TMP/cache paths instead; Cargo target/config overrides are rejected.
+All five pass bash syntax and guarded --exec true checks. No project output,
+shared application state or user data was deleted or migrated. Bounded checks
+did not identify task-owned project files requiring cleanup; they are not a
+claim of zero Codex/OS footprint. Unrelated total boot usage is out of scope.
+
+One independent guard review identifies two gaps: comparing filesystem IDs
+against `/` alone does not establish an external mount, and `--exec` skipped
+target/config override rejection. Parent corrects both in one pass: diskutil
+must identify the exact KIOXIA mount as Internal=false before any directory
+creation/Cargo execution, every checked path belongs to that device, and
+override rejection applies through --exec too. A harmless true command with
+--target-dir is observed passing before the fix and rejected after it; no
+target directory is created. All five final guards pass syntax/external
+preflight and reject the override. Generic --exec is explicitly not a sandbox.
+Review: /Volumes/KIOXIA/Developments/tmp/storage-guard-review-20261031.uxDMQU/REPORT.md.
+Final deseq/ecology/structure guard SHA9ad8dc36e6211ddf66d6510f4e87b6b3cc8873cadf4ad178403691e6c840585b;
+edgeR8b13981d6de8a74cf05c1991a70b952a7833d794b42f1441a6d746d1adf27d67;
+limma5bf8929cb24b594af505ac96c0a582de234873c03f95253db18a29f91b255060.
+Separate owning storage-policy commits: DESeq917ede8, ecologycfb3b8e,
+structure58493ba, edgeR8111941 and limmab54ad8c. No analytical source changed
+in those commits. edgeR/limma current README policy paragraphs are included;
+the other owners' current README updates accompany their ongoing feature/
+preparation edits. Historical source snapshots/notices/reports stay immutable.
+
+The goal remains active. Structure resumes its interrupted whole-feature
+suite, and DESeq resumes unpacked package tests into new logs. Earlier exit130
+and partial outputs remain preserved and are not counted as passes. Ecology's
+completed rarefaction evidence/review can now be adopted. Shared live Codex
+history/database and OS-managed swap are not ordinary project scratch and
+must not be deleted to satisfy this project-storage policy.
+
+## Historical trigger and stopped checkpoint
+
 STOP affected local work pending user decision. Fresh DESeq release-review
 guard observed boot APFS occupancy0.8001193971506715 (80.01194%), free
 48992174080bytes. Parent independently confirms0.8000922918183473, size

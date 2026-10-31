@@ -212,13 +212,21 @@ If only one product needs the code, keep it internal.
 ## Git and CI
 
 - Before any build, test, benchmark, or dependency download, verify that
-  `CARGO_HOME`, Cargo's resolved target directory, and `TMPDIR` point to the
-  allowed external-disk locations. Also check free space on `/` and KIOXIA.
-  Stop before compiling if the boot disk is at or above 80% usage or any build
-  path resolves to it.
-  On macOS, calculate occupancy from `APFSContainerSize` and
-  `APFSContainerFree` in `diskutil info -plist /`; `df /` alone describes the
-  read-only system volume and can substantially understate boot-disk pressure.
+  `CARGO_HOME`, Cargo's resolved target directory, `RUSTUP_HOME`, `TMPDIR`
+  and tool-specific cache paths physically resolve to the allowed external
+  disks. Check the actual mounted device and external free space; a path
+  merely starting with /Volumes is not sufficient. Do not let command-line
+  target/config overrides bypass these checks. Project data, downloads,
+  scratch, build output and tool caches must never be placed on the boot disk.
+  Boot-disk total occupancy is not a project stop condition: unrelated usage
+  must not block verified external work. Do not clean unrelated user data.
+  Close task-owned tabs when no longer needed. Distinguish project files from
+  shared Codex application history/state and OS-managed swap; never claim a
+  zero application/OS footprint merely because Cargo paths are external.
+  A guard's `--exec` mode is a trusted preflight/environment helper, not a
+  sandbox: check the invoked tool's own output arguments and cache behavior.
+  Migrating live shared application state requires a verified backup and
+  safe application shutdown, not deleting an active history or database.
 - Work in the owning repository under
   `/Volumes/KIOXIA/Documents/omics-rust/rsomics-<name>`.
 - Direct commits to `main`; no pull requests unless the user requests one.
@@ -280,7 +288,8 @@ Stop the affected action and request a user decision when:
 - live registry, GitHub, source, and local evidence materially disagree;
 - a public API choice would lock several products into an uncertain model;
 - correctness or compatibility evidence contradicts the intended behavior;
-- the boot disk exceeds 80% usage or build output appears on it.
+- a project write, build, scratch or cache path resolves onto the boot disk,
+  or task-owned project output is discovered there.
 
 Do not stop merely at a phase boundary, because work is difficult, or because
 another product remains. Record the gate and continue with an unblocked task.

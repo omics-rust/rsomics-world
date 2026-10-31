@@ -72,7 +72,9 @@ named log-expression first-release path remains required. Do not silently
 erase that requirement or make its completion a DESeq packaging dependency.
 
 Use apply_patch for owning/world edits and preserve inherited changes. Fresh
-correct-owner guard before every build/test/download/package, external Cargo
-home/target/TMP/rustup, actual resolved target and bootAPFS<80%. No project
-scratch on boot disk, destructive cleanup, new installs or historical edits.
+correct-owner guard before every build/test/download/package; Cargo home,
+resolved target, TMP, rustup/toolchain and caches physically stay external.
+The user's storage-policy override removes the global boot-occupancy80% stop,
+not the external project-storage requirement. No project scratch on boot disk,
+destructive cleanup, new installs or historical evidence edits.
 Parent owns Git/index/repository/CI/publication and durable control-plane state.
