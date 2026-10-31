@@ -9,6 +9,18 @@ source-compatible result. This unblocks the private rarefaction implementation
 through the existing sparse count model. The separate undefined beta-distance
 choice remains unanswered and holds only that public adapter.
 
+Parent reads complete130-line rarefaction contract REPORT.md
+SHA1a5c08b09ca74a285d3d44bff504a7f77cbfc357ea47d449a7a3babed67bc4df,
+/Volumes/KIOXIA/Developments/tmp/ecology-rarefy-contract-20261031.QhESSv/,
+and actual selected NumPy seed/PCG/bounded sources plus all relevant notices.
+Legacy cutoff20/core already match by inspection, not a new execution claim.
+Adopted docs/plans/2026-10-31-ecology-sparse-rarefaction.md authorizes actual
+private CLI implementation through the existing sparse owner. Required explicit
+u128 seed and depth identify the fixed same-seed-per-sample profile; no omitted
+upstream seed semantics or statistically independent sample-seed claim. Sparse
+counts do not erase population-sized tail-shuffle workspace. Existing captures
+hold final count vectors, not independently observed raw RNG words.
+
 The complete private sparse-alpha slice is now committed on owning main
 01c90896869261ab38eddb88a210b6e9069008c3. The owner is clean, has no remote
 and remains publish=false. All 18 adopted files match the implementation
