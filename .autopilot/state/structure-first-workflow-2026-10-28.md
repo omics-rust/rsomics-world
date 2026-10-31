@@ -1,5 +1,25 @@
 # Structure first-workflow source qualification
 
+## Four-native preparation frozen and parent-checked
+
+Exact owning2aee715 source is frozen into green-1 under
+.autopilot/snapshots/structure-core-2026-10-31/. Archive6bb268dbbc96bd0090f5f9cc16b4eb56dee8ffa4573835b59bfdd341b509ef18
+and files manifestabd2564adf5a2242cbc46322f606974c5c67a0120b9d44bedf37dc6ecbd4294d
+bind all122original regular source/fixture/notice bytes. New workflow
+26c9e3e0640f03b6b7cd9aa1a479ebdfbaae838fafac4c9fa0f9d22561af1900 and
+test7725580e264e212cf5c181f5b82cd0369316d3f2f2987ea8bea48d08718be1fb
+only add the planned dispatch-only native gate; no owning code changes.
+
+Parent reads complete workflow/test/snapshot README and author REPORT
+e0c290c0472a2d893b9ce907e3bbe50450d1114d7821614fae5f748da67d2e18,
+/Volumes/KIOXIA/Developments/tmp/structure-native-four-20261031.rP98iZ/.
+Both author and fresh parent route checks pass actual safe extraction and
+worker-model gate checks. Parent full controller506tests/2existing skips and
+architecture pass. Static/fixture gate checks are not native source acceptance.
+Actual four-native all8debug/release tests, binary/host/source provenance and
+real1/4-worker contacts/exposure must succeed and be retained before adoption.
+No source replay, timing/scaling claim, public7 completion or publication.
+
 ## Reviewed analysis adopted; four-native gate next
 
 Owning clean private main2aee715c91bcf5f748e45409f9e689ae78f399e7 now commits

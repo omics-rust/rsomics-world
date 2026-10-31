@@ -1,0 +1,296 @@
+name: Private structure coordinate-analysis candidate
+
+on:
+  workflow_dispatch:
+    inputs:
+      snapshot:
+        description: Frozen source under structure-core-2026-10-31 (green-N)
+        type: string
+        required: true
+
+permissions:
+  contents: read
+
+jobs:
+  native:
+    name: ${{ matrix.target }}
+    runs-on: ${{ matrix.runner }}
+    timeout-minutes: 35
+    strategy:
+      fail-fast: false
+      matrix:
+        include: >-
+          ${{ fromJSON('[{"target":"linux-x86_64","runner":"ubuntu-24.04","system":"Linux","arch":"x86_64","host":"x86_64-unknown-linux-gnu"},{"target":"linux-aarch64","runner":"ubuntu-24.04-arm","system":"Linux","arch":"aarch64","host":"aarch64-unknown-linux-gnu"},{"target":"macos-x86_64","runner":"macos-15-intel","system":"Darwin","arch":"x86_64","host":"x86_64-apple-darwin"},{"target":"macos-aarch64","runner":"macos-15","system":"Darwin","arch":"arm64","host":"aarch64-apple-darwin"}]') }}
+    env:
+      SNAPSHOT_ID: ${{ inputs.snapshot }}
+      TARGET: ${{ matrix.target }}
+      EXPECTED_SYSTEM: ${{ matrix.system }}
+      EXPECTED_ARCH: ${{ matrix.arch }}
+      EXPECTED_HOST: ${{ matrix.host }}
+      CONTROLLER_COMMIT: ${{ github.sha }}
+      PYTHONDONTWRITEBYTECODE: '1'
+      CARGO_BUILD_JOBS: '2'
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+
+      - name: Prepare hosted storage
+        run: |
+          set -euo pipefail
+          export CARGO_HOME="$RUNNER_TEMP/cargo-home"
+          export CARGO_TARGET_DIR="$RUNNER_TEMP/cargo-target"
+          export RUSTUP_HOME="$RUNNER_TEMP/rustup-home"
+          export TMPDIR="$RUNNER_TEMP/scratch"
+          export XDG_CACHE_HOME="$RUNNER_TEMP/cache"
+          export EVIDENCE="$RUNNER_TEMP/structure-evidence"
+          export RUSTUP_TOOLCHAIN=1.91.0
+          for name in CARGO_HOME CARGO_TARGET_DIR RUSTUP_HOME TMPDIR XDG_CACHE_HOME EVIDENCE RUSTUP_TOOLCHAIN; do
+            printf '%s=%s\n' "$name" "${!name}" >> "$GITHUB_ENV"
+          done
+          mkdir -p "$CARGO_HOME" "$CARGO_TARGET_DIR" "$RUSTUP_HOME" "$TMPDIR" "$XDG_CACHE_HOME" "$EVIDENCE/controller"
+          python3 -B - <<'PY'
+          import json, os, shutil
+          from pathlib import Path
+          runner = Path(os.environ['RUNNER_TEMP']).resolve(strict=True)
+          names = ('CARGO_HOME', 'CARGO_TARGET_DIR', 'RUSTUP_HOME', 'TMPDIR', 'XDG_CACHE_HOME', 'EVIDENCE')
+          locations = {name: Path(os.environ[name]).resolve(strict=True) for name in names}
+          assert all(path.is_relative_to(runner) and path.stat().st_dev == runner.stat().st_dev
+                     for path in locations.values()), 'storage escapes runner-temp'
+          usage = shutil.disk_usage(runner)
+          assert usage.free > 0, 'runner-temp is full'
+          record = dict(runner_temp=str(runner), device=runner.stat().st_dev,
+                        paths={name: str(path) for name, path in locations.items()},
+                        disk_total=usage.total, disk_used=usage.used, disk_free=usage.free)
+          (locations['EVIDENCE'] / 'storage.json').write_text(json.dumps(record, indent=2) + '\n')
+          PY
+          cp .github/workflows/structure-candidate.yml scripts/test_structure_candidate_workflow.py \
+            scripts/infercnv_source_snapshot.py "$EVIDENCE/controller/"
+          (cd "$EVIDENCE/controller" && shasum -a 256 *.py *.yml) > "$EVIDENCE/controller/checksums.sha256"
+          {
+            printf 'controller_commit=%s\nsnapshot=%s\ntarget=%s\n' "$CONTROLLER_COMMIT" "$SNAPSHOT_ID" "$TARGET"
+            uname -a
+            df -h "$RUNNER_TEMP"
+          } | tee "$EVIDENCE/host.log"
+
+      - name: Verify and extract frozen source
+        id: snapshot
+        run: |
+          set -euo pipefail
+          [[ "$SNAPSHOT_ID" =~ ^green-[0-9]+$ ]]
+          snapshot="$GITHUB_WORKSPACE/.autopilot/snapshots/structure-core-2026-10-31/$SNAPSHOT_ID"
+          cp "$snapshot/source.tar.gz" "$snapshot/files.sha256" "$snapshot/checksums.sha256" \
+            "$snapshot/README.md" "$EVIDENCE/"
+          python3 -B scripts/infercnv_source_snapshot.py \
+            --snapshot-dir "$snapshot" --output-dir "$RUNNER_TEMP/structure-candidate" \
+            2>&1 | tee "$EVIDENCE/archive-verification.log"
+          (cd "$RUNNER_TEMP/structure-candidate" && shasum -a 256 --check "$EVIDENCE/files.sha256") \
+            | tee "$EVIDENCE/source-before.log"
+
+      - name: Install Rust 1.91
+        uses: dtolnay/rust-toolchain@1.91.0
+        with:
+          components: clippy,rustfmt
+
+      - name: Verify native compiler and frozen dependencies
+        id: metadata
+        working-directory: ${{ runner.temp }}/structure-candidate
+        run: |
+          set -euo pipefail
+          test "$(uname -s)" = "$EXPECTED_SYSTEM"
+          test "$(uname -m)" = "$EXPECTED_ARCH"
+          rustc -Vv | tee "$EVIDENCE/rustc.log"
+          cargo -V | tee "$EVIDENCE/cargo.log"
+          cargo metadata --locked --no-deps --format-version 1 > "$EVIDENCE/metadata-preflight.json"
+          python3 -B - <<'PY'
+          import json, os, shutil
+          from pathlib import Path
+          root = Path(os.environ['EVIDENCE'])
+          compiler = dict(line.split(': ', 1) for line in (root / 'rustc.log').read_text().splitlines() if ': ' in line)
+          assert compiler['host'] == os.environ['EXPECTED_HOST'], 'compiler is not the native class'
+          assert compiler['release'] == '1.91.0', 'compiler version differs'
+          assert not any(os.environ.get(name) for name in
+                         ('CARGO_BUILD_TARGET', 'RUSTC_WRAPPER', 'RUSTC_WORKSPACE_WRAPPER', 'RUSTFLAGS', 'CARGO_ENCODED_RUSTFLAGS')), \
+              'unexpected compiler/target overrides'
+          metadata = json.loads((root / 'metadata-preflight.json').read_text())
+          target = Path(metadata['target_directory']).resolve(strict=True)
+          runner = Path(os.environ['RUNNER_TEMP']).resolve(strict=True)
+          assert target == Path(os.environ['CARGO_TARGET_DIR']).resolve(strict=True) and target.is_relative_to(runner), \
+              'Cargo resolved target differs before dependency acquisition'
+          assert target.stat().st_dev == runner.stat().st_dev and shutil.disk_usage(target).free > 0
+          PY
+          cargo metadata --locked --all-features --format-version 1 > "$EVIDENCE/metadata.json"
+          python3 -B - <<'PY'
+          import json, os
+          from pathlib import Path
+          root = Path(os.environ['EVIDENCE'])
+          metadata = json.loads((root / 'metadata.json').read_text())
+          assert Path(metadata['target_directory']).resolve() == Path(os.environ['CARGO_TARGET_DIR']).resolve()
+          package = next(item for item in metadata['packages'] if item['name'] == 'rsomics-structure')
+          assert package['publish'] == [], 'candidate must remain private'
+          assert [target['name'] for target in package['targets'] if 'bin' in target['kind']] == ['rsomics-structure']
+          assert [item['name'] for item in metadata['packages'] if item['source'] is None] == ['rsomics-structure'], \
+              'unexpected local path dependency'
+          PY
+          cp Cargo.lock "$EVIDENCE/Cargo.lock"
+
+      - name: Format and strict Clippy
+        if: ${{ !cancelled() && steps.metadata.outcome == 'success' && matrix.target == 'linux-x86_64' }}
+        working-directory: ${{ runner.temp }}/structure-candidate
+        run: |
+          set -euo pipefail
+          cargo fmt --all -- --check 2>&1 | tee "$EVIDENCE/format.log"
+          cargo clippy --locked --all-targets --all-features -- -D warnings 2>&1 | tee "$EVIDENCE/clippy.log"
+
+      - name: Test debug
+        if: ${{ !cancelled() && steps.metadata.outcome == 'success' }}
+        working-directory: ${{ runner.temp }}/structure-candidate
+        run: |
+          set -euo pipefail
+          export RSOMICS_STRUCTURE_EVIDENCE="$EVIDENCE/test-debug-commands"
+          mkdir "$RSOMICS_STRUCTURE_EVIDENCE"
+          status=0
+          cargo test --locked --all-features --no-fail-fast -- --nocapture \
+            2>&1 | tee "$EVIDENCE/test-debug.log" || status=$?
+          printf '%s\n' "$status" > "$EVIDENCE/test-debug.exit"
+          exit "$status"
+
+      - name: Test release
+        if: ${{ !cancelled() && steps.metadata.outcome == 'success' }}
+        working-directory: ${{ runner.temp }}/structure-candidate
+        run: |
+          set -euo pipefail
+          export RSOMICS_STRUCTURE_EVIDENCE="$EVIDENCE/test-release-commands"
+          mkdir "$RSOMICS_STRUCTURE_EVIDENCE"
+          status=0
+          cargo test --locked --release --all-features --no-fail-fast -- --nocapture \
+            2>&1 | tee "$EVIDENCE/test-release.log" || status=$?
+          printf '%s\n' "$status" > "$EVIDENCE/test-release.exit"
+          exit "$status"
+
+      - name: Build and retain release executable
+        id: binary
+        if: ${{ !cancelled() && steps.metadata.outcome == 'success' }}
+        working-directory: ${{ runner.temp }}/structure-candidate
+        run: |
+          set -euo pipefail
+          status=0
+          cargo build --locked --release --bin rsomics-structure --message-format=json \
+            2> "$EVIDENCE/build-release.stderr" | tee "$EVIDENCE/build-release.jsonl" || status=$?
+          cat "$EVIDENCE/build-release.stderr"
+          printf '%s\n' "$status" > "$EVIDENCE/build-release.exit"
+          test "$status" = 0
+          python3 -B - <<'PY'
+          import hashlib, json, os, shutil
+          from pathlib import Path
+          root = Path(os.environ['EVIDENCE'])
+          messages = [json.loads(line) for line in (root / 'build-release.jsonl').read_text().splitlines()]
+          executables = [Path(item['executable']) for item in messages if item.get('reason') == 'compiler-artifact'
+                         and item.get('executable') and item['target']['name'] == 'rsomics-structure'
+                         and 'bin' in item['target']['kind']]
+          assert len(executables) == 1, 'release executable is not unique'
+          binary = executables[0].resolve(strict=True)
+          assert binary == (Path(os.environ['CARGO_TARGET_DIR']) / 'release/rsomics-structure').resolve(strict=True), \
+              'release output is not native Cargo target layout'
+          output = root / 'native-binary'
+          output.mkdir()
+          retained = output / ('rsomics-structure-' + os.environ['TARGET'])
+          shutil.copy2(binary, retained)
+          record = dict(target=os.environ['TARGET'], compiler_host=os.environ['EXPECTED_HOST'],
+                        path=str(retained), sha256=hashlib.sha256(retained.read_bytes()).hexdigest())
+          (output / 'binary.json').write_text(json.dumps(record, sort_keys=True) + '\n')
+          print(json.dumps(record, sort_keys=True))
+          PY
+
+      - name: Run actual hot-path workers
+        id: workers
+        if: ${{ !cancelled() && steps.binary.outcome == 'success' }}
+        working-directory: ${{ runner.temp }}/structure-candidate
+        run: |
+          set -euo pipefail
+          python3 -B - <<'PY'
+          import hashlib, json, os, subprocess
+          from pathlib import Path
+          root = Path(os.environ['EVIDENCE'])
+          binary = root / 'native-binary' / ('rsomics-structure-' + os.environ['TARGET'])
+          fixture = Path.cwd() / 'tests/fixtures/analysis/hsexposure-4hhb.pdb'
+          failures = []
+          for operation, flags in (('contacts', ['--cutoff', '4']), ('exposure', ['--radius', '13'])):
+              for workers in (1, 4):
+                  output = root / 'workers' / operation / str(workers)
+                  output.mkdir(parents=True)
+                  args = [str(binary), '--json', '--threads', str(workers), operation, str(fixture), *flags]
+                  with (output / 'stdout.json').open('wb') as stdout, (output / 'stderr.txt').open('wb') as stderr:
+                      result = subprocess.run(args, stdout=stdout, stderr=stderr)
+                  record = dict(args=args, status=result.returncode,
+                                binary_sha256=hashlib.sha256(binary.read_bytes()).hexdigest(),
+                                input_sha256=hashlib.sha256(fixture.read_bytes()).hexdigest())
+                  (output / 'command.json').write_text(json.dumps(record, sort_keys=True) + '\n')
+                  if result.returncode != 0:
+                      failures.append(dict(operation=operation, workers=workers, status=result.returncode))
+          assert not failures, failures
+          PY
+
+      - name: Check complete worker models
+        if: ${{ !cancelled() && steps.workers.outcome == 'success' }}
+        run: |
+          set -euo pipefail
+          python3 -B - <<'PY'
+          import hashlib, json, os
+          from pathlib import Path
+          root = Path(os.environ['EVIDENCE'])
+          compared = {}
+          for operation, population in (('contacts', 'pairs'), ('exposure', 'rows')):
+              outputs = [root / 'workers' / operation / str(n) for n in (1, 4)]
+              assert all(json.loads((out / 'command.json').read_text())['status'] == 0 for out in outputs)
+              states = [json.loads((out / 'stdout.json').read_text())['result'] for out in outputs]
+              assert [state.pop('workers') for state in states] == [1, 4]
+              assert states[0] == states[1], 'worker count changed complete ' + operation + ' result'
+              state = states[0]
+              assert state['operation'] == operation and state['models']
+              count = sum(len(model[population]) for model in state['models'])
+              assert count > 0, 'empty hot-path population'
+              compared[operation] = dict(models=len(state['models']), population=count,
+                  result_sha256=hashlib.sha256(json.dumps(state, sort_keys=True).encode()).hexdigest())
+          record = dict(passed=True, compared_workers=[1, 4], operations=compared,
+                        ignored_fields=['result.workers'], performance_claim=False)
+          (root / 'worker-equality.json').write_text(json.dumps(record, sort_keys=True) + '\n')
+          print(json.dumps(record, sort_keys=True))
+          PY
+
+      - name: Verify source remains unchanged
+        if: ${{ always() && steps.snapshot.outcome == 'success' }}
+        working-directory: ${{ runner.temp }}/structure-candidate
+        run: |
+          set -euo pipefail
+          python3 -B - <<'PY'
+          import json, os, sys
+          from pathlib import Path
+          sys.path.insert(0, str(Path(os.environ['GITHUB_WORKSPACE']) / 'scripts'))
+          from infercnv_source_snapshot import _hash_file, _manifest, _regular
+          source = Path(os.environ['RUNNER_TEMP']) / 'structure-candidate'
+          recorded = _manifest((Path(os.environ['EVIDENCE']) / 'files.sha256').read_bytes())
+          actual = set()
+          for path in source.rglob('*'):
+              if not path.is_dir() or path.is_symlink():
+                  _regular(path)
+                  actual.add(path.relative_to(source).as_posix())
+          assert actual == set(recorded), 'source file inventory changed'
+          assert all(_hash_file(source / name) == digest for name, digest in recorded.items()), 'source bytes changed'
+          record = dict(unchanged_files=len(recorded))
+          (Path(os.environ['EVIDENCE']) / 'source-after.json').write_text(json.dumps(record, sort_keys=True) + '\n')
+          print(json.dumps(record, sort_keys=True))
+          PY
+
+      - name: Upload raw evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: structure-${{ github.run_id }}-${{ github.run_attempt }}-${{ matrix.target }}
+          path: ${{ runner.temp }}/structure-evidence/
+          if-no-files-found: error
+          include-hidden-files: true
+          retention-days: 30
