@@ -1,5 +1,15 @@
 # Native peak first-four construction
 
+## Exact controller accepted; native gate dispatched
+
+World head238eb117cd8b2d92060787eb83faaea14633aa51 includes the actual69-file
+asset and final green1 owner snapshot. Exact-head control-plane run41234390346
+passes. Root dispatches peak-candidate.yml at that main head with snapshot=green-1:
+actual run41234576411 is active. Its native/source results must be adopted next,
+not inferred from successful dispatch. The real-input performance plan is separately
+adopted in docs/plans/2026-11-01-peak-real-performance.md. Preparation may proceed,
+but provider-body acquisition and science wait for native/source acceptance.
+
 ## Reviewed real source and69-file native gate frozen
 
 The one fresh whole-product review reports three materialP2 issues and no
