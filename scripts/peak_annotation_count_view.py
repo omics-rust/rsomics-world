@@ -364,7 +364,7 @@ def verify_runtime(restored, root):
     targets += sorted((restored / 'R-library').rglob('*.so'))
     for index, target in enumerate(targets):
         directory = root / 'runtime-check/ldd' / str(index)
-        original.require(directory, ['ldd', target])
+        original.require(directory, ['R', 'CMD', 'ldd', target])
         text = (directory / 'stdout.txt').read_text()
         if 'not found' in text:
             raise ValueError('unresolved ELF dependency: ' + str(target))

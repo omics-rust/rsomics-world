@@ -1,5 +1,42 @@
 # Peak next-product source qualification
 
+## Verified original text identifies an R-loader context mismatch
+
+Actual failed addon41224174210 ated0f71c8504ad0a5ed39d30352a9fe89030ffcf2
+passes restored package identities, namespace components/bodies and the Rscript
+load of143 namespaces. Raw ldd/2 stdout reports specifically libR.so=>not found
+for Biobase.so, while the same captured R-state DLLs.tsv shows Biobase loaded.
+It is a standalone loader-context mismatch, not an observed missing R package.
+
+The exact original is read and completely verified HOSTED by projection
+41227065047 at31c0294c869df2ce788535ce67970695a2942fd9 after exact controller
+41226894694 SUCCESS. Original ZIP13050966794 is2764857715B,
+SHA9e1a690ef51d0cef7d8fc77343f37712e3ad8be95fc2f088c6da08077bbe341e;
+TAR5298872320B ab8c2ef3c05a6609f4bfbcd0b3d91e88d1f660dbd724548c14c1988bb4b4e0ca.
+All21425 regular bodies plus1 virtual alias match the original21426-entry
+manifest61d9bb030d4128a9859a811c65ec646dcc1d4c809803473c47c026ebffc0d265.
+This is NOT full local original retention or source-view success.
+
+Parent acquires and verifies the complete small projection ZIP13052580362,
+34858B SHA08caa47321f2b76d9dbb04a3e91fd5f69bd9077228ee4da475b97a3a87d81ce4,
+all46836B projected text identities and exact3 controller bodies. ProofSHA
+ef986bb88943a39b408aa20df191ab0d31a401c9ee2d95c22bdba94af0b3d5e0
+and raw ldd/request/process/R-state records are retained under
+/Volumes/KIOXIA/Developments/tmp/peak-text-projection-adoption-20261101.a5Oe6k/.
+Oversized integrity-after.json is fully verified but explicitly not projected.
+Both old local transport prefixes remain preserved; the earlier retry/one-shot
+processes are no longer observable and have no completed local receipt. No
+third full local request, deletion or fabricated completion is made.
+
+Parent reads actual pinned R4.6.1 Rscript.c, R.sh.in, Rcmd.in and ldpaths.in
+from the already retained source archive. Rscript execs the R shell launcher;
+both its normal and CMD branches source the SAME ldpaths; Rcmd directly execs
+arbitrary commands. Change only standalone ldd argv to R CMD ldd, preserving
+the installed R loader environment without guessed paths, relinking, library
+replacement or ignoring unresolved dependencies. All package/binary/source
+bodies, scientific calls/inputs/answers/bands and ldd-not-found checks remain
+unchanged. Existing preparation and exact new CI precede a new actual attempt.
+
 ## Second addon attempt stops at storage before any restoration
 
 Run41222823649 at764884b1 fails in the hosted storage preflight before API
