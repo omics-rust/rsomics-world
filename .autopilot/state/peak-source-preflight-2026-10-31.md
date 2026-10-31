@@ -1,5 +1,13 @@
 # Peak next-product source qualification
 
+## Corrected hosted retry active
+
+Run41201586593/attempt1 is active at exact world
+a005dcab6b65a3feaf3b45a66aceae61ca8006b8 after controller41201196043 SUCCESS.
+Source job124538289750 passes image/preflight/acquisition-admission and is
+installing the pinned runtime. Compiler binding/source cases are not yet
+qualified by terminal retained evidence; no source success is claimed.
+
 ## Actual compiler failure retained; build-only compiler binding adopted
 
 Parent reads the full original REPORT

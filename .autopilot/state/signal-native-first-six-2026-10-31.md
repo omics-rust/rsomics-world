@@ -1,5 +1,31 @@
 # Whole-first-six native signal implementation
 
+## Integrated native graph progresses; optional BED policy held
+
+The actual private dependency graph builds with bigtools0.5.8/bamio0.8.4 and
+one libdeflate-sys1.26.1. The coordinating implementer reports a real connected
+six-command CLI check passing, including explicit Rust test-only sort/index,
+independent retained source matrix/NPZ/track values, the three approved repairs
+and meaningful native zoom rollover. This is local implementation progress,
+not parent-adopted whole-feature/native4/performance/source-on-native proof.
+Final frozen source/report and one whole-feature review are still required.
+
+A complete BAM/count/normalization/filter partition and C region/matrix
+partition are integrated; natural tests/strict checks have actual logs.
+The private writer reproduces the pinned source's observed zoom-buffer quirks
+without changing full-resolution values or silently choosing exact summaries.
+Legitimate empty-BW encoding is an actual remaining codec integration edge;
+no fabricated zero or sentinel interval is accepted as an output substitute.
+
+One NEW optional-output policy choice is pending separately: actual source
+save_BED truncates its joined starts to the first character before subtraction.
+Source100/320 exons export blockStarts99,319;800/1020 export792,1012, producing
+invalid/lossy BED12. Parent reads original output and heatmapper.py1008-1022,
+then asks one async human choice: valid BED12 with recorded incompatibility
+(recommended), or strict anomaly compatibility. Existing source-byte assertion
+is observational, not an approved native default. Matrix numerical outputs and
+other operations continue; the goal is not paused. Original source stays exact.
+
 ## Adopted design and active owning implementation
 
 The user approves the three named upstream defect repairs on2026-10-31;

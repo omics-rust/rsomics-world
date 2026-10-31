@@ -1,5 +1,45 @@
 # Complete ordinary-expression performance gate
 
+## Corrected complete-lifecycle performance accepted
+
+Run41199697947/attempt1 is SUCCESS at exact world
+e852d681b35a8fa6de464ac9d24931f0eec84e70 after controller41199275506 SUCCESS.
+Parent reads full REPORT3a9595faf28f2a07f2605180a5c790b5320fe5221bed3f00e5103130afbf372f,
+verification40da8185d0a10f25097d579f362b06f107c285eccbef48d83b1b6d6c7a8dab33,
+actual summary/distributions and source QR comparison at
+/Volumes/Zane's HDD/rsomics-fixtures/evidence/limma-logexpression-performance-2026-10-31/run-41199697947/.
+Parent independently hashes the complete983672091-byte original ZIP to API
+62b91b14146fb5f138572147bf0912f57204383aab5ab75cce62a9c8d4e108ad
+and recomputes the unchanged fixed decisions from actual raw distributions.
+All5186 original members/CRC/bytes,827 source/31 production/31 validation maps,
+accepted ELF926da173...,105 clean processes and full repeat/worker outputs
+qualify. No native rebuild or source/count witness replay occurs.
+
+All4 actual source inspections pass121 numeric fields/911676 finite points
+and134 exact fields; all9 QR matrices x21 values have zero scaled error here.
+All12 native comparisons pass117 fields/871143 points within unchanged bounds;
+all3 discovery sequences811 and complete states/6 TSVs agree across repeats/
+workers. Every validator executes0 native commands. First failed run remains
+failed, with all original exact-QR mismatches preserved.
+
+Source inner times are0.648/0.650/0.651s. Native1 totals are
+1.60/0.36/0.37/0.35/0.47s; native4 are0.43/0.36/0.37/0.35/0.34s for7 CLI
+processes each. Keep the1.60s outlier. Strict serial throughput FAILS, strict
+four-worker throughput PASSES; both process-RSS gates PASS (source minimum
+105780KiB versus native maxima31508/31540KiB). Fixed resource-or-throughput
+advantage is therefore accepted. Median speed ratios1.7568/1.8056 are
+descriptive only. Worker scaling FAILS;1.0278 median ratio is not a win.
+
+Scope is warm same-host Linux x86_64/8066x7 supplied unweighted E, not count/
+weighted fitting, independent microarrays, kernel speed or multi-host results.
+RSS is max individual process, not aggregate live memory. GNU centisecond
+timers cannot support the marginal0.01s worker-median claim; retained owner
+timestamps also overlap. Native JSON+TSVs writes22051382B versus source
+compressed RDS+TSVs13932994B, so no storage/I/O advantage is claimed. Source
+package startup is excluded from the primary inner timer. No cold-cache or
+crash-durability claim. Registry authorization and final owning-package/
+metadata delivery remain separate; do not retry unchanged failed credentials.
+
 ## Scoped QR-inspector correction adopted; hosted retry pending
 
 Parent reads the complete correction REPORT

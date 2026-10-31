@@ -2,11 +2,10 @@
 
 ## Current position
 
-Full30-family goal is active and unchanged. Exact pushed head0792353f passes
-controller41182421821. Prior source-controllerd709ad00 passes40643918864
-(504tests/two existing skips). Its structure source
-run40644150133 is also SUCCESS and completely retained/qualified. The gates
-below supersede the historical execution narrative further down.
+Full30-family goal is active and unchanged. This table records named gates,
+not a rolling checkout HEAD. Last code checkpointa005dcab passes exact
+controller41201196043 (511tests/two existing skips). Per-family current states
+and immutable original receipts supersede the historical narrative below.
 
 The user resolves the2026-10-31 storage stop: keep all project data/builds/
 scratch/caches physically external, but do not stop for unrelated total boot
@@ -17,22 +16,29 @@ No deletion or migration of project/shared application/user data occurred.
 | Workstream | Verified current position | Next affected gate |
 |---|---|---|
 | DESeq | accepted green7/native4/performance; real owning636e259 passes exact native4/debug/release/strict/package/unpacked run41180255242; real package example passes | registry authorization/actual clean publication artifact held; no more unchanged-slice source/native/performance campaigns |
-| limma | accepted count native4/performance; reviewed/fixed ordinary source witness dispatched41182610397 at0792353f | retain/qualify actual source before native extension; no count replay, scope narrowing or scaling-win claim |
+| limma | ordinary source/native4/all4 original archives accepted; corrected ordinary performance41199697947 at e852d681 accepted for strict RSS1/4 and throughput4 | serial throughput/scaling fail with outlier retained; final package/metadata and registry authorization remain separate; no unchanged source/count replay |
 | edgeR | complete private QL workflow; original P/FDR gate remains failed | explicit numerical-contract decision; no band tuning |
 | ecology | source40634594900 fully retained/qualified; real table/tree/IDs pass raw checks; reviewed sparse-alpha01c9089 plus actual sparse rarefactione1b03cb;984exact count cells/594alpha checks pass | undefined beta choice holds only that adapter; full product/native4/performance unearned |
-| structure | source40644150133 qualified; reviewed actual selectors/four CLI analyses/private torsion committed2aee715 after two view fixes; all8local tests/strict checks pass | four-native exact checkpoint task active; public torsion/full7/performance remain held or unearned; no coordinate foundation |
+| structure | source40644150133 qualified; reviewed private2aee715 and native4 run41184818337 accepted | public torsion/full7/performance remain held or unearned; no coordinate foundation |
 | shared TMM | reviewed stats0.2.5 pushed at00a1819; real edgeR/limma contracts, persistent nonunit source regression and exact-head native4 run40648343214 all pass; primitive cost+2.53% | inherited working lock preserved; registry publication/adoption held |
+| signal | full first-six source41192955170 accepted; user approves3 data-loss/filter repairs; private native dependency/spine/connected CLI progress | whole-feature review, hosted native-output/zoom interop, empty-BW edge, representative performance/native4 unearned; only new optional sortedBED policy awaits human choice |
+| peak | reviewed full-four source producer; first install failure41197783094 fully retained; existing-GCC bindinga005dcab passes CI | corrected source41201586593 active at that head; actual runtime/source qualification still required |
+| PLINK | current beta source/old assets preflight complete, no native implementation | exact runtime/full shared filtered-fileset source casebook; private codec/distribution choice not yet adopted |
 
 DESeq full14599×7 parametric/local R-inner medians5.264/5.375s versus native1
 1.02/1.05s and native4 .79/.81s. Both strict throughput AND process-RSS pass;
-worker gain~1.29x has disjoint ranges, not4x. Limma R-inner1.889s versus native1
-.57s/native4 .60s: both strict throughput AND RSS pass, but worker scaling
-FAILS (overlapping ranges, median ratio.95). No startup-inflated primary speed,
+worker gain~1.29x has disjoint ranges, not4x. Earlier count-specific limma
+R-inner1.889s versus native1 .57s/native4 .60s passes throughput/RSS but fails
+scaling; it is not the ordinary benchmark or reassigned to a newer binary.
+Current supplied-E ordinary source inner.648/.650/.651s versus native medians
+.37/.36s passes RSS1/4 and strict throughput4; serial1.60s outlier and failed
+worker scaling remain. No startup-inflated primary speed,
 pure-kernel/aggregate-memory or universally smaller-storage claim.
 
 Native four-job/required-step/raw-log gates stay mandatory. Selected Linux
-source/binary/full workflows are deeply retained; other archive mirroring is
-supplemental, not another mathematical replay/campaign. DESeq performance
+source/binary/full workflows are deeply retained; other platform archive scope
+belongs to each product receipt. Limma ordinary's four local originals are now
+complete. Mirroring is not another mathematical replay/campaign. DESeq performance
 whole ZIP is complete/digest-verified separately without changing its core;
 limma performance whole ZIP is also complete/digest-verified separately. Prior
 failed harness runs remain failed.

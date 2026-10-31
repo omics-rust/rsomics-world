@@ -1,7 +1,9 @@
 # Genotype and population-genetics product dossiers
 
 Status: joint boundary, upstream-operation, and historical-source audit
-complete. Neither target repository exists yet.
+complete. The initial2026-07-31 inspection found neither target repository;
+this is not a current live-registry assertion. Current PLINK source preflight
+is recorded in `.autopilot/state/plink-source-preflight-2026-10-31.md`.
 
 ## Portfolio decision
 
@@ -41,6 +43,15 @@ Live GitHub inspection on 2026-07-31 found no `omics-rust/rsomics-plink` or
 allowlist entries, not published implementations.
 
 ## Boundary and overlap map
+
+The2026-10-31 source refresh pins beta v2.0.0-b.1.2 to
+`cc2c95e61c509d49aaf884d2ec0956a921770745` (24Oct2026), separately from alpha
+and newer master. Official dated runtime links are captured but executable
+hash/version/compatibility remain unqualified. The current full-path oracle
+must materialize filtered PGEN before QC, then prune/extract/reopen explicitly;
+same-invocation reports can precede later filters. See the state/report above
+for primary-source bindings and actual historical asset disposition. No native
+codec/public API or performance result is adopted by that source preflight.
 
 | Capability | Canonical product | Reason |
 |---|---|---|

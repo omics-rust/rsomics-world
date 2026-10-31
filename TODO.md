@@ -15,16 +15,18 @@ See [current execution state](.autopilot/state/portfolio-execution-2026-10-23.md
 Current frontier (2026-10-31): DESeq's owning package/native4 gate is accepted
 and publication remains credential-held; limma's count lifecycle is qualified,
 its ordinary-expression source/reload and reviewed local extension are accepted,
-with green-2 native4 and all four original archives accepted. Its first ordinary
-measurement fails in untimed QR inspection; the narrow harness correction is
-adopted for a hosted retry. Structure's
+with green-2 native4 and all four original archives accepted. Corrected ordinary
+performance passes the fixed resource gate and four-worker throughput gate;
+strict serial throughput and worker scaling fail, with the slow sample retained.
+Structure's
 reviewed private analysis passes native4, with public
 torsion/performance still held or unearned. Ecology has reviewed alpha and
 rarefaction while beta policy is held. Signal's corrected six-operation source
 lifecycle is accepted with complete original evidence; the user approves native
 repairs for confirmed arithmetic/data-loss and filtering defects, with named
 incompatibilities. Full-six native implementation is active; normal source semantics
-are unchanged.
+are unchanged. A newly confirmed optional sorted-BED defect has a separate
+pending decision; matrix numbers and other work continue.
 Peak's current full-four source casebook, inputs and reviewed/corrected hosted
 producer are adopted; actual runtime admission/source capture remain gates.
 Exact gates and original receipts live in each product dossier/state file.
