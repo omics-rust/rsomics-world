@@ -58,6 +58,14 @@ class PeakViewPreparationTest(unittest.TestCase):
         self.assertIsNone(view.dll_file({'name': 'base', 'path': 'base'}, root / 'restored'))
         with self.assertRaises(ValueError):
             view.dll_file({'name': 'unbound', 'path': 'base'}, root / 'restored')
+        packages = {'RColorBrewer': {'Version': '1.1-3'}, 'RCurl': {'Version': '1.98-1.20'}}
+        namespaces = [{'namespace': 'RColorBrewer', 'version': '1.1.3'},
+                      {'namespace': 'RCurl', 'version': '1.98.1.20'}]
+        view.check_namespace_versions(namespaces, packages)
+        with self.assertRaisesRegex(ValueError, 'unadmitted'):
+            view.check_namespace_versions([{'namespace': 'RCurl', 'version': '1.98.1.21'}], packages)
+        with self.assertRaisesRegex(ValueError, 'unadmitted'):
+            view.check_namespace_versions([{'namespace': 'unknown', 'version': '1.1.3'}], packages)
         payload = {'R-library/pkg/a': b'original library', 'inputs/a.bam': b'original BAM'}
         manifest = {name: dict(size=len(data), sha256=hashlib.sha256(data).hexdigest())
                     for name, data in payload.items()}

@@ -307,6 +307,17 @@ def dll_file(row, restored):
     return path
 
 
+def check_namespace_versions(namespaces, packages):
+    def components(version):
+        if not re.fullmatch(r'[0-9]+(?:[.-][0-9]+)+', version):
+            raise ValueError('invalid R package version: ' + version)
+        return tuple(map(int, re.split(r'[.-]', version)))
+    for row in namespaces:
+        name = row['namespace']
+        if name not in packages or components(row['version']) != components(packages[name]['Version']):
+            raise ValueError('unadmitted loaded R namespace: ' + name)
+
+
 def verify_runtime(restored, root):
     final = json.loads((restored / 'runtime/final-runtime-manifest.json').read_text())
     admitted = restored / 'runtime/admitted-install-manifest.json'
@@ -344,9 +355,7 @@ def verify_runtime(restored, root):
         raise ValueError('restored R installed-package population/version differs')
     with (root / 'runtime-check/R-state/namespaces.tsv').open() as stream:
         namespaces = list(csv.DictReader(stream, delimiter='\t'))
-    if any(row['namespace'] not in final['packages'] or
-           row['version'] != final['packages'][row['namespace']]['Version'] for row in namespaces):
-        raise ValueError('unadmitted loaded R namespace')
+    check_namespace_versions(namespaces, final['packages'])
     with (root / 'runtime-check/R-state/DLLs.tsv').open() as stream:
         dlls = list(csv.DictReader(stream, delimiter='\t'))
     dll_paths = [path for row in dlls if (path := dll_file(row, restored)) is not None]

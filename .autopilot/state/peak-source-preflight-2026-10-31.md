@@ -1,5 +1,26 @@
 # Peak next-product source qualification
 
+## Actual namespace spelling failure; component comparison corrected
+
+Targeted run41220226878 at35af65ef is FAILED before the new annotation/count
+calls. It restores the original runtime and passes installed package bodies,
+all181 raw installed versions and namespace function bodies. Actual143 loaded
+namespaces have17 raw-string mismatches: every mismatch is a hyphen-to-dot
+version spelling, not a changed component or absent package. Actual TSV
+be4cf98476d751df4df10f19a7f10ef534a1b82bc101b0f70f64c89d1aa81a81
+and original runtime manifestd2c14f7ef8a68a8680d6d8f17f1c50c5c5bad23341d19339e0c8bded42cf6b5a
+bind the diagnosis. Parent reads every observed mismatch and exact R4.6.1
+packageVersion/.make_numeric_version/format bodies: integer components split
+on[.-], formatted with dots. No guessed package allowlist is used.
+
+The producer now compares those exact integer-component sequences while
+retaining raw strings and unchanged package/body/version gates. A changed
+component or unknown namespace still fails. The SAME existing integrated
+preparation check observes the representation failure (0.138s), then passes
+1/0.562s after the narrow correction. No scientific input/answer/band/library
+or R driver changes. Full original retention/adoption and exact new CI precede
+any source retry; proposed view answers remain unearned.
+
 ## Native owner construction adopted without inferring pending source answers
 
 docs/plans/2026-11-01-peak-native-first-release.md adopts the read whole proposal
