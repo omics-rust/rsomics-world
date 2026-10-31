@@ -1,5 +1,40 @@
 # Ecology diversity source qualification
 
+## Adopted sparse rarefaction extension, 2026-10-31
+
+Owning maine1b03cb commits the real private rarefaction extension after the
+separate storage-policycfb3b8e. Owner is clean/publish=false/no remote. Parent
+reads complete IMPLEMENTATION-REPORT.md2f4a44e595570e049ef84ca19146585f995a4b1c36ad7aa2bf9179e603d7950d
+and verification.json1af2c39eea550da5e1c4912b6d7811d53c36c363f8efa3945a1ada8bce2485d1,
+/Volumes/KIOXIA/Developments/tmp/ecology-rarefy-contract-20261031.QhESSv/.
+Complete source/tests/licenses match the frozen author snapshot; protected
+alpha/phylogeny/old tests/manifests/lock hashes remain unchanged. Current README
+and guard have a separate explicit user-authorized storage-policy delta, not
+a retroactive alteration of historical evidence.
+
+Fresh whole-feature review3cc7fff16aef24c50f60a34f9066e284511ce49989800e443a11df4b543ad81d
+in /Volumes/KIOXIA/Developments/tmp/ecology-rarefy-review-VX0uI7/ has no
+Critical/Important/Minor finding. Parent reads the full report and actual
+production/tests/comparator/source/notices. Author format/strict Clippy/release
+and four integrated tests pass; parent fresh guarded offline full suite also
+passes all four tests and unit/doc harnesses, log41ff187f0f0fb28648faebe5b1b344aee5835d27945cf9727c7dd01a518161b7.
+
+Frozen binary574b084984291a89600db92f09ec35bb81a3a57eef0a1e470239348a6718721a
+has984exact count cells across six actual1/4-worker retained-profile calls.
+Actual native primary rarefaction feeds all594alpha comparisons/56unavailable
+classes, max finite absolute error3.552713678800501e-15, unchanged1e-10 bands.
+No source/RNG oracle, seed search or extra timing campaign was run. Two original
+upstream notice files contain retained trailing whitespace; staged diff checking
+excludes only those two verbatim notice files, not production/tests/docs.
+
+The chosen zero-depth fix preserves empty/all-zero dimensions; exact-total
+calls retain counts; undersized samples fail. Required depth/u128 seed and
+same-seed-per-sample profile are explicit. Tail-shuffle remains O(population)
+per active sample, so sparse data structure is not a claimed RSS/speed win.
+No new public API/foundation, beta placeholder, native4 acceptance, whole-product
+performance or publication is inferred. Undefined beta adapter remains held
+only for the unanswered user choice; the full initial product is not complete.
+
 ## Accepted source, raw data and private development
 
 User explicitly resolves the rarefaction depth-zero boundary: an empty vector
