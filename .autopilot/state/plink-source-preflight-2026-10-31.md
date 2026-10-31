@@ -1,5 +1,21 @@
 # PLINK next-workflow source preflight
 
+## First originals adopted; empty-suffix retry dispatched
+
+Parent reads the complete83-line retention report
+ee361996f6247d05eee3f6cf7e5c7239690e77092ec6a125e6f13e5fa9f6f469,
+freshly hashes the36586181B original ZIP7bfc0f3e5caa26a6db517f32a7907907d077dca5747d2625b5d96a3c97010117
+and verifies all102 DELIVERY.sha256 bindings (seal9cda3c6c48a42ea6c863dce11cdecc6b65f978cc8dabd1e9b2f981ee8c208e25).
+Evidence: `/Volumes/Zane's HDD/rsomics-fixtures/evidence/plink-first-workflow-oracle-2026-11-01/run-41218304562/`.
+All1402 source blobs match archive and unpacked bodies; six exact-head
+controllers and26 prepared inputs verify. No uploaded sidecar exists; no
+source build/helper/version/scientific output is invented from acquisition.
+
+Current world7642deb5af8384ac27d2f18b1d946f584acbab42 includes the sole SFX=
+correction and passes exact controller41219591498. One new actual source run
+41219915856 is dispatched at that head. It must earn actual source/official
+qualification and the whole casebook; the first failed run stays failed.
+
 ## Empty target suffix selected explicitly for the observed build failure
 
 Actual dry-run returns2 with zero stdout and stderr No rule to make target
