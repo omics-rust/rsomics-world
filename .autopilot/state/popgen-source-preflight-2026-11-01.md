@@ -1,5 +1,14 @@
 # Popgen connected source workflow
 
+## Third actual source attempt
+
+Root dispatches41252735560/1 at42d1138df77548d69d8ad90b4c747aedcc15035a
+only after exact-head Control plane41251417921 succeeds. This attempt includes
+both the prefix-preserving venv and actual-import-context library admission
+corrections. No casebook, cohort or native product acceptance is inferred
+before its authenticated useful outputs are recovered and checked. The second
+failed run remains retained, not rerun or relabelled.
+
 ## Second actual attempt passes runtime setup; closure adapter corrected
 
 Actual41250505334/1 at a6012d90 passes the symlink venv, explicit ensurepip,

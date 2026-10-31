@@ -1,5 +1,36 @@
 # Fixed real-input Peak performance gate
 
+## Fifth actual campaign completes science; caller speed remains held
+
+Actual41250498517/1 at a6012d90fa9fa67185ebc3fe89d50211e31791e1 admits
+final green2/owner5705a307 and completes54 graph/196 command measurements,
+all exit0. All26 whole-product comparisons and both corrected-view
+qualifications pass, including both worker settings, warmups and all five
+alternating pairs. Legacy model is d178/334 pairs, no fallback;306 peaks,
+3134 sparse rows and3440 annotation/count rows. Corrected output separately
+has3441 rows and is not substituted into the legacy comparison.
+
+The final strict gate is HELD only for caller wall time: T1 native4.274–4.283s
+versus source0.880–0.885s; T4 native4.221–4.285s versus source0.828–0.853s.
+Whole graph strictly passes at both budgets (native about8s, source about29s),
+as do sparse/annotation/count and corrected downstream stages. Exact cgroup
+memory is N/A. No whole-graph parallel speedup or release acceptance is earned.
+
+Root reads full REPORT and actual first-error/range anchors in
+peak-real-latest-failure-20261101.f0whcylr. Full useful ZIP115590454B,
+SHAcfd0f262d64dbb55cca426645714dd649f467963cbdf6c5619d176424fd9cda3,
+all2077 manifest bodies/CRC and17 Git-bound files verify. REPORT
+ad12550b9b4f239e1e65988fb829b25e320bd0d2de80493f0339eda373dfd1c4;
+completedcd66b51151410414d6b5ff1f2d093034dc831f687ad6dd2ff9d03c84cb23822c.
+Original runtime/provider carriers are not recopied or claimed in this packet.
+
+Actual caller T1 sample is user0.602s/system3.598s. Owner output.rs writes
+442527 bedGraph rows directly to unbuffered File, while spools and other
+product outputs already use buffered I/O. This is a concrete optimization
+candidate, not a measured syscall profile. A native-only same-real-input
+before/after check is starting externally; no source algorithm, scientific
+policy, input, memory budget or strict threshold is changed.
+
 ## Fourth attempt reaches real annotation and exposes cumulative accounting
 
 Actual41242120160/attempt1 atf9b32007e6df9605f4c1039f0b0f0aa39a6a4a6d

@@ -1,5 +1,15 @@
 # Fixed private HGDP whole-workflow gate
 
+## Actual second hosted attempt is being recovered
+
+After exact-head Control plane41250162613 passes, root dispatches41250502140/1
+at a6012d90fa9fa67185ebc3fe89d50211e31791e1. Runtime setup passes; the private
+whole-workflow step fails. Ciphertext artifact13061845524 is2501620547B.
+Complete external download, authenticated decryption and original manifest/
+controller binding are in progress before a scientific cause is recorded.
+Neither its size nor its duration is a cohort, qualification or timing result.
+Do not rerun unchanged or change the predeclared data and performance policy.
+
 ## First real startup/custody failures corrected narrowly
 
 Root reads the complete REPORT/diagnosis at
