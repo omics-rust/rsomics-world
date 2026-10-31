@@ -1,5 +1,25 @@
 # Native peak first-four construction
 
+## Final green-2 four-native/source originals accepted
+
+Actual41246653577/1 at13e5aa6c35e632027e850c9ab60dd4c63e78b138 passes
+all four actual native classes and the pinned source consumer. Root reads the
+full report/new receipt and verifies the sealed full-original packet in
+peak-green2-adoption-20261101.Bhtu4S. All five original ZIP/TAR carriers, every
+manifest body, five raw joblogs,13 exact-head controllers and34 owner files
+are bound. Debug/release each7lib+3count+1whole/zero ignored on every target.
+Source independently matches2265 sparse/2667 annotation core9+masks9/2667 count
+rows from the SAME new native products;272 native and21382 restored files plus
+29 image-package trees stay unchanged. No local scientific replay occurs.
+
+Explicit new receipt is peak-native-2026-11-01-green-2.json. Linux release ELF
+eecb790b1c11e24dfba4d0155b54ebeaa71a266a796dbc825144aac6d7905ea0,
+artifact13059766021/44835478B ZIP
+8399503454ac5b9de90097a94e78e0ee8aab102fd58bfc59c552f6a1d4f1b5c3.
+Completed packetbb5e2c5154d11957d847f7f1fa34d717a39927014e79cc0e00a6f300e47e4b63;
+historical green-1 receipt remains unchanged. Fixed full real-input retry must
+use this new source/binary pair; no real performance/release is pre-accepted.
+
 ## Final correction native gate dispatched
 
 Exact-head Control plane41246520997 passes at

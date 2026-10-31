@@ -1,0 +1,96 @@
+{
+  "schema": "rsomics.peak.native-adoption.v1",
+  "product": "rsomics-peak",
+  "repository": "omics-rust/rsomics-world",
+  "workflow_path": ".github/workflows/peak-candidate.yml",
+  "run_id": 41246653577,
+  "run_attempt": 1,
+  "head_sha": "13e5aa6c35e632027e850c9ab60dd4c63e78b138",
+  "artifact_id": 13059766021,
+  "artifact_name": "peak-native-41246653577-1-linux-x86_64",
+  "size_in_bytes": 44835478,
+  "artifact_sha256": "8399503454ac5b9de90097a94e78e0ee8aab102fd58bfc59c552f6a1d4f1b5c3",
+  "native_tar_sha256": "0f9de9ebce4185679c5d405db94afc174b684f0da0e6774a1abe75ae1ce7fa09",
+  "binary_sha256": "eecb790b1c11e24dfba4d0155b54ebeaa71a266a796dbc825144aac6d7905ea0",
+  "snapshot": "green-2",
+  "owner_commit": "5705a307ccd3a535610f8989583882bd805c8446",
+  "source_file_count": 34,
+  "source_archive_sha256": "c198781664a3bdac71629bca22efa0be79f3d69ff294eb2844b1dc427855f149",
+  "source_manifest_sha256": "536c397ca678397485c1ad1b55249c6ecaa7e41e6184be4d9dc5c65bf05a82ab",
+  "lock_sha256": "09fab7983c70d156da0be454299e04167f58ef576671709683240d9929fddb67",
+  "fixture_archive_sha256": "99bfccd7b23faa97c2f73ecff914cea2c554475eb6bcc24cad72762f0b459465",
+  "fixture_manifest_sha256": "766d8216c8efb56fca8044df8f5477757078495f55c93b59d7303cac7c1c8a36",
+  "four_native_and_source_passed": true,
+  "native_targets": [
+    "linux-x86_64",
+    "linux-aarch64",
+    "macos-x86_64",
+    "macos-aarch64"
+  ],
+  "workers": [
+    1,
+    4
+  ],
+  "worker_equality_sha256": "0422761a82ba8078a04a3d6344071e2520baaadce0209edf3f31ce8970279282",
+  "integrity_sha256": "2a764b798651d4f6393aac951bc41518be983a01effbea26a6f6b74cd9ece287",
+  "source_on_native": {
+    "artifact_id": 13060741568,
+    "artifact_name": "peak-source-on-native-41246653577-1",
+    "size_in_bytes": 6158740,
+    "artifact_sha256": "d8c3892cb5135218aec8fe8735923e8af5d331906cb513d08eba5e209f717b77",
+    "tar_sha256": "738bc35d768c3e9d14efc6ba83e86abca79adef8190acbafc7c4030811a4f2e1",
+    "qualification_sha256": "c4766aa916664a89f6001310a2fd851506cbb2b30f8f78a07a6a3bc26175fc99",
+    "native_integrity_sha256": "1ae748d5796cc995906ddf0fba5e5626f9c1c6ac79cec8fb465106e92254a77b",
+    "runtime_integrity_sha256": "e96c6b397425b2a02743edcc20a6a9d14ffc464cd97c9a94890a7599ed3fdd9d",
+    "sparse_rows": 2265,
+    "annotation_rows": 2667,
+    "count_rows": 2667,
+    "detail_masks": 9,
+    "count_unit": "alignment",
+    "count_samples": [
+      "T1",
+      "T2"
+    ],
+    "private_feature_hit_ids_independently_oracle_qualified": false
+  },
+  "other_native_artifacts": [
+    {
+      "artifact_id": 13059671926,
+      "target": "macos-aarch64",
+      "size_in_bytes": 32632026,
+      "artifact_sha256": "4e8ba26074c33cab94655da35bf88850bc7ff7e1788c8adad3dc4723e28c7760"
+    },
+    {
+      "artifact_id": 13059708422,
+      "target": "macos-x86_64",
+      "size_in_bytes": 32463145,
+      "artifact_sha256": "bf489b5c62eaa41e5b6b1642e133bbeb3976afd2dcdf968b60befe4581d3a69f"
+    },
+    {
+      "artifact_id": 13059720483,
+      "target": "linux-aarch64",
+      "size_in_bytes": 42902543,
+      "artifact_sha256": "2d3e0ab954b234170943cf0f0830f4ea93b58012530aae61b784bb36fd3f38bb"
+    }
+  ],
+  "evidence_directory": "/Volumes/KIOXIA/Developments/tmp/peak-green2-adoption-20261101.Bhtu4S",
+  "full_originals_verified": 5,
+  "verified_native_files_per_artifact": 272,
+  "verified_source_files": 421,
+  "native_test_populations": {
+    "debug": [
+      7,
+      3,
+      1
+    ],
+    "release": [
+      7,
+      3,
+      1
+    ]
+  },
+  "native_verification_sha256": "5e348c6ca5e3032ebb0aa1fb6cf25e391eeaffa1527c55dd0916461010731c94",
+  "source_verification_sha256": "3667131570eb4dc11744cb8eb291d1be2b4cd3194b7bb695bfd2662ee25b8336",
+  "performance_claim": false,
+  "release": false
+}
