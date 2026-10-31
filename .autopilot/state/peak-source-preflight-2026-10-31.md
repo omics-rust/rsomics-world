@@ -1,5 +1,38 @@
 # Peak next-product source qualification
 
+## Complete inventory failure retained; quoted-inventory retry active
+
+Parent adopts the complete original run41201586593 retention after reading
+the full REPORT/bindings and freshly checking the full original ZIP and seals:
+`/Volumes/Zane's HDD/rsomics-fixtures/evidence/peak-first-workflow-oracle-2026-10-31/run-41201586593/`.
+REPORT2d8ba74cf67818b3a9abb2738e9aab003f96cb01139cdb6c6d980a6801467db4;
+bindingse2f3cc366dbabb9f14e0831026360972ce1805a6dae373880949475440c56ea3;
+retained manifest e524cfef68a78db33e2104c37aab7f233daaac16bce195b00b6480ac3a1366d1.
+Actual artifact13043971391/1090430043bytes has SHA
+d720eeb778a4d619b659bc1e62478da26b48b7f4c9cf3df20c728b6e68eb5bd7.
+Its one2322452480-byte original TAR has computed SHA
+b603102ae7738b8c02ee8ab860b4c2e04e73dab1713c042c3a73244e30d4b3ed.
+All38809 source-manifest entries match;42963 TAR metadata records and1053
+links stay virtual, not filesystem link extraction.166 actual child processes
+return0 with matching raw streams; all8 archived controllers match exacta005dcab.
+The controller comparison still failed and scientific cases were skipped.
+
+The actual upload contains ONLY the TAR; job.log independently says one file.
+The declared tar-hash JSON sidecar is absent, so that comparison is unavailable,
+not invented or passed. API ZIP digest/CRC and complete internal manifests
+remain the available independently checked original bindings.
+
+Diagnostic reconstruction of the unmodified malformed TSV finds181 real
+package records,0 actual duplicate names/admitted-version differences, and152
+installed DESCRIPTION versions agreeing. It is diagnosis only, not a repaired
+runtime result. Final runtime manifest, R-runtime gate, scientific inputs and
+witness are genuinely absent in this failed original.
+
+The quoted-inventory correction b92eb0404aad1a0222ad580c2a81c5431ff42957
+passes exact controller41208904418. Actual full-four retry41209740891/attempt1
+is dispatched at that exact head on2026-10-31. No package/library/compiler/
+source/input/numerical rule changed; runtime and source success remain gates.
+
 ## Inventory-framing failure diagnosed; narrow correction adopted
 
 Run41201586593/attempt1 is terminal FAILURE at exact world
