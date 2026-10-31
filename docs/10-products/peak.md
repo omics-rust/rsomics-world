@@ -1,7 +1,10 @@
 # Peak product dossier
 
-Status: source and upstream-operation audit complete. The target repository has
-not been created.
+Status: initial boundary and operation mapping complete. Fresh2026-10-31
+source revalidation finds unresolved historical annotation authority and SEACR
+semantics, so old compatibility claims do not qualify an implementation.
+No consolidated target exists locally; a fresh parent GitHub read returns404.
+See `.autopilot/state/peak-source-preflight-2026-10-31.md`.
 
 ## Boundary
 
@@ -48,7 +51,7 @@ MACS3 helper operations are routed by their user-visible contract:
 
 | MACS3 operation | Decision |
 |---|---|
-| `callvar` | variation calling belongs to `rsomics-vcf` |
+| `callvar` | variation calling belongs to `rsomics-call`, not the VCF/BCF format product |
 | `bdgcmp`, `bdgdiff`, `bdgopt`, `cmbreps` | general track arithmetic belongs to `rsomics-signal`; peak calling may keep private equivalents |
 | `pileup` | public track generation belongs to `rsomics-signal`; the exact MACS background model stays private to `call` |
 | `filterdup`, `randsample` | alignment filtering and sampling belong to `rsomics-bam`; `call` may apply equivalent private policy during ingestion |
@@ -168,8 +171,10 @@ src/
 multi-output transactions. `rsomics-help` owns the complete command tree.
 
 `rsomics-peak` is a concrete consumer of validated alignment readers and
-records from `rsomics-bamio`, and of checked interval geometry and indexing
-from `rsomics-intervals`. Consumer tests must cover `call`, `annotate`, and
+records from `rsomics-bamio`, and of checked interval geometry from
+`rsomics-intervals`. Current intervals has no public IntervalIndex/IntervalSet;
+overlap indexes, strand and transcript models start product-private.
+Consumer tests must cover `call`, `annotate`, and
 `count`, not only compile a dependency.
 
 The exact MACS pileup, Poisson tail, q-value, background, broad-region, and
@@ -191,8 +196,8 @@ clean external-disk clones remain the source pool.
 | Source asset | Revision | Disposition |
 |---|---|---|
 | `rsomics-macs` | `f914cdcad4c1ef63ac9930d13257518fd23531e3` | refactor then merge; retain the single-end no-control algorithm, model, goldens, and measurements |
-| `rsomics-seacr` | `d6ed2f0890989fa2de2007a1763bed3d51e365b2` | refactor then merge; retain threshold algorithms and all-mode oracle fixtures, but isolate deliberate shell quirks |
-| `rsomics-peak-annotate` | `e3435660b4ab6219661ece133b8f7dd52c0203db` | refactor then merge; retain the verified ChIPseeker default semantics and goldens |
+| `rsomics-seacr` | `d6ed2f0890989fa2de2007a1763bed3d51e365b2` | refactor then merge selected threshold algorithms; retain the small input pair/skippable live harness, not a presumed six-mode expected-output receipt |
+| `rsomics-peak-annotate` | `e3435660b4ab6219661ece133b8f7dd52c0203db` | refactor then merge model/annotation seeds; preserve old goldens as unqualified historical assets while resolving source/session/options authority |
 | `rsomics-peak-count` | `147ed9b4a3d2d58210d28b8be268ac25bd537b07` | refactor then merge; retain overlap fixtures and the sequential-scan performance hypothesis |
 | `rsomics-find-peaks` | `20c65c54462aaf1f92dd86242e8f9e7ff2afb3a7` | discard from this product; retain only as an unpromoted algorithm, test, and benchmark asset if a concrete future consumer appears |
 
@@ -204,15 +209,47 @@ reused. Upstream behavior and license provenance remain recorded independently.
 - MACS: byte-identical narrowPeak and summit outputs on the committed
   single-end no-control fixture, plus larger synthetic no-model and model-path
   comparisons.
-- SEACR: all six control/fraction, normalization, and threshold combinations
-  compared live against SEACR 1.3 on one fixture.
-- Annotation: a committed ChIPseeker 1.46.1 golden covering categories,
+- SEACR: the historical harness intends all six control/fraction,
+  normalization and threshold combinations but can skip as success; its177/54
+  input rows survive, not six frozen expected outputs or a current receipt.
+- Annotation: a committed golden attributed to ChIPseeker 1.46.1 covers categories,
   strands, multiple transcripts, equal-coordinate isoforms, wide peaks, and
-  downstream behavior.
+  downstream behavior; source-default/session/options provenance is unresolved.
 - Count: a committed bedtools `multicov` golden and an optional live
   differential.
 - Generic find-peaks: SciPy value and property goldens remain useful only if a
   real consumer later needs that exact one-dimensional contract.
+
+### Current source revalidation
+
+Parent reads the complete85-line REPORT73d909dbe95887b19cd8bbc0940d198ba604f067584aba9a3a3fba657aadeb06
+at `/Volumes/KIOXIA/Developments/tmp/peak-source-assessment.crpVKc/`, verifies
+all149source/fixture/metadata bindings and directly reads the actual annotation,
+SEACR control-mask and old count paths. All four historical heads match and
+are clean. This is source inspection, not a scientific runtime or native gate.
+
+Pinned ChIPseeker1.46.1 archive25e0acdb6965f7553d995c52db49a4c9cf4acedc216344a56d58c89689c5fbb7
+binds RELEASE_3_22/c9031f6. Its getGenomicAnnotation reads the global option
+ChIPseeker.downstreamDistance and defaults to3000, using a separate follow
+query at feature ends. Rust hard-codes300 against the nearest-TSS transcript;
+the old golden labels300bp although its generator records no option/version/
+session. Preserve all original bytes and hold the verified-default claim until
+a real pinned source run records these inputs/options and resolves the mapping.
+Do not silently rewrite the golden or choose native behavior from its label.
+
+SEACR1.3 tag5a0efe59f06fb17cf9d34d415bb0c1a1f7a77a3c shell/R bytes expose
+distinct AUC/component-count thresholds, normalized controls, always-stringent
+unmerged control masks and fractional strict merge gaps. The old Rust differs
+in those states in addition to the known first/final-record omissions. All-mode
+compatibility must be earned by one full source workflow, not inferred from
+the duplicated numeric-mode branches or a skippable harness.
+
+MACS3's current3.1.0 release changes performance and fixes control duplicate,
+large-count Poisson and truncated-BAM behavior;3.0.4 remains only the retained
+historical pin. Current ChIPseeker is1.48.0/Bioc3.23 and bedtools2.31.1; SEACR's
+newer1.4 tags are beta, not an automatic stable replacement. New source and
+performance work must name its exact profile. The historical ratios below
+prove no current advantage. No source/native bug policy is selected here.
 
 ## Existing implementation gaps
 
