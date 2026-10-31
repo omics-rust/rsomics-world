@@ -1,5 +1,17 @@
 # Real signal campaign
 
+## Fresh 4090 read-only feasibility does not admit an idle benchmark
+
+Root reads ssh-4090-signal-feasibility-20261101.0DpHC6 REPORT
+875a45d4e2ca425b27e3ab132775de906f31feb46f03630d6d216a15b63f46af.
+At22:29:50UTC,112CPU/affinity0-111 and ample memory/home capacity are real,
+but load29.34 and other users' active bamCoverage do not establish reserved
+otherwise-idle CPUs. No remote writes/install/image pull/runner registration/
+science or interference with other jobs occurred. Original one-host benchmark
+is not currently admitted there. The bounded paired-job proposal also remains
+unimplemented; it must not silently change same-host claims or original strict
+whole-graph/stage/1-vs4 acceptance. Other unblocked product work proceeds.
+
 ## Actual NPZ layout failure corrected without changing numeric policy
 
 Actual41227066387/attempt1 at31c0294c869df2ce788535ce67970695a2942fd9

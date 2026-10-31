@@ -1,5 +1,16 @@
 # Popgen connected source workflow
 
+## Actual first hosted source dispatched
+
+Exact-head Control plane41248536045 passes at
+b51a18135b941146711eddd78a630c099275fad7. Root dispatches the manual source
+workflow: actual41248783607/1. It subsequently fails in the early execute
+step; init/transport/seal/encrypted upload all pass. Artifact13060336720 is
+362103271B ZIP06a470e2de620a54a4c4ae9f04e9eec3526d711cbd6197694ddd05242e5fda46.
+Full authenticated external recovery/manifest/first-error diagnosis is active;
+no source/casebook/cohort/algorithm success or failure is inferred from a short
+step duration. Do not blindly rerun or change the scientific profile.
+
 ## Hosted encrypted integration reviewed and live-tree race corrected
 
 Root reads the complete hosted controller/workflow/existing ONE test/plan and
