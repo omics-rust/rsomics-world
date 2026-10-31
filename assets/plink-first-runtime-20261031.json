@@ -1,0 +1,47 @@
+{
+  "schema": 1,
+  "status": "acquisition specification only; no binary/build/runtime qualified locally",
+  "execution": "hosted Linux x86_64 only; compact engineering casebook; no timing",
+  "image": {
+    "reference": "gcc:14.3.0-bookworm@sha256:a689e29bc3adf4663ef9a141d23081252764d1319c63f591a027bd6fd676f4c1",
+    "manifest_digest": "sha256:a689e29bc3adf4663ef9a141d23081252764d1319c63f591a027bd6fd676f4c1",
+    "config_digest": "sha256:f3d916a4884034b89cb6148781f07d8c92d94b6c6dc1b74dcbec3475d16400da",
+    "platform": "linux/amd64",
+    "gcc_version": "14.3.0",
+    "metadata_origin": "official Docker registry library/gcc index, amd64 manifest and config inspected 2026-10-31; no image layers downloaded locally"
+  },
+  "official": {
+    "url": "https://s3.amazonaws.com/plink2-assets/beta1/plink2_linux_x86_64_20261024.zip",
+    "version_token": "v2.0.0-b.1.2",
+    "date_token": "24 Oct 2026",
+    "max_bytes": 33554432,
+    "sha256_status": "must record actual archive and executable SHA256 after hosted acquisition; not known here",
+    "source_correspondence": "separate runtime profile; version/date is not proof of commit correspondence"
+  },
+  "source": {
+    "commit": "cc2c95e61c509d49aaf884d2ec0956a921770745",
+    "tag": "v2.0.0-b.1.2",
+    "url": "https://codeload.github.com/chrchang/plink-ng/tar.gz/cc2c95e61c509d49aaf884d2ec0956a921770745",
+    "tree_url": "https://api.github.com/repos/chrchang/plink-ng/git/trees/cc2c95e61c509d49aaf884d2ec0956a921770745?recursive=1",
+    "max_bytes": 134217728,
+    "max_unpacked_bytes": 536870912,
+    "git_blob_anchors": {
+      "2.0/Makefile.src": "4e88bececc9ad666852fabf0a0ee20dbfb1593d3",
+      "2.0/build_dynamic/Makefile": "b03d4592b3d68d1b93d118a9c70924b7fcaf50f7",
+      "2.0/include/pgenlib_ffi_support.h": "4ee86dbbc397613b27f60cb8fcef023c07f38a97",
+      "2.0/include/pgenlib_read.h": "2c04c92dcfeddc1faf026fb8474928d1371074b1",
+      "2.0/pgen_compress.cc": "8bd93312411dbd537c9e78ab078859465e2d0880",
+      "2.0/plink2_import.cc": "2d1190d82b6112fd3f9abc68ffd6a9de76462922",
+      "2.0/plink2.cc": "9a753541d1bc170ad0e0fa9635dd0b45d5c20fbb"
+    },
+    "make_directory": "2.0/build_dynamic",
+    "make_argv": ["make", "-j2", "plink2", "pgen_compress", "NO_LAPACK=1", "NO_AVX2=1", "NO_SSE42=1", "CC=/usr/local/bin/gcc", "CXX=/usr/local/bin/g++"],
+    "scope": "NO_LAPACK only disables LAPACK-dependent excluded workflows; full first-slice QC/LD source policy remains tested",
+    "helper_sources": ["include/plink2_base.cc", "include/plink2_bits.cc", "include/plink2_simd.cc", "include/pgenlib_misc.cc", "include/pgenlib_mtwrite.cc", "include/pgenlib_read.cc", "include/pgenlib_write.cc", "include/pgenlib_ffi_support.cc"],
+    "helper_flags": ["-std=c++17", "-O2", "-ffp-contract=off", "-pthread"],
+    "licenses": ["2.0/COPYING", "2.0/COPYING.LESSER"],
+    "identity": "verify every acquired source member against immutable-commit recursive Git tree blob IDs, plus captured independent anchors; retain entire unmodified archive/tree/build closure"
+  },
+  "limits": {"samples": 72, "baseline_variants": 64, "rich_variants": 24, "disk_bytes": 4294967296},
+  "deferred": ["large engineering or real cohort acquisition", "performance/timing", "production codec adoption", "public crate/API", "four-native-platform release qualification"]
+}

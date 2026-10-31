@@ -1,5 +1,36 @@
 # PLINK next-workflow source preflight
 
+## Whole producer reviewed and adopted; real hosted build is the next gate
+
+Parent reads all1844 original six-file lines, complete preparation report
+c545d11e43e6bf82b045e98cf39a725c8298b3072a8edd42dfcaa478e53296db,
+and freshly verifies all18 delivery bindings. One whole-producer review
+2d3761801229a7b61a26d8f73c915a7a5f77f59ad15420375ca63718a19d91f2
+finds one P2: conditional HDS delta checks could accept complete phase loss.
+One concentrated two-file correction derives required presence/absence,
+units and hardcall orientation from the existing HDS fixture and the actual
+post-parse ApplyHardCallThreshPhased/make-copy/writer rules. No new cohort,
+generic DS-to-phase assumption or second reviewer is introduced.
+
+Correction: `/Volumes/KIOXIA/Developments/tmp/plink-hds-phase-correction-20261031.jsprwmjn/`.
+REPORT616a2a9b2d35b5410c6c9f6235cf6decfdf5f5c711c26e78da789fe8d50ce163;
+DELIVERYa564d1bb8e9342345f91e3698be9e04f62427278b73fa482ca0d80fb03f0e026.
+Parent reads full report/diff and actual pinned threshold/copy/half-distance
+bodies, freshly verifies all18 correction bindings and all6 live source files.
+The existing integrated preparation test passes1/0.176s for parent under
+external guard; actual old-checker RED remains retained. Other4files unchanged.
+
+The manual hosted graph builds exact source and separately acquires the dated
+official executable, then runs independent1/4-requested-worker I→F→QC/LD/prune→P
+and24manifest-bound reloads. Generic source flags are source-supported;
+runtime/image/source pins, complete originals and source notices are retained.
+Malformed DS cardinality is diagnostic-only; tiny HWE tail is positive with
+log evidence, not a claimed compact-cohort underflow test. No local source/
+scientific/native/C++ build or run, runtime/corpus acquisition or new product
+is performed by preparation. Exact controller CI must precede actual hosted
+execution. ABI/build, real source outputs and casebook qualification remain
+unearned until that run and original verification complete.
+
 ## Whole shared-fileset source casebook adopted; execution not yet started
 
 Parent reads complete REPORT97/PLAN105/EVIDENCE56 lines in

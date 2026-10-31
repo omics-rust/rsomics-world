@@ -1,0 +1,72 @@
+name: PLINK whole-six compact source oracle
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  compact-source-oracle:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 120
+    container:
+      image: gcc:14.3.0-bookworm@sha256:a689e29bc3adf4663ef9a141d23081252764d1319c63f591a027bd6fd676f4c1
+    env:
+      PLINK_CONTAINER_DIGEST: sha256:a689e29bc3adf4663ef9a141d23081252764d1319c63f591a027bd6fd676f4c1
+      PYTHONDONTWRITEBYTECODE: '1'
+      PYTHONNOUSERSITE: '1'
+      OMP_NUM_THREADS: '1'
+      OPENBLAS_NUM_THREADS: '1'
+      CC: /usr/local/bin/gcc
+      CXX: /usr/local/bin/g++
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+
+      - name: Bind explicit hosted scratch and cache roots
+        run: |
+          set -euo pipefail
+          test "$(uname -s)" = Linux
+          test "$(uname -m)" = x86_64
+          test "$GCC_VERSION" = 14.3.0
+          for name in TMPDIR XDG_CACHE_HOME XDG_CONFIG_HOME XDG_DATA_HOME PIP_CACHE_DIR PYTHONUSERBASE PYTHONPYCACHEPREFIX CCACHE_DIR; do
+            path="$RUNNER_TEMP/plink-first-workflow-cache/$name"
+            mkdir -p "$path"
+            printf '%s=%s\n' "$name" "$path" >> "$GITHUB_ENV"
+          done
+          ulimit -c 0
+
+      - name: Capture both exact source and dated official whole-six graphs
+        run: |
+          set -euo pipefail
+          ulimit -c 0
+          python3 -B scripts/plink_first_workflow_oracle.py --action run --runtime-lock assets/plink-first-runtime-20261031.json --output "$RUNNER_TEMP/plink-first-workflow-oracle"
+
+      - name: Bind all originals including partial failures
+        if: always()
+        run: |
+          set -euo pipefail
+          python3 -B scripts/plink_first_workflow_oracle.py --action manifest --output "$RUNNER_TEMP/plink-first-workflow-oracle"
+
+      - name: Preserve links and exact case in complete archive
+        if: always()
+        run: |
+          set -euo pipefail
+          python3 -B scripts/plink_first_workflow_oracle.py --action package --output "$RUNNER_TEMP/plink-first-workflow-oracle" --archive "$RUNNER_TEMP/plink-first-workflow-oracle.tar"
+
+      - name: Upload immutable complete original and archive binding
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: plink-first-workflow-oracle-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            ${{ runner.temp }}/plink-first-workflow-oracle.tar
+            ${{ runner.temp }}/plink-first-workflow-oracle.tar.json
+          include-hidden-files: true
+          if-no-files-found: error
+          retention-days: 90
