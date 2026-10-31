@@ -1,5 +1,31 @@
 # Native PLINK first coherent workflow active
 
+## Final local checks verified; one material correction wave adopted
+
+Root reads complete final freeze report and raw debug/release logs, then
+independently verifies all302 owner file bodies, four check logs and both
+complete graph receipts against plink-compact-native-freeze-20261101.0iGNWb.
+Actual fmt/strict Clippy/debug/release pass4lib+1connected, zero ignored;
+review-input treefa9e6e016616e9aec58cf91304eabe0b94f2457d234d487ead5326eadb6327be.
+
+One fresh whole-product review at plink-whole-feature-review-20261101.NoJLl8
+(REPORT SHAda4884f18c119758a49eca399fdc1c7833f607dcde8fadbd19a58acce62d06ca)
+finds four materialP2s: external header-only REF report metadata, make's omitted
+persistent metadata/writer memory, typed C++ writer-offset aliasing and quadratic
+dense-track sample projection. The reviewer actually demonstrates a valid4.2MB
+PVAR can be published under --memory-mib1; this is not a claimed RSS measurement.
+Root reads the full report and adopts one concentrated correction wave, plus
+serial codec-open allocation only for the concrete non-atomic global failure
+diagnostic. Independent readers/compute remain parallel; no unsafe Send or
+whole read-path lock. Existing connected checks strengthen the actual probes;
+no public foundation/API, source answer, numerical band or helper-test ladder.
+
+The next four-native/same-generation source gate is independently planned and
+adopted in docs/plans/2026-11-01-plink-native-four.md; four unique control-plane
+files may be prepared concurrently. Parent freezes the owner ONLY after the
+correction wave's final actual checks. No current final snapshot, native-four,
+source cross-read, real-cohort performance or distribution success is inferred.
+
 ## Actual compact whole workflow green; final quality and review active
 
 Coordinator's retained plink-native-whole-graph-20261101-3.log records a genuine
