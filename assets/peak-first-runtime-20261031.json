@@ -1,0 +1,2161 @@
+{
+  "active_python_dependency_edges": [
+    {
+      "package": "scipy",
+      "requires": "numpy<2.5,>=1.23.5",
+      "resolved_name": "numpy",
+      "resolved_version": "2.2.6"
+    },
+    {
+      "package": "pandas",
+      "requires": "numpy>=1.26.0; python_version >= \"3.12\"",
+      "resolved_name": "numpy",
+      "resolved_version": "2.2.6"
+    },
+    {
+      "package": "pandas",
+      "requires": "python-dateutil>=2.8.2",
+      "resolved_name": "python-dateutil",
+      "resolved_version": "2.9.0.post0"
+    },
+    {
+      "package": "pandas",
+      "requires": "pytz>=2020.1",
+      "resolved_name": "pytz",
+      "resolved_version": "2025.2"
+    },
+    {
+      "package": "pandas",
+      "requires": "tzdata>=2022.7",
+      "resolved_name": "tzdata",
+      "resolved_version": "2025.2"
+    },
+    {
+      "package": "anndata",
+      "requires": "array-api-compat!=1.5,>1.4",
+      "resolved_name": "array-api-compat",
+      "resolved_version": "1.11.2"
+    },
+    {
+      "package": "anndata",
+      "requires": "h5py>=3.7",
+      "resolved_name": "h5py",
+      "resolved_version": "3.13.0"
+    },
+    {
+      "package": "anndata",
+      "requires": "natsort",
+      "resolved_name": "natsort",
+      "resolved_version": "8.4.0"
+    },
+    {
+      "package": "anndata",
+      "requires": "numpy>=1.23",
+      "resolved_name": "numpy",
+      "resolved_version": "2.2.6"
+    },
+    {
+      "package": "anndata",
+      "requires": "packaging>=24.2",
+      "resolved_name": "packaging",
+      "resolved_version": "25.0"
+    },
+    {
+      "package": "anndata",
+      "requires": "pandas!=2.1.0rc0,!=2.1.2,>=1.4",
+      "resolved_name": "pandas",
+      "resolved_version": "2.2.3"
+    },
+    {
+      "package": "anndata",
+      "requires": "scipy>1.8",
+      "resolved_name": "scipy",
+      "resolved_version": "1.15.3"
+    },
+    {
+      "package": "hmmlearn",
+      "requires": "numpy>=1.10",
+      "resolved_name": "numpy",
+      "resolved_version": "2.2.6"
+    },
+    {
+      "package": "hmmlearn",
+      "requires": "scikit-learn!=0.22.0,>=0.16",
+      "resolved_name": "scikit-learn",
+      "resolved_version": "1.6.1"
+    },
+    {
+      "package": "hmmlearn",
+      "requires": "scipy>=0.19",
+      "resolved_name": "scipy",
+      "resolved_version": "1.15.3"
+    },
+    {
+      "package": "scikit-learn",
+      "requires": "numpy>=1.19.5",
+      "resolved_name": "numpy",
+      "resolved_version": "2.2.6"
+    },
+    {
+      "package": "scikit-learn",
+      "requires": "scipy>=1.6.0",
+      "resolved_name": "scipy",
+      "resolved_version": "1.15.3"
+    },
+    {
+      "package": "scikit-learn",
+      "requires": "joblib>=1.2.0",
+      "resolved_name": "joblib",
+      "resolved_version": "1.4.2"
+    },
+    {
+      "package": "scikit-learn",
+      "requires": "threadpoolctl>=3.1.0",
+      "resolved_name": "threadpoolctl",
+      "resolved_version": "3.6.0"
+    },
+    {
+      "package": "h5py",
+      "requires": "numpy>=1.19.3",
+      "resolved_name": "numpy",
+      "resolved_version": "2.2.6"
+    },
+    {
+      "package": "python-dateutil",
+      "requires": "six >=1.5",
+      "resolved_name": "six",
+      "resolved_version": "1.17.0"
+    },
+    {
+      "package": "macs3",
+      "requires": "numpy>=1.25",
+      "resolved_name": "numpy",
+      "resolved_version": "2.2.6"
+    },
+    {
+      "package": "macs3",
+      "requires": "scipy>=1.12",
+      "resolved_name": "scipy",
+      "resolved_version": "1.15.3"
+    },
+    {
+      "package": "macs3",
+      "requires": "pandas>=2.0",
+      "resolved_name": "pandas",
+      "resolved_version": "2.2.3"
+    },
+    {
+      "package": "macs3",
+      "requires": "anndata>=0.10",
+      "resolved_name": "anndata",
+      "resolved_version": "0.11.4"
+    },
+    {
+      "package": "macs3",
+      "requires": "hmmlearn>=0.3.2",
+      "resolved_name": "hmmlearn",
+      "resolved_version": "0.3.3"
+    },
+    {
+      "package": "macs3",
+      "requires": "scikit-learn>=1.3",
+      "resolved_name": "scikit-learn",
+      "resolved_version": "1.6.1"
+    }
+  ],
+  "held": [
+    "Admit full R dependency closure: resolve codetools R>=4.7 conflict against immutable-image compatible recommended package, preserve actual package identity/source SHA256 and install order",
+    "Installed R namespace/version/loaded-object and executable identity receipts",
+    "Image layer acquisition/hash verification and compiler/compression-library inventory",
+    "Hosted MACS wheel build/hash, pip check, R package installs and source runs"
+  ],
+  "hosted_class": "Linux x86_64 source oracle, one real host; no local scientific execution",
+  "inputs": {
+    "SE_records_all_samples": 320088,
+    "alignment_records_all_samples": 640192,
+    "annotation_genes": 256,
+    "annotation_transcripts": 320,
+    "contig_count": 2,
+    "contig_length": 10000000,
+    "core_molecules": {
+      "C1": 60000,
+      "C2": 60000,
+      "T1": 100000,
+      "T2": 100000
+    },
+    "diagnostic_peak_rows": 48,
+    "generator": "scripts/peak_first_workflow_inputs.py",
+    "panel_alignment_records_per_sample": 48,
+    "panel_molecules_per_sample": 22,
+    "seed": 20261031
+  },
+  "python": {
+    "checksum_url": "https://github.com/astral-sh/python-build-standalone/releases/download/20250409/cpython-3.12.10%2B20250409-x86_64-unknown-linux-gnu-install_only.tar.gz.sha256",
+    "filename": "cpython-3.12.10+20250409-x86_64-unknown-linux-gnu-install_only.tar.gz",
+    "release": "20250409",
+    "sha256": "e9cf6f7da499a4400ba30ae1da8f7ef25ce97827bd8c1084717aa05438035186",
+    "size": 66393557,
+    "url": "https://github.com/astral-sh/python-build-standalone/releases/download/20250409/cpython-3.12.10%2B20250409-x86_64-unknown-linux-gnu-install_only.tar.gz",
+    "version": "3.12.10"
+  },
+  "python_build_requirements": {
+    "MACS3": [
+      "setuptools==80.9.0",
+      "Cython==3.0.12",
+      "numpy==2.2.6"
+    ],
+    "bootstrap": [
+      "pip==25.1.1",
+      "setuptools==80.9.0",
+      "wheel==0.45.1"
+    ]
+  },
+  "python_packages": {
+    "anndata": {
+      "filename": "anndata-0.11.4-py3-none-any.whl",
+      "metadata_sha256": "3929a766212f37bf2a0f521267f34fecc6056ac88b49728cbd0005a8a0dc87a9",
+      "metadata_url": "https://pypi.org/pypi/anndata/0.11.4/json",
+      "requires_dist": [
+        "array-api-compat!=1.5,>1.4",
+        "exceptiongroup; python_version < \"3.11\"",
+        "h5py>=3.7",
+        "natsort",
+        "numpy>=1.23",
+        "packaging>=24.2",
+        "pandas!=2.1.0rc0,!=2.1.2,>=1.4",
+        "scipy>1.8",
+        "cupy-cuda11x; extra == \"cu11\"",
+        "cupy-cuda12x; extra == \"cu12\"",
+        "dask[array]!=2024.8.*,!=2024.9.*,<2025.2.0,>=2022.09.2; extra == \"dask\"",
+        "awkward>=2.3; extra == \"dev\"",
+        "boltons; extra == \"dev\"",
+        "dask[array]!=2024.8.*,!=2024.9.*,<2025.2.0,>=2022.09.2; extra == \"dev\"",
+        "dask[distributed]; extra == \"dev\"",
+        "filelock; extra == \"dev\"",
+        "hatch-vcs; extra == \"dev\"",
+        "httpx; extra == \"dev\"",
+        "joblib; extra == \"dev\"",
+        "loompy>=3.0.5; extra == \"dev\"",
+        "matplotlib; extra == \"dev\"",
+        "openpyxl; extra == \"dev\"",
+        "pyarrow; extra == \"dev\"",
+        "pytest-cov>=2.10; extra == \"dev\"",
+        "pytest-memray; extra == \"dev\"",
+        "pytest-mock; extra == \"dev\"",
+        "pytest-randomly; extra == \"dev\"",
+        "pytest-xdist[psutil]; extra == \"dev\"",
+        "pytest<8.3.4,>=8.2; extra == \"dev\"",
+        "scanpy>=1.9.8; extra == \"dev\"",
+        "scikit-learn; extra == \"dev\"",
+        "towncrier>=24.8.0; extra == \"dev\"",
+        "zarr<3; extra == \"dev\"",
+        "towncrier>=24.8.0; extra == \"dev-doc\"",
+        "awkward>=2.3; extra == \"doc\"",
+        "ipython; extra == \"doc\"",
+        "myst-nb; extra == \"doc\"",
+        "myst-parser; extra == \"doc\"",
+        "readthedocs-sphinx-search; extra == \"doc\"",
+        "scanpydoc[theme,typehints]>=0.15.1; extra == \"doc\"",
+        "sphinx-autodoc-typehints>=2.2.0; extra == \"doc\"",
+        "sphinx-book-theme>=1.1.0; extra == \"doc\"",
+        "sphinx-copybutton; extra == \"doc\"",
+        "sphinx-design>=0.5.0; extra == \"doc\"",
+        "sphinx-issues; extra == \"doc\"",
+        "sphinx-toolbox>=3.8.0; extra == \"doc\"",
+        "sphinx>=8.2.1; extra == \"doc\"",
+        "sphinxext-opengraph; extra == \"doc\"",
+        "towncrier>=24.8.0; extra == \"doc\"",
+        "zarr<3; extra == \"doc\"",
+        "cupy; extra == \"gpu\"",
+        "awkward>=2.3; extra == \"test\"",
+        "boltons; extra == \"test\"",
+        "dask[array]!=2024.8.*,!=2024.9.*,<2025.2.0,>=2022.09.2; extra == \"test\"",
+        "dask[distributed]; extra == \"test\"",
+        "filelock; extra == \"test\"",
+        "httpx; extra == \"test\"",
+        "joblib; extra == \"test\"",
+        "loompy>=3.0.5; extra == \"test\"",
+        "matplotlib; extra == \"test\"",
+        "openpyxl; extra == \"test\"",
+        "pyarrow; extra == \"test\"",
+        "pytest-cov>=2.10; extra == \"test\"",
+        "pytest-memray; extra == \"test\"",
+        "pytest-mock; extra == \"test\"",
+        "pytest-randomly; extra == \"test\"",
+        "pytest-xdist[psutil]; extra == \"test\"",
+        "pytest<8.3.4,>=8.2; extra == \"test\"",
+        "scanpy>=1.9.8; extra == \"test\"",
+        "scikit-learn; extra == \"test\"",
+        "zarr<3; extra == \"test\""
+      ],
+      "requires_python": ">=3.10",
+      "sha256": "fefebb1480316dfa5a23924aa9f74781d447484421bb0c788b0b2ca5e3b339d2",
+      "size": 144472,
+      "status": "acquired/hash and size verified; NOT installed",
+      "url": "https://files.pythonhosted.org/packages/0a/4b/ab615fea52e34579d5c6c7dba86b4f9d7f3cdb6a170b348ec49f34cf4355/anndata-0.11.4-py3-none-any.whl",
+      "version": "0.11.4"
+    },
+    "array-api-compat": {
+      "filename": "array_api_compat-1.11.2-py3-none-any.whl",
+      "metadata_sha256": "d939e0548f3c625a03ddec7b5af811530e54f8526fd952868c3034b404d939ff",
+      "metadata_url": "https://pypi.org/pypi/array-api-compat/1.11.2/json",
+      "requires_dist": [
+        "numpy; extra == \"numpy\"",
+        "cupy; extra == \"cupy\"",
+        "jax; extra == \"jax\"",
+        "pytorch; extra == \"pytorch\"",
+        "dask; extra == \"dask\"",
+        "sparse>=0.15.1; extra == \"sparse\""
+      ],
+      "requires_python": ">=3.9",
+      "sha256": "b1d0059714a4153b3ae37c989e47b07418f727be5b22908dd3cf9d19bdc2c547",
+      "size": 53149,
+      "status": "acquired/hash and size verified; NOT installed",
+      "url": "https://files.pythonhosted.org/packages/9f/d8/3388c7da49f522e51ab2f919797db28782216cadc9ecc9976160302cfcd6/array_api_compat-1.11.2-py3-none-any.whl",
+      "version": "1.11.2"
+    },
+    "cython": {
+      "filename": "Cython-3.0.12-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+      "metadata_sha256": "a07b493c7958f9b73c58dd304948556b6b36e58a88b0b46084caf7e49b337b1b",
+      "metadata_url": "https://pypi.org/pypi/Cython/3.0.12/json",
+      "requires_dist": [],
+      "requires_python": "!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,>=2.7",
+      "sha256": "0faa5e39e5c8cdf6f9c3b1c3f24972826e45911e7f5b99cf99453fca5432f45e",
+      "size": 3517692,
+      "status": "acquired/hash and size verified; NOT installed",
+      "url": "https://files.pythonhosted.org/packages/0d/72/743730d7c46b4c85abefb93187cbbcb7aae8de288d7722b990db3d13499e/Cython-3.0.12-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+      "version": "3.0.12"
+    },
+    "h5py": {
+      "filename": "h5py-3.13.0-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+      "metadata_sha256": "22469441c0abd13b1f065ead16486e73c2e73a03af056557e203fcabccff0fdb",
+      "metadata_url": "https://pypi.org/pypi/h5py/3.13.0/json",
+      "requires_dist": [
+        "numpy>=1.19.3"
+      ],
+      "requires_python": ">=3.9",
+      "sha256": "d6f13f9b5ce549448c01e4dfe08ea8d1772e6078799af2c1c8d09e941230a90d",
+      "size": 4932139,
+      "status": "acquired/hash and size verified; NOT installed",
+      "url": "https://files.pythonhosted.org/packages/a7/da/3c137006ff5f0433f0fb076b1ebe4a7bf7b5ee1e8811b5486af98b500dd5/h5py-3.13.0-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+      "version": "3.13.0"
+    },
+    "hmmlearn": {
+      "filename": "hmmlearn-0.3.3-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+      "metadata_sha256": "7cb97769c9d91da556d12d5bad19822d04dc48d2edc265550b25cc88fa47647d",
+      "metadata_url": "https://pypi.org/pypi/hmmlearn/0.3.3/json",
+      "requires_dist": [
+        "numpy>=1.10",
+        "scikit-learn!=0.22.0,>=0.16",
+        "scipy>=0.19",
+        "matplotlib; extra == \"docs\"",
+        "pydata-sphinx-theme; extra == \"docs\"",
+        "sphinx>=2.0; extra == \"docs\"",
+        "sphinx-gallery; extra == \"docs\"",
+        "pytest; extra == \"tests\""
+      ],
+      "requires_python": ">=3.8",
+      "sha256": "6cd27dc66bfe7f6ff77804f7dbfe42b35d18e21403eb2bdfef0de6ad3bd2368f",
+      "size": 165953,
+      "status": "acquired/hash and size verified; NOT installed",
+      "url": "https://files.pythonhosted.org/packages/82/c8/88973fc908111491747cf1737d1c30f5d1a5f777ea3cdf625c8fcb3cdd9d/hmmlearn-0.3.3-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+      "version": "0.3.3"
+    },
+    "joblib": {
+      "filename": "joblib-1.4.2-py3-none-any.whl",
+      "metadata_sha256": "2f4b4bc09a83001086d58394d18a0b70ea7cb023b2ecb1072deaea466a84225b",
+      "metadata_url": "https://pypi.org/pypi/joblib/1.4.2/json",
+      "requires_dist": [],
+      "requires_python": ">=3.8",
+      "sha256": "06d478d5674cbc267e7496a410ee875abd68e4340feff4490bcb7afb88060ae6",
+      "size": 301817,
+      "status": "acquired/hash and size verified; NOT installed",
+      "url": "https://files.pythonhosted.org/packages/91/29/df4b9b42f2be0b623cbd5e2140cafcaa2bef0759a00b7b70104dcfe2fb51/joblib-1.4.2-py3-none-any.whl",
+      "version": "1.4.2"
+    },
+    "macs3": {
+      "filename": "macs3-3.1.0.tar.gz",
+      "requires_dist": [
+        "numpy>=1.25",
+        "scipy>=1.12",
+        "pandas>=2.0",
+        "anndata>=0.10",
+        "hmmlearn>=0.3.2",
+        "scikit-learn>=1.3"
+      ],
+      "sha256": "aae548b86ab652717dca281fa2e33645fc1dc8091264ccbf7ce09cf8a13532e0",
+      "size": 897983,
+      "status": "sdist acquired/hash verified; not built",
+      "url": "https://files.pythonhosted.org/packages/d6/eb/3b32d38f8cbc8044043e4cdb53c1df26f627d483cb04642645dc65b8aa7e/macs3-3.1.0.tar.gz",
+      "version": "3.1.0"
+    },
+    "natsort": {
+      "filename": "natsort-8.4.0-py3-none-any.whl",
+      "metadata_sha256": "8175293cdffed55c9ee3c1d97d55dfa1d08adb314542033a76916606b726ec2f",
+      "metadata_url": "https://pypi.org/pypi/natsort/8.4.0/json",
+      "requires_dist": [
+        "fastnumbers (>=2.0.0) ; extra == 'fast'",
+        "PyICU (>=1.0.0) ; extra == 'icu'"
+      ],
+      "requires_python": ">=3.7",
+      "sha256": "4732914fb471f56b5cce04d7bae6f164a592c7712e1c85f9ef585e197299521c",
+      "size": 38268,
+      "status": "acquired/hash and size verified; NOT installed",
+      "url": "https://files.pythonhosted.org/packages/ef/82/7a9d0550484a62c6da82858ee9419f3dd1ccc9aa1c26a1e43da3ecd20b0d/natsort-8.4.0-py3-none-any.whl",
+      "version": "8.4.0"
+    },
+    "numpy": {
+      "filename": "numpy-2.2.6-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+      "metadata_sha256": "dbed1d6e66316f9a403aa115085c85678f22b8dc6e60faf65b43e2aa166b17fe",
+      "metadata_url": "https://pypi.org/pypi/numpy/2.2.6/json",
+      "requires_dist": [],
+      "requires_python": ">=3.10",
+      "sha256": "fd83c01228a688733f1ded5201c678f0c53ecc1006ffbc404db9f7a899ac6249",
+      "size": 16527618,
+      "status": "acquired/hash and size verified; NOT installed",
+      "url": "https://files.pythonhosted.org/packages/8c/3d/1e1db36cfd41f895d266b103df00ca5b3cbe965184df824dec5c08c6b803/numpy-2.2.6-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+      "version": "2.2.6"
+    },
+    "packaging": {
+      "filename": "packaging-25.0-py3-none-any.whl",
+      "metadata_sha256": "6ab300d7b0735a50109912decebb1731ed292f1ed88a3ce5e4bb7876b182cac0",
+      "metadata_url": "https://pypi.org/pypi/packaging/25.0/json",
+      "requires_dist": [],
+      "requires_python": ">=3.8",
+      "sha256": "29572ef2b1f17581046b3a2227d5c611fb25ec70ca1ba8554b24b0e69331a484",
+      "size": 66469,
+      "status": "acquired/hash and size verified; NOT installed",
+      "url": "https://files.pythonhosted.org/packages/20/12/38679034af332785aac8774540895e234f4d07f7545804097de4b666afd8/packaging-25.0-py3-none-any.whl",
+      "version": "25.0"
+    },
+    "pandas": {
+      "filename": "pandas-2.2.3-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+      "metadata_sha256": "3ee22756a4588e90895c910825e1d5aa303e43e634f30975c50f84c845cd95b7",
+      "metadata_url": "https://pypi.org/pypi/pandas/2.2.3/json",
+      "requires_dist": [
+        "numpy>=1.22.4; python_version < \"3.11\"",
+        "numpy>=1.23.2; python_version == \"3.11\"",
+        "numpy>=1.26.0; python_version >= \"3.12\"",
+        "python-dateutil>=2.8.2",
+        "pytz>=2020.1",
+        "tzdata>=2022.7",
+        "hypothesis>=6.46.1; extra == \"test\"",
+        "pytest>=7.3.2; extra == \"test\"",
+        "pytest-xdist>=2.2.0; extra == \"test\"",
+        "pyarrow>=10.0.1; extra == \"pyarrow\"",
+        "bottleneck>=1.3.6; extra == \"performance\"",
+        "numba>=0.56.4; extra == \"performance\"",
+        "numexpr>=2.8.4; extra == \"performance\"",
+        "scipy>=1.10.0; extra == \"computation\"",
+        "xarray>=2022.12.0; extra == \"computation\"",
+        "fsspec>=2022.11.0; extra == \"fss\"",
+        "s3fs>=2022.11.0; extra == \"aws\"",
+        "gcsfs>=2022.11.0; extra == \"gcp\"",
+        "pandas-gbq>=0.19.0; extra == \"gcp\"",
+        "odfpy>=1.4.1; extra == \"excel\"",
+        "openpyxl>=3.1.0; extra == \"excel\"",
+        "python-calamine>=0.1.7; extra == \"excel\"",
+        "pyxlsb>=1.0.10; extra == \"excel\"",
+        "xlrd>=2.0.1; extra == \"excel\"",
+        "xlsxwriter>=3.0.5; extra == \"excel\"",
+        "pyarrow>=10.0.1; extra == \"parquet\"",
+        "pyarrow>=10.0.1; extra == \"feather\"",
+        "tables>=3.8.0; extra == \"hdf5\"",
+        "pyreadstat>=1.2.0; extra == \"spss\"",
+        "SQLAlchemy>=2.0.0; extra == \"postgresql\"",
+        "psycopg2>=2.9.6; extra == \"postgresql\"",
+        "adbc-driver-postgresql>=0.8.0; extra == \"postgresql\"",
+        "SQLAlchemy>=2.0.0; extra == \"mysql\"",
+        "pymysql>=1.0.2; extra == \"mysql\"",
+        "SQLAlchemy>=2.0.0; extra == \"sql-other\"",
+        "adbc-driver-postgresql>=0.8.0; extra == \"sql-other\"",
+        "adbc-driver-sqlite>=0.8.0; extra == \"sql-other\"",
+        "beautifulsoup4>=4.11.2; extra == \"html\"",
+        "html5lib>=1.1; extra == \"html\"",
+        "lxml>=4.9.2; extra == \"html\"",
+        "lxml>=4.9.2; extra == \"xml\"",
+        "matplotlib>=3.6.3; extra == \"plot\"",
+        "jinja2>=3.1.2; extra == \"output-formatting\"",
+        "tabulate>=0.9.0; extra == \"output-formatting\"",
+        "PyQt5>=5.15.9; extra == \"clipboard\"",
+        "qtpy>=2.3.0; extra == \"clipboard\"",
+        "zstandard>=0.19.0; extra == \"compression\"",
+        "dataframe-api-compat>=0.1.7; extra == \"consortium-standard\"",
+        "adbc-driver-postgresql>=0.8.0; extra == \"all\"",
+        "adbc-driver-sqlite>=0.8.0; extra == \"all\"",
+        "beautifulsoup4>=4.11.2; extra == \"all\"",
+        "bottleneck>=1.3.6; extra == \"all\"",
+        "dataframe-api-compat>=0.1.7; extra == \"all\"",
+        "fastparquet>=2022.12.0; extra == \"all\"",
+        "fsspec>=2022.11.0; extra == \"all\"",
+        "gcsfs>=2022.11.0; extra == \"all\"",
+        "html5lib>=1.1; extra == \"all\"",
+        "hypothesis>=6.46.1; extra == \"all\"",
+        "jinja2>=3.1.2; extra == \"all\"",
+        "lxml>=4.9.2; extra == \"all\"",
+        "matplotlib>=3.6.3; extra == \"all\"",
+        "numba>=0.56.4; extra == \"all\"",
+        "numexpr>=2.8.4; extra == \"all\"",
+        "odfpy>=1.4.1; extra == \"all\"",
+        "openpyxl>=3.1.0; extra == \"all\"",
+        "pandas-gbq>=0.19.0; extra == \"all\"",
+        "psycopg2>=2.9.6; extra == \"all\"",
+        "pyarrow>=10.0.1; extra == \"all\"",
+        "pymysql>=1.0.2; extra == \"all\"",
+        "PyQt5>=5.15.9; extra == \"all\"",
+        "pyreadstat>=1.2.0; extra == \"all\"",
+        "pytest>=7.3.2; extra == \"all\"",
+        "pytest-xdist>=2.2.0; extra == \"all\"",
+        "python-calamine>=0.1.7; extra == \"all\"",
+        "pyxlsb>=1.0.10; extra == \"all\"",
+        "qtpy>=2.3.0; extra == \"all\"",
+        "scipy>=1.10.0; extra == \"all\"",
+        "s3fs>=2022.11.0; extra == \"all\"",
+        "SQLAlchemy>=2.0.0; extra == \"all\"",
+        "tables>=3.8.0; extra == \"all\"",
+        "tabulate>=0.9.0; extra == \"all\"",
+        "xarray>=2022.12.0; extra == \"all\"",
+        "xlrd>=2.0.1; extra == \"all\"",
+        "xlsxwriter>=3.0.5; extra == \"all\"",
+        "zstandard>=0.19.0; extra == \"all\""
+      ],
+      "requires_python": ">=3.9",
+      "sha256": "fffb8ae78d8af97f849404f21411c95062db1496aeb3e56f146f0355c9989319",
+      "size": 12739445,
+      "status": "incomplete download retained; NOT an installable artifact",
+      "url": "https://files.pythonhosted.org/packages/38/f8/d8fddee9ed0d0c0f4a2132c1dfcf0e3e53265055da8df952a53e7eaf178c/pandas-2.2.3-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+      "version": "2.2.3"
+    },
+    "pip": {
+      "filename": "pip-25.1.1-py3-none-any.whl",
+      "metadata_sha256": "5940f4bde946c57302e043e0bb1d833dbc0b1f7426c706e8d57d5cd0b663b6eb",
+      "metadata_url": "https://pypi.org/pypi/pip/25.1.1/json",
+      "requires_dist": [],
+      "requires_python": ">=3.9",
+      "sha256": "2913a38a2abf4ea6b64ab507bd9e967f3b53dc1ede74b01b0931e1ce548751af",
+      "size": 1825227,
+      "status": "acquired/hash and size verified; NOT installed",
+      "url": "https://files.pythonhosted.org/packages/29/a2/d40fb2460e883eca5199c62cfc2463fd261f760556ae6290f88488c362c0/pip-25.1.1-py3-none-any.whl",
+      "version": "25.1.1"
+    },
+    "pysam": {
+      "filename": "pysam-0.23.3-cp312-cp312-manylinux_2_28_x86_64.whl",
+      "metadata_sha256": "5b7f64ee56435e22c975def3bc0a8b3bd9d37d764de63b2f117ce7f24d75af0c",
+      "metadata_url": "https://pypi.org/pypi/pysam/0.23.3/json",
+      "requires_dist": [],
+      "requires_python": ">=3.8",
+      "sha256": "4099393fc5097b5081c7efaf46b0109e4f0a8ed18f86d497219a8bf739c73992",
+      "size": 24021198,
+      "status": "acquired/hash and size verified; NOT installed",
+      "url": "https://files.pythonhosted.org/packages/df/a6/c100df6c8118b4ce1f9c086bb9cf5bccd4f71d05ceb2ecf474f3b0ea87b8/pysam-0.23.3-cp312-cp312-manylinux_2_28_x86_64.whl",
+      "version": "0.23.3"
+    },
+    "python-dateutil": {
+      "filename": "python_dateutil-2.9.0.post0-py2.py3-none-any.whl",
+      "metadata_sha256": "f3a0d4d44ef5e71ff77e4dd013b39b1d1bd173fb04f8b0aecc83e5502c44d858",
+      "metadata_url": "https://pypi.org/pypi/python-dateutil/2.9.0.post0/json",
+      "requires_dist": [
+        "six >=1.5"
+      ],
+      "requires_python": "!=3.0.*,!=3.1.*,!=3.2.*,>=2.7",
+      "sha256": "a8b2bc7bffae282281c8140a97d3aa9c14da0b136dfe83f850eea9a5f7470427",
+      "size": 229892,
+      "status": "acquired/hash and size verified; NOT installed",
+      "url": "https://files.pythonhosted.org/packages/ec/57/56b9bcc3c9c6a792fcbaf139543cee77261f3651ca9da0c93f5c1221264b/python_dateutil-2.9.0.post0-py2.py3-none-any.whl",
+      "version": "2.9.0.post0"
+    },
+    "pytz": {
+      "filename": "pytz-2025.2-py2.py3-none-any.whl",
+      "metadata_sha256": "c94511d1e441176e3b0805ef4c7fa29c1be2c8a03eb9fdbfe70a887c0154ea72",
+      "metadata_url": "https://pypi.org/pypi/pytz/2025.2/json",
+      "requires_dist": [],
+      "requires_python": null,
+      "sha256": "5ddf76296dd8c44c26eb8f4b6f35488f3ccbf6fbbd7adee0b7262d43f0ec2f00",
+      "size": 509225,
+      "status": "acquired/hash and size verified; NOT installed",
+      "url": "https://files.pythonhosted.org/packages/81/c4/34e93fe5f5429d7570ec1fa436f1986fb1f00c3e0f43a589fe2bbcd22c3f/pytz-2025.2-py2.py3-none-any.whl",
+      "version": "2025.2"
+    },
+    "scikit-learn": {
+      "filename": "scikit_learn-1.6.1-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+      "metadata_sha256": "0f253f9050b7b6612088efbb3a1a90e2cf52c28d6498f0743395638799dc08c9",
+      "metadata_url": "https://pypi.org/pypi/scikit-learn/1.6.1/json",
+      "requires_dist": [
+        "numpy>=1.19.5",
+        "scipy>=1.6.0",
+        "joblib>=1.2.0",
+        "threadpoolctl>=3.1.0",
+        "numpy>=1.19.5; extra == \"build\"",
+        "scipy>=1.6.0; extra == \"build\"",
+        "cython>=3.0.10; extra == \"build\"",
+        "meson-python>=0.16.0; extra == \"build\"",
+        "numpy>=1.19.5; extra == \"install\"",
+        "scipy>=1.6.0; extra == \"install\"",
+        "joblib>=1.2.0; extra == \"install\"",
+        "threadpoolctl>=3.1.0; extra == \"install\"",
+        "matplotlib>=3.3.4; extra == \"benchmark\"",
+        "pandas>=1.1.5; extra == \"benchmark\"",
+        "memory_profiler>=0.57.0; extra == \"benchmark\"",
+        "matplotlib>=3.3.4; extra == \"docs\"",
+        "scikit-image>=0.17.2; extra == \"docs\"",
+        "pandas>=1.1.5; extra == \"docs\"",
+        "seaborn>=0.9.0; extra == \"docs\"",
+        "memory_profiler>=0.57.0; extra == \"docs\"",
+        "sphinx>=7.3.7; extra == \"docs\"",
+        "sphinx-copybutton>=0.5.2; extra == \"docs\"",
+        "sphinx-gallery>=0.17.1; extra == \"docs\"",
+        "numpydoc>=1.2.0; extra == \"docs\"",
+        "Pillow>=7.1.2; extra == \"docs\"",
+        "pooch>=1.6.0; extra == \"docs\"",
+        "sphinx-prompt>=1.4.0; extra == \"docs\"",
+        "sphinxext-opengraph>=0.9.1; extra == \"docs\"",
+        "plotly>=5.14.0; extra == \"docs\"",
+        "polars>=0.20.30; extra == \"docs\"",
+        "sphinx-design>=0.5.0; extra == \"docs\"",
+        "sphinx-design>=0.6.0; extra == \"docs\"",
+        "sphinxcontrib-sass>=0.3.4; extra == \"docs\"",
+        "pydata-sphinx-theme>=0.15.3; extra == \"docs\"",
+        "sphinx-remove-toctrees>=1.0.0.post1; extra == \"docs\"",
+        "towncrier>=24.8.0; extra == \"docs\"",
+        "matplotlib>=3.3.4; extra == \"examples\"",
+        "scikit-image>=0.17.2; extra == \"examples\"",
+        "pandas>=1.1.5; extra == \"examples\"",
+        "seaborn>=0.9.0; extra == \"examples\"",
+        "pooch>=1.6.0; extra == \"examples\"",
+        "plotly>=5.14.0; extra == \"examples\"",
+        "matplotlib>=3.3.4; extra == \"tests\"",
+        "scikit-image>=0.17.2; extra == \"tests\"",
+        "pandas>=1.1.5; extra == \"tests\"",
+        "pytest>=7.1.2; extra == \"tests\"",
+        "pytest-cov>=2.9.0; extra == \"tests\"",
+        "ruff>=0.5.1; extra == \"tests\"",
+        "black>=24.3.0; extra == \"tests\"",
+        "mypy>=1.9; extra == \"tests\"",
+        "pyamg>=4.0.0; extra == \"tests\"",
+        "polars>=0.20.30; extra == \"tests\"",
+        "pyarrow>=12.0.0; extra == \"tests\"",
+        "numpydoc>=1.2.0; extra == \"tests\"",
+        "pooch>=1.6.0; extra == \"tests\"",
+        "conda-lock==2.5.6; extra == \"maintenance\""
+      ],
+      "requires_python": ">=3.9",
+      "sha256": "2e69fab4ebfc9c9b580a7a80111b43d214ab06250f8a7ef590a4edf72464dd86",
+      "size": 13147700,
+      "status": "acquired/hash and size verified; NOT installed",
+      "url": "https://files.pythonhosted.org/packages/29/7a/8bce8968883e9465de20be15542f4c7e221952441727c4dad24d534c6d99/scikit_learn-1.6.1-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+      "version": "1.6.1"
+    },
+    "scipy": {
+      "filename": "scipy-1.15.3-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+      "metadata_sha256": "952ee2f6cf47b68d4e27d5ab8aba8bae835c9742b8c4200ea1f0be01d1adf47a",
+      "metadata_url": "https://pypi.org/pypi/scipy/1.15.3/json",
+      "requires_dist": [
+        "numpy<2.5,>=1.23.5",
+        "pytest; extra == \"test\"",
+        "pytest-cov; extra == \"test\"",
+        "pytest-timeout; extra == \"test\"",
+        "pytest-xdist; extra == \"test\"",
+        "asv; extra == \"test\"",
+        "mpmath; extra == \"test\"",
+        "gmpy2; extra == \"test\"",
+        "threadpoolctl; extra == \"test\"",
+        "scikit-umfpack; extra == \"test\"",
+        "pooch; extra == \"test\"",
+        "hypothesis>=6.30; extra == \"test\"",
+        "array-api-strict<2.1.1,>=2.0; extra == \"test\"",
+        "Cython; extra == \"test\"",
+        "meson; extra == \"test\"",
+        "ninja; sys_platform != \"emscripten\" and extra == \"test\"",
+        "sphinx<8.0.0,>=5.0.0; extra == \"doc\"",
+        "intersphinx_registry; extra == \"doc\"",
+        "pydata-sphinx-theme>=0.15.2; extra == \"doc\"",
+        "sphinx-copybutton; extra == \"doc\"",
+        "sphinx-design>=0.4.0; extra == \"doc\"",
+        "matplotlib>=3.5; extra == \"doc\"",
+        "numpydoc; extra == \"doc\"",
+        "jupytext; extra == \"doc\"",
+        "myst-nb; extra == \"doc\"",
+        "pooch; extra == \"doc\"",
+        "jupyterlite-sphinx>=0.19.1; extra == \"doc\"",
+        "jupyterlite-pyodide-kernel; extra == \"doc\"",
+        "mypy==1.10.0; extra == \"dev\"",
+        "typing_extensions; extra == \"dev\"",
+        "types-psutil; extra == \"dev\"",
+        "pycodestyle; extra == \"dev\"",
+        "ruff>=0.0.292; extra == \"dev\"",
+        "cython-lint>=0.12.2; extra == \"dev\"",
+        "rich-click; extra == \"dev\"",
+        "doit>=0.36.0; extra == \"dev\"",
+        "pydevtool; extra == \"dev\""
+      ],
+      "requires_python": ">=3.10",
+      "sha256": "271e3713e645149ea5ea3e97b57fdab61ce61333f97cfae392c28ba786f9bb49",
+      "size": 37309455,
+      "status": "incomplete download retained; NOT an installable artifact",
+      "url": "https://files.pythonhosted.org/packages/0b/1f/03f52c282437a168ee2c7c14a1a0d0781a9a4a8962d84ac05c06b4c5b555/scipy-1.15.3-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+      "version": "1.15.3"
+    },
+    "setuptools": {
+      "filename": "setuptools-80.9.0-py3-none-any.whl",
+      "metadata_sha256": "e3188a9a8921b0bd16ae2728753269376a4b90ca3413f67b77f77417ab2e503e",
+      "metadata_url": "https://pypi.org/pypi/setuptools/80.9.0/json",
+      "requires_dist": [
+        "pytest!=8.1.*,>=6; extra == \"test\"",
+        "virtualenv>=13.0.0; extra == \"test\"",
+        "wheel>=0.44.0; extra == \"test\"",
+        "pip>=19.1; extra == \"test\"",
+        "packaging>=24.2; extra == \"test\"",
+        "jaraco.envs>=2.2; extra == \"test\"",
+        "pytest-xdist>=3; extra == \"test\"",
+        "jaraco.path>=3.7.2; extra == \"test\"",
+        "build[virtualenv]>=1.0.3; extra == \"test\"",
+        "filelock>=3.4.0; extra == \"test\"",
+        "ini2toml[lite]>=0.14; extra == \"test\"",
+        "tomli-w>=1.0.0; extra == \"test\"",
+        "pytest-timeout; extra == \"test\"",
+        "pytest-perf; sys_platform != \"cygwin\" and extra == \"test\"",
+        "jaraco.develop>=7.21; (python_version >= \"3.9\" and sys_platform != \"cygwin\") and extra == \"test\"",
+        "pytest-home>=0.5; extra == \"test\"",
+        "pytest-subprocess; extra == \"test\"",
+        "pyproject-hooks!=1.1; extra == \"test\"",
+        "jaraco.test>=5.5; extra == \"test\"",
+        "sphinx>=3.5; extra == \"doc\"",
+        "jaraco.packaging>=9.3; extra == \"doc\"",
+        "rst.linker>=1.9; extra == \"doc\"",
+        "furo; extra == \"doc\"",
+        "sphinx-lint; extra == \"doc\"",
+        "jaraco.tidelift>=1.4; extra == \"doc\"",
+        "pygments-github-lexers==0.0.5; extra == \"doc\"",
+        "sphinx-favicon; extra == \"doc\"",
+        "sphinx-inline-tabs; extra == \"doc\"",
+        "sphinx-reredirects; extra == \"doc\"",
+        "sphinxcontrib-towncrier; extra == \"doc\"",
+        "sphinx-notfound-page<2,>=1; extra == \"doc\"",
+        "pyproject-hooks!=1.1; extra == \"doc\"",
+        "towncrier<24.7; extra == \"doc\"",
+        "packaging>=24.2; extra == \"core\"",
+        "more_itertools>=8.8; extra == \"core\"",
+        "jaraco.text>=3.7; extra == \"core\"",
+        "importlib_metadata>=6; python_version < \"3.10\" and extra == \"core\"",
+        "tomli>=2.0.1; python_version < \"3.11\" and extra == \"core\"",
+        "wheel>=0.43.0; extra == \"core\"",
+        "platformdirs>=4.2.2; extra == \"core\"",
+        "jaraco.functools>=4; extra == \"core\"",
+        "more_itertools; extra == \"core\"",
+        "pytest-checkdocs>=2.4; extra == \"check\"",
+        "pytest-ruff>=0.2.1; sys_platform != \"cygwin\" and extra == \"check\"",
+        "ruff>=0.8.0; sys_platform != \"cygwin\" and extra == \"check\"",
+        "pytest-cov; extra == \"cover\"",
+        "pytest-enabler>=2.2; extra == \"enabler\"",
+        "pytest-mypy; extra == \"type\"",
+        "mypy==1.14.*; extra == \"type\"",
+        "importlib_metadata>=7.0.2; python_version < \"3.10\" and extra == \"type\"",
+        "jaraco.develop>=7.21; sys_platform != \"cygwin\" and extra == \"type\""
+      ],
+      "requires_python": ">=3.9",
+      "sha256": "062d34222ad13e0cc312a4c02d73f059e86a4acbfbdea8f8f76b28c99f306922",
+      "size": 1201486,
+      "status": "acquired/hash and size verified; NOT installed",
+      "url": "https://files.pythonhosted.org/packages/a3/dc/17031897dae0efacfea57dfd3a82fdd2a2aeb58e0ff71b77b87e44edc772/setuptools-80.9.0-py3-none-any.whl",
+      "version": "80.9.0"
+    },
+    "six": {
+      "filename": "six-1.17.0-py2.py3-none-any.whl",
+      "metadata_sha256": "d8de39dd52b73048d81a8fd78022ee2bc72f8b568bcf0d88e5d5069c302b1208",
+      "metadata_url": "https://pypi.org/pypi/six/1.17.0/json",
+      "requires_dist": [],
+      "requires_python": "!=3.0.*,!=3.1.*,!=3.2.*,>=2.7",
+      "sha256": "4721f391ed90541fddacab5acf947aa0d3dc7d27b2e1e8eda2be8970586c3274",
+      "size": 11050,
+      "status": "acquired/hash and size verified; NOT installed",
+      "url": "https://files.pythonhosted.org/packages/b7/ce/149a00dd41f10bc29e5921b496af8b574d8413afcd5e30dfa0ed46c2cc5e/six-1.17.0-py2.py3-none-any.whl",
+      "version": "1.17.0"
+    },
+    "threadpoolctl": {
+      "filename": "threadpoolctl-3.6.0-py3-none-any.whl",
+      "metadata_sha256": "5ee046d3f7dd06270e19794d00ad231238fb32e5f54866e6285d7d0d3d5fc3c9",
+      "metadata_url": "https://pypi.org/pypi/threadpoolctl/3.6.0/json",
+      "requires_dist": [],
+      "requires_python": ">=3.9",
+      "sha256": "43a0b8fd5a2928500110039e43a5eed8480b918967083ea48dc3ab9f13c4a7fb",
+      "size": 18638,
+      "status": "acquired/hash and size verified; NOT installed",
+      "url": "https://files.pythonhosted.org/packages/32/d5/f9a850d79b0851d1d4ef6456097579a9005b31fea68726a4ae5f2d82ddd9/threadpoolctl-3.6.0-py3-none-any.whl",
+      "version": "3.6.0"
+    },
+    "tzdata": {
+      "filename": "tzdata-2025.2-py2.py3-none-any.whl",
+      "metadata_sha256": "d0463f2e13d744f6096fa5f81cb7a89c1b9d2aea632390c9cb8c1d56107966c0",
+      "metadata_url": "https://pypi.org/pypi/tzdata/2025.2/json",
+      "requires_dist": [],
+      "requires_python": ">=2",
+      "sha256": "1a403fada01ff9221ca8044d701868fa132215d84beb92242d9acd2147f667a8",
+      "size": 347839,
+      "status": "acquired/hash and size verified; NOT installed",
+      "url": "https://files.pythonhosted.org/packages/5c/23/c7abc0ca0a1526a0774eca151daeb8de62ec457e77262b66b359c3c7679e/tzdata-2025.2-py2.py3-none-any.whl",
+      "version": "2025.2"
+    },
+    "wheel": {
+      "filename": "wheel-0.45.1-py3-none-any.whl",
+      "metadata_sha256": "617c2b62cc17caeef3fc1e10144bd3d5b8dc2fb93bb67a87f2802c2d0a856c32",
+      "metadata_url": "https://pypi.org/pypi/wheel/0.45.1/json",
+      "requires_dist": [
+        "pytest>=6.0.0; extra == \"test\"",
+        "setuptools>=65; extra == \"test\""
+      ],
+      "requires_python": ">=3.8",
+      "sha256": "708e7481cc80179af0e556bbf0cc00b8444c7321e2700b8d8580231d13017248",
+      "size": 72494,
+      "status": "acquired/hash and size verified; NOT installed",
+      "url": "https://files.pythonhosted.org/packages/0b/2c/87f3254fd8ffd29e4c02732eee68a83a1d3c346ae39bc6822dcbcb697f2b/wheel-0.45.1-py3-none-any.whl",
+      "version": "0.45.1"
+    }
+  },
+  "r_base_container": {
+    "config_sha256": "e62ba95218d7f8602c14695ef232ef2042bba1337ee1e7d2a459880a4c1b6423",
+    "declared_BIOCONDUCTOR_VERSION": "3.23",
+    "declared_R_VERSION": "4.6.1",
+    "digest": "sha256:81bf4c3e9f1b08b0ada0a45ef16ef51d03dc91b0b06cda4b408d667cb8c2c645",
+    "image": "docker.io/bioconductor/bioconductor_docker",
+    "manifest_sha256": "81bf4c3e9f1b08b0ada0a45ef16ef51d03dc91b0b06cda4b408d667cb8c2c645",
+    "platform": "linux/amd64",
+    "status": "registry manifest/config resolved and SHA verified; image not pulled or run"
+  },
+  "r_sources": [
+    {
+      "package": "ChIPseeker",
+      "sha256": "6b364053903c85ab10ee152db64b169b944525ef2b49975cda5fe33465619ac0",
+      "url": "https://bioconductor.org/packages/3.23/bioc/src/contrib/ChIPseeker_1.48.0.tar.gz",
+      "version": "1.48.0"
+    },
+    {
+      "package": "txdbmaker",
+      "sha256": "87482fdb69f5fe0c12a9bdde0f1a64bfeb7421679b96c5bccf84eb96851b23a4",
+      "url": "https://bioconductor.org/packages/3.23/bioc/src/contrib/txdbmaker_1.8.0.tar.gz",
+      "version": "1.8.0"
+    }
+  ],
+  "schema": 1,
+  "status": "prepared partial acquisition packet; NOT an executable full runtime lock; R closure HELD",
+  "r_candidate_closure": [
+    {
+      "package": "AnnotationDbi",
+      "version": "1.74.0",
+      "repository": "bioc",
+      "source_url": "https://bioconductor.org/packages/3.23/bioc/src/contrib/AnnotationDbi_1.74.0.tar.gz",
+      "official_index_md5": "65b70a0537974d127d44e98225de05ef",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "BH",
+      "version": "1.90.0-1",
+      "repository": "cran",
+      "source_url": "https://cran.r-project.org/src/contrib/BH_1.90.0-1.tar.gz",
+      "official_index_md5": "4b82aea7c6223ea0048c3edbe1a2caa0",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "Biobase",
+      "version": "2.72.0",
+      "repository": "bioc",
+      "source_url": "https://bioconductor.org/packages/3.23/bioc/src/contrib/Biobase_2.72.0.tar.gz",
+      "official_index_md5": "b3b23749597ddfccf0daeee65d1ec8f8",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "BiocFileCache",
+      "version": "3.2.0",
+      "repository": "bioc",
+      "source_url": "https://bioconductor.org/packages/3.23/bioc/src/contrib/BiocFileCache_3.2.0.tar.gz",
+      "official_index_md5": "3d1d2717ece2ee0b4fc6f3b731fc5319",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "BiocGenerics",
+      "version": "0.58.1",
+      "repository": "bioc",
+      "source_url": "https://bioconductor.org/packages/3.23/bioc/src/contrib/BiocGenerics_0.58.1.tar.gz",
+      "official_index_md5": "6aa4beaff2e84c0ff9d155a346a66eaa",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "BiocIO",
+      "version": "1.22.0",
+      "repository": "bioc",
+      "source_url": "https://bioconductor.org/packages/3.23/bioc/src/contrib/BiocIO_1.22.0.tar.gz",
+      "official_index_md5": "93365b44bc9a0209ae936a96851c21f4",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "BiocParallel",
+      "version": "1.46.0",
+      "repository": "bioc",
+      "source_url": "https://bioconductor.org/packages/3.23/bioc/src/contrib/BiocParallel_1.46.0.tar.gz",
+      "official_index_md5": "6b273932d1944fa81ae0e2cf8a2cc471",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "Biostrings",
+      "version": "2.80.2",
+      "repository": "bioc",
+      "source_url": "https://bioconductor.org/packages/3.23/bioc/src/contrib/Biostrings_2.80.2.tar.gz",
+      "official_index_md5": "1ca4c420eb164cef95edad78b9a8baea",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "ChIPseeker",
+      "version": "1.48.0",
+      "repository": "bioc",
+      "source_url": "https://bioconductor.org/packages/3.23/bioc/src/contrib/ChIPseeker_1.48.0.tar.gz",
+      "official_index_md5": "d7ffc6e31ecb74dd90e1940fbedf328e",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "DBI",
+      "version": "1.3.0",
+      "repository": "cran",
+      "source_url": "https://cran.r-project.org/src/contrib/DBI_1.3.0.tar.gz",
+      "official_index_md5": "ce5e3153cc7395a2aac452db1099d003",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "DOSE",
+      "version": "4.6.0",
+      "repository": "bioc",
+      "source_url": "https://bioconductor.org/packages/3.23/bioc/src/contrib/DOSE_4.6.0.tar.gz",
+      "official_index_md5": "43e362425afb697b04fef6e58d59608e",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "DelayedArray",
+      "version": "0.38.2",
+      "repository": "bioc",
+      "source_url": "https://bioconductor.org/packages/3.23/bioc/src/contrib/DelayedArray_0.38.2.tar.gz",
+      "official_index_md5": "01223fbdc2a77a81a05b2683f1bd317f",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "GO.db",
+      "version": "3.23.1",
+      "repository": "annotation",
+      "source_url": "https://bioconductor.org/packages/3.23/data/annotation/src/contrib/GO.db_3.23.1.tar.gz",
+      "official_index_md5": "b9848764614f05b19038754dc6baa78d",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "GOSemSim",
+      "version": "2.38.3",
+      "repository": "bioc",
+      "source_url": "https://bioconductor.org/packages/3.23/bioc/src/contrib/GOSemSim_2.38.3.tar.gz",
+      "official_index_md5": "d22587da75c29c13af8dfa2001e2e0b0",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "GenomeInfoDb",
+      "version": "1.48.0",
+      "repository": "bioc",
+      "source_url": "https://bioconductor.org/packages/3.23/bioc/src/contrib/GenomeInfoDb_1.48.0.tar.gz",
+      "official_index_md5": "a2a1c79535a195453468244d738b17da",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "GenomicAlignments",
+      "version": "1.48.0",
+      "repository": "bioc",
+      "source_url": "https://bioconductor.org/packages/3.23/bioc/src/contrib/GenomicAlignments_1.48.0.tar.gz",
+      "official_index_md5": "37dc95156b10e04873ca4d08f13802ce",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "GenomicFeatures",
+      "version": "1.64.0",
+      "repository": "bioc",
+      "source_url": "https://bioconductor.org/packages/3.23/bioc/src/contrib/GenomicFeatures_1.64.0.tar.gz",
+      "official_index_md5": "4e4c38905ba534adbb5ee3e55fdd1e19",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "GenomicRanges",
+      "version": "1.64.0",
+      "repository": "bioc",
+      "source_url": "https://bioconductor.org/packages/3.23/bioc/src/contrib/GenomicRanges_1.64.0.tar.gz",
+      "official_index_md5": "16b687fa031d965176f4e50532fef0a1",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "IRanges",
+      "version": "2.46.0",
+      "repository": "bioc",
+      "source_url": "https://bioconductor.org/packages/3.23/bioc/src/contrib/IRanges_2.46.0.tar.gz",
+      "official_index_md5": "19207bce0e7449363d4bd4e1f4c84dd0",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "KEGGREST",
+      "version": "1.52.2",
+      "repository": "bioc",
+      "source_url": "https://bioconductor.org/packages/3.23/bioc/src/contrib/KEGGREST_1.52.2.tar.gz",
+      "official_index_md5": "55392c8b3fd533bf866a71244b455989",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "KernSmooth",
+      "version": "2.23-27",
+      "repository": "cran",
+      "source_url": "https://cran.r-project.org/src/contrib/KernSmooth_2.23-27.tar.gz",
+      "official_index_md5": "fcb00c7502387107c125ca4ca6382139",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "MASS",
+      "version": "7.3-66",
+      "repository": "cran",
+      "source_url": "https://cran.r-project.org/src/contrib/MASS_7.3-66.tar.gz",
+      "official_index_md5": "272648f9e6c9f1855417b099ea03ee46",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "Matrix",
+      "version": "1.7-6",
+      "repository": "cran",
+      "source_url": "https://cran.r-project.org/src/contrib/Matrix_1.7-6.tar.gz",
+      "official_index_md5": "92502b5e17bc36390d9e52c0f2c2e0f0",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "MatrixGenerics",
+      "version": "1.24.0",
+      "repository": "bioc",
+      "source_url": "https://bioconductor.org/packages/3.23/bioc/src/contrib/MatrixGenerics_1.24.0.tar.gz",
+      "official_index_md5": "4695a279932ea75cf770fc4e3327e854",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "R6",
+      "version": "2.6.1",
+      "repository": "cran",
+      "source_url": "https://cran.r-project.org/src/contrib/R6_2.6.1.tar.gz",
+      "official_index_md5": "f01b1787f12797c29194d63c9afd5d70",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "RColorBrewer",
+      "version": "1.1-3",
+      "repository": "cran",
+      "source_url": "https://cran.r-project.org/src/contrib/RColorBrewer_1.1-3.tar.gz",
+      "official_index_md5": "9b687595bbe02a7e43fc195ba33f065c",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "RCurl",
+      "version": "1.98-1.20",
+      "repository": "cran",
+      "source_url": "https://cran.r-project.org/src/contrib/RCurl_1.98-1.20.tar.gz",
+      "official_index_md5": "390df1d46ab4d4f755855f3dc4b8a637",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "RSQLite",
+      "version": "3.53.3",
+      "repository": "cran",
+      "source_url": "https://cran.r-project.org/src/contrib/RSQLite_3.53.3.tar.gz",
+      "official_index_md5": "82267c88d52a98b0a3b988bc63d4fefd",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "Rcpp",
+      "version": "1.1.2",
+      "repository": "cran",
+      "source_url": "https://cran.r-project.org/src/contrib/Rcpp_1.1.2.tar.gz",
+      "official_index_md5": "353d35176db9c570705a0a324c06fdca",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "RcppEigen",
+      "version": "0.3.4.0.2",
+      "repository": "cran",
+      "source_url": "https://cran.r-project.org/src/contrib/RcppEigen_0.3.4.0.2.tar.gz",
+      "official_index_md5": "d636083ce19deae8f32883170314f2ea",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "Rhtslib",
+      "version": "3.8.0",
+      "repository": "bioc",
+      "source_url": "https://bioconductor.org/packages/3.23/bioc/src/contrib/Rhtslib_3.8.0.tar.gz",
+      "official_index_md5": "eb9cfc0b4db5c7cd7f6aa4c76d23b74e",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "Rsamtools",
+      "version": "2.28.0",
+      "repository": "bioc",
+      "source_url": "https://bioconductor.org/packages/3.23/bioc/src/contrib/Rsamtools_2.28.0.tar.gz",
+      "official_index_md5": "25f396ca7d0e44d30f6e46d70c7c1fc6",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "S4Arrays",
+      "version": "1.12.1",
+      "repository": "bioc",
+      "source_url": "https://bioconductor.org/packages/3.23/bioc/src/contrib/S4Arrays_1.12.1.tar.gz",
+      "official_index_md5": "de6c0e780bffc8fdd8d016f368769246",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "S4Vectors",
+      "version": "0.50.3",
+      "repository": "bioc",
+      "source_url": "https://bioconductor.org/packages/3.23/bioc/src/contrib/S4Vectors_0.50.3.tar.gz",
+      "official_index_md5": "78e199c653ffa787875688cd5f1cef3f",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "S7",
+      "version": "0.2.2",
+      "repository": "cran",
+      "source_url": "https://cran.r-project.org/src/contrib/S7_0.2.2.tar.gz",
+      "official_index_md5": "6a40d3eae470be0f06a03737b9391269",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "Seqinfo",
+      "version": "1.2.0",
+      "repository": "bioc",
+      "source_url": "https://bioconductor.org/packages/3.23/bioc/src/contrib/Seqinfo_1.2.0.tar.gz",
+      "official_index_md5": "b6bda99a95704fab8638e7caaf4646e4",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "SparseArray",
+      "version": "1.12.3",
+      "repository": "bioc",
+      "source_url": "https://bioconductor.org/packages/3.23/bioc/src/contrib/SparseArray_1.12.3.tar.gz",
+      "official_index_md5": "5fa998d87e368b0afd8b589cd9a421f9",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "SummarizedExperiment",
+      "version": "1.42.0",
+      "repository": "bioc",
+      "source_url": "https://bioconductor.org/packages/3.23/bioc/src/contrib/SummarizedExperiment_1.42.0.tar.gz",
+      "official_index_md5": "03714c185f20dd1c45bb8772d544d750",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "TxDb.Hsapiens.UCSC.hg19.knownGene",
+      "version": "3.22.1",
+      "repository": "annotation",
+      "source_url": "https://bioconductor.org/packages/3.23/data/annotation/src/contrib/TxDb.Hsapiens.UCSC.hg19.knownGene_3.22.1.tar.gz",
+      "official_index_md5": "0372510d8a078f427b6ea3644ac4ec89",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "UCSC.utils",
+      "version": "1.8.0",
+      "repository": "bioc",
+      "source_url": "https://bioconductor.org/packages/3.23/bioc/src/contrib/UCSC.utils_1.8.0.tar.gz",
+      "official_index_md5": "dd0c6c3e0db772995886e0cc65debb9f",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "XML",
+      "version": "3.99-0.25",
+      "repository": "cran",
+      "source_url": "https://cran.r-project.org/src/contrib/XML_3.99-0.25.tar.gz",
+      "official_index_md5": "fc6edff6c7f88b8a865b51363d48c60a",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "XVector",
+      "version": "0.52.0",
+      "repository": "bioc",
+      "source_url": "https://bioconductor.org/packages/3.23/bioc/src/contrib/XVector_0.52.0.tar.gz",
+      "official_index_md5": "d3f45d565b9d6804c95d4ca1a4ec81d2",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "abind",
+      "version": "1.4-8",
+      "repository": "cran",
+      "source_url": "https://cran.r-project.org/src/contrib/abind_1.4-8.tar.gz",
+      "official_index_md5": "7a440111cd1e24356d558ac55a65dc98",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "ape",
+      "version": "5.8-1",
+      "repository": "cran",
+      "source_url": "https://cran.r-project.org/src/contrib/ape_5.8-1.tar.gz",
+      "official_index_md5": "e3946ed9c8cf0abd3b86810fe7267bb9",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "aplot",
+      "version": "0.3.2",
+      "repository": "cran",
+      "source_url": "https://cran.r-project.org/src/contrib/aplot_0.3.2.tar.gz",
+      "official_index_md5": "39aff02633725cab3b1039de7ebd7f3a",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "askpass",
+      "version": "1.2.1",
+      "repository": "cran",
+      "source_url": "https://cran.r-project.org/src/contrib/askpass_1.2.1.tar.gz",
+      "official_index_md5": "fc2c6a61b6a354707586b01950366f37",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "base64enc",
+      "version": "0.1-6",
+      "repository": "cran",
+      "source_url": "https://cran.r-project.org/src/contrib/base64enc_0.1-6.tar.gz",
+      "official_index_md5": "2c4ecc969451a673ee05eb2e725fcbaf",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "biomaRt",
+      "version": "2.68.0",
+      "repository": "bioc",
+      "source_url": "https://bioconductor.org/packages/3.23/bioc/src/contrib/biomaRt_2.68.0.tar.gz",
+      "official_index_md5": "0f6a3394158133b0349f56617b48c6db",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "bit",
+      "version": "4.6.0",
+      "repository": "cran",
+      "source_url": "https://cran.r-project.org/src/contrib/bit_4.6.0.tar.gz",
+      "official_index_md5": "f36540550af63b0db8c78429d7366998",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "bit64",
+      "version": "4.8.6",
+      "repository": "cran",
+      "source_url": "https://cran.r-project.org/src/contrib/bit64_4.8.6.tar.gz",
+      "official_index_md5": "8c4fb59f92ce6b09ecdc8e0f7a186504",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "bitops",
+      "version": "1.1-0",
+      "repository": "cran",
+      "source_url": "https://cran.r-project.org/src/contrib/bitops_1.1-0.tar.gz",
+      "official_index_md5": "6e2f8d461c60c5187313a4bce28dbf39",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "blob",
+      "version": "1.3.0",
+      "repository": "cran",
+      "source_url": "https://cran.r-project.org/src/contrib/blob_1.3.0.tar.gz",
+      "official_index_md5": "8a43f72d9dff0b574606a9d8b191c33a",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "boot",
+      "version": "1.3-32",
+      "repository": "cran",
+      "source_url": "https://cran.r-project.org/src/contrib/boot_1.3-32.tar.gz",
+      "official_index_md5": "c883de096f9a6b3afbf461337092a1f3",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "bslib",
+      "version": "0.12.0",
+      "repository": "cran",
+      "source_url": "https://cran.r-project.org/src/contrib/bslib_0.12.0.tar.gz",
+      "official_index_md5": "4e10d130d9538a635ae123e52b1274bf",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "caTools",
+      "version": "1.18.4",
+      "repository": "cran",
+      "source_url": "https://cran.r-project.org/src/contrib/caTools_1.18.4.tar.gz",
+      "official_index_md5": "e8e44f4da77b1d95935b0683f2944628",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "cachem",
+      "version": "1.1.0",
+      "repository": "cran",
+      "source_url": "https://cran.r-project.org/src/contrib/cachem_1.1.0.tar.gz",
+      "official_index_md5": "53980eb40dd09b0cd44673d3a6fabe36",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "cigarillo",
+      "version": "1.2.1",
+      "repository": "bioc",
+      "source_url": "https://bioconductor.org/packages/3.23/bioc/src/contrib/cigarillo_1.2.1.tar.gz",
+      "official_index_md5": "68182faeb5bef61b9543067b36fc8347",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "cli",
+      "version": "3.6.6",
+      "repository": "cran",
+      "source_url": "https://cran.r-project.org/src/contrib/cli_3.6.6.tar.gz",
+      "official_index_md5": "eedc08ba864ae6cd640b05eff1a607ee",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "cluster",
+      "version": "2.1.8.3",
+      "repository": "cran",
+      "source_url": "https://cran.r-project.org/src/contrib/cluster_2.1.8.3.tar.gz",
+      "official_index_md5": "b6c742457ff06f5f3a20d883afdd19a7",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "codetools",
+      "version": "0.2-20",
+      "repository": "cran",
+      "source_url": "https://cran.r-project.org/src/contrib/codetools_0.2-20.tar.gz",
+      "official_index_md5": "b6d2fb49c00a528b04f574892359aa55",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "cpp11",
+      "version": "0.5.5",
+      "repository": "cran",
+      "source_url": "https://cran.r-project.org/src/contrib/cpp11_0.5.5.tar.gz",
+      "official_index_md5": "7c4c3f58ffa7adec25b85d0d99c0d7ed",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "crayon",
+      "version": "1.5.3",
+      "repository": "cran",
+      "source_url": "https://cran.r-project.org/src/contrib/crayon_1.5.3.tar.gz",
+      "official_index_md5": "bb290c70d23b2200006187ac7839116f",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "curl",
+      "version": "8.1.0",
+      "repository": "cran",
+      "source_url": "https://cran.r-project.org/src/contrib/curl_8.1.0.tar.gz",
+      "official_index_md5": "196b1c5e8adafec4b5bb9123864b52b4",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "dbplyr",
+      "version": "2.6.0",
+      "repository": "cran",
+      "source_url": "https://cran.r-project.org/src/contrib/dbplyr_2.6.0.tar.gz",
+      "official_index_md5": "1384b443dbd4dfa5632bbf9d8b75f648",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "digest",
+      "version": "0.6.39",
+      "repository": "cran",
+      "source_url": "https://cran.r-project.org/src/contrib/digest_0.6.39.tar.gz",
+      "official_index_md5": "2b7268922b0f86dbc8064ff8e3a1ca1b",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "dplyr",
+      "version": "1.2.1",
+      "repository": "cran",
+      "source_url": "https://cran.r-project.org/src/contrib/dplyr_1.2.1.tar.gz",
+      "official_index_md5": "1c6ba2499c7a08d081bdb530423ab22c",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "enrichit",
+      "version": "0.2.7",
+      "repository": "cran",
+      "source_url": "https://cran.r-project.org/src/contrib/enrichit_0.2.7.tar.gz",
+      "official_index_md5": "4b99f352a49a102049417578d536bf60",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "enrichplot",
+      "version": "1.32.1",
+      "repository": "bioc",
+      "source_url": "https://bioconductor.org/packages/3.23/bioc/src/contrib/enrichplot_1.32.1.tar.gz",
+      "official_index_md5": "061bd90e2aace638a4ce21788992d622",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "evaluate",
+      "version": "1.0.5",
+      "repository": "cran",
+      "source_url": "https://cran.r-project.org/src/contrib/evaluate_1.0.5.tar.gz",
+      "official_index_md5": "64d96fee3845fd96d1eafaba37adf00e",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "farver",
+      "version": "2.1.2",
+      "repository": "cran",
+      "source_url": "https://cran.r-project.org/src/contrib/farver_2.1.2.tar.gz",
+      "official_index_md5": "1fa98878bb985e28d968630c7e7597b6",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "fastmap",
+      "version": "1.2.0",
+      "repository": "cran",
+      "source_url": "https://cran.r-project.org/src/contrib/fastmap_1.2.0.tar.gz",
+      "official_index_md5": "f53773acd6ba9a86413e8c2dc6441544",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "filelock",
+      "version": "1.0.3",
+      "repository": "cran",
+      "source_url": "https://cran.r-project.org/src/contrib/filelock_1.0.3.tar.gz",
+      "official_index_md5": "db8ce0e4e54049a51875108aa996bbdb",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "fontBitstreamVera",
+      "version": "0.1.1",
+      "repository": "cran",
+      "source_url": "https://cran.r-project.org/src/contrib/fontBitstreamVera_0.1.1.tar.gz",
+      "official_index_md5": "c32821c06d909336ace68f2df3d8710e",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "fontLiberation",
+      "version": "0.1.0",
+      "repository": "cran",
+      "source_url": "https://cran.r-project.org/src/contrib/fontLiberation_0.1.0.tar.gz",
+      "official_index_md5": "7a317aca78d58fc0b2417380cc702864",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "fontawesome",
+      "version": "0.5.3",
+      "repository": "cran",
+      "source_url": "https://cran.r-project.org/src/contrib/fontawesome_0.5.3.tar.gz",
+      "official_index_md5": "95b072a27418b962792410dfb21c3d2b",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "fontquiver",
+      "version": "0.2.1",
+      "repository": "cran",
+      "source_url": "https://cran.r-project.org/src/contrib/fontquiver_0.2.1.tar.gz",
+      "official_index_md5": "eddbde07ef14475acfbdc9e82d45385a",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "formatR",
+      "version": "1.14",
+      "repository": "cran",
+      "source_url": "https://cran.r-project.org/src/contrib/formatR_1.14.tar.gz",
+      "official_index_md5": "8af25a6fd3fcd575a70800921362e63b",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "fs",
+      "version": "2.1.0",
+      "repository": "cran",
+      "source_url": "https://cran.r-project.org/src/contrib/fs_2.1.0.tar.gz",
+      "official_index_md5": "6011a5e758c21acc297ed8bbcf97e7d9",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "futile.logger",
+      "version": "1.4.9",
+      "repository": "cran",
+      "source_url": "https://cran.r-project.org/src/contrib/futile.logger_1.4.9.tar.gz",
+      "official_index_md5": "547e54942e85aaa758590784504b3847",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "futile.options",
+      "version": "1.0.1",
+      "repository": "cran",
+      "source_url": "https://cran.r-project.org/src/contrib/futile.options_1.0.1.tar.gz",
+      "official_index_md5": "040daac5089839c104ffd0e0fbedb98d",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "gdtools",
+      "version": "0.5.2",
+      "repository": "cran",
+      "source_url": "https://cran.r-project.org/src/contrib/gdtools_0.5.2.tar.gz",
+      "official_index_md5": "e907a613c135c7ab52adfbe1173972d5",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "generics",
+      "version": "0.1.4",
+      "repository": "cran",
+      "source_url": "https://cran.r-project.org/src/contrib/generics_0.1.4.tar.gz",
+      "official_index_md5": "dda54b65216fe3c53571d2adaddc7461",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "ggforce",
+      "version": "0.5.0",
+      "repository": "cran",
+      "source_url": "https://cran.r-project.org/src/contrib/ggforce_0.5.0.tar.gz",
+      "official_index_md5": "1c7db06e82968ef2b402fd7a96af55b8",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "ggfun",
+      "version": "0.2.2",
+      "repository": "cran",
+      "source_url": "https://cran.r-project.org/src/contrib/ggfun_0.2.2.tar.gz",
+      "official_index_md5": "04814613a86523a50ff46897742ab1ff",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "ggiraph",
+      "version": "0.9.6",
+      "repository": "cran",
+      "source_url": "https://cran.r-project.org/src/contrib/ggiraph_0.9.6.tar.gz",
+      "official_index_md5": "b4124d8c621dba74ff25e0ef7b99ab0c",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "ggnewscale",
+      "version": "0.5.2",
+      "repository": "cran",
+      "source_url": "https://cran.r-project.org/src/contrib/ggnewscale_0.5.2.tar.gz",
+      "official_index_md5": "677df3b312795bc47e86bc88fc9273a0",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "ggplot2",
+      "version": "4.0.3",
+      "repository": "cran",
+      "source_url": "https://cran.r-project.org/src/contrib/ggplot2_4.0.3.tar.gz",
+      "official_index_md5": "c50d6864f6226ed9759e5deaa0a25e7f",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "ggplotify",
+      "version": "0.1.4",
+      "repository": "cran",
+      "source_url": "https://cran.r-project.org/src/contrib/ggplotify_0.1.4.tar.gz",
+      "official_index_md5": "39ec8abde205bdc56ceb6554fe0e4186",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "ggrepel",
+      "version": "0.9.8",
+      "repository": "cran",
+      "source_url": "https://cran.r-project.org/src/contrib/ggrepel_0.9.8.tar.gz",
+      "official_index_md5": "33e4c1f39e92d9e828203b10e12f831c",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "ggtangle",
+      "version": "0.1.4",
+      "repository": "cran",
+      "source_url": "https://cran.r-project.org/src/contrib/ggtangle_0.1.4.tar.gz",
+      "official_index_md5": "2177ae6f63b7e918e7da2ea31b123c63",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "ggtree",
+      "version": "4.2.1",
+      "repository": "bioc",
+      "source_url": "https://bioconductor.org/packages/3.23/bioc/src/contrib/ggtree_4.2.1.tar.gz",
+      "official_index_md5": "683bce3b4e5d8109431898c586eadff7",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "glue",
+      "version": "1.8.1",
+      "repository": "cran",
+      "source_url": "https://cran.r-project.org/src/contrib/glue_1.8.1.tar.gz",
+      "official_index_md5": "24e3cd382f52015c929538a5208d11aa",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "gplots",
+      "version": "3.3.0",
+      "repository": "cran",
+      "source_url": "https://cran.r-project.org/src/contrib/gplots_3.3.0.tar.gz",
+      "official_index_md5": "3271bbd55b49779d3d27ef542480e6ea",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "gridGraphics",
+      "version": "0.5-1",
+      "repository": "cran",
+      "source_url": "https://cran.r-project.org/src/contrib/gridGraphics_0.5-1.tar.gz",
+      "official_index_md5": "ec6a5183d4597929f18ae491b9adecf9",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "gtable",
+      "version": "0.3.6",
+      "repository": "cran",
+      "source_url": "https://cran.r-project.org/src/contrib/gtable_0.3.6.tar.gz",
+      "official_index_md5": "545f07ada570ec8e3f4b22843974ac6d",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "gtools",
+      "version": "3.9.5",
+      "repository": "cran",
+      "source_url": "https://cran.r-project.org/src/contrib/gtools_3.9.5.tar.gz",
+      "official_index_md5": "6d7837a6d8b8019e16a7c9eb567899db",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "highr",
+      "version": "0.12",
+      "repository": "cran",
+      "source_url": "https://cran.r-project.org/src/contrib/highr_0.12.tar.gz",
+      "official_index_md5": "006fcfa8e16c72ecd1adffdf0cf87e43",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "hms",
+      "version": "1.1.4",
+      "repository": "cran",
+      "source_url": "https://cran.r-project.org/src/contrib/hms_1.1.4.tar.gz",
+      "official_index_md5": "f63240ba5139ec2a20bd1ac56bae8243",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "htmltools",
+      "version": "0.5.9",
+      "repository": "cran",
+      "source_url": "https://cran.r-project.org/src/contrib/htmltools_0.5.9.tar.gz",
+      "official_index_md5": "f4a0cac920fb54b5c5ea94e175e20067",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "htmlwidgets",
+      "version": "1.6.4",
+      "repository": "cran",
+      "source_url": "https://cran.r-project.org/src/contrib/htmlwidgets_1.6.4.tar.gz",
+      "official_index_md5": "e1ea7f9774ad7a79fcf31e52c2074fd1",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "httr",
+      "version": "1.4.9",
+      "repository": "cran",
+      "source_url": "https://cran.r-project.org/src/contrib/httr_1.4.9.tar.gz",
+      "official_index_md5": "22833540ae6b924a3de576cf6c9c8e50",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "httr2",
+      "version": "1.3.0",
+      "repository": "cran",
+      "source_url": "https://cran.r-project.org/src/contrib/httr2_1.3.0.tar.gz",
+      "official_index_md5": "790051880d410d91692fbd4cb3c29414",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "igraph",
+      "version": "2.3.4",
+      "repository": "cran",
+      "source_url": "https://cran.r-project.org/src/contrib/igraph_2.3.4.tar.gz",
+      "official_index_md5": "32025403dd0a955373615930cf0aa578",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "isoband",
+      "version": "0.3.0",
+      "repository": "cran",
+      "source_url": "https://cran.r-project.org/src/contrib/isoband_0.3.0.tar.gz",
+      "official_index_md5": "0b811a225740b6e4ae0afcdd64f11407",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "jquerylib",
+      "version": "0.1.4",
+      "repository": "cran",
+      "source_url": "https://cran.r-project.org/src/contrib/jquerylib_0.1.4.tar.gz",
+      "official_index_md5": "3607a34ac45ff420bc325d84eab4b0cb",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "jsonlite",
+      "version": "2.0.0",
+      "repository": "cran",
+      "source_url": "https://cran.r-project.org/src/contrib/jsonlite_2.0.0.tar.gz",
+      "official_index_md5": "3e54e6fbc0c9063936e3d01e91419c14",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "knitr",
+      "version": "1.52",
+      "repository": "cran",
+      "source_url": "https://cran.r-project.org/src/contrib/knitr_1.52.tar.gz",
+      "official_index_md5": "0fc9f044e50fd86269f05b6067159bc6",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "labeling",
+      "version": "0.4.3",
+      "repository": "cran",
+      "source_url": "https://cran.r-project.org/src/contrib/labeling_0.4.3.tar.gz",
+      "official_index_md5": "915e6c823c1d8243641ce97253389f14",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "lambda.r",
+      "version": "1.2.6",
+      "repository": "cran",
+      "source_url": "https://cran.r-project.org/src/contrib/lambda.r_1.2.6.tar.gz",
+      "official_index_md5": "cfd18ed648c858a7873506af81469de2",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "lattice",
+      "version": "0.23-1",
+      "repository": "cran",
+      "source_url": "https://cran.r-project.org/src/contrib/lattice_0.23-1.tar.gz",
+      "official_index_md5": "e449ab6441f74836e93869dd34cdf3ba",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "lazyeval",
+      "version": "0.2.3",
+      "repository": "cran",
+      "source_url": "https://cran.r-project.org/src/contrib/lazyeval_0.2.3.tar.gz",
+      "official_index_md5": "4389f7decad5f4418c3288c7f6101adb",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "lifecycle",
+      "version": "1.0.5",
+      "repository": "cran",
+      "source_url": "https://cran.r-project.org/src/contrib/lifecycle_1.0.5.tar.gz",
+      "official_index_md5": "bce35a7a89fe4108f262db3e441cccae",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "magrittr",
+      "version": "2.0.5",
+      "repository": "cran",
+      "source_url": "https://cran.r-project.org/src/contrib/magrittr_2.0.5.tar.gz",
+      "official_index_md5": "4ee23a88bc1589527696d777d7e68dfc",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "matrixStats",
+      "version": "1.5.0",
+      "repository": "cran",
+      "source_url": "https://cran.r-project.org/src/contrib/matrixStats_1.5.0.tar.gz",
+      "official_index_md5": "8bece992ad950d8528407acee0bc2d1e",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "memoise",
+      "version": "2.0.1",
+      "repository": "cran",
+      "source_url": "https://cran.r-project.org/src/contrib/memoise_2.0.1.tar.gz",
+      "official_index_md5": "89da4ce771967d851db47132b762ce6f",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "mime",
+      "version": "0.13",
+      "repository": "cran",
+      "source_url": "https://cran.r-project.org/src/contrib/mime_0.13.tar.gz",
+      "official_index_md5": "45c3868fb2f5a7f3817d54d1c75799f9",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "nlme",
+      "version": "3.1-171",
+      "repository": "cran",
+      "source_url": "https://cran.r-project.org/src/contrib/nlme_3.1-171.tar.gz",
+      "official_index_md5": "f68635ab19fe0acbd0035c5b12e3a6d4",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "openssl",
+      "version": "2.4.2",
+      "repository": "cran",
+      "source_url": "https://cran.r-project.org/src/contrib/openssl_2.4.2.tar.gz",
+      "official_index_md5": "748b0fa601173da477706803783b6943",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "patchwork",
+      "version": "1.3.2",
+      "repository": "cran",
+      "source_url": "https://cran.r-project.org/src/contrib/patchwork_1.3.2.tar.gz",
+      "official_index_md5": "cd1723c708ead431720bc9652998e325",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "pillar",
+      "version": "1.11.1",
+      "repository": "cran",
+      "source_url": "https://cran.r-project.org/src/contrib/pillar_1.11.1.tar.gz",
+      "official_index_md5": "eb84af558b1ac0d743a4790e99acad6e",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "pkgconfig",
+      "version": "2.0.3",
+      "repository": "cran",
+      "source_url": "https://cran.r-project.org/src/contrib/pkgconfig_2.0.3.tar.gz",
+      "official_index_md5": "7b9ca1d45d941238381cb55d13ff4d68",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "plotrix",
+      "version": "3.8-14",
+      "repository": "cran",
+      "source_url": "https://cran.r-project.org/src/contrib/plotrix_3.8-14.tar.gz",
+      "official_index_md5": "2f854b315816ce240d89ad895c57e291",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "plyr",
+      "version": "1.8.9",
+      "repository": "cran",
+      "source_url": "https://cran.r-project.org/src/contrib/plyr_1.8.9.tar.gz",
+      "official_index_md5": "5a8b129534abace172059ecc5c0b5072",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "png",
+      "version": "0.1-9",
+      "repository": "cran",
+      "source_url": "https://cran.r-project.org/src/contrib/png_0.1-9.tar.gz",
+      "official_index_md5": "1410f91d9ac052c15c6eea3bc1c89672",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "polyclip",
+      "version": "1.10-7",
+      "repository": "cran",
+      "source_url": "https://cran.r-project.org/src/contrib/polyclip_1.10-7.tar.gz",
+      "official_index_md5": "1925777475f45c333affbd495d1cd32c",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "prettyunits",
+      "version": "1.2.0",
+      "repository": "cran",
+      "source_url": "https://cran.r-project.org/src/contrib/prettyunits_1.2.0.tar.gz",
+      "official_index_md5": "2e2db8105f214b80d3d4254b8aabb255",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "progress",
+      "version": "1.2.3",
+      "repository": "cran",
+      "source_url": "https://cran.r-project.org/src/contrib/progress_1.2.3.tar.gz",
+      "official_index_md5": "db78636d2dd5ee346f5caf48bfa69f5e",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "purrr",
+      "version": "1.2.2",
+      "repository": "cran",
+      "source_url": "https://cran.r-project.org/src/contrib/purrr_1.2.2.tar.gz",
+      "official_index_md5": "1b554060b57fdfe3ba6544c557b0f8d8",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "rappdirs",
+      "version": "0.3.4",
+      "repository": "cran",
+      "source_url": "https://cran.r-project.org/src/contrib/rappdirs_0.3.4.tar.gz",
+      "official_index_md5": "a990a3ddcfa9eb422cd406f78084fbd8",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "reshape2",
+      "version": "1.4.5",
+      "repository": "cran",
+      "source_url": "https://cran.r-project.org/src/contrib/reshape2_1.4.5.tar.gz",
+      "official_index_md5": "2b99f857c715d1ebca9416e8b4dd51c2",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "restfulr",
+      "version": "0.0.17",
+      "repository": "cran",
+      "source_url": "https://cran.r-project.org/src/contrib/restfulr_0.0.17.tar.gz",
+      "official_index_md5": "209a8d71e4711225fadfa3698d5a1aec",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "rjson",
+      "version": "0.2.23",
+      "repository": "cran",
+      "source_url": "https://cran.r-project.org/src/contrib/rjson_0.2.23.tar.gz",
+      "official_index_md5": "3eccfd8c0623a5c7ea7456b585d43dbe",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "rlang",
+      "version": "1.3.0",
+      "repository": "cran",
+      "source_url": "https://cran.r-project.org/src/contrib/rlang_1.3.0.tar.gz",
+      "official_index_md5": "b52c165e43f4d7fe5cfa15c5c9467ff4",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "rmarkdown",
+      "version": "2.32",
+      "repository": "cran",
+      "source_url": "https://cran.r-project.org/src/contrib/rmarkdown_2.32.tar.gz",
+      "official_index_md5": "01b497e82b287a2269a965119ed59271",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "rtracklayer",
+      "version": "1.72.0",
+      "repository": "bioc",
+      "source_url": "https://bioconductor.org/packages/3.23/bioc/src/contrib/rtracklayer_1.72.0.tar.gz",
+      "official_index_md5": "f5ec8a266f6b044f791b5783734b74af",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "sass",
+      "version": "0.4.10",
+      "repository": "cran",
+      "source_url": "https://cran.r-project.org/src/contrib/sass_0.4.10.tar.gz",
+      "official_index_md5": "16054a7117a81ba75893fec17da62209",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "scales",
+      "version": "1.4.0",
+      "repository": "cran",
+      "source_url": "https://cran.r-project.org/src/contrib/scales_1.4.0.tar.gz",
+      "official_index_md5": "6dd61123ecc2be3e3777aa77c172261d",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "scatterpie",
+      "version": "0.2.6",
+      "repository": "cran",
+      "source_url": "https://cran.r-project.org/src/contrib/scatterpie_0.2.6.tar.gz",
+      "official_index_md5": "3e07a7a602b9dc3a51b0c1d93a2d594b",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "snow",
+      "version": "0.4-4",
+      "repository": "cran",
+      "source_url": "https://cran.r-project.org/src/contrib/snow_0.4-4.tar.gz",
+      "official_index_md5": "8a6ded9cae4a175619ad1e33cc31d4b9",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "stringi",
+      "version": "1.8.9",
+      "repository": "cran",
+      "source_url": "https://cran.r-project.org/src/contrib/stringi_1.8.9.tar.gz",
+      "official_index_md5": "6888a5ac007ad34590ce6afbd0cb2491",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "stringr",
+      "version": "1.6.0",
+      "repository": "cran",
+      "source_url": "https://cran.r-project.org/src/contrib/stringr_1.6.0.tar.gz",
+      "official_index_md5": "e6d638f79f82b1c39fc88e7295ba1c9d",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "sys",
+      "version": "3.4.3",
+      "repository": "cran",
+      "source_url": "https://cran.r-project.org/src/contrib/sys_3.4.3.tar.gz",
+      "official_index_md5": "ffb4244c6d4cacdd4ac8ef187699707c",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "systemfonts",
+      "version": "1.3.2",
+      "repository": "cran",
+      "source_url": "https://cran.r-project.org/src/contrib/systemfonts_1.3.2.tar.gz",
+      "official_index_md5": "57b95280ca9bba2bb18477eb512ac971",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "tibble",
+      "version": "3.3.1",
+      "repository": "cran",
+      "source_url": "https://cran.r-project.org/src/contrib/tibble_3.3.1.tar.gz",
+      "official_index_md5": "97ff25ebdd1460ec152d48e9bb54fa43",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "tidydr",
+      "version": "0.0.7",
+      "repository": "cran",
+      "source_url": "https://cran.r-project.org/src/contrib/tidydr_0.0.7.tar.gz",
+      "official_index_md5": "3f3f831e09a89fda30c5a17723180da1",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "tidyr",
+      "version": "1.3.2",
+      "repository": "cran",
+      "source_url": "https://cran.r-project.org/src/contrib/tidyr_1.3.2.tar.gz",
+      "official_index_md5": "f8e976221d4ed9092c734cf86abcdba9",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "tidyselect",
+      "version": "1.2.1",
+      "repository": "cran",
+      "source_url": "https://cran.r-project.org/src/contrib/tidyselect_1.2.1.tar.gz",
+      "official_index_md5": "49c581292e819a2a39aac321f27ab0a8",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "tidytree",
+      "version": "0.4.8",
+      "repository": "cran",
+      "source_url": "https://cran.r-project.org/src/contrib/tidytree_0.4.8.tar.gz",
+      "official_index_md5": "076bdc9b26f8da5591af7f61d57a4f15",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "tinytex",
+      "version": "0.61",
+      "repository": "cran",
+      "source_url": "https://cran.r-project.org/src/contrib/tinytex_0.61.tar.gz",
+      "official_index_md5": "67e114649aa529e1631baed939110e97",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "treeio",
+      "version": "1.36.1",
+      "repository": "bioc",
+      "source_url": "https://bioconductor.org/packages/3.23/bioc/src/contrib/treeio_1.36.1.tar.gz",
+      "official_index_md5": "e1be791c314cb5625fa5b9cbf3997e51",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "tweenr",
+      "version": "2.0.3",
+      "repository": "cran",
+      "source_url": "https://cran.r-project.org/src/contrib/tweenr_2.0.3.tar.gz",
+      "official_index_md5": "eb40435b47811466581a5b4365456e11",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "txdbmaker",
+      "version": "1.8.0",
+      "repository": "bioc",
+      "source_url": "https://bioconductor.org/packages/3.23/bioc/src/contrib/txdbmaker_1.8.0.tar.gz",
+      "official_index_md5": "8b1ebe7900ef3a68d130bc2e85ac2339",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "utf8",
+      "version": "1.2.6",
+      "repository": "cran",
+      "source_url": "https://cran.r-project.org/src/contrib/utf8_1.2.6.tar.gz",
+      "official_index_md5": "12037c186ddded4d9b289762b69fc435",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "vctrs",
+      "version": "0.7.3",
+      "repository": "cran",
+      "source_url": "https://cran.r-project.org/src/contrib/vctrs_0.7.3.tar.gz",
+      "official_index_md5": "d99218820f353c359ff59fd46b52ddb3",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "viridisLite",
+      "version": "0.4.3",
+      "repository": "cran",
+      "source_url": "https://cran.r-project.org/src/contrib/viridisLite_0.4.3.tar.gz",
+      "official_index_md5": "ecfcfd15db2d5a79c25b9514748762b5",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "withr",
+      "version": "3.0.3",
+      "repository": "cran",
+      "source_url": "https://cran.r-project.org/src/contrib/withr_3.0.3.tar.gz",
+      "official_index_md5": "121bf3699aadb9d1b47d648964b934f8",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "xfun",
+      "version": "0.62",
+      "repository": "cran",
+      "source_url": "https://cran.r-project.org/src/contrib/xfun_0.62.tar.gz",
+      "official_index_md5": "93bc01d797fcdf1e4014998e4c248bd7",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "xml2",
+      "version": "1.6.0",
+      "repository": "cran",
+      "source_url": "https://cran.r-project.org/src/contrib/xml2_1.6.0.tar.gz",
+      "official_index_md5": "4e005569a935f91400a06533cad641e8",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "yaml",
+      "version": "2.3.12",
+      "repository": "cran",
+      "source_url": "https://cran.r-project.org/src/contrib/yaml_2.3.12.tar.gz",
+      "official_index_md5": "6beea9b09717960f6c79fcbc1e129c41",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    },
+    {
+      "package": "yulab.utils",
+      "version": "0.2.5",
+      "repository": "cran",
+      "source_url": "https://cran.r-project.org/src/contrib/yulab.utils_0.2.5.tar.gz",
+      "official_index_md5": "09c42a5753acb5f2b98badebf5dc3ec6",
+      "status": "metadata-resolved; SHA256/acquisition/install HELD"
+    }
+  ],
+  "r_metadata_indexes": [
+    {
+      "repository": "Bioconductor 3.23 software",
+      "url": "https://bioconductor.org/packages/3.23/bioc/src/contrib/PACKAGES.gz",
+      "sha256": "f3d3883ce074ec7a93a14c9a9214d00a8b8e9305d46203f4507d6a06f71fde36"
+    },
+    {
+      "repository": "Bioconductor 3.23 annotation",
+      "url": "https://bioconductor.org/packages/3.23/data/annotation/src/contrib/PACKAGES.gz",
+      "sha256": "f138660beafb88571bd786a5f86883b08b232d0b4f83b4bc0382dc95319cae6c"
+    },
+    {
+      "repository": "CRAN current metadata captured 2026-10-31",
+      "url": "https://cran.r-project.org/src/contrib/PACKAGES.gz",
+      "sha256": "a05504290e6a803705f8001bf36a1d3e40b5445d1f2df328be436d6fbe12bd37"
+    }
+  ],
+  "r_candidate_closure_status": "160 candidate source records only; NOT an admitted dependency lock. Current codetools requires R>=4.7, incompatible with image R4.6.1. Prefer inspected image recommended codetools if compatible with consumers; otherwise exact compatible archive+SHA before installation.",
+  "bedtools": {
+    "version": "2.31.1",
+    "commit": "705ccfdf2c9a77d71560c8adcece0663c2f5e18e",
+    "url": "https://codeload.github.com/arq5x/bedtools2/tar.gz/705ccfdf2c9a77d71560c8adcece0663c2f5e18e",
+    "sha256": "1db4e57c1899aede13ef516c61c9b5819cf2790994a556dbb28972488f9946e6",
+    "status": "complete archive acquired, gzip tested, hash verified; NOT built"
+  },
+  "seacr": {
+    "version": "1.3",
+    "commit": "5a0efe59f06fb17cf9d34d415bb0c1a1f7a77a3c",
+    "files": [
+      {
+        "url": "https://raw.githubusercontent.com/FredHutch/SEACR/5a0efe59f06fb17cf9d34d415bb0c1a1f7a77a3c/SEACR_1.3.sh",
+        "sha256": "f1f3897732d8664904017615d145a6605ac6a89ac6ea872a0f83038c4e517ad8"
+      },
+      {
+        "url": "https://raw.githubusercontent.com/FredHutch/SEACR/5a0efe59f06fb17cf9d34d415bb0c1a1f7a77a3c/SEACR_1.3.R",
+        "sha256": "106c28d691bc548731814d5d52da2a052474f3c1f5b270504e9f58f70e9110cc"
+      }
+    ]
+  }
+}

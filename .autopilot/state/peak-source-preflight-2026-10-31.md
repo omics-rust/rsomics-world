@@ -1,5 +1,53 @@
 # Peak next-product source qualification
 
+## Shared input packet adopted; runtime admission still incomplete
+
+Parent reads complete59-line REPORT
+49e5be8c0ec73cb14c871524ae48a93617f483181ae9c7ff551fcd5f823c3c79
+at /Volumes/KIOXIA/Developments/tmp/peak-input-runtime-20261031.LSP4R2/,
+all215 generator/156 integrated-test lines and the runtime packet's explicit
+partial status/structure. All94 retained file bindings and delivery hashes
+freshly verify. Parent reruns the full input-only integrated check through
+external guard:1 test,7.827s, exit0. No BAM decoder, upstream science or actual
+installed environment is implied by this standard-library generation test.
+
+Retained23-file input witness is229424715bytes, manifest
+09f1eb05ac69c51e0bd71b3b7273b63cdc5a41343dd91aef265e5baba27ae001.
+It contains320088 molecules/640192 PE records/320088 SE records, explicit
+molecule/fragment ledgers,256 genes/320 transcripts/960 exon edges and48 stable
+diagnostic row ordinals. Shared GFF3 Parent relationships and duplicate display
+names/coordinates remain intact. SAM honestly says unsorted; real BAM sort/
+index/full decode, model fitting and source annotations are still hosted gates.
+Distance sentinel labels are geometry, not asserted category-coverage: default
+promoter priority can mask short downstream probes. Record actual full classes
+rather than infer branch coverage from names or add a per-boundary campaign.
+
+New generatorb59cd382f8e7965b77450a1772ae87898e95b3e5cca56988928d8cc121ec858e,
+test07b7bd8a0575aa12ec8cc2cc9ab0a721fd4480de994ade6c589d350a2618a0a6,
+runtime packet04312db3a13cc65f37d9bf42917e957e7fca75e43c041fe9d9d3f803785f209a.
+The packet is NOT an executable full runtime lock:22 Python distributions/
+27 active edges are resolved;19 wheels are admitted, pandas/scipy partials
+are preserved but not installable. Bedtools complete archive
+1db4e57c1899aede13ef516c61c9b5819cf2790994a556dbb28972488f9946e6
+is acquired/gzip-verified; no native source is built.
+
+Immutable official Linux R-image digest
+81bf4c3e9f1b08b0ada0a45ef16ef51d03dc91b0b06cda4b408d667cb8c2c645
+and verified config declare R4.6.1/Bioc3.23; the image is not locally run.
+All160 R candidate/index records are metadata, not admitted source packages.
+Current codetools candidate requires R>=4.7, so this closure cannot install
+unchanged. Hosted completion should inspect compatible recommended packages
+already bound by the image first, then acquire exact remaining versions,
+check actual constraints and freeze final source/runtime hashes BEFORE any
+scientific case. Do not launch another local160-package audit/download phase,
+invent missing SHA values or use a moving latest resolver silently.
+
+No product/native/API/SEACR-quirk/fragment policy or performance is adopted.
+The existing plan remains full-four, and the next coherent task is a hosted
+source producer/runtime completion recipe plus one integrated preparation
+review. Historical records, original input witness and partial failures remain
+immutable; no Git/publication/deletion by the preparer occurred.
+
 ## Current source profile and integrated casebook adopted
 
 Parent reads complete93-line REPORT
