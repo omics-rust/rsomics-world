@@ -128,11 +128,14 @@ def setup(root, cpus, idle):
 
 
 def committed_receipt(world, selector):
-    world, relative = Path(world), Path(selector)
+    world, relative = Path(world).resolve(strict=True), Path(selector)
     check(relative.as_posix().startswith('.autopilot/oracles/') and relative.suffix == '.json' and
           not relative.is_absolute() and '..' not in relative.parts, 'explicit tracked native receipt required')
-    blob = subprocess.run(['git', 'show', 'HEAD:' + relative.as_posix()], cwd=world,
-                          check=True, capture_output=True).stdout
+    result = subprocess.run(['git', '-c', 'safe.directory=' + str(world),
+                             'show', 'HEAD:' + relative.as_posix()], cwd=world, capture_output=True)
+    check(result.returncode == 0, 'tracked native receipt Git read failed: ' +
+          result.stderr.decode(errors='replace').strip())
+    blob = result.stdout
     check(blob == (world / relative).read_bytes(), 'native adoption differs from its committed body')
     receipt = json.loads(blob)
     check(receipt['schema'] == 'rsomics.peak.native-adoption.v1' and

@@ -87,6 +87,14 @@ class PeakRealPreparation(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, 'runner'):
                 real.admit_old_prefix(root / 'elsewhere', prefix.parent)
 
+            with patch.dict(os.environ, GIT_TEST_ASSUME_DIFFERENT_OWNER='1',
+                            GIT_CONFIG_GLOBAL='/dev/null', GIT_CONFIG_SYSTEM='/dev/null'):
+                receipt, adopted = real.committed_receipt(
+                    ROOT, '.autopilot/oracles/peak-native-2026-11-01.json')
+            self.assertTrue(receipt['four_native_and_source_passed'])
+            self.assertEqual(receipt['run_id'], 41234576411)
+            self.assertRegex(adopted['sha256'], r'^[0-9a-f]{64}$')
+
             schedule = real.pair_schedule()
             self.assertEqual(len(schedule), 10)
             for workers in (1, 4):

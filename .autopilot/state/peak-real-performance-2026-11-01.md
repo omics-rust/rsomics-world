@@ -1,5 +1,29 @@
 # Fixed real-input Peak performance gate
 
+## First hosted attempt retained; exact-repository Git read corrected
+
+Actual run41237542008/attempt1 at e34bef00 fails in committed-receipt Git read
+with exit128, BEFORE native/runtime/provider acquisition, prefix/ELF admission
+or any science. Storage/CPU setup passes (86,277,861,376B free,15,266,406,400B
+MemAvailable,4 CPUs). No disk failure, prefix failure or ABI result is inferred.
+Root reads the full retention REPORT826b6d0cd1969ee5b0805a0ee54f4ecc1ea8357f5e670fb1f368e31d6adb7e2f
+and actual raw log in peak-real-failure-20261101.D28G1T. The only original
+artifact13056033639 is3970B SHAcb63e768528a0fce1704688ee1f7b385484e53a7d1ce2b77c38b54fbf273c2fb;
+all5 bodies/CRC/manifest verify. Nothing was deleted or left downloading.
+
+The actual Git stderr was discarded, so the hosted ownership diagnostic is
+not recovered fact. Checkout's safe-directory HOME differs from task HOME;
+a read-only forced-owner/empty-config mechanism returns128 then0 with exact
+command-scoped trust and the same committed receipt. Root strengthens the SAME
+preparation test: actual RED128, then GREEN0.162s after changing only Git read
+to command-scoped safe.directory for the resolved repository. Failures now retain
+Git stderr. No global trust/configuration, numerical/profile/input/budget or
+scientific check is changed. Current controller SHA
+8d08bb267980a97ceb7494f910df69b9a6e0ab0289a315bcdb213f0c6634a9d8,
+preparation178f5d0d3fc900d7f2c8f06f4389e07e310295a038cb7e12afb6a9ab9da23058.
+One new actual attempt still needs exact-head CI and dispatch; earlier failure
+stays failed. PLINK's independent native gate41237806705 runs in parallel.
+
 Native/source authority is actual accepted41234576411 at238eb117, with all
 five full originals independently verified and actual Linux ELF90fca208...;
 the tracked selector is .autopilot/oracles/peak-native-2026-11-01.json.
