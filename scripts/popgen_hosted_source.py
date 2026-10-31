@@ -441,8 +441,9 @@ def prepare_runtime(private: Path) -> tuple[Path, Path]:
     extract_archive(python_archive, runtime / 'portable', 1024 * 2**20)
     base_python = runtime / 'portable/python/bin/python3'
     capture(private, 'python-version', [base_python, '-I', '-c', 'import platform,sys;assert platform.python_version()=="3.12.10";print(sys.version)'])
-    capture(private, 'venv', [base_python, '-I', '-m', 'venv', '--copies', runtime / 'venv'])
+    capture(private, 'venv', [base_python, '-I', '-m', 'venv', '--symlinks', '--without-pip', runtime / 'venv'])
     python = runtime / 'venv/bin/python3'
+    capture(private, 'venv-pip', [python, '-I', '-m', 'ensurepip', '--upgrade', '--default-pip'])
     wheels = runtime / 'wheels'
     wheels.mkdir()
     requirements = []

@@ -1,5 +1,33 @@
 # Popgen connected source workflow
 
+## Authenticated first failure is a copied-interpreter layout mismatch
+
+Root reads the complete recovered report and original failure anchors in
+popgen-first-hosted-failure-20261101.jcOlG5. Exact two-file ZIP362103271B,
+complete age authentication/TAR361902080B and5211 exact members verify:
+3938 regular bodies,224 directories,1049 metadata-only links. Casefolding
+collisions are safely retained as content-addressed blobs, not recreated at
+Linux absolute paths or followed on the Mac. All11 controller bodies match
+the actual run head. Failure evidence really recovers; no key bytes are
+read/printed/hashed/copied by retention code.
+
+Seven bootstrap calls pass, including original portable Python3.12.10; venv
+creation fails when its ensurepip child returns127. Static authenticated ELF
+has DT_NEEDED=$ORIGIN/../lib/libpython3.12.so.1.0; --copies moves that same
+binary to venv/bin but its library exists only at portable/python/lib. The
+actual loader message was swallowed by original venv check_output, and is not
+invented here. No wheels/scikit/vcftools/casebook/cohort/scientific call occurs.
+
+Root switches only this setup to a prefix-preserving symlink venv and captures
+ensurepip as an explicit separate child (same --upgrade/--default-pip), so its
+actual stdout/stderr survive future failures. No LD_LIBRARY_PATH workaround,
+upstream patch, version/input/estimator/capacity change. These are standard
+venv options: https://docs.python.org/3.12/library/venv.html . The genuine
+system RED remains the first hosted run; actual corrected runtime/source
+success requires a new exact-head run, not a synthetic local science claim.
+REPORTb312af3c4be270bcd1fb3203b05bec7b505b9d412eb466060d6c0454278275c4;
+completed-receiptd92149d4bbe66f895a2c1bde3fc1b7c307e4ff047392c1c7f6ba370cb8146679.
+
 ## Actual first hosted source dispatched
 
 Exact-head Control plane41248536045 passes at
