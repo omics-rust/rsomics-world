@@ -1,5 +1,13 @@
 # Native peak first-four construction
 
+## Actual green-3 gate dispatched
+
+Exact-head Control plane41253738854 succeeds at
+72fb3bc2554e88ac4ce5925ba30896afc82f3d10. Root dispatches peak-candidate.yml
+with explicit snapshot=green-3: actual41253851251/1. Its four native jobs and
+same-file source consumer are pending acceptance; this is not a relabel of
+the previous successful green2 authorities or a new real performance result.
+
 ## Buffered caller frozen as green-3; native/source acceptance pending
 
 Root reviews the entire two-file caller diff and full final report at
