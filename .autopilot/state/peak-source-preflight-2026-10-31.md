@@ -1,5 +1,16 @@
 # Peak next-product source qualification
 
+## Native owner construction adopted without inferring pending source answers
+
+docs/plans/2026-11-01-peak-native-first-release.md adopts the read whole proposal
+with explicit alignment-count/default-annotation scope and isolated SEACR policy
+hold. A private publish=false owner may now implement genuine operations; no
+placeholder CLI, new public foundation or public release follows. A single
+coordinator first freezes private contracts and count, then independent module
+work can proceed. Whole-product review/fix/native4/source/performance gates stay
+separate. The actual source supplement41220226878 is running at35af65ef after
+exact controller41220043191 SUCCESS; restoration/source results remain unearned.
+
 ## Targeted producer read and prepared; actual restoration remains gated
 
 Parent reads all894 lines across the four new workflow/controller/R/test
