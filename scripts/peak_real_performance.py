@@ -251,7 +251,15 @@ def check_version_closure(needs, providers):
         check(not missing, 'ELF provider ' + library + ' lacks ' + ','.join(sorted(missing)))
 
 
-def admit_elf(binary, output):
+def loader_providers(text, interpreter):
+    paths = dict(re.findall(r'^\s*(\S+)\s+=>\s+(/\S+)\s+\(0x[0-9a-fA-F]+\)\s*$', text, re.MULTILINE))
+    standalone = re.findall(r'^\s*(/\S+)\s+\(0x[0-9a-fA-F]+\)\s*$', text, re.MULTILINE)
+    if interpreter in standalone:
+        paths[Path(interpreter).name] = interpreter
+    return paths
+
+
+def admit_elf(binary, output, probe_version=True):
     output.mkdir()
     original.require(output / 'readelf', ['readelf', '-hldV', binary])
     text = (output / 'readelf/stdout.txt').read_text()
@@ -275,14 +283,16 @@ def admit_elf(binary, output):
     original.require(output / 'loader-list', [interpreters[0], '--list', binary])
     loaded = (output / 'loader-list/stdout.txt').read_text()
     check('not found' not in loaded, 'static-admitted native ELF loader closure failed')
+    actual_paths = loader_providers(loaded, interpreters[0])
     for name, path in paths.items():
-        actual = re.search(re.escape(name) + r'\s+=>\s+(\S+)', loaded)
-        check(actual is not None and Path(actual.group(1)).resolve(strict=True) == path, 'ELF actual provider differs: ' + name)
+        actual = actual_paths.get(name)
+        check(actual is not None and Path(actual).resolve(strict=True) == path, 'ELF actual provider differs: ' + name)
     save(output / 'admission.json', dict(binary_sha256=_hash_file(binary), interpreter=interpreters[0],
         providers={name: dict(path=str(path), sha256=_hash_file(path)) for name, path in paths.items()},
         required_versions={name: sorted(values) for name, values in version_needs(text).items()},
         scientific_binary_executed_before_static_admission=False))
-    original.require(output / 'native-version', [binary, '--version'])
+    if probe_version:
+        original.require(output / 'native-version', [binary, '--version'])
 
 
 def acquire(root, world, selector):

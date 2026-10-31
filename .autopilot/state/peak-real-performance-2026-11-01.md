@@ -1,5 +1,30 @@
 # Fixed real-input Peak performance gate
 
+## Second hosted failure is loader-list grammar, not a proven ABI mismatch
+
+Actual retry41239000161/attempt1 at2a30bf48 fails before native --version or
+real-input acquisition: `ELF actual provider differs: ld-linux-x86-64.so.2`.
+Root reads the complete57-line SMALL-REPORTf952b6606de2b4d8a475de15345424e94b594e661d9c1a97782cc57c76c4fb4b,
+full raw failure anchors and actual loader/readelf/ldconfig/provider records in
+peak-real-retry-failure-20261101.J00Xkm. The small original13057225523 is
+4523947B SHA8e8cbb565b2cbeb496ce4b6aeb6e67d81101c785ebf3bbd86b853b22921b3e8f;
+all385 manifest bodies verify. Its separate2908542749B acquisition carrier is
+still downloading at this record and is NOT claimed fully retained.
+
+Actual loader --list returned0 and prints the interpreter as a standalone
+absolute path, without `=>`. The old parser therefore finds no match and fails
+BEFORE physical comparison. Root strengthens the same integrated preparation
+with the actual output grammar: RED AttributeError, then GREEN1/0.685s after
+recognizing standalone interpreter paths. Provider symbol versions and strict
+resolved-file equality remain required. This is not a claim that the future
+image's physical loader comparison or native execution has passed.
+
+The private ELF helper also accepts probe_version=False solely for PLINK's
+raw observer, whose actual CLI has no --version command; all static/provider
+admission remains shared and mandatory. Peak's default probe is unchanged.
+No scientific code, dataset, options, thresholds, numerical band or budget is
+changed. A new real attempt requires this fix's exact-head CI first.
+
 ## First hosted attempt retained; exact-repository Git read corrected
 
 Actual run41237542008/attempt1 at e34bef00 fails in committed-receipt Git read

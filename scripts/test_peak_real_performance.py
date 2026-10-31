@@ -78,6 +78,12 @@ class PeakRealPreparation(unittest.TestCase):
                 real.check_version_closure(real.version_needs(needed), {'libc.so.6': provided})
             real.check_version_closure(real.version_needs(needed), {
                 'libc.so.6': 'Version definition section:\n  Name: GLIBC_2.31\n  Name: GLIBC_2.34\n'})
+            loader = ('\tlinux-vdso.so.1 (0x00007f53e43b0000)\n'
+                      '\tlibc.so.6 => /lib/x86_64-linux-gnu/libc.so.6 (0x00007f53e3dee000)\n'
+                      '\t/lib64/ld-linux-x86-64.so.2 (0x00007f53e43b2000)\n')
+            self.assertEqual(real.loader_providers(loader, '/lib64/ld-linux-x86-64.so.2'), {
+                'libc.so.6': '/lib/x86_64-linux-gnu/libc.so.6',
+                'ld-linux-x86-64.so.2': '/lib64/ld-linux-x86-64.so.2'})
             prefix = root / 'runner/peak-first-workflow-oracle'
             prefix.parent.mkdir()
             self.assertEqual(real.admit_old_prefix(prefix, prefix.parent), prefix)
