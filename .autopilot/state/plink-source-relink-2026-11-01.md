@@ -1,5 +1,27 @@
 # Private offline source and replace-codec delivery
 
+## Final green-2 offline/relink actual evidence accepted
+
+Actual41247573646/attempt1 at530220cbff0dceb097761136d5c63ea762a7852b
+passes. Root reads the complete final report and suggested new receipt after
+the reused full-original/semantic verifiers actually pass. Complete original
+ZIP4054538B/TAR27228160B,1577 manifest bodies and54971B raw joblog are retained
+in plink-final-relink-adoption-20261101.8PRpm8. Delivered final source is exactly
+private-green-2/23866729B/5485184aefab85dbe917dc613336baddeca88a7ffe17d583f85c5f917a4eea29;
+all4847 bodies and85 dependencies verify against the actual head.
+Root freshly verifies all15 sealed packet files after reading the complete
+final report/receipt; no local rebuild or scientific replay is performed.
+
+Each real fresh offline base/modified build passes4lib+1whole, zero ignored,
+36 generations/74878cells/workers1,4. Actual controller and verbose compilation
+logs verify distinct newly created Cargo homes/targets. Only the dated PgrInit
+marker differs; reader object/static archive/ELF all change, and336 scientific
+files are byte-exact. Rebuilt binaries are not substituted for native-four ELF.
+New explicit adoption is plink-source-relink-2026-11-01-green-2.json; old green-1
+receipt and originals remain intact. Completed evidence
+65dd4bbae44ffa1aea3024b84bc562324c126923a55e06ef6828076e8716e6b3.
+No HGDP performance, Mac delivered-install, legal clearance or public release.
+
 ## Final native/source prerequisite now independently accepted
 
 Actual final native/source41246273033 is fully accepted in the new explicit
