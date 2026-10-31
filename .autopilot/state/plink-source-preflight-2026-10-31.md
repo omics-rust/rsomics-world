@@ -1,5 +1,16 @@
 # PLINK next-workflow source preflight
 
+## Empty target suffix selected explicitly for the observed build failure
+
+Actual dry-run returns2 with zero stdout and stderr No rule to make target
+'plink2'. The retained exact source Makefile declares SFX ?= "", creating
+literal quoted target suffixes unless overridden. Parent reads those actual
+target definitions and selects SFX= in the existing make argv. This is a
+source-supported build-variable override only: no upstream source patch,
+compiler/library/profile switch, data/numerical change or weaker check.
+Existing preparation checks and exact controller CI precede a new real build;
+the original failed source run remains failed and its originals are retained.
+
 ## First real source run reaches build dry-run, then fails
 
 The test-only environment correction is world6e9fd5125e470c60359523d2f5e807d5a1cda196;

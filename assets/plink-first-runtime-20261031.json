@@ -35,7 +35,7 @@
       "2.0/plink2.cc": "9a753541d1bc170ad0e0fa9635dd0b45d5c20fbb"
     },
     "make_directory": "2.0/build_dynamic",
-    "make_argv": ["make", "-j2", "plink2", "pgen_compress", "NO_LAPACK=1", "NO_AVX2=1", "NO_SSE42=1", "CC=/usr/local/bin/gcc", "CXX=/usr/local/bin/g++"],
+    "make_argv": ["make", "-j2", "plink2", "pgen_compress", "SFX=", "NO_LAPACK=1", "NO_AVX2=1", "NO_SSE42=1", "CC=/usr/local/bin/gcc", "CXX=/usr/local/bin/g++"],
     "scope": "NO_LAPACK only disables LAPACK-dependent excluded workflows; full first-slice QC/LD source policy remains tested",
     "helper_sources": ["include/plink2_base.cc", "include/plink2_bits.cc", "include/plink2_simd.cc", "include/pgenlib_misc.cc", "include/pgenlib_mtwrite.cc", "include/pgenlib_read.cc", "include/pgenlib_write.cc", "include/pgenlib_ffi_support.cc"],
     "helper_flags": ["-std=c++17", "-O2", "-ffp-contract=off", "-pthread"],
