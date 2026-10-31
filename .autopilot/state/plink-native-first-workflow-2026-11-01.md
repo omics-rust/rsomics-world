@@ -1,5 +1,33 @@
 # Native PLINK first coherent workflow active
 
+## Concentrated corrections verified; real post-review source frozen
+
+Root reads the complete material-wave report/closure and all changed production
+boundaries, then independently verifies all302 final owner bodies,16 delivered
+packet files,4 final check logs and2 complete graph receipts. All fourP2s and
+the reader-open-only mutex disposition close in one wave. Actual direct probes
+check320 REF report rows/1016 pair rows and reject the unchanged4195985B PVAR
+at1MiB before any generation publication. Original vendor/lock/policy/answers
+stay unchanged. Final debug/release each pass4lib+1whole with74878 exact cells.
+
+Private owner is committed clean on maina1c50116e52c71f8cd6bbb65ac94ddfb4418dd94,
+no remote/publication. Root freezes the ACTUAL final302-file source in
+.autopilot/snapshots/plink-native-2026-11-01/green-1. Archive525762B SHA
+5f034c6ad1cbbeb6304f190b97059b3a2508b2e859230beb8704755a06ff23d2,
+manifest681d320ee94f6ea2eb2c1ec6f51fe230fe4ce48b888b3cf9648058216a572028,
+four-file seal075d3244b628edb617e676041479068b808c5c903a02e6f43a4afa8fcfc1ca30.
+The real snapshot guard freshly extracts and matches all302 files; no fixture
+pack, path dependency or public foundation is added.
+
+Root reads ALL1204 new four-native/source-controller/preparation/workflow lines
+and the full implementation REPORT4f79b101d8fe5bcad42c95e6ce69c6fcf645b82a805faf40295c0ec9e7a0164d
+in plink-native-four-implementation-20261101.qQbHPW. Parent focused preparation
+passes1/0.431s; parent actual combined525-test suite passes with2 existing skips.
+The helper additionally reads all6360 old CAPTURE entries without restoration,
+and binds only an explicitly historical pre-fix native graph, not this source.
+Actual native-four and source/official/bridge reading the SAME new generations
+still require exact-head CI, dispatch and independent original adoption.
+
 ## Final local checks verified; one material correction wave adopted
 
 Root reads complete final freeze report and raw debug/release logs, then

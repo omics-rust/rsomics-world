@@ -1,0 +1,249 @@
+name: Private PLINK native-four and same-generation upstream consumers
+
+on:
+  workflow_dispatch:
+    inputs:
+      snapshot:
+        description: Actual post-review source under plink-native-2026-11-01 (green-N); missing snapshots fail
+        required: true
+        type: string
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  native:
+    name: ${{ matrix.target }}
+    runs-on: ${{ matrix.runner }}
+    timeout-minutes: 55
+    strategy:
+      fail-fast: false
+      matrix:
+        include: >-
+          ${{ fromJSON('[{"target":"linux-x86_64","runner":"ubuntu-24.04","system":"Linux","arch":"x86_64","host":"x86_64-unknown-linux-gnu"},{"target":"linux-aarch64","runner":"ubuntu-24.04-arm","system":"Linux","arch":"aarch64","host":"aarch64-unknown-linux-gnu"},{"target":"macos-x86_64","runner":"macos-15-intel","system":"Darwin","arch":"x86_64","host":"x86_64-apple-darwin"},{"target":"macos-aarch64","runner":"macos-15","system":"Darwin","arch":"arm64","host":"aarch64-apple-darwin"}]') }}
+    env:
+      SNAPSHOT_ID: ${{ inputs.snapshot }}
+      TARGET: ${{ matrix.target }}
+      EXPECTED_SYSTEM: ${{ matrix.system }}
+      EXPECTED_ARCH: ${{ matrix.arch }}
+      EXPECTED_HOST: ${{ matrix.host }}
+      CONTROLLER_COMMIT: ${{ github.sha }}
+      RUSTUP_TOOLCHAIN: '1.91.0'
+      CARGO_BUILD_JOBS: '2'
+      CARGO_INCREMENTAL: '0'
+      PYTHONDONTWRITEBYTECODE: '1'
+      PYTHONNOUSERSITE: '1'
+      PIP_CONFIG_FILE: /dev/null
+      PIP_DISABLE_PIP_VERSION_CHECK: '1'
+      PIP_NO_INPUT: '1'
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+
+      - name: Prepare native storage
+        run: |
+          set -euo pipefail
+          export EVIDENCE="$RUNNER_TEMP/plink-evidence"
+          export CANDIDATE="$EVIDENCE/candidate"
+          export CARGO_HOME="$RUNNER_TEMP/plink-cargo-home"
+          export CARGO_TARGET_DIR="$RUNNER_TEMP/plink-cargo-target"
+          export RUSTUP_HOME="$RUNNER_TEMP/plink-rustup-home"
+          export TMPDIR="$RUNNER_TEMP/plink-scratch"
+          export XDG_CACHE_HOME="$RUNNER_TEMP/plink-cache"
+          export PIP_CACHE_DIR="$RUNNER_TEMP/plink-cache/pip"
+          export PYTHONUSERBASE="$RUNNER_TEMP/plink-python-user"
+          export MPLCONFIGDIR="$RUNNER_TEMP/plink-cache/matplotlib"
+          export CLANG_MODULE_CACHE_PATH="$RUNNER_TEMP/plink-cache/clang-modules"
+          export CCACHE_DIR="$RUNNER_TEMP/plink-cache/ccache"
+          export SCCACHE_DIR="$RUNNER_TEMP/plink-cache/sccache"
+          for name in EVIDENCE CARGO_HOME CARGO_TARGET_DIR RUSTUP_HOME TMPDIR XDG_CACHE_HOME PIP_CACHE_DIR PYTHONUSERBASE MPLCONFIGDIR CLANG_MODULE_CACHE_PATH CCACHE_DIR SCCACHE_DIR; do
+            mkdir -p "${!name}"
+            printf '%s=%s\n' "$name" "${!name}" >> "$GITHUB_ENV"
+          done
+          printf 'CANDIDATE=%s\n' "$CANDIDATE" >> "$GITHUB_ENV"
+          python3 -B scripts/plink_candidate.py storage --output "$EVIDENCE/storage.json"
+          {
+            printf 'controller=%s\nsnapshot=%s\ntarget=%s\n' "$CONTROLLER_COMMIT" "$SNAPSHOT_ID" "$TARGET"
+            uname -a
+            df -h "$RUNNER_TEMP"
+          } > "$EVIDENCE/host.log"
+          ulimit -c 0
+
+      - name: Verify frozen source vendor and fixture closure
+        id: snapshot
+        run: |
+          set -euo pipefail
+          python3 -B scripts/plink_candidate.py prepare --snapshot "$SNAPSHOT_ID" --output "$CANDIDATE" \
+            2>&1 | tee "$EVIDENCE/prepare.log"
+
+      - name: Install actual native Rust 1.91
+        if: ${{ !cancelled() && steps.snapshot.outcome == 'success' }}
+        uses: dtolnay/rust-toolchain@1.91.0
+        with:
+          components: clippy,rustfmt
+
+      - name: Verify native compilers and resolved dependency routes
+        id: metadata
+        if: ${{ !cancelled() && steps.snapshot.outcome == 'success' }}
+        run: |
+          set -euo pipefail
+          python3 -B scripts/plink_candidate.py metadata --output "$CANDIDATE" \
+            2>&1 | tee "$EVIDENCE/metadata.log"
+
+      - name: Check formatting and strict all-target Clippy
+        if: ${{ !cancelled() && steps.metadata.outcome == 'success' }}
+        working-directory: ${{ runner.temp }}/plink-evidence/candidate/source
+        run: |
+          set -euo pipefail
+          cargo fmt --all -- --check 2>&1 | tee "$EVIDENCE/format.log"
+          cargo clippy --locked --all-targets -- -D warnings 2>&1 | tee "$EVIDENCE/clippy.log"
+
+      - name: Full debug workflow and raw-state inspection
+        if: ${{ !cancelled() && steps.metadata.outcome == 'success' }}
+        run: |
+          set -euo pipefail
+          python3 -B scripts/plink_candidate.py tests --mode debug --output "$CANDIDATE" \
+            2>&1 | tee "$EVIDENCE/debug.log"
+
+      - name: Full release workflow and raw-state inspection
+        if: ${{ !cancelled() && steps.metadata.outcome == 'success' }}
+        run: |
+          set -euo pipefail
+          python3 -B scripts/plink_candidate.py tests --mode release --output "$CANDIDATE" \
+            2>&1 | tee "$EVIDENCE/release.log"
+
+      - name: Verify protected source and native generations
+        if: always()
+        run: |
+          set -euo pipefail
+          if [[ -n "${CANDIDATE:-}" && -d "$CANDIDATE" ]]; then
+            python3 -B scripts/plink_candidate.py finalize --output "$CANDIDATE" \
+              2>&1 | tee "$EVIDENCE/integrity.log"
+          fi
+
+      - name: Package actual native outputs without Cargo caches
+        if: always()
+        run: |
+          set -euo pipefail
+          if [[ -n "${EVIDENCE:-}" && -d "$EVIDENCE" ]]; then
+            python3 -B scripts/plink_candidate.py package --output "$EVIDENCE" \
+              --archive "$RUNNER_TEMP/plink-native-$TARGET.tar"
+          fi
+
+      - name: Retain native originals and failures
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: plink-native-${{ github.run_id }}-${{ github.run_attempt }}-${{ matrix.target }}
+          path: ${{ runner.temp }}/plink-native-${{ matrix.target }}.tar
+          include-hidden-files: true
+          if-no-files-found: error
+          retention-days: 90
+
+  source-on-native:
+    name: Pinned source and official engines read same native generations
+    needs: native
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    container:
+      image: gcc:14.3.0-bookworm@sha256:a689e29bc3adf4663ef9a141d23081252764d1319c63f591a027bd6fd676f4c1
+    env:
+      PLINK_CONTAINER_DIGEST: sha256:a689e29bc3adf4663ef9a141d23081252764d1319c63f591a027bd6fd676f4c1
+      PYTHONDONTWRITEBYTECODE: '1'
+      PYTHONNOUSERSITE: '1'
+      OMP_NUM_THREADS: '1'
+      OPENBLAS_NUM_THREADS: '1'
+      MKL_NUM_THREADS: '1'
+      BLIS_NUM_THREADS: '1'
+      NUMEXPR_NUM_THREADS: '1'
+      PIP_CONFIG_FILE: /dev/null
+      PIP_DISABLE_PIP_VERSION_CHECK: '1'
+      PIP_NO_INPUT: '1'
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+
+      - name: Prepare source consumer storage
+        run: |
+          set -euo pipefail
+          test "$(uname -s)" = Linux
+          test "$(uname -m)" = x86_64
+          test "$GCC_VERSION" = 14.3.0
+          export EVIDENCE="$RUNNER_TEMP/plink-source-evidence"
+          export TMPDIR="$RUNNER_TEMP/plink-source-scratch"
+          export XDG_CACHE_HOME="$RUNNER_TEMP/plink-source-cache"
+          export XDG_CONFIG_HOME="$RUNNER_TEMP/plink-source-config"
+          export XDG_DATA_HOME="$RUNNER_TEMP/plink-source-data"
+          export PIP_CACHE_DIR="$RUNNER_TEMP/plink-source-cache/pip"
+          export PYTHONUSERBASE="$RUNNER_TEMP/plink-source-python-user"
+          export PYTHONPYCACHEPREFIX="$RUNNER_TEMP/plink-source-cache/pycache"
+          export MPLCONFIGDIR="$RUNNER_TEMP/plink-source-cache/matplotlib"
+          export CLANG_MODULE_CACHE_PATH="$RUNNER_TEMP/plink-source-cache/clang-modules"
+          export CCACHE_DIR="$RUNNER_TEMP/plink-source-cache/ccache"
+          export SCCACHE_DIR="$RUNNER_TEMP/plink-source-cache/sccache"
+          export CARGO_HOME="$RUNNER_TEMP/plink-source-unused-cargo"
+          export CARGO_TARGET_DIR="$RUNNER_TEMP/plink-source-unused-target"
+          export RUSTUP_HOME="$RUNNER_TEMP/plink-source-unused-rustup"
+          for name in EVIDENCE TMPDIR XDG_CACHE_HOME XDG_CONFIG_HOME XDG_DATA_HOME PIP_CACHE_DIR PYTHONUSERBASE PYTHONPYCACHEPREFIX MPLCONFIGDIR CLANG_MODULE_CACHE_PATH CCACHE_DIR SCCACHE_DIR CARGO_HOME CARGO_TARGET_DIR RUSTUP_HOME; do
+            mkdir -p "${!name}"
+            printf '%s=%s\n' "$name" "${!name}" >> "$GITHUB_ENV"
+          done
+          python3 -B scripts/plink_candidate.py storage --output "$EVIDENCE/storage.json"
+          python3 -B - <<'PY'
+          import os, shutil, sys
+          from pathlib import Path
+          sys.path.insert(0, 'scripts')
+          import plink_candidate as gate
+          root = Path(os.environ['EVIDENCE']) / 'controller'
+          for name in gate.CONTROLLERS:
+              target = root / name
+              target.parent.mkdir(parents=True, exist_ok=True)
+              shutil.copy2(name, target)
+          gate.save(root / 'checksums.json', gate.tree_manifest(root))
+          PY
+          ulimit -c 0
+
+      - name: Acquire only this attempt's actual Linux native artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: plink-native-${{ github.run_id }}-${{ github.run_attempt }}-linux-x86_64
+          path: ${{ runner.temp }}/plink-native-download
+
+      - name: Pinned engines consume same native generations without native ELF execution
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          python3 -B scripts/plink_source_on_native.py \
+            --native-archive "$RUNNER_TEMP/plink-native-download/plink-native-linux-x86_64.tar" \
+            --native-output "$RUNNER_TEMP/plink-native-input" \
+            --work "$RUNNER_TEMP/plink-source-work" --output "$EVIDENCE/capture" \
+            2>&1 | tee "$EVIDENCE/source-on-native.log"
+
+      - name: Package new source observations and identity proofs only
+        if: always()
+        run: |
+          set -euo pipefail
+          if [[ -n "${EVIDENCE:-}" && -d "$EVIDENCE" ]]; then
+            python3 -B scripts/plink_candidate.py package --output "$EVIDENCE" \
+              --archive "$RUNNER_TEMP/plink-source-on-native.tar"
+          fi
+
+      - name: Retain source consumer originals and failures
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: plink-source-on-native-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/plink-source-on-native.tar
+          include-hidden-files: true
+          if-no-files-found: error
+          retention-days: 90
