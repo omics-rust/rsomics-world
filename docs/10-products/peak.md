@@ -1,9 +1,9 @@
 # Peak product dossier
 
-Status: initial boundary and operation mapping complete. Fresh2026-10-31
-source revalidation finds unresolved historical annotation authority and SEACR
-semantics, so old compatibility claims do not qualify an implementation.
-No consolidated target exists locally; a fresh parent GitHub read returns404.
+Status: current full-four source casebook41209740891 is adopted after complete
+original/runtime/object verification. Historical annotation goldens remain
+unqualified; current ChIPseeker1.48.0/TxDb outputs now provide independent
+authority. This is not native correctness, performance or release acceptance.
 See `.autopilot/state/peak-source-preflight-2026-10-31.md`.
 
 ## Boundary
@@ -221,6 +221,24 @@ reused. Upstream behavior and license provenance remain recorded independently.
   real consumer later needs that exact one-dimensional contract.
 
 ### Current source revalidation
+
+The actual current38-case full-four workflow completes atb92eb0404aad1a0222ad580c2a81c5431ff42957.
+Parent reads the full retained report and freshly verifies original ZIP and
+all final seals. All5 MACS cases retain400peaks, both model cases fit without
+fallback, all6 SEACR modes and all3 TxDb/annotation profiles execute, and all
+4count profiles preserve20561ordered row keys. Original105R objects and9fresh
+hosted reloads are retained. Default GTF/GFF3 annotation tables and normalized
+960-edge graph multisets match; physical CDS IDs/counts differ by isoform
+representation. Old goldens are not silently rewritten or elevated.
+
+Important observed limits remain: annotation assignments cover only promoter,
+downstream and distal classes; proper/flags/split count outputs coincide on
+this row set; missing-contig input is not an executed case; sparse outputs are
+all nonempty with finite thresholds. A targeted annotation/count supplement
+must close the major branch gaps without broadening the initial product or
+rerunning unchanged source families unnecessarily. Source casebook report:
+`/Volumes/Zane's HDD/rsomics-fixtures/evidence/peak-first-workflow-oracle-2026-10-31/run-41209740891/REPORT.md`,
+SHA83cbf36dbe59c17f87745a02c43c5f2f045c3d29ba9627b22ee31ccce3e348ed.
 
 Parent reads the complete85-line REPORT73d909dbe95887b19cd8bbc0940d198ba604f067584aba9a3a3fba657aadeb06
 at `/Volumes/KIOXIA/Developments/tmp/peak-source-assessment.crpVKc/`, verifies

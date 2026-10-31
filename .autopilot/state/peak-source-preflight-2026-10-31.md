@@ -1,5 +1,45 @@
 # Peak next-product source qualification
 
+## Actual full-four source casebook adopted with explicit coverage limits
+
+Run41209740891/attempt1 atb92eb0404aad1a0222ad580c2a81c5431ff42957
+is terminal SUCCESS, source job124562023993. Parent reads the complete
+REPORT83cbf36dbe59c17f87745a02c43c5f2f045c3d29ba9627b22ee31ccce3e348ed
+and DELIVERY201091da2bc5c7d9a02ba87ca15d74e0b88914efdbbafdc815067054a0825f35,
+freshly verifies all8 final seals and full1206132297B original ZIP
+c6a8a06c14788c557c6165f524ce3524d367b58779636826ceef1abf238afa51.
+Evidence: `/Volumes/Zane's HDD/rsomics-fixtures/evidence/peak-first-workflow-oracle-2026-10-31/run-41209740891/`.
+Its ONE real member is __w/_temp/peak-first-workflow-oracle.tar,
+3178844160B/0e19577fef849bfa54ff663d671028f29ca85186145b42951f14fb1442f60ef3.
+No original JSON sidecar exists. All39404 manifest entries verify;
+1053links/33casefold groups remain virtual, not extracted runtime trees.
+
+All38 declared cases and217 captured processes return0;105R objects and
+9 actual fresh hosted reloads are retained. M1/M2 fit d212/211 with no
+fallback; all5 MACS cases yield400peaks. All6 SEACR modes execute with
+different actual outputs, and diagnostic outputs match before state admission.
+The20561 ordered row keys survive all3 real-TxDb annotations and4 multicov
+calls. Default GTF/GFF3 annotations match. Raw CDS row counts672/840 differ
+only by isoform-shared coordinate IDs: normalized960-edge graph multisets
+match exactly. Do not call the raw SQLite objects identical.
+
+This adopts current source/runtime/object authority, not native correctness,
+complete option coverage or release readiness. Observed annotation classes
+are promoter/downstream/distal only; Exon/Intron/UTR remain unobserved.
+Missing-contig view is input-only. Proper/flags/split count outputs coincide
+on this row set despite different eligible-unit observations. All6 SEACR
+outputs are nonempty with finite thresholds. No fragment-unit or SEACR
+defect-repair public policy follows from source capture.
+
+Next: practical whole-four native design using valid historical components,
+plus one targeted annotation/count source supplement for these major gaps.
+Original corpus/answers remain immutable; no Cartesian test campaign or
+unchanged MACS/SEACR replay is required merely to extend annotation/count
+evidence. Native4, representative hot-path performance and public delivery
+remain separate gates. Source-installed152R package bodies are physically
+verified in the TAR;29base/recommended packages are immutable-image/record
+bound, not independently mirrored image bytes.
+
 ## Complete inventory failure retained; quoted-inventory retry active
 
 Parent adopts the complete original run41201586593 retention after reading
