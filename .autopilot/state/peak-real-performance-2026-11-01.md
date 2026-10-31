@@ -12,8 +12,16 @@ preparation files and complete peak-real-workflow-implementation-20261101.5RDRWI
 REPORTac4b38411f1358cd6a62e51e32380c5bcbc4e48b1dcdd8c0afe1d5f2a5bc24c7.
 Source identity is controller54a31b2dd5cd58ce261acf55a4c00f9b8237dd7031a011ba4396a57dc120429c,
 R1bf4996a48643019165b7ef518adf508daa0a3bee515338cc47a1ba9d3f3103f,
-preparation62bf6baa1f1d83175909fb44b64ada476d4ea1fcd2e3c99d01018279f69462a6,
+initial preparation62bf6baa1f1d83175909fb44b64ada476d4ea1fcd2e3c99d01018279f69462a6,
 workflow53e82eed52cc0ce8b77a312d377767992250624a70bca36804bb1f215a4db8fc.
+
+Before dispatch, root reproduces the negative preparation assertion under actual
+hosted-Linux environment values: it incorrectly reaches RUNNER_TEMP instead of
+the intended unhosted rejection. Only that negative fixture now explicitly sets
+GITHUB_ACTIONS=false. Same existing test is RED then GREEN0.041s under the
+simulated CI environment; production admission/science is unchanged. Current
+preparation SHA92290c7fb03bbea87d3c6b2667f9fe528500157bebaf65a5d65f19afe8f982b3;
+raw parent-ci-negative-red/green.log remain in the implementation packet.
 
 Actual parent focused preparation passes1/0.255s. Actual final shared control
 suite passes525 tests/62.965s with2 existing skips, after the parallel PLINK

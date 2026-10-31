@@ -9,6 +9,7 @@ import sys
 import subprocess
 import tempfile
 import unittest
+from unittest.mock import patch
 
 from test_infercnv_ingestion_workflow import bash_body, steps
 
@@ -115,7 +116,7 @@ class PeakRealPreparation(unittest.TestCase):
                 self.assertEqual([row['name'] for row in graph], ['annotate', 'count'])
                 self.assertTrue(all(str(ledger) in ' '.join(row['argv']) for row in graph))
 
-            with redirect_stderr(io.StringIO()) as error:
+            with patch.dict(os.environ, GITHUB_ACTIONS='false'), redirect_stderr(io.StringIO()) as error:
                 blocked = real.main(['campaign', '--root', str(root / 'not-hosted'),
                                      '--native-receipt', 'missing'])
             self.assertNotEqual(blocked, 0)
