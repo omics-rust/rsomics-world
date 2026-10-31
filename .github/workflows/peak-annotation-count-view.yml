@@ -1,0 +1,100 @@
+name: Peak targeted annotation-count source view
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  source-view:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    container:
+      image: bioconductor/bioconductor_docker@sha256:81bf4c3e9f1b08b0ada0a45ef16ef51d03dc91b0b06cda4b408d667cb8c2c645
+      options: --user 0:0
+    env:
+      PEAK_CONTAINER_DIGEST: sha256:81bf4c3e9f1b08b0ada0a45ef16ef51d03dc91b0b06cda4b408d667cb8c2c645
+      PYTHONDONTWRITEBYTECODE: '1'
+      PYTHONNOUSERSITE: '1'
+      R_ENVIRON_USER: /dev/null
+      R_PROFILE_USER: /dev/null
+      R_ENVIRON: /dev/null
+      R_PROFILE: /dev/null
+      OMP_NUM_THREADS: '1'
+      OPENBLAS_NUM_THREADS: '1'
+      MKL_NUM_THREADS: '1'
+      BLIS_NUM_THREADS: '1'
+      VECLIB_MAXIMUM_THREADS: '1'
+      NUMEXPR_NUM_THREADS: '1'
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+
+      - name: Prepare immutable hosted storage
+        run: |
+          set -euo pipefail
+          test "$(uname -s)" = Linux
+          test "$(uname -m)" = x86_64
+          test "$BIOCONDUCTOR_DOCKER_VERSION" = 3.23.4
+          test "$BIOCONDUCTOR_VERSION" = 3.23
+          test "$TARGETARCH" = amd64
+          export EVIDENCE="$RUNNER_TEMP/peak-annotation-count-view-host"
+          export TMPDIR="$EVIDENCE/scratch"
+          export XDG_CACHE_HOME="$EVIDENCE/cache"
+          export XDG_CONFIG_HOME="$EVIDENCE/config"
+          export XDG_DATA_HOME="$EVIDENCE/data"
+          export PIP_CACHE_DIR="$EVIDENCE/cache/pip"
+          export UV_CACHE_DIR="$EVIDENCE/cache/uv"
+          export PYTHONUSERBASE="$EVIDENCE/python-user"
+          export PYTHONPYCACHEPREFIX="$EVIDENCE/cache/pycache"
+          export MPLCONFIGDIR="$EVIDENCE/cache/matplotlib"
+          export R_LIBS_USER="$EVIDENCE/R-library"
+          export R_LIBS_SITE="$EVIDENCE/R-library"
+          export R_USER_CACHE_DIR="$EVIDENCE/cache/R"
+          for name in EVIDENCE TMPDIR XDG_CACHE_HOME XDG_CONFIG_HOME XDG_DATA_HOME PIP_CACHE_DIR UV_CACHE_DIR PYTHONUSERBASE PYTHONPYCACHEPREFIX MPLCONFIGDIR R_LIBS_USER R_LIBS_SITE R_USER_CACHE_DIR; do
+            mkdir -p "${!name}"
+            printf '%s=%s\n' "$name" "${!name}" >> "$GITHUB_ENV"
+          done
+          ulimit -c 0
+
+      - name: Restore original runtime and capture only the adopted view
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          ulimit -c 0
+          python3 -B scripts/peak_annotation_count_view.py --action run \
+            --output "$EVIDENCE/capture"
+
+      - name: Bind complete source-view evidence including failures
+        if: always()
+        run: |
+          set -euo pipefail
+          python3 -B scripts/peak_annotation_count_view.py --action manifest \
+            --output "$RUNNER_TEMP/peak-annotation-count-view-host/capture"
+
+      - name: Archive original carrier and all partial objects before upload
+        if: always()
+        run: |
+          set -euo pipefail
+          python3 -B scripts/peak_annotation_count_view.py --action package \
+            --output "$RUNNER_TEMP/peak-annotation-count-view-host/capture" \
+            --archive "$RUNNER_TEMP/peak-annotation-count-view.tar"
+
+      - name: Retain original carrier and source-view objects
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: peak-annotation-count-view-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            ${{ runner.temp }}/peak-annotation-count-view.tar
+            ${{ runner.temp }}/peak-annotation-count-view.tar.json
+          if-no-files-found: error
+          include-hidden-files: true
+          retention-days: 90

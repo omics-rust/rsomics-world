@@ -1,5 +1,28 @@
 # Peak next-product source qualification
 
+## Targeted producer read and prepared; actual restoration remains gated
+
+Parent reads all894 lines across the four new workflow/controller/R/test
+files and the complete final report in
+`/Volumes/KIOXIA/Developments/tmp/peak-annotation-count-addon-final-20261101.XBV8DC/`.
+REPORTf61f696bef7510f7341b26e76974cef6ba23be7b036dcc0d4fdc6e8682819ed7;
+DELIVERY32dbb8ffc22fac7d72cd500e3ca572562fd27c309e5a8f33eac0f4fca4837a2e.
+All14 packet/live-file bindings verify freshly. Parent reruns the existing
+single integrated stdlib preparation check under the external guard:
+PASS1/0.545s; retained objects peak-view-preparation-chyk581e.
+
+The original package/binary bodies remain exact. Function comparisons
+normalize only the process-specific whole bytecode-address line while
+retaining both raw exports. The exact built-in DLL pair name=base,path=base
+is virtual; every real DLL still requires absolute admitted path and body
+verification. No other relative DLL or scientific tolerance is admitted.
+The earlier l4gkrZ packet remains unchanged and superseded by this final one.
+
+Only producer preparation is adopted. Exact-head controller CI, real hosted
+original-library restoration/ELF admission, actual annotation/count/source
+observations and complete original retention remain mandatory. No R/source
+runtime executes locally; no product owner or native/performance claim exists.
+
 ## Targeted annotation/count view adopted; producer preparation active
 
 Parent reads the complete473-line native proposal and107-line report in
