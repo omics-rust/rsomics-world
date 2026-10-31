@@ -12,6 +12,18 @@ RED campaign, provenance audit and review for every small component. The
 four-native release gate, storage rules and no-placeholder rule still apply.
 See [current execution state](.autopilot/state/portfolio-execution-2026-10-23.md).
 
+Current frontier (2026-10-31): DESeq's owning package/native4 gate is accepted
+and publication remains credential-held; limma's count lifecycle is qualified,
+its ordinary-expression source/reload is accepted and the native extension is
+active; structure's reviewed private analysis passes native4, with public
+torsion/performance still held or unearned. Ecology has reviewed alpha and
+rarefaction while beta policy is held. Signal's full six-operation source
+witness is being prepared, and peak has a bounded next-source assessment.
+Exact gates and original receipts live in each product dossier/state file.
+No unchanged accepted source/native/performance campaign needs replay. All
+project writes/build/cache/scratch remain external; global boot occupancy is
+no longer a stop condition.
+
 ## P0.1 — finish the architecture reset
 
 - [x] Freeze the 30-product and nine-foundation allowlist after rejecting the

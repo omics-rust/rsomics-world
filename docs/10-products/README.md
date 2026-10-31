@@ -25,14 +25,14 @@ operation will ship. It records:
 | `rsomics-cnv` | 2 | [released 0.1.0](variant.md#rsomics-cnv) |
 | `rsomics-composition` | 10 | [released 0.1.0](composition.md) |
 | `rsomics-count` | 4 | [released 0.1.0](count-gate-2026-08-02.md) |
-| `rsomics-deseq` | 12 | [qualified Wald/VST source/native/performance; owning package/CI preparation](bulk-expression.md#rsomics-deseq) |
-| `rsomics-ecology` | 19 | [audited](ecology.md) |
+| `rsomics-deseq` | 12 | [qualified Wald/VST and owning package/native CI; registry held](bulk-expression.md#rsomics-deseq) |
+| `rsomics-ecology` | 19 | [private alpha/rarefaction; beta contract held](ecology.md) |
 | `rsomics-edger` | 17 | [private modern QL workflow; numerical contract held](bulk-expression.md#rsomics-edger) |
 | `rsomics-fastq-preprocess` | 12 | [released 0.1.1](fastq-preprocess-gate-2026-07-30.md) |
 | `rsomics-fastq-qc` | 1 | [released 0.1.0](fastq-qc-gate-2026-08-02.md) |
 | `rsomics-index` | 5 | [held: raw performance evidence unavailable; storage and credential gates open](interval-annotation-index.md#rsomics-index) |
 | `rsomics-liftover` | 1 | [released 0.1.0](liftover.md) |
-| `rsomics-limma` | 16 | [private current-voom candidate; native/performance gate pending](bulk-expression.md#rsomics-limma) |
+| `rsomics-limma` | 16 | [qualified count lifecycle; ordinary-expression native extension active](bulk-expression.md#rsomics-limma) |
 | `rsomics-metagenomics` | 5 | [released 0.1.0](metagenomics-gate-2026-08-02.md) |
 | `rsomics-methyl` | 1 | [released 0.1.0](methyl.md) |
 | `rsomics-minimap2` | 1 | [audited](minimap2.md); legacy release requires reconstruction |
@@ -43,9 +43,9 @@ operation will ship. It records:
 | `rsomics-rnaseq-qc` | 21 | [qualified first slice; registry adoption held](rnaseq-qc-signal.md#rsomics-rnaseq-qc) |
 | `rsomics-sc` | 29 | [private inferCNV candidate; discovery contract held](sc.md) |
 | `rsomics-seq` | 34 | [released 0.2.0](sequence-fastq.md#rsomics-seq) |
-| `rsomics-signal` | 15 | [audited](rnaseq-qc-signal.md#rsomics-signal) |
+| `rsomics-signal` | 15 | [pinned six-operation source-witness preparation](rnaseq-qc-signal.md#rsomics-signal) |
 | `rsomics-sketch` | 1 | [released 0.1.0](sketch-gate-2026-08-02.md) |
-| `rsomics-structure` | 9 | [audited](structure.md) |
+| `rsomics-structure` | 9 | [reviewed private analysis/native4; public torsion contract held](structure.md) |
 | `rsomics-table` | 16 | [release candidate; registry credential blocked](table.md) |
 | `rsomics-vcf` | 30 | [released 0.5.0; 0.6.0 registry credential blocked](variant.md#rsomics-vcf) |
 
