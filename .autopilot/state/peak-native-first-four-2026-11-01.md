@@ -1,5 +1,36 @@
 # Native peak first-four construction
 
+## Complete local CLI graph and one whole-product review
+
+Root wires all four genuinely functioning operations: call, call-sparse,
+annotate and count. Debug full suite with explicit retained source calls passes
+lib6/count integration3/connected native CLI1, zero ignored or failed. Full raw
+log is /Volumes/KIOXIA/Developments/tmp/peak-whole-native-integration-20261101.JmnuFX/whole-cli-debug.log.
+All50 complete MACS scientific table comparisons match (five modes, five
+outputs,1/4 workers), real fitted d212/211 without fallback, and12 original
+sparse workflows/three original annotation views/four original count views
+retain their fixed comparisons. Native call tracks feed native sparse calling;
+new native call/sparse peaks create the tagged ordinal BED6 ledger consumed by
+annotation/count, including retained duplicate rows. Connected products remain
+at /Volumes/KIOXIA/Developments/tmp/peak-whole-native-O6jPKU/.
+
+The earlier third library invocation failed only because root omitted required
+RSOMICS_PEAK_SOURCE_CALLS; its5pass/1failure and all earlier real compile/numeric
+failures remain retained. It is not relabelled as a whole pass. After debug,
+root rejects explicit fitted-only CLI options under other models, fixes the
+test-only Graph import and mechanical Clippy diagnostics without changing math,
+then strict all-target Clippy passes19.46s. Final full release/debug confirmation
+of the final reviewed tree remains unearned; durations are not performance.
+
+Parent reads full call and annotation reports; annotation46 and projector29
+packet/read/live bindings freshly match. Call report binds its independently
+verified119 source/answer/code/log identities. Root owns shared CLI integration;
+operation partitions are frozen. One fresh whole-product review is active,
+with one concentrated material correction wave to follow if needed. A separate
+read-only native-four/source-on-native design may reuse existing infrastructure;
+no source addon answer, snapshot, native-four, performance, release or registry
+status is inferred from these local results. Owner remains private/uncommitted.
+
 Adopted plan: docs/plans/2026-11-01-peak-native-first-release.md. Actual private
 owner `/Volumes/KIOXIA/Documents/omics-rust/rsomics-peak` now exists with Git
 main initialized by parent, publish=false, no public remote or release. No owner
