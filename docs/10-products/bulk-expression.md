@@ -7,8 +7,9 @@ real parametric/local complete performance paths. On the full14599×7 fixture,
 native1/4 takes1.02/0.79s or1.05/0.81s versus R inner5.264/5.375s; moderate
 1.29x worker gain and lower process RSS are measured. It is not published or
 release-complete. Reviewed source-package and actual example preparation is
-now pushed to its populated owning repository; exact owning native4 CI and
-registry authorization remain separate gates. See
+now pushed to its populated owning repository; exact owning native4 CI
+run41180255242 passes at636e259, including Linux source-package/unpacked tests.
+Registry authorization and the actual clean publication artifact remain gates. See
 `.autopilot/state/deseq-schema5-performance-2026-10-28.md` and
 `.autopilot/state/deseq-release-preparation-2026-10-31.md`.
 The edgeR target has a complete private native modern-QL workflow, but its
