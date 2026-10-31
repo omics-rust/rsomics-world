@@ -1,5 +1,40 @@
 # Structure first-workflow source qualification
 
+## Four-native correctness accepted
+
+Run41184818337 at world06837d86ee46203cb6e5cafc9cef89f08e3f42df, attempt1,
+is terminal SUCCESS on Linux/macOS x86_64/aarch64 after exact controller
+41184335582. Parent reads complete REPORTb4ff82eb38b015b78a6f5ac97eafdb80e8447bbebdfaf4e0d31da32e99f572f7
+and verification5a7c2c3d1f312c62d0b2b4efe1f7c96e7278a173bfd92e27b46a1e64a71f37fe,
+then freshly verifies all1367retained files and directly compares all4platforms'
+actual complete1/4-worker result models. Only result.workers is removed.
+Contacts has26520pairs and exposure801rows per platform, not empty checks.
+Cross-platform bitwise equality or scaling is not asserted.
+
+Original evidence root:
+/Volumes/Zane's HDD/rsomics-fixtures/evidence/structure-native-four-2026-10-31/run-41184818337/.
+Complete-retention manifest5917d188728563c5f963bd9654f1d35d35f63e8344db533b6f3d33515b6586fc
+binds original run/jobs/artifact/controller APIs, full logZIPs, all4original
+artifactZIPs and extracted members. API size/digest, CRC/safe extraction and
+all122source files match owner2aee715 and frozen archive. Actual Rust1.91
+hosts and ELF/MachO machine types confirm native execution, not cross-compile.
+Each profile has7executed Rust tests plus1compiled no_run doctest and109actual
+CLI records (101success/8deliberate nonzero). Linux fmt/strict Clippy passes.
+
+This closes only native correctness for the reviewed private slice. Public
+degenerate torsion/full7/M1 policy fields/representative performance/final
+release review/publication remain held or unearned. No source rerun, local
+scientific execution or performance campaign occurs during retention.
+
+## Four-native execution dispatched
+
+World06837d86ee46203cb6e5cafc9cef89f08e3f42df passes exact-head controller
+41184335582. Parent dispatches structure-candidate run41184818337 at that
+head, attempt1, snapshot=green-1. Live API verifies the exact head and actual
+four native jobs. Dispatch/setup is not acceptance: all terminal originals,
+host/compiler/source/binary bindings, tests and worker-model evidence must
+be retained and verified. No upstream rerun or performance claim is added.
+
 ## Four-native preparation frozen and parent-checked
 
 Exact owning2aee715 source is frozen into green-1 under

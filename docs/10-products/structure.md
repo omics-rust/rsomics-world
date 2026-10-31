@@ -3,10 +3,11 @@
 Status: boundary, upstream-operation, and historical-source audit complete.
 The complete pinned first-workflow source is qualified at run40644150133;
 private raw mmCIF I/O fitness passes the admitted identity contract. A private
-unpublished owner has reviewed working PDB/CIF inspect/select/split at d7309d5;
-remaining selectors and native analyses now share that spine. The full seven
-first-release commands remain required. Degenerate-torsion representation is held for an
-explicit compatibility choice; no native4/performance or release is claimed.
+unpublished owner now has reviewed selectors and real native analyses on that
+same PDB/CIF spine at2aee715. Four actual native classes pass run41184818337,
+including full1/4-worker contacts/exposure result equivalence. The full seven
+first-release commands remain required. Degenerate-torsion representation is
+held for an explicit compatibility choice; performance and release are unearned.
 See `.autopilot/state/structure-first-workflow-2026-10-28.md`.
 
 ## Portfolio decision
