@@ -1,5 +1,32 @@
 # Native PLINK first coherent workflow active
 
+## Actual compact whole workflow green; final quality and review active
+
+Coordinator's retained plink-native-whole-graph-20261101-3.log records a genuine
+complete connected graph at requested1/4: all six own native import lanes feed
+own F, QC/pairs/prune, emitted prune.in extraction to own P and fresh re-QC.
+The native-graph.json at /Volumes/KIOXIA/Developments/tmp/plink-whole-native-ZkrRYt/
+records complete_compact_native_graph_passed:36 generations,114 principal
+reports/lists per worker profile and74,878 exact raw cells. All source rows,
+metadata/shapes, founder64 tiny HWE and native F-to-P raw projection agree;
+scientific files are byte-equal1/4. No frozen answer or numeric band changes.
+
+The first actual rich PAR endpoint failure was repaired with the source's
+inclusive GRCh37 boundaries. Strict Clippy then passes after mechanical edits;
+QC now reports effective_worker_limit, not an observed thread-count claim.
+Final full debug/release confirmation is active before one fresh whole-product
+review and one concentrated material correction wave.
+
+Coordinator separately finds a real direct external-PGEN metadata issue:
+stats prints PVAR-only provisionalREF while the accepted external-index PGEN
+header supplies provisionalREF=true. Own make generations retain the correct
+flag and the whole graph remains valid. Include this concrete discrepancy,
+native FFI/type ownership and LD reader initialization placement in the one
+whole review. External-index format failure/old-output preservation also stays
+bound to its OWN original captured raw answer, not a baseline lane substitute.
+Native-four, source reading the same new native generations, real-cohort
+performance and source/relink distribution gates remain unearned.
+
 Parent reads/adopts the full193-line source/codec/workflow design and105-line
 report in plink-native-codec-plan-20261101.mp78r1, then freshly confirms the
 owner absent and initializes private main at /Volumes/KIOXIA/Documents/omics-rust/rsomics-plink.
