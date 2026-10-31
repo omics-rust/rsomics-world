@@ -301,7 +301,18 @@ Evidence is retained at
 `/Volumes/KIOXIA/Developments/tmp/signal-upstream-contract-20261031.TtuUdJ/`;
 source-evidence.jsonf3eb890a20f74a89235705f1066db3dfa10fe47444aae830b75d193415856850
 binds144 source/metadata files, including51 Git-identical deepTools files.
-No source runtime, native result or performance has been earned yet.
+The subsequent installed source lifecycle is accepted at run41192955170,
+world93572f54, after exact-head controller41192740323. All six operations,
+130 observations and45 actual entrypoint calls complete; the one explicitly
+named convertBED TypeError probe is retained as a source defect, not a skipped
+generic failure. Original ZIP/TAR and all29347 manifest entries verify, with
+installed runtime/source/controller/input bindings and no source/input changes.
+See `.autopilot/state/signal-preflight-2026-10-31.md` and retained REPORT
+9b520a38db6aa2426ded5ebefc7004966b663fd8064b3b4165fff9ffea65adca.
+Native Rust implementation, codec/build qualification and performance remain
+unearned. A single consolidated human choice is pending for the native default
+handling of clear signed-arithmetic/trailing-zero data loss and the TypeError
+boundary; normal approximation/normalization/alias semantics are separate.
 
 Meaningful source profiles must not be flattened into one coverage policy:
 unextended reads use aligned blocks, while extension and offset modes differ;
@@ -310,15 +321,15 @@ run finalization are operation-specific. BAM/BW summaries and multi-sample,
 multi-group reference/scale matrices remain required first-release behavior.
 alignmentSieve's MACS2 fragment BED is not conventional six/ten-column BEDPE.
 
-The source-only integrated witness must retain source behavior before native
-policy choices for BPM's CPM-equivalent implementation despite different help,
+The accepted source-only integrated witness retains source behavior before
+native policy choices for BPM's CPM-equivalent implementation despite different help,
 signed-cancellation skipZeroOverZero, omitted trailing zero runs, nonfinite
 serialization, summary zoom-dependent means and shift metadata/sort validity.
 BW arithmetic/matrix use full values; default multiBigwigSummary uses stats
 without exact=True. Equal full-resolution output alone does not establish
 equal downstream summary defaults. Original BW headers/zooms and default plus
 exact diagnostic statistics therefore belong in the witness. These are
-qualification questions, not silently adopted bugs or compatibility fixes.
+actual qualified observations, not silently adopted native bugs or fixes.
 
 The codec decision remains private. Previously inspected bigtools0.5.6 requires
 libdeflater0.13 while current bamio0.8.4 requires libdeflater1; their sys crates

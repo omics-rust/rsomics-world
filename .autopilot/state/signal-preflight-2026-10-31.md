@@ -1,5 +1,54 @@
 # Signal next-family retained-source assessment
 
+## Successful first-six source lifecycle accepted; native policy question open
+
+Corrected run41192955170/attempt1 at world93572f5464d8b89211ae97f754f71ba73abe8773
+is terminal SUCCESS after controller41192740323 passes at that exact head.
+Parent reads full retention REPORT
+9b520a38db6aa2426ded5ebefc7004966b663fd8064b3b4165fff9ffea65adca,
+verification60eb9bae95d804b02a9ce08fbdc194be638693ccc6f0d45126ad8ebf04a99cc3,
+actual record bindings660ebcf26d7e77300dcc057989f5ae2d9a5d47269afc0473d4f40dc01aa59efe
+at /Volumes/Zane's HDD/rsomics-fixtures/evidence/signal-first-workflow-oracle-2026-10-31/run-41192955170/.
+Parent freshly hashes original ZIP/report/verification/bindings/sealed manifest,
+reads actual qualification/integrity and producing-call normalization records.
+Original artifact13039807073 is392550468bytes,
+SHAbaa79d4910a420462e3551d6f3a78122b71d6da83612b9990c6b91ba5c09ef89.
+Intact TAR944261120bytes/4dfae3a073a1437bd71faf9cf68c192d552603a6fb4544d4729b33b82172f2bd
+preserves32496 members including1052 symlinks/33 casefold collision groups.
+All29347 source-manifest logical files match virtual size/hash,0 missing/
+changed/unlisted; no absolute link is extracted/followed on Mac. The original
+TAR is primary;1004 selected regular evidence files are separately retained.
+Final1059-file packet seal19cee6fd5f9dee6d3c3a4ec39e0840e56220c09ae3d4bfd1fc3e405042d23f16
+passes fresh full retention verification. Partial/failed transport evidence is
+preserved; source/profile/controller/runtime/input bytes are not repaired.
+
+Actual symlink venv/ensurepip/all9 runtime commands pass. All47 locked downloads,
+45 installed versions/7 module bindings/42 installed source .py files and38
+input members bind. Qualificationeeddebaf0ba445587cde3d6833b1dbf58b40ae6c14d8baee1fef60fbde774e6f
+is complete/main_lifecycle_complete=true:130 observations,72 main/56 diagnostic/
+1 runtime/1 explicitly named expected TypeError,45 actual CLI entrypoints.
+Both final changed-input/source lists are empty. This is installed upstream
+source qualification, not native Rust implementation/performance/release.
+
+Actual connected graph reaches filtered/shifted explicitly sorted/indexed BAM,
+CPM tracks, four BAM compares, BW compare/average, summaries and multi-sample/
+group reference/scale/BED12/GTF matrices. Main A/B64/124 kept records give
+CPM15625/8064.516129032258; producing verbose logs/counters independently agree.
+SES factors1/0.5 use24 actual50-base regions. BAM4 workers reorder the same
+row multiset; no upstream order determinism is inferred. Approximate/exact zoom
+means, alias/dictionary and normalization semantics are recorded separately.
+
+Material observed defects: signed arithmetic can return entirely empty output;
+explicit trailing zeros/all-zero contig intervals disappear; the named filtered
+BED boundary raises convertBED TypeError. Parent asks ONE consolidated async
+human decision: native default fixes these clear data-loss/error defects with
+recorded incompatibilities, or strictly reproduces them. No answer yet. This
+holds the affected public arithmetic/boundary contract, not the entire goal.
+Normal approximate statistics/normalization/alias rules and intentional shifted
+alignment metadata policy are not silently changed by that question. Continue
+unaffected work/limma performance/peak preparation, with no speculative public
+foundation or native policy selection. Original failed41190638374 stays exact.
+
 ## Bootstrap and archive correction adopted; corrected hosted run pending
 
 Parent reads complete correction REPORT

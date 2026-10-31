@@ -43,7 +43,7 @@ operation will ship. It records:
 | `rsomics-rnaseq-qc` | 21 | [qualified first slice; registry adoption held](rnaseq-qc-signal.md#rsomics-rnaseq-qc) |
 | `rsomics-sc` | 29 | [private inferCNV candidate; discovery contract held](sc.md) |
 | `rsomics-seq` | 34 | [released 0.2.0](sequence-fastq.md#rsomics-seq) |
-| `rsomics-signal` | 15 | [six-operation source witness; bootstrap correction active](rnaseq-qc-signal.md#rsomics-signal) |
+| `rsomics-signal` | 15 | [six-operation source qualified; native defect policy pending](rnaseq-qc-signal.md#rsomics-signal) |
 | `rsomics-sketch` | 1 | [released 0.1.0](sketch-gate-2026-08-02.md) |
 | `rsomics-structure` | 9 | [reviewed private analysis/native4; public torsion contract held](structure.md) |
 | `rsomics-table` | 16 | [release candidate; registry credential blocked](table.md) |

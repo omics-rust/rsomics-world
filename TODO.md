@@ -18,9 +18,9 @@ its ordinary-expression source/reload and reviewed local extension are accepted,
 with green-2 native4/core accepted and ordinary performance preparation active; structure's
 reviewed private analysis passes native4, with public
 torsion/performance still held or unearned. Ecology has reviewed alpha and
-rarefaction while beta policy is held. Signal's first six-operation hosted run
-failed at portable-Python bootstrap before science; originals are retained and
-a narrow environment/transport correction is adopted for a fresh hosted run.
+rarefaction while beta policy is held. Signal's corrected six-operation source
+lifecycle is accepted with complete original evidence; its native handling of
+clear upstream arithmetic/data-loss defects awaits one consolidated decision.
 Peak's current full-four
 source casebook is adopted, with input/runtime preparation active.
 Exact gates and original receipts live in each product dossier/state file.
