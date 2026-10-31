@@ -1,5 +1,75 @@
 # Signal next-family retained-source assessment
 
+## Bootstrap and archive correction adopted; corrected hosted run pending
+
+Parent reads complete correction REPORT
+7845f3cb66edd3f26132b4a805d91fac0fc5f6ca81dec487b22eaf3454a83279
+and exact three-file diff at
+/Volumes/KIOXIA/Developments/tmp/signal-bootstrap-transport-correction-20261031.YuvHD1/.
+Parent freshly verifies all20 final evidence bindings and3 live source hashes,
+and runs the same focused integrated module through the external guard:
+1 test,1.011s, exit0. This is controller/protocol validation, not an installed
+Linux bootstrap or scientific GREEN. Full committed-tree controller CI must
+pass at the pushed head before one corrected hosted dispatch.
+
+Producer39668a86b2fa084d8520e7f63f85bb837a2857c527de56917f9baef4ca107b57
+uses explicit symlinks/no implicit pip, retains actual cfg/hash/path binding,
+rejects copied fallback and separately captures required ensurepip. Workflow
+5c91272de75d71f35023885608b58a7b9563db9a87d5eccdf8d01d3baae128e7
+always packages a new tar outside EVIDENCE after manifest and uploads only it.
+Absolute link metadata is preserved, never blindly followed by the receiver.
+Test8618ff7a5da0f324f530e8efea37def2d7005337278c46dabc704177ea4ef4db
+checks binding/failure capture and actual tar/link/upload protocol in the same
+integrated route. Source archive1c92cd0d2245acab37203944e7e8c1d3a864e06ddb64003face6529bb6125cce
+contains exactly3 regular declared files. Original runtime lock/input and all47
+artifact pins/130 observations/45 scientific entrypoint declarations are exact.
+Final correction manifest35f015658c12ef6ad3f52be4c5064b94022c2a8603229d5a896b5a25d95b6717
+preserves before/after copies and actual local RED/GREEN. No new review loop,
+source patch, local science/install/build, deletion or registry retry occurs.
+
+## First hosted bootstrap failure retained; narrow environment fix active
+
+Actual run41190638374/attempt1 at world1e9ddabdb6c8ddca166ae31f827d2fa23dc22329
+is terminal FAILURE after exact-head controller41190539494 succeeds. The
+environment install fails before pinned bootstrap/package/scientific calls;
+capture is skipped. No source workflow result is accepted.
+
+Parent reads complete failure REPORT
+a77ab8f1c05f3b48a6a1a05ed1b45f12b00d20d9d08d4dbd14e1e79f78463f31,
+verificationc30b8cb889a0b54b95362c2092f0f82cbcefa7e1ab0ad1579cd53c0753f3477d,
+diagnosisad8a594bbe1d97a597eda7c5469b447eaea0e1383951f94b2691348f2cf6cad5
+at /Volumes/Zane's HDD/rsomics-fixtures/evidence/signal-first-workflow-oracle-2026-10-31/run-41190638374/,
+plus actual base/venv ELF dynamic bodies, pyvenv config and producer code.
+Retained ZIP artifact13038866532 is324345208bytes,
+SHAe5b9df21aae74876daf862091c1ff5fefe26fdf342cab9f361c75f05b28c4368.
+All4930 ZIP members/CRC/extracted bytes and4929 source-manifest entries pass,
+with0 missing/changed/unlisted;47 locked downloads,5 controllers and38 input
+members bind. Runtime lock, inputs and upstream bytes remain unchanged.
+
+Cause: default venv copies the portable ELF (actual pyvenv.cfg --copies).
+Both interpreter hashes match, but slash-bearing DT_NEEDED
+$ORIGIN/../lib/libpython3.12.so.1.0 now points to absent venv/lib rather than
+the original bundled library. Actual ensurepip child exits127; hidden loader
+stderr was not recorded, so no invented loader text is quoted as observation.
+This is a bootstrap construction defect, not a scientific disagreement.
+
+The ZIP's25 casefold collision groups are fully preserved, despite uploader
+warnings. A task-owned case-sensitive sparse image was needed for lossless
+external APFS extraction and is sealed/read-only/nobrowse,714084352bytes,
+SHAe0a5e3401508a619a9eb4bfc80e28087209533154a49af3c22ec075070773d44.
+Backing is the same run directory on external HDD/dev/disk10s1; virtual mount
+is/dev/disk14s1. No existing partitions/data changed. Original ZIP is primary.
+Final retained-hash manifestf310010d995b416c640c329bf651afcbe89a0bc7e6ce09345b94afb7ff470386
+binds the original packet; nothing is removed or rewritten.
+
+Parent authorizes one bounded producer/test/workflow correction: explicit
+symlink venv anchored to the original executable, separately captured required
+ensurepip stdout/stderr/status, and tar-before-upload transport. Same source,
+runtime lock, input corpus, math/options/graph and failure requirements stay.
+No local scientific install/import/execution or patched upstream; hosted
+bootstrap and full source lifecycle must still actually pass after corrected
+commit/exact-head CI/dispatch. Limma native4 and peak preparation continue.
+
 ## Integrated source-witness preparation adopted; hosted execution pending
 
 Parent adopts the complete first-six source-witness preparation after one

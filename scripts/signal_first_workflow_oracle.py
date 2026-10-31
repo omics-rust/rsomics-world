@@ -224,6 +224,23 @@ def requirements(lock, names, output, built=None):
     Path(output).write_text('\n'.join(rows) + '\n')
 
 
+def bootstrap_venv(output):
+    output = Path(output)
+    venv.EnvBuilder(symlinks=True, with_pip=False).create(output / 'venv')
+    python = output / 'venv/bin/python'
+    original = (output / 'python/bin/python3').resolve(strict=True)
+    resolved = python.resolve(strict=True)
+    configuration = output / 'venv/pyvenv.cfg'
+    save(output / 'venv-binding.json', dict(executable=str(python), resolved_executable=str(resolved),
+        original_executable=str(original), original_executable_sha256=sha256(original),
+        executable_sha256=sha256(python), is_symlink=python.is_symlink(),
+        configuration=configuration.read_text(), configuration_sha256=sha256(configuration)))
+    if resolved != original:
+        raise RuntimeError('virtual environment interpreter does not resolve to the original portable executable')
+    capture(output / 'ensurepip', [python, '-m', 'ensurepip', '--upgrade', '--default-pip'])
+    return python
+
+
 def install_runtime(lock_path, output):
     output = hosted_root(output)
     lock = json.loads(Path(lock_path).read_text())
@@ -231,8 +248,7 @@ def install_runtime(lock_path, output):
         raise RuntimeError('runtime is not the frozen Python3.12.10 Linux x86_64 class')
     save(output / 'interpreter.json', dict(version=sys.version, executable=sys.executable,
         executable_sha256=sha256(sys.executable), prefix=sys.prefix, platform=platform.platform()))
-    venv.EnvBuilder(with_pip=True).create(output / 'venv')
-    python = output / 'venv/bin/python'
+    python = bootstrap_venv(output)
     downloads = output / 'downloads'
     bootstrap = output / 'bootstrap.txt'
     requirements(lock, lock['bootstrap'], bootstrap)

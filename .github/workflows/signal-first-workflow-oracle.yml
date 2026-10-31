@@ -98,12 +98,21 @@ jobs:
           python3 -B scripts/signal_first_workflow_oracle.py --manifest \
             --output "$RUNNER_TEMP/signal-first-workflow-oracle"
 
+      - name: Package complete original evidence
+        if: always()
+        run: |
+          set -euo pipefail
+          test ! -e "$RUNNER_TEMP/signal-first-workflow-oracle.tar"
+          test ! -L "$RUNNER_TEMP/signal-first-workflow-oracle.tar"
+          tar -cf "$RUNNER_TEMP/signal-first-workflow-oracle.tar" \
+            -C "$RUNNER_TEMP" signal-first-workflow-oracle
+
       - name: Retain complete original evidence
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: signal-first-workflow-oracle-${{ github.run_id }}-${{ github.run_attempt }}
-          path: ${{ runner.temp }}/signal-first-workflow-oracle/
+          path: ${{ runner.temp }}/signal-first-workflow-oracle.tar
           include-hidden-files: true
           if-no-files-found: error
           retention-days: 90

@@ -3,10 +3,13 @@ import json
 import os
 from pathlib import Path
 import re
+import shutil
 import subprocess
 import sys
+import tarfile
 import tempfile
 import unittest
+from unittest import mock
 
 from test_infercnv_ingestion_workflow import bash_body, steps
 
@@ -112,6 +115,55 @@ class SignalFirstWorkflowOracleTests(unittest.TestCase):
             self.assertEqual(runtime['packages']['deeptools']['version'], '3.5.6')
             self.assertTrue(all(re.fullmatch('[0-9a-f]{64}', item['sha256'])
                                 for item in runtime['packages'].values()))
+            with self.subTest('portable binding precedes separately captured required ensurepip'):
+                self.assertTrue(hasattr(oracle, 'bootstrap_venv'), 'missing explicit portable venv bootstrap')
+
+                class FixtureVenv:
+                    def __init__(self, with_pip=False, symlinks=False):
+                        if with_pip:
+                            raise AssertionError('implicit ensurepip would hide child output')
+                        self.symlinks = symlinks
+
+                    def create(self, destination):
+                        binary = destination / 'bin/python'
+                        binary.parent.mkdir(parents=True)
+                        original = destination.parent / 'python/bin/python3'
+                        if self.symlinks:
+                            binary.symlink_to(original)
+                        else:
+                            shutil.copyfile(original, binary)
+                        (destination / 'pyvenv.cfg').write_text('include-system-site-packages = false\n')
+
+                output = root / 'bootstrap'
+                original = output / 'python/bin/python3'
+                original.parent.mkdir(parents=True)
+                original.write_text('#!/bin/sh\nprintf "bootstrap stdout\\n"\nprintf "bootstrap stderr\\n" >&2\nexit 23\n')
+                original.chmod(0o755)
+                with mock.patch.object(oracle.venv, 'EnvBuilder', FixtureVenv):
+                    with self.assertRaisesRegex(RuntimeError, 'required command failed'):
+                        oracle.bootstrap_venv(output)
+                binding = json.loads((output / 'venv-binding.json').read_text())
+                self.assertEqual(binding['resolved_executable'], str(original.resolve()))
+                self.assertEqual(binding['original_executable_sha256'], oracle.sha256(original))
+                self.assertEqual(binding['configuration_sha256'], oracle.sha256(output / 'venv/pyvenv.cfg'))
+                self.assertEqual(json.loads((output / 'ensurepip/request.json').read_text())['argv'],
+                                 [str(output / 'venv/bin/python'), '-m', 'ensurepip', '--upgrade', '--default-pip'])
+                self.assertEqual(json.loads((output / 'ensurepip/command.json').read_text())['status'], 23)
+                self.assertEqual((output / 'ensurepip/stdout.txt').read_text(), 'bootstrap stdout\n')
+                self.assertEqual((output / 'ensurepip/stderr.txt').read_text(), 'bootstrap stderr\n')
+
+                class CopiedVenv(FixtureVenv):
+                    def create(self, destination):
+                        self.symlinks = False
+                        super().create(destination)
+
+                copied = root / 'copied-bootstrap'
+                (copied / 'python/bin').mkdir(parents=True)
+                shutil.copyfile(original, copied / 'python/bin/python3')
+                with mock.patch.object(oracle.venv, 'EnvBuilder', CopiedVenv):
+                    with self.assertRaisesRegex(RuntimeError, 'virtual environment interpreter'):
+                        oracle.bootstrap_venv(copied)
+                self.assertFalse((copied / 'ensurepip').exists())
             with (root / 'source-sorted-regions.bed').open('w') as stream:
                 oracle.save(root / 'source-defaults.json', {'outFileSortedRegions': stream})
             self.assertEqual(json.loads((root / 'source-defaults.json').read_text())['outFileSortedRegions']['mode'], 'w')
@@ -122,7 +174,7 @@ class SignalFirstWorkflowOracleTests(unittest.TestCase):
             env = dict(os.environ, RUNNER_TEMP=str(runner), GITHUB_SHA='route-only',
                        GITHUB_RUN_ID='route-only', GITHUB_RUN_ATTEMPT='1')
             for name in ('EVIDENCE', 'TMPDIR', 'XDG_CACHE_HOME', 'PIP_CACHE_DIR', 'PYTHONUSERBASE', 'MPLCONFIGDIR'):
-                path = runner / name.lower()
+                path = runner / ('signal-first-workflow-oracle' if name == 'EVIDENCE' else name.lower())
                 path.mkdir()
                 env[name] = str(path)
             (Path(env['EVIDENCE']) / 'controller').mkdir()
@@ -133,6 +185,31 @@ class SignalFirstWorkflowOracleTests(unittest.TestCase):
             self.assertEqual(result.returncode, 0, result.stderr)
             self.assertEqual(json.loads((Path(env['EVIDENCE']) / 'storage-host.json').read_text())['controller_commit'], 'route-only')
             self.assertNotEqual(storage_check(dict(env, MPLCONFIGDIR=str(root))).returncode, 0)
+            with self.subTest('single original tar preserves case and link metadata after manifest'):
+                name = 'Package complete original evidence'
+                self.assertTrue(name in routed, 'missing case-preserving original archive step')
+                self.assertIn('if: always()', routed[name])
+                self.assertLess(list(routed).index('Bind all originals and failed partial evidence'), list(routed).index(name))
+                self.assertLess(list(routed).index(name), list(routed).index('Retain complete original evidence'))
+                evidence = Path(env['EVIDENCE'])
+                (evidence / 'UpperCase').mkdir()
+                (evidence / 'UpperCase/Original.txt').write_bytes(b'partial original bytes\n')
+                (evidence / 'absolute-link').symlink_to('/host-only/runtime/python/bin/python3')
+                oracle.bind_evidence(evidence)
+                result = subprocess.run(['bash', '-c', bash_body(routed[name])], env=dict(env, COPYFILE_DISABLE='1'),
+                                        capture_output=True, text=True, timeout=15)
+                self.assertEqual(result.returncode, 0, result.stderr)
+                archive = runner / 'signal-first-workflow-oracle.tar'
+                upload = re.search(r'^\s+path: (.+)$', routed['Retain complete original evidence'], re.MULTILINE)[1]
+                self.assertEqual(Path(upload.replace('${{ runner.temp }}', str(runner))), archive)
+                with tarfile.open(archive) as retained:
+                    prefix = 'signal-first-workflow-oracle/'
+                    self.assertEqual(retained.extractfile(prefix + 'UpperCase/Original.txt').read(), b'partial original bytes\n')
+                    link = retained.getmember(prefix + 'absolute-link')
+                    self.assertTrue(link.issym())
+                    self.assertEqual(link.linkname, '/host-only/runtime/python/bin/python3')
+                    self.assertIsNotNone(retained.getmember(prefix + 'artifact-manifest.json'))
+                self.assertTrue((evidence / 'UpperCase/Original.txt').is_file())
             result = oracle.capture(root / 'command', [sys.executable, '-B', '-c',
                                      'import sys; print("captured input"); sys.stderr.write("original failure\\n"); sys.exit(7)'],
                                     required=False)

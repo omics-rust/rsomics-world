@@ -14,11 +14,15 @@ See [current execution state](.autopilot/state/portfolio-execution-2026-10-23.md
 
 Current frontier (2026-10-31): DESeq's owning package/native4 gate is accepted
 and publication remains credential-held; limma's count lifecycle is qualified,
-its ordinary-expression source/reload is accepted and the native extension is
-active; structure's reviewed private analysis passes native4, with public
+its ordinary-expression source/reload and reviewed local extension are accepted,
+with green-2 native4 passed and retained-core adoption pending; structure's
+reviewed private analysis passes native4, with public
 torsion/performance still held or unearned. Ecology has reviewed alpha and
-rarefaction while beta policy is held. Signal's full six-operation source
-witness is being prepared, and peak has a bounded next-source assessment.
+rarefaction while beta policy is held. Signal's first six-operation hosted run
+failed at portable-Python bootstrap before science; originals are retained and
+a narrow environment/transport correction is adopted for a fresh hosted run.
+Peak's current full-four
+source casebook is adopted, with input/runtime preparation active.
 Exact gates and original receipts live in each product dossier/state file.
 No unchanged accepted source/native/performance campaign needs replay. All
 project writes/build/cache/scratch remain external; global boot occupancy is
