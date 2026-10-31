@@ -58,6 +58,9 @@ are not blanket-sanitized. Original source outputs, defects and failed run
 named, not installed as replacement source goldens. Whole-six native design
 and implementation may proceed with existing public foundations and private
 BBI/operation policy. No native acceptance, speed or release is yet earned.
+The parent adopts docs/plans/2026-10-31-signal-native-first-six.md after reading
+the full design/report and verifying28 anchors. Actual private implementation
+is assigned; signal-native-first-six-2026-10-31.md owns its current gates.
 
 ## Bootstrap and archive correction adopted; corrected hosted run pending
 

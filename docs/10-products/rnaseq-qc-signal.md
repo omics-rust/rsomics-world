@@ -318,6 +318,12 @@ source evidence and separately test corrected expectations. Explicit computed
 zero is not missing data, and legitimate NaN/Inf is not silently sanitized.
 Normal approximate/zoom statistics, normalization, chromosome-alias and
 intentional shift-metadata behavior are not changed by this approval.
+The complete native design is adopted at
+`docs/plans/2026-10-31-signal-native-first-six.md`; current implementation gates
+are in `.autopilot/state/signal-native-first-six-2026-10-31.md`. Its declared
+first-six input set is indexed BAM, local bigWig and rich BED/GTF regions;
+general fragment/text-track conversion and later dossier operations remain
+explicitly outside that release, not accepted but inert flags.
 
 Meaningful source profiles must not be flattened into one coverage policy:
 unextended reads use aligned blocks, while extension and offset modes differ;

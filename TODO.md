@@ -23,7 +23,7 @@ torsion/performance still held or unearned. Ecology has reviewed alpha and
 rarefaction while beta policy is held. Signal's corrected six-operation source
 lifecycle is accepted with complete original evidence; the user approves native
 repairs for confirmed arithmetic/data-loss and filtering defects, with named
-incompatibilities. Full-six native design is active; normal source semantics
+incompatibilities. Full-six native implementation is active; normal source semantics
 are unchanged.
 Peak's current full-four source casebook, inputs and reviewed/corrected hosted
 producer are adopted; actual runtime admission/source capture remain gates.
