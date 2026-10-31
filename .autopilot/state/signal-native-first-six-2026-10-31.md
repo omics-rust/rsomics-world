@@ -1,5 +1,19 @@
 # Whole-first-six native signal implementation
 
+## Dedicated hosted Linux selected for an actual gated performance attempt
+
+Ruling before timing: use the existing manual performance workflow on a fresh
+GitHub-hosted ubuntu-24.04 runner with explicit CPUs0,1,2,3 rather than infer
+that the shared4090 is idle. This uses an isolated project job, not a new
+self-hosted runner, credential transfer, reservation or interference with user
+workloads. Its actual affinity/memory/free-space preflight and measured product/
+spool projection must qualify; neither runner-label capability nor requested
+CPU IDs are accepted as observed resources. Existing32GiB headroom,160GiB
+campaign cap,16GiB sampled abort, all correctness checks and five paired wall
+criteria remain unchanged. Failure retains evidence and does not authorize
+cleanup, silent workload shrinkage or fabricated timing. Existing receipt is
+explicit signal-native-2026-10-31.json at the frozen remote764884b1 head.
+
 ## Fresh4090 feasibility: static ABI feasible, timing not launched
 
 Parent reads the sealed host inventory/follow-up and ELF report. Ordinary
