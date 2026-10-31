@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       native_receipt:
-        description: Actual root-adopted native-four and source-on-native receipt under .autopilot/oracles; absent receipt fails
+        description: Full tracked path, e.g. .autopilot/oracles/signal-native-2026-10-31.json; absent receipt fails
         type: string
         required: true
       runner_labels:

@@ -1,5 +1,24 @@
 # Whole-first-six native signal implementation
 
+## First hosted eligibility passes; operator receipt selector corrected
+
+Actual dedicated run41223116931 at764884b1 passes host setup: affinity0..3,
+15.73GB MemAvailable and91.76GB free disk, glibc2.39/Linuxx86_64. It fails
+BEFORE acquisition/install/preparation/timing because parent supplies only the
+receipt basename; the existing interface explicitly requires the FULL tracked
+path .autopilot/oracles/signal-native-2026-10-31.json. This is an operator-input
+error, not a native/source/performance failure or reason to relax admission.
+The workflow input description now spells out the full-path example. One
+new attempt uses the existing unchanged full-path admission contract; no
+source receipt is fabricated or replaced by a local binary.
+
+Complete81877B original artifact13050389039 is retained and freshly verified
+against API SHA c8ba561b55fd317ddf2bbbfe0d622c40b3827bda41f8655324759e9e65c74f85,
+with actual run/jobs/API/log/host-plan/acquisition traceback at
+`/Volumes/KIOXIA/Developments/tmp/hosted-preflight-failures-20261101.ko21SO/41223116931/`.
+The observed91.76GB is capacity for later product-size qualification, not a
+claim that the entire160GiB cap or actual campaign will fit. No timing exists.
+
 ## Dedicated hosted Linux selected for an actual gated performance attempt
 
 Ruling before timing: use the existing manual performance workflow on a fresh
