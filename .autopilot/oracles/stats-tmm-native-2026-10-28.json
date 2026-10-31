@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "repository": "omics-rust/rsomics-stats",
+  "workflow_path": ".github/workflows/ci.yml",
+  "run_id": 40648343214,
+  "run_attempt": 1,
+  "head_sha": "00a1819a1582fc10b6d238e8f5bff5e95d19251f",
+  "status": "native4_exact_head_pass",
+  "native_jobs": {
+    "macos-aarch64": 122682305888,
+    "macos-x86_64": 122682306223,
+    "linux-x86_64": 122682306305,
+    "linux-aarch64": 122682306383
+  },
+  "profiles": ["debug", "release"],
+  "legacy_tests_per_profile": 33,
+  "normalization_tests_per_profile": 1,
+  "nontrivial_source_regression_passes": 8,
+  "exact_head_contents_files": 21,
+  "retained_files": 124,
+  "canonical_ci_lock_sha256": "723f9666a5cd35bd2820e2ebe55707180cf05c25ab1f726bfafc15bb1752454a",
+  "production_tmm_sha256": "d8b292f92c7a453e55ea1792ed84afb59d4a87406183176f8d8c4e218390e743",
+  "normalization_test_sha256": "c7acf9057fb87823bca607d8c4d281af99ddc2b82c3c62a4a6c03e5faa720b9c",
+  "ci_artifact_count": 0,
+  "retained_ci_binary_or_package_archive": false,
+  "verification_sha256": "4869aa5a203e69d18d9849eea0f739f1877a4d39bfc9c8ca5134f4c4c9a6a790",
+  "report_sha256": "e11046113dffd5d2c0cbf8095764dc570d71fb6cea3576c111235b0059ac7ba2",
+  "evidence_directory": "/Volumes/Zane's HDD/rsomics-fixtures/evidence/stats-tmm-native-2026-10-28/run-40648343214",
+  "qualification_scope": "Exact-head native-four raw logs, actual test discovery and exact-head source/fixture Contents API bindings; no new source R, performance run, CI binary/archive digest, registry publication or production consumer adoption. Inherited working Cargo.lock is preserved separately."
+}
