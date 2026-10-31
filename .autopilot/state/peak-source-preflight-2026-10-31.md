@@ -1,5 +1,49 @@
 # Peak next-product source qualification
 
+## Reviewed full-four hosted source producer adopted
+
+The source producer completes the preparation graph under
+docs/plans/2026-10-31-peak-first-workflow-oracle.md. Its38 jobs include five
+MACS calls, six unmodified SEACR calls plus separately admitted diagnostics,
+three real-TxDb annotations and four multicov calls. Complete M2/all6 sparse
+outputs and48 diagnostic rows feed one ordered ledger; fresh-process object
+reloads and original failure/blocked statuses are retained. No native product,
+public policy, source success or performance result is inferred.
+
+Parent reads all802 Python/183 original R/136 workflow/110 test lines and the
+runtime-only recipe delta. The complete prepared REPORT
+0bf5c293ac505d3f33b0e727a04a14c70bdcc4e759e1ec848733234af65bbdd9
+remains at /Volumes/KIOXIA/Developments/tmp/peak-producer-prep-20261031.GzCk8j/.
+One fresh whole-workflow review REPORT
+41f2b67a50a92410a53cce1f87cc79020506b3e363c288491fec5b454de7e240
+at peak-full-source-review-20261031.gQT1jP establishes one P2: a top-level
+warning option changed SEACR diagnostic options. One concentrated correction
+removes only that line; original source/argv/output-equality/reload rules and
+the other four owned files remain unchanged. No additional review campaign.
+
+Correction REPORT3b804a3c1470bfc95a8377a3382441069ea804bb2a476b3e03d5c248ea8e00ee
+at /Volumes/KIOXIA/Developments/tmp/peak-producer-correction-20261031.VEU553/
+binds15 freshly verified files and bundle
+8697ef5bbffbf93fdb518edd954798592ea2b04bf57b5043528e85b0664a6a67.
+Current R driver2fbcd7656d4bc8debf61c12d29ecdab89833647167896b22c6883815aac105a3
+and Python7bf6be0176170366e60f206bb75b54f6c22de276aa1b06ced434e97a74189f32
+retain original source objects and one tar before upload. Existing focused
+stdlib preparation test passes1test/0.206s; parent verifies all15 bindings.
+
+The appended hosted completion recipe does not relabel the original partial
+runtime packet as installed. Actual immutable-image R4.6.1/Bioc3.23 admission,
+exact source downloads/dependency constraints, compatible recommended
+codetools, offline MACS build, BAM decoding, fitted models, annotations and
+reloads remain unexecuted hosted gates. No local R/scientific imports,
+installations, builds or source cases occurred. Parent's full controller
+passes510 tests/59.792s/two existing skips on Python3.15.2, log
+902bbbd2656ab358244612d035d11d28f71ece48ded2eec52d8b60700aafd52d
+at /Volumes/KIOXIA/Developments/tmp/controller-peak-source-20261031.clwpFt/;
+architecture validation also exits0. An initial explicitly selected system
+Python3.9.6 run fails unsupported syntax/modules; its unchanged failure log
+is retained separately, not treated as a source/native failure or a pass.
+Exact-head CI, hosted dispatch and complete original retention are next.
+
 ## Shared input packet adopted; runtime admission still incomplete
 
 Parent reads complete59-line REPORT

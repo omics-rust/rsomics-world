@@ -2157,5 +2157,43 @@
         "sha256": "106c28d691bc548731814d5d52da2a052474f3c1f5b270504e9f58f70e9110cc"
       }
     ]
+  },
+  "hosted_completion_recipe": {
+    "status": "prepared producer, NOT locally installed or source-qualified; runtime must be admitted on hosted execution",
+    "controller": "scripts/peak_first_workflow_oracle.py",
+    "R_driver": "scripts/peak_first_workflow_oracle.R",
+    "workflow": ".github/workflows/peak-first-workflow-oracle.yml",
+    "shared_helpers": {
+      "controller": "scripts/signal_first_workflow_oracle.py",
+      "functions": [
+        "download",
+        "bootstrap_venv",
+        "sha256"
+      ],
+      "binding": "actual imported controller SHA256 retained before acquisition/install/scientific cases"
+    },
+    "execution_class": "one real Linux x86_64 GitHub source-oracle job in the immutable Bioconductor image; native PRODUCT four-class qualification is later",
+    "image_gate": "GitHub pins the immutable amd64 image digest; verify registry manifest/config hashes and actual R4.6.1/Bioc3.23/image environment before acquisition or installation",
+    "Python": "freshly acquire and verify all22 distribution artifacts, symlink portable venv, captured ensurepip, exact offline build/runtime requirements, retain MACS built-wheel SHA/compiler and pip check/inspect/freeze",
+    "R": "inspect actual immutable-image base/recommended packages first (including compatible codetools); acquire remaining captured source versions with MD5 and actual SHA256, validate actual DESCRIPTION dependency constraints and topological order, freeze admission manifest, install exact archives without a moving resolver, retain installed package/DLL files and final runtime manifest before source cases",
+    "R_hold": "if the actual image recommended package cannot meet consumer constraints, fail admission and retain sources/status rather than install an unchosen latest or fake archived fallback",
+    "input_gate": "hosted CPython3.12.10 accepted generator; full BAM record/decode/index/dictionary/mate/TLEN checks; capped pre-source input manifest",
+    "source_cases": {
+      "MACS": 5,
+      "SEACR_unmodified": 6,
+      "SEACR_state_diagnostics": 6,
+      "ChIPseeker": 3,
+      "multicov": 4
+    },
+    "retention": "all original logs/source archives/objects/partial failures in one tar outside EVIDENCE before artifact upload; do not blindly extract preserved absolute runtime aliases",
+    "policies": "no native SEACR quirk/default/fragment/public API policy selected; no speed or biological claim",
+    "additional_sources": [
+      {
+        "filename": "SEACR-LICENSE",
+        "url": "https://raw.githubusercontent.com/FredHutch/SEACR/5a0efe59f06fb17cf9d34d415bb0c1a1f7a77a3c/LICENSE",
+        "sha256": "8177f97513213526df2cf6184d8ff986c675afb514d4e68a404010521b880643",
+        "purpose": "retain the actual upstream GPL-2.0 notice alongside unmodified oracle files"
+      }
+    ]
   }
 }

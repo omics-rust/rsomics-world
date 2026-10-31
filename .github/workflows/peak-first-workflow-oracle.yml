@@ -1,0 +1,136 @@
+name: Peak full-four pinned source workflow
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  source-witness:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 180
+    container:
+      image: bioconductor/bioconductor_docker@sha256:81bf4c3e9f1b08b0ada0a45ef16ef51d03dc91b0b06cda4b408d667cb8c2c645
+      options: --user 0:0
+    env:
+      PEAK_CONTAINER_DIGEST: sha256:81bf4c3e9f1b08b0ada0a45ef16ef51d03dc91b0b06cda4b408d667cb8c2c645
+      PYTHONDONTWRITEBYTECODE: '1'
+      PYTHONNOUSERSITE: '1'
+      PIP_DISABLE_PIP_VERSION_CHECK: '1'
+      PIP_NO_INPUT: '1'
+      PIP_CONFIG_FILE: /dev/null
+      R_ENVIRON_USER: /dev/null
+      R_PROFILE_USER: /dev/null
+      R_ENVIRON: /dev/null
+      R_PROFILE: /dev/null
+      OMP_NUM_THREADS: '1'
+      OPENBLAS_NUM_THREADS: '1'
+      MKL_NUM_THREADS: '1'
+      BLIS_NUM_THREADS: '1'
+      VECLIB_MAXIMUM_THREADS: '1'
+      NUMEXPR_NUM_THREADS: '1'
+      MAKEFLAGS: -j2
+      CMAKE_BUILD_PARALLEL_LEVEL: '2'
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+
+      - name: Verify immutable image and prepare hosted storage
+        run: |
+          set -euo pipefail
+          test "$(uname -s)" = Linux
+          test "$(uname -m)" = x86_64
+          test "$BIOCONDUCTOR_DOCKER_VERSION" = 3.23.4
+          test "$BIOCONDUCTOR_VERSION" = 3.23
+          test "$TARGETARCH" = amd64
+          export EVIDENCE="$RUNNER_TEMP/peak-first-workflow-oracle"
+          export TMPDIR="$EVIDENCE/scratch"
+          export XDG_CACHE_HOME="$EVIDENCE/cache"
+          export XDG_CONFIG_HOME="$EVIDENCE/config"
+          export XDG_DATA_HOME="$EVIDENCE/data"
+          export PIP_CACHE_DIR="$EVIDENCE/cache/pip"
+          export UV_CACHE_DIR="$EVIDENCE/cache/uv"
+          export PYTHONUSERBASE="$EVIDENCE/python-user"
+          export PYTHONPYCACHEPREFIX="$EVIDENCE/cache/pycache"
+          export MPLCONFIGDIR="$EVIDENCE/cache/matplotlib"
+          export R_LIBS_USER="$EVIDENCE/R-library"
+          export R_LIBS_SITE="$EVIDENCE/R-library"
+          export R_USER_CACHE_DIR="$EVIDENCE/cache/R"
+          for name in EVIDENCE TMPDIR XDG_CACHE_HOME XDG_CONFIG_HOME XDG_DATA_HOME PIP_CACHE_DIR UV_CACHE_DIR             PYTHONUSERBASE PYTHONPYCACHEPREFIX MPLCONFIGDIR R_LIBS_USER R_LIBS_SITE R_USER_CACHE_DIR; do
+            mkdir -p "${!name}"
+            printf '%s=%s\n' "$name" "${!name}" >> "$GITHUB_ENV"
+          done
+          Rscript --vanilla -e 'stopifnot(as.character(getRversion())=="4.6.1"); print(sessionInfo())' \
+            2>&1 | tee "$EVIDENCE/image-preflight.log"
+          mkdir "$EVIDENCE/controller"
+          cp scripts/peak_first_workflow_oracle.py scripts/peak_first_workflow_oracle.R             scripts/test_peak_first_workflow_oracle.py scripts/peak_first_workflow_inputs.py             scripts/test_peak_first_workflow_inputs.py scripts/signal_first_workflow_oracle.py             assets/peak-first-runtime-20261031.json .github/workflows/peak-first-workflow-oracle.yml             "$EVIDENCE/controller/"
+          python3 -B - <<'PY'
+          import hashlib, json, os, platform, shutil
+          from pathlib import Path
+          runner = Path(os.environ['RUNNER_TEMP']).resolve(strict=True)
+          names = ('EVIDENCE', 'TMPDIR', 'XDG_CACHE_HOME', 'XDG_CONFIG_HOME', 'XDG_DATA_HOME',
+                   'PIP_CACHE_DIR', 'UV_CACHE_DIR', 'PYTHONUSERBASE', 'PYTHONPYCACHEPREFIX',
+                   'MPLCONFIGDIR', 'R_LIBS_USER', 'R_LIBS_SITE', 'R_USER_CACHE_DIR')
+          paths = {name: Path(os.environ[name]).resolve(strict=True) for name in names}
+          assert all(path.is_relative_to(runner) and path.stat().st_dev == runner.stat().st_dev
+                     for path in paths.values()), 'hosted project path escapes RUNNER_TEMP'
+          disk = shutil.disk_usage(runner)
+          assert disk.free > 12 * 2**30, 'insufficient full source-workflow space'
+          root = paths['EVIDENCE']
+          record = dict(paths={k: str(v) for k, v in paths.items()}, disk=disk._asdict(),
+              host=platform.platform(), image_digest=os.environ['PEAK_CONTAINER_DIGEST'],
+              controller_commit=os.environ['GITHUB_SHA'], run_id=os.environ['GITHUB_RUN_ID'],
+              run_attempt=os.environ['GITHUB_RUN_ATTEMPT'],
+              container_provisioning='GitHub-managed immutable container image; not a local project cache')
+          (root / 'storage-host.json').write_text(json.dumps(record, indent=2) + '\n')
+          files = {p.name: hashlib.sha256(p.read_bytes()).hexdigest() for p in (root / 'controller').iterdir()}
+          (root / 'controller-checksums.json').write_text(json.dumps(files, indent=2, sort_keys=True) + '\n')
+          PY
+          uname -a > "$EVIDENCE/host.txt"
+          df -h "$RUNNER_TEMP" >> "$EVIDENCE/host.txt"
+          ulimit -c 0
+
+      - name: Acquire and admit captured runtime sources
+        run: |
+          set -euo pipefail
+          python3 -B scripts/peak_first_workflow_oracle.py --action acquire             --runtime-lock assets/peak-first-runtime-20261031.json --output "$EVIDENCE/runtime"             2>&1 | tee "$EVIDENCE/runtime-acquisition.log"
+
+      - name: Install exact admitted source runtime
+        run: |
+          set -euo pipefail
+          "$EVIDENCE/runtime/python/bin/python3" -B scripts/peak_first_workflow_oracle.py --action install             --runtime-lock assets/peak-first-runtime-20261031.json --output "$EVIDENCE/runtime"             2>&1 | tee "$EVIDENCE/runtime-install.log"
+
+      - name: Capture full-four source casebook
+        run: |
+          set -euo pipefail
+          ulimit -c 0
+          "$EVIDENCE/runtime/venv/bin/python" -B scripts/peak_first_workflow_oracle.py --action run             --runtime "$EVIDENCE/runtime" --inputs "$EVIDENCE/inputs" --output "$EVIDENCE/witness"             2>&1 | tee "$EVIDENCE/capture.log"
+
+      - name: Bind complete original and partial evidence
+        if: always()
+        run: |
+          set -euo pipefail
+          python3 -B scripts/peak_first_workflow_oracle.py --action manifest             --output "$RUNNER_TEMP/peak-first-workflow-oracle"
+
+      - name: Archive all objects and originals before upload
+        if: always()
+        run: |
+          set -euo pipefail
+          python3 -B scripts/peak_first_workflow_oracle.py --action package             --output "$RUNNER_TEMP/peak-first-workflow-oracle"             --archive "$RUNNER_TEMP/peak-first-workflow-oracle.tar"
+
+      - name: Retain complete original evidence archive
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: peak-first-workflow-oracle-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            ${{ runner.temp }}/peak-first-workflow-oracle.tar
+            ${{ runner.temp }}/peak-first-workflow-oracle.tar.json
+          include-hidden-files: true
+          if-no-files-found: error
+          retention-days: 90

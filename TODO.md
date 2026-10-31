@@ -21,8 +21,8 @@ torsion/performance still held or unearned. Ecology has reviewed alpha and
 rarefaction while beta policy is held. Signal's corrected six-operation source
 lifecycle is accepted with complete original evidence; its native handling of
 clear upstream arithmetic/data-loss defects awaits one consolidated decision.
-Peak's current full-four
-source casebook is adopted, with input/runtime preparation active.
+Peak's current full-four source casebook, inputs and reviewed/corrected hosted
+producer are adopted; actual runtime admission/source capture remain gates.
 Exact gates and original receipts live in each product dossier/state file.
 No unchanged accepted source/native/performance campaign needs replay. All
 project writes/build/cache/scratch remain external; global boot occupancy is
