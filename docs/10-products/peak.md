@@ -1,10 +1,21 @@
 # Peak product dossier
 
 Status: current full-four source casebook41209740891 is adopted after complete
-original/runtime/object verification. Historical annotation goldens remain
-unqualified; current ChIPseeker1.48.0/TxDb outputs now provide independent
-authority. This is not native correctness, performance or release acceptance.
-See `.autopilot/state/peak-source-preflight-2026-10-31.md`.
+original/runtime/object verification. A private publish=false owner now exists;
+count and explicit-profile sparse workflows pass native debug/release checks
+against actual retained source outputs. Call and annotation construction and
+whole-product integration are active. Four-native, source-on-native, representative
+performance and public release remain unearned. Historical annotation goldens
+remain unqualified; current ChIPseeker1.48.0/TxDb is the independent authority.
+See `.autopilot/state/peak-source-preflight-2026-10-31.md` and
+`.autopilot/state/peak-native-first-four-2026-11-01.md`.
+
+The first slice is BAM/BAMPE narrow calling, explicit-profile sparse positive
+signal calling, transcript-level GTF/GFF3 annotation and alignment-unit BAM
+counts. The broader family map below is a target, not an implemented or stable
+release promise. No public release exists, and unfinished commands stay absent
+from the CLI. SEACR's default compatibility policy remains separately held;
+the working private CLI requires an explicit profile rather than guessing it.
 
 ## Boundary
 
@@ -14,14 +25,14 @@ annotates those regions, and builds per-sample peak count matrices.
 
 The primary behavior sources are:
 
-- [MACS3 3.0.4](https://macs3-project.github.io/MACS/), especially
+- [MACS3 3.1.0](https://macs3-project.github.io/MACS/), especially
   [`callpeak`](https://macs3-project.github.io/MACS/docs/callpeak.html) and the
   complete
   [subcommand ledger](https://macs3-project.github.io/MACS/docs/subcommands_index.html);
 - [SEACR 1.3](https://github.com/FredHutch/SEACR) and its CUT&RUN method;
 - [ChIPseeker](https://bioconductor.org/packages/release/bioc/html/ChIPseeker.html)
   `annotatePeak` for nearest-feature and genomic-category behavior;
-- [bedtools 2.31 `multicov`](https://bedtools.readthedocs.io/en/latest/content/tools/multicov.html)
+- [bedtools 2.31.1 `multicov`](https://bedtools.readthedocs.io/en/latest/content/tools/multicov.html)
   for interval-overlap count behavior;
 - SAM/BAM, BED, bedGraph, narrowPeak, broadPeak, gappedPeak, GFF3, and GTF
   specifications.
@@ -63,7 +74,8 @@ analysis workflow, and signal/profile visualization belongs to
 
 ### `call` contract
 
-The stable MACS-compatible path covers:
+The full-family MACS-compatible target covers the following; the initial slice
+is deliberately narrower as specified above:
 
 - one or more treatment files and one or more optional controls;
 - single-end BAM or SAM, paired-end BAMPE, BED, MACS-style BEDPE, and 10x FRAG
