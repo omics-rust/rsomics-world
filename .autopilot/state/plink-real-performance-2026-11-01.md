@@ -1,5 +1,28 @@
 # Fixed private HGDP whole-workflow gate
 
+## Source-faithful QC print correction committed; LD gate remains separate
+
+Root fully reviews all four changed owner files, final REPORT/COMPLETED and
+original dtoa_g/dtoa_so6/BankerRoundD5 bodies. Product-private numeric scaling,
+thresholds and tolerant even rounding now match that source; HWE uses the
+same reciprocal order. No epsilon hack, comparator, tolerance, public API,
+dependency/lock/vendor/FFI or LD change. Owner clean main is
+023e102bf7828234bae1ac5388c043fa78461db0.
+
+The existing whole CLI test genuinely fails before this fix and passes after;
+pinned fmt/strictClippy/full release4lib+1whole pass, retaining36 generations/
+74878 raw cells. Actual retained929-sample F/P QC at1/4 returns0 in all four
+calls:32 complete tables/248398 rows pass the original frozen source comparator,
+all16 worker outputs are byte-identical, six regular input bodies unchanged.
+No source engine runs locally. Root freshly verifies all16 sealed packet
+bodies at plink-numeric-print-fix-20261101.AmcYMc4s. REPORT
+d306c9d470e193a686861c32b98d6371e4844fd87b29cd9debe0515d2084e9d9;
+COMPLETED69b361a110711619674603a78c9ca76896e664a1a9ab038f9caa1a52f6689bdc.
+
+Original hosted run staysfailed and green2 authorities unchanged. No new
+four-native/relink/full-HGDP/performance result is accepted. Investigate actual
+LD CPU/cache behavior before another formal whole-workflow campaign.
+
 ## Authenticated second attempt reaches the real product comparison
 
 Root reads the full final REPORT/COMPLETED and actual upstream arithmetic/
