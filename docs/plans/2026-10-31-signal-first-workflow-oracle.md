@@ -120,8 +120,11 @@ waits exact-head controller, then dispatches once and retains original evidence.
 No default bug emulation/fix choice is made for BPM, signed-cancellation skips,
 trailing-zero/nonfinite serialization, summary zooms, malformed annotations or
 shift metadata/sort behavior. Actual source observations precede those choices.
-BBI remains private and undecided: bigtools0.5.6/libdeflater0.13 conflicts with
-current bamio's libdeflater1 links graph. No Cargo solve/build, alternative BAM
-reader, public codec or unchecked old-parser adoption is part of this task.
+BBI remains private. Later primary-source qualification identifies published
+bigtools0.5.8/libdeflater1 as a concrete candidate matching current bamio's
+inspected links constraints; qualify it in real implementation rather than
+reimplementing BBI solely for the older0.5.6/libdeflater0.13 conflict. This is
+not an actual resolver/build/runtime result. No Cargo solve/build, alternative
+BAM reader, public codec or unchecked old-parser adoption is part of this task.
 No native4, speed/resource advantage, complete product or release is earned by
 this witness preparation. Continue other unblocked families meanwhile.

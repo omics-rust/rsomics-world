@@ -320,13 +320,23 @@ equal downstream summary defaults. Original BW headers/zooms and default plus
 exact diagnostic statistics therefore belong in the witness. These are
 qualification questions, not silently adopted bugs or compatibility fixes.
 
-The codec decision remains private. Published bigtools0.5.6 requires
+The codec decision remains private. Previously inspected bigtools0.5.6 requires
 libdeflater0.13 while current bamio0.8.4 requires libdeflater1; their sys crates
 both declare links=libdeflate, so an independent repository layout does not
-remove the single-binary dependency conflict. Qualify a compatible external
-codec or narrow dependency update, or refactor the old checked/streaming BBI
-implementation with independent interoperability. No new public foundation,
-bamio bypass or unsafe parser adoption follows from this assessment.
+remove that version's single-binary dependency conflict. A subsequent live
+primary-source check identifies published non-yanked bigtools0.5.8, commit
+89bf6243a9d733236afe672d2d5245e1ecb4cae3, archive
+af1b9bbf6596d602e472a23ed5aa5d611fb04f14e7772226fb61c720e806202e.
+It already requires libdeflater1 and has indexed full/zoom reads and streaming
+temp-backed writes. Qualify this concrete registry candidate with bamio in the
+real implementation before considering a private codec rewrite; no fork is
+needed merely for the old link conflict. Parent reads REPORT
+af25a4bd123489cff5be21c943ebf1cce4cff96b8923e40b0f385b183f6da37c
+under `/Volumes/KIOXIA/Developments/tmp/signal-bbi-codec-routes-20261031.sijwFq/`
+and verifies all40retained-file hashes. The actual resolver/build/interoperability/
+resource gates remain unearned; header-driven allocations and decompression
+unwraps still need product boundary handling. No new public foundation, bamio
+bypass or automatic parser-safety claim follows from this dependency finding.
 
 ### Data and execution model
 

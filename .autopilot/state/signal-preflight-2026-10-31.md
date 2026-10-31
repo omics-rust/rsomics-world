@@ -1,5 +1,25 @@
 # Signal next-family retained-source assessment
 
+## Concrete published codec candidate; source preparation active
+
+Parent reads full REPORTaf25a4bd123489cff5be21c943ebf1cce4cff96b8923e40b0f385b183f6da37c,
+actual released manifest and freshly verifies all40retained-file hashes at
+/Volumes/KIOXIA/Developments/tmp/signal-bbi-codec-routes-20261031.sijwFq/.
+Published non-yanked bigtools0.5.8/archiveaf1b9bbf6596d602e472a23ed5aa5d611fb04f14e7772226fb61c720e806202e
+binds release89bf6243a9d733236afe672d2d5245e1ecb4cae3 and16Git-identical
+manifest/API/license files. It already uses libdeflater1, compatible inspected
+ranges with current bamio/noodles and existing1.25.2sys. No compression fork,
+bamio downgrade/process split or BBI rewrite is justified solely by0.5.6's
+old conflict. Qualify this registry candidate within the real implementation.
+No Cargo solve/build/runtime/interop/performance is claimed here, and decoder
+unwrap/header allocation/cache bounds remain genuine boundary considerations.
+
+Adopted docs/plans/2026-10-31-signal-first-workflow-oracle.md now has one
+isolated source-witness preparer active on new world files/input-only assets.
+No local scientific execution, source oracle or native implementation has
+started. Parent owns the later complete review, Git, hosted execution and
+source-policy adoption. The full six-operation scope is unchanged.
+
 ## Pinned primary-source contract adopted
 
 Parent reads full76-line REPORT6bd7b1cdab68b261a72401316d52a71dc2d8304b6dda43df37883f2f38f2fa11
