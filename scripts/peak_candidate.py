@@ -22,7 +22,7 @@ from signal_candidate import capture, check_tree, portable_names, storage, tree_
 REPOSITORY = 'omics-rust/rsomics-world'
 ASSET = 'peak-native-fixtures-20261101'
 SNAPSHOTS = '.autopilot/snapshots/peak-native-2026-11-01'
-TEST_POPULATIONS = {'green-1': (6, 3, 1), 'green-2': (7, 3, 1)}
+TEST_POPULATIONS = {'green-1': (6, 3, 1), 'green-2': (7, 3, 1), 'green-3': (7, 3, 1)}
 SOURCE_RUN = 41209740891
 SOURCE_REPORT = '83cbf36dbe59c17f87745a02c43c5f2f045c3d29ba9627b22ee31ccce3e348ed'
 SOURCE_MANIFEST = '5f7c351e3b7e4e7d0e2ec8837124862a590dc01e1af8010d972c4249b7be305f'

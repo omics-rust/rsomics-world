@@ -1,5 +1,31 @@
 # Native peak first-four construction
 
+## Buffered caller frozen as green-3; native/source acceptance pending
+
+Root reviews the entire two-file caller diff and full final report at
+peak-caller-buffering-20261101.uQpy46, then independently verifies all66 sealed
+bodies. Clean owner main63caec8551ba9a2281d43026966d26d67684a4ee only wraps
+existing staged track/report files in BufWriter with explicit error-propagating
+flush before the original transaction/sync. No algorithm, API, schema, data,
+foundation, dependency, memory budget or source/performance policy changes.
+
+Pinned fmt/strict all-target Clippy and existing full release7+3+1 all pass,
+zero ignored. Same real T1/T2/C inputs at1/4 workers yield all five scientific
+files byte-exact to the baseline and original actual Linux products; complete
+JSON matches after phase-path normalization. Mac single native-only caller
+observations improve8.56→0.36s and7.30→0.32s, not a Linux upstream benchmark.
+REPORTe81ae5aae811c11a54b693ba5b4d7ffccf83c24d678509df347febd52a3f6acd;
+completed52db753e8eadabfed3f366d84a8a7c2338d11d31b1e7bb9f7e83714ead2bc962.
+
+Fresh green-3 freezes all34 exact Git-bound regular bodies. Archive73130B,
+SHA3921ba9f3807fdd1f3a65832cd270c0de12f5fee5a23c62b0f7576a1316ddf66;
+manifestb3488cbf833df1089032a6d855b41996f0068fb96936296a7140f0dfd2dec9c0.
+Parent personally executes the original snapshot/extract guard and verifies
+both older snapshot directories unchanged. Existing ONE controller preparation
+passes1/0.460s, expecting7+3+1 explicitly forgreen3. Freeze record remains in
+peak-green3-snapshot-20261101.Ed3GMP/receipt.json. No new native-four/source
+receipt, real performance result or release is accepted by this source freeze.
+
 ## Final green-2 four-native/source originals accepted
 
 Actual41246653577/1 at13e5aa6c35e632027e850c9ab60dd4c63e78b138 passes

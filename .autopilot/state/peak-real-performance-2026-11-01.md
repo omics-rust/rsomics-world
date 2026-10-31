@@ -1,5 +1,17 @@
 # Fixed real-input Peak performance gate
 
+## Caller-local buffering prepared for the next unchanged gate
+
+Clean owner63caec8551ba9a2281d43026966d26d67684a4ee preserves all caller
+wire bytes and numerical/worker/budget contracts while buffering track/JSON
+writes. Root reviews the complete change/report and freshly verifies66 sealed
+bodies. Existing release11 passes; native-only same-real-input Mac caller
+wall8.56→0.36s atT1 and7.30→0.32s atT4, with original Linux/baseline output
+byte equality. This supports the I/O diagnosis but is not a new performance
+campaign. Green3 source freeze must earn fresh four-native/same-file source
+acceptance before the unchanged Linux fixed-real gate may run again. The
+failed green2 run below staysHELD; no sample or threshold is rewritten.
+
 ## Fifth actual campaign completes science; caller speed remains held
 
 Actual41250498517/1 at a6012d90fa9fa67185ebc3fe89d50211e31791e1 admits
