@@ -1,0 +1,73 @@
+{
+  "schema": 1,
+  "profile": "1000Genomes-phase3-GRCh37-whole-chr22-YRI108-CEU99-project-accessibility",
+  "status": "Acquisition/admission specification only. VCF, TBI and mask bodies not downloaded in CORE/PREP.",
+  "populations": {"YRI": 108, "CEU": 99},
+  "population_order": ["YRI", "CEU"],
+  "window_bp": 100000,
+  "jackknife_variants": 10000,
+  "contigs": {
+    "22": {"length": 51304566, "mask_file": "mask", "mask_header_aliases": ["22", "chr22"]}
+  },
+  "files": {
+    "vcf": {
+      "filename": "ALL.chr22.phase3_shapeit2_mvncall_integrated_v5b.20130502.genotypes.vcf.gz",
+      "url": "https://ftp.1000genomes.ebi.ac.uk/vol1/ftp/release/20130502/ALL.chr22.phase3_shapeit2_mvncall_integrated_v5b.20130502.genotypes.vcf.gz",
+      "size": 205612353,
+      "sha256": null,
+      "etag": "\"c416541-5bda952a1a040\"",
+      "last_modified": "Tue, 16 Mar 2021 15:50:17 GMT",
+      "binding": "Provider HEAD checked 2026-11-01; record actual body SHA256 at future acquisition"
+    },
+    "tbi": {
+      "filename": "ALL.chr22.phase3_shapeit2_mvncall_integrated_v5b.20130502.genotypes.vcf.gz.tbi",
+      "url": "https://ftp.1000genomes.ebi.ac.uk/vol1/ftp/release/20130502/ALL.chr22.phase3_shapeit2_mvncall_integrated_v5b.20130502.genotypes.vcf.gz.tbi",
+      "size": 36251,
+      "sha256": null,
+      "etag": "\"8d9b-5bda96075aa40\"",
+      "binding": "Retain original provider index. Source workflow does not use it to crop the complete contig."
+    },
+    "mask": {
+      "filename": "20140520.chr22.strict_mask.fasta.gz",
+      "url": "https://ftp.1000genomes.ebi.ac.uk/vol1/ftp/release/20130502/supporting/accessible_genome_masks/StrictMask/20140520.chr22.strict_mask.fasta.gz",
+      "size": 627527,
+      "sha256": null,
+      "etag": "\"99347-502a7252c2f80\"",
+      "binding": "Original whole-chromosome strict mask FASTA; P means project accessibility, not per-sample callability."
+    },
+    "panel": {
+      "filename": "integrated_call_samples_v3.20130502.ALL.panel",
+      "url": "https://ftp.1000genomes.ebi.ac.uk/vol1/ftp/release/20130502/integrated_call_samples_v3.20130502.ALL.panel",
+      "size": 55156,
+      "sha256": "b4023dc6ee2d62ee89c8d4d347db4d348e65518d66d346574cdae7a4bbd76858"
+    },
+    "reference_fai": {
+      "filename": "human_g1k_v37.fasta.fai",
+      "url": "https://ftp.1000genomes.ebi.ac.uk/vol1/ftp/technical/reference/human_g1k_v37.fasta.fai",
+      "size": 2746,
+      "sha256": "04aa12dcb4e7131d9c7361082bfd02f8415ee11e956bf358a339f0d3c54180ab"
+    }
+  },
+  "population_id_lf_sorted_sha256": {
+    "YRI": "e576528bfcc289d7946158c226324f30b04bf7e1ee5a46294c8a1852fa453bf9",
+    "CEU": "bb868256be3b436bc94beafc9825778ed4a3cc641740d80547fc4e4914b53997"
+  },
+  "scientific_policy": {
+    "region": "Complete contig positions 1-51304566 inclusive, no subsetting/resampling/replication",
+    "sites": "PASS, P-accessible, literal A/C/G/T SNVs; retain multiallelic SNVs and report all exclusive exclusions",
+    "gt": "Selected full YRI/CEU cohort in original VCF order; numeric diploid calls or complete diploid missing; reject partial/non-diploid/out-of-range alleles before read_vcf",
+    "shape": "Admit actual maximum ALT width over all original records; genotype/i2 and Number=2 explicitly bound; no default ALT/GT truncation",
+    "ancestral": "Original INFO/AA first nucleotide token uniquely matching REF/ALT, preserving raw case/suffix; no REF fallback or GRCh38 substitute",
+    "sfs": "Biallelic records complete in relevant population(s), fixed 216/198 chromosome axes, no projection; unfolded additionally requires usable AA; bin0 only among supplied records",
+    "uncertainty": "Pinned source 10000-variant jackknife: all-row point estimate, full-block resampling only, residual tail disclosed; not bp blocks or demographic confidence intervals"
+  },
+  "documentation": {
+    "mask_codes": "https://ftp.1000genomes.ebi.ac.uk/vol1/ftp/release/20130502/supporting/accessible_genome_masks/README.accessible_genome_mask.20140520",
+    "ancestral_annotation": "https://ftp.1000genomes.ebi.ac.uk/vol1/ftp/release/20130502/README_vcf_info_annotation.20141104",
+    "terms": "https://www.internationalgenome.org/IGSR_disclaimer/",
+    "citations": ["https://doi.org/10.1038/nature15393", "https://doi.org/10.1093/nar/gkw829"],
+    "interpretation": "Masked variant-callset compatibility only; no unbiased biological diversity, independent-person, clinical ancestry, selection or demographic claim"
+  },
+  "privacy": "Keep originals, joins, row-level artifacts, logs and manifests private. Hosted acquisition/execution/encrypted-retention admission is parent-owned and not implemented here.",
+  "proposed_budget": {"available_ram_bytes": 8589934592, "process_tree_abort_bytes": 8589934592, "retained_bytes_cap": 17179869184, "persistent_free_bytes_min": 25769803776, "finalization_overhead": "Parent must include admitted encryption/retention overhead before execution; do not reduce contig/cohort/output scope to fit."}
+}
