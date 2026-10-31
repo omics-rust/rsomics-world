@@ -1,0 +1,148 @@
+name: Peak qualified real whole-workflow performance
+
+on:
+  workflow_dispatch:
+    inputs:
+      native_receipt:
+        description: Full tracked peak native-four and same-file-source adoption JSON path
+        required: true
+        type: string
+      runner_labels:
+        description: Explicit JSON labels for an eligible otherwise-idle Linux x86_64 host
+        required: true
+        type: string
+      cpus:
+        description: Four explicitly allocated otherwise-idle logical CPU IDs, comma-separated
+        required: true
+        type: string
+      idle_host_confirmed:
+        description: Operator confirmed this fresh host is otherwise idle
+        required: true
+        type: boolean
+        default: false
+      cgroup_parent:
+        description: Optional existing delegated cgroup-v2 parent; absent means exact memory N/A
+        required: false
+        type: string
+
+permissions:
+  contents: read
+  actions: read
+
+concurrency:
+  group: peak-real-performance
+  cancel-in-progress: false
+
+jobs:
+  performance:
+    runs-on: ${{ fromJSON(inputs.runner_labels) }}
+    timeout-minutes: 720
+    container:
+      image: bioconductor/bioconductor_docker@sha256:81bf4c3e9f1b08b0ada0a45ef16ef51d03dc91b0b06cda4b408d667cb8c2c645
+      options: --user 0:0
+    env:
+      NATIVE_RECEIPT: ${{ inputs.native_receipt }}
+      ALLOCATED_CPUS: ${{ inputs.cpus }}
+      IDLE_CONFIRMED: ${{ inputs.idle_host_confirmed }}
+      CGROUP_PARENT: ${{ inputs.cgroup_parent }}
+      PEAK_CONTAINER_DIGEST: sha256:81bf4c3e9f1b08b0ada0a45ef16ef51d03dc91b0b06cda4b408d667cb8c2c645
+      CONTROLLER_COMMIT: ${{ github.sha }}
+      PYTHONDONTWRITEBYTECODE: '1'
+      PYTHONNOUSERSITE: '1'
+      PIP_CONFIG_FILE: /dev/null
+      PIP_DISABLE_PIP_VERSION_CHECK: '1'
+      PIP_NO_INPUT: '1'
+      R_ENVIRON_USER: /dev/null
+      R_PROFILE_USER: /dev/null
+      R_ENVIRON: /dev/null
+      R_PROFILE: /dev/null
+      OMP_NUM_THREADS: '1'
+      OPENBLAS_NUM_THREADS: '1'
+      MKL_NUM_THREADS: '1'
+      BLIS_NUM_THREADS: '1'
+      VECLIB_MAXIMUM_THREADS: '1'
+      NUMEXPR_NUM_THREADS: '1'
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+
+      - name: Qualify explicit Linux storage CPU and cache routes
+        run: |
+          set -euo pipefail
+          test "$IDLE_CONFIRMED" = true
+          export PERFORMANCE_ROOT="$RUNNER_TEMP/peak-real-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
+          python3 -B scripts/peak_real_performance.py setup --root "$PERFORMANCE_ROOT" \
+            --cpus "$ALLOCATED_CPUS" --idle-host-confirmed
+          source "$PERFORMANCE_ROOT/environment.sh"
+          printf 'PERFORMANCE_ROOT=%s\n' "$PERFORMANCE_ROOT" >> "$GITHUB_ENV"
+          for name in EVIDENCE TMPDIR HOME XDG_CACHE_HOME XDG_CONFIG_HOME XDG_DATA_HOME PIP_CACHE_DIR UV_CACHE_DIR PYTHONUSERBASE PYTHONPYCACHEPREFIX MPLCONFIGDIR R_LIBS_USER R_LIBS_SITE R_USER_CACHE_DIR CARGO_HOME CARGO_TARGET_DIR RUSTUP_HOME; do
+            printf '%s=%s\n' "$name" "${!name}" >> "$GITHUB_ENV"
+          done
+          ulimit -c 0
+
+      - name: Admit exact native receipt runtime prefix ELF and pinned providers
+        id: admission
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          python3 -B scripts/peak_real_performance.py acquire --root "$PERFORMANCE_ROOT" \
+            --world "$GITHUB_WORKSPACE" --native-receipt "$NATIVE_RECEIPT" \
+            2>&1 | tee "$EVIDENCE/acquisition.log"
+          source "$PERFORMANCE_ROOT/runtime-environment.sh"
+          for name in R_LIBS_USER R_LIBS_SITE PATH; do
+            printf '%s=%s\n' "$name" "${!name}" >> "$GITHUB_ENV"
+          done
+          printf 'BOUND_PYTHON=%s\n' \
+            /__w/_temp/peak-first-workflow-oracle/runtime/venv/bin/python >> "$GITHUB_ENV"
+
+      - name: Materialize and freeze the predeclared real coordinate slice
+        run: |
+          set -euo pipefail
+          "$BOUND_PYTHON" -B scripts/peak_real_performance.py materialize --root "$PERFORMANCE_ROOT" \
+            2>&1 | tee "$EVIDENCE/input-preparation.log"
+
+      - name: Qualify whole graphs and run five alternating pairs at each CPU budget
+        run: |
+          set -euo pipefail
+          args=()
+          if [[ -n "$CGROUP_PARENT" ]]; then
+            args+=(--cgroup-parent "$CGROUP_PARENT")
+          fi
+          "$BOUND_PYTHON" -B scripts/peak_real_performance.py campaign --root "$PERFORMANCE_ROOT" \
+            --world "$GITHUB_WORKSPACE" --native-receipt "$NATIVE_RECEIPT" "${args[@]}" \
+            2>&1 | tee "$EVIDENCE/campaign.log"
+
+      - name: Bind every retained output and preserve actual failure status
+        if: always()
+        run: |
+          set -euo pipefail
+          if [[ -n "${PERFORMANCE_ROOT:-}" && -d "$PERFORMANCE_ROOT/evidence" ]]; then
+            python3 -B scripts/peak_real_performance.py finalize --root "$PERFORMANCE_ROOT"
+          fi
+
+      - name: Retain complete useful scientific outputs timings and identities
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: peak-real-performance-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ env.PERFORMANCE_ROOT }}/evidence
+          include-hidden-files: true
+          if-no-files-found: error
+          retention-days: 90
+
+      - name: Preserve original acquisition carriers and partial provider bodies on admission failure
+        if: ${{ failure() && steps.admission.outcome == 'failure' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: peak-real-acquisition-failure-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            ${{ env.PERFORMANCE_ROOT }}/acquisition
+            ${{ env.PERFORMANCE_ROOT }}/providers
+          include-hidden-files: true
+          if-no-files-found: warn
+          retention-days: 90
