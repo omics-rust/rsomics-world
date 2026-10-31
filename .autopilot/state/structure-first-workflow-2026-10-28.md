@@ -2,6 +2,33 @@
 
 ## Accepted source and current native gate
 
+Private I/O is now adopted on owning main
+d7309d563be58e82dd5e943e6372ce29f0607834 (publish=false/no remote). Parent
+reads all production code/tests/docs/notices and verifies all31original source
+hashes against producer manifest32c44928.... Actual inspect/select/split and
+reload pass both retained CIF populations and PDB profiles. Independent whole
+review0a72c230d436feaebd68d4de7fc46acf385acdd40e9e77c41bb71ac4df14ce12
+has one Important I1 only: an unrelated missing author-chain column blocked
+unfiltered/model-only selection. Parent adds one label-only model lifecycle to
+the existing test, observes actual RED and fixes conditional namespace lookup.
+The real chain-filter unavailable-namespace negative remains. Final2integrated/
+1doctest/fmt/strict Clippy pass; source selection26feabd6.../test6e6a4fd2....
+Closure and original failed/passing logs are retained at
+/Volumes/KIOXIA/Developments/tmp/structure-parent-check-20261031.atZQmQ/.
+Original producer source archive/report and review remain immutable. No native4,
+math/performance/full-product or public release claim is inferred.
+
+Parent reads complete272-line native-analysis assessment
+SHA72292f704098d485ced5aa7c5f79ce2dba9a1240fdcf31419a80e8a64d5e251a,
+/Volumes/KIOXIA/Developments/tmp/structure-native-analysis-contract-20261031.0cVmk4/.
+Adopted docs/plans/2026-10-31-structure-native-analysis.md freezes actual dtype,
+population/fit contracts and numerical bands before native analyses. The same
+reader will retain admitted ANISOU/CONECT for read-only analyses but reject
+unqualified linked-record writes; no source stripping or alternate parser.
+Full remaining entity/residue/atom/polymer/conformer selection is still needed.
+Geometry/contacts/exposure/proper-fit and ordinary torsion engines now proceed;
+only collinear-torsion public adapter remains held. No empty command is added.
+
 Exact-head controller40643918864 passes at worldd709ad00973dd60f1c16c340fc5a4c37474bf13f
 (504tests/two skips). First source40644150133/attempt1 is SUCCESS there. Parent
 reads the full original-source REPORT.md and immutable core

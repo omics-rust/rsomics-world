@@ -3,8 +3,9 @@
 Status: boundary, upstream-operation, and historical-source audit complete.
 The complete pinned first-workflow source is qualified at run40644150133;
 private raw mmCIF I/O fitness passes the admitted identity contract. A private
-unpublished owner is now implementing the shared PDB/CIF spine and actual
-inspect/select commands. Native degenerate-torsion representation is held for an
+unpublished owner has reviewed working PDB/CIF inspect/select/split at d7309d5;
+remaining selectors and native analyses now share that spine. The full seven
+first-release commands remain required. Degenerate-torsion representation is held for an
 explicit compatibility choice; no native4/performance or release is claimed.
 See `.autopilot/state/structure-first-workflow-2026-10-28.md`.
 
@@ -106,10 +107,11 @@ The historical tools disagree legitimately:
 | FreeSASA's input selection | SASA compatibility profile |
 
 These become named policies over one model. They are not four parsers.
-`pdbtbx` is adopted as an external dependency if adversarial PDB/mmCIF
-round-trip tests confirm the required identities and values. Product-local
-adapters own rsomics compatibility policy. A thin public wrapper around
-`pdbtbx` would add versioning without a second product consumer.
+The actual pdbtbx0.12 assessment rejects it as the authoritative model because
+dual identifiers/null kinds are lost. Use the qualified mmcif-cif0.3.1 raw
+document and a private fixed-column PDB adapter with compact coordinate/field
+handles. Product-local views own compatibility policy; no public coordinate
+wrapper or foundation has a demonstrated second product consumer.
 
 `select` does not pretend that line filtering is structure serialization. PDB
 input may offer an explicit record-preserving profile when the selection can be
@@ -149,9 +151,9 @@ src/
 The spatial index, vector math, residue assembly, mass table, atom
 correspondence, and selection logic are product-internal shared modules. They
 remain narrow typed APIs rather than a generic geometry framework.
-`rsomics-help` supplies the single help, version, diagnostics, completion, and
-output contract. `rsomics-common` supplies only product-independent error and
-execution primitives.
+`rsomics-help` supplies the uniform Clap/help adapter. `rsomics-common` supplies
+product-independent errors, execution/output envelopes, thread options, aliases
+and atomic output primitives.
 
 ## Historical asset disposition
 
@@ -166,7 +168,7 @@ execution primitives.
 | `rsomics-dssp` | `723668553d88c0605fd6fc6bfb8371e5bb170aba` | algorithm, fixture, and benchmark seed for later `secondary`; do not carry forward the 98% compatibility gate |
 | `rsomics-freesasa` | `53fe8beaa06de9c7124342adc67e415b5c7425dc` | refactor then merge into later `sasa`; retain both kernels, ProtOr data, RSA fixtures, and current-source provenance |
 | `rsomics-tm-align` | `5b4bc6b5b2c6093b8ef74a22ee18656b35a17376` | algorithm and performance seed for later `align`; current loose oracle thresholds cannot qualify a release |
-| `rsomics-pdb-core` | `7452a78326384fc9307e5234f40cc2362d9fb2be` | internalize parser semantics and adversarial tests; replace its public crate boundary and evaluate `pdbtbx` for IO |
+| `rsomics-pdb-core` | `7452a78326384fc9307e5234f40cc2362d9fb2be` | internalize field semantics/adversarial tests; replace its public boundary and lossy hierarchy with the qualified private raw model |
 
 All ten repositories were clean at audit time. Historical Git identity remains
 in the merge record; none of the deleted micro-crate repositories is revived.
@@ -245,8 +247,9 @@ The first release must pass:
    residue numbers, alternate conformers, partial occupancy, microheterogeneity,
    modified residues, ligands, water, hydrogen/deuterium, unknown elements,
    missing values, and truncated records;
-2. round trips through `pdbtbx`, Biopython, and an independent mmCIF reader for
-   every declared identity and numeric field;
+2. semantic round trips through the actual private PDB/mmcif-cif adapters and
+   independent raw Gemmi/MMCIF2Dict observations for every declared identity
+   and numeric field; lossy Bio Structure views qualify analyses, not raw IDs;
 3. exact operation-specific Biopython 1.87 differentials, with documented
    numeric tolerances derived from coordinate precision rather than broad
    pass percentages;
