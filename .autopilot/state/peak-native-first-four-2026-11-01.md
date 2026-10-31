@@ -1,5 +1,13 @@
 # Native peak first-four construction
 
+## Final correction native gate dispatched
+
+Exact-head Control plane41246520997 passes at
+13e5aa6c35e632027e850c9ab60dd4c63e78b138. Existing peak-candidate.yml is
+dispatched with snapshot=green-2: actual run41246653577. The complete new
+native/source result and original artifacts remain pending independent
+adoption. No old receipt is relabelled for the correction.
+
 ## Live-storage correction frozen as actual green-2
 
 The fixed real campaign41242120160 exposes a cumulative allocation-accounting
