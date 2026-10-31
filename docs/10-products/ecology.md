@@ -3,7 +3,9 @@
 Status: source and upstream-operation audit complete. The hosted0.7.3 diversity
 workflow and original real community table/tree are qualified. One private
 unpublished ecology repository has a reviewed, source-matching sparse alpha
-path at main01c9089; beta/rarefy public boundary decisions remain pending.
+path at main01c9089. The user selects successful same-dimensional zeros for
+empty/all-zero depth-zero rarefaction, a documented upstream bug fix. Only the
+undefined beta-distance public boundary decision remains pending.
 See `.autopilot/state/ecology-initial-diversity-2026-10-28.md` and
 `../plans/2026-10-28-ecology-sparse-alpha-native.md`. No native4/performance or
 complete first-release claim exists yet.

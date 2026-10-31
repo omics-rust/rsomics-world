@@ -24,6 +24,9 @@ recorded NumPy-PCG64 compatibility profile, fixed depth/seed and independent
 same-seed vector calls per sample; parallel scheduling does not change draws.
 Capture actual source integer/RNG limits before finalizing the native input
 range. Depth0, empty features, zero samples and depth>total are explicit cases.
+The user explicitly chooses same-dimensional zeros for empty/all-zero depth0
+inputs. The captured upstream IndexError remains the source observation;
+native successful zeros are a documented bug fix/known incompatibility.
 
 Use existing common/help/phylo-tree0.2/Rayon. The current immutable tree API
 already supplies topology/traversals/tip identities and has actual phylo and

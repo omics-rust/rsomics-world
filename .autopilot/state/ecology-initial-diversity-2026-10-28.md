@@ -2,6 +2,13 @@
 
 ## Accepted source, raw data and private development
 
+User explicitly resolves the rarefaction depth-zero boundary: an empty vector
+or all-zero sample returns same-dimensional zeros. Record this as an intentional
+upstream bug fix/known incompatibility with the captured IndexError, not a
+source-compatible result. This unblocks the private rarefaction implementation
+through the existing sparse count model. The separate undefined beta-distance
+choice remains unanswered and holds only that public adapter.
+
 The complete private sparse-alpha slice is now committed on owning main
 01c90896869261ab38eddb88a210b6e9069008c3. The owner is clean, has no remote
 and remains publish=false. All 18 adopted files match the implementation
@@ -20,7 +27,7 @@ SHA ffa69bbfb721edd4cb922b33fda7926906a499571f568b1d2cc7383a48cc3b32.
 No Important/Critical finding remains in that alpha slice. Shared sparse
 counts/prepared phylogeny and sample-parallel reusable touched-node workspaces
 use existing common/help/phylo-tree only. Beta/rarefy are deliberately absent,
-not stubs. Their two public-policy choices, full-product review, native4 and
+not stubs. The remaining beta public-policy choice, full-product review, native4 and
 representative whole-study performance remain separate unearned gates.
 
 Parent reads the complete source report and adopts the whole original ZIP/
@@ -30,8 +37,7 @@ SciPy1.18.1/skbio0.7.3/BIOM2.1.17,46required returned calls. Choice source
 shuffle=False cutoff20/population>10000 makes legacy small/Floyd versus actual
 big total59297/depth29648 tail-shuffle profiles distinct. No arbitrary-NumPy
 compatibility claim. Both empty/allzero depth0 source calls raise IndexError;
-an additional async user choice is pending: native successful zeros with known
-bug-fix incompatibility versus explicit rejection. Do not choose by silence.
+the explicit user ruling above chooses successful zeros as a documented fix.
 
 Parent reads the raw-data COMPANION941282ce4b80eaaf7a2dca6928473bb8cae7aa7fe77f8d3fdbe26d90e3d66fea,
 complete inspect_raw.py and original qualificationfdac6bdacafbc722edf948c584911b7703cd30d09014e56a2fa2cebc80b5bc7b,
@@ -52,8 +58,9 @@ input or use rarefied easier data for original-count alpha/beta performance.
 CSR3.94MB/dense365.34MB/edge×sample2.859GB are arithmetic, not measured RSS.
 
 Historical ledger excludes this new consolidation output, preserving original
-source-pool counts. The adopted sparse-alpha-native plan did not authorize the
-unresolved beta/rarefy adapters or any empty future module.
+source-pool counts. The adopted sparse-alpha-native plan did not authorize
+beta/rarefy or empty future modules. Rarefaction now proceeds under a separate
+extension; beta's unresolved adapter remains held.
 
 ## Source qualification history
 
