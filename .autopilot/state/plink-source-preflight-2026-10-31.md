@@ -1,5 +1,17 @@
 # PLINK next-workflow source preflight
 
+## Actual controller failure: isolate the non-hosted rejection test
+
+World727c303a377a8a5c096b39e9656b76d90ca735ab controller41217328784
+fails1of519tests (2existing skips). On actual Linux Actions, the preparation
+test's intended non-hosted rejection instead enters hosted path checks and
+raises missingXDG_CACHE_HOME. This is a test-environment assumption, not a
+source/C++ result. The complete failed-step log is retained in the external
+HDS correction packet as controller-failure.log. A narrow test-only patch
+sets GITHUB_ACTIONS=false around that negative assertion. Actual runtime
+host/cache/image guards, producer, inputs, source rules and bands are unchanged.
+New exact-head controller success is required before the first source dispatch.
+
 ## Whole producer reviewed and adopted; real hosted build is the next gate
 
 Parent reads all1844 original six-file lines, complete preparation report

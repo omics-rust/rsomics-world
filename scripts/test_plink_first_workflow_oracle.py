@@ -12,6 +12,7 @@ import sys
 import tarfile
 import tempfile
 import unittest
+from unittest import mock
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -138,7 +139,8 @@ class PlinkWholeProducerPreparationTest(unittest.TestCase):
             self.assertIn('retained failure', (root / 'calls/broken/stdout.txt').read_text())
             self.assertEqual(json.loads((root / 'calls/broken/request.json').read_text())['argv'][-1],
                              'print("retained failure"); raise SystemExit(7)')
-            with self.assertRaisesRegex(RuntimeError, 'hosted Linux x86_64'):
+            with mock.patch.dict(os.environ, {'GITHUB_ACTIONS': 'false'}), \
+                    self.assertRaisesRegex(RuntimeError, 'hosted Linux x86_64'):
                 oracle.hosted(root)
             objects = root / 'objects'
             objects.mkdir()
