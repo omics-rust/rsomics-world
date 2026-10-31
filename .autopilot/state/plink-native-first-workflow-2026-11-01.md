@@ -1,5 +1,31 @@
 # Native PLINK first coherent workflow active
 
+## Ordinary Mac build fixed; actual green-2 source frozen
+
+Root reads the full install-contract report and exact three-file diff, then
+freshly verifies3 owner files,6 raw check logs and2 complete graph receipts in
+plink-macos-install-contract-20261101.4iLsTP. Actual ordinary Mac build with
+GHA/guard markers absent is RED101 then GREEN, while the outer wrapper keeps
+all project outputs physically external. Fmt/strict Clippy/debug/release pass,
+each mode4lib+1whole/74878 cells. Explicit guarded OUT_DIR containment remains;
+only the blanket customer-Mac rejection is removed. No algorithm/FFI/CLI/lock/
+dependency/vendor/fixture changes. Owning clean main is now
+1d199b541ea014bdff487b99ee6669873f533b0d; no remote/publication.
+
+Root reads all175 generator lines and complete snapshot report at
+plink-green2-snapshot-20261101.px7nendq, then independently checks all302 actual
+source bodies/Git blob identities/archive modes and all4 snapshot files.
+Actual green-2 archive526617B SHA
+0270a5ae213b1ace803f56fe1a87390d8bcd4a25aff33ca5b737434c5b571592,
+files manifest a759b2acb8d91ce2779868d304ca7b5b216d9d47cfca01936728516fc3176bba,
+four-file seal c53fcf691d8fc0b31003648a188fee48feea9e0cb71dd70ced193568ce3626f1.
+Full source/Git provenance ledger SHA
+611014e94519ddd8f84b5067b569fc016676f107653f72309e08dc943272f327.
+Existing prepare_source extracts/checks all302 files once; green-1 and the
+old offline source bundle are unchanged. New four-native/same-native-source
+qualification still requires this actual snapshot's exact-head gate; old
+baseline receipts are not relabelled for the guard-only revision.
+
 ## Four native targets and same-native upstream comparison accepted
 
 Actual run41237806705/attempt1 at8931edd31110b57554c3f29d74ed59b3ed22561d
