@@ -1,5 +1,35 @@
 # Native peak first-four construction
 
+## Actual four-native and same-file source gate adopted
+
+Run41234576411/attempt1 is terminal SUCCESS at exact head
+238eb117cd8b2d92060787eb83faaea14633aa51: all four native jobs and the pinned
+Linux source consumer pass. Root retains all FIVE original ZIPs/TARs, raw final
+run/jobs/artifact APIs and offline checks in peak-native-adoption-20261101.DpW2Jr.
+Every ZIP API size/SHA and CRC and every TAR body/membership match:272 files
+per native artifact,421 source files. No local scientific runtime executes.
+
+Actual source observations: SEACR1.3 matches2265 native legacy rows; ChIPseeker
+matches2667 actual corrected-ledger rows across nine core fields and all nine
+detail masks; bedtools matches all2667 rows/T1,T2 alignment count cells. Source
+reads the actual native tracks/rows, not substituted oracle peaks. Native,
+restored runtime, image package and ELF identities stay unchanged. Private
+feature-hit IDs are not independently oracle-qualified. No default is inferred
+between explicit corrected/legacy profiles, no fresh MACS source rerun or
+real-input performance/biology/release claim follows from this interoperability.
+
+Root adopts .autopilot/oracles/peak-native-2026-11-01.json with actual Linux ELF
+90fca208ad723a7ba987e5bcdfcd254244db90404316a7bd0bf0a73d13984fba,
+native artifact13055177713 and source artifact13055930706. Full source carrier
+6158495B SHA47983e89fa6189ca9e082b836c9a53d3e39ce83d7e3590e39b358d988be2a24e;
+qualificationc4766aa916664a89f6001310a2fd851506cbb2b30f8f78a07a6a3bc26175fc99.
+The next gate is the fixed real-input workflow. Before ANY science, parent
+corrects the proposed timing harness to exclude source-only graph/RDS/session
+diagnostic serialization; same primary scientific APIs/options and complete
+matched core/mask outputs remain. This is a recorded pre-outcome fairness
+correction, not post-result tuning. All new harness code still needs full parent
+reading and actual combined preparation/CI before dispatch.
+
 ## Exact controller accepted; native gate dispatched
 
 World head238eb117cd8b2d92060787eb83faaea14633aa51 includes the actual69-file

@@ -52,6 +52,19 @@ all nine masks; count default alignment semantics in T1,T2,C order. Also run
 source annotation/count on the exact native C ledger without substituting
 source peaks. Adapt only real chromosome metadata, never scientific options.
 
+Pre-outcome timing correction: the old witness wrapper also writes TxDb.sqlite,
+transcript/exon/CDS graphs, many RDS slots, installed source and session audits.
+Those are evidence-only extras, not matched native annotation outputs. The new
+real-input timing wrapper instead calls the same pinned makeTxDbFromGFF and
+annotatePeak APIs with the same exact options/input row metadata, then directly
+exports the complete agreed core fields and all nine detail masks from the
+actual object. Omit diagnostic-only graph/RDS/source/session serialization from
+timed work on BOTH qualification and trial routes; compare all exported rows
+and fields as before. This changes our harness, not installed upstream science.
+The accepted original/source gate retains its full RDS/SQLite reload evidence.
+Real performance claims remain fresh-process/startup-inclusive CLI replacement
+wall time, not isolated annotation arithmetic or cold-cache/durability claims.
+
 Wait for the actual four-native/source-on-native gate before acquisition or
 scientific dispatch. Qualify one full pair at each worker budget, then one
 discarded warmup pair and at least5 alternating AB/BA pairs per budget, retaining
