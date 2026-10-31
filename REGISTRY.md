@@ -23,7 +23,7 @@ Status meanings are defined in [CONVENTIONS.md](CONVENTIONS.md).
 | `rsomics-cnv` | live | BAF/LRR copy-number HMM and chromosome-level polysomy analysis |
 | `rsomics-composition` | live | Aitchison geometry, log-ratio transforms, zero handling, proportionality, and composition-native inference |
 | `rsomics-count` | live | feature and read counting workflows |
-| `rsomics-deseq` | planned | DESeq2-style differential-expression workflow |
+| `rsomics-deseq` | repo-only | DESeq2-style fitted Wald/count-transform workflow; package and owning native CI qualification |
 | `rsomics-ecology` | planned | community-table diversity, ecological dissimilarity, ordination, metadata association, and permutation analysis |
 | `rsomics-edger` | planned | edgeR-style differential-expression workflow |
 | `rsomics-fastq-preprocess` | live | trimming and filtering (initial fastp-compatible subset); later correction, UMI, merge, deduplication |
@@ -52,14 +52,20 @@ Product status summary:
 | Status | Count |
 |---|---:|
 | live | 17 |
-| repo-only | 2 |
+| repo-only | 3 |
 | pilot | 0 |
-| planned | 11 |
+| planned | 10 |
 | **Total** | **30** |
 
 `pilot` means the boundary and source audit are active. It does not imply that
 a public repository or installable release exists. `repo-only` likewise does
 not imply that the crate has passed its publication gate.
+
+DESeq owning repository was created and populated on2026-10-31 after complete
+source/native/performance qualification. The identified public registry API
+still returns404; this is not a published package or a reserved empty name.
+See `.autopilot/state/deseq-release-preparation-2026-10-31.md` for exact-head
+owning CI and remaining release/authorization gates.
 
 ## Public foundations
 

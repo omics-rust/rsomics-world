@@ -25,7 +25,7 @@ operation will ship. It records:
 | `rsomics-cnv` | 2 | [released 0.1.0](variant.md#rsomics-cnv) |
 | `rsomics-composition` | 10 | [released 0.1.0](composition.md) |
 | `rsomics-count` | 4 | [released 0.1.0](count-gate-2026-08-02.md) |
-| `rsomics-deseq` | 12 | [private Wald/VST candidate; final native/performance gate pending](bulk-expression.md#rsomics-deseq) |
+| `rsomics-deseq` | 12 | [qualified Wald/VST source/native/performance; owning package/CI preparation](bulk-expression.md#rsomics-deseq) |
 | `rsomics-ecology` | 19 | [audited](ecology.md) |
 | `rsomics-edger` | 17 | [private modern QL workflow; numerical contract held](bulk-expression.md#rsomics-edger) |
 | `rsomics-fastq-preprocess` | 12 | [released 0.1.1](fastq-preprocess-gate-2026-07-30.md) |

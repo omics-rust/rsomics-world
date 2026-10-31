@@ -1,12 +1,16 @@
 # Bulk-expression product dossiers
 
 Status: joint boundary, upstream-operation, and historical-source audit
-complete. DESeq has a complete private schema5 Wald/normalized-count/fitted-VST
+complete. DESeq has a complete unpublished schema5 Wald/normalized-count/fitted-VST
 slice: final green7 passes24 workflows across four native classes and both
 real parametric/local complete performance paths. On the full14599×7 fixture,
 native1/4 takes1.02/0.79s or1.05/0.81s versus R inner5.264/5.375s; moderate
 1.29x worker gain and lower process RSS are measured. It is not published or
-release-complete. See `.autopilot/state/deseq-schema5-performance-2026-10-28.md`.
+release-complete. Reviewed source-package and actual example preparation is
+now pushed to its populated owning repository; exact owning native4 CI and
+registry authorization remain separate gates. See
+`.autopilot/state/deseq-schema5-performance-2026-10-28.md` and
+`.autopilot/state/deseq-release-preparation-2026-10-31.md`.
 The edgeR target has a complete private native modern-QL workflow, but its
 original P/FDR compatibility gate remains failed pending an explicit numerical
 contract decision; see `.autopilot/state/edger-native-ql-2026-10-28.md`.
@@ -18,6 +22,9 @@ remains pending, and the original first-release named log-expression path is
 still required. The private count-only plan does not narrow that dossier scope.
 See `.autopilot/state/limma-performance-2026-10-28.md` and
 `../plans/2026-10-28-limma-native-count-workflow.md`.
+The ordinary unweighted log-expression source witness now proceeds separately
+under `../plans/2026-10-31-limma-logexpression-oracle.md`, using retained
+derived-real E as supplied input, not reusing weighted count fits as answers.
 
 ## Portfolio decision
 

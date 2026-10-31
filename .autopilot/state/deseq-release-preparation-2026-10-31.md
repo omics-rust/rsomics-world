@@ -1,5 +1,56 @@
 # DESeq release preparation, not publication
 
+## Adopted preparation and owning CI, 2026-10-31
+
+Fresh scoped reviewe082d045cea4a946662bea26d2f83ad3da67ec2dab43df8532e0f886337094dc
+at /Volumes/KIOXIA/Developments/tmp/deseq-release-review-20261031.agwbUW/
+has no Critical/Important finding. Parent reads all154lines and actual changed
+metadata/README/CLI/workflow. Its one Minor is resolved by explicitly labeling
+the omitted witness/Mac scripts checkout-only and directing packaged consumers
+to portable Cargo commands. No development script is made an install dependency.
+
+Original interrupted unpacked test log remains failed/incomplete. Resumed
+unpacked-tests-resumed.log exits0 with all13test intents (11library+two
+integrations), SHA4356879a6294fb0f0412662b469663c691bbdadcd95bfd4a8fd19e0e2ead7e85.
+Final owner fmt/strict all-target/all-feature Clippy pass, logs
+bf42b6741c009e49adf5538145c46d668a0d5eea24d417da42ddb77a90973bbe /
+1da9d95bafc6c32c76b2ae05a6e8b942a60dd5234202796b5e8c85c37e7382b2.
+
+Final120-file candidate package9a16b42963bc3c4d9a78e1dbbbd2e949cfc94bf66f07056bf90e0f8a86757236
+is separately retained as rsomics-deseq-0.1.0.final-candidate.crate. Guarded
+locked/offline package verification/build passes. It used --allow-dirty and
+preparation-tree VCS metadata, not a clean registry artifact. Final unpack
+final-unpacked.wvk5YG/ has byte-identical current src/assets/tests/LICENSES/
+README; all analytical source and tests match the tested candidate except
+the already-qualified about/metadata changes. Release build from this actual
+unpack passes. Frozen executable071f54670f9ea9eb75932b976f34d468a6f8b5727c359dc9a0f77164445fbbdd
+is rsomics-deseq-final-candidate, not a newly measured performance binary.
+
+All four README commands actually pass from the final unpack using its real
+1200x12 fixture/metadata: run/save, fresh results reload, normalized and VST
+exports. example.kGkZuW/ retains every stdout/stderr and output. Bundle is
+schema5/workers4; all1200feature IDs retain order, both1200x12 matrices are
+finite. Bundle2aeaef121e25b40aa5dfd852024347a20df152b541fa0cfc7fa958ccdff7c711;
+results6ee6db7eb84d144231e18dc27ab197e0f59f7e12d060a062d316ba2c2a1ab5f1;
+normalizedd64a566741d2fb0bb5d321b67ad43fc9b3346f9badcfdb183164cdb2ed8dbe11;
+VSTe98429074294bb20a682d577bdb30a25be678a910b0a2c1e2cc41177e3794192.
+This is install/package lifecycle evidence, not a new biological/science gate.
+
+Fresh GitHub target returns404 before creation. Parent creates the real fully
+implemented repository https://github.com/omics-rust/rsomics-deseq and pushes
+main preparationd70f76eb738221dd052add2c1021be3468ddeeb3 after separate
+storage-policy917ede8. Initial owning CI41180144974 fails before creating
+jobs: runner context is not permitted in job-level env. The focused fix
+636e25987f7543a68c4a35cf07bd74a52850c9f6 moves external runner-path setup
+into the preparation step/GITHUB_ENV, changing no analytical source/package
+contents. Exact-head run41180255242 is active, with all four native jobs
+created and executing; do not call it accepted before actual terminal checks.
+Public unauthenticated registry read with an identified project client returns
+404. A first unidentified read403 is a client-policy observation, not a
+publication/token retry. publish=false remains; unchanged org credential is
+not read or retried. Existing native/scientific/performance acceptance stays
+separate and valid, not re-executed.
+
 Adopted plan: docs/plans/2026-10-31-deseq-release-preparation.md.
 Parent reads complete bulk preflight REPORT
 df9bc40a59a38252b763a8695ffcfc568e8169f1d89fe2ce7b4882f2205806c9;

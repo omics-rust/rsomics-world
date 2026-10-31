@@ -2,8 +2,8 @@
 
 ## Current position
 
-Full30-family goal is active and unchanged. Exact pushed head2fe51534 passes
-controller41177407552. Prior source-controllerd709ad00 passes40643918864
+Full30-family goal is active and unchanged. Exact pushed head7615d280 passes
+controller41179963210. Prior source-controllerd709ad00 passes40643918864
 (504tests/two existing skips). Its structure source
 run40644150133 is also SUCCESS and completely retained/qualified. The gates
 below supersede the historical execution narrative further down.
@@ -16,8 +16,8 @@ No deletion or migration of project/shared application/user data occurred.
 
 | Workstream | Verified current position | Next affected gate |
 |---|---|---|
-| DESeq | final green7/native40629123490 passes all4classes; default/local performance40632494429 accepted, core2ec95e3c... | release metadata/registry authorization, not more native/source campaigns |
-| limma | green1/native40629128374 all4classes; complete count-voom performance40636288327 accepted, core146f0296... | original dossier log-expression path still required before full first-release completion; no scope narrowing or scaling-win claim |
+| DESeq | accepted green7/native4/performance; reviewed package/example preparation pushed636e259 to real owner; exact owning CI41180255242 active | wait all four owning native jobs/package gates; registry authorization held, no more source/science campaign |
+| limma | accepted count native4/performance; ordinary log-expression source-contract report adopted and new witness task active | qualify actual ordinary shared-QR/equal-df lifecycle before native extension; no count replay, scope narrowing or scaling-win claim |
 | edgeR | complete private QL workflow; original P/FDR gate remains failed | explicit numerical-contract decision; no band tuning |
 | ecology | source40634594900 fully retained/qualified; real table/tree/IDs pass raw checks; reviewed sparse-alpha01c9089 plus actual sparse rarefactione1b03cb;984exact count cells/594alpha checks pass | undefined beta choice holds only that adapter; full product/native4/performance unearned |
 | structure | source40644150133 qualified; reviewed actual PDB/CIF inspect/select/split committed d7309d5 after one namespace fix; full integrated checks pass | implement full remaining selectors/analysis engines; degenerate-torsion public choice holds only that adapter; no coordinate foundation |
