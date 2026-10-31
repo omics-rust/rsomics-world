@@ -1,0 +1,86 @@
+name: Private PLINK offline source and replace-codec proof
+
+on:
+  workflow_dispatch:
+    inputs:
+      bundle:
+        description: Actual private source delivery selector
+        required: true
+        default: private-green-1
+        type: string
+      native_run:
+        description: Completed successful native-four and source-on-native run
+        required: true
+        type: string
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  rebuild:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    env:
+      BUNDLE: ${{ inputs.bundle }}
+      NATIVE_RUN: ${{ inputs.native_run }}
+      CARGO_BUILD_JOBS: '2'
+      CARGO_INCREMENTAL: '0'
+      PYTHONDONTWRITEBYTECODE: '1'
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+
+      - name: Prepare isolated source-delivery routes
+        run: |
+          set -euo pipefail
+          export WORK="$RUNNER_TEMP/plink-relink-work"
+          export EVIDENCE="$RUNNER_TEMP/plink-relink-evidence"
+          export CARGO_HOME="$RUNNER_TEMP/plink-relink-bootstrap-cargo"
+          export CARGO_TARGET_DIR="$RUNNER_TEMP/plink-relink-bootstrap-target"
+          export RUSTUP_HOME="$RUNNER_TEMP/plink-relink-rustup"
+          export TMPDIR="$RUNNER_TEMP/plink-relink-scratch"
+          export XDG_CACHE_HOME="$RUNNER_TEMP/plink-relink-cache"
+          export CLANG_MODULE_CACHE_PATH="$RUNNER_TEMP/plink-relink-clang-cache"
+          export CCACHE_DIR="$RUNNER_TEMP/plink-relink-ccache"
+          export SCCACHE_DIR="$RUNNER_TEMP/plink-relink-sccache"
+          for name in WORK EVIDENCE CARGO_HOME CARGO_TARGET_DIR RUSTUP_HOME TMPDIR XDG_CACHE_HOME CLANG_MODULE_CACHE_PATH CCACHE_DIR SCCACHE_DIR; do
+            mkdir -p "${!name}"
+            printf '%s=%s\n' "$name" "${!name}" >> "$GITHUB_ENV"
+          done
+          uname -a > "$EVIDENCE/host.txt"
+          df -h "$RUNNER_TEMP" >> "$EVIDENCE/host.txt"
+
+      - name: Admit actual completed native four and same-generation source gate
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          python3 -B scripts/plink_source_relink.py admit --bundle "$BUNDLE" --native-run "$NATIVE_RUN" \
+            --work "$WORK" --evidence "$EVIDENCE" 2>&1 | tee "$EVIDENCE/admission.log"
+
+      - name: Install pinned native Rust after admission
+        uses: dtolnay/rust-toolchain@1.91.0
+
+      - name: Rebuild only delivered offline source and prove real codec replacement
+        run: |
+          set -euo pipefail
+          test -z "${GH_TOKEN:-}"
+          python3 -B scripts/plink_source_relink.py run --bundle "$BUNDLE" \
+            --work "$WORK" --evidence "$EVIDENCE" 2>&1 | tee "$EVIDENCE/rebuild.log"
+
+      - name: Retain complete useful outputs and failures without build caches
+        if: always()
+        run: |
+          set -euo pipefail
+          python3 -B scripts/plink_source_relink.py package --bundle "$BUNDLE" \
+            --work "$WORK" --evidence "$EVIDENCE" --archive "$RUNNER_TEMP/plink-source-relink.tar"
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: plink-source-relink-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/plink-source-relink.tar
+          if-no-files-found: error
+          retention-days: 90

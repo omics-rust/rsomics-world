@@ -1,0 +1,38 @@
+{
+  "files": [
+    {
+      "bytes": 1071,
+      "canonical_url": "https://raw.githubusercontent.com/zaeleus/noodles/fe2b112566a5d509910303841bb9df47dd007fcf/LICENSE.txt",
+      "consumers": [
+        "noodles-bgzf@0.49.0",
+        "noodles-csi@0.58.0",
+        "noodles-tabix@0.64.0",
+        "noodles-vcf@0.90.0"
+      ],
+      "path": "licenses/noodles-fe2b1125-MIT.txt",
+      "sha256": "fabb1552f03c2091f7eac99f3161a07698fd783b2b0ac1001431cd840f65a7a1",
+      "source_url": "https://raw.githubusercontent.com/zaeleus/noodles/fe2b112566a5d509910303841bb9df47dd007fcf/LICENSE.txt"
+    },
+    {
+      "bytes": 1071,
+      "canonical_url": "https://raw.githubusercontent.com/zaeleus/noodles/f6a9dd58400a30084226c9c1d0fc300a9468c15a/LICENSE.txt",
+      "consumers": [
+        "noodles-core@0.20.0"
+      ],
+      "path": "licenses/noodles-f6a9dd58-MIT.txt",
+      "sha256": "fabb1552f03c2091f7eac99f3161a07698fd783b2b0ac1001431cd840f65a7a1",
+      "source_url": "https://raw.githubusercontent.com/zaeleus/noodles/f6a9dd58400a30084226c9c1d0fc300a9468c15a/LICENSE.txt"
+    },
+    {
+      "bytes": 7048,
+      "canonical_url": "https://creativecommons.org/publicdomain/zero/1.0/legalcode.txt",
+      "consumers": [
+        "six original SIMDe CC0 headers"
+      ],
+      "path": "licenses/CC0-1.0.txt",
+      "sha256": "a2010f343487d3f7618affe54f789f5487602331c0a8d03f49e9a7c547cf0499",
+      "source_url": "https://raw.githubusercontent.com/spdx/license-list-data/31846481de7ea17d92f2f46fad76abe58b2e9bb0/text/CC0-1.0.txt"
+    }
+  ],
+  "schema": 1
+}
