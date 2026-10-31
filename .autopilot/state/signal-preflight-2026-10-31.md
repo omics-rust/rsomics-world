@@ -1,5 +1,51 @@
 # Signal next-family retained-source assessment
 
+## Integrated source-witness preparation adopted; hosted execution pending
+
+Parent adopts the complete first-six source-witness preparation after one
+independent whole-feature review and one concentrated correction wave.
+Original preparation remains immutable at
+/Volumes/KIOXIA/Developments/tmp/signal-first-witness-20261031.yj8hid/;
+REPORT874fda2a5f778e5a13180b96bebc49c671ad60e6ff6136b2e3f798f1e6ee3578.
+Review REPORT6dc7e3626a3bc6d0b030d48c3a649d48f44fac639e7138180b3e86de5329f025
+at signal-witness-review-20261031.sOjrGA identifies three Important preparation
+gaps, all closed in the original author's single correction wave.
+
+The arithmetic bigWigs now feed actual summary and reference/scale matrix
+entrypoints; main normalization captures producing-call verbose logs and actual
+source counters/factors bound to the same prepared BAMs; an asymmetric signed
+log2 diagnostic records observed nonfinite classes without rewriting source.
+One coherent casebook contains130 observations/45 entrypoint calls, not a
+Cartesian option campaign. The full six-operation release scope is unchanged.
+
+Correction REPORT11875a46a06968afdee8ee140fee8f7273be5b287a81c133515812485e212eb8
+and manifest4d7b0f7985c504b9c4fa9a778949aa3fcd6294e865df06d2a0c1c7ded7eb243c
+are retained at
+/Volumes/KIOXIA/Developments/tmp/signal-first-witness-correction-20261031.A3RJy1/.
+Parent reads complete producer/workflow/test, original review and correction,
+verifies all original and corrected evidence bindings, and reruns the focused
+integrated route test through the external-disk guard:1 test,0.536s, exit0.
+The author's full control-plane suite passes507 tests with2 existing skips;
+the actual architecture validator exits0. The original wrong-filename exit2
+is retained, not counted as passing. All144 primary-source bindings and122
+structure owner files remain exact. The retained deeptoolsintervals0.1.9
+setup.py needs setuptools/Python/zlib, not an uninstalled NumPy build import.
+
+Adopted producer843d10b1033d9f84e4ceac4007e5e940317999594d2e8f89898b6e025fa5f35f;
+route test52143a41afbc012c8de567b67ecc331e8684164a11dd5bba8a485dd9e510f3fb;
+workflowb2c8a66176530d4eb666a8b131b9247e3cd517662cb4f000ed571c3b02fb780a;
+runtime lock763a0eae15f15315f001ffb56dd261710f862362d5a3da6d94b107f13c022bc9;
+input tar1b5c408100d44affccd585cc010918bdead2001ffd08f2ab15b6cc602d22285b.
+The last three are unchanged by correction. Hosted-only installation is pinned
+to portable Python3.12.10, deepTools3.5.6 and exact hashed dependency artifacts.
+
+This accepts preparation only. No installed scientific runtime, source
+completion, normalization/SES/nonfinite result, native implementation,
+performance or release is claimed. After commit/push, wait for exact-head
+controller CI before a single hosted source dispatch; retain complete original
+and failed partial artifacts. No local scientific install/import or source
+execution, deletion, registry/authentication retry or new public API occurs.
+
 ## Concrete published codec candidate; source preparation active
 
 Parent reads full REPORTaf25a4bd123489cff5be21c943ebf1cce4cff96b8923e40b0f385b183f6da37c,

@@ -1,0 +1,109 @@
+name: Signal first-six pinned source workflow
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  source-witness:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    env:
+      PYTHONDONTWRITEBYTECODE: '1'
+      PYTHONNOUSERSITE: '1'
+      PIP_DISABLE_PIP_VERSION_CHECK: '1'
+      PIP_NO_INPUT: '1'
+      PIP_CONFIG_FILE: /dev/null
+      OMP_NUM_THREADS: '1'
+      OPENBLAS_NUM_THREADS: '1'
+      MKL_NUM_THREADS: '1'
+      BLIS_NUM_THREADS: '1'
+      VECLIB_MAXIMUM_THREADS: '1'
+      NUMEXPR_NUM_THREADS: '1'
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+
+      - name: Prepare hosted storage
+        run: |
+          set -euo pipefail
+          test "$(uname -s)" = Linux
+          test "$(uname -m)" = x86_64
+          export EVIDENCE="$RUNNER_TEMP/signal-first-workflow-oracle"
+          export TMPDIR="$EVIDENCE/scratch"
+          export XDG_CACHE_HOME="$RUNNER_TEMP/signal-cache"
+          export PIP_CACHE_DIR="$RUNNER_TEMP/signal-cache/pip"
+          export PYTHONUSERBASE="$RUNNER_TEMP/signal-python-user"
+          export MPLCONFIGDIR="$RUNNER_TEMP/signal-cache/matplotlib"
+          for name in EVIDENCE TMPDIR XDG_CACHE_HOME PIP_CACHE_DIR PYTHONUSERBASE MPLCONFIGDIR; do
+            mkdir -p "${!name}"
+            printf '%s=%s\n' "$name" "${!name}" >> "$GITHUB_ENV"
+          done
+          mkdir "$EVIDENCE/controller"
+          cp scripts/signal_first_workflow_oracle.py scripts/test_signal_first_workflow_oracle_workflow.py \
+            .github/workflows/signal-first-workflow-oracle.yml \
+            assets/signal-first-runtime-20261031.json assets/signal-first-inputs-20261031.tar.gz \
+            "$EVIDENCE/controller/"
+          python3 -B - <<'PY'
+          import hashlib, json, os, platform, shutil
+          from pathlib import Path
+          runner = Path(os.environ['RUNNER_TEMP']).resolve(strict=True)
+          names = ('EVIDENCE', 'TMPDIR', 'XDG_CACHE_HOME', 'PIP_CACHE_DIR', 'PYTHONUSERBASE', 'MPLCONFIGDIR')
+          paths = {name: Path(os.environ[name]).resolve(strict=True) for name in names}
+          assert all(path.is_relative_to(runner) and path.stat().st_dev == runner.stat().st_dev
+                     for path in paths.values()), 'hosted write path escapes RUNNER_TEMP'
+          disk = shutil.disk_usage(runner)
+          assert disk.free > 5 * 2**30, 'insufficient source witness storage'
+          root = paths['EVIDENCE']
+          record = dict(paths={name: str(path) for name, path in paths.items()}, disk=disk._asdict(),
+              host=platform.platform(), controller_commit=os.environ['GITHUB_SHA'],
+              run_id=os.environ['GITHUB_RUN_ID'], run_attempt=os.environ['GITHUB_RUN_ATTEMPT'])
+          (root / 'storage-host.json').write_text(json.dumps(record, indent=2) + '\n')
+          files = {p.name: hashlib.sha256(p.read_bytes()).hexdigest() for p in (root / 'controller').iterdir()}
+          (root / 'controller-checksums.json').write_text(json.dumps(files, indent=2, sort_keys=True) + '\n')
+          PY
+          uname -a > "$EVIDENCE/host.txt"
+          df -h "$RUNNER_TEMP" >> "$EVIDENCE/host.txt"
+          ulimit -c 0
+
+      - name: Acquire and install the frozen source runtime
+        run: |
+          set -euo pipefail
+          python3 -B scripts/signal_first_workflow_oracle.py --acquire \
+            --runtime-lock assets/signal-first-runtime-20261031.json --output "$EVIDENCE/runtime" \
+            2>&1 | tee "$EVIDENCE/runtime-acquisition.log"
+          "$EVIDENCE/runtime/python/bin/python3" -B scripts/signal_first_workflow_oracle.py --install \
+            --runtime-lock assets/signal-first-runtime-20261031.json --output "$EVIDENCE/runtime" \
+            2>&1 | tee "$EVIDENCE/runtime-install.log"
+
+      - name: Capture the complete first-six source lifecycle
+        run: |
+          set -euo pipefail
+          ulimit -c 0
+          "$EVIDENCE/runtime/venv/bin/python" -B scripts/signal_first_workflow_oracle.py --run \
+            --runtime-lock assets/signal-first-runtime-20261031.json --runtime "$EVIDENCE/runtime" \
+            --inputs assets/signal-first-inputs-20261031.tar.gz --output "$EVIDENCE/witness" \
+            2>&1 | tee "$EVIDENCE/capture.log"
+
+      - name: Bind all originals and failed partial evidence
+        if: always()
+        run: |
+          set -euo pipefail
+          python3 -B scripts/signal_first_workflow_oracle.py --manifest \
+            --output "$RUNNER_TEMP/signal-first-workflow-oracle"
+
+      - name: Retain complete original evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: signal-first-workflow-oracle-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/signal-first-workflow-oracle/
+          include-hidden-files: true
+          if-no-files-found: error
+          retention-days: 90
