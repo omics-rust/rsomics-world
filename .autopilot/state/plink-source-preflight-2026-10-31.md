@@ -1,5 +1,28 @@
 # PLINK next-workflow source preflight
 
+## Actual compilation failure adopted; standard-header preinclude selected
+
+Source retry41219915856 at7642deb5 is FAILED: dry-run now returns0, actual
+build returns2 because pinned plink2_matrix.h423 calls fabs before the
+including plink2_matrix.cc20 introduces math.h. Parent reads the real stderr,
+header conditional/function, .cc include order and Makefile recipe, plus the
+complete retention REPORTabd5dea55de9c87422e9e49b5f6699ffbf3482b98441041fd9c33439a029b2bd.
+Fresh full39246337B ZIP57d7df989eb013a03721b5d8f0bd4aba12b1ddbf53e91fd711391043f81db194
+and all110 delivery bindings verify; delivery seal1d5208f7e63e15bd1f0bcdc09e7a350537a3a2b122e3077b38cfa02180cf05fd.
+Evidence: `/Volumes/Zane's HDD/rsomics-fixtures/evidence/plink-first-workflow-oracle-2026-11-01/run-41219915856/`.
+All1402 source blobs verify in both representations; partial88objects and
+compressor are not a qualified main binary/helper/runtime/scientific casebook.
+
+Ruling: preinclude the source's intended standard math.h through the existing
+single make argv assignment CXX=/usr/local/bin/g++ -include math.h. GCC14.3's
+primary preprocessor contract establishes processing before primary source.
+This leaves upstream source bytes, compiler binary, Makefile CXXFLAGS,
+NO_LAPACK/CPU/numeric options, all inputs and comparisons unchanged. The first
+SFX fix worked; this distinct declaration failure is not evidence to change
+the genotype architecture or compiler. Existing preparation/CI and a new
+actual hosted build must validate this explicit build profile; no local
+compiler or scientific payload executes and no later success is presumed.
+
 ## First originals adopted; empty-suffix retry dispatched
 
 Parent reads the complete83-line retention report
