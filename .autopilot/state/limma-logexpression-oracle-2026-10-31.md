@@ -1,5 +1,32 @@
 # Ordinary log-expression source-witness preparation
 
+## Original failure retained; narrow capture fix ready
+
+Run41182610397 is terminal FAILURE, not accepted. Complete original retention
+REPORT9b779646235485b314405f5195411a8325312860214250a95779033c1f7ff699 /
+verification6a07ca5872ee8c6cde6da93f0dfa730bccac01484ee188e58362654ffdcdc277
+are read by parent under
+/Volumes/Zane's HDD/rsomics-fixtures/evidence/limma-logexpression-oracle-2026-10-31/run-41182610397/.
+Artifact13034889031 is35192190bytes; API digest/size/CRC/all807extracted files
+match SHA8c105898f66150ca996b208a75b529b510d68b138ef935f316c6024dc617ba29.
+All471workflow-manifest entries, original inputs, source/runtime/DLL/installed
+stats definition and exact-head controllers bind correctly. No RDS is decoded
+or scientific source run locally. Five case failures all say Two subscripts
+required; no independent reload occurred. Raw base/contrast/moderation/table
+and supplied-E/fitted/residual exports are retained, not repaired or accepted.
+
+Parent reads actual limma R/subsetting.R107-123 and locates the capture bug:
+the summary indexes an MArrayLM with one subscript, invoking row/column subset
+instead of ordinary field lookup. One-line unclass-before-field-selection fix
+matches upstream topTable's access pattern and changes no fit, data, source
+function, mapping, tolerance or native code. New driver
+224caff362a6413c78880cca836c2ba0cf1006c43925b2bae96397dd15056adc.
+The actual failed source run is RED evidence; local route checks are not an R
+runtime GREEN. Parent final controller506tests/2existing skips and architecture
+pass after this narrow change and the new native gate. A fresh exact-head
+controller and new hosted source run remain required. Do not retry unchanged
+code, erase the failed run, or replay accepted count science/performance.
+
 ## Actual hosted execution dispatched
 
 World0792353f565995788b7389c617186b4a8dfe2061 passes exact controller41182421821.

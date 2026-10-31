@@ -230,7 +230,7 @@ logexpression_case <- function(input, root, parameters, observe) {
         if (is.null(value$moderated) || value$moderated$status != "returned") return(NULL)
         list(prior_df=limma_shape(value$moderated$value$df.prior),
             positive_infinite_prior=any(value$moderated$value$df.prior == Inf),
-            nonfinite=lapply(value$moderated$value[c("t", "p.value", "lods", "F", "F.p.value")], limma_shape))
+            nonfinite=lapply(unclass(value$moderated$value)[c("t", "p.value", "lods", "F", "F.p.value")], limma_shape))
     })
     summary <- list(checks=checks, complete_derivation=logexpression_complete(derived),
         features=nrow(input$expression), samples=ncol(input$expression), coefficients=ncol(input$design),
