@@ -23,6 +23,21 @@ WORKFLOW = ROOT / '.github/workflows/signal-real-performance.yml'
 
 
 class SignalPerformanceTests(unittest.TestCase):
+    def test_api_download_redirect_does_not_forward_api_credentials(self):
+        module=importlib.import_module('signal_real_performance')
+        def response(request, timeout):
+            self.assertEqual(request.get_header('Authorization'), 'Bearer fixture-not-a-credential')
+            redirected=module.urllib.request.HTTPRedirectHandler().redirect_request(
+                request,None,302,'Found',{},'https://fixture.blob.core.windows.net/artifact')
+            self.assertNotIn('authorization', {key.lower() for key,_ in redirected.header_items()})
+            return io.BytesIO(b'{"retained":"transport fixture only"}')
+        with tempfile.TemporaryDirectory(prefix='signal-perf-redirect-') as directory:
+            destination=Path(directory)/'original.json'
+            with mock.patch.dict(os.environ,GH_TOKEN='fixture-not-a-credential'),mock.patch.object(module.urllib.request,'urlopen',side_effect=response):
+                result=module.api('actions/artifacts/1/zip',destination)
+            self.assertEqual(result,{'retained':'transport fixture only'})
+            self.assertEqual(destination.read_bytes(),b'{"retained":"transport fixture only"}')
+
     def test_receipt_requires_actual_head_blob(self):
         module=importlib.import_module('signal_real_performance')
         import hashlib

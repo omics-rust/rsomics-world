@@ -223,8 +223,9 @@ def api(path, destination, binary=False):
     token = os.environ.get('GH_TOKEN') or os.environ.get('GITHUB_TOKEN')
     check(token, 'authenticated read-only Actions API token required')
     request = urllib.request.Request('https://api.github.com/repos/'+REPOSITORY+'/'+path,
-        headers={'Authorization':'Bearer '+token,'Accept':'application/vnd.github+json',
+        headers={'Accept':'application/vnd.github+json',
                  'X-GitHub-Api-Version':'2022-11-28','User-Agent':'rsomics-signal-qualified-performance'})
+    request.add_unredirected_header('Authorization','Bearer '+token)
     with urllib.request.urlopen(request,timeout=120) as response, Path(destination).open('xb') as out:
         shutil.copyfileobj(response,out,1024*1024)
     if not binary:

@@ -1,5 +1,31 @@
 # Whole-first-six native signal implementation
 
+## Actual signed-download401 diagnosed; API authorization no longer redirects
+
+Full-path retry41223600857 at47c58798 passes host setup, committed receipt,
+current run/artifact/four-job metadata, then fails at the actual signed ZIP
+redirect with HTTP401. No runtime install, prepared corpus or timing occurs.
+Complete87228B original artifact13051350267 SHA
+eda659770cca93c9f3aa5235beb0e800c4e9fa298b668195f212b6e0c9bc928b is retained
+and freshly verified with raw APIs/log/host plan/acquisition traceback under
+`/Volumes/KIOXIA/Developments/tmp/hosted-preflight-failures-20261101.ko21SO/41223600857/`.
+
+Parent reads actual urllib redirect behavior: normal request headers include
+Authorization in redirected requests. Thus GitHub API authentication is sent
+to the signed object-store endpoint, which rejects it. The narrow correction
+uses Request.add_unredirected_header for API authorization: authenticate the
+original API request only, never forward it on a redirect. No credential value
+is logged or persisted, and no user Cargo/org secret is involved; the hosted
+job uses its ephemeral read-only GitHub token. Actual original bytes still
+must meet the same API/archive/receipt hashes and all admission gates.
+
+One focused real-redirect characterization in the existing prep suite observes
+RED (forwarded Authorization) and GREEN after the two-line request correction;
+all7 preparation tests pass0.211s. It uses a nonsecret dummy token and the real
+stdlib redirect handler, replacing only external I/O. No new helper review or
+numeric/native/source change. Exact new CI and fresh actual acquisition remain
+required; this is not a successful performance result.
+
 ## First hosted eligibility passes; operator receipt selector corrected
 
 Actual dedicated run41223116931 at764884b1 passes host setup: affinity0..3,
