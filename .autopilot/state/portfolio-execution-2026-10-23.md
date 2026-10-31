@@ -2,20 +2,19 @@
 
 ## Current position
 
-Full30-family goal is active and unchanged. Prior accepted controller head
-18bf36d3 passes40635888758 (502tests/two existing skips). Current integration
-passes architecture validation and504tests55.376s/two existing skips; exact
-push-head CI is still required. The gates below supersede the historical
-execution narrative further down.
+Full30-family goal is active and unchanged. Exact pushed headd709ad00 passes
+controller40643918864 (504tests/two existing skips). Its structure source
+run40644150133 is also SUCCESS and completely retained/qualified. The gates
+below supersede the historical execution narrative further down.
 
 | Workstream | Verified current position | Next affected gate |
 |---|---|---|
 | DESeq | final green7/native40629123490 passes all4classes; default/local performance40632494429 accepted, core2ec95e3c... | release metadata/registry authorization, not more native/source campaigns |
 | limma | green1/native40629128374 all4classes; complete voom performance40636288327 accepted, core146f0296... | release metadata/registry authorization; no scaling-win claim |
 | edgeR | complete private QL workflow; original P/FDR gate remains failed | explicit numerical-contract decision; no band tuning |
-| ecology | source40634594900 fully retained/qualified; whole real table/tree/IDs pass raw checks; reviewed private sparse-alpha committed01c9089, 50 calls/594 values pass | undefined beta/depth-zero rarefy choices hold only those adapters; full product/native4/performance unearned |
-| structure | actual parser/asset/selection assessment and source producer complete; independent whole-producer review passes | exact-head controller and hosted source qualification then real private model/I/O; no new coordinate foundation |
-| shared TMM | identical149-line kernel with two actual edgeR/limma consumers; bounded stats0.2.5 candidate underway | isolated candidate/two consumer contracts; preserve inherited stats lock; no public item yet |
+| ecology | source40634594900 fully retained/qualified; whole real table/tree/IDs pass raw checks; reviewed private sparse-alpha committed01c9089, 50 calls/594 values pass; user chooses depth-zero zeros bug fix | implement sparse rarefaction; undefined beta choice holds only that adapter; full product/native4/performance unearned |
+| structure | source40644150133 qualified; private raw I/O fitness passes full fields; actual PDB/CIF inspect/select/split delivered for whole-slice review | adopt reviewed IO then implement analyses; degenerate-torsion choice holds that boundary only; no coordinate foundation |
+| shared TMM | reviewed stats0.2.5 pushed at00a1819; real edgeR/limma contracts, persistent nonunit source regression and exact-head native4 run40648343214 all pass; primitive cost+2.53% | inherited working lock preserved; registry publication/adoption held |
 
 DESeq full14599×7 parametric/local R-inner medians5.264/5.375s versus native1
 1.02/1.05s and native4 .79/.81s. Both strict throughput AND process-RSS pass;
