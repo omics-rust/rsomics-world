@@ -1,5 +1,17 @@
 # PLINK next-workflow source preflight
 
+## First real source run reaches build dry-run, then fails
+
+The test-only environment correction is world6e9fd5125e470c60359523d2f5e807d5a1cda196;
+its exact controller41217995565 is SUCCESS. Actual first source run41218304562
+attempt1 at that exact head is terminal FAILURE, job124587381056. Runtime
+acquisition reaches source/dated-official archives and compiler/package
+inspection, then requires build-dry-run and fails there. No source build,
+codec-helper compile or scientific casebook is qualified from acquisition.
+Full original retention and actual stderr/Makefile diagnosis are active.
+No build-flag guess, source patch, profile switch or tolerance change is
+adopted before that evidence. Source casebook and all24reloads remain pending.
+
 ## Actual controller failure: isolate the non-hosted rejection test
 
 World727c303a377a8a5c096b39e9656b76d90ca735ab controller41217328784
