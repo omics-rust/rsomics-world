@@ -1,5 +1,36 @@
 # Fixed private HGDP whole-workflow gate
 
+## Authenticated second attempt reaches the real product comparison
+
+Root reads the full final REPORT/COMPLETED and actual upstream arithmetic/
+printing excerpts in plink-second-hosted-failure-20261101.e64iQxrB. Complete
+ZIP2501620547B/API SHA205fac5c82794a609465ddac0fd477bcd8dbc9ca6ce2d4aecc577d77de9a3aef,
+two-file receipt, full age authentication,2993 manifest entries/2995 TAR
+members and20 exact-head controllers verify. The executable-mode and upload
+route fixes genuinely pass; no same-run log salvage is needed this time.
+REPORT9db66213a9595dd0d7d87a1c330e3be1ce5214e666e5ad7390decab2e8aacc1c;
+COMPLETED69f9b62e8c4dc968f96dd11eac9d27abb6dc2a8fbdb5a6c8f7e3a0df7c0f8620.
+
+Full preparation is929 samples/231470 variants. One-worker source9/native7
+commands all return0; I/F/P metadata and raw genotype streams match. Frozen
+report comparison rejects six cells: the same three expected-heterozygosity
+half-boundaries repeated in the two F Hardy reports. The other fields/rows
+across all16 QC reports pass; LD/prune comparison has not yet been accepted.
+
+Actual source dtoa_g deliberately uses a tolerant even-rounding window; the
+product's Rust formatter does not. Source reciprocal arithmetic alone cannot
+fix all three cases. Prepare a source-faithful product-private printer and
+HWE arithmetic order, preserving the original comparator, data and scientific
+thresholds. No new public API or epsilon adjustment is authorized. Verify
+the retained full QC outputs at1/4 workers after the fix, then freeze a new
+candidate rather than relabel green2 or the failed campaign.
+
+The single untimed qualification also shows LD-pairs user50.143/system1.078s
+(wall51.238s), compared with source wall5.050s. It evaluates33780398 pairs and
+emits2527798, so the next performance investigation is CPU-oriented. This is
+not a five-pair benchmark verdict. No worker4 qualification, timed trials or
+strict performance decision exists yet; do not blindly rerun this ELF.
+
 ## Actual second hosted attempt is being recovered
 
 After exact-head Control plane41250162613 passes, root dispatches41250502140/1
