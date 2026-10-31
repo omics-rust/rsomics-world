@@ -1,0 +1,38 @@
+{
+  "schema": "rsomics.private-artifact.tools.v1",
+  "version": "v1.3.2",
+  "release_url": "https://github.com/FiloSottile/age/releases/tag/v1.3.2",
+  "release_api": "https://api.github.com/repos/FiloSottile/age/releases/tags/v1.3.2",
+  "published_at": "2026-08-29T17:55:36Z",
+  "sigsum_documentation": "https://github.com/FiloSottile/age/blob/v1.3.2/SIGSUM.md",
+  "platforms": {
+    "darwin-arm64": {
+      "archive": {
+        "name": "age-v1.3.2-darwin-arm64.tar.gz",
+        "url": "https://github.com/FiloSottile/age/releases/download/v1.3.2/age-v1.3.2-darwin-arm64.tar.gz",
+        "bytes": 18106798,
+        "sha256": "e2020b073c44f692685a24d6abc378817eb81ffaaf49fd0531ef8565f767f2f5"
+      },
+      "proof": {
+        "name": "age-v1.3.2-darwin-arm64.tar.gz.proof",
+        "url": "https://github.com/FiloSottile/age/releases/download/v1.3.2/age-v1.3.2-darwin-arm64.tar.gz.proof",
+        "bytes": 1921,
+        "sha256": "26e3fcc371f19e35c7d37500baf8e82c4386538dc6f47e66f4e0fefec50531e4"
+      }
+    },
+    "linux-amd64": {
+      "archive": {
+        "name": "age-v1.3.2-linux-amd64.tar.gz",
+        "url": "https://github.com/FiloSottile/age/releases/download/v1.3.2/age-v1.3.2-linux-amd64.tar.gz",
+        "bytes": 19405817,
+        "sha256": "cbe24006683f8eb669266162894b9a522a1af52f2665fbc63a4bb032ed26ac10"
+      },
+      "proof": {
+        "name": "age-v1.3.2-linux-amd64.tar.gz.proof",
+        "url": "https://github.com/FiloSottile/age/releases/download/v1.3.2/age-v1.3.2-linux-amd64.tar.gz.proof",
+        "bytes": 1921,
+        "sha256": "98402fa59b4e433426156b4a7e74a32e44902e0434c61158f7de18ffc84f1f97"
+      }
+    }
+  }
+}
