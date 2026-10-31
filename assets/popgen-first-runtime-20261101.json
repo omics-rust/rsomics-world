@@ -416,7 +416,7 @@
       [
         "./configure",
         "--prefix={runtime}/vcftools",
-        "--with-pmdir={runtime}/vcftools/perl"
+        "--with-pmdir=perl"
       ],
       [
         "make",

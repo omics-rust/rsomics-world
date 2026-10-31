@@ -65,11 +65,12 @@ include full parse-to-identical logical exports at1/4 CPU budgets, one warmup
 then five alternating pairs, without diagnostic serialization in one timer.
 
 Runtime/data/privacy/finalization capacity must be admitted before dispatch.
-Private encrypted hosted retention is being evaluated separately; do not upload
-plaintext cohort originals, manifests, exceptions or scientific logs, or require
-an unadmitted private host by assumption. The proposed8GiB RAM/16GiB retained
-cap must include verified finalization overhead before selecting free-space
-admission. No acquisition/build/science dispatch is authorized by preparation.
+The manual-only hosted integration below uses the shared pinned age transport
+and fixed public recipient. Do not upload plaintext cohort originals, manifests,
+exceptions or scientific logs, or require an unadmitted private host by
+assumption. The proposed8GiB process/16GiB retained cap includes additional
+streamed-TAR/cipher space and8GiB headroom before selecting free-space admission.
+No acquisition/build/science dispatch is authorized by preparation.
 Small metadata/source or cached wheel downloads may use the external guard;
 no scientific import or upstream build runs on the Mac.
 
@@ -77,3 +78,52 @@ Reuse selected old diversity/FST/SFS/core code only after real source acceptance
 internalize policy and duplicate readers, retain useful assets, never revive
 micro-crates or change inherited locks/target directories. Existing common/help
 remain the concrete foundations. No selection/admixture/PBS/LD placeholders.
+
+## Manual-only hosted source integration
+
+Root authorizes preparing, but not dispatching, one workflow and one controller:
+`.github/workflows/popgen-first-workflow-oracle.yml` and
+`scripts/popgen_hosted_source.py`. The existing scientific CORE/profile stays
+unchanged. Extend only the existing ONE stdlib preparation test; no helper
+review/test ladder, owner crate or public API is introduced.
+
+- [ ] Pin a genuine ubuntu24.04 standard hosted job with four admitted CPUs
+  and the exact GCC14.3.0 Bookworm image; bind actual registry configuration,
+  compiler, portable CPython, all11 offline wheels, vcftools source/build/version
+  and observed ELF/library closure in a fresh0700 RUNNER_TEMP private tree.
+- [ ] Admit the fixed public recipient and existing pinned age helper first.
+  Reserve16GiB retained bytes plus a bounded streamed TAR/cipher copy and8GiB
+  headroom, not merely24GiB total. Observe cgroup/host/process limits honestly;
+  no sampled process RSS is advertised as a global bound.
+- [ ] Run the complete engineering casebook plus all five legacy commands in
+  the actual runtime. Only its genuine successful result unlocks whole chr22,
+  mask/panel/FAI/TBI acquisition, unified admission and the identical full source
+  program for all207 YRI/CEU people. Keep upstream anomalies red and unchanged.
+- [ ] Capture every scientific stdout/stderr/exception and original body in the
+  private tree. An always-finalizer inventories quiescent evidence and streams
+  TAR directly through shared age encryption to a sibling cipher directory.
+  Upload only the exact ciphertext and approved public transport receipt; never
+  plaintext or a fallback. Earlier failure remains a failed job. Finalization
+  diagnostics stay private; timeout, cancellation, encryption failure or host
+  loss cannot be represented as zero-loss retention guarantees.
+- [ ] Root reviews the complete code, one preparation result and bindings before
+  Git/dispatch. Runtime/science/capacity acceptance is still future hosted work;
+  local preparation does not earn scientific or performance claims.
+
+Prepared admission currently requires44,029,968,416 initial free bytes:
+16GiB originals, a17GiB TAR byte bound (including1GiB header allowance), the
+shared helper's age ciphertext expansion and8GiB headroom. A standard runner
+with less space fails before cohort acquisition; do not clean unrelated host
+data or reduce the cohort/operations. The job requests an actual4-CPU/12GiB
+container cgroup; source commands have8GiB per-process address-space limits and
+sampled descendant RSS observations, not an invented process-tree/global RSS
+guarantee. All these actual hosted admissions remain unexecuted locally.
+
+The original vcftools release member `src/perl/Makefile.am` defines
+`pmdir = $(exec_prefix)/$(PMDIR)`. Root therefore authorizes changing only the
+runtime lock's earlier absolute `--with-pmdir={runtime}/vcftools/perl` argument
+to `--with-pmdir=perl`; the prefix still points inside the private runtime.
+This records an installation-layout correction, not source/estimator changes.
+The bound original release is at external scratch
+`popgen-core-prep-20261101.lf5xppcm/vcftools-0.1.17.tar.gz`, SHA256
+`b9e0e1c3e86533178edb35e02c6c4de9764324ea0973bebfbb747018c2d2a42c`.

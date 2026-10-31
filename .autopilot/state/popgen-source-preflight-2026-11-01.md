@@ -1,5 +1,34 @@
 # Popgen connected source workflow
 
+## Hosted encrypted integration reviewed and live-tree race corrected
+
+Root reads the complete hosted controller/workflow/existing ONE test/plan and
+runtime-lock diff plus full report at popgen-hosted-source-20261101.7k8iyyxe.
+The five primary source anchors, both scientific CORE scripts, fixed real
+specification and shared crypto contract remain unchanged. The sole lock edit
+is approved relative PMDIR=perl; root directly reads the original release
+Makefile.am confirming exec_prefix/PMDIR before adoption.
+
+One bounded independent integration review finds exactly one materialP2:
+retained_size samples an active tree with separate type checks and lstat, so
+normal pip/venv/make temporary deletion can falsely fail the job. Root reproduces
+the actual disappearing-file access inside the SAME existing ONE test: RED
+FileNotFoundError, then GREEN with single lstat and only ENOENT ignored. Other
+I/O failures still propagate. No helper-test ladder/scientific policy change.
+Parent fresh combined popgen/PLINK preparation passes2/0.809s. Eighteen original
+preparation bodies verify, plus the two explicit root-reviewed correction files.
+Parent actual complete control suite passes529/74.493s with2 existing skips on
+the final executable bytes; no scientific import/build/oracle runs locally.
+
+The actual manual standard-hosted source run remains unexecuted. Its first
+stages admit capacity/recipient/image/runtime/library provenance and full
+casebook+five vcftools commands; only genuine success unlocks whole chr22/all207
+people. Complete originals/logs/runtime/results are private until streamed age
+encryption, with only ciphertext/allowlisted receipt uploaded. Initial free
+admission44029968416B includes retained+TAR/cipher+8GiB headroom; no cleanup or
+cohort/operation shrink. This prepares an executable source qualification,
+not a placeholder native crate or earned science/performance/release result.
+
 ## Core preparation accepted; no scientific execution
 
 Root reads all1423 lines across the five delivered core/preparation/assets,

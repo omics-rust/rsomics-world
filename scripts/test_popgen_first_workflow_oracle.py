@@ -1,10 +1,15 @@
 import importlib.util
+import io
+import gzip
 import json
 import os
 from pathlib import Path
 import sys
+import subprocess
 import tempfile
+import tarfile
 import unittest
+from unittest.mock import patch
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -13,6 +18,9 @@ sys.path.insert(0, str(ROOT / 'scripts'))
 
 class PopgenSourcePreparationTest(unittest.TestCase):
     def test_connected_casebook_admits_lossless_shapes_and_rejects_invalid_genotypes(self):
+        self.assertTrue((ROOT / 'scripts/popgen_hosted_source.py').is_file(),
+                        'manual hosted source integration is absent')
+        import popgen_hosted_source as hosted
         producer = ROOT / 'scripts/popgen_first_workflow_oracle.py'
         self.assertTrue(producer.is_file(), 'connected popgen source producer is absent')
         import popgen_first_workflow_inputs as inputs
@@ -22,6 +30,24 @@ class PopgenSourcePreparationTest(unittest.TestCase):
         self.assertFalse({'numpy', 'allel', 'dask'}.intersection(sys.modules))
         with tempfile.TemporaryDirectory(prefix='popgen-preparation-', dir=os.environ['TMPDIR']) as directory:
             destination = Path(directory)
+            session = hosted.new_session(destination)
+            self.assertEqual(session['private'].stat().st_mode & 0o777, 0o700)
+            transient = session['private'] / 'transient.tmp'
+            transient.write_bytes(b'x')
+            original_lstat = Path.lstat
+            def disappearing_metadata(path, *args, **kwargs):
+                if path == transient:
+                    transient.unlink()
+                return original_lstat(path, *args, **kwargs)
+            with patch.object(Path, 'lstat', disappearing_metadata):
+                self.assertEqual(hosted.retained_size(session['private']), 0)
+            self.assertFalse(session['cipher'].is_relative_to(session['private']))
+            self.assertEqual(set(hosted.public_outputs(session['session'])), {'payload.tar.age', 'receipt.json'})
+            capacity = hosted.retention_plan()
+            self.assertGreater(capacity['initial_free_bytes'], 40 * 2**30)
+            self.assertEqual(capacity['retained_limit_bytes'], 16 * 2**30)
+            with self.assertRaisesRegex(ValueError, 'casebook'):
+                hosted.require_casebook(session['private'])
             case = inputs.casebook(destination / 'casebook')
             case = json.loads((destination / 'casebook/specification.json').read_text())
             admission = inputs.admit(destination / 'casebook', case)
@@ -72,12 +98,46 @@ class PopgenSourcePreparationTest(unittest.TestCase):
             (destination / 'casebook/casebook.vcf').write_text(original + '\n')
             with self.assertRaisesRegex(ValueError, 'identity'):
                 oracle.verify_admission(destination / 'casebook', case, admission)
+            inventory = hosted.archive_inventory(destination / 'casebook')
+            buffer = io.BytesIO()
+            hosted.write_tar(destination / 'casebook', inventory, buffer)
+            buffer.seek(0)
+            with tarfile.open(fileobj=buffer, mode='r:') as archive:
+                self.assertEqual(archive.extractfile('casebook.vcf').read(),
+                                 (destination / 'casebook/casebook.vcf').read_bytes())
+            carrier = destination / 'prepared.tar.gz'
+            carrier.write_bytes(gzip.compress(buffer.getvalue()))
+            hosted.extract_archive(carrier, destination / 'extracted', 2**20)
+            self.assertEqual((destination / 'extracted/casebook.vcf').read_bytes(),
+                             (destination / 'casebook/casebook.vcf').read_bytes())
+            external = destination / 'outside.txt'
+            external.write_text('must not enter the archive')
+            (destination / 'casebook/escape').symlink_to(external)
+            with self.assertRaisesRegex(ValueError, 'symlink'):
+                hosted.archive_inventory(destination / 'casebook')
+            workflow = ROOT / '.github/workflows/popgen-first-workflow-oracle.yml'
+            unsafe_workflow = destination / 'unsafe.yml'
+            unsafe_workflow.write_text(workflow.read_text().replace('/cipher/receipt.json', '/private/controller.stderr'))
+            with self.assertRaisesRegex(ValueError, 'receipt|plaintext'):
+                hosted.validate_workflow(unsafe_workflow)
         runtime = json.loads((ROOT / 'assets/popgen-first-runtime-20261101.json').read_text())
         self.assertEqual(oracle.validate_runtime_lock(runtime), None)
         self.assertEqual(set(runtime['python_packages']),
                          {'scikit-allel', 'numpy', 'dask', 'click', 'cloudpickle', 'fsspec',
                           'packaging', 'partd', 'pyyaml', 'toolz', 'locket'})
         self.assertFalse({'numpy', 'allel', 'dask'}.intersection(sys.modules))
+        self.assertEqual(hosted.validate_workflow(ROOT / '.github/workflows/popgen-first-workflow-oracle.yml'), None)
+        lines = (ROOT / '.github/workflows/popgen-first-workflow-oracle.yml').read_text().splitlines()
+        for index, line in enumerate(lines):
+            if line != '        run: |':
+                continue
+            body = []
+            for current in lines[index + 1:]:
+                if current and not current.startswith('          '):
+                    break
+                body.append(current[10:] if current else '')
+            checked = subprocess.run(['bash', '-n'], input='\n'.join(body) + '\n', text=True, capture_output=True)
+            self.assertEqual(checked.returncode, 0, checked.stderr)
 
 
 if __name__ == '__main__':
