@@ -1,5 +1,54 @@
 # Whole-first-six native signal implementation
 
+## Reviewed corrected candidate frozen for actual hosted qualification
+
+Owning38-file source is committed locally at
+200a8eee88d66d5d963739fed9abffc1b62765cc, publish=false and no remote.
+The two original task logs in owning evidence/ remain untracked/preserved;
+they are not production source or a hidden source dependency.
+The real green-1 snapshot is under
+`.autopilot/snapshots/signal-native-2026-10-31/green-1` and independently
+passes strict checksum/member/byte verification and extraction. No hosted
+result or native admission receipt is fabricated by that freeze.
+
+Parent reads the complete2457-line correction diff/full report. Its nine
+material review findings are addressed, but parent identifies one remaining
+finding8 task-ownership error in the first closure attempt: splitting a BAM
+task into4096-row count tasks can reintroduce a long/spliced duplicate after
+its earlier short same-start duplicate no longer overlaps the next fetch.
+The same integrated checker reproduces it, then the279-line narrow closure
+restores one original fetch/FilterState per task/sample. Only row serialization
+splits. Original task/in-flight numerical allocations are budgeted upfront;
+oversized shapes fail contextually rather than silently regrid. No second
+reviewer or unrelated feature campaign is used.
+
+The final packet is
+`/Volumes/KIOXIA/Developments/tmp/signal-native-correction-final-20261031.QKvusF/`:
+REPORT842bd4a447878d6f69cc17a9fa293b60a7fee6129d9a36468497dcbed6c0426a;
+bindings9e3008344fb37091eedb2cc5f1e57a77151029b5b403c98fd474f3b44ab87aa6;
+source archiveacc1854aed938fce5019e239ffb2219e6f3a43a31e775224f7f2f7815719c36f;
+manifest3d6ee463d1d7fb608b4830077c3fa616dfd902c262daafbdaf7ac4e2a6603834.
+Parent reads the complete closure/report, freshly verifies all18 artifact
+bindings,38 live/archive source files and291 connected graph/archive files.
+The original graph checksum ./ convention and named TAR root are preserved;
+an initial parent-only strict source-manifest parser mismatch is a metadata
+routing issue, not a failed native execution or repaired evidence.
+
+Actual final local10 library tests plus1 connected workflow, format and strict
+all-target Clippy pass without warnings/ignored tests.67 exact native CLI
+calls comprise61 successes and6 intentional errors. First-input geometry,
+bounded spools, persistent annotation indexes, boundary-specific alias/missing/
+sampling policies and one-time resource-admitted BW readers remain integrated.
+Private task/query/codec/factor limits are explicit; no total-RSS promise or
+source numerical band is altered. Original packets remain immutable.
+
+Parent retains the actual final debug binaryd9c3bad094e3337883d612530be1d28b379aa1e7cc94b7f45606f399f77acdfd
+and a verified extraction in
+`/Volumes/KIOXIA/Developments/tmp/signal-native-adoption-20261031.3pfet_h7/`.
+The next actual gate is exact-head native4 plus pinned source-on-native
+zoom/empty/NPZ/matrix interoperability. Representative performance and optional
+sortedBED policy remain separate; no publication follows from local tests.
+
 ## One whole-feature review complete; concentrated correction active
 
 The actual private dependency graph builds with bigtools0.5.8/bamio0.8.4 and
