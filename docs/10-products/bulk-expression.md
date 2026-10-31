@@ -14,7 +14,9 @@ The limma target has a complete reviewed private current-voom count workflow,
 four-native acceptance and accepted whole-workflow performance: R inner median
 1.889s versus native1/4 medians0.57/0.60s, with lower process RSS. Worker scaling
 does not pass; four workers are slightly slower on this fixture. Publication
-remains pending. See `.autopilot/state/limma-performance-2026-10-28.md` and
+remains pending, and the original first-release named log-expression path is
+still required. The private count-only plan does not narrow that dossier scope.
+See `.autopilot/state/limma-performance-2026-10-28.md` and
 `../plans/2026-10-28-limma-native-count-workflow.md`.
 
 ## Portfolio decision
