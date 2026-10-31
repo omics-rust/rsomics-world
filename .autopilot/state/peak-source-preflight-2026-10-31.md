@@ -1,5 +1,23 @@
 # Peak next-product source qualification
 
+## Second addon attempt stops at storage before any restoration
+
+Run41222823649 at764884b1 fails in the hosted storage preflight before API
+acquisition/restoration or new source calls. Its actual936B original
+artifact13050886283 SHA c06e89a4b29634d8fd9d5724930f7f0db69d53ecd6fccbe402d65832429ac29e
+is retained with APIs/log/failure at
+`/Volumes/KIOXIA/Developments/tmp/hosted-preflight-failures-20261101.ko21SO/41222823649/`.
+The old combined condition reports only insufficient-or-escaped storage; it
+does NOT retain actual device/free-space values, so no exact shortfall or
+device mismatch is invented. This concerns the disposable Linux runner, NOT
+the Mac boot disk or verified external project storage.
+
+Move the existing host.json observation BEFORE this check, adding both device
+IDs and required free bytes. Keep the SAME12GiB threshold and route checks;
+no cleanup, moving image, source/library/input/band change or fallback is
+authorized by this diagnostic correction. Existing integrated prep passes
+1/0.643s; exact new CI precedes another gated attempt with actual observations.
+
 ## Complete addon failure originals adopted; source retry authorized
 
 Parent reads the complete REPORT18c4a64dd562844b533f5e006e9fe02ce6f3be0e3ed539e9c64d9005b5b79432,

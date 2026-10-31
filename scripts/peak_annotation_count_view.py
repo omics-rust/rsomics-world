@@ -386,11 +386,13 @@ def run(root):
         raise ValueError('source-view output already exists')
     root.mkdir(parents=True)
     runner = Path(os.environ['RUNNER_TEMP']).resolve(strict=True)
-    if root.stat().st_dev != runner.stat().st_dev or shutil.disk_usage(runner).free < 12 * 2**30:
-        raise ValueError('insufficient or escaped hosted source-view storage')
+    disk = shutil.disk_usage(runner)
     save(root / 'host.json', dict(run=os.environ['GITHUB_RUN_ID'], head=os.environ['GITHUB_SHA'],
-         image=original.IMAGE, disk=shutil.disk_usage(runner)._asdict(), runner=str(runner),
-         python=sys.version, platform=original.platform.platform(), output_device=root.stat().st_dev))
+         image=original.IMAGE, disk=disk._asdict(), runner=str(runner), runner_device=runner.stat().st_dev,
+         python=sys.version, platform=original.platform.platform(), output_device=root.stat().st_dev,
+         required_free_bytes=12 * 2**30))
+    if root.stat().st_dev != runner.stat().st_dev or disk.free < 12 * 2**30:
+        raise ValueError('insufficient or escaped hosted source-view storage; actual devices/free space in host.json')
     cache_paths = {}
     for name in ('EVIDENCE', 'TMPDIR', 'XDG_CACHE_HOME', 'XDG_CONFIG_HOME', 'XDG_DATA_HOME',
                  'PIP_CACHE_DIR', 'UV_CACHE_DIR', 'PYTHONUSERBASE', 'PYTHONPYCACHEPREFIX',
