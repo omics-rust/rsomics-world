@@ -1,5 +1,38 @@
 # Native peak first-four construction
 
+## Live-storage correction frozen as actual green-2
+
+The fixed real campaign41242120160 exposes a cumulative allocation-accounting
+error, not an observed OOM. Root reads the full correction report, four-file
+diff, final raw suite and real-input comparison, then independently verifies
+160 packet/owner bodies. Original budgets, science, full GTF and fixtures stay
+unchanged. Only parse.rs/graph.rs/index.rs and one annotation regression change;
+assign.rs, public API, CLI, dependencies and schemas do not.
+
+Pinned1.91 fmt/strict Clippy and full release suite pass7lib+3count+1whole,
+zero ignored. Root freshly reruns fmt and diff-check. Real full GTF295085100B
+SHA8424becc4124034acb2ab58093bece8ce23793b604ae2eabd7db6cb0da498687
+now annotates at1/4 threads; all3440 rows/nine core/nine masks match retained
+source and worker TSVs are byte-identical. Final RSS382451712/402063360B is
+maximum process RSS, not aggregate memory or an OS cap, and not a speed claim.
+
+Clean owner main5705a307ccd3a535610f8989583882bd805c8446 is frozen into actual
+green-2, all34 bodies checked against Git blobs and freshly extracted through
+the existing verifier. Archive73081B SHA
+c198781664a3bdac71629bca22efa0be79f3d69ff294eb2844b1dc427855f149;
+manifest536c397ca678397485c1ad1b55249c6ecaa7e41e6184be4d9dc5c65bf05a82ab;
+sealef79acd8cfcd97ab8194b0adcf0e2fe8cdc157db6dd84c521345517f5a40c5ba.
+Green-1 remains unchanged. Existing gate explicitly binds6+3+1 forgreen-1 and
+7+3+1 forgreen-2; same ONE preparation test passes1/0.360s. Initial invocation
+missed PYTHONPATH; corrected actual contract RED is absent TEST_POPULATIONS,
+then GREEN. No test/case/source answer is dropped. Final native-four/source
+and whole real count/performance remain pending, not inherited from green-1.
+
+Full correction packet: peak-annotation-memory-20261101.TjxOA4,
+REPORT3896d1eff9cae32a1fe91cc0d71c763a5c9f6f3082670ba639ffdc8a4ddcc44b,
+receipt04e073b71ab00c538f52555f135f21959a32693bfd40276cfafb6081cdadf788.
+Freeze packet: peak-green2-snapshot-20261101.bCd5KV. No remote/publication.
+
 ## Actual four-native and same-file source gate adopted
 
 Run41234576411/attempt1 is terminal SUCCESS at exact head

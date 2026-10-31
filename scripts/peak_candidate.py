@@ -22,6 +22,7 @@ from signal_candidate import capture, check_tree, portable_names, storage, tree_
 REPOSITORY = 'omics-rust/rsomics-world'
 ASSET = 'peak-native-fixtures-20261101'
 SNAPSHOTS = '.autopilot/snapshots/peak-native-2026-11-01'
+TEST_POPULATIONS = {'green-1': (6, 3, 1), 'green-2': (7, 3, 1)}
 SOURCE_RUN = 41209740891
 SOURCE_REPORT = '83cbf36dbe59c17f87745a02c43c5f2f045c3d29ba9627b22ee31ccce3e348ed'
 SOURCE_MANIFEST = '5f7c351e3b7e4e7d0e2ec8837124862a590dc01e1af8010d972c4249b7be305f'
@@ -315,7 +316,9 @@ def tests(root, mode):
         logs = capture(root, 'test-' + mode, test_command(mode), root / 'source')
         text = (logs / 'stdout.txt').read_text() + (logs / 'stderr.txt').read_text()
         populations = [int(number) for number in re.findall(r'test result: ok\. (\d+) passed; 0 failed; 0 ignored;', text)]
-        check(all(number in populations for number in (6, 3, 1)), 'complete6+3+1 native test population absent')
+        expected = TEST_POPULATIONS[load(root / 'selection.json')['snapshot']]
+        check(all(number in populations for number in expected),
+              'complete native test population absent: ' + '+'.join(map(str, expected)))
         binary = Path(os.environ['CARGO_TARGET_DIR']) / mode / 'rsomics-peak'
         _regular(binary)
         shutil.copy2(binary, root / ('binary-' + mode))

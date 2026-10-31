@@ -27,6 +27,8 @@ class PeakCandidatePreparationTest(unittest.TestCase):
         self.assertTrue(WORKFLOW.is_file(), 'complete peak native-four/consumer gate is absent')
         candidate = importlib.import_module('peak_candidate')
         consumer = importlib.import_module('peak_source_on_native')
+        self.assertEqual(candidate.TEST_POPULATIONS,
+                         {'green-1': (6, 3, 1), 'green-2': (7, 3, 1)})
         text = WORKFLOW.read_text()
         routes = json.loads(re.search(r"fromJSON\('([^']+)'\)", text)[1])
         self.assertEqual([(r['target'], r['runner'], r['system'], r['arch']) for r in routes], [

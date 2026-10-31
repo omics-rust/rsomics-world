@@ -1,5 +1,29 @@
 # Fixed real-input Peak performance gate
 
+## Fourth attempt reaches real annotation and exposes cumulative accounting
+
+Actual41242120160/attempt1 atf9b32007e6df9605f4c1039f0b0f0aa39a6a4a6d
+fails after runtime/ELF/probe/provider/materialization admission. All five source
+stages exit0; native call/sparse/row derivation exit0; annotate exits1 and count
+is not reached. Actual stderr names annotation.gtf:578254 and the512MiB graph
+admission budget. Process RSS194473984B is not OOM/live-descendant evidence;
+the generic complete-graph wrapper message is not the scientific root cause.
+
+Useful artifact13058341167 is30126579B ZIP SHA
+f91ff4e95c76a496bdae84fda21f37241ed4fe61821ce2e72d4cd8109707815b.
+All609 manifest bodies/CRC/16 exact-head controllers verify in
+peak-real-fourth-failure-20261101.277pCP; no acquisition carrier is claimed.
+Root reads the full actual report and native stderr/measurement. Complete real
+GTF669503lines/295085100B stays retained; no filtering/trimming occurs.
+
+Narrow native live-storage/lifetime correction is now clean owner5705a307,
+with original512MiB admission budget, full input and scientific output intact.
+Same full GTF annotation matches all3440 retained source rows/nine core/nine
+masks at1/4 workers; no real native count or whole performance is yet accepted.
+Final green-2 native/source qualification must precede another fixed real run.
+See peak-native-first-four state for exact source/check identities. No source
+threshold, benchmark data, fitted-model requirement or sparse policy changed.
+
 ## Pinned MACS3 wheel does not expose a module-version attribute
 
 Before another dispatch, root reads the ACTUAL retained built wheel from the
