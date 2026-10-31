@@ -45,9 +45,14 @@ Pre-outcome resource refinement: do not require an arbitrary128GiB free merely
 because uncompressed raw JSON is verbose. Stream raw observer captures directly
 to lossless gzip while recording decompressed-byte SHA/size and exact row/cell
 comparison; never create then silently delete raw captures. Keep all originals.
-Require at least72GiB free/8GiB available RAM; bound the whole retained campaign
-to64GiB plus8GiB headroom using actual qualification output sizes and coordinate-
-only candidate-pair counts. If the bound fails, hold or acquire separate capacity,
+Require8GiB available RAM; retain the64GiB plaintext ceiling and reserve a complete
+streamed-TAR age ciphertext copy plus8GiB headroom. Before scientific work, derive
+the smaller admissible retained ceiling from actual free space. After the six
+qualification graphs, admit the complete unchanged26-graph plan using actual
+output sizes and coordinate-only candidate-pair counts. Shared finalization space
+is additional free space: add only future retained growth, not retained bytes
+again. Reserve128MiB TAR metadata/padding and verify the exact TAR bound at seal.
+If the bound fails, hold or acquire separate capacity,
 not alter the fixed cohort, regions, flags, outputs or timing samples. Application
 budget remains2GiB; prepared I remains at most500000 variants.
 
@@ -59,3 +64,22 @@ all trials, startup/process-count differences, real task imbalance and regressio
 No fixture timing, selected best run or synthetic scaling supports release.
 Released-sequence analysis terms do not imply CC0 or public redistribution;
 retain source/CEPH/study acknowledgement, keep cohort artifacts private initially.
+
+Use only standard four-CPU ubuntu-24.04 GitHub-hosted execution inside the exact
+original GCC14.3 Bookworm image. Adopt the committed final-source green-2 receipt
+from run41246273033/1, including its full historical controller-byte map; never
+change the actual Actions head to restore historical artifacts. Native runtime
+and the capacity-only observer still require their normal actual admission.
+All originals, logs, source, tools and caches live in a fresh0700 RUNNER_TEMP
+private tree. Public-recipient SHA is pinned; the runner receives no private key.
+
+After the run (also after ordinary failures), write the product's complete private
+manifest and stream the no-dereference TAR directly into pinned age1.3.2. Only the
+final hgdp.tar.age and allowlisted ciphertext receipt are uploaded; source rows,
+individual GT, scientific stdout/stderr and manifests/hashes stay inside encryption.
+No plaintext fallback, error sidecar upload or masked success is allowed. Encryption
+and upload are outside every scientific timer. GitHub's runtime still sees plaintext;
+this protects artifact/public-log delivery, not against the hosting provider. Abrupt
+runner loss or an encryption/upload failure can still prevent original recovery.
+Root must download the exact-run artifact to external storage, decrypt externally
+and validate the full private manifest and scientific run status before adoption.

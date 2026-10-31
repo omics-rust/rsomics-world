@@ -26,6 +26,8 @@ class PlinkRealPreparation(unittest.TestCase):
                         'integrated private HGDP controller is not implemented')
         real = importlib.import_module('plink_real_performance')
         observer = importlib.import_module('plink_observer_admission')
+        self.assertTrue(callable(getattr(real, 'finalization_budget', None)),
+                        'complete retained-plus-ciphertext budget is not implemented')
         self.assertFalse({'numpy', 'pandas', 'pgenlib', 'scipy'}.intersection(sys.modules))
         spec = real.config()
         self.assertEqual(sum(row['bytes'] for row in spec['objects']), 274156684)
@@ -39,6 +41,37 @@ class PlinkRealPreparation(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, 'owner-only'):
                 real.private_directory(private)
             private.chmod(0o700)
+            (private / 'synthetic.tsv').write_text('synthetic\t7\n')
+            (root / 'outside.txt').write_text('must not be followed\n')
+            (private / 'alias').symlink_to('../outside.txt')
+            real.write_private_manifest(private)
+            carrier = io.BytesIO()
+            real.archive_stream(private, carrier)
+            with tarfile.open(fileobj=io.BytesIO(carrier.getvalue()), mode='r:') as archive:
+                self.assertEqual(set(archive.getnames()), {'plink-private', 'plink-private/alias',
+                    'plink-private/synthetic.tsv', 'plink-private/final-private-manifest.json'})
+                self.assertEqual(archive.extractfile('plink-private/synthetic.tsv').read(), b'synthetic\t7\n')
+                self.assertTrue(archive.getmember('plink-private/alias').issym())
+                self.assertEqual(archive.getmember('plink-private/alias').linkname, '../outside.txt')
+            self.assertLessEqual(len(carrier.getvalue()), real.archive_plan(private)['tar_bound_bytes'])
+            self.assertTrue((root / 'outside.txt').is_file())
+            self.assertEqual(real.finalization_budget(100, 1000, 8726284172)['required_free_bytes'], 8726284172)
+            with self.assertRaisesRegex(ValueError, 'finalization'):
+                real.finalization_budget(100, 1000, 8726284171)
+            recipient = real.admit_recipient(ROOT)
+            self.assertEqual(hashlib.sha256(recipient.read_bytes()).hexdigest(),
+                             '8bb86dc97982fc7b64d7e33f7c3741e7f3d27a21690f48ddce9dada4a230680d')
+            adopted, _ = real.committed_receipt(ROOT, real.DEFAULT_RECEIPT)
+            self.assertEqual(adopted['snapshot'], 'green-2')
+            self.assertEqual(set(adopted['controller_sha256']), set(real.source.CONTROLLERS))
+            with self.assertRaisesRegex(ValueError, 'historical'):
+                real.source.extract_native(root / 'absent.tar', root / 'absent', ROOT,
+                                           expected_head=adopted['head_sha'])
+            invalid_hashes = dict(adopted['controller_sha256'])
+            invalid_hashes[next(iter(invalid_hashes))] = 'bad'
+            with self.assertRaisesRegex(ValueError, 'historical'):
+                real.source.extract_native(root / 'absent.tar', root / 'absent', ROOT,
+                    expected_head=adopted['head_sha'], expected_controller_hashes=invalid_hashes)
             for tool in ('source', 'official', 'native'):
                 for workers in (1, 4):
                     graph = real.graph(tool, workers, root / 'INPUT', root / tool / str(workers), root / 'binary')
@@ -124,9 +157,9 @@ class PlinkRealPreparation(unittest.TestCase):
             self.assertIn(b'variants.size() > 500000 || samples.size() > 1000', changed_source)
             with self.assertRaisesRegex(ValueError, 'identity'):
                 observer.widen(changed_source)
-            self.assertEqual(real.storage_bound(1024, [2048] * 6)['retained_bound_bytes'], 1024 + 20 * 2048 + 26 * 2**20)
+            self.assertEqual(real.storage_bound(1024, [2048] * 6, 16 * 2**30)['retained_bound_bytes'], 1024 + 20 * 2048 + 26 * 2**20)
             with self.assertRaisesRegex(ValueError, '64'):
-                real.storage_bound(64 * 2**30, [2048] * 6)
+                real.storage_bound(64 * 2**30, [2048] * 6, 256 * 2**30)
             measurements = [dict(tool=tool, wall_seconds=wall + i, scientific_cli_wall_seconds=7 * stage,
                 aggregate_tree_peak_bytes=None, stages=[dict(group=group, wall_seconds=stage) for group in
                     ('I', 'F', 'F.qc', 'pairs', 'prune', 'P', 'P.qc')])
@@ -139,7 +172,15 @@ class PlinkRealPreparation(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, 'GLIBC_2.39'):
                 real.check_version_closure(real.version_needs(needs), {'libc.so.6': 'Version definition section:\n Name: GLIBC_2.36\n'})
             workflow = (ROOT / '.github/workflows/plink-real-performance.yml').read_text()
-            self.assertNotIn('upload-artifact', workflow)
+            self.assertIn('runs-on: ubuntu-24.04', workflow)
+            self.assertNotIn('runner_labels:', workflow)
+            self.assertNotIn('private_storage:', workflow)
+            upload = steps(workflow)['Upload encrypted originals only']
+            paths = upload.split('path: |', 1)[1].split('retention-days:', 1)[0]
+            self.assertIn('/delivery/hgdp.tar.age', paths)
+            self.assertIn('/delivery/receipt.json', paths)
+            self.assertNotIn('.stderr', paths)
+            self.assertNotIn('*', paths)
             self.assertNotRegex(workflow.split('permissions:', 1)[0], r'\n  (push|pull_request|schedule):')
             for title, step in steps(workflow).items():
                 if '        run: |\n' in step:

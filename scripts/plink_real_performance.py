@@ -1,9 +1,10 @@
-"""Private, adopted HGDP whole-workflow qualification; never uploads cohort artifacts."""
+"""Hosted HGDP whole-workflow qualification with encrypted-only original delivery."""
 
 import argparse
 import csv
 import gzip
 import hashlib
+import io
 import itertools
 import json
 import os
@@ -16,11 +17,13 @@ import stat
 import statistics
 import subprocess
 import sys
+import tarfile
 import time
 import urllib.error
 import urllib.request
 import zipfile
 
+import private_artifact
 import plink_source_on_native as source
 import plink_first_workflow_oracle as oracle
 from plink_candidate import check, load, save, file_identity, tree_manifest, SNAPSHOTS, POLICY, EXPECTED
@@ -32,12 +35,17 @@ ROOT = Path(__file__).resolve().parents[1]
 GIB = 2**30
 LIMIT = 64 * GIB
 HEADROOM = 8 * GIB
+ARCHIVE_OVERHEAD = 128 * 2**20
+DEFAULT_RECEIPT = '.autopilot/oracles/plink-native-2026-11-01-green-2.json'
+RECIPIENT = 'assets/private-artifacts-20261101.recipient'
+RECIPIENT_SHA = '8bb86dc97982fc7b64d7e33f7c3741e7f3d27a21690f48ddce9dada4a230680d'
 TARGETS = ['linux-x86_64', 'linux-aarch64', 'macos-x86_64', 'macos-aarch64']
 REPORTS = ('acount', 'gcount', 'scount', 'smiss', 'vmiss', 'het', 'hardy', 'hwe-log.hardy')
 CONTROLLERS = ('scripts/plink_real_performance.py', 'scripts/plink_observer_admission.py',
     'scripts/test_plink_real_performance.py', 'assets/plink-real-hgdp-20261101.json',
     '.github/workflows/plink-real-performance.yml', 'scripts/signal_real_performance.py',
-    'scripts/peak_real_performance.py', *source.CONTROLLERS)
+    'scripts/peak_real_performance.py', 'scripts/private_artifact.py',
+    'assets/private-artifact-tools-20261101.json', RECIPIENT, *source.CONTROLLERS)
 
 
 def config():
@@ -65,46 +73,67 @@ def cpu_set(text):
     return values
 
 
-def setup(storage, cpus, idle):
-    check(os.environ.get('GITHUB_ACTIONS') == 'true' and os.environ.get('RUNNER_ENVIRONMENT') == 'self-hosted' and
-          platform.system() == 'Linux' and platform.machine() == 'x86_64', 'explicit hosted self-hosted Linux route required')
-    check(idle, 'fresh otherwise-idle host confirmation required')
-    storage = private_directory(storage)
-    check(storage.stat().st_dev != Path('/').stat().st_dev, 'private persistent storage cannot be the host boot filesystem')
-    check(all(Path(os.environ[name]).resolve(strict=True).stat().st_dev == storage.stat().st_dev
-              for name in ('GITHUB_WORKSPACE', 'RUNNER_TEMP')), 'runner project/cache routes are not on the admitted private device')
+def hosted_route(root):
+    check(os.environ.get('GITHUB_ACTIONS') == 'true' and os.environ.get('GITHUB_REPOSITORY') == source.REPOSITORY and
+          os.environ.get('RUNNER_ENVIRONMENT') == 'github-hosted' and platform.system() == 'Linux' and
+          platform.machine() == 'x86_64', 'actual GitHub-hosted Linux workflow required; standalone unsupported')
+    root = private_directory(root)
+    runner = Path(os.environ['RUNNER_TEMP']).resolve(strict=True)
+    parent = private_directory(root.parent)
+    check(parent.parent == runner and root.name == 'private' and
+          parent.name == 'plink-real-' + os.environ['GITHUB_RUN_ID'] + '-' + os.environ['GITHUB_RUN_ATTEMPT'] and
+          root.stat().st_dev == runner.stat().st_dev, 'private route escapes fresh RUNNER_TEMP campaign')
+    check(not any(os.environ.get(name) for name in ('LD_PRELOAD', 'LD_LIBRARY_PATH', 'CXXFLAGS', 'CFLAGS', 'LDFLAGS')),
+          'unadmitted compiler/loader override')
+    return root
+
+
+def setup(root, world, selector, cpus):
+    root = hosted_route(root)
+    inner_environment(root, admitted=False)
+    oracle.hosted(root)
     allocated = cpu_set(cpus)
-    check(set(allocated) <= os.sched_getaffinity(0), 'CPUs are not actually allocated')
-    check(meminfo()['MemAvailable'] >= 8 * GIB and shutil.disk_usage(storage).free >= 72 * GIB,
-          'private route requires72GiB free and8GiB currently available RAM')
-    docker_root = subprocess.run(['docker', 'info', '--format', '{{.DockerRootDir}}'], check=True, capture_output=True, text=True).stdout.strip()
-    check(Path(docker_root).resolve(strict=True).stat().st_dev == storage.stat().st_dev,
-          'Docker state/cache is not on the admitted private storage device')
-    image = subprocess.run(['docker', 'image', 'inspect', '--format', '{{json .RepoDigests}}',
-        'gcc:14.3.0-bookworm@' + oracle.IMAGE], check=True, capture_output=True, text=True)
-    check(any(value.endswith('@' + oracle.IMAGE) for value in json.loads(image.stdout)), 'exact image is not already present; no implicit pull allowed')
-    root = storage / ('plink-' + os.environ['GITHUB_RUN_ID'] + '-' + os.environ['GITHUB_RUN_ATTEMPT'])
-    root.mkdir(mode=0o700)
-    save(root / 'private-host.json', dict(private_root=str(storage), device=storage.stat().st_dev,
-        uid=os.getuid(), mode=oct(stat.S_IMODE(storage.stat().st_mode)), docker_root=docker_root,
-        image=oracle.IMAGE, cpus=allocated, idle_operator_confirmed=True, available_memory=meminfo(),
-        disk=shutil.disk_usage(storage)._asdict(), public_upload=False, standalone_mode=False))
+    check(allocated == [0, 1, 2, 3] and set(allocated) == os.sched_getaffinity(0), 'standard four-CPU allocation differs')
+    check(meminfo()['MemAvailable'] >= 8 * GIB, 'hosted route requires8GiB currently available RAM')
+    committed_receipt(world, selector)
+    recipient = admit_recipient(world)
+    private_artifact.prepare_tool('linux-amd64', root / 'tools/age')
+    probe = root / 'evidence/encryption-readiness.txt'
+    probe.write_text('rsomics PLINK encrypted delivery readiness\n')
+    private_artifact.encrypt(root / 'tools/age', recipient, root / 'evidence/encryption-readiness.age', input_file=probe)
+    retained = tree_bytes(root); free = shutil.disk_usage(root).free
+    low, high = retained, LIMIT
+    while low < high:
+        middle = (low + high + 1) // 2
+        if finalization_budget(retained, middle)['required_free_bytes'] <= free:
+            low = middle
+        else:
+            high = middle - 1
+    budget = finalization_budget(retained, low, free)
+    save(root / 'private-host.json', dict(private_root=str(root), device=root.stat().st_dev,
+        uid=os.getuid(), image=oracle.IMAGE, cpus=allocated, head_sha=os.environ['GITHUB_SHA'],
+        run_id=os.environ['GITHUB_RUN_ID'], run_attempt=os.environ['GITHUB_RUN_ATTEMPT'],
+        retained_ceiling_bytes=low, storage=budget, available_memory=meminfo(),
+        disk=shutil.disk_usage(root)._asdict(), encrypted_upload_only=True, standalone_mode=False))
+    hosted(root)
+    with Path(os.environ['GITHUB_ENV']).open('a') as stream:
+        for name in ('EVIDENCE', *oracle.CACHE_KEYS, 'CARGO_HOME', 'CARGO_TARGET_DIR', 'RUSTUP_HOME'):
+            check('\n' not in os.environ[name], 'private environment path contains newline')
+            stream.write(name + '=' + os.environ[name] + '\n')
 
 
 def hosted(root):
-    check(os.environ.get('GITHUB_ACTIONS') == 'true' and os.environ.get('GITHUB_REPOSITORY') == source.REPOSITORY and
-          os.environ.get('RUNNER_ENVIRONMENT') == 'self-hosted', 'actual hosted self-hosted workflow required; standalone unsupported')
-    root = private_directory(root)
-    parent = private_directory(os.environ['PRIVATE_STORAGE_ROOT'])
-    check(root.parent == parent and load(root / 'private-host.json')['image'] == oracle.IMAGE and
-          os.environ.get('PRIVATE_RETENTION') == 'owner-only-persistent-no-upload', 'private persistent route has not been admitted')
-    check(not any(os.environ.get(name) for name in ('LD_PRELOAD', 'LD_LIBRARY_PATH', 'CXXFLAGS', 'CFLAGS', 'LDFLAGS')),
-          'unadmitted compiler/loader override')
+    root = hosted_route(root)
+    admission = load(root / 'private-host.json')
+    check(admission['image'] == oracle.IMAGE and admission['private_root'] == str(root) and
+          admission['head_sha'] == os.environ['GITHUB_SHA'] and admission['run_id'] == os.environ['GITHUB_RUN_ID'] and
+          admission['run_attempt'] == os.environ['GITHUB_RUN_ATTEMPT'] and admission['encrypted_upload_only'] is True,
+          'actual hosted private/encrypted route has not been admitted')
     oracle.hosted(root)
     return root
 
 
-def inner_environment(root):
+def inner_environment(root, admitted=True):
     root = Path(root).resolve(strict=True)
     paths = {name: root / relative for name, relative in {
         'EVIDENCE': 'evidence', 'TMPDIR': 'scratch', 'XDG_CACHE_HOME': 'cache', 'XDG_CONFIG_HOME': 'config',
@@ -114,7 +143,17 @@ def inner_environment(root):
     for name, path in paths.items():
         path.mkdir(parents=True, exist_ok=True, mode=0o700)
         os.environ[name] = str(path)
-    hosted(root)
+    if admitted:
+        hosted(root)
+
+
+def admit_recipient(world):
+    path = Path(world) / RECIPIENT
+    check(path.is_file() and not path.is_symlink() and oracle.sha256(path) == RECIPIENT_SHA,
+          'public encryption recipient differs')
+    lines = path.read_text().splitlines()
+    check(len(lines) == 1 and re.fullmatch(r'age1pq1[0-9a-z]+', lines[0]), 'one native PQ public recipient required')
+    return path
 
 
 def committed_receipt(world, selector):
@@ -132,9 +171,13 @@ def committed_receipt(world, selector):
           'actual four-native/source adoption is absent')
     for field in ('artifact_sha256', 'binary_sha256', 'source_archive_sha256', 'source_manifest_sha256'):
         check(re.fullmatch('[0-9a-f]{64}', row[field]), 'invalid adoption digest: ' + field)
-    check(re.fullmatch('[0-9a-f]{40}', row['head_sha']) and re.fullmatch(r'green-[1-9][0-9]*', row['snapshot']) and
+    check(re.fullmatch('[0-9a-f]{40}', row['head_sha']) and row['snapshot'] == 'green-2' and
           all(type(row[key]) is int and row[key] > 0 for key in ('run_id', 'run_attempt', 'artifact_id', 'size_in_bytes')),
           'invalid adopted run/snapshot identity')
+    controllers = row['controller_sha256']
+    check(isinstance(controllers, dict) and set(controllers) == set(source.CONTROLLERS) and
+          all(isinstance(value, str) and re.fullmatch('[0-9a-f]{64}', value) for value in controllers.values()),
+          'complete native adoption controller binding required')
     snapshot = world / SNAPSHOTS / row['snapshot']
     check(oracle.sha256(snapshot / 'source.tar.gz') == row['source_archive_sha256'] and
           oracle.sha256(snapshot / 'files.sha256') == row['source_manifest_sha256'], 'adopted source snapshot differs')
@@ -186,12 +229,8 @@ def acquire_runtime(root, world, selector):
               zipped.testzip() is None, 'native carrier layout/CRC differs')
         with zipped.open(carrier.name) as stream, carrier.open('xb') as output:
             shutil.copyfileobj(stream, output, 2**20)
-    previous = os.environ['GITHUB_SHA']
-    try:
-        os.environ['GITHUB_SHA'] = receipt['head_sha']
-        native, binding = source.extract_native(carrier, destination / 'restored', world)
-    finally:
-        os.environ['GITHUB_SHA'] = previous
+    native, binding = source.extract_native(carrier, destination / 'restored', world,
+        expected_head=receipt['head_sha'], expected_controller_hashes=receipt['controller_sha256'])
     check(oracle.sha256(native / 'binary-release') == receipt['binary_sha256'] and
           oracle.sha256(native / 'source.tar.gz') == receipt['source_archive_sha256'] and
           oracle.sha256(native / 'files.sha256') == receipt['source_manifest_sha256'], 'restored adopted native bodies differ')
@@ -371,17 +410,99 @@ def pair_schedule():
             for workers in (1, 4) for index in range(5)]
 
 
-def storage_bound(retained, qualification_sizes):
+def finalization_budget(retained, planned_retained, free_bytes=None):
+    check(type(retained) is int and type(planned_retained) is int and 0 <= retained <= planned_retained <= LIMIT,
+          'whole retained campaign exceeds64GiB or has an invalid finalization plan')
+    archive_bound = planned_retained + ARCHIVE_OVERHEAD
+    result = private_artifact.finalization_space(planned_retained, archive_bound)
+    result.update(retained_bytes=retained, retained_bound_bytes=planned_retained, archive_bound_bytes=archive_bound,
+                  required_free_bytes=planned_retained - retained + result['required_free_bytes'])
+    if free_bytes is not None:
+        check(free_bytes >= result['required_free_bytes'], 'complete retained-plus-ciphertext finalization budget does not fit')
+    return result
+
+
+def storage_bound(retained, qualification_sizes, free_bytes):
     check(len(qualification_sizes) == 6, 'six complete qualification sizes required')
     bound = retained + 20 * max(qualification_sizes) + 26 * 2**20
     check(bound <= LIMIT, 'whole retained campaign exceeds64GiB; fixed scientific profile must hold')
-    return dict(retained_bound_bytes=bound, limit_bytes=LIMIT, headroom_bytes=HEADROOM,
+    return dict(**finalization_budget(retained, bound, free_bytes), limit_bytes=LIMIT,
                 basis='retained originals + twenty maximum qualified complete graphs +1MiB per graph for variable logs')
 
 
 def budget_guard(root):
-    check(tree_bytes(root) <= LIMIT and shutil.disk_usage(root).free >= HEADROOM, 'private campaign64GiB/8GiB storage guard reached')
+    retained = tree_bytes(root)
+    check(retained <= load(root / 'private-host.json')['retained_ceiling_bytes'], 'admitted private retained ceiling reached')
+    finalization_budget(retained, retained, shutil.disk_usage(root).free)
     check(meminfo()['MemAvailable'] >= 512 * 2**20, 'host available-memory abort guard reached')
+
+
+def archive_entries(root):
+    return [root, *sorted(root.rglob('*'))]
+
+
+def write_private_manifest(root):
+    root = private_directory(root)
+    files = {}
+    for path in archive_entries(root)[1:]:
+        name = path.relative_to(root).as_posix()
+        if name == 'final-private-manifest.json':
+            continue
+        info = path.lstat()
+        row = dict(mode=oct(stat.S_IMODE(info.st_mode)))
+        if path.is_symlink():
+            row.update(type='symlink', target=os.readlink(path))
+        elif path.is_dir():
+            row.update(type='directory')
+        else:
+            check(stat.S_ISREG(info.st_mode), 'private archive contains an unsupported special file')
+            row.update(type='file', **file_identity(path))
+        files[name] = row
+    save(root / 'final-private-manifest.json', dict(schema='rsomics.plink.private-originals.v1', files=files,
+        root='plink-private', encrypted_delivery=True, source_manifest_public=False,
+        verification='operator must decrypt, validate every retained body and inspect the private run status'))
+
+
+def archive_plan(root):
+    root = private_directory(root)
+    size = 0
+    with tarfile.open(fileobj=io.BytesIO(), mode='w', format=tarfile.PAX_FORMAT, dereference=False) as archive:
+        for path in archive_entries(root):
+            name = 'plink-private' + (('/' + path.relative_to(root).as_posix()) if path != root else '')
+            info = archive.gettarinfo(str(path), arcname=name)
+            check(info is not None and (info.isfile() or info.isdir() or info.issym() or info.islnk()),
+                  'private archive contains an unsupported special file')
+            size += len(info.tobuf(tarfile.PAX_FORMAT, archive.encoding, archive.errors))
+            if info.isfile():
+                size += (info.size + 511) // 512 * 512
+    bound = ((size + 1024 + tarfile.RECORDSIZE - 1) // tarfile.RECORDSIZE) * tarfile.RECORDSIZE
+    return dict(tar_bound_bytes=bound, retained_bytes=tree_bytes(root), dereference=False, materialized_tar=False)
+
+
+def archive_stream(root, stream):
+    root = private_directory(root)
+    with tarfile.open(fileobj=stream, mode='w|', format=tarfile.PAX_FORMAT, dereference=False) as archive:
+        for path in archive_entries(root):
+            name = 'plink-private' + (('/' + path.relative_to(root).as_posix()) if path != root else '')
+            archive.add(path, arcname=name, recursive=False)
+
+
+def seal(root, world, delivery):
+    root = hosted_route(root)
+    delivery = private_directory(delivery)
+    check(delivery.parent == root.parent and delivery.name == 'delivery', 'ciphertext must be outside the packaged private tree')
+    recipient = admit_recipient(world)
+    tool = private_artifact.prepare_tool('linux-amd64', root / 'tools/age')
+    write_private_manifest(root)
+    plan = archive_plan(root)
+    check(plan['tar_bound_bytes'] <= plan['retained_bytes'] + ARCHIVE_OVERHEAD, 'private TAR overhead exceeds reserved bound')
+    budget = private_artifact.finalization_space(plan['retained_bytes'], plan['tar_bound_bytes'])
+    check(shutil.disk_usage(delivery).free >= budget['required_free_bytes'], 'encrypted finalization lacks reserved free space')
+    return private_artifact.encrypt(tool, recipient, delivery / 'hgdp.tar.age',
+        producer=[sys.executable, '-B', str(Path(__file__).resolve()), 'archive', '--root', str(root)],
+        plaintext_limit=plan['tar_bound_bytes'], context=dict(repository=source.REPOSITORY, product='rsomics-plink',
+            head_sha=os.environ['GITHUB_SHA'], workflow_path='.github/workflows/plink-real-performance.yml',
+            phase='real-hgdp', run_id=int(os.environ['GITHUB_RUN_ID']), run_attempt=int(os.environ['GITHUB_RUN_ATTEMPT'])))
 
 
 def acquire_cohort(root):
@@ -620,7 +741,9 @@ def campaign(root, runtime, cpus, cgroup_parent=None):
             if tool == 'source': baseline = directory
             qualified[workers, tool] = directory; sizes.append(tree_bytes(directory)); measurements.append(measured)
     geometry = {str(workers): coordinate_pairs(qualified[workers, 'source'] / 'products/F') for workers in (1, 4)}
-    bound = storage_bound(tree_bytes(root), sizes)
+    bound = storage_bound(tree_bytes(root), sizes, shutil.disk_usage(root).free)
+    check(bound['retained_bound_bytes'] <= load(root / 'private-host.json')['retained_ceiling_bytes'],
+          'complete campaign exceeds its pre-science retained-plus-ciphertext admission')
     save(root / 'evidence/qualification.json', dict(status='six_whole_graphs_passed', storage=bound,
         chromosome_tasks=geometry, measurements=measurements, warmups=6, source_official_build_correspondence='unproven'))
     results = []
@@ -643,7 +766,8 @@ def run(root, world, selector, cpus, cgroup_parent=None):
     root = Path(root).resolve(strict=True); inner_environment(root)
     allocated = cpu_set(cpus)
     check(set(allocated) <= os.sched_getaffinity(0), 'allocated CPUs differ inside exact image')
-    check(meminfo()['MemAvailable'] >= 8 * GIB and shutil.disk_usage(root).free >= 72 * GIB, 'initial72GiB/8GiB admission failed')
+    check(meminfo()['MemAvailable'] >= 8 * GIB, 'initial8GiB available-memory admission failed')
+    budget_guard(root)
     before = {name: oracle.sha256(ROOT / name) for name in set(CONTROLLERS)}
     save(root / 'evidence/controller.json', dict(commit=os.environ['GITHUB_SHA'], files=before, image=oracle.IMAGE))
     failure = None
@@ -662,23 +786,25 @@ def run(root, world, selector, cpus, cgroup_parent=None):
     finally:
         os.environ.pop('GH_TOKEN', None)
         check(before == {name: oracle.sha256(ROOT / name) for name in set(CONTROLLERS)}, 'protected controller changed')
-        record = dict(status='failed' if failure else 'completed', failure=failure, files=tree_manifest(root),
+        record = dict(status='failed' if failure else 'completed', failure=failure,
                       performance_passed=load(root / 'evidence/performance-decision.json')['passed']
                         if (root / 'evidence/performance-decision.json').is_file() else None,
-                      private_retention=True, public_upload=False, release=False)
-        save(root / 'final-private-manifest.json', record)
+                      private_retention=True, encrypted_upload_only=True, release=False)
+        save(root / 'run-status.json', record)
 
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('action', choices=['setup', 'run', 'execute'])
-    parser.add_argument('--root', type=Path); parser.add_argument('--storage-root', type=Path)
-    parser.add_argument('--world', type=Path, default=ROOT); parser.add_argument('--native-receipt')
-    parser.add_argument('--cpus', required=True); parser.add_argument('--idle-host-confirmed', action='store_true')
+    parser.add_argument('action', choices=['setup', 'run', 'execute', 'seal', 'archive'])
+    parser.add_argument('--root', type=Path); parser.add_argument('--delivery', type=Path)
+    parser.add_argument('--world', type=Path, default=ROOT); parser.add_argument('--native-receipt', default=DEFAULT_RECEIPT)
+    parser.add_argument('--cpus', default='0,1,2,3')
     parser.add_argument('--cgroup-parent', type=Path); parser.add_argument('--plan', type=Path)
     args = parser.parse_args()
-    if args.action == 'setup': setup(args.storage_root, args.cpus, args.idle_host_confirmed)
+    if args.action == 'setup': setup(args.root, args.world, args.native_receipt, args.cpus)
     elif args.action == 'run': run(args.root, args.world, args.native_receipt, args.cpus, args.cgroup_parent)
+    elif args.action == 'seal': print(json.dumps(seal(args.root, args.world, args.delivery), sort_keys=True))
+    elif args.action == 'archive': archive_stream(args.root, sys.stdout.buffer)
     else:
         root = hosted(args.root); plan = args.plan.resolve(strict=True)
         check(plan.is_relative_to(root / 'evidence'), 'graph plan escapes private campaign')

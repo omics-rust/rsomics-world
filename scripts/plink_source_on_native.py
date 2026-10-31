@@ -242,11 +242,18 @@ def extract_artifact(archive_path, destination):
     return manifest
 
 
-def extract_native(archive_path, destination, world):
+def extract_native(archive_path, destination, world, *, expected_head=None, expected_controller_hashes=None):
+    historical = expected_head is not None or expected_controller_hashes is not None
+    if historical:
+        check(isinstance(expected_head, str) and re.fullmatch('[0-9a-f]{40}', expected_head) and
+              isinstance(expected_controller_hashes, dict) and set(expected_controller_hashes) == set(CONTROLLERS) and
+              all(isinstance(value, str) and re.fullmatch('[0-9a-f]{64}', value)
+                  for value in expected_controller_hashes.values()), 'complete paired historical native binding required')
     extract_artifact(archive_path, destination)
     root = Path(destination) / 'candidate'; world = Path(world)
     selection = load(root / 'selection.json')
-    check(selection['controller_commit'] == os.environ['GITHUB_SHA'] and selection['target'] == 'linux-x86_64' and
+    check(selection['controller_commit'] == (expected_head if historical else os.environ['GITHUB_SHA']) and
+          selection['target'] == 'linux-x86_64' and
           selection['comparison_sha256'] == POLICY and selection['expected_manifest_sha256'] == EXPECTED,
           'native controller/target/comparison selection differs')
     check(re.fullmatch(r'green-[1-9][0-9]*', selection['snapshot']), 'native snapshot selector differs')
@@ -260,7 +267,8 @@ def extract_native(archive_path, destination, world):
           _hash_file(root / 'source/vendor/SOURCE.json') == selection['vendor_manifest_sha256'] and
           load(root / 'integrity-after.json')['failures'] == [], 'native source/lock/integrity binding differs')
     for name in CONTROLLERS:
-        check(_hash_file(Path(destination) / 'controller' / name) == _hash_file(world / name),
+        check(_hash_file(Path(destination) / 'controller' / name) ==
+              (expected_controller_hashes[name] if historical else _hash_file(world / name)),
               'native controller byte binding differs: ' + name)
     for mode in ('debug', 'release'):
         check(_hash_file(root / ('binary-' + mode)) == load(root / ('binary-' + mode + '.json'))['sha256'],
@@ -282,8 +290,11 @@ def extract_native(archive_path, destination, world):
               'complete restored native graph receipt differs')
         for name, identity in binding['reports'].items():
             check(file_identity(graph / name) == identity, 'portable native principal report differs')
-    return root, dict(archive_sha256=_hash_file(archive_path), selection=selection,
-                      manifest_sha256=_hash_file(Path(destination) / 'artifact-manifest.json'))
+    receipt = dict(archive_sha256=_hash_file(archive_path), selection=selection,
+                   manifest_sha256=_hash_file(Path(destination) / 'artifact-manifest.json'))
+    if historical:
+        receipt['historical_binding'] = dict(head_sha=expected_head, controller_sha256=expected_controller_hashes)
+    return root, receipt
 
 
 def compare_raw(native, bridge, shape):
