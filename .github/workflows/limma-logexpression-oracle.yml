@@ -1,0 +1,153 @@
+name: limma ordinary supplied-expression source oracle
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  oracle:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    env:
+      PYTHONDONTWRITEBYTECODE: '1'
+      OMP_NUM_THREADS: '1'
+      OPENBLAS_NUM_THREADS: '1'
+      MKL_NUM_THREADS: '1'
+      LIMMA_SOURCE_COMMIT: 825d1c8330d024adb6c54af66d79b0f4ec258530
+      LIMMA_SOURCE_SHA256: 40b1d2059a76ad98db4bf80139760acf8e8bae92a8265aaaf16ac199831533f4
+      INPUT_SHA256: 696c3084e9abf66187e8b052b8696d44422a25360884dc97871bdcdf39325616
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+
+      - name: Prepare hosted source storage
+        run: |
+          set -euo pipefail
+          export EVIDENCE="$RUNNER_TEMP/limma-logexpression-oracle"
+          export TMPDIR="$RUNNER_TEMP/scratch"
+          export R_LIBS_USER="$RUNNER_TEMP/R/library"
+          export R_USER_CACHE_DIR="$RUNNER_TEMP/R/cache"
+          export R_USER="$RUNNER_TEMP/R/home"
+          export XDG_CACHE_HOME="$RUNNER_TEMP/cache"
+          export CARGO_HOME="$RUNNER_TEMP/cargo-home"
+          export CARGO_TARGET_DIR="$RUNNER_TEMP/cargo-target"
+          export RUSTUP_HOME="$RUNNER_TEMP/rustup-home"
+          export LIMMA_SOURCE_ARCHIVE="$EVIDENCE/limma_3.68.5.tar.gz"
+          export INPUT_ARCHIVE="$GITHUB_WORKSPACE/assets/limma-logexpression-inputs-20261031.tar.gz"
+          export INPUT_DIR="$EVIDENCE/input-assets/limma-logexpression-inputs"
+          mkdir -p "$EVIDENCE/controller" "$TMPDIR" "$R_LIBS_USER" "$R_USER_CACHE_DIR" "$R_USER" "$XDG_CACHE_HOME" "$CARGO_HOME" "$CARGO_TARGET_DIR" "$RUSTUP_HOME"
+          printf 'EVIDENCE=%s\nTMPDIR=%s\nR_LIBS_USER=%s\nR_USER_CACHE_DIR=%s\nR_USER=%s\nXDG_CACHE_HOME=%s\nCARGO_HOME=%s\nCARGO_TARGET_DIR=%s\nRUSTUP_HOME=%s\nLIMMA_SOURCE_ARCHIVE=%s\nINPUT_ARCHIVE=%s\nINPUT_DIR=%s\n' \
+            "$EVIDENCE" "$TMPDIR" "$R_LIBS_USER" "$R_USER_CACHE_DIR" "$R_USER" "$XDG_CACHE_HOME" "$CARGO_HOME" "$CARGO_TARGET_DIR" "$RUSTUP_HOME" "$LIMMA_SOURCE_ARCHIVE" "$INPUT_ARCHIVE" "$INPUT_DIR" >> "$GITHUB_ENV"
+          python3 -B - <<'PY'
+          import json, os, shutil
+          from pathlib import Path
+          runner = Path(os.environ['RUNNER_TEMP']).resolve(strict=True)
+          paths = {name: Path(os.environ[name]).resolve(strict=True) for name in
+                   ('EVIDENCE', 'TMPDIR', 'R_LIBS_USER', 'R_USER_CACHE_DIR', 'R_USER', 'XDG_CACHE_HOME', 'CARGO_HOME', 'CARGO_TARGET_DIR', 'RUSTUP_HOME')}
+          assert all(value.is_relative_to(runner) for value in paths.values()), 'storage escapes runner-temp'
+          usage = shutil.disk_usage(runner)
+          assert usage.free > 4 * 2**30, 'insufficient source storage'
+          (paths['EVIDENCE'] / 'storage.json').write_text(json.dumps(dict(paths={name: str(value) for name, value in paths.items()}, disk_total=usage.total, disk_free=usage.free), indent=2) + '\n')
+          PY
+
+      - name: Verify and unpack frozen input-only assets
+        run: |
+          set -euo pipefail
+          python3 -B - <<'PY'
+          import csv, hashlib, io, json, os, tarfile
+          from pathlib import Path, PurePosixPath
+          archive = Path(os.environ['INPUT_ARCHIVE'])
+          expected_digest = os.environ['INPUT_SHA256']
+          assert hashlib.sha256(archive.read_bytes()).hexdigest() == expected_digest, 'input archive digest differs'
+          destination = Path(os.environ['EVIDENCE']) / 'input-assets'
+          assert not destination.exists(), 'input destination already exists'
+          root = 'limma-logexpression-inputs'
+          expected = {f'{case}/{name}.tsv' for case in ('real', 'equalvar', 'constvar', 'two-row', 'one-zero')
+                      for name in ('expression', 'design', 'samples', 'contrasts')} | {'LINEAGE.md', 'manifest.tsv'}
+          with tarfile.open(archive, 'r:gz') as bundle:
+              members = bundle.getmembers()
+              assert len({member.name.rstrip('/') for member in members}) == len(members), 'duplicate archive member'
+              regular = {}
+              for member in members:
+                  path = PurePosixPath(member.name)
+                  assert not path.is_absolute() and '..' not in path.parts and path.parts[0] == root, 'unsafe archive member'
+                  assert member.isfile() or member.isdir(), 'archive link or special member'
+                  if member.isfile():
+                      regular[str(path.relative_to(root))] = bundle.extractfile(member).read()
+              assert set(regular) == expected, 'input-only archive membership differs'
+              manifest = list(csv.DictReader(io.StringIO(regular['manifest.tsv'].decode()), delimiter='\t'))
+              assert len(manifest) == 21 and {row['path'] for row in manifest} == expected - {'manifest.tsv'}, 'input manifest membership differs'
+              for row in manifest:
+                  assert hashlib.sha256(regular[row['path']]).hexdigest() == row['sha256'], 'input member digest differs'
+              for member, data in regular.items():
+                  target = destination / root / member
+                  target.parent.mkdir(parents=True, exist_ok=True)
+                  target.write_bytes(data)
+          shutil_path = Path(os.environ['EVIDENCE']) / archive.name
+          shutil_path.write_bytes(archive.read_bytes())
+          (Path(os.environ['EVIDENCE']) / 'input-acquisition.json').write_text(json.dumps(dict(archive_sha256=expected_digest, files=manifest, input_only=True), indent=2) + '\n')
+          PY
+
+      - uses: r-lib/actions/setup-r@v2
+        with:
+          r-version: '4.6.1'
+          use-public-rspm: true
+
+      - name: Acquire the exact released limma source
+        run: |
+          set -euo pipefail
+          curl --fail --location --retry 3 \
+            https://bioconductor.org/packages/3.23/bioc/src/contrib/limma_3.68.5.tar.gz \
+            --output "$LIMMA_SOURCE_ARCHIVE"
+          printf '%s  %s\n' "$LIMMA_SOURCE_SHA256" "$LIMMA_SOURCE_ARCHIVE" | sha256sum --check - | tee "$EVIDENCE/source-verification.log"
+          tar -xzf "$LIMMA_SOURCE_ARCHIVE" -C "$EVIDENCE"
+          test "$(sed -n 's/^Version: //p' "$EVIDENCE/limma/DESCRIPTION")" = '3.68.5'
+
+      - name: Install required dependencies and exact released limma
+        run: |
+          set -euo pipefail
+          Rscript --vanilla - <<'RS' 2>&1 | tee "$EVIDENCE/install-dependencies.log"
+          stopifnot(as.character(getRversion()) == '4.6.1')
+          cran <- Sys.getenv('RSPM')
+          if (!nzchar(cran)) stop('setup-r did not provide RSPM')
+          options(repos=c(CRAN=cran))
+          install.packages('BiocManager', lib=Sys.getenv('R_LIBS_USER'))
+          BiocManager::install(version='3.23', ask=FALSE, update=FALSE)
+          desc <- read.dcf(file.path(Sys.getenv('EVIDENCE'), 'limma', 'DESCRIPTION'))
+          fields <- intersect(c('Depends', 'Imports', 'LinkingTo'), colnames(desc))
+          deps <- trimws(unlist(strsplit(paste(desc[1, fields], collapse=','), ',', fixed=TRUE)))
+          deps <- unique(sub('[[:space:]]*\\(.*', '', deps))
+          deps <- setdiff(deps, c('R', 'limma', rownames(installed.packages(priority='base'))))
+          BiocManager::install(c(deps, 'digest', 'jsonlite'), ask=FALSE, update=FALSE,
+                               dependencies=c('Depends', 'Imports', 'LinkingTo'), Ncpus=2L)
+          missing <- setdiff(c(deps, 'digest', 'jsonlite'), rownames(installed.packages()))
+          if (length(missing)) stop('missing source dependencies: ', paste(missing, collapse=', '))
+          RS
+          R CMD INSTALL --preclean --clean --library="$R_LIBS_USER" "$EVIDENCE/limma" 2>&1 | tee "$EVIDENCE/install-limma.log"
+          Rscript --vanilla -e 'stopifnot(as.character(packageVersion("limma")) == "3.68.5", as.character(BiocManager::version()) == "3.23"); library(limma)'
+
+      - name: Capture ordinary expression and independent reload
+        run: |
+          set -euo pipefail
+          cp scripts/deseq_workflow_oracle.R scripts/edger_workflow_oracle.R scripts/limma_workflow_oracle.R scripts/limma_logexpression_oracle.R "$EVIDENCE/controller/"
+          (cd "$EVIDENCE/controller"; sha256sum *.R) > "$EVIDENCE/controller/checksums.sha256"
+          git rev-parse HEAD > "$EVIDENCE/head.sha"
+          uname -a > "$EVIDENCE/host.txt"
+          Rscript --vanilla scripts/limma_logexpression_oracle.R "$EVIDENCE/limma" "$INPUT_DIR" "$EVIDENCE/workflow" 2>&1 | tee "$EVIDENCE/workflow.log"
+          Rscript --vanilla scripts/limma_logexpression_oracle.R --reload "$EVIDENCE/workflow" 2>&1 | tee "$EVIDENCE/reload.log"
+
+      - name: Retain complete original source evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: limma-logexpression-oracle-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/limma-logexpression-oracle/
+          if-no-files-found: error
+          include-hidden-files: true
+          retention-days: 90
