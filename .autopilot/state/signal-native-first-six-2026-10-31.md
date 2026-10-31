@@ -1,5 +1,37 @@
 # Whole-first-six native signal implementation
 
+## Source-header accumulation corrected; new candidate requires a real gate
+
+Actual corrected-controller run41212042509/attempt1 atbc744fb9 is terminal
+FAILED only in Linux x86 source-on-native. All four native debug/release/worker
+lanes pass; MacIntel124568877352/LinuxARM124568877531/MacARM124568877545
+are successful. Linuxx86124568877652 reaches source and fails sampleB
+sumData; later source-consumer operations remain unexecuted, not accepted.
+
+Parent reads the complete original retention report
+0e769b1ce9a7ee5360b2f2b7055251c5577fbee756eec61f5c25e1646b21db77 under
+`/Volumes/Zane's HDD/rsomics-fixtures/evidence/signal-native-2026-10-31/run-41212042509/`.
+Its416420385B ZIP156af2afb3e210a0b2d7bda868efc7df5e38299e454dfc2e9e0cef190e899d2c
+is freshly hashed; all7 final bindings verify. The1026232320B original TAR,
+30277 original manifest entries, full four job logs/APIs, pinned source bodies
+and virtual link/casefold inventory are retained. Raw sampleB sumData differs
+79838727.6953125 vs79838726.0; runs/values/other retained statistics match.
+Pinned libBigWig accumulates f32(span*value) into f64, while bigtools promotes
+before multiplying. No tolerance or scientific data change is justified.
+
+The narrow private correction is owning main0f4690363d8dc29b498fceeb07605b855d400032,
+two files only. The existing native-spine regression observes actual RED,
+then the whole10-library/1-connected-workflow suite, fmt and strict Clippy
+pass. Header sum changes only; full query means/zoom/other fields/source
+runtime remain unchanged. No repeated whole-feature review is started.
+Packet: `/Volumes/KIOXIA/Developments/tmp/signal-header-sum-correction-20261031.wD8EAd/`.
+New actual green-2 archive946334c1000eb1e9622ed32b2772346b3dd60a8ee338e175af2ba24178155b06
+and manifest4f1ce7d5dd04309ca5c4d148772b57dda57541a9b87da4668141b677f62ac6f3
+freeze all38 regular source files; Cargo.lock unchanged. Original failed
+runs and green-1 remain immutable. New four-native/source gate, representative
+performance and optional sortedBED decision remain required; no receipt or
+publication is fabricated.
+
 ## First hosted worker gate failure retained; one-field comparator corrected
 
 Actual green-1 run41210632592/attempt1 at exacte96361e0 reaches worker
