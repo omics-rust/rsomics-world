@@ -212,4 +212,3 @@ if __name__ == '__main__':
     manifest = generate(args.output)
     print(json.dumps({'files': len(manifest['files']), 'molecules': manifest['molecules'],
                       'seed': manifest['seed'], 'status': manifest['status']}, sort_keys=True))
-

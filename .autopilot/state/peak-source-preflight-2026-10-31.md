@@ -22,9 +22,16 @@ Distance sentinel labels are geometry, not asserted category-coverage: default
 promoter priority can mask short downstream probes. Record actual full classes
 rather than infer branch coverage from names or add a per-boundary campaign.
 
-New generatorb59cd382f8e7965b77450a1772ae87898e95b3e5cca56988928d8cc121ec858e,
+Original generatorb59cd382f8e7965b77450a1772ae87898e95b3e5cca56988928d8cc121ec858e,
 test07b7bd8a0575aa12ec8cc2cc9ab0a721fd4480de994ade6c589d350a2618a0a6,
-runtime packet04312db3a13cc65f37d9bf42917e957e7fca75e43c041fe9d9d3f803785f209a.
+runtime packet04312db3a13cc65f37d9bf42917e957e7fca75e43c041fe9d9d3f803785f209a
+are preserved by the original packet and world881ea448. Parent's whitespace
+check then finds one trailing empty line in each Python helper. Removing only
+those final empty lines changes no generation/test logic or corpus file bytes;
+current generatorfb9b7d45121b3529e38199186597466a576b2a4ee7606226cd45ed0747e566d7
+and test5b920f13c8ca257adbefcd4701d9edd6f468f7429bf5ce123324c9860b81f52d
+are rechecked with the same full integrated test. The original input manifest
+retains its original generator hash, not silently relabeled as this version.
 The packet is NOT an executable full runtime lock:22 Python distributions/
 27 active edges are resolved;19 wheels are admitted, pandas/scipy partials
 are preserved but not installable. Bedtools complete archive
