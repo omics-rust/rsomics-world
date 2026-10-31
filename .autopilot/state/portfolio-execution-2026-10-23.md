@@ -3,8 +3,8 @@
 ## Current position
 
 Full30-family goal is active and unchanged. This table records named gates,
-not a rolling checkout HEAD. Last code checkpointa6226656 passes exact
-controller41207601520. Per-family current states
+not a rolling checkout HEAD. Last code checkpointb6c17201 passes exact
+controller41240183930. Per-family current states
 and immutable original receipts supersede the historical narrative below.
 
 The user resolves the2026-10-31 storage stop: keep all project data/builds/
@@ -21,9 +21,9 @@ No deletion or migration of project/shared application/user data occurred.
 | ecology | source40634594900 fully retained/qualified; real table/tree/IDs pass raw checks; reviewed sparse-alpha01c9089 plus actual sparse rarefactione1b03cb;984exact count cells/594alpha checks pass | undefined beta choice holds only that adapter; full product/native4/performance unearned |
 | structure | source40644150133 qualified; reviewed private2aee715 and native4 run41184818337 accepted | public torsion/full7/performance remain held or unearned; no coordinate foundation |
 | shared TMM | reviewed stats0.2.5 pushed at00a1819; real edgeR/limma contracts, persistent nonunit source regression and exact-head native4 run40648343214 all pass; primitive cost+2.53% | inherited working lock preserved; registry publication/adoption held |
-| signal | full first-six source41192955170 accepted; user approves3 data-loss/filter repairs; one whole-native review complete and concentrated correction active; adopted hosted gate/performance scope at a6226656 | corrected freeze, actual same-file source/zoom/empty interoperability, representative performance/native4 unearned; optional sortedBED policy alone awaits human choice |
-| peak | reviewed full-four source producer; first install failure41197783094 fully retained; existing-GCC bindinga005dcab passes CI; retry41201586593 fails malformed inventory framing after actual installs | original retry retention/serialization correction active; no package-version or library-precedence workaround; actual runtime/source qualification still required |
-| PLINK | current beta source/old assets preflight complete, no native implementation | exact runtime/full shared filtered-fileset source casebook; private codec/distribution choice not yet adopted |
+| signal | reviewed/corrected first-six native4 and same-file source/zoom/empty interoperability41217009133 accepted; approved3 data-loss/filter repairs remain explicit known incompatibilities | representative real campaign41227066387 qualifying complete outputs; no performance claim yet; optional sortedBED policy alone awaits human choice |
+| peak | private94316272 actual four-native and same-file source41234576411 accepted; all5 originals retained; coherent call/sparse/annotate/count functioning | fixed-input real retry41240347352 again fails admission; actual first error is being retained/diagnosed without guessing; second failure's full large-carrier verification active; real performance and release unearned |
+| PLINK | privatea1c50116 coherent own I/F/QC/LD/prune/P/reopen passes native4 and same-native source/official41237806705; all5 originals/all source bodies retained and verified | fixed all929 HGDP workflow and offline source/relink preparation complete; final527 control tests pass; pending exact-head controller CI and actual source/relink smoke; private real host, performance/install/release gates remain unearned |
 
 DESeq full14599×7 parametric/local R-inner medians5.264/5.375s versus native1
 1.02/1.05s and native4 .79/.81s. Both strict throughput AND process-RSS pass;
