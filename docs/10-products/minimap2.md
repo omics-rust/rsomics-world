@@ -1,9 +1,11 @@
 # Minimap2 product dossier
 
 Status: the product boundary remains valid, but a new wrapper implementation
-and release are held pending exact engine/binding provenance, lifetime safety
-and demonstrated product value. The2026-11-01 source review corrects the old
-MMI and output-error claims below. Published0.1.0 is a legacy FFI proof, not
+and release are held pending a safe engine/binding baseline and demonstrated
+product value. Exact legacy package provenance is now resolved: labels say2.30
+but the vendored engine is2.29-r1283, with a source-level reader lifetime
+defect. The2026-11-01 source review also corrects the old MMI and output-error
+claims below. Published0.1.0 is a legacy FFI proof, not
 the implementation baseline. No namespace retirement or scope reduction is
 authorized by this hold.
 
@@ -20,8 +22,8 @@ The primary behavior sources are:
   [user guide](https://github.com/lh3/minimap2#users-guide), and man page;
 - the [minimap2 method](https://doi.org/10.1093/bioinformatics/bty191);
 - [minimap2-rs 0.1.31](https://docs.rs/minimap2/0.1.31+minimap2.2.30/minimap2/),
-  whose published package label names2.30; its exact vendored C revision is
-  not independently established by that label;
+  whose published package label names2.30 but whose locked sys package
+  vendors the verified2.29 engine described below;
 - FASTA, FASTQ, MMI, PAF, SAM, BAM, CRAM, BED12, and relevant tag
   specifications.
 
@@ -184,17 +186,23 @@ The published crate resolves `minimap2`
 `0.1.31+minimap2.2.30`, while the current upstream release is minimap2 2.31.
 A loose `minimap2 = "0.1"` dependency is insufficient release provenance.
 
-The generated sys MM_VERSION reports2.29-r1283, while package metadata says
-2.30. A stale generated constant is possible; neither establishes actual
-vendored C source. Pin the exact crate bodies, C file map and Git revision
-before interpreting runtime compatibility or performance.
+Fresh official registry archives match both exact Cargo.lock checksums.
+The sys package's own VCS revision0a18af923fe02937575f2ae1c05c9feeefee33da
+points its engine gitlink to
+[official2.29-r1283](https://github.com/lh3/minimap2/commit/1fd85be6e2515c9194740e1d2e6a2625be36f508),
+not the official2.30 revision79c9cc186b95f50bd899f69b48eba995ced810c6.
+All127 vendored bodies match the fixed Git objects, including46 expanded
+SIMDe files. Actual C header and generated Rust MM_VERSION agree on2.29-r1283;
+the package label is misleading, not merely a stale generated constant.
+Build source selects that vendored directory. This is source provenance,
+not an executed binary, actual ISA or platform-install qualification.
 
 There is also a source-level reader-lifetime concern: the
 [binding revision](https://raw.githubusercontent.com/jguhlin/minimap2-rs/c3bae473f0d93218bdf224a985b33c8c9ea08a60/src/lib.rs)
-closes its reader and later copies through that pointer; the official
-[C close implementation](https://raw.githubusercontent.com/lh3/minimap2/v2.31/index.c)
-frees it. This requires exact-package verification and correction before
-reuse, not a claim of a reproduced crash or qualified installed binary.
+closes its reader and later copies through that pointer. Both this ordering
+and the corresponding C close's free are now confirmed in the checksum-matched
+package bodies. Correct the ownership baseline before reuse; no runtime crash,
+sanitizer result or qualified installed binary is claimed.
 
 ## Existing implementation gaps
 
