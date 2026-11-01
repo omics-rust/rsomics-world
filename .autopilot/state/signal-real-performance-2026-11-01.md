@@ -1,5 +1,16 @@
 # Real signal campaign
 
+## Actual preparation qualified; shared-host campaign running
+
+Root's bounded read-only SSH checkpoint at2026-11-01T02:44:09UTC observes
+the original detached hostPID1468391 still live. Retained events record
+prepare-returned-zero at02:39:45.903051UTC and prepared-qualification-returned-zero
+at02:39:54.038179UTC; status enters campaign-running at02:39:54.090720UTC.
+This is a point-in-time phase observation, not final scientific/performance
+acceptance. Full original results remain required. The unchanged campaign
+runs on a shared host with the original guards; no task is duplicated and
+no exclusive-host, exact aggregate RSS or finished-campaign claim is made.
+
 ## Actual detached shared-host preparation running
 
 Root fully reads the bounded-launch report, actual runner-v2 and point-in-time
