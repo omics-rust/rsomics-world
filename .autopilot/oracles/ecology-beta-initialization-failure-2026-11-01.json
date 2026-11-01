@@ -1,0 +1,81 @@
+{
+  "actual_initial_free_bytes": null,
+  "actual_job_conclusion": "failure",
+  "canonical_wall_chronology_adopted": false,
+  "directly_logged_cpus": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "evidence_directory": "/Volumes/KIOXIA/Developments/tmp/ecology-beta-init-custody-20261101.cDjrX7",
+  "failure_scope": "runner capacity preflight; not upstream numerical failure or measured native performance",
+  "free_bytes_below_requirement_inferred_not_measured": true,
+  "frozen_exact_head_context": {
+    "bytes": 10769,
+    "sha256": "466f9048ac4c9743c9038d295a7f0097c101cbb15a157340a2da955470899f2f"
+  },
+  "full_original_raw_job_log": {
+    "bytes": 35369,
+    "sha256": "66bc2a793c5c57a370f3566acbfa7749472626d73b43f5a475a8215a2d1d0e58"
+  },
+  "full_payload_crc_tar_manifest_or_scientific_custody_claim": false,
+  "head_sha": "7d68a900a82100573cc927337eb4bf01003b3f87",
+  "job_id": 124793769919,
+  "later_capacity_only_retry_authorized_by_this_proposal": false,
+  "measured_trial_count": 0,
+  "metric": "weighted_normalized_unifrac",
+  "no_performance_winner_selection_or_criteria_change": true,
+  "original_root_log": {
+    "identity": {
+      "bytes": 35369,
+      "sha256": "66bc2a793c5c57a370f3566acbfa7749472626d73b43f5a475a8215a2d1d0e58"
+    },
+    "original_mode": 420,
+    "original_mtime_ns": 1793521357097820200,
+    "path": "/Volumes/KIOXIA/Developments/tmp/ecology-beta-init-failure-20261101.WHgoVI/job.raw.log",
+    "unchanged": true
+  },
+  "other_jobs_cancelled_or_restarted": false,
+  "performance_accepted": false,
+  "primary_failure": "actual22GiB/four-CPU admission unavailable",
+  "private_payload_present": false,
+  "publication": false,
+  "qualification_complete": false,
+  "raw_anchors": {
+    "bytes": 7488,
+    "sha256": "a71ad415d50bdc21eab2f9eb1e9d37ad14c820008284661860f3ed3c23511b78"
+  },
+  "required_initial_free_bytes": 23622320128,
+  "root_adopted": true,
+  "root_fresh_review_required": false,
+  "run_attempt": 1,
+  "run_id": 41288208209,
+  "runner_private_request_or_manifest_bodies_recovered": false,
+  "schema": "rsomics.ecology.beta-initialization-failure-adoption.v1",
+  "status": "available-failure-custody-accepted",
+  "timing_discrepancy": {
+    "canonical_wall_chronology_adopted": false,
+    "discrepancy": "API top-level run/job UTC fields are one hour later than the same job step/log UTC fields; raw values retained without correction.",
+    "job_api_top_level_completed_at": "2026-11-01T09:17:31Z",
+    "job_api_top_level_started_at": "2026-11-01T09:17:08Z",
+    "raw_log_first_utc": "2026-11-01T08:17:08.9696136Z",
+    "raw_log_last_utc": "2026-11-01T08:17:30.2307595Z",
+    "root_decision_required": true,
+    "run_api_created_at": "2026-11-01T09:17:05Z",
+    "run_api_started_at": "2026-11-01T09:17:05Z",
+    "same_job_api_final_step_completed_at": "2026-11-01T08:17:30Z",
+    "same_job_api_first_step_started_at": "2026-11-01T08:17:08Z"
+  },
+  "verification": {
+    "bytes": 4774,
+    "sha256": "e444919ab90d8bcfd11ccb17718921fe2145896d0c2d047fb67204cc654e085f"
+  },
+  "warmup_complete": false,
+  "workflow_path": ".github/workflows/ecology-beta-real.yml",
+  "root_review": "Read complete report, failure validator and actual original initializer/finalizer plus raw API/log anchors; freshly verify all157 sealed bodies/1232404B, exact file membership and directory modes. No runner-private payload or exact free-byte observation is reconstructed.",
+  "report_sha256": "580cbe63aa8236b50865292a8c63dd26eb9d2ffc943e419e58f485321ca37467",
+  "seal_sha256": "a42a7e616d8ceb613d82e8bd71314dd1ce351017e9c8a461362e22c71b01bdb9",
+  "root_timing_ruling": "Canonical wall chronology remains unresolved and unadopted. Same run/head/job identities, exact logged predicate and step outcome establish the pre-science capacity rejection without using inconsistent outer UTC fields. No performance or total-duration claim derives from those fields.",
+  "root_next_action": "At most one unchanged capacity-only retry of this terminal failed job after fresh capacity/status admission; no retry of scientific results and no cancellation/repetition of successful or still-running other metrics."
+}

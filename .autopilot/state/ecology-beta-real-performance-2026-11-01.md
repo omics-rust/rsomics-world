@@ -1,5 +1,43 @@
 # Ecology complete-original beta performance
 
+## Actual eight-metric campaign dispatched; one pre-science capacity hold
+
+After exact-head Control41287959956 SUCCESS and fresh remote/dev/sdd capacity
+658122665984B, root verifies live main7d68a900a82100573cc927337eb4bf01003b3f87
+and no earlier beta run, then dispatches actual41288208209/1 with the explicit
+recovery attestation. All eight fixed jobs exist. A later bounded snapshot
+observes five metric jobsSUCCESS, two UniFrac jobs still running and
+weighted_normalized_unifrac124793769919 FAILED during initial capacity
+admission, before its scientific step. This is not all-eight acceptance.
+
+Full raw log35369B SHA66bc2a793c5c57a370f3566acbfa7749472626d73b43f5a475a8215a2d1d0e58
+records the actual22GiB/four-CPU predicate rejection. Environment shows0,1,2,3
+CPUs, so free space below22GiB is inferred; exact free bytes were not recorded.
+Transport preparation had not happened, so finalization cannot admit age and
+no ciphertext exists for this job. No source data/qualification/timing result
+is claimed. Root preserves full available APIs/log/frozen context, not a
+fictional recovered private packet or zero-loss guarantee.
+Other seven jobs are not cancelled or repeated. A future unchanged capacity-
+only failed-job retry must retain this original failure and actual head/attempt,
+not lower22GiB or retry a scientific outcome to improve its score.
+
+Available failed-init custody is independently adopted in
+ecology-beta-initialization-failure-2026-11-01.json after root reads the full
+report/validator and freshly checks157 sealed bodies/1232404B, exact membership
+and directory modes at ecology-beta-init-custody-20261101.cDjrX7.
+REPORT580cbe63aa8236b50865292a8c63dd26eb9d2ffc943e419e58f485321ca37467;
+SEALa42a7e616d8ceb613d82e8bd71314dd1ce351017e9c8a461362e22c71b01bdb9.
+The source closure39 files is separate frozen Git context, not recovered
+runner-private state. Raw API top-level UTC fields differ by one hour from
+the SAME job's steps/logs. Both namespaces remain unchanged; canonical outer
+wall chronology is NOT adopted. Failure cause/IDs/head/steps agree, and this
+pre-science ruling needs no duration calculation or scientific timing claim.
+
+The current helper supports Ecology's payload.tar.age/receipt.json only.
+RNA evidence.tar.age/transport.json and PLINK hgdp.tar.age need explicit future
+member adaptation; RNA instead has a separate44GiB HDD custody admission.
+The earlier RNA-in-remote planning reserve is not a second simultaneous copy.
+
 ## Integrated CI finds permission-state leak; one scoped correction
 
 Actual controlCI41287584238 atce33e7ff fails one of537 tests after remote
