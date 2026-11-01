@@ -1,0 +1,912 @@
+{
+  "actual_bookworm_loader_and_cli_success": true,
+  "actual_service_conclusion": "success",
+  "all15_profiles_qualified": false,
+  "alpha_comparison_cells": 680680,
+  "alpha_tolerance": {
+    "absolute": 1e-10,
+    "nonfinite_classes_exact": true,
+    "observed_features_integer_exact": true,
+    "relative": 1e-10
+  },
+  "artifact": {
+    "bytes": 3977861900,
+    "sha256": "cfbe70dd23e159709871a9ba2e64b04729b7990be5dee5badbed73796fc7a2b6"
+  },
+  "artifact_id": 13070179375,
+  "artifact_name": "ecology-private-whole-real-41273333210-1",
+  "beta_distance_qualified": false,
+  "ciphertext": {
+    "bytes": 3977860891,
+    "sha256": "b69609f6ddb51e24a4826ce6c1b8573d4e848b49b36bce2fbf292bbc33b77e23"
+  },
+  "compiled_anchors": 4,
+  "complete_scientific_exports": 87,
+  "complete_workflows": 28,
+  "fair_source_shared_setup": true,
+  "first_full_public_driver_reference_qualified": true,
+  "full_product_qualified": false,
+  "head_sha": "b0950de23dadf239a858b44e11cf37716ad8b76b",
+  "identical_original_interpreter": false,
+  "image": {
+    "config_digest": "sha256:f3d916a4884034b89cb6148781f07d8c92d94b6c6dc1b74dcbec3475d16400da",
+    "gcc_version": "14.3.0",
+    "manifest_digest": "sha256:a689e29bc3adf4663ef9a141d23081252764d1319c63f591a027bd6fd676f4c1",
+    "platform": "linux/amd64",
+    "reference": "gcc:14.3.0-bookworm@sha256:a689e29bc3adf4663ef9a141d23081252764d1319c63f591a027bd6fd676f4c1"
+  },
+  "job_id": 124750429737,
+  "loaded_source_providers": [
+    {
+      "architecture": "Haswell",
+      "filepath": "/__w/_temp/ecology-whole-real-_i3h5la8/private/runtime/venv/lib/python3.12/site-packages/scipy.libs/libscipy_openblas-5f890258.so",
+      "internal_api": "openblas",
+      "num_threads": 1,
+      "original_body": {
+        "bytes": 25094609,
+        "sha256": "2a5b4c1a6311873c59132b2ceaaf3c26258a17350b7cd27ea8782a47e3322981"
+      },
+      "prefix": "libscipy_openblas",
+      "threading_layer": "pthreads",
+      "user_api": "blas",
+      "version": "0.3.31.dev"
+    },
+    {
+      "filepath": "/__w/_temp/ecology-whole-real-_i3h5la8/private/runtime/venv/lib/python3.12/site-packages/scikit_bio.libs/libgomp-e985bcbb.so.1.0.0",
+      "internal_api": "openmp",
+      "num_threads": 1,
+      "original_body": {
+        "bytes": 253289,
+        "sha256": "a43904e4fa297301d4640dc1bb3c8a3480b406f99e498eba9b1914b68aab604a"
+      },
+      "prefix": "libgomp",
+      "user_api": "openmp",
+      "version": null
+    },
+    {
+      "architecture": "Haswell",
+      "filepath": "/__w/_temp/ecology-whole-real-_i3h5la8/private/runtime/venv/lib/python3.12/site-packages/numpy.libs/libscipy_openblas64_-f48b354e.so",
+      "internal_api": "openblas",
+      "num_threads": 1,
+      "original_body": {
+        "bytes": 24325657,
+        "sha256": "432e1c1739731468ba305771af96773939e43016643e2d630f58cb45b6670e96"
+      },
+      "prefix": "libscipy_openblas",
+      "threading_layer": "pthreads",
+      "user_api": "blas",
+      "version": "0.3.34.106.0"
+    }
+  ],
+  "lock_sha256": "7d7218ba50202994ed28f61cbb127aaaafab7e0076e5d2cd35ce74e65d7d58c7",
+  "machine": {
+    "cpu_max": "400000 100000\n",
+    "cpus": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "memory_max": "12884901888",
+    "memory_swap_max": "0",
+    "no_address_space_limit_set": true,
+    "rlimit_as": [
+      -1,
+      -1
+    ],
+    "uname": {
+      "machine": "x86_64",
+      "node": "15abf898972d",
+      "processor": "",
+      "release": "7.0.0-1017-azure",
+      "system": "Linux",
+      "version": "#17~24.04.1-Ubuntu SMP PREEMPT Thu Sep 24 18:46:57 UTC 2026"
+    }
+  },
+  "maximum_absolute_alpha_error": 4.490630090003833e-12,
+  "metrics": [
+    "observed_features",
+    "shannon",
+    "simpson",
+    "dominance",
+    "inv_simpson",
+    "simpson_e",
+    "pielou_e",
+    "chao1",
+    "goods_coverage",
+    "faith_pd",
+    "phydiv"
+  ],
+  "native_A_first_real_CLI": true,
+  "native_binary": {
+    "bytes": 1821480,
+    "sha256": "58cd2ec1e4072ee4e76d2a244c2547022524025faf6b406af8cd65ef08d45a0a"
+  },
+  "native_four_head_sha": "5affb09ceeae9922f59a22b70736a3cec5ef8c1d",
+  "native_four_run_attempt": 1,
+  "native_four_run_id": 41268190701,
+  "native_receipt": {
+    "bytes": 14973,
+    "sha256": "dfc1e96c369c18e0e5ef876779c4cc0e9f715916be1850757037e40514f28290"
+  },
+  "native_system_dso_bytes_separately_archived": false,
+  "native_thread_scaling_is_limited": true,
+  "native_worker_and_repeat_payloads_byte_exact": true,
+  "nonfinite_comparison_cells": 0,
+  "original_python": "3.12.15",
+  "original_wheels": 27,
+  "outer_wait4_CPU_counted_once": true,
+  "owner_commit": "e1b03cb68876be2dd8bb9fbc520b5194be055d9e",
+  "owner_tree": "b5996ddd92f292714c82c0c53a50c041f2b90249",
+  "performance_decisions": {
+    "1": {
+      "endpoints": {
+        "a": {
+          "conservative_process_memory": true,
+          "distributions": {
+            "cpu": {
+              "native": [
+                1.219927,
+                1.256361,
+                1.2719079999999998,
+                1.2838880000000001,
+                1.2871460000000001
+              ],
+              "native_median": 1.2719079999999998,
+              "source": [
+                15.314166,
+                15.432831,
+                15.719382999999999,
+                16.550762,
+                15.52727
+              ],
+              "source_median": 15.52727
+            },
+            "rss": {
+              "native": [
+                81833984,
+                81694720,
+                81752064,
+                81801216,
+                81743872
+              ],
+              "native_median": 81752064,
+              "source": [
+                3571843072,
+                3572092928,
+                3571970048,
+                3572355072,
+                3572002816
+              ],
+              "source_median": 3572002816
+            },
+            "wall": {
+              "native": [
+                1.306195379,
+                1.306678157,
+                1.30647107,
+                1.306485344,
+                1.306566482
+              ],
+              "native_median": 1.306485344,
+              "source": [
+                15.318821122,
+                15.437635427,
+                15.72566735,
+                16.55555115,
+                15.531958925
+              ],
+              "source_median": 15.531958925
+            }
+          },
+          "median_ratios": {
+            "cpu": 0.08091335391471789,
+            "rss": 0.02288710792683556,
+            "wall": 0.0841211651607558
+          },
+          "passed": true,
+          "ratios": {
+            "cpu": [
+              0.07966003502900516,
+              0.08140833007242806,
+              0.08091335391471789,
+              0.07757274257221512,
+              0.0828958342322894
+            ],
+            "rss": [
+              0.022910856482330922,
+              0.02287026727654046,
+              0.02288710792683556,
+              0.02289840017336328,
+              0.022884604579214308
+            ],
+            "wall": [
+              0.08526735631922212,
+              0.0846423769481339,
+              0.08307889521776002,
+              0.07891524312073415,
+              0.0841211651607558
+            ]
+          },
+          "throughput": true,
+          "wall_losses": []
+        },
+        "w": {
+          "conservative_process_memory": true,
+          "distributions": {
+            "cpu": {
+              "native": [
+                4.611867,
+                4.686128,
+                4.693119,
+                4.769183,
+                4.714793
+              ],
+              "native_median": 4.693119,
+              "source": [
+                29.355637,
+                30.906564,
+                30.985177999999998,
+                30.940929,
+                30.923694
+              ],
+              "source_median": 30.923694
+            },
+            "rss": {
+              "native": [
+                81833984,
+                81694720,
+                81752064,
+                81801216,
+                81743872
+              ],
+              "native_median": 81752064,
+              "source": [
+                3574104064,
+                3573325824,
+                3573891072,
+                3573739520,
+                3573350400
+              ],
+              "source_median": 3573739520
+            },
+            "wall": {
+              "native": [
+                4.840371183,
+                4.941335411,
+                4.94271505,
+                5.042537356,
+                4.942509946
+              ],
+              "native_median": 4.942509946,
+              "source": [
+                29.418636826,
+                30.934242472,
+                31.033959921,
+                31.02183484,
+                31.025026997
+              ],
+              "source_median": 31.02183484
+            }
+          },
+          "median_ratios": {
+            "cpu": 0.1524653878673098,
+            "rss": 0.022875974323704723,
+            "wall": 0.1597367517718473
+          },
+          "passed": true,
+          "ratios": {
+            "cpu": [
+              0.15710328479671554,
+              0.15162241910812216,
+              0.1514633545109859,
+              0.15413832596946264,
+              0.1524653878673098
+            ],
+            "rss": [
+              0.02289636298625691,
+              0.02286237640332235,
+              0.02287480573778383,
+              0.02288952945289085,
+              0.022875974323704723
+            ],
+            "wall": [
+              0.16453417646877885,
+              0.1597367517718473,
+              0.15926794590771426,
+              0.16254800472014894,
+              0.15930719243138522
+            ]
+          },
+          "throughput": true,
+          "wall_losses": []
+        }
+      },
+      "later_stages": {
+        "rarefied-alpha": {
+          "median_ratio": 0.10541910500383977,
+          "passed": true,
+          "ratios": [
+            0.1069737423726626,
+            0.10530972644045823,
+            0.10541910500383977,
+            0.11459356429887249,
+            0.103983164860767
+          ]
+        },
+        "rarefy": {
+          "median_ratio": 0.4141480208428219,
+          "passed": true,
+          "ratios": [
+            0.4178027396370313,
+            0.3967810973508447,
+            0.41235883806220297,
+            0.41821709383609873,
+            0.4141480208428219
+          ]
+        }
+      },
+      "passed": true
+    },
+    "4": {
+      "endpoints": {
+        "a": {
+          "conservative_process_memory": true,
+          "distributions": {
+            "cpu": {
+              "native": [
+                1.364253,
+                1.3472169999999999,
+                1.385449,
+                1.3720750000000002,
+                1.356528
+              ],
+              "native_median": 1.364253,
+              "source": [
+                24.542468999999997,
+                23.384199,
+                23.20219,
+                23.045975000000002,
+                23.186024
+              ],
+              "source_median": 23.20219
+            },
+            "rss": {
+              "native": [
+                81895424,
+                81747968,
+                81780736,
+                81858560,
+                81727488
+              ],
+              "native_median": 81780736,
+              "source": [
+                1361305600,
+                1361121280,
+                1361108992,
+                1360543744,
+                1360986112
+              ],
+              "source_median": 1361108992
+            },
+            "wall": {
+              "native": [
+                1.105808474,
+                1.105128149,
+                1.106118553,
+                1.106605814,
+                1.105770058
+              ],
+              "native_median": 1.105808474,
+              "source": [
+                10.561306691,
+                10.171640841,
+                10.077772021,
+                10.022283535,
+                10.097104334
+              ],
+              "source_median": 10.097104334
+            }
+          },
+          "median_ratios": {
+            "cpu": 0.058506279472496016,
+            "rss": 0.06008389958531697,
+            "wall": 0.10951358146082914
+          },
+          "passed": true,
+          "ratios": {
+            "cpu": [
+              0.055587439063282514,
+              0.05761227912916752,
+              0.059711992704136976,
+              0.05953642664283026,
+              0.058506279472496016
+            ],
+            "rss": [
+              0.06015947043779148,
+              0.06005928288770858,
+              0.06008389958531697,
+              0.060166062547416334,
+              0.06005019983627871
+            ],
+            "wall": [
+              0.10470375554403072,
+              0.10864797197178189,
+              0.10975824326002581,
+              0.11041453877606745,
+              0.10951358146082914
+            ]
+          },
+          "throughput": true,
+          "wall_losses": []
+        },
+        "w": {
+          "conservative_process_memory": true,
+          "distributions": {
+            "cpu": {
+              "native": [
+                4.777989,
+                4.771637,
+                4.827953,
+                4.852999,
+                4.7779929999999995
+              ],
+              "native_median": 4.7779929999999995,
+              "source": [
+                49.360285,
+                48.141942,
+                48.627068,
+                48.386689,
+                48.117389
+              ],
+              "source_median": 48.386689
+            },
+            "rss": {
+              "native": [
+                81895424,
+                81747968,
+                81780736,
+                81858560,
+                81727488
+              ],
+              "native_median": 81780736,
+              "source": [
+                1370816512,
+                1370411008,
+                1370906624,
+                1369964544,
+                1369956352
+              ],
+              "source_median": 1370411008
+            },
+            "wall": {
+              "native": [
+                4.637228025,
+                4.636187988,
+                4.741052581,
+                4.840360991,
+                4.640165583
+              ],
+              "native_median": 4.640165583,
+              "source": [
+                21.34449411,
+                20.938414993,
+                21.038246186,
+                20.939200879,
+                20.83505374
+              ],
+              "source_median": 20.939200879
+            }
+          },
+          "median_ratios": {
+            "cpu": 0.09928529929051037,
+            "rss": 0.059657001393282345,
+            "wall": 0.22270955673570536
+          },
+          "passed": true,
+          "ratios": {
+            "cpu": [
+              0.0967982457961902,
+              0.09911600574816862,
+              0.09928529929051037,
+              0.1002961578958213,
+              0.09929867557859383
+            ],
+            "rss": [
+              0.059742075823492856,
+              0.05965215364061057,
+              0.0596544903703084,
+              0.059752320130118636,
+              0.059657001393282345
+            ],
+            "wall": [
+              0.21725640350629982,
+              0.22142019773463947,
+              0.22535398336363968,
+              0.2311626417345475,
+              0.22270955673570536
+            ]
+          },
+          "throughput": true,
+          "wall_losses": []
+        }
+      },
+      "later_stages": {
+        "rarefied-alpha": {
+          "median_ratio": 0.20569092516031207,
+          "passed": true,
+          "ratios": [
+            0.2045010490476637,
+            0.20569092516031207,
+            0.22147873547069954,
+            0.22117413283591228,
+            0.2034433855748937
+          ]
+        },
+        "rarefy": {
+          "median_ratio": 0.36876244056840457,
+          "passed": true,
+          "ratios": [
+            0.36745780856210586,
+            0.37079777095290806,
+            0.3669218956473136,
+            0.36876244056840457,
+            0.3720246000562615
+          ]
+        }
+      },
+      "passed": true
+    }
+  },
+  "previously_failed_run_still_failed": 41272473289,
+  "product": "rsomics-ecology",
+  "pure_source_anchors": 10,
+  "rarefaction": {
+    "body": {
+      "bytes": 92708903,
+      "sha256": "66f888c516a4240b139eac06a11c22a271d9a43ce2b79d025c9e28cc09f2025d"
+    },
+    "conserved_all_cells": true,
+    "depth": 3,
+    "identical_complete_bodies": 29,
+    "reads": 3315,
+    "samples": 1105,
+    "seed": 42
+  },
+  "release_or_publication_qualified": false,
+  "repository": "omics-rust/rsomics-world",
+  "root_fresh_review_required": false,
+  "rss_definition": "largest single-process lifetime peak; not aggregate or isolated algorithm heap",
+  "run_attempt": 1,
+  "run_id": 41273333210,
+  "schema": "rsomics.ecology.whole-real.scoped-adoption.v1",
+  "scientific_execution_on_mac": false,
+  "source_A_wall_definition": "original producer monotonic endpoint marker, not independently reconstructed file mtime",
+  "source_failure_count": 0,
+  "source_old_case_bridge_qualified": true,
+  "source_python": "3.12.10 (main, Apr  9 2025, 04:03:51) [Clang 20.1.0 ]",
+  "source_relative_pair_wall_losses": 0,
+  "source_snapshot_sha256": "e202c3d8eefb216f19adfd20b8db2efe0dbb59bbf3cec68af25b89c9409177d2",
+  "status": "accepted",
+  "study": {
+    "biom_to_tsv_conversion_untimed": true,
+    "complete_outer_tree_zip_acquired": false,
+    "extra_tree_tips": 121003,
+    "features": 41328,
+    "hdf5_independently_decoded_on_mac": false,
+    "metadata_extra": 543,
+    "metadata_matched": 1105,
+    "no_feature_or_sample_drop": true,
+    "nonzeros": 314497,
+    "reads": 21227600,
+    "samples": 1105,
+    "tree_edges": 323371,
+    "tree_tips": 162331
+  },
+  "tar": {
+    "bytes": 3976888320,
+    "sha256": "3fa877910c3300584455da1d7daceca7aafcf126e6773249d150c4647b81f67a"
+  },
+  "thread_scaling": {
+    "native": {
+      "a": {
+        "cpu": {
+          "median1": 1.2719079999999998,
+          "median4": 1.364253,
+          "worker1": [
+            1.219927,
+            1.256361,
+            1.2719079999999998,
+            1.2838880000000001,
+            1.2871460000000001
+          ],
+          "worker4": [
+            1.364253,
+            1.3472169999999999,
+            1.385449,
+            1.3720750000000002,
+            1.356528
+          ]
+        },
+        "rss": {
+          "median1": 81752064,
+          "median4": 81780736,
+          "worker1": [
+            81833984,
+            81694720,
+            81752064,
+            81801216,
+            81743872
+          ],
+          "worker4": [
+            81895424,
+            81747968,
+            81780736,
+            81858560,
+            81727488
+          ]
+        },
+        "wall": {
+          "median1": 1.306485344,
+          "median4": 1.105808474,
+          "worker1": [
+            1.306195379,
+            1.306678157,
+            1.30647107,
+            1.306485344,
+            1.306566482
+          ],
+          "worker4": [
+            1.105808474,
+            1.105128149,
+            1.106118553,
+            1.106605814,
+            1.105770058
+          ]
+        }
+      },
+      "w": {
+        "cpu": {
+          "median1": 4.693119,
+          "median4": 4.7779929999999995,
+          "worker1": [
+            4.611867,
+            4.686128,
+            4.693119,
+            4.769183,
+            4.714793
+          ],
+          "worker4": [
+            4.777989,
+            4.771637,
+            4.827953,
+            4.852999,
+            4.7779929999999995
+          ]
+        },
+        "rss": {
+          "median1": 81752064,
+          "median4": 81780736,
+          "worker1": [
+            81833984,
+            81694720,
+            81752064,
+            81801216,
+            81743872
+          ],
+          "worker4": [
+            81895424,
+            81747968,
+            81780736,
+            81858560,
+            81727488
+          ]
+        },
+        "wall": {
+          "median1": 4.942509946,
+          "median4": 4.640165583,
+          "worker1": [
+            4.840371183,
+            4.941335411,
+            4.94271505,
+            5.042537356,
+            4.942509946
+          ],
+          "worker4": [
+            4.637228025,
+            4.636187988,
+            4.741052581,
+            4.840360991,
+            4.640165583
+          ]
+        }
+      }
+    },
+    "source": {
+      "a": {
+        "cpu": {
+          "median1": 15.52727,
+          "median4": 23.20219,
+          "worker1": [
+            15.314166,
+            15.432831,
+            15.719382999999999,
+            16.550762,
+            15.52727
+          ],
+          "worker4": [
+            24.542468999999997,
+            23.384199,
+            23.20219,
+            23.045975000000002,
+            23.186024
+          ]
+        },
+        "rss": {
+          "median1": 3572002816,
+          "median4": 1361108992,
+          "worker1": [
+            3571843072,
+            3572092928,
+            3571970048,
+            3572355072,
+            3572002816
+          ],
+          "worker4": [
+            1361305600,
+            1361121280,
+            1361108992,
+            1360543744,
+            1360986112
+          ]
+        },
+        "wall": {
+          "median1": 15.531958925,
+          "median4": 10.097104334,
+          "worker1": [
+            15.318821122,
+            15.437635427,
+            15.72566735,
+            16.55555115,
+            15.531958925
+          ],
+          "worker4": [
+            10.561306691,
+            10.171640841,
+            10.077772021,
+            10.022283535,
+            10.097104334
+          ]
+        }
+      },
+      "w": {
+        "cpu": {
+          "median1": 30.923694,
+          "median4": 48.386689,
+          "worker1": [
+            29.355637,
+            30.906564,
+            30.985177999999998,
+            30.940929,
+            30.923694
+          ],
+          "worker4": [
+            49.360285,
+            48.141942,
+            48.627068,
+            48.386689,
+            48.117389
+          ]
+        },
+        "rss": {
+          "median1": 3573739520,
+          "median4": 1370411008,
+          "worker1": [
+            3574104064,
+            3573325824,
+            3573891072,
+            3573739520,
+            3573350400
+          ],
+          "worker4": [
+            1370816512,
+            1370411008,
+            1370906624,
+            1369964544,
+            1369956352
+          ]
+        },
+        "wall": {
+          "median1": 31.02183484,
+          "median4": 20.939200879,
+          "worker1": [
+            29.418636826,
+            30.934242472,
+            31.033959921,
+            31.02183484,
+            31.025026997
+          ],
+          "worker4": [
+            21.34449411,
+            20.938414993,
+            21.038246186,
+            20.939200879,
+            20.83505374
+          ]
+        }
+      }
+    }
+  },
+  "transport_receipt": {
+    "bytes": 749,
+    "crc32": "8ef7c338",
+    "sha256": "06d15502b98d32721c3dfc8524bd4e1d0f4eb0d87c875c18eb8149bc58c550b0"
+  },
+  "verifications": {
+    "BRIDGE-VERIFICATION.json": {
+      "bytes": 416,
+      "mode": "0600",
+      "sha256": "087dbaef1106638b01d17a08d74cfd07e898d53d266c9f9c1f757969b2b33a79"
+    },
+    "CONTEXT-VERIFICATION.json": {
+      "bytes": 7687,
+      "mode": "0600",
+      "sha256": "551ef4d99eb6313b27550cbcd14c8aa13003bda19e634ddfc58882d3bdf262f3"
+    },
+    "DECRYPTION.json": {
+      "bytes": 510,
+      "mode": "0600",
+      "sha256": "a1ab911dde54c68e945c38657c45a3bd23b1ccf2688b5e7859f7647c9e2db76a"
+    },
+    "INPUT-VERIFICATION.json": {
+      "bytes": 24977,
+      "mode": "0600",
+      "sha256": "51453ff258ea53b4888a3b3d9a9c78298be648a73abd047c38fcb9bb1d100dfc"
+    },
+    "PUBLIC-VERIFICATION.json": {
+      "bytes": 6277,
+      "mode": "0600",
+      "sha256": "9aec6d1548f284a485ec79746beff68785ead925c789d3d8f8141dcf133b3d6a"
+    },
+    "RETENTION-VERIFICATION.json": {
+      "bytes": 668,
+      "mode": "0600",
+      "sha256": "511be5d9cff5c4eed6535457b002946fd9674ba2ec11f52c097bb805a7671057"
+    },
+    "RUNTIME-VERIFICATION.json": {
+      "bytes": 3384,
+      "mode": "0600",
+      "sha256": "68ba6898a66cf973652d210bc7c66d08c724a5f1d119588e23e50c9ddbe5a425"
+    },
+    "SCIENCE-PERFORMANCE-VERIFICATION.json": {
+      "bytes": 104613,
+      "mode": "0600",
+      "sha256": "0d0868d5386df39368ad0aec5cdf1adea980fa5dd1aa8c0b800ec2d9aadd6a9e"
+    },
+    "TAR-PREFLIGHT.json": {
+      "bytes": 4494,
+      "mode": "0600",
+      "sha256": "6fa976e59e057e77dd2e9193ce9a54b4fdb4c1b8890ffbdc7530824605e1e9f2"
+    },
+    "tar-verification.json": {
+      "bytes": 12694106,
+      "mode": "0600",
+      "sha256": "eb949caed3a341dd27bf21ec67a87d9bc52478f48b9684e9f6f190eb4976615c"
+    }
+  },
+  "workflow_path": ".github/workflows/ecology-whole-real.yml",
+  "whole_study_alpha_rarefaction_qualified": true,
+  "root_review": {
+    "packet": "/Volumes/KIOXIA/Developments/tmp/ecology-whole-real-success-20261101.5nkx31",
+    "report_sha256": "ed9d7376c8ddcff27331dadbbb40b08c65507b39dba9f4ca189ca6e752200070",
+    "proposal_sha256": "6ee7d16d5079159cdd9c45183f651ea164da402b6744d7b3b66ce747dff1ed0f",
+    "seal_sha256": "395307d0dc16582ac8e3ba98c5e80c907245ca79f4ce8bd7a75753fa1429a4ad",
+    "completed_sha256": "cd0c31b041ae2fc5b7a2735694fd6329df9332aae24929534fc8ea25937ecf1a",
+    "fresh_regular_files_verified": 16986,
+    "fresh_regular_bytes_verified": 13289979460,
+    "complete_validator_and_archive_custody_reviewed": true,
+    "independent_data_and_fixed_gate_reduction_reviewed": true,
+    "scientific_execution_on_mac": false,
+    "scope": "eleven selected full-study alpha metrics, depth3 seed42 rarefaction and complete three-stage workflow only; not beta, all15 profiles, full product or release"
+  }
+}

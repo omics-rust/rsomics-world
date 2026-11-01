@@ -9,12 +9,16 @@ fix. Beta will use the dossier's finite reusable-matrix contract: genuinely
 undefined pairs fail with the metric/sample identities and protect the output;
 valid zero distances remain valid. This is root's explicit delegated engineering
 ruling and a stricter source domain, not a previously answered user choice.
-The beta implementation itself remains pending; nullable reports are not added.
+The beta implementation is in progress; nullable reports are not added.
 Actual41268190701 now passes all4 native classes on the unchanged owner;
 complete original source/log/artifact/release-binary identities are accepted.
 See `.autopilot/state/ecology-initial-diversity-2026-10-28.md` and
 `../plans/2026-11-01-ecology-native-real.md`. Complete-study reference and
-performance remain unearned; no full first-release claim exists yet.
+performance for the selected11-metric alpha/depth3-rarefy/alpha workflow are
+now accepted from actual41273333210, with all41328 features/1105 samples and
+the full162331-tip tree. The unchanged1/4 CPU gates pass, but native thread
+scaling is limited. See `.autopilot/oracles/ecology-whole-real-2026-11-01.json`.
+This does not qualify beta, all15 captured alpha profiles or a full release.
 
 ## Boundary
 

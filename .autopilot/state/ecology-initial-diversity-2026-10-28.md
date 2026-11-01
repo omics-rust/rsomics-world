@@ -1,5 +1,45 @@
 # Ecology diversity source qualification
 
+## Complete-study alpha/rarefaction success adopted, not beta or release
+
+Root reads complete REPORT,448-line data/resource validator, full TAR/CAS and
+final receipt/seal programs at ecology-whole-real-success-20261101.5nkx31;
+freshly hashes all16986 physical sealed files/13289979460B and verifies modes.
+REPORTed9d7376c8ddcff27331dadbbb40b08c65507b39dba9f4ca189ca6e752200070;
+SEAL395307d0dc16582ac8e3ba98c5e80c907245ca79f4ce8bd7a75753fa1429a4ad;
+COMPLETEDcd0c31b041ae2fc5b7a2735694fd6329df9332aae24929534fc8ea25937ecf1a.
+Actual41273333210/1 succeeds atb0950de2, job124750429737/artifact13070179375.
+Full ZIP3977861900B cfbe70dd23e159709871a9ba2e64b04729b7990be5dee5badbed73796fc7a2b6,
+cipher and whole authenticated TAR3976888320B are retained. All18659 logical
+regular bodies/modes and1052 links as metadata are lossless;33 terminfo
+casefold collisions are not restored as paths or executed on Mac.
+
+Actual accepted native e1b03cb6/ELF58cd2ec1 and fresh3.12.10 source/27 original
+wheels/providers execute on the pinned Bookworm machine. Fresh interpreter
+is not old3.12.15. Native systemDSO bytes are not separately archived; loader
+success is not complete system-provider body identity. Outer tree ZIP was
+not fully acquired and root does not independently decode HDF5 on Mac.
+Original QZA/BIOM/body pins and hosted executed conversion connect to a full
+independent45667440-cell TSV scan and sparse count digest. No sample/feature
+or supplied-tree pruning:41328 features/1105 samples/314497 nonzeros/21227600
+reads/162331 tips. Depth3/seed42 preserves IDs/all1105 samples and3315 reads.
+
+Independent reduction verifies28 workflows/87 exports/680680 alpha cells,
+maximum absolute error4.490630090003833e-12, exact observed richness and
+native1/4/repeat payloads. B1/B4 original-alpha A and whole-three-stage W pass
+both unchanged throughput and conservative-process-memory routes; later
+stages also pass. Whole wall medians source31.021835/native4.942510s B1;
+source20.939201/native4.640166s B4. No measured pair wall loss. W wait4 CPU
+is counted once; A uses its actual first native CLI. RSS is largest process
+lifetime peak, not simultaneous aggregate or isolated algorithm heap.
+
+Native1->4 speedups remain only A1.181x/W1.065x, with CPU increases7.26%/
+1.81%; no strong-thread-scaling claim. New accepted scoped receipt
+.autopilot/oracles/ecology-whole-real-2026-11-01.json SHA179835de584fe258fcf62859565203d2d0c4742c27fe32c0636015341c7bd3b7
+accepts only these11 alpha metrics/rarefaction/whole workflow. Beta/all15
+profiles/full product/publication remain false. First failed41272473289
+stays failed. No unchanged campaign replay is required for the new beta work.
+
 ## Beta private implementation design adopted
 
 Root fully reads and hashes the18853B design606e23e626e14a32c80ee25ed625c0171a157bb4c6bcbe275e08645721bd4abe,
