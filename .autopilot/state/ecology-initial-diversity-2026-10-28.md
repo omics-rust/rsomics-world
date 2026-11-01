@@ -42,6 +42,12 @@ stays failed. No unchanged campaign replay is required for the new beta work.
 
 ## Beta private implementation design adopted
 
+One bounded author /root/ecology_beta_impl owns the private owner wave;
+external delivery workspace is ecology-beta-wave.tZw4mT. Original integrated
+RED and connected source/rarefy/worker checks are retained there. Root has
+not staged/committed the owner or accepted the new beta source/native/performance
+wave; final complete diff/report and one fresh whole-feature review remain.
+
 Root fully reads and hashes the18853B design606e23e626e14a32c80ee25ed625c0171a157bb4c6bcbe275e08645721bd4abe,
 actual retained beta driver/UniFrac/root-path source and current owner models.
 Plan docs/plans/2026-11-01-ecology-beta.md adopts one private eight-mode wave,
