@@ -18,6 +18,7 @@ No deletion or migration of project/shared application/user data occurred.
 |---|---|---|
 | DESeq | accepted green7/schema5/performance; actual owning5563528d deliveryCI41293914322 and complete originals accepted; GitHubv0.1.0/fresh public Mac1200x12 lifecycle pass | registry authorization held/publish=false; no unchanged source/native/performance replay |
 | limma | count/ordinary science and performance accepted; actual owning90d44575 deliveryCI41310896586/full originals/GitHubv0.1.0/fresh public13-call two-route install pass | registry held/publish=false; serial throughput/scaling losses retained; no unchanged source/count replay |
+| table | reviewed six-operation delivery owninge98f54ac, exactCI41332571386/all six jobs and full original artifacts/source packages/four installed lifecycles root-adopted | earned GitHub release/fresh public download next; registry held, old performance remains bound to2bd0fd3/measured6e490331 |
 | edgeR | complete private QL workflow; original P/FDR gate remains failed | explicit numerical-contract decision; no band tuning |
 | ecology | current111adf5e native4/alpha plus ALL8 full41328x1105 beta metrics/tree/source/1+4 outputs/resources and complete originals accepted | public package/native-delivery/release still unearned; dedicated compact source-on-native flag staysfalse, full-study source comparisons accepted separately |
 | structure | source40644150133 qualified; reviewed private2aee715 and native4 run41184818337 accepted | public torsion/full7/performance remain held or unearned; no coordinate foundation |

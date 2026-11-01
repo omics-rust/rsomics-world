@@ -1,0 +1,1404 @@
+{
+  "additional_live_csvtk_passes": 16,
+  "benchmark": {
+    "artifact": {
+      "bytes": 2706155,
+      "sha256": "a875850deb88b32d993b837825dc29b8c4769c8a0f6515b6f7f45a1224408c94"
+    },
+    "artifact_id": 13093049034,
+    "files": {
+      "build-manifest.txt": {
+        "bytes": 473,
+        "sha256": "273812d2e661a238b1b8c96bf71cbaee65b5f3bcd3e72118990eee87edf3d1c2"
+      },
+      "compare-groupby": {
+        "bytes": 3936048,
+        "sha256": "505ec5f3c4f6e6d400a2cfb85474047a518a949636e3286e00f8a21727e83af6"
+      },
+      "rsomics-table": {
+        "bytes": 4512520,
+        "sha256": "113af698f3641a76380bc61cf9f73c50df7d530d487a157e53a6774c6058a0ea"
+      }
+    },
+    "new_measurement": false
+  },
+  "binary_executed_locally": false,
+  "default_ignored_per_profile": 6,
+  "default_passed_per_profile": 111,
+  "fresh_public_download_smoke_accepted": false,
+  "full_oracle": {
+    "bytes": 26150,
+    "failed": 0,
+    "groups": [
+      [
+        32,
+        0,
+        0
+      ],
+      [
+        4,
+        0,
+        0
+      ],
+      [
+        16,
+        0,
+        0
+      ],
+      [
+        1,
+        0,
+        0
+      ],
+      [
+        13,
+        0,
+        0
+      ],
+      [
+        2,
+        0,
+        0
+      ],
+      [
+        12,
+        0,
+        0
+      ],
+      [
+        1,
+        0,
+        0
+      ],
+      [
+        10,
+        0,
+        0
+      ],
+      [
+        1,
+        0,
+        0
+      ],
+      [
+        12,
+        0,
+        0
+      ],
+      [
+        1,
+        0,
+        0
+      ],
+      [
+        12,
+        0,
+        0
+      ]
+    ],
+    "ignored": 0,
+    "passed": 117,
+    "raw_log": "linux-x86_64-oracles/10_Pinned live differentials.txt",
+    "sha256": "002c130971237d5523a54342d8ce188625c949daeb636a21cdcb5aa4345bc3e4"
+  },
+  "full_oracle_passed": 117,
+  "head_sha": "e98f54acb051ee827b858aadf7ee3de11f007869",
+  "installed_calls_total": 44,
+  "installed_expected_failures": 4,
+  "limitations": [
+    "Historical performance stays bound to old2bd0fd3/measuredELF; delivery executables are not remeasured.",
+    "The same111 test intents run in three profiles/four hosts;1332 instances are not distinct tests.",
+    "Six default live tests are ignored in each ordinary profile; the separate full oracle runs all117 with0ignored.",
+    "Inert local0600 bodies are not restored executables; actual archive/Git modes are retained separately.",
+    "Header classes/actual native CI are verified, not full OS minimum versions or a mapped system DSO inventory."
+  ],
+  "linked_system_library_inventory": false,
+  "new_performance_claim": false,
+  "original_artifacts": 5,
+  "profiles_per_target": 3,
+  "protected_baseline_bodies_modes": 53,
+  "raw_job_logs": {
+    "linux-aarch64": {
+      "bytes": 155775,
+      "job_id": 124925572543,
+      "raw_log": "0_linux-aarch64.txt",
+      "sha256": "58a092009ae27e9cb3bf704ea1095abed4af12d44c6b6b16f0f377fd84c0c997"
+    },
+    "linux-x86_64": {
+      "bytes": 157860,
+      "job_id": 124925572601,
+      "raw_log": "2_linux-x86_64.txt",
+      "sha256": "e46b13a2cec07af5c70bb7a7405084de0c3d601a7ee1c3886597fcce7ef17d1e"
+    },
+    "linux-x86_64-benchmark-artifact": {
+      "bytes": 52734,
+      "job_id": 124925572250,
+      "raw_log": "4_linux-x86_64-benchmark-artifact.txt",
+      "sha256": "97dc3a8e4941daf5394fcb42f13821939b99232d055231eebc7f59a70d078565"
+    },
+    "linux-x86_64-oracles": {
+      "bytes": 447905,
+      "job_id": 124925572405,
+      "raw_log": "5_linux-x86_64-oracles.txt",
+      "sha256": "df636e52f06caa87b5486a9db7535f5f4a97ea90a3ab661315f8033171a20b5d"
+    },
+    "macos-aarch64": {
+      "bytes": 155706,
+      "job_id": 124925572454,
+      "raw_log": "3_macos-aarch64.txt",
+      "sha256": "253c3ebf39804f98d111c71b5e51e7bdf27ae3dfbb714882987ae50695448d39"
+    },
+    "macos-x86_64": {
+      "bytes": 155525,
+      "job_id": 124925572542,
+      "raw_log": "1_macos-x86_64.txt",
+      "sha256": "34515f18ae86c1445ff8a91ecbd72c8347161491f5384fb69ca30784b5a043ed"
+    }
+  },
+  "registry_published": false,
+  "release_published": false,
+  "repository": "omics-rust/rsomics-table",
+  "repository_id": 1339954631,
+  "root_adopted": true,
+  "run_attempt": 1,
+  "run_id": 41332571386,
+  "schema": "rsomics.table.native-delivery-adoption.v1",
+  "scientific_replay": false,
+  "signed_release": false,
+  "source_default_ignore_instances": 72,
+  "source_git_files": 181,
+  "source_package_byte_identical_across_four": true,
+  "source_package_hashes": [
+    "4672a8fbcac112df8f56c5388b72eb95c46f487f073d7589c2482ae264404013"
+  ],
+  "source_test_instances": 1332,
+  "source_tree": "c0bed010bd30fcf607e2d926dc3388842bda812d",
+  "status": "accepted-exact-head-four-native-source-package-and-installed-lifecycle",
+  "targets": {
+    "linux-aarch64": {
+      "all_122_notice_bodies_verified": true,
+      "artifact": {
+        "bytes": 5020724,
+        "sha256": "ed9ef119ec437fcd6289b5e03547c011a59315a0f21788b5f6fc1bc68cba336c"
+      },
+      "artifact_id": 13094097297,
+      "binary": {
+        "bytes": 4349368,
+        "sha256": "05bcb13aaa3c2eff54e705669f30a249bbf2295ff98218a2983f27e02b307c03"
+      },
+      "header": {
+        "executable_type": 3,
+        "format": "ELF64-little",
+        "header_hex": "7f454c460201010000000000000000000300b70001000000c0c20500000000004000000000000000b85542000000000000000000400038000a00400020001f00",
+        "machine": 183
+      },
+      "host": "aarch64-unknown-linux-gnu",
+      "installed": {
+        "binary_sha256": "05bcb13aaa3c2eff54e705669f30a249bbf2295ff98218a2983f27e02b307c03",
+        "calls": 11,
+        "expected_failures": 1,
+        "grouped_records": 3,
+        "independent_values_and_multiplicity": true,
+        "input_records": 6,
+        "joined_records": 4,
+        "six_operations_verified": true,
+        "successes": 10
+      },
+      "job_id": 124925572543,
+      "native_archive": {
+        "bytes": 1526605,
+        "sha256": "32e171bda088d92b578e96910ea4994106f74ece7af30d7b0d16749d6bd6341d"
+      },
+      "native_enabled_packages": 55,
+      "native_regular_files": 130,
+      "native_tar_members": 191,
+      "original_zip_files": 178,
+      "source_package": {
+        "bytes": 108184,
+        "sha256": "4672a8fbcac112df8f56c5388b72eb95c46f487f073d7589c2482ae264404013"
+      },
+      "source_regular_files": 183,
+      "tests": {
+        "Pinned csvtk differential": {
+          "bytes": 3792,
+          "failed": 0,
+          "groups": [
+            [
+              1,
+              0,
+              0
+            ],
+            [
+              1,
+              0,
+              0
+            ],
+            [
+              1,
+              0,
+              0
+            ],
+            [
+              1,
+              0,
+              0
+            ]
+          ],
+          "ignored": 0,
+          "passed": 4,
+          "raw_log": "linux-aarch64/13_Pinned csvtk differential.txt",
+          "sha256": "0521cd7c421c4f55c9bd96ad3f0d8a16e7c966fb2f29b465d7168d8f5a72e057"
+        },
+        "Test debug": {
+          "bytes": 21110,
+          "failed": 0,
+          "groups": [
+            [
+              32,
+              0,
+              0
+            ],
+            [
+              4,
+              0,
+              0
+            ],
+            [
+              16,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              1
+            ],
+            [
+              13,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              2
+            ],
+            [
+              12,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              1
+            ],
+            [
+              10,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              1
+            ],
+            [
+              12,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              1
+            ],
+            [
+              12,
+              0,
+              0
+            ]
+          ],
+          "ignored": 6,
+          "passed": 111,
+          "raw_log": "linux-aarch64/11_Test debug.txt",
+          "sha256": "edfad02244a1c03c17160f91c8a01025d5a6cba639e32b6cea2de69d87f7a029"
+        },
+        "Test packaged release": {
+          "bytes": 18092,
+          "failed": 0,
+          "groups": [
+            [
+              32,
+              0,
+              0
+            ],
+            [
+              4,
+              0,
+              0
+            ],
+            [
+              16,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              1
+            ],
+            [
+              13,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              2
+            ],
+            [
+              12,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              1
+            ],
+            [
+              10,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              1
+            ],
+            [
+              12,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              1
+            ],
+            [
+              12,
+              0,
+              0
+            ]
+          ],
+          "ignored": 6,
+          "passed": 111,
+          "raw_log": "linux-aarch64/15_Test packaged release.txt",
+          "sha256": "4673c500f7f7a3b4c1342de5a3f212cf7678c093708d7fa43be95ee99a74213e"
+        },
+        "Test release": {
+          "bytes": 21729,
+          "failed": 0,
+          "groups": [
+            [
+              32,
+              0,
+              0
+            ],
+            [
+              4,
+              0,
+              0
+            ],
+            [
+              16,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              1
+            ],
+            [
+              13,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              2
+            ],
+            [
+              12,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              1
+            ],
+            [
+              10,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              1
+            ],
+            [
+              12,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              1
+            ],
+            [
+              12,
+              0,
+              0
+            ]
+          ],
+          "ignored": 6,
+          "passed": 111,
+          "raw_log": "linux-aarch64/12_Test release.txt",
+          "sha256": "637673751c39669a47ec08174c472c7098a3e77be3b5718934da534cb3865e9e"
+        }
+      }
+    },
+    "linux-x86_64": {
+      "all_122_notice_bodies_verified": true,
+      "artifact": {
+        "bytes": 5121027,
+        "sha256": "97200831471f5c43129f2f811754ab162bc76bd5f3df3a5ea9d5a3880928e333"
+      },
+      "artifact_id": 13093178615,
+      "binary": {
+        "bytes": 4512520,
+        "sha256": "858a3a8688c5ccfb201859a4d95aa99d0fdc9c458145d4c4f6731193eec9d0dc"
+      },
+      "header": {
+        "executable_type": 3,
+        "format": "ELF64-little",
+        "header_hex": "7f454c4602010100000000000000000003003e0001000000a017110000000000400000000000000048d244000000000000000000400038000c00400023002100",
+        "machine": 62
+      },
+      "host": "x86_64-unknown-linux-gnu",
+      "installed": {
+        "binary_sha256": "858a3a8688c5ccfb201859a4d95aa99d0fdc9c458145d4c4f6731193eec9d0dc",
+        "calls": 11,
+        "expected_failures": 1,
+        "grouped_records": 3,
+        "independent_values_and_multiplicity": true,
+        "input_records": 6,
+        "joined_records": 4,
+        "six_operations_verified": true,
+        "successes": 10
+      },
+      "job_id": 124925572601,
+      "native_archive": {
+        "bytes": 1571524,
+        "sha256": "e852c080a2dd186784e4cfa2912445a766279317edd0215ad2c028365309b320"
+      },
+      "native_enabled_packages": 55,
+      "native_regular_files": 130,
+      "native_tar_members": 191,
+      "original_zip_files": 178,
+      "source_package": {
+        "bytes": 108184,
+        "sha256": "4672a8fbcac112df8f56c5388b72eb95c46f487f073d7589c2482ae264404013"
+      },
+      "source_regular_files": 183,
+      "tests": {
+        "Pinned csvtk differential": {
+          "bytes": 3790,
+          "failed": 0,
+          "groups": [
+            [
+              1,
+              0,
+              0
+            ],
+            [
+              1,
+              0,
+              0
+            ],
+            [
+              1,
+              0,
+              0
+            ],
+            [
+              1,
+              0,
+              0
+            ]
+          ],
+          "ignored": 0,
+          "passed": 4,
+          "raw_log": "linux-x86_64/13_Pinned csvtk differential.txt",
+          "sha256": "fc0827970aaf07d4cf09a1836280a5c6e7393c38ce933ec6d5e648a5c73d596f"
+        },
+        "Test debug": {
+          "bytes": 21108,
+          "failed": 0,
+          "groups": [
+            [
+              32,
+              0,
+              0
+            ],
+            [
+              4,
+              0,
+              0
+            ],
+            [
+              16,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              1
+            ],
+            [
+              13,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              2
+            ],
+            [
+              12,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              1
+            ],
+            [
+              10,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              1
+            ],
+            [
+              12,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              1
+            ],
+            [
+              12,
+              0,
+              0
+            ]
+          ],
+          "ignored": 6,
+          "passed": 111,
+          "raw_log": "linux-x86_64/11_Test debug.txt",
+          "sha256": "b17a4e979f689956a3a023256a663dd12c481c523b59fd1cc7a24fe590583220"
+        },
+        "Test packaged release": {
+          "bytes": 18090,
+          "failed": 0,
+          "groups": [
+            [
+              32,
+              0,
+              0
+            ],
+            [
+              4,
+              0,
+              0
+            ],
+            [
+              16,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              1
+            ],
+            [
+              13,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              2
+            ],
+            [
+              12,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              1
+            ],
+            [
+              10,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              1
+            ],
+            [
+              12,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              1
+            ],
+            [
+              12,
+              0,
+              0
+            ]
+          ],
+          "ignored": 6,
+          "passed": 111,
+          "raw_log": "linux-x86_64/15_Test packaged release.txt",
+          "sha256": "ce2618542a1237c26bb4319b012c9f47bc1ec2446be545534fcd019e07a9894a"
+        },
+        "Test release": {
+          "bytes": 21727,
+          "failed": 0,
+          "groups": [
+            [
+              32,
+              0,
+              0
+            ],
+            [
+              4,
+              0,
+              0
+            ],
+            [
+              16,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              1
+            ],
+            [
+              13,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              2
+            ],
+            [
+              12,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              1
+            ],
+            [
+              10,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              1
+            ],
+            [
+              12,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              1
+            ],
+            [
+              12,
+              0,
+              0
+            ]
+          ],
+          "ignored": 6,
+          "passed": 111,
+          "raw_log": "linux-x86_64/12_Test release.txt",
+          "sha256": "63ed42e5d7c4b3b96f7cea4005405600f1e9e14a64f7599f1bfd34c1cb22a660"
+        }
+      }
+    },
+    "macos-aarch64": {
+      "all_122_notice_bodies_verified": true,
+      "artifact": {
+        "bytes": 4654574,
+        "sha256": "03858306d8710bfa9178ce33ea53fc6d662427c5e2b72c0a759d3c49f97a79bb"
+      },
+      "artifact_id": 13093637877,
+      "binary": {
+        "bytes": 3560912,
+        "sha256": "21d0dfdb13d8da96e00676fa96f6c211caffb7d7c3ab4bc3cf167a6197368f8b"
+      },
+      "header": {
+        "cpu_subtype": 0,
+        "cpu_type": 16777228,
+        "executable_type": 2,
+        "format": "Mach-O64-little",
+        "header_hex": "cffaedfe0c000001000000000200000012000000700800008500a00000000000"
+      },
+      "host": "aarch64-apple-darwin",
+      "installed": {
+        "binary_sha256": "21d0dfdb13d8da96e00676fa96f6c211caffb7d7c3ab4bc3cf167a6197368f8b",
+        "calls": 11,
+        "expected_failures": 1,
+        "grouped_records": 3,
+        "independent_values_and_multiplicity": true,
+        "input_records": 6,
+        "joined_records": 4,
+        "six_operations_verified": true,
+        "successes": 10
+      },
+      "job_id": 124925572454,
+      "native_archive": {
+        "bytes": 1412184,
+        "sha256": "db84d432fded9e03189d323059c89077ff4c387ff0df3ef5cc460bbf3c21d1de"
+      },
+      "native_enabled_packages": 55,
+      "native_regular_files": 130,
+      "native_tar_members": 191,
+      "original_zip_files": 178,
+      "source_package": {
+        "bytes": 108184,
+        "sha256": "4672a8fbcac112df8f56c5388b72eb95c46f487f073d7589c2482ae264404013"
+      },
+      "source_regular_files": 183,
+      "tests": {
+        "Pinned csvtk differential": {
+          "bytes": 3796,
+          "failed": 0,
+          "groups": [
+            [
+              1,
+              0,
+              0
+            ],
+            [
+              1,
+              0,
+              0
+            ],
+            [
+              1,
+              0,
+              0
+            ],
+            [
+              1,
+              0,
+              0
+            ]
+          ],
+          "ignored": 0,
+          "passed": 4,
+          "raw_log": "macos-aarch64/13_Pinned csvtk differential.txt",
+          "sha256": "e7d27f56efe9c5a6917c4a3f4ad001bceef25adac6854a1cee1c12c78824ffc2"
+        },
+        "Test debug": {
+          "bytes": 21115,
+          "failed": 0,
+          "groups": [
+            [
+              32,
+              0,
+              0
+            ],
+            [
+              4,
+              0,
+              0
+            ],
+            [
+              16,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              1
+            ],
+            [
+              13,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              2
+            ],
+            [
+              12,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              1
+            ],
+            [
+              10,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              1
+            ],
+            [
+              12,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              1
+            ],
+            [
+              12,
+              0,
+              0
+            ]
+          ],
+          "ignored": 6,
+          "passed": 111,
+          "raw_log": "macos-aarch64/11_Test debug.txt",
+          "sha256": "911a90dd8d78e65e6740f863bfe6574d147af1e027413e46e011f6f33ef8ce53"
+        },
+        "Test packaged release": {
+          "bytes": 18107,
+          "failed": 0,
+          "groups": [
+            [
+              32,
+              0,
+              0
+            ],
+            [
+              4,
+              0,
+              0
+            ],
+            [
+              16,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              1
+            ],
+            [
+              13,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              2
+            ],
+            [
+              12,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              1
+            ],
+            [
+              10,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              1
+            ],
+            [
+              12,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              1
+            ],
+            [
+              12,
+              0,
+              0
+            ]
+          ],
+          "ignored": 6,
+          "passed": 111,
+          "raw_log": "macos-aarch64/15_Test packaged release.txt",
+          "sha256": "4ff87e3c4a1806b23aea0db7dbed8f2d948e515cf344a08b360e404e785db3df"
+        },
+        "Test release": {
+          "bytes": 21734,
+          "failed": 0,
+          "groups": [
+            [
+              32,
+              0,
+              0
+            ],
+            [
+              4,
+              0,
+              0
+            ],
+            [
+              16,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              1
+            ],
+            [
+              13,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              2
+            ],
+            [
+              12,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              1
+            ],
+            [
+              10,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              1
+            ],
+            [
+              12,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              1
+            ],
+            [
+              12,
+              0,
+              0
+            ]
+          ],
+          "ignored": 6,
+          "passed": 111,
+          "raw_log": "macos-aarch64/12_Test release.txt",
+          "sha256": "5fe304b257342968d8aa12d7f16088a55a84c3700a2455c65eab16f02f822ee7"
+        }
+      }
+    },
+    "macos-x86_64": {
+      "all_122_notice_bodies_verified": true,
+      "artifact": {
+        "bytes": 4864569,
+        "sha256": "77195e167fb066ada7d0e6e37a467ff117a53d844cd550d5d92255f5a229059a"
+      },
+      "artifact_id": 13093914566,
+      "binary": {
+        "bytes": 3790568,
+        "sha256": "85f6a14fe8a8466a18bf58f7b27c02e35b7e07edd9eb4a620e419a24612b9221"
+      },
+      "header": {
+        "cpu_subtype": 3,
+        "cpu_type": 16777223,
+        "executable_type": 2,
+        "format": "Mach-O64-little",
+        "header_hex": "cffaedfe07000001030000000200000010000000080800008500a00000000000"
+      },
+      "host": "x86_64-apple-darwin",
+      "installed": {
+        "binary_sha256": "85f6a14fe8a8466a18bf58f7b27c02e35b7e07edd9eb4a620e419a24612b9221",
+        "calls": 11,
+        "expected_failures": 1,
+        "grouped_records": 3,
+        "independent_values_and_multiplicity": true,
+        "input_records": 6,
+        "joined_records": 4,
+        "six_operations_verified": true,
+        "successes": 10
+      },
+      "job_id": 124925572542,
+      "native_archive": {
+        "bytes": 1486720,
+        "sha256": "186d145264ba93059e5398d86f7c25d8ccd2bc84ae8968a109269edfc0b4c4b7"
+      },
+      "native_enabled_packages": 55,
+      "native_regular_files": 130,
+      "native_tar_members": 191,
+      "original_zip_files": 178,
+      "source_package": {
+        "bytes": 108184,
+        "sha256": "4672a8fbcac112df8f56c5388b72eb95c46f487f073d7589c2482ae264404013"
+      },
+      "source_regular_files": 183,
+      "tests": {
+        "Pinned csvtk differential": {
+          "bytes": 3794,
+          "failed": 0,
+          "groups": [
+            [
+              1,
+              0,
+              0
+            ],
+            [
+              1,
+              0,
+              0
+            ],
+            [
+              1,
+              0,
+              0
+            ],
+            [
+              1,
+              0,
+              0
+            ]
+          ],
+          "ignored": 0,
+          "passed": 4,
+          "raw_log": "macos-x86_64/13_Pinned csvtk differential.txt",
+          "sha256": "dc52928b2142266b80cae6787916ea90242d3e71006f1c302f1fdc7f7e8b42cb"
+        },
+        "Test debug": {
+          "bytes": 21113,
+          "failed": 0,
+          "groups": [
+            [
+              32,
+              0,
+              0
+            ],
+            [
+              4,
+              0,
+              0
+            ],
+            [
+              16,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              1
+            ],
+            [
+              13,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              2
+            ],
+            [
+              12,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              1
+            ],
+            [
+              10,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              1
+            ],
+            [
+              12,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              1
+            ],
+            [
+              12,
+              0,
+              0
+            ]
+          ],
+          "ignored": 6,
+          "passed": 111,
+          "raw_log": "macos-x86_64/11_Test debug.txt",
+          "sha256": "1145fbabaa07b50be4f1036114d4ef0defa6fa8dc51abf6771cdc6eb47b48872"
+        },
+        "Test packaged release": {
+          "bytes": 18105,
+          "failed": 0,
+          "groups": [
+            [
+              32,
+              0,
+              0
+            ],
+            [
+              4,
+              0,
+              0
+            ],
+            [
+              16,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              1
+            ],
+            [
+              13,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              2
+            ],
+            [
+              12,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              1
+            ],
+            [
+              10,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              1
+            ],
+            [
+              12,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              1
+            ],
+            [
+              12,
+              0,
+              0
+            ]
+          ],
+          "ignored": 6,
+          "passed": 111,
+          "raw_log": "macos-x86_64/15_Test packaged release.txt",
+          "sha256": "225ee01488d2145ab08eee721e536f9a14847f10dad04c71ddcb2ba50f73dee4"
+        },
+        "Test release": {
+          "bytes": 21732,
+          "failed": 0,
+          "groups": [
+            [
+              32,
+              0,
+              0
+            ],
+            [
+              4,
+              0,
+              0
+            ],
+            [
+              16,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              1
+            ],
+            [
+              13,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              2
+            ],
+            [
+              12,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              1
+            ],
+            [
+              10,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              1
+            ],
+            [
+              12,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              1
+            ],
+            [
+              12,
+              0,
+              0
+            ]
+          ],
+          "ignored": 6,
+          "passed": 111,
+          "raw_log": "macos-x86_64/12_Test release.txt",
+          "sha256": "e71170c0aa0a86895e328595c469fc838762284983815dec8ea2483272322cb3"
+        }
+      }
+    }
+  },
+  "upstream_executed_locally": false,
+  "recovery_proposal_schema": "rsomics.table.native-delivery-adoption-proposal.v1",
+  "product": "rsomics-table",
+  "root_adoption": {
+    "evidence_directory": "/Volumes/KIOXIA/Developments/tmp/table-delivery-originals-20261102.XyGTyH",
+    "report_sha256": "b0b574d04763500c8f22bed8cc76a6fcf5a1eeff3e0fe56bd974fac9d55a7644",
+    "seal_sha256": "0c835c186d9603cd354ccba9ebbd6ca3d52f8f532ab7c5d9da33d1fceba0e474",
+    "original_proposal_sha256": "2c8de9674c376e3fd5ec7290e4afdfc1ce43f58569af43f48226aaa52851cd75",
+    "root_directory": "/Volumes/KIOXIA/Developments/tmp/table-root-20261102.4O4y4o",
+    "fresh_stdout_sha256": "7c47e1832590172019557d04d8a85614d003f441a63325b8d4d4d5827e8a1bbe",
+    "exit_code": 0,
+    "stderr_bytes": 0,
+    "physical_files_including_seal": 1152,
+    "physical_bytes_including_seal": 80521760,
+    "full_zip_crc_nested_archive_and_source_mode_recheck": true,
+    "complete_data_receipt_rebuilt_read_only": true,
+    "scientific_execution": false,
+    "packet_writes": false
+  }
+}

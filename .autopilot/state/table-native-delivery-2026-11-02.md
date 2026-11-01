@@ -57,3 +57,36 @@ is committed/pushed; actual exact-head CI41332571386 is in progress. Clean
 source-package binding, six-job native/oracle success and full delivery
 originals remain unaccepted until actual results. Registry remains held;
 no GitHub release or cargo publication has occurred.
+
+## Exact-head delivery and complete originals accepted
+
+Actual41332571386/1 at clean owninge98f54acb051ee827b858aadf7ee3de11f007869
+finishes SUCCESS, all six jobs. The four native classes each pass111 default
+intents in debug/release/packaged-release with six named live-oracle ignores,
+plus four live csvtk checks. The separate full Linux oracle passes117/0ignored;
+the comparator job passes3. Repeated profiles/hosts are test instances, not
+1332 distinct tests. All four source packages are byte-identical108184B,
+SHA4672a8fbcac112df8f56c5388b72eb95c46f487f073d7589c2482ae264404013.
+Each contains183 regular members:181 exact Git bodies/modes plus the original
+manifest and clean exact-head VCS metadata. Normalized Cargo metadata agrees.
+
+All four installed11-call lifecycles verify the six operations, quoted UTF-8/
+multiline fields,1/4 sort identity, duplicate-key Cartesian join, grouped gzip
+values and nonzero malformed-input failure preserving a prior output.
+Native archives each retain130 regular files/191 members, the actual product
+executable and all122 original dependency terms. Header/native-host checks
+are not OS-minimum, full linked-DSO, signing or notarization qualification.
+No unchanged scientific benchmark is replayed; old implementation2bd0fd3/
+measured6e490331 performance and its sort/grouping trade-offs remain scoped.
+
+Complete XyGTyH contains all five original ZIPs, full six-job logs and nested
+source/native archives:1152 physical files/80521760B including the seal.
+REPORTb0b574d0/SEAL0c835c18/proposal2c8de967 remain immutable. Root reads the
+complete report/reader/verifier and freshly checks all sealed bodies, ZIP CRCs,
+nested archives, Git modes, source metadata, notice bodies and rebuilt data
+receipt:4O4y4o/delivery-originals.stdout SHA7c47e183, exit0/empty stderr.
+No recovered binary/upstream program is executed locally during custody.
+Root adoption is table-native-delivery-2026-11-02.json. The actual new delivery
+ELFs/Mach-O bodies do not inherit old measured timings. GitHub release and a
+fresh actual public-download install remain next; registry publication remains
+held and has not been retried.
