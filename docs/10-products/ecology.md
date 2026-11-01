@@ -14,16 +14,17 @@ nullable reports are not added. Actual41280935272 now qualifies all four
 native classes for owner111adf5/120 source files/86 fixtures: six integrations
 in debug and release, zero ignored, with complete originals and exact release
 binaries independently accepted in ecology-native-beta-2026-11-01.json.
-Full-study beta now has six accepted independent full metrics from
-actual41288208209/1: Bray-Curtis, Jaccard, Canberra, city-block, Euclidean and
-unweighted UniFrac. All use the complete41328-feature/1105-sample input;
-all126 matrices and six complete original carriers were verified. Serial
-throughput and RSS gates pass for each, with measured1->4 wall scaling and
-explicit CPU/resource tradeoffs. UniFrac uses the declared adapted public
-contiguous-layout baseline, not unchanged-default source performance.
-See ecology-beta-six-real-2026-11-01.json. Weighted UniFrac is still running;
-normalized weighted UniFrac failed before science at capacity admission.
-Neither is accepted, so the eight-metric slice and release remain pending.
+All eight full-study beta modes now have accepted complete originals and
+correctness/resource comparisons: seven actual41288208209/1 jobs plus the
+single capacity-only normalized weighted UniFrac retry at attempt2. All use
+the complete41328-feature/1105-sample input; no feature/sample/tree pruning or
+beta rarefaction occurs. Both fixed serial throughput and RSS gates pass for
+each; measured1->4 wall scaling and CPU/resource costs remain explicit.
+UniFrac uses the charged adapted public contiguous-layout source baseline,
+not unchanged-default source performance. The root authority is
+ecology-beta-eight-real-2026-11-02.json. Dedicated compact source-on-native
+qualification remains false; full-study source comparisons are accepted
+separately. Public package/native delivery and release remain unearned.
 Actual41268190701 remains historical for the earlier e1b03cb6 alpha/rarefaction
 owner; its original authority is not rebound to the beta candidate.
 See `.autopilot/state/ecology-initial-diversity-2026-10-28.md` and
@@ -32,7 +33,8 @@ performance for the selected11-metric alpha/depth3-rarefy/alpha workflow are
 now accepted from actual41273333210, with all41328 features/1105 samples and
 the full162331-tip tree. The unchanged1/4 CPU gates pass, but native thread
 scaling is limited. See `.autopilot/oracles/ecology-whole-real-2026-11-01.json`.
-This does not qualify beta, all15 captured alpha profiles or a full release.
+That earlier workflow alone does not qualify beta, all15 captured alpha
+profiles or a full release. Beta is qualified separately as recorded above.
 
 ## Boundary
 
@@ -277,9 +279,10 @@ Only modules belonging to the current release slice are created. The initial
 diversity release has no empty ordination, inference, association, or
 trajectory module.
 
-The library exposes checked table inputs, metric configurations, distance and
-result types required for programmatic diversity work. CLI parsing, input
-profile selection, serialization policy, and execution plumbing stay private.
+For0.1 the executable is the supported interface and the library exposes only
+run_cli. Checked count/tree/matrix models, metric configuration and computation
+remain product-private. The larger structure above describes later slices,
+not empty modules or a promise to publish scientific model APIs now.
 
 ## Foundation relationships
 
