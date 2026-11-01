@@ -1,0 +1,512 @@
+{
+  "adapted_terms": 8,
+  "binary_executed_locally": false,
+  "copied_registry_terms": 99,
+  "distinct_integration_test_intents": 6,
+  "fresh_public_download_smoke_accepted": false,
+  "head_sha": "60dd0bfd34c51518768bc52e2d6e1089b7378f9d",
+  "installed_calls_total": 56,
+  "installed_expected_failures": 4,
+  "installed_successes_total": 52,
+  "integration_ignored_per_profile": 0,
+  "integration_passed_per_profile": 6,
+  "limitations": [
+    "Earlier alpha/rarefaction and beta measurements stay bound to their original executables; delivery binaries are not remeasured.",
+    "Six integration test intents repeat in three profiles on four native hosts:72 instances, not72 distinct tests.",
+    "Installed lifecycle compares recorded source observations; these four jobs did not run live upstream science.",
+    "Inert local0600 copies are data; exact original archive/Git modes are retained separately.",
+    "Actual native hosts and executable header classes are verified, not signing, older OS floors or full mapped DSO inventories.",
+    "GitHub release, fresh public download and registry publication remain unaccepted/pending root action."
+  ],
+  "linked_system_library_inventory": false,
+  "new_performance_claim": false,
+  "original_artifacts": 4,
+  "profiles_per_target": 3,
+  "protected_baseline_bodies_modes": 114,
+  "raw_job_logs": {
+    "linux-aarch64": {
+      "bytes": 58237,
+      "job_id": 124951443392,
+      "raw_log": "1_linux-aarch64.txt",
+      "sha256": "4f5c5cbc04fa94e2aaad60e4240bb916662bea3fafd535fe9595220f51590185"
+    },
+    "linux-x86_64": {
+      "bytes": 58154,
+      "job_id": 124951443333,
+      "raw_log": "0_linux-x86_64.txt",
+      "sha256": "caeeb4ff253ffa6b88b16e05b3bd2d19805562cb076cf00f0d4ce3ece757d1ab"
+    },
+    "macos-aarch64": {
+      "bytes": 58013,
+      "job_id": 124951443345,
+      "raw_log": "3_macos-aarch64.txt",
+      "sha256": "49be85a6eb7147c73c7f76d18843a98c2a0aa5401dc2d8716cbe51cdbc5f198a"
+    },
+    "macos-x86_64": {
+      "bytes": 57846,
+      "job_id": 124951443391,
+      "raw_log": "2_macos-x86_64.txt",
+      "sha256": "cd0b650d5f3ff402af83d230f4f5a10b67ba1656a3d9f48fee3e4b3a9d76c499"
+    }
+  },
+  "registry_archive_union": 47,
+  "registry_published": false,
+  "release_published": false,
+  "repository": "omics-rust/rsomics-ecology",
+  "repository_id": 1442155778,
+  "root_adopted": true,
+  "run_attempt": 1,
+  "run_id": 41341218191,
+  "schema": "rsomics.ecology.native-delivery-adoption.v1",
+  "scientific_replay": false,
+  "signed_release": false,
+  "source_capture": {
+    "bound_source_files": 85,
+    "copied_beta_files": 78,
+    "manifest": {
+      "bytes": 79623,
+      "sha256": "34b96bfccadb55f6a2ff57e443c8089a1b3636171bea7be6b89c4d86ef727439"
+    },
+    "original_run": 40634594900,
+    "rarefaction_files": 7,
+    "witness": {
+      "bytes": 109940,
+      "sha256": "b6eb9045c2dceba4754821f90c8c553a3da221f04405364bbd0639fd4fd146a1"
+    }
+  },
+  "source_git_files": 223,
+  "source_package_byte_identical_across_four": true,
+  "source_package_hashes": [
+    "df8944440f9978a00095a79f776e4b1447890e881a1721d1be4e4dd8acb97ec5"
+  ],
+  "source_test_instances": 72,
+  "source_tree": "3e9fb6a85b923a05403e2f7062797c2c81214199",
+  "status": "accepted-exact-head-four-native-clean-source-package-and-installed-lifecycle",
+  "targets": {
+    "linux-aarch64": {
+      "all_99_registry_terms_and_8_adapted_terms_verified": true,
+      "artifact": {
+        "bytes": 2657219,
+        "sha256": "e846fd28fa2024741da78dd58b5c8d238ca7852f5d307cf5d04d63911270fda0"
+      },
+      "artifact_id": 13096638977,
+      "binary": {
+        "bytes": 1924168,
+        "sha256": "d9d42acb816e54321425c38669ae5ca6296635106cfbf40e4875c110be0a2790"
+      },
+      "header": {
+        "executable_type": 3,
+        "format": "ELF64-little",
+        "header_hex": "7f454c460201010000000000000000000300b70001000000c075010000000000400000000000000048541d000000000000000000400038000a00400020001f00",
+        "machine": 183
+      },
+      "host": "aarch64-unknown-linux-gnu",
+      "installed": {
+        "alpha_metrics": 11,
+        "alpha_values": 66,
+        "beta_metrics": 8,
+        "beta_values": 288,
+        "binary_sha256": "d9d42acb816e54321425c38669ae5ca6296635106cfbf40e4875c110be0a2790",
+        "byte_exact_counts": true,
+        "calls": 14,
+        "depth": 8,
+        "exact_argv_and_status": true,
+        "expected_failures": 1,
+        "failure_preserves_prior_output": true,
+        "features": 12,
+        "independent_original_capture_comparison": true,
+        "labelled_tsv_json_roundtrip": true,
+        "rarefaction_profile": "skbio-0.7.3/biom-2.1.17/numpy-2.5.4-pcg64-choice-shuffle-false",
+        "samples": 6,
+        "seed": "42",
+        "successes": 13,
+        "symmetric_hollow_labelled_matrices": true
+      },
+      "job_id": 124951443392,
+      "native_archive": {
+        "bytes": 768562,
+        "sha256": "bc705126f493e39a3e4be778455d9aa61448455a5dac269f7731c258c7134995"
+      },
+      "native_enabled_packages": 46,
+      "native_regular_files": 115,
+      "native_tar_members": 165,
+      "original_zip_files": 192,
+      "source_package": {
+        "bytes": 107090,
+        "sha256": "df8944440f9978a00095a79f776e4b1447890e881a1721d1be4e4dd8acb97ec5"
+      },
+      "source_regular_files": 225,
+      "tests": {
+        "debug": {
+          "bytes": 1041,
+          "failed": 0,
+          "ignored": 0,
+          "passed": 6,
+          "sha256": "60e592b938553cb50c018a3725f2dd326e7f178c8e8893fcdd0594d83700220d",
+          "six_test_intents": [
+            "captured_sampling_profiles_replay_with_workers_and_feed_alpha",
+            "invalid_inputs_and_aliases_leave_named_destinations_unchanged",
+            "multi_alpha_preserves_sparse_identities_root_weights_and_unavailable_values",
+            "original_rarefied_reload_all_eight_matrices_and_alpha_match_frozen_source",
+            "source_boundaries_strict_validation_and_undefined_pairs_are_atomic",
+            "zero_depth_and_failures_preserve_dimensions_and_atomic_outputs"
+          ]
+        },
+        "packaged-release": {
+          "bytes": 1041,
+          "failed": 0,
+          "ignored": 0,
+          "passed": 6,
+          "sha256": "c2695aa1ea1efa5b40d8bae40981e59b677c114ab977c0b14eeb1a6f7edd4152",
+          "six_test_intents": [
+            "captured_sampling_profiles_replay_with_workers_and_feed_alpha",
+            "invalid_inputs_and_aliases_leave_named_destinations_unchanged",
+            "multi_alpha_preserves_sparse_identities_root_weights_and_unavailable_values",
+            "original_rarefied_reload_all_eight_matrices_and_alpha_match_frozen_source",
+            "source_boundaries_strict_validation_and_undefined_pairs_are_atomic",
+            "zero_depth_and_failures_preserve_dimensions_and_atomic_outputs"
+          ]
+        },
+        "release": {
+          "bytes": 1041,
+          "failed": 0,
+          "ignored": 0,
+          "passed": 6,
+          "sha256": "c1b66f7b91230e22414102ba956007f9b61dc5a1575aac0b1406f8a2b2b8ec20",
+          "six_test_intents": [
+            "captured_sampling_profiles_replay_with_workers_and_feed_alpha",
+            "invalid_inputs_and_aliases_leave_named_destinations_unchanged",
+            "multi_alpha_preserves_sparse_identities_root_weights_and_unavailable_values",
+            "original_rarefied_reload_all_eight_matrices_and_alpha_match_frozen_source",
+            "source_boundaries_strict_validation_and_undefined_pairs_are_atomic",
+            "zero_depth_and_failures_preserve_dimensions_and_atomic_outputs"
+          ]
+        }
+      }
+    },
+    "linux-x86_64": {
+      "all_99_registry_terms_and_8_adapted_terms_verified": true,
+      "artifact": {
+        "bytes": 2715446,
+        "sha256": "1a7cf9d85867e613662a2f701197a75a518051f72b745e18a7be2ba90a9ad48e"
+      },
+      "artifact_id": 13096919864,
+      "binary": {
+        "bytes": 1969968,
+        "sha256": "c775ea69d8b35948377a2cdff5de1a0a1261dba16afb54cacec5459fbcd3af81"
+      },
+      "header": {
+        "executable_type": 3,
+        "format": "ELF64-little",
+        "header_hex": "7f454c4602010100000000000000000003003e000100000040bd050000000000400000000000000070061e000000000000000000400038000c00400023002100",
+        "machine": 62
+      },
+      "host": "x86_64-unknown-linux-gnu",
+      "installed": {
+        "alpha_metrics": 11,
+        "alpha_values": 66,
+        "beta_metrics": 8,
+        "beta_values": 288,
+        "binary_sha256": "c775ea69d8b35948377a2cdff5de1a0a1261dba16afb54cacec5459fbcd3af81",
+        "byte_exact_counts": true,
+        "calls": 14,
+        "depth": 8,
+        "exact_argv_and_status": true,
+        "expected_failures": 1,
+        "failure_preserves_prior_output": true,
+        "features": 12,
+        "independent_original_capture_comparison": true,
+        "labelled_tsv_json_roundtrip": true,
+        "rarefaction_profile": "skbio-0.7.3/biom-2.1.17/numpy-2.5.4-pcg64-choice-shuffle-false",
+        "samples": 6,
+        "seed": "42",
+        "successes": 13,
+        "symmetric_hollow_labelled_matrices": true
+      },
+      "job_id": 124951443333,
+      "native_archive": {
+        "bytes": 794062,
+        "sha256": "cf352702dbedeb0f43bd3ea4aed3fd2b71a94222cb6672f7e97fa94eadb86891"
+      },
+      "native_enabled_packages": 46,
+      "native_regular_files": 115,
+      "native_tar_members": 165,
+      "original_zip_files": 192,
+      "source_package": {
+        "bytes": 107090,
+        "sha256": "df8944440f9978a00095a79f776e4b1447890e881a1721d1be4e4dd8acb97ec5"
+      },
+      "source_regular_files": 225,
+      "tests": {
+        "debug": {
+          "bytes": 1041,
+          "failed": 0,
+          "ignored": 0,
+          "passed": 6,
+          "sha256": "2143f0c6ef7afc8d4b96e703f526e64e0cddd7aa86f91802c9f6cb4061aea29b",
+          "six_test_intents": [
+            "captured_sampling_profiles_replay_with_workers_and_feed_alpha",
+            "invalid_inputs_and_aliases_leave_named_destinations_unchanged",
+            "multi_alpha_preserves_sparse_identities_root_weights_and_unavailable_values",
+            "original_rarefied_reload_all_eight_matrices_and_alpha_match_frozen_source",
+            "source_boundaries_strict_validation_and_undefined_pairs_are_atomic",
+            "zero_depth_and_failures_preserve_dimensions_and_atomic_outputs"
+          ]
+        },
+        "packaged-release": {
+          "bytes": 1041,
+          "failed": 0,
+          "ignored": 0,
+          "passed": 6,
+          "sha256": "3a7f836f3260690b41fd8311d068cfefc480f9b61d5eda6d922483c12839753f",
+          "six_test_intents": [
+            "captured_sampling_profiles_replay_with_workers_and_feed_alpha",
+            "invalid_inputs_and_aliases_leave_named_destinations_unchanged",
+            "multi_alpha_preserves_sparse_identities_root_weights_and_unavailable_values",
+            "original_rarefied_reload_all_eight_matrices_and_alpha_match_frozen_source",
+            "source_boundaries_strict_validation_and_undefined_pairs_are_atomic",
+            "zero_depth_and_failures_preserve_dimensions_and_atomic_outputs"
+          ]
+        },
+        "release": {
+          "bytes": 1041,
+          "failed": 0,
+          "ignored": 0,
+          "passed": 6,
+          "sha256": "3a7f836f3260690b41fd8311d068cfefc480f9b61d5eda6d922483c12839753f",
+          "six_test_intents": [
+            "captured_sampling_profiles_replay_with_workers_and_feed_alpha",
+            "invalid_inputs_and_aliases_leave_named_destinations_unchanged",
+            "multi_alpha_preserves_sparse_identities_root_weights_and_unavailable_values",
+            "original_rarefied_reload_all_eight_matrices_and_alpha_match_frozen_source",
+            "source_boundaries_strict_validation_and_undefined_pairs_are_atomic",
+            "zero_depth_and_failures_preserve_dimensions_and_atomic_outputs"
+          ]
+        }
+      }
+    },
+    "macos-aarch64": {
+      "all_99_registry_terms_and_8_adapted_terms_verified": true,
+      "artifact": {
+        "bytes": 2533895,
+        "sha256": "503ee52ec00c78eca0f379c4b4792e55608648d5408c00d530419da611c2279a"
+      },
+      "artifact_id": 13097313007,
+      "binary": {
+        "bytes": 1676336,
+        "sha256": "8a3f88ce57e5478d7b661cece433350f81bf430aabd62d2f57aba0cb6b23a512"
+      },
+      "header": {
+        "cpu_subtype": 0,
+        "cpu_type": 16777228,
+        "executable_type": 2,
+        "format": "Mach-O64-little",
+        "header_hex": "cffaedfe0c000001000000000200000012000000700800008500a00000000000"
+      },
+      "host": "aarch64-apple-darwin",
+      "installed": {
+        "alpha_metrics": 11,
+        "alpha_values": 66,
+        "beta_metrics": 8,
+        "beta_values": 288,
+        "binary_sha256": "8a3f88ce57e5478d7b661cece433350f81bf430aabd62d2f57aba0cb6b23a512",
+        "byte_exact_counts": true,
+        "calls": 14,
+        "depth": 8,
+        "exact_argv_and_status": true,
+        "expected_failures": 1,
+        "failure_preserves_prior_output": true,
+        "features": 12,
+        "independent_original_capture_comparison": true,
+        "labelled_tsv_json_roundtrip": true,
+        "rarefaction_profile": "skbio-0.7.3/biom-2.1.17/numpy-2.5.4-pcg64-choice-shuffle-false",
+        "samples": 6,
+        "seed": "42",
+        "successes": 13,
+        "symmetric_hollow_labelled_matrices": true
+      },
+      "job_id": 124951443345,
+      "native_archive": {
+        "bytes": 732408,
+        "sha256": "349259b5d045b5a5c0cbcf57af2c1db5c55a904527cfc6d1867a3baf4c2e922d"
+      },
+      "native_enabled_packages": 46,
+      "native_regular_files": 115,
+      "native_tar_members": 165,
+      "original_zip_files": 192,
+      "source_package": {
+        "bytes": 107090,
+        "sha256": "df8944440f9978a00095a79f776e4b1447890e881a1721d1be4e4dd8acb97ec5"
+      },
+      "source_regular_files": 225,
+      "tests": {
+        "debug": {
+          "bytes": 1041,
+          "failed": 0,
+          "ignored": 0,
+          "passed": 6,
+          "sha256": "3368e2bc0ba31eb02b2f4775c45c4ac6f1a58e167fee53f4a30edd3af7b4edfd",
+          "six_test_intents": [
+            "captured_sampling_profiles_replay_with_workers_and_feed_alpha",
+            "invalid_inputs_and_aliases_leave_named_destinations_unchanged",
+            "multi_alpha_preserves_sparse_identities_root_weights_and_unavailable_values",
+            "original_rarefied_reload_all_eight_matrices_and_alpha_match_frozen_source",
+            "source_boundaries_strict_validation_and_undefined_pairs_are_atomic",
+            "zero_depth_and_failures_preserve_dimensions_and_atomic_outputs"
+          ]
+        },
+        "packaged-release": {
+          "bytes": 1041,
+          "failed": 0,
+          "ignored": 0,
+          "passed": 6,
+          "sha256": "0ab57d3df49108585257e86d71c115a2b2aa873a066a9018f0efe47361a85295",
+          "six_test_intents": [
+            "captured_sampling_profiles_replay_with_workers_and_feed_alpha",
+            "invalid_inputs_and_aliases_leave_named_destinations_unchanged",
+            "multi_alpha_preserves_sparse_identities_root_weights_and_unavailable_values",
+            "original_rarefied_reload_all_eight_matrices_and_alpha_match_frozen_source",
+            "source_boundaries_strict_validation_and_undefined_pairs_are_atomic",
+            "zero_depth_and_failures_preserve_dimensions_and_atomic_outputs"
+          ]
+        },
+        "release": {
+          "bytes": 1041,
+          "failed": 0,
+          "ignored": 0,
+          "passed": 6,
+          "sha256": "b497c9b76460897a45810ccb342402f44601f794ca287c581086b58473a9af83",
+          "six_test_intents": [
+            "captured_sampling_profiles_replay_with_workers_and_feed_alpha",
+            "invalid_inputs_and_aliases_leave_named_destinations_unchanged",
+            "multi_alpha_preserves_sparse_identities_root_weights_and_unavailable_values",
+            "original_rarefied_reload_all_eight_matrices_and_alpha_match_frozen_source",
+            "source_boundaries_strict_validation_and_undefined_pairs_are_atomic",
+            "zero_depth_and_failures_preserve_dimensions_and_atomic_outputs"
+          ]
+        }
+      }
+    },
+    "macos-x86_64": {
+      "all_99_registry_terms_and_8_adapted_terms_verified": true,
+      "artifact": {
+        "bytes": 2597141,
+        "sha256": "aa374ebe946526637c66982631d417b973a033b5287563acdc745c2b2a060823"
+      },
+      "artifact_id": 13098045229,
+      "binary": {
+        "bytes": 1734624,
+        "sha256": "6bea8dde28ab3977319a8a15a60b52f6fc5a3e863b3d38dce03f85dbf83e8283"
+      },
+      "header": {
+        "cpu_subtype": 3,
+        "cpu_type": 16777223,
+        "executable_type": 2,
+        "format": "Mach-O64-little",
+        "header_hex": "cffaedfe07000001030000000200000010000000080800008500a00000000000"
+      },
+      "host": "x86_64-apple-darwin",
+      "installed": {
+        "alpha_metrics": 11,
+        "alpha_values": 66,
+        "beta_metrics": 8,
+        "beta_values": 288,
+        "binary_sha256": "6bea8dde28ab3977319a8a15a60b52f6fc5a3e863b3d38dce03f85dbf83e8283",
+        "byte_exact_counts": true,
+        "calls": 14,
+        "depth": 8,
+        "exact_argv_and_status": true,
+        "expected_failures": 1,
+        "failure_preserves_prior_output": true,
+        "features": 12,
+        "independent_original_capture_comparison": true,
+        "labelled_tsv_json_roundtrip": true,
+        "rarefaction_profile": "skbio-0.7.3/biom-2.1.17/numpy-2.5.4-pcg64-choice-shuffle-false",
+        "samples": 6,
+        "seed": "42",
+        "successes": 13,
+        "symmetric_hollow_labelled_matrices": true
+      },
+      "job_id": 124951443391,
+      "native_archive": {
+        "bytes": 755607,
+        "sha256": "d7a8f2e0d1771393b1137970accb07479de313b8e82a9503ced344bc2938095a"
+      },
+      "native_enabled_packages": 46,
+      "native_regular_files": 115,
+      "native_tar_members": 165,
+      "original_zip_files": 192,
+      "source_package": {
+        "bytes": 107090,
+        "sha256": "df8944440f9978a00095a79f776e4b1447890e881a1721d1be4e4dd8acb97ec5"
+      },
+      "source_regular_files": 225,
+      "tests": {
+        "debug": {
+          "bytes": 1041,
+          "failed": 0,
+          "ignored": 0,
+          "passed": 6,
+          "sha256": "70ef984ed5663aec4a040e2d26e916bbf487589491b9e81b15339e0e2617e749",
+          "six_test_intents": [
+            "captured_sampling_profiles_replay_with_workers_and_feed_alpha",
+            "invalid_inputs_and_aliases_leave_named_destinations_unchanged",
+            "multi_alpha_preserves_sparse_identities_root_weights_and_unavailable_values",
+            "original_rarefied_reload_all_eight_matrices_and_alpha_match_frozen_source",
+            "source_boundaries_strict_validation_and_undefined_pairs_are_atomic",
+            "zero_depth_and_failures_preserve_dimensions_and_atomic_outputs"
+          ]
+        },
+        "packaged-release": {
+          "bytes": 1041,
+          "failed": 0,
+          "ignored": 0,
+          "passed": 6,
+          "sha256": "ab5b2057423fe3581560403f8cdd6b98b4b75b31c5de9ae4fe38734fca474604",
+          "six_test_intents": [
+            "captured_sampling_profiles_replay_with_workers_and_feed_alpha",
+            "invalid_inputs_and_aliases_leave_named_destinations_unchanged",
+            "multi_alpha_preserves_sparse_identities_root_weights_and_unavailable_values",
+            "original_rarefied_reload_all_eight_matrices_and_alpha_match_frozen_source",
+            "source_boundaries_strict_validation_and_undefined_pairs_are_atomic",
+            "zero_depth_and_failures_preserve_dimensions_and_atomic_outputs"
+          ]
+        },
+        "release": {
+          "bytes": 1041,
+          "failed": 0,
+          "ignored": 0,
+          "passed": 6,
+          "sha256": "0e1aac21ea30484bfcf6ea57fd716306861430b2051f3f39ff8e977d1abbcd83",
+          "six_test_intents": [
+            "captured_sampling_profiles_replay_with_workers_and_feed_alpha",
+            "invalid_inputs_and_aliases_leave_named_destinations_unchanged",
+            "multi_alpha_preserves_sparse_identities_root_weights_and_unavailable_values",
+            "original_rarefied_reload_all_eight_matrices_and_alpha_match_frozen_source",
+            "source_boundaries_strict_validation_and_undefined_pairs_are_atomic",
+            "zero_depth_and_failures_preserve_dimensions_and_atomic_outputs"
+          ]
+        }
+      }
+    }
+  },
+  "upstream_executed_locally": false,
+  "recovery_proposal_schema": "rsomics.ecology.native-delivery-adoption-proposal.v1",
+  "root_adoption": {
+    "evidence_directory": "/Volumes/KIOXIA/Developments/tmp/ecology-delivery-originals-20261102.ffGtu2",
+    "report_sha256": "2caf337f327b0439693c3d2663b226b578297432ce5dbfc71144035895e7b953",
+    "seal_sha256": "b5e7a47869f7dc129de70d416153948137966ad34d73977301394febea618860",
+    "proposal_sha256": "e8947282fac6f43921d2d0c85ed60f9e43d3959c3a1797f65d91ba76fa98276c",
+    "root_directory": "/Volumes/KIOXIA/Developments/tmp/ecology-delivery-root-20261102.PGVLvb",
+    "fresh_stdout_sha256": "54f119443e2f47a53ecff658e2f7f95d3cb09f8d0495a15507b38e5ccd3bd058",
+    "exit_code": 0,
+    "stderr_bytes": 0,
+    "sealed_payload_files": 1177,
+    "sealed_payload_bytes": 36170706,
+    "full_original_ZIP_CRC_nested_source_native_Git_modes_and_original_terms_rechecked": true,
+    "complete_installed_values_profiles_and_original_source_bindings_rebuilt": true,
+    "binary_or_upstream_execution": false,
+    "packet_writes": false
+  },
+  "live_upstream_execution_in_four_delivery_jobs": false
+}

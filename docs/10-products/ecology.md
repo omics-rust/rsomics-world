@@ -1,8 +1,8 @@
 # Community ecology product dossier
 
 Status: source and upstream-operation audit complete. The hosted0.7.3 diversity
-workflow and original real community table/tree are qualified. One private
-unpublished ecology repository has reviewed, source-matching sparse alpha,
+workflow and original real community table/tree are qualified. The owning
+ecology repository has reviewed, source-matching sparse alpha,
 seeded rarefaction and eight beta modes at main111adf5. Empty/all-zero depth-zero rarefaction now
 returns same-dimensional zeros as the user selected, a documented upstream bug
 fix. Beta will use the dossier's finite reusable-matrix contract: genuinely
@@ -24,7 +24,12 @@ UniFrac uses the charged adapted public contiguous-layout source baseline,
 not unchanged-default source performance. The root authority is
 ecology-beta-eight-real-2026-11-02.json. Dedicated compact source-on-native
 qualification remains false; full-study source comparisons are accepted
-separately. Public package/native delivery and release remain unearned.
+separately. Public native/source delivery at60dd0bfd now passes exact
+four-platformCI41341218191 and complete original adoption:223 Git bodies,
+four identical clean source packages and56 installed workflow calls. The
+public repository is https://github.com/omics-rust/rsomics-ecology; release
+publication/fresh public download and registry publication remain separate
+gates. See ecology-native-delivery-2026-11-02.json for actual source/binary pins.
 Actual41268190701 remains historical for the earlier e1b03cb6 alpha/rarefaction
 owner; its original authority is not rebound to the beta candidate.
 See `.autopilot/state/ecology-initial-diversity-2026-10-28.md` and

@@ -98,3 +98,34 @@ Actual CI41341218191 at60dd0bfd is in progress. Complete clean source-package,
 four-host install/lifecycle/archives and their original adoption remain gates.
 Earlier111adf5e native/science proofs are not relabelled as this delivery head.
 There is no GitHub release or registry publication yet.
+
+## Complete four-native delivery originals accepted
+
+Actual41341218191/1 at60dd0bfd succeeds on all four native classes. Root reads
+the complete ffGtu2 report/checker/454-line typed reader and nine pinned pure
+archive/data helpers, then freshly checks all1177 sealed payloads/36170706B,
+four original ZIPs/full job+run logs,223 exact Git bodies/modes and all nested
+source/native archives. PGVLvb/originals.stdout SHA54f119443e2f47a53ecff658e2f7f95d3cb09f8d0495a15507b38e5ccd3bd058,
+exit0/empty stderr; no recovered binary, source oracle or packet write.
+ffGtu2 REPORT2caf337f/SEALb5e7a478/proposale8947282 remain unchanged.
+
+All four clean source.crates are107090B/SHAdf894444,225 regular members:
+223 original Git bodies plus Cargo.toml.orig and clean exact-head VCS metadata.
+Normalized manifest/dependencies and package listings match. Native TARs each
+have165 members/115 regular files with exactly one0755 product and all107
+original registry/adapted terms, documentation/provenance/BUILD at0644.
+All54 full-metadata packages match the lock; shipping remains46 per native
+target/47 union with99 registry and eight adapted-code terms. Header/native
+host checks are not signing, minimum-OS or complete linked-system inventory.
+
+The reader independently rebuilds all56 actual installed calls:52 success and
+four intended errors,66 alpha/288 beta values per host, exact seeded counts/
+identities/profiles, labelled TSV/JSON and atomic failure. All85 retained
+source-capture bindings match the original40634594900 witness. Six integration
+intents run three profiles/four hosts:72 instances/0ignored, not72 distinct
+tests or fresh live upstream executions. Raw ANSI/download diagnostics retain
+their bytes; two bounded reader-classification corrections are preserved.
+
+Root adoption is ecology-native-delivery-2026-11-02.json. GitHub release and
+fresh public Mac download remain next; registry stays held. No new executable
+inherits old alpha/beta timing and no unchanged science benchmark is replayed.
