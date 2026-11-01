@@ -1,4 +1,6 @@
 import hashlib
+import importlib
+import copy
 import io
 import json
 import os
@@ -164,6 +166,127 @@ class RnaSeqCandidateWorkflowTests(unittest.TestCase):
                 self.assertEqual(selection['binary'], str(retained))
                 self.assertEqual(selection['oracle'], str(root / 'oracle'))
                 self.assertTrue((evidence / 'native-binary/checksums.sha256').is_file())
+
+    def test_explicit_junction_candidate_preserves_exact_source_and_failure_evidence(self):
+        controller = ROOT / 'scripts/rnaseq_qc_junction_candidate.py'
+        available = subprocess.run(['python3', '-B', str(controller), '--help'],
+                                   capture_output=True, text=True, timeout=15)
+        self.assertEqual(available.returncode, 0,
+                         'the additive junction authority controller is not available: ' + available.stderr)
+        candidate = importlib.import_module('rnaseq_qc_junction_candidate')
+        selector = bash_body(self.step('Verify and extract frozen source')).split(
+            'python3 -B scripts/infercnv_source_snapshot.py', 1)[0]
+        selector = selector[selector.index('case "${CANDIDATE_AUTHORITY') :]
+        for authority, snapshot, bootstrap, accepted in [
+            ('five-metric', 'green-6', 'false', True),
+            ('junctions', 'green-1', 'false', True),
+            ('junctions', 'green-6', 'false', False),
+            ('junctions', 'green-1', 'true', False),
+            ('unknown', 'green-1', 'false', False),
+        ]:
+            with self.subTest(authority=authority, snapshot=snapshot, bootstrap=bootstrap):
+                selected = subprocess.run(['bash', '-c', 'set -euo pipefail\n' + selector],
+                    env=dict(os.environ, CANDIDATE_AUTHORITY=authority, SNAPSHOT_ID=snapshot,
+                             BOOTSTRAP_DEPENDENCIES=bootstrap, GITHUB_WORKSPACE=str(ROOT)),
+                    capture_output=True, text=True, timeout=15)
+                self.assertEqual(selected.returncode == 0, accepted, selected.stderr)
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            source, evidence = root / 'source', root / 'evidence'
+            from infercnv_source_snapshot import verify_and_extract
+            snapshot = ROOT / '.autopilot/snapshots/rnaseq-qc-junctions-2026-11-01/green-1'
+            verify_and_extract(snapshot, source)
+            evidence.mkdir()
+            prepared = candidate.prepare(ROOT, source, evidence)
+            self.assertEqual(prepared['source_files'], 66)
+            self.assertEqual(prepared['captured_files'], 45)
+            self.assertEqual(prepared['owner_commit'], 'a618e6ab293e2fb7a113d949197e1bb43ecc7733')
+            self.assertTrue((evidence / 'junction-authority/receipt.json').is_file())
+            self.assertEqual(len(list((evidence / 'junction-authority/fixtures').rglob('input.bam'))), 5)
+            authority = candidate.authority(ROOT)
+            candidate.verify_source(source, authority)
+            production = source / 'src/metrics/junctions.rs'
+            body = production.read_bytes()
+            production.write_bytes(body + b'\n')
+            with self.assertRaises(ValueError):
+                candidate.verify_source(source, authority)
+            production.write_bytes(body)
+            production.chmod(0o600)
+            with self.assertRaises(ValueError):
+                candidate.verify_source(source, authority)
+            production.chmod(0o644)
+            fixture = source / 'tests/fixtures/junctions/informative-single'
+            expected = candidate.source_expected(fixture, 'informative-single')
+            self.assertEqual(expected['counts'], dict(total_events=11, known_events=6,
+                partial_novel_events=1, novel_events=3, filtered_events=1, total_junctions=6,
+                known_junctions=2, partial_novel_junctions=1, novel_junctions=3))
+            self.assertEqual([(row['start'], row['end'], row['read_count']) for row in expected['rows']],
+                [(120, 170, 5), (120, 270, 1), (120, 171, 1), (190, 240, 1), (320, 370, 1), (522, 572, 1)])
+            native = root / 'native-fixture'
+            native.mkdir()
+            report = dict(schema_version='1.0', sample='input', profile='rseqc-5.0.5', metrics=['junctions'],
+                          junctions={key: copy.deepcopy(expected[key]) for key in ('rows', 'counts')})
+            def native_output(value, mutation=None):
+                (native / 'report.json').write_text(json.dumps(value))
+                detail = 'chrom\tintron_start\tintron_end\tread_count\tannotation\n'
+                detail += ''.join('\t'.join(str(row[key]) for key in ('chrom','start','end','read_count','annotation')) + '\n'
+                                  for row in value['junctions']['rows'])
+                (native / 'junctions.tsv').write_text(detail)
+                (native / 'junctions-summary.tsv').write_text('metric\tvalue\n' + ''.join(
+                    f'{key}\t{count}\n' for key, count in value['junctions']['counts'].items()))
+                outputs = [dict(path=name, bytes=(native / name).stat().st_size,
+                    sha256=hashlib.sha256((native / name).read_bytes()).hexdigest())
+                    for name in ('report.json','junctions.tsv','junctions-summary.tsv')]
+                manifest = dict(status='complete', profile='rseqc-5.0.5', selected_metrics=['junctions'], omitted_metrics=['mapping'],
+                    bam_traversals=1, original_records=16, inflate_workers=1, outputs=outputs,
+                    policy=dict(junctions=dict(excluded_flags=0x704, minimum_mapq=30, minimum_intron=50,
+                        omitted_outputs=['R','PDF','BED12','Interact','junction-saturation'])))
+                if mutation == 'policy':
+                    manifest['policy']['junctions']['excluded_flags'] = 0
+                elif mutation == 'digest':
+                    manifest['outputs'][0]['sha256'] = '0' * 64
+                (native / 'manifest.json').write_text(json.dumps(manifest))
+            native_output(report)
+            candidate.verify_output(native, expected, 'rseqc-5.0.5', 'junctions', 1, 16)
+            for mutation in ('order', 'support', 'counter', 'policy', 'digest'):
+                changed = copy.deepcopy(report)
+                if mutation == 'order':
+                    changed['junctions']['rows'].reverse()
+                elif mutation == 'support':
+                    changed['junctions']['rows'][0]['read_count'] = 99
+                elif mutation == 'counter':
+                    changed['junctions']['counts']['filtered_events'] = 0
+                native_output(changed, mutation)
+                with self.subTest(native_mutation=mutation), self.assertRaises(ValueError):
+                    candidate.verify_output(native, expected, 'rseqc-5.0.5', 'junctions', 1, 16)
+            for profile in ('debug', 'release'):
+                names = authority['tests']['unit'] + authority['tests']['workflow']
+                log = '\n'.join(f'test {name} ... ok' for name in names)
+                log += '\nrunning 4 tests\nrunning 0 tests\nrunning 8 tests\n'
+                log += '\n'.join(f'test result: ok. {n} passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s' for n in (4, 0, 8)) + '\n'
+                (evidence / f'test-{profile}.log').write_text(log)
+            candidate.verify_test_logs(evidence, authority)
+            with (evidence / 'test-release.log').open('a') as stream:
+                stream.write('test unexpected ... ignored\n')
+            with self.assertRaises(ValueError):
+                candidate.verify_test_logs(evidence, authority)
+            result = subprocess.run(['python3', '-B', str(controller), 'finalize', '--workspace', str(ROOT),
+                '--source', str(source), '--evidence', str(evidence)], capture_output=True, text=True, timeout=15)
+            self.assertNotEqual(result.returncode, 0)
+            final = json.loads((evidence / 'junction-finalization.json').read_text())
+            self.assertEqual(final['status'], 'failed')
+            self.assertTrue(final['retained_files'])
+            self.assertTrue((evidence / 'test-release.log').is_file())
+            (evidence / 'junction-finalization.log').write_text(result.stdout + result.stderr)
+            candidate.seal(evidence)
+            integrity = json.loads((evidence / 'junction-integrity.json').read_text())
+            self.assertEqual(integrity['finalization_status'], 'failed')
+            self.assertEqual(integrity['files']['junction-finalization.log']['sha256'],
+                             hashlib.sha256((result.stdout + result.stderr).encode()).hexdigest())
+        acquisition = self.step('Acquire and verify actual RSeQC evidence')
+        self.assertIn("if: ${{ inputs.authority != 'junctions' }}", acquisition)
+        finalize = self.step('Finalize junction candidate evidence')
+        self.assertIn("if: ${{ always() && inputs.authority == 'junctions' }}", finalize)
 
 
 if __name__ == '__main__':

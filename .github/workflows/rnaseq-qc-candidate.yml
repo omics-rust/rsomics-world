@@ -4,9 +4,17 @@ on:
   workflow_dispatch:
     inputs:
       snapshot:
-        description: Frozen source directory under rnaseq-qc-core-2026-10-28, for example green-1
+        description: Frozen source directory under the explicitly selected authority
         type: string
         required: true
+      authority:
+        description: Historical five-metric candidate or additive adopted junction candidate
+        type: choice
+        required: true
+        default: five-metric
+        options:
+          - five-metric
+          - junctions
       bootstrap_dependencies:
         description: Linux-only initial dependency-lock resolution; not the four-native release gate
         type: boolean
@@ -28,6 +36,7 @@ jobs:
           ${{ fromJSON(inputs.bootstrap_dependencies && '[{"target":"linux-x86_64","runner":"ubuntu-24.04","system":"Linux","arch":"x86_64"}]' || '[{"target":"linux-x86_64","runner":"ubuntu-24.04","system":"Linux","arch":"x86_64"},{"target":"linux-aarch64","runner":"ubuntu-24.04-arm","system":"Linux","arch":"aarch64"},{"target":"macos-x86_64","runner":"macos-15-intel","system":"Darwin","arch":"x86_64"},{"target":"macos-aarch64","runner":"macos-15","system":"Darwin","arch":"arm64"}]') }}
     env:
       SNAPSHOT_ID: ${{ inputs.snapshot }}
+      CANDIDATE_AUTHORITY: ${{ inputs.authority || 'five-metric' }}
       BOOTSTRAP_DEPENDENCIES: ${{ inputs.bootstrap_dependencies }}
       PYTHONDONTWRITEBYTECODE: '1'
     defaults:
@@ -71,7 +80,15 @@ jobs:
             cd "$EVIDENCE/source-guard"
             shasum -a 256 *.py
           ) > "$EVIDENCE/source-guard/checksums.sha256"
-          snapshot="$GITHUB_WORKSPACE/.autopilot/snapshots/rnaseq-qc-core-2026-10-28/$SNAPSHOT_ID"
+          case "${CANDIDATE_AUTHORITY:-five-metric}" in
+            five-metric)
+              snapshot="$GITHUB_WORKSPACE/.autopilot/snapshots/rnaseq-qc-core-2026-10-28/$SNAPSHOT_ID" ;;
+            junctions)
+              test "$SNAPSHOT_ID" = green-1
+              test "$BOOTSTRAP_DEPENDENCIES" = false
+              snapshot="$GITHUB_WORKSPACE/.autopilot/snapshots/rnaseq-qc-junctions-2026-11-01/$SNAPSHOT_ID" ;;
+            *) echo 'Unknown RNA-seq candidate authority' >&2; exit 1 ;;
+          esac
           python3 -B scripts/infercnv_source_snapshot.py \
             --snapshot-dir "$snapshot" --output-dir "$RUNNER_TEMP/rnaseq-qc-candidate" \
             2>&1 | tee "$EVIDENCE/archive-verification.log"
@@ -87,6 +104,20 @@ jobs:
             df -h
             printf 'snapshot=%s\nbootstrap_dependencies=%s\n' "$SNAPSHOT_ID" "$BOOTSTRAP_DEPENDENCIES"
           } | tee "$EVIDENCE/host.log"
+          if [[ "${CANDIDATE_AUTHORITY:-five-metric}" == junctions ]]; then
+            mkdir "$EVIDENCE/junction-controller"
+            for name in rnaseq_qc_junction_candidate.py infercnv_source_snapshot.py infercnv_trial_process.py \
+                        test_rnaseq_qc_candidate_workflow.py test_infercnv_ingestion_workflow.py; do
+              cp "$GITHUB_WORKSPACE/scripts/$name" "$EVIDENCE/junction-controller/"
+            done
+            (
+              cd "$EVIDENCE/junction-controller"
+              shasum -a 256 *.py
+            ) > "$EVIDENCE/junction-controller/checksums.sha256"
+            python3 -B "$EVIDENCE/junction-controller/rnaseq_qc_junction_candidate.py" prepare \
+              --workspace "$GITHUB_WORKSPACE" --source "$RUNNER_TEMP/rnaseq-qc-candidate" --evidence "$EVIDENCE" \
+              2>&1 | tee "$EVIDENCE/junction-authority.log"
+          fi
 
       - name: Install Rust 1.91
         uses: dtolnay/rust-toolchain@1.91.0
@@ -104,6 +135,7 @@ jobs:
           shasum -a 256 "$EVIDENCE/Cargo.lock" > "$EVIDENCE/lock-resolution.sha256"
 
       - name: Acquire and verify actual RSeQC evidence
+        if: ${{ inputs.authority != 'junctions' }}
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
@@ -213,6 +245,7 @@ jobs:
           cp Cargo.lock "$EVIDENCE/Cargo.lock"
 
       - name: Format and strict Clippy
+        id: format
         if: ${{ !cancelled() && steps.metadata.outcome == 'success' }}
         working-directory: ${{ runner.temp }}/rnaseq-qc-candidate
         run: |
@@ -221,6 +254,7 @@ jobs:
           cargo clippy --locked --all-targets --all-features -- -D warnings 2>&1 | tee "$EVIDENCE/clippy.log"
 
       - name: Test debug
+        id: debug
         if: ${{ !cancelled() && steps.metadata.outcome == 'success' }}
         working-directory: ${{ runner.temp }}/rnaseq-qc-candidate
         run: |
@@ -229,6 +263,7 @@ jobs:
             2>&1 | tee "$EVIDENCE/test-debug.log"
 
       - name: Test release
+        id: release
         if: ${{ !cancelled() && steps.metadata.outcome == 'success' }}
         working-directory: ${{ runner.temp }}/rnaseq-qc-candidate
         run: |
@@ -237,6 +272,7 @@ jobs:
             2>&1 | tee "$EVIDENCE/test-release.log"
 
       - name: Compare complete native reports
+        id: comparison
         if: ${{ !cancelled() && steps.metadata.outcome == 'success' }}
         working-directory: ${{ runner.temp }}/rnaseq-qc-candidate
         run: |
@@ -246,6 +282,13 @@ jobs:
           binary="$EVIDENCE/native-binary/rsomics-rnaseq-qc-${{ matrix.target }}"
           cp "$CARGO_TARGET_DIR/release/rsomics-rnaseq-qc" "$binary"
           shasum -a 256 "$binary" > "$EVIDENCE/native-binary/checksums.sha256"
+          if [[ "${CANDIDATE_AUTHORITY:-five-metric}" == junctions ]]; then
+            python3 -B "$EVIDENCE/junction-controller/rnaseq_qc_junction_candidate.py" compare \
+              --workspace "$GITHUB_WORKSPACE" --source "$RUNNER_TEMP/rnaseq-qc-candidate" --evidence "$EVIDENCE" \
+              --binary "$binary" --target '${{ matrix.target }}' \
+              2>&1 | tee "$EVIDENCE/comparison.log"
+            exit 0
+          fi
           for name in compare_rnaseq_qc_workflow.py test_compare_rnaseq_qc_workflow.py rnaseq_qc_oracle.py \
                       infercnv_trial_process.py validate_infercnv_shipped_oracle.py; do
             cp "$GITHUB_WORKSPACE/scripts/$name" "$EVIDENCE/controller/"
@@ -283,6 +326,23 @@ jobs:
           (Path(os.environ['EVIDENCE']) / 'source-after.json').write_text(json.dumps(record, sort_keys=True) + '\n')
           print(json.dumps(record, sort_keys=True))
           PY
+
+      - name: Finalize junction candidate evidence
+        if: ${{ always() && inputs.authority == 'junctions' }}
+        env:
+          JUNCTION_GATES: ${{ toJSON(steps) }}
+        run: |
+          set -euo pipefail
+          export EVIDENCE="${EVIDENCE:-$RUNNER_TEMP/rnaseq-qc-evidence}"
+          mkdir -p "$EVIDENCE"
+          status=0
+          python3 -B "$GITHUB_WORKSPACE/scripts/rnaseq_qc_junction_candidate.py" finalize \
+            --workspace "$GITHUB_WORKSPACE" --source "$RUNNER_TEMP/rnaseq-qc-candidate" --evidence "$EVIDENCE" \
+            > "$EVIDENCE/junction-finalization.log" 2>&1 || status=$?
+          python3 -B "$GITHUB_WORKSPACE/scripts/rnaseq_qc_junction_candidate.py" seal \
+            --workspace "$GITHUB_WORKSPACE" --source "$RUNNER_TEMP/rnaseq-qc-candidate" --evidence "$EVIDENCE"
+          cat "$EVIDENCE/junction-finalization.log"
+          exit "$status"
 
       - name: Upload raw evidence
         if: always()

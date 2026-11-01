@@ -1,5 +1,26 @@
 # SDD ledger — plan: docs/plans/2026-11-01-rnaseq-qc-junctions.md
 
+## Exact additive junction four-native candidate prepared and verified
+
+Root reads the complete operational REPORT6dc564b0dc30ca7fa667897bd22f184e3a078c3c787c25269d40c2601f68193d,
+full395-line controller, workflow/test diff and actual freeze recipe at
+rnaseq-junction-candidate-20261101.aVMQS0. Freshly verifies all eight delivered
+paths,26 unchanged historical authorities and66 actual clean owner Git bodies/
+modes, then runs the SAME complete candidate preparation suite:5pass/1.182s.
+Root logs are rnaseq-junction-root-candidate-20261101.837bNI. The new archive
+64011B SHA9f327ca20de7fd9acce44206f62194a037ef56365bda64ca59c4ebe7245338af;
+asset99bc21a9f8d8dc21da6b4e9096b1be6e0c06472f5b67d0e20db4375dcaed27fc.
+
+Existing workflow now has explicit authority=junctions/snapshot=green-1 with
+bootstrap=false, retaining the old five-metric default route and every old
+authority. Each native target must pass actual4unit/8workflow in both modes,
+22 complete retained junction CLI comparisons at1/4, exact source/manifest/
+binary identities and stable always-run failure finalization. Captured source
+data is consumed from adopted fixtures; the upstream runtime is NOT restored
+or rerun. Synthetic preparation outputs are not claimed as native execution.
+Exact-head Control and real four-native originals remain required before
+adoption. No native/performance/publication acceptance follows from preparation.
+
 ## Complete native junction wave locally accepted and committed
 
 Root reads the complete author REPORT909e6f5099106fc99357f00fc3ee7f8333dacf29d94156b7f334ba90c1e331d4,

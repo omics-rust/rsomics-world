@@ -1,0 +1,683 @@
+{
+  "authority": "junctions",
+  "fixture_provenance": {
+    "captured_files": {
+      "all-short/genes.bed12": {
+        "bytes": 270,
+        "member": "inputs/all-short/genes.bed12",
+        "sha256": "0c844c495c122d3e0673070627a375f7b81f7793b20ce1f0080d0ae3f3162b69"
+      },
+      "all-short/input.bam": {
+        "bytes": 335,
+        "member": "inputs/all-short/input.bam",
+        "sha256": "513ff355cbd479096bbb1a69c59e5e5efd5778f3993575600c975fc905251987"
+      },
+      "all-short/input.sam": {
+        "bytes": 187,
+        "member": "inputs/all-short/input.sam",
+        "sha256": "5d67025292d8a98b3d57f59dcde79e5633e4b4efc3bbda18ddbf22b7a523476c"
+      },
+      "all-short/observation.json": {
+        "bytes": 1156,
+        "member": "observations/all-short/observation.json",
+        "sha256": "ccdb2e80d13318ac32e9d484a225ff624e73952d0ec73943622c05d6360566b5"
+      },
+      "all-short/observed.junction.xls": {
+        "bytes": 67,
+        "member": "observations/all-short/observed.junction.xls",
+        "sha256": "a0fc8488940954701352a5f564d606032f009a1098136354dae78a5041e96fc1"
+      },
+      "all-short/process.process.json": {
+        "bytes": 851,
+        "member": "observations/all-short/call/process.process.json",
+        "sha256": "7b5252db1580a2106de22e99afa3bc2aea22d72ec042ecc3f1603ec23c89b934"
+      },
+      "all-short/process.stderr": {
+        "bytes": 365,
+        "member": "observations/all-short/call/process.stderr",
+        "sha256": "46bd4c0741df01e3356dec3e4f500b186c49f261a85d1fcb8db117d60cb862f8"
+      },
+      "all-short/process.stdout": {
+        "bytes": 10,
+        "member": "observations/all-short/call/process.stdout",
+        "sha256": "3ae57946a3aded5025d5ac2f41aac6b2543ba9d4b7d18251bdedf86ae7eb40f1"
+      },
+      "all-short/record-cigar-inventory.json": {
+        "bytes": 1704,
+        "member": "inputs/all-short/record-cigar-inventory.json",
+        "sha256": "2bf6a3db91ad4a51e5e0f0a2036650c9187f34c50df97e1ae25997a9ac506e35"
+      },
+      "case-alias-only/genes.bed12": {
+        "bytes": 54,
+        "member": "inputs/case-alias-only/genes.bed12",
+        "sha256": "b2746c18354a63ad38cc04b36839d5ac5a8c260b561030b44ad5ed91438dee8e"
+      },
+      "case-alias-only/input.bam": {
+        "bytes": 333,
+        "member": "inputs/case-alias-only/input.bam",
+        "sha256": "38ed4584e73f680d7417f80e746a41b42fd516e7377cd718d289c7a7cdc9b121"
+      },
+      "case-alias-only/input.sam": {
+        "bytes": 183,
+        "member": "inputs/case-alias-only/input.sam",
+        "sha256": "7e7940498cab3e66547ece5e6edd7b1b5b6200765199614dbe93c97c8744b6cc"
+      },
+      "case-alias-only/observation.json": {
+        "bytes": 1344,
+        "member": "observations/case-alias-only/observation.json",
+        "sha256": "38f1b2c7be0699f9e1d598036881970e1a278a699ad0dc7628ae4add071c252a"
+      },
+      "case-alias-only/observed.junction.xls": {
+        "bytes": 93,
+        "member": "observations/case-alias-only/observed.junction.xls",
+        "sha256": "662bf7fd03d3305ec9f0573f12facd9e9cc7ed733fdc7ba894ca0f93d588de5a"
+      },
+      "case-alias-only/process.process.json": {
+        "bytes": 826,
+        "member": "observations/case-alias-only/call/process.process.json",
+        "sha256": "076fc8eb484eac08abdfb2c13c225b5c29dc9168d95bcc30d96a05e8648e0ad0"
+      },
+      "case-alias-only/process.stderr": {
+        "bytes": 541,
+        "member": "observations/case-alias-only/call/process.stderr",
+        "sha256": "bccf62789d4a5766765c61a96d209dd7f7e2e252d951d532e6464781145ce5be"
+      },
+      "case-alias-only/process.stdout": {
+        "bytes": 10,
+        "member": "observations/case-alias-only/call/process.stdout",
+        "sha256": "3ae57946a3aded5025d5ac2f41aac6b2543ba9d4b7d18251bdedf86ae7eb40f1"
+      },
+      "case-alias-only/record-cigar-inventory.json": {
+        "bytes": 1751,
+        "member": "inputs/case-alias-only/record-cigar-inventory.json",
+        "sha256": "938e84c844a9c536b923c084bc245907640e34042e3d9f2496cd61c78757dfac"
+      },
+      "informative-paired/genes.bed12": {
+        "bytes": 270,
+        "member": "inputs/informative-paired/genes.bed12",
+        "sha256": "0c844c495c122d3e0673070627a375f7b81f7793b20ce1f0080d0ae3f3162b69"
+      },
+      "informative-paired/input.bam": {
+        "bytes": 843,
+        "member": "inputs/informative-paired/input.bam",
+        "sha256": "45e98bbc0b55e6812b103ca051cdd9058c7f7ffb6537e8a85aba49b7d2b94d8b"
+      },
+      "informative-paired/input.sam": {
+        "bytes": 4079,
+        "member": "inputs/informative-paired/input.sam",
+        "sha256": "c988ede3662e4fa6564fce749da945b7ac42c741b1308961dc92601b1e167ee9"
+      },
+      "informative-paired/observation.json": {
+        "bytes": 2018,
+        "member": "observations/informative-paired/observation.json",
+        "sha256": "7b4ccda332263de92b8c5d2e3d6e05dea35db9d8f8c13a6984ea653637c8c59b"
+      },
+      "informative-paired/observed.junction.xls": {
+        "bytes": 243,
+        "member": "observations/informative-paired/observed.junction.xls",
+        "sha256": "e36897625cdd889096c2de6a7a3bddcdf254f9d12d3a15d8f7e5efc4fad09d4c"
+      },
+      "informative-paired/process.process.json": {
+        "bytes": 835,
+        "member": "observations/informative-paired/call/process.process.json",
+        "sha256": "429a59f1b4f3008b67dc63231a741ce7f258e978b3ccda10efb68c7d837fa5dc"
+      },
+      "informative-paired/process.stderr": {
+        "bytes": 546,
+        "member": "observations/informative-paired/call/process.stderr",
+        "sha256": "c402c45bb21fe72403e9023ddcf15b4dcac97d7c8a687b3e5d263640324b2dae"
+      },
+      "informative-paired/process.stdout": {
+        "bytes": 11,
+        "member": "observations/informative-paired/call/process.stdout",
+        "sha256": "0acd45e74a4bdcebe5380f1840ad65a6c61db4575c99c62863a02d3cc2a10143"
+      },
+      "informative-paired/record-cigar-inventory.json": {
+        "bytes": 19308,
+        "member": "inputs/informative-paired/record-cigar-inventory.json",
+        "sha256": "7d8152f6cd7207f3870327e5b23cbbb3ce6902aba382c2a68cf75c1f0b083bd8"
+      },
+      "informative-single/genes.bed12": {
+        "bytes": 270,
+        "member": "inputs/informative-single/genes.bed12",
+        "sha256": "0c844c495c122d3e0673070627a375f7b81f7793b20ce1f0080d0ae3f3162b69"
+      },
+      "informative-single/input.bam": {
+        "bytes": 687,
+        "member": "inputs/informative-single/input.bam",
+        "sha256": "9a6abf7d6bef6a51546d4a6369e1ed008118dffdd0e263af9201b78cbd23f420"
+      },
+      "informative-single/input.sam": {
+        "bytes": 2126,
+        "member": "inputs/informative-single/input.sam",
+        "sha256": "2bd1d5086cc0125078e3bd0b6cd6a6bb5f6b0a50528a3555c4a7fd5980c310d5"
+      },
+      "informative-single/observation.json": {
+        "bytes": 2016,
+        "member": "observations/informative-single/observation.json",
+        "sha256": "ad5bc11e6a34ad1c3c049a105caaaffdf34931722ff3c634ae2fd609464b4dd5"
+      },
+      "informative-single/observed.junction.xls": {
+        "bytes": 242,
+        "member": "observations/informative-single/observed.junction.xls",
+        "sha256": "722b03f128c55d7898d97af41757a063ee2ebf18e3d4b123114a8ae1c512342d"
+      },
+      "informative-single/process.process.json": {
+        "bytes": 835,
+        "member": "observations/informative-single/call/process.process.json",
+        "sha256": "e7a393ef5eb076c2d47c6503d6eadfa7b0f7bc8b232fcf9dd8d3679d0c52b57a"
+      },
+      "informative-single/process.stderr": {
+        "bytes": 545,
+        "member": "observations/informative-single/call/process.stderr",
+        "sha256": "8e9184e326fbab60707c8dc38bf3984aedd821a89db59204be42728d76505176"
+      },
+      "informative-single/process.stdout": {
+        "bytes": 11,
+        "member": "observations/informative-single/call/process.stdout",
+        "sha256": "43ede6ab12cb62f2dab2e276a9fb64a5b31472c886839d4f814eb24ac03de9aa"
+      },
+      "informative-single/record-cigar-inventory.json": {
+        "bytes": 10938,
+        "member": "inputs/informative-single/record-cigar-inventory.json",
+        "sha256": "0f30a58d932048d69ebdefc05903a3e53b1ad4cba52a7b6719c62048d591781b"
+      },
+      "no-N/genes.bed12": {
+        "bytes": 270,
+        "member": "inputs/no-N/genes.bed12",
+        "sha256": "0c844c495c122d3e0673070627a375f7b81f7793b20ce1f0080d0ae3f3162b69"
+      },
+      "no-N/input.bam": {
+        "bytes": 321,
+        "member": "inputs/no-N/input.bam",
+        "sha256": "1ea11910c965d9b0b6d7ccb03431759e1074926b618f48134691a68aff9ee11d"
+      },
+      "no-N/input.sam": {
+        "bytes": 176,
+        "member": "inputs/no-N/input.sam",
+        "sha256": "cb0d2644ab6ec9c2fb379f26800ff8af29a8bd3b9a36d6c854ade839c5be04d0"
+      },
+      "no-N/observation.json": {
+        "bytes": 1073,
+        "member": "observations/no-N/observation.json",
+        "sha256": "67e85bb1f56291132cb0bfce8371aa1d2a7aab8034ebc1eaecb4159575a5fa90"
+      },
+      "no-N/observed.junction.xls": {
+        "bytes": 0,
+        "member": "observations/no-N/observed.junction.xls",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "no-N/process.process.json": {
+        "bytes": 794,
+        "member": "observations/no-N/call/process.process.json",
+        "sha256": "8a23adced45928e055dd21bb137617a8c4c70add36e8f668082ccb918e54de1a"
+      },
+      "no-N/process.stderr": {
+        "bytes": 159,
+        "member": "observations/no-N/call/process.stderr",
+        "sha256": "12ad8f554f9dacdba7865e0223228d1e0d299339d7983846350253060ae95e22"
+      },
+      "no-N/process.stdout": {
+        "bytes": 10,
+        "member": "observations/no-N/call/process.stdout",
+        "sha256": "9c49477dc0581afc5c2da386e4230d70ee8fa415a9d8bfa886e221dfe5575d6d"
+      },
+      "no-N/record-cigar-inventory.json": {
+        "bytes": 1365,
+        "member": "inputs/no-N/record-cigar-inventory.json",
+        "sha256": "8c54fdc3f767a0ebb1b9bedf624b0d2bdfa8d737c49fc0ebaa7a2e048422ffcd"
+      }
+    },
+    "original_packet": "/Volumes/KIOXIA/Developments/tmp/rnaseq-junction-source-success-20261101.EQWawE",
+    "root_receipt_sha256": "8ea60c35c952a600fa526ebfd3e020e142b01706f50a87a9fbc8818ce9ce5b2b",
+    "scope": "Captured upstream data only; no runtime, symlinks, scientific import or upstream execution on Mac.",
+    "source_artifact": 13071489886,
+    "source_head": "b4cde25cde7a7d52d4b3947004929991b897a727",
+    "source_run": "41277337904/1"
+  },
+  "owner_commit": "a618e6ab293e2fb7a113d949197e1bb43ecc7733",
+  "owner_tree": "e81e89d6e6ae6a8ae7a83a6a6d82cdc9a2aa20bb",
+  "schema": "rsomics.rnaseq-qc.junction-candidate.v1",
+  "scope": "Four-native correctness candidate only; no performance/publication/release acceptance.",
+  "snapshot": "green-1",
+  "snapshot_files": {
+    "README.md": {
+      "bytes": 1575,
+      "sha256": "0ba55c84c679fcaa3709c3963845d9ecdbb586b86151d59b7f66d582c64ea6cd"
+    },
+    "checksums.sha256": {
+      "bytes": 235,
+      "sha256": "40be38096d3e709dc6f47aaeb8a2e2d675d5d1e98f8ac34513d774956836c9fd"
+    },
+    "files.sha256": {
+      "bytes": 7228,
+      "sha256": "2481ea186f7db63519c4cca3359445e20a18b82fafd08d071fbb89d9efde8650"
+    },
+    "source.tar.gz": {
+      "bytes": 64011,
+      "sha256": "9f327ca20de7fd9acce44206f62194a037ef56365bda64ca59c4ebe7245338af"
+    }
+  },
+  "snapshot_path": ".autopilot/snapshots/rnaseq-qc-junctions-2026-11-01/green-1",
+  "source_files": {
+    ".gitignore": {
+      "bytes": 8,
+      "git_blob": "ea8c4bf7f35f6f77f75d92ad8ce8349f6e81ddba",
+      "mode": 420,
+      "sha256": "44c92e3a70ad3307b7056871c2bdb096d8bfa9373f5bf06a79bb6324a20ff2fb"
+    },
+    "Cargo.lock": {
+      "bytes": 40990,
+      "git_blob": "5f4a718290d8f4e51df3119c96087fe912e654f7",
+      "mode": 420,
+      "sha256": "a6ec5961981e2f95070cec067e52c91cff9dc4b86da7f726256e504521086a84"
+    },
+    "Cargo.toml": {
+      "bytes": 798,
+      "git_blob": "94aedb86ad4e3bd07fd1eb81c8ca14d754eb5e49",
+      "mode": 420,
+      "sha256": "d5093ee51d02bb929da2e17a27e755098ebc195940375f663dce1e0f28f4c97a"
+    },
+    "LICENSE-APACHE-2.0": {
+      "bytes": 11282,
+      "git_blob": "28338c01e87d7c2d6f204b09b46d64b7ad9c4087",
+      "mode": 420,
+      "sha256": "6d061273eb5b605d391caddff4855419b2222ff4d40183b22fdd551c49f9b8d2"
+    },
+    "LICENSE-MIT": {
+      "bytes": 1067,
+      "git_blob": "bc34e7e0551c6e3a718cf1dc7ce2412bb9d311ce",
+      "mode": 420,
+      "sha256": "e7a94e2f444c13b00256a046f677f62ed7a8511d4241a898ce687551909833e1"
+    },
+    "MERGE_RECORD.md": {
+      "bytes": 13044,
+      "git_blob": "0fac81608aea80d9d45b45cb464ce9423f808be3",
+      "mode": 420,
+      "sha256": "d3434aa1e3b3fed02046ed387d2787fb219c0a970ab24763ef13636804183f9c"
+    },
+    "README.md": {
+      "bytes": 7762,
+      "git_blob": "c3d99be0b8c41d2d0d49d2de4059f2d8c800b0cf",
+      "mode": 420,
+      "sha256": "4abe2185764ae59cde3c06bcace11999d32e31c2b35061a56c4d1394466208e6"
+    },
+    "src/annotation.rs": {
+      "bytes": 9645,
+      "git_blob": "d5e1568ce99f2c5d3e28b9826444fee2c576980f",
+      "mode": 420,
+      "sha256": "84155f9be93dd58bd72aa666c90fbc8ad9bf83330cf6f12249bbc89765e9037d"
+    },
+    "src/cli.rs": {
+      "bytes": 5519,
+      "git_blob": "0d6c00ac42af53d3fe8eebbe2da7be34ba266698",
+      "mode": 420,
+      "sha256": "9d3fae212efd0daf68ebb515bade03940eda4cbbe31f12077a1ca9841d809427"
+    },
+    "src/lib.rs": {
+      "bytes": 91,
+      "git_blob": "9ddaeb0f3db350bb878e2cb30b7f3754e78632d3",
+      "mode": 420,
+      "sha256": "61f9df030cecce9debb9bad6a0927187d3bf8c9b407cf869136aea9b9a9327d4"
+    },
+    "src/main.rs": {
+      "bytes": 122,
+      "git_blob": "bc10d5780936f1e2e3630412e30a946d624d80fe",
+      "mode": 420,
+      "sha256": "30a536edd9fa4dc932699b8a147ac610535026d2ebeb3d4737c0ef693bbccd86"
+    },
+    "src/metrics/distribution.rs": {
+      "bytes": 16619,
+      "git_blob": "f7f8f7762bcb2e03bac183f1569c07063cdbaada",
+      "mode": 420,
+      "sha256": "54473b1bbe40cc39266a4b5c2da6a281b7e971d5fc6a1821bf7ce5ae93f37e14"
+    },
+    "src/metrics/junctions.rs": {
+      "bytes": 9707,
+      "git_blob": "a5b8cded77946f7b5b1fcea9f6140c51eee98329",
+      "mode": 420,
+      "sha256": "ae15a2ed07bb09add1ba0eda020f7c789d9dfb210d4876707b74aa8c496566d0"
+    },
+    "src/metrics/mapping.rs": {
+      "bytes": 2344,
+      "git_blob": "355f55b1a0117ec710c004b69d2519b8b3d6baf1",
+      "mode": 420,
+      "sha256": "3231af74a5fc01e8e1f78c1abdc3e5b460edbe033fb8eb6ac19a6a1c2490d879"
+    },
+    "src/metrics/mod.rs": {
+      "bytes": 133,
+      "git_blob": "bdec583b723430f22c1ce686819bf705c6de0708",
+      "mode": 420,
+      "sha256": "12dc15cbe4fa686da2a8eb005e2617a6101073816e7457035bd67ece36846529"
+    },
+    "src/metrics/sampling.rs": {
+      "bytes": 20124,
+      "git_blob": "356eae5b8e74b4f3bfdd49efbb9ebef203484302",
+      "mode": 420,
+      "sha256": "57cb840f03629b76c805cf49415e240ceab61f95e467a2aedf2f8260d75f0e1b"
+    },
+    "src/metrics/strandedness.rs": {
+      "bytes": 4209,
+      "git_blob": "27b30ad31d0d27bf510db822a38cfbfa5a44d144",
+      "mode": 420,
+      "sha256": "9202418296b2ca12be293af6544e3707cdb98b2d6b6d4647ed7588a1791b6742"
+    },
+    "src/output.rs": {
+      "bytes": 4838,
+      "git_blob": "79db1035410e35e9da097574b43a9bdc4fee143b",
+      "mode": 420,
+      "sha256": "f409334fec2196dbe4fe64881f1bf6c0fa68e29ffa85459151cf8013d234b09f"
+    },
+    "src/report.rs": {
+      "bytes": 20057,
+      "git_blob": "33bf980d7c921158148153f244fa36a4ed46c6c6",
+      "mode": 420,
+      "sha256": "4a90f57bd7ff46cf20b979c99cf11eacab7274abf27220558f1de40123799f0e"
+    },
+    "tests/fixtures/junctions/all-short/genes.bed12": {
+      "bytes": 270,
+      "git_blob": "7be5ad0be8d6e1db576485540594266a885d3a1f",
+      "mode": 420,
+      "sha256": "0c844c495c122d3e0673070627a375f7b81f7793b20ce1f0080d0ae3f3162b69"
+    },
+    "tests/fixtures/junctions/all-short/input.bam": {
+      "bytes": 335,
+      "git_blob": "e1ec630db79140992585459811320539448b13c8",
+      "mode": 420,
+      "sha256": "513ff355cbd479096bbb1a69c59e5e5efd5778f3993575600c975fc905251987"
+    },
+    "tests/fixtures/junctions/all-short/input.sam": {
+      "bytes": 187,
+      "git_blob": "7bb7dcf89334b374f7ae310f932b06e5d0ac210a",
+      "mode": 420,
+      "sha256": "5d67025292d8a98b3d57f59dcde79e5633e4b4efc3bbda18ddbf22b7a523476c"
+    },
+    "tests/fixtures/junctions/all-short/observation.json": {
+      "bytes": 1156,
+      "git_blob": "0a30bf847c3ce1877487a0c55640b81bd2e9a6ec",
+      "mode": 420,
+      "sha256": "ccdb2e80d13318ac32e9d484a225ff624e73952d0ec73943622c05d6360566b5"
+    },
+    "tests/fixtures/junctions/all-short/observed.junction.xls": {
+      "bytes": 67,
+      "git_blob": "732e3630b78c75aa2233fc78414c00c07a243815",
+      "mode": 420,
+      "sha256": "a0fc8488940954701352a5f564d606032f009a1098136354dae78a5041e96fc1"
+    },
+    "tests/fixtures/junctions/all-short/process.process.json": {
+      "bytes": 851,
+      "git_blob": "4946961b1f902d40ed0c54e66c8bc05d936b5623",
+      "mode": 420,
+      "sha256": "7b5252db1580a2106de22e99afa3bc2aea22d72ec042ecc3f1603ec23c89b934"
+    },
+    "tests/fixtures/junctions/all-short/process.stderr": {
+      "bytes": 365,
+      "git_blob": "c98d9e926e86865eb826540034a0a96fa36ec580",
+      "mode": 420,
+      "sha256": "46bd4c0741df01e3356dec3e4f500b186c49f261a85d1fcb8db117d60cb862f8"
+    },
+    "tests/fixtures/junctions/all-short/process.stdout": {
+      "bytes": 10,
+      "git_blob": "e1fb2fbcf6a9ad2293c7d6043732024ff770724a",
+      "mode": 420,
+      "sha256": "3ae57946a3aded5025d5ac2f41aac6b2543ba9d4b7d18251bdedf86ae7eb40f1"
+    },
+    "tests/fixtures/junctions/all-short/record-cigar-inventory.json": {
+      "bytes": 1704,
+      "git_blob": "bbf09b8d5f6a9039da98033721a7fe25b195c80d",
+      "mode": 420,
+      "sha256": "2bf6a3db91ad4a51e5e0f0a2036650c9187f34c50df97e1ae25997a9ac506e35"
+    },
+    "tests/fixtures/junctions/case-alias-only/genes.bed12": {
+      "bytes": 54,
+      "git_blob": "afd753627db69fde5cef14171b3b57891d097bca",
+      "mode": 420,
+      "sha256": "b2746c18354a63ad38cc04b36839d5ac5a8c260b561030b44ad5ed91438dee8e"
+    },
+    "tests/fixtures/junctions/case-alias-only/input.bam": {
+      "bytes": 333,
+      "git_blob": "f99fbbda5457f25481a70a098339a95eb9216c19",
+      "mode": 420,
+      "sha256": "38ed4584e73f680d7417f80e746a41b42fd516e7377cd718d289c7a7cdc9b121"
+    },
+    "tests/fixtures/junctions/case-alias-only/input.sam": {
+      "bytes": 183,
+      "git_blob": "269dadac42e76156f84be1d04e01b54e8b2bf3cb",
+      "mode": 420,
+      "sha256": "7e7940498cab3e66547ece5e6edd7b1b5b6200765199614dbe93c97c8744b6cc"
+    },
+    "tests/fixtures/junctions/case-alias-only/observation.json": {
+      "bytes": 1344,
+      "git_blob": "4ae2cca293827131985cf95053eb9c6614d8130d",
+      "mode": 420,
+      "sha256": "38f1b2c7be0699f9e1d598036881970e1a278a699ad0dc7628ae4add071c252a"
+    },
+    "tests/fixtures/junctions/case-alias-only/observed.junction.xls": {
+      "bytes": 93,
+      "git_blob": "0d94d8e55a1aeda9503c4fd50ca2ca52b0eda477",
+      "mode": 420,
+      "sha256": "662bf7fd03d3305ec9f0573f12facd9e9cc7ed733fdc7ba894ca0f93d588de5a"
+    },
+    "tests/fixtures/junctions/case-alias-only/process.process.json": {
+      "bytes": 826,
+      "git_blob": "3da44ab747962a77dfda5036f9417ca571dd7818",
+      "mode": 420,
+      "sha256": "076fc8eb484eac08abdfb2c13c225b5c29dc9168d95bcc30d96a05e8648e0ad0"
+    },
+    "tests/fixtures/junctions/case-alias-only/process.stderr": {
+      "bytes": 541,
+      "git_blob": "8c80505cc6849f86cd1261ecd3dc3b0a591b709a",
+      "mode": 420,
+      "sha256": "bccf62789d4a5766765c61a96d209dd7f7e2e252d951d532e6464781145ce5be"
+    },
+    "tests/fixtures/junctions/case-alias-only/process.stdout": {
+      "bytes": 10,
+      "git_blob": "e1fb2fbcf6a9ad2293c7d6043732024ff770724a",
+      "mode": 420,
+      "sha256": "3ae57946a3aded5025d5ac2f41aac6b2543ba9d4b7d18251bdedf86ae7eb40f1"
+    },
+    "tests/fixtures/junctions/case-alias-only/record-cigar-inventory.json": {
+      "bytes": 1751,
+      "git_blob": "89db506ca6639815d004f01f2ffa9c153b0e9d39",
+      "mode": 420,
+      "sha256": "938e84c844a9c536b923c084bc245907640e34042e3d9f2496cd61c78757dfac"
+    },
+    "tests/fixtures/junctions/informative-paired/genes.bed12": {
+      "bytes": 270,
+      "git_blob": "7be5ad0be8d6e1db576485540594266a885d3a1f",
+      "mode": 420,
+      "sha256": "0c844c495c122d3e0673070627a375f7b81f7793b20ce1f0080d0ae3f3162b69"
+    },
+    "tests/fixtures/junctions/informative-paired/input.bam": {
+      "bytes": 843,
+      "git_blob": "465d27820f6fed6b73066c8a9cd4346bd63ddabd",
+      "mode": 420,
+      "sha256": "45e98bbc0b55e6812b103ca051cdd9058c7f7ffb6537e8a85aba49b7d2b94d8b"
+    },
+    "tests/fixtures/junctions/informative-paired/input.sam": {
+      "bytes": 4079,
+      "git_blob": "a1b159bc5fb8e9c706f75ae03cefec599532f6b8",
+      "mode": 420,
+      "sha256": "c988ede3662e4fa6564fce749da945b7ac42c741b1308961dc92601b1e167ee9"
+    },
+    "tests/fixtures/junctions/informative-paired/observation.json": {
+      "bytes": 2018,
+      "git_blob": "79819c5d3923dd112e8f465b1aa4d23f6bebee2c",
+      "mode": 420,
+      "sha256": "7b4ccda332263de92b8c5d2e3d6e05dea35db9d8f8c13a6984ea653637c8c59b"
+    },
+    "tests/fixtures/junctions/informative-paired/observed.junction.xls": {
+      "bytes": 243,
+      "git_blob": "f0571c333bcf737fd9cc5432a17bf7e7a8b71fa1",
+      "mode": 420,
+      "sha256": "e36897625cdd889096c2de6a7a3bddcdf254f9d12d3a15d8f7e5efc4fad09d4c"
+    },
+    "tests/fixtures/junctions/informative-paired/process.process.json": {
+      "bytes": 835,
+      "git_blob": "4f43b2519aef1e92c902790d8bba9d83edcdbd9c",
+      "mode": 420,
+      "sha256": "429a59f1b4f3008b67dc63231a741ce7f258e978b3ccda10efb68c7d837fa5dc"
+    },
+    "tests/fixtures/junctions/informative-paired/process.stderr": {
+      "bytes": 546,
+      "git_blob": "5246defb0c300de5174fe9870f12f33551842a5a",
+      "mode": 420,
+      "sha256": "c402c45bb21fe72403e9023ddcf15b4dcac97d7c8a687b3e5d263640324b2dae"
+    },
+    "tests/fixtures/junctions/informative-paired/process.stdout": {
+      "bytes": 11,
+      "git_blob": "04ad731c8afbd77ae5fd144ab6104cd78ae5d17c",
+      "mode": 420,
+      "sha256": "0acd45e74a4bdcebe5380f1840ad65a6c61db4575c99c62863a02d3cc2a10143"
+    },
+    "tests/fixtures/junctions/informative-paired/record-cigar-inventory.json": {
+      "bytes": 19308,
+      "git_blob": "cceec8183fc372e132482c0ccf980a16921ac7c6",
+      "mode": 420,
+      "sha256": "7d8152f6cd7207f3870327e5b23cbbb3ce6902aba382c2a68cf75c1f0b083bd8"
+    },
+    "tests/fixtures/junctions/informative-single/genes.bed12": {
+      "bytes": 270,
+      "git_blob": "7be5ad0be8d6e1db576485540594266a885d3a1f",
+      "mode": 420,
+      "sha256": "0c844c495c122d3e0673070627a375f7b81f7793b20ce1f0080d0ae3f3162b69"
+    },
+    "tests/fixtures/junctions/informative-single/input.bam": {
+      "bytes": 687,
+      "git_blob": "a9d4dc9c6d1e639eec408e39c6ff1b15d14b2b99",
+      "mode": 420,
+      "sha256": "9a6abf7d6bef6a51546d4a6369e1ed008118dffdd0e263af9201b78cbd23f420"
+    },
+    "tests/fixtures/junctions/informative-single/input.sam": {
+      "bytes": 2126,
+      "git_blob": "d4abd9e432b0e513367eda0c86cb4a13e7489cf6",
+      "mode": 420,
+      "sha256": "2bd1d5086cc0125078e3bd0b6cd6a6bb5f6b0a50528a3555c4a7fd5980c310d5"
+    },
+    "tests/fixtures/junctions/informative-single/observation.json": {
+      "bytes": 2016,
+      "git_blob": "63dca98adfe351fd5e38f721ca8305dd73e7504c",
+      "mode": 420,
+      "sha256": "ad5bc11e6a34ad1c3c049a105caaaffdf34931722ff3c634ae2fd609464b4dd5"
+    },
+    "tests/fixtures/junctions/informative-single/observed.junction.xls": {
+      "bytes": 242,
+      "git_blob": "9f54d0344888f4fdbdf8f07373034a3181cbe7f5",
+      "mode": 420,
+      "sha256": "722b03f128c55d7898d97af41757a063ee2ebf18e3d4b123114a8ae1c512342d"
+    },
+    "tests/fixtures/junctions/informative-single/process.process.json": {
+      "bytes": 835,
+      "git_blob": "db577af3f37f191051e8ef4f6a125a650643c7c5",
+      "mode": 420,
+      "sha256": "e7a393ef5eb076c2d47c6503d6eadfa7b0f7bc8b232fcf9dd8d3679d0c52b57a"
+    },
+    "tests/fixtures/junctions/informative-single/process.stderr": {
+      "bytes": 545,
+      "git_blob": "cd174b659b47554cc102019bea089007b90bd3d5",
+      "mode": 420,
+      "sha256": "8e9184e326fbab60707c8dc38bf3984aedd821a89db59204be42728d76505176"
+    },
+    "tests/fixtures/junctions/informative-single/process.stdout": {
+      "bytes": 11,
+      "git_blob": "90b89a94417db6425ab3e35a0253ed5a0ce1cc0e",
+      "mode": 420,
+      "sha256": "43ede6ab12cb62f2dab2e276a9fb64a5b31472c886839d4f814eb24ac03de9aa"
+    },
+    "tests/fixtures/junctions/informative-single/record-cigar-inventory.json": {
+      "bytes": 10938,
+      "git_blob": "47080b17ffef01d988b2d158978113bef2af48dc",
+      "mode": 420,
+      "sha256": "0f30a58d932048d69ebdefc05903a3e53b1ad4cba52a7b6719c62048d591781b"
+    },
+    "tests/fixtures/junctions/no-N/genes.bed12": {
+      "bytes": 270,
+      "git_blob": "7be5ad0be8d6e1db576485540594266a885d3a1f",
+      "mode": 420,
+      "sha256": "0c844c495c122d3e0673070627a375f7b81f7793b20ce1f0080d0ae3f3162b69"
+    },
+    "tests/fixtures/junctions/no-N/input.bam": {
+      "bytes": 321,
+      "git_blob": "9277c6e8b677e1498ce54425719c6060fab93064",
+      "mode": 420,
+      "sha256": "1ea11910c965d9b0b6d7ccb03431759e1074926b618f48134691a68aff9ee11d"
+    },
+    "tests/fixtures/junctions/no-N/input.sam": {
+      "bytes": 176,
+      "git_blob": "27573ae718cf78c24b4ec900a2061abae6d614c0",
+      "mode": 420,
+      "sha256": "cb0d2644ab6ec9c2fb379f26800ff8af29a8bd3b9a36d6c854ade839c5be04d0"
+    },
+    "tests/fixtures/junctions/no-N/observation.json": {
+      "bytes": 1073,
+      "git_blob": "62c5bc7158b66148bd1e553e3af5f53f136cd252",
+      "mode": 420,
+      "sha256": "67e85bb1f56291132cb0bfce8371aa1d2a7aab8034ebc1eaecb4159575a5fa90"
+    },
+    "tests/fixtures/junctions/no-N/observed.junction.xls": {
+      "bytes": 0,
+      "git_blob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "mode": 420,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "tests/fixtures/junctions/no-N/process.process.json": {
+      "bytes": 794,
+      "git_blob": "8ee88c17c1ed0bdd1bb313d4a3d9901a81e23115",
+      "mode": 420,
+      "sha256": "8a23adced45928e055dd21bb137617a8c4c70add36e8f668082ccb918e54de1a"
+    },
+    "tests/fixtures/junctions/no-N/process.stderr": {
+      "bytes": 159,
+      "git_blob": "c22a5d4d45e09e561487e302760232041c214ca1",
+      "mode": 420,
+      "sha256": "12ad8f554f9dacdba7865e0223228d1e0d299339d7983846350253060ae95e22"
+    },
+    "tests/fixtures/junctions/no-N/process.stdout": {
+      "bytes": 10,
+      "git_blob": "0cd9610de67291f670c919d87248e827c13f3805",
+      "mode": 420,
+      "sha256": "9c49477dc0581afc5c2da386e4230d70ee8fa415a9d8bfa886e221dfe5575d6d"
+    },
+    "tests/fixtures/junctions/no-N/record-cigar-inventory.json": {
+      "bytes": 1365,
+      "git_blob": "f41e9ebd84e6d632ee45b63261a35a70be565fde",
+      "mode": 420,
+      "sha256": "8c54fdc3f767a0ebb1b9bedf624b0d2bdfa8d737c49fc0ebaa7a2e048422ffcd"
+    },
+    "tests/fixtures/junctions/provenance.json": {
+      "bytes": 9963,
+      "git_blob": "5fd15859c9988c15bd951a747405b3fd20b1558c",
+      "mode": 420,
+      "sha256": "eaf8f03ed164f0286591944344b0d8eb42fa307e93a250cbf3a8abd189064a39"
+    },
+    "tests/workflow.rs": {
+      "bytes": 28633,
+      "git_blob": "18b7081ef78cc25688f5363f38064ac580be3f18",
+      "mode": 420,
+      "sha256": "45d91810f43620e1e69e5758ed3f69d45daae9e89cd8375cd70e7f9f73e2ad4b"
+    }
+  },
+  "source_receipt": {
+    "bytes": 9159,
+    "path": ".autopilot/oracles/rnaseq-qc-junctions-2026-11-01.json",
+    "sha256": "8ea60c35c952a600fa526ebfd3e020e142b01706f50a87a9fbc8818ce9ce5b2b"
+  },
+  "tests": {
+    "unit": [
+      "annotation::tests::bed12_rows_retain_identity_and_index_nested_transcripts",
+      "annotation::tests::malformed_bed12_fails_at_the_input_row",
+      "metrics::distribution::tests::report_distribution_distinguishes_canonical_and_legacy_cigar",
+      "metrics::distribution::tests::distribution_preserves_ambiguity_cumulative_flanks_and_legacy_boundary"
+    ],
+    "workflow": [
+      "report_keeps_positive_zero_entropy_and_eligible_zero_and_focused_projection",
+      "annotation_and_bam_errors_do_not_publish_a_partial_report",
+      "output_set_failure_preserves_existing_report",
+      "canonical_distribution_uses_equals_and_x_while_legacy_retains_pinned_projection",
+      "filtered_alignment_does_not_cancel_valid_mate_quality_adjustment",
+      "source_queries_restart_overlap_history_and_replay_original_qualities",
+      "placed_unmapped_coordinates_do_not_advance_source_query_windows",
+      "junctions_match_captured_source_and_share_the_original_record_transaction"
+    ]
+  }
+}
