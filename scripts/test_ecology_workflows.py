@@ -54,6 +54,12 @@ class EcologyWorkflowTests(unittest.TestCase):
         ast.parse((ROOT / 'scripts/ecology_candidate.py').read_text())
         with tempfile.TemporaryDirectory(prefix='ecology-gate-') as directory:
             root = Path(directory)
+            beta_authority = candidate.prepare_source(ROOT, root / 'beta', 'green-2')
+            self.assertEqual(beta_authority['owner_commit'], '111adf5e8a3657a99c50a9832ca5ed9c53fd98d7')
+            self.assertEqual(beta_authority['owner_tree'], 'd1963110fbee9b1c18b999a3a6e09d94dd37f977')
+            self.assertEqual(len(beta_authority['files']), 120)
+            self.assertEqual(len(beta_authority['fixtures']), 86)
+            self.assertEqual(beta_authority['policy']['tests'], 6)
             for selector in ('missing', '../green-1', 'green-1/x'):
                 with self.assertRaises((ValueError, OSError)):
                     candidate.prepare_source(ROOT, root / 'absent', selector)
@@ -64,6 +70,39 @@ class EcologyWorkflowTests(unittest.TestCase):
             self.assertEqual(len(authority['files']), 35)
             self.assertEqual(len(authority['fixtures']), 8)
             self.assertEqual(authority['source_run']['run_id'], 40634594900)
+            self.assertEqual(candidate.ASSET, 'assets/ecology-native-20261101.json')
+            self.assertEqual(candidate.OWNER, 'e1b03cb68876be2dd8bb9fbc520b5194be055d9e')
+            old_names = (
+                'multi_alpha_preserves_sparse_identities_root_weights_and_unavailable_values',
+                'invalid_inputs_and_aliases_leave_named_destinations_unchanged',
+                'captured_sampling_profiles_replay_with_workers_and_feed_alpha',
+                'zero_depth_and_failures_preserve_dimensions_and_atomic_outputs')
+            beta_names = (*old_names,
+                'original_rarefied_reload_all_eight_matrices_and_alpha_match_frozen_source',
+                'source_boundaries_strict_validation_and_undefined_pairs_are_atomic')
+            for selector, folder, selected, asset, names, population in (
+                ('green-1', output, authority, 'assets/ecology-native-20261101.json', old_names, 8),
+                ('green-2', root / 'beta', beta_authority,
+                 'assets/ecology-native-beta-20261101.json', beta_names, 86)):
+                candidate.save(folder / 'selection.json', dict(snapshot=selector, authority_path=asset,
+                    authority_sha256=candidate._hash_file(ROOT / asset),
+                    owner_commit=selected['owner_commit'], owner_tree=selected['owner_tree']))
+                self.assertEqual(candidate.selected_authority(folder, ROOT), selected)
+                controller = root / ('controller-' + selector)
+                candidate.prepare_controller(ROOT, controller, selector)
+                self.assertEqual((controller / asset).read_bytes(), (ROOT / asset).read_bytes())
+                closure = json.loads((controller / 'checksums.json').read_bytes())
+                self.assertEqual(closure[asset]['sha256'], candidate._hash_file(ROOT / asset))
+                transcript = ''.join('test ' + name + ' ... ok\n' for name in names)
+                transcript += f'test result: ok. {len(names)} passed; 0 failed; 0 ignored;\n'
+                summary = candidate.test_summary(transcript, selected)
+                self.assertEqual(summary['passed'], len(names))
+                self.assertEqual(summary['integrations'], names)
+                self.assertEqual(summary['captured_fixture_files'], population)
+                with self.assertRaises(ValueError):
+                    candidate.test_summary(transcript.replace(f'{len(names)} passed', '0 passed'), selected)
+                self.assertFalse(summary['performance_claim'])
+                self.assertFalse(summary['per_cli_originals_retained'])
             manifest = {name: row['sha256'] for name, row in authority['files'].items()}
             candidate.check_tree(output / 'source', manifest)
             for name, row in authority['fixtures'].items():

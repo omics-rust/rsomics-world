@@ -23,6 +23,21 @@ PATHS = ('CARGO_HOME', 'CARGO_TARGET_DIR', 'RUSTUP_HOME', 'TMPDIR', 'XDG_CACHE_H
 CONTROLLERS = ('scripts/ecology_candidate.py', 'scripts/test_ecology_workflows.py',
     'scripts/infercnv_source_snapshot.py', 'scripts/signal_candidate.py',
     '.github/workflows/ecology-candidate.yml', ASSET, '.autopilot/oracles/ecology-diversity-2026-10-28.json')
+INTEGRATIONS = ('multi_alpha_preserves_sparse_identities_root_weights_and_unavailable_values',
+    'invalid_inputs_and_aliases_leave_named_destinations_unchanged',
+    'captured_sampling_profiles_replay_with_workers_and_feed_alpha',
+    'zero_depth_and_failures_preserve_dimensions_and_atomic_outputs')
+PROFILES = {
+    'green-1': dict(asset=ASSET, owner_commit=OWNER,
+        owner_tree='b5996ddd92f292714c82c0c53a50c041f2b90249', files=35, fixtures=8,
+        integrations=INTEGRATIONS),
+    'green-2': dict(asset='assets/ecology-native-beta-20261101.json',
+        owner_commit='111adf5e8a3657a99c50a9832ca5ed9c53fd98d7',
+        owner_tree='d1963110fbee9b1c18b999a3a6e09d94dd37f977', files=120, fixtures=86,
+        integrations=(*INTEGRATIONS,
+            'original_rarefied_reload_all_eight_matrices_and_alpha_match_frozen_source',
+            'source_boundaries_strict_validation_and_undefined_pairs_are_atomic')),
+}
 
 
 def check(condition, message):
@@ -40,6 +55,47 @@ def save(path, value):
 
 def load(path):
     return json.loads(Path(path).read_bytes())
+
+
+def authority_profile(selector):
+    check(selector in PROFILES, 'unreviewed snapshot selector')
+    return PROFILES[selector]
+
+
+def read_authority(world, selector):
+    profile = authority_profile(selector)
+    authority = load(Path(world) / profile['asset'])
+    check(authority['schema'] == 'rsomics.ecology.native-authority.v1'
+          and authority['product'] == 'rsomics-ecology'
+          and authority['snapshot']['selector'] == selector
+          and all(authority[key] == profile[key] for key in ('owner_commit', 'owner_tree'))
+          and len(authority['files']) == profile['files']
+          and len(authority['fixtures']) == profile['fixtures']
+          and authority['policy']['tests'] == len(profile['integrations'])
+          and authority['policy']['ignored'] == 0 and authority['policy']['workers'] == [1, 4],
+          'reviewed authority profile differs')
+    return authority
+
+
+def selected_authority(root, world=None):
+    world = Path(os.environ['GITHUB_WORKSPACE']) if world is None else Path(world)
+    selection = load(Path(root) / 'selection.json')
+    authority = read_authority(world, selection['snapshot'])
+    asset = authority_profile(selection['snapshot'])['asset']
+    check(selection['authority_path'] == asset
+          and selection['authority_sha256'] == _hash_file(world / asset)
+          and all(selection[key] == authority[key] for key in ('owner_commit', 'owner_tree')),
+          'selected authority identity differs')
+    return authority
+
+
+def prepare_controller(world, controller, selector):
+    world, controller = Path(world), Path(controller)
+    for name in dict.fromkeys((*CONTROLLERS, authority_profile(selector)['asset'])):
+        destination = controller / name
+        destination.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(world / name, destination)
+    save(controller / 'checksums.json', tree_manifest(controller))
 
 
 def storage(environment=None):
@@ -62,10 +118,7 @@ def hosted():
 
 def prepare_source(world, output, selector):
     world, output = Path(world), Path(output)
-    authority = load(world / ASSET)
-    check(selector == 'green-1' and authority['snapshot']['selector'] == selector, 'unreviewed snapshot selector')
-    check(authority['owner_commit'] == OWNER and len(authority['files']) == 35,
-          'reviewed owner closure differs')
+    authority = read_authority(world, selector)
     snapshot = world / SNAPSHOTS / selector
     check(set(p.name for p in snapshot.iterdir()) == {'README.md', 'files.sha256', 'checksums.sha256', 'source.tar.gz'},
           'snapshot metadata closure differs')
@@ -88,7 +141,6 @@ def prepare_source(world, output, selector):
     check(all((source / n).stat().st_size == row['bytes'] for n, row in authority['files'].items()),
           'source size metadata differs')
     check(_hash_file(source / 'Cargo.lock') == authority['lock_sha256'], 'locked dependency identity differs')
-    check(len(authority['fixtures']) == 8, 'complete captured fixture population differs')
     for name, row in authority['fixtures'].items():
         check(manifest[name] == row['sha256'] and (source / name).stat().st_size == row['bytes'],
               'source fixture differs: ' + name)
@@ -102,15 +154,12 @@ def prepare(world, output, selector):
     world, output = Path(world), Path(output)
     authority = prepare_source(world, output, selector)
     controller = Path(os.environ['EVIDENCE']) / 'controller'
-    for name in CONTROLLERS:
-        destination = controller / name
-        destination.parent.mkdir(parents=True, exist_ok=True)
-        shutil.copy2(world / name, destination)
-    save(controller / 'checksums.json', tree_manifest(controller))
+    prepare_controller(world, controller, selector)
     call = capture(output, 'controller-head', ['git', 'rev-parse', 'HEAD'], world)
     check((call / 'stdout.txt').read_text().strip() == os.environ['CONTROLLER_COMMIT'], 'actual controller Git head differs')
-    save(output / 'selection.json', dict(owner_commit=OWNER, owner_tree=authority['owner_tree'], snapshot=selector,
-         authority_sha256=_hash_file(world / ASSET), source_archive_sha256=_hash_file(output / 'source.tar.gz'),
+    asset = authority_profile(selector)['asset']
+    save(output / 'selection.json', dict(owner_commit=authority['owner_commit'], owner_tree=authority['owner_tree'], snapshot=selector,
+         authority_path=asset, authority_sha256=_hash_file(world / asset), source_archive_sha256=_hash_file(output / 'source.tar.gz'),
          source_manifest_sha256=_hash_file(output / 'files.sha256'), lock_sha256=authority['lock_sha256'],
          controller_commit=os.environ['CONTROLLER_COMMIT'], target=os.environ['TARGET'],
          source_run=authority['source_run'], source_on_native_qualified=False, performance_claim=False, release=False))
@@ -119,7 +168,7 @@ def prepare(world, output, selector):
 def metadata(root):
     hosted()
     root = Path(root); source = root / 'source'
-    authority = load(Path(os.environ['GITHUB_WORKSPACE']) / ASSET)
+    authority = selected_authority(root)
     check(platform.system() == os.environ['EXPECTED_SYSTEM'] and platform.machine() == os.environ['EXPECTED_ARCH'],
           'actual host is not the required native class')
     check(not any(os.environ.get(n) for n in ('CARGO_BUILD_TARGET', 'CARGO_BUILD_BUILD_DIR', 'RUSTC_WRAPPER',
@@ -175,19 +224,24 @@ def test_command(mode):
 def tests(root, mode):
     hosted()
     root = Path(root)
+    authority = selected_authority(root)
     call = capture(root, 'test-' + mode, test_command(mode), root / 'source')
     text = (call / 'stdout.txt').read_text() + (call / 'stderr.txt').read_text()
-    names = ('multi_alpha_preserves_sparse_identities_root_weights_and_unavailable_values',
-             'invalid_inputs_and_aliases_leave_named_destinations_unchanged',
-             'captured_sampling_profiles_replay_with_workers_and_feed_alpha',
-             'zero_depth_and_failures_preserve_dimensions_and_atomic_outputs')
+    summary = test_summary(text, authority)
+    save(root / ('test-' + mode + '-summary.json'), summary)
+
+
+def test_summary(text, authority):
+    names = authority_profile(authority['snapshot']['selector'])['integrations']
     check(all(re.search(r'test ' + name + r' \.\.\. ok', text) for name in names),
           'complete reviewed integration did not pass')
     summaries = re.findall(r'test result: ok\. ([0-9]+) passed; ([0-9]+) failed; ([0-9]+) ignored;', text)
     check(summaries and all(failed == ignored == '0' for _, failed, ignored in summaries)
-          and sum(int(passed) for passed, _, _ in summaries) == 4, 'full reviewed test population differs')
-    save(root / ('test-' + mode + '-summary.json'), dict(passed=4, integrations=names,
-         workers=[1, 4], captured_fixture_files=8, per_cli_originals_retained=False, performance_claim=False))
+          and sum(int(passed) for passed, _, _ in summaries) == authority['policy']['tests'],
+          'full reviewed test population differs')
+    return dict(passed=authority['policy']['tests'], integrations=names,
+         workers=authority['policy']['workers'], captured_fixture_files=len(authority['fixtures']),
+         per_cli_originals_retained=False, performance_claim=False)
 
 
 def binary(root):

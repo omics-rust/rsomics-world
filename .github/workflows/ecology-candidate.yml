@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       snapshot:
-        description: Reviewed immutable private Ecology snapshot (green-1)
+        description: Reviewed immutable private Ecology snapshot (green-1 alpha or green-2 alpha/beta)
         required: true
         type: string
 

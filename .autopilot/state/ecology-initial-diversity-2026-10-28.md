@@ -1,5 +1,23 @@
 # Ecology diversity source qualification
 
+## Additive alpha/beta native candidate independently verified
+
+Root reads the complete operational REPORT/freeze/binding recipes and actual
+controller/test/workflow diff at ecology-native-beta-prep-20261101.gg1hpgl1.
+REPORT SHA cf30b469dda3e17c2fdd49ebac7b598f3d207aeeb0e8daf5f7ebc542c7e876c4;
+delivery seal d17a9c21260863ba55bfeeecbf7d1c2670f6e2d40105acc7b021df8c07a296fc.
+The selected green2 authority binds owner111adf5e,120 Git-exact source bodies,
+86 original fixtures and six integrations; unchanged green1 retains35/eight/four.
+All old source/native/whole-alpha authorities remain immutable. Root freshly
+checks packet/delivery/source Git bodies and runs the SAME connected guarded
+preparation test successfully; root logs are ecology-beta-root-prep-20261101.ajXDgF.
+
+New source archive63812B SHA83b06b706ba6ab4139c48d5da6c47d283279bccb8e186e25069ebf951567ee56;
+authority d8b3404d59ff3bab157a402492683f391070a9339f56015126aee69ced0dadfa.
+Only selected-profile plumbing and additive authority/snapshot are accepted by
+this preparation. No new native-four/source-on-native/full-study beta/performance
+gate or publication is inferred. Exact-head Control must pass before dispatch.
+
 ## Corrected beta source accepted locally; new native candidate preparation active
 
 Root reads the complete corrected REPORT0ffa57cc8f2fb6c65e849eb2b1b56d07f8a479c637c131b557875fa5c885a703
