@@ -1,5 +1,34 @@
 # Fixed private HGDP whole-workflow gate
 
+## HWE source wave accepted locally; exact green5 native qualification next
+
+Root commits clean local5ec85fd1363ca21cac621a3a682b684f688448e1, tree
+c11df466ad54c650d9e2e2522318558554cdaac8. The five-path HWE change has one
+whole review with noP0/P1/P2 and no requested source correction: mCWU4H
+REPORT7f053629. Root reads all changed source/context, freshly verifies303
+current/TAR bodies, complete diff/log inventory and eight original F/report
+pins, then confirms both profiles/all requested1/4 Hardy bodies equal the
+old accepted native. Full eight-report1/4 identity remains exact. Root proof
+BBAaHV/data-check.stdout is18a3f9bb/exit0/empty stderr. Actual root fresh
+format/full release4lib+1whole with0ignored/diff-check pass;
+release.stdout SHA6afbe1a8. Author complete debug/release and same retained
+real F checks stay independently scoped, not benchmark timings.
+
+Author CK6n5S REPORT84b9e50a/INVENTORY85bac05a freezes303 source bodies,
+11702B diff8c27e636 and534479B TARa492878c. New explicit green-5 snapshot
+contains those exact source bodies; all old snapshots/contract hashes remain
+unchanged. Existing native transport adds only the same116-report/52-worker
+profile selector. Full World539-test regression includes the new snapshot.
+
+This owner intentionally has no public remote, as established by its prior
+private implementation state. A fresh GitHub ref read404 and empty local
+remote list agree with that design, not lost published work. Do not create a
+public repository or push this private slice merely to obtain CI; use the
+existing World snapshot-bound four-native/same-generation source workflow.
+Actual green5 CI, source/relink and unchanged complete seven-stage performance
+remain unearned. No A-only whole benchmark retry or B implementation starts
+until this source/native acceptance is recorded; old negative result remains.
+
 ## Bounded HWE implementation active; observer work stopped
 
 Root adopts the complete source-only design
