@@ -1,5 +1,25 @@
 # Popgen connected source workflow
 
+## Coherent native implementation authorized
+
+Root adopts docs/plans/2026-11-01-popgen-native-first-workflow.md after fully
+reading the complete design/source-asset/numeric/metadata map and relevant
+actual WC/Hudson/diversity/window/SFS/jackknife/NumPy bodies; all97 design
+packet bodies freshly verify. Approve one connected analyze workflow, shared
+strict input/count/heterozygote spool, deterministic bounded1/4 processing,
+all canonical exports and five distinct legacy tables. No new foundation,
+LayerB dependency, placeholder operation or original-GT matrix is justified.
+
+The fixed pre-outcome canonical finite rule is max(2^-44,2^-40*abs(source));
+discrete/nonfinite/legacy parsed decimals and native1/4 payloads stay exact.
+Comparator+closed producer metadata map freeze before first candidate output.
+Whole-cohort source/dimensions/NaNs/variant-tail semantics remain unchanged.
+The new independent private publish=false owner may be created only at the
+approved external path. Local Rust build/tests/full native-only comparison
+are authorized; root owns commit/native4/formal performance/publication.
+No native implementation or acceptance exists merely because this plan is
+approved. Actual implementation now proceeds without another routine approval.
+
 ## Complete actual casebook and full-chr22 source oracle accepted
 
 Root reads the complete final report and metadata/scientific audit code,
