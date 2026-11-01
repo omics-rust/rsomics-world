@@ -12,25 +12,22 @@ RED campaign, provenance audit and review for every small component. The
 four-native release gate, storage rules and no-placeholder rule still apply.
 See [current execution state](.autopilot/state/portfolio-execution-2026-10-23.md).
 
-Current frontier (2026-10-31): DESeq's owning package/native4 gate is accepted
-and publication remains credential-held; limma's count lifecycle is qualified,
-its ordinary-expression source/reload and reviewed local extension are accepted,
-with green-2 native4 and all four original archives accepted. Corrected ordinary
-performance passes the fixed resource gate and four-worker throughput gate;
-strict serial throughput and worker scaling fail, with the slow sample retained.
-Its populated owning repositoryf8c8f42 now passes exact native4/package/unpacked
-CI41207239669; source delivery is available while registry authorization is held.
-Structure's
-reviewed private analysis passes native4, with public
-torsion/performance still held or unearned. Ecology has reviewed alpha and
-rarefaction while beta policy is held. Signal's corrected six-operation source
-lifecycle is accepted with complete original evidence; the user approves native
-repairs for confirmed arithmetic/data-loss and filtering defects, with named
-incompatibilities. Full-six native implementation is active; normal source semantics
-are unchanged. A newly confirmed optional sorted-BED defect has a separate
-pending decision; matrix numbers and other work continue.
-Peak's current full-four source casebook, inputs and reviewed/corrected hosted
-producer are adopted; actual runtime admission/source capture remain gates.
+Current frontier (2026-11-02): Popgen, DESeq, RNA-seq QC, limma and table have
+earned GitHub native releases and fresh actual public-install lifecycles;
+registry authorization remains separately held. Each performance result stays
+bound to its measured implementation/binary, with losses and scope retained.
+Ecology's alpha/rarefaction and all eight complete-study beta modes now have
+accepted correctness/resource/original evidence. Its bounded public delivery
+implementation is active; no new science API or benchmark replay is needed.
+PLINK's prepared-reader/LD change passes green7 native/source qualification;
+actual41335480371/1 runs the unchanged final seven-stage performance graph.
+Index's corrected whole41327532095 is terminal failure; complete original
+recovery remains active, so the scientific failure cause/result is not inferred.
+Signal's confirmed arithmetic/data-loss/filter repairs are approved known
+incompatibilities. The distinct optional sorted-BED row-order decision remains
+pending. Structure torsion, edgeR QL numerical policy, inferCNV Leiden quality
+and Peak sparse-default policy keep their explicit holds; other work continues.
+No pending human decision is silently resolved or used to block the portfolio.
 Exact gates and original receipts live in each product dossier/state file.
 No unchanged accepted source/native/performance campaign needs replay. All
 project writes/build/cache/scratch remain external; global boot occupancy is
