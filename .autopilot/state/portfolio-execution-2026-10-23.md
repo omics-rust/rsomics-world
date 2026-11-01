@@ -3,9 +3,10 @@
 ## Current position
 
 Full30-family goal is active and unchanged. This table records named gates,
-not a rolling checkout HEAD. Last code checkpoint61254983 passes exact
-controller41266468976. Per-family current states
-and immutable original receipts supersede the historical narrative below.
+not a rolling checkout HEAD. GitHub native delivery now includes Popgen,
+DESeq, RNA-seq QC and limma; registry authorization remains a separate hold.
+Per-family current states and immutable original receipts supersede the
+historical narrative below. No unmeasured candidate inherits an older speed.
 
 The user resolves the2026-10-31 storage stop: keep all project data/builds/
 scratch/caches physically external, but do not stop for unrelated total boot
@@ -15,17 +16,18 @@ No deletion or migration of project/shared application/user data occurred.
 
 | Workstream | Verified current position | Next affected gate |
 |---|---|---|
-| DESeq | accepted green7/native4/performance; real owning636e259 passes exact native4/debug/release/strict/package/unpacked run41180255242; real package example passes | registry authorization/actual clean publication artifact held; no more unchanged-slice source/native/performance campaigns |
-| limma | ordinary source/native4/all4 original archives/performance accepted; populated owningf8c8f42 passes exact native4/package/unpacked CI41207239669; local/Linux clean source packages match | registry authorization held/publish=false; serial throughput/scaling fail with outlier retained; no unchanged source/count replay |
+| DESeq | accepted green7/schema5/performance; actual owning5563528d deliveryCI41293914322 and complete originals accepted; GitHubv0.1.0/fresh public Mac1200x12 lifecycle pass | registry authorization held/publish=false; no unchanged source/native/performance replay |
+| limma | count/ordinary science and performance accepted; actual owning90d44575 deliveryCI41310896586/full originals/GitHubv0.1.0/fresh public13-call two-route install pass | registry held/publish=false; serial throughput/scaling losses retained; no unchanged source/count replay |
 | edgeR | complete private QL workflow; original P/FDR gate remains failed | explicit numerical-contract decision; no band tuning |
-| ecology | source40634594900 fully retained/qualified; real table/tree/IDs pass raw checks; reviewed sparse-alpha01c9089 plus actual sparse rarefactione1b03cb;984exact count cells/594alpha checks pass | undefined beta choice holds only that adapter; full product/native4/performance unearned |
+| ecology | current111adf5e native4/alpha plus seven complete beta metrics accepted; full41328x1105 table and162331-tip tree, source/1/4 outputs/resources qualify | normalized weighted exact failed-init-only attempt2 still running; no full-eight/publication acceptance |
 | structure | source40644150133 qualified; reviewed private2aee715 and native4 run41184818337 accepted | public torsion/full7/performance remain held or unearned; no coordinate foundation |
 | shared TMM | reviewed stats0.2.5 pushed at00a1819; real edgeR/limma contracts, persistent nonunit source regression and exact-head native4 run40648343214 all pass; primitive cost+2.53% | inherited working lock preserved; registry publication/adoption held |
-| signal | first-six native4/same-file source41217009133 accepted; approved data-loss/filter fixes remain known incompatibilities; actual C/F NPZ layout rejection corrected at unchanged numeric bounds | exact system-image transport and genuine shared4090 runtime/provider admission accepted; actual preparation/qualification return0 and original full campaign runs on shared host; no representative performance claim |
+| signal | first-six native4/source accepted; approved signed/zero/filter repairs remain known incompatibilities; complete failed-campaign originals adopted | separate region-order contract decision pending; no measured trial/performance acceptance or unchanged rerun |
 | peak | clean private63caec85 green3 native4/source41253851251 and complete real41255568382 accepted; all54 graphs/196 stages/output comparisons/14 strict wall decisions pass | no whole-graph parallel-speedup/exact-memory claim; public sparse-default and registry-auth holds remain; no unchanged accepted-slice replay |
-| PLINK | clean private00ce7b39 green3 native4/source41258923590 and complete actual offline source/relink41262996186 accepted;340 byte-exact scientific files, real changed codec objects/ELFs; old proofs unchanged | unchanged full929-HGDP performance41260156411 active; ordinary Mac distribution/publication remain separate holds |
-| index | clean owner7f2d4fd exact native4 CI41259142238, captured samtools source and integrated streaming FAI/GZI/query/dict slice accepted | complete originals prove historical provider RAZF valid; narrow untimed decoder fix passes and actual full-reference retry41266649396 runs; no timing yet; old13-lane/publication hold unchanged |
-| popgen | clean privateff8e9513 coherent analyze workflow; source41252735560, complete chr22 Mac1/4 parity and actual native4 41265985145 accepted;50010408 Mac comparison cells each/all11 payloads worker-exact; no full-GT matrix/new foundation | accepted actual Linux ELF feeds approved same-machine repeated performance plan; shared source audits untimed and full fresh source/native outputs required; no public release acceptance yet |
+| PLINK | e03ada17 green4/native4/full929x231470 seven-stage correctness accepted; complete actual41282068831 originals and negative performance adopted | all seven stage walls lose; observer work stopped after three correct I only, no full profile; substantive source candidates next, no unchanged performance retry/release |
+| index | 030be208 full-reference performance accepted; complete13-lane41294913111 correct but two primaries fail; reviewed coherent hot-pathd57bdaa2 now pushed | actual native-fourCI41313466286 active, then new exact-binary13-lane gate; no speed/release earned by local changes |
+| popgen | accepted actual full-chr22/performance/native4/delivery359c6de9 and GitHubv0.1.0; fresh public install passes | registry held; no universal scaling/heap-memory/biological claim or unchanged replay |
+| RNA-seq QC | default-five and separate whole-junction gates accepted; owning39f65576 actual deliveryCI41301688183/full originals/GitHubv0.1.0/fresh public install pass | registry pileup0.9.1/auth hold; source TAR is not a normalized registry crate; no summed six-metric timing |
 
 DESeq full14599×7 parametric/local R-inner medians5.264/5.375s versus native1
 1.02/1.05s and native4 .79/.81s. Both strict throughput AND process-RSS pass;

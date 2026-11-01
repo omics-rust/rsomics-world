@@ -1,5 +1,43 @@
 # Index complete BGZF/tabix real performance
 
+## Reviewed substantive hot-path change committed; native-four gate active
+
+Clean owningd57bdaa2a19492d902a5f59c8de3c9f35113053a is committed and pushed
+to omics-rust/rsomics-index/main. Actual own CI41313466286/attempt1 runs at
+that full SHA. Its native-four and Linux live HTSlib results must be recovered
+before acceptance. No new performance/publication is earned by this change.
+
+Root reads the complete nine-path implementation and underlying source plus
+one independent whole review, REPORT5f90de25/SEALd88f2d95 at
+index-hotpath-whole-review-20261101.FPFTcj, noP0/P1/P2. One concentrated
+two-path P3 closure keeps target-only one-pass scans uncached and sets the
+existing midstream sink-failure scenario to stored level0, exercising an
+active producer with the larger output buffer. No extra review/test ladder.
+
+The actual change supplies true inline T1/input+frame reuse/direct payload,
+bounded N4 credit/reorder work, real HTSlib effort mapping, buffered truthful
+physical cursor, bounded FIFO/cache0 storage reuse and actual-fragment parse
+termination. It also fixes observed unique multi-fragment duplicate rows.
+Full returned-chunk CRC/framing/endpoint/EOF validation and N4 result drain
+remain; suffix parsing stops, not all suffix I/O/decode. Public API, Cargo/
+lock/foundations, FAI/dict/fixtures/transaction sync and107 protected paths
+remain exact. Compressed bytes/quality change; old speed/size is not inherited.
+
+Root freshly checks all259 sealed author bodies/1817175B,116 owning files
+and four unchanged controllers before the two P3 edits. Actual final root
+format/pinned strict Clippy/full release66pass+9explicitly ignored upstream
+tests/diff-check pass. Author's pre-P3 debug/release and the independent35-
+test connected regression remain separately scoped. Final root116-body/source/
+log closure is index-hotpath-root-20261101.U2Sk5N/CLOSURE.json; only the two
+declared paths differ from the reviewed frozen candidate. Author packet is
+index-hot-path-implementation-20261101.OVThRp, REPORTfcff5b85/SEALdf8c7276.
+
+The next fixed13-lane runtime design must bind this new source/CI/native ELF,
+not overwrite the old030be208 reference receipt or use its old measured ELF.
+Reuse the already qualified source/compiler/provider runtime where possible;
+do not replay unchanged full-reference science merely to obtain a new native
+build. Actual new performance and custody/capacity admission remain gates.
+
 ## Complete correct originals adopted; two primary performance routes fail
 
 Root adopts actual41294913111/1, owner030be208, from the complete original
