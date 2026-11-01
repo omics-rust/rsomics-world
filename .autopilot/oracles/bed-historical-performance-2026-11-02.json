@@ -1,0 +1,46 @@
+{
+  "schema": "rsomics.bed.historical-performance-custody.v1",
+  "product": "rsomics-bed",
+  "root_adopted": true,
+  "scope": "availability, identity and arithmetic consistency of retained historical observations; not a new benchmark or fresh large-output verification",
+  "evidence_directory": "/Volumes/KIOXIA/Developments/tmp/bed-old-performance-custody-20261102.pbFiNZ",
+  "report_sha256": "734bade539b300f964eb8648d158558f7a15df13fa2766a593b9ee441897e251",
+  "originals": {
+    "base-1m-d7b1507.json": "b4fb912d945dd83d1467f40f39ecf534cb8f27641cf8b312b3d12c290c3a0e8e",
+    "relations-1m-d7b1507.json": "695c0d7a34020a006251d18e212d8760a1b53a4e59b7c07855ee594c7d8eee14",
+    "relations-1m.json": "f66f1248f30e084b1bb78c51c6147ef636097dcf21f41d311cba4800f4486a6a",
+    "bedtools_benchmark.py": "ba09fce09fb7152e1a02d983defa282a951d64931b8a9ef4d8de66e64d48f6f2",
+    "bedtools_relations_benchmark.py": "9d16cbc2b808c93210b5a3b4c637a08fd2a84b6e33545e1a73b6324a9d004e76"
+  },
+  "measured_source": "d7b1507b178053a087862255d84a244e4921f192",
+  "recorded_native_sha256": "9a55972f96e11bf087515b61799575505291d12d67902b4c965b8b9e32b51ff8",
+  "recorded_oracle_sha256": "287fb59cd3f68f43e45df5e807596fdc2f170be38c9b8953aaceb511b20cbfb0",
+  "oracle_version": "bedtools v2.31.1",
+  "delivery_baseline": "02b85a1a348c271e485cca629dc4e71fa075388a",
+  "base_measured_samples": 100,
+  "accepted_relation_measured_samples": 120,
+  "rejected_relation_measured_samples": 120,
+  "accepted_lanes": 11,
+  "base_execution_order": "blocked by implementation, not alternating pairs",
+  "base_cpu_available": false,
+  "relation_execution_order": "alternating implementation order by pair",
+  "root_checks": {
+    "all_five_original_hashes_match": true,
+    "all_three_raw_sample_means_sd_rss_recomputed": true,
+    "relation_cpu_summaries_recomputed": true,
+    "retained_accepted_correctness_digest_records_equal": true,
+    "current_protected_bodies_match_delivery_baseline": true,
+    "measured_to_baseline_full_runtime_diff_read": true,
+    "new_scientific_or_benchmark_execution": false,
+    "fresh_large_fixture_output_or_binary_hashing": false
+  },
+  "limitations": [
+    "Old compiler/idle/runtime provenance is not newly authenticated by these JSONs; current executable bodies were only statted, not rehashed.",
+    "Base JSON has no source_revision field; its source association uses the identical measured executable and retained run, not a fabricated field.",
+    "Measured d7b to delivery baseline changes self version/description, API paths and docs, not interval algorithms; the entire source tree is not byte-identical.",
+    "Merge has only 0.01-second range separation, equal to the recorder wall resolution; no universal cross-host guarantee.",
+    "Complement RSS is 1.20x worse; closest RSS is 11.06x worse and unsigned closest 24.11x worse despite accepted throughput.",
+    "Rejected closest remains 0.943374858x throughput and 577304 KiB; its current legacy checkout is dirty and is not treated as a clean rebuilt source.",
+    "No new delivery executable inherits the historical timing; no cold-cache, aggregate-memory, physical-I/O or thread-scaling claim."
+  ]
+}

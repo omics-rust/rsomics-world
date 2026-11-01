@@ -10,6 +10,16 @@ only by the expired organization credential: publish run `32329397022`
 completed package verification and then received crates.io `403 authentication
 failed`. The registry therefore still serves 0.1.0.
 
+The2026-11-02 delivery task adds four-native GitHub installation for the
+unchanged eight-operation0.2 slice; it does not retry registry authentication
+or add later operations. Historical raw performance JSONs and runners are
+freshly retained/hash-checked and their340 sample summaries recompute, including
+the rejected candidate and RSS losses. This is not a new benchmark or a fresh
+large-output/runtime attestation. See
+`.autopilot/oracles/bed-historical-performance-2026-11-02.json` and
+`.autopilot/state/bed-native-delivery-2026-11-02.md`. New delivery/release/public
+installation remain unearned until their actual gates pass.
+
 ## Boundary
 
 `rsomics-bed` is one BED and BEDPE interval-workflow product. It owns strict
