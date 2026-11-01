@@ -11,6 +11,9 @@ package/native installation, complete notices and one installed six-operation
 lifecycle. Rust/Cargo/lock/oracle/benchmark bodies stay protected. No extra
 functional scope, speculative foundation or registry publish is authorized.
 One whole delivery/public-API/hot-path review follows the frozen result.
+Fresh independent reviewer /root/table_delivery_whole_review (gpt-6-astra/high)
+has read the complete baseline production/CLI/hot paths and is READY/idle;
+no candidate verdict until the author freezes the complete handoff.
 Root owns commits, exact-head CI/original adoption and any GitHub release.
 All scratch/targets are external, cap4GiB plus independent8GiB headroom.
 
