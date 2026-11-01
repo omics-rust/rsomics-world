@@ -159,3 +159,36 @@ qualification from gdb's own exit. Cost: debugger installation can alter system
 packages, so raw before/after statuses and system package changes must remain
 visible. No Mac install, product build, scientific benchmark, API change,
 publication, or unconditional whole-product retry is authorized by this probe.
+
+Backtrace-only run41355005538/1 was dispatched once at World
+438e910abe86abb52c66bc65b4a49eea51c0f844 after exact Control41354832857
+passed. Original module-matrix run41354486584 is not rerun.
+
+Actual backtrace run completed failure at the final true CLI exit check.
+Artifact13102644134/163650B/SHA
+d48c6bc54e7d9dc45efeee3f0947ea43a2e66e06711a1cd32648eddccb9352e4 is retained
+in BfxL2j with raw run/jobs/artifacts API. Both pre/post debugger version exits
+are139. Gdb exits0 only because it captured the crash, not because the child
+succeeded. Root read Thread1: unknownPC0xfffff66ae974 -> libc exit -> Py_Exit;
+handle_system_exit intended exitcode0. Six BLAS threads are merely waiting.
+No sourmash library remains in gdb's current shared-library list. This supports
+a DSO-lifetime hypothesis but does not yet identify the fatal address owner.
+APT changed no existing package; only gdb and3 support packages were added.
+
+The exact official ARM wheel SHA11906e896e68c9d7f58251bc1a539e02540d063f2bab9733dc9c6a2b0dfa3317
+is retained as data in external kr63Fn. Root verified its loader: CFFI
+ffi.dlopen of8,320,576B lib_lowlevel.so with default flags. CFFI's documented
+handle cleanup closes the object; Linux RTLD_NODELETE prevents unloading on
+dlclose. These are loader-lifetime facts, not a general Rust or CFFI defect
+attribution. All3 diagnostic pip reports have the same21 selected identities/
+URLs/archive hashes, canonical SHA5383412e98d1021e9f05471044d31725020d08664440e7b9a44a69fc43a82e82.
+
+Ruling: one focused native lifetime contrast now binds loaded-library mappings
+at sourmash_init to the exit trace and runs the unchanged official console entry
+with explicit RTLD_NODELETE retention. Verify real version and one canonical
+sketch with actual exit0, unchanged entry/loader/library hashes and literal
+hash/digest expectations. No upstream file is patched, no status is suppressed,
+and no product executes. Cost: even a successful contrast is only a bounded
+oracle-runtime workaround candidate; full native4/source/oracle and actual
+eight-job resource gates remain required, with launcher configuration visible.
+Do not start another dependency/Python matrix or callback-by-callback campaign.

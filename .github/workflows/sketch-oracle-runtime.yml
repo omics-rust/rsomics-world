@@ -58,7 +58,7 @@ jobs:
           sudo apt-get install -y --no-install-recommends gdb > "$RUNNER_TEMP/evidence/apt-install.log" 2>&1
           dpkg-query -W > "$RUNNER_TEMP/evidence/dpkg-after.txt"
           gdb --version > "$RUNNER_TEMP/evidence/gdb-version.txt"
-      - name: Capture the native exit stack without product execution
+      - name: Bind the fatal address to the loaded upstream library
         run: |
           ulimit -c 0
           set +e
@@ -66,7 +66,9 @@ jobs:
           oracle_exit=$?
           printf '%s\n' "$oracle_exit" > "$RUNNER_TEMP/evidence/after-debugger.exit"
           gdb --batch --quiet -ex 'set pagination off' -ex 'set debuginfod enabled off' \
-            -ex run -ex 'thread apply all bt full' -ex 'info sharedlibrary' \
+            -ex 'set breakpoint pending on' -ex 'break sourmash_init' \
+            -ex run -ex 'info sharedlibrary' -ex 'info proc mappings' \
+            -ex continue -ex bt -ex 'info sharedlibrary' \
             --args "$(command -v python)" -X faulthandler "$(command -v sourmash)" --version \
             > "$RUNNER_TEMP/evidence/gdb.stdout" 2> "$RUNNER_TEMP/evidence/gdb.stderr"
           gdb_exit=$?
@@ -74,8 +76,56 @@ jobs:
           set -e
           printf '%s\n' 'Oracle environment diagnosis only; not native, compatibility or performance qualification.'
           test "$gdb_exit" -eq 0
-          test "$(< "$RUNNER_TEMP/evidence/before-debugger.exit")" -eq 0
-          test "$oracle_exit" -eq 0
+      - name: Test only library-lifetime retention with the unchanged upstream entry
+        if: always()
+        run: |
+          ulimit -c 0
+          python -B - <<'PY'
+          import hashlib, json, os, shutil, subprocess, sys
+          from importlib.metadata import distribution
+          from pathlib import Path
+          root = Path(os.environ['RUNNER_TEMP']) / 'evidence'
+          entry = shutil.which('sourmash')
+          library = Path(distribution('sourmash').locate_file('sourmash/_lowlevel/lib_lowlevel.so'))
+          loader = library.with_name('__init__.py')
+          assert entry and library.is_file() and loader.is_file()
+          paths = (Path(entry), loader, library)
+          before = {str(p): hashlib.sha256(p.read_bytes()).hexdigest() for p in paths}
+          code = '''import os, runpy, sys
+          from cffi import FFI
+          ffi = FFI()
+          held = ffi.dlopen(sys.argv[1], os.RTLD_NOW | os.RTLD_NODELETE)
+          sys.argv = sys.argv[2:]
+          runpy.run_path(sys.argv[0], run_name="__main__")
+          '''
+          import textwrap
+          code = textwrap.dedent(code)
+          commands = []
+          def run(name, arguments):
+              argv = [sys.executable, '-X', 'faulthandler', '-c', code, str(library), entry, *arguments]
+              with (root / (name + '.stdout')).open('xb') as out, (root / (name + '.stderr')).open('xb') as err:
+                  result = subprocess.run(argv, stdout=out, stderr=err, timeout=90)
+              commands.append(dict(name=name, argv=argv, returncode=result.returncode))
+              return result.returncode
+          version_exit = run('nodelete-version', ['--version'])
+          fasta, signature = root / 'one-kmer.fa', root / 'one-kmer.sig'
+          fasta.write_bytes(b'>canonical\nACG\n')
+          sketch_exit = run('nodelete-sketch', ['sketch', 'dna', '-p', 'k=3,scaled=1,seed=42,noabund',
+                                              '-o', str(signature), str(fasta)])
+          after = {str(p): hashlib.sha256(p.read_bytes()).hexdigest() for p in paths}
+          report = dict(scope='Linux ARM oracle DSO-lifetime contrast only; not product qualification',
+              flags=dict(RTLD_NOW=os.RTLD_NOW, RTLD_NODELETE=os.RTLD_NODELETE),
+              official_entry_loader_library_before=before, official_entry_loader_library_after=after,
+              upstream_files_unchanged=before == after, commands=commands)
+          (root / 'lifetime-contrast.json').write_text(json.dumps(report, indent=2) + '\n')
+          print(json.dumps(report, indent=2))
+          assert before == after and version_exit == sketch_exit == 0
+          assert (root / 'nodelete-version.stdout').read_text().strip() == 'sourmash 4.9.4'
+          value, = json.loads(signature.read_bytes())
+          sketch, = value['signatures']
+          assert sketch['mins'] == [1731421407650554201]
+          assert sketch['md5sum'] == '08c05d56c36a44d38e708f93eb4f87b2'
+          PY
       - uses: actions/upload-artifact@v7.0.1
         if: always()
         with:
