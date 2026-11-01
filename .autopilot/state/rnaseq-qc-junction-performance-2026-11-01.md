@@ -1,5 +1,31 @@
 # RNA-seq QC complete junction performance
 
+## Actual full-input campaign launched at the accepted head
+
+Root waits for exact-head Control41291015694 at
+8b2ae7bb1e674669dac9b1d57706405d448c98a6:538 tests/88.119s, two pre-existing
+skips, architecture validationSUCCESS. Root freshly verifies the unchanged
+clean ownera618e6ab, all four operational hashes, actual remote main and no
+earlier run of this new workflow. Physical external HDD/dev/disk10s1,
+internal=false and matching task/mount device16777253 has126048866304B free
+against the separate47244640256B/44GiB complete-original envelope. Ecology
+bulk custody is separately reserved on remote/dev/sdd, not double-booked here.
+
+Actual workflow41291319388/1 is dispatched with recovery_admitted=true at that
+exact head. It is the new complete21-call junction campaign, not a replay or
+acceptance of the historical five-metric result. Scientific qualification,
+performance and complete authenticated originals remain unearned.
+
+Launch originals, raw APIs/complete Control logZIP/commands/statuses and
+capacity records are retained in rnaseq-junction-performance-launch-20261101.WDj0ph.
+attempt-v2/ADMISSION.json SHA
+85e3b3ab9efb812ede18f1247973a9fa6f58395ea6403b1d690b7bc9c2128ed9;
+LAUNCHED.json SHA84a48bda34ae03bf2633570bfb4624fca2b7b3f228271a3d9b5857975fb0954a.
+The first local launch-controller attempt used the CLI flag at the wrong
+global position and stopped before any dispatch. Its original code/raw
+response remain; v2 places --allow-escape-sequences after api. No scientific
+controller, fixture, numerical band or workflow rule changes.
+
 ## Operational wave accepted; exact-head Control precedes actual execution
 
 Root reads the complete735-line controller,196-line SAME preparation test,
