@@ -1,5 +1,26 @@
 # Fixed private HGDP whole-workflow gate
 
+## Packed green4 native-four and same-generation source acceptance
+
+Root reuses the fully read custody/scientific-binding verifiers with exact
+41280585897/1/head2ac92393/ownere03ada17 bindings. All five complete original
+ZIPs/TARs, manifest bodies, ten controllers and five raw logs verify at
+plink-green4-adoption-20261101.Hp6x52. Completed seal binds9868 files/460107525B;
+COMPLETED4d6fe81b7e745042b02025278ab913dcb73e6ba2903047d94a17c6d3ac0de502;
+REPORT3470543f7875ff2694f4ba3e5267bc2d98559efdc73ed1f43df5200a7c367b10.
+New plink-native-2026-11-01-green-4.json accepts this compact source/native gate.
+
+All four classes pass4lib+1whole in both modes, zeroignored,303 exact source
+bodies,36 own generations/74878 cells/116 reports/52 worker records per mode.
+Official/source consume SAME newly generated Linux data in224 report and36
+raw bridge calls. Protected inputs/runtime/image/controllers stay unchanged;
+official-to-source commit correspondence remains unproven. Actual new Linux
+release ELF032ea39a28846dbe145445662e8534717a0a36035e2cb64a0bbf0626494b9283
+is retained, not run in the older Bookworm source-consumer image. Its runtime
+providers/ABI must be admitted separately by the unchanged real-cohort gate.
+No formal performance/source-relink/publication claim; old whole failure stays
+failed. Only new explicit green4 receipt admission may precede that real retry.
+
 ## Packed green4 native/source gate dispatched
 
 Exact-head Control41279477985 succeeds for
