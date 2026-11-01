@@ -263,3 +263,9 @@ All generated BUILD pending/not-remeasured/registry-false/signing-false flags
 are retained. This earns source/native/install compatibility only, not actual
 new performance, legal/system-runtime/minimumOS/signing or public availability.
 Next is ONE root-dispatched final-head8-job resource gate with both full inputs.
+
+After fresh public-main confirmation and zero prior benchmark runs at eb1b1510,
+root dispatches benchmark.yml exactly once: actual41360132692/1, same exact
+head eb1b15102f1adaedb738e4ddb98bd9bd841669d1, queued. All8 native/workload
+jobs and complete raw originals remain required. No new result, favorable
+subset, publication or registry attempt is inferred. Do not redispatch unchanged.
