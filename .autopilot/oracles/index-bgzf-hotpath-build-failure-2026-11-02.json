@@ -1,0 +1,94 @@
+{
+  "schema": "rsomics.index.changed-native-build-failure-adoption.v1",
+  "status": "accepted-complete-failure-custody-and-build-only",
+  "root_adopted": true,
+  "original_custody_complete": true,
+  "repository": "omics-rust/rsomics-world",
+  "controller": "1ccacefee97cdd67e95440e89a466cc2aa85d36f",
+  "owner": "d57bdaa2a19492d902a5f59c8de3c9f35113053a",
+  "run_id": 41319662660,
+  "run_attempt": 1,
+  "job_id": 124886974280,
+  "artifact_id": 13088419344,
+  "artifact_name": "index-bgzf-real-41319662660-1",
+  "complete_original_zip": {
+    "bytes": 2064997595,
+    "sha256": "756ffd3503498235ec3f4277e8258bde031b5a1df28df7ccd46e12f4f05c08a7"
+  },
+  "packet": {
+    "path": "/Volumes/KIOXIA/Developments/tmp/index-bgzf-hotpath-recovery-20261101.FaJFHx",
+    "files": 230,
+    "bytes": 10497915,
+    "report_sha256": "606aabd24f98e7b4e9c6014ce2afc3098b272b1e0697852c0f28b9d481906042",
+    "seal_sha256": "524c9180a61970998c550c9644627749dc1a9106a40c9f3b986675e59d9b3234",
+    "unchanged_proposal_sha256": "582db4f656e47c3da2aab5a830f0786edb1a74aaa59572bc81f69f626c5e4749"
+  },
+  "complete_original_ledger": {
+    "bytes": 3848926,
+    "sha256": "1cac481dcf48eb33f9107275208a771df1b84212ef0e171e9f32c2dd95fea09e"
+  },
+  "complete_data_only_assessment": {
+    "bytes": 646432,
+    "sha256": "dc007f92dcfde3f9888650df1f9acc3b8a9e68ddf125498f10b35d755bf7347e"
+  },
+  "remote_root": "/home/liangjy/rsomics-index-bgzf-hotpath-recovery-20261101",
+  "zip_members": 5110,
+  "unique_cas_bodies": 4406,
+  "unique_cas_bytes": 3735065672,
+  "original_symbolic_reference_rows": 1,
+  "link_representation": "Actions dereferenced body retained as inert metadata; no symlink restored",
+  "nested_old_donor_carriers": "Complete original ZIP/TAR identities verified; not unpacked or newly member-catalogued",
+  "build": {
+    "source_files_verified": 116,
+    "source_before_after_and_admission_equal": true,
+    "offline_locked_fresh_target": true,
+    "old_target_or_native_substituted": false,
+    "owned_processes": 15,
+    "all_owned_exit_zero_and_groups_empty": true,
+    "separate_readelf_ldd_exit_zero": 2,
+    "elapsed_seconds": 29.186790634,
+    "native_bytes": 2783672,
+    "native_sha256": "f185956f93854d08ca5c19470d097fe4b2b0998e8f991e7dcc8f4e9259de1057",
+    "observed_samples": 49,
+    "sample_interval_seconds": 0.5,
+    "observed_target_peak_bytes": 144092868,
+    "observed_runtime_peak_bytes": 3745627802,
+    "observed_retained_peak_bytes": 3747692737,
+    "sampled_not_exclusive_quota_or_instantaneous_peak": true
+  },
+  "failure": {
+    "exception": "HTTP Error 503: No healthy backends",
+    "stage": "prepare_timer fifth copyright GET",
+    "url_inferred_from_frozen_order_and_complete_membership_not_traceback": true,
+    "origin_cdn_proxy_cause_established": false,
+    "first_four_exact_archives_present": true,
+    "timer_extraction_version_and_full_runtime_admission_reached": false,
+    "fixture_canonical_or_scientific_execution_reached": false
+  },
+  "qualified_records": 0,
+  "benchmark_records": 0,
+  "all_13_complete": false,
+  "material_gates": "HOLD-incomplete-not-a-native-win",
+  "new_performance_accepted": false,
+  "old_reference_performance_inherited": false,
+  "publication": false,
+  "root_verification": {
+    "path": "/Volumes/KIOXIA/Developments/tmp/index-changed-native-root-20261101.OlTAE0",
+    "local_stdout_sha256": "1ed181986cd2d27a6aeafa65091d1c6fb261782a377d085df7f38f86177966fe",
+    "local_exit_code": 0,
+    "local_stderr_bytes": 0,
+    "local_source_check_precedes_copyright_correction": true,
+    "remote_stdout_sha256": "8cb43cafc142432b430b87c3c1c83c240a1c211ed82ce95ab7cdef7ad581c2a7",
+    "remote_exit_code": 0,
+    "remote_stderr_bytes": 0,
+    "fresh_whole_zip_crc_cas_modes_and_independent_assessment": true,
+    "science_or_foreign_execution_during_recovery": false
+  },
+  "capacity": {
+    "old_originals_and_failed_76_gib_preserved": true,
+    "logical_envelopes_gib": 480,
+    "independent_headroom_gib": 8,
+    "failed_envelope_automatically_released_or_reused": false,
+    "next_complete_campaign_requires_fresh_separate_76_gib_admission": true
+  }
+}

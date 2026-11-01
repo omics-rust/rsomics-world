@@ -55,6 +55,28 @@ class IndexBgzfPreparation(unittest.TestCase):
         self.assertEqual(len({n['id'] for n in benchmark + qualification}), 380)
         root = Path(tempfile.mkdtemp(prefix='index-bgzf-connected-', dir=os.environ['TMPDIR']))
         print('preparation_evidence=' + str(root))
+        packaging_copyright = root / 'runtime/timer/packaging-source/debian/copyright'
+        installed_copyright = root / 'runtime/timer/prefix/usr/share/doc/time/copyright'
+        copyright_body = b'authored archive copyright\n'
+        copyright_pin = dict(bytes=len(copyright_body), sha256=hashlib.sha256(copyright_body).hexdigest(),
+                             url=policy['timer']['copyright']['url'])
+        for path in (packaging_copyright, installed_copyright):
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_bytes(copyright_body)
+        self.assertTrue(callable(getattr(p, '_timer_copyright', None)),
+                        'archive-derived timer copyright validation is absent')
+        copyright = p._timer_copyright(root, packaging_copyright, installed_copyright, copyright_pin)
+        self.assertEqual(copyright, dict(identity=dict(bytes=copyright_pin['bytes'], sha256=copyright_pin['sha256']),
+            provenance=dict(derivation='archive-derived', sources={
+                'debian': 'runtime/timer/packaging-source/debian/copyright',
+                'deb': 'runtime/timer/prefix/usr/share/doc/time/copyright'},
+                declared_metadata=dict(url='https://metadata.ftp-master.debian.org/changelogs/main/t/time/time_1.9-0.2_copyright',
+                                       requested=False))))
+        for path in (packaging_copyright, installed_copyright):
+            path.write_bytes(b'changed archive copyright!\n')
+            with self.subTest(copyright_path=path), self.assertRaisesRegex(ValueError, 'body identity'):
+                p._timer_copyright(root, packaging_copyright, installed_copyright, copyright_pin)
+            path.write_bytes(copyright_body)
         programs = dict(native=Path('/exact/native'), bgzip=Path('/exact/bgzip'),
                         tabix=Path('/exact/tabix'), timer=Path('/exact/time'))
         for row in benchmark:

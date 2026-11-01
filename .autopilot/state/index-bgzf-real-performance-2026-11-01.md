@@ -1,5 +1,33 @@
 # Index complete BGZF/tabix real performance
 
+## Failed changed-native originals accepted; one operational correction ready
+
+Root adopts complete41319662660/1 failure custody and successful fresh d57
+offline build in index-bgzf-hotpath-build-failure-2026-11-02.json. Full
+230-file packet FaJFHx, all5110 ZIP members/4406 CAS bodies and independent
+data-only assessment pass fresh root local/remote checks, exit0/empty stderr.
+OlTAE0/failure-local.stdout is1ed181986c; failure-remote.stdout is8cb43cafc1.
+The original proposal/old receipts and every failed body remain unchanged.
+
+The new2783672B ELF isf185956f93, not the old measured binary. All116 source
+bodies and before/after admission agree;15 owned commands and two separate
+ELF/provider captures finish0. Actual49 build samples fit the stated bounds;
+they are observations, not a quota or instantaneous-peak proof. HTTP503 occurs
+on the fifth copyright GET, inferred from frozen order/membership. Timer/
+full-runtime admission, fixtures,42 qualifications and338 calls never start.
+All13 lanes remain HOLD; no performance or release is earned.
+
+One concentrated timer correction derives the identical pinned2943B copyright
+from the already required Debian archive and independently checks the installed
+package. It records archive-derived provenance and requested=false for the old
+metadata URL; the four original downloads/pins and every scientific gate stay.
+Author iKiSv9 source-final.diff is4d48d9e1; independent whole review G2Iyyu
+REPORT5a39798a APPROVES with noP0/P1/P2. Root full Control passes539 tests/
+84.231s, two pre-existing skips, stdout07ab45d2/stderre902cf3c inOlTAE0.
+Corrected Linux preparation has not run. Exact-head Control and a fresh separate
+76GiB reservation are still required before one complete corrected campaign;
+the failed76GiB is neither released nor silently reused.
+
 ## Actual changed-native run fails; full failure originals recovery active
 
 Exact-head Control41319241320 succeeds at

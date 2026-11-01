@@ -886,12 +886,21 @@ def command_text(root, name, argv, timeout=30):
     return (Path(root) / 'calls' / name / 'process.stdout').read_text()
 
 
+def _timer_copyright(root, packaging, installed, pin):
+    paths = dict(debian=packaging, deb=installed)
+    for path in paths.values():
+        matches(path, pin)
+    return dict(identity=identity(packaging), provenance=dict(derivation='archive-derived',
+        sources={name: str(path.relative_to(root)) for name, path in paths.items()},
+        declared_metadata=dict(url=pin['url'], requested=False)))
+
+
 def prepare_timer(root, policy):
     spec = policy['timer']
     directory = Path(root) / 'runtime/timer'
     directory.mkdir()
     bodies = {}
-    for name in ('deb', 'dsc', 'orig', 'debian', 'copyright'):
+    for name in ('deb', 'dsc', 'orig', 'debian'):
         pin = spec[name]
         path = directory / urllib.parse.urlsplit(pin['url']).path.rsplit('/', 1)[-1]
         download(pin['url'], path, pin['bytes'])
@@ -905,8 +914,8 @@ def prepare_timer(root, policy):
         dict(size=spec['orig']['bytes'], sha256=spec['orig']['sha256'], prefix='time-1.9', unpacked_limit=16 * 2**20))
     packaging = source.extract_release(bodies['debian'], directory / 'packaging-source',
         dict(size=spec['debian']['bytes'], sha256=spec['debian']['sha256'], prefix='debian', unpacked_limit=2 * 2**20))
-    matches(packaging / 'copyright', spec['copyright'])
-    matches(directory / 'prefix/usr/share/doc/time/copyright', spec['copyright'])
+    copyright = _timer_copyright(root, packaging / 'copyright',
+        directory / 'prefix/usr/share/doc/time/copyright', spec['copyright'])
     licenses = directory / 'licenses'
     licenses.mkdir()
     for name in ('GPL-2', 'GPL-3'):
@@ -915,7 +924,9 @@ def prepare_timer(root, policy):
     banner = command_text(root, 'timer-version', [binary, '--version']).splitlines()[0]
     check(banner in ('time (GNU Time) 1.9', 'time (GNU Time) UNKNOWN'), 'actual GNU Time banner differs')
     save(directory / 'source-and-version.json', dict(package='time', package_version='1.9-0.2',
-         architecture='amd64', bodies={name: identity(path) for name, path in bodies.items()},
+         architecture='amd64', bodies={**{name: identity(path) for name, path in bodies.items()},
+                                      'copyright': copyright['identity']},
+         copyright_provenance=copyright['provenance'],
          executable=identity(binary), actual_banner=banner, upstream_version_observed='UNKNOWN' if banner.endswith('UNKNOWN') else '1.9',
          unknown_is_not_observed_1_9=True, source=str(original.relative_to(root)), packaging=str(packaging.relative_to(root)),
          licenses=source.tree_files(licenses), signature_verified=False, release_chain_verified=False,
