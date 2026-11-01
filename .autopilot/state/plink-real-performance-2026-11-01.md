@@ -1,5 +1,37 @@
 # Fixed private HGDP whole-workflow gate
 
+## Complete green3 whole failure adopted; coherent optimization authorized
+
+Root reads the full REPORT, complete198-line audit and116-line TAR verifier;
+freshly verifies all2306 sealed physical files/38228404521B at
+plink-real-failure-20261101.8uTneP. REPORT0559f3d961992c038d9b2824f4c8a4dbb6d5a410bc29e3086b48bc6e98a522f8;
+AUDIT1c5908dfc2f7f1ec07f25f7ce75e52fbc294299d22afc7312b48167798bf6514;
+SEALac41a921ce7e890f9c99c2addbda94987cde330294bfe2cd4efb1f1850a6c01d;
+COMPLETEDacb8c61b0bb218cf4fad767bf68a196abeb57de8fda1a0a4a29c4c4a6cb37919.
+Complete original ZIP/cipher/authenticated TAR,4802 logical regular bodies,
+20 controllers/303 owner sources/providers/all APIs/full logs remain intact.
+
+Actual41260156411/1 fails only at the strict performance decision: six
+qualification/warmup plus20 measured graphs/210 scientific CLIs complete.
+Input I929x231470 -> F929x23029 -> P929x696 and exact original comparisons
+pass; this recovery binds retained receipts/bodies, not a new Mac genotype
+recomputation. Native33780398 evaluated/2527798 emitted pairs remain exact.
+B1 wall medians source5.719653/native22.120533s; B4 source3.274481/native
+15.907042s. Every seven-stage median regresses. No delegated exact aggregate
+memory exists; process maxRSS and sampled groupRSS cannot substitute for it.
+Performance/publication remain false; no unchanged retry or easier case.
+
+Root also reads the separate whole bounded bottleneck note64578bf3 and live
+make/filter/reader/genotype/QC source. Unconditional identity Call roundtrips,
+duplicate decode/tally passes, unbuffered text and LD part-copy are concrete
+source facts, not profiled percentage causes. Actual C++ is release-O3, and
+existing LD cache/POPCNT is already present. Native durability is stronger
+than inspected source close paths; preserve it, not waive the failed gate.
+Plan docs/plans/2026-11-01-plink-packed-workflow.md authorizes one coherent
+product-private packed/buffered wave with complete fallbacks/science unchanged,
+one whole review and later new candidate/native/source/whole gates. No speedup
+or formal acceptance is inferred from the diagnosis or plan.
+
 ## Actual unchanged real-cohort green3 attempt dispatched
 
 Exact-head Control41259929663 passes for
