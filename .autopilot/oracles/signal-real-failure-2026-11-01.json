@@ -1,0 +1,401 @@
+{
+  "schema": "rsomics.signal.failed-real-campaign-original-adoption.v1",
+  "status": "failure-originals-accepted",
+  "product": "rsomics-signal",
+  "source_controller": "af137c73f4129dd9ba9d9157e31ff1a98b31146d",
+  "remote_task_root": "/home/liangjy/rsomics-signal-ssh-20261101-af137",
+  "remote_snapshot_directory": "/home/liangjy/rsomics-signal-ssh-20261101-af137/failure-original-snapshot-lwwdyf6v",
+  "local_evidence_directory": "/Volumes/KIOXIA/Developments/tmp/signal-real-failure-20261101.bRmQFB",
+  "archive": {
+    "bytes": 15514122240,
+    "sha256": "77f0e8e922da6e0029c841640902846a3f955e31ea8e9a80b79ee93bfa7d7fd4"
+  },
+  "source_manifest": {
+    "bytes": 20982217,
+    "sha256": "695ddc121940a3e0818ee56ce068ef0ea7198b4caf64e604afb8ff0223d31c6c"
+  },
+  "original_entries": 34681,
+  "archive_members": 34686,
+  "archive_types": {
+    "directory": 3466,
+    "regular": 30168,
+    "symlink": 1052
+  },
+  "source_regular_logical_bytes": 15431678845,
+  "source_cas_unique_bytes": 12906150610,
+  "source_cas_unique_bodies": 27830,
+  "source_git_tracked_bodies": 1083,
+  "original_runtime_image_id": "sha256:82d2ec6154d317c422d6d512a26174588ffc8a21f12301298bd0e701ec1a30de",
+  "original_container": "d9658ada0a87dedb2d1a4f0ba8bd8f6c114b9e7292452cf26d03d962cb8e0664",
+  "credential_directories_excluded_without_reading_or_copying": [
+    "/home/liangjy/rsomics-signal-ssh-20261101-af137/docker-config",
+    "/home/liangjy/rsomics-signal-ssh-20261101-af137/docker-config-2",
+    "/home/liangjy/rsomics-signal-ssh-20261101-af137/system-image-transport-3e875-BLxyR0/docker-config"
+  ],
+  "first_failure": {
+    "absolute_delta": 21,
+    "absolute_delta_over_band": 954545454545.4546,
+    "column_one_based": 1,
+    "column_zero_based": 0,
+    "delta_native_minus_source": 21,
+    "finite": true,
+    "frozen_band": 2.1999999999999998e-11,
+    "label": "P0",
+    "native": 21,
+    "native_f64_le_bytes": "0000000000003540",
+    "native_float_hex": "0x1.5000000000000p+4",
+    "product": "summary-bam-regions",
+    "row_one_based": 1,
+    "row_zero_based": 0,
+    "source": 0,
+    "source_f64_le_bytes": "0000000000000000",
+    "source_float_hex": "0x0.0p+0"
+  },
+  "summary_counts": {
+    "summary-bam-bins": {
+      "beyond_band_cells": 0,
+      "beyond_by_column": {},
+      "class_mismatches": 0,
+      "comparison_cells": 928743,
+      "unexpected_beyond_band_cells": 0
+    },
+    "summary-bam-regions": {
+      "beyond_band_cells": 164113,
+      "beyond_by_column": {
+        "0": 54758,
+        "1": 54664,
+        "2": 54691
+      },
+      "class_mismatches": 0,
+      "comparison_cells": 175152,
+      "unexpected_beyond_band_cells": 164113
+    },
+    "summary-bw-bins": {
+      "beyond_band_cells": 13889,
+      "beyond_by_column": {
+        "2": 13889
+      },
+      "class_mismatches": 13587,
+      "comparison_cells": 928743,
+      "unexpected_beyond_band_cells": 0
+    },
+    "summary-bw-regions": {
+      "beyond_band_cells": 168169,
+      "beyond_by_column": {
+        "0": 55925,
+        "1": 55925,
+        "2": 56319
+      },
+      "class_mismatches": 226,
+      "comparison_cells": 175152,
+      "unexpected_beyond_band_cells": 111850
+    }
+  },
+  "coordinate_correspondence": {
+    "summary-bam-regions": {
+      "columns": 3,
+      "coordinate_identity_multisets_equal": true,
+      "diagnostic_aligned_beyond_band_cells": 0,
+      "diagnostic_aligned_beyond_by_column": {},
+      "diagnostic_aligned_cells": 175152,
+      "diagnostic_aligned_equal_infinity_cells": 0,
+      "diagnostic_aligned_equal_nan_cells": 0,
+      "diagnostic_aligned_exact_finite_cells": 175152,
+      "diagnostic_aligned_first_beyond": null,
+      "diagnostic_aligned_unexpected_beyond_band_cells": 0,
+      "diagnostic_aligned_within_band_nonexact_finite_cells": 0,
+      "extra_native_identities_count": 0,
+      "first_extra_native": [],
+      "first_missing_source": [],
+      "mapped_rows": 58384,
+      "mapping_first_ten": [
+        [
+          0,
+          1624
+        ],
+        [
+          1,
+          1625
+        ],
+        [
+          2,
+          1626
+        ],
+        [
+          3,
+          1627
+        ],
+        [
+          4,
+          1628
+        ],
+        [
+          5,
+          1629
+        ],
+        [
+          6,
+          1630
+        ],
+        [
+          7,
+          1631
+        ],
+        [
+          8,
+          1632
+        ],
+        [
+          9,
+          1633
+        ]
+      ],
+      "missing_source_identities_count": 0,
+      "native_duplicate_occurrences": 100,
+      "native_npz_matches_own_raw_table": {
+        "beyond_band": 0,
+        "cells": 175152,
+        "exact_or_same_nonfinite": 175152,
+        "first_beyond": null,
+        "within_band_nonexact": 0
+      },
+      "native_unique_identities": 58284,
+      "positionally_different_identities": 58137,
+      "rows": 58384,
+      "source_duplicate_occurrences": 100,
+      "source_npz_matches_own_raw_table": {
+        "beyond_band": 0,
+        "cells": 175152,
+        "exact_or_same_nonfinite": 175152,
+        "first_beyond": null,
+        "within_band_nonexact": 0
+      },
+      "source_unique_identities": 58284,
+      "stable_occurrence_permutation_sha256": "2d5c7dbbba97f5c6c5151d5c8c3ba2df6dce69b00e4cf9a7f39eb65f5830cad2"
+    },
+    "summary-bw-regions": {
+      "columns": 3,
+      "coordinate_identity_multisets_equal": true,
+      "diagnostic_aligned_beyond_band_cells": 294,
+      "diagnostic_aligned_beyond_by_column": {
+        "2": 294
+      },
+      "diagnostic_aligned_cells": 175152,
+      "diagnostic_aligned_equal_infinity_cells": 0,
+      "diagnostic_aligned_equal_nan_cells": 0,
+      "diagnostic_aligned_exact_finite_cells": 174800,
+      "diagnostic_aligned_first_beyond": {
+        "column_zero_based": 2,
+        "identity": [
+          "chr1",
+          "49839872,49888734,49935470,49937667",
+          "49840016,49888806,49935678,49937757"
+        ],
+        "native": 0,
+        "native_row_zero_based": 3030,
+        "source": "NaN",
+        "source_row_zero_based": 1838
+      },
+      "diagnostic_aligned_unexpected_beyond_band_cells": 0,
+      "diagnostic_aligned_within_band_nonexact_finite_cells": 58,
+      "extra_native_identities_count": 0,
+      "first_extra_native": [],
+      "first_missing_source": [],
+      "mapped_rows": 58384,
+      "mapping_first_ten": [
+        [
+          0,
+          1624
+        ],
+        [
+          1,
+          1625
+        ],
+        [
+          2,
+          1626
+        ],
+        [
+          3,
+          1627
+        ],
+        [
+          4,
+          1628
+        ],
+        [
+          5,
+          1629
+        ],
+        [
+          6,
+          1630
+        ],
+        [
+          7,
+          1631
+        ],
+        [
+          8,
+          1632
+        ],
+        [
+          9,
+          1633
+        ]
+      ],
+      "missing_source_identities_count": 0,
+      "native_duplicate_occurrences": 100,
+      "native_npz_matches_own_raw_table": {
+        "beyond_band": 0,
+        "cells": 175152,
+        "exact_or_same_nonfinite": 175152,
+        "first_beyond": null,
+        "within_band_nonexact": 0
+      },
+      "native_unique_identities": 58284,
+      "positionally_different_identities": 58137,
+      "rows": 58384,
+      "source_duplicate_occurrences": 100,
+      "source_npz_matches_own_raw_table": {
+        "beyond_band": 0,
+        "cells": 175152,
+        "exact_or_same_nonfinite": 175152,
+        "first_beyond": null,
+        "within_band_nonexact": 0
+      },
+      "source_unique_identities": 58284,
+      "stable_occurrence_permutation_sha256": "2d5c7dbbba97f5c6c5151d5c8c3ba2df6dce69b00e4cf9a7f39eb65f5830cad2"
+    }
+  },
+  "observed_original_bed_order": {
+    "native_equals_original_global_bed_order": false,
+    "native_equals_stable_header_chromosome_grouped_original_bed_order": true,
+    "native_equals_stable_lexical_chromosome_grouped_original_bed_order": true,
+    "native_first_identity_original_bed_rows": [
+      0
+    ],
+    "native_vs_header_grouped_position_differences": 0,
+    "original_bed_chromosome_run_sequence": [
+      "chr1",
+      "chr2",
+      "chr3",
+      "chr4",
+      "chr5",
+      "chr6",
+      "chr7",
+      "chr8",
+      "chr9",
+      "chrX",
+      "chrY",
+      "chr10",
+      "chr11",
+      "chr12",
+      "chr13",
+      "chr14",
+      "chr15",
+      "chr16",
+      "chr17",
+      "chr18",
+      "chr19",
+      "chr20",
+      "chr21",
+      "chr22"
+    ],
+    "original_bed_first_record": {
+      "blocks": 22,
+      "identity": [
+        "chr1",
+        "66999251,66999928,67091529,67098752,67105459,67108492,67109226,67136677,67137626,67138963,67142686,67145360,67154830,67155872,67160121,67184976,67194946,67199430,67205017,67206340,67206954,67208755",
+        "66999355,67000051,67091593,67098777,67105516,67108547,67109402,67136702,67137678,67139049,67142779,67145435,67154958,67155999,67160187,67185088,67195102,67199563,67205220,67206405,67207119,67216822"
+      ],
+      "name": "NM_001308203.1",
+      "span_end": 67216822,
+      "span_start": 66999251,
+      "strand": "+"
+    },
+    "original_bed_rows": 58384,
+    "scope": "Observed complete T1 cohort only; chromosome header order happens to be lexical here, so these data do not distinguish those general policies.",
+    "source_first_identity_original_bed_rows": [
+      1624
+    ]
+  },
+  "source_order_contract_warning": "mapReduce.py135-146 shuffles TASKS for >1 processors. Only T1 is observed here; no T4 row-order qualification or universal key is inferred.",
+  "original_failure_measurement": {
+    "aggregate_tree_peak_bytes": null,
+    "argv": [
+      "/home/runner/work/_temp/signal-evidence/runtime/venv/bin/python",
+      "-B",
+      "/work/world/scripts/signal_real_performance_check.py",
+      "--root",
+      "/home/runner/work/_temp/signal-evidence",
+      "--world",
+      "/work/world",
+      "--case",
+      "main",
+      "--workers",
+      "1",
+      "--source",
+      "/home/runner/work/_temp/signal-evidence/evidence/qualification/main-1-source",
+      "--native",
+      "/home/runner/work/_temp/signal-evidence/evidence/qualification/main-1-native",
+      "--output",
+      "/home/runner/work/_temp/signal-evidence/evidence/checks/qualification-main-1-native/products",
+      "--qualification"
+    ],
+    "exit": 1,
+    "filesystem_input_blocks": 944,
+    "filesystem_output_blocks": 111464296,
+    "io_bytes": null,
+    "kernel_max_rss_bytes": 624447488,
+    "kernel_max_rss_scope": "Linux wait4 KiB normalized to bytes; maximum process/waited-child RSS, NOT aggregate tree",
+    "major_faults": 0,
+    "minor_faults": 112154535,
+    "name": "validate-all-products",
+    "pid": 9527,
+    "shared": true,
+    "system_seconds": 324.07001,
+    "user_seconds": 2991.322363,
+    "wall_seconds": 4447.802332592
+  },
+  "scope_classification": "Observed summary-regions row-correspondence incompatibility. All aligned BAM counts exact on this T1 cohort; no native numerical-model bug established. NPZ storage-layout differences are explicitly decoded and own raw TSV values match.",
+  "root_fresh_verification": {
+    "path": "/Volumes/KIOXIA/Developments/tmp/whole-adoption-root-20261101.dhz7O8/signal-fresh-verification.json",
+    "sha256": "b2d0a8b392fb7b83fb147b9f143d885682a847a8758a7b5d6495e513d773f253",
+    "record": {
+      "bytes": 28450370352,
+      "completion_sha256": "e94f0f3fc69d6a2a0c39df63150a1a057071e51560532d71f1fcb65d8f149b0a",
+      "directory": "/Volumes/KIOXIA/Developments/tmp/signal-real-failure-20261101.bRmQFB",
+      "directory_modes_verified": true,
+      "elapsed_seconds": 75.11289429664612,
+      "files": 27922,
+      "passed": true,
+      "physical_file_set_exact": true,
+      "scope": "Fresh root size/mode/SHA256 check of all sealed regular bodies; no producer/scientific program executed",
+      "seal_sha256": "990e218697f8010f79343c5d57b73507ba7d87ca0e07da0ccdfa594b258a7454"
+    }
+  },
+  "root_adopted": true,
+  "report_sha256": "bbeeb404a96b09a382d6527f2051ae7962254c60343c65470fc0f783a63a9ad4",
+  "seal_sha256": "990e218697f8010f79343c5d57b73507ba7d87ca0e07da0ccdfa594b258a7454",
+  "completed_sha256": "e94f0f3fc69d6a2a0c39df63150a1a057071e51560532d71f1fcb65d8f149b0a",
+  "physical_packet": {
+    "files": 27924,
+    "bytes": 28456368438
+  },
+  "original_source_sorting_and_multithread_shuffle_directly_reviewed": true,
+  "diagnostic_alignment_not_a_new_acceptance_rule": true,
+  "root_review": "Read complete report, snapshot/stream/custody/NPZ/coordinate/order/proposal programs and actual called-source anchors; freshly hashed all27922 sealed regular files and exact physical file membership. No source/native/checker execution on Mac.",
+  "row_order_choice": "Pending direct user decision; native current observed order is stable chromosome grouping with within-chromosome BED encounter order, not global BED order. No public order/checker change is authorized yet.",
+  "first_launcher_failure_preserved": true,
+  "original_positional_qualification_failure_unchanged": true,
+  "qualification_complete": false,
+  "warmup_complete": false,
+  "measured_trial_count": 0,
+  "performance_complete": false,
+  "performance_qualified": false,
+  "product_fix_implemented": false,
+  "original_outputs_reordered": false,
+  "numeric_tolerance_changed": false,
+  "publication": false
+}

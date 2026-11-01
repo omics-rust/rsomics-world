@@ -1,5 +1,38 @@
 # Real signal campaign
 
+## Complete failed-campaign originals adopted; row-order choice still pending
+
+Root accepts only failure custody/diagnosis in
+`.autopilot/oracles/signal-real-failure-2026-11-01.json`. The complete external
+packet at signal-real-failure-20261101.bRmQFB retains27924 physical files/
+28456368438B, including15514122240B full-originals TAR SHA
+77f0e8e922da6e0029c841640902846a3f955e31ea8e9a80b79ee93bfa7d7fd4.
+REPORT bbeeb404a96b09a382d6527f2051ae7962254c60343c65470fc0f783a63a9ad4;
+SEAL990e218697f8010f79343c5d57b73507ba7d87ca0e07da0ccdfa594b258a7454;
+completed e94f0f3fc69d6a2a0c39df63150a1a057071e51560532d71f1fcb65d8f149b0a.
+Root reads complete recovery/custody/NPZ/coordinate/order/proposal programs,
+actual sorting/shuffle/concatenation/chromosome-order source functions and
+freshly hashes all27922 sealed bodies/28450370352B with exact physical file
+membership and directory modes. Root proof is under
+whole-adoption-root-20261101.dhz7O8/signal-fresh-verification.json.
+
+All34681 original entries,1083 actual controller Git bodies, original system
+image and66 previous launcher packet files remain. All body/type/mode/owner/
+mtime/link metadata is verified;33 case-collision groups remain in TAR/CAS,
+not restored executable paths. Only the three explicitly named credential
+directories are excluded without reading/copying their contents. No scientific
+program or captured checker is executed on Mac, and no original is changed.
+
+The observed native order equals stable chromosome grouping with each
+chromosome's original BED encounter order, NOT global BED order. The pending
+question's recommended input-order wording refers to preserving this current
+stable native behavior. Header and lexical chromosome orders happen to agree
+on this cohort; no universal order is inferred from that coincidence.
+The source sorts overlap tuples and can shuffle multiworker tasks. No new
+comparison policy, production change, qualification retry or retroactive pass
+is authorized until the separate human row-order choice. The first launcher
+and actual positional qualification remain failed, with zero measured trials.
+
 ## Region-order contract decision pending; no native numerical bug inferred
 
 The bounded data-only failure diagnosis at signal-real-failure-20261101.bRmQFB
@@ -18,8 +51,9 @@ exceed1; concatenation retains that order. The observed failure is T1 and
 does not qualify or predict T4 output. Native numerical/NPY-layout failure is
 not established by a positional comparison of reordered rows.
 
-Root asks one asynchronous user decision: keep deterministic native input
-order and verify all exact region/duplicate-occurrence identities before strict
+Root asks one asynchronous user decision: keep current deterministic native
+chromosome-grouped/within-chromosome input order and verify all exact
+region/duplicate-occurrence identities before strict
 numeric comparison, documenting row-order incompatibility; or change native
 to source T1 coordinate order. No random shuffle is fabricated, no row/value/
 duplicate is dropped, and no numerical band/source producer policy changes.
