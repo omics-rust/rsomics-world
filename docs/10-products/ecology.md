@@ -10,10 +10,15 @@ undefined pairs fail with the metric/sample identities and protect the output;
 valid zero distances remain valid. This is root's explicit delegated engineering
 ruling and a stricter source domain, not a previously answered user choice.
 The beta implementation passes the integrated compact source/worker workflow;
-nullable reports are not added. Full-study beta and the new candidate's four
-native classes are pending. Actual41268190701 passes all4 native classes on
-the earlier e1b03cb6 alpha/rarefaction owner;
-complete original source/log/artifact/release-binary identities are accepted.
+nullable reports are not added. Actual41280935272 now qualifies all four
+native classes for owner111adf5/120 source files/86 fixtures: six integrations
+in debug and release, zero ignored, with complete originals and exact release
+binaries independently accepted in ecology-native-beta-2026-11-01.json.
+Full-study beta remains pending under the separately frozen
+2026-11-01-ecology-beta-real-performance plan: eight independent full metrics,
+explicit adapted public UniFrac layout, serial primary and measured1->4 scaling.
+Actual41268190701 remains historical for the earlier e1b03cb6 alpha/rarefaction
+owner; its original authority is not rebound to the beta candidate.
 See `.autopilot/state/ecology-initial-diversity-2026-10-28.md` and
 `../plans/2026-11-01-ecology-native-real.md`. Complete-study reference and
 performance for the selected11-metric alpha/depth3-rarefy/alpha workflow are
