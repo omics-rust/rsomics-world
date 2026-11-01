@@ -1,0 +1,82 @@
+{
+  "schema": "rsomics.index.corrected-runtime-recovery-admission.v1",
+  "record": "index-copyright-20261102-7dd0be8b-remote-dev-sdd-76GiB",
+  "controller": "7dd0be8bcb17c42fb3f61d11ca87da9a4d9fd20a",
+  "owner": "d57bdaa2a19492d902a5f59c8de3c9f35113053a",
+  "native_ci": 41313466286,
+  "native_ci_attempt": 1,
+  "control_ci": 41327249574,
+  "utc": "2026-11-01T16:39:48Z",
+  "uid": 1006,
+  "device": 2096,
+  "mount": ["/dev/sdd[/home/liangjy]", "ext4", "/home/liangjy"],
+  "free_bytes": 578868989952,
+  "required_zero_credit_bytes": 605590388736,
+  "required_after_verified_same_envelope_credit_bytes": 538047508480,
+  "own_allocation_credit_bytes": 67542880256,
+  "credit_method": "unique (st_dev,st_ino) allocated st_blocks*512 within each same owned envelope; no inode counted twice",
+  "existing_envelopes": {
+    "ecology": {
+      "path": "/home/liangjy/rsomics-ecology-beta-recovery-20261101",
+      "logical_envelope_bytes": 343597383680,
+      "allocated_bytes": 33298141184,
+      "credited_unique_allocated_bytes": 33298141184,
+      "regular_bytes": 32984660840,
+      "entries": 119234,
+      "repeated_inodes_not_credited_again": 0
+    },
+    "old_index": {
+      "path": "/home/liangjy/rsomics-index-bgzf-recovery-20261101",
+      "logical_envelope_bytes": 81604378624,
+      "allocated_bytes": 28328329216,
+      "credited_unique_allocated_bytes": 28328329216,
+      "regular_bytes": 28284807968,
+      "entries": 15141,
+      "repeated_inodes_not_credited_again": 0
+    },
+    "plink_observer": {
+      "path": "/home/liangjy/rsomics-plink-attribution-20261101",
+      "logical_envelope_bytes": 8589934592,
+      "allocated_bytes": 99938304,
+      "credited_unique_allocated_bytes": 99938304,
+      "regular_bytes": 99714610,
+      "entries": 79,
+      "repeated_inodes_not_credited_again": 0
+    },
+    "failed_changed_index": {
+      "path": "/home/liangjy/rsomics-index-bgzf-hotpath-recovery-20261101",
+      "logical_envelope_bytes": 81604378624,
+      "allocated_bytes": 5816471552,
+      "credited_unique_allocated_bytes": 5816471552,
+      "regular_bytes": 5804564140,
+      "entries": 4417,
+      "repeated_inodes_not_credited_again": 0
+    }
+  },
+  "new_root": "/home/liangjy/rsomics-index-bgzf-copyright-recovery-20261102",
+  "new_root_was_absent": true,
+  "new_envelope_bytes": 81604378624,
+  "total_envelopes_bytes": 597000454144,
+  "independent_headroom_bytes": 8589934592,
+  "all_unmaterialized_allowances_remain_reserved": true,
+  "logical_reservation_not_exclusive_quota": true,
+  "speculative_dedup_credit": false,
+  "extra_failed_transport_carrier_admitted": false,
+  "old_originals_preserved": true,
+  "failed_76_gib_released_or_reused": false,
+  "scientific_execution": false,
+  "admitted": true,
+  "root_proof": {
+    "local_directory": "/Volumes/KIOXIA/Developments/tmp/index-corrected-root-20261102.8L6lnN",
+    "program_sha256": "bf1a3cc06988caaae23d39b525ff09222b49786587af057fb20a2f794a93b23a",
+    "stdout_sha256": "230706f6ac5b613a4c6d45fc269978d38c8c381ac01a385e59e2551ce7a60d62",
+    "exit_code": 0,
+    "stderr_bytes": 0,
+    "actual_new_directory_and_reservation_created": true,
+    "control_exact_head_success": true,
+    "dispatched_run_id": 41327532095,
+    "run_attempt": 1,
+    "dispatch_count": 1,
+    "runtime_or_science_acceptance_inferred_from_dispatch": false
+  }
+}

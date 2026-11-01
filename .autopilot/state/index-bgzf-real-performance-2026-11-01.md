@@ -1,5 +1,24 @@
 # Index complete BGZF/tabix real performance
 
+## Corrected whole campaign dispatched once after exact-head Control
+
+Control41327249574 succeeds at7dd0be8bcb17c42fb3f61d11ca87da9a4d9fd20a.
+Root freshly inventories all four old owned external roots and admits a NEW
+exclusive76GiB root rsomics-index-bgzf-copyright-recovery-20261102. Existing
+480GiB plus new76GiB and independent8GiB remain fully accounted. Free
+578868989952B exceeds538047508480B net required: only67542880256B physically
+allocated unique(dev,ino) blocks in their own envelopes are credited once.
+No old allowance, failed76GiB or original is released, reused or deleted.
+The additive index-corrected-runtime-capacity-2026-11-02.json binds actual
+0600 reservation/root0700 on UID1006/dev2096/ext4/dev/sdd, not root/NVMe.
+
+One dispatch creates actual41327532095/1 at exact7dd0be8b, changed_native=true,
+recovery record index-copyright-20261102-7dd0be8b-remote-dev-sdd-76GiB. It is
+in progress, not runtime/correctness/performance acceptance. The complete
+fixed13-lane/42-qualification/338-call graph and all primary gates remain.
+This is a corrected pre-science operational failure, not a retry of an
+unchanged negative measurement. All earlier negative/failed originals stay.
+
 ## Failed changed-native originals accepted; one operational correction ready
 
 Root adopts complete41319662660/1 failure custody and successful fresh d57
