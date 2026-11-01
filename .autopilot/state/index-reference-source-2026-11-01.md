@@ -1,5 +1,29 @@
 # Index reference-resource source workflow
 
+## Bounded query optimization committed; new exact native-four gate running
+
+Owning main030be20895cb7806f78b2923e1c1ac3afa05cd96 changes only query.rs
+and the existing reference_workflow lifecycle. Root reads both complete files,
+actual diff, delivery report and one independent whole-change report; freshly
+verifies137 sealed bodies/20588273B and all116 current source bodies/modes at
+index-bulk-query-20261101.XEE3Rd. REPORTad539a3f472c1d764a88e92f937e0bf901c9a6b8b7a5177fcff92ee82dac8210;
+SEAL0918ac11613126fd6c6fe3b0ab4092c7401d244f8ba25ed700b7250e1701d1a8.
+Independent REPORT7a1a10abc6e91fef69adfa48b5a7421ea82b358820268956a99a3d5bfdc1ef7f
+at index-bulk-independent-review-20261101.d8kXug has no evidencedP1/P2.
+
+Single-worker execution shares the lazy bounded planner/decoder/emitter without
+OS-worker channels; short plain reads are limited to their physicalFAI span.
+Long/BGZF paths,1MiB chunks, order/duplicates/wrapping/atomic outputs and all
+dependencies/public contracts remain unchanged. The real old performance loss
+is the RED baseline; the coherent extended lifecycle also passes on old source,
+so no functionalRED is fabricated. Author guarded fmt/strictClippy/full debug
+and release each63pass/9old live-oracle ignores; root freshly runs the same
+complete reference lifecycle in release1pass/1.53s. No Mac upstream or real-bio
+benchmark runs. Exact-source CI41272452578 is actually in progress after push.
+The old7f2d4fd performance receipt does not qualify this changed source. Only
+after native-four passes may the benchmark bind the real new owner/run and
+repeat its unchanged complete168-call graph; no static speedup is claimed.
+
 ## Complete-reference originals accepted; memory benefit and query losses retained
 
 Root reads the complete REPORT,389-line original-body validator and full
