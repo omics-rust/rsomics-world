@@ -1,5 +1,13 @@
 # Popgen connected source workflow
 
+## Whole-real comparison implementation prepared
+
+The complete five-file same-machine gate and one integrated scientific/
+fairness review are now adopted for actual execution. State and mandatory
+original-source adoption route live in popgen-whole-real-performance-2026-11-01.md.
+Accepted native-four remains separate from unearned Bookworm/full-real/
+performance/publication evidence; no completed campaign is inferred here.
+
 ## Exact four-native integration and actual release executables accepted
 
 Actual41265985145/1 at a3d2e024a541dbd01c6a07cd12eadb3399903ecb succeeds

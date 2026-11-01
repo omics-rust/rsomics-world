@@ -1,0 +1,95 @@
+name: Private Popgen whole chr22 same-machine qualification
+
+on:
+  workflow_dispatch:
+    inputs:
+      native_receipt:
+        description: Tracked accepted native-four receipt path at this controller head
+        required: true
+        type: string
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  whole-real:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 240
+    container:
+      image: gcc:14.3.0-bookworm@sha256:a689e29bc3adf4663ef9a141d23081252764d1319c63f591a027bd6fd676f4c1
+      options: --cpus 4 --memory 12g --memory-swap 12g
+    env:
+      POPGEN_CONTAINER_DIGEST: sha256:a689e29bc3adf4663ef9a141d23081252764d1319c63f591a027bd6fd676f4c1
+      NATIVE_RECEIPT: ${{ inputs.native_receipt }}
+      PYTHONDONTWRITEBYTECODE: '1'
+      PYTHONNOUSERSITE: '1'
+      PYTHONPATH: ''
+      PIP_CONFIG_FILE: /dev/null
+      OMP_NUM_THREADS: '1'
+      OPENBLAS_NUM_THREADS: '1'
+      MKL_NUM_THREADS: '1'
+      BLIS_NUM_THREADS: '1'
+      NUMEXPR_NUM_THREADS: '1'
+      CC: /usr/local/bin/gcc
+      CXX: /usr/local/bin/g++
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+
+      - name: Create private routes and admit fixed cipher capacity
+        run: |
+          set -euo pipefail
+          umask 077
+          ulimit -c 0
+          python3 -B scripts/popgen_whole_real.py init --native-receipt "$NATIVE_RECEIPT"
+
+      - name: Admit public-recipient transport before original acquisition
+        run: |
+          set -euo pipefail
+          umask 077
+          ulimit -c 0
+          python3 -B scripts/popgen_whole_real.py transport > "$POPGEN_SESSION/private/transport.stdout" 2> "$POPGEN_SESSION/private/transport.stderr"
+
+      - name: Bind the actual accepted native-four original and providers
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          umask 077
+          ulimit -c 0
+          python3 -B scripts/popgen_whole_real.py admit-native --native-receipt "$NATIVE_RECEIPT" > "$POPGEN_SESSION/private/native-admission.stdout" 2> "$POPGEN_SESSION/private/native-admission.stderr"
+
+      - name: Qualify source then measure unchanged whole workflow
+        run: |
+          set -euo pipefail
+          umask 077
+          ulimit -c 0
+          test -z "${GH_TOKEN:-}"
+          python3 -B scripts/popgen_whole_real.py execute > "$POPGEN_SESSION/private/controller.stdout" 2> "$POPGEN_SESSION/private/controller.stderr"
+
+      - name: Seal all available originals and failures
+        id: seal
+        if: always()
+        run: |
+          set -euo pipefail
+          umask 077
+          ulimit -c 0
+          test -n "${POPGEN_SESSION:-}"
+          python3 -B scripts/popgen_whole_real.py finalize > "$POPGEN_SESSION/finalization.stdout" 2> "$POPGEN_SESSION/finalization.stderr"
+
+      - name: Upload ciphertext and allowlisted transport receipt only
+        if: always() && steps.seal.outcome == 'success'
+        uses: actions/upload-artifact@v4
+        with:
+          name: popgen-private-whole-real-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            ${{ env.POPGEN_SESSION }}/cipher/payload.tar.age
+            ${{ env.POPGEN_SESSION }}/cipher/receipt.json
+          if-no-files-found: error
+          retention-days: 90

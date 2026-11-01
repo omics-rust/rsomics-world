@@ -1,0 +1,76 @@
+{
+  "schema": "rsomics.popgen.whole-real.v1",
+  "status": "Prepared protocol; accepted native-four receipt is pinned, but target ABI/full chr22/performance remain unearned",
+  "native_receipt": {
+    "path": ".autopilot/oracles/popgen-native-2026-11-01.json",
+    "sha256": "2260adecef59e06e89dd973fa399ac8a58eedd787e339b0700314bac59786c34"
+  },
+  "owner": {
+    "commit": "ff8e951344b5cd8f8c049c96afa9e2c585d14995",
+    "tree": "8879ad1fbee6c1ed2d59cd32a4f255dfc0416d23",
+    "source_files": 48,
+    "registry_packages": 69,
+    "snapshot": "green-1",
+    "source_archive_sha256": "5565951e8ecd9352583e309be70bc861c877ae953da094e015b065e5db4db579",
+    "source_manifest_sha256": "f9d886ea1ffe00905eba6a29690f216119c62f8ece73d45711863ed79b0400b3",
+    "lock_sha256": "84f00eb7b34d86787c28116184f74374d80c8dcbbf729067ade367ce5d185f16"
+  },
+  "source_run": 41252735560,
+  "source_receipt_sha256": "607d542153ae75ed4accf799d4f49547985c926379c7e4ab3ab78a0b9a9abf31",
+  "comparator": {
+    "path": "assets/popgen-whole-real-compare-20261101.py",
+    "sha256": "d14f08cee17b395ff6460692c166d4740f352ea9ee6c33115449ce778d0177d9",
+    "canonical_abs_floor_power": -44,
+    "canonical_relative_power": -40,
+    "legacy_parsed_finite_decimal_exact": true,
+    "native_payload_repeat_worker_exact": true,
+    "root_authenticated_original_source_required": true
+  },
+  "inputs": {
+    "vcf": {"size": 205612353, "sha256": "a90c16c4ff2b3196476d506ae13cb3047fae8670163c7c932c4b0239aef3daf5"},
+    "tbi": {"size": 36251, "sha256": "27de6b77af65d300bb968e8e372439deb949389e4395eb0dd251f9ba7d73bbed"},
+    "mask": {"size": 627527, "sha256": "ebd57c06296bd1f9430871d993f7a89aeaa9e50b1f15adae16b22d8eff17f59a"},
+    "panel": {"size": 55156, "sha256": "b4023dc6ee2d62ee89c8d4d347db4d348e65518d66d346574cdae7a4bbd76858"},
+    "reference_fai": {"size": 2746, "sha256": "04aa12dcb4e7131d9c7361082bfd02f8415ee11e956bf358a339f0d3c54180ab"}
+  },
+  "population": {
+    "persons": 207, "original_rows": 1103547, "max_alt": 8, "canonical_rows": 723783,
+    "window_rows": 514, "blocks": 72, "tail_rows": 3783, "comparison_cells": 50010408,
+    "legacy_rows": [721170, 338, 347, 721170, 338],
+    "derivative_bytes": 700345062,
+    "derivative_sha256": "042b1f01fcae94b21b8fcc9b847e6c1338c45c517b41bc919c355d541e5266ad"
+  },
+  "schedule": {"allowances": [1, 4], "warmup_pairs_each": 1, "measured_pairs_each": 5},
+  "limits": {
+    "container_memory_bytes": 12884901888,
+    "container_cpus": 4,
+    "sampled_tree_rss_bytes": 8589934592,
+    "sampled_rss_is_hard_peak": false,
+    "sample_interval_seconds": 0.1,
+    "call_timeout_seconds": 1800,
+    "admission_timeout_seconds": 3600,
+    "controller_compute_seconds": 10800,
+    "native_planning_memory_mib": 512
+  },
+  "retention": {
+    "retained_bytes": 17179869184,
+    "tar_bound_bytes": 18253611008,
+    "initial_free_bytes": 44029968416,
+    "base_bytes": 3221225472,
+    "source_run_bytes": 943718400,
+    "native_run_bytes": 134217728,
+    "overhead_bytes": 536870912
+  },
+  "material": {
+    "throughput_median_wall_ratio_max": 0.8,
+    "throughput_pair_wall_ratio_max": 0.9,
+    "throughput_pairs_required": 4,
+    "cpu_ratio_max": 1.05,
+    "throughput_rss_ratio_max": 1.1,
+    "resource_median_rss_ratio_max": 0.75,
+    "resource_all_memory_ratios_below": 1.0,
+    "resource_wall_ratio_max": 1.05,
+    "both_allowances_required": true
+  },
+  "claims": {"performance_qualified": false, "root_original_source_adoption_required": true, "release": false}
+}

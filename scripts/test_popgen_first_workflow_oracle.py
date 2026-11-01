@@ -1,4 +1,6 @@
 import importlib.util
+import hashlib
+import resource
 import io
 import gzip
 import json
@@ -20,6 +22,39 @@ class PopgenSourcePreparationTest(unittest.TestCase):
     def test_connected_casebook_admits_lossless_shapes_and_rejects_invalid_genotypes(self):
         self.assertTrue((ROOT / 'scripts/popgen_hosted_source.py').is_file(),
                         'manual hosted source integration is absent')
+        self.assertTrue((ROOT / 'scripts/popgen_whole_real.py').is_file(),
+                        'complete same-machine whole-real workflow is absent')
+        import popgen_whole_real as whole
+        policy = whole.load_policy()
+        planned = whole.schedule(policy)
+        self.assertEqual([(row['workers'], row['warmup'], row['engine']) for row in planned],
+            [(1, True, 'native'), (1, True, 'source'),
+             (1, False, 'native'), (1, False, 'source'),
+             (1, False, 'source'), (1, False, 'native'),
+             (1, False, 'native'), (1, False, 'source'),
+             (1, False, 'source'), (1, False, 'native'),
+             (1, False, 'native'), (1, False, 'source'),
+             (4, True, 'source'), (4, True, 'native'),
+             (4, False, 'source'), (4, False, 'native'),
+             (4, False, 'native'), (4, False, 'source'),
+             (4, False, 'source'), (4, False, 'native'),
+             (4, False, 'native'), (4, False, 'source'),
+             (4, False, 'source'), (4, False, 'native')])
+        self.assertEqual(whole.retention_partition(policy), 16693329920)
+        self.assertEqual(policy['limits']['sampled_tree_rss_bytes'], 8589934592)
+        self.assertNotIn('address_space_bytes', policy['limits'])
+        self.assertFalse(policy['limits']['sampled_rss_is_hard_peak'])
+        self.assertEqual(hashlib.sha256((ROOT / 'assets/popgen-whole-real-compare-20261101.py').read_bytes()).hexdigest(),
+                         'd14f08cee17b395ff6460692c166d4740f352ea9ee6c33115449ce778d0177d9')
+        whole.validate_workflow(ROOT / '.github/workflows/popgen-whole-real.yml')
+        with self.assertRaisesRegex((ValueError, FileNotFoundError), 'receipt'):
+            whole.read_native_receipt(ROOT / '.autopilot/oracles/absent-popgen-native.json')
+        adopted = whole.read_native_receipt(ROOT / '.autopilot/oracles/popgen-native-2026-11-01.json')
+        self.assertEqual(adopted['run_id'], 41265985145)
+        self.assertEqual(adopted['binary_sha256'], '2800d57d0508a4979dccb850688bc475c58c1cedb588427c1f5ba0fa05bb0525')
+        before_address_limit = resource.getrlimit(resource.RLIMIT_AS)
+        whole.child_setup(None)
+        self.assertEqual(resource.getrlimit(resource.RLIMIT_AS), before_address_limit)
         import popgen_hosted_source as hosted
         producer = ROOT / 'scripts/popgen_first_workflow_oracle.py'
         self.assertTrue(producer.is_file(), 'connected popgen source producer is absent')
@@ -31,6 +66,19 @@ class PopgenSourcePreparationTest(unittest.TestCase):
         with tempfile.TemporaryDirectory(prefix='popgen-preparation-', dir=os.environ['TMPDIR']) as directory:
             destination = Path(directory)
             session = hosted.new_session(destination)
+            fresh_source = destination / 'fresh-source'
+            fresh_source.mkdir()
+            (fresh_source / 'body.txt').write_bytes(b'actual fresh body\n')
+            inputs.save(fresh_source / 'output-manifest.json', {'body.txt':
+                {'size': 18, 'sha256': hashlib.sha256(b'actual fresh body\n').hexdigest()}})
+            view = whole.source_view(destination / 'views/first', fresh_source, ROOT / 'assets/popgen-first-input-20261101.json')
+            index = json.loads((view / 'tar-verification.json').read_text())
+            self.assertEqual(index['kind'], 'fresh-source-output-view')
+            self.assertFalse(index['archive_authentication_claim'])
+            self.assertEqual(Path(index['files']['real-source/body.txt']['extracted_path']).read_bytes(), b'actual fresh body\n')
+            (fresh_source / 'body.txt').write_bytes(b'changed body\n')
+            with self.assertRaisesRegex(ValueError, 'body'):
+                whole.source_view(destination / 'views/changed', fresh_source, ROOT / 'assets/popgen-first-input-20261101.json')
             self.assertEqual(session['private'].stat().st_mode & 0o777, 0o700)
             transient = session['private'] / 'transient.tmp'
             transient.write_bytes(b'x')
@@ -89,6 +137,14 @@ class PopgenSourcePreparationTest(unittest.TestCase):
             self.assertEqual(derivative['records'], 10)
             self.assertEqual((legacy / 'YRI.txt').read_text(), 'Y1\nY2\n')
             self.assertEqual((legacy / 'CEU.txt').read_text(), 'C1\nC2\n')
+            fast = destination / 'lightweight-legacy'
+            fast.mkdir()
+            with patch.object(inputs, 'records', side_effect=AssertionError('independent GT reparse')):
+                fast_derivative = whole.write_legacy(destination / 'casebook', case, admission,
+                    {0, 1, 7, 8, 11, 12, 14, 15, 16, 17}, fast)
+            self.assertEqual(fast_derivative['records'], 10)
+            for name in ('eligible.vcf', 'YRI.txt', 'CEU.txt'):
+                self.assertEqual((fast / name).read_bytes(), (legacy / name).read_bytes())
             rows = [line.split('\t') for line in (legacy / 'eligible.vcf').read_text().splitlines()
                     if not line.startswith('#')]
             self.assertTrue(all(len(row) == 13 and ',' not in row[4] for row in rows))
@@ -120,6 +176,9 @@ class PopgenSourcePreparationTest(unittest.TestCase):
             unsafe_workflow.write_text(workflow.read_text().replace('/cipher/receipt.json', '/private/controller.stderr'))
             with self.assertRaisesRegex(ValueError, 'receipt|plaintext'):
                 hosted.validate_workflow(unsafe_workflow)
+            unsafe_workflow.write_text((ROOT / '.github/workflows/popgen-whole-real.yml').read_text().replace('/cipher/receipt.json', '/private/controller.stderr'))
+            with self.assertRaisesRegex(ValueError, 'receipt|ciphertext'):
+                whole.validate_workflow(unsafe_workflow)
         runtime = json.loads((ROOT / 'assets/popgen-first-runtime-20261101.json').read_text())
         self.assertEqual(oracle.validate_runtime_lock(runtime), None)
         self.assertEqual(set(runtime['python_packages']),
@@ -127,7 +186,21 @@ class PopgenSourcePreparationTest(unittest.TestCase):
                           'packaging', 'partd', 'pyyaml', 'toolz', 'locket'})
         self.assertFalse({'numpy', 'allel', 'dask'}.intersection(sys.modules))
         self.assertEqual(hosted.validate_workflow(ROOT / '.github/workflows/popgen-first-workflow-oracle.yml'), None)
-        lines = (ROOT / '.github/workflows/popgen-first-workflow-oracle.yml').read_text().splitlines()
+        records = []
+        for workers in (1, 4):
+            for pair in range(1, 6):
+                records.extend([dict(workers=workers, pair=pair, warmup=False, engine='native',
+                    wall_seconds=80.0, total_cpu_seconds=102.0, kernel_maxrss_kib=100.0),
+                    dict(workers=workers, pair=pair, warmup=False, engine='source',
+                    wall_seconds=100.0, total_cpu_seconds=100.0, kernel_maxrss_kib=100.0)])
+        self.assertTrue(whole.advantage(records, policy)['material_advantage_observed'])
+        for row in records:
+            if row['workers'] == 4 and row['engine'] == 'native':
+                row['wall_seconds'] = 100.0
+        self.assertFalse(whole.advantage(records, policy)['material_advantage_observed'])
+        self.assertTrue(whole.advantage(records, policy)['root_original_source_adoption_required'])
+        lines = ((ROOT / '.github/workflows/popgen-first-workflow-oracle.yml').read_text() + '\n' +
+                 (ROOT / '.github/workflows/popgen-whole-real.yml').read_text()).splitlines()
         for index, line in enumerate(lines):
             if line != '        run: |':
                 continue
