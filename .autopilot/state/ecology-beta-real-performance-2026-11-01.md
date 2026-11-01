@@ -1,5 +1,18 @@
 # Ecology complete-original beta performance
 
+## Exact failed-job request is not yet eligible
+
+With the other two UniFrac jobs still active, root refreshes remote/dev/sdd
+free space658123165696B and requests only failed-init job124793769919 once.
+GitHub rejects the request: `job 124793769919 cannot be rerun`, exit1.
+No new job/attempt or scientific call is created; the seven other metrics
+remain unchanged. Raw response is retained at
+ecology-beta-capacity-retry-20261101.YKEBxZ/rerun.raw.log, SHA
+30c81bb4f73cec9c9265638f900e11e34f3875d3f89e47e1f29a3590b7538888.
+Do not poll the same mutation. Reconsider the unchanged capacity-only retry
+after the original workflow reaches a terminal state; do not rerun any
+completed metric, lower22GiB or select a better scientific outcome.
+
 ## Actual eight-metric campaign dispatched; one pre-science capacity hold
 
 After exact-head Control41287959956 SUCCESS and fresh remote/dev/sdd capacity
