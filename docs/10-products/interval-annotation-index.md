@@ -5,7 +5,8 @@ verified. The complete BED family map is now maintained in `bed.md`. The BGZF
 and tabix slice of `rsomics-index` is implemented and compatibility-verified.
 The coherent FASTA indexing/query/dictionary slice is now committed with
 captured samtools1.24 comparisons and an accepted four-native gate. Publication
-still requires current-head performance evidence and registry credentials.
+still requires restoration or replacement of historical BGZF/tabix performance
+evidence and registry credentials; current reference-slice evidence alone is insufficient.
 
 Routing corrections move table aggregation to `rsomics-table`, SEACR to
 `rsomics-peak`, FASTA masking to `rsomics-bed`, and FASTA indexing plus
@@ -297,6 +298,19 @@ versus36.625s, not evidence that every operation is faster. A bounded query
 optimization is being verified separately; this accepted baseline cannot
 qualify changed source. No exact aggregate RSS, cold-cache, publication or
 restoration of the old missing-raw benchmark evidence below is claimed.
+
+Optimized owner030be20895cb7806f78b2923e1c1ac3afa05cd96 passes separate
+four-native CI41272452578 and fresh unchanged complete-reference run41273328984.
+Root verifies the complete original packet and independent full reduction;
+the new accepted receipt is index-optimized-reference-real-performance-2026-11-01.json.
+All168 calls/182 scientific outputs match. Both fixed performance routes pass:
+primary median35.859s native versus58.485s source, with disjoint five-trial
+ranges; serial chr1 processRSS47.6MB versus252.2–253.0MB. BGZF serial bulk
+still loses7.3388%, and query CPU/scaling losses are retained rather than
+hidden by the aggregate. These are same-job Linux x86_64 measurements, not
+a causal cross-run optimization comparison, exact aggregate memory, cold-cache,
+uniform parallel scaling or physical-I/O proof. Old baseline and missing-raw
+BGZF/tabix evidence/publication hold below remain unchanged.
 
 The initial implementation runs from `acba3ec` through code head
 `05960a4609a3b2acc388c0a149b5e023d53027f1`. Harness revision

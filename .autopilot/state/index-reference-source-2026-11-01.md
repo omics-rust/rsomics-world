@@ -1,5 +1,40 @@
 # Index reference-resource source workflow
 
+## Optimized complete-reference correctness and both performance routes accepted
+
+Root reads complete REPORT and all551 lines of the independent validator,
+then freshly verifies all1755 sealed physical files/modes/33900722862B at
+/Volumes/Zane's HDD/rsomics-fixtures/evidence/index-optimized-reference-2026-11-01/recovery.YVNwtV.
+REPORT646c72c7a95e27ebb966bf6836528f3bfd2ebe15fbf1fef360c96608981a61ce;
+SEAL8659146496bb911d6386f61fde377a1714aec59c55f8e0e875460c7af5f4ff85;
+COMPLETED068c2a1f821b9afeef49d8ff0e4136c8e1042b8167609ff4e644622d65e38620.
+New accepted index-optimized-reference-real-performance-2026-11-01.json binds
+actual41273328984/1, owner030be208, native-four41272452578, actual built ELF
+b42d28aef080af8fff2c12b746e30ddc1949cb0db738554c2a9330a2555c3714.
+All complete original ZIPs/runtime TAR/APIs/logs/controller/source/provider
+bodies are retained;17801 manifest entries close. No local Linux execution.
+
+All168 science calls and182 complete outputs/14793901108B agree with source;
+84 contigs/3101804739 bases/10423 ordered bulk requests remain unchanged.
+The unchanged throughput AND scoped-memory routes pass. Primary five-pair
+wall medians native35.859037/source58.485394s, ratio.613128; worst native
+35.951442 < best source58.396890. BGZF bulk1 still loses7.3388%, within the
+predeclared10% primary-node ceiling. Both serial chr1 processRSS medians are
+47570944B versus252248064/253042688B, disjoint, with wall ratios.887091/.982159.
+
+All12-node CPU/RSS/wall distributions and losses are retained. Query userCPU
+and BGZF build/bulk systemCPU regress despite primary CPU improvement.
+Native1->4 wall ratios are plain bulk1.112755/chr1 1.032433 and BGZF bulk
+2.137483/chr1 1.200314; extra CPU costs and one plain-bulk paired loss remain.
+Source BGZF bulk4 is2.504277x slower. RSS is wait4 process lifetime high-water,
+not aggregate/isolated heap; small nodes share a fork/exec floor. Cold-cache,
+kernel I/O bytes and macOS/aarch64 performance are unproven. Host differs from
+the old baseline, so no cross-run causal optimization ratio is claimed.
+
+This accepts the exact optimized reference slice, not the whole Index product.
+Earlier failures/baseline acceptance and old13-lane missing-original/publication
+hold remain intact. No registry action or unchanged benchmark replay follows.
+
 ## Actual optimized complete-reference remeasurement dispatched
 
 Exact-head Control41273149802 succeeds at
