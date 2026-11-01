@@ -28,8 +28,8 @@ from plink_first_workflow_oracle import download, save, sha256
 
 ROOT = Path(__file__).resolve().parents[1]
 WORKFLOW = '.github/workflows/index-reference-real-performance.yml'
-OWNER = '7f2d4fdeda9d0062d10941258b40eee16fdb9042'
-OWNER_CI = 41259142238
+OWNER = '030be20895cb7806f78b2923e1c1ac3afa05cd96'
+OWNER_CI = 41272452578
 MANIFEST = '33741a1f3dc1a89037aac0cf37512e0ef3cb3b9167e55178b8e797fb1b46a671'
 LOCK = '469601b48976964ef31f1a1bbaa54f63583239e94e73129ceb8f03961d29ccb6'
 BASE = 'https://ftp.1000genomes.ebi.ac.uk/vol1/ftp/technical/reference/'

@@ -1,0 +1,43 @@
+{
+  "additional_linux_x86_64_live_htslib_1_24_passed": 9,
+  "all_required_jobs_success": true,
+  "attempt_api_sha256": "b36e7aca2fb651214d0ad378f6d34141afc8e0572bcdc4e909315f1fa25b2395",
+  "compiled_binary_carriers_uploaded_by_this_owner_workflow": false,
+  "complete_raw_log_sha256": "93b4490e0d57c39626b3930c62857c670186e39f4fc3d3c4937ff29eb8cb9978",
+  "debug_passed_each_target": 63,
+  "evidence_directory": "/Volumes/KIOXIA/Developments/tmp/index-bulk-native-adoption-20261101.YA2trG",
+  "existing_live_oracles_ignored_in_default_suites": 9,
+  "format_strict_clippy_rustdoc_package_passed": true,
+  "jobs": {
+    "linux-aarch64": 124747831174,
+    "linux-x86_64": 124747830901,
+    "macos-aarch64": 124747830920,
+    "macos-x86_64": 124747830708
+  },
+  "jobs_api_sha256": "f9694e4ed98dcc41e5c13742f8821a8f733a787af3cb4b9755730cb5bb3d73fe",
+  "native_targets": [
+    "linux-x86_64",
+    "linux-aarch64",
+    "macos-x86_64",
+    "macos-aarch64"
+  ],
+  "new_performance_accepted": false,
+  "old_13_lane_missing_raw_evidence_hold_unchanged": true,
+  "owner_commit": "030be20895cb7806f78b2923e1c1ac3afa05cd96",
+  "performance_claim": false,
+  "product": "rsomics-index",
+  "reference_source_receipt": ".autopilot/oracles/index-reference-source-2026-11-01.json",
+  "reference_source_run": 41255333228,
+  "release": false,
+  "release_passed_each_target": 63,
+  "repository": "omics-rust/rsomics-index",
+  "root_adopted": true,
+  "run_api_sha256": "e5d5563fc3789a6f20eddf1ffc3f4be2595905cef777f73b54f7266e7463b331",
+  "run_attempt": 1,
+  "run_id": 41272452578,
+  "schema": "rsomics.index.reference-native-ci.v1",
+  "source_fixtures_regular_bodies": 54,
+  "status": "accepted",
+  "verification_sha256": "5132a473a8d46987fde2dbb55eb408835a1ae5dec52684cb2688df544618829f",
+  "workflow_path": ".github/workflows/ci.yml"
+}

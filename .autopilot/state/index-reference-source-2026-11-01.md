@@ -1,5 +1,29 @@
 # Index reference-resource source workflow
 
+## Optimized exact native-four accepted; unchanged real graph rebound
+
+Actual ownerCI41272452578/1 succeeds at
+030be20895cb7806f78b2923e1c1ac3afa05cd96. Root freshly recovers exact
+run/attempt/jobs APIs and complete raw log in
+index-bulk-native-adoption-20261101.YA2trG, verifies all four actual native
+jobs/required steps and per-step test populations. Each target debug/release
+passes63 with9 pre-existing live-oracle ignores; all9 actual Linux HTSlib1.24
+compatibility tests separately pass. Format/strictClippy/docs/package succeed.
+Raw log SHA93b4490e0d57c39626b3930c62857c670186e39f4fc3d3c4937ff29eb8cb9978;
+run API e5d5563fc3789a6f20eddf1ffc3f4be2595905cef777f73b54f7266e7463b331;
+jobs API f9694e4ed98dcc41e5c13742f8821a8f733a787af3cb4b9755730cb5bb3d73fe.
+New index-bulk-native-2026-11-01.json accepts only this source/native gate.
+This owner workflow uploads no compiled binary; the full-reference job will
+build and retain its new actual executable/provider identities itself.
+
+Only performance controller OWNER and OWNER_CI are rebound to those real
+values. Manifest/lock, actual source packages, full observed original RAZF/
+plain/FAI, common BGZF preparation, all168 science calls/182 outputs, CPU
+masks, alternating pairs, capacity and material criteria remain unchanged.
+Root freshly runs the unchanged ONE connected preparation test through the
+owner external guard:1pass/.304s. New exact-head Control and actual complete
+remeasurement remain required; no inherited old speed/memory acceptance.
+
 ## Bounded query optimization committed; new exact native-four gate running
 
 Owning main030be20895cb7806f78b2923e1c1ac3afa05cd96 changes only query.rs
