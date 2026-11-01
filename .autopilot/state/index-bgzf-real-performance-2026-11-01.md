@@ -1,11 +1,30 @@
 # Index complete BGZF/tabix real performance
 
-## Reviewed substantive hot-path change committed; native-four gate active
+## New hot-path source passes actual native-four and live HTSlib gates
 
 Clean owningd57bdaa2a19492d902a5f59c8de3c9f35113053a is committed and pushed
-to omics-rust/rsomics-index/main. Actual own CI41313466286/attempt1 runs at
-that full SHA. Its native-four and Linux live HTSlib results must be recovered
-before acceptance. No new performance/publication is earned by this change.
+to omics-rust/rsomics-index/main. Actual own CI41313466286/attempt1 succeeds
+at that full SHA. Root freshly validates all254 retained files/2150755B,
+complete original log ZIP/45members, four independent raw job logs and116
+public-tree/Git-bound source bodies. The additive native receipt is
+index-hotpath-native-2026-11-01.json; old authorities remain unchanged.
+
+Each native Linux/macOS x86_64/aarch64 job runs debug/release66passed with
+9 explicit upstream-oracle skips per profile:528 execution instances of66
+test intents, not528 distinct tests. Linux separately executes all9 live
+HTSlib1.24 oracles with0ignored, plus fmt/strict Clippy/rustdoc/package.
+Actual artifact count is0: neither compiled binaries nor the verified118-
+member package body are retained by that owning workflow. This accepts exact
+source-head native correctness, not changed-binary performance/publication.
+Packet index-hotpath-native-recovery-20261101.M3zdx7 has REPORT302c4ca5,
+SEALeb59c20c. Root actual-native.stdout in U2Sk5N is0f4f5a83/exit0/empty stderr.
+
+Root adopts docs/plans/2026-11-01-index-changed-native-runtime.md and assigns
+one opt-in operational implementation: preserve old default selectors, split
+old runtime donor from new source, fresh offline build and actual new ELF
+admission in the same frozen13-lane job. No new campaign is launched. One
+whole operational review, exact control CI and fresh separate76GiB recovery
+capacity admission remain before execution; no unchanged FAI science replay.
 
 Root reads the complete nine-path implementation and underlying source plus
 one independent whole review, REPORT5f90de25/SEALd88f2d95 at

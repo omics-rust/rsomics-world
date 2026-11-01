@@ -1,0 +1,661 @@
+{
+  "actual_artifact_count": 0,
+  "additional_linux_x86_64_live_htslib_1_24_passed": 9,
+  "all_required_jobs_success": true,
+  "compiled_binary_carriers_uploaded_by_this_owner_workflow": false,
+  "debug_passed_each_target": 66,
+  "existing_live_oracles_ignored_in_default_suites": 9,
+  "first_collector_repo_trailing_slash_404_preserved": true,
+  "format_strict_clippy_rustdoc_package_passed": true,
+  "limitations": [
+    "Native execution is established by actual compiler-host and test logs; no ELF/Mach-O body was uploaded for independent inspection.",
+    "Package verification passed on Linux; its118-member archive is not uploaded or retained by this workflow.",
+    "Default suites ignore the9 live oracles; only the separate Linux compatibility step executes them.",
+    "This is source-head native correctness evidence, not a changed-binary performance measurement or release acceptance."
+  ],
+  "live_oracle_log": "linux-x86_64/14_Test HTSlib compatibility.txt",
+  "live_oracle_names": [
+    "both_builders_reject_unsorted_data",
+    "both_tools_reject_crc_corruption_and_truncation",
+    "cross_tool_bgzf_round_trips_cover_levels_workers_and_block_modes",
+    "csi_structures_and_queries_match_at_multiple_minimum_shifts",
+    "custom_columns_headers_and_query_modes_match",
+    "gzi_indexes_and_partial_reads_interoperate_in_both_directions",
+    "partial_index_configuration_uses_htslib_gff_defaults",
+    "tbi_structures_and_queries_match_for_every_preset",
+    "vcf_region_target_header_deduplication_and_list_modes_match"
+  ],
+  "live_oracle_source_archive_sha256": "28a8de191381c7a97a35675ceac76fa1ea95e7b678d6a2e9d600a7874e4077de",
+  "local_science_execution": false,
+  "new_performance_accepted": false,
+  "owner_commit": "d57bdaa2a19492d902a5f59c8de3c9f35113053a",
+  "package_archive_retained": false,
+  "package_files_reported_by_ci": 118,
+  "raw_log_zip": {
+    "bytes": 150645,
+    "sha256": "fbdf3ed6571d23c69eb095a47197f49682533ff377a4b762f235007ce819c7fe"
+  },
+  "raw_log_zip_members": 45,
+  "registry_publication": false,
+  "release": false,
+  "release_passed_each_target": 66,
+  "repository": "omics-rust/rsomics-index",
+  "repository_id": 1339832270,
+  "root_adopted": true,
+  "run_attempt": 1,
+  "run_id": 41313466286,
+  "schema": "rsomics.index.hotpath-native-ci.v1",
+  "source_api_tree_all_bodies_verified": true,
+  "source_files": 116,
+  "source_tree": "b47ad82cd9127030dbdb94dbc85121b99a064d36",
+  "status": "accepted-source-head-native-correctness",
+  "targets": {
+    "linux-aarch64": {
+      "all_required_steps_success": true,
+      "compiler_actual_lines": [
+        "2026-11-01T13:54:07.9474991Z rustc 1.91.0 (f8297e351 2025-10-28)",
+        "2026-11-01T13:54:07.9477119Z host: aarch64-unknown-linux-gnu",
+        "2026-11-01T13:54:07.9477565Z release: 1.91.0"
+      ],
+      "compiler_log": "linux-aarch64/3_Install Rust 1.91.txt",
+      "full_job_log": {
+        "bytes": 67266,
+        "sha256": "c16e92e9203b4fede57663cac4660c39cb6f5df3185619c0cec59e4752cc0f01"
+      },
+      "host": "aarch64-unknown-linux-gnu",
+      "job_id": 124868516013,
+      "profiles": {
+        "Test debug": {
+          "failed": 0,
+          "groups": [
+            [
+              16,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              24,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              3
+            ],
+            [
+              6,
+              0,
+              0
+            ],
+            [
+              1,
+              0,
+              0
+            ],
+            [
+              8,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              6
+            ],
+            [
+              11,
+              0,
+              0
+            ]
+          ],
+          "ignored": 9,
+          "ignored_names": [
+            "both_builders_reject_unsorted_data",
+            "both_tools_reject_crc_corruption_and_truncation",
+            "cross_tool_bgzf_round_trips_cover_levels_workers_and_block_modes",
+            "csi_structures_and_queries_match_at_multiple_minimum_shifts",
+            "custom_columns_headers_and_query_modes_match",
+            "gzi_indexes_and_partial_reads_interoperate_in_both_directions",
+            "partial_index_configuration_uses_htslib_gff_defaults",
+            "tbi_structures_and_queries_match_for_every_preset",
+            "vcf_region_target_header_deduplication_and_list_modes_match"
+          ],
+          "passed": 66,
+          "raw_log": "linux-aarch64/7_Test debug.txt",
+          "sha256": "df6b9459b62696a1d273fced01c6fd97a5addcdc3c50acf840de67626962f6bc"
+        },
+        "Test release": {
+          "failed": 0,
+          "groups": [
+            [
+              16,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              24,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              3
+            ],
+            [
+              6,
+              0,
+              0
+            ],
+            [
+              1,
+              0,
+              0
+            ],
+            [
+              8,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              6
+            ],
+            [
+              11,
+              0,
+              0
+            ]
+          ],
+          "ignored": 9,
+          "ignored_names": [
+            "both_builders_reject_unsorted_data",
+            "both_tools_reject_crc_corruption_and_truncation",
+            "cross_tool_bgzf_round_trips_cover_levels_workers_and_block_modes",
+            "csi_structures_and_queries_match_at_multiple_minimum_shifts",
+            "custom_columns_headers_and_query_modes_match",
+            "gzi_indexes_and_partial_reads_interoperate_in_both_directions",
+            "partial_index_configuration_uses_htslib_gff_defaults",
+            "tbi_structures_and_queries_match_for_every_preset",
+            "vcf_region_target_header_deduplication_and_list_modes_match"
+          ],
+          "passed": 66,
+          "raw_log": "linux-aarch64/8_Test release.txt",
+          "sha256": "8b16e9341a2671ca4ef9c36189e7b6fbbca288d648eec85b6eac8d1e8266ccc0"
+        }
+      }
+    },
+    "linux-x86_64": {
+      "all_required_steps_success": true,
+      "compiler_actual_lines": [
+        "2026-11-01T13:54:06.4052525Z rustc 1.91.0 (f8297e351 2025-10-28)",
+        "2026-11-01T13:54:06.4053451Z host: x86_64-unknown-linux-gnu",
+        "2026-11-01T13:54:06.4053628Z release: 1.91.0"
+      ],
+      "compiler_log": "linux-x86_64/3_Install Rust 1.91.txt",
+      "full_job_log": {
+        "bytes": 105401,
+        "sha256": "1a2f919c7215ebe4b20aeae7a8742eb507456e46937c0f364cc1bd6f8cede417"
+      },
+      "host": "x86_64-unknown-linux-gnu",
+      "job_id": 124868515882,
+      "profiles": {
+        "Test debug": {
+          "failed": 0,
+          "groups": [
+            [
+              16,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              24,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              3
+            ],
+            [
+              6,
+              0,
+              0
+            ],
+            [
+              1,
+              0,
+              0
+            ],
+            [
+              8,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              6
+            ],
+            [
+              11,
+              0,
+              0
+            ]
+          ],
+          "ignored": 9,
+          "ignored_names": [
+            "both_builders_reject_unsorted_data",
+            "both_tools_reject_crc_corruption_and_truncation",
+            "cross_tool_bgzf_round_trips_cover_levels_workers_and_block_modes",
+            "csi_structures_and_queries_match_at_multiple_minimum_shifts",
+            "custom_columns_headers_and_query_modes_match",
+            "gzi_indexes_and_partial_reads_interoperate_in_both_directions",
+            "partial_index_configuration_uses_htslib_gff_defaults",
+            "tbi_structures_and_queries_match_for_every_preset",
+            "vcf_region_target_header_deduplication_and_list_modes_match"
+          ],
+          "passed": 66,
+          "raw_log": "linux-x86_64/7_Test debug.txt",
+          "sha256": "dadcc86779e9840cbb8058e8e119b00ac9ec8ebfa87c083e0537b5c7ad39fa52"
+        },
+        "Test release": {
+          "failed": 0,
+          "groups": [
+            [
+              16,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              24,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              3
+            ],
+            [
+              6,
+              0,
+              0
+            ],
+            [
+              1,
+              0,
+              0
+            ],
+            [
+              8,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              6
+            ],
+            [
+              11,
+              0,
+              0
+            ]
+          ],
+          "ignored": 9,
+          "ignored_names": [
+            "both_builders_reject_unsorted_data",
+            "both_tools_reject_crc_corruption_and_truncation",
+            "cross_tool_bgzf_round_trips_cover_levels_workers_and_block_modes",
+            "csi_structures_and_queries_match_at_multiple_minimum_shifts",
+            "custom_columns_headers_and_query_modes_match",
+            "gzi_indexes_and_partial_reads_interoperate_in_both_directions",
+            "partial_index_configuration_uses_htslib_gff_defaults",
+            "tbi_structures_and_queries_match_for_every_preset",
+            "vcf_region_target_header_deduplication_and_list_modes_match"
+          ],
+          "passed": 66,
+          "raw_log": "linux-x86_64/8_Test release.txt",
+          "sha256": "8738e5f44ff8501f0fd44fde6e7d3b8b7b047b42b7f80a486634db0899a9acad"
+        }
+      }
+    },
+    "macos-aarch64": {
+      "all_required_steps_success": true,
+      "compiler_actual_lines": [
+        "2026-11-01T13:54:14.9836070Z rustc 1.91.0 (f8297e351 2025-10-28)",
+        "2026-11-01T13:54:14.9854040Z host: aarch64-apple-darwin",
+        "2026-11-01T13:54:14.9854290Z release: 1.91.0"
+      ],
+      "compiler_log": "macos-aarch64/3_Install Rust 1.91.txt",
+      "full_job_log": {
+        "bytes": 67963,
+        "sha256": "5400029c6e9c250bbd405ed0d4e1347d7faed21fa9f8560d8b9bfef40ad25112"
+      },
+      "host": "aarch64-apple-darwin",
+      "job_id": 124868515983,
+      "profiles": {
+        "Test debug": {
+          "failed": 0,
+          "groups": [
+            [
+              16,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              24,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              3
+            ],
+            [
+              6,
+              0,
+              0
+            ],
+            [
+              1,
+              0,
+              0
+            ],
+            [
+              8,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              6
+            ],
+            [
+              11,
+              0,
+              0
+            ]
+          ],
+          "ignored": 9,
+          "ignored_names": [
+            "both_builders_reject_unsorted_data",
+            "both_tools_reject_crc_corruption_and_truncation",
+            "cross_tool_bgzf_round_trips_cover_levels_workers_and_block_modes",
+            "csi_structures_and_queries_match_at_multiple_minimum_shifts",
+            "custom_columns_headers_and_query_modes_match",
+            "gzi_indexes_and_partial_reads_interoperate_in_both_directions",
+            "partial_index_configuration_uses_htslib_gff_defaults",
+            "tbi_structures_and_queries_match_for_every_preset",
+            "vcf_region_target_header_deduplication_and_list_modes_match"
+          ],
+          "passed": 66,
+          "raw_log": "macos-aarch64/7_Test debug.txt",
+          "sha256": "c810837a5ea86cd79cdbb6262b15e4261b4a6d8ae1089802f6f3c4c40b61e9f5"
+        },
+        "Test release": {
+          "failed": 0,
+          "groups": [
+            [
+              16,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              24,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              3
+            ],
+            [
+              6,
+              0,
+              0
+            ],
+            [
+              1,
+              0,
+              0
+            ],
+            [
+              8,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              6
+            ],
+            [
+              11,
+              0,
+              0
+            ]
+          ],
+          "ignored": 9,
+          "ignored_names": [
+            "both_builders_reject_unsorted_data",
+            "both_tools_reject_crc_corruption_and_truncation",
+            "cross_tool_bgzf_round_trips_cover_levels_workers_and_block_modes",
+            "csi_structures_and_queries_match_at_multiple_minimum_shifts",
+            "custom_columns_headers_and_query_modes_match",
+            "gzi_indexes_and_partial_reads_interoperate_in_both_directions",
+            "partial_index_configuration_uses_htslib_gff_defaults",
+            "tbi_structures_and_queries_match_for_every_preset",
+            "vcf_region_target_header_deduplication_and_list_modes_match"
+          ],
+          "passed": 66,
+          "raw_log": "macos-aarch64/8_Test release.txt",
+          "sha256": "1f2bbb15b5cffa1701050c77f98e4897091af1799e6f5144f67ca62e903e11e3"
+        }
+      }
+    },
+    "macos-x86_64": {
+      "all_required_steps_success": true,
+      "compiler_actual_lines": [
+        "2026-11-01T13:54:17.0377660Z rustc 1.91.0 (f8297e351 2025-10-28)",
+        "2026-11-01T13:54:17.0382830Z host: x86_64-apple-darwin",
+        "2026-11-01T13:54:17.0383600Z release: 1.91.0"
+      ],
+      "compiler_log": "macos-x86_64/3_Install Rust 1.91.txt",
+      "full_job_log": {
+        "bytes": 67775,
+        "sha256": "9f113c18d3cb623bba7fb7a09cc8c3213c2c18a3c6aea9caef08e5d73ac369c0"
+      },
+      "host": "x86_64-apple-darwin",
+      "job_id": 124868516057,
+      "profiles": {
+        "Test debug": {
+          "failed": 0,
+          "groups": [
+            [
+              16,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              24,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              3
+            ],
+            [
+              6,
+              0,
+              0
+            ],
+            [
+              1,
+              0,
+              0
+            ],
+            [
+              8,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              6
+            ],
+            [
+              11,
+              0,
+              0
+            ]
+          ],
+          "ignored": 9,
+          "ignored_names": [
+            "both_builders_reject_unsorted_data",
+            "both_tools_reject_crc_corruption_and_truncation",
+            "cross_tool_bgzf_round_trips_cover_levels_workers_and_block_modes",
+            "csi_structures_and_queries_match_at_multiple_minimum_shifts",
+            "custom_columns_headers_and_query_modes_match",
+            "gzi_indexes_and_partial_reads_interoperate_in_both_directions",
+            "partial_index_configuration_uses_htslib_gff_defaults",
+            "tbi_structures_and_queries_match_for_every_preset",
+            "vcf_region_target_header_deduplication_and_list_modes_match"
+          ],
+          "passed": 66,
+          "raw_log": "macos-x86_64/7_Test debug.txt",
+          "sha256": "66600b730ab81720fa7372bc55a409f6ea775dcef8110539ac8bb1d50b2d64c1"
+        },
+        "Test release": {
+          "failed": 0,
+          "groups": [
+            [
+              16,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              24,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              3
+            ],
+            [
+              6,
+              0,
+              0
+            ],
+            [
+              1,
+              0,
+              0
+            ],
+            [
+              8,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              6
+            ],
+            [
+              11,
+              0,
+              0
+            ]
+          ],
+          "ignored": 9,
+          "ignored_names": [
+            "both_builders_reject_unsorted_data",
+            "both_tools_reject_crc_corruption_and_truncation",
+            "cross_tool_bgzf_round_trips_cover_levels_workers_and_block_modes",
+            "csi_structures_and_queries_match_at_multiple_minimum_shifts",
+            "custom_columns_headers_and_query_modes_match",
+            "gzi_indexes_and_partial_reads_interoperate_in_both_directions",
+            "partial_index_configuration_uses_htslib_gff_defaults",
+            "tbi_structures_and_queries_match_for_every_preset",
+            "vcf_region_target_header_deduplication_and_list_modes_match"
+          ],
+          "passed": 66,
+          "raw_log": "macos-x86_64/8_Test release.txt",
+          "sha256": "572b6e77a1903348df2b55b4bab8add347a9dd7845521566f2bdbd7b9c20482f"
+        }
+      }
+    }
+  },
+  "test_execution_instances_default_profiles": 528,
+  "test_execution_instances_live_oracle": 9,
+  "root_adoption": {
+    "packet": "/Volumes/KIOXIA/Developments/tmp/index-hotpath-native-recovery-20261101.M3zdx7",
+    "report_sha256": "302c4ca5d45e9411726eff7c52010a58c5e89f0488e31d7084713e1382e9ff69",
+    "seal_sha256": "eb59c20c3801d638460c9d712ccd36a9c5faec11a743cf27d5e2460701397da9",
+    "original_proposal_sha256": "072c3316bcf2e89fe7367f2e7f12ce684b6fba6b2989a6d2ed5d0166341515c3",
+    "fresh_check_exit": 0,
+    "fresh_check_stdout": "/Volumes/KIOXIA/Developments/tmp/index-hotpath-root-20261101.U2Sk5N/actual-native.stdout",
+    "fresh_check_stdout_sha256": "0f4f5a83f16e75124e712ff0b3e52a2c255220f1d3ab758cc33cc4d11b7489c8",
+    "fresh_check_stderr_bytes": 0,
+    "files_including_seal": 254,
+    "directories_excluding_root": 44,
+    "bytes_including_seal": 2150755,
+    "whole_source_review_and_complete_raw_body_validation": true,
+    "full_data_verifier_read": true,
+    "source_inventory": "/Volumes/KIOXIA/Developments/tmp/index-hotpath-native-recovery-20261101.M3zdx7/SOURCE-INVENTORY.json",
+    "historical_receipts_unchanged": true
+  }
+}
