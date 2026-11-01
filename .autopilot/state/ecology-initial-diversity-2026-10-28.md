@@ -1,5 +1,13 @@
 # Ecology diversity source qualification
 
+## Actual unchanged-owner native-four dispatched
+
+Exact-head Control41268019349 succeeds at
+5affb09ceeae9922f59a22b70736a3cec5ef8c1d. Root verifies live remote main
+and dispatches actual41268190701/1 with green-1 on that head. Native execution,
+full original artifact/log recovery and root acceptance remain required;
+no duplicate run or first-study/performance/publication acceptance is inferred.
+
 ## Unchanged-owner native-four gate reviewed and prepared
 
 Root fully reads the native controller/workflow/ONE preparation test, original
