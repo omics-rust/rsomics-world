@@ -1,5 +1,29 @@
 # Index reference-resource source workflow
 
+## Complete-reference controller reviewed for actual execution
+
+Root reads every line of the three-file controller/workflow/ONE-test wave,
+its report and the reused runtime/ELF helpers. Freshly verifies all26 sealed
+preparation bodies at index-real-performance-prep-20261101.tPD0ec; REPORT
+d7e5e2dcb2a4970a655b3224fa076beb8df8da5eae24f42aa87612a25a4342ce,
+completedfb6f872af0ac924c7cb70193d67cbe3604954842c95858b9b99c41a952f90482.
+One independent integrated review reports no additionalP1/P2 after the root
+corrections below. No helper-test/review ladder or owner edit is introduced.
+
+Root fixes the comparative CPU-budget gap before outcomes: every scientific
+child inherits an explicit first1/4 eligible CPU mask before exec, identical
+for both engines; parent/selected/requested masks are retained. The SAME ONE
+test is RED on the missing CPU argument, then GREEN1/0.125s. On Mac it tests
+the non-affinity stdlib child route; exact-head Linux CI additionally exercises
+and checks the real one-CPU child mask. No Mac science is run.
+
+Native build clears inherited source CPPFLAGS/LDFLAGS/PKG_CONFIG_PATH while
+preserving the admitted loader environment. Both the new real-performance
+plan and connected test are now retained with the actual controllers. The
+fixed168-call/182-output graph, original comparison/performance criteria and
+24GiB+8GiB reservations are unchanged. Exact-head control CI and actual hosted
+acquisition/runtime/reference measurements follow; none are preaccepted.
+
 ## Exact native-four integration accepted
 
 Owner7f2d4fdeda9d0062d10941258b40eee16fdb9042 actualCI41259142238/1

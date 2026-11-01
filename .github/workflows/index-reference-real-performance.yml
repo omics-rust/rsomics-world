@@ -1,0 +1,83 @@
+name: Index complete-reference real performance
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  complete-reference:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 180
+    container:
+      image: gcc:14.3.0-bookworm@sha256:a689e29bc3adf4663ef9a141d23081252764d1319c63f591a027bd6fd676f4c1
+      options: --cpus 4 --memory 8g --memory-swap 8g
+    defaults:
+      run:
+        shell: bash
+    env:
+      INDEX_CONTAINER_DIGEST: sha256:a689e29bc3adf4663ef9a141d23081252764d1319c63f591a027bd6fd676f4c1
+      PYTHONDONTWRITEBYTECODE: '1'
+      PYTHONNOUSERSITE: '1'
+      PYTHONPATH: ''
+      CC: /usr/local/bin/gcc
+      CXX: /usr/local/bin/g++
+      OMP_NUM_THREADS: '1'
+      OPENBLAS_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+
+      - name: Create complete-reference evidence routes
+        run: |
+          set -euo pipefail
+          umask 077
+          ulimit -c 0
+          python3 -B scripts/index_reference_real_performance.py init
+
+      - name: Admit exact native and source then compare the complete reference
+        run: |
+          set -euo pipefail
+          umask 077
+          ulimit -c 0
+          python3 -B scripts/index_reference_real_performance.py execute > "$INDEX_SESSION/controller.stdout.txt" 2> "$INDEX_SESSION/controller.stderr.txt"
+
+      - name: Bind all available original evidence even after failure
+        if: always()
+        run: |
+          set -euo pipefail
+          umask 077
+          ulimit -c 0
+          python3 -B scripts/index_reference_real_performance.py finalize
+
+      - name: Retain mode-preserving native and source runtime
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: index-reference-real-runtime-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ env.INDEX_RUNTIME_CARRIER }}
+          include-hidden-files: true
+          if-no-files-found: warn
+          compression-level: 1
+          retention-days: 90
+
+      - name: Retain all complete inputs outputs and observations
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: index-reference-real-evidence-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            ${{ env.INDEX_SESSION }}/data
+            ${{ env.INDEX_SESSION }}/outputs
+            ${{ env.INDEX_SESSION }}/calls
+            ${{ env.INDEX_SESSION }}/metadata
+            ${{ env.INDEX_SESSION }}/controller
+            ${{ env.INDEX_SESSION }}/*.json
+            ${{ env.INDEX_SESSION }}/*.txt
+          include-hidden-files: true
+          if-no-files-found: error
+          compression-level: 1
+          retention-days: 90
