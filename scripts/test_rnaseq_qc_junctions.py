@@ -98,6 +98,19 @@ class JunctionPreparation(unittest.TestCase):
         self.assertEqual((short["events"]["total"], short["events"]["filtered"], short["rows"]), (1, 1, []))
         self.assertEqual(driver.predicted(plans["case-alias-only"])["rows"][0]["annotation"], "annotated")
         retained = Path(tempfile.mkdtemp(prefix="junction-preparation-contract-"))
+        portable = retained / "portable.tar.gz"
+        with tarfile.open(portable, "w:gz") as archive:
+            body = b"synthetic terminal description"
+            regular = tarfile.TarInfo("python/share/terminfo/a/base")
+            regular.size = len(body)
+            archive.addfile(regular, io.BytesIO(body))
+            alias = tarfile.TarInfo("python/share/terminfo/1/base")
+            alias.type, alias.linkname = tarfile.SYMTYPE, "../a/base"
+            archive.addfile(alias)
+        driver.extract_python(portable, retained / "portable")
+        terminal = retained / "portable/python/share/terminfo/1/base"
+        self.assertTrue(terminal.is_symlink())
+        self.assertEqual(terminal.read_bytes(), body)
         def redirected_download(request, timeout):
             self.assertEqual(request.get_header("Authorization"), "Bearer fake-preparation-sentinel")
             redirected = urllib.request.HTTPRedirectHandler().redirect_request(

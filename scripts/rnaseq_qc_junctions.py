@@ -454,6 +454,7 @@ def extract_python(archive, output):
                 target.chmod(row.mode & 0o777)
         for row in members:
             if row.issym():
+                (output / row.name).parent.mkdir(parents=True, exist_ok=True)
                 (output / row.name).symlink_to(row.linkname)
 
 

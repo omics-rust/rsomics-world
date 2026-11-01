@@ -1,5 +1,44 @@
 # SDD ledger — plan: docs/plans/2026-11-01-rnaseq-qc-junctions.md
 
+## First failure adopted; implicit runtime-link parents corrected
+
+Complete original349706064B ZIP matches API8abe643743cc15dba2ff9ea84ad2b197998289c6ec7407dd4c7aa83da461b04b;
+whole cipher authenticates before TAR349511680B c410d64f0ceb9f8a048e27ffbc65018be30706daba8ca3f173123ae702ad48e6
+is interpreted. All4162 members/3944 regular bodies/modes/mtimes/10 partial
+runtime-link metadata verify against exact membership; ten actual controller
+Git blobs, complete APIs/full logs and originals remain externally retained.
+Root seals/freshly hashes3974 physical files/1396876954B at
+rnaseq-junction-source-failure-20261101.sZjgj3. REPORTc62fa4c11cdee0c7c647834d307a61bb15b252475bd6ae403cceb4bbea9fe9b8;
+SEAL8ba5e5e0ab283587d56ab7fab572db3c23e417328083c71df63267e51bca868c;
+COMPLETEDd630bc3459d8ef3fdf1faba32dd86c419f70ab7d11d5dae3795585722609f7e4.
+
+Actual first failure is FileNotFoundError creating portable terminfo/1/1178
+symlink. Root reads the official retained TAR: link/target exist but link-only
+parent1 is implicit. Existing regular-file extraction makes parents; delayed
+symlink extraction does not. No interpreter/source/qualification has started,
+no ABI/OOM/scientific failure or profile change is claimed.
+
+The SAME connected preparation gains one code-less synthetic archive with
+this omitted-parent structure: RED1/.240s reproduces the exact exception;
+one production mkdir line yields GREEN1/.143s. Original archive/ancestor-link/
+containment checks and all HTTP/auth/private-retention/source policy checks
+remain. No real Linux runtime or science executes on Mac. Controller now
+c1fd8aca6f164ec43c0f5806cc1e73636fc1c376062faca8a2a1d152befc209b;
+test bbc3234c0c30f5099fc6454c546a483fe589d6ad4ac4701038a5d99f8b614493.
+First run remains failed; exact-head Control and one corrected actual source
+attempt are next. No new review ladder or Task2 native acceptance follows.
+
+## First actual source attempt failed; complete recovery active
+
+Actual41275994387/1 at37fc7f7c fails in the runtime/source step; init/public
+transport, sealing and ciphertext-only upload succeed. Full artifact13070453369
+is349706064B, API SHA8abe643743cc15dba2ff9ea84ad2b197998289c6ec7407dd4c7aa83da461b04b.
+Root starts complete original/API/full-log/controller recovery at
+rnaseq-junction-source-failure-20261101.sZjgj3 under the external guard.
+No private archive is interpreted before whole cipher authentication; no
+scientific cause or source/native acceptance is inferred from the step name.
+No unchanged retry is dispatched; original failure remains failed.
+
 ## Actual junction source qualification dispatched
 
 Exact-head Control41275820376 succeeds for
