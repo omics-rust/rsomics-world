@@ -29,6 +29,7 @@ CONTROLLERS = ('scripts/plink_candidate.py', 'scripts/plink_source_on_native.py'
     'scripts/signal_candidate.py', 'scripts/plink_first_workflow_oracle.py',
     'scripts/plink_first_workflow_inputs.py', 'scripts/plink_pgen_capture.cc',
     '.github/workflows/plink-candidate.yml', 'assets/plink-first-runtime-20261031.json')
+GRAPH_POPULATIONS = {'green-1': (114, 50), 'green-2': (114, 50), 'green-3': (116, 52)}
 
 
 def check(condition, message):
@@ -48,6 +49,11 @@ def load(path):
     return json.loads(Path(path).read_bytes())
 
 
+def graph_population(selector):
+    check(selector in GRAPH_POPULATIONS, 'unsupported source graph profile')
+    return GRAPH_POPULATIONS[selector]
+
+
 def hosted():
     check(os.environ.get('GITHUB_ACTIONS') == 'true' and
           os.environ.get('GITHUB_REPOSITORY') == REPOSITORY,
@@ -63,6 +69,7 @@ def hosted():
 
 def prepare_source(world, output, selector):
     check(isinstance(selector, str) and re.fullmatch(r'green-[1-9][0-9]*', selector), 'invalid snapshot selector')
+    graph_population(selector)
     snapshot = Path(world) / SNAPSHOTS / selector
     manifest = read_snapshot_manifest(snapshot)
     portable_names(manifest)
@@ -72,6 +79,8 @@ def prepare_source(world, output, selector):
         'src/io/pgen.rs', 'src/stats/mod.rs', 'src/ld/pairs.rs', 'src/ld/prune.rs',
         'tests/workflow.rs', 'tests/workflow.py', 'tests/compare_workflow.py',
         'tests/COMPARISON.md', 'tests/fixtures/expected/SOURCE.json', 'tests/fixtures/inputs/manifest.json'}
+    if selector == 'green-3':
+        required.add('src/numeric.rs')
     check(required <= manifest.keys(), 'snapshot omits product/source/license/fixture closure')
     check(manifest['tests/COMPARISON.md'] == POLICY and
           manifest['tests/fixtures/expected/SOURCE.json'] == EXPECTED, 'frozen comparison/source contract differs')
@@ -145,7 +154,8 @@ def test_command(mode):
             '--', '--include-ignored', '--nocapture', '--test-threads=1']
 
 
-def report_paths():
+def report_paths(selector='green-1'):
+    reports, _ = graph_population(selector)
     rows = []
     for workers in (1, 4):
         for lane in LANES:
@@ -154,6 +164,8 @@ def report_paths():
                     rows.append(f'{workers}/{lane}.{stage}.qc.{extension}')
             rows += [f'{workers}/{lane}.F.{suffix}' for suffix in ('ld.vcor', 'prune.prune.in', 'prune.prune.out')]
         rows += [f'{workers}/tail.{suffix}' for suffix in ('hardy', 'hwe-log.hardy')]
+        if reports == 116:
+            rows += [f'{workers}/rounding.qc.{suffix}' for suffix in ('hardy', 'hwe-log.hardy')]
     return rows
 
 
@@ -162,11 +174,12 @@ def file_identity(path):
     return dict(bytes=path.stat().st_size, sha256=_hash_file(path))
 
 
-def bind_graph(graph):
+def bind_graph(graph, selector='green-1'):
+    reports_per_worker, _ = graph_population(selector)
     graph = Path(graph).resolve(strict=True)
     record = load(graph / 'native-graph.json')
     check(record['status'] == 'complete_compact_native_graph_passed' and
-          record['principal_report_files'] == 114 and record['raw_cells_checked'] == 74878,
+          record['principal_report_files'] == reports_per_worker and record['raw_cells_checked'] == 74878,
           'whole native graph is not complete at the frozen compact profile')
     keys = {(worker, lane, stage) for worker in (1, 4) for lane in LANES for stage in ('I', 'F', 'P')}
     observed = set(); generations = []
@@ -183,14 +196,15 @@ def bind_graph(graph):
         generations.append(dict(workers=workers, lane=lane, stage=stage,
             prefix=relative, shape=entry['shape'], raw=relative + '.raw.json', files=files))
     check(observed == keys, 'native generation is absent')
-    reports = {name: file_identity(graph / name) for name in report_paths()}
+    reports = {name: file_identity(graph / name) for name in report_paths(selector)}
     portable_names([*reports, *(name for entry in generations for name in entry['files'])])
     return dict(schema='rsomics.plink.portable-generations.v1', graph_sha256=_hash_file(graph / 'native-graph.json'),
                 generations=generations, reports=reports, raw_cells_checked=74878,
-                principal_report_files_per_worker=114, original_absolute_graph_preserved=True)
+                principal_report_files_per_worker=reports_per_worker, original_absolute_graph_preserved=True)
 
 
-def worker_provenance(graph):
+def worker_provenance(graph, selector='green-1'):
+    _, expected = graph_population(selector)
     rows = {}
     for workers in (1, 4):
         for call in sorted((Path(graph) / str(workers) / 'calls').iterdir()):
@@ -203,7 +217,7 @@ def worker_provenance(graph):
             rows[f'{workers}/{call.name}'] = dict(requested=workers, compute=model[field],
                 measure='batch parallel capacity' if field == 'effective_worker_limit' else 'observed distinct part-worker ids',
                 writer=1)
-    check(len(rows) == 50, 'native QC/LD worker report membership differs')
+    check(len(rows) == expected, 'native QC/LD worker report membership differs')
     return rows
 
 
@@ -219,7 +233,8 @@ def tests(root, mode):
         check(sorted(populations) == [0, 0, 1, 4], 'complete4-library+1-workflow test population absent')
         graphs = [path for path in scratch.glob('plink-whole-native-*') if path.is_dir()]
         check(len(graphs) == 1, 'one complete kept native workflow graph required per mode')
-        graph = graphs[0]; binding = bind_graph(graph)
+        selector = load(root / 'selection.json')['snapshot']
+        graph = graphs[0]; binding = bind_graph(graph, selector)
         binary = Path(os.environ['CARGO_TARGET_DIR']) / mode / 'rsomics-plink'
         _regular(binary)
         check(load(graph / 'identity.json')['binary_sha256'] == _hash_file(binary), 'whole graph binary differs')
@@ -227,7 +242,7 @@ def tests(root, mode):
         save(root / ('binary-' + mode + '.json'), dict(sha256=_hash_file(binary),
             compiler_host=os.environ['EXPECTED_HOST'], selection_sha256=_hash_file(root / 'selection.json')))
         save(root / ('generations-' + mode + '.json'), dict(graph=graph.relative_to(root).as_posix(), **binding))
-        save(root / ('workers-' + mode + '.json'), worker_provenance(graph))
+        save(root / ('workers-' + mode + '.json'), worker_provenance(graph, selector))
         records = {}
         for path in sorted((Path(os.environ['CARGO_TARGET_DIR']) / mode / 'build').glob('rsomics-plink-*/out/compiler.txt')):
             target = root / 'cpp-build' / mode / path.parent.parent.name / path.name
@@ -253,7 +268,8 @@ def finalize(root):
             path = root / ('generations-' + mode + '.json')
             if path.is_file():
                 binding = load(path); graph = root / binding['graph']
-                check(bind_graph(graph) == {key: value for key, value in binding.items() if key != 'graph'},
+                check(bind_graph(graph, load(root / 'selection.json')['snapshot']) ==
+                      {key: value for key, value in binding.items() if key != 'graph'},
                       'native generation/report identity changed: ' + mode)
     except (ValueError, OSError) as error:
         failures.append(str(error))

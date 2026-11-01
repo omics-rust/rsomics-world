@@ -58,9 +58,15 @@ class PlinkCandidatePreparationTest(unittest.TestCase):
                                 for value in gate.storage(env, require_space=0)['paths'].values()))
             with self.assertRaises(ValueError):
                 gate.storage(dict(env, TMPDIR=str(root)), require_space=0)
-            for selector in ('missing', '../green-1', 'green-0', 'green-1/extra'):
+            for selector in ('missing', '../green-1', 'green-0', 'green-1/extra', 'green-99'):
                 with self.assertRaises((ValueError, OSError)):
                     gate.prepare_source(ROOT, root / selector.replace('/', '_'), selector)
+            for selector in ('green-1', 'green-2', 'green-3'):
+                prepared = root / ('prepared-' + selector)
+                manifest = gate.prepare_source(ROOT, prepared, selector)
+                self.assertEqual('src/numeric.rs' in manifest, selector == 'green-3')
+                self.assertEqual(hashlib.sha256((prepared / 'source/Cargo.lock').read_bytes()).hexdigest(),
+                                 manifest['Cargo.lock'])
 
             snap = root / 'snapshot'; snap.mkdir()
             payload = b'[package]\nname="transport-only"\n'
@@ -104,6 +110,13 @@ class PlinkCandidatePreparationTest(unittest.TestCase):
                         (graph / str(workers) / f'{lane}.F.{extension}').write_text('transport-only\n')
                 for extension in ('hardy', 'hwe-log.hardy'):
                     (graph / str(workers) / f'tail.{extension}').write_text('transport-only\n')
+                for call in [*(f'{lane}.{name}' for lane in shapes
+                                for name in ('F.stats', 'P.stats', 'F.pairs', 'F.prune')), 'tail.stats']:
+                    directory = graph / str(workers) / 'calls' / call
+                    directory.mkdir(parents=True)
+                    field = 'effective_worker_limit' if call.endswith('.stats') else 'effective_workers'
+                    (directory / 'stdout.txt').write_text(json.dumps(dict(result={
+                        'requested_workers': workers, 'writer_workers': 1, field: workers})))
             record = dict(status='complete_compact_native_graph_passed', generations=generations,
                 principal_report_files=114, raw_cells_checked=74878)
             (graph / 'native-graph.json').write_text(json.dumps(record))
@@ -111,9 +124,26 @@ class PlinkCandidatePreparationTest(unittest.TestCase):
             self.assertEqual(len(mapped['generations']), 36)
             self.assertEqual(mapped['generations'][0]['prefix'], '1/gt.I')
             self.assertEqual(mapped['generations'][-1]['prefix'], '4/rich.P')
+            self.assertEqual(len(gate.worker_provenance(graph, 'green-2')), 50)
+            for workers in (1, 4):
+                for extension in ('hardy', 'hwe-log.hardy'):
+                    (graph / str(workers) / f'rounding.qc.{extension}').write_text('transport-only\n')
+                directory = graph / str(workers) / 'calls/rounding.stats'
+                directory.mkdir(parents=True)
+                (directory / 'stdout.txt').write_text(json.dumps(dict(result={
+                    'requested_workers': workers, 'writer_workers': 1, 'effective_worker_limit': workers})))
+            record['principal_report_files'] = 116
+            (graph / 'native-graph.json').write_text(json.dumps(record))
+            mapped = gate.bind_graph(graph, 'green-3')
+            self.assertEqual(mapped['principal_report_files_per_worker'], 116)
+            self.assertEqual(len(mapped['reports']), 232)
+            self.assertEqual(len(gate.worker_provenance(graph, 'green-3')), 52)
+            for selector in ('green-1', 'green-2', 'green-99'):
+                with self.assertRaises(ValueError): gate.bind_graph(graph, selector)
+                with self.assertRaises(ValueError): gate.worker_provenance(graph, selector)
             record['generations'][0]['prefix'] = str(root / 'outside')
             (graph / 'native-graph.json').write_text(json.dumps(record))
-            with self.assertRaises(ValueError): gate.bind_graph(graph)
+            with self.assertRaises(ValueError): gate.bind_graph(graph, 'green-3')
 
             bodies_by_name = {'runtime/source/plink2': b'not an executable\n',
                               'case/A': b'upper\n', 'case/a': b'lower\n'}

@@ -18,7 +18,7 @@ import zipfile
 import plink_first_workflow_oracle as original
 from plink_candidate import (CONTROLLERS, EXPECTED, LANES, POLICY, REPOSITORY, SCHEMA,
     SNAPSHOTS, _hash_file, check, check_tree,
-    file_identity, load, portable_names, read_snapshot_manifest, save, tree_manifest)
+    file_identity, graph_population, load, portable_names, read_snapshot_manifest, save, tree_manifest)
 
 
 RUN = 41221033473
@@ -258,6 +258,7 @@ def extract_native(archive_path, destination, world, *, expected_head=None, expe
           selection['comparison_sha256'] == POLICY and selection['expected_manifest_sha256'] == EXPECTED,
           'native controller/target/comparison selection differs')
     check(re.fullmatch(r'green-[1-9][0-9]*', selection['snapshot']), 'native snapshot selector differs')
+    reports_per_worker, _ = graph_population(selection['snapshot'])
     snapshot = world / SNAPSHOTS / selection['snapshot']
     for name in ('README.md', 'files.sha256', 'source.tar.gz', 'checksums.sha256'):
         check(_hash_file(root / name) == _hash_file(snapshot / name), 'native source snapshot differs: ' + name)
@@ -287,7 +288,8 @@ def extract_native(archive_path, destination, world, *, expected_head=None, expe
         check(binding['graph_sha256'] == _hash_file(graph / 'native-graph.json') and
               original_graph['status'] == 'complete_compact_native_graph_passed' and
               original_graph['raw_cells_checked'] == binding['raw_cells_checked'] == 74878 and
-              binding['principal_report_files_per_worker'] == 114 and len(binding['generations']) == 36,
+              original_graph['principal_report_files'] == binding['principal_report_files_per_worker'] ==
+              reports_per_worker and len(binding['generations']) == 36,
               'complete restored native graph receipt differs')
         for name, identity in binding['reports'].items():
             check(file_identity(graph / name) == identity, 'portable native principal report differs')

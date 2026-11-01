@@ -1,5 +1,30 @@
 # Fixed private HGDP whole-workflow gate
 
+## Green-3 frozen for the next actual native/source gate
+
+Root reads the complete three-controller/test diff, freeze generator, README
+and preparation report; freshly verifies all323 sealed packet bodies,303
+immutable owner Git blobs and16 unchanged historical authorities. The SAME
+preparation test passes1/0.897s under the external guard. Source owner remains
+clean00ce7b39f8decbeab40ed7f92f1191a304827b74, tree
+af96bfddb49afd0f1f0a6dc2dd553a902bf71a42.
+
+New full-source green-3 archive520088B SHA
+c9d8707c3c4388928851b80ac64417c0ca9d7b9c38544d8eada011b1c547f794;
+manifest b51e9862c7080462edf874c8a8b53e591b3f015e84cb3af54b787318bf7889ce.
+Selector-specific checks preserve green1/2 at114 reports/50 worker records;
+green3 binds the actual116/52. Existing4lib+1whole,36 generations/74878 cells
+and56-operation upstream consumer plan remain unchanged. Added rounding
+witnesses are native checks, not new executed upstream operations.
+
+Packet plink-green3-source-prep-20261101.dYR2iivB REPORT
+112da4cc8d14fab49238087d3eac7351fe9960bfe818e37ad2736f8f306b2d91;
+COMPLETED50015ee436a19159e41e1fd2d22d9009476bb42751b52de57ede53282fe0db8a.
+Exact-head control CI and the manual green3 four-native/source execution are
+next. No new native acceptance, source/relink bundle or formal real-HGDP
+performance result is conferred by this freeze. Existing green2 authorities
+and real-performance selector remain unchanged.
+
 ## Full real LD correspondence and bounded-cache material wave
 
 Root reads all nine changed paths/full report/primary source anchors; one
