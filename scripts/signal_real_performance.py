@@ -10,11 +10,13 @@ import math
 import os
 from pathlib import Path
 import platform
+import posixpath
 import re
 import resource
 import shlex
 import shutil
 import signal
+import socket
 import sqlite3
 import stat
 import statistics
@@ -23,6 +25,7 @@ import subprocess
 import sys
 import tarfile
 import time
+import uuid
 import urllib.request
 import zipfile
 
@@ -61,6 +64,91 @@ CONTROLLERS = ('signal_real_performance.py', 'signal_real_performance_check.py',
                'test_signal_real_performance.py', 'signal_first_workflow_oracle.py',
                'signal_candidate.py', 'signal_source_on_native.py', 'infercnv_source_snapshot.py',
                'verify_infercnv_oracle_artifact.py')
+SSH_PREFIX = Path('/home/runner/work/_temp/signal-evidence/runtime')
+IMAGE_ASSET = 'assets/signal-ssh-image-20261101.json'
+
+
+def execution_policy(idle_confirmed, shared, context):
+    check(not (idle_confirmed and shared), 'shared execution cannot claim an idle host')
+    if shared:
+        check(context.get('kind')=='ssh-docker-shared' and context.get('provider_admitted') is True,
+              'HELD: genuine SSH context and provider admission required before shared campaign')
+        return 'shared/non-exclusive; original idle-host and isolated scalability gates unearned'
+    check(idle_confirmed, 'otherwise-idle host must be explicitly confirmed')
+    return 'operator-confirmed otherwise-idle host'
+
+
+def verify_runtime_carrier(carrier, destination=None):
+    if destination is not None:
+        destination=Path(destination)
+        check(destination==SSH_PREFIX, 'restore must retain the exact accepted runtime prefix')
+        if destination.exists() or destination.is_symlink():
+            raise FileExistsError('fresh runtime prefix required; existing data is never replaced')
+    with tarfile.open(carrier,'r:') as archive:
+        members=archive.getmembers(); by_name={row.name:row for row in members}
+        check(len(members)==len(by_name)<=100000, 'duplicate/oversized original TAR inventory')
+        for row in members:
+            check(_archive_name(row.name,False)==row.name and row.type in (tarfile.REGTYPE,tarfile.DIRTYPE,tarfile.SYMTYPE),
+                  'unsafe original native TAR member')
+            for parent in Path(row.name).parents:
+                if str(parent)!='.':check(str(parent) in by_name and by_name[str(parent)].isdir(), 'TAR parent is not a directory')
+        index=by_name['signal-evidence/artifact-manifest.json']
+        check(index.isfile() and index.size<16*2**20, 'original source manifest absent or oversized')
+        model=json.load(archive.extractfile(index))
+        check(model['schema']=='rsomics.signal.source-artifact.v1', 'original source manifest schema differs')
+        expected=model['files']; identities={}; links={}
+        def resolve(name, seen=()):
+            check(name in by_name and name not in seen and len(seen)<32, 'original link escapes carrier or cycles')
+            row=by_name[name]
+            if not row.issym():return row
+            target=row.linkname
+            if target.startswith('/'):
+                path=Path(target)
+                check(path.is_relative_to(SSH_PREFIX.parent), 'absolute original link escapes accepted prefix')
+                target='signal-evidence/'+path.relative_to(SSH_PREFIX.parent).as_posix()
+            else:target=posixpath.normpath(posixpath.join(posixpath.dirname(name),target))
+            check(target=='signal-evidence' or target.startswith('signal-evidence/'), 'relative original link escapes carrier')
+            return resolve(target,(*seen,name))
+        for row in members:
+            if row.isfile():
+                with archive.extractfile(row) as stream:
+                    identities[row.name]=dict(bytes=row.size,sha256=hashlib.file_digest(stream,'sha256').hexdigest())
+            elif row.issym():links[row.name]=resolve(row.name).name
+        observed={name.removeprefix('signal-evidence/'):value for name,value in identities.items()
+                  if Path(name).name!='artifact-manifest.json'}
+        for name,target in links.items():
+            if target in identities:observed[name.removeprefix('signal-evidence/')]=identities[target]
+        check(observed==expected, 'complete original TAR manifest membership/body differs')
+        runtime={row.name:row for row in members if row.name.startswith('signal-evidence/runtime/')}
+        check(runtime, 'original runtime missing')
+        for name,row in runtime.items():
+            check(not row.mode&0o7000, 'privileged runtime mode refused')
+            if row.issym():check(links[name].startswith('signal-evidence/runtime/'), 'runtime link leaves restored runtime')
+        if destination is not None:
+            check(destination.parent.resolve(strict=True)==destination.parent, 'runtime parent must not traverse links')
+            destination.mkdir(mode=0o700)
+            for name,row in runtime.items():
+                path=destination/name.removeprefix('signal-evidence/runtime/')
+                path.parent.mkdir(parents=True,exist_ok=True,mode=0o700)
+                if row.isdir():path.mkdir(exist_ok=True,mode=0o700)
+                elif row.isfile():
+                    with archive.extractfile(row) as source,path.open('xb') as output:shutil.copyfileobj(source,output,1024*1024)
+                    path.chmod(row.mode)
+            for name,row in runtime.items():
+                if row.issym():
+                    path=destination/name.removeprefix('signal-evidence/runtime/')
+                    path.symlink_to(row.linkname)
+            for name,row in runtime.items():
+                path=destination/name.removeprefix('signal-evidence/runtime/')
+                if not row.isdir() and not (row.issym() and by_name[links[name]].isdir()):
+                    check(_hash_file(path)==observed[name.removeprefix('signal-evidence/')]['sha256'], 'restored runtime body differs')
+            for name,row in runtime.items():
+                if row.isdir():(destination/name.removeprefix('signal-evidence/runtime/')).chmod(row.mode)
+            destination.chmod(by_name['signal-evidence/runtime'].mode)
+        return dict(verified_manifest_entries=len(observed),runtime_members=len(runtime),
+                    carrier_sha256=_hash_file(carrier),original_prefix=str(SSH_PREFIX),
+                    self_manifest_exceptions=[name for name in identities if Path(name).name=='artifact-manifest.json'],
+                    restored=destination is not None,scientific_execution=False)
 
 
 def check(condition, message):
@@ -140,12 +228,13 @@ def resource_plan(cpus, allowed, memory, free):
         exact_tree_peak='optional predelegated cgroup only; otherwise unavailable')
 
 
-def setup(root, cpus):
+def setup(root, cpus, execution_ledger=None):
     root = Path(root).absolute()
     check(not root.exists() and root.parent.resolve(strict=True) == root.parent, 'new real campaign root required')
     check(platform.system()=='Linux' and platform.machine()=='x86_64', 'real execution requires Linux x86_64')
     values = cpu_set(cpus)
     plan = resource_plan(values, os.sched_getaffinity(0), meminfo(), shutil.disk_usage(root.parent).free)
+    context=validate_ssh_context(load(execution_ledger),root) if execution_ledger is not None else None
     root.mkdir()
     paths = {name:root/relative for name,relative in {
         'EVIDENCE':'evidence', 'TMPDIR':'scratch', 'XDG_CACHE_HOME':'cache',
@@ -153,6 +242,9 @@ def setup(root, cpus):
         'CARGO_HOME':'unused-cargo-home', 'CARGO_TARGET_DIR':'unused-cargo-target', 'RUSTUP_HOME':'unused-rustup-home'}.items()}
     for path in paths.values():
         path.mkdir(parents=True, exist_ok=True)
+    if execution_ledger is not None:
+        save(root/'evidence/execution-context.json',context)
+        paths['HOME']=root/'user-home';paths['HOME'].mkdir()
     environment = dict(paths, RUNNER_TEMP=root, PYTHONDONTWRITEBYTECODE='1', PYTHONNOUSERSITE='1',
         PIP_CONFIG_FILE='/dev/null', PIP_DISABLE_PIP_VERSION_CHECK='1', PIP_NO_INPUT='1')
     environment.update({name:'1' for name in oracle.THREADS})
@@ -163,6 +255,119 @@ def setup(root, cpus):
         available_memory=meminfo(), disk=shutil.disk_usage(root)._asdict(),
         affinity=sorted(os.sched_getaffinity(0)), durability_claim=False, cache='warm-cache only'))
     return root
+
+
+def image_authority(world):
+    row=load(Path(world)/IMAGE_ASSET)
+    check(row['schema']=='rsomics.signal.ssh-image.v1' and row['platform']=='linux/amd64', 'image authority differs')
+    for name in ('index','manifest','config'):
+        check('sha256:'+hashlib.sha256(row['raw'][name].encode()).hexdigest()==row[name+'_digest'], 'official image metadata body differs')
+    index,manifest,config=[json.loads(row['raw'][name]) for name in ('index','manifest','config')]
+    check(any(x['digest']==row['manifest_digest'] and x['platform']==dict(os='linux',architecture='amd64') for x in index['manifests']) and
+          manifest['config']['digest']==row['config_digest'] and config['os']=='linux' and config['architecture']=='amd64',
+          'official image platform/config chain differs')
+    return row
+
+
+def record_ssh_context(parent, world, container, cpus, output):
+    check(platform.system()=='Linux' and platform.machine()=='x86_64' and os.environ.get('SSH_CONNECTION'),
+          'HELD: run context capture in the actual Linux SSH session')
+    ancestors=[];pid=os.getppid()
+    for _ in range(32):
+        path=Path('/proc')/str(pid)
+        ancestors.append((path/'comm').read_text().strip())
+        text=(path/'stat').read_text();pid=int(text[text.rfind(')')+2:].split()[1])
+        if pid<=1:break
+    check(any(name.startswith('sshd') for name in ancestors), 'HELD: no actual sshd ancestry')
+    check(re.fullmatch('[0-9a-f]{12,64}',container), 'actual Docker container ID required')
+    parent=Path(parent).resolve(strict=True)
+    check(parent.stat().st_uid==os.getuid() and parent.stat().st_mode&0o077==0, 'private user-owned host work parent required')
+    raw=subprocess.check_output(['docker','inspect','--type','container',container]);items=json.loads(raw)
+    check(len(items)==1 and items[0]['State']['Running'], 'HELD: existing running task container required')
+    actual=items[0];image_raw=subprocess.check_output(['docker','image','inspect',actual['Image']]);image=json.loads(image_raw)[0]
+    authority=image_authority(world);base=json.loads(authority['raw']['config'])['rootfs']['diff_ids']
+    check(image['RootFS']['Layers'][:len(base)]==base and image['Config']['Labels'].get('org.rsomics.signal.base-manifest')==authority['manifest_digest'] and
+          image['Config']['Labels'].get('org.rsomics.signal.recipe-sha256')==_hash_file(Path(world)/'assets/signal-ssh.Dockerfile'),
+          'derivative image does not retain the admitted official base')
+    config=actual['HostConfig'];mounts={row['Destination']:row for row in actual['Mounts']}
+    check(not {value.split('=',1)[0] for value in actual['Config']['Env']} &
+          {'GITHUB_ACTIONS','RUNNER_ENVIRONMENT','GITHUB_SHA','GH_TOKEN','GITHUB_TOKEN'},
+          'scientific container must not contain Actions identity flags or API credentials')
+    check(not config['Privileged'] and config['ReadonlyRootfs'] and not config.get('PidMode') and not config.get('IpcMode')=='host' and
+          config.get('NetworkMode')=='none' and 'ALL' in (config.get('CapDrop') or []) and
+          any(value.startswith('no-new-privileges') for value in config.get('SecurityOpt') or []),
+          'private nonprivileged read-only-root container required')
+    check(set(cpu_set(config['CpusetCpus']))==set(cpu_set(cpus)), 'actual Docker CPU binding differs')
+    check(mounts[str(SSH_PREFIX.parent.parent)]['RW'] and Path(mounts[str(SSH_PREFIX.parent.parent)]['Source']).resolve()==parent and
+          all(name in mounts and not mounts[name]['RW'] for name in ('/work/world','/capsule')),
+          'actual work/world/capsule Docker mounts differ')
+    check(not any(row['Destination']=='/var/run/docker.sock' for row in actual['Mounts']), 'Docker socket must not enter scientific container')
+    originals={}
+    for name,body in (('ssh-container-inspect.json',raw),('ssh-image-inspect.json',image_raw)):
+        path=Path(output).parent/name
+        with path.open('xb') as stream:stream.write(body)
+        originals[name]=dict(bytes=len(body),sha256=hashlib.sha256(body).hexdigest())
+    save(output,dict(schema='rsomics.signal.execution-context.v1',kind='ssh-docker-shared',execution_id=str(uuid.uuid4()),
+        host=platform.node(),boot_id=Path('/proc/sys/kernel/random/boot_id').read_text().strip(),
+        ssh_connection=os.environ['SSH_CONNECTION'],sshd_ancestry=ancestors,host_uid=os.getuid(),
+        controller=image_and_controller(world),
+        host_parent=str(parent),container=actual,image=image,inspect_originals=originals,image_authority_sha256=_hash_file(Path(world)/IMAGE_ASSET),
+        cpus=cpu_set(cpus),provider_admitted=False,original_idle_host_gate_earned=False,
+        scientific_execution=False,source_of_truth='actual SSH process ancestry and existing Docker daemon inspect; not a GitHub execution'))
+
+
+def validate_ssh_context(context, root):
+    check(context.get('schema')=='rsomics.signal.execution-context.v1' and context.get('kind')=='ssh-docker-shared' and
+          str(uuid.UUID(context['execution_id']))==context['execution_id'], 'genuine SSH execution ledger required')
+    check(not any(os.environ.get(name) for name in ('GITHUB_ACTIONS','RUNNER_ENVIRONMENT','GITHUB_SHA','GH_TOKEN','GITHUB_TOKEN')),
+          'SSH scientific context must not impersonate Actions or contain an API token')
+    check(Path(root)==SSH_PREFIX.parent and socket.gethostname()==context['container']['Config']['Hostname'] and
+          Path('/proc/sys/kernel/random/boot_id').read_text().strip()==context['boot_id'] and
+          os.getuid()==int(context['container']['Config']['User'].split(':')[0]), 'actual container/prefix/host identity differs')
+    check(set(os.sched_getaffinity(0))==set(context['cpus']), 'actual scientific container affinity differs')
+    return context
+
+
+def native_carrier(root):
+    target=root/'original.tar'
+    with zipfile.ZipFile(root/'artifact.zip') as zipped:
+        rows=zip_members(zipped);files=[row for row in rows if not row.is_dir()]
+        check(len(files)==1 and files[0].filename.endswith('.tar') and zipped.testzip() is None, 'original native carrier differs')
+        with zipped.open(files[0]) as source,target.open('xb') as output:shutil.copyfileobj(source,output,1024*1024)
+    return target
+
+
+def seal_capsule(output,world,selector,native_zip,input_zip):
+    output=Path(output);output.mkdir(mode=0o700)
+    receipt,adoption=load_receipt(world,selector)
+    for name,authority,original in (('native',receipt,native_zip),('input',INPUT,input_zip)):
+        acquire_artifact(output/name,authority,name=='native',original_zip=original)
+    extract_native(output/'native',receipt,world)
+    proof=verify_runtime_carrier(native_carrier(output/'native'))
+    with zipfile.ZipFile(output/'input/artifact.zip') as archive:
+        check(len(zip_members(archive))==521 and archive.testzip() is None, 'original input carrier differs')
+        for name,(size,sha) in INPUT_FILES.items():
+            with archive.open(name) as stream:actual=hashlib.file_digest(stream,'sha256').hexdigest()
+            check(actual==sha and (size is None or archive.getinfo(name).file_size==size), 'original input body differs')
+    save(output/'capsule.json',dict(schema='rsomics.signal.ssh-capsule.v1',receipt=receipt,receipt_adoption=adoption,
+        runtime=proof,controller=image_and_controller(world),files=manifest(output),scientific_execution=False))
+
+
+def image_and_controller(world):
+    world=Path(world)
+    return dict(head=subprocess.check_output(['git','-C',str(world),'rev-parse','HEAD'],text=True).strip(),
+                image_authority=image_authority(world),recipe_sha256=_hash_file(world/'assets/signal-ssh.Dockerfile'),
+                files={name:_hash_file(world/'scripts'/name) for name in CONTROLLERS})
+
+
+def verified_capsule(path,world,receipt,adoption):
+    path=Path(path).resolve(strict=True);row=load(path/'capsule.json')
+    check(row['schema']=='rsomics.signal.ssh-capsule.v1' and row['receipt']==receipt and row['receipt_adoption']==adoption and
+          row['controller']==image_and_controller(world),
+          'capsule native/controller/official-image authority differs')
+    current=manifest(path);current.pop('capsule.json')
+    check(current==row['files'] and row['runtime']['scientific_execution'] is False, 'complete capsule membership/body differs')
+    return path
 
 
 def committed_receipt(world, selector):
@@ -257,22 +462,27 @@ def zip_members(archive):
     return rows
 
 
-def acquire_artifact(root, receipt, native=False):
+def acquire_artifact(root, receipt, native=False, capsule=None, original_zip=None):
     root.mkdir(parents=True)
-    run = api(f"actions/runs/{receipt['run_id']}/attempts/{receipt['run_attempt']}",root/'run.json')
+    def metadata(endpoint,name):
+        if capsule is None:return api(endpoint,root/name)
+        shutil.copyfile(Path(capsule)/name,root/name);return load(root/name)
+    run = metadata(f"actions/runs/{receipt['run_id']}/attempts/{receipt['run_attempt']}",'run.json')
     _run(root/'run.json',receipt)
-    item = api(f"actions/artifacts/{receipt['artifact_id']}",root/'artifact.json')
+    item = metadata(f"actions/artifacts/{receipt['artifact_id']}",'artifact.json')
     check(item.get('size_in_bytes')==receipt['size_in_bytes'] and item.get('expired') is False and
           item.get('digest')=='sha256:'+receipt['artifact_sha256'], 'current artifact size/digest/admission differs')
     if native:
-        jobs=api(f"actions/runs/{receipt['run_id']}/attempts/{receipt['run_attempt']}/jobs?per_page=100",root/'jobs.json')
+        jobs=metadata(f"actions/runs/{receipt['run_id']}/attempts/{receipt['run_attempt']}/jobs?per_page=100",'jobs.json')
         check(jobs['total_count']==len(jobs['jobs'])==4 and {j['name'] for j in jobs['jobs']}==set(TARGETS),
               'actual four native jobs are absent')
         check(all(j['conclusion']=='success' and j['status']=='completed' and
                   j['run_id']==receipt['run_id'] and j['head_sha']==receipt['head_sha'] and
                   j['run_attempt']==receipt['run_attempt'] for j in jobs['jobs']),
               'native platform job failed or identity differs')
-    api(f"actions/artifacts/{receipt['artifact_id']}/zip",root/'artifact.zip',True)
+    if capsule is not None:shutil.copyfile(Path(capsule)/'artifact.zip',root/'artifact.zip')
+    elif original_zip is not None:shutil.copyfile(original_zip,root/'artifact.zip')
+    else:api(f"actions/artifacts/{receipt['artifact_id']}/zip",root/'artifact.zip',True)
     _artifact(root/'artifact.json',receipt,root/'artifact.zip')
     check(_hash_file(root/'artifact.zip')==receipt['artifact_sha256'], 'downloaded original artifact differs')
     return run
@@ -373,28 +583,38 @@ def extract_inputs(root):
     return selected/'benchmark/inputs'
 
 
-def acquire(root,world,selector):
+def acquire(root,world,selector,capsule=None):
     root=checked_paths(root); world=Path(world)
+    check(not (root/'evidence/execution-context.json').exists() or capsule is not None,
+          'HELD: SSH acquisition requires its verified capsule, never an API token')
     receipt,adoption=load_receipt(world,selector)
     controller_binding(root,world)
+    if capsule is not None:
+        context=validate_ssh_context(load(root/'evidence/execution-context.json'),root)
+        check(context['controller']==image_and_controller(world), 'actual SSH/controller Git identity differs')
+        capsule=verified_capsule(capsule,world,receipt,adoption)
     native=root/'evidence/acquisition/native'
-    acquire_artifact(native,receipt,True)
+    acquire_artifact(native,receipt,True,capsule/'native' if capsule else None)
     binary=extract_native(native,receipt,world)
     save(root/'evidence/native-admission.json',dict(receipt_selector=selector,receipt_sha256=adoption['sha256'],
         receipt=receipt,receipt_adoption=adoption,binary=str(binary),binary_sha256=_hash_file(binary)))
     inputs=root/'evidence/acquisition/input'
-    acquire_artifact(inputs,INPUT)
+    acquire_artifact(inputs,INPUT,capsule=capsule/'input' if capsule else None)
     extract_inputs(inputs)
     check(_hash_file(world/'assets/signal-first-runtime-20261031.json')==LOCK_SHA and _hash_file(oracle.__file__)==PRODUCER_SHA,
           'immutable source acquisition helper/lock changed')
-    oracle.acquire_runtime(world/'assets/signal-first-runtime-20261031.json',root/'runtime')
+    if capsule is None:
+        check(not (root/'evidence/execution-context.json').exists(), 'SSH source acquisition requires its verified capsule')
+        oracle.acquire_runtime(world/'assets/signal-first-runtime-20261031.json',root/'runtime')
+    else:
+        save(root/'evidence/runtime-restore.json',verify_runtime_carrier(native_carrier(native),root/'runtime'))
 
 
 def controller_binding(root,world):
     world=Path(world).resolve(strict=True)
     files=['scripts/'+name for name in CONTROLLERS]+[
         '.github/workflows/signal-real-performance.yml','assets/signal-first-runtime-20261031.json',
-        'docs/plans/2026-10-31-signal-whole-workflow-performance.md']
+        'docs/plans/2026-10-31-signal-whole-workflow-performance.md',IMAGE_ASSET,'assets/signal-ssh.Dockerfile']
     head=subprocess.run(['git','-C',str(world),'rev-parse','HEAD'],check=True,
                         capture_output=True,text=True).stdout.strip()
     check(re.fullmatch('[0-9a-f]{40}',head),'actual performance controller commit absent')
@@ -403,6 +623,132 @@ def controller_binding(root,world):
     if target.exists(): check(load(target)==current,'performance controller bytes/commit changed after acquisition')
     else: save(target,current)
     return current
+
+
+def admission_command(output, argv):
+    output=Path(output);output.mkdir(parents=True)
+    save(output/'request.json',dict(argv=list(map(str,argv)),timeout_seconds=30))
+    try:
+        with (output/'stdout.txt').open('xb') as stdout,(output/'stderr.txt').open('xb') as stderr:
+            completed=subprocess.run(list(map(str,argv)),stdout=stdout,stderr=stderr,timeout=30)
+    except (OSError,subprocess.TimeoutExpired) as error:
+        save(output/'command.json',dict(status='failed',type=type(error).__name__,message=str(error)))
+        raise
+    save(output/'command.json',dict(status=completed.returncode,
+        stdout_sha256=_hash_file(output/'stdout.txt'),stderr_sha256=_hash_file(output/'stderr.txt')))
+    check(completed.returncode==0,'HELD: admission command failed; originals retained at '+str(output))
+    return (output/'stdout.txt').read_text()+(output/'stderr.txt').read_text()
+
+
+def ssh_admission(root,world):
+    root=checked_paths(root);world=Path(world)
+    context=validate_ssh_context(load(root/'evidence/execution-context.json'),root)
+    check(not os.environ.get('LD_PRELOAD') and not os.environ.get('LD_LIBRARY_PATH'), 'unbound loader overrides refused')
+    for tool in ('readelf','ldd','ldconfig','git'):
+        check(shutil.which(tool), 'HELD: derivative system tool missing: '+tool)
+    closure=Path('/usr/local/share/rsomics-system-closure')
+    bodies={}
+    for line in (closure/'bodies.sha256').read_text().splitlines():
+        sha,name=line.split(None,1);name=name.strip()
+        check(re.fullmatch('[0-9a-f]{64}',sha) and _archive_name(name,False)==name, 'invalid system closure index')
+        path=closure/name;check(path.is_file() and not path.is_symlink() and _hash_file(path)==sha, 'actual system package/index body differs')
+        bodies[name]=dict(bytes=path.stat().st_size,sha256=sha)
+    check(any(name.startswith('archives/') and name.endswith('.deb') for name in bodies) and
+          any('InRelease' in name for name in bodies), 'retained official APT originals/index absent')
+    save(root/'evidence/system-tool-closure.json',dict(files=bodies,packages=(closure/'packages.tsv').read_text(),
+        packages_sha256=_hash_file(closure/'packages.tsv'),image=context['image']['Id'],
+        dockerfile_sha256=_hash_file(world/'assets/signal-ssh.Dockerfile'),source_runtime_rebuilt=False))
+    command_number=0
+    def command(argv):
+        nonlocal command_number
+        command_number+=1
+        return admission_command(root/'evidence/ssh-admission-commands'/str(command_number),argv)
+    cache={}
+    def elf(path):
+        path=Path(path).resolve(strict=True)
+        if path in cache:return cache[path]
+        with path.open('rb') as stream:header=stream.read(20)
+        check(header[:6]==b'\x7fELF\x02\x01' and int.from_bytes(header[18:20],'little')==62, 'actual ELF class/ISA differs: '+str(path))
+        text=command(['readelf','--program-headers','--dynamic','--version-info',path])
+        needs={};current=None;section=''
+        for line in text.splitlines():
+            if line.startswith('Version '):section=line
+            if 'Version needs section' in section:
+                found=re.search(r'File:\s*(\S+)',line)
+                if found:current=found[1];needs.setdefault(current,set())
+                found=re.search(r'Name:\s*(\S+)',line)
+                if found and current:needs[current].add(found[1])
+        definitions=set(re.findall(r'Name:\s*(\S+)',text.split('Version definition section',1)[-1].split('Version needs section',1)[0])) if 'Version definition section' in text else set()
+        result=dict(needed=re.findall(r'\(NEEDED\).*?\[([^\]]+)\]',text),versions=needs,definitions=definitions,
+                    sonames=re.findall(r'\(SONAME\).*?\[([^\]]+)\]',text),sha256=_hash_file(path))
+        interpreter=re.findall(r'Requesting program interpreter:\s*([^\]]+)\]',text)
+        result['interpreter']=interpreter[0] if interpreter else None
+        cache[path]=result;return result
+    candidates={}
+    for line in command(['ldconfig','-p']).splitlines():
+        match=re.match(r'\s*(\S+)\s+\([^)]*x86-64[^)]*\)\s+=>\s+(/\S+)',line)
+        if match:candidates.setdefault(match[1],set()).add(Path(match[2]).resolve(strict=True))
+    runtime=root/'runtime';paths={Path(load(root/'evidence/native-admission.json')['binary']).resolve(strict=True)}
+    for path in runtime.rglob('*'):
+        if path.is_file() and ('.so' in path.name or path.name.startswith('python')):
+            with path.open('rb') as stream:magic=stream.read(4)
+            if magic==b'\x7fELF':paths.add(path.resolve(strict=True))
+    for path in paths:
+        info=elf(path)
+        for name in [path.name,*info['sonames']]:candidates.setdefault(name,set()).add(path)
+    slots=[]
+    for path in sorted(paths):
+        info=elf(path)
+        if info['interpreter']:elf(Path(info['interpreter']).resolve(strict=True))
+        for name in info['needed']:
+            providers={Path(name.replace('$ORIGIN',str(path.parent))).resolve(strict=True)} if '/' in name else candidates.get(name,set())
+            required=info['versions'].get(name,set())
+            eligible=[provider for provider in sorted(providers) if required<=elf(provider)['definitions']]
+            check(eligible, 'HELD: actual provider/version closure unresolved: '+str(path)+' → '+name)
+            slots.append(dict(elf=str(path),needed=name,versions=sorted(required),providers=list(map(str,eligible))))
+    for path in (Path(load(root/'evidence/native-admission.json')['binary']),runtime/'python/bin/python3'):
+        text=command(['ldd',path])
+        check('not found' not in text, 'HELD: actual executable-root loader failure')
+    save(root/'evidence/ssh-static-admission.json',dict(passed=True,slots=slots,
+        bodies={str(path):row['sha256'] for path,row in cache.items()},container_id=context['container']['Id'],
+        scientific_import=False,scientific_execution=False))
+    oracle.capture(root/'evidence/ssh-source-import',[runtime/'venv/bin/python','-B',Path(__file__),'ssh-source-probe',
+        '--root',root,'--world',world])
+    probe=load(root/'evidence/ssh-source-import/providers.json')
+    save(root/'evidence/ssh-provider-admission.json',dict(provider_admitted=True,container_id=context['container']['Id'],
+        static_sha256=_hash_file(root/'evidence/ssh-static-admission.json'),mapped=probe,
+        scientific_import=True,scientific_producer_executed=False,
+        qualified_graphs=False,performance_claim=False,release=False))
+
+
+def ssh_source_probe(root,world):
+    root=checked_paths(root)
+    context=validate_ssh_context(load(root/'evidence/execution-context.json'),root)
+    static=load(root/'evidence/ssh-static-admission.json')
+    check(static['passed'] and static['container_id']==context['container']['Id'] and
+          all(_hash_file(path)==sha for path,sha in static['bodies'].items()), 'static runtime/provider bodies changed before imports')
+    import signal_real_performance_check as checker
+    checker.pinned_runtime(root,world)
+    mapped={}
+    for line in Path('/proc/self/maps').read_text().splitlines():
+        fields=line.split()
+        if len(fields)<6 or not fields[-1].startswith('/'):continue
+        path=Path(fields[-1]).resolve(strict=True)
+        with path.open('rb') as stream:magic=stream.read(4)
+        if magic!=b'\x7fELF':continue
+        check(str(path) in static['bodies'] and _hash_file(path)==static['bodies'][str(path)],
+              'actual imported ELF provider was not statically admitted: '+str(path))
+        mapped[str(path)]=static['bodies'][str(path)]
+    save(root/'evidence/ssh-source-import/providers.json',mapped)
+
+
+def ssh_campaign_context(root):
+    context=validate_ssh_context(load(root/'evidence/execution-context.json'),root)
+    admission=load(root/'evidence/ssh-provider-admission.json');static=load(root/'evidence/ssh-static-admission.json')
+    check(admission['provider_admitted'] and admission['container_id']==context['container']['Id'] and
+          admission['static_sha256']==_hash_file(root/'evidence/ssh-static-admission.json') and
+          all(_hash_file(path)==sha for path,sha in static['bodies'].items()), 'SSH runtime/provider admission changed')
+    return dict(context,provider_admitted=True)
 
 
 def frozen_inputs(inputs,qualification):
@@ -553,6 +899,7 @@ def partition_stream(source, outputs, database):
 def prepare(root, world):
     import signal_real_performance_check as checker
     root=checked_paths(root); world=Path(world)
+    if (root/'evidence/execution-context.json').exists():ssh_campaign_context(root)
     checker.pinned_runtime(root,world)
     admission=load(root/'evidence/native-admission.json')
     check(_hash_file(admission['binary'])==admission['binary_sha256'],'admitted native binary changed')
@@ -794,10 +1141,12 @@ def strict_decision(rows,*,stage=False):
         filesystem_blocks_are_not_bytes=True,durability_claim=False)
 
 
-def campaign(root,world,selector,idle_confirmed,cgroup_parent=None):
+def campaign(root,world,selector,idle_confirmed,cgroup_parent=None,shared_host=False):
     import signal_real_performance_check as checker
     root=checked_paths(root); world=Path(world)
-    check(idle_confirmed,'otherwise-idle host must be explicitly confirmed; capability inventory is not permission')
+    context=ssh_campaign_context(root) if shared_host else {}
+    host_policy=execution_policy(idle_confirmed,shared_host,context)
+    check(shared_host or not (root/'evidence/execution-context.json').exists(), 'SSH context requires explicit shared-host mode')
     controller_binding(root,world)
     receipt,adoption=load_receipt(world,selector)
     admission=load(root/'evidence/native-admission.json')
@@ -855,10 +1204,12 @@ def campaign(root,world,selector,idle_confirmed,cgroup_parent=None):
     after=checker.pinned_runtime(root,world)
     check(before==after and _hash_file(binary)==receipt['binary_sha256'],'qualified runtime/native changed during campaign')
     frozen_inputs(inputs,qualification)
+    if shared_host:ssh_campaign_context(root)
     controller_binding(root,world)
     save(root/'evidence/summary.json',dict(decisions=decisions,stage_decisions=stage_decisions,all_samples=results,
         passed=all(r['strict_advantage'] for r in decisions.values()) and all(r['strict_advantage'] for r in stage_decisions.values()),
         native_four_and_source_adoption=receipt,receipt_adoption=adoption,sorted_bed='observational export only; default policy pending',
+        host_policy=host_policy,execution_context=context,original_idle_host_gate_earned=False if shared_host else None,
         resource_claims='whole-graph exact matched cgroup alternative only; replacement stages strictly wall-only with exact stage memory N/A; no I/O/durability/cold-cache claims',
         release=False))
     check(all(r['strict_advantage'] for r in decisions.values()) and all(r['strict_advantage'] for r in stage_decisions.values()),
@@ -877,20 +1228,33 @@ def main():
     parser=argparse.ArgumentParser(description=__doc__)
     sub=parser.add_subparsers(dest='action',required=True)
     setup_args=sub.add_parser('setup'); setup_args.add_argument('--root',type=Path,required=True); setup_args.add_argument('--cpus',required=True)
+    setup_args.add_argument('--execution-ledger',type=Path)
     for action in ('acquire','prepare','campaign'):
         args=sub.add_parser(action); args.add_argument('--root',type=Path,required=True)
         args.add_argument('--world',type=Path,required=True)
         if action in ('acquire','campaign'): args.add_argument('--native-receipt',required=True)
+        if action=='acquire':args.add_argument('--capsule',type=Path)
         if action=='campaign':
             args.add_argument('--idle-host-confirmed',action='store_true'); args.add_argument('--cgroup-parent',type=Path)
+            args.add_argument('--shared-host',action='store_true')
+    args=sub.add_parser('capsule');args.add_argument('--root',type=Path,required=True);args.add_argument('--world',type=Path,required=True)
+    args.add_argument('--native-receipt',required=True);args.add_argument('--native-zip',type=Path,required=True);args.add_argument('--input-zip',type=Path,required=True)
+    args=sub.add_parser('ssh-context');args.add_argument('--root',type=Path,required=True);args.add_argument('--world',type=Path,required=True)
+    args.add_argument('--container-id',required=True);args.add_argument('--cpus',required=True);args.add_argument('--execution-ledger',type=Path,required=True)
+    for action in ('admit-ssh','ssh-source-probe'):
+        args=sub.add_parser(action);args.add_argument('--root',type=Path,required=True);args.add_argument('--world',type=Path,required=True)
     args=sub.add_parser('execute-graph'); args.add_argument('--plan',type=Path,required=True); args.add_argument('--cpus',required=True)
     args=sub.add_parser('samtools'); args.add_argument('--input',type=Path,required=True); args.add_argument('--output',type=Path,required=True); args.add_argument('--workers',type=int,choices=[1,4],required=True)
     args=sub.add_parser('finalize'); args.add_argument('--root',type=Path,required=True)
     args=parser.parse_args()
-    if args.action=='setup': setup(args.root,args.cpus)
-    elif args.action=='acquire': acquire(args.root,args.world,args.native_receipt)
+    if args.action=='setup': setup(args.root,args.cpus,args.execution_ledger)
+    elif args.action=='acquire': acquire(args.root,args.world,args.native_receipt,args.capsule)
     elif args.action=='prepare': prepare(args.root,args.world)
-    elif args.action=='campaign': campaign(args.root,args.world,args.native_receipt,args.idle_host_confirmed,args.cgroup_parent)
+    elif args.action=='campaign': campaign(args.root,args.world,args.native_receipt,args.idle_host_confirmed,args.cgroup_parent,args.shared_host)
+    elif args.action=='capsule':seal_capsule(args.root,args.world,args.native_receipt,args.native_zip,args.input_zip)
+    elif args.action=='ssh-context':record_ssh_context(args.root,args.world,args.container_id,args.cpus,args.execution_ledger)
+    elif args.action=='admit-ssh':ssh_admission(args.root,args.world)
+    elif args.action=='ssh-source-probe':ssh_source_probe(args.root,args.world)
     elif args.action=='execute-graph':
         cpus=[int(v) for v in args.cpus.split(',')]
         check(len(cpus) in (1,4) and set(cpus)<=os.sched_getaffinity(0),'actual trial CPU set differs')
@@ -902,4 +1266,18 @@ def main():
 
 
 if __name__=='__main__':
-    main()
+    try:
+        main()
+    except Exception as error:
+        ssh_action=any(value in sys.argv for value in ('capsule','ssh-context','admit-ssh','ssh-source-probe',
+                                                      '--capsule','--shared-host','--execution-ledger'))
+        if not ssh_action:raise
+        if '--root' in sys.argv:
+            root=Path(sys.argv[sys.argv.index('--root')+1])
+            if (root/'evidence/execution-context.json').is_file():
+                checked_paths(root)
+                path=root/'evidence'/('failure-'+sys.argv[1]+'.json')
+                if not path.exists():save(path,dict(status='HELD',type=type(error).__name__,message=str(error),
+                    qualified_graphs=False,performance_claim=False,release=False))
+        print('HELD: '+type(error).__name__+': '+str(error),file=sys.stderr)
+        raise SystemExit(1)

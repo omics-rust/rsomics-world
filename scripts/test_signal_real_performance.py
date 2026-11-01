@@ -103,6 +103,48 @@ class SignalPerformanceTests(unittest.TestCase):
             self.assertEqual(result.returncode,0,name+result.stderr)
         for name in ('signal_real_performance.py','signal_real_performance_check.py'):
             ast.parse((ROOT/'scripts'/name).read_text())
+        import hashlib
+        with tempfile.TemporaryDirectory(prefix='signal-ssh-preparation-') as directory:
+            root=Path(directory); prefix=root/'original/runtime'; prefix.parent.mkdir()
+            carrier=root/'original.tar'
+            payload=b'preparation fixture, never executed\n'
+            files={'runtime/python/bin/python3':dict(bytes=len(payload),sha256=hashlib.sha256(payload).hexdigest()),
+                   'runtime/venv/bin/python':dict(bytes=len(payload),sha256=hashlib.sha256(payload).hexdigest())}
+            with tarfile.open(carrier,'w') as archive:
+                for name in ('signal-evidence','signal-evidence/runtime','signal-evidence/runtime/python',
+                             'signal-evidence/runtime/python/bin','signal-evidence/runtime/venv','signal-evidence/runtime/venv/bin'):
+                    entry=tarfile.TarInfo(name); entry.type=tarfile.DIRTYPE; entry.mode=0o700; archive.addfile(entry)
+                entry=tarfile.TarInfo('signal-evidence/runtime/python/bin/python3');entry.mode=0o700;entry.size=len(payload)
+                archive.addfile(entry,io.BytesIO(payload))
+                entry=tarfile.TarInfo('signal-evidence/runtime/venv/bin/python');entry.type=tarfile.SYMTYPE
+                entry.linkname=str(prefix/'python/bin/python3');archive.addfile(entry)
+                body=json.dumps(dict(schema='rsomics.signal.source-artifact.v1',files=files)).encode()
+                entry=tarfile.TarInfo('signal-evidence/artifact-manifest.json');entry.size=len(body);archive.addfile(entry,io.BytesIO(body))
+            with mock.patch.object(module,'SSH_PREFIX',prefix):
+                observed=module.verify_runtime_carrier(carrier,prefix)
+                self.assertEqual(observed['verified_manifest_entries'],2)
+                self.assertEqual((prefix/'venv/bin/python').resolve(),prefix/'python/bin/python3')
+                self.assertEqual((prefix/'python/bin/python3').read_bytes(),payload)
+                with self.assertRaises(FileExistsError):module.verify_runtime_carrier(carrier,prefix)
+            self.assertFalse(observed['scientific_execution'])
+        self.assertEqual(module.execution_policy(False,True,{'kind':'ssh-docker-shared','provider_admitted':True}),
+                         'shared/non-exclusive; original idle-host and isolated scalability gates unearned')
+        with self.assertRaises(ValueError):module.execution_policy(True,True,{})
+        image=module.image_authority(ROOT)
+        self.assertEqual(image['platform'],'linux/amd64')
+        self.assertIn(image['manifest_digest'],(ROOT/'assets/signal-ssh.Dockerfile').read_text())
+        with tempfile.TemporaryDirectory(prefix='signal-no-fake-ssh-') as directory:
+            ledger=Path(directory)/'ledger.json'
+            with mock.patch.dict(os.environ,SSH_CONNECTION=''),self.assertRaises(ValueError):
+                module.record_ssh_context(Path(directory),ROOT,'0'*64,'0,1,2,3',ledger)
+            self.assertFalse(ledger.exists())
+            diagnostic=Path(directory)/'loader-command'
+            with self.assertRaises(ValueError):
+                module.admission_command(diagnostic,[sys.executable,'-B','-c',
+                    'import sys; print("synthetic provider not found"); print("original loader detail",file=sys.stderr); sys.exit(7)'])
+            self.assertEqual(json.loads((diagnostic/'command.json').read_text())['status'],7)
+            self.assertEqual((diagnostic/'stdout.txt').read_text(),'synthetic provider not found\n')
+            self.assertEqual((diagnostic/'stderr.txt').read_text(),'original loader detail\n')
 
     def test_exact_qname_payload_union_and_membership(self):
         module=importlib.import_module('signal_real_performance')

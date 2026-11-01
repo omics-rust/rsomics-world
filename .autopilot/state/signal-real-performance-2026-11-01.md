@@ -1,5 +1,35 @@
 # Real signal campaign
 
+## Genuine SSH adapter reviewed; actual provider admission is next
+
+Root reads the full changed controller/test, image authority, system-only
+Docker recipe, final report and concrete root commands. One bounded integrated
+review finds one materialP2: captured readelf/ldd diagnostics were discarded
+on failure. Root replaces only that command capture with retained request,
+separate exact stdout/stderr/status and the same30-second/nonzero rules;
+both streams remain included in loader-error parsing. The SAME existing
+integration checks an actual synthetic failed child and its original bytes;
+the full existing7-test module passes0.312s. No new helper-test ladder.
+
+Parent freshly verifies all30 original implementation packet bodies at
+signal-ssh-adapter-20261101.8te9v5ji before this explicit root correction.
+Its full original carrier check covers30408 declared entries/31374 runtime
+members, TAR7e19939095519e88d46f20b2ad9648565f3349886c0d23a1b55a13bbd314c2dd.
+Only the two original non-runtime self-manifests are excluded by that producer
+contract; they remain bound by the complete carrier. Mac restore=false, no
+source runtime or scientific execution. Original graphs/schedule/partition/
+numeric policy/resource budgets are unchanged.
+
+The route is a verified local original-artifact capsule, exact original-prefix
+restoration, real SSH/process/Docker/controller ledger, actual system-provider
+and unchanged-source import admission, then explicitly shared-host work.
+No fake GHA identity, API token in the scientific container, source rebuild,
+runner registration, paid host, other-user interference or new public API.
+Pinned official Ubuntu metadata and a task-owned system-tool/DSO Docker
+derivative are setup provenance, not provider/science acceptance. Remote
+directory/image/container/admission actions are still unexecuted; root must
+inspect their actual retained result before any graph/campaign launch.
+
 ## Additional shared-host route selected before any new measurement
 
 Root reads the complete narrow SSH proposal at
