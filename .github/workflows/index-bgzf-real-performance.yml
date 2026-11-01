@@ -1,0 +1,82 @@
+name: Index complete BGZF tabix real performance
+
+on:
+  workflow_dispatch:
+    inputs:
+      recovery_admitted:
+        description: Root verified an independent 76GiB external recovery reservation
+        type: boolean
+        required: true
+        default: false
+      recovery_record:
+        description: Public nonsecret identifier of the fresh recovery capacity record
+        type: string
+        required: true
+        default: ''
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  complete-bgzf-tabix:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 360
+    container:
+      image: gcc:14.3.0-bookworm@sha256:a689e29bc3adf4663ef9a141d23081252764d1319c63f591a027bd6fd676f4c1
+      options: --cpus 4 --memory 8g --memory-swap 8g
+    defaults:
+      run:
+        shell: bash
+    env:
+      INDEX_CONTAINER_DIGEST: sha256:a689e29bc3adf4663ef9a141d23081252764d1319c63f591a027bd6fd676f4c1
+      INDEX_RECOVERY_ADMITTED: ${{ inputs.recovery_admitted }}
+      INDEX_RECOVERY_RECORD: ${{ inputs.recovery_record }}
+      PYTHONDONTWRITEBYTECODE: '1'
+      PYTHONNOUSERSITE: '1'
+      PYTHONPATH: ''
+      OMP_NUM_THREADS: '1'
+      OPENBLAS_NUM_THREADS: '1'
+      LC_ALL: C
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+
+      - name: Require root recovery admission and create the absent exact runtime prefix
+        run: |
+          set -euo pipefail
+          umask 077
+          ulimit -c 0
+          python3 -B scripts/index_bgzf_real_performance.py init
+
+      - name: Admit exact restored tools then execute the complete frozen graph
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          umask 077
+          ulimit -c 0
+          python3 -B scripts/index_bgzf_real_performance.py execute > "$INDEX_SESSION/controller.stdout.txt" 2> "$INDEX_SESSION/controller.stderr.txt"
+
+      - name: Seal every available original and failed body without cleanup
+        if: always() && env.INDEX_SESSION != ''
+        timeout-minutes: 10
+        run: |
+          set -euo pipefail
+          umask 077
+          ulimit -c 0
+          python3 -B scripts/index_bgzf_real_performance.py finalize
+
+      - name: Retain the whole public synthetic campaign and original runtime carriers
+        if: always() && env.INDEX_SESSION != ''
+        timeout-minutes: 30
+        uses: actions/upload-artifact@v4
+        with:
+          name: index-bgzf-real-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ env.INDEX_SESSION }}
+          include-hidden-files: true
+          if-no-files-found: error
+          compression-level: 1
+          retention-days: 90

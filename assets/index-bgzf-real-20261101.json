@@ -1,0 +1,96 @@
+{
+  "schema": "rsomics.index.bgzf-real.v1",
+  "owner": "030be20895cb7806f78b2923e1c1ac3afa05cd96",
+  "owner_repository": "omics-rust/rsomics-index",
+  "owner_ci": 41272452578,
+  "accepted_reference": {
+    "path": ".autopilot/oracles/index-optimized-reference-real-performance-2026-11-01.json",
+    "bytes": 66180,
+    "sha256": "048210afe734444d56956a1a8b5bac05e9f2c467e258ff804281eb7122f84d56",
+    "run_id": 41273328984,
+    "run_attempt": 1,
+    "controller": "b0950de23dadf239a858b44e11cf37716ad8b76b",
+    "workflow": ".github/workflows/index-reference-real-performance.yml",
+    "source_files": 116,
+    "source_tree": "d41f60a18d3da0629718e7c14feb4f5a68f65d26"
+  },
+  "image": {
+    "name": "gcc:14.3.0-bookworm",
+    "manifest": "sha256:a689e29bc3adf4663ef9a141d23081252764d1319c63f591a027bd6fd676f4c1",
+    "config": "sha256:f3d916a4884034b89cb6148781f07d8c92d94b6c6dc1b74dcbec3475d16400da"
+  },
+  "runtime": {
+    "session": "/__w/_temp/index-reference-real-rj4i4or7",
+    "artifact_id": 13070438494,
+    "artifact_name": "index-reference-real-runtime-41273328984-1",
+    "zip": {"bytes": 876708340, "sha256": "e3d1e3b6f8485bee70fd998ba28de6e2ba494b3f1f02fd37626b9d4d977bc94f"},
+    "tar": {"bytes": 2034073600, "sha256": "9e70cf8fb3f02131731b028ec41524591d57c640e98e5654cb849f57c1e65e62"},
+    "members": 18191,
+    "binaries": {
+      "native": {"path": "runtime/native/target/release/rsomics-index", "bytes": 2745336, "sha256": "b42d28aef080af8fff2c12b746e30ddc1949cb0db738554c2a9330a2555c3714"},
+      "bgzip": {"path": "runtime/htslib-original/htslib-1.24/bgzip", "bytes": 3763560, "sha256": "49b3c476385a9dfe88a10307e46af52fe9d501a1e1cf877852e292ccf894a593"},
+      "tabix": {"path": "runtime/htslib-original/htslib-1.24/tabix", "bytes": 4581040, "sha256": "2ba4dbb47c3422c0926be00842a714201eab93c388494bcdabad4dfb2ca28f3f"}
+    },
+    "anchors": {
+      "runtime/lock.json": {"bytes": 2283, "sha256": "b742f5796938f0815c533557aee4a53e405d13b834705b3090031c341b88ce47"},
+      "runtime/htslib-original/htslib-1.24/bgzip.c": {"bytes": 29939, "sha256": "85321d6ae17377c250882da0f460014053519fcb514531b77bc477cd29158305"},
+      "runtime/htslib-original/htslib-1.24/tabix.c": {"bytes": 31833, "sha256": "1356aede370a71f729064b5e918e99b521a22e9a3ac5f6f958f573597eba522b"},
+      "runtime/htslib-original/htslib-1.24/htslib/hts.h": {"bytes": 58286, "sha256": "9b286747b6c954a264af8f4981bc777fbf687be04508ec815f0fa96eeb891a25"}
+    },
+    "libdeflate": {"path": "runtime/prefix/lib/libdeflate.so.0", "bytes": 93880, "sha256": "0cc41c99d40bb91c2454ade7a24e4f6f3850b4c536986fbc3c9ca8de990e9aad"},
+    "provider_graph": "native static libdeflate-sys1.25.2 and Rust zlib-rs0.6.7; source shared libdeflate1.25; not a single shared DSO"
+  },
+  "timer": {
+    "package": "time", "version": "1.9-0.2", "architecture": "amd64",
+    "metadata_url": "https://packages.debian.org/bookworm/amd64/time/download",
+    "deb": {"url": "https://deb.debian.org/debian/pool/main/t/time/time_1.9-0.2_amd64.deb", "bytes": 50776, "sha256": "10257c6fe888e6578550b1f20705d282dd630b76f8df0c006aec3031fefe5e23"},
+    "dsc": {"url": "https://deb.debian.org/debian/pool/main/t/time/time_1.9-0.2.dsc", "bytes": 1703, "sha256": "32edee09df14a7e61fe0d02be477e7f2efd3df3f601dff6ecc51f18b99fd0f24"},
+    "orig": {"url": "https://deb.debian.org/debian/pool/main/t/time/time_1.9.orig.tar.gz", "bytes": 596779, "sha256": "fbacf0c81e62429df3e33bda4cee38756604f18e01d977338e23306a3e3b521e"},
+    "debian": {"url": "https://deb.debian.org/debian/pool/main/t/time/time_1.9-0.2.debian.tar.xz", "bytes": 14748, "sha256": "42a9d951055290c5186a1b83808744bd07bf8675f24e99998e46a31825781480"},
+    "copyright": {"url": "https://metadata.ftp-master.debian.org/changelogs/main/t/time/time_1.9-0.2_copyright", "bytes": 2943, "sha256": "9c5fb22ad687c290ca88f4064a2b5f89bb998a5caec2f5eada316d6caf889738"},
+    "licenses": {"upstream": "GPL-3+", "debian": "GPL-2+", "debian/time.1": "freely-redistributable"},
+    "signature_verified": false,
+    "wall_resolution_seconds": 0.01,
+    "small_child_max_rss_exclusive_bytes": 3145728,
+    "unknown_banner_is_not_observed_1_9": true
+  },
+  "fixture": {
+    "records": 6000000, "contigs": 24, "records_per_contig": 250000, "payload_bytes": 320,
+    "vcf": {"bytes": 2189973389, "sha256": "9620ea9137b89492cac7ed268111a92ce90890d3f8f615fa33335b7503578283"},
+    "vcf_header_bytes": 1019, "vcf_data_bytes": 2189972370,
+    "binary": {"bytes": 2147483648, "sha256": "4b18c8570bf559c6bdf4ae1108056c2b9bb4d32c9d3b35e91356d378e6df57e1"},
+    "aes_key": "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef",
+    "aes_iv": "fedcba9876543210fedcba9876543210",
+    "slice": {"offset": 536870912, "bytes": 536870912, "sha256": "fec6299886342f5aff07f4e062d3a550068873c5451d1fa8bf100fd20252477f"},
+    "query_rows": {"query_sparse_t1": 10000, "query_dense_t4": 600000, "query_overlap_unique_t4": 2880000, "query_targets_t4": 600024},
+    "historical_harness_sha256": "ee12c7fb3d35c6167683190e38768d3c9bc5a897534abe3eb5a10dd6abbe5d86"
+  },
+  "material": {
+    "primary": ["compress_binary_t1", "build_tbi", "build_csi", "query_sparse_t1"],
+    "throughput_median_ratio": 0.9,
+    "rss_median_ratio": 0.75,
+    "rss_wall_ratio": 1.05,
+    "disjoint_wall_gap_exceeds_seconds": 0.01,
+    "all_primary_each_qualify": true,
+    "aggregate_gate": false,
+    "publication_automatic": false
+  },
+  "limits": {
+    "cpus": 4, "memory_bytes": 8589934592, "extra_swap_bytes": 0,
+    "initial_free_bytes": 44023414784, "headroom_bytes": 8589934592,
+    "categories": {"inputs": 8589934592, "runtime": 4294967296, "cas": 16106127360, "metadata": 2147483648, "active": 3221225472},
+    "retained_bytes": 34359738368, "artifact_zip_bytes": 36507222016,
+    "controller_seconds": 18600, "admission_seconds": 1800, "qualification_seconds": 1750,
+    "benchmark_seconds": 13650, "comparison_seconds": 1200,
+    "finalization_seconds": 600, "upload_seconds": 1800, "workflow_minutes": 360,
+    "binary_bgzf_bytes": 2164260864, "text_bgzf_bytes": 67108864,
+    "index_bytes": 4194304, "read_output_bytes": 3221225472,
+    "max_members": 30000
+  },
+  "recovery": {
+    "allocated": false, "bytes": 81604378624,
+    "additional_failed_carrier_bytes": 36507222016,
+    "manual_admission_required": true,
+    "conflicts": "Root must reconcile Ecology remote320GiB, RNA HDD44GiB and live PLINK's unknown terminal envelope before launch. Current free space is not a reservation."
+  }
+}

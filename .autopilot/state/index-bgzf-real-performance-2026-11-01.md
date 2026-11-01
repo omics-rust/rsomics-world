@@ -1,0 +1,48 @@
+# Index complete BGZF/tabix real performance
+
+## Four-path operational wave adopted; actual run remains pending
+
+Root reads the complete1088-line controller,195-line SAME connected test,
+96-line asset,82-line workflow and reused acquisition/ELF/provider/process/
+timer/custody contracts. The literal AWK escape characters match the retained
+owning harness as data; no Mac AWK/OpenSSL/source/native science is executed.
+No owner Rust/public API/foundation/old controller/accepted receipt changes.
+
+Frozen controller e9e2decd00c9be2322071e165fe653154706af647cd2f9fc9f0cf3604518b71d;
+asset2e2e47da46698083d7a3bbbc64937e363393baa884a93320555eef9fb5b35914;
+workflow12a66c9db4cd170230c0d203fa1e165a433403f4c100776435165efd306a1fd8;
+test798d48e51838f0a5a92a098a3da8b335d7b566383705d982e6fc945f55ab80f5.
+Author REPORTa452150643f25781660ba6201a372f1941c1f99045edeebd618e54722212a863,
+SEAL6ec89da54519b16af9fef81e532b0ec2ce40b88f03b7ac0c6b981cdfab1bde86.
+These are preparation evidence, not a Linux runtime or performance result.
+
+One fresh independent whole operational review finds noP1/P2:
+index-bgzf-whole-operational-review-20261101-e9e2decd.md SHA
+9ee1f7b9de2a1a5c01f5214992dec2719998ff8f194f03433eca083622414e71.
+Root freshly verifies the complete supplied packet/source/log/17-preparation-
+body hashes and unchanged reference/hold/adopted-plan identities. The SAME
+ONE connected preparation passes1/.415s through the external-path guard;
+raw log75feffa358a35a2c114086a26e539c151b15d490122036ac4c07255d7532881a.
+Root proof is index-bgzf-root-20261101.zerWql/VERIFICATION.json.
+
+The fixed gate has42 complete qualifications,78 excluded warmups and260
+measured calls. Each of four named serial primary hot paths must independently
+qualify .90 disjoint wall with gap>.01s OR .75 disjoint processRSS plus
+wall<=1.05. Other lanes/N4 cannot rescue a primary. All13 lanes, full24-contig
+TBI/CSI cross-reader bodies and literal timed /dev/null reads stay declared.
+No per-trial read body, summed pipeline, aggregate RSS, cold cache or blanket
+all-operations-faster claim. Final review must inspect CPU/I/O losses too.
+
+Actual pinned Bookworm runtime/provider/previously unadmitted tabix/Debian
+timer/executable/banner/fields/small-C-child floor must still be admitted on
+Linux. Exact whole original runtime ZIP/TAR stay retained. UNKNOWN timer
+banner remains UNKNOWN; no binary rebuild, system install, signature proof or
+Mac foreign execution is inferred. Any source/tool/time/capacity failure holds
+the affected campaign rather than creating a Rust win.
+
+Root's separate76GiB remote complete-original allocation is recorded in
+concurrent-original-custody.md alongside Ecology320 and PLINK208. It is not
+a quota or this preparation's fresh free-space proof. Refresh all envelopes,
+actual device/free/already-allocated bytes and exact-head Control before an
+explicit manual dispatch. An extra34GiB failed carrier requires readmission.
+No actual run or publication is accepted by this state.
