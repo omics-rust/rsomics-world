@@ -1,0 +1,292 @@
+{
+  "adoption_status": "accepted",
+  "all_four_source_packages_byte_identical": true,
+  "complete_packet_seal": {
+    "bytes": 58708,
+    "sha256": "b7e0706b2cf4c0be5dc1d53c8d46b86f4df03082836c398c6de39acaabbaea9d"
+  },
+  "complete_run_log_zip": {
+    "bytes": 218289,
+    "members": 67,
+    "sha256": "0f4081e3fdf95f8d3a599e6582cc9a93e9c70b7a94276181343af8989dec2e1a"
+  },
+  "delivery_binaries_remeasured": false,
+  "downloaded_release_smoke": false,
+  "evidence_root": "/Volumes/KIOXIA/Developments/tmp/deseq-final-delivery-adoption-20261101.WTgee1",
+  "github_release_created": false,
+  "github_release_eligible": true,
+  "head_sha": "5563528d56d604411f01270188a0d29d76321a79",
+  "historical_measured_binary_sha256": "6baa1f897f5d8df1bedf0a5b830503c0ec7545c658028243f922530cfda56db1",
+  "historical_performance_run_id": 40632494429,
+  "historical_scientific_native_run_id": 40629123490,
+  "kind": "rsomics-owning-native-source-delivery",
+  "lock_sha256": "501544e3615498b7f26c06bb5ea36c4d027b61f7366cce4a11b6efcbfc82e241",
+  "original_job_logs_match_complete_run_zip": true,
+  "product_version": "0.1.0",
+  "registry_publication": false,
+  "repository": "omics-rust/rsomics-deseq",
+  "root_adopted": true,
+  "root_full_original_verification": {
+    "bytes": 786,
+    "sha256": "eefde7b9cef94a613387d1f5e75af1577d35ab89495a6af96516960fe65e7b97"
+  },
+  "run_attempt": 1,
+  "run_id": 41293914322,
+  "schema_version": 1,
+  "scientific_revalidation": false,
+  "signed_release": false,
+  "source_git_objects_verified": true,
+  "source_original_members": 118,
+  "source_package": {
+    "bytes": 512204,
+    "sha256": "ea206a34615a60fb3f76c811f24d2c16bd5b9a15cb2689a2ca49f2a8a081eabe"
+  },
+  "source_total_regular_members": 120,
+  "source_tracked_body_count": 124,
+  "source_vcs_clean_exact_head": true,
+  "targets": {
+    "linux-aarch64": {
+      "artifact_id": 13078841793,
+      "artifact_name": "rsomics-deseq-linux-aarch64-5563528d56d604411f01270188a0d29d76321a79",
+      "binary": {
+        "bytes": 5020008,
+        "sha256": "6c5124c026f64b9ea54ac33bb5e5e5a34faff8c2c5e47ec02a7cf8e458405a92"
+      },
+      "binary_headers": {
+        "elf_type": 3,
+        "format": "ELF64 little-endian",
+        "interpreter": "/lib/ld-linux-aarch64.so.1",
+        "machine": 183,
+        "needed": [
+          "libc.so.6",
+          "libm.so.6",
+          "libgcc_s.so.1"
+        ],
+        "provider_scope": "static header names only; no local loader or foreign executable invocation"
+      },
+      "build": {
+        "bytes": 1273,
+        "sha256": "914ba65a5f24afd096dafe2aaab2061e298bf7dc0ece42bc3b4ec6809b54f9ce"
+      },
+      "checkout_debug_tests_passed": 13,
+      "checkout_release_tests_passed": 13,
+      "complete_license_texts": 74,
+      "fitted_schema": 5,
+      "fixture_genes": 1200,
+      "fixture_samples": 12,
+      "full_input_counts_and_metadata_verified": true,
+      "full_transform_dimensions_and_finiteness_verified": true,
+      "installed_call_failures": 0,
+      "installed_calls": 6,
+      "job_completed_at": "2026-11-01T09:40:12Z",
+      "job_id": 124810655582,
+      "job_started_at": "2026-11-01T09:37:14Z",
+      "lifecycle_verified_record": {
+        "bytes": 4116,
+        "sha256": "3ed2c9c7f567dbe89c669453aac3e90b03500c042412cf7829fbb16adc388e30"
+      },
+      "native_archive": {
+        "bytes": 1690852,
+        "name": "rsomics-deseq-0.1.0-linux-aarch64.tar.gz",
+        "sha256": "93b183e3b31091a467b0fd696203d189b2de9288a631abaad6aa5da0ef3d298c"
+      },
+      "native_binary_mode": "0755",
+      "native_directory_members": 3,
+      "native_directory_mode": "0755",
+      "native_executable_count": 1,
+      "native_other_regular_mode": "0644",
+      "native_regular_members": 80,
+      "native_tar_members": 83,
+      "original_zip": {
+        "bytes": 3259337,
+        "sha256": "0f672212986b015aaba30c0b1a7322f4740b45f246087984ff7140db63e74b43"
+      },
+      "packaged_release_tests_passed": 13,
+      "saved_results_export_verified": true,
+      "workers": 4
+    },
+    "linux-x86_64": {
+      "artifact_id": 13079095185,
+      "artifact_name": "rsomics-deseq-linux-x86_64-5563528d56d604411f01270188a0d29d76321a79",
+      "binary": {
+        "bytes": 5206632,
+        "sha256": "65231c4dc740d7c88191a47aeefc53f34886b2e43929a6f2f7637b1c54e869ab"
+      },
+      "binary_headers": {
+        "elf_type": 3,
+        "format": "ELF64 little-endian",
+        "interpreter": "/lib64/ld-linux-x86-64.so.2",
+        "machine": 62,
+        "needed": [
+          "libc.so.6",
+          "ld-linux-x86-64.so.2",
+          "libm.so.6",
+          "libgcc_s.so.1"
+        ],
+        "provider_scope": "static header names only; no local loader or foreign executable invocation"
+      },
+      "build": {
+        "bytes": 1270,
+        "sha256": "f1ee24f65fd228991ce80f2cd8903a77930fd93e74c475933b7592afda3f9090"
+      },
+      "checkout_debug_tests_passed": 13,
+      "checkout_release_tests_passed": 13,
+      "complete_license_texts": 74,
+      "fitted_schema": 5,
+      "fixture_genes": 1200,
+      "fixture_samples": 12,
+      "full_input_counts_and_metadata_verified": true,
+      "full_transform_dimensions_and_finiteness_verified": true,
+      "installed_call_failures": 0,
+      "installed_calls": 6,
+      "job_completed_at": "2026-11-01T09:39:47Z",
+      "job_id": 124810655546,
+      "job_started_at": "2026-11-01T09:37:12Z",
+      "lifecycle_verified_record": {
+        "bytes": 4116,
+        "sha256": "48ddad91f9a79f1a1acc20e5a8fc6718f3da94e837cc09c57f3ad8b41534a2f8"
+      },
+      "native_archive": {
+        "bytes": 1769427,
+        "name": "rsomics-deseq-0.1.0-linux-x86_64.tar.gz",
+        "sha256": "6e726767d01c203b001f46c97542cf585b4acee5654c7a1f303c4f56990b3be5"
+      },
+      "native_binary_mode": "0755",
+      "native_directory_members": 3,
+      "native_directory_mode": "0755",
+      "native_executable_count": 1,
+      "native_other_regular_mode": "0644",
+      "native_regular_members": 80,
+      "native_tar_members": 83,
+      "original_zip": {
+        "bytes": 3340211,
+        "sha256": "43ef93040e7c7b433c4a8aa3a8d27482a1e6a2b1c845a2d96265940c716c293c"
+      },
+      "packaged_release_tests_passed": 13,
+      "saved_results_export_verified": true,
+      "workers": 4
+    },
+    "macos-aarch64": {
+      "artifact_id": 13078047295,
+      "artifact_name": "rsomics-deseq-macos-aarch64-5563528d56d604411f01270188a0d29d76321a79",
+      "binary": {
+        "bytes": 4587712,
+        "sha256": "be5551e7c1bf3243036792a7164e274a2f268ce7c86e73d1b79caa71761a83ba"
+      },
+      "binary_headers": {
+        "code_signature_command_present": true,
+        "cpu_type": 16777228,
+        "dylibs": [
+          "/usr/lib/libiconv.2.dylib",
+          "/usr/lib/libSystem.B.dylib"
+        ],
+        "filetype": 2,
+        "format": "Mach-O64 little-endian",
+        "provider_scope": "static load-command names only; no signing/notarization/provider resolution claim"
+      },
+      "build": {
+        "bytes": 1263,
+        "sha256": "281378fdc35eb4bafcfa7af4d93ebdd800ec3cfe0ae5e9ae2bd09fd47cd2c172"
+      },
+      "checkout_debug_tests_passed": 13,
+      "checkout_release_tests_passed": 13,
+      "complete_license_texts": 74,
+      "fitted_schema": 5,
+      "fixture_genes": 1200,
+      "fixture_samples": 12,
+      "full_input_counts_and_metadata_verified": true,
+      "full_transform_dimensions_and_finiteness_verified": true,
+      "installed_call_failures": 0,
+      "installed_calls": 6,
+      "job_completed_at": "2026-11-01T09:41:31Z",
+      "job_id": 124810655615,
+      "job_started_at": "2026-11-01T09:37:14Z",
+      "lifecycle_verified_record": {
+        "bytes": 4124,
+        "sha256": "aa30ed864ae0a58d924420103353944c71655da621cd7afc9004f442063431c5"
+      },
+      "native_archive": {
+        "bytes": 1648716,
+        "name": "rsomics-deseq-0.1.0-macos-aarch64.tar.gz",
+        "sha256": "d3f89db5bce35dae9e7599f4dacd9e0a3cde1fa6c5a0c8cd25b214ba1fae9ba3"
+      },
+      "native_binary_mode": "0755",
+      "native_directory_members": 3,
+      "native_directory_mode": "0755",
+      "native_executable_count": 1,
+      "native_other_regular_mode": "0644",
+      "native_regular_members": 80,
+      "native_tar_members": 83,
+      "original_zip": {
+        "bytes": 3220321,
+        "sha256": "9ffe1cf164eea744840aaaf8fd99f70b8fc43fa2cc6ae93badc7f44ed619537c"
+      },
+      "packaged_release_tests_passed": 13,
+      "saved_results_export_verified": true,
+      "workers": 4
+    },
+    "macos-x86_64": {
+      "artifact_id": 13078911998,
+      "artifact_name": "rsomics-deseq-macos-x86_64-5563528d56d604411f01270188a0d29d76321a79",
+      "binary": {
+        "bytes": 4802240,
+        "sha256": "2a312f028bbc3b5b4c7fda952271488466c247677c9fac2e1a31ad9d68a49b09"
+      },
+      "binary_headers": {
+        "code_signature_command_present": false,
+        "cpu_type": 16777223,
+        "dylibs": [
+          "/usr/lib/libiconv.2.dylib",
+          "/usr/lib/libSystem.B.dylib"
+        ],
+        "filetype": 2,
+        "format": "Mach-O64 little-endian",
+        "provider_scope": "static load-command names only; no signing/notarization/provider resolution claim"
+      },
+      "build": {
+        "bytes": 1260,
+        "sha256": "5bf75e0d6432f3e4fb450609f003ab0b3a2a43ac098f4701c7b179ea0c267331"
+      },
+      "checkout_debug_tests_passed": 13,
+      "checkout_release_tests_passed": 13,
+      "complete_license_texts": 74,
+      "fitted_schema": 5,
+      "fixture_genes": 1200,
+      "fixture_samples": 12,
+      "full_input_counts_and_metadata_verified": true,
+      "full_transform_dimensions_and_finiteness_verified": true,
+      "installed_call_failures": 0,
+      "installed_calls": 6,
+      "job_completed_at": "2026-11-01T09:43:18Z",
+      "job_id": 124810655379,
+      "job_started_at": "2026-11-01T09:37:14Z",
+      "lifecycle_verified_record": {
+        "bytes": 4124,
+        "sha256": "733171221997d96beb8dde732e44c53c432ac1b5e530edf6e231a8fcaaa196da"
+      },
+      "native_archive": {
+        "bytes": 1703159,
+        "name": "rsomics-deseq-0.1.0-macos-x86_64.tar.gz",
+        "sha256": "9d85acba087c941a06823b4e2d8220aa99c171fe0eceff8c31d9c77834c8ca2b"
+      },
+      "native_binary_mode": "0755",
+      "native_directory_members": 3,
+      "native_directory_mode": "0755",
+      "native_executable_count": 1,
+      "native_other_regular_mode": "0644",
+      "native_regular_members": 80,
+      "native_tar_members": 83,
+      "original_zip": {
+        "bytes": 3275559,
+        "sha256": "c5bf413ca68b690acd956fe11b35459f6bdd0093ef5e5f5a7ad35b40c1b52e58"
+      },
+      "packaged_release_tests_passed": 13,
+      "saved_results_export_verified": true,
+      "workers": 4
+    }
+  },
+  "tree_sha": "4ae77a06a1bf260a3fb509d3c117d87adc830462",
+  "verification_scope": "Complete four original API-sized/digested/CRC-checked artifact ZIPs; exact committed source tree and all 124 bodies; complete source/native memberships and notices/modes/BUILD/checksums; every original job log and run-log ZIP; installed six-call schema-5 1200x12 lifecycle per native class. Data-only adoption, no recovered-binary execution or scientific replay.",
+  "verification_sha256": "bb5db8d1bbff2997f6bbc056dd86985fc8940fa7f0decfb1b3aac99183956762",
+  "workflow_path": ".github/workflows/ci.yml"
+}
