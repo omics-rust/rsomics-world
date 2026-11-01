@@ -1,0 +1,485 @@
+{
+  "actual_conclusion": "success",
+  "artifact_zip_files_total": 634,
+  "bedtools_original_notice": {
+    "bytes": 1082,
+    "sha256": "0e44360fb7c5f08f49575e8de98606a10a9bc3e785e2c65cbef63e676190c86d"
+  },
+  "captured_content_executed": false,
+  "distinct_test_intents": 95,
+  "full_individual_job_logs_match_run_zip": true,
+  "identical_source_packages": true,
+  "installed_lifecycle_calls": 44,
+  "native_targets": {
+    "linux-aarch64": {
+      "artifact": {
+        "bytes": 2381441,
+        "sha256": "0e99792ae5864041ae44b63d137d05c946ab0f11955b8d7d0c8722416b6f5635"
+      },
+      "artifact_id": 13099494152,
+      "binary": {
+        "bytes": 1681864,
+        "sha256": "75b740ab65a962cb20728794689c54ffa954193576c0cacf642d07606a75d014"
+      },
+      "binary_header": "ELF64 little-endian aarch64",
+      "host": "aarch64-unknown-linux-gnu",
+      "lifecycle_calls": 11,
+      "machine": "Linux runnervm9u1px 7.0.0-1017-azure #17~24.04.1-Ubuntu SMP PREEMPT Thu Sep 24 19:06:39 UTC 2026 aarch64 aarch64 aarch64 GNU/Linux",
+      "native_archive": {
+        "bytes": 688680,
+        "sha256": "5ccbe89dbc3c9b0188f5446026b9e7fe8a7dc2b16e0412bed944e5111fe67ae7"
+      },
+      "native_directories": 45,
+      "native_files": 99,
+      "oracle_version": "bedtools v2.31.1",
+      "required_ci_steps": {
+        "full_log": {
+          "bytes": 143140,
+          "sha256": "984df6482e13f710ac7b46a5f4c4a8fc4bdcee818bff81266410566a2b3afa9d"
+        },
+        "job_id": 124972087084,
+        "required_steps_success": true,
+        "run_zip_member": "0_linux-aarch64.txt",
+        "warnings": 52
+      },
+      "shipping_packages": 41,
+      "source_package": {
+        "bytes": 97436,
+        "clean_vcs": true,
+        "members": 187,
+        "normalized_metadata_match": true,
+        "original_bodies_modes_match": true,
+        "original_members": 185,
+        "sha256": "26b2da773027d4f6a1bcab0caa620c67f9e75009a81272b8657805d6d3d9c7a3",
+        "source_commit": "bcbee5f87aeda2e7664c279b32c5a3098635ca9b"
+      },
+      "tests": {
+        "debug": {
+          "ignored": 0,
+          "passed": 95,
+          "stderr": {
+            "bytes": 3136,
+            "sha256": "e771c7c0ee0ef9b6ec67787d01b55845163b82c492b849844c8dc24bf4d94a27"
+          },
+          "stdout": {
+            "bytes": 7140,
+            "sha256": "cc7da3bca1fa0b27d709f266789f7d3e98dea00faa52896373b6057538ecf56f"
+          }
+        },
+        "packaged-tests": {
+          "ignored": 0,
+          "passed": 95,
+          "stderr": {
+            "bytes": 798,
+            "sha256": "6175f79f277a161b58d15a4f8b6f204fd55f97dac4ca02d38af931d15d168d61"
+          },
+          "stdout": {
+            "bytes": 7140,
+            "sha256": "610e764f573933beb868d015ca4460fca7de6a274e22d27b01bd49da953693ce"
+          }
+        },
+        "release": {
+          "ignored": 0,
+          "passed": 95,
+          "stderr": {
+            "bytes": 3617,
+            "sha256": "ed5ddf50b7acb5048ef153b6351d4aa4d0b6065ea42803a21466234931134203"
+          },
+          "stdout": {
+            "bytes": 7140,
+            "sha256": "4de8f48c601b48f6fe498605ed7c67f5adffa9ba4c4d098633b5478c7e3f436f"
+          }
+        }
+      },
+      "warnings": {
+        "clippy.stderr": 0,
+        "debug.stderr": 0,
+        "fmt.stderr": 0,
+        "install.stderr": 0,
+        "lifecycle/0.stderr": 0,
+        "lifecycle/1.stderr": 0,
+        "lifecycle/10.stderr": 0,
+        "lifecycle/2.stderr": 0,
+        "lifecycle/3.stderr": 0,
+        "lifecycle/4.stderr": 0,
+        "lifecycle/5.stderr": 0,
+        "lifecycle/6.stderr": 0,
+        "lifecycle/7.stderr": 0,
+        "lifecycle/8.stderr": 0,
+        "lifecycle/9.stderr": 0,
+        "oracle-build.stderr": 52,
+        "package.stderr": 0,
+        "packaged-tests.stderr": 0,
+        "release.stderr": 0,
+        "rustdoc.stderr": 0
+      },
+      "zip_files": 158
+    },
+    "linux-x86_64": {
+      "artifact": {
+        "bytes": 2464805,
+        "sha256": "7676a8d8475c6ee1e79032b744bd46cf59f74f88dac2dc9cda6ff5364adcf561"
+      },
+      "artifact_id": 13099713394,
+      "binary": {
+        "bytes": 1772808,
+        "sha256": "cbda5dd3afd4fd3d2342217247abc6a0aa3227c69b54602ebd3024b975fac6b0"
+      },
+      "binary_header": "ELF64 little-endian x86_64",
+      "host": "x86_64-unknown-linux-gnu",
+      "lifecycle_calls": 11,
+      "machine": "Linux runnervm48cm3 7.0.0-1017-azure #17~24.04.1-Ubuntu SMP PREEMPT Thu Sep 24 18:46:57 UTC 2026 x86_64 x86_64 x86_64 GNU/Linux",
+      "native_archive": {
+        "bytes": 721647,
+        "sha256": "8d5b5b083f94db88e3e03e15521b499132cabb368d917b5b0b4599219b36e923"
+      },
+      "native_directories": 45,
+      "native_files": 99,
+      "oracle_version": "bedtools v2.31.1",
+      "required_ci_steps": {
+        "full_log": {
+          "bytes": 144638,
+          "sha256": "a0dee0224f5de4eff59962e1c14a29a3829b610d4881497ea04d883b08ca7a24"
+        },
+        "job_id": 124972087011,
+        "required_steps_success": true,
+        "run_zip_member": "1_linux-x86_64.txt",
+        "warnings": 52
+      },
+      "shipping_packages": 41,
+      "source_package": {
+        "bytes": 97436,
+        "clean_vcs": true,
+        "members": 187,
+        "normalized_metadata_match": true,
+        "original_bodies_modes_match": true,
+        "original_members": 185,
+        "sha256": "26b2da773027d4f6a1bcab0caa620c67f9e75009a81272b8657805d6d3d9c7a3",
+        "source_commit": "bcbee5f87aeda2e7664c279b32c5a3098635ca9b"
+      },
+      "tests": {
+        "debug": {
+          "ignored": 0,
+          "passed": 95,
+          "stderr": {
+            "bytes": 3136,
+            "sha256": "af2bbaa4f1a4573fef70d8ea836f022bb7dcf683939b4410b69bf161e6645b72"
+          },
+          "stdout": {
+            "bytes": 7140,
+            "sha256": "3ba789ba159ed48c5f271cfc0d3e666c8c6239a3c6b095a7a3bd49347d46c373"
+          }
+        },
+        "packaged-tests": {
+          "ignored": 0,
+          "passed": 95,
+          "stderr": {
+            "bytes": 797,
+            "sha256": "d7f6e28ac9e7d0580fe4fb4d1353b43cfe2c191257e25f3b124c692cd5784e6a"
+          },
+          "stdout": {
+            "bytes": 7140,
+            "sha256": "4ac00fd7635942b3f5238dbc78aca9fe5feedd2a0ea7be37da747e71c7b4311b"
+          }
+        },
+        "release": {
+          "ignored": 0,
+          "passed": 95,
+          "stderr": {
+            "bytes": 3617,
+            "sha256": "5ce463b64909b0f3f18e8d4ffada3a8970642dda9d793db31078122c22ddea0b"
+          },
+          "stdout": {
+            "bytes": 7140,
+            "sha256": "599adb632ede1e40f9922660000efed93e8dd3dc99358d7d79264813de381102"
+          }
+        }
+      },
+      "warnings": {
+        "benchmark-smoke.stderr": 0,
+        "clippy.stderr": 0,
+        "debug.stderr": 0,
+        "fmt.stderr": 0,
+        "install.stderr": 0,
+        "lifecycle/0.stderr": 0,
+        "lifecycle/1.stderr": 0,
+        "lifecycle/10.stderr": 0,
+        "lifecycle/2.stderr": 0,
+        "lifecycle/3.stderr": 0,
+        "lifecycle/4.stderr": 0,
+        "lifecycle/5.stderr": 0,
+        "lifecycle/6.stderr": 0,
+        "lifecycle/7.stderr": 0,
+        "lifecycle/8.stderr": 0,
+        "lifecycle/9.stderr": 0,
+        "oracle-build.stderr": 52,
+        "package.stderr": 0,
+        "packaged-tests.stderr": 0,
+        "release.stderr": 0,
+        "rustdoc.stderr": 0
+      },
+      "zip_files": 160
+    },
+    "macos-aarch64": {
+      "artifact": {
+        "bytes": 2272963,
+        "sha256": "8569a79ad04a5047d4c501071e4d4a2b504b1f9f85c609736e039a1772860926"
+      },
+      "artifact_id": 13099728694,
+      "binary": {
+        "bytes": 1477616,
+        "sha256": "23cfb9b09bdeb3e59cf0ccda7269026ea0aef80c062ca2d8401db0e17f21ffe3"
+      },
+      "binary_header": "Mach-O64 little-endian aarch64",
+      "host": "aarch64-apple-darwin",
+      "lifecycle_calls": 11,
+      "machine": "Darwin sjc22-bm207-076e8f66-1cfa-4629-a6dd-45d4c794fc57-6AAF23E998A6.local 24.6.0 Darwin Kernel Version 24.6.0: Sun Oct 11 23:44:11 PDT 2026; root:xnu-11417.140.69.713.47~2/RELEASE_ARM64_VMAPPLE arm64",
+      "native_archive": {
+        "bytes": 657333,
+        "sha256": "0e8e4350b73be30ca68a443ba7dd2b7d2eca33cbc0c933495dd02871b410fe6d"
+      },
+      "native_directories": 45,
+      "native_files": 99,
+      "oracle_version": "bedtools v2.31.1",
+      "required_ci_steps": {
+        "full_log": {
+          "bytes": 211808,
+          "sha256": "80482d1acd2df8fffbf6b14cb8e4e30e36aeb5eeb7409a96320c41f1f12c6a5a"
+        },
+        "job_id": 124972086765,
+        "required_steps_success": true,
+        "run_zip_member": "3_macos-aarch64.txt",
+        "warnings": 132
+      },
+      "shipping_packages": 41,
+      "source_package": {
+        "bytes": 97436,
+        "clean_vcs": true,
+        "members": 187,
+        "normalized_metadata_match": true,
+        "original_bodies_modes_match": true,
+        "original_members": 185,
+        "sha256": "26b2da773027d4f6a1bcab0caa620c67f9e75009a81272b8657805d6d3d9c7a3",
+        "source_commit": "bcbee5f87aeda2e7664c279b32c5a3098635ca9b"
+      },
+      "tests": {
+        "debug": {
+          "ignored": 0,
+          "passed": 95,
+          "stderr": {
+            "bytes": 3134,
+            "sha256": "b4eccec1bf4a07abb34c402b63446c78a6a01ca15e42538443483079c43eddf0"
+          },
+          "stdout": {
+            "bytes": 7140,
+            "sha256": "36b71cfbaf90f6041c576053541920d627f94f295acf08b071d2578ab5c5a404"
+          }
+        },
+        "packaged-tests": {
+          "ignored": 0,
+          "passed": 95,
+          "stderr": {
+            "bytes": 804,
+            "sha256": "97d63ed3679dc6a68d3f73dc5e7a368690d86478be6245f69b7c512c97eeb1c8"
+          },
+          "stdout": {
+            "bytes": 7140,
+            "sha256": "edfb2d2f18e21f9e8d0744b9c9b7dc759c53e6509867e56da5c2d3736b90bdc5"
+          }
+        },
+        "release": {
+          "ignored": 0,
+          "passed": 95,
+          "stderr": {
+            "bytes": 3615,
+            "sha256": "deb8da6cf7381a4cd6bb838065edac224d875632e012329b869e832f682b2000"
+          },
+          "stdout": {
+            "bytes": 7140,
+            "sha256": "3720de74ac0cca0ac6983fab2b40e469dc0026acb9860d8f6f42fa7610095ecd"
+          }
+        }
+      },
+      "warnings": {
+        "clippy.stderr": 0,
+        "debug.stderr": 0,
+        "fmt.stderr": 0,
+        "install.stderr": 0,
+        "lifecycle/0.stderr": 0,
+        "lifecycle/1.stderr": 0,
+        "lifecycle/10.stderr": 0,
+        "lifecycle/2.stderr": 0,
+        "lifecycle/3.stderr": 0,
+        "lifecycle/4.stderr": 0,
+        "lifecycle/5.stderr": 0,
+        "lifecycle/6.stderr": 0,
+        "lifecycle/7.stderr": 0,
+        "lifecycle/8.stderr": 0,
+        "lifecycle/9.stderr": 0,
+        "oracle-build.stderr": 132,
+        "package.stderr": 0,
+        "packaged-tests.stderr": 0,
+        "release.stderr": 0,
+        "rustdoc.stderr": 0
+      },
+      "zip_files": 158
+    },
+    "macos-x86_64": {
+      "artifact": {
+        "bytes": 2354072,
+        "sha256": "80245fa19d53cb0c3b234881c750100e16f78d9d958b8934e882c8a271a3a4bd"
+      },
+      "artifact_id": 13099399919,
+      "binary": {
+        "bytes": 1576256,
+        "sha256": "3bfac1c568f1e3eb67f719c0650d75a88a72f40cd75b8d541d91cb03c88c547a"
+      },
+      "binary_header": "Mach-O64 little-endian x86_64",
+      "host": "x86_64-apple-darwin",
+      "lifecycle_calls": 11,
+      "machine": "Darwin iad01-ar513-8b147e30-3a12-462a-8334-71cde31f80d6-DE5ED4DD0658.local 24.6.0 Darwin Kernel Version 24.6.0: Tue Jul 21 20:50:07 PDT 2026; root:xnu-11417.140.69.711.44~1/RELEASE_X86_64 x86_64",
+      "native_archive": {
+        "bytes": 686055,
+        "sha256": "9ca25b8e7afcdaf9852418e7cb8032e3770b755a1cfba531c207f2950afca3c4"
+      },
+      "native_directories": 45,
+      "native_files": 99,
+      "oracle_version": "bedtools v2.31.1",
+      "required_ci_steps": {
+        "full_log": {
+          "bytes": 212039,
+          "sha256": "ce8da9ebeef39b72dd18bd7a07b0023d96bbafaa9b6b44fd11367cf6c1efaf90"
+        },
+        "job_id": 124972086989,
+        "required_steps_success": true,
+        "run_zip_member": "2_macos-x86_64.txt",
+        "warnings": 132
+      },
+      "shipping_packages": 41,
+      "source_package": {
+        "bytes": 97436,
+        "clean_vcs": true,
+        "members": 187,
+        "normalized_metadata_match": true,
+        "original_bodies_modes_match": true,
+        "original_members": 185,
+        "sha256": "26b2da773027d4f6a1bcab0caa620c67f9e75009a81272b8657805d6d3d9c7a3",
+        "source_commit": "bcbee5f87aeda2e7664c279b32c5a3098635ca9b"
+      },
+      "tests": {
+        "debug": {
+          "ignored": 0,
+          "passed": 95,
+          "stderr": {
+            "bytes": 3134,
+            "sha256": "1b726af29cedc2a6f8e57051aa74dd4ea1dac463234994de74d2b61eab911a90"
+          },
+          "stdout": {
+            "bytes": 7140,
+            "sha256": "c9f1c0c9d7e166abfe4fbccc3554ec39d393256a48aab1abd374607ab7e2cb41"
+          }
+        },
+        "packaged-tests": {
+          "ignored": 0,
+          "passed": 95,
+          "stderr": {
+            "bytes": 804,
+            "sha256": "616df1cbb7332a6aea1dc6c633e8148cc246ec36d7d28f624be92a2858fccb64"
+          },
+          "stdout": {
+            "bytes": 7140,
+            "sha256": "9c14efaf4c5742c6e78a99d243c918002fe271e1abbdafe2160606d3326841f7"
+          }
+        },
+        "release": {
+          "ignored": 0,
+          "passed": 95,
+          "stderr": {
+            "bytes": 3615,
+            "sha256": "79f5347ba7598de2871a5ea544b06ff3a053308d64f21bc3f5252e1f712cad95"
+          },
+          "stdout": {
+            "bytes": 7140,
+            "sha256": "868489d126f177a124e6f2403d437bce2b6b742802ccf0f67f621013946edd46"
+          }
+        }
+      },
+      "warnings": {
+        "clippy.stderr": 0,
+        "debug.stderr": 0,
+        "fmt.stderr": 0,
+        "install.stderr": 0,
+        "lifecycle/0.stderr": 0,
+        "lifecycle/1.stderr": 0,
+        "lifecycle/10.stderr": 0,
+        "lifecycle/2.stderr": 0,
+        "lifecycle/3.stderr": 0,
+        "lifecycle/4.stderr": 0,
+        "lifecycle/5.stderr": 0,
+        "lifecycle/6.stderr": 0,
+        "lifecycle/7.stderr": 0,
+        "lifecycle/8.stderr": 0,
+        "lifecycle/9.stderr": 0,
+        "oracle-build.stderr": 132,
+        "package.stderr": 0,
+        "packaged-tests.stderr": 0,
+        "release.stderr": 0,
+        "rustdoc.stderr": 0
+      },
+      "zip_files": 158
+    }
+  },
+  "new_performance_earned": false,
+  "old_performance_unchanged": true,
+  "owner_commit": "bcbee5f87aeda2e7664c279b32c5a3098635ca9b",
+  "protected_baseline_files": 88,
+  "publication": false,
+  "registry_original_terms": 88,
+  "remaining": [
+    "GitHub release publication",
+    "fresh public install lifecycle"
+  ],
+  "repository": "omics-rust/rsomics-bed",
+  "root_adopted": true,
+  "run_attempt": 1,
+  "run_id": 41348074250,
+  "run_log_zip": {
+    "bytes": 284893,
+    "sha256": "25149f0c02211aebc6834f160c0ec3ea4f137575d694317ac2539dd6ac18722b"
+  },
+  "run_log_zip_members": 87,
+  "schema": "rsomics.bed.native-delivery-originals.v1",
+  "scope_limits": [
+    "not signing/notarization",
+    "not older OS floor",
+    "not full system runtime inventory",
+    "not legal clearance",
+    "registry remains separate"
+  ],
+  "shipping_graph_union_packages": 42,
+  "source_files": 185,
+  "source_normalized_manifest_verified_as_data": true,
+  "source_original_member_count": 185,
+  "source_package": {
+    "bytes": 97436,
+    "sha256": "26b2da773027d4f6a1bcab0caa620c67f9e75009a81272b8657805d6d3d9c7a3"
+  },
+  "source_package_members": 187,
+  "source_tree": "accd58e11210976141b48cbf2b54b4ee8626fad9",
+  "test_execution_instances": 1140,
+  "evidence_directory": "/Volumes/KIOXIA/Developments/tmp/bed-native-originals-20261102.0DQDbw",
+  "root_proof": {
+    "directory": "/Volumes/KIOXIA/Developments/tmp/bed-native-root-adoption-20261102.xQYbpz",
+    "stdout_sha256": "640eb4070f15ad40fd46c40dd4ab29497f839d467c8e9ba74ca56e35eeea61bb",
+    "exit_code": 0,
+    "guard_diagnostics_on_stderr": true,
+    "read_only_enforced": true,
+    "original_packet_unchanged": true,
+    "physical_files": 73,
+    "physical_bytes": 10859512,
+    "raw_api_artifacts_match_collection": true,
+    "report_sha256": "f22225b10ff0dc0dd2d9a19941f516fc596af8de39a82d7d197fa3d6400261eb",
+    "checker_sha256": "1667b78aab04bacc532dbf73225b5e5064cbf344b7c9ebaca524b833c115c61a",
+    "original_proposal_sha256": "fcc7e5cf80697c6bdbdf8cf990e68ce4cd7f120de92ccd3a715624081a9d09e0"
+  }
+}

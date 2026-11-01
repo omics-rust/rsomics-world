@@ -1,5 +1,9 @@
 # BED native/source delivery
 
+Current: actual native4CI41348074250 and complete originals are root-adopted
+for185-file ownerbcbee5f8. GitHub release/fresh public installation are next;
+registry stays held. Prior sections below preserve the chronological gates.
+
 Root selects the completed eight-operation0.2 slice after fresh local/live-main
 agreement at02b85a1a348c271e485cca629dc4e71fa075388a and fresh empty release
 listing/v0.2.0 ref404. The91-file baseline has tree49a916836bc119696a6845d97c03c992b1d44dec.
@@ -95,3 +99,38 @@ failures, not interpreted as registry authentication/publication attempts.
 The manual-only publish.yml is unchanged and will not run from a release tag.
 Clean source, all four actual native results/originals and fresh public
 installation remain gates; all older packets and measured losses are preserved.
+
+## Complete native delivery originals accepted
+
+Actual41348074250/1 is SUCCESS atbcbee5f8 on all four native classes. Root
+reads the complete report/208-line data checker, then runs a fresh guarded
+read-only check of all73 physical files/10859512B. Path writes are rejected;
+before/after complete payload hashes match. All four primary raw API artifact
+records match the collection and exact run/head. Root stdout SHA
+640eb4070f15ad40fd46c40dd4ab29497f839d467c8e9ba74ca56e35eeea61bb;
+exit0, stderr contains only external guard diagnostics. No recovered content,
+scientific binary, native binary or build executes.
+
+All four original ZIPs/634 members and full run-log ZIP/87 members pass CRC;
+the four independent raw job logs agree byte-exactly. Four source crates are
+97436B/SHA26b2da773027d4f6a1bcab0caa620c67f9e75009a81272b8657805d6d3d9c7a3,
+with185 exact Git files plus original manifest/clean VCS. The normalized
+manifest, library/tests/goldens, source metadata and88 protected bodies match.
+Native TARs each contain99 regular files/45 directories, exactly one0755
+product, original terms/docs/BUILD0644 and directories0755. Actual architecture,
+native host, Rust/Cargo1.91 and source/lifecycle/checksum bindings agree.
+
+There are95 distinct tests/profile, three profiles/four hosts=1140 execution
+instances/0ignored; all actual live pinned BEDTools cases pass. Each installed
+binary executes the11-call workflow:44 total,40 success/four intended errors.
+All goldens, stdin reload, JSON and pre-commit output preservation match.
+Shipping is41 packages per target/42 union with88 original registry terms and
+the pinned BEDTools notice. Original upstream build warnings and three reader/
+client classification failures remain, never converted into candidate failures
+or hidden by modifying original bytes. Linux-only benchmark smoke is not a
+new measurement.
+
+Root adopts bed-native-delivery-2026-11-02.json. Packet0DQDbw/reportf22225b1/
+checker1667b78a/proposalfcc7e5cf remain unchanged. Old measured executables and
+RSS/order losses stay separate. Release and fresh public installation remain
+required; registry/signing/older-OS/full-system/legal claims stay unqualified.

@@ -18,7 +18,14 @@ the rejected candidate and RSS losses. This is not a new benchmark or a fresh
 large-output/runtime attestation. See
 `.autopilot/oracles/bed-historical-performance-2026-11-02.json` and
 `.autopilot/state/bed-native-delivery-2026-11-02.md`. New delivery/release/public
-installation remain unearned until their actual gates pass.
+installation remain separate gates. Actual ownerbcbee5f8/native4CI41348074250
+now has complete originals adopted:185 Git files/four identical clean source
+packages,95 distinct tests in three profiles/four hosts, and44 installed calls.
+Native source/package/bundle checks pass; GitHub publication and fresh public
+installation are next, not yet claimed. The inherited README I/O guarantee
+now explicitly distinguishes pre-commit preservation from post-commit sync
+errors, without changing the locked runtime or public API. See
+`.autopilot/oracles/bed-native-delivery-2026-11-02.json`.
 
 ## Boundary
 

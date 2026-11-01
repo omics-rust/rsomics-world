@@ -76,22 +76,22 @@ registry archives, current eight CLI contracts, existing tests/golden bytes.
 **Produces:** exact clean source.crate, four native TARs with BUILD/checksums,
 original terms and an installed eleven-call lifecycle with raw outputs.
 
-- [ ] Freeze the91 original bodies/modes and intentional changed-path list
+- [x] Freeze the91 original bodies/modes and intentional changed-path list
   before editing. Record that no delivery helper/native carrier currently
   exists; use one connected missing-delivery check, not invented helper tests.
-- [ ] Add an owner-specific external-path guard from the current Ecology
+- [x] Add an owner-specific external-path guard from the current Ecology
   pattern. Preserve tool/target/cache checks and reject storage overrides.
   Create new target/scratch directories only at the explicit external paths.
-- [ ] Derive the actual locked normal/build graphs for each native target;
+- [x] Derive the actual locked normal/build graphs for each native target;
   copy original checksum-locked license bodies, including applicable nested
   terms, and document shipping versus dev-only/source graph scopes. Do not
   guess licensing from SPDX alone or introduce dependencies.
-- [ ] Implement source/smoke/bundle actions using the accepted delivery shape.
+- [x] Implement source/smoke/bundle actions using the accepted delivery shape.
   A clean source package has exact Git body/mode membership, Cargo.toml.orig
   and clean VCS identity. A native bundle has one0755 product, original terms,
   README/notices/BUILD at0644 and directories0755; no build scratch or oracle
   binary. Record Rust/native host/head/lock/run/attempt, not minimum-OS/signing.
-- [ ] Run one installed eleven-call lifecycle: version, help, all eight
+- [x] Run one installed eleven-call lifecycle: version, help, all eight
   operations and one expected parse failure. Sort the existing sort.input.bed
   through stdin and compare existing sort.expected.bed; reload that result
   through merge with JSON and a named output. Its exact merged BED3 result is
@@ -102,7 +102,7 @@ original terms and an installed eleven-call lifecycle with raw outputs.
   The malformed intersect input must return the common input-error exit and
   leave a pre-existing named output unchanged. Record each argv/status/stdout/
   stderr/output and installed binary hash. No repeated standalone helper gate.
-- [ ] Extend current CI to actual ubuntu-24.04/ubuntu-24.04-arm/macos-15-intel/
+- [x] Extend current CI to actual ubuntu-24.04/ubuntu-24.04-arm/macos-15-intel/
   macos-15. Configure Cargo/target/TMP step-locally under RUNNER_TEMP before
   toolchain setup. Retain pinned Rust1.91 and SHA-checked bedtools2.31.1 build,
   actual oracle version, debug/release full tests, strict Clippy, fmt, package
@@ -111,13 +111,18 @@ original terms and an installed eleven-call lifecycle with raw outputs.
   artifacts/logs with90-day retention. No cross-build substitutes or skipped
   oracle qualification. Local verification uses own Rust lib/CLI tests only;
   all native CI hosts run complete actual upstream compatibility/differentials.
-- [ ] Update installation/scope/metadata docs honestly; GitHub release remains
+- [x] Update installation/scope/metadata docs honestly; GitHub release remains
   pending until root's later public action. Keep current public API and all
   scientific/format bodies unchanged. Guarded local fmt/strictClippy/rustdoc,
   Rust lib/CLI tests and actual installed lifecycle run once; freeze complete
   diff/source/notices and raw local results for one whole review.
 
 ## Root adoption
+
+Implementation, one whole review/correction and actual native-four original
+adoption are complete atbcbee5f8/run41348074250. See
+bed-native-delivery-2026-11-02.json. GitHub publication and fresh public
+installation remain the next mandatory gates.
 
 Root independently reviews the complete candidate plus one fresh whole review,
 then addresses material findings together. Before any owning push, verify old
