@@ -1,0 +1,536 @@
+{
+  "attribution": "Meilander et al.; Upcycling Human Excrement: The Gut Microbiome to Soil Microbiome Axis; Zenodo15390940 CC-BY-4.0",
+  "image": {
+    "config_digest": "sha256:f3d916a4884034b89cb6148781f07d8c92d94b6c6dc1b74dcbec3475d16400da",
+    "gcc_version": "14.3.0",
+    "manifest_digest": "sha256:a689e29bc3adf4663ef9a141d23081252764d1319c63f591a027bd6fd676f4c1",
+    "platform": "linux/amd64",
+    "reference": "gcc:14.3.0-bookworm@sha256:a689e29bc3adf4663ef9a141d23081252764d1319c63f591a027bd6fd676f4c1"
+  },
+  "lock_sha256": "7d7218ba50202994ed28f61cbb127aaaafab7e0076e5d2cd35ce74e65d7d58c7",
+  "native_authority": {
+    "bytes": 23104,
+    "sha256": "a7728566328baf168b6552deb9177c2edb4d94691e0c7b77e9b4b03038ac7ddf"
+  },
+  "native_receipt": {
+    "path": ".autopilot/oracles/ecology-native-2026-11-01.json",
+    "sha256": "dfc1e96c369c18e0e5ef876779c4cc0e9f715916be1850757037e40514f28290",
+    "required_schema": "rsomics.ecology.native-adoption.v1",
+    "runtime_input": "tracked relative receipt path plus its actual SHA; no future identifiers",
+    "status": "accepted",
+    "targets": [
+      "linux-aarch64",
+      "linux-x86_64",
+      "macos-aarch64",
+      "macos-x86_64"
+    ]
+  },
+  "original_source": {
+    "artifact_id": 12792734146,
+    "artifact_name": "ecology-diversity-oracle-40634594900-1",
+    "artifact_sha256": "51a14cfbbc64b6cd7c07d7a61788d224924a44a3de02ae51c593a3a4d3e792fe",
+    "head_sha": "e712975eceec6ac8120fa84ac617498016a12221",
+    "manifest_sha256": "34b96bfccadb55f6a2ff57e443c8089a1b3636171bea7be6b89c4d86ef727439",
+    "run_attempt": 1,
+    "run_id": 40634594900,
+    "size_in_bytes": 142733553,
+    "witness_sha256": "b6eb9045c2dceba4754821f90c8c553a3da221f04405364bbd0639fd4fd146a1"
+  },
+  "owner_commit": "e1b03cb68876be2dd8bb9fbc520b5194be055d9e",
+  "owner_tree": "b5996ddd92f292714c82c0c53a50c041f2b90249",
+  "policy": {
+    "abs_tolerance": 1e-10,
+    "allowances": [
+      1,
+      4
+    ],
+    "budgets": {
+      "inputs": 268435456,
+      "metadata": 536870912,
+      "runtime": 2415919104,
+      "science": 3221225472
+    },
+    "complete_workflows": 28,
+    "controller_deadline_seconds": 8100,
+    "cpus": 4,
+    "effective_rooted": true,
+    "headroom_bytes": 8589934592,
+    "max_alpha_bytes": 2097152,
+    "max_rarefied_bytes": 104857600,
+    "measured_pair_orders": [
+      "SN",
+      "NS",
+      "SN",
+      "NS",
+      "SN"
+    ],
+    "measured_pairs_per_allowance": 5,
+    "memory_cgroup_bytes": 12884901888,
+    "metrics": [
+      "observed_features",
+      "shannon",
+      "simpson",
+      "dominance",
+      "inv_simpson",
+      "simpson_e",
+      "pielou_e",
+      "chao1",
+      "goods_coverage",
+      "faith_pd",
+      "phydiv"
+    ],
+    "pd_rooted": "auto",
+    "pd_weight": 0.25,
+    "performance": {
+      "endpoints": [
+        "a",
+        "w"
+      ],
+      "later_stage_wall_ratio": 1.1,
+      "resource_all_rss_ratios_lt": 1,
+      "resource_cpu_ratio": 1.05,
+      "resource_median_rss_ratio": 0.75,
+      "resource_wall_ratio": 1.05,
+      "throughput_cpu_ratio": 1.05,
+      "throughput_median_ratio": 0.8,
+      "throughput_pair_ratio": 0.9,
+      "throughput_required_pairs": 4,
+      "throughput_rss_ratio": 1.1
+    },
+    "qualification_workflows": 4,
+    "rarefaction": {
+      "depth": 3,
+      "seed": 42
+    },
+    "reference_timeout_seconds": 1800,
+    "rel_tolerance": 1e-10,
+    "retained_limit_bytes": 6442450944,
+    "rlimit_as": null,
+    "tar_bound_bytes": 7516192768,
+    "warmup_pairs_per_allowance": 1,
+    "workflow_timeout_seconds": 1200
+  },
+  "product": "rsomics-ecology",
+  "python": {
+    "authority": "External interpreter distribution identity reused from existing verified official python-build-standalone authority, not a dependency on another Layer B product",
+    "checksum_url": "https://github.com/astral-sh/python-build-standalone/releases/download/20250409/cpython-3.12.10%2B20250409-x86_64-unknown-linux-gnu-install_only.tar.gz.sha256",
+    "filename": "cpython-3.12.10+20250409-x86_64-unknown-linux-gnu-install_only.tar.gz",
+    "release": "20250409",
+    "sha256": "e9cf6f7da499a4400ba30ae1da8f7ef25ce97827bd8c1084717aa05438035186",
+    "size": 66393557,
+    "url": "https://github.com/astral-sh/python-build-standalone/releases/download/20250409/cpython-3.12.10%2B20250409-x86_64-unknown-linux-gnu-install_only.tar.gz",
+    "version": "3.12.10"
+  },
+  "recipient": {
+    "path": "assets/private-artifacts-20261101.recipient",
+    "sha256": "8bb86dc97982fc7b64d7e33f7c3741e7f3d27a21690f48ddce9dada4a230680d"
+  },
+  "schema": "rsomics.ecology.whole-real-policy.v1",
+  "scope": "first complete-study qualification and fixed11-metric performance profile; not all15 captured profiles, beta, full product or publication",
+  "source_archive_sha256": "e202c3d8eefb216f19adfd20b8db2efe0dbb59bbf3cec68af25b89c9409177d2",
+  "source_manifest_sha256": "8bd51f8b797a3e772ebdc9acb69a3a60d7d277f8196c4142a9ce6246dc31ca75",
+  "source_runtime": {
+    "biom_commit": "2b81a013aae29004d9b82d13847450b27fd6b161",
+    "compiled_modules": {
+      "biom._subsample": {
+        "relative": "biom/_subsample.cpython-312-x86_64-linux-gnu.so",
+        "sha256": "5a33bb24a0c96901ae800ec288c1efe981380f57fbcc388f2a40100ca01bda8a"
+      },
+      "numpy.random._generator": {
+        "relative": "numpy/random/_generator.cpython-312-x86_64-linux-gnu.so",
+        "sha256": "e362c7a4c9d5d97404ee1fcbf00c2b345ecec945df50f6ea3e0f4631d4ab336e"
+      },
+      "numpy.random._pcg64": {
+        "relative": "numpy/random/_pcg64.cpython-312-x86_64-linux-gnu.so",
+        "sha256": "61175f3da7d43f4811277cdf743906b8d405d1800cee79632a17fbca478e6964"
+      },
+      "skbio.diversity._phylogenetic": {
+        "relative": "skbio/diversity/_phylogenetic.cpython-312-x86_64-linux-gnu.so",
+        "sha256": "f69780f0ab803b5fe487c5614a04012ad8448873205243d4a949bc86045bc957"
+      }
+    },
+    "difference": "fresh pinned standalone patch/build; old-case bridge and new full-study public-reference qualification mandatory",
+    "installed_python_sources": {
+      "skbio/diversity/_driver.py": "cce20bfab060b5abf81529a9566b3b1f0de94cdf21ac80d54ab01dd33a9065d7",
+      "skbio/diversity/_util.py": "d2403b84ba0a49b2fb48aadcc8a24c703a623329ea4c8aab25cc15e8dcb4b70c",
+      "skbio/diversity/alpha/_base.py": "ad55376df0694358feedf27a7a532d060927d6d574c9494e66830cb12b601cf7",
+      "skbio/diversity/alpha/_chao1.py": "f329947f3e9950fb284a58b3d753e99dfdb8f03f147633cdc39dbf90094be6f5",
+      "skbio/diversity/alpha/_pd.py": "b884fd146b47ef419837eed840f7cabadbfb6dd3952810dae3371fa406dfc635",
+      "skbio/diversity/beta/_unifrac.py": "813aa7554a79a577c808c1fcd1525a5476174137bdcfd5b4e14b4f80ffbbb949",
+      "skbio/stats/_subsample.py": "355dcc624f523639f8b40f62c9bb108070f9007767ad325f82f972fb7c346fc8",
+      "skbio/tree/_tree.py": "383b089b40589ec664d1d2ef81ede5a8a36106e87bb1aa92bc3b01116893a54e",
+      "skbio/tree/_utils.py": "333903337875ec509020284c09b804d03bc63e7f4b3b20df11492bfb2a10b7f4",
+      "skbio/util/_misc.py": "d1283c71fd1fa21cfa2a0b59ee4d1be2513db603dfa60d38e7de4a4c48db05f1"
+    },
+    "original_python": "3.12.15",
+    "proposed_python": "3.12.10",
+    "scientific_versions": {
+      "biom-format": "2.1.17",
+      "numpy": "2.5.4",
+      "scikit-bio": "0.7.3",
+      "scipy": "1.18.1"
+    },
+    "scikit_bio_commit": "a3beaa632077a532330343d5db0d8e30e58b6705",
+    "wheels": {
+      "array-api-compat": {
+        "bytes": 81744,
+        "filename": "array_api_compat-1.16.0-py3-none-any.whl",
+        "metadata_member": "array_api_compat-1.16.0.dist-info/METADATA",
+        "metadata_sha256": "b0ef85122b908e16bd75aa420329a9ecfbb54e1746a50431622e0e3861854c43",
+        "requires_python": ">=3.10",
+        "sha256": "0464934d7d5f1e9b728b2e248da52400630b1fcb46b70073eab3c7ae084290aa",
+        "version": "1.16.0"
+      },
+      "biom-format": {
+        "bytes": 12318435,
+        "filename": "biom_format-2.1.17-cp312-cp312-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+        "metadata_member": "biom_format-2.1.17.dist-info/METADATA",
+        "metadata_sha256": "45d12718ae81fd883d37cfb9ce242c51218e9679b3db6f0e02fa2b854e48d594",
+        "requires_python": ">=3.9",
+        "sha256": "601a012503363cfa8d011d51f5d90a93dcca8feaa01cce38eacd5c26005bc3a0",
+        "version": "2.1.17"
+      },
+      "certifi": {
+        "bytes": 135082,
+        "filename": "certifi-2026.10.23-py3-none-any.whl",
+        "metadata_member": "certifi-2026.10.23.dist-info/METADATA",
+        "metadata_sha256": "e463e38f7fe7da36a11e6d3fecc5dfa5b97be8c8022620400750d79ae7d842bc",
+        "requires_python": ">=3.7",
+        "sha256": "e9b54de76e530bb6cf0ccd036787103acb58fd42ba930ea8bf948ddbaa2f61d1",
+        "version": "2026.10.23"
+      },
+      "charset-normalizer": {
+        "bytes": 257601,
+        "filename": "charset_normalizer-3.5.2-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl",
+        "metadata_member": "charset_normalizer-3.5.2.dist-info/METADATA",
+        "metadata_sha256": "89ce6362bb7be88558f4be99a98f5d1b4da93d19cd0323e5ee0bac05cf883dfb",
+        "requires_python": ">=3.7",
+        "sha256": "3d31298449090ab8d47b7b1b2a555ff73cac7ed438a08b7ac160980c7ebed649",
+        "version": "3.5.2"
+      },
+      "click": {
+        "bytes": 125251,
+        "filename": "click-8.5.0-py3-none-any.whl",
+        "metadata_member": "click-8.5.0.dist-info/METADATA",
+        "metadata_sha256": "e87bce0bd194de70dfb8e708e0a6b0483009f25611804eaf87bfeb63e6c20501",
+        "requires_python": ">=3.10",
+        "sha256": "255bc9599cf7748b4b1a446ccc735421bd08a2ae529a8b88597d3de5664ee360",
+        "version": "8.5.0"
+      },
+      "decorator": {
+        "bytes": 10365,
+        "filename": "decorator-5.3.1-py3-none-any.whl",
+        "metadata_member": "decorator-5.3.1.dist-info/METADATA",
+        "metadata_sha256": "2133792485403bbd739e1db5960228bedbcde6d00c0acc052b27f39dbae5b5c4",
+        "requires_python": ">=3.8",
+        "sha256": "f47fe6fdbd2edd623ecfe36875d37aba411624e2670dd395dddae1358689bb3c",
+        "version": "5.3.1"
+      },
+      "formulaic": {
+        "bytes": 118939,
+        "filename": "formulaic-1.2.2-py3-none-any.whl",
+        "metadata_member": "formulaic-1.2.2.dist-info/METADATA",
+        "metadata_sha256": "abc2ce34c42d629b55aa1665550d8f1ba50fcacf874db97954f3b9f2890e0643",
+        "requires_python": ">=3.9",
+        "sha256": "0f84ff49e3fc9dc0e68ab08a0a9427874021aa6c558e66b44dc634a35739b09b",
+        "version": "1.2.2"
+      },
+      "h5py": {
+        "bytes": 5405250,
+        "filename": "h5py-3.16.0-cp312-cp312-manylinux_2_28_x86_64.whl",
+        "metadata_member": "h5py-3.16.0.dist-info/METADATA",
+        "metadata_sha256": "e461fcf7eb9fee6242205f9225cc178455a0212d1c0cb8f997f7eebf8cd9695e",
+        "requires_python": ">=3.10",
+        "sha256": "dfc21898ff025f1e8e67e194965a95a8d4754f452f83454538f98f8a3fcb207e",
+        "version": "3.16.0"
+      },
+      "idna": {
+        "bytes": 69583,
+        "filename": "idna-3.20-py3-none-any.whl",
+        "metadata_member": "idna-3.20.dist-info/METADATA",
+        "metadata_sha256": "dbd8c14c1e4ca1e0c9824a6dbc7cbbf78884f38eb52d91148cd3025f671e4b85",
+        "requires_python": ">=3.9",
+        "sha256": "ab7ae7122974553370f0bdb919e1a960b2cd1bc1ef0276416d896db81c14582c",
+        "version": "3.20"
+      },
+      "interface-meta": {
+        "bytes": 15330,
+        "filename": "interface_meta-2.0.1-py3-none-any.whl",
+        "metadata_member": "interface_meta-2.0.1.dist-info/METADATA",
+        "metadata_sha256": "e9f0a6845e13e5de8b4ee9419760ca1517ee3cdd2c41b1b205499122117f0222",
+        "requires_python": ">=3.10",
+        "sha256": "f38016bef9a4429b6d0792d809be7b65e9781820c674bf7f463999086b6e6323",
+        "version": "2.0.1"
+      },
+      "narwhals": {
+        "bytes": 490591,
+        "filename": "narwhals-2.28.0-py3-none-any.whl",
+        "metadata_member": "narwhals-2.28.0.dist-info/METADATA",
+        "metadata_sha256": "d0da2a7f975c93dc3845bf5d56a4ec09b83709bc31330f5a9cc2031b2a729aed",
+        "requires_python": ">=3.10",
+        "sha256": "1f69d6385ec30e2fa6e1fdeb37c562ecabd0f713f6f3e3b58a668c5c9df9567f",
+        "version": "2.28.0"
+      },
+      "natsort": {
+        "bytes": 38268,
+        "filename": "natsort-8.4.0-py3-none-any.whl",
+        "metadata_member": "natsort-8.4.0.dist-info/METADATA",
+        "metadata_sha256": "fe0934ce644ef39d034647b3280cc7e8afeaad92732ca70eb5f9e946db65f4a3",
+        "requires_python": ">=3.7",
+        "sha256": "4732914fb471f56b5cce04d7bae6f164a592c7712e1c85f9ef585e197299521c",
+        "version": "8.4.0"
+      },
+      "numpy": {
+        "bytes": 16727283,
+        "filename": "numpy-2.5.4-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl",
+        "metadata_member": "numpy-2.5.4.dist-info/METADATA",
+        "metadata_sha256": "e2b909d6a37d76c2bc130f528d7fed0c517322bce16dc7846b6a6df30e200403",
+        "requires_python": ">=3.12",
+        "sha256": "fbde6962867ee75b48b0ee29b2b9372ec5d617799dbaf38e82dc0596f2f7738a",
+        "version": "2.5.4"
+      },
+      "packaging": {
+        "bytes": 129956,
+        "filename": "packaging-26.3-py3-none-any.whl",
+        "metadata_member": "packaging-26.3.dist-info/METADATA",
+        "metadata_sha256": "70fdb89fc4d4a9a043bf7372b8972bcc883fddff34ab55e9cf80d73875384763",
+        "requires_python": ">=3.9",
+        "sha256": "d7193f7c8e4e93f444fde0262bf90af30e16fa0ad0ad44cb553c87339b23cd1c",
+        "version": "26.3"
+      },
+      "pandas": {
+        "bytes": 12019688,
+        "filename": "pandas-3.1.0-cp312-cp312-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl",
+        "metadata_member": "pandas-3.1.0.dist-info/METADATA",
+        "metadata_sha256": "b2b43910a5ef734a08be961df9c484f4664ad9ec2fa5a08294d0edfa08bcdd4b",
+        "requires_python": ">=3.11",
+        "sha256": "9433b5dc2f26ef9d9b56daaf4d41d078bf4372c5d88c42ed5b397a6eea80de16",
+        "version": "3.1.0"
+      },
+      "patsy": {
+        "bytes": 233318,
+        "filename": "patsy-1.0.3-py2.py3-none-any.whl",
+        "metadata_member": "patsy-1.0.3.dist-info/METADATA",
+        "metadata_sha256": "c9d8d1a6ebfdadd02c21b9f4d15b1c26716f181c4bb6bcccb1006c9d892da31f",
+        "requires_python": ">=3.6",
+        "sha256": "d3dbebe8fd5f46e29912d030b63c6268647b59bf788a99e2af28a30234cf357c",
+        "version": "1.0.3"
+      },
+      "python-dateutil": {
+        "bytes": 94659,
+        "filename": "python_dateutil-3.0.0-py2.py3-none-any.whl",
+        "metadata_member": "python_dateutil-3.0.0.dist-info/METADATA",
+        "metadata_sha256": "e10ead93598aed51bdb28aa30ef64ee5d6ccc871e88741d220e504e979af4695",
+        "requires_python": "!=3.0.*,!=3.1.*,!=3.2.*,>=2.7",
+        "sha256": "3c79630202e4152c6add678446984236efe4f57e84d8e892aab0637bab82e9fd",
+        "version": "3.0.0"
+      },
+      "requests": {
+        "bytes": 73075,
+        "filename": "requests-2.34.2-py3-none-any.whl",
+        "metadata_member": "requests-2.34.2.dist-info/METADATA",
+        "metadata_sha256": "8c384ba3e979480faae2859d3c5e6c1276dd2c3616e322e124d52c8cfc556f27",
+        "requires_python": ">=3.10",
+        "sha256": "2a0d60c172f83ac6ab31e4554906c0f3b3588d37b5cb939b1c061f4907e278e0",
+        "version": "2.34.2"
+      },
+      "scikit-bio": {
+        "bytes": 10549010,
+        "filename": "scikit_bio-0.7.3-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl",
+        "metadata_member": "scikit_bio-0.7.3.dist-info/METADATA",
+        "metadata_sha256": "ee1a53423cdbcb96ba5363cf719faede1bae5f002586d0fd8556c7c9b6a09a40",
+        "requires_python": ">=3.10",
+        "sha256": "bf7513c4c4b43373a262fcc22c311050e64f908d67fd8354b94c40cac6a2237c",
+        "version": "0.7.3"
+      },
+      "scipy": {
+        "bytes": 35344199,
+        "filename": "scipy-1.18.1-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl",
+        "metadata_member": "scipy-1.18.1.dist-info/METADATA",
+        "metadata_sha256": "6d1ebfbce110009e25e8249fea05e21c0449735144e9bd8df1a52931f957c1ea",
+        "requires_python": ">=3.12",
+        "sha256": "f55fa87b6c612ecd6b058f167c53231b1d14e412efe361d3d6e38b3631c73218",
+        "version": "1.18.1"
+      },
+      "six": {
+        "bytes": 11050,
+        "filename": "six-1.17.0-py2.py3-none-any.whl",
+        "metadata_member": "six-1.17.0.dist-info/METADATA",
+        "metadata_sha256": "562042078c2752549f6d8a7c86dbc5dd708088a7be6d80672ec7b07100b72468",
+        "requires_python": ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*",
+        "sha256": "4721f391ed90541fddacab5acf947aa0d3dc7d27b2e1e8eda2be8970586c3274",
+        "version": "1.17.0"
+      },
+      "statsmodels": {
+        "bytes": 12042643,
+        "filename": "statsmodels-0.15.0-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl",
+        "metadata_member": "statsmodels-0.15.0.dist-info/METADATA",
+        "metadata_sha256": "5c2b2bc90b451ec1d9d87529d25754011b4436f55f2a2956e0fabda34b82a826",
+        "requires_python": ">=3.10",
+        "sha256": "c6f2bd48915cc9b3b95c3c7f6ac363b6f8aaa38172962ba5f7f6885f0dfe57f2",
+        "version": "0.15.0"
+      },
+      "threadpoolctl": {
+        "bytes": 26362,
+        "filename": "threadpoolctl-3.7.0-py3-none-any.whl",
+        "metadata_member": "threadpoolctl-3.7.0.dist-info/METADATA",
+        "metadata_sha256": "09b19e721560cd12246402d44e53c1ede5194b8398ef60822f02cab86ccf8d1f",
+        "requires_python": ">=3.9",
+        "sha256": "cd8b60b5641b45c67bbf73c64c843235fc2d8a480c87389f52f5dbee893b86be",
+        "version": "3.7.0"
+      },
+      "typing-extensions": {
+        "bytes": 45571,
+        "filename": "typing_extensions-4.16.0-py3-none-any.whl",
+        "metadata_member": "typing_extensions-4.16.0.dist-info/METADATA",
+        "metadata_sha256": "b05084ca1d50879865178d9fff9fabeab61bdfb1f361bfbde95421ffc8f9be46",
+        "requires_python": ">=3.9",
+        "sha256": "481caa481374e813c1b176ada14e97f1f67a4539ce9cfeb3f350d78d6370c2e8",
+        "version": "4.16.0"
+      },
+      "tzdata": {
+        "bytes": 347996,
+        "filename": "tzdata-2026.5-py2.py3-none-any.whl",
+        "metadata_member": "tzdata-2026.5.dist-info/METADATA",
+        "metadata_sha256": "e0780e8b6dc8882ce87e871a9d4589d59cb05a0c2d64f58b1ba62cde1ee91f6a",
+        "requires_python": ">=2",
+        "sha256": "b683bd1b6659ddcd810ff02ad09ba821d4bf1065072805063eb35c49617905ac",
+        "version": "2026.5"
+      },
+      "urllib3": {
+        "bytes": 135717,
+        "filename": "urllib3-2.8.0-py3-none-any.whl",
+        "metadata_member": "urllib3-2.8.0.dist-info/METADATA",
+        "metadata_sha256": "10898c620e8007c030e07fa5622b68358a43010025dfbd78a1cb797699de2bb4",
+        "requires_python": ">=3.10",
+        "sha256": "0cf3cae568d36aa9576b28dfb35f11328f1cb974ca7647d9475ebb86c75ac6e3",
+        "version": "2.8.0"
+      },
+      "wrapt": {
+        "bytes": 250438,
+        "filename": "wrapt-2.5.1-cp312-cp312-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl",
+        "metadata_member": "wrapt-2.5.1.dist-info/METADATA",
+        "metadata_sha256": "166ca07d308c14c3e9dfe028c6389bf1a439027fe7b389d33eedb7d002e8bafb",
+        "requires_python": ">=3.9",
+        "sha256": "bfaa998ceeea4d0aa72b40cdd0023d19409504e244b439ff2aa9f01729341c5f",
+        "version": "2.5.1"
+      }
+    }
+  },
+  "study": {
+    "api_url": "https://zenodo.org/api/records/15390940",
+    "doi": "10.5281/zenodo.15390940",
+    "feature_ids_sha256": "d4c659780893a35c280632876f375a44e57756e58da2f31cf69a5562063142fd",
+    "features": 41328,
+    "license": "CC-BY-4.0",
+    "metadata_extra_rows": 543,
+    "metadata_rows": 1648,
+    "nonzeros": 314497,
+    "originals": {
+      "asv-table.qza": {
+        "bytes": 4241367,
+        "md5": "cbc05a3a6a9bbceb730c4ae60968beb3",
+        "payload": {
+          "bytes": 4479942,
+          "crc32": "a9f1e24c",
+          "md5": "6cefd8f3cf80d476e51115b28a1ebbb3",
+          "path": "f3a548a2-0c95-44b0-b5e2-1ad3c29d55ef/data/feature-table.biom",
+          "sha256": "4e4fdded5797c2b5432c83e9007d3ac939bd77a930973d2efea44fd68c1cf1b9"
+        },
+        "publisher_md5_verified": true,
+        "sha256": "7b47a6a0c1ce2bfce64a06943aa1ee5bef0cd1b96d8ae1b47733eca6e8dfe369",
+        "url": "https://zenodo.org/api/records/15390940/files/asv-table.qza/content",
+        "uuid": "f3a548a2-0c95-44b0-b5e2-1ad3c29d55ef"
+      },
+      "rooted-tree.qza": {
+        "bytes": 5100101,
+        "md5": "6c6cf96d37bf92fa1e509d75fbaab192",
+        "outer_crc32": "efb37a8b",
+        "outer_member": "gut-to-soil-qiime2/combined/rooted-tree.qza",
+        "payload": {
+          "bytes": 9705677,
+          "crc32": "bfabe866",
+          "md5": "6024884efb5bbe831eb3c07ef22db241",
+          "path": "ecb63807-e5b7-41bd-9f3d-f0bbbd5d4572/data/tree.nwk",
+          "sha256": "f06e853effe36628a650534cad71d01a6cfee169226e8a8c758a3bcec02c5bd7"
+        },
+        "publisher_md5_verified": false,
+        "sha256": "442b14157bc4063317eb792df9da4bd6bb7ed5be87d553309792246e10290e11",
+        "uuid": "ecb63807-e5b7-41bd-9f3d-f0bbbd5d4572"
+      },
+      "sample-metadata.tsv": {
+        "bytes": 356035,
+        "md5": "8eb74537d05d11013a24fed0c0202371",
+        "publisher_md5_verified": true,
+        "sha256": "5804446a7a54949c853fb14652bf45dca5c8cf7f209e77a9d75a1fa65532e7ee",
+        "url": "https://zenodo.org/api/records/15390940/files/sample-metadata.tsv/content"
+      }
+    },
+    "record_id": 15390940,
+    "root_degree": 2,
+    "sample_ids_sha256": "9f01293199a3355384942dc0e5cfe9c4209c257fb4a8df2aeda9fe65c4bd74dc",
+    "samples": 1105,
+    "stored_root_length": null,
+    "total_reads": 21227600,
+    "tree_edges": 323371,
+    "tree_extra_tips": 121003,
+    "tree_nodes": 323372,
+    "tree_ranges": {
+      "publisher_md5": "25b2a2b564b118c72144d7a0a354339a",
+      "requests": [
+        {
+          "end": 15598521476,
+          "requested_bytes": 22,
+          "sha256": "3e8e7ab3363e3159413a9f7896ef4097747f75e87ff9479ee784f0c2ab692e34",
+          "start": 15598521455
+        },
+        {
+          "end": 15598521454,
+          "requested_bytes": 20,
+          "sha256": "6d780159f681650348ed6feb03f9d3d36e7b69bc993a777aa8c5c88fbffd72cb",
+          "start": 15598521435
+        },
+        {
+          "end": 15598521434,
+          "requested_bytes": 56,
+          "sha256": "1c0569e373125ad9fdb87c4fe54599d483d5eb51acf71725fe98c89eb68fdaa6",
+          "start": 15598521379
+        },
+        {
+          "end": 15598521378,
+          "requested_bytes": 147165,
+          "sha256": "5a726ca236ae2195ae091a2828eceea03828ecf8f1659552988777e7f894e8fe",
+          "start": 15598374214
+        },
+        {
+          "end": 492386576,
+          "requested_bytes": 30,
+          "sha256": "3eb3624685c19716544f856fe84e72be56090bf244c02f0eb3261585ce9fe60a",
+          "start": 492386547
+        },
+        {
+          "end": 492386619,
+          "requested_bytes": 43,
+          "sha256": "f682bd2aea3a5365da148ab094b6564ea36a45cd3041f8e6b616a9302e1c1d01",
+          "start": 492386577
+        },
+        {
+          "end": 492386651,
+          "requested_bytes": 32,
+          "sha256": "2c9bb7f1373408897faac1de8df7dd412c706a0537e7592b7a3c67c2a3aec54e",
+          "start": 492386620
+        },
+        {
+          "end": 497415392,
+          "requested_bytes": 5028741,
+          "sha256": "b3098d10f29d889e02999016b4a10d26599b8b2913deab5e395808081511bd29",
+          "start": 492386652
+        }
+      ],
+      "total_bytes": 15598521477,
+      "url": "https://zenodo.org/api/records/15390940/files/gut-to-soil-qiime2.zip/content"
+    },
+    "tree_tips": 162331,
+    "whole_archive_checksum_verified": false
+  }
+}

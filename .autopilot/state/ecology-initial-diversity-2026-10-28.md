@@ -1,5 +1,44 @@
 # Ecology diversity source qualification
 
+## Complete-study controller reviewed for actual source/native execution
+
+Root reads all five complete delivery files,2071 lines, REPORT and timing
+clarification; freshly verifies52 sealed bodies/807050B and all five current
+delivery hashes at ecology-whole-real-prep-20261101.Hh9ldf. REPORT
+79b52a90ca112627e11825570c9b76e18ddf266ecb3be4d0600c19ac923078b3;
+SEAL644ff074523641a8965cd46c9d68a0147cf99e2c436acd23c5c6ae0e122882d0;
+completed f9fe029300040e739c390cfbef87a5bfdac308878a103787e696ed6dc65d24ce.
+One independent whole-wave scientific/fairness review finds no evidenced
+P1/P2; root fully reads and verifies REPORTf494cc2e5d7ae12b5e3a35414523a476e28732b122fa43f4ebcdac57ab375e17
+at ecology-whole-real-science-review-20261101.xUWsZZ. No helper-review ladder.
+
+All41328 features/1105 samples, full162331-tip tree, original-alpha endpointA
+and separate three-stage endpointW remain fixed. Source shares the actual
+upstream node-count kernel/branch vectors for Faith and quarter-PD, with real
+nonoverlapping four-process chunks. The original casebook quarter bridge and
+first independent complete-study public-driver reference must qualify all
+source/native1/4 outputs before timing.28 complete workflows retain all outputs,
+fixed allowances/metrics/numeric bands and pre-outcome material criteria.
+Source failure is a hold, not a native win. No pruning, seed search, data
+replacement, formula rewrite, new public API/foundation or owner edit occurs.
+
+The real accepted native receipt path/SHA dfc1e96c is pinned. Bookworm executes
+the retained ELF rather than rebuilding it. Source CPython3.12.10 differs from
+the original3.12.15; all27 original wheels/compiled modules are pinned and both
+scientific bridges remain mandatory. A native measures its actual first CLI;
+W uses external waited CPU once, process-RSS is a largest-process lower bound,
+not exact aggregate.6GiB retained/7GiB streamed TAR/8GiB headroom and ciphertext-
+only upload preserve available failures without a plaintext fallback.
+
+Author SAME ONE connected prep is final1/.583s. Root first invokes the system
+Python3.9 by mistake and encounters unsupported helper annotations, not a
+scientific failure; with existing Python3.13 through the owning external guard
+the unchanged ONE check passes1/3.071s. The expected exit9 child is retained
+failure-path evidence. No source/library import, real-study run or Linux ELF
+is executed on Mac. Exact-head Control, actual hosted runtime/ABI, scientific
+qualification, full recovered originals and performance adoption are still
+required; this preparation does not close beta or first-release/publication.
+
 ## Exact four-native alpha/rarefaction integration accepted
 
 Actual41268190701/1 at5affb09ceeae9922f59a22b70736a3cec5ef8c1d succeeds

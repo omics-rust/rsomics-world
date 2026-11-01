@@ -1,0 +1,88 @@
+name: Ecology complete-study real performance
+
+on:
+  workflow_dispatch:
+    inputs:
+      native_receipt:
+        description: Tracked accepted Ecology native-four receipt path
+        required: true
+        type: string
+      native_receipt_sha:
+        description: Actual SHA256 of that accepted receipt
+        required: true
+        type: string
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  complete-study:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 180
+    container:
+      image: gcc:14.3.0-bookworm@sha256:a689e29bc3adf4663ef9a141d23081252764d1319c63f591a027bd6fd676f4c1
+      options: --cpus 4 --memory 12g --memory-swap 12g
+    defaults:
+      run:
+        shell: bash
+    env:
+      ECOLOGY_CONTAINER_DIGEST: sha256:a689e29bc3adf4663ef9a141d23081252764d1319c63f591a027bd6fd676f4c1
+      PYTHONDONTWRITEBYTECODE: '1'
+      PYTHONNOUSERSITE: '1'
+      PYTHONPATH: ''
+      PYTHONUNBUFFERED: '1'
+      PIP_NO_INPUT: '1'
+      PIP_DISABLE_PIP_VERSION_CHECK: '1'
+      PIP_CONFIG_FILE: /dev/null
+      OMP_NUM_THREADS: '1'
+      OPENBLAS_NUM_THREADS: '1'
+      MKL_NUM_THREADS: '1'
+      NUMEXPR_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+
+      - name: Admit complete-study private storage and future native authority
+        env:
+          NATIVE_RECEIPT: ${{ inputs.native_receipt }}
+          NATIVE_RECEIPT_SHA: ${{ inputs.native_receipt_sha }}
+        run: |
+          set -euo pipefail
+          umask 077
+          ulimit -c 0
+          python3 -B scripts/ecology_whole_real.py init \
+            --native-receipt "$NATIVE_RECEIPT" --native-receipt-sha "$NATIVE_RECEIPT_SHA"
+
+      - name: Qualify original study and measure the fixed complete workflows
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          umask 077
+          ulimit -c 0
+          python3 -B scripts/ecology_whole_real.py execute \
+            > "$ECOLOGY_PRIVATE/controller.stdout.txt" 2> "$ECOLOGY_PRIVATE/controller.stderr.txt"
+
+      - name: Bind and encrypt all available original evidence
+        if: always()
+        run: |
+          set -euo pipefail
+          umask 077
+          ulimit -c 0
+          python3 -B scripts/ecology_whole_real.py finalize
+
+      - name: Upload ciphertext and allowlisted transport receipt only
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ecology-private-whole-real-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            ${{ env.ECOLOGY_SESSION }}/cipher/payload.tar.age
+            ${{ env.ECOLOGY_SESSION }}/cipher/receipt.json
+          include-hidden-files: true
+          if-no-files-found: error
+          compression-level: 0
+          retention-days: 90

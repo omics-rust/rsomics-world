@@ -107,6 +107,85 @@ class EcologyWorkflowTests(unittest.TestCase):
                 self.assertFalse(record['performance_claim'])
                 self.assertFalse(record['source_on_native_qualified'])
 
+        whole_workflow = ROOT / '.github/workflows/ecology-whole-real.yml'
+        self.assertTrue(whole_workflow.is_file(), 'missing full-study Ecology workflow')
+        whole = importlib.import_module('ecology_whole_real')
+        policy = whole.read_policy(ROOT)
+        self.assertEqual(policy['study']['features'], 41328)
+        self.assertEqual(policy['study']['samples'], 1105)
+        self.assertEqual(policy['policy']['rarefaction'], {'depth': 3, 'seed': 42})
+        accepted = whole.validate_native_receipt(ROOT, policy['native_receipt']['path'],
+                                                policy['native_receipt']['sha256'])
+        self.assertTrue(accepted['native_four_qualified'])
+        self.assertEqual(set(accepted['targets']),
+                         {'linux-x86_64', 'linux-aarch64', 'macos-x86_64', 'macos-aarch64'})
+        schedule = whole.schedule()
+        self.assertEqual([(r['phase'], r['workers'], r['pair'], r['engine']) for r in schedule], [
+            ('qualification', 1, 0, 'source'), ('qualification', 4, 0, 'source'),
+            ('qualification', 1, 0, 'native'), ('qualification', 4, 0, 'native'),
+            ('warmup', 1, 0, 'source'), ('warmup', 1, 0, 'native'),
+            ('measured', 1, 1, 'source'), ('measured', 1, 1, 'native'),
+            ('measured', 1, 2, 'native'), ('measured', 1, 2, 'source'),
+            ('measured', 1, 3, 'source'), ('measured', 1, 3, 'native'),
+            ('measured', 1, 4, 'native'), ('measured', 1, 4, 'source'),
+            ('measured', 1, 5, 'source'), ('measured', 1, 5, 'native'),
+            ('warmup', 4, 0, 'source'), ('warmup', 4, 0, 'native'),
+            ('measured', 4, 1, 'source'), ('measured', 4, 1, 'native'),
+            ('measured', 4, 2, 'native'), ('measured', 4, 2, 'source'),
+            ('measured', 4, 3, 'source'), ('measured', 4, 3, 'native'),
+            ('measured', 4, 4, 'native'), ('measured', 4, 4, 'source'),
+            ('measured', 4, 5, 'source'), ('measured', 4, 5, 'native')])
+        reservation = whole.retention_plan()
+        self.assertEqual(reservation['retained_limit_bytes'], 6 * 2**30)
+        self.assertEqual(reservation['tar_bound_bytes'], 7 * 2**30)
+        self.assertEqual(reservation['headroom_bytes'], 8 * 2**30)
+        with tempfile.TemporaryDirectory(prefix='ecology-whole-prep-') as directory:
+            root = Path(directory)
+            source_alpha, native_alpha = root / 'source.tsv', root / 'native.tsv'
+            source_alpha.write_text('sample\tobserved_features\tshannon\np\t2\t0.5\nz\t0\tnan\n')
+            native_alpha.write_text('sample\tobserved_features\tshannon\np\t2\t0.50000000001\nz\t0\tnan\n')
+            self.assertEqual(whole.compare_alpha(source_alpha, native_alpha,
+                             ['p', 'z'], ['observed_features', 'shannon'])['cells'], 4)
+            native_alpha.write_text('sample\tobserved_features\tshannon\np\t2\t0.5\nz\t0\t0\n')
+            with self.assertRaises(ValueError):
+                whole.compare_alpha(source_alpha, native_alpha,
+                                    ['p', 'z'], ['observed_features', 'shannon'])
+            original, expected, actual = root / 'original.tsv', root / 'expected.tsv', root / 'actual.tsv'
+            original.write_text('feature\tp\tq\na\t4\t1\nb\t1\t4\n')
+            expected.write_text('feature\tp\tq\na\t2\t1\nb\t1\t2\n')
+            actual.write_bytes(expected.read_bytes())
+            self.assertEqual(whole.compare_counts(original, expected, actual,
+                             ['a', 'b'], ['p', 'q'], 3)['cells'], 4)
+            actual.write_text('feature\tp\tq\na\t1\t2\nb\t2\t1\n')
+            with self.assertRaises(ValueError):
+                whole.compare_counts(original, expected, actual, ['a', 'b'], ['p', 'q'], 3)
+            with self.assertRaises((ValueError, OSError)):
+                whole.validate_native_receipt(root, '.autopilot/oracles/ecology-native-missing.json')
+            good_pairs = [dict(source=dict(a=dict(wall=10, cpu=10, rss=100),
+                                          w=dict(wall=20, cpu=20, rss=100),
+                                          stages={'rarefy': 4, 'rarefied-alpha': 6}),
+                               native=dict(a=dict(wall=5, cpu=5, rss=50),
+                                           w=dict(wall=10, cpu=10, rss=50),
+                                           stages={'rarefy': 2, 'rarefied-alpha': 3})) for _ in range(5)]
+            self.assertTrue(whole.evaluate(good_pairs)['passed'])
+            broken = json.loads(json.dumps(good_pairs))
+            for pair in broken:
+                pair['native']['stages']['rarefy'] = 5
+            self.assertFalse(whole.evaluate(broken)['passed'])
+            with self.assertRaises(RuntimeError):
+                whole.capture(root, 'nonzero', [os.sys.executable, '-B', '-c',
+                    'import sys; print("retained-five"); sys.exit(5)'], workers=1, timeout=10)
+            self.assertIn(b'retained-five', (root / 'nonzero/stdout.txt').read_bytes())
+            self.assertEqual(json.loads((root / 'nonzero/status.json').read_bytes())['returncode'], 5)
+        for path in ('scripts/ecology_whole_real.py', 'scripts/ecology_source_workflow.py'):
+            ast.parse((ROOT / path).read_text())
+        for name, step in steps(whole_workflow.read_text()).items():
+            if '        run: |\n' in step:
+                body = re.sub(r'\$\{\{.*?\}\}', 'route-only', bash_body(step))
+                checked = subprocess.run(['bash', '-n'], input=body, text=True,
+                                         capture_output=True, timeout=15)
+                self.assertEqual(checked.returncode, 0, name + checked.stderr)
+
 
 if __name__ == '__main__':
     unittest.main()
