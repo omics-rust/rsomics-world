@@ -6,7 +6,7 @@
 
 **Architecture:** keep resource preparation/access in `rsomics-index`. Reuse common/help and existing product BGZF framing; new scanners, FAI/region/query/dict policy remain product-private. No new owner, product boundary or public foundation API.
 
-**Current delivery:** actual source casebook41255333228 accepted; the complete native reference slice is committed at owner7f2d4fdeda9d0062d10941258b40eee16fdb9042. Exact four-native CI41259142238 is running. Full-reference performance and publication remain pending; no local samtools execution occurred.
+**Current delivery:** actual source casebook41255333228 accepted; the complete native reference slice is committed at owner7f2d4fdeda9d0062d10941258b40eee16fdb9042. Exact four-native CI41259142238 passes. Full-reference performance preparation follows the separately frozen 2026-11-01-index-reference-real-performance plan; publication remains pending and no local samtools execution occurred.
 
 ## Fixed source and behavior
 
