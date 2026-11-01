@@ -21,6 +21,13 @@ B1 wall medians source5.719653/native22.120533s; B4 source3.274481/native
 memory exists; process maxRSS and sampled groupRSS cannot substitute for it.
 Performance/publication remain false; no unchanged retry or easier case.
 
+One bounded author /root/plink_packed_impl owns the complete private wave;
+external workspace is plink-packed-wave-20261101.Jvzk3R. The owner guard
+rejects inherited CPPFLAGS; author explicitly removes that ambient override,
+not compiler policy. Root has not staged/committed the owner or frozen a new
+candidate. The whole diff, raw regression/native-only diagnostics and ONE
+fresh Rust/C++ safety/science/performance-path review remain required.
+
 Root also reads the separate whole bounded bottleneck note64578bf3 and live
 make/filter/reader/genotype/QC source. Unconditional identity Call roundtrips,
 duplicate decode/tally passes, unbuffered text and LD part-copy are concrete
