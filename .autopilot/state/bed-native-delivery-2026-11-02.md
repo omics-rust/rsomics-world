@@ -85,7 +85,7 @@ Root rulings on every declined review scope:
 
 Root commits only97 intended paths at main
 bcbee5f87aeda2e7664c279b32c5a3098635ca9b, treeaccd58e11210976141b48cbf2b54b4ee8626fad9,
-with all185 files and88 protected baseline bodies unchanged. Push succeeds;
+with185 files; all88 protected baseline bodies stay unchanged. Push succeeds;
 exact-head native CI41348074250 is in progress. No release is yet created.
 
 Fresh unauthenticated sparse registry index returns200 and only non-yanked
