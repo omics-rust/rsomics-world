@@ -124,3 +124,13 @@ diff, actual source reports and confirms identical source/archive hashes.
 The full Control suite is assigned to exact-head CI rather than repeating
 the unchanged local539-test suite again; actual corrected native/source gate
 remains required. No old ELF/timing/source-relink acceptance is inherited.
+
+## Corrected native/source gate dispatched once
+
+Exact-head full Control41329115995 succeeds at
+ff558968225f4d83c95b540d8cb434948b4c0884. Root verifies live main/absence of
+an earlier same-head candidate run and dispatches snapshotgreen-7 once.
+Actual41329335343/1 is in progress. New complete originals are assigned to
+/root/plink_green6_originals in a fresh external512MiB packet plus8GiB
+headroom; old failed/successful originals stay unchanged. Only actual new
+native binaries/ABI/bindings and source comparisons can earn this gate.
