@@ -1,0 +1,50 @@
+{
+  "schema": "rsomics.index.bgzf-terminal-failure.v1",
+  "status": "terminal-failure-public-log-cause-unknown",
+  "root_adopted": true,
+  "scope": "complete available public metadata and logs only; no original large artifact or scientific result adopted",
+  "repository": "omics-rust/rsomics-world",
+  "run_id": 41294913111,
+  "run_attempt": 1,
+  "head_sha": "bf60a596153a98e43341cbc8ad82ec2dbec88fb8",
+  "job_id": 124813613819,
+  "conclusion": "failure",
+  "execute_exit": 1,
+  "sealing": "success",
+  "upload": "success",
+  "artifact": {
+    "id": 13080522726,
+    "name": "index-bgzf-real-41294913111-1",
+    "bytes": 11036840266,
+    "sha256": "20400b99544920bed4898b12f4305ec4d1708d90887b08fc154119e26d7a6c3a",
+    "large_body_recovered": false
+  },
+  "public_log": {
+    "bytes": 106961,
+    "sha256": "6c3976b70c01ac362a859d3e5e5c6da09580abdd6096a949062325014f7030ca",
+    "raw_zip_bytes": 55537,
+    "raw_zip_sha256": "f95b054fe027c70b998164d4def7b73d56c5a86c4cb3dc1b7f45774a4bc2da54",
+    "zip_members": 12,
+    "job_log_matches_full_zip_member": true,
+    "all_member_crc_verified": true,
+    "underlying_failure_record_redirected_to_original_artifact": true
+  },
+  "custody": {
+    "path": "/Volumes/KIOXIA/Developments/tmp/index-bgzf-terminal-20261101.VsSMkl",
+    "report_sha256": "5f9022ce570e25506200427b99f68f31d57e1cb461035664dff091e29b1db6db",
+    "seal_sha256": "aab013c526d0eef96c38aef97386b0f0284e0d1562e613f1941159a346ca00f7",
+    "sealed_files": 74,
+    "sealed_bytes_excluding_seal": 339634,
+    "root_fresh_complete_file_set_verified": true,
+    "root_validation": "/Volumes/KIOXIA/Developments/tmp/ecology-beta-root-adoption-20261101.t5vENM/index-terminal-packet-validation.stdout",
+    "root_validation_sha256": "af37f3e253945931cda8d3c677a568d4dba68db457cd7861ee0d8329f07a81b8",
+    "root_validation_exit": 0,
+    "initial_nonterminal_404_reads_preserved": true
+  },
+  "actual_scientific_coverage": null,
+  "actual_runtime_admission": null,
+  "numerical_or_native_failure_established": false,
+  "performance_accepted": false,
+  "publication": false,
+  "next_action": "one complete original public ZIP and inert-body recovery under existing remote76GiB admission, then whole failure assessment; no speculative fix or rerun"
+}

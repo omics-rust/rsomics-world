@@ -1,5 +1,30 @@
 # Index complete BGZF/tabix real performance
 
+## Actual run failed; available public logs accepted, full originals next
+
+Actual41294913111/1 atbf60a596 is terminal FAILURE. Execute exits1; original
+sealing and upload succeed. Complete raw public logs contain no underlying
+traceback: stdout/stderr are redirected into the original campaign artifact.
+Initial session-admission success does NOT prove later tool/runtime admission.
+No reached qualification/call count, correctness or performance is inferred.
+
+Root reads the complete terminal report/collector and freshly hashes all74
+sealed bodies/339634B in index-bgzf-terminal-20261101.VsSMkl. Its full job log
+matches the complete12-member raw-log ZIP, including all CRCs. Original404
+reads before terminal status remain. The additive public-log-only receipt is
+index-bgzf-terminal-failure-2026-11-01.json; REPORT5f9022ce, SEALaab013c5.
+This does not adopt the large artifact, raw scientific resources or a result.
+
+Final actual artifact13080522726 is11036840266B, SHA
+20400b99544920bed4898b12f4305ec4d1708d90887b08fc154119e26d7a6c3a.
+Root authorizes ONE complete original ZIP/inert-CAS recovery under the existing
+remote76GiB allocation, with fresh physical mount/owner/free/reservation and
+current Ecology320+Index76 accounting. No key/cipher/new framework is needed
+for public synthetic originals. No foreign/scientific code is restored/run,
+partial deleted, gate lowered or scientific rerun authorized. Actual failure
+cause/coverage and all genuine complete resource distributions must be read
+from those originals before choosing the next whole-feature action.
+
 ## Actual complete Linux campaign launched
 
 Exact-head Control41294210741 at
