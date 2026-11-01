@@ -1,5 +1,15 @@
 # Ecology diversity source qualification
 
+## Actual pinned-receipt complete-study retry dispatched
+
+After exact-head Control41273149802 succeeds, root verifies live remote
+b0950de23dadf239a858b44e11cf37716ad8b76b and dispatches actual41273333210/1,
+job124750429737. The only execution correction removes the redundant local
+Git-process check; pinned receipt/native/source/input/science and all28 fixed
+workflows/criteria remain unchanged. Actual hosted admission/scientific result,
+full authenticated original recovery and root adoption are not preaccepted;
+the earlier first run remains failed before any science.
+
 ## First complete-study failure adopted; redundant runtime Git dependency removed
 
 Actual41272473289/1 fails before native carrier acquisition or any science.
