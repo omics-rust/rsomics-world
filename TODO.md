@@ -27,9 +27,10 @@ Index's corrected whole41327532095 has complete correct originals adopted:
 three serial primaries pass throughput, binary compression alone fails the
 material-advantage gate. A new implementation/profile is not yet justified;
 retain the negative result and advance other products without an unchanged rerun.
-Signal's confirmed arithmetic/data-loss/filter repairs are approved known
-incompatibilities. The distinct optional sorted-BED row-order decision remains
-pending. Structure torsion, edgeR QL numerical policy, inferCNV Leiden quality
+Signal's approved arithmetic/data-loss/filter repairs are already implemented
+and four-native/source qualified. Its mandatory summary region-order decision
+remains pending; the optional matrix sorted-BED anomaly is separate, not the
+cause of the failed NPZ comparison. Structure torsion, edgeR QL numerical policy, inferCNV Leiden quality
 and Peak sparse-default policy keep their explicit holds; other work continues.
 No pending human decision is silently resolved or used to block the portfolio.
 Exact gates and original receipts live in each product dossier/state file.

@@ -279,6 +279,21 @@ a strict throughput or resource advantage for the relevant replacement path.
 
 ## `rsomics-signal`
 
+Current: the first-six implementation at owner
+eb6c38327e9aa8ad56a2f3a0b1b0e805194bfbd5 passes four-native run41217009133,
+workers1/4 and source-on-native interoperability. The three approved
+signed-arithmetic/explicit-zero/filter corrections are already implemented
+and recorded as named incompatibilities, not new work awaiting another repair
+wave. See `.autopilot/oracles/signal-native-2026-10-31.json`.
+
+The complete real-input qualification remains failed with zero measured
+trials. Region-identity alignment diagnoses reordered summary rows, not a
+proven numerical defect; the separate human region-order contract decision
+remains pending. The optional matrix sorted-BED export anomaly is another
+distinct boundary, not the cause of this failed mandatory NPZ comparison.
+No ordering/checker change, retry, performance or release is accepted here.
+See `.autopilot/state/signal-real-performance-2026-11-01.md`.
+
 ### Boundary and upstream scope
 
 `rsomics-signal` is one genome-signal workflow over BAM, BED/bedGraph,
@@ -347,8 +362,9 @@ generic failure. Original ZIP/TAR and all29347 manifest entries verify, with
 installed runtime/source/controller/input bindings and no source/input changes.
 See `.autopilot/state/signal-preflight-2026-10-31.md` and retained REPORT
 9b520a38db6aa2426ded5ebefc7004966b663fd8064b3b4165fff9ffea65adca.
-Native Rust implementation, codec/build qualification and performance remain
-unearned. On2026-10-31 the user explicitly approves native default repairs for
+These source-only receipts did not qualify native implementation, codec/build
+or performance; the later native gate is recorded above. On2026-10-31 the user
+explicitly approves native default repairs for
 the confirmed signed-arithmetic empty-output defect, lost explicit trailing
 zeros/all-zero chromosomes and BED plus rejected-read TypeError boundary.
 Record these as named known upstream incompatibilities; preserve original
@@ -393,10 +409,11 @@ real implementation before considering a private codec rewrite; no fork is
 needed merely for the old link conflict. Parent reads REPORT
 af25a4bd123489cff5be21c943ebf1cce4cff96b8923e40b0f385b183f6da37c
 under `/Volumes/KIOXIA/Developments/tmp/signal-bbi-codec-routes-20261031.sijwFq/`
-and verifies all40retained-file hashes. The actual resolver/build/interoperability/
-resource gates remain unearned; header-driven allocations and decompression
-unwraps still need product boundary handling. No new public foundation, bamio
-bypass or automatic parser-safety claim follows from this dependency finding.
+and verifies all40retained-file hashes. That dependency finding alone did not
+qualify resolver/build/interoperability/resources; the later native gate is
+recorded above. Header-driven allocations and decompression unwraps required
+product-boundary handling. No new public foundation, bamio bypass or automatic
+parser-safety claim follows from the dependency finding.
 
 ### Data and execution model
 
