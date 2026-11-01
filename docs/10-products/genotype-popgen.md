@@ -11,10 +11,14 @@ independently accepted. The prior full-HGDP41260156411 finished with correct
 outputs but FAILED performance; that failure remains. Coherent packed-buffer
 optimization was remeasured on the unchanged full graph in actual
 41282068831/1, which is now terminal FAILURE. Sealing/upload succeeded and
-the complete failed originals are being recovered under the external-HDD
-terminal-size custody plan. Actual cause, achieved coverage and performance
-remain unadopted until that original assessment; no source/native failure is
-inferred from service status. No formal new performance or source/relink delivery is accepted
+the complete failed originals are now independently accepted under the
+external-HDD terminal-size custody plan. All26 whole graphs/210 commands are
+correct, but the fixed performance gate fails: native whole wall is1.757x/
+1.893x source at1/4, all seven stages regress, CPU/process-RSS also regress.
+This is not a service/native execution failure or release qualification.
+The additive plink-real-performance-green4-failure-2026-11-01.json preserves
+all losses. Whole-path attribution precedes any next coherent optimization;
+source inspection alone does not prove a bottleneck. No source/relink delivery is accepted
 yet; green3's41262996186 offline delivery remains historical, not rebound.
 Popgen source41252735560 is now accepted after
 full authenticated original and output audits: complete chr22/207 persons,

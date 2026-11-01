@@ -1,5 +1,58 @@
 # Fixed private HGDP whole-workflow gate
 
+## Full green4 originals accepted: correct workflow, performance FAILED
+
+Actual41282068831/1 failure is now established from full originals: the fixed
+material performance gate, NOT a service failure or failed native command.
+Root accepts complete correctness/custody evidence and the negative result in
+plink-real-performance-green4-failure-2026-11-01.json. No PLINK release follows.
+All929 people and declared chr19-22 inclusive20000001..22000000 remain:
+input231470 variants ->F23029 ->P696. This is not whole-genome/all-operation
+or real DS/HDS/VCF-import qualification or biological validation.
+
+All26 complete graphs/210 scientific commands/78 creation-bound generations
+and52 original source/official final-P validations succeeded. The442 logical
+reports reduce to19 unique complete pairs/2675722 rows under unchanged frozen
+printed-numeric/categorical/dosage rules. Eighteen unique complete raw streams
+pass CRC/EOF/decompressed hash/count, and every full I/F/P body agrees across
+source/native/official. No independent PGEN/ZSTD decoding or reparse of all
+logical call arrays is claimed by recovery. Actual ELF032ea39a/sourcee03ada17/
+303 bodies and all6360 original source-CAPTURE entries remain exact.
+
+| Workers | Source whole wall s | Native s | Native/source |
+|---|---:|---:|---:|
+|1|5.775210|10.148089|1.75718|
+|4|3.263942|6.178324|1.89290|
+
+All seven stage-wall ranges are entirely worse. F.qc median ratios17.7166/
+15.5508 are conspicuous but not mechanism attribution. CPU ratios1.617/1.492
+and wait4 max-process RSS ratios2.036/1.808 also regress; exact aggregate-tree
+memory is unavailable. Native4 improves its own wall1.6425x with more CPU;
+that is not an upstream advantage. Native4 output blocks1342320 vs707848;
+two native trials have8 input blocks despite zero median. Full distributions,
+stage-specific improvements/losses and scope remain retained, not physical-
+I/O-byte/heap/cold-cache/exclusive-host claims. Actual CPU model is unknown.
+
+Root fully reads the577-line assessor and custody/authentication/verifier/
+report/provenance, then freshly hashes every2391 sealed body/38236510418B,
+all ZIP/cipher/TAR/CAS, exact files/modes: exit0/empty stderr. Root separately
+recomputes142 resource-distribution summaries/ratios from the five raw trials.
+Packet plink-whole-real-green4-20261101.zCJ7RN:
+REPORTa0e32aa378cc357f205c69b36d327867997cf936604b1d893db4742811c488f5;
+SEAL3d58866fa0c2c871e28753a478544ed4fc3dce64e8ffff1c1cb382f25c7ff235.
+Root proof plink-green4-root-adoption-20261101.97XHts, stdout8e191e86.
+The single operator nested-CAPTURE reader correction and failed v1 remain,
+without a re-download/decryption/scientific rerun or changed original/gate.
+
+One read-only owning hot-path analysis z106aj/REPORT.md SHA6f7b1dc6 identifies
+repeated PGEN index preparation and single-variant mode, QC's repeated Call
+expansion and remaining LD bookkeeping. Green4 already solves packed identity
+make, buffers/filter counts and direct T1 LD output; do not repeat that work.
+A prepared private reader is only a candidate, not a proven bottleneck or
+promised speedup. Next is one proportional native whole-path attribution
+before choosing one coherent change; no speculative public API/foundation,
+extra helper-test campaign, score retry or relaxation of seven-stage criteria.
+
 ## Actual packed campaign failed; complete original recovery active
 
 Actual41282068831/1 at4d137b853ab055567bcc7716863d213dd9d03f01 is terminal

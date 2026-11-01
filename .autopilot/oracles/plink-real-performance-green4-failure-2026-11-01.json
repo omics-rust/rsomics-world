@@ -1,0 +1,554 @@
+{
+  "actual_native_elf_sha256": "032ea39a28846dbe145445662e8534717a0a36035e2cb64a0bbf0626494b9283",
+  "actual_native_source_files": 303,
+  "all_originals": {
+    "all_paths_types_modes_links_and_bodies_verified": true,
+    "archive_authenticated_before_inspection": true,
+    "authenticated_tar": {
+      "bytes": 12060549120,
+      "sha256": "e25fd84dfc0cafce584c1a1d22a1c87d3ad47425298ee80d196a07075a116381"
+    },
+    "cas_unique_bodies": 2187,
+    "cas_unique_bytes": 2040740495,
+    "casefold_collision_groups": [],
+    "custody_only_not_science_adoption": true,
+    "duplicate_bodies_independently_compared": 2615,
+    "hardlink_bindings_verified_without_duplicate_body_reads": 0,
+    "key_bytes_read_by_controller": false,
+    "original_manifest_files": 5503,
+    "original_members": 5505,
+    "original_regular_logical_bytes": 12050979712,
+    "original_zip": {
+      "bytes": 12063496320,
+      "sha256": "66893bcb7994e7e976483358283b4548ee673ef53fcf9f704f23c3798645380c"
+    },
+    "schema": "rsomics.plink.complete-original-custody.v1",
+    "science_executed": false,
+    "types": {
+      "directory": 703,
+      "file": 4802
+    },
+    "utc": "2026-11-01T11:30:00.939155+00:00"
+  },
+  "artifact_id": 13078418420,
+  "artifact_name": "plink-real-encrypted-41282068831-1",
+  "authenticated_tar": {
+    "bytes": 12060549120,
+    "path": "/Volumes/Zane's HDD/rsomics-fixtures/evidence/plink-whole-real-green4-20261101.zCJ7RN/authenticated.tar",
+    "sha256": "e25fd84dfc0cafce584c1a1d22a1c87d3ad47425298ee80d196a07075a116381"
+  },
+  "biological_claim": false,
+  "complete_fresh_source_official_P_validations": 52,
+  "complete_qualification_graphs": 6,
+  "complete_stage_commands": 210,
+  "filtered_shape": [
+    929,
+    23029
+  ],
+  "full_product_or_four_platform_performance_qualification": false,
+  "head_sha": "4d137b853ab055567bcc7716863d213dd9d03f01",
+  "independent_performance": {
+    "bytes": 467599,
+    "sha256": "37c7b1d05b31010d6119317d6817085e462d03ecf7e3a4e7364a635a8a2bd495"
+  },
+  "input_samples": 929,
+  "input_variants": 231470,
+  "job_conclusion": "failure",
+  "job_id": 124775836332,
+  "material_gate_both_worker_profiles_passed": false,
+  "measured_graphs": 20,
+  "median_stage_regressions_both_workers": [
+    "I",
+    "F",
+    "F.qc",
+    "pairs",
+    "prune",
+    "P",
+    "P.qc"
+  ],
+  "native_owner": "e03ada173d8dabb1c7894e2a0e53479d1cd41fa6",
+  "native_snapshot": "green-4",
+  "no_scientific_retry_or_cancel": true,
+  "older_campaigns_unchanged": true,
+  "operator_reader_correction": "Only exclude exact top-level source CAPTURE; two nested CAPTURE bodies are ordinary indexed originals. v2 source/failed v1 logs preserved.",
+  "operator_reader_v1_failure_preserved": true,
+  "original_cipher": {
+    "bytes": 12063495243,
+    "path": "/Volumes/Zane's HDD/rsomics-fixtures/evidence/plink-whole-real-green4-20261101.zCJ7RN/hgdp.tar.age",
+    "sha256": "f16031b25fad77531b2ec57a8b3067ab49598610e711aee086229e6fb2cf9341"
+  },
+  "original_failure": {
+    "encrypted_upload_only": true,
+    "failure": {
+      "message": "strict real whole-workflow performance gate did not pass; all originals retained",
+      "type": "ValueError"
+    },
+    "performance_passed": false,
+    "private_retention": true,
+    "release": false,
+    "status": "failed"
+  },
+  "original_runtime_links_or_executable_modes_restored": false,
+  "original_zip": {
+    "bytes": 12063496320,
+    "path": "/Volumes/Zane's HDD/rsomics-fixtures/evidence/plink-whole-real-green4-20261101.zCJ7RN/original.zip",
+    "sha256": "66893bcb7994e7e976483358283b4548ee673ef53fcf9f704f23c3798645380c"
+  },
+  "own_generations": 78,
+  "private_key_bytes_read_by_controller": false,
+  "pruned_shape": [
+    929,
+    696
+  ],
+  "real_scope": "fixed HGDP all929 chr19-22 inclusive20000001..22000000 GT/phase PGEN I-F-QC-pairs-prune-P",
+  "recovery_bulk_failures_or_retries": 0,
+  "release": false,
+  "repository": "omics-rust/rsomics-world",
+  "root_adopted": true,
+  "root_fresh_whole_custody_verification_required": false,
+  "run_attempt": 1,
+  "run_id": 41282068831,
+  "schema": "rsomics.plink.terminal-full-original-custody.v1",
+  "science_coverage": {
+    "bytes": 52336,
+    "sha256": "7554fc7361e09aecfc7fc3d670eba55bd4704fdd8e5c9cfd5f2fd39f7088df49"
+  },
+  "scientific_or_recovered_program_execution": false,
+  "source_and_gates_unchanged": true,
+  "source_pins": {
+    "bytes": 42773,
+    "sha256": "ade79223e6574cfebb277ecdd40306f28f09b85e99a86995146bfecb3aff6e52"
+  },
+  "status": "accepted-correct-whole-workflow-with-material-performance-failure",
+  "workflow": ".github/workflows/plink-real-performance.yml",
+  "correctness_evidence_accepted": true,
+  "performance_qualified": false,
+  "root_custody": {
+    "packet": "/Volumes/Zane's HDD/rsomics-fixtures/evidence/plink-whole-real-green4-20261101.zCJ7RN",
+    "report_sha256": "a0e32aa378cc357f205c69b36d327867997cf936604b1d893db4742811c488f5",
+    "source_sha256": "b7f801c0b3239946afef0a3bbf0a88f80fd6a477430980bc79d97bf8a3196087",
+    "seal_sha256": "3d58866fa0c2c871e28753a478544ed4fc3dce64e8ffff1c1cb382f25c7ff235",
+    "sealed_files": 2391,
+    "sealed_bytes": 38236510418,
+    "full_zip_cipher_tar_cas_hashes_fresh": true,
+    "metadata_only": false,
+    "root_validation_stdout": "/Volumes/KIOXIA/Developments/tmp/plink-green4-root-adoption-20261101.97XHts/full-custody.stdout",
+    "root_validation_sha256": "8e191e8635107ddee50e6fbb0712bbda2066045f5ba0763769c16113dfec062c",
+    "root_validation_exit": 0,
+    "root_validation_stderr_bytes": 0,
+    "root_complete_assessor_custody_and_authentication_sources_read": true
+  },
+  "root_resource_reduction": {
+    "independently_recomputed_raw_distribution_counters": 142,
+    "profiles": {
+      "1": {
+        "whole": {
+          "wall_seconds": {
+            "source_median": 5.775209668,
+            "native_median": 10.148088758,
+            "source_range": [
+              5.684654256,
+              6.10644124
+            ],
+            "native_range": [
+              10.021678674,
+              10.75204834
+            ],
+            "native_over_source_ratio": 1.757181010107701,
+            "native_median_loss": true,
+            "native_range_entirely_worse": true,
+            "source_zero_denominator": false
+          },
+          "scientific_cli_wall_seconds": {
+            "source_median": 5.716714426,
+            "native_median": 10.091385452,
+            "source_range": [
+              5.627635996,
+              6.046771092000001
+            ],
+            "native_range": [
+              9.965900699,
+              10.696084976
+            ],
+            "native_over_source_ratio": 1.7652421828355993,
+            "native_median_loss": true,
+            "native_range_entirely_worse": true,
+            "source_zero_denominator": false
+          },
+          "cpu_seconds": {
+            "source_median": 6.245145999999999,
+            "native_median": 10.099837,
+            "source_range": [
+              6.119342,
+              6.581834
+            ],
+            "native_range": [
+              9.973757,
+              10.756256
+            ],
+            "native_over_source_ratio": 1.6172299254493012,
+            "native_median_loss": true,
+            "native_range_entirely_worse": true,
+            "source_zero_denominator": false
+          },
+          "kernel_max_rss_bytes": {
+            "source_median": 98344960,
+            "native_median": 200257536,
+            "source_range": [
+              90087424,
+              101457920
+            ],
+            "native_range": [
+              200126464,
+              200404992
+            ],
+            "native_over_source_ratio": 2.0362765514369014,
+            "native_median_loss": true,
+            "native_range_entirely_worse": true,
+            "source_zero_denominator": false
+          },
+          "sampled_sum_rss_peak_bytes": {
+            "source_median": 124620800,
+            "native_median": 218136576,
+            "source_range": [
+              124473344,
+              124665856
+            ],
+            "native_range": [
+              198279168,
+              222912512
+            ],
+            "native_over_source_ratio": 1.7504026294165982,
+            "native_median_loss": true,
+            "native_range_entirely_worse": true,
+            "source_zero_denominator": false
+          }
+        },
+        "stages": {
+          "F": {
+            "source_median": 0.133382993,
+            "native_median": 0.49733538,
+            "source_range": [
+              0.122572342,
+              0.155800889
+            ],
+            "native_range": [
+              0.48511221,
+              0.533684638
+            ],
+            "native_over_source_ratio": 3.7286266323323543,
+            "native_median_loss": true,
+            "native_range_entirely_worse": true,
+            "source_zero_denominator": false
+          },
+          "F.qc": {
+            "source_median": 0.069674624,
+            "native_median": 1.234397326,
+            "source_range": [
+              0.067001338,
+              0.080375587
+            ],
+            "native_range": [
+              1.207026211,
+              1.295274136
+            ],
+            "native_over_source_ratio": 17.716598312751568,
+            "native_median_loss": true,
+            "native_range_entirely_worse": true,
+            "source_zero_denominator": false
+          },
+          "I": {
+            "source_median": 0.169720435,
+            "native_median": 0.481911051,
+            "source_range": [
+              0.166223526,
+              0.193368302
+            ],
+            "native_range": [
+              0.475241785,
+              0.527809046
+            ],
+            "native_over_source_ratio": 2.8394403478873946,
+            "native_median_loss": true,
+            "native_range_entirely_worse": true,
+            "source_zero_denominator": false
+          },
+          "P": {
+            "source_median": 0.013055779,
+            "native_median": 0.042113259,
+            "source_range": [
+              0.012590816,
+              0.015588945
+            ],
+            "native_range": [
+              0.041596279,
+              0.043925498
+            ],
+            "native_over_source_ratio": 3.225641227536097,
+            "native_median_loss": true,
+            "native_range_entirely_worse": true,
+            "source_zero_denominator": false
+          },
+          "P.qc": {
+            "source_median": 0.020820539,
+            "native_median": 0.052377807,
+            "source_range": [
+              0.018452575,
+              0.0247013
+            ],
+            "native_range": [
+              0.051633486,
+              0.053265158
+            ],
+            "native_over_source_ratio": 2.5156796853337946,
+            "native_median_loss": true,
+            "native_range_entirely_worse": true,
+            "source_zero_denominator": false
+          },
+          "pairs": {
+            "source_median": 5.096508536,
+            "native_median": 7.043595443,
+            "source_range": [
+              5.043063607,
+              5.429174425
+            ],
+            "native_range": [
+              6.967484703,
+              7.442752765
+            ],
+            "native_over_source_ratio": 1.3820432936090348,
+            "native_median_loss": true,
+            "native_range_entirely_worse": true,
+            "source_zero_denominator": false
+          },
+          "prune": {
+            "source_median": 0.191932954,
+            "native_median": 0.739552962,
+            "source_range": [
+              0.19136022,
+              0.207151985
+            ],
+            "native_range": [
+              0.729505087,
+              0.802565816
+            ],
+            "native_over_source_ratio": 3.853183867529075,
+            "native_median_loss": true,
+            "native_range_entirely_worse": true,
+            "source_zero_denominator": false
+          }
+        },
+        "both_frozen_routes_failed": true,
+        "no_stage_median_regression_rule_passed": false
+      },
+      "4": {
+        "whole": {
+          "wall_seconds": {
+            "source_median": 3.263941967,
+            "native_median": 6.178324036,
+            "source_range": [
+              3.199119732,
+              3.296848381
+            ],
+            "native_range": [
+              6.128995797,
+              6.269897977
+            ],
+            "native_over_source_ratio": 1.8929025388520335,
+            "native_median_loss": true,
+            "native_range_entirely_worse": true,
+            "source_zero_denominator": false
+          },
+          "scientific_cli_wall_seconds": {
+            "source_median": 3.2075868579999995,
+            "native_median": 6.121209680999999,
+            "source_range": [
+              3.142428306,
+              3.239074018
+            ],
+            "native_range": [
+              6.072441961,
+              6.213385676999999
+            ],
+            "native_over_source_ratio": 1.9083535230645965,
+            "native_median_loss": true,
+            "native_range_entirely_worse": true,
+            "source_zero_denominator": false
+          },
+          "cpu_seconds": {
+            "source_median": 10.059946,
+            "native_median": 15.007527999999999,
+            "source_range": [
+              9.938618,
+              10.187638
+            ],
+            "native_range": [
+              14.96706,
+              15.098685
+            ],
+            "native_over_source_ratio": 1.4918099957991822,
+            "native_median_loss": true,
+            "native_range_entirely_worse": true,
+            "source_zero_denominator": false
+          },
+          "kernel_max_rss_bytes": {
+            "source_median": 110718976,
+            "native_median": 200171520,
+            "source_range": [
+              110673920,
+              116924416
+            ],
+            "native_range": [
+              200151040,
+              200327168
+            ],
+            "native_over_source_ratio": 1.8079242351374347,
+            "native_median_loss": true,
+            "native_range_entirely_worse": true,
+            "source_zero_denominator": false
+          },
+          "sampled_sum_rss_peak_bytes": {
+            "source_median": 124227584,
+            "native_median": 224362496,
+            "source_range": [
+              124198912,
+              124514304
+            ],
+            "native_range": [
+              219185152,
+              224567296
+            ],
+            "native_over_source_ratio": 1.8060602064031126,
+            "native_median_loss": true,
+            "native_range_entirely_worse": true,
+            "source_zero_denominator": false
+          }
+        },
+        "stages": {
+          "F": {
+            "source_median": 0.1242927,
+            "native_median": 0.495162153,
+            "source_range": [
+              0.112606615,
+              0.148695951
+            ],
+            "native_range": [
+              0.492839563,
+              0.498304086
+            ],
+            "native_over_source_ratio": 3.9838393807520474,
+            "native_median_loss": true,
+            "native_range_entirely_worse": true,
+            "source_zero_denominator": false
+          },
+          "F.qc": {
+            "source_median": 0.06445632,
+            "native_median": 1.002344489,
+            "source_range": [
+              0.061580571,
+              0.07456995999999999
+            ],
+            "native_range": [
+              0.997143844,
+              1.050735617
+            ],
+            "native_over_source_ratio": 15.550755752112439,
+            "native_median_loss": true,
+            "native_range_entirely_worse": true,
+            "source_zero_denominator": false
+          },
+          "I": {
+            "source_median": 0.152102749,
+            "native_median": 0.489640173,
+            "source_range": [
+              0.149726705,
+              0.158020004
+            ],
+            "native_range": [
+              0.486942569,
+              0.504695294
+            ],
+            "native_over_source_ratio": 3.2191408519513343,
+            "native_median_loss": true,
+            "native_range_entirely_worse": true,
+            "source_zero_denominator": false
+          },
+          "P": {
+            "source_median": 0.012945899,
+            "native_median": 0.042541192,
+            "source_range": [
+              0.012178081,
+              0.015605747
+            ],
+            "native_range": [
+              0.041300788,
+              0.043707898
+            ],
+            "native_over_source_ratio": 3.28607476390786,
+            "native_median_loss": true,
+            "native_range_entirely_worse": true,
+            "source_zero_denominator": false
+          },
+          "P.qc": {
+            "source_median": 0.019586739,
+            "native_median": 0.045503202,
+            "source_range": [
+              0.019094612,
+              0.020906181000000003
+            ],
+            "native_range": [
+              0.045184534,
+              0.047195531
+            ],
+            "native_over_source_ratio": 2.3231637486975245,
+            "native_median_loss": true,
+            "native_range_entirely_worse": true,
+            "source_zero_denominator": false
+          },
+          "pairs": {
+            "source_median": 2.666530134,
+            "native_median": 3.633271442,
+            "source_range": [
+              2.639414136,
+              2.729424203
+            ],
+            "native_range": [
+              3.583660357,
+              3.720830971
+            ],
+            "native_over_source_ratio": 1.3625465527928664,
+            "native_median_loss": true,
+            "native_range_entirely_worse": true,
+            "source_zero_denominator": false
+          },
+          "prune": {
+            "source_median": 0.138596514,
+            "native_median": 0.395069601,
+            "source_range": [
+              0.135342104,
+              0.141459663
+            ],
+            "native_range": [
+              0.375507488,
+              0.416033788
+            ],
+            "native_over_source_ratio": 2.850501716082123,
+            "native_median_loss": true,
+            "native_range_entirely_worse": true,
+            "source_zero_denominator": false
+          }
+        },
+        "both_frozen_routes_failed": true,
+        "no_stage_median_regression_rule_passed": false
+      }
+    },
+    "all_raw_arrays_and_counter_scopes_remain_in_bound_packet": true,
+    "exact_tree_memory_available": false,
+    "wall_clock_is_child_monotonic_not_parent_polling": true
+  },
+  "next_action": {
+    "source_analysis": "/Volumes/KIOXIA/Developments/tmp/plink-whole-hotpath-readonly-20261101.z106aj/REPORT.md",
+    "source_analysis_sha256": "6f7b1dc602ad6b2986cb403eb9d31ce6a46c260c097e1cf59bdd5b64e2c37f4f",
+    "ruling": "Perform one proportionate native whole-path attribution before selecting a coherent private read-session/QC implementation wave. Repeated setup is source-proven; runtime dominance is unproven. No release, threshold change, public foundation or scientific rerun follows from adoption."
+  }
+}
