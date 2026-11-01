@@ -4,7 +4,7 @@
 
 Full30-family goal is active and unchanged. This table records named gates,
 not a rolling checkout HEAD. GitHub native delivery now includes Popgen,
-DESeq, RNA-seq QC, limma, table and ecology; registry authorization remains a separate hold.
+DESeq, RNA-seq QC, limma, table, ecology and BED0.2; registry authorization remains a separate hold.
 Per-family current states and immutable original receipts supersede the
 historical narrative below. No unmeasured candidate inherits an older speed.
 
@@ -19,7 +19,7 @@ No deletion or migration of project/shared application/user data occurred.
 | DESeq | accepted green7/schema5/performance; actual owning5563528d deliveryCI41293914322 and complete originals accepted; GitHubv0.1.0/fresh public Mac1200x12 lifecycle pass | registry authorization held/publish=false; no unchanged source/native/performance replay |
 | limma | count/ordinary science and performance accepted; actual owning90d44575 deliveryCI41310896586/full originals/GitHubv0.1.0/fresh public13-call two-route install pass | registry held/publish=false; serial throughput/scaling losses retained; no unchanged source/count replay |
 | table | reviewed six-operation delivery owninge98f54ac/exactCI41332571386/full originals accepted; GitHubv0.1.0/public Mac11-call lifecycle/READMEac3788aa exactCI41337623958 pass | registry held; immutable release/assets unchanged, old performance bound to2bd0fd3/measured6e490331 |
-| bed | unchanged eight-operation0.2 ownerbcbee5f8 reviewed; exactnative4CI41348074250, full originals/clean packages/95test intents/44installed calls adopted; old340 measured observations retained | GitHub release/fresh public install next; registry0.1.0/auth held, old RSS/order losses and measured binary scope retained |
+| bed | reviewedbcbee5f8/native4CI41348074250/full originals/GitHubv0.2.0/fresh public11-call lifecycle pass; docs97aa04a6 exactCI41351177412 passes | registry0.1.0/auth held; immutable release and old measured binary/RSS/order losses retained |
 | edgeR | complete private QL workflow; original P/FDR gate remains failed | explicit numerical-contract decision; no band tuning |
 | ecology | all8 full-study beta/source/resource originals accepted; reviewed delivery60dd0bfd/native4CI41341218191/full originals, GitHubv0.1.0 and fresh public Mac14-call lifecycle pass; README7f27eb01 exactCI41344601496 passes | registry held; compact source-on-native flag staysfalse, old measured binaries not reassigned, immutable release unchanged |
 | structure | source40644150133 qualified; reviewed private2aee715 and native4 run41184818337 accepted | public torsion/full7/performance remain held or unearned; no coordinate foundation |

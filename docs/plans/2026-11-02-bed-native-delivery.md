@@ -119,10 +119,11 @@ original terms and an installed eleven-call lifecycle with raw outputs.
 
 ## Root adoption
 
-Implementation, one whole review/correction and actual native-four original
-adoption are complete atbcbee5f8/run41348074250. See
-bed-native-delivery-2026-11-02.json. GitHub publication and fresh public
-installation remain the next mandatory gates.
+Complete: implementation, one whole review/correction and native-four original
+adoption atbcbee5f8/run41348074250, GitHubv0.2.0, fresh public11-call lifecycle,
+and post-release docs97aa04a6 exactCI41351177412. Native/public receipts are
+bed-native-delivery-2026-11-02.json and bed-public-delivery-2026-11-02.json.
+Registry remains separately held; this does not complete the portfolio goal.
 
 Root independently reviews the complete candidate plus one fresh whole review,
 then addresses material findings together. Before any owning push, verify old

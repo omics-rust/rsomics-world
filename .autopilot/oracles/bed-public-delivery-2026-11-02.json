@@ -1,0 +1,158 @@
+{
+  "schema": "rsomics.bed.github-release-adoption.v1",
+  "product": "rsomics-bed",
+  "root_adopted": true,
+  "repository": "omics-rust/rsomics-bed",
+  "release": {
+    "id": 430859449,
+    "tag_name": "v0.2.0",
+    "target_commitish": "bcbee5f87aeda2e7664c279b32c5a3098635ca9b",
+    "published_at": "2026-11-01T21:11:14Z",
+    "html_url": "https://github.com/omics-rust/rsomics-bed/releases/tag/v0.2.0",
+    "draft": false,
+    "prerelease": false,
+    "assets": [
+      {
+        "id": 699532885,
+        "name": "rsomics-bed-0.2.0-linux-aarch64.tar.gz",
+        "size": 688680,
+        "digest": "sha256:5ccbe89dbc3c9b0188f5446026b9e7fe8a7dc2b16e0412bed944e5111fe67ae7",
+        "browser_download_url": "https://github.com/omics-rust/rsomics-bed/releases/download/v0.2.0/rsomics-bed-0.2.0-linux-aarch64.tar.gz"
+      },
+      {
+        "id": 699532883,
+        "name": "rsomics-bed-0.2.0-linux-x86_64.tar.gz",
+        "size": 721647,
+        "digest": "sha256:8d5b5b083f94db88e3e03e15521b499132cabb368d917b5b0b4599219b36e923",
+        "browser_download_url": "https://github.com/omics-rust/rsomics-bed/releases/download/v0.2.0/rsomics-bed-0.2.0-linux-x86_64.tar.gz"
+      },
+      {
+        "id": 699532886,
+        "name": "rsomics-bed-0.2.0-macos-aarch64.tar.gz",
+        "size": 657333,
+        "digest": "sha256:0e8e4350b73be30ca68a443ba7dd2b7d2eca33cbc0c933495dd02871b410fe6d",
+        "browser_download_url": "https://github.com/omics-rust/rsomics-bed/releases/download/v0.2.0/rsomics-bed-0.2.0-macos-aarch64.tar.gz"
+      },
+      {
+        "id": 699532884,
+        "name": "rsomics-bed-0.2.0-macos-x86_64.tar.gz",
+        "size": 686055,
+        "digest": "sha256:9ca25b8e7afcdaf9852418e7cb8032e3770b755a1cfba531c207f2950afca3c4",
+        "browser_download_url": "https://github.com/omics-rust/rsomics-bed/releases/download/v0.2.0/rsomics-bed-0.2.0-macos-x86_64.tar.gz"
+      },
+      {
+        "id": 699532882,
+        "name": "rsomics-bed-0.2.0.crate",
+        "size": 97436,
+        "digest": "sha256:26b2da773027d4f6a1bcab0caa620c67f9e75009a81272b8657805d6d3d9c7a3",
+        "browser_download_url": "https://github.com/omics-rust/rsomics-bed/releases/download/v0.2.0/rsomics-bed-0.2.0.crate"
+      },
+      {
+        "id": 699532957,
+        "name": "SHA256SUMS",
+        "size": 508,
+        "digest": "sha256:03896eec35ef615c1bb7166d3bb64a059c67733574daad94f3d54ab1511f41cf",
+        "browser_download_url": "https://github.com/omics-rust/rsomics-bed/releases/download/v0.2.0/SHA256SUMS"
+      }
+    ]
+  },
+  "registry_published": false,
+  "native_delivery_receipt": ".autopilot/oracles/bed-native-delivery-2026-11-02.json",
+  "native_delivery_ci": 41348074250,
+  "run_attempt": 1,
+  "tag_commit": "bcbee5f87aeda2e7664c279b32c5a3098635ca9b",
+  "tag_object_type": "commit",
+  "evidence_directory": "/Volumes/KIOXIA/Developments/tmp/bed-public-release-20261102.94AGq2",
+  "api_proofs": {
+    "public_release_sha256": "b7ec8a11f1a05974ceb2f9ddb2844a9bac453ba356387ede3c1f9e692c62b72c",
+    "public_tag_sha256": "5163aea72ae18926c8f99137b7c7d93c39c88810560b3122655bd920d9e3f84c",
+    "draft_sha256": "0e5a28f098457296e31909ff61add92c9454766638984c80ab0d6ce0cdda445f",
+    "release_notes_sha256": "470f703876d17d9c705e7d6b14921840efaef9831f6814518f5560b9c1dba0e3"
+  },
+  "publication_checks": {
+    "prior_release_and_tag_absent": true,
+    "draft_asset_count": 6,
+    "all_api_digests_and_sizes_match_local_originals": true,
+    "public_release_notes_exact": true,
+    "no_asset_replacement": true,
+    "asset_ids_unchanged_from_draft": true,
+    "draft_untagged_urls_became_public_tag_urls": true,
+    "data_only_public_check_stdout_sha256": "78358986a969fd3cba6a8c25ad8a7522d8e6bba5cac8a88f2a0d04f4061576a4"
+  },
+  "public_download": {
+    "authenticated": false,
+    "host": "Darwin arm64",
+    "os_version": "27.2",
+    "http_status_each": 200,
+    "assets": [
+      "rsomics-bed-0.2.0-macos-aarch64.tar.gz",
+      "rsomics-bed-0.2.0.crate",
+      "SHA256SUMS"
+    ],
+    "byte_equal_to_original_uploaded_assets": true,
+    "source_vcs_commit": "bcbee5f87aeda2e7664c279b32c5a3098635ca9b",
+    "archive_sha256": "0e8e4350b73be30ca68a443ba7dd2b7d2eca33cbc0c933495dd02871b410fe6d",
+    "source_crate_sha256": "26b2da773027d4f6a1bcab0caa620c67f9e75009a81272b8657805d6d3d9c7a3",
+    "checksums_sha256": "03896eec35ef615c1bb7166d3bb64a059c67733574daad94f3d54ab1511f41cf"
+  },
+  "installed_lifecycle": {
+    "fresh_public_download": true,
+    "own_rust_binary_only": true,
+    "calls": 11,
+    "successes": 10,
+    "expected_failures": 1,
+    "exit_code": 0,
+    "stdout_bytes": 0,
+    "stderr_bytes": 0,
+    "binary_bytes": 1477616,
+    "binary_sha256": "23cfb9b09bdeb3e59cf0ccda7269026ea0aef80c062ca2d8401db0e17f21ffe3",
+    "stable_operations": [
+      "sort",
+      "merge",
+      "intersect",
+      "subtract",
+      "complement",
+      "cluster",
+      "window",
+      "closest"
+    ],
+    "stdin_sort": true,
+    "sort_output_reloaded_by_merge": true,
+    "common_json_named_output": true,
+    "golden_outputs_byte_exact": true,
+    "failure_preserves_prior_output": true,
+    "receipt_sha256": "d283444721e316adf2ec2230749bdaf1fe8f984e1f33eb07cfe4bd9b60b12522",
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "new_performance_measurement": false,
+  "new_upstream_scientific_execution": false,
+  "new_build": false,
+  "performance_receipt": ".autopilot/oracles/bed-historical-performance-2026-11-02.json",
+  "performance_implementation_base": "d7b1507b178053a087862255d84a244e4921f192",
+  "signed_or_notarized": false,
+  "full_system_library_or_minimum_os_qualified": false,
+  "registry_read": {
+    "source": "https://index.crates.io/rs/om/rsomics-bed",
+    "http_status": 200,
+    "newest_non_yanked_version": "0.1.0",
+    "sha256": "71420537a989aff172fb20b76c4cd93e6e8c9c3ab98db550496fa0c61ae31698",
+    "authenticated": false,
+    "publication_attempted": false
+  },
+  "post_release_readme_commit": "97aa04a6acfba702af35639f32be9e427ae29f90",
+  "post_release_readme_ci_accepted": true,
+  "post_release_readme_ci": {
+    "run_id": 41351177412,
+    "head_sha": "97aa04a6acfba702af35639f32be9e427ae29f90",
+    "conclusion": "success",
+    "api_sha256": "27e017422f2ef6f45f6d568e842828f64bcb858bc165abde40bd529dc17d9d33"
+  },
+  "limitations": [
+    "GitHub installation is delivered; crates.io remains separately held and unattempted.",
+    "Historical throughput and RSS remain bound to the measured d7b1507/9a55972f executable, not these release binaries.",
+    "Closest and complement RSS losses, narrow merge throughput margin and intentional sort/window ordering differences remain explicit.",
+    "Post-release README/MIGRATION changes do not replace the immutable release commit, tag or assets.",
+    "One data-only check initially compared draft and public browser URLs; the expected untagged-to-tag URL change is recorded separately without altering originals or replaying binaries."
+  ]
+}

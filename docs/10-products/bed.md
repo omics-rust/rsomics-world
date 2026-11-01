@@ -6,7 +6,7 @@ Status: `rsomics-bed 0.1.0` is published with `sort`, `merge`, `intersect`,
 `closest` and passed exact-head four-platform CI run `32329089591`. The
 representative performance source is
 `d7b1507b178053a087862255d84a244e4921f192`. Registry publication is blocked
-only by the expired organization credential: publish run `32329397022`
+by registry authentication: publish run `32329397022`
 completed package verification and then received crates.io `403 authentication
 failed`. The registry therefore still serves 0.1.0.
 
@@ -21,11 +21,15 @@ large-output/runtime attestation. See
 installation remain separate gates. Actual ownerbcbee5f8/native4CI41348074250
 now has complete originals adopted:185 Git files/four identical clean source
 packages,95 distinct tests in three profiles/four hosts, and44 installed calls.
-Native source/package/bundle checks pass; GitHub publication and fresh public
-installation are next, not yet claimed. The inherited README I/O guarantee
+Native source/package/bundle checks pass. [GitHub v0.2.0](https://github.com/omics-rust/rsomics-bed/releases/tag/v0.2.0)
+and a fresh public Mac11-call installation now pass; post-release docs97aa04a6
+passes exactCI41351177412 without replacing the immutablebcbee5f8 release.
+Registry remains separately held. The inherited README I/O guarantee
 now explicitly distinguishes pre-commit preservation from post-commit sync
 errors, without changing the locked runtime or public API. See
 `.autopilot/oracles/bed-native-delivery-2026-11-02.json`.
+Public release and installation proof is
+`.autopilot/oracles/bed-public-delivery-2026-11-02.json`.
 
 ## Boundary
 

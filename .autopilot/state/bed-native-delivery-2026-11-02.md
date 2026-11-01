@@ -1,8 +1,9 @@
 # BED native/source delivery
 
-Current: actual native4CI41348074250 and complete originals are root-adopted
-for185-file ownerbcbee5f8. GitHub release/fresh public installation are next;
-registry stays held. Prior sections below preserve the chronological gates.
+Current: native4CI41348074250/full originals, GitHubv0.2.0 and fresh public
+Mac11-call installation are accepted for immutable185-file ownerbcbee5f8.
+Post-release docs97aa04a6 exactCI41351177412 passes; registry stays held.
+Prior sections below preserve the chronological gates.
 
 Root selects the completed eight-operation0.2 slice after fresh local/live-main
 agreement at02b85a1a348c271e485cca629dc4e71fa075388a and fresh empty release
@@ -134,3 +135,27 @@ Root adopts bed-native-delivery-2026-11-02.json. Packet0DQDbw/reportf22225b1/
 checker1667b78a/proposalfcc7e5cf remain unchanged. Old measured executables and
 RSS/order losses stay separate. Release and fresh public installation remain
 required; registry/signing/older-OS/full-system/legal claims stay unqualified.
+
+## GitHub release and fresh public installation accepted
+
+Root publishes release430859449/v0.2.0 on2026-11-01T21:11:14Z atbcbee5f8:
+four native TARs, clean source.crate and SHA256SUMS. All six API assets retain
+their draft IDs/names/sizes/digests and exact release notes; no replacement.
+The lightweight tag points exactly tobcbee5f8. A data-only check initially
+mistakes GitHub's expected draft-untagged->public-tag URL change for an
+immutable-field mismatch. Both API bodies and the diagnostic remain; the
+corrected check preserves all content checks and validates public URLs
+separately. No asset change or binary replay resolves that reader assumption.
+
+Fresh unauthenticated Mac/source/checksum URLs return200 with657333/97436/508B,
+byte-identical to the accepted uploads. The actual public23cfb9b0 binary runs
+the complete11-call lifecycle:10 successes, one intended error, all eight
+goldens, stdin sort->named JSON merge and prior-output preservation. No new
+build, source oracle or performance run. Lifecycle receipt SHA
+d283444721e316adf2ec2230749bdaf1fe8f984e1f33eb07cfe4bd9b60b12522.
+
+Root adopts bed-public-delivery-2026-11-02.json. Post-release README/MIGRATION
+commit97aa04a6acfba702af35639f32be9e427ae29f90 passes exactCI41351177412.
+It does not replace the formal tag or assets. Registry remains0.1.0 in the
+fresh public sparse index; no authentication/publication is retried. The old
+native receipt's publication=false remains its historical as-of-adoption state.
