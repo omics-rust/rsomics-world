@@ -1,0 +1,113 @@
+{
+  "actual_published_MacARM_smoke": {
+    "actual_downloaded_binary": {
+      "bytes": 4587712,
+      "sha256": "be5551e7c1bf3243036792a7164e274a2f268ce7c86e73d1b79caa71761a83ba"
+    },
+    "actual_published_MacARM_executed": true,
+    "all_returncodes_zero": true,
+    "complete_lifecycle_calls": 6,
+    "foreign_executables_run": false,
+    "genes": 1200,
+    "head": "5563528d56d604411f01270188a0d29d76321a79",
+    "lifecycle": {
+      "bytes": 4560,
+      "sha256": "1eb2a24cfb9462655c07af07043e5c5c9fce27cced548f706afaeaaae8d7ccf1"
+    },
+    "native_archive": {
+      "bytes": 1648716,
+      "sha256": "d3f89db5bce35dae9e7599f4dacd9e0a3cde1fa6c5a0c8cd25b214ba1fae9ba3"
+    },
+    "registry_publication": false,
+    "release": "https://github.com/omics-rust/rsomics-deseq/releases/tag/v0.1.0",
+    "release_id": 430498879,
+    "samples": 12,
+    "schema": 5,
+    "signed_release": false,
+    "source_package": {
+      "bytes": 512204,
+      "sha256": "ea206a34615a60fb3f76c811f24d2c16bd5b9a15cb2689a2ca49f2a8a081eabe"
+    },
+    "workers": 4
+  },
+  "assets": {
+    "SHA256SUMS": {
+      "bytes": 518,
+      "sha256": "62296e23ba7fba49defa345ea288e773e0beffae117681435c8ded40323b6ebc"
+    },
+    "rsomics-deseq-0.1.0-linux-aarch64.tar.gz": {
+      "bytes": 1690852,
+      "sha256": "93b183e3b31091a467b0fd696203d189b2de9288a631abaad6aa5da0ef3d298c"
+    },
+    "rsomics-deseq-0.1.0-linux-x86_64.tar.gz": {
+      "bytes": 1769427,
+      "sha256": "6e726767d01c203b001f46c97542cf585b4acee5654c7a1f303c4f56990b3be5"
+    },
+    "rsomics-deseq-0.1.0-macos-aarch64.tar.gz": {
+      "bytes": 1648716,
+      "sha256": "d3f89db5bce35dae9e7599f4dacd9e0a3cde1fa6c5a0c8cd25b214ba1fae9ba3"
+    },
+    "rsomics-deseq-0.1.0-macos-x86_64.tar.gz": {
+      "bytes": 1703159,
+      "sha256": "9d85acba087c941a06823b4e2d8220aa99c171fe0eceff8c31d9c77834c8ca2b"
+    },
+    "rsomics-deseq-0.1.0.crate": {
+      "bytes": 512204,
+      "sha256": "ea206a34615a60fb3f76c811f24d2c16bd5b9a15cb2689a2ca49f2a8a081eabe"
+    }
+  },
+  "checksum_file": {
+    "bytes": 518,
+    "sha256": "62296e23ba7fba49defa345ea288e773e0beffae117681435c8ded40323b6ebc"
+  },
+  "delivery_binaries_remeasured": false,
+  "downloaded_release_verification": {
+    "bytes": 955,
+    "sha256": "8656d361ddd582f5ad2cad45bcb7b480be769b9bbb1d923c817eee53e7fa5c75"
+  },
+  "head_sha": "5563528d56d604411f01270188a0d29d76321a79",
+  "kind": "rsomics-product-github-release",
+  "native_classes": [
+    "linux-x86_64",
+    "linux-aarch64",
+    "macos-x86_64",
+    "macos-aarch64"
+  ],
+  "native_delivery_receipt": {
+    "path": ".autopilot/oracles/deseq-native-delivery-2026-11-01.json",
+    "sha256": "83c41d2dcfe045f64a5618c57535858879a23817d0ad9bcad4b929a7e6f903d9"
+  },
+  "notarization_claim": false,
+  "notes": {
+    "bytes": 1391,
+    "sha256": "9d76d013a74112b9d6801b3f2a9a2a07fcd36fefc4594951bee576f097100425"
+  },
+  "owning_ci": {
+    "all_four_native_passed": true,
+    "head_sha": "5563528d56d604411f01270188a0d29d76321a79",
+    "run_attempt": 1,
+    "run_id": 41293914322
+  },
+  "product": "rsomics-deseq",
+  "published_release_api": {
+    "bytes": 12643,
+    "sha256": "061da1a2ebd052933155f8898535162a5665be77ba8e80d2f59e82e8c8ee7cf7"
+  },
+  "registry_publication": false,
+  "release_evidence_root": "/Volumes/KIOXIA/Developments/tmp/deseq-release-20261101.XJ2fcL",
+  "release_id": 430498879,
+  "release_url": "https://github.com/omics-rust/rsomics-deseq/releases/tag/v0.1.0",
+  "repository": "omics-rust/rsomics-deseq",
+  "root_adopted": true,
+  "schema_version": 1,
+  "scientific_revalidation": false,
+  "scope": "CLI-only schema5 Wald run/results/transform/inspect; no LRT/LFC-shrink/rlog/plots or full-DESeq2 parity",
+  "signed_release": false,
+  "status": "published-and-verified",
+  "tag": "v0.1.0",
+  "tag_api": {
+    "bytes": 349,
+    "sha256": "94cf0ddc3b3a775ca8a12bfa33ac10ecbc19a0ea4965ccf6c28e71ca07ae6a29"
+  },
+  "version": "0.1.0"
+}

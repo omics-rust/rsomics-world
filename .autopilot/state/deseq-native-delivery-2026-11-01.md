@@ -1,5 +1,28 @@
 # DESeq native/source GitHub delivery
 
+## GitHub v0.1.0 published and freshly downloaded install verified
+
+Root publishes https://github.com/omics-rust/rsomics-deseq/releases/tag/v0.1.0,
+release430498879, tag exactly5563528d56d604411f01270188a0d29d76321a79.
+All six uploaded assets have exact expected API size/digest/state: four
+original native TARs, the shared clean source crate and unsigned SHA256SUMS.
+No crate registry upload or trusted signing/notarization claim is made.
+
+Root then freshly downloads the ACTUAL public MacARM native archive and
+source crate, verifies full archive/binary/source identities and BUILD, and
+runs the installed published binary's six-call1200x12 saved-fit lifecycle.
+Version/help/fit/reload-results/normalized/VST all exit0, complete source
+identities/order/schema5/four workers and finite transforms pass. No foreign
+binary, R/upstream package or scientific benchmark runs on Mac.
+Published MacARM executable4587712B SHA
+be5551e7c1bf3243036792a7164e274a2f268ce7c86e73d1b79caa71761a83ba;
+archive1648716B/d3f89db5bce35dae9e7599f4dacd9e0a3cde1fa6c5a0c8cd25b214ba1fae9ba3.
+Full API/tag/upload/download/commands/results remain in
+deseq-release-20261101.XJ2fcL. New additive deseq-release-2026-11-01.json
+records actual release and smoke, separately from unchanged scientific and
+prepublication native-delivery receipts. GitHub delivery is complete for the
+declared Wald slice; registry authorization remains separately held.
+
 ## Actual four-native source/install originals accepted
 
 Exact5563528d56d604411f01270188a0d29d76321a79 owningCI41293914322/1 is
