@@ -1,5 +1,23 @@
 # Real signal campaign
 
+## Actual campaign fails full qualification; no timed performance acceptance
+
+Root's2026-11-01T06:28:18UTC SSH check finds the owned runner no longer live
+and actual campaign.result.json exit1, finished06:26:58.258964UTC. Status is
+campaign-failed/performance_complete=false. Exact owned checker stage
+qualification-main-1-native/validate-all-products exits1 after4447.802333s:
+compare_npz raises NPZ categorical/f64 cell differs. This is an observed
+full-qualification contradiction, not an identified native/source cause or
+a performance result. General NumPy/SciPy optional-pyyaml warnings are not
+the reported failure. No changed tolerance, ignored cell or automatic retry.
+
+All available remote originals remain under the same task-owned external
+execution route; no container/host/user data is deleted or killed. Root starts
+bounded full failure-original recovery and exact-cell diagnosis as data only.
+The affected campaign is held before any measured acceptance; other product
+work continues. User-approved source defect repairs do not automatically
+authorize reinterpreting this different numerical mismatch.
+
 ## Bounded live checkpoint, not campaign acceptance
 
 At2026-11-01T05:19:27UTC root reads only this task's exact hostPID/container
