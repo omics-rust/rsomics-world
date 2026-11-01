@@ -171,7 +171,7 @@ def committed_receipt(world, selector):
           'actual four-native/source adoption is absent')
     for field in ('artifact_sha256', 'binary_sha256', 'source_archive_sha256', 'source_manifest_sha256'):
         check(re.fullmatch('[0-9a-f]{64}', row[field]), 'invalid adoption digest: ' + field)
-    check(re.fullmatch('[0-9a-f]{40}', row['head_sha']) and row['snapshot'] in ('green-2', 'green-3', 'green-4') and
+    check(re.fullmatch('[0-9a-f]{40}', row['head_sha']) and row['snapshot'] in ('green-2', 'green-3', 'green-4', 'green-7') and
           all(type(row[key]) is int and row[key] > 0 for key in ('run_id', 'run_attempt', 'artifact_id', 'size_in_bytes')),
           'invalid adopted run/snapshot identity')
     controllers = row['controller_sha256']

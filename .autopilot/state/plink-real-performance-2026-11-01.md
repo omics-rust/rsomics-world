@@ -1,5 +1,27 @@
 # Fixed private HGDP whole-workflow gate
 
+## Prepared-reader green7 accepted; final whole route prepared
+
+Root adopts actual41329335343/1 atff558968 over clean owner7b214436,
+all five complete originals in m21dVh. New ELF76a81eee/3103032B and complete
+303-source/native123-report/66-worker/source224+36 gate qualify independently;
+the old green4 negative result, green6 failure and prior source/relink stay.
+Detailed adoption is plink-native-2026-11-02-green-7.json and B's state.
+
+The existing real controller admits only one new explicit snapshotgreen7,
+leaving defaultgreen2 and historicalgreen3/4 unchanged. The same connected
+preparation first fails at unsupported green7, then passes1test/1.218s after
+the one-line selector extension. BBAaHV/green7-perf-green.stdout SHA1771bcde,
+stderr a36f534b. No cohort/region/flag/comparator/graph/trial/resource/gate
+function changes and no new benchmark executes locally. Bookworm runtime
+admission, complete final performance and new original custody remain gates.
+
+Separate final-campaign capacity planning is active. Existing remote556GiB
+envelopes/8GiB headroom and all old originals are preserved. The terminal
+Ecology original recovery must be complete/root-adopted before retiring any
+unused planning allowance; do not assume old12GiB PLINK terminal size or
+silently reuse released208GiB. Fresh admission precedes any scientific launch.
+
 ## Actual green5 native/source originals adopted; coupled data-plane B assigned
 
 Root adopts plink-native-2026-11-01-green-5.json after complete report and all
