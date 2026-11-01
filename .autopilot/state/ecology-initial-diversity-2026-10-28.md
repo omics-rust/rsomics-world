@@ -1,5 +1,16 @@
 # Ecology diversity source qualification
 
+## Exact alpha/beta four-native gate dispatched
+
+Exact-head Control41280670167 succeeds at
+52cdb0149ed735d42959a810ec310a70604324e8. Root dispatches existing
+ecology-candidate.yml once with snapshot=green-2: actual41280935272/attempt1
+at the same head. All four native source/test/binary originals require
+independent adoption; no new native acceptance follows from dispatch.
+Full beta benchmark preparation follows the separately frozen
+2026-11-01-ecology-beta-real-performance plan; execution additionally needs
+the actual accepted native receipt/ELF and a verified total recovery envelope.
+
 ## Additive alpha/beta native candidate independently verified
 
 Root reads the complete operational REPORT/freeze/binding recipes and actual
