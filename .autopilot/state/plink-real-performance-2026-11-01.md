@@ -1,5 +1,26 @@
 # Fixed private HGDP whole-workflow gate
 
+## Bounded HWE implementation active; observer work stopped
+
+Root adopts the complete source-only design
+plink-source-wave-design-20261101.fSV9DW/REPORT.md,
+SHA672e57195626a2f6fa3627409067f2a27117277fa8227cbf80032228748151ac.
+Wave A changes only the private HWE kernel and its existing QC chunk boundary:
+mode-scaled probability recurrence, unchanged exact likelihood/tie policy and
+complete old log fallback for non-normal/uncertain cases. Eligible per-variant
+HWE moves into the existing parallel tally batch; sample accumulation, output
+order, memory admission and report/threshold rules remain unchanged. Current
+source e03ada17 and the complete negative whole-workflow result remain the
+accepted authorities until the changed wave passes its actual gates.
+
+The separate prepared PGEN/LD resident-window design is not included in A.
+No memo cache, new public foundation/API, formatter rewrite or new observer
+route is authorized. The three prior observer attempts yielded only three
+correct I outputs and no complete profile/whole graph; further observer work
+was stopped. These are not measured CPU attribution or performance evidence.
+One integrated regression and whole review precede owning commit/native-four;
+actual unchanged whole-workflow performance criteria remain unearned.
+
 ## Full green4 originals accepted: correct workflow, performance FAILED
 
 Actual41282068831/1 failure is now established from full originals: the fixed
