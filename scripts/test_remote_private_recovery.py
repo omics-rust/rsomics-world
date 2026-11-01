@@ -1,6 +1,7 @@
 import hashlib
 import importlib.util
 import json
+import os
 from pathlib import Path
 import sys
 import tempfile
@@ -14,6 +15,8 @@ class RemotePrivateRecoveryTest(unittest.TestCase):
         self.assertIsNotNone(importlib.util.find_spec('remote_private_recovery'),
                              'the connected remote recovery controller is missing')
         import remote_private_recovery as recovery
+        previous_umask = os.umask(0o022)
+        self.addCleanup(os.umask, previous_umask)
 
         with tempfile.TemporaryDirectory(prefix='remote-recovery-contract-') as temporary:
             root = Path(temporary)
@@ -64,6 +67,7 @@ class RemotePrivateRecoveryTest(unittest.TestCase):
             self.assertEqual((remote / 'success/candidate.tar').read_bytes(), plaintext)
             self.assertTrue((remote / 'success/AUTHENTICATED.json').is_file())
             self.assertEqual(result['pipeline_returncodes'], dict(source=0, age=0, sink=0))
+            self.assertEqual(os.umask(0o022), 0o022)
 
             failed = dict(request, attempt='age-failed')
             with patch.object(recovery, '_remote_command', side_effect=local_remote), \
@@ -103,6 +107,7 @@ class RemotePrivateRecoveryTest(unittest.TestCase):
             self.assertFalse((remote / 'source-failed/AUTHENTICATED.json').exists())
             self.assertEqual(carrier.read_bytes(), original)
             self.assertFalse(identity_path.exists())
+            self.assertEqual(os.umask(0o022), 0o022)
 
 
 if __name__ == '__main__':

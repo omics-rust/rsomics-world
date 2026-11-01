@@ -1,5 +1,24 @@
 # Ecology complete-original beta performance
 
+## Integrated CI finds permission-state leak; one scoped correction
+
+Actual controlCI41287584238 atce33e7ff fails one of537 tests after remote
+recovery preparation: the later unchanged junction source verifier observes
+0600 instead of0644 for.gitignore. Root reproduces the exact adjacent remote
+and junction tests:2 tests/1error/1.631s. The recovery function changes global
+umask to077 without restoring it; no source body or original TAR changes.
+
+Root scopes that same private umask to recover with finally restoration and
+adds restoration checks to the SAME connected test. No transport/authentication,
+ZIP/TAR/context/key/byte/capacity/performance rule changes. The SAME adjacent
+pair now passes2/1.806s; logs remain under
+remote-recovery-umask-fix-20261101.31H4ZZ. Current helper3306371a and testcb8fba40
+supersede d99fb4ec/f97a2ce2 only for this scoped process-state correction.
+Original failed CI remains failed; the earlier complete real SSH/age protocol
+proof remains bounded to its original source, with unchanged pipeline/remote
+program bodies. New exact-head complete controlCI is still required before
+launch. No source verifier is weakened and no original permission is ignored.
+
 ## Remote custody route qualified; exact-head Control before launch
 
 Root adopts the concrete320GiB remote all-eight envelope in

@@ -301,11 +301,18 @@ def _pipeline(directory, request, age_command, state, deadline):
 
 
 def recover(request, evidence, tool_dir, identity_path):
+    previous_umask = os.umask(0o077)
+    try:
+        return _recover_private(request, evidence, tool_dir, identity_path)
+    finally:
+        os.umask(previous_umask)
+
+
+def _recover_private(request, evidence, tool_dir, identity_path):
     request = dict(request)
     _validate(request)
     directory, identity_path = Path(evidence), Path(identity_path)
     _external_evidence(directory)
-    os.umask(0o077)
     directory.mkdir(mode=0o700)
     _save(directory / 'request.json', request)
     (directory / 'remote-program.py').write_text(REMOTE_PROGRAM)
