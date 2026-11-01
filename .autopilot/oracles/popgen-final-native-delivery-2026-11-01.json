@@ -1,0 +1,515 @@
+{
+  "accepted_historical_whole_receipt": {
+    "bytes": 31385,
+    "sha256": "470ec36318d29276f3476bad5adeb0233952086e2a9d18b0755c2a635678bd36"
+  },
+  "actual_conclusion": "success",
+  "actual_data_only_verification": {
+    "bytes": 115460,
+    "sha256": "e9ffeda39503c0247af590fdb9ced0541fc63deb1d5347a47355f7b172d6a873"
+  },
+  "admission": {
+    "actual_artifact_bytes": 3346187,
+    "actual_device_id": 16777259,
+    "actual_free_bytes": 49469607936,
+    "independent_headroom_bytes": 8589934592,
+    "no_clone_space_credit": true,
+    "no_deletion_to_fit": true,
+    "original_artifacts": 4,
+    "recovery_envelope_bytes": 52428800,
+    "same_external_mount": "/Volumes/KIOXIA",
+    "utc": "2026-11-01T08:11:19.015938+00:00"
+  },
+  "all_exact_head_ci_test_package_install_and_native_steps_pass": true,
+  "all_four_raw_job_logs_match_exact_aggregate_zip_bodies": true,
+  "complete_original_source_crates_byte_identical_observed": true,
+  "credential_contents_read": false,
+  "first_workflow_failure": {
+    "actual_jobs": 0,
+    "annotation_not_independently_recovered_by_this_worker": true,
+    "conclusion": "failure",
+    "parent_reported_annotation_cause": "job env runner.temp expression context invalid; parent corrected through GITHUB_ENV",
+    "run_id": 41286761259,
+    "rust_test_failure": false
+  },
+  "git_mutations": false,
+  "github_api_mutations": false,
+  "github_resolved_tree_sha": "dcd0feaa312d2f73b35a776c3ba2de009c72f1d2",
+  "head_sha": "359c6de9fc4ed935476ae1987259b4d1089e749a",
+  "historical_performance_elf_rebound": false,
+  "historical_scientific_owner": "ff8e951344b5cd8f8c049c96afa9e2c585d14995",
+  "historical_scientific_protected_files_unchanged": 46,
+  "historical_whole_performance_run": 41272268312,
+  "lock_sha256": "84f00eb7b34d86787c28116184f74374d80c8dcbbf729067ade367ce5d185f16",
+  "new_delivery_binaries_remeasured": false,
+  "original_log_zip_full_crc_members_verified": true,
+  "owning_repository_native_four_observed": true,
+  "product": "rsomics-popgen",
+  "raw_artifacts_api": {
+    "bytes": 3021,
+    "sha256": "4cdf48e1fc3159c9407c3416bb7e91a24567bc5c4de8a08c3c1d04a598d26fe4"
+  },
+  "raw_attempt_api": {
+    "bytes": 12932,
+    "sha256": "89ab40b07734cf7c7ca7ab460328a5a3592bfe4a6b108235f957e922f08e999f"
+  },
+  "raw_attempt_log_zip": {
+    "bytes": 165188,
+    "sha256": "3f8e17c4ddda2eb624c49b64819c38ac4e9260ca5dba18c407aae30d136453c5"
+  },
+  "raw_escape_sequences_preserved_without_terminal_execution": true,
+  "raw_jobs_api": {
+    "bytes": 13578,
+    "sha256": "bd26b5a6c8a956ef6ef2e55ab2f0d39f7a4eeff5c8b3aaf4ad2b7650718786bb"
+  },
+  "raw_run_api": {
+    "bytes": 12910,
+    "sha256": "1014d96d119b92ac0d655f6be1ec35d4967206326bdb59d014867b229d3913a4"
+  },
+  "raw_run_log_zip": {
+    "bytes": 165188,
+    "sha256": "3f8e17c4ddda2eb624c49b64819c38ac4e9260ca5dba18c407aae30d136453c5"
+  },
+  "recovered_originals_directory": "/Volumes/KIOXIA/Developments/tmp/popgen-final-delivery-adoption-20261101.usf8ZA",
+  "recovery_transport_escape_rejection_preserved": true,
+  "registry_publication": false,
+  "release_created": false,
+  "repository": "omics-rust/rsomics-popgen",
+  "root_adopted": true,
+  "run_attempt": 1,
+  "run_id": 41287339903,
+  "schema": "rsomics.popgen.final-native-delivery-adoption.v1",
+  "scientific_or_foreign_binary_execution_on_mac": false,
+  "source_bindings": {
+    "bytes": 12214,
+    "sha256": "d2adeeeac19b90abc23044f81f01d7f0d17ce816b157a3789c83593fa165d962"
+  },
+  "source_crate_identities": {
+    "linux-aarch64": {
+      "bytes": 47639,
+      "sha256": "f624b8893f86020613192918b00d77e88803cb982967da2c4f43a90ef67d21b3"
+    },
+    "linux-x86_64": {
+      "bytes": 47639,
+      "sha256": "f624b8893f86020613192918b00d77e88803cb982967da2c4f43a90ef67d21b3"
+    },
+    "macos-aarch64": {
+      "bytes": 47639,
+      "sha256": "f624b8893f86020613192918b00d77e88803cb982967da2c4f43a90ef67d21b3"
+    },
+    "macos-x86_64": {
+      "bytes": 47639,
+      "sha256": "f624b8893f86020613192918b00d77e88803cb982967da2c4f43a90ef67d21b3"
+    }
+  },
+  "source_files": 50,
+  "source_github_blobs_and_git_modes_bound": true,
+  "source_original_ci_or_scientific_results_not_modified": true,
+  "source_runtime_imported": false,
+  "status": "accepted",
+  "symlinks_or_original_executable_modes_restored": false,
+  "targets": {
+    "linux-aarch64": {
+      "all_original_zip_crc_digest_and_body_members_verified": true,
+      "artifact_id": 13075053453,
+      "binary": {
+        "bytes": 1793368,
+        "elf_type": 3,
+        "executed_on_mac": false,
+        "format": "ELF64-little-endian",
+        "machine": 183,
+        "original_mode": 493,
+        "retained_data_mode": 384,
+        "sha256": "c387f121742e41bbf7d05e6ead601522f9326f926d249f89f386e5b0a6f1bc93"
+      },
+      "build": {
+        "binary": {
+          "bytes": 1793368,
+          "sha256": "c387f121742e41bbf7d05e6ead601522f9326f926d249f89f386e5b0a6f1bc93"
+        },
+        "head_sha": "359c6de9fc4ed935476ae1987259b4d1089e749a",
+        "historical_performance_run": 41272268312,
+        "historical_scientific_owner": "ff8e951344b5cd8f8c049c96afa9e2c585d14995",
+        "lock_sha256": "84f00eb7b34d86787c28116184f74374d80c8dcbbf729067ade367ce5d185f16",
+        "native_host": "aarch64-unknown-linux-gnu",
+        "product": "rsomics-popgen",
+        "publication": false,
+        "run_attempt": 1,
+        "run_id": 41287339903,
+        "rustc": "rustc 1.91.0 (f8297e351 2025-10-28)\nbinary: rustc\ncommit-hash: f8297e351a40c1439a467bbbb6879088047f50b3\ncommit-date: 2025-10-28\nhost: aarch64-unknown-linux-gnu\nrelease: 1.91.0\nLLVM version: 21.1.2\n",
+        "signed_release": false,
+        "target": "linux-aarch64",
+        "this_binary_remeasured": false,
+        "version": "0.1.0"
+      },
+      "connected_integration_instances": 2,
+      "ignored_tests": 0,
+      "job_id": 124791209603,
+      "library_or_main_unit_instances": 0,
+      "native_archive": {
+        "bytes": 787545,
+        "path": "/Volumes/KIOXIA/Developments/tmp/popgen-final-delivery-adoption-20261101.usf8ZA/validation/13075053453/rsomics-popgen-0.1.0-linux-aarch64.tar.gz",
+        "sha256": "56b607775c6444508d1407767a9449abfa7c0966352a00c5e8b9b0fd92e81188"
+      },
+      "native_notices_and_guide_match_final_owner": true,
+      "native_tar_members": 9,
+      "original_zip": {
+        "bytes": 833786,
+        "sha256": "082a83e229b2b666243cdfd1492db6642ba1b48c7e9fc7f14f6b86c24cb672c7"
+      },
+      "original_zip_members": 3,
+      "package_original_bodies_and_normalized_manifest_verified": true,
+      "raw_job_log": {
+        "bytes": 77555,
+        "job_id": 124791209603,
+        "path": "logs/124791209603.raw-v2.log",
+        "sha256": "06e0f2cf72ab6d2470300582de927f0bef0bca1383d70ea7040e9595b98f9649"
+      },
+      "source_crate": {
+        "bytes": 47639,
+        "path": "/Volumes/KIOXIA/Developments/tmp/popgen-final-delivery-adoption-20261101.usf8ZA/validation/13075053453/rsomics-popgen-0.1.0.crate",
+        "sha256": "f624b8893f86020613192918b00d77e88803cb982967da2c4f43a90ef67d21b3"
+      },
+      "source_crate_members": 49,
+      "source_package_installed_by_actual_native_ci": true,
+      "test_summaries": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          1,
+          0,
+          0
+        ]
+      ]
+    },
+    "linux-x86_64": {
+      "all_original_zip_crc_digest_and_body_members_verified": true,
+      "artifact_id": 13076180261,
+      "binary": {
+        "bytes": 1886208,
+        "elf_type": 3,
+        "executed_on_mac": false,
+        "format": "ELF64-little-endian",
+        "machine": 62,
+        "original_mode": 493,
+        "retained_data_mode": 384,
+        "sha256": "291ddfd208a2032fafdddce473eb4645373af473da4aeea0fe27af10071ae6c2"
+      },
+      "build": {
+        "binary": {
+          "bytes": 1886208,
+          "sha256": "291ddfd208a2032fafdddce473eb4645373af473da4aeea0fe27af10071ae6c2"
+        },
+        "head_sha": "359c6de9fc4ed935476ae1987259b4d1089e749a",
+        "historical_performance_run": 41272268312,
+        "historical_scientific_owner": "ff8e951344b5cd8f8c049c96afa9e2c585d14995",
+        "lock_sha256": "84f00eb7b34d86787c28116184f74374d80c8dcbbf729067ade367ce5d185f16",
+        "native_host": "x86_64-unknown-linux-gnu",
+        "product": "rsomics-popgen",
+        "publication": false,
+        "run_attempt": 1,
+        "run_id": 41287339903,
+        "rustc": "rustc 1.91.0 (f8297e351 2025-10-28)\nbinary: rustc\ncommit-hash: f8297e351a40c1439a467bbbb6879088047f50b3\ncommit-date: 2025-10-28\nhost: x86_64-unknown-linux-gnu\nrelease: 1.91.0\nLLVM version: 21.1.2\n",
+        "signed_release": false,
+        "target": "linux-x86_64",
+        "this_binary_remeasured": false,
+        "version": "0.1.0"
+      },
+      "connected_integration_instances": 2,
+      "ignored_tests": 0,
+      "job_id": 124791209521,
+      "library_or_main_unit_instances": 0,
+      "native_archive": {
+        "bytes": 824844,
+        "path": "/Volumes/KIOXIA/Developments/tmp/popgen-final-delivery-adoption-20261101.usf8ZA/validation/13076180261/rsomics-popgen-0.1.0-linux-x86_64.tar.gz",
+        "sha256": "0b7bccc1d16bdb1fc3415010ef1bbc69b437bea4eb204a0c28e6216d858d84c6"
+      },
+      "native_notices_and_guide_match_final_owner": true,
+      "native_tar_members": 9,
+      "original_zip": {
+        "bytes": 871383,
+        "sha256": "edb00077a9c3b7433d21408a17ba4484d4538e29d16ca15ac2232b81e48d6c2a"
+      },
+      "original_zip_members": 3,
+      "package_original_bodies_and_normalized_manifest_verified": true,
+      "raw_job_log": {
+        "bytes": 84422,
+        "job_id": 124791209521,
+        "path": "logs/124791209521.raw-v2.log",
+        "sha256": "bbf6c3ad90c1cbdf85f0ae919a901bb6ec8577d40ea337bfe8215079fe5cb897"
+      },
+      "source_crate": {
+        "bytes": 47639,
+        "path": "/Volumes/KIOXIA/Developments/tmp/popgen-final-delivery-adoption-20261101.usf8ZA/validation/13076180261/rsomics-popgen-0.1.0.crate",
+        "sha256": "f624b8893f86020613192918b00d77e88803cb982967da2c4f43a90ef67d21b3"
+      },
+      "source_crate_members": 49,
+      "source_package_installed_by_actual_native_ci": true,
+      "test_summaries": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          1,
+          0,
+          0
+        ]
+      ]
+    },
+    "macos-aarch64": {
+      "all_original_zip_crc_digest_and_body_members_verified": true,
+      "artifact_id": 13075547662,
+      "binary": {
+        "bytes": 1606624,
+        "cpu_subtype": 0,
+        "cpu_type": 16777228,
+        "executed_on_mac": false,
+        "file_type": 2,
+        "format": "Mach-O64-little-endian",
+        "original_mode": 493,
+        "retained_data_mode": 384,
+        "sha256": "6dff2f48a91e15ff900d7e2c042358f3a7a13785da6838eebfb2ab8064d8fb16"
+      },
+      "build": {
+        "binary": {
+          "bytes": 1606624,
+          "sha256": "6dff2f48a91e15ff900d7e2c042358f3a7a13785da6838eebfb2ab8064d8fb16"
+        },
+        "head_sha": "359c6de9fc4ed935476ae1987259b4d1089e749a",
+        "historical_performance_run": 41272268312,
+        "historical_scientific_owner": "ff8e951344b5cd8f8c049c96afa9e2c585d14995",
+        "lock_sha256": "84f00eb7b34d86787c28116184f74374d80c8dcbbf729067ade367ce5d185f16",
+        "native_host": "aarch64-apple-darwin",
+        "product": "rsomics-popgen",
+        "publication": false,
+        "run_attempt": 1,
+        "run_id": 41287339903,
+        "rustc": "rustc 1.91.0 (f8297e351 2025-10-28)\nbinary: rustc\ncommit-hash: f8297e351a40c1439a467bbbb6879088047f50b3\ncommit-date: 2025-10-28\nhost: aarch64-apple-darwin\nrelease: 1.91.0\nLLVM version: 21.1.2\n",
+        "signed_release": false,
+        "target": "macos-aarch64",
+        "this_binary_remeasured": false,
+        "version": "0.1.0"
+      },
+      "connected_integration_instances": 2,
+      "ignored_tests": 0,
+      "job_id": 124791209516,
+      "library_or_main_unit_instances": 0,
+      "native_archive": {
+        "bytes": 749853,
+        "path": "/Volumes/KIOXIA/Developments/tmp/popgen-final-delivery-adoption-20261101.usf8ZA/validation/13075547662/rsomics-popgen-0.1.0-macos-aarch64.tar.gz",
+        "sha256": "fadd7f9729318c37fb4ddd50df00a490197f5c1a6092ef8ecc62754c54404e75"
+      },
+      "native_notices_and_guide_match_final_owner": true,
+      "native_tar_members": 9,
+      "original_zip": {
+        "bytes": 797145,
+        "sha256": "dfeb842d242f852d7769861c7148fead996dd4ec84bb9e8f9dd3f6528d5e06b6"
+      },
+      "original_zip_members": 3,
+      "package_original_bodies_and_normalized_manifest_verified": true,
+      "raw_job_log": {
+        "bytes": 78130,
+        "job_id": 124791209516,
+        "path": "logs/124791209516.raw-v2.log",
+        "sha256": "62f8a314103bfe4b0089120f23deaaa1ccf77b2bcb22d46da2108062c9ff7d22"
+      },
+      "source_crate": {
+        "bytes": 47639,
+        "path": "/Volumes/KIOXIA/Developments/tmp/popgen-final-delivery-adoption-20261101.usf8ZA/validation/13075547662/rsomics-popgen-0.1.0.crate",
+        "sha256": "f624b8893f86020613192918b00d77e88803cb982967da2c4f43a90ef67d21b3"
+      },
+      "source_crate_members": 49,
+      "source_package_installed_by_actual_native_ci": true,
+      "test_summaries": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          1,
+          0,
+          0
+        ]
+      ]
+    },
+    "macos-x86_64": {
+      "all_original_zip_crc_digest_and_body_members_verified": true,
+      "artifact_id": 13076055804,
+      "binary": {
+        "bytes": 1736280,
+        "cpu_subtype": 3,
+        "cpu_type": 16777223,
+        "executed_on_mac": false,
+        "file_type": 2,
+        "format": "Mach-O64-little-endian",
+        "original_mode": 493,
+        "retained_data_mode": 384,
+        "sha256": "8c54138ab166baa996d8605aa207bd57dc13704976ff3660d518323d74712199"
+      },
+      "build": {
+        "binary": {
+          "bytes": 1736280,
+          "sha256": "8c54138ab166baa996d8605aa207bd57dc13704976ff3660d518323d74712199"
+        },
+        "head_sha": "359c6de9fc4ed935476ae1987259b4d1089e749a",
+        "historical_performance_run": 41272268312,
+        "historical_scientific_owner": "ff8e951344b5cd8f8c049c96afa9e2c585d14995",
+        "lock_sha256": "84f00eb7b34d86787c28116184f74374d80c8dcbbf729067ade367ce5d185f16",
+        "native_host": "x86_64-apple-darwin",
+        "product": "rsomics-popgen",
+        "publication": false,
+        "run_attempt": 1,
+        "run_id": 41287339903,
+        "rustc": "rustc 1.91.0 (f8297e351 2025-10-28)\nbinary: rustc\ncommit-hash: f8297e351a40c1439a467bbbb6879088047f50b3\ncommit-date: 2025-10-28\nhost: x86_64-apple-darwin\nrelease: 1.91.0\nLLVM version: 21.1.2\n",
+        "signed_release": false,
+        "target": "macos-x86_64",
+        "this_binary_remeasured": false,
+        "version": "0.1.0"
+      },
+      "connected_integration_instances": 2,
+      "ignored_tests": 0,
+      "job_id": 124791209541,
+      "library_or_main_unit_instances": 0,
+      "native_archive": {
+        "bytes": 796204,
+        "path": "/Volumes/KIOXIA/Developments/tmp/popgen-final-delivery-adoption-20261101.usf8ZA/validation/13076055804/rsomics-popgen-0.1.0-macos-x86_64.tar.gz",
+        "sha256": "469de1e754a5fee6b5b69cbb381d0bd0b50f246b953429481a868698b6ec1c41"
+      },
+      "native_notices_and_guide_match_final_owner": true,
+      "native_tar_members": 9,
+      "original_zip": {
+        "bytes": 843873,
+        "sha256": "0763e426b647152238a81433139a50778d61d5cf74382501c5f6437e76f40130"
+      },
+      "original_zip_members": 3,
+      "package_original_bodies_and_normalized_manifest_verified": true,
+      "raw_job_log": {
+        "bytes": 77984,
+        "job_id": 124791209541,
+        "path": "logs/124791209541.raw-v2.log",
+        "sha256": "4dbc378742304fd05edb74189d9e03f8bfd26190cd872d678760199614f4f989"
+      },
+      "source_crate": {
+        "bytes": 47639,
+        "path": "/Volumes/KIOXIA/Developments/tmp/popgen-final-delivery-adoption-20261101.usf8ZA/validation/13076055804/rsomics-popgen-0.1.0.crate",
+        "sha256": "f624b8893f86020613192918b00d77e88803cb982967da2c4f43a90ef67d21b3"
+      },
+      "source_crate_members": 49,
+      "source_package_installed_by_actual_native_ci": true,
+      "test_summaries": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          1,
+          0,
+          0
+        ]
+      ]
+    }
+  },
+  "total_connected_integration_instances": 8,
+  "validator_original_false_alias_and_unit_count_assumptions_preserved": true,
+  "version": "0.1.0",
+  "workflow_path": ".github/workflows/ci.yml",
+  "completed_sha256": "fb3c76eb9af7f82de02250d694f351b06e6c3192d3685e7e2c7e91d20d126c26",
+  "owning_repository_native_four_qualified": true,
+  "final_public_api_and_unchanged_hot_paths_reviewed": true,
+  "root_review": "Read complete final report and original/archive/source/package/CI validator; freshly verify all517 sealed bodies/16917157B, exact519-file membership and all directory modes. All46 scientific protected originals remain byte/mode identical; only one public run_cli item, no new API/foundation/dependency. No foreign binary executed on Mac.",
+  "report_sha256": "03c4149c661d03bd7dd7a48c5ee82f90cd0593f02c80e3e023517b0ff475806d",
+  "seal_sha256": "11e20c0866434ad572af920d47f5cdad35988e18b9dd340bb608a53654284ecc",
+  "physical_packet": {
+    "files": 519,
+    "bytes": 17025540
+  },
+  "github_native_release_assets_eligible": true,
+  "registry_authorization_qualified": false
+}

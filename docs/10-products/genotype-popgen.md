@@ -15,7 +15,7 @@ yet; green3's41262996186 offline delivery remains historical, not rebound.
 Popgen source41252735560 is now accepted after
 full authenticated original and output audits: complete chr22/207 persons,
 723783 canonical SNVs,514 windows and full SFS/jackknife outputs, with separate
-legacy semantics and original nonfinite values. Private Popgen ownerff8e9513
+legacy semantics and original nonfinite values. Scientific Popgen implementationff8e9513
 now implements the coherent streaming neutral workflow. Full chr22 Mac1/4
 each passes50010408 frozen comparison cells; all11 scientific payloads are
 worker-exact, with no new public foundation or full-GT matrix. One integrated
@@ -29,8 +29,12 @@ both fixed throughput/process-memory routes pass at1/4 CPU allowances. Wall
 medians are Source404.61s/Native69.10s at1 and383.53s/45.45s at4. Native1
 systemCPU regression and only1.52x native1→4 scaling are retained. This earns
 neutral-workflow same-host performance, not selection/admixture, universal
-scaling or release. Owning-repo/package/docs/binary delivery and registry
-authorization remain; no new public foundation is needed for this slice.
+scaling. Owning repo final359c6de9 now passes actual41287339903 native/package/
+install CI, and complete source/native originals are independently adopted.
+GitHubv0.1.0 is published with four native archives/sourcecrate/checksums;
+the freshly downloaded MacARM binary runs the documented example. Registry
+authorization/crates.io publication remains separate. No new public foundation
+is needed for this neutral-only slice.
 The dated source audits below remain historical context, not a reason to
 rerun those accepted preflights.
 

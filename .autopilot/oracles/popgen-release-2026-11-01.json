@@ -1,0 +1,91 @@
+{
+  "schema": "rsomics.popgen.github-release.v1",
+  "assets": [
+    {
+      "bytes": 787545,
+      "name": "rsomics-popgen-0.1.0-linux-aarch64.tar.gz",
+      "sha256": "56b607775c6444508d1407767a9449abfa7c0966352a00c5e8b9b0fd92e81188"
+    },
+    {
+      "bytes": 824844,
+      "name": "rsomics-popgen-0.1.0-linux-x86_64.tar.gz",
+      "sha256": "0b7bccc1d16bdb1fc3415010ef1bbc69b437bea4eb204a0c28e6216d858d84c6"
+    },
+    {
+      "bytes": 749853,
+      "name": "rsomics-popgen-0.1.0-macos-aarch64.tar.gz",
+      "sha256": "fadd7f9729318c37fb4ddd50df00a490197f5c1a6092ef8ecc62754c54404e75"
+    },
+    {
+      "bytes": 796204,
+      "name": "rsomics-popgen-0.1.0-macos-x86_64.tar.gz",
+      "sha256": "469de1e754a5fee6b5b69cbb381d0bd0b50f246b953429481a868698b6ec1c41"
+    },
+    {
+      "bytes": 47639,
+      "name": "rsomics-popgen-0.1.0.crate",
+      "sha256": "f624b8893f86020613192918b00d77e88803cb982967da2c4f43a90ef67d21b3"
+    },
+    {
+      "bytes": 523,
+      "name": "SHA256SUMS",
+      "sha256": "021f80c15fcef438a77f1b18c5c8146e8171e876c7ae252058cf3a5605940325"
+    }
+  ],
+  "commands": [
+    {
+      "name": "version",
+      "returncode": 0
+    },
+    {
+      "name": "help",
+      "returncode": 0
+    },
+    {
+      "name": "casebook",
+      "returncode": 0
+    }
+  ],
+  "head_sha": "359c6de9fc4ed935476ae1987259b4d1089e749a",
+  "no_other_platform_binary_executed_on_mac": true,
+  "published_macos_arm64_download_and_example_passed": true,
+  "registry_publication": false,
+  "release_id": 430450052,
+  "signature_claim": false,
+  "status": "published-native-release-verified",
+  "tag": "v0.1.0",
+  "url": "https://github.com/omics-rust/rsomics-popgen/releases/tag/v0.1.0",
+  "evidence_directory": "/Volumes/KIOXIA/Developments/tmp/popgen-release-20261101.20NSIY",
+  "evidence_bodies": {
+    "VERIFICATION.json": {
+      "bytes": 1639,
+      "sha256": "5fb36019682b5886e95984b9b2843a2280676b9df4c1e1688acfdda940eb50aa"
+    },
+    "release.json": {
+      "bytes": 12845,
+      "sha256": "8c019ace96a77aa73a3fcf9140e00f4f6a677e6fd64fc51a95268cffe5359a9c"
+    },
+    "tag.json": {
+      "bytes": 351,
+      "sha256": "c8bed58d95ff745472e8c8442ea69fedb5064f41732d893f4fb2ac50e9057de2"
+    },
+    "SHA256SUMS": {
+      "bytes": 523,
+      "sha256": "021f80c15fcef438a77f1b18c5c8146e8171e876c7ae252058cf3a5605940325"
+    },
+    "NOTES.md": {
+      "bytes": 1582,
+      "sha256": "7466514ef004fc59dbb12fb2a77e32aeada0a3875d0f859810b81e74221e4bb2"
+    }
+  },
+  "product": "rsomics-popgen",
+  "version": "0.1.0",
+  "root_adopted": true,
+  "owning_exact_head_ci_run_id": 41287339903,
+  "owning_exact_head_ci_run_attempt": 1,
+  "source_equivalent_scientific_owner": "ff8e951344b5cd8f8c049c96afa9e2c585d14995",
+  "native_delivery_receipt": ".autopilot/oracles/popgen-final-native-delivery-2026-11-01.json",
+  "historical_performance_run_id": 41272268312,
+  "new_release_binaries_full_performance_remeasured": false,
+  "registry_authorization_qualified": false
+}
