@@ -1,5 +1,31 @@
 # Real signal campaign
 
+## Region-order contract decision pending; no native numerical bug inferred
+
+The bounded data-only failure diagnosis at signal-real-failure-20261101.bRmQFB
+finds the same58384 region-identity occurrences in both outputs, including100
+duplicate occurrences;58137 positions differ. Exact correspondence aligns
+all175152 BAM region cells exactly. Each NPZ also exactly matches its OWN raw
+TSV. BigWig aligned differences are only the previously attributed P2 column;
+no unexpected aligned numerical difference is found. These are diagnostic
+reductions, not a changed oracle or qualification of the old failed campaign.
+
+Root directly reads actual retained mapReduce.py1d5e2674a3e11873d510007fc31a3924eb4e5aea5e1c5ac87ff285e7403185eb,
+deeptoolsintervals/parse.pyc6425a5fa72fc2a37a3441a33dd1fbc830d92a418d77752b3d16caf0c60a94e5,
+and both BAM/BigWig concatenation consumers. The source sorts overlap tuples
+within chunks, and random.shuffle(TASKS) runs when both tasks and processors
+exceed1; concatenation retains that order. The observed failure is T1 and
+does not qualify or predict T4 output. Native numerical/NPY-layout failure is
+not established by a positional comparison of reordered rows.
+
+Root asks one asynchronous user decision: keep deterministic native input
+order and verify all exact region/duplicate-occurrence identities before strict
+numeric comparison, documenting row-order incompatibility; or change native
+to source T1 coordinate order. No random shuffle is fabricated, no row/value/
+duplicate is dropped, and no numerical band/source producer policy changes.
+Affected ordering/oracle work waits for that decision; other products continue.
+Original positional failure remains failed. No product or checker edit yet.
+
 ## Actual campaign fails full qualification; no timed performance acceptance
 
 Root's2026-11-01T06:28:18UTC SSH check finds the owned runner no longer live
