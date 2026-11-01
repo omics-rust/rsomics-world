@@ -1,5 +1,15 @@
 # Popgen whole-chr22 same-machine performance
 
+## Actual namespace-corrected qualification dispatched
+
+Exact-head Control41272172559 completes successfully at
+0d0eaa772ab57dbcd66e9de7c622a47931a11f4a. Root verifies remote main and
+dispatches actual41272268312/1 on that head with the unchanged accepted native
+receipt; actual job124747301871 reaches source qualification. This run adds
+only the original jackknife import/call correction. Complete original source,
+casebook then chr22 qualification, unchanged measured graph and authenticated
+original recovery remain mandatory. No science/performance result is yet adopted.
+
 ## Second actual failure adopted; source jackknife namespace corrected
 
 After exact-head Control41270476433 succeeds, root verifies remote53656eb5
