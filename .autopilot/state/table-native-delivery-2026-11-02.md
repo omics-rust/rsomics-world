@@ -90,3 +90,26 @@ Root adoption is table-native-delivery-2026-11-02.json. The actual new delivery
 ELFs/Mach-O bodies do not inherit old measured timings. GitHub release and a
 fresh actual public-download install remain next; registry publication remains
 held and has not been retried.
+
+## GitHub0.1.0 and fresh public installation accepted
+
+Fresh live preflight finds no prior tag/release. Root creates draft430776039
+at immutable owninge98f54ac, verifies all six uploaded asset IDs/sizes/API
+SHA256 digests and exact notes, then publishes normal v0.1.0. Public tag is a
+commit ref toe98f54ac; no asset/tag is replaced. Four native archives plus
+the byte-identical source.crate and aggregate checksums are public.
+
+Root downloads MacARM TAR/source.crate/checksums through unauthenticated
+public URLs into Q4MUVs/public-download, HTTP200 each. All three are byte-equal
+to verified uploaded originals. Fresh source VCS metadata bindse98f54ac and
+the archive's actual21d0dfdb binary passes the same11-call installed lifecycle:
+ten success, one intended nonzero, all six operations, exact1/4 sort, quoted
+multiline UTF-8, duplicate join, gzip group values and atomic failure.
+smoke.stdout SHA9aeaefe5, empty stderr, VERIFIED.json270fe678, exit0.
+No new upstream/performance replay or local source rebuild is inferred.
+
+table-public-delivery-2026-11-02.json records release/API/assets/public smoke.
+The release is not signed/notarized or minimum-OS/full-DSO qualified. Registry
+remains unpublished/held. Separate README-only mainac3788aa advertises the
+now-real release without changing its tag or artifacts; exact-head followup
+CI remains pending, not a replacement release-binary qualification.

@@ -1,0 +1,134 @@
+{
+  "schema": "rsomics.table.github-release-adoption.v1",
+  "product": "rsomics-table",
+  "root_adopted": true,
+  "repository": "omics-rust/rsomics-table",
+  "release": {
+    "id": 430776039,
+    "tag_name": "v0.1.0",
+    "target_commitish": "e98f54acb051ee827b858aadf7ee3de11f007869",
+    "published_at": "2026-11-01T18:34:40Z",
+    "html_url": "https://github.com/omics-rust/rsomics-table/releases/tag/v0.1.0",
+    "draft": false,
+    "prerelease": false,
+    "assets": [
+      {
+        "id": 699168082,
+        "name": "rsomics-table-0.1.0-linux-aarch64.tar.gz",
+        "size": 1526605,
+        "digest": "sha256:32e171bda088d92b578e96910ea4994106f74ece7af30d7b0d16749d6bd6341d",
+        "browser_download_url": "https://github.com/omics-rust/rsomics-table/releases/download/v0.1.0/rsomics-table-0.1.0-linux-aarch64.tar.gz"
+      },
+      {
+        "id": 699168079,
+        "name": "rsomics-table-0.1.0-linux-x86_64.tar.gz",
+        "size": 1571524,
+        "digest": "sha256:e852c080a2dd186784e4cfa2912445a766279317edd0215ad2c028365309b320",
+        "browser_download_url": "https://github.com/omics-rust/rsomics-table/releases/download/v0.1.0/rsomics-table-0.1.0-linux-x86_64.tar.gz"
+      },
+      {
+        "id": 699168085,
+        "name": "rsomics-table-0.1.0-macos-aarch64.tar.gz",
+        "size": 1412184,
+        "digest": "sha256:db84d432fded9e03189d323059c89077ff4c387ff0df3ef5cc460bbf3c21d1de",
+        "browser_download_url": "https://github.com/omics-rust/rsomics-table/releases/download/v0.1.0/rsomics-table-0.1.0-macos-aarch64.tar.gz"
+      },
+      {
+        "id": 699168083,
+        "name": "rsomics-table-0.1.0-macos-x86_64.tar.gz",
+        "size": 1486720,
+        "digest": "sha256:186d145264ba93059e5398d86f7c25d8ccd2bc84ae8968a109269edfc0b4c4b7",
+        "browser_download_url": "https://github.com/omics-rust/rsomics-table/releases/download/v0.1.0/rsomics-table-0.1.0-macos-x86_64.tar.gz"
+      },
+      {
+        "id": 699168080,
+        "name": "rsomics-table-0.1.0.crate",
+        "size": 108184,
+        "digest": "sha256:4672a8fbcac112df8f56c5388b72eb95c46f487f073d7589c2482ae264404013",
+        "browser_download_url": "https://github.com/omics-rust/rsomics-table/releases/download/v0.1.0/rsomics-table-0.1.0.crate"
+      },
+      {
+        "id": 699168145,
+        "name": "SHA256SUMS",
+        "size": 518,
+        "digest": "sha256:58f9886e22dd67c7259e1ff33c0d5036837ba90e0341818a0707355a5fc241d0",
+        "browser_download_url": "https://github.com/omics-rust/rsomics-table/releases/download/v0.1.0/SHA256SUMS"
+      }
+    ]
+  },
+  "registry_published": false,
+  "native_delivery_receipt": ".autopilot/oracles/table-native-delivery-2026-11-02.json",
+  "native_delivery_ci": 41332571386,
+  "run_attempt": 1,
+  "tag_commit": "e98f54acb051ee827b858aadf7ee3de11f007869",
+  "tag_object_type": "commit",
+  "evidence_directory": "/Volumes/KIOXIA/Developments/tmp/table-public-release-20261102.Q4MUVs",
+  "api_proofs": {
+    "public_release_sha256": "7c5ab759074a7df279fce8eae560d3ed46ab145ead49b71b76eccb9b628740f5",
+    "public_tag_sha256": "586cdb5677d25f0a1c4bf6b5ad841985108fb9f48866c6775a63932d4e9c34ea",
+    "draft_sha256": "429bc9608d30fdd29d4277d26071fb511de59a4d24ea5132ad938213c49df39f",
+    "release_notes_sha256": "adfc39697fe99fe4ed6950cdd556e86a08af275d2f7df6cf4a1d85e0b17e12e8"
+  },
+  "publication_checks": {
+    "prior_release_and_tag_absent": true,
+    "draft_asset_count": 6,
+    "all_api_digests_and_sizes_match_local_originals": true,
+    "public_release_notes_exact": true,
+    "no_asset_replacement": true
+  },
+  "public_download": {
+    "authenticated": false,
+    "host": "Darwin arm64",
+    "os_version": "27.2",
+    "http_status_each": 200,
+    "assets": [
+      "rsomics-table-0.1.0-macos-aarch64.tar.gz",
+      "rsomics-table-0.1.0.crate",
+      "SHA256SUMS"
+    ],
+    "byte_equal_to_original_uploaded_assets": true,
+    "source_vcs_commit": "e98f54acb051ee827b858aadf7ee3de11f007869",
+    "archive_sha256": "db84d432fded9e03189d323059c89077ff4c387ff0df3ef5cc460bbf3c21d1de",
+    "source_crate_sha256": "4672a8fbcac112df8f56c5388b72eb95c46f487f073d7589c2482ae264404013",
+    "checksums_sha256": "58f9886e22dd67c7259e1ff33c0d5036837ba90e0341818a0707355a5fc241d0"
+  },
+  "installed_lifecycle": {
+    "fresh_public_download": true,
+    "own_rust_binary_only": true,
+    "calls": 11,
+    "successes": 10,
+    "expected_failures": 1,
+    "exit_code": 0,
+    "stderr_bytes": 0,
+    "binary_bytes": 3560912,
+    "binary_sha256": "21d0dfdb13d8da96e00676fa96f6c211caffb7d7c3ab4bc3cf167a6197368f8b",
+    "stable_operations": [
+      "validate",
+      "select",
+      "filter",
+      "sort",
+      "join",
+      "groupby"
+    ],
+    "one_four_sort_bytes_equal": true,
+    "quoted_multiline_utf8_preserved": true,
+    "duplicate_join_cartesian_multiplicity_verified": true,
+    "gzip_grouped_values_verified": true,
+    "malformed_input_preserves_existing_output": true,
+    "receipt_sha256": "270fe6789e8061b950f8972688951d6a4fa61acffd7d1e96547acfe8585b953b",
+    "stdout_sha256": "9aeaefe52bba57094f666223fa0f1005fa69810a800cc4510ed8800a06d82c46",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "new_performance_measurement": false,
+  "new_upstream_scientific_execution": false,
+  "performance_implementation_base": "2bd0fd3698c152bb27e7d0d7635d51fb41655112",
+  "signed_or_notarized": false,
+  "full_system_library_or_minimum_os_qualified": false,
+  "post_release_readme_commit": "ac3788aafae0d5b9a1e0829e6c1b1c4743743bc8",
+  "post_release_readme_ci_accepted": false,
+  "limitations": [
+    "GitHub installation is delivered; crates.io remains held and unattempted.",
+    "Historical throughput and RSS remain bound to the older measured executable, not these release binaries.",
+    "Post-release README changes do not replace the immutable release commit, tag or assets."
+  ]
+}
