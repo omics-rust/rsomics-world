@@ -1,0 +1,654 @@
+{
+  "accepted_source": {
+    "artifact_id": 12740753197,
+    "artifact_name": "rnaseq-qc-oracle-40520155303-1",
+    "artifact_sha256": "b54f52612cd1bc8f0ea94f622ba24cba7379c9432c9914e78e185f2bc6ca1a97",
+    "bundle_path": "workflows",
+    "head_sha": "64a323edcde7a289192abd288987cf3655a14bae",
+    "manifest_sha256": "bd13fd167c7fd3cc8813e00dfd7ba45dd96dd60b93f55215064a91af82f965ea",
+    "repository": "omics-rust/rsomics-world",
+    "run_attempt": 1,
+    "run_id": 40520155303,
+    "schema_version": 1,
+    "size_in_bytes": 897158,
+    "witness_sha256": "05affe2124a41813500e16b5b19afc319a1fdf7c52d422f3027a29ad190b307a",
+    "workflow_path": ".github/workflows/rnaseq-qc-oracle.yml"
+  },
+  "dependency_freeze_sha256": "4e8a228089cc2fbc456acb9fb70582fc0eec9e6759cee4509952878ead8a196d",
+  "dependency_policy": "17 exact original versions plus RSeQC5.0.5; offline hash-required wheels only; no upgrade/solver/source build; pip check and actual imports/providers admitted before calls",
+  "fixtures": {
+    "all-short": {
+      "bed_sha256": "0c844c495c122d3e0673070627a375f7b81f7793b20ce1f0080d0ae3f3162b69",
+      "intent": {
+        "native": "complete atomic zero tables, exit0 intentional difference",
+        "source": "exit1, header-only primary, event-only R, no derivatives"
+      },
+      "sam_sha256": "5d67025292d8a98b3d57f59dcde79e5633e4b4efc3bbda18ddbf22b7a523476c"
+    },
+    "case-alias-only": {
+      "bed_sha256": "b2746c18354a63ad38cc04b36839d5ac5a8c260b561030b44ad5ed91438dee8e",
+      "intent": {
+        "native": "reject absent exact annotation header name",
+        "source": "uppercase alias participates"
+      },
+      "sam_sha256": "7e7940498cab3e66547ece5e6edd7b1b5b6200765199614dbe93c97c8744b6cc"
+    },
+    "informative-paired": {
+      "bed_sha256": "0c844c495c122d3e0673070627a375f7b81f7793b20ce1f0080d0ae3f3162b69",
+      "intent": {
+        "annotation": "duplicate sites and names, opposite strands do not multiply support",
+        "case": "both exact header names present; source uppercase pooling",
+        "classes": [
+          "annotated",
+          "partial_novel",
+          "complete_novel"
+        ],
+        "filters": "0x704 excluded, supplementary included, MAPQ29/30/255 and N49/50/51",
+        "independent_sites": "120 and270 from separate transcript pairs; no120-270 annotation pair",
+        "projection": "S/I/H/P and =/X ignored; M/D/N advance; mixed CIGAR separates canonical geometry",
+        "scope": "synthetic semantic qualification, not biological or performance evidence",
+        "support": "duplicate records, multiple N events and both mates count independently"
+      },
+      "sam_sha256": "c988ede3662e4fa6564fce749da945b7ac42c741b1308961dc92601b1e167ee9"
+    },
+    "informative-single": {
+      "bed_sha256": "0c844c495c122d3e0673070627a375f7b81f7793b20ce1f0080d0ae3f3162b69",
+      "intent": {
+        "annotation": "duplicate sites and names, opposite strands do not multiply support",
+        "case": "both exact header names present; source uppercase pooling",
+        "classes": [
+          "annotated",
+          "partial_novel",
+          "complete_novel"
+        ],
+        "filters": "0x704 excluded, supplementary included, MAPQ29/30/255 and N49/50/51",
+        "independent_sites": "120 and270 from separate transcript pairs; no120-270 annotation pair",
+        "projection": "S/I/H/P and =/X ignored; M/D/N advance; mixed CIGAR separates canonical geometry",
+        "scope": "synthetic semantic qualification, not biological or performance evidence",
+        "support": "duplicate records, multiple N events and both mates count independently"
+      },
+      "sam_sha256": "2bd1d5086cc0125078e3bd0b6cd6a6bb5f6b0a50528a3555c4a7fd5980c310d5"
+    },
+    "no-N": {
+      "bed_sha256": "0c844c495c122d3e0673070627a375f7b81f7793b20ce1f0080d0ae3f3162b69",
+      "intent": {
+        "native": "complete atomic zero tables, exit0 intentional difference",
+        "source": "exit0, empty primary and R files, no derivative files"
+      },
+      "sam_sha256": "cb0d2644ab6ec9c2fb379f26800ff8af29a8bd3b9a36d6c854ade839c5be04d0"
+    }
+  },
+  "image": {
+    "config_digest": "sha256:f3d916a4884034b89cb6148781f07d8c92d94b6c6dc1b74dcbec3475d16400da",
+    "gcc_version": "14.3.0",
+    "manifest_digest": "sha256:a689e29bc3adf4663ef9a141d23081252764d1319c63f591a027bd6fd676f4c1",
+    "platform": "linux/amd64",
+    "reference": "gcc:14.3.0-bookworm@sha256:a689e29bc3adf4663ef9a141d23081252764d1319c63f591a027bd6fd676f4c1"
+  },
+  "invocations": [
+    {
+      "case": "informative-single",
+      "expected_exit": 0,
+      "name": "informative-single",
+      "options": [
+        "-q",
+        "30",
+        "-m",
+        "50",
+        "--skip-plot",
+        "--skip-bed",
+        "--skip-interact"
+      ]
+    },
+    {
+      "case": "informative-paired",
+      "expected_exit": 0,
+      "name": "informative-paired",
+      "options": [
+        "-q",
+        "30",
+        "-m",
+        "50",
+        "--skip-plot",
+        "--skip-bed",
+        "--skip-interact"
+      ]
+    },
+    {
+      "case": "case-alias-only",
+      "expected_exit": 0,
+      "name": "case-alias-only",
+      "options": [
+        "-q",
+        "30",
+        "-m",
+        "50",
+        "--skip-plot",
+        "--skip-bed",
+        "--skip-interact"
+      ]
+    },
+    {
+      "case": "no-N",
+      "expected_exit": 0,
+      "name": "no-N",
+      "options": [
+        "-q",
+        "30",
+        "-m",
+        "50",
+        "--skip-plot",
+        "--skip-bed",
+        "--skip-interact"
+      ]
+    },
+    {
+      "case": "all-short",
+      "expected_exit": 1,
+      "name": "all-short",
+      "options": [
+        "-q",
+        "30",
+        "-m",
+        "50",
+        "--skip-plot",
+        "--skip-bed",
+        "--skip-interact"
+      ]
+    },
+    {
+      "case": "informative-single",
+      "expected_exit": 0,
+      "name": "informative-single-exports",
+      "options": [
+        "-q",
+        "30",
+        "-m",
+        "50",
+        "--skip-plot"
+      ]
+    }
+  ],
+  "limits": {
+    "cpus": 4,
+    "headroom_bytes": 8589934592,
+    "memory_bytes": 8589934592,
+    "per_call_seconds": 300,
+    "retained_bytes": 2147483648,
+    "tar_bytes": 3221225472
+  },
+  "packages": {
+    "RSeQC": {
+      "bytes": 204772,
+      "filename": "rseqc-5.0.5-py3-none-any.whl",
+      "metadata_member": "rseqc-5.0.5.dist-info/METADATA",
+      "metadata_sha256": "7237285e89d07b92ded09314f8e50d840443bef9f5fcbc045936a2aed3ec92bb",
+      "metadata_url": "https://pypi.org/pypi/RSeQC/5.0.5/json",
+      "pypi_json_sha256": "5f4268d2eda4a1b2539cf7e8da9551165460eeced52a02b61b49822fcbf90e5b",
+      "requires_dist": [
+        "pysam",
+        "bx-python",
+        "numpy",
+        "pyBigWig",
+        "logomaker"
+      ],
+      "requires_python": ">=3.9",
+      "sha256": "a1fca6d455886b19bc2d58aa1e13b233977a2c835f676ef93bd0c6f4099b8452",
+      "url": "https://files.pythonhosted.org/packages/3e/ab/006316611cf2b28e62b79057ed6bad311443616513e4bb5a0d308e029a53/rseqc-5.0.5-py3-none-any.whl",
+      "version": "5.0.5"
+    },
+    "bx-python": {
+      "bytes": 6408674,
+      "filename": "bx_python-0.15.1-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl",
+      "metadata_member": "bx_python-0.15.1.dist-info/METADATA",
+      "metadata_sha256": "ad0fbef006bcc45502c1e96ef8a4f46cc46ea33a7c94a0a0413cf5472a6c6cf0",
+      "metadata_url": "https://pypi.org/pypi/bx-python/0.15.1/json",
+      "pypi_json_sha256": "b2e56fb180144278769ce241c79648527a0478ce74ca1b1c396382b3d27b9d6f",
+      "requires_dist": [
+        "numpy",
+        "pyparsing"
+      ],
+      "requires_python": ">=3.10",
+      "sha256": "efaadf9ab3750498ec43831ee9c0a8251093fea2a315025546bd9bcea70b18ad",
+      "url": "https://files.pythonhosted.org/packages/d9/32/5575bba07d26741fe7df61479bbe6c1ad9d694f13df2669ae5de223b8c1e/bx_python-0.15.1-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl",
+      "version": "0.15.1"
+    },
+    "contourpy": {
+      "bytes": 383243,
+      "filename": "contourpy-1.4.0-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl",
+      "metadata_member": "contourpy-1.4.0.dist-info/METADATA",
+      "metadata_sha256": "40450acd747b288a5db999c435e1e921ffee0a38c7884a80cd46934c8004568f",
+      "metadata_url": "https://pypi.org/pypi/contourpy/1.4.0/json",
+      "pypi_json_sha256": "38b45f9f0cc556a4b2621ae474419bff5ffeb0d01e3582579206af5ff8a5bd3b",
+      "requires_dist": [
+        "numpy>=2.0",
+        "myst-parser; extra == \"docs\"",
+        "sphinx; extra == \"docs\"",
+        "sphinx-book-theme; extra == \"docs\"",
+        "sphinx-copybutton; extra == \"docs\"",
+        "bokeh; extra == \"bokeh\"",
+        "selenium; extra == \"bokeh\"",
+        "contourpy[bokeh,docs]; extra == \"mypy\"",
+        "bokeh; extra == \"mypy\"",
+        "docutils-stubs; extra == \"mypy\"",
+        "mypy==2.1.0; extra == \"mypy\"",
+        "types-Pillow; extra == \"mypy\"",
+        "contourpy[test-no-images]; extra == \"test\"",
+        "matplotlib; extra == \"test\"",
+        "pre-commit; extra == \"test\"",
+        "Pillow; extra == \"test\"",
+        "pytest; extra == \"test-no-images\"",
+        "pytest-cov; extra == \"test-no-images\"",
+        "pytest-rerunfailures<16; extra == \"test-no-images\"",
+        "pytest-xdist; extra == \"test-no-images\"",
+        "wurlitzer; extra == \"test-no-images\""
+      ],
+      "requires_python": ">=3.12",
+      "sha256": "875f42444c9cf48d56f724f2637e60d0f73b3b12c9041e1484580a233edf9591",
+      "url": "https://files.pythonhosted.org/packages/78/f9/b6831508960d559581c448532ba4df312217072975486dbf2b24fcc5b76f/contourpy-1.4.0-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl",
+      "version": "1.4.0"
+    },
+    "cycler": {
+      "bytes": 8321,
+      "filename": "cycler-0.12.1-py3-none-any.whl",
+      "metadata_member": "cycler-0.12.1.dist-info/METADATA",
+      "metadata_sha256": "23289e19b76f1e01394227696e6af2b6cd1ce79e89731209bf9195148b18ed36",
+      "metadata_url": "https://pypi.org/pypi/cycler/0.12.1/json",
+      "pypi_json_sha256": "c4dc853a4b3611f48cfef3e363faeb85c70af63e3d49fe2c64dbe56ab5d688f0",
+      "requires_dist": [
+        "ipython ; extra == 'docs'",
+        "matplotlib ; extra == 'docs'",
+        "numpydoc ; extra == 'docs'",
+        "sphinx ; extra == 'docs'",
+        "pytest ; extra == 'tests'",
+        "pytest-cov ; extra == 'tests'",
+        "pytest-xdist ; extra == 'tests'"
+      ],
+      "requires_python": ">=3.8",
+      "sha256": "85cef7cff222d8644161529808465972e51340599459b8ac3ccbac5a854e0d30",
+      "url": "https://files.pythonhosted.org/packages/e7/05/c19819d5e3d95294a6f5947fb9b9629efb316b96de511b418c53d245aae6/cycler-0.12.1-py3-none-any.whl",
+      "version": "0.12.1"
+    },
+    "fonttools": {
+      "bytes": 5408233,
+      "filename": "fonttools-4.67.0-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl",
+      "metadata_member": "fonttools-4.67.0.dist-info/METADATA",
+      "metadata_sha256": "33dec14bec601b457a07a6550086cb6725b5aaedc3a881f9fa7a84d3841ddcfe",
+      "metadata_url": "https://pypi.org/pypi/fonttools/4.67.0/json",
+      "pypi_json_sha256": "c9c5d23925405a429fba972fffbd7c88cb82a4de1905b1b491d725092d9e0db2",
+      "requires_dist": [
+        "lxml>=4.0; extra == \"lxml\"",
+        "brotli>=1.0.1; platform_python_implementation == \"CPython\" and extra == \"woff\"",
+        "brotlicffi>=0.8.0; platform_python_implementation != \"CPython\" and extra == \"woff\"",
+        "zopfli>=0.1.4; extra == \"woff\"",
+        "unicodedata2>=18.0.0; python_version <= \"3.15\" and extra == \"unicode\"",
+        "lz4>=1.7.4.2; extra == \"graphite\"",
+        "scipy; platform_python_implementation != \"PyPy\" and extra == \"interpolatable\"",
+        "munkres; platform_python_implementation == \"PyPy\" and extra == \"interpolatable\"",
+        "pycairo; extra == \"interpolatable\"",
+        "matplotlib; extra == \"plot\"",
+        "sympy; extra == \"symfont\"",
+        "xattr; sys_platform == \"darwin\" and extra == \"type1\"",
+        "skia-pathops>=0.5.0; extra == \"pathops\"",
+        "uharfbuzz>=0.45.0; extra == \"repacker\"",
+        "lxml>=4.0; extra == \"all\"",
+        "brotli>=1.0.1; platform_python_implementation == \"CPython\" and extra == \"all\"",
+        "brotlicffi>=0.8.0; platform_python_implementation != \"CPython\" and extra == \"all\"",
+        "zopfli>=0.1.4; extra == \"all\"",
+        "unicodedata2>=18.0.0; python_version <= \"3.15\" and extra == \"all\"",
+        "lz4>=1.7.4.2; extra == \"all\"",
+        "scipy; platform_python_implementation != \"PyPy\" and extra == \"all\"",
+        "munkres; platform_python_implementation == \"PyPy\" and extra == \"all\"",
+        "pycairo; extra == \"all\"",
+        "matplotlib; extra == \"all\"",
+        "sympy; extra == \"all\"",
+        "xattr; sys_platform == \"darwin\" and extra == \"all\"",
+        "skia-pathops>=0.5.0; extra == \"all\"",
+        "uharfbuzz>=0.45.0; extra == \"all\""
+      ],
+      "requires_python": ">=3.11",
+      "sha256": "eb3c98cac93aac4b9f6e3ce2008325340b234cc9b0338ca6b513f31962a1e278",
+      "url": "https://files.pythonhosted.org/packages/c1/e0/ec9e4cc868c514deb02233aa1047a6aeb9350d3ee012862f58eec10ef834/fonttools-4.67.0-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl",
+      "version": "4.67.0"
+    },
+    "kiwisolver": {
+      "bytes": 1477929,
+      "filename": "kiwisolver-1.5.1-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl",
+      "metadata_member": "kiwisolver-1.5.1.dist-info/METADATA",
+      "metadata_sha256": "f07b7b6c0c9c2a624c8a31f931e16712f2cf3490e7dfd51643d68e9d42d4b2c9",
+      "metadata_url": "https://pypi.org/pypi/kiwisolver/1.5.1/json",
+      "pypi_json_sha256": "9b4053c476b6cd0da61e905cc5cdf4a7309dc0ce17809475e615c5444ade86fe",
+      "requires_dist": [],
+      "requires_python": ">=3.10",
+      "sha256": "34633ecf50d16187ab8e5528b7a2530f2feb4e23f300db4672538b51cfc5cd38",
+      "url": "https://files.pythonhosted.org/packages/fc/f4/dadfec469313c7f428efa7e84b4aba9732f813c13ea7131a24b7b008ef57/kiwisolver-1.5.1-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl",
+      "version": "1.5.1"
+    },
+    "logomaker": {
+      "bytes": 13186440,
+      "filename": "logomaker-0.8.7-py3-none-any.whl",
+      "metadata_member": "logomaker-0.8.7.dist-info/METADATA",
+      "metadata_sha256": "32ed93e1c788c754f786c124e40dbf0ce8415008e98077de343ba803659b9e0b",
+      "metadata_url": "https://pypi.org/pypi/logomaker/0.8.7/json",
+      "pypi_json_sha256": "b1ceacd2294e2ef0c68396b7855ba7bfd73f2024f65c5efb97e76179a6c6744d",
+      "requires_dist": [
+        "matplotlib",
+        "numpy",
+        "pandas"
+      ],
+      "requires_python": ">=3.8",
+      "sha256": "8a65a5e5136a08823d199fbb5a9443674062a1c223236301accde19b0e401762",
+      "url": "https://files.pythonhosted.org/packages/d5/1f/9be29e34615a4325a0ff6da18c55994cb546dcff4423c91f80f101a9858c/logomaker-0.8.7-py3-none-any.whl",
+      "version": "0.8.7"
+    },
+    "matplotlib": {
+      "bytes": 9860353,
+      "filename": "matplotlib-3.11.2-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl",
+      "metadata_member": "matplotlib-3.11.2.dist-info/METADATA",
+      "metadata_sha256": "e5f532226d1025af2dd15ff951df27391f66d46403b8244ea61e6b8eb3e4d806",
+      "metadata_url": "https://pypi.org/pypi/matplotlib/3.11.2/json",
+      "pypi_json_sha256": "5f75d7e3ecb136a2b41d647188dd25f670558870661e0f870aedc76643d20606",
+      "requires_dist": [
+        "contourpy>=1.0.1",
+        "cycler>=0.10",
+        "fonttools>=4.28.2",
+        "kiwisolver>=1.3.1",
+        "numpy>=1.25",
+        "packaging>=20.0",
+        "pillow>=9",
+        "pyparsing>=3",
+        "python-dateutil>=2.7"
+      ],
+      "requires_python": ">=3.11",
+      "sha256": "df4f7784aca81a94f254c0a2767d592ee25f407e488f5fa7203e51093fb6ca27",
+      "url": "https://files.pythonhosted.org/packages/b8/90/2b3fd67ee273163faeda6d514be70b5596eaa0fd77b60ffc294ad0b34f5f/matplotlib-3.11.2-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl",
+      "version": "3.11.2"
+    },
+    "numpy": {
+      "bytes": 16527618,
+      "filename": "numpy-2.2.6-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+      "metadata_member": "numpy-2.2.6.dist-info/METADATA",
+      "metadata_sha256": "22d648f53848429464ca643b40d73b49a920d47876fc77c395d4dca4e834904a",
+      "metadata_url": "https://pypi.org/pypi/numpy/2.2.6/json",
+      "pypi_json_sha256": "dbed1d6e66316f9a403aa115085c85678f22b8dc6e60faf65b43e2aa166b17fe",
+      "requires_dist": [],
+      "requires_python": ">=3.10",
+      "sha256": "fd83c01228a688733f1ded5201c678f0c53ecc1006ffbc404db9f7a899ac6249",
+      "url": "https://files.pythonhosted.org/packages/8c/3d/1e1db36cfd41f895d266b103df00ca5b3cbe965184df824dec5c08c6b803/numpy-2.2.6-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+      "version": "2.2.6"
+    },
+    "packaging": {
+      "bytes": 129956,
+      "filename": "packaging-26.3-py3-none-any.whl",
+      "metadata_member": "packaging-26.3.dist-info/METADATA",
+      "metadata_sha256": "70fdb89fc4d4a9a043bf7372b8972bcc883fddff34ab55e9cf80d73875384763",
+      "metadata_url": "https://pypi.org/pypi/packaging/26.3/json",
+      "pypi_json_sha256": "4f190d2f0b312b3086058cee64ab4333bf3ce67fb78b4c2bdb43899049b29f4d",
+      "requires_dist": [],
+      "requires_python": ">=3.9",
+      "sha256": "d7193f7c8e4e93f444fde0262bf90af30e16fa0ad0ad44cb553c87339b23cd1c",
+      "url": "https://files.pythonhosted.org/packages/63/34/ba1c580383c9eada3711951fef0795c80b829a078d72188184bcab9dd527/packaging-26.3-py3-none-any.whl",
+      "version": "26.3"
+    },
+    "pandas": {
+      "bytes": 12019688,
+      "filename": "pandas-3.1.0-cp312-cp312-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl",
+      "metadata_member": "pandas-3.1.0.dist-info/METADATA",
+      "metadata_sha256": "b2b43910a5ef734a08be961df9c484f4664ad9ec2fa5a08294d0edfa08bcdd4b",
+      "metadata_url": "https://pypi.org/pypi/pandas/3.1.0/json",
+      "pypi_json_sha256": "22fdd3bd46dfe287d02a70c640837ce39d81f95c453fb613f374c698b5d48129",
+      "requires_dist": [
+        "numpy>=2.0.2; python_version < \"3.14\"",
+        "numpy>=2.3.3; python_version >= \"3.14\"",
+        "python-dateutil>=2.9.0",
+        "tzdata; sys_platform == \"win32\"",
+        "tzdata; sys_platform == \"emscripten\"",
+        "pytest>=8.3.4; extra == \"test\"",
+        "pytest-xdist>=3.6.1; extra == \"test\"",
+        "pyarrow>=16.0.0; extra == \"pyarrow\"",
+        "bottleneck>=1.5.0; extra == \"performance\"",
+        "numba>=0.61.2; extra == \"performance\"",
+        "numexpr!=2.14.1,>=2.11.0; extra == \"performance\"",
+        "scipy>=1.16.1; extra == \"computation\"",
+        "xarray>=2025.7.1; extra == \"computation\"",
+        "fsspec>=2025.7.0; extra == \"fss\"",
+        "s3fs>=2025.7.0; extra == \"aws\"",
+        "gcsfs>=2025.7.0; extra == \"gcp\"",
+        "odfpy>=1.4.1; extra == \"excel\"",
+        "openpyxl>=3.1.5; extra == \"excel\"",
+        "python-calamine>=0.4.0; extra == \"excel\"",
+        "pyxlsb>=1.0.10; extra == \"excel\"",
+        "xlrd>=2.0.2; extra == \"excel\"",
+        "xlsxwriter>=3.2.5; extra == \"excel\"",
+        "pyarrow>=13.0.0; extra == \"parquet\"",
+        "pyarrow>=13.0.0; extra == \"feather\"",
+        "pyiceberg>=0.9.1; extra == \"iceberg\"",
+        "tables>=3.10.2; extra == \"hdf5\"",
+        "pyreadstat>=1.3.0; extra == \"spss\"",
+        "SQLAlchemy>=2.0.42; extra == \"postgresql\"",
+        "psycopg2>=2.9.10; extra == \"postgresql\"",
+        "adbc-driver-postgresql>=1.7.0; extra == \"postgresql\"",
+        "SQLAlchemy>=2.0.42; extra == \"mysql\"",
+        "pymysql>=1.1.1; extra == \"mysql\"",
+        "SQLAlchemy>=2.0.42; extra == \"sql-other\"",
+        "adbc-driver-postgresql>=1.7.0; extra == \"sql-other\"",
+        "adbc-driver-sqlite>=1.7.0; extra == \"sql-other\"",
+        "beautifulsoup4>=4.13.4; extra == \"html\"",
+        "html5lib>=1.1; extra == \"html\"",
+        "lxml>=6.0.0; extra == \"html\"",
+        "lxml>=6.0.0; extra == \"xml\"",
+        "matplotlib>=3.10.5; extra == \"plot\"",
+        "jinja2>=3.1.6; extra == \"output-formatting\"",
+        "tabulate>=0.9.0; extra == \"output-formatting\"",
+        "PyQt5>=5.15.11; extra == \"clipboard\"",
+        "qtpy>=2.4.3; extra == \"clipboard\"",
+        "zstandard>=0.23.0; extra == \"compression\"",
+        "pytz>=2020.1; extra == \"timezone\"",
+        "adbc-driver-postgresql>=1.7.0; extra == \"all\"",
+        "adbc-driver-sqlite>=1.7.0; extra == \"all\"",
+        "beautifulsoup4>=4.13.4; extra == \"all\"",
+        "bottleneck>=1.5.0; extra == \"all\"",
+        "fastparquet>=2024.11.0; extra == \"all\"",
+        "fsspec>=2025.7.0; extra == \"all\"",
+        "gcsfs>=2025.7.0; extra == \"all\"",
+        "html5lib>=1.1; extra == \"all\"",
+        "jinja2>=3.1.6; extra == \"all\"",
+        "lxml>=6.0.0; extra == \"all\"",
+        "matplotlib>=3.10.5; extra == \"all\"",
+        "numba>=0.61.2; extra == \"all\"",
+        "numexpr!=2.14.1,>=2.11.0; extra == \"all\"",
+        "odfpy>=1.4.1; extra == \"all\"",
+        "openpyxl>=3.1.5; extra == \"all\"",
+        "psycopg2>=2.9.10; extra == \"all\"",
+        "pyarrow>=16.0.0; extra == \"all\"",
+        "pyiceberg>=0.9.1; extra == \"all\"",
+        "pymysql>=1.1.1; extra == \"all\"",
+        "PyQt5>=5.15.11; extra == \"all\"",
+        "pyreadstat>=1.3.0; extra == \"all\"",
+        "pytest>=8.3.4; extra == \"all\"",
+        "pytest-xdist>=3.6.1; extra == \"all\"",
+        "python-calamine>=0.4.0; extra == \"all\"",
+        "pytz>=2020.1; extra == \"all\"",
+        "pyxlsb>=1.0.10; extra == \"all\"",
+        "qtpy>=2.4.3; extra == \"all\"",
+        "scipy>=1.16.1; extra == \"all\"",
+        "s3fs>=2025.7.0; extra == \"all\"",
+        "SQLAlchemy>=2.0.42; extra == \"all\"",
+        "tables>=3.10.2; extra == \"all\"",
+        "tabulate>=0.9.0; extra == \"all\"",
+        "xarray>=2025.7.1; extra == \"all\"",
+        "xlrd>=2.0.2; extra == \"all\"",
+        "xlsxwriter>=3.2.5; extra == \"all\"",
+        "zstandard>=0.23.0; extra == \"all\""
+      ],
+      "requires_python": ">=3.11",
+      "sha256": "9433b5dc2f26ef9d9b56daaf4d41d078bf4372c5d88c42ed5b397a6eea80de16",
+      "url": "https://files.pythonhosted.org/packages/c5/a6/dc89cdd95e12093bc813e9b814a09f1a056be3e1304edaef9bf9dbee108a/pandas-3.1.0-cp312-cp312-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl",
+      "version": "3.1.0"
+    },
+    "pillow": {
+      "bytes": 7144542,
+      "filename": "pillow-13.0.0-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl",
+      "metadata_member": "pillow-13.0.0.dist-info/METADATA",
+      "metadata_sha256": "dba7fdfe24e302f46bae562f55d66cc367c0618abae9894a1ebec93dc8f0e511",
+      "metadata_url": "https://pypi.org/pypi/pillow/13.0.0/json",
+      "pypi_json_sha256": "183d4151cbc909acf39d4d5d48469d6bc66d5516e7f506854241839d0611b69e",
+      "requires_dist": [
+        "furo; extra == \"docs\"",
+        "olefile; extra == \"docs\"",
+        "sphinx>=8.2; extra == \"docs\"",
+        "sphinx-autobuild; extra == \"docs\"",
+        "sphinx-copybutton; extra == \"docs\"",
+        "sphinx-inline-tabs; extra == \"docs\"",
+        "sphinxext-opengraph; extra == \"docs\"",
+        "olefile; extra == \"fpx\"",
+        "olefile; extra == \"mic\"",
+        "arro3-compute; extra == \"test-arrow\"",
+        "arro3-core; extra == \"test-arrow\"",
+        "nanoarrow; extra == \"test-arrow\"",
+        "pyarrow; extra == \"test-arrow\"",
+        "coverage>=7.4.2; extra == \"tests\"",
+        "defusedxml; extra == \"tests\"",
+        "markdown2; extra == \"tests\"",
+        "olefile; extra == \"tests\"",
+        "packaging; extra == \"tests\"",
+        "psutil; (sys_platform == \"linux\" or sys_platform == \"darwin\") and extra == \"tests\"",
+        "pytest; extra == \"tests\"",
+        "pytest-cov; extra == \"tests\"",
+        "pytest-timeout; extra == \"tests\"",
+        "pytest-xdist; extra == \"tests\"",
+        "setuptools; extra == \"tests\"",
+        "trove-classifiers>=2024.10.12; extra == \"tests\"",
+        "defusedxml; extra == \"xmp\""
+      ],
+      "requires_python": ">=3.11",
+      "sha256": "42d63be3af4f9b951b199b0a9d23365d37ab14687e6d77b74940432c8515c4ca",
+      "url": "https://files.pythonhosted.org/packages/e6/99/fdf65cc539e266ab93546c261bdf98411fe165c6e4e13f9dbf597097192b/pillow-13.0.0-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl",
+      "version": "13.0.0"
+    },
+    "pyBigWig": {
+      "bytes": 189085,
+      "filename": "pybigwig-0.3.26-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl",
+      "metadata_member": "pybigwig-0.3.26.dist-info/METADATA",
+      "metadata_sha256": "da4d016697c392a4a50eceae8b387d7bc09264fa996d0fc1d896f461546fda14",
+      "metadata_url": "https://pypi.org/pypi/pyBigWig/0.3.26/json",
+      "pypi_json_sha256": "0e4c16a2a4b842952ae703251588104e340f028d1b42bde317afe5f6b59496fb",
+      "requires_dist": [],
+      "requires_python": ">=3.9",
+      "sha256": "3403636c431a5bbab05f5c3ce24acb5ae0fab5e5602c259725ef0f54ddc98817",
+      "url": "https://files.pythonhosted.org/packages/c3/57/43cfb46cd842f67f8654484eff284d9a922848cc60af42dddcd8d30e4117/pybigwig-0.3.26-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl",
+      "version": "0.3.26"
+    },
+    "pyparsing": {
+      "bytes": 126420,
+      "filename": "pyparsing-3.3.3-py3-none-any.whl",
+      "metadata_member": "pyparsing-3.3.3.dist-info/METADATA",
+      "metadata_sha256": "f2ca34052d720622d300023472ef8ae94fe5b57d69acbb28a8667f6dd0e13497",
+      "metadata_url": "https://pypi.org/pypi/pyparsing/3.3.3/json",
+      "pypi_json_sha256": "b851d5414eca50b38263f56c00a1fbec80383a26a3ad8e41a204b72cdeee5751",
+      "requires_dist": [
+        "railroad-diagrams ; extra == \"diagrams\"",
+        "jinja2 ; extra == \"diagrams\""
+      ],
+      "requires_python": ">=3.9",
+      "sha256": "ece8c00a69cf01b45d0b1dedabb469c90d8caf996d4fda40f147627a122849a4",
+      "url": "https://files.pythonhosted.org/packages/38/bb/d215ee7c73b61497b28a5503f9f53523f294fcc936762b7caf90e0c1c2b5/pyparsing-3.3.3-py3-none-any.whl",
+      "version": "3.3.3"
+    },
+    "pysam": {
+      "bytes": 23226776,
+      "filename": "pysam-0.24.0-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl",
+      "metadata_member": "pysam-0.24.0.dist-info/METADATA",
+      "metadata_sha256": "d5f518e20755ce18c08733d06b07676da626acef049ba4e909a13c55e6f16247",
+      "metadata_url": "https://pypi.org/pypi/pysam/0.24.0/json",
+      "pypi_json_sha256": "56736817cbea04b484ea61e2485d7716901c303ab88b126747e1884d661229f1",
+      "requires_dist": [],
+      "requires_python": ">=3.8",
+      "sha256": "4a642f18649e59817de272173e9c27c031dceaca199809e4f8b338ebfc5d6698",
+      "url": "https://files.pythonhosted.org/packages/55/0f/e7f1ff3a1cabc6c4486a7ee1b0506aedf2f5f8329760ac1f4e8032feef2b/pysam-0.24.0-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl",
+      "version": "0.24.0"
+    },
+    "python-dateutil": {
+      "bytes": 94659,
+      "filename": "python_dateutil-3.0.0-py2.py3-none-any.whl",
+      "metadata_member": "python_dateutil-3.0.0.dist-info/METADATA",
+      "metadata_sha256": "e10ead93598aed51bdb28aa30ef64ee5d6ccc871e88741d220e504e979af4695",
+      "metadata_url": "https://pypi.org/pypi/python-dateutil/3.0.0/json",
+      "pypi_json_sha256": "6e33ca795417ca662f2820675158d64500733c354a7f7b81184a5471886240a7",
+      "requires_dist": [
+        "six>=1.6",
+        "tzdata"
+      ],
+      "requires_python": "!=3.0.*,!=3.1.*,!=3.2.*,>=2.7",
+      "sha256": "3c79630202e4152c6add678446984236efe4f57e84d8e892aab0637bab82e9fd",
+      "url": "https://files.pythonhosted.org/packages/5a/17/cebee01d1c0c1441174cf0456ddc91b280d79acb65340c05e41d77866ee8/python_dateutil-3.0.0-py2.py3-none-any.whl",
+      "version": "3.0.0"
+    },
+    "six": {
+      "bytes": 11050,
+      "filename": "six-1.17.0-py2.py3-none-any.whl",
+      "metadata_member": "six-1.17.0.dist-info/METADATA",
+      "metadata_sha256": "562042078c2752549f6d8a7c86dbc5dd708088a7be6d80672ec7b07100b72468",
+      "metadata_url": "https://pypi.org/pypi/six/1.17.0/json",
+      "pypi_json_sha256": "d8de39dd52b73048d81a8fd78022ee2bc72f8b568bcf0d88e5d5069c302b1208",
+      "requires_dist": [],
+      "requires_python": ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*",
+      "sha256": "4721f391ed90541fddacab5acf947aa0d3dc7d27b2e1e8eda2be8970586c3274",
+      "url": "https://files.pythonhosted.org/packages/b7/ce/149a00dd41f10bc29e5921b496af8b574d8413afcd5e30dfa0ed46c2cc5e/six-1.17.0-py2.py3-none-any.whl",
+      "version": "1.17.0"
+    },
+    "tzdata": {
+      "bytes": 347996,
+      "filename": "tzdata-2026.5-py2.py3-none-any.whl",
+      "metadata_member": "tzdata-2026.5.dist-info/METADATA",
+      "metadata_sha256": "e0780e8b6dc8882ce87e871a9d4589d59cb05a0c2d64f58b1ba62cde1ee91f6a",
+      "metadata_url": "https://pypi.org/pypi/tzdata/2026.5/json",
+      "pypi_json_sha256": "4012473993653f5591d5b324e7cc104fd9e53c1263e0f0a2de7dc51063fe2ea9",
+      "requires_dist": [],
+      "requires_python": ">=2",
+      "sha256": "b683bd1b6659ddcd810ff02ad09ba821d4bf1065072805063eb35c49617905ac",
+      "url": "https://files.pythonhosted.org/packages/94/21/1e5995a1c920cce14e4bffae20c665ec10e7ed03ab25e006cd741092b718/tzdata-2026.5-py2.py3-none-any.whl",
+      "version": "2026.5"
+    }
+  },
+  "privacy": {
+    "limitations": "Requires surviving host, space and encryption; no zero-loss guarantee or plaintext fallback",
+    "plaintext_upload": false,
+    "public": "ciphertext plus allowlisted private_artifact transport receipt only",
+    "recipient_sha256": "8bb86dc97982fc7b64d7e33f7c3741e7f3d27a21690f48ddce9dada4a230680d",
+    "retained": "complete originals/runtime/inputs/outputs/status/errors/controller inside streamed encrypted TAR"
+  },
+  "python": {
+    "authority": "External interpreter distribution identity reused from existing verified official python-build-standalone authority, not a dependency on another Layer B product",
+    "checksum_url": "https://github.com/astral-sh/python-build-standalone/releases/download/20250409/cpython-3.12.10%2B20250409-x86_64-unknown-linux-gnu-install_only.tar.gz.sha256",
+    "filename": "cpython-3.12.10+20250409-x86_64-unknown-linux-gnu-install_only.tar.gz",
+    "release": "20250409",
+    "sha256": "e9cf6f7da499a4400ba30ae1da8f7ef25ce97827bd8c1084717aa05438035186",
+    "size": 66393557,
+    "url": "https://github.com/astral-sh/python-build-standalone/releases/download/20250409/cpython-3.12.10%2B20250409-x86_64-unknown-linux-gnu-install_only.tar.gz",
+    "version": "3.12.10"
+  },
+  "qualification": {
+    "all_short": "actual exit1, header-only primary and event-only R; not generic accepted failure",
+    "classes": "independent pooled donor/acceptor sites, no pair or strand membership",
+    "identity": "uppercase chromosome, first sorted BAM encounter, source CHR replacement display",
+    "no_N": "actual exit0 and empty primary/R files; not complete success",
+    "projection": "M/D/N advance, S/I/H/P/=/X ignored",
+    "scope": "source witness only; six calls, no R execution, no native or performance claim",
+    "source_class": "ParseBAM.annotate_junction",
+    "support": "one count per accepted N event, including every mate and supplementary record"
+  },
+  "schema": "rsomics.rnaseq-qc.junction-source-policy.v1",
+  "source": {
+    "anchors": {
+      "qcmodule/SAM.py": "43727df48288f808159b1bf60c75db010a8e115359dd5280ddf3e0211944d5f5",
+      "qcmodule/bam_cigar.py": "805777b0853595733630db164663036f15f0e62e2af201f244385c652eafa2b9",
+      "rseqc-5.0.5.data/scripts/junction_annotation.py": "527d4ef87cab543a5e92f5438f16152bc79f8a5f35f25a15b6ccefd0aa09e03b"
+    },
+    "archive_sha256": "8c9d34c208bf7852f147dd365312a43a546148d1bf76581c5c0ede73fdb254b8",
+    "archive_url": "https://codeload.github.com/liguowang/RSeQC/tar.gz/0d2e017723c5c4b41eb3b938e1631692d187de1f",
+    "commit": "0d2e017723c5c4b41eb3b938e1631692d187de1f",
+    "wheel_sha256": "a1fca6d455886b19bc2d58aa1e13b233977a2c835f676ef93bd0c6f4099b8452"
+  },
+  "status": "PREP only; fresh official bodies verified, no source/scientific import, installation or execution; no actual new run/artifact receipt exists"
+}

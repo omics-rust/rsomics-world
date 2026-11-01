@@ -80,3 +80,30 @@ and execution are excluded beyond provenance-only capture. Hard host loss and
 sealing failure carry the existing no-zero-loss/no-plaintext-fallback limit.
 Unrelated worktree/helper redesign remains outside scope. None of these
 deferred phases is counted as an implemented or accepted result.
+
+## Task1 corrected source preparation accepted for actual execution
+
+Root reads the full corrected controller/test diff and appended author report.
+One integrated fix pass addresses all three findings: original bounded HTTP
+error bodies/status/headers/final URLs and explicit truncation remain fatal;
+pre-seal probe ciphertext/partials/producer and age diagnostics are inside the
+private inventory; API/registry auth uses unredirected headers. Successful
+registry token bytes remain memory-only. No upload allowlist, six source calls,
+fixture/input/math/status expectation or resource budget changes.
+
+The SAME connected test observes the real stdlib redirect leak RED before
+correction, then author GREEN1/.290s. Root freshly runs that complete check
+through the external guard:1pass/.342s. Root also freshly runs the existing
+delivery verifier: all18 original wheels/METADATA bodies, official Python
+archive static scan, five-file stdlib closure, four shell blocks and four-file
+whitespace/current-body checks pass. No local scientific import/execution.
+Corrected controller d436f247e6448010cd882c7c843aeccf4b8922a781b1c482c245bfa4dddaa1f6;
+test101b2b8fd2047c392b19cec99fc2cd8d582fc7ee9ef24ece7818cda92640aa15.
+Policy2cdf41e1 and workflow3cc77b1f remain exact. Original pre-fix bodies/logs
+remain in correction-1, not overwritten or relabelled green. Both minors
+remain deferred with the original provenance-only export scope.
+
+This accepts the real witness preparation for exact-head Control and hosted
+qualification, not source ABI/scientific/native/performance success. Actual
+six-call source execution and complete authenticated original adoption are
+still required before Task2; no source receipt/run/artifact is invented.

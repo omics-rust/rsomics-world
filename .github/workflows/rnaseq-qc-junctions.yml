@@ -1,0 +1,79 @@
+name: RNA-seq QC private junction source qualification
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  junction-source:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    container:
+      image: gcc:14.3.0-bookworm@sha256:a689e29bc3adf4663ef9a141d23081252764d1319c63f591a027bd6fd676f4c1
+      options: --cpus=4 --memory=8g --memory-swap=8g
+    env:
+      JUNCTION_IMAGE_DIGEST: sha256:a689e29bc3adf4663ef9a141d23081252764d1319c63f591a027bd6fd676f4c1
+      PYTHONDONTWRITEBYTECODE: '1'
+      PYTHONNOUSERSITE: '1'
+      PYTHONPATH: ''
+      PIP_CONFIG_FILE: /dev/null
+      OMP_NUM_THREADS: '1'
+      OPENBLAS_NUM_THREADS: '1'
+      MKL_NUM_THREADS: '1'
+      BLIS_NUM_THREADS: '1'
+      NUMEXPR_NUM_THREADS: '1'
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+
+      - name: Initialize fresh private runner storage
+        run: |
+          set -euo pipefail
+          umask 077
+          ulimit -c 0
+          python3 -B scripts/rnaseq_qc_junctions.py init
+
+      - name: Admit pinned public transport and finalization capacity
+        run: |
+          set -euo pipefail
+          umask 077
+          ulimit -c 0
+          python3 -B scripts/rnaseq_qc_junctions.py transport > "$JUNCTION_SESSION/private/transport.stdout" 2> "$JUNCTION_SESSION/private/transport.stderr"
+
+      - name: Admit fresh frozen Linux runtime and observe six original source calls
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          umask 077
+          ulimit -c 0
+          python3 -B scripts/rnaseq_qc_junctions.py execute > "$JUNCTION_SESSION/private/controller.stdout" 2> "$JUNCTION_SESSION/private/controller.stderr"
+
+      - name: Seal all available originals including failures
+        id: seal
+        if: always()
+        run: |
+          set -euo pipefail
+          umask 077
+          ulimit -c 0
+          test -n "${JUNCTION_SESSION:-}"
+          python3 -B scripts/rnaseq_qc_junctions.py finalize > "$JUNCTION_SESSION/finalization.stdout" 2> "$JUNCTION_SESSION/finalization.stderr"
+
+      - name: Upload ciphertext and allowlisted transport receipt only
+        if: always() && steps.seal.outcome == 'success'
+        uses: actions/upload-artifact@v4
+        with:
+          name: rnaseq-qc-junctions-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            ${{ env.JUNCTION_SESSION }}/cipher/evidence.tar.age
+            ${{ env.JUNCTION_SESSION }}/cipher/transport.json
+          if-no-files-found: error
+          retention-days: 90
