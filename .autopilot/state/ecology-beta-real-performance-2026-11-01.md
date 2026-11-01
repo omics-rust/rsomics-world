@@ -1,5 +1,61 @@
 # Ecology complete-original beta performance
 
+## Six complete metrics accepted; two remain outside acceptance
+
+Root adopts braycurtis, jaccard, canberra, cityblock, euclidean and
+unweighted_unifrac from actual41288208209/1, exact7d68a900. The additive
+ecology-beta-six-real-2026-11-01.json binds all six jobs, whole artifacts,
+originals and performance. This is NOT all-eight qualification or publication.
+Weighted UniFrac is still running; normalized weighted UniFrac remains the
+original pre-science capacity failure. Do not rerun the six accepted metrics.
+
+Root reads the full recovery/actual validator/provenance and independently
+recomputes all median resource counters, fixed decisions and losses. Fresh
+API run/attempt/jobs/artifacts bind each original ZIP to its exact job/head.
+One read-only complete custody pass exits0: all690 local files/106791332B,
+six complete remote ZIPs/TARs/CAS/file sets, each16772 sealed regular files.
+Source/runtime links and executable modes remain inert metadata, not restored.
+Packet ecology-beta-five-recovery-20261101.y3mImc now contains six metrics:
+REPORT62e747498e0a2dd6221e3b3fc15c977b60d2a53ee74b51946c49d392fc7ae993;
+SEALc860bc37ee08935dde3df9a59f0fbdf8f6786895906249fcd33e1a2bcc127a4b.
+Root proof ecology-beta-root-adoption-20261101.t5vENM, validation stdout
+a17da5bd3738182daf6944c3f8dab67738a826937b9fef53249d87583f8c2504.
+No source/native science is replayed and no numerical band or gate changes.
+
+Each metric covers all41328 features/1105 samples/314497 nonzeros/21227600
+reads, and UniFrac the full162331-tip/323372-node tree. All126 complete
+matrices preserve sample identities/shape and the fixed1e-10+1e-10 band.
+Twelve unique matrix bodies are parsed numerically; repeated full bodies are
+certified by exact independently verified hashes, not126 separate parses.
+All14 native worker/repetition outputs per metric are byte-identical.
+
+| Metric | Source1 wall s | Native1 wall s | Native4 wall s | N1/source RSS |
+|---|---:|---:|---:|---:|
+| braycurtis |19.173191|2.896360|1.677900|.053386|
+| jaccard |47.409903|3.146093|1.761412|.050917|
+| canberra |24.978085|2.954331|1.756355|.051855|
+| cityblock |15.925210|3.086565|1.736294|.052752|
+| euclidean |18.706689|3.292350|1.867325|.052766|
+| unweighted_unifrac |465.297168|15.298063|7.103013|.024131|
+
+All six pass both unchanged serial-primary routes with disjoint wall/RSS
+ranges. Native4 cannot rescue a failed primary. Native4 increases CPU/user
+time/minor faults for every metric; system-time and UniFrac RSS losses remain
+in the receipt. Nonphylogenetic metrics retain optimized named SciPy routes.
+The UniFrac reference is explicitly contiguous-public: public validated beta
+driver plus charged2858608480B C-layout copy, NOT unchanged-default memory.
+CPython3.12.10 differs from old3.12.15. All27 wheels and actual providers are
+bound, not every mapped system DSO or a complete OS. Dense TSV was fully
+parsed, but no independent HDF5 import/full15.6GB outer tree ZIP is claimed.
+Euclidean uses Intel8573C; other accepted jobs AMD7763. Do not sum hosts into
+a pipeline, infer cold-cache/heap/aggregate-process RSS, or normalize the
+known raw API/step timestamp discrepancy into invented chronology.
+
+The terminal-size PLINK placement plan now releases its never-materialized
+remote208GiB reserve: future remote envelopes are Ecology320+Index76=396GiB.
+Historical604GiB checks remain unchanged and more conservative. This does
+not move/delete any existing body or remove fresh physical-space admission.
+
 ## Exact failed-job request is not yet eligible
 
 With the other two UniFrac jobs still active, root refreshes remote/dev/sdd

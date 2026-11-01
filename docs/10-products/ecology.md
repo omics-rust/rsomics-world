@@ -14,9 +14,16 @@ nullable reports are not added. Actual41280935272 now qualifies all four
 native classes for owner111adf5/120 source files/86 fixtures: six integrations
 in debug and release, zero ignored, with complete originals and exact release
 binaries independently accepted in ecology-native-beta-2026-11-01.json.
-Full-study beta remains pending under the separately frozen
-2026-11-01-ecology-beta-real-performance plan: eight independent full metrics,
-explicit adapted public UniFrac layout, serial primary and measured1->4 scaling.
+Full-study beta now has six accepted independent full metrics from
+actual41288208209/1: Bray-Curtis, Jaccard, Canberra, city-block, Euclidean and
+unweighted UniFrac. All use the complete41328-feature/1105-sample input;
+all126 matrices and six complete original carriers were verified. Serial
+throughput and RSS gates pass for each, with measured1->4 wall scaling and
+explicit CPU/resource tradeoffs. UniFrac uses the declared adapted public
+contiguous-layout baseline, not unchanged-default source performance.
+See ecology-beta-six-real-2026-11-01.json. Weighted UniFrac is still running;
+normalized weighted UniFrac failed before science at capacity admission.
+Neither is accepted, so the eight-metric slice and release remain pending.
 Actual41268190701 remains historical for the earlier e1b03cb6 alpha/rarefaction
 owner; its original authority is not rebound to the beta candidate.
 See `.autopilot/state/ecology-initial-diversity-2026-10-28.md` and

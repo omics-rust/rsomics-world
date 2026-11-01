@@ -1,0 +1,863 @@
+{
+  "actual_native_binary": {
+    "bytes": 1970360,
+    "sha256": "d7dc1832fab7857aba17179b4eb632438094b7f64c7ac7bf562bd64778017bd3"
+  },
+  "complete_input": {
+    "counts_sha256": "60285874d6a93b82e5cd7d8d13459dcd7dee71c78f2db8770d868824be86c24f",
+    "features": 41328,
+    "nonzeros": 314497,
+    "rarefaction": false,
+    "reads": 21227600,
+    "samples": 1105,
+    "subsampling": false,
+    "tree_nodes": 323372,
+    "tree_sha256": "f06e853effe36628a650534cad71d01a6cfee169226e8a8c758a3bcec02c5bd7",
+    "tree_tips": 162331
+  },
+  "coverage": {
+    "abs_tolerance": 1e-10,
+    "calls_per_metric": 21,
+    "complete_outputs": 126,
+    "matrix_cells": 1221025,
+    "measured_per_metric": 15,
+    "native4_cannot_rescue": true,
+    "native_worker_repeat_bytes_exact": true,
+    "qualification_per_metric": 3,
+    "rel_tolerance": 1e-10,
+    "repeats_certified_by_fresh_full_body_hashes": true,
+    "sole_primary": "native1 versus source1",
+    "unique_matrices_numerically_parsed": 12,
+    "warmups_per_metric": 3
+  },
+  "custody": {
+    "authenticated_tar_bytes": 10139054080,
+    "each_casefold_collision_groups": 33,
+    "each_duplicate_bodies_full_byte_compared": 1727,
+    "each_original_members": 21693,
+    "each_original_types": {
+      "directory": 2153,
+      "file": 18488,
+      "symlink": 1052
+    },
+    "each_unique_cas_bodies": 16761,
+    "fresh_complete_remote_zip_tar_cas_file_set_hashes": true,
+    "live_api": {
+      "live-artifacts.json": {
+        "bytes": 4388,
+        "sha256": "4540f799d5779da5fbced131d5bdcc02babf523f11fd5ee0b70242cbe6e8ff7a"
+      },
+      "live-attempt1-jobs.json": {
+        "bytes": 21042,
+        "sha256": "20594b404f17132ea94e1619599c33a3364c48f2087f2eabeaa896afb5530c15"
+      },
+      "live-run.json": {
+        "bytes": 12665,
+        "sha256": "c950a9b23b6754fe7b139e67b288a4afa25ef89ad87b4ec45adb0b3e08c97639"
+      }
+    },
+    "local_bytes": 106791332,
+    "local_files": 690,
+    "local_packet": "/Volumes/KIOXIA/Developments/tmp/ecology-beta-five-recovery-20261101.y3mImc",
+    "local_seal": {
+      "bytes": 124639,
+      "sha256": "c860bc37ee08935dde3df9a59f0fbdf8f6786895906249fcd33e1a2bcc127a4b"
+    },
+    "original_links_or_executable_modes_restored": false,
+    "original_zip_bytes": 10141545385,
+    "report": {
+      "bytes": 11160,
+      "sha256": "62e747498e0a2dd6221e3b3fc15c977b60d2a53ee74b51946c49d392fc7ae993"
+    },
+    "root_validation": {
+      "bytes": 2548,
+      "sha256": "a17da5bd3738182daf6944c3f8dab67738a826937b9fef53249d87583f8c2504"
+    },
+    "root_validation_exit": 0,
+    "root_validation_stderr_bytes": 0,
+    "root_verification_directory": "/Volumes/KIOXIA/Developments/tmp/ecology-beta-root-adoption-20261101.t5vENM",
+    "source": {
+      "bytes": 24423,
+      "sha256": "d1383fb56a24a209b9d4713e878252fc0211e015d82330370f35273aa11332b3"
+    },
+    "unique_cas_body_bytes": 7741590978,
+    "root_reduction_source": {
+      "path": "/Volumes/KIOXIA/Developments/tmp/ecology-beta-root-adoption-20261101.t5vENM/adopt.py",
+      "sha256": "824d7c6112714a6661bc19465ae87bf0b47106e31291210b23fd4e82be5a88b2"
+    },
+    "root_reduction_stdout": {
+      "path": "/Volumes/KIOXIA/Developments/tmp/ecology-beta-root-adoption-20261101.t5vENM/ADOPTED.json",
+      "sha256": "a87e657f181fb81665125a64966e7e821ce1534f5d3a20716de72697f044162d",
+      "scope": "guard preflight lines followed by complete adopted JSON; reduction exit0"
+    }
+  },
+  "full_eight_metric_product_qualified": false,
+  "head_sha": "7d68a900a82100573cc927337eb4bf01003b3f87",
+  "limitations": [
+    "weighted UniFrac still running; normalized weighted UniFrac failed before science and remains unqualified",
+    "Euclidean host Intel Xeon Platinum8573C; other accepted hosts AMD EPYC7763; no cross-host pipeline sum",
+    "wait4 lifetime process counters, not isolated heap, simultaneous process-tree aggregate, cold-cache or exclusive host",
+    "native4 increases CPU/user time/minor faults for all six; additional system-time/RSS losses retained per metric",
+    "full dense TSV parsed and original BIOM preserved, but no independent HDF5 import or full outer15.6GB tree ZIP acquisition",
+    "all27 wheels/providers bound; not every mapped system DSO or complete OS captured",
+    "raw API/step timestamp disagreement retained; no invented canonical outer chronology",
+    "no scientific program rerun, no foreign/scientific execution on Mac, no gate or tolerance changes"
+  ],
+  "metrics": {
+    "braycurtis": {
+      "artifact_id": 13076760099,
+      "authenticated_tar": {
+        "bytes": 1732700160,
+        "sha256": "8fbe385ec0db1825ab8c38839a5553f5664fadd11b9417939b4664f1dfbb068d"
+      },
+      "cas_unique_bodies": 16761,
+      "cas_unique_bytes": 1294237437,
+      "decision": {
+        "cpu_ratio": 0.14255006475726673,
+        "disjoint_rss": true,
+        "disjoint_wall": true,
+        "memory": true,
+        "native4_scaling": 1.7261815769081703,
+        "rss_ratio": 0.05338562653342646,
+        "throughput": true,
+        "wall_ratio": 0.15106303395979778
+      },
+      "job_id": 124793770196,
+      "local_verification": {
+        "bytes": 30402,
+        "sha256": "4ec0a06fbff37c7e2a7c22d74fceef1d3cd40db88d9312f8b42292f01dca5c31"
+      },
+      "losses": {
+        "native1_over_source": {
+          "cpu": false,
+          "input_blocks": false,
+          "major_faults": false,
+          "minor_faults": false,
+          "output_blocks": false,
+          "rss_bytes": false,
+          "system": false,
+          "user": false,
+          "wall": false
+        },
+        "native4_over_native1": {
+          "cpu": true,
+          "input_blocks": false,
+          "major_faults": false,
+          "minor_faults": true,
+          "output_blocks": false,
+          "rss_bytes": false,
+          "system": false,
+          "user": true,
+          "wall": false
+        },
+        "native4_over_source": {
+          "cpu": false,
+          "input_blocks": false,
+          "major_faults": false,
+          "minor_faults": false,
+          "output_blocks": false,
+          "rss_bytes": false,
+          "system": false,
+          "user": false,
+          "wall": false
+        }
+      },
+      "matrix_checks": {
+        "7b8099332b8199b4297d737b3035b0600beac7c4408dbee26ded24d508164989": {
+          "cells": 1221025,
+          "max_error": 0
+        },
+        "af3009cff470fe5093c4e90196759248fc3cfa102b77a4aafbc7bf6b8a13881a": {
+          "cells": 1221025,
+          "max_error": 0
+        }
+      },
+      "medians": {
+        "native1": {
+          "cpu": 2.731371,
+          "input_blocks": 0,
+          "major_faults": 0,
+          "minor_faults": 6829,
+          "output_blocks": 42048,
+          "rss_bytes": 48840704,
+          "system": 0.039005,
+          "user": 2.690127,
+          "wall": 2.896360332
+        },
+        "native4": {
+          "cpu": 3.460638,
+          "input_blocks": 0,
+          "major_faults": 0,
+          "minor_faults": 6855,
+          "output_blocks": 42048,
+          "rss_bytes": 48840704,
+          "system": 0.034928,
+          "user": 3.419666,
+          "wall": 1.677900153
+        },
+        "source": {
+          "cpu": 19.160784,
+          "input_blocks": 0,
+          "major_faults": 0,
+          "minor_faults": 34021,
+          "output_blocks": 42456,
+          "rss_bytes": 914866176,
+          "system": 0.244029,
+          "user": 18.90781,
+          "wall": 19.173190529
+        }
+      },
+      "original_zip": {
+        "bytes": 1733125836,
+        "sha256": "9a9858d10702f38430dd0f63772937f417c459ea3a3dbadd8fe548d422497d56"
+      },
+      "proposal": {
+        "bytes": 9330,
+        "sha256": "7ade685dd3b5e802965b5696b26da01afaf1fc81906de25b4198465d2cc3395a"
+      },
+      "remote_authenticated_tar": "/home/liangjy/rsomics-ecology-beta-recovery-20261101/braycurtis-41288208209-1-auth-attempt1/candidate.tar",
+      "remote_original_zip": "/home/liangjy/rsomics-ecology-beta-recovery-20261101/artifact-13076760099-braycurtis-attempt1.zip",
+      "remote_seal": {
+        "bytes": 3545975,
+        "large_body_hashes_reused": 16762,
+        "path": "/home/liangjy/rsomics-ecology-beta-recovery-20261101/braycurtis-41288208209-1-auth-attempt1/REMOTE-SEAL.json",
+        "regular_bytes": 3040565466,
+        "regular_files": 16772,
+        "sha256": "9b135ce903bf2fd6d91028eec49e10e3653dc611c6f6ca7fc6866ab1c5436ccd"
+      }
+    },
+    "canberra": {
+      "artifact_id": 13076332054,
+      "authenticated_tar": {
+        "bytes": 1717637120,
+        "sha256": "55719468b8bf1173448aca4d055f6e36820af33ba3cb99c76957931860f027e1"
+      },
+      "cas_unique_bodies": 16761,
+      "cas_unique_bytes": 1292774473,
+      "decision": {
+        "cpu_ratio": 0.11941965327357755,
+        "disjoint_rss": true,
+        "disjoint_wall": true,
+        "memory": true,
+        "native4_scaling": 1.6820803597072482,
+        "rss_ratio": 0.051854770818033635,
+        "throughput": true,
+        "wall_ratio": 0.11827691570691799
+      },
+      "job_id": 124793770199,
+      "local_verification": {
+        "bytes": 30502,
+        "sha256": "bacb9744ca4bc46839e18b3679bcd40842b6bf6b4e3ed22ee13e362cc3c3d821"
+      },
+      "losses": {
+        "native1_over_source": {
+          "cpu": false,
+          "input_blocks": false,
+          "major_faults": false,
+          "minor_faults": false,
+          "output_blocks": false,
+          "rss_bytes": false,
+          "system": false,
+          "user": false,
+          "wall": false
+        },
+        "native4_over_native1": {
+          "cpu": true,
+          "input_blocks": false,
+          "major_faults": false,
+          "minor_faults": true,
+          "output_blocks": false,
+          "rss_bytes": false,
+          "system": true,
+          "user": true,
+          "wall": false
+        },
+        "native4_over_source": {
+          "cpu": false,
+          "input_blocks": false,
+          "major_faults": false,
+          "minor_faults": false,
+          "output_blocks": false,
+          "rss_bytes": false,
+          "system": false,
+          "user": false,
+          "wall": false
+        }
+      },
+      "matrix_checks": {
+        "094f3c34494b282f695dea91b55be13017f7943237989218522afa285ccd5c35": {
+          "cells": 1221025,
+          "max_error": 0
+        },
+        "689b27e14c1ebf216185d3e14a74ddf434f89063bd1f0bb0c07c4cf588ac55d7": {
+          "cells": 1221025,
+          "max_error": 0
+        }
+      },
+      "medians": {
+        "native1": {
+          "cpu": 2.9429070000000004,
+          "input_blocks": 0,
+          "major_faults": 0,
+          "minor_faults": 6835,
+          "output_blocks": 40648,
+          "rss_bytes": 47431680,
+          "system": 0.038016999999999995,
+          "user": 2.903703,
+          "wall": 2.954330886
+        },
+        "native4": {
+          "cpu": 3.6139300000000003,
+          "input_blocks": 0,
+          "major_faults": 0,
+          "minor_faults": 6861,
+          "output_blocks": 40648,
+          "rss_bytes": 47431680,
+          "system": 0.038935,
+          "user": 3.571532,
+          "wall": 1.756355378
+        },
+        "source": {
+          "cpu": 24.643406,
+          "input_blocks": 0,
+          "major_faults": 0,
+          "minor_faults": 34003,
+          "output_blocks": 41064,
+          "rss_bytes": 914702336,
+          "system": 0.25074599999999997,
+          "user": 24.39266,
+          "wall": 24.97808527
+        }
+      },
+      "original_zip": {
+        "bytes": 1718059130,
+        "sha256": "cf6dd07d266d00f11c816667f7e412455d2c2ae5deca1243976d9a418f8ef8f5"
+      },
+      "proposal": {
+        "bytes": 9309,
+        "sha256": "f9223de0d476e2b33ec7bd1e7a49b2f757f84e21150db118eecde814b6a94c06"
+      },
+      "remote_authenticated_tar": "/home/liangjy/rsomics-ecology-beta-recovery-20261101/canberra-41288208209-1-auth-attempt1/candidate.tar",
+      "remote_original_zip": "/home/liangjy/rsomics-ecology-beta-recovery-20261101/artifact-13076332054-canberra-attempt1.zip",
+      "remote_seal": {
+        "bytes": 3545971,
+        "large_body_hashes_reused": 16762,
+        "path": "/home/liangjy/rsomics-ecology-beta-recovery-20261101/canberra-41288208209-1-auth-attempt1/REMOTE-SEAL.json",
+        "regular_bytes": 3024016668,
+        "regular_files": 16772,
+        "sha256": "cadf39e58e219f132701406f17c5a69c84d2dff0f0001d444ed1a3ae67802651"
+      }
+    },
+    "cityblock": {
+      "artifact_id": 13076356866,
+      "authenticated_tar": {
+        "bytes": 1450496000,
+        "sha256": "ef3d2a497776eeaa01eedb112e60b42d40a93856ff58c4f871351dbfede89e4c"
+      },
+      "cas_unique_bodies": 16761,
+      "cas_unique_bytes": 1268099732,
+      "decision": {
+        "cpu_ratio": 0.17604041314612526,
+        "disjoint_rss": true,
+        "disjoint_wall": true,
+        "memory": true,
+        "native4_scaling": 1.7776744296005411,
+        "rss_ratio": 0.052752221699908224,
+        "throughput": true,
+        "wall_ratio": 0.19381626743276006
+      },
+      "job_id": 124793770209,
+      "local_verification": {
+        "bytes": 30514,
+        "sha256": "cdb3ed6a5267a77d567c513ac2fe41dd33f8d1095e8f821edf7c0fdd6799955c"
+      },
+      "losses": {
+        "native1_over_source": {
+          "cpu": false,
+          "input_blocks": false,
+          "major_faults": false,
+          "minor_faults": false,
+          "output_blocks": false,
+          "rss_bytes": false,
+          "system": false,
+          "user": false,
+          "wall": false
+        },
+        "native4_over_native1": {
+          "cpu": true,
+          "input_blocks": false,
+          "major_faults": false,
+          "minor_faults": true,
+          "output_blocks": false,
+          "rss_bytes": false,
+          "system": false,
+          "user": true,
+          "wall": false
+        },
+        "native4_over_source": {
+          "cpu": false,
+          "input_blocks": false,
+          "major_faults": false,
+          "minor_faults": false,
+          "output_blocks": false,
+          "rss_bytes": false,
+          "system": false,
+          "user": false,
+          "wall": false
+        }
+      },
+      "matrix_checks": {
+        "1e4ad3bff956fe8e13421ac6ebe4f0a663e88150fa68134a321109547e978660": {
+          "cells": 1221025,
+          "max_error": 0
+        },
+        "6e390e069b35a80bcb7ee5794c65542dc2920e45c518429e3e0f6259f5b027e2": {
+          "cells": 1221025,
+          "max_error": 0
+        }
+      },
+      "medians": {
+        "native1": {
+          "cpu": 2.8011289999999995,
+          "input_blocks": 0,
+          "major_faults": 0,
+          "minor_faults": 6830,
+          "output_blocks": 14336,
+          "rss_bytes": 48263168,
+          "system": 0.039006,
+          "user": 2.7611559999999997,
+          "wall": 3.086564719
+        },
+        "native4": {
+          "cpu": 3.4572670000000003,
+          "input_blocks": 0,
+          "major_faults": 0,
+          "minor_faults": 6849,
+          "output_blocks": 14336,
+          "rss_bytes": 48263168,
+          "system": 0.035963999999999996,
+          "user": 3.420307,
+          "wall": 1.736293591
+        },
+        "source": {
+          "cpu": 15.911852,
+          "input_blocks": 0,
+          "major_faults": 0,
+          "minor_faults": 33420,
+          "output_blocks": 19152,
+          "rss_bytes": 914903040,
+          "system": 0.269101,
+          "user": 15.642751,
+          "wall": 15.925209787
+        }
+      },
+      "original_zip": {
+        "bytes": 1450852779,
+        "sha256": "1315161c320849e1322c5fd8703c4df4421a022b5a0b7f8da8950f759d12207a"
+      },
+      "proposal": {
+        "bytes": 9321,
+        "sha256": "f192696831de99bec852dd74cd24d0d9044f23a6ea12d22215358b5ca2e4ee48"
+      },
+      "remote_authenticated_tar": "/home/liangjy/rsomics-ecology-beta-recovery-20261101/cityblock-41288208209-1-auth-attempt1/candidate.tar",
+      "remote_original_zip": "/home/liangjy/rsomics-ecology-beta-recovery-20261101/artifact-13076356866-cityblock-attempt1.zip",
+      "remote_seal": {
+        "bytes": 3545983,
+        "large_body_hashes_reused": 16762,
+        "path": "/home/liangjy/rsomics-ecology-beta-recovery-20261101/cityblock-41288208209-1-auth-attempt1/REMOTE-SEAL.json",
+        "regular_bytes": 2732212973,
+        "regular_files": 16772,
+        "sha256": "a5ffdd7f6920fa1a6d39da8a62f938abc5d8c4fed17a264ce2b714166ea36c52"
+      }
+    },
+    "euclidean": {
+      "artifact_id": 13075549116,
+      "authenticated_tar": {
+        "bytes": 1747312640,
+        "sha256": "bd6abd8b09c784946f86b4d20d115ff7f6c7b21bc318a3d1ff2d24e4c0541b39"
+      },
+      "cas_unique_bodies": 16761,
+      "cas_unique_bytes": 1295556146,
+      "decision": {
+        "cpu_ratio": 0.16912507059430448,
+        "disjoint_rss": true,
+        "disjoint_wall": true,
+        "memory": true,
+        "native4_scaling": 1.7631365830134111,
+        "rss_ratio": 0.05276614384752573,
+        "throughput": true,
+        "wall_ratio": 0.17599852296554333
+      },
+      "job_id": 124793770222,
+      "local_verification": {
+        "bytes": 30576,
+        "sha256": "b08c5b769facd4c3730107e848d84556c6f0b1b01ea80f9e97627b1289eb6c58"
+      },
+      "losses": {
+        "native1_over_source": {
+          "cpu": false,
+          "input_blocks": false,
+          "major_faults": false,
+          "minor_faults": false,
+          "output_blocks": false,
+          "rss_bytes": false,
+          "system": false,
+          "user": false,
+          "wall": false
+        },
+        "native4_over_native1": {
+          "cpu": true,
+          "input_blocks": false,
+          "major_faults": false,
+          "minor_faults": true,
+          "output_blocks": false,
+          "rss_bytes": false,
+          "system": true,
+          "user": true,
+          "wall": false
+        },
+        "native4_over_source": {
+          "cpu": false,
+          "input_blocks": false,
+          "major_faults": false,
+          "minor_faults": false,
+          "output_blocks": false,
+          "rss_bytes": false,
+          "system": false,
+          "user": false,
+          "wall": false
+        }
+      },
+      "matrix_checks": {
+        "8548a3dd4ddbc70e64cfd997e2fe192b93d8e8da0d12e91a989aa8245e6cdb59": {
+          "cells": 1221025,
+          "max_error": 0
+        },
+        "a0c60a5ee0eb15ca6bd9406032cf5c6779c8305ce34579d20bfe3005e0f6f33d": {
+          "cells": 1221025,
+          "max_error": 0
+        }
+      },
+      "medians": {
+        "native1": {
+          "cpu": 3.12134,
+          "input_blocks": 0,
+          "major_faults": 0,
+          "minor_faults": 6835,
+          "output_blocks": 43528,
+          "rss_bytes": 48353280,
+          "system": 0.032014,
+          "user": 3.099338,
+          "wall": 3.292349607
+        },
+        "native4": {
+          "cpu": 3.8943130000000004,
+          "input_blocks": 0,
+          "major_faults": 0,
+          "minor_faults": 6859,
+          "output_blocks": 43528,
+          "rss_bytes": 48353280,
+          "system": 0.041967,
+          "user": 3.856301,
+          "wall": 1.867325333
+        },
+        "source": {
+          "cpu": 18.455809,
+          "input_blocks": 0,
+          "major_faults": 0,
+          "minor_faults": 33932,
+          "output_blocks": 43584,
+          "rss_bytes": 916369408,
+          "system": 0.23698,
+          "user": 18.225622,
+          "wall": 18.706688849
+        }
+      },
+      "original_zip": {
+        "bytes": 1747741883,
+        "sha256": "eda6af341ed75d4b4ebe83a7d3c14c4e09076c46aaee2757764aacfefbec3ef2"
+      },
+      "proposal": {
+        "bytes": 9321,
+        "sha256": "cab9db54c31476e737f774c9a761c9b6e9dd74a1e113fc49512afa20ecbbcf95"
+      },
+      "remote_authenticated_tar": "/home/liangjy/rsomics-ecology-beta-recovery-20261101/euclidean-41288208209-1-auth-attempt1/candidate.tar",
+      "remote_original_zip": "/home/liangjy/rsomics-ecology-beta-recovery-20261101/artifact-13075549116-euclidean-attempt1.zip",
+      "remote_seal": {
+        "bytes": 3545985,
+        "large_body_hashes_reused": 16762,
+        "path": "/home/liangjy/rsomics-ecology-beta-recovery-20261101/euclidean-41288208209-1-auth-attempt1/REMOTE-SEAL.json",
+        "regular_bytes": 3056486131,
+        "regular_files": 16772,
+        "sha256": "07a75d428f58481c2d3109f4e857691241d91ad9e4bcc50df44b032fecfde907"
+      }
+    },
+    "jaccard": {
+      "artifact_id": 13076601958,
+      "authenticated_tar": {
+        "bytes": 1726863360,
+        "sha256": "c0409d0cde88b11f0ef72d200a040ead1892e6a816a795e1e7a23cff6fc1a853"
+      },
+      "cas_unique_bodies": 16761,
+      "cas_unique_bytes": 1293638452,
+      "decision": {
+        "cpu_ratio": 0.06266420451855047,
+        "disjoint_rss": true,
+        "disjoint_wall": true,
+        "memory": true,
+        "native4_scaling": 1.7861200107114286,
+        "rss_ratio": 0.0509167661606686,
+        "throughput": true,
+        "wall_ratio": 0.06635941505390552
+      },
+      "job_id": 124793770108,
+      "local_verification": {
+        "bytes": 30448,
+        "sha256": "e46b9d4077c3f651415af0fb33c02a5e425ef898da811b1f4f9cbbce3cb0ffdf"
+      },
+      "losses": {
+        "native1_over_source": {
+          "cpu": false,
+          "input_blocks": false,
+          "major_faults": false,
+          "minor_faults": false,
+          "output_blocks": false,
+          "rss_bytes": false,
+          "system": false,
+          "user": false,
+          "wall": false
+        },
+        "native4_over_native1": {
+          "cpu": true,
+          "input_blocks": false,
+          "major_faults": false,
+          "minor_faults": true,
+          "output_blocks": false,
+          "rss_bytes": false,
+          "system": false,
+          "user": true,
+          "wall": false
+        },
+        "native4_over_source": {
+          "cpu": false,
+          "input_blocks": false,
+          "major_faults": false,
+          "minor_faults": false,
+          "output_blocks": false,
+          "rss_bytes": false,
+          "system": false,
+          "user": false,
+          "wall": false
+        }
+      },
+      "matrix_checks": {
+        "58dd826b588ea91ef27492a1216214dad99ea8d06dd7dfc4039445918768e12e": {
+          "cells": 1221025,
+          "max_error": 0
+        },
+        "9beedee1911829cc5f97395e994c5f53443bd00a2bae9cc56d2d1b89899a2974": {
+          "cells": 1221025,
+          "max_error": 0
+        }
+      },
+      "medians": {
+        "native1": {
+          "cpu": 2.969694,
+          "input_blocks": 0,
+          "major_faults": 0,
+          "minor_faults": 6831,
+          "output_blocks": 41512,
+          "rss_bytes": 48910336,
+          "system": 0.043004,
+          "user": 2.937698,
+          "wall": 3.14609344
+        },
+        "native4": {
+          "cpu": 3.538982,
+          "input_blocks": 0,
+          "major_faults": 0,
+          "minor_faults": 6849,
+          "output_blocks": 41512,
+          "rss_bytes": 48910336,
+          "system": 0.041868999999999996,
+          "user": 3.494566,
+          "wall": 1.761412123
+        },
+        "source": {
+          "cpu": 47.390596,
+          "input_blocks": 0,
+          "major_faults": 0,
+          "minor_faults": 33992,
+          "output_blocks": 41920,
+          "rss_bytes": 960593920,
+          "system": 0.291195,
+          "user": 47.132826,
+          "wall": 47.409903138
+        }
+      },
+      "original_zip": {
+        "bytes": 1727287609,
+        "sha256": "f5553b201aee055bdf41f279d3c103039955d88de44f606a70de37934fafbb26"
+      },
+      "proposal": {
+        "bytes": 9298,
+        "sha256": "c52f86bcc03543b624d1a9b7f8ddd206982257015e1152ea269c70107ef73aec"
+      },
+      "remote_authenticated_tar": "/home/liangjy/rsomics-ecology-beta-recovery-20261101/jaccard-41288208209-1-auth-attempt1/candidate.tar",
+      "remote_original_zip": "/home/liangjy/rsomics-ecology-beta-recovery-20261101/artifact-13076601958-jaccard-attempt1.zip",
+      "remote_seal": {
+        "bytes": 3545970,
+        "large_body_hashes_reused": 16762,
+        "path": "/home/liangjy/rsomics-ecology-beta-recovery-20261101/jaccard-41288208209-1-auth-attempt1/REMOTE-SEAL.json",
+        "regular_bytes": 3034095388,
+        "regular_files": 16772,
+        "sha256": "008f557864865042368ad12bd4fd4b3861b1c4af736d4d1ad5673f75c4762119"
+      }
+    },
+    "unweighted_unifrac": {
+      "artifact_id": 13077359724,
+      "authenticated_tar": {
+        "bytes": 1764044800,
+        "sha256": "ba7f1622c4d3ecb73bafe8c99050068b73d62799827fde490cffcec2c1927177"
+      },
+      "cas_unique_bodies": 16761,
+      "cas_unique_bytes": 1297284738,
+      "decision": {
+        "cpu_ratio": 0.03285750295915757,
+        "disjoint_rss": true,
+        "disjoint_wall": true,
+        "memory": true,
+        "native4_scaling": 2.153742935518805,
+        "rss_ratio": 0.024131462712944387,
+        "throughput": true,
+        "wall_ratio": 0.032878049096759225
+      },
+      "job_id": 124793770145,
+      "local_verification": {
+        "bytes": 30694,
+        "sha256": "f026f18a3e33daf8c60e0334ae49cb2858c11e3a63810e367086ab638e3d7aaf"
+      },
+      "losses": {
+        "native1_over_source": {
+          "cpu": false,
+          "input_blocks": false,
+          "major_faults": false,
+          "minor_faults": false,
+          "output_blocks": false,
+          "rss_bytes": false,
+          "system": false,
+          "user": false,
+          "wall": false
+        },
+        "native4_over_native1": {
+          "cpu": true,
+          "input_blocks": false,
+          "major_faults": false,
+          "minor_faults": true,
+          "output_blocks": false,
+          "rss_bytes": true,
+          "system": true,
+          "user": true,
+          "wall": false
+        },
+        "native4_over_source": {
+          "cpu": false,
+          "input_blocks": false,
+          "major_faults": false,
+          "minor_faults": false,
+          "output_blocks": false,
+          "rss_bytes": false,
+          "system": false,
+          "user": false,
+          "wall": false
+        }
+      },
+      "matrix_checks": {
+        "17d6b6ad7c1e676ffe0c9fa102b5cede58f45dc038a7ec1e9c527eab181bc8b5": {
+          "cells": 1221025,
+          "max_error": 6.45039577307216e-14
+        },
+        "658afd89a2370cb5e8aa2960c7f705fcbabd7108267a022acced12499d742f33": {
+          "cells": 1221025,
+          "max_error": 0
+        }
+      },
+      "medians": {
+        "native1": {
+          "cpu": 15.286142,
+          "input_blocks": 0,
+          "major_faults": 0,
+          "minor_faults": 42814,
+          "output_blocks": 45072,
+          "rss_bytes": 154812416,
+          "system": 0.12400499999999999,
+          "user": 15.152168,
+          "wall": 15.29806315
+        },
+        "native4": {
+          "cpu": 21.565839,
+          "input_blocks": 0,
+          "major_faults": 0,
+          "minor_faults": 45161,
+          "output_blocks": 45072,
+          "rss_bytes": 162226176,
+          "system": 0.13988799999999998,
+          "user": 21.436015,
+          "wall": 7.103012573
+        },
+        "source": {
+          "cpu": 465.22531000000004,
+          "input_blocks": 0,
+          "major_faults": 0,
+          "minor_faults": 92323,
+          "output_blocks": 45128,
+          "rss_bytes": 6415376384,
+          "system": 0.742929,
+          "user": 464.473361,
+          "wall": 465.297168484
+        }
+      },
+      "original_zip": {
+        "bytes": 1764478148,
+        "sha256": "3497df0c2479c0aa4f9a94d2418a9fad038ee49c14055736faeb9e9a4871d5f0"
+      },
+      "proposal": {
+        "bytes": 9413,
+        "sha256": "bcfe80d46ec6da861435c94c4392ef64dd1bc9bb213d6ee74a0d674bbf52d15f"
+      },
+      "remote_authenticated_tar": "/home/liangjy/rsomics-ecology-beta-recovery-20261101/unweighted_unifrac-41288208209-1-auth-attempt1/candidate.tar",
+      "remote_original_zip": "/home/liangjy/rsomics-ecology-beta-recovery-20261101/artifact-13077359724-unweighted_unifrac-attempt1.zip",
+      "remote_seal": {
+        "bytes": 3546001,
+        "large_body_hashes_reused": 16762,
+        "path": "/home/liangjy/rsomics-ecology-beta-recovery-20261101/unweighted_unifrac-41288208209-1-auth-attempt1/REMOTE-SEAL.json",
+        "regular_bytes": 3075050324,
+        "regular_files": 16772,
+        "sha256": "fe4173b309eb0843c1992f53ec100732c23166b9a6f88cd0b6bc4dee9b16ea51"
+      }
+    }
+  },
+  "owner": "111adf5e8a3657a99c50a9832ca5ed9c53fd98d7",
+  "performance_accepted": true,
+  "publication": false,
+  "repository": "omics-rust/rsomics-world",
+  "root_adopted": true,
+  "run_attempt": 1,
+  "run_id": 41288208209,
+  "schema": "rsomics.ecology.beta-six-real-performance.v1",
+  "source_profile": {
+    "actual_python": "3.12.10",
+    "compiled_kernel_source_inspected": false,
+    "compiled_module_anchors": 5,
+    "installed_source_anchors": 12,
+    "name": "contiguous-public",
+    "numpy": "2.5.4",
+    "old_original_python": "3.12.15",
+    "scikit_bio": "0.7.3",
+    "scipy": "1.18.1",
+    "unchanged_upstream_default_performance_claim": false,
+    "unifrac_public_pairwise_layout": "int64[1105,323372] C-layout copy, 2858608480B; copy time and RSS charged",
+    "wheels": 27
+  },
+  "status": "accepted-six-full-metrics-not-eight"
+}
