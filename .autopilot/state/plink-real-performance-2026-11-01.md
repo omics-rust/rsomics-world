@@ -1,5 +1,16 @@
 # Fixed private HGDP whole-workflow gate
 
+## Actual packed full-cohort remeasurement dispatched
+
+Exact-head Control41281822854 succeeds at
+4d137b853ab055567bcc7716863d213dd9d03f01 and live remote main matches.
+Root dispatches plink-real-performance.yml once with the actual committed
+plink-native-2026-11-01-green-4.json. Actual41282068831/attempt1 runs on that
+head. Runtime/native ELF/provider admission and the SAME complete HGDP929/
+four-window/seven-stage/qualification/warmup/five-pair1/4 graph remain required.
+Original criteria/comparisons/capacity are unchanged; no performance result
+follows from dispatch and the prior green3 whole failure stays failed.
+
 ## Explicit packed green4 real-cohort admission prepared
 
 The SAME existing connected preparation test consumes the actual committed
