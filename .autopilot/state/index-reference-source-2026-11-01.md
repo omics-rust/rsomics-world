@@ -1,5 +1,26 @@
 # Index reference-resource source workflow
 
+## Actual complete source originals accepted
+
+Corrected run41255333228/1 succeeds. Root verifies full original228572581B
+ZIP/501022720B TAR,12157 members/11776 manifest entries:11772 regular bodies
+and4 metadata-only symlinks, with all five controller/plan files equal to
+actual381848e0 Git blobs. Source admission and68 original call statuses verify:
+62 required return0; the six malformed/edge observations are retained verbatim.
+No runtime link/ELF executes or is restored locally. Full carrier/rawlog/APIs,
+CAS and logical metadata remain at index-source-adoption-20261101.MxghXd.
+
+Root reads actual source version/features/provider/outcome/FAI/alias records.
+Pinned samtools/HTSlib1.24 andlibdeflate1.25 pass the connected plain/BGZF/
+empty-member source graph. Actual last83/noLF FAI width is84. Both GZIs have
+5anchors/88B; valid empty members cause a67719B gap, proving why the old
+compressed-gap bound cannot be copied into faidx. Diagnostic duplicate-name/
+missing-final-marker return0; ambiguous/unknown/CRC/ragged return1, not a
+post-hoc native policy. New explicit source-only receipt is
+index-reference-source-2026-11-01.json. Native implementation is now underway
+in the existing owner against selected54 regular authored goldens387576B;
+it has no accepted four-native, real-reference performance or release gate.
+
 ## Corrected actual source retry dispatched
 
 Exact-head Control plane41255074004 succeeds at

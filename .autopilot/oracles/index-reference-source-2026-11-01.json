@@ -1,0 +1,52 @@
+{
+  "schema": "rsomics.index.reference-source-adoption.v1",
+  "product": "rsomics-index",
+  "repository": "omics-rust/rsomics-world",
+  "workflow_path": ".github/workflows/index-reference-source.yml",
+  "run_id": 41255333228,
+  "run_attempt": 1,
+  "head_sha": "381848e07c8dceb5d30f208381e33ba17f4e9a7d",
+  "artifact_id": 13062733951,
+  "artifact_name": "index-reference-source-41255333228-1",
+  "size_in_bytes": 228572581,
+  "artifact_sha256": "3ee721ddf17f20eb97402b86dd9daa7fb1293cbbc3ce3caa3e01c9003d857f37",
+  "tar_bytes": 501022720,
+  "tar_sha256": "9b93ca99da611e8464a81fd9df42359d1f02db692b8f8055d874fc4551537894",
+  "manifest_entries": 11776,
+  "regular_bodies_verified": 11772,
+  "metadata_only_symlinks": 4,
+  "full_originals_verified": true,
+  "source_only": true,
+  "native_product_implemented": false,
+  "source_versions": {
+    "samtools": "1.24",
+    "htslib": "1.24",
+    "libdeflate": "1.25",
+    "cmake": "3.31.8"
+  },
+  "image": "sha256:a689e29bc3adf4663ef9a141d23081252764d1319c63f591a027bd6fd676f4c1",
+  "compiler": "GCC 14.3.0",
+  "libdeflate_provider_sha256": "0cc41c99d40bb91c2454ade7a24e4f6f3850b4c536986fbc3c9ca8de990e9aad",
+  "actual_calls": 68,
+  "required_calls_passed": 62,
+  "observed_diagnostic_exits": {
+    "duplicate_name": 0,
+    "missing_eof_marker": 0,
+    "ambiguous_name": 1,
+    "missing_region": 1,
+    "crc_damaged": 1,
+    "ragged": 1
+  },
+  "source_casebook_passed": true,
+  "controllers": {
+    ".github/workflows/index-reference-source.yml": "d7616e432d810ebd300758c2e92676ca304fc162de7c613a343d8fcf7119fe89",
+    "docs/plans/2026-11-01-index-reference-workflow.md": "672e9ae9b454e5afa6ee3af212b686ba1d82c704b0d4cae744cce6e801b800fa",
+    "scripts/index_reference_source.py": "25e36ff2c2749eadfdd13efc6e744efaab5f80b0068a5013bb0f3021abb2af3e",
+    "scripts/plink_first_workflow_inputs.py": "557e32764eec82ba67f69e6efa1b88e7626d55710337c248b1a8d921a613ece3",
+    "scripts/plink_first_workflow_oracle.py": "d0cdaf2093c6d7864c54fe97b38f317dd7d34ea9effdff5f69f172e1e6fb8153"
+  },
+  "evidence_directory": "/Volumes/KIOXIA/Developments/tmp/index-source-adoption-20261101.MxghXd",
+  "source_execution_local": false,
+  "performance_claim": false,
+  "release": false
+}
