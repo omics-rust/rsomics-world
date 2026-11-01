@@ -1,5 +1,35 @@
 # Fixed private HGDP whole-workflow gate
 
+## Full real LD correspondence and bounded-cache material wave
+
+Root reads all nine changed paths/full report/primary source anchors; one
+bounded independent integrated review finds no actionableP1/P2. Parent freshly
+verifies all70 sealed private bodies. Owner is clean
+00ce7b39f8decbeab40ed7f92f1191a304827b74 after separate source-report and
+performance commits10696fa/00ce7b3. Shared product-private numeric removes the
+second formatter; reference frequency follows actual source reciprocal order.
+Coarse contiguous weighted partitions keep bounded per-part reader/cache,
+while runtime-detected x86 POPCNT retains the exact portable integer loop.
+No public API/dependency/FFI, dosage/window/threshold/order or2GiB-budget change.
+
+Full original LD replay first identifies34 MAJ/NONMAJ cells at three exact50/50
+cases plus one R2 print mismatch. Candidate1/4 both match all2527798 source
+rows and the entire323714377B body SHA
+0b77da54d3e4638caff2633933a4a8636fca8c5b2b3b6bb98fd95651885eb1c0.
+Both prune lists are source-byte-exact at1/4:696 kept/22333 removed. All929
+founders/23029 variants/33780398 evaluated pairs and six inputs are preserved.
+
+Same-Mac single native pairs observations improve31.783→6.018s atT1 and
+10.890→2.712s atT4. RSS rises26.25→49.23MB and45.69→56.84MB, explicitly
+within the unchanged application budget. Pinned fmt/strictClippy/full release
+4lib+1whole pass;36 generations/74878 cells remain. This is not x86 POPCNT
+execution, a cross-machine resource comparison or a formal upstream gate.
+Packet plink-ld-material-wave-20261101.hoXeM6CY REPORT
+5d9d5cd1cf8f4d3eacb76dae287fe0216b112f043a01c2a37d3065ab06923387;
+COMPLETED55e871184054949a32fb752f19461aabdd010795583c2657582abb88f5e63d80.
+Original red run/green2 authorities remain unchanged. New full-source freeze,
+four-native/source and eventual real whole-workflow gate are pending.
+
 ## Source-faithful QC print correction committed; LD gate remains separate
 
 Root fully reviews all four changed owner files, final REPORT/COMPLETED and
