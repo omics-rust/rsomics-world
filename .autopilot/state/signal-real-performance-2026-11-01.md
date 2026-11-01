@@ -1,5 +1,16 @@
 # Real signal campaign
 
+## Bounded live checkpoint, not campaign acceptance
+
+At2026-11-01T05:19:27UTC root reads only this task's exact hostPID/container
+and execution directory. Original runner1468391 remains live, elapsed3h10m;
+campaign1666167 is live at2h39m. Actual child now runs the fixed
+qualification-main-1-native checker, not the previously observed source
+computeMatrix process. This establishes forward progress, not completion of
+all qualification/correctness/performance gates. No duplicate launch, shared
+host mutation or final speed/memory claim follows; full originals remain
+required after actual campaign completion.
+
 ## Actual preparation qualified; shared-host campaign running
 
 Root's bounded read-only SSH checkpoint at2026-11-01T02:44:09UTC observes
