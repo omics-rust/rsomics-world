@@ -105,3 +105,18 @@ ledgers. Fresh remote main agrees. Root dispatches green8 exactly once:
 actual41362616110/1 at that controller head. Native-four/source originals and
 new actual resources remain required. A shortly-after-dispatch filtered list
 was empty; the returned run ID, not redispatch, is the authoritative follow-up.
+
+Docs-only c39e5f15274b527efbd221784fd29934bde88fc4 passes exact Control
+41362803114/1. Actual41362616110/1 is terminal SUCCESS on native4 and source;
+complete-original adoption is still pending, not inferred from job conclusions.
+
+Root adopts terminal-retention-planning-2026-11-02.json after reading the full
+metadata checker/walker/report and freshly running it: law1FJ proof exit0,
+stderr0, stdout SHA046c4aadd9c80da27c38efaecfbf8c05a420a209bf5f1ddf1a0a8e7d1af85cf5.
+The NEW view supersedes only370GiB of unused historical planning allowance;
+no physical byte is freed and all originals/old reservation records remain.
+Five adopted terminal roots get conservative retained-size+2GiB caps; the
+stopped/incomplete observer keeps its full8GiB. Known terminal caps total170GiB.
+Future208GiB plus independent8GiB would require265328599040 free bytes after
+crediting actual allocation once; root observes478411907072, margin213083308032.
+This is planning only, not a global writer lease or future run/recovery admission.
