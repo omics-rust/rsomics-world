@@ -3,11 +3,13 @@ import importlib
 import inspect
 import os
 from pathlib import Path
+import struct
 import subprocess
 import sys
 import tarfile
 import tempfile
 import unittest
+import zlib
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -41,6 +43,38 @@ class IndexReferenceRealPerformancePreparationTest(unittest.TestCase):
         controller.verify_plain(reference, rows)
         reference.write_bytes(reference.read_bytes() + b'\n\n')
         controller.verify_plain(reference, rows)
+        complete = reference.read_bytes() + b'\n' * 65536
+        compressor = zlib.compressobj(wbits=-15)
+        payload = b''
+        offsets = []
+        for start in range(0, len(complete), 32768):
+            block = complete[start:start + 32768]
+            payload += compressor.compress(block)
+            if len(block) == 32768:
+                payload += compressor.flush(zlib.Z_FULL_FLUSH)
+                offsets.append(19 + len(payload))
+        payload += compressor.flush(zlib.Z_FINISH)
+        member = (bytes.fromhex('1f8b0804000000000003070052415a46018000') + payload
+                  + struct.pack('<II', zlib.crc32(complete), len(complete)))
+        index = struct.pack('>IQ', len(offsets), offsets[0])
+        index += b''.join(struct.pack('>I', offset - offsets[0]) for offset in offsets)
+        razf_body = member + index + struct.pack('>QQ', len(complete), len(member))
+        original = data / 'synthetic-razf.gz'
+        original.write_bytes(razf_body)
+        decoded = data / 'decoded.fa'
+        facts = controller._decode_razf(original, decoded, len(complete))
+        self.assertEqual(decoded.read_bytes(), complete)
+        controller.verify_plain(decoded, rows)
+        self.assertEqual(facts['index_entries'], 2)
+        self.assertEqual(facts['gzip_member_bytes'], len(member))
+        self.assertEqual(facts['plain'], controller.identity(decoded))
+        for name, offset in (('crc', len(member) - 8), ('footer', len(razf_body) - 1)):
+            damaged = bytearray(razf_body)
+            damaged[offset] ^= 1
+            broken = data / (name + '.gz')
+            broken.write_bytes(damaged)
+            with self.assertRaisesRegex(ValueError, 'RAZF'):
+                controller._decode_razf(broken, data / (name + '.fa'), len(complete))
         plan = controller.prepare_plan(root, rows,
             dict(plain=reference, bgzf=data / 'reference.fa.gz'),
             dict(source=Path('/oracle/samtools'), native=Path('/native/rsomics-index')))

@@ -20,6 +20,7 @@ import tarfile
 import tempfile
 import time
 import traceback
+import zlib
 
 import index_reference_source as source
 from plink_first_workflow_oracle import download, save, sha256
@@ -35,6 +36,9 @@ BASE = 'https://ftp.1000genomes.ebi.ac.uk/vol1/ftp/technical/reference/'
 URI = BASE + 'human_g1k_v37.fasta.gz'
 PROVIDER_BYTES = 892331003
 PROVIDER_ETAG = '"352fe3fb-4a7e0737e1bc0"'
+PROVIDER_SHA = '8b6c538abf0dd92d3f3020f36cc1dd67ce004ffa421c2781205f1eb690bdb442'
+PLAIN_BYTES = 3153506519
+PLAIN_SHA = '2f9cd9e853a9284c53884e6a551b1c7284795dd053f255d630aeeb114d1fa81f'
 FAI_SHA = '04aa12dcb4e7131d9c7361082bfd02f8415ee11e956bf358a339f0d3c54180ab'
 BGZF_CAP = 3 * 2**29
 BUDGET = dict(inputs=11 * 2**29, outputs=14 * 2**30, runtime=4 * 2**30, metadata=2**29)
@@ -417,6 +421,77 @@ def prepare_native(root: Path) -> Path:
     return binary
 
 
+def _decode_razf(original: Path, plain: Path, plain_cap: int) -> dict:
+    size = original.stat().st_size
+    header = bytes.fromhex('1f8b0804000000000003070052415a46018000')
+    with original.open('rb') as stream:
+        if stream.read(len(header)) != header or size < 47:
+            raise ValueError('RAZF provider header differs')
+        stream.seek(-16, 2)
+        footer = stream.read(16)
+        plain_bytes, member_end = struct.unpack('>QQ', footer)
+        if plain_bytes > plain_cap:
+            raise RuntimeError('capacity: complete decompression exceeds input envelope, not a FAI-derived upper bound')
+        entries = plain_bytes // 32768
+        bins = entries // 131072 + 1
+        index_bytes = 4 + 8 * bins + 4 * entries
+        if member_end <= len(header) + 8 or member_end + index_bytes + 16 != size:
+            raise ValueError('RAZF index/footer geometry differs')
+        stream.seek(member_end)
+        index = stream.read(index_bytes)
+        if struct.unpack_from('>I', index)[0] != entries:
+            raise ValueError('RAZF index count differs from complete plain length')
+        bin_offsets = struct.unpack_from(f'>{bins}Q', index, 4)
+        previous = len(header)
+        for number, (cell,) in enumerate(struct.iter_unpack('>I', index[4 + 8 * bins:])):
+            offset = bin_offsets[number // 131072] + cell
+            if (number % 131072 == 0 and cell != 0) or not previous < offset < member_end - 8:
+                raise ValueError('RAZF index offsets differ')
+            stream.seek(offset - 4)
+            if stream.read(4) != b'\x00\x00\xff\xff':
+                raise ValueError('RAZF index full-flush marker differs')
+            previous = offset
+        stream.seek(member_end - 8)
+        trailer_crc, trailer_size = struct.unpack('<II', stream.read(8))
+        stream.seek(len(header))
+        decoder = zlib.decompressobj(-15)
+        digest = hashlib.sha256()
+        crc = count = 0
+        remaining = member_end - 8 - len(header)
+        block = b''
+        with plain.open('xb') as output:
+            while remaining or block:
+                if not block:
+                    block = stream.read(min(2**16, remaining))
+                    if not block:
+                        raise ValueError('RAZF DEFLATE stream is truncated')
+                    remaining -= len(block)
+                try:
+                    chunk = decoder.decompress(block, 2**20)
+                except zlib.error as error:
+                    raise ValueError('RAZF DEFLATE stream is invalid') from error
+                block = decoder.unconsumed_tail
+                if decoder.unused_data:
+                    raise ValueError('RAZF DEFLATE ends before its indexed trailer')
+                count += len(chunk)
+                if count > plain_cap:
+                    raise RuntimeError('capacity: complete decompression exceeds input envelope, not a FAI-derived upper bound')
+                if count > plain_bytes:
+                    raise ValueError('RAZF complete plain length exceeds footer')
+                output.write(chunk)
+                digest.update(chunk)
+                crc = zlib.crc32(chunk, crc)
+        if (not decoder.eof or count != plain_bytes or crc != trailer_crc
+                or count % 2**32 != trailer_size):
+            raise ValueError('RAZF DEFLATE EOF, CRC or complete size differs from trailer/footer')
+    return dict(flavor='RAZF: one gzip member plus validated random-access index',
+        header_hex=header.hex(), gzip_member_bytes=member_end, gzip_crc32=f'{crc:08x}',
+        gzip_isize=trailer_size, index_entries=entries, index_bins=bins, index_bytes=index_bytes,
+        index_sha256=hashlib.sha256(index).hexdigest(), footer_hex=footer.hex(),
+        trailing_index_and_footer_bytes=index_bytes + 16,
+        plain=dict(bytes=count, sha256=digest.hexdigest()))
+
+
 def acquire_reference(root: Path, bgzip: Path) -> tuple[dict, list[dict]]:
     data = root / 'data'
     data.mkdir()
@@ -454,17 +529,14 @@ def acquire_reference(root: Path, bgzip: Path) -> tuple[dict, list[dict]]:
     capacity(root, 'before-provider-body')
     original = data / 'human_g1k_v37.fasta.gz'
     receipt = download(URI, original, PROVIDER_BYTES)
-    if receipt['bytes'] != PROVIDER_BYTES or receipt['headers'].get('ETag') != PROVIDER_ETAG:
-        raise ValueError('provider original body size/ETag differs')
+    if (receipt['bytes'] != PROVIDER_BYTES or receipt['headers'].get('ETag') != PROVIDER_ETAG
+            or receipt['sha256'] != PROVIDER_SHA):
+        raise ValueError('provider original body size/ETag/observed SHA differs')
     plain = data / 'reference.fa'
     plain_cap = BUDGET['inputs'] - PROVIDER_BYTES - BGZF_CAP - fai.stat().st_size - 2**20
-    count = 0
-    with gzip.open(original, 'rb') as compressed, plain.open('xb') as output:
-        while chunk := compressed.read(2**20):
-            count += len(chunk)
-            if count > plain_cap:
-                raise RuntimeError('capacity: complete decompression exceeds input envelope, not a FAI-derived upper bound')
-            output.write(chunk)
+    compression = _decode_razf(original, plain, plain_cap)
+    if compression['plain'] != dict(bytes=PLAIN_BYTES, sha256=PLAIN_SHA):
+        raise ValueError('complete provider plain body differs from observed full-body identity')
     verify_plain(plain, rows)
     capacity(root, 'after-complete-plain')
     bgzf = data / 'reference.fa.gz'
@@ -490,21 +562,12 @@ def acquire_reference(root: Path, bgzip: Path) -> tuple[dict, list[dict]]:
         raise RuntimeError('capacity: complete source BGZF GZI exceeds frozen allowance')
     with original.open('rb') as stream:
         original_prefix = stream.read(64).hex()
-        stream.seek(0)
-        header = stream.read(12)
-        extra = stream.read(int.from_bytes(header[10:12], 'little')) if header[3] & 4 else b''
-    offset = 0
-    first_bgzf = False
-    while offset + 4 <= len(extra):
-        key, size = struct.unpack_from('<2sH', extra, offset)
-        first_bgzf |= key == b'BC' and size == 2
-        offset += 4 + size
     save(root / 'inputs.json', dict(original=identity(original), plain=identity(plain), bgzf=identity(bgzf),
         provider_fai=identity(fai), contigs=len(rows), bases=sum(row['bases'] for row in rows),
         original_gzip_prefix_hex=original_prefix, complete_gzip_crc_verified=True,
-        original_compression_flavor='BGZF first member' if first_bgzf else 'ordinary gzip first member',
+        original_compression_flavor=compression['flavor'], original_compression=compression,
         bgzf_members=members, plain_cap_from_input_envelope=plain_cap,
-        checksum_provenance='No advertised provider checksum; first full-body SHA frozen before qualification, not independently authenticated.'))
+        checksum_provenance='No advertised provider checksum; compressed/plain SHA frozen from full original failed run41262994994 before qualification, not independently provider-authenticated.'))
     return dict(plain=plain, bgzf=bgzf), rows
 
 

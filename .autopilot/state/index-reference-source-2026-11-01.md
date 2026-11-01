@@ -1,5 +1,40 @@
 # Index reference-resource source workflow
 
+## Second failure originals accepted; private RAZF preparation corrected
+
+Actual41262994994/1 at b8db86cfd3807443138e10fecd15f33877e1fe1b fails
+before any scientific call. All41 runtime/native admission commands return0.
+Python's next-gzip-member reader rejects the valid provider RAZF index after
+its complete DEFLATE member; the partial plain body is438487B short and is
+not accepted as input. This is a preparation failure, not a performance result.
+
+Root fully reads REPORT/FORMAT-FORENSICS and freshly verifies296 retained
+bodies/8871622763B in index-real-corrected-failure-20261101.QElQkv.
+REPORT fd54a316c7db014f2b342541b46e92ea3b903ce8594d0a1056d0cc62d38db670;
+format cf7899ced197eff3a38b362b6a30d99fa7397074a850590dcf38f3d63cb0c610;
+seal652f3b0b8294a71b1aa552dbc492deb85e27347bdaf0bb158f8e0765aab98d82.
+Both complete original artifact ZIPs, all246 CRC members,16765 manifest
+entries/18191 runtime TAR members and actual8 controllers are retained.
+Full-stream stdlib forensics verifies CRC/ISIZE, index/footer/flush offsets,
+3153506519 unchanged plain bytes and all84 original FAI layouts. Original
+compressed SHA8b6c538abf0dd92d3f3020f36cc1dd67ce004ffa421c2781205f1eb690bdb442
+and plain SHA2f9cd9e853a9284c53884e6a551b1c7284795dd053f255d630aeeb114d1fa81f
+are observed failed-run identities, not independently advertised checksums.
+
+Root reads the complete two-file correction and report, freshly verifies all13
+sealed bodies/119025B at index-razf-preparation-fix-20261101.4R7m9x and current
+source equality. SEAL da82c47602ffcbefbd2f97b78e3f20ecd942f974134f2da7303b2e407927c580;
+REPORT150ce2c47eebc2a43cc22746eb55367c9503517e3ce16d8165c02ce7fb7ea14a.
+The private bounded decoder validates the exact RAZF structure and all complete
+bytes before unchanged FAI/common-BGZF preparation. No generic trailing-byte
+ignore, reference editing, public RAZF API or product-owner change is added.
+The SAME ONE connected preparation test is author RED/GREEN1/.107/.191s;
+root freshly runs it through the external-storage guard:1pass/.284s. It covers
+full synthetic bytes plus CRC/footer rejection within the existing graph test.
+Original168 calls/182 scientific bodies, CPU masks, performance criteria and
+capacity remain fixed. New exact-head CI and actual hosted retry are required;
+neither previous failure is relabelled green and no real result is preaccepted.
+
 ## Actual corrected complete-reference run dispatched
 
 Exact-head Control41262794499 succeeds at

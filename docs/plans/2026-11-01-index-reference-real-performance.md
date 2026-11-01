@@ -9,6 +9,20 @@ explicit corrections below. No real performance outcome is preaccepted.
 
 ## Runtime and data
 
+Actual failed run41262994994 preserves the provider's complete RAZF body,
+not ordinary concatenated gzip. Before any scientific execution, the narrow
+preparation correction freezes observed compressed SHA
+8b6c538abf0dd92d3f3020f36cc1dd67ce004ffa421c2781205f1eb690bdb442
+and complete3153506519B plain SHA
+2f9cd9e853a9284c53884e6a551b1c7284795dd053f255d630aeeb114d1fa81f.
+These are original-run observations, not independent provider authentication.
+Validate the exact19-byte header, single DEFLATE EOF/CRC/ISIZE, complete
+big-endian index/footer geometry and ordered full-flush offsets. Preserve
+every plain byte and require the same complete FAI before common BGZF.
+Do not accept arbitrary post-gzip bytes or promote this private acquisition
+adapter into a public Index feature. The graph and advantage gates below
+remain unchanged; both earlier actual runs remain failed before science.
+
 Require actual owner7f2d4fdeda9d0062d10941258b40eee16fdb9042 four-native
 CI41259142238 success. Fresh hosted ubuntu24.04/four-CPU/eight-GiB uses the
 same fixed GCC14.3 Bookworm image/source runtime admission as the accepted
