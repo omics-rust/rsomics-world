@@ -1,5 +1,31 @@
 # rsomics-index 0.1 release gate
 
+## Current scoped acceptance and historical custody — 2026-11-01
+
+Owner030be20895cb7806f78b2923e1c1ac3afa05cd96 has accepted exact four-native
+CI41272452578 and fresh full-reference41273328984 correctness plus both fixed
+throughput/scoped process-memory routes. This closes FAI/query/dictionary
+evidence only, not the missing historical BGZF/tabix thirteen-lane proof.
+The optimized reference accepted receipt explicitly keeps publication false.
+
+Root reads the complete bounded hold inventory at
+index-historical-hold-review-20261101.u5Npe5/REPORT.md,
+SHA89f4d3aa48813607e75adc28c1f04a8f04839e423ff0ac797f5c667106aedff4.
+Exact old821d491 binary184860bd075777ac309efd72cca46b7c9dad4eb2d7c2e5db3c7e214fc17ec69d
+AND its matching build sidecar74d9cdc57bb7f5cee780058f85858f0cddeda75e4bb3b12691bf3b065115f6b0
+survive. The three recorded raw/result directories and original fixture root
+are absent at their exact paths; other backups are unverified, not presumed
+deleted. The default target binary no longer matches that historical sidecar.
+The retained older local0.1.0 crate is not candidate030 or registry evidence.
+
+Recover/verify the complete old result bundle and reassess applicability, or
+qualify a fresh complete Linux BGZF/tabix workflow with current-source/binary/
+provider binding and predeclared gates/capacity. Do not replay the old Darwin
+harness under today's no-Mac-upstream rule, borrow reference-only timings or
+claim that all originals disappeared. Final API/hot-path release review, fresh
+registry/version/authority and actual published-install verification remain
+separate. No secret or registry query is performed by this custody inventory.
+
 ## Current storage contract — 2026-11-01
 
 Owner c7a8f8d52c00feb405a5c968f48d425668dd3219 supersedes the historical
