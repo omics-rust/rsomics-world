@@ -1,5 +1,67 @@
 # Real signal campaign
 
+## Actual detached shared-host preparation running
+
+Root fully reads the bounded-launch report, actual runner-v2 and point-in-time
+snapshot, then freshly verifies all65 sealed bodies/207799B at
+signal-ssh-campaign-launch-20261101.yFm0nM. REPORT SHA
+29f22523047c8546b6a92c2dad52f637c9f6e70c2fd75ccd84c9b23ce1da6449;
+completedc12004c2d28a6d98dfaf3035209f1a040e6415e0e0adf047c2e22b931f868a13.
+
+Actual normal detached task starts2026-11-01T02:08:54UTC in the admitted
+containerd9658ada0a87dedb2d1a4f0ba8bd8f6c114b9e7292452cf26d03d962cb8e0664:
+hostPID1468391/containerPID306/start_ticks380739624, UID1006, affinity0-3.
+At02:10:29UTC checkpoint that exact PID/start pair is live and prepare-running;
+prepared files exist but qualification.json/campaign.lock do not yet exist.
+No preparation/campaign/performance completion is inferred from this snapshot.
+
+Host logs are under
+/home/liangjy/rsomics-signal-ssh-20261101-af137/work/signal-evidence/evidence/execution-run-yFm0nM-v2.
+The unchanged absolute original venv executes prepare, then only on success
+and fixed-population/file qualification the complete campaign --shared-host.
+All science/checker/resource guards remain; no scheduler/cron/notification,
+idle-host or exact-cgroup-memory claim is introduced. Future checks must match
+actual PID/start identity and current status rather than assume it stayed live.
+
+The first launcher uses system Python and is correctly rejected before data
+preparation by the pinned-interpreter check. It remains failed and retained.
+Root reads actualaf137 workflow: prepare/campaign explicitly use the original
+runtime/venv/bin/python. Only that invocation is corrected in new additivev2;
+no runtime/source/image/data/threshold change or re-admission is performed.
+
+## Actual shared-SSH runtime/provider admission accepted
+
+The verified system image is transferred/loaded once. Genuine container,
+ssh-context, setup, acquire and admit-ssh all succeed. Root reads full REPORT,
+actual stage records, native receipt and provider mapping, then freshly verifies
+all1106 sealed bodies/22590118B at
+signal-ssh-system-image-admission-20261101.BLxyR0. REPORT SHA
+c5ba3163a73bdab0d62ccc4010b0019a22e7985f5da262c0fddc953391f1b328;
+completed7dafe3f81e4a84d4316b7e73b8d341ca16dce62d7f0e0dd3a0e9d7c49f016ee2.
+Recovery11939840B TAR/1053 members SHA
+00b988fc12e0cac338b3ee65e1f02c351490a21e5b6405223244354745b9ef04.
+
+Actual restored runtime31374 members/30408 manifest entries keeps original
+absolute prefix and carrier SHA7e19939095519e88d46f20b2ad9648565f3349886c0d23a1b55a13bbd314c2dd.
+Static241 ELF bodies/769 needed slots and244 raw commands pass;59 actual
+import mappings agree, as do78 system closure bodies. Native binary remains
+9d62499fa2909c57654547379a29850f5f81683da5464cb32901e263fedf3804.
+No scientific package is installed, patched or rebuilt; no graph/performance
+or release is accepted by these imports.
+
+One task-wrapper false stop is retained: it compared sparse raw config missing
+WorkingDir with Docker inspect's empty default. Root reviews actual originals;
+additivev2 compares the complete original/loaded inspect Config dictionaries,
+which are exactly equal, while raw config SHA/imageID/rootFS/labels stay strict.
+No re-load/image change/default-policy relaxation occurs. V2 six stages return0
+in54.223s and stop after admission. Only task-container sleep remains at handoff.
+
+Root now authorizes unchanged prepare followed on success by the complete
+original campaign --shared-host in the same admitted task container. All six
+case/worker qualifications, warmups, five alternating pairs, numeric/storage
+guards remain; no idle/exclusive-host or unmeasured cgroup-memory claim. Launch
+is pending separate actual process evidence, not inferred from authorization.
+
 ## Complete system-image transport accepted; actual SSH admission next
 
 Root fully reads the actual transport report and both verification programs,
