@@ -10,10 +10,6 @@ jobs:
   diagnose:
     runs-on: ubuntu-24.04-arm
     timeout-minutes: 20
-    strategy:
-      fail-fast: false
-      matrix:
-        python: ['3.12.14', '3.12.15']
     defaults:
       run:
         shell: bash
@@ -29,7 +25,7 @@ jobs:
           echo "XDG_CACHE_HOME=$RUNNER_TEMP/cache" >> "$GITHUB_ENV"
       - uses: actions/setup-python@v6
         with:
-          python-version: ${{ matrix.python }}
+          python-version: '3.12.15'
       - name: Recreate the failed oracle package selection
         run: |
           ulimit -c 0
@@ -45,51 +41,45 @@ jobs:
             pyparsing==3.3.3 python-dateutil==4.0.0 pycparser==3.12 scipy==1.18.1 \
             tzdata==2026.6 2>&1 | tee "$RUNNER_TEMP/evidence/pip-install.log"
           python -m pip freeze > "$RUNNER_TEMP/evidence/pip-freeze.txt"
-      - name: Isolate import and process-exit failures without product execution
+      - name: Capture the uninstrumented oracle exit before debugger installation
         run: |
           ulimit -c 0
-          python -B - <<'PY'
-          import hashlib, json, os, shutil, subprocess, sys
-          from pathlib import Path
-          root = Path(os.environ['RUNNER_TEMP']) / 'evidence'
-          commands = [('python', [sys.executable, '-X', 'faulthandler', '-c', 'print("runtime")'])]
-          for label, module in (('cffi-backend', '_cffi_backend'), ('numpy', 'numpy'),
-                                ('scipy-native', 'scipy.optimize, scipy.stats'),
-                                ('bitstring', 'bitstring'), ('sourmash', 'sourmash')):
-              code = (f'import {module}; import sys; print("imported {module}", flush=True); '
-                      'print("\\n".join(sorted(sys.modules)), flush=True)')
-              commands.append((label, [sys.executable, '-X', 'faulthandler', '-c', code]))
-          entry = shutil.which('sourmash')
-          assert entry
-          commands.append(('version', [entry, '--version']))
-          records = []
-          for name, argv in commands:
-              with (root / (name + '.stdout')).open('xb') as out, (root / (name + '.stderr')).open('xb') as err:
-                  completed = subprocess.run(argv, stdout=out, stderr=err, timeout=90)
-              records.append(dict(name=name, argv=argv, returncode=completed.returncode))
-          (root / 'commands.json').write_text(json.dumps(records, indent=2) + '\n')
-          gdb = shutil.which('gdb')
-          crashed = any(row['returncode'] in (-11, 139) for row in records)
-          if crashed and gdb:
-              argv = [gdb, '--batch', '--quiet', '-ex', 'set pagination off', '-ex', 'run',
-                      '-ex', 'thread apply all bt', '--args', sys.executable,
-                      '-X', 'faulthandler', entry, '--version']
-              with (root / 'gdb.stdout').open('xb') as out, (root / 'gdb.stderr').open('xb') as err:
-                  result = subprocess.run(argv, stdout=out, stderr=err, timeout=120)
-              (root / 'gdb-command.json').write_text(json.dumps(dict(argv=argv, returncode=result.returncode), indent=2) + '\n')
-          summary = dict(scope='Oracle environment diagnosis only; no product/native/performance qualification',
-              python=sys.version, executable=sys.executable, entry=entry,
-              entry_sha256=hashlib.sha256(Path(entry).read_bytes()).hexdigest(),
-              gdb_available=bool(gdb), commands=records)
-          (root / 'summary.json').write_text(json.dumps(summary, indent=2) + '\n')
-          print(json.dumps(summary, indent=2))
-          if any(row['returncode'] for row in records):
-              raise SystemExit('one or more oracle runtime probes failed')
-          PY
+          command -v python sourmash > "$RUNNER_TEMP/evidence/executables.txt"
+          sha256sum "$(command -v sourmash)" > "$RUNNER_TEMP/evidence/entry-sha256.txt"
+          set +e
+          sourmash --version > "$RUNNER_TEMP/evidence/before-debugger.stdout" 2> "$RUNNER_TEMP/evidence/before-debugger.stderr"
+          oracle_exit=$?
+          set -e
+          printf '%s\n' "$oracle_exit" > "$RUNNER_TEMP/evidence/before-debugger.exit"
+      - name: Install a debugger only on the disposable hosted ARM runner
+        run: |
+          dpkg-query -W > "$RUNNER_TEMP/evidence/dpkg-before.txt"
+          sudo apt-get update > "$RUNNER_TEMP/evidence/apt-update.log" 2>&1
+          sudo apt-get install -y --no-install-recommends gdb > "$RUNNER_TEMP/evidence/apt-install.log" 2>&1
+          dpkg-query -W > "$RUNNER_TEMP/evidence/dpkg-after.txt"
+          gdb --version > "$RUNNER_TEMP/evidence/gdb-version.txt"
+      - name: Capture the native exit stack without product execution
+        run: |
+          ulimit -c 0
+          set +e
+          sourmash --version > "$RUNNER_TEMP/evidence/after-debugger.stdout" 2> "$RUNNER_TEMP/evidence/after-debugger.stderr"
+          oracle_exit=$?
+          printf '%s\n' "$oracle_exit" > "$RUNNER_TEMP/evidence/after-debugger.exit"
+          gdb --batch --quiet -ex 'set pagination off' -ex 'set debuginfod enabled off' \
+            -ex run -ex 'thread apply all bt full' -ex 'info sharedlibrary' \
+            --args "$(command -v python)" -X faulthandler "$(command -v sourmash)" --version \
+            > "$RUNNER_TEMP/evidence/gdb.stdout" 2> "$RUNNER_TEMP/evidence/gdb.stderr"
+          gdb_exit=$?
+          printf '%s\n' "$gdb_exit" > "$RUNNER_TEMP/evidence/gdb.exit"
+          set -e
+          printf '%s\n' 'Oracle environment diagnosis only; not native, compatibility or performance qualification.'
+          test "$gdb_exit" -eq 0
+          test "$(< "$RUNNER_TEMP/evidence/before-debugger.exit")" -eq 0
+          test "$oracle_exit" -eq 0
       - uses: actions/upload-artifact@v7.0.1
         if: always()
         with:
-          name: sketch-oracle-runtime-python-${{ matrix.python }}-${{ github.sha }}
+          name: sketch-oracle-runtime-backtrace-${{ github.sha }}
           path: ${{ runner.temp }}/evidence
           if-no-files-found: error
           retention-days: 90

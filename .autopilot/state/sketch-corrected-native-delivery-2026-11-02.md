@@ -127,3 +127,35 @@ boundary. No product build, compatibility waiver, source change, time/RSS
 measurement, blind pin or rerun of the whole product is part of this diagnosis.
 Cost: until actual cause/correction and native4 succeed, Sketch delivery stays
 held; other product work continues. All original failed outcomes remain.
+
+Complete initial native originals are now retained in external yYTrnl:
+all4 raw artifact ZIPs, full attempt log and complete run/attempt/jobs/artifacts
+API responses,9,649,884B raw. Root read REPORT92cca43f and verified its complete
+SHA256SUMS. Actual native3 succeed (Linuxx86,Macx86,MacARM); LinuxARM fails.
+The three passed BUILD records name9061d942/tree5a501fb9 and141-file source
+TAR SHA9a78c89f359879489723a57628242f521eb746c5fc0ff6b31d588ec04646b118.
+This adopts retention only, not native4 or source/binary/performance acceptance.
+
+Actual two-version runtime diagnosis41354486584/1 at Worlddd1fe05c (exact
+Control41354368416 passed) completed both jobs with failure. Original ZIPs:
+3.12.14 artifact13102303928/145979B/SHA
+b7922868bd12ed507737dccde680e9892d6b245e53906f1c4cbf25aec0e14991;
+3.12.15 artifact13103010402/145980B/SHA
+b67521485866389a18049a61c7caa067ef272015d6598eb39dd8070bca644cbd.
+Root retained/checked both in external BfxL2j and read all14 probe statuses:
+Python, CFFI backend, numpy, scipy.optimize/stats and bitstring exit0 on both;
+import sourmash and actual version both print then exitSIGSEGV/-11 on both.
+No faulthandler traceback is emitted; neither runner has gdb. The CPython
+point-version hypothesis is disproven for this recreated package selection.
+Cause is narrowed to sourmash initialization/teardown or its interaction, not
+proven to be a particular library. No dependency pin or product fix follows.
+
+Ruling: one further native ARM backtrace-only diagnosis uses3.12.15 and the
+same21 package versions. A debugger may be installed only on this disposable
+hosted runner; retain dpkg before/after, package-manager logs and true CLI
+statuses before/after installation, disable debuginfod and capture native
+threads/shared libraries. Do not repeat the module matrix or infer green
+qualification from gdb's own exit. Cost: debugger installation can alter system
+packages, so raw before/after statuses and system package changes must remain
+visible. No Mac install, product build, scientific benchmark, API change,
+publication, or unconditional whole-product retry is authorized by this probe.

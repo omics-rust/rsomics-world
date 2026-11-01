@@ -22,7 +22,12 @@ passes exact four-nativeCI41341218191 with complete originals adopted.
 GitHubv0.1.0 and the fresh public Mac14-call lifecycle pass; post-release
 README7f27eb01 passes exactCI41344601496. Registry remains separately held.
 PLINK's prepared-reader/LD change passes green7 native/source qualification;
-actual41335480371/1 runs the unchanged final seven-stage performance graph.
+actual41335480371/1 is terminal failure; complete encrypted originals are being
+recovered in the admitted external208GiB envelope before attributing a cause or
+claiming a performance outcome. Sketch's corrected kmer adoption9061d942 passes
+three native classes; LinuxARM is held at the pinned upstream oracle's startup
+SIGSEGV. Both tested Python point versions reproduce it; native backtrace
+diagnosis continues without a product pin, platform skip or performance dispatch.
 Index's corrected whole41327532095 has complete correct originals adopted:
 three serial primaries pass throughput, binary compression alone fails the
 material-advantage gate. A new implementation/profile is not yet justified;
