@@ -1,15 +1,22 @@
 # Bulk-expression product dossiers
 
 Status: joint boundary, upstream-operation, and historical-source audit
-complete. DESeq has a complete unpublished schema5 Wald/normalized-count/fitted-VST
+complete. DESeq has a complete schema5 Wald/normalized-count/fitted-VST
 slice: final green7 passes24 workflows across four native classes and both
 real parametric/local complete performance paths. On the full14599×7 fixture,
 native1/4 takes1.02/0.79s or1.05/0.81s versus R inner5.264/5.375s; moderate
-1.29x worker gain and lower process RSS are measured. It is not published or
-release-complete. Reviewed source-package and actual example preparation is
-now pushed to its populated owning repository; exact owning native4 CI
-run41180255242 passes at636e259, including Linux source-package/unpacked tests.
-Registry authorization and the actual clean publication artifact remain gates. See
+1.29x worker gain and lower process RSS are measured. The bounded CLI slice
+is now published as [GitHub v0.1.0](https://github.com/omics-rust/rsomics-deseq/releases/tag/v0.1.0),
+exact5563528d56d604411f01270188a0d29d76321a79. Actual owning CI41293914322
+passes all four native classes, complete source-package/unpacked tests and
+installed lifecycle checks. The complete actual artifacts are independently
+adopted; all four source packages are byte-identical. A freshly downloaded
+public MacARM archive passes the six-call1200-gene/12-sample schema5 lifecycle.
+This is not a newly remeasured scientific binary or full DESeq2 parity.
+Crates.io publication remains separately authorization-held, publish=false;
+four native archives, source crate and checksums are delivered on GitHub.
+See `.autopilot/oracles/deseq-release-2026-11-01.json`,
+`.autopilot/state/deseq-native-delivery-2026-11-01.md`,
 `.autopilot/state/deseq-schema5-performance-2026-10-28.md` and
 `.autopilot/state/deseq-release-preparation-2026-10-31.md`.
 The edgeR target has a complete private native modern-QL workflow, but its
