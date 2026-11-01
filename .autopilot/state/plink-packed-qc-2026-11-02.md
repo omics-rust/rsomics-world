@@ -120,3 +120,26 @@ stopped/incomplete observer keeps its full8GiB. Known terminal caps total170GiB.
 Future208GiB plus independent8GiB would require265328599040 free bytes after
 crediting actual allocation once; root observes478411907072, margin213083308032.
 This is planning only, not a global writer lease or future run/recovery admission.
+
+## Green8 complete native/source originals adopted
+
+Root reads full504-line self-contained data checker and report, then freshly
+verifies the closed471341527-byte packet4Onwue under the owning guard. Exit0,
+stderr0; UFGTbb/check.stdout SHA
+772e0dfefb78dd1e77e1a56bde9a53315af81d04118f0e679e4fcfd7485e475f.
+Five whole ZIP/TAR originals,10571 regular bodies, API metadata and complete
+attempt/five job logs remain. Canonical303 source bodies reconstruct the exact
+Git commit/tree/blob/modes; extracted local modes are not runtime/Git evidence.
+Each of8 native modes has actual5lib+1whole-CLI/0ignored,123 principal reports
+per worker profile,66 worker records,36 generations and74878 raw cells.
+All224 actual source/official commands and36 raw bridges are independently
+recompared at the frozen text/numeric contract. Every profile has3541 QC and
+3193 HWE/LD/tail rows. No recovered code/scientific process runs in root check.
+Source consumers do not execute the native ELF or prove deployment ABI.
+
+Adoption plink-native-2026-11-02-green-8.json binds actual Linux ELF3120520B,
+SHAd9c448e30f988b23f5dd3df025674483d469f9812d37e58712c8c55cd19ec882.
+The real controller adds only this explicit selector to the admitted list;
+defaultgreen2/older receipts, strict performance predicate and comparisons
+stay unchanged. Local reader setup errors remain in the packet and are not
+CI failures. New actual whole resources and publication are still unearned.

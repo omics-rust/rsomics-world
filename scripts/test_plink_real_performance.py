@@ -228,6 +228,13 @@ class PlinkRealPreparation(unittest.TestCase):
             self.assertEqual(prepared['binary_sha256'], '76a81eee24c7425615473d542413080d790a907f438100723a092577c0cfbc41')
             self.assertEqual(prepared['principal_reports_per_worker'], 123)
             self.assertEqual(prepared['worker_provenance_records_per_mode'], 66)
+            qc, _ = real.committed_receipt(ROOT, '.autopilot/oracles/plink-native-2026-11-02-green-8.json')
+            self.assertEqual(qc['snapshot'], 'green-8')
+            self.assertEqual(qc['owner_commit'], 'f49f3675184801bb1e2cbf935f0ecadbc6a22e84')
+            self.assertEqual(qc['binary_sha256'], 'd9c448e30f988b23f5dd3df025674483d469f9812d37e58712c8c55cd19ec882')
+            self.assertEqual(qc['library_tests_per_mode'], 5)
+            self.assertEqual(qc['principal_reports_per_worker'], 123)
+            self.assertEqual(qc['worker_provenance_records_per_mode'], 66)
             with self.assertRaisesRegex(ValueError, 'historical'):
                 real.source.extract_native(root / 'absent.tar', root / 'absent', ROOT,
                                            expected_head=adopted['head_sha'])

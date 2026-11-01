@@ -5,8 +5,17 @@ complete. The initial2026-07-31 inspection found neither target repository;
 this is not a current live-registry assertion. Current PLINK source preflight
 is recorded in `.autopilot/state/plink-source-preflight-2026-10-31.md`.
 
-Current2026-11-02 PLINK: prepared-reader/LD owner7b214436 and green7
-native/source41329335343 remain accepted. Actual whole41335480371/1 at
+Current2026-11-02 PLINK: packed-QC ownerf49f3675 and actual green8
+native/source41362616110/1 are accepted after complete original adoption and
+root data-only numeric/raw replay. Its303 exact Git source bodies, native4
+debug/release5-library+1-whole-CLI tests and224 source commands pass. Real
+performance of this new candidate remains pending. Opt-in own-role content
+reuse retains all6 full qualifications and every timed scientific command;
+it reduces out-of-clock validation, not a claimed CLI speedup. Old/default
+selectors remain unchanged; new whole-run admission must use fresh capacity.
+
+Prior prepared-reader/LD owner7b214436 and green7 native/source41329335343
+remain accepted historical evidence. Actual whole41335480371/1 at
 40b2989b is now independently adopted after complete authenticated original
 custody and root data-only replay. All26 fixed graphs/210 commands/78 own
 generations/52 retained fresh-P validations are correct on all929 HGDP people
