@@ -51,6 +51,28 @@ numbers. JSON records schema/metric/source-profile/IDs and borrowed matrix
 rows. This is numeric source compatibility, not a claim of Python-repr byte
 identity. Native1/4 outputs must be byte-identical.
 
+## Consolidated review correction ruling
+
+The one whole-feature review finds noP1 and oneP2: separately cached sample
+correction masses can lose source zero/nonfinite classification for subnormal
+paths or overflowed unobserved extra-tip paths. Root adopts source-order
+sparse pair correction, length*(p+q), plus shared source-masked path
+information instead of cached sample masses. An internal infinite path is
+masked to NaN by the source; an infinite tip is NaN-producing only when
+absent from both samples (inf*0). If every infinite tip has positive pair
+support and no internal NaN exists, an infinite correction can legitimately
+yield zero. Root corrects its initial overbroad any-infinite-tip shorthand:
+retain an internal-NaN flag and infinite-tip total/visited-union accounting,
+not blanket tree rejection. Folding that correction into
+the existing sorted branch merge is allowed. Keep double-empty precedence,
+zero-feature/diagonal exceptions and exact pair-specific failure semantics.
+No epsilon, clamp, narrower tree domain, relaxed band or new source capture.
+The two evidenced cases enter the SAME integrated boundary group in ONE
+fix wave. Eager tip-root setup is a nonblocking later measurement concern,
+not another cleanup/review task. The actual review report is
+ecology-beta-review.wnz0JS/REPORT.md, SHA256
+3d8bb147b85eed0cef7b684cd3bfd14541d0e6e07ec05b5ab37a17d94819f061.
+
 ## One integrated qualification and review
 
 Use the original captured12-feature/six-sample table at all eight metrics,

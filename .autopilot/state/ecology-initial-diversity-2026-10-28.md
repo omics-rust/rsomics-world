@@ -1,5 +1,29 @@
 # Ecology diversity source qualification
 
+## One whole beta review; one localized correction wave
+
+Root reads the entire production/test/comparator/doc wave and fresh reviewer
+REPORT3d8bb147b85eed0cef7b684cd3bfd14541d0e6e07ec05b5ab37a17d94819f061
+at ecology-beta-review.wnz0JS. NoP1; oneP2 concerns normalized correction's
+defined/nonfinite classification under floating underflow/extra-tip overflow.
+One author correction at ecology-beta-correction1.Otp2mX replaces per-sample
+mass caching with source-order sparse pair correction and all-tip path state;
+the two evidenced cases join the SAME integrated boundary group. Original
+report/manifests/logs are preserved first. No tolerance, domain, golden,
+alpha/RNG/public API/dependency change or new upstream source campaign.
+The eager-setup minor is deferred to actual measurement. Root will inspect
+the corrected local diff and one integrated check, not spawn a second review.
+Native-four/full-study beta/performance/release remain pending.
+
+Author's actual-source audit catches root's overbroad shorthand before final
+correction: any infinite tip is not automatically undefined. _tip_distances
+masks internal infinite paths to NaN; tip infinity times pair-positive support
+is infinity, while an omitted infinite tip contributes inf*0=NaN. Root rereads
+that exact two-step contract and adopts source-masked path state, internal-NaN
+flag and infinite-tip total/visited pair-union accounting. Double-empty/zero-
+feature/diagonal precedence stays intact. No new human question or extra
+stress/source campaign is needed; this remains the SAME correction wave.
+
 ## Complete-study alpha/rarefaction success adopted, not beta or release
 
 Root reads complete REPORT,448-line data/resource validator, full TAR/CAS and
