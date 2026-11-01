@@ -41,3 +41,42 @@ workspace and may not spawn subagents, mutate Git or run scientific code.
 Owning scope is exactly the four
 new source-controller/workflow/asset/ONE-test paths in the plan; no owning
 Rust code yet. Tasks2/3 remain pending actual earlier receipts.
+
+## Task1 frozen delivery and one whole-change review
+
+Author delivers all four owned paths/1576 lines with ONE connected prep
+RED then GREEN1/.138s,18 actual fresh wheel/METADATA bodies, actual pinned
+interpreter/source originals, five-file stdlib AST closure and four shell blocks.
+Root reads every delivered source/test/workflow/policy line, the complete
+report, reused verifier/process/transport interfaces and actual old ZIP layout.
+No Rust/native/source science has run. External task-1-report.md carries
+original four body hashes f386cb11/ba5470e5/2cdf41e1/3cc77b1f and raw logs.
+
+One fresh whole-change review by /root/rnaseq_junction_review uses gpt-6-astra
+and actual four-file no-index diff, not a fabricated committed range. Root
+reads complete review74d208d7fdfef16b365707eb460169b9e6045dce99abfe8a0503491660cd41dd.
+It finds twoP2: available HTTP failure responses lose raw bodies/status/headers;
+pre-seal transport-probe diagnostics/partials sit outside the private inventory.
+Root adds one evidencedP2: urllib redirects preserve Authorization put into
+Request.headers; actual installed stdlib source confirms the cross-host copy.
+Use unredirected auth headers instead of forwarding the GitHub bearer token.
+No new workflow is dispatched while these findings remain.
+
+Task1: one integrated three-finding fix wave assigned to the original author.
+It freezes the original four bodies, extends the SAME connected test with
+stdlib failure-response/probe-membership/auth-redirect checks, observes RED,
+fixes only localized custody/auth plumbing, then GREEN/new delivery identities.
+No extra helper tests/reviewer ladder, source import or scientific result.
+
+Review minors deferred: duplicate300s policy/controller literals (agree today);
+optional export provenance checks count rows but do not certify all fields.
+Native export compatibility is not advertised from this capture.
+
+Review scope rulings: runtime ABI/live API freshness, actual six observations
+and authenticated recovery await the hosted source run. Native/default-five/
+canonical/shared-foundation behavior awaits Task2; throughput/full-input/
+scaling/release awaits Task3 and final gates. R/PDF/BED/Interact compatibility
+and execution are excluded beyond provenance-only capture. Hard host loss and
+sealing failure carry the existing no-zero-loss/no-plaintext-fallback limit.
+Unrelated worktree/helper redesign remains outside scope. None of these
+deferred phases is counted as an implemented or accepted result.
