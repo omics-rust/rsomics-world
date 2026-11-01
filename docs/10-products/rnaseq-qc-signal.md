@@ -227,7 +227,19 @@ complete operations. Each operation must pass:
 - a coordinated-report comparison that includes repeated upstream startup and
   scans rather than summing unrelated microbenchmarks.
 
-Later slices add junctions, fragments, bias, duplication, and saturation only
+The private junction detail/summary addition is now committed at
+a618e6ab293e2fb7a113d949197e1bb43ecc7733 after one whole-feature review and
+full local verification. Source-only41277337904 qualifies its ordered rows,
+support, independent endpoint classes and nine counters. It observes original
+records in the same traversal, with focused/explicit report selection; the
+default five remain unchanged. Exact four-native41282068281 is in progress;
+new full-input junction performance is not yet accepted. Canonical geometry,
+strict aliases and complete no-N/all-short results are explicit source
+differences. Native R/PDF/BED/Interact exports and saturation remain excluded.
+See the separately adopted 2026-11-01-rnaseq-qc-junctions plan and state ledger;
+historical five-metric timings are not new junction or six-metric evidence.
+
+Remaining later slices add fragments, bias, duplication, and saturation only
 when each advertised mode passes the same gate. An incomplete metric is absent
 from help and presets.
 
