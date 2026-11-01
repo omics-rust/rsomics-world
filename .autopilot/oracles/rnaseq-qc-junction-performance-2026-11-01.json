@@ -1,0 +1,685 @@
+{
+  "actual_native_sha256": "eb472af80dfa26a00819448f895ccbcceb570de3ad629ac81f9507c7534282ae",
+  "all_full_outputs_compared": true,
+  "artifact_id": 13077159572,
+  "authenticated_tar": {
+    "bytes": 2680002560,
+    "sha256": "95235b840cfc4263829a413302677c90b344937654dcce2d271402a23779468f"
+  },
+  "cipher": {
+    "bytes": 2680658507,
+    "sha256": "0ce0745713e85cf24ce7df30268bc590f613e53bd5e2ef1c5af152c0975f4881"
+  },
+  "complete_scientific_payload_bytes": {
+    "native1": 12726340,
+    "native4": 12726340,
+    "source": 2519183
+  },
+  "controller_bodies": 29,
+  "decision": {
+    "cold_cache_proven": false,
+    "distributions": {
+      "native1": {
+        "cpu": {
+          "maximum": 2.988072,
+          "median": 2.962704,
+          "minimum": 2.949753,
+          "values": [
+            2.962704,
+            2.988072,
+            2.980101,
+            2.9618830000000003,
+            2.949753
+          ]
+        },
+        "input_blocks": {
+          "maximum": 0,
+          "median": 0,
+          "minimum": 0,
+          "values": [
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "major_faults": {
+          "maximum": 0,
+          "median": 0,
+          "minimum": 0,
+          "values": [
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "minor_faults": {
+          "maximum": 13841,
+          "median": 13834,
+          "minimum": 13831,
+          "values": [
+            13831,
+            13831,
+            13841,
+            13834,
+            13838
+          ]
+        },
+        "output_blocks": {
+          "maximum": 24896,
+          "median": 24896,
+          "minimum": 24896,
+          "values": [
+            24896,
+            24896,
+            24896,
+            24896,
+            24896
+          ]
+        },
+        "rss_bytes": {
+          "maximum": 46383104,
+          "median": 46321664,
+          "minimum": 46198784,
+          "values": [
+            46198784,
+            46231552,
+            46321664,
+            46333952,
+            46383104
+          ]
+        },
+        "system_seconds": {
+          "maximum": 0.227931,
+          "median": 0.194049,
+          "minimum": 0.177052,
+          "values": [
+            0.18798099999999998,
+            0.199004,
+            0.227931,
+            0.177052,
+            0.194049
+          ]
+        },
+        "user_seconds": {
+          "maximum": 2.789068,
+          "median": 2.774723,
+          "minimum": 2.75217,
+          "values": [
+            2.774723,
+            2.789068,
+            2.75217,
+            2.784831,
+            2.7557039999999997
+          ]
+        },
+        "wall": {
+          "maximum": 2.996995624,
+          "median": 2.973215984,
+          "minimum": 2.964969739,
+          "values": [
+            2.972083677,
+            2.996995624,
+            2.987690192,
+            2.973215984,
+            2.964969739
+          ]
+        }
+      },
+      "native4": {
+        "cpu": {
+          "maximum": 4.431337,
+          "median": 4.3622570000000005,
+          "minimum": 4.34382,
+          "values": [
+            4.35887,
+            4.3622570000000005,
+            4.34382,
+            4.374225,
+            4.431337
+          ]
+        },
+        "input_blocks": {
+          "maximum": 0,
+          "median": 0,
+          "minimum": 0,
+          "values": [
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "major_faults": {
+          "maximum": 0,
+          "median": 0,
+          "minimum": 0,
+          "values": [
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "minor_faults": {
+          "maximum": 13876,
+          "median": 13873,
+          "minimum": 13866,
+          "values": [
+            13874,
+            13866,
+            13869,
+            13873,
+            13876
+          ]
+        },
+        "output_blocks": {
+          "maximum": 24896,
+          "median": 24896,
+          "minimum": 24896,
+          "values": [
+            24896,
+            24896,
+            24896,
+            24896,
+            24896
+          ]
+        },
+        "rss_bytes": {
+          "maximum": 46419968,
+          "median": 46292992,
+          "minimum": 46211072,
+          "values": [
+            46292992,
+            46231552,
+            46403584,
+            46419968,
+            46211072
+          ]
+        },
+        "system_seconds": {
+          "maximum": 0.481104,
+          "median": 0.441683,
+          "minimum": 0.426664,
+          "values": [
+            0.426664,
+            0.441683,
+            0.44809899999999997,
+            0.481104,
+            0.434365
+          ]
+        },
+        "user_seconds": {
+          "maximum": 3.996972,
+          "median": 3.9205740000000002,
+          "minimum": 3.893121,
+          "values": [
+            3.932206,
+            3.9205740000000002,
+            3.895721,
+            3.893121,
+            3.996972
+          ]
+        },
+        "wall": {
+          "maximum": 1.466908354,
+          "median": 1.451237994,
+          "minimum": 1.437552378,
+          "values": [
+            1.451237994,
+            1.437552378,
+            1.447982472,
+            1.466908354,
+            1.466340161
+          ]
+        }
+      },
+      "source": {
+        "cpu": {
+          "maximum": 17.406843,
+          "median": 17.326000999999998,
+          "minimum": 17.309816,
+          "values": [
+            17.31901,
+            17.361622,
+            17.326000999999998,
+            17.309816,
+            17.406843
+          ]
+        },
+        "input_blocks": {
+          "maximum": 0,
+          "median": 0,
+          "minimum": 0,
+          "values": [
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "major_faults": {
+          "maximum": 0,
+          "median": 0,
+          "minimum": 0,
+          "values": [
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "minor_faults": {
+          "maximum": 19378,
+          "median": 19372,
+          "minimum": 19369,
+          "values": [
+            19373,
+            19369,
+            19372,
+            19372,
+            19378
+          ]
+        },
+        "output_blocks": {
+          "maximum": 4944,
+          "median": 4944,
+          "minimum": 4944,
+          "values": [
+            4944,
+            4944,
+            4944,
+            4944,
+            4944
+          ]
+        },
+        "rss_bytes": {
+          "maximum": 111349760,
+          "median": 111198208,
+          "minimum": 111083520,
+          "values": [
+            111198208,
+            111276032,
+            111132672,
+            111083520,
+            111349760
+          ]
+        },
+        "system_seconds": {
+          "maximum": 0.128991,
+          "median": 0.11898399999999999,
+          "minimum": 0.11599,
+          "values": [
+            0.11599999999999999,
+            0.11599,
+            0.127992,
+            0.11898399999999999,
+            0.128991
+          ]
+        },
+        "user_seconds": {
+          "maximum": 17.277852,
+          "median": 17.20301,
+          "minimum": 17.190832,
+          "values": [
+            17.20301,
+            17.245632,
+            17.198009,
+            17.190832,
+            17.277852
+          ]
+        },
+        "wall": {
+          "maximum": 17.412823678,
+          "median": 17.338170747,
+          "minimum": 17.316885216,
+          "values": [
+            17.322649387,
+            17.372827752,
+            17.338170747,
+            17.316885216,
+            17.412823678
+          ]
+        }
+      }
+    },
+    "io_counters_are_not_exact_storage_bytes": true,
+    "median_deltas_vs_source": {
+      "native1": {
+        "cpu": -14.363296999999998,
+        "input_blocks": 0,
+        "major_faults": 0,
+        "minor_faults": -5538,
+        "output_blocks": 19952,
+        "rss_bytes": -64876544,
+        "system_seconds": 0.075065,
+        "user_seconds": -14.428287,
+        "wall": -14.364954763
+      },
+      "native4": {
+        "cpu": -12.963743999999998,
+        "input_blocks": 0,
+        "major_faults": 0,
+        "minor_faults": -5499,
+        "output_blocks": 19952,
+        "rss_bytes": -64905216,
+        "system_seconds": 0.322699,
+        "user_seconds": -13.282435999999999,
+        "wall": -15.886932753
+      }
+    },
+    "median_ratios_vs_source": {
+      "native1": {
+        "cpu": 0.1709975660280754,
+        "input_blocks": null,
+        "major_faults": null,
+        "minor_faults": 0.714123477183564,
+        "output_blocks": 5.035598705501618,
+        "rss_bytes": 0.41656843966406365,
+        "system_seconds": 1.630883143952128,
+        "user_seconds": 0.16129287839744325,
+        "wall": 0.17148383340926848
+      },
+      "native4": {
+        "cpu": 0.2517751788193941,
+        "input_blocks": null,
+        "major_faults": null,
+        "minor_faults": 0.7161366921329755,
+        "output_blocks": 5.035598705501618,
+        "rss_bytes": 0.41631059378223073,
+        "system_seconds": 3.712120957439656,
+        "user_seconds": 0.2279004662556146,
+        "wall": 0.08370190922540693
+      }
+    },
+    "memory": true,
+    "native4_cannot_rescue_primary": true,
+    "native4_scaling": 2.0487445865478078,
+    "passed": true,
+    "primary": "Native1/Source1 ratio of medians",
+    "raw_wait4": {
+      "native1": [
+        {
+          "input_blocks": 0,
+          "major_faults": 0,
+          "minor_faults": 13831,
+          "output_blocks": 24896,
+          "rss_bytes": 46198784,
+          "system_seconds": 0.18798099999999998,
+          "user_seconds": 2.774723
+        },
+        {
+          "input_blocks": 0,
+          "major_faults": 0,
+          "minor_faults": 13831,
+          "output_blocks": 24896,
+          "rss_bytes": 46231552,
+          "system_seconds": 0.199004,
+          "user_seconds": 2.789068
+        },
+        {
+          "input_blocks": 0,
+          "major_faults": 0,
+          "minor_faults": 13841,
+          "output_blocks": 24896,
+          "rss_bytes": 46321664,
+          "system_seconds": 0.227931,
+          "user_seconds": 2.75217
+        },
+        {
+          "input_blocks": 0,
+          "major_faults": 0,
+          "minor_faults": 13834,
+          "output_blocks": 24896,
+          "rss_bytes": 46333952,
+          "system_seconds": 0.177052,
+          "user_seconds": 2.784831
+        },
+        {
+          "input_blocks": 0,
+          "major_faults": 0,
+          "minor_faults": 13838,
+          "output_blocks": 24896,
+          "rss_bytes": 46383104,
+          "system_seconds": 0.194049,
+          "user_seconds": 2.7557039999999997
+        }
+      ],
+      "native4": [
+        {
+          "input_blocks": 0,
+          "major_faults": 0,
+          "minor_faults": 13874,
+          "output_blocks": 24896,
+          "rss_bytes": 46292992,
+          "system_seconds": 0.426664,
+          "user_seconds": 3.932206
+        },
+        {
+          "input_blocks": 0,
+          "major_faults": 0,
+          "minor_faults": 13866,
+          "output_blocks": 24896,
+          "rss_bytes": 46231552,
+          "system_seconds": 0.441683,
+          "user_seconds": 3.9205740000000002
+        },
+        {
+          "input_blocks": 0,
+          "major_faults": 0,
+          "minor_faults": 13869,
+          "output_blocks": 24896,
+          "rss_bytes": 46403584,
+          "system_seconds": 0.44809899999999997,
+          "user_seconds": 3.895721
+        },
+        {
+          "input_blocks": 0,
+          "major_faults": 0,
+          "minor_faults": 13873,
+          "output_blocks": 24896,
+          "rss_bytes": 46419968,
+          "system_seconds": 0.481104,
+          "user_seconds": 3.893121
+        },
+        {
+          "input_blocks": 0,
+          "major_faults": 0,
+          "minor_faults": 13876,
+          "output_blocks": 24896,
+          "rss_bytes": 46211072,
+          "system_seconds": 0.434365,
+          "user_seconds": 3.996972
+        }
+      ],
+      "source": [
+        {
+          "input_blocks": 0,
+          "major_faults": 0,
+          "minor_faults": 19373,
+          "output_blocks": 4944,
+          "rss_bytes": 111198208,
+          "system_seconds": 0.11599999999999999,
+          "user_seconds": 17.20301
+        },
+        {
+          "input_blocks": 0,
+          "major_faults": 0,
+          "minor_faults": 19369,
+          "output_blocks": 4944,
+          "rss_bytes": 111276032,
+          "system_seconds": 0.11599,
+          "user_seconds": 17.245632
+        },
+        {
+          "input_blocks": 0,
+          "major_faults": 0,
+          "minor_faults": 19372,
+          "output_blocks": 4944,
+          "rss_bytes": 111132672,
+          "system_seconds": 0.127992,
+          "user_seconds": 17.198009
+        },
+        {
+          "input_blocks": 0,
+          "major_faults": 0,
+          "minor_faults": 19372,
+          "output_blocks": 4944,
+          "rss_bytes": 111083520,
+          "system_seconds": 0.11898399999999999,
+          "user_seconds": 17.190832
+        },
+        {
+          "input_blocks": 0,
+          "major_faults": 0,
+          "minor_faults": 19378,
+          "output_blocks": 4944,
+          "rss_bytes": 111349760,
+          "system_seconds": 0.128991,
+          "user_seconds": 17.277852
+        }
+      ]
+    },
+    "rss_is_process_peak_not_aggregate": true,
+    "rss_ratio": 0.41656843966406365,
+    "separated_rss": true,
+    "separated_wall": true,
+    "throughput": true,
+    "wall_ratio": 0.17148383340926848,
+    "zero_source_median_ratio_is_unavailable": true
+  },
+  "evidence_root": "/Volumes/Zane's HDD/rsomics-fixtures/evidence/rnaseq-junction-performance-20261101.2dAyn1",
+  "foreign_scientific_execution_on_mac": false,
+  "fresh_full_comparison": {
+    "bytes": 13612,
+    "sha256": "3136743942b8df27d69126ba55dc738b508cc414dfe5b0aeac868f3802e3aaa6"
+  },
+  "full_input_records": 9810963,
+  "github_release_eligible_only_after_separate_owning_delivery": true,
+  "head_sha": "8b2ae7bb1e674669dac9b1d57706405d448c98a6",
+  "input_original_bodies": 521,
+  "kind": "rsomics-rnaseq-qc-complete-junction-performance",
+  "limitations": [
+    "one warm-cache full-input workload",
+    "RSS is wait4 process/waited-child maximum, not isolated Rust heap or aggregate tree",
+    "richer native JSON and TSV payloads and raw output-block count are larger; no general I/O or storage win",
+    "four workers improve wall time with more total CPU, not linear scaling",
+    "R generation is counted, no R rendering is performed",
+    "old default five metrics remain separate evidence; no newly measured old-five pipeline",
+    "single external HDD custody, not independent-device replication"
+  ],
+  "logical_original_members": 16891,
+  "measured_calls": 15,
+  "measured_medians": {
+    "native1": {
+      "cpu": 2.962704,
+      "input_blocks": 0,
+      "major_faults": 0,
+      "minor_faults": 13834,
+      "output_blocks": 24896,
+      "rss_bytes": 46321664,
+      "system_seconds": 0.194049,
+      "user_seconds": 2.774723,
+      "wall": 2.973215984
+    },
+    "native4": {
+      "cpu": 4.3622570000000005,
+      "input_blocks": 0,
+      "major_faults": 0,
+      "minor_faults": 13873,
+      "output_blocks": 24896,
+      "rss_bytes": 46292992,
+      "system_seconds": 0.441683,
+      "user_seconds": 3.9205740000000002,
+      "wall": 1.451237994
+    },
+    "source": {
+      "cpu": 17.326000999999998,
+      "input_blocks": 0,
+      "major_faults": 0,
+      "minor_faults": 19372,
+      "output_blocks": 4944,
+      "rss_bytes": 111198208,
+      "system_seconds": 0.11898399999999999,
+      "user_seconds": 17.20301,
+      "wall": 17.338170747
+    }
+  },
+  "native1_raw_output_block_ratio_vs_source": 5.035598705501618,
+  "native4_cpu_ratio_vs_native1": 1.4723904244230948,
+  "native_four_qualified": true,
+  "native_receipt": {
+    "path": ".autopilot/oracles/rnaseq-qc-junction-native-2026-11-01.json",
+    "sha256": "647d2f5b77ccfb411606cd68af46dc7ece018e86b48f52a6b676d5056f38828c"
+  },
+  "native_three_scientific_payloads_byte_identical_across_all14_calls": true,
+  "original_zip": {
+    "bytes": 2681477318,
+    "sha256": "bbb6d4cca80b4bf1bdffaeae800900b10c02de9b0ab21657b033a061fdfb51ac"
+  },
+  "owner_commit": "a618e6ab293e2fb7a113d949197e1bb43ecc7733",
+  "owner_source_bodies": 66,
+  "packet": {
+    "full_data_verification_complete": true,
+    "publication": false,
+    "report": {
+      "bytes": 1173,
+      "sha256": "7c0da02a3ab5030572ba5459044c117d807e56d6938750e0b2fcd9ae76fe0d8b"
+    },
+    "seal": {
+      "bytes": 2780525,
+      "sha256": "f463807f7494a3bcac7f4cab82bf59b81dfb89b6c792132ebe183745964d1b07"
+    },
+    "sealed_bytes": 10099066311,
+    "sealed_files": 13375,
+    "verification": {
+      "bytes": 15818,
+      "sha256": "b8e3275a54f3ab3536ec2f27e7049d33afc8199c0364d7c2de1b58cdb3a25aa3"
+    }
+  },
+  "performance_qualified": true,
+  "prepared_annotation_rows": 58384,
+  "qualification_calls": 3,
+  "raw_requests_statuses_resources_and_complete_outputs_bound": true,
+  "registry_publication": false,
+  "regular_original_bytes": 2665537273,
+  "regular_original_members": 14554,
+  "repository": "omics-rust/rsomics-world",
+  "root_adopted": true,
+  "run_attempt": 1,
+  "run_id": 41291319388,
+  "schema_version": 1,
+  "source_counters": {
+    "filtered_events": 0,
+    "known_events": 259333,
+    "known_junctions": 51951,
+    "novel_events": 20151,
+    "novel_junctions": 11638,
+    "partial_novel_events": 6289,
+    "partial_novel_junctions": 2694,
+    "total_events": 285773,
+    "total_junctions": 66283
+  },
+  "source_qualified": true,
+  "source_receipt": {
+    "path": ".autopilot/oracles/rnaseq-qc-junctions-2026-11-01.json",
+    "sha256": "8ea60c35c952a600fa526ebfd3e020e142b01706f50a87a9fbc8818ce9ce5b2b"
+  },
+  "source_rows": 66283,
+  "source_wheels": 18,
+  "status": "accepted",
+  "verification": {
+    "bytes": 15818,
+    "sha256": "b8e3275a54f3ab3536ec2f27e7049d33afc8199c0364d7c2de1b58cdb3a25aa3"
+  },
+  "warmup_calls": 3,
+  "whole_scientific_calls": 21,
+  "workflow": ".github/workflows/rnaseq-qc-junction-performance.yml"
+}

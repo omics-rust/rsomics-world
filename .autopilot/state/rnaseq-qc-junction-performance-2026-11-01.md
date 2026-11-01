@@ -1,5 +1,50 @@
 # RNA-seq QC complete junction performance
 
+## Complete real-input results and original custody accepted
+
+Actual41291319388/1 at8b2ae7bb1e674669dac9b1d57706405d448c98a6 succeeds.
+Root retains the exact2681477318B originalZIP, SHAbbb6d4cca80b4bf1bdffaeae800900b10c02de9b0ab21657b033a061fdfb51ac,
+originalcipher/transport/fullauthenticatedTAR and every original logical
+member. Final root packet is external HDD
+rnaseq-junction-performance-20261101.2dAyn1:13375 sealed paths/10099066311B;
+16891 original logical members,14554 regular originals/2665537273B.
+Runtime is inert CAS with original mode/link metadata, never restored/executed
+on Mac. Complete age authentication precedes any TAR inspection.
+
+Root freshly compares all seven complete source observations and fourteen
+native outputs:66283 ordered junction rows, support/classification and all
+nine counters match. Native report/detail/summary bodies are byte-identical
+across all repeats/workers. Raw requests/status/custody/actual resource records
+bind every one of21 calls; three qualification/three warmup are excluded from
+15 measured calls. All29 controller/66 owner/521 original input/18wheel bodies,
+actual Python/native/provider identities are independently tied to the frozen
+authority and actual Git head; no BAM rewrite, source or scientific replay.
+
+Measured median wall S1/N1/N4 is17.338170747/2.973215984/1.451237994s;
+processRSS111198208/46321664/46292992B. Native1 wall/source=.1714838334,
+RSS/source=.4165684397, both fixed material routes pass with disjoint ranges.
+N1/N4 wall gain2.0487446x costs47.2% more total CPU, not linear scaling.
+Native complete scientific exports12726340B versus source2519183B and raw
+output blocks24896 versus4944 are LOSSES, not an I/O/storage advantage.
+Input blocks are zero in these warm measurements. RSS is wait4 process/
+waited-child maximum, not isolated Rust heap or aggregate tree. Old-five
+performance is separate; this does not invent a newly timed six-metric sum.
+
+VERIFICATIONb8e3275a54f3ab3536ec2f27e7049d33afc8199c0364d7c2de1b58cdb3a25aa3;
+freshfullcomparison3136743942b8df27d69126ba55dc738b508cc414dfe5b0aeac868f3802e3aaa6;
+REPORT7c0da02a3ab5030572ba5459044c117d807e56d6938750e0b2fcd9ae76fe0d8b;
+SEALf463807f7494a3bcac7f4cab82bf59b81dfb89b6c792132ebe183745964d1b07.
+One final-checker field assumption is preserved with its original code/failure:
+Python archive pin uses size, wheels use bytes. Mapping that unchanged field
+fixes only the recorder; no originals, tolerance, input, or scientific call
+changes or repeats. New additive actual-performance receipt is
+rnaseq-qc-junction-performance-2026-11-01.json, root_adopted=true.
+
+Scientific/performance qualification is earned, not an owning release. The
+default-five report plus opt-in/focused junctions is a coherent first slice;
+owning repo/package/install/notices/native delivery and final public artifact
+adoption still precede GitHub publication. Registry stays independently held.
+
 ## Actual full-input campaign launched at the accepted head
 
 Root waits for exact-head Control41291015694 at
