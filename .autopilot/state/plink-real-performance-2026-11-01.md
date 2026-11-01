@@ -1,5 +1,16 @@
 # Fixed private HGDP whole-workflow gate
 
+## Actual unchanged real-cohort green3 attempt dispatched
+
+Exact-head Control41259929663 passes for
+f8b9d79fda32c5949550c2c1446a393c960cfca9. Root dispatches actual
+41260156411/1 with explicit plink-native-2026-11-01-green-3.json. Complete
+HGDP929/four fixed windows/2048MiB/qualifications/warmup/five-pair graph and
+original comparison/strict policy remain unchanged. Target-runtime admission,
+full outputs and measured performance are pending, not inferred from the Mac
+diagnostic or native-four acceptance. Only ciphertext/allowlisted receipt may
+be uploaded; prior red originals remain immutable.
+
 ## Explicit green3 real-performance admission prepared
 
 Root extends the SAME existing preparation with the actual committed green3
