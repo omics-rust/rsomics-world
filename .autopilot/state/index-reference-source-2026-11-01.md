@@ -1,5 +1,37 @@
 # Index reference-resource source workflow
 
+## Complete native reference slice committed; exact four-native CI running
+
+Clean owner7f2d4fdeda9d0062d10941258b40eee16fdb9042 is pushed. Actual
+CI41259142238 now exercises all four native target classes, including the
+existing Linux live HTSlib compatibility lane. No new release/performance
+result is inferred before that run completes.
+
+Root reads the entire native Rust/CLI/test/dependency/documentation change
+and one independent integrated review. The only actionableP2 is a gzip stdin
+short read: one fill_buf could contain just the first magic byte. A narrow
+two-byte prefix/rechain fix preserves all bytes and public contracts; the
+SAME connected test genuinely fails before it and passes after it. No helper
+test/review ladder or new public foundation/API is added.
+
+Original material wave passes pinned fmt/strictClippy and full debug/release
+63tests each; nine existing live-oracle tests remain explicitly ignored on
+Mac. Correction runs fmt/strictClippy and the same complete connected release
+test1pass/0ignored, not a relabelled full63 rerun. Root freshly verifies81
+original packet bodies,22 correction packet bodies and all116 current owner
+files. All54 actual source fixture bodies remain exact. Original report
+183c0f39f67f5cfe8e1323be8054d2efcb6f74eae0a277a97ffbe04507fa5062
+at index-native-reference-20261101.7canbq_s; additive correction report
+0f9f1efdac65a1a3c766015d7e6cea413e562bc8da84422135df201e22381738,
+seal4f24dbacacc1241b1aed6cb0ce5bb2b82ae8064c3ebd0a99139ab92559defe12
+at index-stdin-prefix-fix-20261101.MN8ZEp.
+
+The coherent slice is streaming plain/BGZF FAI/GZI build, ordered bounded
+query chunks at1/4 workers and plain/gzip/BGZF/stdin SAM dictionaries. Existing
+common/help interfaces are reused; the older BGZF/tabix policy is unchanged.
+Complete-reference performance preparation follows separately. The old13-lane
+missing-raw/publication hold is not repaired by these captured-source tests.
+
 ## Actual complete source originals accepted
 
 Corrected run41255333228/1 succeeds. Root verifies full original228572581B

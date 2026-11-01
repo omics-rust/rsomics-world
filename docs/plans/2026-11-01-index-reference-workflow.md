@@ -6,7 +6,7 @@
 
 **Architecture:** keep resource preparation/access in `rsomics-index`. Reuse common/help and existing product BGZF framing; new scanners, FAI/region/query/dict policy remain product-private. No new owner, product boundary or public foundation API.
 
-**Current delivery:** world-only manual source controller/workflow plus one stdlib preparation test. No native implementation, publication, large reference acquisition or local samtools execution.
+**Current delivery:** actual source casebook41255333228 accepted; the complete native reference slice is committed at owner7f2d4fdeda9d0062d10941258b40eee16fdb9042. Exact four-native CI41259142238 is running. Full-reference performance and publication remain pending; no local samtools execution occurred.
 
 ## Fixed source and behavior
 
@@ -52,8 +52,9 @@ The job is manual-only, contents-read, four CPUs with a bounded memory allocatio
 
 - [x] ONE preparation test RED: missing controller was the observed intended failure.
 - [x] Implement source-only controller/workflow; the same preparation test passed without local upstream execution. The final delivery report records the exact verification and SHA identities; source runtime/casebook are not yet run.
-- [ ] Root review/commit/exact-head control CI, then manual hosted dispatch. This worker does not dispatch or Git-write.
-- [ ] Inspect actual source output before authorizing native merge; no post-hoc scientific relaxation.
+- [x] Root review/commit/exact-head control CI and actual hosted source41255333228; full original verification is recorded in index-reference-source state.
+- [x] Inspect actual source output, then authorize the coherent native merge. All54 selected regular source fixtures and strict-input differences are recorded; no post-hoc scientific relaxation.
+- [x] Root whole-slice review and one independent review; correct the observed gzip stdin short-read failure. Commit/push owner7f2d4fd; exact four-native qualification remains pending.
 
 ## Later complete real measurement, not run here
 

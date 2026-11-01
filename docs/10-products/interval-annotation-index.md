@@ -2,9 +2,10 @@
 
 Status: the BED and annotation initial slices are published and independently
 verified. The complete BED family map is now maintained in `bed.md`. The BGZF
-and tabix slice of `rsomics-index` is implemented and compatibility-verified;
-publication still requires a current-head performance run and registry
-credentials.
+and tabix slice of `rsomics-index` is implemented and compatibility-verified.
+The coherent FASTA indexing/query/dictionary slice is now committed with
+captured samtools1.24 comparisons; its four-native gate is running. Publication
+still requires current-head performance evidence and registry credentials.
 
 Routing corrections move table aggregation to `rsomics-table`, SEACR to
 `rsomics-peak`, FASTA masking to `rsomics-bed`, and FASTA indexing plus
@@ -269,13 +270,25 @@ and index discovery, metadata copying, implicit input deletion, and
 multi-input invocation are explicit 0.1 exclusions. Unsupported operations
 are absent from help rather than accepted as placeholders.
 
-The next complete slice is FAI/GZI construction plus FASTA random-access
-querying under `faidx`, followed by sequence-dictionary creation under `dict`.
+The new complete slice is FAI/GZI construction plus FASTA random-access
+querying under `faidx` and sequence-dictionary creation under `dict`.
 FASTQ indexing, reverse-complement rendering, strand-label policy, alternate
 locus dictionaries, and compressed-reference output indexing remain excluded
 until their complete samtools contracts and fixtures are included.
 
 ### Implementation and evidence
+
+Reference slice owner7f2d4fdeda9d0062d10941258b40eee16fdb9042 reuses
+common/help and private BGZF framing, with no new public foundation/API.
+Actual source run41255333228 supplies54 exact authored input/golden bodies.
+Native streaming scans preserve LF/CRLF/last-no-LF FAI widths and valid empty
+BGZF members; ordered1MiB query chunks span requests with one reader/worker.
+Dictionary MD5/chr-MT aliases follow the captured source; plain/gzip/stdin are
+supported. Explicit build/query and strict malformed-input differences are
+documented in the owner merge record. Mac full debug/release each63pass and
+the focused real stdin short-read correction pass; exact four-native
+CI41259142238 and complete-reference performance remain pending. This does
+not restore the old missing-raw benchmark evidence below.
 
 The initial implementation runs from `acba3ec` through code head
 `05960a4609a3b2acc388c0a149b5e023d53027f1`. Harness revision
