@@ -98,3 +98,10 @@ fallback cannot be ruled out; no zero application/OS footprint is claimed.
 Next: push this control-plane integration, wait its exact-head Control, then
 dispatch once the green8 native-four/same-generation source workflow. All new
 native/source/real-performance/publication gates remain pending at this record.
+
+Integration346d2a1076f9749cafc7f40d682aad0add7e4db8 passes exact Control
+41362365422/1, including the full hosted controller suite and architecture
+ledgers. Fresh remote main agrees. Root dispatches green8 exactly once:
+actual41362616110/1 at that controller head. Native-four/source originals and
+new actual resources remain required. A shortly-after-dispatch filtered list
+was empty; the returned run ID, not redispatch, is the authoritative follow-up.
