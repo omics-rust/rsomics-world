@@ -1,6 +1,56 @@
 # Fixed private HGDP whole-workflow gate
 
-## Prepared-reader green7 accepted; final whole campaign dispatched
+## Green7 complete whole result adopted; material performance FAILED
+
+Actual41335480371/1 at40b2989b finished the six qualification and20 measured
+graphs, then failed the unchanged strict performance predicate. Root adopts
+the complete encrypted originals and bounded correctness/negative result in
+plink-real-performance-green7-failure-2026-11-02.json. Owner7b214436 and
+ELF76a81eee/3103032B are unchanged; no publication or scientific rerun follows.
+
+All26 graphs/210 commands/78 own generations/52 fresh-P validations pass for
+the fixed929-person HGDP chr19–22 windows:231470 ->23029 ->696 variants.
+All full I/F/P stream identities and442 logical printed-report comparisons
+agree. This is not all-operation/full-genome/four-platform performance or
+biological validation; independent PGEN/ZSTD decoding is not claimed.
+
+Native/source whole-wall medians are8.086860/6.061853s at1 and
+5.074562/3.257775s at4 (ratios1.334058/1.557677). Wait4 maximum-process RSS
+ratios are1.850779/1.672461; exact aggregate-tree memory is unavailable.
+Six stage medians regress at1 and all7 at4. The1-worker pairs median win
+does not rescue either whole/stage gate. Full arrays, CPU/RSS/I/O losses and
+earlier green4/green6 originals remain; no favorable subset is substituted.
+
+Whole ZIP12065821360B/SHA0b396005, cipher12065820283B/SHA23cbec2c,
+authenticated TAR12062873600B/SHAb02aa5de and all5721 members are retained
+under the existing remote208GiB root. The2239 unique inert CAS bodies total
+2042294777B; duplicate originals and partials remain. Reservationed4bc4bb is
+unchanged. Key bytes were used only by pinned age, never read/hashed/copied
+by controllers. No large plaintext was stored on either Mac disk.
+
+Root read the full authored data assessor/custody/checker wrappers and exact
+v2/v3 reader corrections, independently verified the unchanged7230B primary
+resource block, then rehashed every sealed file:2500 files/50310669378B
+(including the preserved same-inode TAR alias), ZIP CRC and data-only replay
+all pass. Nqky5R/check.stdout SHA
+96560c1040554780246306eba594b61da8c6aa09b2b655958ea5c3b83a691ca1,
+exit0/empty stderr. Sealed metadata/proposal root_adopted=false remains intact;
+the new tracked receipt alone records root adoption. No recovered code ran.
+
+Initial Python3.10 hasher failure and v1/v2 assessor schema assumptions are
+preserved with sources/logs/diffs; v3 uses actual full selection and explicit
+native process.json versus source result.json, no fallback. These are recovery
+reader errors, not product/scientific failures or grounds to alter a gate.
+
+Source-only FIESDX diagnosis confirms the new prepared PGEN owner is reached
+by all7 real stages. F.qc has the largest positive wall gap (~1.024/.699s),
+while pairs dominates total native time. Duplicate scalar unpacking/tiny count
+allocations support a bounded packed-QC candidate, not a demonstrated cure;
+LD cache selection/cost shares remain unmeasured. Validation outside the
+timed clocks is expensive but cannot explain the failed throughput. Preserve
+the negative result and make only source-supported coherent improvements.
+
+## Prior single dispatch and capacity admission (before completion)
 
 Exact Control41334861328 passes at40b2989b419c9eb3eb61603a0c3e8d0cde254d74.
 After fresh remote allocation accounting, root admits the final208GiB recovery

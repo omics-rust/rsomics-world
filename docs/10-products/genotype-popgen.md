@@ -5,7 +5,23 @@ complete. The initial2026-07-31 inspection found neither target repository;
 this is not a current live-registry assertion. Current PLINK source preflight
 is recorded in `.autopilot/state/plink-source-preflight-2026-10-31.md`.
 
-Current2026-11-01 gates: packed private PLINK ownere03ada17 green4 passes
+Current2026-11-02 PLINK: prepared-reader/LD owner7b214436 and green7
+native/source41329335343 remain accepted. Actual whole41335480371/1 at
+40b2989b is now independently adopted after complete authenticated original
+custody and root data-only replay. All26 fixed graphs/210 commands/78 own
+generations/52 retained fresh-P validations are correct on all929 HGDP people
+in the declared chr19–22 windows (231470 ->23029 ->696 variants). Material
+performance FAILED at both worker profiles: native/source whole-wall ratios
+1.334058/1.557677 and maximum-process RSS ratios1.850779/1.672461. Six stage
+medians regress at1 worker and all7 at4; the isolated1-worker pairs improvement
+is not a whole-workflow win. No exact-tree-memory, all-operation, biological,
+public-release or four-platform performance claim follows. Full losses and
+scope are in the green7 failure receipt and current real-performance state.
+Earlier negative campaigns stay unchanged. Source-supported optimization and
+cheaper content-equivalent validation may proceed; no unchanged retry or
+performance waiver is approved.
+
+Historical2026-11-01 PLINK gates: packed private ownere03ada17 green4 passes
 actual four-native/same-generation-source41280585897 with complete originals
 independently accepted. The prior full-HGDP41260156411 finished with correct
 outputs but FAILED performance; that failure remains. Coherent packed-buffer

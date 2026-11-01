@@ -1,0 +1,248 @@
+{
+  "actual_native_elf": {
+    "bytes": 3103032,
+    "sha256": "76a81eee24c7425615473d542413080d790a907f438100723a092577c0cfbc41"
+  },
+  "actual_native_source_files": 303,
+  "all_existing_bodies_partials_reservations_preserved": true,
+  "all_originals": {
+    "all_paths_types_modes_links_and_bodies_verified": true,
+    "archive_authenticated_before_inspection": true,
+    "authenticated_tar": {
+      "bytes": 12062873600,
+      "sha256": "b02aa5de0ad5d09f2559d92324f2a30ca42e45b68529c630f0a4e02ccd11dfd6"
+    },
+    "cas_unique_bodies": 2239,
+    "cas_unique_bytes": 2042294777,
+    "casefold_collision_groups": [],
+    "custody_only_not_science_adoption": true,
+    "duplicate_bodies_independently_compared": 2751,
+    "hardlink_bindings_verified_without_duplicate_body_reads": 0,
+    "key_bytes_read_by_controller": false,
+    "original_manifest_files": 5719,
+    "original_members": 5721,
+    "original_regular_logical_bytes": 12052909145,
+    "original_zip": {
+      "bytes": 12065821360,
+      "sha256": "0b396005c735d85199c2d83b647ae6e20cab1d05d7d29dfa52851bc0ab7248cd"
+    },
+    "schema": "rsomics.plink.complete-original-custody.v1",
+    "science_executed": false,
+    "types": {
+      "directory": 731,
+      "file": 4990
+    },
+    "utc": "2026-11-01T22:13:16Z"
+  },
+  "artifact_id": 13100978623,
+  "artifact_name": "plink-real-encrypted-41335480371-1",
+  "authenticated_tar": {
+    "bytes": 12062873600,
+    "path": "/home/liangjy/rsomics-plink-green7-recovery-20261102/authenticated.tar",
+    "sha256": "b02aa5de0ad5d09f2559d92324f2a30ca42e45b68529c630f0a4e02ccd11dfd6"
+  },
+  "biological_claim": false,
+  "capacity_authority": {
+    "bytes": 3412,
+    "sha256": "ed4bc4bbf5a37164c5bfc48fc9f224914d1e11c0ca051378efdda7dbbddbda0b"
+  },
+  "complete_campaign": true,
+  "complete_graphs": 26,
+  "complete_stage_commands": 210,
+  "fresh_P_validations": 52,
+  "full_product_or_four_platform_performance_qualification": false,
+  "head_sha": "40b2989b419c9eb3eb61603a0c3e8d0cde254d74",
+  "independent_performance": {
+    "bytes": 506716,
+    "sha256": "067187b24c602c4e5eda4273f348a2def2b00f136fb1a05e58f52b86bbad9b97"
+  },
+  "job_conclusion": "failure",
+  "job_id": 124934293052,
+  "material_gate_both_worker_profiles_passed": false,
+  "median_stage_regressions": {
+    "1": [
+      "I",
+      "F",
+      "F.qc",
+      "prune",
+      "P",
+      "P.qc"
+    ],
+    "4": [
+      "I",
+      "F",
+      "F.qc",
+      "pairs",
+      "prune",
+      "P",
+      "P.qc"
+    ]
+  },
+  "native_owner": "7b21443622321b3bd9adeb5059e3035de69c4ea4",
+  "native_snapshot": "green-7",
+  "no_scientific_retry_or_cancel": true,
+  "older_campaigns_unchanged": true,
+  "operator_assessment_reader_correction": "Bind the full original selection to the actual green7 native selection nested in the unchanged receipt, rather than expecting an obsolete top-level comparison field. Existing identical inventory JSON is compared without overwriting; new v2 capacity snapshots have distinct names.",
+  "operator_assessment_reader_v1_failure_preserved": true,
+  "operator_assessment_reader_v2_failure_preserved": true,
+  "operator_assessment_reader_v3_correction": "Explicit native-elf process.json record family; PLINK source runtime remains result.json. All 15 actual command records and required keys/hashes inspected before v3. The unchanged primary performance block executes before optional ABI metadata checks.",
+  "operator_initial_preflight_failure_preserved": true,
+  "operator_preflight_correction": "Remote Python3.10 lacks hashlib.file_digest; replaced data-only hasher with streaming SHA256. Old controller and failed preflight logs retained before bulk acquisition.",
+  "original_cipher": {
+    "bytes": 12065820283,
+    "path": "/home/liangjy/rsomics-plink-green7-recovery-20261102/hgdp.tar.age",
+    "sha256": "23cbec2c5d128bcedf158a524c3e186d028971ea155d2c792d1822b9609d8a8c"
+  },
+  "original_failure": {
+    "encrypted_upload_only": true,
+    "failure": {
+      "message": "strict real whole-workflow performance gate did not pass; all originals retained",
+      "type": "ValueError"
+    },
+    "performance_passed": false,
+    "private_retention": true,
+    "release": false,
+    "status": "failed"
+  },
+  "original_failure_and_partials": {
+    "bytes": 2184520,
+    "sha256": "2106b04a9e945cf02d8a65199e93f6073374d7eda05fdf13b181ffe55d84244f"
+  },
+  "original_runtime_links_or_executable_modes_restored": false,
+  "original_zip": {
+    "bytes": 12065821360,
+    "path": "/home/liangjy/rsomics-plink-green7-recovery-20261102/original.zip",
+    "sha256": "0b396005c735d85199c2d83b647ae6e20cab1d05d7d29dfa52851bc0ab7248cd"
+  },
+  "own_generations": 78,
+  "private_key_bytes_read_hashed_printed_or_copied_by_controller": false,
+  "recovery_bulk_failures_or_retries": 0,
+  "release": false,
+  "remote_recovery_root": "/home/liangjy/rsomics-plink-green7-recovery-20261102",
+  "repository": "omics-rust/rsomics-world",
+  "root_adopted": true,
+  "root_fresh_whole_custody_verification_required": false,
+  "run_attempt": 1,
+  "run_id": 41335480371,
+  "schema": "rsomics.plink.terminal-full-original-custody-proposal.v1",
+  "science_coverage": {
+    "bytes": 52324,
+    "sha256": "87a8f440c2de41a4875dfa3ae8af2e0d9de0e2ecbd00939ad3fff560112b2b3c"
+  },
+  "scientific_or_recovered_program_execution": false,
+  "source_and_gates_unchanged": true,
+  "source_pins": {
+    "bytes": 111571,
+    "sha256": "8a6008b0e35d71eb854823223fb0c6f2a8c3d44ccd9576b4463d8780dfa322aa"
+  },
+  "status": "complete-original-custody-bounded-correctness-and-negative-performance-adopted",
+  "workflow": ".github/workflows/plink-real-performance.yml",
+  "correctness_evidence_earned_for_fixed_real_slice": true,
+  "root_adoption": {
+    "local_packet": "/Volumes/KIOXIA/Developments/tmp/plink-green7-final-originals-20261102.UPfjsr",
+    "remote_seal_sha256": "366a82b855b9080d933e2f5ce906a8d547c56a60ea1b2c5563fbce0a76813473",
+    "proof_directory": "/Volumes/KIOXIA/Developments/tmp/plink-green7-root-adoption-20261102.Nqky5R",
+    "proof_stdout_sha256": "96560c1040554780246306eba594b61da8c6aa09b2b655958ea5c3b83a691ca1",
+    "proof_stderr_bytes": 0,
+    "exit_code": 0,
+    "proof": {
+      "capacity": {
+        "all_existing_reservations_unchanged": true,
+        "device": 2096,
+        "envelopes": {
+          "corrected_index": {
+            "allocated_bytes": 38290169856,
+            "credited_unique_allocated_bytes": 38290169856,
+            "entries": 7197,
+            "logical_envelope_bytes": 81604378624,
+            "path": "/home/liangjy/rsomics-index-bgzf-copyright-recovery-20261102",
+            "regular_bytes": 38269549316
+          },
+          "ecology": {
+            "allocated_bytes": 38343782400,
+            "credited_unique_allocated_bytes": 38343782400,
+            "entries": 136273,
+            "logical_envelope_bytes": 103079215104,
+            "path": "/home/liangjy/rsomics-ecology-beta-recovery-20261101",
+            "regular_bytes": 37985536905
+          },
+          "failed_changed_index": {
+            "allocated_bytes": 5816471552,
+            "credited_unique_allocated_bytes": 5816471552,
+            "entries": 4417,
+            "logical_envelope_bytes": 81604378624,
+            "path": "/home/liangjy/rsomics-index-bgzf-hotpath-recovery-20261101",
+            "regular_bytes": 5804564140
+          },
+          "final_plink": {
+            "allocated_bytes": 38257053696,
+            "credited_unique_allocated_bytes": 38257053696,
+            "entries": 2776,
+            "logical_envelope_bytes": 223338299392,
+            "path": "/home/liangjy/rsomics-plink-green7-recovery-20261102",
+            "regular_bytes": 50311623484
+          },
+          "old_index": {
+            "allocated_bytes": 28328329216,
+            "credited_unique_allocated_bytes": 28328329216,
+            "entries": 15141,
+            "logical_envelope_bytes": 81604378624,
+            "path": "/home/liangjy/rsomics-index-bgzf-recovery-20261101",
+            "regular_bytes": 28284807968
+          },
+          "plink_observer": {
+            "allocated_bytes": 99938304,
+            "credited_unique_allocated_bytes": 99938304,
+            "entries": 79,
+            "logical_envelope_bytes": 8589934592,
+            "path": "/home/liangjy/rsomics-plink-attribution-20261101",
+            "regular_bytes": 99714610
+          }
+        },
+        "free_bytes": 481825955840,
+        "guessed_dedup_credit": false,
+        "independent_headroom_bytes": 8589934592,
+        "logical_not_exclusive_quota": true,
+        "logical_remaining_plus_independent_headroom_bytes": 439274774528,
+        "margin_bytes": 42551181312,
+        "mount": [
+          "/dev/sdd[/home/liangjy]",
+          "ext4",
+          "/home/liangjy"
+        ],
+        "reservation": {
+          "bytes": 3412,
+          "sha256": "ed4bc4bbf5a37164c5bfc48fc9f224914d1e11c0ca051378efdda7dbbddbda0b"
+        },
+        "schema": "rsomics.plink.final-recovery-capacity-observation.v1",
+        "total_envelopes_bytes": 579820584960,
+        "uid": 1006,
+        "utc": "2026-11-01T22:27:39Z",
+        "verified_unique_allocated_credit_bytes": 149135745024
+      },
+      "data_assessment_replay": {
+        "exit": 0,
+        "stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stdout": {
+          "bytes": 6554,
+          "sha256": "cce500e83f397e3dfd4c63cfddf4d7fa89fe89311a7492217420634132984fd9"
+        }
+      },
+      "data_only": true,
+      "every_whole_zip_cipher_tar_and_cas_hash_fresh": true,
+      "file_set_sizes_modes_verified": true,
+      "freshly_hashed_bytes": 50310669378,
+      "metadata_only": false,
+      "original_reservation_unchanged": true,
+      "publication": false,
+      "regular_bytes": 50310669378,
+      "regular_files": 2500,
+      "root_adopted": false,
+      "scientific_execution": false
+    },
+    "review": "Root read the complete authored assessor and custody/checker wrappers; verified v2/v3 exact changes and unchanged resource block; freshly rehashed every sealed file and replayed the data-only assessment. No recovered scientific code executed, no old record changed."
+  }
+}
