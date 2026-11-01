@@ -1,0 +1,90 @@
+name: Ecology original-study independent beta metrics
+
+on:
+  workflow_dispatch:
+    inputs:
+      recovery_admitted:
+        description: Root has verified concrete external all-eight or staged recovery capacity
+        type: boolean
+        required: true
+        default: false
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  metric:
+    name: ${{ matrix.metric }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 360
+    strategy:
+      fail-fast: false
+      matrix:
+        metric: ${{ fromJSON('["braycurtis","jaccard","euclidean","canberra","cityblock","unweighted_unifrac","weighted_unifrac","weighted_normalized_unifrac"]') }}
+    container:
+      image: gcc:14.3.0-bookworm@sha256:a689e29bc3adf4663ef9a141d23081252764d1319c63f591a027bd6fd676f4c1
+      options: --cpus 4 --memory 12g --memory-swap 12g
+    defaults:
+      run:
+        shell: bash
+    env:
+      ECOLOGY_CONTAINER_DIGEST: sha256:a689e29bc3adf4663ef9a141d23081252764d1319c63f591a027bd6fd676f4c1
+      ECOLOGY_BETA_RECOVERY_ADMITTED: ${{ inputs.recovery_admitted }}
+      PYTHONDONTWRITEBYTECODE: '1'
+      PYTHONNOUSERSITE: '1'
+      PYTHONPATH: ''
+      PYTHONUNBUFFERED: '1'
+      PIP_NO_INPUT: '1'
+      PIP_DISABLE_PIP_VERSION_CHECK: '1'
+      PIP_CONFIG_FILE: /dev/null
+      OMP_NUM_THREADS: '1'
+      OPENBLAS_NUM_THREADS: '1'
+      MKL_NUM_THREADS: '1'
+      NUMEXPR_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+
+      - name: Admit pinned metric storage and actual native authority
+        timeout-minutes: 20
+        run: |
+          set -euo pipefail
+          umask 077
+          ulimit -c 0
+          python3 -B scripts/ecology_beta_real.py init --metric '${{ matrix.metric }}'
+
+      - name: Qualify original metric and execute the fixed twenty-one calls
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          umask 077
+          ulimit -c 0
+          python3 -B scripts/ecology_beta_real.py execute \
+            > "$ECOLOGY_PRIVATE/controller.stdout.txt" 2> "$ECOLOGY_PRIVATE/controller.stderr.txt"
+
+      - name: Bind and encrypt available metric originals
+        if: always()
+        timeout-minutes: 20
+        run: |
+          set -euo pipefail
+          umask 077
+          ulimit -c 0
+          python3 -B scripts/ecology_beta_real.py finalize
+
+      - name: Upload metric ciphertext and transport receipt
+        if: always()
+        timeout-minutes: 20
+        uses: actions/upload-artifact@v4
+        with:
+          name: ecology-private-beta-${{ matrix.metric }}-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            ${{ env.ECOLOGY_SESSION }}/cipher/payload.tar.age
+            ${{ env.ECOLOGY_SESSION }}/cipher/receipt.json
+          include-hidden-files: true
+          if-no-files-found: error
+          compression-level: 0
+          retention-days: 90
