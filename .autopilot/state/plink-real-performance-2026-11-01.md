@@ -1,5 +1,27 @@
 # Fixed private HGDP whole-workflow gate
 
+## Actual green-3 four-native/source adoption
+
+Actual41258923590/1 ataf137c73f4129dd9ba9d9157e31ff1a98b31146d
+passes all four native classes and same-native source/official consumption.
+Root recovers all five complete ZIP/TAR originals, every manifest body and
+five raw logs; ten archived controllers match the immutable head. All303
+owner00ce7b39 Git bodies are exact in every native artifact. Debug/release
+each pass4lib+1whole/0ignored,36 generations/74878 cells,116 principal reports
+per worker and52 worker records. Source/official36 bridge+224 report commands
+pass, with protected runtime/native/image/controller identities unchanged.
+
+Actual new Linux ELF is7ae7332ba8f756c3809d2e32e509b1abdbae5d22c7daaf4e7245a5aa19f0ca49.
+Source consumer does not execute it; target Bookworm ABI/real HGDP and new
+source/relink distribution remain separate gates. No local science executes.
+Root-reviewed packet plink-green3-adoption-20261101.65fD3V seals9865 bodies/
+457916494B. REPORTf3d3c7e54bbe7873d23a4afb39cecbf14353892e69472bcc59aca30eb08e7885;
+completed29926f4ea4b83fdffc25d630561fbc98f395ec907666abffdfb96d47dba084ef.
+New accepted receipt is plink-native-2026-11-01-green-3.json. Old green2
+receipts/bundles and failed real campaigns remain immutable. Next is explicit
+green3 admission in the unchanged real-performance controller, then exact-head
+CI and an actual unchanged full-cohort performance attempt.
+
 ## Actual green-3 native/source gate dispatched
 
 Exact-head Control41258777312 succeeds for
