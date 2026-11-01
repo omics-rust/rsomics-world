@@ -1,5 +1,19 @@
 # Concurrent complete-original custody
 
+## Additive bounded native diagnostic
+
+The new PLINK attribution task is separately admitted at
+/home/liangjy/rsomics-plink-attribution-20261101 on the verified same ext4/
+devsdd device. Its8GiB cap is shared by all diagnostic-route subdirectories,
+not charged afresh per route. Current envelopes are therefore Ecology320+
+Index76+Profile8=404GiB, plus8GiB independent headroom. Root freshly admits
+593565409280B free against442381631488B required with ZERO allocation
+credit before receiving26869760B of exact original inputs/ELF/metadata.
+Weighted's final independent admission also records this full404+8 budget.
+No large source/runtime is restored or transferred, no original is deleted,
+and no failed-route bytes/envelope are silently released. Prior396/604GiB
+records below remain their original point-in-time contexts.
+
 ## Current terminal-size placement
 
 The subsequently admitted terminal PLINK artifact is12063496320B. Its complete

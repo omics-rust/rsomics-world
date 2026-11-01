@@ -1,5 +1,40 @@
 # Ecology complete-original beta performance
 
+## Seventh metric weighted UniFrac accepted from complete attempt1 originals
+
+Root adopts weighted_unifrac actual41288208209/1, job124793770126 and
+artifact13080998436, NOT its carried attempt2 alias124844250389. The new
+ecology-beta-weighted-real-2026-11-01.json records full custody, correctness
+and fixed performance acceptance. Seven metrics are now accepted; normalized
+weighted attempt2 remains separate, not a full-eight or publication claim.
+
+Root reads the full report, unchanged numerical/reduction adaptations and
+complete fresh validator. One independent read-only pass exits0/empty stderr:
+all192 local files/18815050B, all16772 remote files/3083545133B, exact file/
+directory modes and complete ZIP/TAR/CAS bodies hash afresh. The whole ZIP
+is1772282930B/7162c7d6c1276e204e67695e722395430de18d3c4e1965cfb774cbe0a956aca0.
+Root also independently reduces all27 five-trial resource distributions and
+recomputes both unchanged serial-primary decisions, all matching the proposal.
+Fresh API artifact identity/head/name/expiry bind the original attempt.
+
+Source1/Native1/Native4 wall medians are1476.086096/13.645896/6.289225s;
+RSS6417465344/154890240/162275328B. Native1 wall/RSS ratios
+.009244648/.024135735 pass both disjoint fixed routes. Native4 wall scaling
+is2.169726x but CPU/user/system/minor-fault/RSS increases remain recorded.
+All21 complete1105x1105 outputs qualify at the unchanged1e-10+1e-10 band;
+two unique bodies are parsed and fourteen native repeats/worker outputs are
+byte-identical. Full41328-feature input and162331-tip/323372-node tree remain.
+The baseline is explicitly contiguous-public with its2858608480B layout copy
+charged; it is NOT unchanged/default source memory. Source Python3.12.10 and
+Intel8573C host are explicit; no cross-host summed pipeline or heap/RSS claim.
+
+Packet ecology-beta-weighted-recovery-20261101.uYfrpi has REPORTa421fdb6,
+SOURCE95484b82, SEAL09353f5e. Root proof
+ecology-beta-weighted-root-adoption-20261101.f3JUY5/check.stdout has SHA
+b7f869d79f993fc817d5ded2d326123758ef1d4aa163e1c9e99617b92da4e754.
+Six earlier accepted metrics, all old authorities, source/helpers/keys and
+normalizedattempt2 remain untouched. No scientific rerun or deletion occurs.
+
 ## Original attempt terminal; one unchanged capacity-only retry admitted
 
 Original41288208209/1 finishes FAILURE solely from the previously preserved

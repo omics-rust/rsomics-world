@@ -1,0 +1,842 @@
+{
+  "actual_job_conclusion": "success",
+  "actual_native_binary": {
+    "bytes": 1970360,
+    "sha256": "d7dc1832fab7857aba17179b4eb632438094b7f64c7ac7bf562bd64778017bd3"
+  },
+  "actual_owner": "111adf5e8a3657a99c50a9832ca5ed9c53fd98d7",
+  "actual_source_admission": {
+    "compiled_modules": {
+      "biom._subsample": {
+        "bytes": 563456,
+        "sha256": "5a33bb24a0c96901ae800ec288c1efe981380f57fbcc388f2a40100ca01bda8a"
+      },
+      "numpy.random._generator": {
+        "bytes": 845808,
+        "sha256": "e362c7a4c9d5d97404ee1fcbf00c2b345ecec945df50f6ea3e0f4631d4ab336e"
+      },
+      "numpy.random._pcg64": {
+        "bytes": 151344,
+        "sha256": "61175f3da7d43f4811277cdf743906b8d405d1800cee79632a17fbca478e6964"
+      },
+      "scipy.spatial._distance_pybind": {
+        "bytes": 616336,
+        "sha256": "e11e762210262b10593a77a1b5f433b14114d12da089f5516044641aced41ada"
+      },
+      "skbio.diversity._phylogenetic": {
+        "bytes": 613016,
+        "sha256": "f69780f0ab803b5fe487c5614a04012ad8448873205243d4a949bc86045bc957"
+      }
+    },
+    "executable": "/__w/_temp/ecology-beta-weighted_unifrac-5qvx0dvf/private/runtime/venv/bin/python",
+    "identical_original_interpreter": false,
+    "installed_source": {
+      "scipy/spatial/distance.py": {
+        "bytes": 92035,
+        "sha256": "e0cd0871d483a355eaf656ee0849e6579af45f579f33ec4ca326df2626b3f196"
+      },
+      "skbio/diversity/_driver.py": {
+        "bytes": 16590,
+        "sha256": "cce20bfab060b5abf81529a9566b3b1f0de94cdf21ac80d54ab01dd33a9065d7"
+      },
+      "skbio/diversity/_util.py": {
+        "bytes": 5919,
+        "sha256": "d2403b84ba0a49b2fb48aadcc8a24c703a623329ea4c8aab25cc15e8dcb4b70c"
+      },
+      "skbio/diversity/alpha/_base.py": {
+        "bytes": 41081,
+        "sha256": "ad55376df0694358feedf27a7a532d060927d6d574c9494e66830cb12b601cf7"
+      },
+      "skbio/diversity/alpha/_chao1.py": {
+        "bytes": 6370,
+        "sha256": "f329947f3e9950fb284a58b3d753e99dfdb8f03f147633cdc39dbf90094be6f5"
+      },
+      "skbio/diversity/alpha/_pd.py": {
+        "bytes": 17227,
+        "sha256": "b884fd146b47ef419837eed840f7cabadbfb6dd3952810dae3371fa406dfc635"
+      },
+      "skbio/diversity/beta/_unifrac.py": {
+        "bytes": 23149,
+        "sha256": "813aa7554a79a577c808c1fcd1525a5476174137bdcfd5b4e14b4f80ffbbb949"
+      },
+      "skbio/io/format/lsmat.py": {
+        "bytes": 10157,
+        "sha256": "6c886aaf0e0ad9201f3fa9d81de2ccf402f80bf5118b92c50068c721cdeb5263"
+      },
+      "skbio/stats/_subsample.py": {
+        "bytes": 7968,
+        "sha256": "355dcc624f523639f8b40f62c9bb108070f9007767ad325f82f972fb7c346fc8"
+      },
+      "skbio/tree/_tree.py": {
+        "bytes": 217133,
+        "sha256": "383b089b40589ec664d1d2ef81ede5a8a36106e87bb1aa92bc3b01116893a54e"
+      },
+      "skbio/tree/_utils.py": {
+        "bytes": 2996,
+        "sha256": "333903337875ec509020284c09b804d03bc63e7f4b3b20df11492bfb2a10b7f4"
+      },
+      "skbio/util/_misc.py": {
+        "bytes": 5491,
+        "sha256": "d1283c71fd1fa21cfa2a0b59ee4d1be2513db603dfa60d38e7de4a4c48db05f1"
+      }
+    },
+    "original_python": "3.12.15",
+    "prefix": "/__w/_temp/ecology-beta-weighted_unifrac-5qvx0dvf/private/runtime/venv",
+    "python": "3.12.10 (main, Apr  9 2025, 04:03:51) [Clang 20.1.0 ]",
+    "threadpools": [
+      {
+        "architecture": "SkylakeX",
+        "filepath": "/__w/_temp/ecology-beta-weighted_unifrac-5qvx0dvf/private/runtime/venv/lib/python3.12/site-packages/scipy.libs/libscipy_openblas-5f890258.so",
+        "internal_api": "openblas",
+        "num_threads": 1,
+        "prefix": "libscipy_openblas",
+        "threading_layer": "pthreads",
+        "user_api": "blas",
+        "version": "0.3.31.dev"
+      },
+      {
+        "architecture": "SkylakeX",
+        "filepath": "/__w/_temp/ecology-beta-weighted_unifrac-5qvx0dvf/private/runtime/venv/lib/python3.12/site-packages/numpy.libs/libscipy_openblas64_-f48b354e.so",
+        "internal_api": "openblas",
+        "num_threads": 1,
+        "prefix": "libscipy_openblas",
+        "threading_layer": "pthreads",
+        "user_api": "blas",
+        "version": "0.3.34.106.0"
+      },
+      {
+        "filepath": "/__w/_temp/ecology-beta-weighted_unifrac-5qvx0dvf/private/runtime/venv/lib/python3.12/site-packages/scikit_bio.libs/libgomp-e985bcbb.so.1.0.0",
+        "internal_api": "openmp",
+        "num_threads": 1,
+        "prefix": "libgomp",
+        "user_api": "openmp",
+        "version": null
+      }
+    ],
+    "versions": {
+      "array-api-compat": "1.16.0",
+      "biom-format": "2.1.17",
+      "certifi": "2026.10.23",
+      "charset-normalizer": "3.5.2",
+      "click": "8.5.0",
+      "decorator": "5.3.1",
+      "formulaic": "1.2.2",
+      "h5py": "3.16.0",
+      "idna": "3.20",
+      "interface-meta": "2.0.1",
+      "narwhals": "2.28.0",
+      "natsort": "8.4.0",
+      "numpy": "2.5.4",
+      "packaging": "26.3",
+      "pandas": "3.1.0",
+      "patsy": "1.0.3",
+      "python-dateutil": "3.0.0",
+      "requests": "2.34.2",
+      "scikit-bio": "0.7.3",
+      "scipy": "1.18.1",
+      "six": "1.17.0",
+      "statsmodels": "0.15.0",
+      "threadpoolctl": "3.7.0",
+      "typing-extensions": "4.16.0",
+      "tzdata": "2026.5",
+      "urllib3": "2.8.0",
+      "wrapt": "2.5.1"
+    }
+  },
+  "all_system_mapped_DSO_bodies_captured": false,
+  "artifact_id": 13080998436,
+  "authenticated_tar": {
+    "bytes": 1771847680,
+    "sha256": "a7dd30e035b761f2ddff957686df6bdfd83092ded0729e8ab56ce69b74917385"
+  },
+  "cas_unique_bodies": 16761,
+  "cas_unique_bytes": 1297999296,
+  "complete_matrix_outputs": 21,
+  "cross_host_pipeline_aggregate_claim": false,
+  "duplicate_bodies_byte_compared": 1727,
+  "full_eight_metric_product_qualified": false,
+  "head_sha": "7d68a900a82100573cc927337eb4bf01003b3f87",
+  "job_id": 124793770126,
+  "local_verification": {
+    "bytes": 30672,
+    "sha256": "e3aa22b9f4f52e5e7bb8d641afdadfcb073d4b7c547a2caae808d36765c943b0"
+  },
+  "metric": "weighted_unifrac",
+  "native14_worker_repeat_bytes_exact": true,
+  "no_foreign_scientific_execution": true,
+  "numeric_tolerance": {
+    "abs": 1e-10,
+    "rel": 1e-10
+  },
+  "only_official_age_read_existing_identity_path": true,
+  "original_members": 21693,
+  "original_types": {
+    "directory": 2153,
+    "file": 18488,
+    "symlink": 1052
+  },
+  "original_zip": {
+    "bytes": 1772282930,
+    "sha256": "7162c7d6c1276e204e67695e722395430de18d3c4e1965cfb774cbe0a956aca0"
+  },
+  "performance_qualified_by_root": true,
+  "private_identity_bytes_handled_by_controller": false,
+  "publication": false,
+  "remote_authenticated_tar": "/home/liangjy/rsomics-ecology-beta-recovery-20261101/weighted_unifrac-41288208209-1-auth-attempt1/candidate.tar",
+  "remote_original_zip": "/home/liangjy/rsomics-ecology-beta-recovery-20261101/artifact-13080998436-weighted_unifrac-attempt1.zip",
+  "remote_seal": {
+    "bytes": 3546000,
+    "large_body_hashes_reused": 16762,
+    "path": "/home/liangjy/rsomics-ecology-beta-recovery-20261101/weighted_unifrac-41288208209-1-auth-attempt1/REMOTE-SEAL.json",
+    "regular_bytes": 3083545133,
+    "regular_files": 16772,
+    "sha256": "bd26fa37b97b8fce5ca905b5ec3ba33314071361b3c3866b02f035bd280e863b"
+  },
+  "repository": "omics-rust/rsomics-world",
+  "resources": {
+    "independent_decision": {
+      "cpu_ratio": 0.009166426964052033,
+      "disjoint_rss": true,
+      "disjoint_wall": true,
+      "memory": true,
+      "native4_scaling": 2.169726184124193,
+      "rss_ratio": 0.024135734545853747,
+      "throughput": true,
+      "wall_ratio": 0.009244648008321619
+    },
+    "losses": {
+      "native1_over_source": {
+        "cpu": false,
+        "input_blocks": false,
+        "major_faults": false,
+        "minor_faults": false,
+        "output_blocks": false,
+        "rss_bytes": false,
+        "system": false,
+        "user": false,
+        "wall": false
+      },
+      "native4_over_native1": {
+        "cpu": true,
+        "input_blocks": false,
+        "major_faults": false,
+        "minor_faults": true,
+        "output_blocks": false,
+        "rss_bytes": true,
+        "system": true,
+        "user": true,
+        "wall": false
+      },
+      "native4_over_source": {
+        "cpu": false,
+        "input_blocks": false,
+        "major_faults": false,
+        "minor_faults": false,
+        "output_blocks": false,
+        "rss_bytes": false,
+        "system": false,
+        "user": false,
+        "wall": false
+      }
+    },
+    "metric": "weighted_unifrac",
+    "native1_rss": 154890240,
+    "native1_wall": 13.645896386,
+    "native4_rss": 162275328,
+    "native4_wall": 6.289225104,
+    "source_rss": 6417465344,
+    "source_wall": 1476.086095838
+  },
+  "root_adopted": true,
+  "root_fresh_whole_review_required": false,
+  "run_attempt": 1,
+  "run_id": 41288208209,
+  "schema": "rsomics.ecology.beta-real-custody-adoption-proposal.v1",
+  "source_default_unmodified_performance_claim": false,
+  "source_profile": {
+    "layout_copy_time_and_rss_charged": true,
+    "name": "contiguous-public",
+    "numeric_bands_unchanged": true,
+    "pairwise_func": "scipy.spatial.distance.pdist(numpy.ascontiguousarray(X), metric=metric, **kwargs)",
+    "unifrac_layout_only": true,
+    "upstream_default_memory_claim": false,
+    "validate": true,
+    "writer": "DistanceMatrix.write(format=lsmat, delimiter=TAB)"
+  },
+  "status": "accepted-complete-weighted-unifrac-correctness-and-performance",
+  "root_verification": {
+    "packet": "/Volumes/KIOXIA/Developments/tmp/ecology-beta-weighted-root-adoption-20261101.f3JUY5",
+    "local_files": 192,
+    "local_bytes": 18815050,
+    "all_local_file_set_modes_hashes": true,
+    "remote_regular_files": 16772,
+    "remote_regular_bytes": 3083545133,
+    "whole_zip_tar_cas_and_file_set_freshly_hashed": true,
+    "stdout_sha256": "b7f869d79f993fc817d5ded2d326123758ef1d4aa163e1c9e99617b92da4e754",
+    "local_check_sha256": "c76e7bf4d8f54a88996af5ab34b00989f145c4f1723143f4c6050a323ca334b4",
+    "report_sha256": "a421fdb6df620834d82717ed6dc3603f71822787173c1bed42b34faf2e6e3c23",
+    "source_sha256": "95484b822cdda29577798e6cbe76873632d8645d8ab555f84569ae34bd2c0529",
+    "seal_sha256": "09353f5ec8843ae7355d31fa12bb102769041063539f1bb5b9dfab4e4dc9b8fe",
+    "fresh_api_binding": true,
+    "independent_raw_distributions": 27,
+    "independent_decision": {
+      "wall_ratio": 0.009244648008321619,
+      "rss_ratio": 0.024135734545853747,
+      "cpu_ratio": 0.009166426964052033,
+      "disjoint_wall": true,
+      "disjoint_rss": true,
+      "native4_scaling": 2.169726184124193,
+      "throughput": true,
+      "memory": true
+    },
+    "scientific_execution": false,
+    "proof_attempt": 1,
+    "carried_alias_not_used": 124844250389
+  },
+  "all_resource_ranges": {
+    "comparisons": {
+      "native1_over_source": {
+        "cpu": {
+          "all_observations_worse": false,
+          "median_loss": false,
+          "median_ratio": 0.009166426964052033,
+          "range_overlap": false,
+          "zero_baseline": false
+        },
+        "input_blocks": {
+          "all_observations_worse": false,
+          "median_loss": false,
+          "median_ratio": null,
+          "range_overlap": true,
+          "zero_baseline": true
+        },
+        "major_faults": {
+          "all_observations_worse": false,
+          "median_loss": false,
+          "median_ratio": null,
+          "range_overlap": true,
+          "zero_baseline": true
+        },
+        "minor_faults": {
+          "all_observations_worse": false,
+          "median_loss": false,
+          "median_ratio": 0.46810557851691487,
+          "range_overlap": false,
+          "zero_baseline": false
+        },
+        "output_blocks": {
+          "all_observations_worse": false,
+          "median_loss": false,
+          "median_ratio": 0.9987787857641311,
+          "range_overlap": false,
+          "zero_baseline": false
+        },
+        "rss_bytes": {
+          "all_observations_worse": false,
+          "median_loss": false,
+          "median_ratio": 0.024135734545853747,
+          "range_overlap": false,
+          "zero_baseline": false
+        },
+        "system": {
+          "all_observations_worse": false,
+          "median_loss": false,
+          "median_ratio": 0.09869157508193516,
+          "range_overlap": false,
+          "zero_baseline": false
+        },
+        "user": {
+          "all_observations_worse": false,
+          "median_loss": false,
+          "median_ratio": 0.009109737253546584,
+          "range_overlap": false,
+          "zero_baseline": false
+        },
+        "wall": {
+          "all_observations_worse": false,
+          "median_loss": false,
+          "median_ratio": 0.009244648008321619,
+          "range_overlap": false,
+          "zero_baseline": false
+        }
+      },
+      "native4_over_native1": {
+        "cpu": {
+          "all_observations_worse": true,
+          "median_loss": true,
+          "median_ratio": 1.4514502195429724,
+          "range_overlap": false,
+          "zero_baseline": false
+        },
+        "input_blocks": {
+          "all_observations_worse": false,
+          "median_loss": false,
+          "median_ratio": null,
+          "range_overlap": true,
+          "zero_baseline": true
+        },
+        "major_faults": {
+          "all_observations_worse": false,
+          "median_loss": false,
+          "median_ratio": null,
+          "range_overlap": true,
+          "zero_baseline": true
+        },
+        "minor_faults": {
+          "all_observations_worse": true,
+          "median_loss": true,
+          "median_ratio": 1.0547977202653462,
+          "range_overlap": false,
+          "zero_baseline": false
+        },
+        "output_blocks": {
+          "all_observations_worse": false,
+          "median_loss": false,
+          "median_ratio": 1,
+          "range_overlap": true,
+          "zero_baseline": false
+        },
+        "rss_bytes": {
+          "all_observations_worse": true,
+          "median_loss": true,
+          "median_ratio": 1.0476794922649741,
+          "range_overlap": false,
+          "zero_baseline": false
+        },
+        "system": {
+          "all_observations_worse": false,
+          "median_loss": true,
+          "median_ratio": 1.170699884765197,
+          "range_overlap": true,
+          "zero_baseline": false
+        },
+        "user": {
+          "all_observations_worse": true,
+          "median_loss": true,
+          "median_ratio": 1.45230489992211,
+          "range_overlap": false,
+          "zero_baseline": false
+        },
+        "wall": {
+          "all_observations_worse": false,
+          "median_loss": false,
+          "median_ratio": 0.4608876490116418,
+          "range_overlap": false,
+          "zero_baseline": false
+        }
+      },
+      "native4_over_source": {
+        "cpu": {
+          "all_observations_worse": false,
+          "median_loss": false,
+          "median_ratio": 0.013304612429397946,
+          "range_overlap": false,
+          "zero_baseline": false
+        },
+        "input_blocks": {
+          "all_observations_worse": false,
+          "median_loss": false,
+          "median_ratio": null,
+          "range_overlap": true,
+          "zero_baseline": true
+        },
+        "major_faults": {
+          "all_observations_worse": false,
+          "median_loss": false,
+          "median_ratio": null,
+          "range_overlap": true,
+          "zero_baseline": true
+        },
+        "minor_faults": {
+          "all_observations_worse": false,
+          "median_loss": false,
+          "median_ratio": 0.4937566970631328,
+          "range_overlap": false,
+          "zero_baseline": false
+        },
+        "output_blocks": {
+          "all_observations_worse": false,
+          "median_loss": false,
+          "median_ratio": 0.9987787857641311,
+          "range_overlap": false,
+          "zero_baseline": false
+        },
+        "rss_bytes": {
+          "all_observations_worse": false,
+          "median_loss": false,
+          "median_ratio": 0.02528651411444225,
+          "range_overlap": false,
+          "zero_baseline": false
+        },
+        "system": {
+          "all_observations_worse": false,
+          "median_loss": false,
+          "median_ratio": 0.11553821557571729,
+          "range_overlap": false,
+          "zero_baseline": false
+        },
+        "user": {
+          "all_observations_worse": false,
+          "median_loss": false,
+          "median_ratio": 0.013230116050328691,
+          "range_overlap": false,
+          "zero_baseline": false
+        },
+        "wall": {
+          "all_observations_worse": false,
+          "median_loss": false,
+          "median_ratio": 0.004260744086495508,
+          "range_overlap": false,
+          "zero_baseline": false
+        }
+      }
+    },
+    "counters_are_not_physical_io_bytes": true,
+    "native4_cannot_rescue": true,
+    "no_cross_host_sum": true,
+    "resources": {
+      "native1": {
+        "cpu": {
+          "maximum": 14.242493,
+          "median": 13.528331,
+          "minimum": 13.00934,
+          "raw": [
+            13.528331,
+            14.242493,
+            13.00934,
+            14.126071,
+            13.337757
+          ]
+        },
+        "input_blocks": {
+          "maximum": 0,
+          "median": 0,
+          "minimum": 0,
+          "raw": [
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "major_faults": {
+          "maximum": 0,
+          "median": 0,
+          "minimum": 0,
+          "raw": [
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "minor_faults": {
+          "maximum": 42819,
+          "median": 42812,
+          "minimum": 42811,
+          "raw": [
+            42819,
+            42812,
+            42812,
+            42811,
+            42816
+          ]
+        },
+        "output_blocks": {
+          "maximum": 45800,
+          "median": 45800,
+          "minimum": 45800,
+          "raw": [
+            45800,
+            45800,
+            45800,
+            45800,
+            45800
+          ]
+        },
+        "rss_bytes": {
+          "maximum": 154927104,
+          "median": 154890240,
+          "minimum": 154738688,
+          "raw": [
+            154927104,
+            154738688,
+            154816512,
+            154890240,
+            154898432
+          ]
+        },
+        "system": {
+          "maximum": 0.121988,
+          "median": 0.105003,
+          "minimum": 0.093995,
+          "raw": [
+            0.093995,
+            0.105003,
+            0.09801,
+            0.106985,
+            0.121988
+          ]
+        },
+        "user": {
+          "maximum": 14.13749,
+          "median": 13.434336,
+          "minimum": 12.91133,
+          "raw": [
+            13.434336,
+            14.13749,
+            12.91133,
+            14.019086,
+            13.215769
+          ]
+        },
+        "wall": {
+          "maximum": 14.621553722,
+          "median": 13.645896386,
+          "minimum": 13.439698206,
+          "raw": [
+            13.645896386,
+            14.621553722,
+            13.439698206,
+            14.4938608,
+            13.531088002
+          ]
+        }
+      },
+      "native4": {
+        "cpu": {
+          "maximum": 19.710732,
+          "median": 19.635699,
+          "minimum": 19.512486,
+          "raw": [
+            19.621359,
+            19.512486,
+            19.664132,
+            19.635699,
+            19.710732
+          ]
+        },
+        "input_blocks": {
+          "maximum": 0,
+          "median": 0,
+          "minimum": 0,
+          "raw": [
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "major_faults": {
+          "maximum": 0,
+          "median": 0,
+          "minimum": 0,
+          "raw": [
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "minor_faults": {
+          "maximum": 45172,
+          "median": 45158,
+          "minimum": 45153,
+          "raw": [
+            45157,
+            45172,
+            45166,
+            45153,
+            45158
+          ]
+        },
+        "output_blocks": {
+          "maximum": 45800,
+          "median": 45800,
+          "minimum": 45800,
+          "raw": [
+            45800,
+            45800,
+            45800,
+            45800,
+            45800
+          ]
+        },
+        "rss_bytes": {
+          "maximum": 162283520,
+          "median": 162275328,
+          "minimum": 162062336,
+          "raw": [
+            162238464,
+            162275328,
+            162283520,
+            162062336,
+            162283520
+          ]
+        },
+        "system": {
+          "maximum": 0.13389099999999998,
+          "median": 0.122927,
+          "minimum": 0.11196199999999999,
+          "raw": [
+            0.122927,
+            0.11196199999999999,
+            0.13389099999999998,
+            0.12494699999999999,
+            0.122898
+          ]
+        },
+        "user": {
+          "maximum": 19.587834,
+          "median": 19.510752,
+          "minimum": 19.400524,
+          "raw": [
+            19.498432,
+            19.400524,
+            19.530241,
+            19.510752,
+            19.587834
+          ]
+        },
+        "wall": {
+          "maximum": 6.474047695,
+          "median": 6.289225104,
+          "minimum": 6.214088161,
+          "raw": [
+            6.214088161,
+            6.273272085,
+            6.289225104,
+            6.356168956,
+            6.474047695
+          ]
+        }
+      },
+      "source": {
+        "cpu": {
+          "maximum": 1480.0173610000002,
+          "median": 1475.85652,
+          "minimum": 1450.4817850000002,
+          "raw": [
+            1480.0173610000002,
+            1450.4817850000002,
+            1476.140447,
+            1475.85652,
+            1474.452482
+          ]
+        },
+        "input_blocks": {
+          "maximum": 0,
+          "median": 0,
+          "minimum": 0,
+          "raw": [
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "major_faults": {
+          "maximum": 0,
+          "median": 0,
+          "minimum": 0,
+          "raw": [
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "minor_faults": {
+          "maximum": 91594,
+          "median": 91458,
+          "minimum": 90951,
+          "raw": [
+            91458,
+            91556,
+            91594,
+            91110,
+            90951
+          ]
+        },
+        "output_blocks": {
+          "maximum": 45856,
+          "median": 45856,
+          "minimum": 45856,
+          "raw": [
+            45856,
+            45856,
+            45856,
+            45856,
+            45856
+          ]
+        },
+        "rss_bytes": {
+          "maximum": 6417993728,
+          "median": 6417465344,
+          "minimum": 6417117184,
+          "raw": [
+            6417575936,
+            6417993728,
+            6417428480,
+            6417117184,
+            6417465344
+          ]
+        },
+        "system": {
+          "maximum": 1.133855,
+          "median": 1.063951,
+          "minimum": 1.049577,
+          "raw": [
+            1.086563,
+            1.063951,
+            1.049577,
+            1.133855,
+            1.060939
+          ]
+        },
+        "user": {
+          "maximum": 1478.930798,
+          "median": 1474.722665,
+          "minimum": 1449.417834,
+          "raw": [
+            1478.930798,
+            1449.417834,
+            1475.09087,
+            1474.722665,
+            1473.391543
+          ]
+        },
+        "wall": {
+          "maximum": 1480.523496432,
+          "median": 1476.086095838,
+          "minimum": 1450.708806827,
+          "raw": [
+            1480.523496432,
+            1450.708806827,
+            1476.368093671,
+            1476.086095838,
+            1474.946993227
+          ]
+        }
+      }
+    },
+    "scope": "wait4 single-process lifetime counters; not isolated heap or exact simultaneous aggregate RSS; no exclusive/cold-cache claim",
+    "sole_primary": "native1 versus source1",
+    "unchanged_decision": {
+      "cpu_ratio": 0.009166426964052033,
+      "disjoint_rss": true,
+      "disjoint_wall": true,
+      "memory": true,
+      "native4_scaling": 2.169726184124193,
+      "rss_ratio": 0.024135734545853747,
+      "throughput": true,
+      "wall_ratio": 0.009244648008321619
+    }
+  }
+}
