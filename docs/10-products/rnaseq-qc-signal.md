@@ -214,9 +214,10 @@ No new public foundation is justified.
 
 ### Compatibility, performance, and release slices
 
-The first release slice is `mapping`, `strandedness`, `distribution`,
-`coverage`, and `integrity`, plus a `report` preset composed only from those
-complete operations. Each operation must pass:
+The current first release slice is `mapping`, `strandedness`, `distribution`,
+`coverage`, `integrity`, and explicit `junctions`. `report` keeps the established
+default five; junctions joins only through explicit metric selection. General
+named presets and later metrics are not implied. Each stable operation needs:
 
 - golden text and structured-output fixtures;
 - a live RSeQC 5.0.5 or Picard 3.4.0 differential on normal and adversarial
@@ -234,8 +235,16 @@ support, independent endpoint classes and nine counters. It observes original
 records in the same traversal, with focused/explicit report selection; the
 default five remain unchanged. Exact four-native41282068281 is now accepted
 from complete originals:96 test instances and88 retained native calls with
-compact worker/platform byte identity. New full-input junction performance
-is not yet accepted. Canonical geometry,
+compact worker/platform byte identity. Complete real-input junction run
+41291319388/1 is now independently accepted from all original bodies and21
+calls:66283 ordered rows/support/classes/nine counters match; Native1/source
+median wall=.1714838334 and processRSS=.4165684397, both fixed gates pass.
+Four workers improve Native1 wall2.0487x with47.2% more total CPU. Native
+scientific exports12.726MB versus source2.519MB and higher raw output blocks
+are explicit losses, not an I/O/storage win. These are warm one-input process
+measurements, not aggregate RAM or newly measured old-five/six-metric totals.
+Owning installation/package/notices/native release delivery remains separate.
+See the new rnaseq-qc-junction-performance-2026-11-01.json receipt. Canonical geometry,
 strict aliases and complete no-N/all-short results are explicit source
 differences. Native R/PDF/BED/Interact exports and saturation remain excluded.
 See the separately adopted 2026-11-01-rnaseq-qc-junctions plan and state ledger;
