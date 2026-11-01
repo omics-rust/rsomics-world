@@ -1,0 +1,867 @@
+{
+  "schema": "rsomics.popgen.whole-real-adoption.v1",
+  "status": "accepted",
+  "product": "rsomics-popgen",
+  "repository": "omics-rust/rsomics-world",
+  "workflow_path": ".github/workflows/popgen-whole-real.yml",
+  "run_id": 41272268312,
+  "run_attempt": 1,
+  "head_sha": "0d0eaa772ab57dbcd66e9de7c622a47931a11f4a",
+  "job_id": 124747301871,
+  "actual_conclusion": "success",
+  "artifact_id": 13072852423,
+  "original_zip": {
+    "bytes": 10569615542,
+    "path": "originals/artifact.ranged-recovered.zip",
+    "sha256": "bb48fdb0233b89abf7c67d3c44ec624644bf18c242d1f24a248b727669679ce7"
+  },
+  "ciphertext": {
+    "bytes": 10566389979,
+    "sha256": "11553f86b9e91891e4bdccd50b50c8c25454e869f1ccb12074744b2b4466859f"
+  },
+  "authenticated_tar": {
+    "bytes": 10563809280,
+    "sha256": "19ef52ec8713193be90b1df8a063b99c85dbf2d60bf06643129326e580c7d108"
+  },
+  "original_receipt": {
+    "bytes": 756,
+    "sha256": "70366cb47e9e7fa7f46d67301545361a7262b18f6440acc77b6e053ebd2ac70e"
+  },
+  "actual_native": {
+    "all_48_source_bodies_and_124_manifest_entries_rechecked": true,
+    "artifact_id": 13067555415,
+    "binary": {
+      "bytes": 1886584,
+      "sha256": "2800d57d0508a4979dccb850688bc475c58c1cedb588427c1f5ba0fa05bb0525"
+    },
+    "native_four_controller_head": "a3d2e024a541dbd01c6a07cd12eadb3399903ecb",
+    "native_four_receipt_identity": {
+      "bytes": 9554,
+      "sha256": "2260adecef59e06e89dd973fa399ac8a58eedd787e339b0700314bac59786c34"
+    },
+    "native_four_run_attempt": 1,
+    "native_four_run_id": 41265985145,
+    "native_tar": {
+      "bytes": 2764800,
+      "sha256": "fc5e61994e671962bfd7e6994a6015dfc348a03cdc7b7870a041141f729e6acc"
+    },
+    "native_zip": {
+      "bytes": 1003610,
+      "sha256": "4cdd4b59b9e4d6bd1cb9aa842495e8b32ac6c5d18538541ff2e2774efd759573"
+    },
+    "providers": {
+      "/lib/x86_64-linux-gnu/libc.so.6": {
+        "bytes": 1922136,
+        "realpath": "/usr/lib/x86_64-linux-gnu/libc.so.6",
+        "retained": "native-original/providers/1d25fd63234b59e4c581564c7a6d8f5c6cf36eee757e3d26f4b0808dd36a4896-libc.so.6",
+        "sha256": "1d25fd63234b59e4c581564c7a6d8f5c6cf36eee757e3d26f4b0808dd36a4896"
+      },
+      "/lib64/ld-linux-x86-64.so.2": {
+        "bytes": 215000,
+        "realpath": "/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2",
+        "retained": "native-original/providers/582f2d3d4edab86d601c54b37f04bd18fa2cda28be30e9f8c87df73c1c581354-ld-linux-x86-64.so.2",
+        "sha256": "582f2d3d4edab86d601c54b37f04bd18fa2cda28be30e9f8c87df73c1c581354"
+      },
+      "/usr/local/lib64/libgcc_s.so.1": {
+        "bytes": 904040,
+        "realpath": "/usr/local/lib64/libgcc_s.so.1",
+        "retained": "native-original/providers/bc74aa72f90673a744681157ca83675abffdb91a8f4caf0fa8092ad3924b0b0b-libgcc_s.so.1",
+        "sha256": "bc74aa72f90673a744681157ca83675abffdb91a8f4caf0fa8092ad3924b0b0b"
+      }
+    },
+    "selection": {
+      "authority_sha256": "c7fbf4242a97d3faa2c7062b9e134238e6783e2ae88c55571798b74c55a66450",
+      "controller_commit": "a3d2e024a541dbd01c6a07cd12eadb3399903ecb",
+      "lock_sha256": "84f00eb7b34d86787c28116184f74374d80c8dcbbf729067ade367ce5d185f16",
+      "owner_commit": "ff8e951344b5cd8f8c049c96afa9e2c585d14995",
+      "owner_tree": "8879ad1fbee6c1ed2d59cd32a4f255dfc0416d23",
+      "performance_claim": false,
+      "release": false,
+      "snapshot": "green-1",
+      "source_archive_sha256": "5565951e8ecd9352583e309be70bc861c877ae953da094e015b065e5db4db579",
+      "source_manifest_sha256": "f9d886ea1ffe00905eba6a29690f216119c62f8ece73d45711863ed79b0400b3",
+      "source_on_native_qualified": false,
+      "source_run": {
+        "artifact_id": 13063005350,
+        "artifact_sha256": "4339253cfc63da01b90d4d466ae23a004c03a307f4357c0aa57d526adc76354f",
+        "authenticated_tar_sha256": "31d4da4c409ef1f30cc6ad300368333ce1f2f56d3150d0af35b10f5d5a81b9b3",
+        "head_sha": "42d1138df77548d69d8ad90b4c747aedcc15035a",
+        "run_attempt": 1,
+        "run_id": 41252735560
+      },
+      "target": "linux-x86_64"
+    }
+  },
+  "owner_commit": "ff8e951344b5cd8f8c049c96afa9e2c585d14995",
+  "owner_tree": "8879ad1fbee6c1ed2d59cd32a4f255dfc0416d23",
+  "lock_sha256": "84f00eb7b34d86787c28116184f74374d80c8dcbbf729067ade367ce5d185f16",
+  "source_original_receipt": {
+    "accessible_bases": 23358803,
+    "all_62_recorded_controller_calls_return0": true,
+    "all_folded_and_unfolded_sfs_bins_exactly_reconstructed": true,
+    "all_original_crc_and_manifest_bodies_verified": true,
+    "artifact_bytes": 1891262928,
+    "artifact_id": 13063005350,
+    "artifact_name": "popgen-private-source-41252735560-1",
+    "artifact_sha256": "4339253cfc63da01b90d4d466ae23a004c03a307f4357c0aa57d526adc76354f",
+    "authenticated_tar_bytes": 1890222080,
+    "authenticated_tar_sha256": "31d4da4c409ef1f30cc6ad300368333ce1f2f56d3150d0af35b10f5d5a81b9b3",
+    "canonical_and_legacy_semantics_distinct": true,
+    "canonical_multiallelic_rows": 2613,
+    "canonical_snv_rows": 723783,
+    "canonical_windows": 514,
+    "cas_unique_regular_bodies": 7219,
+    "casebook_and_real_output_manifests_verified": true,
+    "casefold_collisions": 33,
+    "ciphertext_bytes": 1890685211,
+    "ciphertext_sha256": "8f4a19bf2f16207527ea456f1af7d9b5c79ffcab3226423bbc4ca26e906360db",
+    "completed_sha256": "8f1617d64b1160645d489371771e5aba5e6caa8215d6f4a983fc9dd605083d47",
+    "controller_bodies_at_exact_head": 11,
+    "empty_or_zero_accessible_windows_preserved": 176,
+    "evidence_directory": "/Volumes/KIOXIA/Developments/tmp/popgen-third-source-adoption-20261101.FIRTDpPx",
+    "head_sha": "42d1138df77548d69d8ad90b4c747aedcc15035a",
+    "jackknife_block_variants": 10000,
+    "jackknife_full_blocks": 72,
+    "jackknife_tail_rows": 3783,
+    "job_id": 124689467479,
+    "legacy_biallelic_complete_rows": 721170,
+    "legacy_commands_per_lane": 5,
+    "links_restored": false,
+    "local_scientific_execution": false,
+    "max_alt_count": 8,
+    "metadata_audit_sha256": "59c7b0b274ba8b17f0c60215b44e0fbde88dc3a15550c7a24e5d594df2fae728",
+    "metadata_only_symlinks": 1052,
+    "native_four_qualified": false,
+    "native_implementation": false,
+    "negative_and_nonfinite_source_values_preserved": true,
+    "original_vcf_rows": 1103547,
+    "packet_manifest_sha256": "1a565546bdb33c2aa5d3966b94939738d3184e77ab8f72c9061fce600d80f9ad",
+    "performance_claim": false,
+    "product": "rsomics-popgen",
+    "release": false,
+    "report_sha256": "416a5615bddbdc5ab813220f026272219ee46d594e274420db61c5770d7bc9dc",
+    "repository": "omics-rust/rsomics-world",
+    "root_freshly_verified_packet_bodies": 7264,
+    "root_freshly_verified_packet_bytes": 7217036918,
+    "run_attempt": 1,
+    "run_id": 41252735560,
+    "schema": "rsomics.popgen.source-adoption.v1",
+    "science_audit_sha256": "ec0c79a85f76308fb20a2c180a00861cd6c215e0af398eb1f93a44a2fc1740df",
+    "scope": "complete GRCh37 chr22; YRI108 and CEU99 in original VCF order",
+    "selected_persons": 207,
+    "sigsum_verification_claimed": false,
+    "source_oracle_qualified": true,
+    "source_versions": {
+      "dask": "2024.9.0",
+      "numpy": "1.26.4",
+      "python": "3.12.10+20250409",
+      "scikit_allel": "1.3.13",
+      "vcftools": "0.1.17"
+    },
+    "tar_directories": 662,
+    "tar_regular_bodies": 7815,
+    "workflow_path": ".github/workflows/popgen-first-workflow-oracle.yml"
+  },
+  "source_original_completion": {
+    "bytes": 1805,
+    "sha256": "8f1617d64b1160645d489371771e5aba5e6caa8215d6f4a983fc9dd605083d47"
+  },
+  "actual_source_versions": {
+    "click": "8.1.8",
+    "cloudpickle": "3.1.1",
+    "dask": "2024.9.0",
+    "fsspec": "2024.9.0",
+    "locket": "1.0.0",
+    "numpy": "1.26.4",
+    "packaging": "24.2",
+    "partd": "1.4.2",
+    "pyyaml": "6.0.2",
+    "scikit-allel": "1.3.13",
+    "toolz": "1.0.0"
+  },
+  "actual_python": {
+    "bytes": 4208976,
+    "sha256": "d3edc79066c9c08a4e4ff74116def227d423ce639f64af1a939862e787fc0dc3"
+  },
+  "actual_vcftools": {
+    "bytes": 17170200,
+    "sha256": "3b259c1179fa4dbf843d904e2d32fe6679ab47ab4f96aa94ae75a01b3bb6de54"
+  },
+  "source_non_elf_mapped_data_hashes_only_not_bodies": {
+    "/usr/lib/locale/C.utf8/LC_CTYPE": {
+      "bytes": 353616,
+      "sha256": "e4b5576b19e40be5923b0eb864750d35944404bb0a92aa68d1a9b96110c52120"
+    },
+    "/usr/lib/x86_64-linux-gnu/gconv/gconv-modules.cache": {
+      "bytes": 27028,
+      "sha256": "52c227df9d53248238602c1ddaccd2c8ddc4cc6a61aa45d7c425af590b8806a5"
+    }
+  },
+  "population": {
+    "block_variants": 10000,
+    "canonical_and_legacy_semantics_distinct": true,
+    "canonical_multiallelic_rows": 2613,
+    "canonical_rows": 723783,
+    "jackknife_blocks": 72,
+    "legacy_biallelic_complete_rows": 721170,
+    "legacy_rows": [
+      721170,
+      338,
+      347,
+      721170,
+      338
+    ],
+    "original_persons": 2504,
+    "original_rows": 1103547,
+    "populations": {
+      "CEU": 99,
+      "YRI": 108
+    },
+    "preserved_empty_or_zero_accessible_windows": 176,
+    "residual_tail_rows": 3783,
+    "selected_persons": 207,
+    "windows": 514
+  },
+  "four_original_source_comparisons": {
+    "native-1": {
+      "compared_cells": 50010408,
+      "frozen_abs_floor": 5.684341886080802e-14,
+      "frozen_relative": 9.094947017729282e-13,
+      "max_canonical_budget_fraction": 0.0107421875,
+      "max_finite_absolute_difference": 1.0913936421275139e-11,
+      "metadata_scientific_contract_checked": true,
+      "original_nonfinite_classes_preserved": true,
+      "parsed_legacy_finite_decimal_exact": true,
+      "producer_paths_runtime_timings_excluded": true,
+      "scientific_payloads": [
+        "22/sites.tsv.gz",
+        "22/windows.tsv.gz",
+        "22/region.json",
+        "22/sfs.json",
+        "22/fst-jackknife.json",
+        "22/jackknife-membership.tsv.gz",
+        "vcftools/site-pi.sites.pi",
+        "vcftools/window-pi.windowed.pi",
+        "vcftools/tajima-d.Tajima.D",
+        "vcftools/weir-fst.weir.fst",
+        "vcftools/window-weir-fst.windowed.weir.fst"
+      ],
+      "status": "passed",
+      "table_rows": {
+        "22/jackknife-membership.tsv.gz": 72,
+        "22/sites.tsv.gz": 723783,
+        "22/windows.tsv.gz": 514,
+        "vcftools/site-pi.sites.pi": 721170,
+        "vcftools/tajima-d.Tajima.D": 347,
+        "vcftools/weir-fst.weir.fst": 721170,
+        "vcftools/window-pi.windowed.pi": 338,
+        "vcftools/window-weir-fst.windowed.weir.fst": 338
+      }
+    },
+    "native-4": {
+      "compared_cells": 50010408,
+      "frozen_abs_floor": 5.684341886080802e-14,
+      "frozen_relative": 9.094947017729282e-13,
+      "max_canonical_budget_fraction": 0.0107421875,
+      "max_finite_absolute_difference": 1.0913936421275139e-11,
+      "metadata_scientific_contract_checked": true,
+      "original_nonfinite_classes_preserved": true,
+      "parsed_legacy_finite_decimal_exact": true,
+      "producer_paths_runtime_timings_excluded": true,
+      "scientific_payloads": [
+        "22/sites.tsv.gz",
+        "22/windows.tsv.gz",
+        "22/region.json",
+        "22/sfs.json",
+        "22/fst-jackknife.json",
+        "22/jackknife-membership.tsv.gz",
+        "vcftools/site-pi.sites.pi",
+        "vcftools/window-pi.windowed.pi",
+        "vcftools/tajima-d.Tajima.D",
+        "vcftools/weir-fst.weir.fst",
+        "vcftools/window-weir-fst.windowed.weir.fst"
+      ],
+      "status": "passed",
+      "table_rows": {
+        "22/jackknife-membership.tsv.gz": 72,
+        "22/sites.tsv.gz": 723783,
+        "22/windows.tsv.gz": 514,
+        "vcftools/site-pi.sites.pi": 721170,
+        "vcftools/tajima-d.Tajima.D": 347,
+        "vcftools/weir-fst.weir.fst": 721170,
+        "vcftools/window-pi.windowed.pi": 338,
+        "vcftools/window-weir-fst.windowed.weir.fst": 338
+      }
+    },
+    "source-1": {
+      "compared_cells": 50010425,
+      "frozen_abs_floor": 5.684341886080802e-14,
+      "frozen_relative": 9.094947017729282e-13,
+      "max_canonical_budget_fraction": 0,
+      "max_finite_absolute_difference": 0,
+      "metadata_scientific_contract_checked": true,
+      "original_nonfinite_classes_preserved": true,
+      "parsed_legacy_finite_decimal_exact": true,
+      "producer_paths_runtime_timings_excluded": true,
+      "scientific_payloads": [
+        "22/sites.tsv.gz",
+        "22/windows.tsv.gz",
+        "22/region.json",
+        "22/sfs.json",
+        "22/fst-jackknife.json",
+        "22/jackknife-membership.tsv.gz",
+        "vcftools/site-pi.sites.pi",
+        "vcftools/window-pi.windowed.pi",
+        "vcftools/tajima-d.Tajima.D",
+        "vcftools/weir-fst.weir.fst",
+        "vcftools/window-weir-fst.windowed.weir.fst"
+      ],
+      "status": "passed",
+      "table_rows": {
+        "22/jackknife-membership.tsv.gz": 72,
+        "22/sites.tsv.gz": 723783,
+        "22/windows.tsv.gz": 514,
+        "vcftools/site-pi.sites.pi": 721170,
+        "vcftools/tajima-d.Tajima.D": 347,
+        "vcftools/weir-fst.weir.fst": 721170,
+        "vcftools/window-pi.windowed.pi": 338,
+        "vcftools/window-weir-fst.windowed.weir.fst": 338
+      }
+    },
+    "source-4": {
+      "compared_cells": 50010425,
+      "frozen_abs_floor": 5.684341886080802e-14,
+      "frozen_relative": 9.094947017729282e-13,
+      "max_canonical_budget_fraction": 0,
+      "max_finite_absolute_difference": 0,
+      "metadata_scientific_contract_checked": true,
+      "original_nonfinite_classes_preserved": true,
+      "parsed_legacy_finite_decimal_exact": true,
+      "producer_paths_runtime_timings_excluded": true,
+      "scientific_payloads": [
+        "22/sites.tsv.gz",
+        "22/windows.tsv.gz",
+        "22/region.json",
+        "22/sfs.json",
+        "22/fst-jackknife.json",
+        "22/jackknife-membership.tsv.gz",
+        "vcftools/site-pi.sites.pi",
+        "vcftools/window-pi.windowed.pi",
+        "vcftools/tajima-d.Tajima.D",
+        "vcftools/weir-fst.weir.fst",
+        "vcftools/window-weir-fst.windowed.weir.fst"
+      ],
+      "status": "passed",
+      "table_rows": {
+        "22/jackknife-membership.tsv.gz": 72,
+        "22/sites.tsv.gz": 723783,
+        "22/windows.tsv.gz": 514,
+        "vcftools/site-pi.sites.pi": 721170,
+        "vcftools/tajima-d.Tajima.D": 347,
+        "vcftools/weir-fst.weir.fst": 721170,
+        "vcftools/window-pi.windowed.pi": 338,
+        "vcftools/window-weir-fst.windowed.weir.fst": 338
+      }
+    }
+  },
+  "native_and_source_all_repetitions_workers_scientific_payload_exact": {
+    "native": {
+      "decompressed_scientific_repeat_worker_exact": true,
+      "full_outputs": 12,
+      "payloads_each": 11
+    },
+    "source": {
+      "decompressed_scientific_repeat_worker_exact": true,
+      "full_outputs": 12,
+      "payloads_each": 11
+    }
+  },
+  "complete_casebook_source_and_native_scientific_comparison": {
+    "compared_cells": 1149,
+    "max_canonical_budget_fraction": 0,
+    "max_finite_absolute_difference": 0,
+    "table_rows": {
+      "a/jackknife-membership.tsv.gz": 3,
+      "a/sites.tsv.gz": 9,
+      "a/windows.tsv.gz": 3,
+      "b/jackknife-membership.tsv.gz": 1,
+      "b/sites.tsv.gz": 4,
+      "b/windows.tsv.gz": 3,
+      "vcftools/site-pi.sites.pi": 10,
+      "vcftools/tajima-d.Tajima.D": 4,
+      "vcftools/weir-fst.weir.fst": 10,
+      "vcftools/window-pi.windowed.pi": 3,
+      "vcftools/window-weir-fst.windowed.weir.fst": 3
+    }
+  },
+  "observed_frozen_material_decision": {
+    "allowances": {
+      "1": {
+        "conservative_memory_material": true,
+        "material": true,
+        "medians": {
+          "cpu": 0.1705684257713515,
+          "rss": 0.015373664197797841,
+          "wall": 0.17079066572292792
+        },
+        "paired_native_over_source": {
+          "cpu": [
+            0.17050610878576017,
+            0.1705684257713515,
+            0.16945630849134993,
+            0.1717132617967462,
+            0.17120396873037844
+          ],
+          "rss": [
+            0.015373664197797841,
+            0.016180570699433915,
+            0.015318489416725988,
+            0.01617940432832405,
+            0.015320374421949171
+          ],
+          "wall": [
+            0.1707545751852797,
+            0.17079066572292792,
+            0.1696521029269435,
+            0.1718873457369529,
+            0.17133718855716193
+          ]
+        },
+        "rss_scope": "native single-process kernel peak / source largest-process kernel peak lower bound",
+        "throughput_material": true
+      },
+      "4": {
+        "conservative_memory_material": true,
+        "material": true,
+        "medians": {
+          "cpu": 0.260405495962345,
+          "rss": 0.01618135224852135,
+          "wall": 0.11852321599489225
+        },
+        "paired_native_over_source": {
+          "cpu": [
+            0.260405495962345,
+            0.2582307390763522,
+            0.2614731255485386,
+            0.2544007827060768,
+            0.2610323798259067
+          ],
+          "rss": [
+            0.01618135224852135,
+            0.015821068205942406,
+            0.016183446028748143,
+            0.01581946561996518,
+            0.016183212710129465
+          ],
+          "wall": [
+            0.11852321599489225,
+            0.1173817523936395,
+            0.12011549522273328,
+            0.11674270630294487,
+            0.11934288882673426
+          ]
+        },
+        "rss_scope": "native single-process kernel peak / source largest-process kernel peak lower bound",
+        "throughput_material": true
+      }
+    },
+    "material_advantage_observed": true,
+    "performance_qualified": false,
+    "release": false,
+    "root_original_source_adoption_required": true,
+    "status": "observations-await-root-original-source-adoption"
+  },
+  "complete_native_and_source_scaling": {
+    "native": {
+      "median_four_over_serial": {
+        "kernel_process_rss_bytes": 1.0525143593951471,
+        "sampled_tree_rss_peak_bytes": 1.0514846743295019,
+        "system_seconds": 0.9208899343914441,
+        "total_cpu_seconds": 1.6507600567445335,
+        "user_seconds": 1.7145050685738958,
+        "wall_seconds": 0.6577517653463592
+      },
+      "paired_serial_over_four_wall": [
+        1.5199811101038592,
+        1.5307822715030712,
+        1.4993431106651793,
+        1.5380727318527831,
+        1.5210041710619817
+      ],
+      "scope": "Same-host sequential allowance campaigns; paired indices are descriptive, not concurrent source/native experiments",
+      "serial_over_four_wall": 1.5203303931437109
+    },
+    "source": {
+      "median_four_over_serial": {
+        "kernel_process_rss_bytes": 1.000014417401804,
+        "sampled_tree_rss_peak_bytes": 0.9856561022080653,
+        "system_seconds": 1.2283588102959015,
+        "total_cpu_seconds": 1.0815134584100525,
+        "user_seconds": 1.0796004676934463,
+        "wall_seconds": 0.9479080777908704
+      },
+      "paired_serial_over_four_wall": [
+        1.0550408340480375,
+        1.0520827048806596,
+        1.0615508864272352,
+        1.0446305540260337,
+        1.0594374357408678
+      ],
+      "scope": "Same-host sequential allowance campaigns; paired indices are descriptive, not concurrent source/native experiments",
+      "serial_over_four_wall": 1.0549546136694303
+    }
+  },
+  "cpu_scope": "Outer waited process usage includes its waited children; inner source SELF/CHILDREN are descriptive and never added twice.",
+  "process_rss_scope": "wait4 process lifetime high-water; source value is conservative largest-process lower bound, not simultaneous aggregate RSS",
+  "io_scope": "Raw rusage and cgroup/sample observations retained; cgroup is job-scoped and live counters omit exited children, not exclusive device-byte throughput.",
+  "recovered_originals_directory": "/Volumes/Zane's HDD/rsomics-fixtures/evidence/popgen-whole-real-2026-11-01/recovery.a3zRZu",
+  "superseded_sequential_partial": {
+    "authoritative_carrier_path": "originals/artifact.ranged-recovered.zip",
+    "command_record": "originals/artifact.zip.command.json",
+    "no_bytes_deleted": true,
+    "partial_identity": {
+      "bytes": 7501627392,
+      "sha256": "759431a7df30e721ec768d0d1fd3fafb4ce4954ac69bd15251361aacef8f7783"
+    },
+    "partial_path": "originals/artifact.zip",
+    "scientific_run_failed": false,
+    "stopped": [
+      {
+        "authority_already_complete_and_api_hash_verified": true,
+        "command": "gh api repos/omics-rust/rsomics-world/actions/artifacts/13072852423/zip --allow-escape-sequences",
+        "pid": 95601,
+        "signal": "SIGTERM"
+      }
+    ]
+  },
+  "all_raw_distribution_reference": {
+    "path": "/Volumes/Zane's HDD/rsomics-fixtures/evidence/popgen-whole-real-2026-11-01/recovery.a3zRZu/PERFORMANCE-VERIFIED.json",
+    "bytes": 197416,
+    "sha256": "e6e7c0d852dfeb0e6192cc616fa547b4452e86e64ad350b71ab1cc6626f24592"
+  },
+  "distributions": {
+    "1": {
+      "source": {
+        "wall_seconds": {
+          "maximum": 406.3279336859996,
+          "median": 404.6086289230002,
+          "minimum": 403.18861333199993,
+          "values": [
+            404.6011715940001,
+            404.6086289230002,
+            406.20862601199997,
+            403.18861333199993,
+            406.3279336859996
+          ]
+        },
+        "user_seconds": {
+          "maximum": 401.574234,
+          "median": 399.884158,
+          "minimum": 398.519797,
+          "values": [
+            399.884158,
+            399.881357,
+            401.158429,
+            398.519797,
+            401.574234
+          ]
+        },
+        "system_seconds": {
+          "maximum": 4.864962,
+          "median": 4.59173,
+          "minimum": 4.461873,
+          "values": [
+            4.614886,
+            4.572666,
+            4.864962,
+            4.461873,
+            4.59173
+          ]
+        },
+        "total_cpu_seconds": {
+          "maximum": 406.165964,
+          "median": 404.499044,
+          "minimum": 402.98167,
+          "values": [
+            404.499044,
+            404.454023,
+            406.023391,
+            402.98167,
+            406.165964
+          ]
+        },
+        "kernel_process_rss_bytes": {
+          "maximum": 2272911360,
+          "median": 2272808960,
+          "minimum": 2272718848,
+          "values": [
+            2272911360,
+            2272718848,
+            2272808960,
+            2272882688,
+            2272796672
+          ]
+        }
+      },
+      "native": {
+        "wall_seconds": {
+          "maximum": 69.6190857900001,
+          "median": 69.10337709100031,
+          "minimum": 68.91414763000012,
+          "values": [
+            69.08750117499994,
+            69.10337709100031,
+            68.91414763000012,
+            69.3030205770001,
+            69.6190857900001
+          ]
+        },
+        "user_seconds": {
+          "maximum": 63.965848,
+          "median": 63.429676,
+          "minimum": 63.336513,
+          "values": [
+            63.336513,
+            63.543316,
+            63.429676,
+            63.419191,
+            63.965848
+          ]
+        },
+        "system_seconds": {
+          "maximum": 5.778106,
+          "median": 5.571377,
+          "minimum": 5.373549,
+          "values": [
+            5.633045,
+            5.44377,
+            5.373549,
+            5.778106,
+            5.571377
+          ]
+        },
+        "total_cpu_seconds": {
+          "maximum": 69.537225,
+          "median": 68.98708599999999,
+          "minimum": 68.803225,
+          "values": [
+            68.96955799999999,
+            68.98708599999999,
+            68.803225,
+            69.19729699999999,
+            69.537225
+          ]
+        },
+        "kernel_process_rss_bytes": {
+          "maximum": 36773888,
+          "median": 34942976,
+          "minimum": 34816000,
+          "values": [
+            34942976,
+            36773888,
+            34816000,
+            36773888,
+            34820096
+          ]
+        }
+      }
+    },
+    "4": {
+      "source": {
+        "wall_seconds": {
+          "maximum": 385.96287632799977,
+          "median": 383.5317877000007,
+          "minimum": 382.6558210310004,
+          "values": [
+            383.4933763099998,
+            384.5787285029992,
+            382.6558210310004,
+            385.96287632799977,
+            383.5317877000007
+          ]
+        },
+        "user_seconds": {
+          "maximum": 435.299458,
+          "median": 431.715124,
+          "minimum": 431.093359,
+          "values": [
+            431.681991,
+            432.889114,
+            431.093359,
+            435.299458,
+            431.715124
+          ]
+        },
+        "system_seconds": {
+          "maximum": 5.756036,
+          "median": 5.640292,
+          "minimum": 5.526045,
+          "values": [
+            5.640292,
+            5.605135,
+            5.708189,
+            5.526045,
+            5.756036
+          ]
+        },
+        "total_cpu_seconds": {
+          "maximum": 440.825503,
+          "median": 437.47116,
+          "minimum": 436.801548,
+          "values": [
+            437.32228299999997,
+            438.494249,
+            436.801548,
+            440.825503,
+            437.47116
+          ]
+        },
+        "kernel_process_rss_bytes": {
+          "maximum": 2272862208,
+          "median": 2272841728,
+          "minimum": 2272813056,
+          "values": [
+            2272862208,
+            2272841728,
+            2272821248,
+            2272813056,
+            2272854016
+          ]
+        }
+      },
+      "native": {
+        "wall_seconds": {
+          "maximum": 45.96289344300021,
+          "median": 45.452868273000604,
+          "minimum": 45.058350714999506,
+          "values": [
+            45.452868273000604,
+            45.14252508499976,
+            45.96289344300021,
+            45.058350714999506,
+            45.771791500999825
+          ]
+        },
+        "user_seconds": {
+          "maximum": 109.050007,
+          "median": 108.750501,
+          "minimum": 107.174436,
+          "values": [
+            108.750501,
+            108.419893,
+            108.790373,
+            107.174436,
+            109.050007
+          ]
+        },
+        "system_seconds": {
+          "maximum": 5.421493,
+          "median": 5.130625,
+          "minimum": 4.812801,
+          "values": [
+            5.130625,
+            4.812801,
+            5.421493,
+            4.9719169999999995,
+            5.144131
+          ]
+        },
+        "total_cpu_seconds": {
+          "maximum": 114.211866,
+          "median": 113.881126,
+          "minimum": 112.146353,
+          "values": [
+            113.881126,
+            113.23269400000001,
+            114.211866,
+            112.146353,
+            114.194138
+          ]
+        },
+        "kernel_process_rss_bytes": {
+          "maximum": 36782080,
+          "median": 36777984,
+          "minimum": 35954688,
+          "values": [
+            36777984,
+            35958784,
+            36782080,
+            35954688,
+            36782080
+          ]
+        }
+      }
+    }
+  },
+  "all_status_records": {
+    "count": 151,
+    "all_zero": true
+  },
+  "root_fresh_verification": {
+    "path": "/Volumes/KIOXIA/Developments/tmp/whole-adoption-root-20261101.dhz7O8/popgen-fresh-verification.json",
+    "sha256": "cf7eb2e605de41a9aa27cff42d088e86ba019842b84d1d4b6d9df957b182171b",
+    "record": {
+      "bytes": 51584067001,
+      "completion_sha256": "c12612819e067c89ac01abded94b71a16f0c6ca01601abc034893c1f165b94de",
+      "directory": "/Volumes/Zane's HDD/rsomics-fixtures/evidence/popgen-whole-real-2026-11-01/recovery.a3zRZu",
+      "directory_modes_verified": false,
+      "elapsed_seconds": 334.5725750923157,
+      "files": 8441,
+      "passed": true,
+      "physical_file_set_exact": true,
+      "scope": "Fresh root size/mode/SHA256 check of all sealed regular bodies; no producer/scientific program executed",
+      "seal_sha256": "b6b0481f09bbafb8fde356a2128f7956dc8ff48affcb1476526c9c0d31d666ee"
+    }
+  },
+  "final_metadata_verification": {
+    "path": "/Volumes/Zane's HDD/rsomics-fixtures/evidence/popgen-whole-real-2026-11-01/recovery.a3zRZu/VERIFICATION-COMPLETE.json",
+    "bytes": 228073,
+    "sha256": "dfcc9eee9ba534dad063c4ab5040cf230446a878991aa073fa85c678263bbcb9"
+  },
+  "root_adopted": true,
+  "scope": "Coherent neutral full-chr22 workflow, fresh scikit-allel1.3.13 canonical statistics plus five real vcftools0.1.17 export profiles; same-host1/4 CPU allowances",
+  "native_four_qualified": true,
+  "native_full_input_correctness_qualified": true,
+  "bookworm_native_abi_qualified": true,
+  "source_original_science_adopted": true,
+  "performance_qualified": true,
+  "throughput_route_passed_both_allowances": true,
+  "conservative_process_memory_route_passed_both_allowances": true,
+  "full_real_workflows": 24,
+  "measured_workflows": 20,
+  "excluded_warmup_workflows": 4,
+  "independent_casebook_workflows": 2,
+  "all_complete_outputs_retained": true,
+  "complete_original_crc_membership_manifest_modes_links_verified": true,
+  "original_types": {
+    "directory": 929,
+    "file": 8799,
+    "symlink": 1052
+  },
+  "original_casefold_collisions": 33,
+  "symlinks_or_foreign_executables_restored_on_mac": false,
+  "root_review": "Read complete report, TAR/metadata/independent original-science/performance/proposal validators; freshly hash all8441 sealed regular files/51584067001B plus exact physical membership. Final VERIFICATION-COMPLETE151 statuses supersedes earlier26-status projection without changing any prior status or science.",
+  "report_sha256": "8a5c64a94453aa068ce5c633cb5ef67f887e2b81c3add62e81fe3876804c966e",
+  "seal_sha256": "b6b0481f09bbafb8fde356a2128f7956dc8ff48affcb1476526c9c0d31d666ee",
+  "completed_sha256": "c12612819e067c89ac01abded94b71a16f0c6ca01601abc034893c1f165b94de",
+  "original_science_verification_sha256": "12698553834c0e6befbc473b1e3560d364e3fac86ef904b22f0dea0b769a6a63",
+  "root_fresh_custody_qualified": true,
+  "explicit_limits": [
+    "Two mapped non-ELF system data bodies are hash-only and equal the original source; complete scientific ELF/provider bodies are retained, but no complete all-process-mapping body custody or per-call dynamic tracing is claimed.",
+    "Native avoids materializing legacy derivative VCF while preserving its virtual input identity and output semantics; this is whole-workflow value, not an isolated kernel speedup.",
+    "Native1 systemCPU median5.571377s exceeds source4.591730s; native4 wall improves only1.520330x while totalCPU rises1.650760x. All regressions/distributions remain.",
+    "Process RSS is a conservative largest-waited-process lower bound for source, not exact simultaneous aggregate memory/heap. No cold-cache/exclusive-device-byte claim.",
+    "Native matching cross-engine phase timers are unavailable; source-only phase times do not prove stage-specific speedups.",
+    "Original first and second whole failures and failed transport/checker attempts remain intact. No original trial is relabelled or rerun.",
+    "Single Linux x86_64 same-job performance workload only; native-four authority is separately earned. Selection/admixture/full-product/publication/auth gates are not granted."
+  ],
+  "matching_cross_engine_stage_timings_available": false,
+  "exact_aggregate_memory_bytes": null,
+  "cold_cache_proven": false,
+  "private_identity_bytes_read_or_transferred_by_checker": false,
+  "scientific_or_foreign_execution_on_mac": false,
+  "earlier_failed_runs_unchanged": true,
+  "publication": false,
+  "public_product_complete": false,
+  "registry_authorization_qualified": false
+}

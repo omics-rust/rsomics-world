@@ -1,5 +1,67 @@
 # Popgen whole-chr22 same-machine performance
 
+## Third whole campaign fully adopted; neutral workflow performance accepted
+
+Actual41272268312/1/head0d0eaa772ab57dbcd66e9de7c622a47931a11f4a,
+job124747301871 is accepted in
+`.autopilot/oracles/popgen-whole-real-2026-11-01.json`. This is the coherent
+neutral workflow, not selection/admixture, whole-product or publication approval.
+Root reads the full report/TAR/metadata/independent original-science/performance
+validators and freshly hashes all8441 sealed regular bodies/51584067001B at
+`/Volumes/Zane's HDD/rsomics-fixtures/evidence/popgen-whole-real-2026-11-01/recovery.a3zRZu`.
+Fresh proof is whole-adoption-root-20261101.dhz7O8/popgen-fresh-verification.json.
+REPORT8a5c64a94453aa068ce5c633cb5ef67f887e2b81c3add62e81fe3876804c966e;
+SEALb6b0481f09bbafb8fde356a2128f7956dc8ff48affcb1476526c9c0d31d666ee;
+completedc12612819e067c89ac01abded94b71a16f0c6ca01601abc034893c1f165b94de.
+
+Whole ZIP10569615542B/bb48fdb0, cipher10566389979B/11553f86 and fully
+authenticated TAR10563809280B/19ef52ec remain with all8799 regular original
+bodies/929 directories/1052 links, raw APIs/logs and33 case collisions safely
+represented in TAR/CAS. Failed64MiB range, full7501627392B superseded partial
+and both original local checker classifications remain. No deletion-to-fit,
+scientific rerun, original-path restoration or Mac science/ELF execution.
+
+Actual native ELF2800d57d remains exactly the accepted four-native executable:
+all48 frozen source bodies/124 native manifest entries/11 actual controllers/
+16 exact-head contexts and real Bookworm providers are checked. Fresh source
+uses CPython3.12.10/scikit-allel1.3.13/NumPy1.26.4/Dask2024.9.0/vcftools0.1.17.
+All44 source library records/three native providers have retained bodies.
+Two non-ELF locale/gconv mapped files have hashes matching the original source
+but no retained bodies; this bounded gap is explicit, not complete process-
+mapping custody or per-call dynamic tracing. Final VERIFICATION-COMPLETE checks
+151 actual zero-status records, extending the earlier26 without changing them.
+
+Full unchanged chr22 contains1103547 rows/2504 persons; YRI108+CEU99 gives207
+selected,723783 canonical SNVs/2613 multiallelic sites/514 windows including176
+empty/zero-accessible,72 full10000-site jackknife blocks and3783 residual rows.
+All four new Source1/Native1/Source4/Native4 comparisons against the authenticated
+original source pass: source50010425 cells exact; native50010408 cells with max
+absolute1.0913936421275139e-11, max frozen-budget fraction.0107421875.
+Every one of12 source and12 native full11-payload sets is repeat/worker exact
+after gzip decompression. All17 original casebook goldens also match. No NaN/
+infinity imputation, row/window omission or canonical/legacy conflation.
+
+| CPU allowance | Source wall median | Native wall median | Median paired N/S wall | Source process RSS median | Native process RSS median |
+|---|---:|---:|---:|---:|---:|
+| 1 | 404.608629s | 69.103377s | .170790666 | 2272808960B | 34942976B |
+| 4 | 383.531788s | 45.452868s | .118523216 | 2272841728B | 36777984B |
+
+All five paired wall comparisons win, with disjoint ranges. Both unchanged
+throughput and conservative-process-memory routes pass at both allowances.
+One warmup plus five alternating pairs each gives24 workflows/20 measured;
+two independent casebook processes are separate. Native1 systemCPU is a kept
+loss:5.571377s vs4.591730s. Native1→4 wall improves1.520330x while totalCPU
+rises1.650760x/RSS1.052514x; not fourfold or uniformly free parallelism.
+Source-only phase timers do not imply matching native stage speedups.
+
+RSS is source's largest waited-process lower bound, not exact simultaneous
+aggregate/heap. CPU is counted once at the outer wait4 boundary. No cold-cache,
+exclusive-host or physical-device-byte claim. Avoided legacy-VCF materialization
+is a declared whole-workflow benefit with exact virtual identity/output
+semantics, not an isolated-kernel comparison. Earlier two whole failures remain
+failed. Remaining delivery work is owning-repo/package/docs/binary integration
+and registry authorization; no speculative new foundation is needed.
+
 ## Actual namespace-corrected qualification dispatched
 
 Exact-head Control41272172559 completes successfully at

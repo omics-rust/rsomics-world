@@ -22,10 +22,15 @@ worker-exact, with no new public foundation or full-GT matrix. One integrated
 review and fresh fmt/strictClippy/release pass. Actual41265985145 now passes
 all four native classes with complete original artifact/log recovery and true
 release executable identities accepted. The compact native4 fixture is not
-full-chr22 evidence. Actual third whole-real41272268312 now finishes SUCCESS,
-but complete authenticated recovery and independent output/performance
-reduction are still underway; CI status alone is not acceptance. Same-machine
-full upstream performance and release remain separate unearned gates.
+full-chr22 evidence. Actual third whole-real41272268312 is now independently
+adopted after complete authenticated recovery and four comparisons against the
+original source. All207 persons/1103547 rows/514 windows and11 payloads remain;
+both fixed throughput/process-memory routes pass at1/4 CPU allowances. Wall
+medians are Source404.61s/Native69.10s at1 and383.53s/45.45s at4. Native1
+systemCPU regression and only1.52x native1→4 scaling are retained. This earns
+neutral-workflow same-host performance, not selection/admixture, universal
+scaling or release. Owning-repo/package/docs/binary delivery and registry
+authorization remain; no new public foundation is needed for this slice.
 The dated source audits below remain historical context, not a reason to
 rerun those accepted preflights.
 
