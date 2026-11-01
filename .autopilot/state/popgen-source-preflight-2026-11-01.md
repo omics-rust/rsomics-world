@@ -1,5 +1,46 @@
 # Popgen connected source workflow
 
+## Complete native-four preparation reviewed; actual execution next
+
+All8 approved controller/workflow/authority/snapshot paths are implemented,
+without owner, estimator, fixture or connected-test changes. Root reads the
+complete material body and report at popgen-native-four-prep-20261101.hWSQix,
+freshly verifies all21 sealed bodies/all8 world copies, exact48 Git-source
+bodies/modes/blobs, all69 locked registry identities and22 actual original
+casebook/golden bodies. Same ONE preparation passes fresh1/0.111s after the
+author's real absent-workflow RED; no Mac product/upstream executes here.
+REPORT SHA13c7ec96f69950482885a797935153103aa22ced6a39671cac2bb430866f0ff6;
+seal9765722f9602df97d1b0a78fb9642e60a87c069a33b2227822a0ad13cf6b0d84.
+
+One independent whole-gate review finds no confirmedP1/P2; root reads its
+complete report popgen-native-four-review-20261101.BRVbQq, SHA
+52dc766d34afdb9d729e5d241b7ce9a77c6c7f74c7a0328cf0250f1731bf82f2.
+The new snapshot is44225B SHA
+5565951e8ecd9352583e309be70bc861c877ae953da094e015b065e5db4db579,
+not a relabel of the earlier precommit freeze. Existing CLI test temporary
+outputs are not claimed retained; raw build/tests, exact source and actual
+Cargo-JSON-selected release binaries are retained for every host. No new
+source-on-native/full-chr22/performance/four-native result is preaccepted.
+
+## Native-four candidate gate design adopted; implementation active
+
+Root fully reads DESIGN/READ_BINDINGS at
+popgen-native-four-design-20261101.x9iUBW; DESIGN SHA
+8a59416b6cb73c57751c602abf8a7e9f5fe9fd777cacc01672a499282670b845.
+Approve exactly8 new world files: manual native-four workflow, one controller,
+ONE connected preparation test, authority JSON and standard4-file immutable
+snapshot. Reuse existing snapshot/capture/package helpers; no shared framework,
+owner or statistical test change is justified.
+
+Exact ownerff8e9513/48 regular bodies and69 locked registry dependencies bind
+all four real native hosts, Rust1.91, full debug/release connected17-golden1/4
+tests, every-host fmt/strictClippy and original partial/failure logs. Retain
+actual Cargo-JSON-selected release ELF/Mach-O with source/lock/controller/native
+CPU headers for the later real gate. No scientific source install, human data,
+private key or source-on-native/performance claim enters this candidate gate.
+Implementation/preparation is authorized; root owns whole review, Git/exact-head
+control CI and actual manual dispatch. No future snapshot hash/run is invented.
+
 ## Complete private native workflow and full-chr22 Mac parity accepted
 
 Root reads the entire production/CLI/test/dependency/documentation wave, the

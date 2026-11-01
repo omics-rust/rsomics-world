@@ -1,0 +1,871 @@
+{
+  "dependencies": [
+    {
+      "checksum": "320119579fcad9c21884f5c4861d16174d0e06250625266f50fe6898340abefa",
+      "name": "adler2",
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "version": "2.0.1"
+    },
+    {
+      "checksum": "824a212faf96e9acacdbd09febd34438f8f711fb84e09a8916013cd7815ca28d",
+      "name": "anstream",
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "version": "1.0.0"
+    },
+    {
+      "checksum": "940b3a0ca603d1eade50a4846a2afffd5ef57a9feac2c0e2ec2e14f9ead76000",
+      "name": "anstyle",
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "version": "1.0.14"
+    },
+    {
+      "checksum": "52ce7f38b242319f7cabaa6813055467063ecdc9d355bbb4ce0c68908cd8130e",
+      "name": "anstyle-parse",
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "version": "1.0.0"
+    },
+    {
+      "checksum": "40c48f72fd53cd289104fc64099abca73db4166ad86ea0b4341abe65af83dadc",
+      "name": "anstyle-query",
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "version": "1.1.5"
+    },
+    {
+      "checksum": "291e6a250ff86cd4a820112fb8898808a366d8f9f58ce16d1f538353ad55747d",
+      "name": "anstyle-wincon",
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "version": "3.0.11"
+    },
+    {
+      "checksum": "3ded4057c258ba199e2d26386d3af3780957ecaee6c4ef4041c6b4b8b97c0b06",
+      "name": "bitflags",
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "version": "2.13.2"
+    },
+    {
+      "checksum": "3078c7629b62d3f0439517fa394996acacc5cbc91c5a20d8c658e77abd503a71",
+      "name": "block-buffer",
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "version": "0.10.4"
+    },
+    {
+      "checksum": "4e7648175b45a9a48536d676f68d918270699102aa8dab5496df06904c914600",
+      "name": "cfg-if",
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "version": "1.0.5"
+    },
+    {
+      "checksum": "aa8876b300ab35ba921adea3dfd70157a46249b33f95c9084ae5709785478946",
+      "name": "clap",
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "version": "4.6.7"
+    },
+    {
+      "checksum": "ec0797fb7aeb1406c84efac526901f7ec3ead2124f946b494e72879d4b54704d",
+      "name": "clap_builder",
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "version": "4.6.7"
+    },
+    {
+      "checksum": "f9c751b79415d4e559e3d1fcf128e09e720eb673a06d26cf6f392d37d75b66e0",
+      "name": "clap_derive",
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "version": "4.6.7"
+    },
+    {
+      "checksum": "1c133bc6a41be0d194c306b5506d15e6feeea7b1d6604bd3f8310dfb2ca96486",
+      "name": "clap_lex",
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "version": "1.1.1"
+    },
+    {
+      "checksum": "1d07550c9036bf2ae0c684c4297d503f838287c83c53686d05370d0e139ae570",
+      "name": "colorchoice",
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "version": "1.0.5"
+    },
+    {
+      "checksum": "59ed5838eebb26a2bb2e58f6d5b5316989ae9d08bab10e0e6d103e656d1b0280",
+      "name": "cpufeatures",
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "version": "0.2.17"
+    },
+    {
+      "checksum": "0ba106e844045ddc02c20768ac4b0b7cb45f2cc2ecbd833ac9f5dacb183c2055",
+      "name": "crc32fast",
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "version": "1.5.3"
+    },
+    {
+      "checksum": "622f3fc73690be383c7214310406f28a90e6edeadc3cea882f9d71e495b9711a",
+      "name": "crossbeam-deque",
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "version": "0.8.8"
+    },
+    {
+      "checksum": "dc74980687109a3b14c72fd458107bf0baa1da1a1a805e178d15501ba9b86d9d",
+      "name": "crossbeam-epoch",
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "version": "0.9.21"
+    },
+    {
+      "checksum": "a31eee39dddec8330830986fcd7625edb5a24ec90ea038215273bbc3adb08ac6",
+      "name": "crossbeam-utils",
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "version": "0.8.23"
+    },
+    {
+      "checksum": "78c8292055d1c1df0cce5d180393dc8cce0abec0a7102adb6c7b1eef6016d60a",
+      "name": "crypto-common",
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "version": "0.1.7"
+    },
+    {
+      "checksum": "52cd9d68cf7efc6ddfaaee42e7288d3a99d613d4b50f76ce9827ae0c6e14f938",
+      "name": "csv",
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "version": "1.4.0"
+    },
+    {
+      "checksum": "704a3c26996a80471189265814dbc2c257598b96b8a7feae2d31ace646bb9782",
+      "name": "csv-core",
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "version": "0.1.13"
+    },
+    {
+      "checksum": "9ed9a281f7bc9b7576e61468ba615a66a5c8cfdff42420a70aa82701a3b1e292",
+      "name": "digest",
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "version": "0.10.7"
+    },
+    {
+      "checksum": "0e9c71c2167ca323c882b99918929403426e2373ea17242ff5653e0d5e1058be",
+      "name": "either",
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "version": "1.19.0"
+    },
+    {
+      "checksum": "39cab71617ae0d63f51a36d69f866391735b51691dbda63cf6f96d042b63efeb",
+      "name": "errno",
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "version": "0.3.14"
+    },
+    {
+      "checksum": "da7c62ceae207dd37ea5b845da6a0696c799f85e97da1ab5b7910be3c1c80223",
+      "name": "fastrand",
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "version": "2.5.0"
+    },
+    {
+      "checksum": "6e634e2e0ebac1ee034020da1ca582e17ffe4e0f5e985823721e168928136dcb",
+      "name": "flate2",
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "version": "1.1.10"
+    },
+    {
+      "checksum": "85649ca51fd72272d7821adaf274ad91c288277713d9c18820d8499a7ff69e9a",
+      "name": "generic-array",
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "version": "0.14.7"
+    },
+    {
+      "checksum": "300e883d756b2e4ec94e02791f39b04b522276138852cfc41d9fb7e904106099",
+      "name": "getrandom",
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "version": "0.4.3"
+    },
+    {
+      "checksum": "2304e00983f87ffb38b55b444b5e3b60a884b5d30c0fca7d82fe33449bbe55ea",
+      "name": "heck",
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "version": "0.5.0"
+    },
+    {
+      "checksum": "a6cb138bb79a146c1bd460005623e142ef0181e3d0219cb493e02f7d08a35695",
+      "name": "is_terminal_polyfill",
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "version": "1.70.2"
+    },
+    {
+      "checksum": "8f42a60cbdf9a97f5d2305f08a87dc4e09308d1276d28c869c684d7777685682",
+      "name": "itoa",
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "version": "1.0.18"
+    },
+    {
+      "checksum": "65cd87c9a6d60536580b316ad985726104730a5151c99845f2490428ef91240a",
+      "name": "libc",
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "version": "0.2.191"
+    },
+    {
+      "checksum": "32a66949e030da00e8c7d4434b251670a91556f4144941d37452769c25d58a53",
+      "name": "linux-raw-sys",
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "version": "0.12.1"
+    },
+    {
+      "checksum": "cf8baf1c55e62ffcace7a9f06f4bd9cd3f0c4beb022d3b367256b91b87513d98",
+      "name": "memchr",
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "version": "2.8.3"
+    },
+    {
+      "checksum": "b63fbc4a50860e98e7b2aa7804ded1db5cbc3aff9193adaff57a6931bf7c4b4c",
+      "name": "miniz_oxide",
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "version": "0.9.1"
+    },
+    {
+      "checksum": "9f7c3e4beb33f85d45ae3e3a1792185706c8e16d043238c593331cc7cd313b50",
+      "name": "once_cell",
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "version": "1.21.4"
+    },
+    {
+      "checksum": "384b8ab6d37215f3c5301a95a4accb5d64aa607f1fcb26a11b5303878451b4fe",
+      "name": "once_cell_polyfill",
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "version": "1.70.2"
+    },
+    {
+      "checksum": "985e7ec9bb745e6ce6535b544d84d6cd6f7ad8bd711c398938ae983b91a766d9",
+      "name": "proc-macro2",
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "version": "1.0.107"
+    },
+    {
+      "checksum": "1fbf4db142a473a8d80c26bbf18454ed458bf8d26c8219c331daecfdbd079001",
+      "name": "quote",
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "version": "1.0.47"
+    },
+    {
+      "checksum": "f8dcc9c7d52a811697d2151c701e0d08956f92b0e24136cf4cf27b57a6a0d9bf",
+      "name": "r-efi",
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "version": "6.0.0"
+    },
+    {
+      "checksum": "fb39b166781f92d482534ef4b4b1b2568f42613b53e5b6c160e24cfbfa30926d",
+      "name": "rayon",
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "version": "1.12.0"
+    },
+    {
+      "checksum": "22e18b0f0062d30d4230b2e85ff77fdfe4326feb054b9783a3460d8435c8ab91",
+      "name": "rayon-core",
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "version": "1.13.0"
+    },
+    {
+      "checksum": "d9a4246711f13a0fdd9398e7eab3a95b991ac555a52c98f6518252c037508401",
+      "name": "rsomics-common",
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "version": "0.12.3"
+    },
+    {
+      "checksum": "5922ec5a261660869fc36aa05f731c0adb059c43344eb78c2393f05611797fe1",
+      "name": "rsomics-help",
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "version": "0.4.0"
+    },
+    {
+      "checksum": "e5e76742e5294153d4dde1207dbec5bdd81eef6fabdc0d2118babadabfd858aa",
+      "name": "rustix",
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "version": "1.1.6"
+    },
+    {
+      "checksum": "9774ba4a74de5f7b1c1451ed6cd5285a32eddb5cccb8cc655a4e50009e06477f",
+      "name": "ryu",
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "version": "1.0.23"
+    },
+    {
+      "checksum": "93fc1dc3aaa9bfed95e02e6eadabb4baf7e3078b0bd1b4d7b6b0b68378900502",
+      "name": "same-file",
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "version": "1.0.6"
+    },
+    {
+      "checksum": "4148590afebada386688f18773da617792bf2ef03ffc1e4cbd2b1d45b023e0ba",
+      "name": "serde",
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "version": "1.0.229"
+    },
+    {
+      "checksum": "67dca2c9c51e58a4791a4b1ed58308b39c64224d349a935ab5039aa360942a48",
+      "name": "serde_core",
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "version": "1.0.229"
+    },
+    {
+      "checksum": "e7a5d71263a5a7d47b41f6b3f06ba276f10cc18b0931f1799f710578e2309348",
+      "name": "serde_derive",
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "version": "1.0.229"
+    },
+    {
+      "checksum": "e7e9cc8b1b85264074fbcc02a88680c4096b1e47df8f739dceb03bf482f04bd6",
+      "name": "serde_json",
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "version": "1.0.154"
+    },
+    {
+      "checksum": "a7507d819769d01a365ab707794a4084392c824f54a7a6a7862f8c3d0892b283",
+      "name": "sha2",
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "version": "0.10.9"
+    },
+    {
+      "checksum": "3a219298ac11a56ea9a6d2120044824d6f01aeb034955e7af7bc16858527deea",
+      "name": "simd-adler32",
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "version": "0.3.10"
+    },
+    {
+      "checksum": "7da8b5736845d9f2fcb837ea5d9e2628564b3b043a70948a3f0b778838c5fb4f",
+      "name": "strsim",
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "version": "0.11.1"
+    },
+    {
+      "checksum": "d78c8dee4c7bf0e14673097256fed6142ce9d3b85a408189d07482442145823b",
+      "name": "syn",
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "version": "3.0.9"
+    },
+    {
+      "checksum": "32497e9a4c7b38532efcdebeef879707aa9f794296a4f0244f6f69e9bc8574bd",
+      "name": "tempfile",
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "version": "3.27.0"
+    },
+    {
+      "checksum": "230a1b821ccbd75b185820a1f1ff7b14d21da1e442e22c0863ea5f08771a8874",
+      "name": "terminal_size",
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "version": "0.4.4"
+    },
+    {
+      "checksum": "09e52cb86a36cede5cb101bf8908837b3e4c6e5e59fe7fd85c23fb56200d189e",
+      "name": "thiserror",
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "version": "2.0.21"
+    },
+    {
+      "checksum": "fe5197923287db20a58125f0bc85c062f7f2c892de97b18c356f9efb14b28524",
+      "name": "thiserror-impl",
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "version": "2.0.21"
+    },
+    {
+      "checksum": "b6f5e870be6c3b371b77fe0ee0bafb859fa4964b4404c27de1d380043c4dda20",
+      "name": "typenum",
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "version": "1.20.1"
+    },
+    {
+      "checksum": "a2c754d6c33795a1c324727428e5a7dedb5b06195f9890bdbcba760d3e246563",
+      "name": "unicode-ident",
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "version": "1.0.27"
+    },
+    {
+      "checksum": "06abde3611657adf66d383f00b093d7faecc7fa57071cce2578660c9f1010821",
+      "name": "utf8parse",
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "version": "0.2.2"
+    },
+    {
+      "checksum": "0b928f33d975fc6ad9f86c8f283853ad26bdd5b10b7f1542aa2fa15e2289105a",
+      "name": "version_check",
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "version": "0.9.5"
+    },
+    {
+      "checksum": "c2a7b1c03c876122aa43f3020e6c3c3ee5c05081c9a00739faf7503aeba10d22",
+      "name": "winapi-util",
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "version": "0.1.11"
+    },
+    {
+      "checksum": "f0805222e57f7521d6a62e36fa9163bc891acd422f971defe97d64e70d0a4fe5",
+      "name": "windows-link",
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "version": "0.2.1"
+    },
+    {
+      "checksum": "ae137229bcbd6cdf0f7b80a31df61766145077ddf49416a728b02cb3921ff3fc",
+      "name": "windows-sys",
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "version": "0.61.2"
+    },
+    {
+      "checksum": "b268e58e7c693d7c271f93ffc4ba3b380412554231c85bf61ca7af91042a4112",
+      "name": "zlib-rs",
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "version": "0.6.8"
+    },
+    {
+      "checksum": "29666d0abbfad1e3dc4dcf6144730dd3a3ab225bbbdac83319345b1b44ccfc1b",
+      "name": "zmij",
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "version": "1.0.23"
+    }
+  ],
+  "files": {
+    ".gitignore": {
+      "bytes": 9,
+      "git_blob": "b83d22266ac8aa2f8df2edef68082c789727841d",
+      "mode": 420,
+      "sha256": "306fd52e74fca6746e12acc750f232de15e71da917756a1270d74c91f5eb7368"
+    },
+    "Cargo.lock": {
+      "bytes": 15842,
+      "git_blob": "9be764359610aaee245cda965ee9b86e4b3bf549",
+      "mode": 420,
+      "sha256": "84f00eb7b34d86787c28116184f74374d80c8dcbbf729067ade367ce5d185f16"
+    },
+    "Cargo.toml": {
+      "bytes": 596,
+      "git_blob": "b7bc58ed5fcfadfa65a6df5b8ddcab426546c4ea",
+      "mode": 420,
+      "sha256": "b3d346deaf7e933662a5b0150739589133db0d080f33c1e9f16e1d5dd19672bc"
+    },
+    "LICENSE-APACHE-2.0": {
+      "bytes": 11282,
+      "git_blob": "28338c01e87d7c2d6f204b09b46d64b7ad9c4087",
+      "mode": 420,
+      "sha256": "6d061273eb5b605d391caddff4855419b2222ff4d40183b22fdd551c49f9b8d2"
+    },
+    "LICENSE-MIT": {
+      "bytes": 1067,
+      "git_blob": "bc34e7e0551c6e3a718cf1dc7ce2412bb9d311ce",
+      "mode": 420,
+      "sha256": "e7a94e2f444c13b00256a046f677f62ed7a8511d4241a898ce687551909833e1"
+    },
+    "README.md": {
+      "bytes": 3080,
+      "git_blob": "9640471af0391fe4224f0f8673cb029c4802bde1",
+      "mode": 420,
+      "sha256": "99a17085b230f43a9e0d741f36660faea9ecd7491a0aa5c7bc60ce44549ef5ec"
+    },
+    "THIRD_PARTY.md": {
+      "bytes": 4469,
+      "git_blob": "eaf0f408ac9746f4bc845b8f866228df7d0e097c",
+      "mode": 420,
+      "sha256": "14fe4187d7b97fadd2311572b61e044e3b333d7e0b42edbced9737a7680ed057"
+    },
+    "scripts/guarded-cargo.sh": {
+      "bytes": 2052,
+      "git_blob": "ee19c36f952bbcb5aaf802911502aad394d57ced",
+      "mode": 420,
+      "sha256": "e0aa1c1075d3eaf953a3c619ca5a9d7fb185e3e3a87304203606b43b9524d4cc"
+    },
+    "src/cli.rs": {
+      "bytes": 1505,
+      "git_blob": "8b0aac2aa1a13fd6cb256ff0049d679495d60c63",
+      "mode": 420,
+      "sha256": "ce8247cbd65afc19f795a68a7bee7ccf38fd294968ec71fda5d199641f5fb32b"
+    },
+    "src/export.rs": {
+      "bytes": 18553,
+      "git_blob": "12ea9b1a7fd3aa88b9c0ba2dffcf3704c3c361e9",
+      "mode": 420,
+      "sha256": "b987c3d44416e937ac4b692ce5c277754afc110ecf73d9703af178dc368e5424"
+    },
+    "src/input.rs": {
+      "bytes": 9673,
+      "git_blob": "a6d15d07455bdb6fda1a37e3834cf83be5626f90",
+      "mode": 420,
+      "sha256": "7293d66e8b69773291b38d19074f37cc16b4118e25eee045f9277d3336cfd5ad"
+    },
+    "src/legacy.rs": {
+      "bytes": 13320,
+      "git_blob": "82adc217a69f4f59afcbd4666d7d52cf654c7b0d",
+      "mode": 420,
+      "sha256": "3195737e726e92ab54ab50aa233a49a80d70baf634c55284f881bcc85f6a8ca3"
+    },
+    "src/lib.rs": {
+      "bytes": 7751,
+      "git_blob": "3545b1af2d6793de7d0fd98f64f30f3317c59e6a",
+      "mode": 420,
+      "sha256": "72656b0dfc78a81bd4648801db3e520ed442d99358a346bff8d760759da70da4"
+    },
+    "src/main.rs": {
+      "bytes": 70,
+      "git_blob": "e25bf7d5e71e247955b0e52927ca7e31479261d3",
+      "mode": 420,
+      "sha256": "08aebe2564aad25c2a3e8f25ec202ceb4a8d36de815c4eff5e5ba7a1d4eda333"
+    },
+    "src/model.rs": {
+      "bytes": 2356,
+      "git_blob": "b0abcd10c6b20deaae4bbb278ff98de3b4365292",
+      "mode": 420,
+      "sha256": "a95b6f5f5f69c9ae3bedafb94349a1ccdf8f442ac736b365bacca5f86b497390"
+    },
+    "src/neutral/aggregate.rs": {
+      "bytes": 2731,
+      "git_blob": "0bea35f20e3eb357731435298f39ab2484ee52aa",
+      "mode": 420,
+      "sha256": "0ea1144a7fa433e8f815cd06d0561448c3cd42188def0c92e4025e4799bcfa27"
+    },
+    "src/neutral/diversity.rs": {
+      "bytes": 2168,
+      "git_blob": "4e94a5d8f2cdb0cd0f1f79be03e1479dd0a08a3d",
+      "mode": 420,
+      "sha256": "33dd5792b8aca4601c72aaea5811bd1095b05f774d70447c6db18d52fc308876"
+    },
+    "src/neutral/fst.rs": {
+      "bytes": 2984,
+      "git_blob": "d9a4ee6979e9399d7df54477207fb36cf0797184",
+      "mode": 420,
+      "sha256": "b139680644193916e9b69e46eab05e795ebb99ec527e0199f2a2e52c4bb88bb7"
+    },
+    "src/neutral/mod.rs": {
+      "bytes": 1698,
+      "git_blob": "32b949d0c7752f7fb0ca2b8124bc637c40e5945e",
+      "mode": 420,
+      "sha256": "290355fc6ff480ba1de19bf5752f89ee15dd18e54d19d1d0d93447f0f5dbbb9e"
+    },
+    "src/neutral/sfs.rs": {
+      "bytes": 4512,
+      "git_blob": "c1ea60b4ed99c17af70bea2274feba140639c4af",
+      "mode": 420,
+      "sha256": "5520c12f31df6fb88127854246eed46f2ae1b767a8c9dff502f73fa95a69f3f0"
+    },
+    "src/neutral/windows.rs": {
+      "bytes": 496,
+      "git_blob": "05570a17bbed738fb254acb2eb172bbf539bdb6b",
+      "mode": 420,
+      "sha256": "ebcad167c1264b7b04bec01e4ba6bbac9175b6aef60e005e386e11b385ff189c"
+    },
+    "src/numeric.rs": {
+      "bytes": 4576,
+      "git_blob": "e78f29a09038f475020b7a829b8708b607a010ed",
+      "mode": 420,
+      "sha256": "4da44f93c66989d9041f678aa1a24073ed166ccf58bf7469fec2c8cb5229e083"
+    },
+    "src/scan.rs": {
+      "bytes": 13258,
+      "git_blob": "e7efd269cbbc3ad6b201dfbc2d9c994574e5fa75",
+      "mode": 420,
+      "sha256": "fd9d6d3b9b085f45a37040d95d03ce122c3c62b59ee1d3f6811f00696d0f9a62"
+    },
+    "tests/fixtures/neutral/a.mask.fa": {
+      "bytes": 35,
+      "git_blob": "eb10e82930678226d6e6c91e632a04a98ede49e9",
+      "mode": 420,
+      "sha256": "e4e320a47d5e33902671f1739cf2535e8149c6988b702ffecaaf21ab3f2ba085"
+    },
+    "tests/fixtures/neutral/b.mask.fa": {
+      "bytes": 27,
+      "git_blob": "0ea032e914a7e11a2858cd821b094492c3fb7b4b",
+      "mode": 420,
+      "sha256": "e86eed224b7f430933faf8e10d0032ac65b011383534404e0d582c9ca5c27a91"
+    },
+    "tests/fixtures/neutral/casebook.vcf": {
+      "bytes": 1516,
+      "git_blob": "b30ce8fe171505f4d7488483ccd4ceca846ed044",
+      "mode": 420,
+      "sha256": "6cf788846360afef3d27e254642ac3e0abe92ef1bf09c18ee44cf4ed36ffab8d"
+    },
+    "tests/fixtures/neutral/expected-admission.json": {
+      "bytes": 3124,
+      "git_blob": "69910ab53916d3689efdb2ec88b501868a4456ea",
+      "mode": 420,
+      "sha256": "16949edf5ca346638065389e42e73f429d72b778d8ca1ac1728d48841f86b7e1"
+    },
+    "tests/fixtures/neutral/expected/a/fst-jackknife.json": {
+      "bytes": 842,
+      "git_blob": "567386462ce7fa58e4af6b1cca09dd4753976d2c",
+      "mode": 420,
+      "sha256": "cd41076fde5e9a3fee0ef7ad99db0ca77d0f9dd120ee1eddc5dfa1532a0da8dd"
+    },
+    "tests/fixtures/neutral/expected/a/jackknife-membership.tsv.gz": {
+      "bytes": 144,
+      "git_blob": "3bb7557c689b24b0ef9906d90030257c7ca921f5",
+      "mode": 420,
+      "sha256": "9132876266285cf1085b32d8b8de995e780d4c15cb307e5e339a56187fa0a299"
+    },
+    "tests/fixtures/neutral/expected/a/region.json": {
+      "bytes": 1293,
+      "git_blob": "ebfc27ef27b077c0d425a85dcef9f441558e71ce",
+      "mode": 420,
+      "sha256": "d73d1aab16cdd50a13fd6886c964ceefe6e49563385193eadabefb4787140805"
+    },
+    "tests/fixtures/neutral/expected/a/sfs.json": {
+      "bytes": 1696,
+      "git_blob": "30946cb69d751d3398a7943b237573d6bfd80a75",
+      "mode": 420,
+      "sha256": "c478ab991fe3b5d34a75045615a7e42d815185ff61ebb6f8c1ae024712aef177"
+    },
+    "tests/fixtures/neutral/expected/a/sites.tsv.gz": {
+      "bytes": 533,
+      "git_blob": "0e1d1a6a63f3e61b52f6d5039b9e39d3276de6c4",
+      "mode": 420,
+      "sha256": "e1ad4c11fea656f867073b3eb25451d81cca79afa5769afafe2ca4d512636b30"
+    },
+    "tests/fixtures/neutral/expected/a/windows.tsv.gz": {
+      "bytes": 372,
+      "git_blob": "f0bd56b9430f0999de2ee770c4c75fc94a99ee3e",
+      "mode": 420,
+      "sha256": "8345aa0c3e4cde60ed8080255773ec1be0478c227f35cc2ef7746de117403d0c"
+    },
+    "tests/fixtures/neutral/expected/b/fst-jackknife.json": {
+      "bytes": 615,
+      "git_blob": "53a77ad1888dd26052264cb3c03882b806ab6027",
+      "mode": 420,
+      "sha256": "733175ff6b623036219c761fec6998de36b8bc8d3cad7428bdbf9e1aaeb1a029"
+    },
+    "tests/fixtures/neutral/expected/b/jackknife-membership.tsv.gz": {
+      "bytes": 128,
+      "git_blob": "f005af59d35c276d835be6d0f5e80e657f2f790e",
+      "mode": 420,
+      "sha256": "43f794c0e964c89f9d2427b392750fd161d9dbace7dfd3f12b24ac82670806ad"
+    },
+    "tests/fixtures/neutral/expected/b/region.json": {
+      "bytes": 1125,
+      "git_blob": "ef23817b3da8bbf67424c9aca0bc8757d52a182c",
+      "mode": 420,
+      "sha256": "6ee3b9c52f39e2b0d44d76c86240f384b8ee182abd2cf50fee1da079aa38a2c4"
+    },
+    "tests/fixtures/neutral/expected/b/sfs.json": {
+      "bytes": 1696,
+      "git_blob": "bf8368b5f4b0a263dacbdf1da345c58ddad88108",
+      "mode": 420,
+      "sha256": "c26670d2c7141da63c9c063cd50a74a1041d50f108feddbd887667bab6a81610"
+    },
+    "tests/fixtures/neutral/expected/b/sites.tsv.gz": {
+      "bytes": 340,
+      "git_blob": "b36565ba1a6455a369192e98767d7293b445c5ed",
+      "mode": 420,
+      "sha256": "cbad11394e906d32cf8346a83b3f600b77a1083036bc5393baae3c4e77a7c507"
+    },
+    "tests/fixtures/neutral/expected/b/windows.tsv.gz": {
+      "bytes": 299,
+      "git_blob": "ca4ef5927ec9c2a37e7200fa220dabacf151518e",
+      "mode": 420,
+      "sha256": "c8cb3743675865b7d94038c37ea10090352b521c4d464953a89496d92fd9be3d"
+    },
+    "tests/fixtures/neutral/expected/vcftools/site-pi.sites.pi": {
+      "bytes": 133,
+      "git_blob": "af760ee857d22180907d55833d842301163f067e",
+      "mode": 420,
+      "sha256": "d5a0f33ad9282b4537691e20b6a58f157796c2f7c71139d17ca4e15dfb460599"
+    },
+    "tests/fixtures/neutral/expected/vcftools/tajima-d.Tajima.D": {
+      "bytes": 85,
+      "git_blob": "8579812d93449e095d2b05fbea42e7b3fdbf14b4",
+      "mode": 420,
+      "sha256": "ef72881a3484ba45e270c4f0536b7578e15b397b4679a73d7529c5f218dfd009"
+    },
+    "tests/fixtures/neutral/expected/vcftools/weir-fst.weir.fst": {
+      "bytes": 121,
+      "git_blob": "6e85c644de70cf29e19828c77efe08a4bd0e3892",
+      "mode": 420,
+      "sha256": "cdcb6ba4c0fb84aae49d67e7bfa7db290c05ce17014a2c0434777a1766726303"
+    },
+    "tests/fixtures/neutral/expected/vcftools/window-pi.windowed.pi": {
+      "bytes": 113,
+      "git_blob": "d0726250e3f112cf420b4f85bb36ce46f8302c1c",
+      "mode": 420,
+      "sha256": "0734e1aa9ca0835875a10d68fc1697a3c58464de1c443a37857aa0627cf33b7d"
+    },
+    "tests/fixtures/neutral/expected/vcftools/window-weir-fst.windowed.weir.fst": {
+      "bytes": 124,
+      "git_blob": "a0d1134fc20cf281e14f03952d0f3e602afc4664",
+      "mode": 420,
+      "sha256": "a9ca04b8f38594cf990ffe3a5997f8d18afa55c804d19df543f9cd2d978c4893"
+    },
+    "tests/fixtures/neutral/panel.tsv": {
+      "bytes": 96,
+      "git_blob": "a3e4d88c4b704073d706c39f3448531f64d0e5ee",
+      "mode": 420,
+      "sha256": "de955a296cbe0aa7cbe12b9ef01c5978f0fcacfa7f487a5b4312f5a49986b442"
+    },
+    "tests/fixtures/neutral/reference.fai": {
+      "bytes": 26,
+      "git_blob": "81888fbcca9d79f59e9bb73a7dbc07e729a76e29",
+      "mode": 420,
+      "sha256": "ef53b815f0f3fb2972beed77e8e387604abe8da956c19dddfc02170052cc20ee"
+    },
+    "tests/fixtures/neutral/scientific-files.json": {
+      "bytes": 458,
+      "git_blob": "9d6b8d077ed034707a04b3e07d8458b46c49db85",
+      "mode": 420,
+      "sha256": "51dbc70b52f93ce0bcd75a2918c0538d65754795e8d2291ab831918f76ab5dcb"
+    },
+    "tests/neutral_workflow.rs": {
+      "bytes": 7087,
+      "git_blob": "a6138cc03a791d1eff494ede7da5a0d3098a7368",
+      "mode": 420,
+      "sha256": "1686bc930b97db5c7f7bab27811bc1068670bcef2a3660f99e32d4954d412627"
+    }
+  },
+  "goldens": {
+    "a/fst-jackknife.json": {
+      "bytes": 842,
+      "original_member": "casebook-source/a/fst-jackknife.json",
+      "sha256": "cd41076fde5e9a3fee0ef7ad99db0ca77d0f9dd120ee1eddc5dfa1532a0da8dd"
+    },
+    "a/jackknife-membership.tsv.gz": {
+      "bytes": 144,
+      "original_member": "casebook-source/a/jackknife-membership.tsv.gz",
+      "sha256": "9132876266285cf1085b32d8b8de995e780d4c15cb307e5e339a56187fa0a299"
+    },
+    "a/region.json": {
+      "bytes": 1293,
+      "original_member": "casebook-source/a/region.json",
+      "sha256": "d73d1aab16cdd50a13fd6886c964ceefe6e49563385193eadabefb4787140805"
+    },
+    "a/sfs.json": {
+      "bytes": 1696,
+      "original_member": "casebook-source/a/sfs.json",
+      "sha256": "c478ab991fe3b5d34a75045615a7e42d815185ff61ebb6f8c1ae024712aef177"
+    },
+    "a/sites.tsv.gz": {
+      "bytes": 533,
+      "original_member": "casebook-source/a/sites.tsv.gz",
+      "sha256": "e1ad4c11fea656f867073b3eb25451d81cca79afa5769afafe2ca4d512636b30"
+    },
+    "a/windows.tsv.gz": {
+      "bytes": 372,
+      "original_member": "casebook-source/a/windows.tsv.gz",
+      "sha256": "8345aa0c3e4cde60ed8080255773ec1be0478c227f35cc2ef7746de117403d0c"
+    },
+    "b/fst-jackknife.json": {
+      "bytes": 615,
+      "original_member": "casebook-source/b/fst-jackknife.json",
+      "sha256": "733175ff6b623036219c761fec6998de36b8bc8d3cad7428bdbf9e1aaeb1a029"
+    },
+    "b/jackknife-membership.tsv.gz": {
+      "bytes": 128,
+      "original_member": "casebook-source/b/jackknife-membership.tsv.gz",
+      "sha256": "43f794c0e964c89f9d2427b392750fd161d9dbace7dfd3f12b24ac82670806ad"
+    },
+    "b/region.json": {
+      "bytes": 1125,
+      "original_member": "casebook-source/b/region.json",
+      "sha256": "6ee3b9c52f39e2b0d44d76c86240f384b8ee182abd2cf50fee1da079aa38a2c4"
+    },
+    "b/sfs.json": {
+      "bytes": 1696,
+      "original_member": "casebook-source/b/sfs.json",
+      "sha256": "c26670d2c7141da63c9c063cd50a74a1041d50f108feddbd887667bab6a81610"
+    },
+    "b/sites.tsv.gz": {
+      "bytes": 340,
+      "original_member": "casebook-source/b/sites.tsv.gz",
+      "sha256": "cbad11394e906d32cf8346a83b3f600b77a1083036bc5393baae3c4e77a7c507"
+    },
+    "b/windows.tsv.gz": {
+      "bytes": 299,
+      "original_member": "casebook-source/b/windows.tsv.gz",
+      "sha256": "c8cb3743675865b7d94038c37ea10090352b521c4d464953a89496d92fd9be3d"
+    },
+    "vcftools/site-pi.sites.pi": {
+      "bytes": 133,
+      "original_member": "casebook-source/vcftools/site-pi.sites.pi",
+      "sha256": "d5a0f33ad9282b4537691e20b6a58f157796c2f7c71139d17ca4e15dfb460599"
+    },
+    "vcftools/tajima-d.Tajima.D": {
+      "bytes": 85,
+      "original_member": "casebook-source/vcftools/tajima-d.Tajima.D",
+      "sha256": "ef72881a3484ba45e270c4f0536b7578e15b397b4679a73d7529c5f218dfd009"
+    },
+    "vcftools/weir-fst.weir.fst": {
+      "bytes": 121,
+      "original_member": "casebook-source/vcftools/weir-fst.weir.fst",
+      "sha256": "cdcb6ba4c0fb84aae49d67e7bfa7db290c05ce17014a2c0434777a1766726303"
+    },
+    "vcftools/window-pi.windowed.pi": {
+      "bytes": 113,
+      "original_member": "casebook-source/vcftools/window-pi.windowed.pi",
+      "sha256": "0734e1aa9ca0835875a10d68fc1697a3c58464de1c443a37857aa0627cf33b7d"
+    },
+    "vcftools/window-weir-fst.windowed.weir.fst": {
+      "bytes": 124,
+      "original_member": "casebook-source/vcftools/window-weir-fst.windowed.weir.fst",
+      "sha256": "a9ca04b8f38594cf990ffe3a5997f8d18afa55c804d19df543f9cd2d978c4893"
+    }
+  },
+  "lock_sha256": "84f00eb7b34d86787c28116184f74374d80c8dcbbf729067ade367ce5d185f16",
+  "native_four_qualified": false,
+  "owner_commit": "ff8e951344b5cd8f8c049c96afa9e2c585d14995",
+  "owner_tree": "8879ad1fbee6c1ed2d59cd32a4f255dfc0416d23",
+  "performance_claim": false,
+  "policy": {
+    "canonical_abs_floor": 5.684341886080802e-14,
+    "canonical_relative": 9.094947017729282e-13,
+    "canonical_rule": "abs(native-source)<=max(2^-44,2^-40*abs(source))",
+    "integer_string_boolean_identity": "exact",
+    "legacy": "parsed source-format finite decimal exact",
+    "native_1_4": "decompressed scientific payload exact",
+    "nonfinite": "NaN class and signed Inf exact; NaN/zero signs portable",
+    "original_comparator_sha256": "d14f08cee17b395ff6460692c166d4740f352ea9ee6c33115449ce778d0177d9"
+  },
+  "registry_packages": 69,
+  "release": false,
+  "schema": "rsomics.popgen.native-authority.v1",
+  "snapshot": {
+    "files": {
+      "README.md": {
+        "bytes": 1356,
+        "sha256": "d0262abca4f1fdfba83416bb4b876fdf2c0cdb0fd225405f2430f3e767cb7246"
+      },
+      "checksums.sha256": {
+        "bytes": 235,
+        "sha256": "8e0703896f15cca211e026a26ba63fdfe4c982b8b1586ff3f0347c75518cea0c"
+      },
+      "files.sha256": {
+        "bytes": 4731,
+        "sha256": "f9d886ea1ffe00905eba6a29690f216119c62f8ece73d45711863ed79b0400b3"
+      },
+      "source.tar.gz": {
+        "bytes": 44225,
+        "sha256": "5565951e8ecd9352583e309be70bc861c877ae953da094e015b065e5db4db579"
+      }
+    },
+    "selector": "green-1"
+  },
+  "source_on_native_qualified": false,
+  "source_receipt_sha256": "607d542153ae75ed4accf799d4f49547985c926379c7e4ab3ab78a0b9a9abf31",
+  "source_run": {
+    "artifact_id": 13063005350,
+    "artifact_sha256": "4339253cfc63da01b90d4d466ae23a004c03a307f4357c0aa57d526adc76354f",
+    "authenticated_tar_sha256": "31d4da4c409ef1f30cc6ad300368333ce1f2f56d3150d0af35b10f5d5a81b9b3",
+    "head_sha": "42d1138df77548d69d8ad90b4c747aedcc15035a",
+    "run_attempt": 1,
+    "run_id": 41252735560
+  },
+  "synthetic_inputs": {
+    "a.mask.fa": {
+      "bytes": 35,
+      "original_member": "casebook/a.mask.fa",
+      "sha256": "e4e320a47d5e33902671f1739cf2535e8149c6988b702ffecaaf21ab3f2ba085"
+    },
+    "b.mask.fa": {
+      "bytes": 27,
+      "original_member": "casebook/b.mask.fa",
+      "sha256": "e86eed224b7f430933faf8e10d0032ac65b011383534404e0d582c9ca5c27a91"
+    },
+    "casebook.vcf": {
+      "bytes": 1516,
+      "original_member": "casebook/casebook.vcf",
+      "sha256": "6cf788846360afef3d27e254642ac3e0abe92ef1bf09c18ee44cf4ed36ffab8d"
+    },
+    "panel.tsv": {
+      "bytes": 96,
+      "original_member": "casebook/panel.tsv",
+      "sha256": "de955a296cbe0aa7cbe12b9ef01c5978f0fcacfa7f487a5b4312f5a49986b442"
+    },
+    "reference.fai": {
+      "bytes": 26,
+      "original_member": "casebook/reference.fai",
+      "sha256": "ef53b815f0f3fb2972beed77e8e387604abe8da956c19dddfc02170052cc20ee"
+    }
+  }
+}

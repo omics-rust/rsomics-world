@@ -1,0 +1,142 @@
+name: Private Popgen native-four candidate
+
+on:
+  workflow_dispatch:
+    inputs:
+      snapshot:
+        description: Reviewed immutable private Popgen snapshot (green-1)
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  native:
+    name: ${{ matrix.target }}
+    runs-on: ${{ matrix.runner }}
+    timeout-minutes: 35
+    strategy:
+      fail-fast: false
+      matrix:
+        include: >-
+          ${{ fromJSON('[{"target":"linux-x86_64","runner":"ubuntu-24.04","system":"Linux","arch":"x86_64","host":"x86_64-unknown-linux-gnu"},{"target":"linux-aarch64","runner":"ubuntu-24.04-arm","system":"Linux","arch":"aarch64","host":"aarch64-unknown-linux-gnu"},{"target":"macos-x86_64","runner":"macos-15-intel","system":"Darwin","arch":"x86_64","host":"x86_64-apple-darwin"},{"target":"macos-aarch64","runner":"macos-15","system":"Darwin","arch":"arm64","host":"aarch64-apple-darwin"}]') }}
+    env:
+      SNAPSHOT_ID: ${{ inputs.snapshot }}
+      TARGET: ${{ matrix.target }}
+      EXPECTED_SYSTEM: ${{ matrix.system }}
+      EXPECTED_ARCH: ${{ matrix.arch }}
+      EXPECTED_HOST: ${{ matrix.host }}
+      CONTROLLER_COMMIT: ${{ github.sha }}
+      RUSTUP_TOOLCHAIN: '1.91.0'
+      CARGO_BUILD_JOBS: '2'
+      CARGO_INCREMENTAL: '0'
+      PYTHONDONTWRITEBYTECODE: '1'
+      PYTHONNOUSERSITE: '1'
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+
+      - name: Prepare native storage
+        run: |
+          set -euo pipefail
+          umask 077
+          export EVIDENCE="$RUNNER_TEMP/popgen-evidence"
+          export CANDIDATE="$EVIDENCE/candidate"
+          export CARGO_HOME="$RUNNER_TEMP/popgen-cargo-home"
+          export CARGO_TARGET_DIR="$RUNNER_TEMP/popgen-cargo-target"
+          export RUSTUP_HOME="$RUNNER_TEMP/popgen-rustup-home"
+          export TMPDIR="$RUNNER_TEMP/popgen-scratch"
+          export XDG_CACHE_HOME="$RUNNER_TEMP/popgen-cache"
+          for name in EVIDENCE CARGO_HOME CARGO_TARGET_DIR RUSTUP_HOME TMPDIR XDG_CACHE_HOME; do
+            mkdir "${!name}"
+            printf '%s=%s\n' "$name" "${!name}" >> "$GITHUB_ENV"
+          done
+          printf 'CANDIDATE=%s\n' "$CANDIDATE" >> "$GITHUB_ENV"
+          python3 -B scripts/popgen_candidate.py storage --output "$EVIDENCE/storage.json"
+          {
+            printf 'controller=%s\nsnapshot=%s\ntarget=%s\nrun=%s\nattempt=%s\n' \
+              "$CONTROLLER_COMMIT" "$SNAPSHOT_ID" "$TARGET" "$GITHUB_RUN_ID" "$GITHUB_RUN_ATTEMPT"
+            uname -a
+            df -h "$RUNNER_TEMP"
+          } > "$EVIDENCE/host.log"
+          ulimit -c 0
+
+      - name: Verify frozen source
+        id: snapshot
+        run: |
+          set -euo pipefail
+          python3 -B scripts/popgen_candidate.py prepare --snapshot "$SNAPSHOT_ID" --output "$CANDIDATE" \
+            2>&1 | tee "$EVIDENCE/prepare.log"
+
+      - name: Install native Rust 1.91
+        if: ${{ !cancelled() && steps.snapshot.outcome == 'success' }}
+        uses: dtolnay/rust-toolchain@1.91.0
+        with:
+          components: clippy,rustfmt
+
+      - name: Admit compiler and locked dependencies
+        id: metadata
+        if: ${{ !cancelled() && steps.snapshot.outcome == 'success' }}
+        run: |
+          set -euo pipefail
+          python3 -B scripts/popgen_candidate.py metadata --output "$CANDIDATE" \
+            2>&1 | tee "$EVIDENCE/metadata.log"
+
+      - name: Formatting and strict Clippy
+        if: ${{ !cancelled() && steps.metadata.outcome == 'success' }}
+        run: |
+          set -euo pipefail
+          python3 -B scripts/popgen_candidate.py quality --output "$CANDIDATE" \
+            2>&1 | tee "$EVIDENCE/quality.log"
+
+      - name: Full debug suite
+        if: ${{ !cancelled() && steps.metadata.outcome == 'success' }}
+        run: |
+          set -euo pipefail
+          python3 -B scripts/popgen_candidate.py tests --mode debug --output "$CANDIDATE" \
+            2>&1 | tee "$EVIDENCE/debug.log"
+
+      - name: Full release suite
+        if: ${{ !cancelled() && steps.metadata.outcome == 'success' }}
+        run: |
+          set -euo pipefail
+          python3 -B scripts/popgen_candidate.py tests --mode release --output "$CANDIDATE" \
+            2>&1 | tee "$EVIDENCE/release.log"
+
+      - name: Retain actual release executable
+        if: ${{ !cancelled() && steps.metadata.outcome == 'success' }}
+        run: |
+          set -euo pipefail
+          python3 -B scripts/popgen_candidate.py binary --output "$CANDIDATE" \
+            2>&1 | tee "$EVIDENCE/binary.log"
+
+      - name: Verify unchanged source
+        if: always()
+        run: |
+          set -euo pipefail
+          if [[ -d "$CANDIDATE" ]]; then
+            python3 -B scripts/popgen_candidate.py finalize --output "$CANDIDATE" \
+              2>&1 | tee "$EVIDENCE/integrity.log"
+          fi
+
+      - name: Package complete originals
+        if: always()
+        run: |
+          set -euo pipefail
+          python3 -B scripts/popgen_candidate.py package --output "$EVIDENCE" \
+            --archive "$RUNNER_TEMP/popgen-evidence.tar"
+
+      - name: Upload complete originals
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: popgen-native-${{ github.run_id }}-${{ github.run_attempt }}-${{ matrix.target }}
+          path: ${{ runner.temp }}/popgen-evidence.tar
+          include-hidden-files: true
+          if-no-files-found: error
+          retention-days: 90
