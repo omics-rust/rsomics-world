@@ -1,0 +1,110 @@
+{
+  "kind": "rsomics-product-github-release",
+  "schema_version": 1,
+  "status": "published-and-verified",
+  "root_adopted": true,
+  "product": "rsomics-rnaseq-qc",
+  "repository": "omics-rust/rsomics-rnaseq-qc",
+  "version": "0.1.0",
+  "tag": "v0.1.0",
+  "head_sha": "39f655764d499a8163d1bbe29e9985fa04ea1d6b",
+  "release_url": "https://github.com/omics-rust/rsomics-rnaseq-qc/releases/tag/v0.1.0",
+  "release_id": 430547470,
+  "source_tree": "2b7c6e9aa798358cbc3688d4d21f9080740c0194",
+  "owning_ci": {
+    "run_id": 41301688183,
+    "run_attempt": 1,
+    "head_sha": "39f655764d499a8163d1bbe29e9985fa04ea1d6b",
+    "all_four_native_passed": true
+  },
+  "native_delivery_receipt": {
+    "path": ".autopilot/oracles/rnaseq-qc-native-delivery-2026-11-01.json",
+    "sha256": "1499c6a6992061df80df8172affe4673bf6217c67df72f735a5c6ae003a830ac"
+  },
+  "native_classes": [
+    "linux-aarch64",
+    "linux-x86_64",
+    "macos-aarch64",
+    "macos-x86_64"
+  ],
+  "assets": {
+    "SHA256SUMS": {
+      "bytes": 543,
+      "sha256": "678d6374c5c9d5d5aefcbe3dbb9c4225f7d4a0fa98fa53c062524a6e3f226db8"
+    },
+    "rsomics-rnaseq-qc-0.1.0-linux-aarch64.tar.gz": {
+      "bytes": 1133616,
+      "sha256": "24cbe95291278c7e4e9c00587df2ed0d849246f2d786d3ba7f718a4349a1a7ff"
+    },
+    "rsomics-rnaseq-qc-0.1.0-linux-x86_64.tar.gz": {
+      "bytes": 1201598,
+      "sha256": "689084a6c527d75cebbdda13336f08c0107e0c5bf281d6fc589f2d6b2ed84eb1"
+    },
+    "rsomics-rnaseq-qc-0.1.0-macos-aarch64.tar.gz": {
+      "bytes": 1060410,
+      "sha256": "56622571dd51a408e5efafae895c76cf0b3a35b913b6db3a230f48a6fc2ccfc8"
+    },
+    "rsomics-rnaseq-qc-0.1.0-macos-x86_64.tar.gz": {
+      "bytes": 1116583,
+      "sha256": "b0d544565e20906ac6063ae1f35a563f2cf3bab03e06948cea100e407d8b208f"
+    },
+    "rsomics-rnaseq-qc-0.1.0-source.tar": {
+      "bytes": 1392640,
+      "sha256": "db4ce01006cfa09d4b0f8ca2de735fbfeb8150ae4d2e501a31b0b816535a8aac"
+    }
+  },
+  "actual_published_MacARM_smoke": {
+    "actual_downloaded_binary": {
+      "bytes": 2321792,
+      "sha256": "bc5b364c85c29cb2907b4f757f791f7f29dde77b0743b093a11ef27203e18ae1"
+    },
+    "actual_published_MacARM_executed": true,
+    "all_returncodes_zero": true,
+    "checksum_file": {
+      "bytes": 543,
+      "sha256": "678d6374c5c9d5d5aefcbe3dbb9c4225f7d4a0fa98fa53c062524a6e3f226db8"
+    },
+    "complete_lifecycle_calls": 5,
+    "default_records": 175,
+    "foreign_executables_run": false,
+    "head": "39f655764d499a8163d1bbe29e9985fa04ea1d6b",
+    "junction_records": 30,
+    "lifecycle": {
+      "bytes": 3271,
+      "sha256": "649b3af768351f3d8227e71674b251bce8639579fbe6049fb0998163abdd1f8a"
+    },
+    "native_archive": {
+      "bytes": 1060410,
+      "sha256": "56622571dd51a408e5efafae895c76cf0b3a35b913b6db3a230f48a6fc2ccfc8"
+    },
+    "new_performance_claim": false,
+    "registry_publication": false,
+    "release": "https://github.com/omics-rust/rsomics-rnaseq-qc/releases/tag/v0.1.0",
+    "release_id": 430547470,
+    "signed_release": false,
+    "source_original_files": 172,
+    "source_tar": {
+      "bytes": 1392640,
+      "sha256": "db4ce01006cfa09d4b0f8ca2de735fbfeb8150ae4d2e501a31b0b816535a8aac"
+    }
+  },
+  "downloaded_release_verification": {
+    "path": "/Volumes/KIOXIA/Developments/tmp/rnaseq-qc-release-20261101.QeaYAN/VERIFICATION.json",
+    "sha256": "b2e0f98b9bf2c1442281ab986b4ef8adca5b7d58e6e1d14d1a0a248a93d99845"
+  },
+  "notes_sha256": "5d15d6c21b8eb8790eb1edca9ad0a01dc15c846e6ef2e999502edebe2042bd01",
+  "release_evidence_root": "/Volumes/KIOXIA/Developments/tmp/rnaseq-qc-release-20261101.QeaYAN",
+  "scope": "CLI default-five RNA-seq QC report plus explicit junctions; source TAR preserves exact public Git dependency",
+  "registry_publication": false,
+  "signed_release": false,
+  "notarization_claim": false,
+  "scientific_revalidation": false,
+  "delivery_binaries_remeasured": false,
+  "source_tar_is_registry_package": false,
+  "dependencies_vendored": false,
+  "limitations": [
+    "No new combined six-metric performance measurement.",
+    "Registry foundation/version and authorization gates remain independent.",
+    "Canonical geometry/strict aliases/depth8000/zero-result behavior and later-mode exclusions remain documented."
+  ]
+}

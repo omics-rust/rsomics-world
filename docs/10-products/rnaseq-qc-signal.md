@@ -10,6 +10,16 @@ Neither product owns generic SAM/BAM/CRAM format operations. Both consume
 
 ## `rsomics-rnaseq-qc`
 
+Current bounded release: [GitHub v0.1.0](https://github.com/omics-rust/rsomics-rnaseq-qc/releases/tag/v0.1.0)
+at39f655764d499a8163d1bbe29e9985fa04ea1d6b. Actual owning native4CI41301688183,
+complete source/native originals and public-downloaded MacARM five-call smoke
+are independently accepted. It delivers the default five metrics plus explicit
+junctions, not the entire later catalogue below. Source delivery is an exact
+Git SOURCE.tar preserving the tested pileup Git pin, not a registry crate or
+offline vendor bundle. Crates.io remains separately held. See
+`.autopilot/oracles/rnaseq-qc-native-delivery-2026-11-01.json`,
+`.autopilot/oracles/rnaseq-qc-release-2026-11-01.json` and the owning delivery state.
+
 ### Boundary and upstream scope
 
 `rsomics-rnaseq-qc` is one report-oriented RNA-seq quality-control product. It
@@ -228,7 +238,7 @@ named presets and later metrics are not implied. Each stable operation needs:
 - a coordinated-report comparison that includes repeated upstream startup and
   scans rather than summing unrelated microbenchmarks.
 
-The private junction detail/summary addition is now committed at
+The source junction detail/summary addition was committed at
 a618e6ab293e2fb7a113d949197e1bb43ecc7733 after one whole-feature review and
 full local verification. Source-only41277337904 qualifies its ordered rows,
 support, independent endpoint classes and nine counters. It observes original
@@ -243,7 +253,12 @@ Four workers improve Native1 wall2.0487x with47.2% more total CPU. Native
 scientific exports12.726MB versus source2.519MB and higher raw output blocks
 are explicit losses, not an I/O/storage win. These are warm one-input process
 measurements, not aggregate RAM or newly measured old-five/six-metric totals.
-Owning installation/package/notices/native release delivery remains separate.
+Owning installation/source-TAR/notices/native delivery is now separately
+accepted at39f6557/run41301688183 and published asGitHubv0.1.0. It retains
+144 actual test instances,20 installed calls and172 original Git files, with
+all four source TARs byte-identical. Fresh public MacARM download also passes.
+New Linuxx86 ELF bytes equal the historical junction executable, without a
+new timing run; no old-five/junction sum is promoted to a six-metric benchmark.
 See the new rnaseq-qc-junction-performance-2026-11-01.json receipt. Canonical geometry,
 strict aliases and complete no-N/all-short results are explicit source
 differences. Native R/PDF/BED/Interact exports and saturation remain excluded.

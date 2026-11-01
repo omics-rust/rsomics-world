@@ -1,5 +1,33 @@
 # RNA-seq QC native/source GitHub delivery
 
+## Published v0.1.0 and actual public-download smoke accepted
+
+GitHub release https://github.com/omics-rust/rsomics-rnaseq-qc/releases/tag/v0.1.0
+ID430547470 is published at exact39f6557 with four native archives, the common
+uncompressed SOURCE.tar and SHA256SUMS. Root verifies live exact tag/asset
+names/sizes/API digests and freshly downloads MacARM/source/checksums. Actual
+public binarybc5b364c passes all five installed version/help/default175/
+focused30/selected30 calls, all exit0. Verification SHA
+b2e0f98b9bf2c1442281ab986b4ef8adca5b7d58e6e1d14d1a0a248a93d99845;
+root publication/download proof rnaseq-qc-release-20261101.QeaYAN. Additive
+rnaseq-qc-release-2026-11-01.json binds the release and actual downloaded smoke.
+No registry publication, signature/notarization or new performance claim.
+
+Actual owning CI41301688183/1 succeeds all4 at39f6557. Root reads the complete
+340-line data validator/recovery/report and freshly hashes all1657 packet
+bodies/54973492B plus repeats complete data verification, exit0/empty stderr.
+Packet rnaseq-qc-native-delivery-recovery-20261101.ZfaH32:
+REPORT1c8a2f8aff017237f432ba98d989717e8001d1178c5b8e7d64a995fc80e0c16a;
+SEALf746ddaa650fe981d8f92bfa5b3bcaa67b781b9d3f13b10dd7d8294bd4f27e66.
+All4 original artifacts/full66-member logs/172 Git bodies/modes, identical
+1392640B source TARs, native109-file archives, actual164-package graphs,
+144 test instances/20 installed calls and full outputs are accepted in
+rnaseq-qc-native-delivery-2026-11-01.json. Source TAR SHA
+db4ce01006cfa09d4b0f8ca2de735fbfeb8150ae4d2e501a31b0b816535a8aac.
+New Linuxx86 bytes equal the historical junctioneb472af8 ELF; this is an
+identity observation, not a newly executed timing. Original failed local
+recovery assumptions remain preserved and are not relabelled CI failures.
+
 ## Owning commit pushed; actual native-four gate running
 
 Public owning repository https://github.com/omics-rust/rsomics-rnaseq-qc now

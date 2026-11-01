@@ -1,0 +1,304 @@
+{
+  "actual_native_enabled_graphs_verified": true,
+  "binary_executed_locally": false,
+  "distinct_tests_per_profile": 12,
+  "fresh_public_download_smoke_accepted": false,
+  "head_sha": "39f655764d499a8163d1bbe29e9985fa04ea1d6b",
+  "installed_calls_total": 20,
+  "known_limits": [
+    "Source TAR is not a registry crate or offline vendored bundle; public pinned dependencies remain required.",
+    "Delivery binaries are unremeasured; historical default-five and junction binary proofs remain separate.",
+    "Archive mode contracts come from TAR and Git; GitHub ZIP export mode metadata is not treated as Git modes."
+  ],
+  "linked_binary_inventory": false,
+  "lock_sha256": "a6ec5961981e2f95070cec067e52c91cff9dc4b86da7f726256e504521086a84",
+  "new_performance_claim": false,
+  "owning_native_four_ci_terminal_success": true,
+  "registry_published": false,
+  "release_published": false,
+  "repository": "omics-rust/rsomics-rnaseq-qc",
+  "repository_id": 1441744755,
+  "run_attempt": 1,
+  "run_id": 41301688183,
+  "schema": "rsomics.rnaseq-qc.native-delivery.v1",
+  "source_additional_provenance": "SOURCE.json",
+  "source_code_executed_locally": false,
+  "source_git_files": 172,
+  "source_tar_byte_identical_across_four": true,
+  "source_tar_sha256": "db4ce01006cfa09d4b0f8ca2de735fbfeb8150ae4d2e501a31b0b816535a8aac",
+  "source_tree": "2b7c6e9aa798358cbc3688d4d21f9080740c0194",
+  "status": "accepted-actual-four-native-source-delivery",
+  "targets": {
+    "linux-aarch64": {
+      "all_nine_junction_counters": true,
+      "artifact": {
+        "bytes": 2458517,
+        "sha256": "a3fee76e2e6cb357bc37042bb2dd97fd964121877af32f6b32f306507a32dca7"
+      },
+      "artifact_id": 13081173005,
+      "binary": {
+        "bytes": 2696016,
+        "sha256": "82870bf0eb73f26cb49519adea90f54a4217dcc0c8218210f3b33680e6435b65"
+      },
+      "default_records": 175,
+      "header": {
+        "executable_type": 3,
+        "format": "ELF64-little",
+        "header_hex": "7f454c460201010000000000000000000300b7000100000040060200000000004000000000000000501b29000000000000000000400038000a00400020001f00",
+        "machine": 183
+      },
+      "host": "aarch64-unknown-linux-gnu",
+      "installed_calls": 5,
+      "job_id": 124833778577,
+      "junction_records": 30,
+      "native_archive": {
+        "bytes": 1133616,
+        "name": "rsomics-rnaseq-qc-0.1.0-linux-aarch64.tar.gz",
+        "sha256": "24cbe95291278c7e4e9c00587df2ed0d849246f2d786d3ba7f718a4349a1a7ff"
+      },
+      "native_archive_files": 109,
+      "native_enabled_packages": 164,
+      "original_zip_members": 41,
+      "report_hashes": {
+        "default-five": "80d05e5bbc3c20c9aea10dfa00eb2304e80ed78920a7097f2cc448587bdbdac4",
+        "junctions": "938d839c36f517e49b8f8454634a9e1cc59304d8c2ad29247b4b35428e9279cd",
+        "selected": "aeea0e8a0d51836ddf2d97ef9aba9706091d7b03f7f6ad266057c434e6e6c8d7"
+      },
+      "source_archive": {
+        "bytes": 1392640,
+        "name": "rsomics-rnaseq-qc-0.1.0-source.tar",
+        "sha256": "db4ce01006cfa09d4b0f8ca2de735fbfeb8150ae4d2e501a31b0b816535a8aac"
+      },
+      "source_archive_files": 173,
+      "source_original_files": 172,
+      "tests": {
+        "Test debug": {
+          "log": "linux-aarch64/7_Test debug.txt",
+          "sha256": "0b7b60c90c31b8ad67a7077cd280fe2b6bfa0e08f78d0b8bd21d6b795fb87bcf",
+          "test_instances": 12
+        },
+        "Test extracted source release": {
+          "log": "linux-aarch64/11_Test extracted source release.txt",
+          "sha256": "00c860fe7fa69c1fb06b35f851f5f77f73a1ad31c51f0451d455a4c119c1c114",
+          "test_instances": 12
+        },
+        "Test release": {
+          "log": "linux-aarch64/8_Test release.txt",
+          "sha256": "85ec426692c50602d8091767675259ad8d17059a8b54aa1d92da6eab26e8cc78",
+          "test_instances": 12
+        }
+      }
+    },
+    "linux-x86_64": {
+      "all_nine_junction_counters": true,
+      "artifact": {
+        "bytes": 2584160,
+        "sha256": "d7909a04b9a7738164fe3c49a98fd4f6391d9891fa98ef1e5b414299a810a10f"
+      },
+      "artifact_id": 13082190128,
+      "binary": {
+        "bytes": 2870600,
+        "sha256": "eb472af80dfa26a00819448f895ccbcceb570de3ad629ac81f9507c7534282ae"
+      },
+      "default_records": 175,
+      "header": {
+        "executable_type": 3,
+        "format": "ELF64-little",
+        "header_hex": "7f454c4602010100000000000000000003003e000100000000b2080000000000400000000000000088c42b000000000000000000400038000c00400023002100",
+        "machine": 62
+      },
+      "host": "x86_64-unknown-linux-gnu",
+      "installed_calls": 5,
+      "job_id": 124833778337,
+      "junction_records": 30,
+      "native_archive": {
+        "bytes": 1201598,
+        "name": "rsomics-rnaseq-qc-0.1.0-linux-x86_64.tar.gz",
+        "sha256": "689084a6c527d75cebbdda13336f08c0107e0c5bf281d6fc589f2d6b2ed84eb1"
+      },
+      "native_archive_files": 109,
+      "native_enabled_packages": 164,
+      "original_zip_members": 41,
+      "report_hashes": {
+        "default-five": "80d05e5bbc3c20c9aea10dfa00eb2304e80ed78920a7097f2cc448587bdbdac4",
+        "junctions": "938d839c36f517e49b8f8454634a9e1cc59304d8c2ad29247b4b35428e9279cd",
+        "selected": "aeea0e8a0d51836ddf2d97ef9aba9706091d7b03f7f6ad266057c434e6e6c8d7"
+      },
+      "source_archive": {
+        "bytes": 1392640,
+        "name": "rsomics-rnaseq-qc-0.1.0-source.tar",
+        "sha256": "db4ce01006cfa09d4b0f8ca2de735fbfeb8150ae4d2e501a31b0b816535a8aac"
+      },
+      "source_archive_files": 173,
+      "source_original_files": 172,
+      "tests": {
+        "Test debug": {
+          "log": "linux-x86_64/7_Test debug.txt",
+          "sha256": "f54daaad375e03fd4daf5ae31a218d0d9febaf65e11d09a98cad7c909a9622da",
+          "test_instances": 12
+        },
+        "Test extracted source release": {
+          "log": "linux-x86_64/11_Test extracted source release.txt",
+          "sha256": "8acff8de7b5edc9d48691f213646a8e10f93c1a0446125633feb5bcf318bb59a",
+          "test_instances": 12
+        },
+        "Test release": {
+          "log": "linux-x86_64/8_Test release.txt",
+          "sha256": "9934d53afcaea6fd6953b95306b7b4f34ba5b0b9e42b3dfaf1fd8d5f7110e091",
+          "test_instances": 12
+        }
+      }
+    },
+    "macos-aarch64": {
+      "all_nine_junction_counters": true,
+      "artifact": {
+        "bytes": 2302600,
+        "sha256": "91f0f11c6a6cbdc173fd6f44cc43cbd805546f936cf10277bb1446e242c6e8de"
+      },
+      "artifact_id": 13081452099,
+      "binary": {
+        "bytes": 2321792,
+        "sha256": "bc5b364c85c29cb2907b4f757f791f7f29dde77b0743b093a11ef27203e18ae1"
+      },
+      "default_records": 175,
+      "header": {
+        "cpu_subtype": 0,
+        "cpu_type": 16777228,
+        "executable_type": 2,
+        "format": "Mach-O64-little",
+        "header_hex": "cffaedfe0c000001000000000200000013000000a80800008500a00000000000"
+      },
+      "host": "aarch64-apple-darwin",
+      "installed_calls": 5,
+      "job_id": 124833778568,
+      "junction_records": 30,
+      "native_archive": {
+        "bytes": 1060410,
+        "name": "rsomics-rnaseq-qc-0.1.0-macos-aarch64.tar.gz",
+        "sha256": "56622571dd51a408e5efafae895c76cf0b3a35b913b6db3a230f48a6fc2ccfc8"
+      },
+      "native_archive_files": 109,
+      "native_enabled_packages": 164,
+      "original_zip_members": 41,
+      "report_hashes": {
+        "default-five": "80d05e5bbc3c20c9aea10dfa00eb2304e80ed78920a7097f2cc448587bdbdac4",
+        "junctions": "938d839c36f517e49b8f8454634a9e1cc59304d8c2ad29247b4b35428e9279cd",
+        "selected": "aeea0e8a0d51836ddf2d97ef9aba9706091d7b03f7f6ad266057c434e6e6c8d7"
+      },
+      "source_archive": {
+        "bytes": 1392640,
+        "name": "rsomics-rnaseq-qc-0.1.0-source.tar",
+        "sha256": "db4ce01006cfa09d4b0f8ca2de735fbfeb8150ae4d2e501a31b0b816535a8aac"
+      },
+      "source_archive_files": 173,
+      "source_original_files": 172,
+      "tests": {
+        "Test debug": {
+          "log": "macos-aarch64/7_Test debug.txt",
+          "sha256": "7312e2917b2ad468e5c5cc50995296098fdc7e5658d75fc2a278e0ced3a9d16b",
+          "test_instances": 12
+        },
+        "Test extracted source release": {
+          "log": "macos-aarch64/11_Test extracted source release.txt",
+          "sha256": "681147c89fa0bcf39fe23a8ee1924e63f8224a0757724ce1b96ab4d6dfd99c65",
+          "test_instances": 12
+        },
+        "Test release": {
+          "log": "macos-aarch64/8_Test release.txt",
+          "sha256": "1cee6123837c668ccf3cc72e03f3f553c979b23b626654cb708eca0932e4c933",
+          "test_instances": 12
+        }
+      }
+    },
+    "macos-x86_64": {
+      "all_nine_junction_counters": true,
+      "artifact": {
+        "bytes": 2409635,
+        "sha256": "406ea3733872de897e9093f235c43db43ebb237a541f44ded2b4dfcde3199cea"
+      },
+      "artifact_id": 13082216212,
+      "binary": {
+        "bytes": 2430160,
+        "sha256": "a85a10596f7777d4c8852915dd5f848d195f2f1e51aa15b398bdde05be82196b"
+      },
+      "default_records": 175,
+      "header": {
+        "cpu_subtype": 3,
+        "cpu_type": 16777223,
+        "executable_type": 2,
+        "format": "Mach-O64-little",
+        "header_hex": "cffaedfe07000001030000000200000011000000400800008500a00000000000"
+      },
+      "host": "x86_64-apple-darwin",
+      "installed_calls": 5,
+      "job_id": 124833778533,
+      "junction_records": 30,
+      "native_archive": {
+        "bytes": 1116583,
+        "name": "rsomics-rnaseq-qc-0.1.0-macos-x86_64.tar.gz",
+        "sha256": "b0d544565e20906ac6063ae1f35a563f2cf3bab03e06948cea100e407d8b208f"
+      },
+      "native_archive_files": 109,
+      "native_enabled_packages": 164,
+      "original_zip_members": 41,
+      "report_hashes": {
+        "default-five": "80d05e5bbc3c20c9aea10dfa00eb2304e80ed78920a7097f2cc448587bdbdac4",
+        "junctions": "938d839c36f517e49b8f8454634a9e1cc59304d8c2ad29247b4b35428e9279cd",
+        "selected": "aeea0e8a0d51836ddf2d97ef9aba9706091d7b03f7f6ad266057c434e6e6c8d7"
+      },
+      "source_archive": {
+        "bytes": 1392640,
+        "name": "rsomics-rnaseq-qc-0.1.0-source.tar",
+        "sha256": "db4ce01006cfa09d4b0f8ca2de735fbfeb8150ae4d2e501a31b0b816535a8aac"
+      },
+      "source_archive_files": 173,
+      "source_original_files": 172,
+      "tests": {
+        "Test debug": {
+          "log": "macos-x86_64/7_Test debug.txt",
+          "sha256": "423235414617b7ada113fc1010d2684739063f83aad079a22e97cb5def662907",
+          "test_instances": 12
+        },
+        "Test extracted source release": {
+          "log": "macos-x86_64/11_Test extracted source release.txt",
+          "sha256": "b1d4b280493eb31e9ca200e0e357159b018e5d1cd5bdde89330de9add321a8a7",
+          "test_instances": 12
+        },
+        "Test release": {
+          "log": "macos-x86_64/8_Test release.txt",
+          "sha256": "5a2473de7bacb420a6774aa5b9a52aaf3a275870dea8888ac22ecf42e4e12c66",
+          "test_instances": 12
+        }
+      }
+    }
+  },
+  "tests_instances": 144,
+  "upstream_runtime_executed_locally": false,
+  "root_adopted": true,
+  "github_release_eligible": true,
+  "registry_eligible": false,
+  "custody": {
+    "packet": "/Volumes/KIOXIA/Developments/tmp/rnaseq-qc-native-delivery-recovery-20261101.ZfaH32",
+    "report_sha256": "1c8a2f8aff017237f432ba98d989717e8001d1178c5b8e7d64a995fc80e0c16a",
+    "proposal_sha256": "d97820e9d4a5d3ed09e7c3eac31f4184d3228346d5121fb0e2dee9dbf50bd32e",
+    "seal_sha256": "f746ddaa650fe981d8f92bfa5b3bcaa67b781b9d3f13b10dd7d8294bd4f27e66",
+    "source_validator_sha256": "dbaad93fb21b810176269553625e18bb8941c5adfaa4708f6ddd79ff18e64b29",
+    "sealed_files": 1657,
+    "sealed_bytes": 54973492,
+    "root_fresh_complete_hash_and_data_validation": true,
+    "root_validation_stdout": "/Volumes/KIOXIA/Developments/tmp/rnaseq-qc-delivery-root-20261101.TY7y7y/actual-native-custody.stdout",
+    "root_validation_sha256": "1f5e90cb8b5c646aee7d8b8371591ec9dc937eb73abd1388aa126e6bebd230ce",
+    "root_validation_exit": 0,
+    "root_validation_stderr_bytes": 0,
+    "original_recovery_assumptions_preserved": [
+      "0644 guard invocation",
+      "still-running initial snapshot",
+      "commit-selector tree SHA echo, resolved with exact commit tree ID"
+    ]
+  },
+  "observed_identity_not_new_measurement": {
+    "linux_x86_64_binary_matches_historical_junction_elf": true,
+    "linux_aarch64_binary_matches_prior_native": true,
+    "new_timing_or_six_metric_sum_claim": false
+  }
+}
