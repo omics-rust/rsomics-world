@@ -1,0 +1,69 @@
+{
+  "control_ci": 41319241320,
+  "controller": "1ccacefee97cdd67e95440e89a466cc2aa85d36f",
+  "device": 2096,
+  "existing_envelopes": {
+    "ecology": {
+      "allocated_bytes": 33298141184,
+      "entries": 119233,
+      "logical_envelope_bytes": 343597383680,
+      "path": "/home/liangjy/rsomics-ecology-beta-recovery-20261101",
+      "regular_bytes": 32984660840
+    },
+    "old_index": {
+      "allocated_bytes": 28328329216,
+      "entries": 15140,
+      "logical_envelope_bytes": 81604378624,
+      "path": "/home/liangjy/rsomics-index-bgzf-recovery-20261101",
+      "regular_bytes": 28284807968
+    },
+    "plink_observer": {
+      "allocated_bytes": 99938304,
+      "entries": 78,
+      "logical_envelope_bytes": 8589934592,
+      "path": "/home/liangjy/rsomics-plink-attribution-20261101",
+      "regular_bytes": 99714610
+    }
+  },
+  "extra_failed_transport_carrier_admitted": false,
+  "free_bytes": 588002193408,
+  "independent_headroom_bytes": 8589934592,
+  "logical_reservation_not_exclusive_quota": true,
+  "mount": [
+    "/dev/sdd[/home/liangjy]",
+    "ext4",
+    "/home/liangjy"
+  ],
+  "native_ci": 41313466286,
+  "native_ci_attempt": 1,
+  "new_envelope_bytes": 81604378624,
+  "new_root": "/home/liangjy/rsomics-index-bgzf-hotpath-recovery-20261101",
+  "new_root_was_absent": true,
+  "old_originals_preserved": true,
+  "own_allocation_credit_bytes": 0,
+  "owner": "d57bdaa2a19492d902a5f59c8de3c9f35113053a",
+  "record": "index-hotpath-20261101-1ccacefe-remote-dev-sdd-76GiB",
+  "required_zero_credit_bytes": 523986010112,
+  "schema": "rsomics.index.changed-native-recovery-admission.v1",
+  "scientific_execution": false,
+  "speculative_dedup_credit": false,
+  "total_envelopes_bytes": 515396075520,
+  "uid": 1006,
+  "utc": "2026-11-01T15:07:24Z",
+  "root_proof": {
+    "local_directory": "/Volumes/KIOXIA/Developments/tmp/index-changed-native-root-20261101.OlTAE0",
+    "stdout_sha256": "afe8926074c4ffab856a3436193399fcab9e8229987df739fd84bcc25ba17daf",
+    "stderr_bytes": 0,
+    "exit_code": 0,
+    "actual_new_directory_and_reservation_created": true,
+    "control_exact_head_success": true,
+    "dispatched_run_id": 41319662660,
+    "run_attempt": 1,
+    "terminal_status": "failure",
+    "original_artifact_id": 13088419344,
+    "artifact_bytes": 2064997595,
+    "artifact_sha256": "756ffd3503498235ec3f4277e8258bde031b5a1df28df7ccd46e12f4f05c08a7",
+    "failure_original_recovery_accepted": false,
+    "performance_accepted": false
+  }
+}

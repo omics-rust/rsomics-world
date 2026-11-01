@@ -1,5 +1,21 @@
 # Fixed private HGDP whole-workflow gate
 
+## Actual green5 native-four/source gate succeeds; full originals pending
+
+Root dispatches plink-candidate.yml snapshot=green-5 exactly once after
+Control41319241320 passes at1ccacefee97cdd67e95440e89a466cc2aa85d36f.
+Actual41319636397/1 uses that exact controller and finishes SUCCESS, all five
+jobs successful. Terminal metadata is not full-original adoption. Complete
+native-four/same-generation source-consumer originals remain required. Owning
+local5ec85fd and all303 source bodies remain clean/frozen. Recovery may collect
+only actual five terminal artifacts/raw logs into a new bounded external
+packet, without executing their scientific/foreign bodies on Mac. Actual five
+ZIPs total38698235B; complete collection is active at6QNRJO within512MiB.
+Original source-TAR Git modes and extracted source filesystem modes must be
+distinguished: snapshot extraction preserves bodies, not Git execute bits.
+No rerun,
+API mutation, B implementation or public owner repository is implied.
+
 ## HWE source wave accepted locally; exact green5 native qualification next
 
 Root commits clean local5ec85fd1363ca21cac621a3a682b684f688448e1, tree

@@ -1,5 +1,24 @@
 # Index complete BGZF/tabix real performance
 
+## Actual changed-native run fails; full failure originals recovery active
+
+Exact-head Control41319241320 succeeds at
+1ccacefee97cdd67e95440e89a466cc2aa85d36f. Root dispatches the new route ONCE
+with changed_native=true and actual independent recovery admission record
+index-hotpath-20261101-1ccacefe-remote-dev-sdd-76GiB. Actual41319662660/1
+at this head finishes FAILURE; job124886974280 init succeeds, execute fails
+after70s, sealing/upload succeed. Init is not a new-native runtime admission.
+Reached build/qualification counts and failure cause remain unknown until
+reading full originals; no scientific/performance pass or rerun is inferred.
+
+Original artifact13088419344, index-bgzf-real-41319662660-1, is2064997595B,
+SHA756ffd3503498235ec3f4277e8258bde031b5a1df28df7ccd46e12f4f05c08a7.
+Root authorizes one complete ZIP/inert-CAS recovery and data-only diagnosis
+in the already created NEW76GiB remote root; all480+8GiB reservations remain.
+The old030be originals, receipts and old recovery root are not touched.
+No automatic retry, science, native/foreign execution, new budget, deletion
+or production change is authorized by this recovery. PLINK/other work continues.
+
 ## Changed-native operational route reviewed; exact Control and admission next
 
 Root adopts the six-path opt-in implementation after complete source/report

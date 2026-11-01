@@ -1,5 +1,24 @@
 # Concurrent complete-original custody
 
+## Separate changed-native Index envelope admitted
+
+Root admits a NEW76GiB envelope on2026-11-01T15:07:24Z, preserving old Index
+originals and all prior reservations. Current logical envelopes are Ecology320
++oldIndex76+PLINKobserver8+newIndex76=480GiB, plus independent8GiB headroom.
+Fresh UID1006/device2096/ext4/dev/sdd bind free588002193408B exceeds the full
+zero-credit523986010112B requirement; no old allocation or dedup is credited.
+Existing actual allocations are Ecology33298141184B, oldIndex28328329216B,
+observer99938304B, all on their original owned0700 roots. The separate absent
+/home/liangjy/rsomics-index-bgzf-hotpath-recovery-20261101 is created0700 with
+an exclusive0600 reservation.json. No old body is moved, overwritten or deleted.
+
+Full data/proof is .autopilot/state/index-changed-native-capacity-2026-11-01.json and
+OlTAE0/capacity-admission.stdout SHAafe89260. This is logical accounting, not
+an exclusive quota or independent backup. New complete actual41319662660/1
+FAILURE artifact13088419344 is2064997595B; one full inert-original recovery
+uses this new envelope. Additional failed transport carriers still require
+fresh separate admission; scientific/performance acceptance is not inferred.
+
 ## Additive bounded native diagnostic
 
 The new PLINK attribution task is separately admitted at
