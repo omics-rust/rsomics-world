@@ -1,5 +1,32 @@
 # Ecology complete-original beta performance
 
+## Final normalized job terminal success; complete-original recovery active
+
+Fresh actual41288208209/2 job124844218701 finishes SUCCESS15:21:25Z,
+unchanged7d68a900a82100573cc927337eb4bf01003b3f87. Exact new artifact
+13089287162 ecology-private-beta-weighted_normalized_unifrac-41288208209-2
+is1789633725B/SHA ded21ade04beea9d9d52c0d04877662e6f3a865207ef0f6c4b03465b9bcde185.
+No carried alias is counted as a new successful-metric run. Seven old beta
+adoptions remain; terminal metadata alone does not adopt the eighth metric.
+
+One complete-original recovery is active in private external packet
+ecology-beta-normalized-recovery-20261102.vlagkg, within existingEcology320GiB.
+Contemporary remote accounting includes all556GiB envelopes plus independent
+8GiB, verified same-envelope allocated-inode credit once; corrected Index's
+new76GiB is conservatively charged in full. Root's actual new reservation is
+index-copyright-20261102-7dd0be8b-remote-dev-sdd-76GiB; no old allowance released.
+The unchanged shared authentication helper has a caller-only SSH argv adapter
+forcing StrictHostKeyChecking=yes/UpdateHostKeys=no. Key bytes are never read,
+hashed, copied or printed by the controller; only pinned local age may read.
+
+The single original ZIP stream is unusually slow. Bounded existing-process
+samples show Python awaiting gh stdout, rather than blocked in sink.write;
+this does not establish an origin/CDN/proxy cause. Its actual3600s local and
+remote transport alarms remain unchanged, partials preserved, no silent retry.
+Full authentication/TAR/member/numeric/performance acceptance is not yet
+reached. A transport failure would not negate the successful scientific job;
+it must be recorded and handled separately from any scientific rerun.
+
 ## Seventh metric weighted UniFrac accepted from complete attempt1 originals
 
 Root adopts weighted_unifrac actual41288208209/1, job124793770126 and
