@@ -21,6 +21,8 @@ class PlinkSourceRelinkPreparationTest(unittest.TestCase):
         self.assertTrue(module.is_file() and workflow.is_file(),
                         'integrated private source-delivery gate is absent')
         gate = importlib.import_module('plink_source_relink')
+        bundles=importlib.import_module('plink_source_bundle')
+        self.assertIn('private-green-3',bundles.BUNDLES,'new source authority has no separate delivery selector')
         self.assertTrue(hasattr(gate, 'compare_scientific'), 'base/modified exact scientific comparison is absent')
         text = workflow.read_text()
         self.assertNotIn('continue-on-error', text)
@@ -41,11 +43,17 @@ class PlinkSourceRelinkPreparationTest(unittest.TestCase):
             (right / 'counts.tsv').write_text('ID\tN\nx\t3\n')
             with self.assertRaises(ValueError): gate.compare_scientific(left, right, ['counts.tsv'])
             original = root / 'original'
-            model = gate.unpack_bundle(ROOT, 'private-green-2', original)
-            self.assertEqual(model['scope'], 'private-green-2; not public-install qualified')
-            self.assertEqual(model['snapshot'], 'green-2')
+            model = gate.unpack_bundle(ROOT, 'private-green-3', original)
+            self.assertEqual(model['scope'], 'private-green-3; not public-install qualified')
+            self.assertEqual(model['snapshot'], 'green-3')
             self.assertEqual(len(model['dependencies']), 85)
-            self.assertEqual(len(model['owner_files']), 302)
+            self.assertEqual(len(model['owner_files']), 303)
+            self.assertIn('src/numeric.rs',model['owner_files'])
+            self.assertIn('private-green-3',(original/'delivery/CHANGES.md').read_text())
+            binding=dict(reports=dict.fromkeys(gate.native.report_paths('green-3')),
+                generations=[dict(files={f'{number}.{extension}':{} for extension in ('pgen','pvar','psam','raw.json')}) for number in range(36)])
+            self.assertEqual(len(gate.scientific_paths(binding,'green-3')),340)
+            with self.assertRaises(ValueError):gate.scientific_paths(binding,'green-2')
             self.assertEqual((original / 'code/Cargo.lock').read_bytes(),
                              (original / 'authority/lock.copy').read_bytes())
             self.assertIn('directory = "../dependencies"',

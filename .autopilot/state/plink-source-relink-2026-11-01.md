@@ -1,5 +1,30 @@
 # Private offline source and replace-codec delivery
 
+## Green-3 complete offline delivery prepared; fresh rebuild required
+
+Root reads the full controller/bundle/test/workflow change, new source identity,
+report and parent-only route at plink-green3-source-delivery-20261101.y62i63oz.
+Freshly verifies all10033 sealed bodies/194335833B and all six delivered world
+files. REPORT SHA0e3b689d8ea150f6ba119958a2f94428260a31d8ff3a54a1a9fc8e547efb91ad;
+DELIVERY SHA13d1e36aaf9cc986d9a82a78836cb5ca187665a6a439603b8da6d6ba1613c00f.
+Root's same connected preparation passes1/6.723s; no scientific build runs.
+
+New private-green-3 archive23863576B SHA
+c66f4b883f88f04e5a79594725d0556f255f252f37bfd67f565352ea49a7d125
+contains4849 regular members,303 exact owner bodies at00ce7b39 and85 unchanged
+locked dependency archives/offline sources/licenses. Actual fresh empty-home
+metadata resolves the delivered source offline; no registry fallback or object
+build is claimed. Old bundles/receipts and the running real-HGDP gate remain
+unchanged. New copied rebuild/history text explicitly distinguishes capture
+time from later native acceptance and still-pending offline replacement proof.
+
+All base/modified graph bindings now receive the selected snapshot. Green-3
+retains its actual116 reports/worker and340 scientific files; old green-1/2
+remain114/336. No tolerance, operation, input or codec replacement policy
+changes. After exact-head Control CI, run the existing manual gate explicitly
+with bundle=private-green-3 and native_run=41258923590. Neither old relink
+acceptance nor this preparation qualifies the new source or a public release.
+
 ## Final green-2 offline/relink actual evidence accepted
 
 Actual41247573646/attempt1 at530220cbff0dceb097761136d5c63ea762a7852b

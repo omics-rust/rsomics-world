@@ -1,0 +1,11 @@
+{
+  "archive": {
+    "bytes": 23863576,
+    "sha256": "c66f4b883f88f04e5a79594725d0556f255f252f37bfd67f565352ea49a7d125"
+  },
+  "public_release": false,
+  "scope": "private-green-3; not public-install qualified",
+  "selector": "private-green-3",
+  "source_archive_sha256": "c9d8707c3c4388928851b80ac64417c0ca9d7b9c38544d8eada011b1c547f794",
+  "source_manifest_sha256": "b51e9862c7080462edf874c8a8b53e591b3f015e84cb3af54b787318bf7889ce"
+}

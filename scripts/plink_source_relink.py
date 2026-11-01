@@ -25,12 +25,13 @@ JOBS = {'linux-x86_64', 'linux-aarch64', 'macos-x86_64', 'macos-aarch64',
         'Pinned source and official engines read same native generations'}
 
 
-def scientific_paths(binding):
+def scientific_paths(binding, snapshot):
     paths = set(binding['reports'])
     for generation in binding['generations']:
         paths.update(name for name in generation['files']
                      if name.endswith(('.pvar', '.psam', '.raw.json')))
-    check(len(paths) == 336, 'complete scientific comparison membership differs')
+    reports, _ = native.graph_population(snapshot)
+    check(len(paths) == reports * 2 + 108, 'complete scientific comparison membership differs')
     return paths
 
 
@@ -174,7 +175,7 @@ def admit(world, selector, run_id, work, evidence):
          selection=selection, public_release=False))
 
 
-def build(root, label, work, evidence):
+def build(root, label, work, evidence, snapshot):
     root, work, evidence = Path(root), Path(work), Path(evidence)
     output = evidence / label; output.mkdir()
     target = work / (label + '-target'); target.mkdir()
@@ -197,7 +198,7 @@ def build(root, label, work, evidence):
     graphs = list(scratch.glob('plink-whole-native-*'))
     check(len(graphs) == 1, 'complete kept native graph absent')
     graph = graphs[0]
-    save(output / 'generations.json', native.bind_graph(graph))
+    save(output / 'generations.json', native.bind_graph(graph, snapshot))
     binary = target / 'release/rsomics-plink'
     check(load(graph / 'identity.json')['binary_sha256'] == file_identity(binary)['sha256'],
           'whole workflow ran a different binary')
@@ -232,22 +233,24 @@ def run(world, selector, work, evidence):
     model = unpack_bundle(world, selector, original)
     check(admission['source_archive_sha256'] == model['source_archive_sha256'] and
           admission['source_manifest_sha256'] == model['source_manifest_sha256'], 'admission source differs')
-    baseline, baseline_graph = build(original, 'base', work, evidence)
+    snapshot = model['snapshot']
+    baseline, baseline_graph = build(original, 'base', work, evidence, snapshot)
     verify_original(original)
     derivative = work / 'modified'
     patch = replace_codec(original, derivative)
     save(evidence / 'replacement.json', patch)
-    modified, modified_graph = build(derivative, 'modified', work, evidence)
+    modified, modified_graph = build(derivative, 'modified', work, evidence, snapshot)
     verify_original(original); verify_derivative(derivative, model, patch)
     for name in ('reader.o', 'codec.a', 'rsomics-plink'):
         check(baseline[name]['sha256'] != modified[name]['sha256'] and
               baseline[name]['marker_present'] is False and modified[name]['marker_present'] is True,
               'actual linked codec substitution is unproven: ' + name)
-    paths = scientific_paths(native.bind_graph(baseline_graph))
-    check(paths == scientific_paths(native.bind_graph(modified_graph)), 'paired scientific membership differs')
+    paths = scientific_paths(native.bind_graph(baseline_graph, snapshot), snapshot)
+    check(paths == scientific_paths(native.bind_graph(modified_graph, snapshot), snapshot), 'paired scientific membership differs')
     comparison = compare_scientific(baseline_graph, modified_graph, paths)
     save(evidence / 'scientific-equality.json', comparison)
     save(evidence / 'receipt.json', dict(status='private_offline_replace_codec_passed',
+         snapshot=snapshot, selector=selector,
          source_archive_sha256=model['source_archive_sha256'], base=baseline, modified=modified,
          native_run_id=admission['run_id'], public_release=False, ordinary_macos_install_qualified=False,
          performance_claim=False, fixed_whole_workflow_preserved=True,

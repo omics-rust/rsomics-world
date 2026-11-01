@@ -6,7 +6,7 @@ on:
       bundle:
         description: Actual private source delivery selector
         required: true
-        default: private-green-2
+        default: private-green-3
         type: string
       native_run:
         description: Completed successful native-four and source-on-native run

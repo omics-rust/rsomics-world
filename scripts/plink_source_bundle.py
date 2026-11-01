@@ -17,6 +17,7 @@ from plink_candidate import (SNAPSHOTS, check, file_identity, load, portable_nam
 BUNDLES = {
     'private-green-1': ('assets/plink-source-private-green-1-20261101', 'green-1'),
     'private-green-2': ('assets/plink-source-private-green-2-20261101', 'green-2'),
+    'private-green-3': ('assets/plink-source-private-green-3-20261101', 'green-3'),
 }
 SCHEMA = 'rsomics.plink.private-offline-source.v1'
 SUPPLEMENTS = 'assets/plink-source-delivery-20261101'
@@ -138,6 +139,20 @@ def pack(world, cache, work, selector):
                       '[source.delivered]\ndirectory = "../dependencies"\n')
     delivery = world / SUPPLEMENTS
     shutil.copytree(delivery, root / 'delivery')
+    if selector == 'private-green-3':
+        history = root / 'delivery/CHANGES.md'
+        history.write_text(history.read_text() + '\n2026-11-01: private-green-3 binds owning revision'
+            '00ce7b39f8decbeab40ed7f92f1191a304827b74 and its accepted native/source gate41258923590.'
+            ' It includes the shared private QC/LD numeric formatter, reference-frequency arithmetic,'
+            ' bounded pair-weighted cache partitions and runtime-gated x86 POPCNT with portable fallback.'
+            ' All85 locked dependencies and original pgenlib/SIMDe terms/bodies remain unchanged.'
+            ' Snapshot authority README status describes capture time; the new offline replacement'
+            ' proof remains pending and earlier bundle proofs do not qualify this revision.\n')
+        instructions = root / 'delivery/REBUILD.md'
+        instructions.write_text(instructions.read_text() + '\nPrivate-green-3 retains the green-2 ordinary'
+            ' downstream guard policy. Its303 owner files include the subsequent QC/LD implementation'
+            ' changes recorded in code/MERGE_RECORD.md; rebuild and replacement results must bind this'
+            ' exact source, not the prior green-2 acceptance.\n')
     for item in load(delivery / 'licenses.json')['files']:
         check(file_identity(root / 'delivery' / item['path']) ==
               {key: item[key] for key in ('bytes', 'sha256')}, 'license supplement body differs')
