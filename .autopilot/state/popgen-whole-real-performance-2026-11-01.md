@@ -1,5 +1,40 @@
 # Popgen whole-chr22 same-machine performance
 
+## Actual initialization failure authenticated; two-line bootstrap corrected
+
+Root fully reads the complete failure report, recovery/manifest program,
+actual raw job traceback and two-file diff. Freshly verifies all80 sealed
+bodies/122257800B and both current corrected files at
+popgen-whole-bootstrap-failure-20261101.MB9a0m. REPORT
+1513105fc72645d1f1974ade8480d5bc2044d96174e6785112cf5c9cbcceaf72;
+SEAL689a4f1d72072f38e786f7a0db0521f2d90a8b7577e0c44b2d77ad1f61848c44;
+completed e1c12371ecb4bf6c46052832f3208315f63eb3120d921fd0d65a24f46b5bf1af.
+Original artifact13068821118/ZIP30472838B SHA
+de3aa950e79eab8b58138f65210e0171d0e05177c72f1a30f92049b5efa075d3;
+full authenticated TAR30453760B SHA
+4142d783ab7b2c88198abb7a27af5e805e64a52ba6f614369ad64b03af71d44e.
+
+Raw log confirms KeyError TMPDIR. Shared initialize creates9 private caches
+and writes GITHUB_ENV for the next step, but only applies POPGEN_SESSION
+to the current process. Whole init immediately calls paths in that same
+process; its error handler repeats the failed guard. The original TAR has
+7 regular bodies/11 directories/0 links; init-failure/controller copies are
+truly absent, not selectively omitted. Exact frozen Git bodies are separately
+retained. Cached official age authenticates the whole cipher before archive
+inspection using the existing identity path only; no key bytes are read,
+hashed/copied/printed by recovery or made available to CI.
+
+Correction applies the just-created9 cache paths to current os.environ before
+the unchanged guard. No shared helper, math/input/capacity/RSS/criteria or
+workflow changes. Controller25999e54b4286ee35d7b6ce0439d8c37a96e77a56a0bd1acdca16b1027c06db7;
+SAME test73346642bd67da18c394d99dc19a9b66de91422a136a4385ef36467a81ab702d.
+The same existing connected test now performs real init/path validation and
+all11 controller copies in simulated hosted identity/env, not science/ELF
+execution. Actual RED1error/.112s reproduces TMPDIR, then GREEN1/.168s;
+root freshly runs that one complete test through the external guard:1/.337s.
+Failed41269279456 remains failed before any native/source measurement. New
+exact-head CI and actual corrected execution are required, not preaccepted.
+
 ## First actual run stops at initialization; no scientific execution
 
 Exact-head Control41269061764 succeeds at

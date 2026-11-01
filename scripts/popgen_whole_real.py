@@ -1356,6 +1356,8 @@ def main():
             check(args.native_receipt is not None, 'actual tracked native receipt required before acquisition')
             read_native_receipt(args.native_receipt)
             hosted.initialize()
+            cache = Path(os.environ['POPGEN_SESSION']) / 'private' / 'cache'
+            os.environ.update({name: str(cache / name) for name in hosted.CACHE_NAMES})
             session = paths()
             validate_workflow(ROOT / WORKFLOW)
             controller = session['private'] / 'controller'

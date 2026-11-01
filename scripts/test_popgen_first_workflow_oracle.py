@@ -65,6 +65,27 @@ class PopgenSourcePreparationTest(unittest.TestCase):
         self.assertFalse({'numpy', 'allel', 'dask'}.intersection(sys.modules))
         with tempfile.TemporaryDirectory(prefix='popgen-preparation-', dir=os.environ['TMPDIR']) as directory:
             destination = Path(directory)
+            bootstrap_environment = dict(GITHUB_ACTIONS='true', GITHUB_REPOSITORY='omics-rust/rsomics-world',
+                GCC_VERSION='14.3.0', POPGEN_CONTAINER_DIGEST=oracle.IMAGE,
+                GITHUB_SHA='5addd6108799a500094880751af1b66556e8b1e4', GITHUB_RUN_ID='41269279456',
+                GITHUB_RUN_ATTEMPT='1', RUNNER_TEMP=str(destination), GITHUB_ENV=str(destination / 'bootstrap.env'))
+            with patch.dict(os.environ, bootstrap_environment, clear=True), \
+                 patch.object(hosted.platform, 'system', return_value='Linux'), \
+                 patch.object(hosted.platform, 'machine', return_value='x86_64'), \
+                 patch.object(sys, 'argv', ['popgen_whole_real.py', 'init', '--native-receipt',
+                     str(ROOT / '.autopilot/oracles/popgen-native-2026-11-01.json')]):
+                self.assertEqual(whole.main(), 0)
+                bootstrap = whole.paths()
+                written_environment = dict(line.split('=', 1) for line in (destination / 'bootstrap.env').read_text().splitlines())
+                for name in hosted.CACHE_NAMES:
+                    self.assertEqual(Path(os.environ[name]), bootstrap['private'] / 'cache' / name)
+                    self.assertEqual(written_environment[name], os.environ[name])
+                controller = bootstrap['private'] / 'controller'
+                copied = json.loads((controller / 'identities.json').read_text())
+                self.assertEqual(len(copied), 11)
+                for name, expected in copied.items():
+                    self.assertEqual((controller / name).read_bytes(), (ROOT / name).read_bytes())
+                    self.assertEqual(whole.identity(controller / name), expected)
             session = hosted.new_session(destination)
             fresh_source = destination / 'fresh-source'
             fresh_source.mkdir()
