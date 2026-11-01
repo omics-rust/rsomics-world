@@ -1,0 +1,183 @@
+{
+  "all_original_carrier_crc_body_hashes_verified": true,
+  "artifact_id": 13074285515,
+  "artifact_name": "rnaseq-qc-41282068281-1-linux-x86_64",
+  "artifact_sha256": "37c675f6196e81ab5d3b46088d1a5531de44d3ecf268f334459d2325b30c3a57",
+  "authority": "junctions",
+  "binary_sha256": "eb472af80dfa26a00819448f895ccbcceb570de3ad629ac81f9507c7534282ae",
+  "canonical_validation": "Compared to the previously independently reviewed local native observation, not an upstream oracle.",
+  "captured_fixture_files": 45,
+  "captured_source_data_compared_on_each_target": true,
+  "compact_reports_byte_identical_across_workers_and_platforms": true,
+  "complete_native_output_sets": 72,
+  "contract_reader_reuse": "Reviewed current trusted controller pure-stdlib readers; no captured foreign program or scientific package imported/executed.",
+  "evidence_directory": "/Volumes/KIOXIA/Developments/tmp/rnaseq-junction-native-adoption-20261101.bUOMY8",
+  "excluded_native_outputs": [
+    "R",
+    "PDF",
+    "BED12",
+    "Interact",
+    "junction-saturation"
+  ],
+  "full_input_performance_accepted": false,
+  "head_sha": "4d137b853ab055567bcc7716863d213dd9d03f01",
+  "known_incompatibilities": [
+    "Canonical full reference-consuming CIGAR differs from explicit RSeQC junction projection.",
+    "Strict exact annotation-header identities reject upstream-only case aliases.",
+    "Valid no-N/all-short inputs finish with complete zero-result tables and exit0 instead of upstream empty/partial outputs."
+  ],
+  "local_upstream_or_native_execution": false,
+  "lock_sha256": "a6ec5961981e2f95070cec067e52c91cff9dc4b86da7f726256e504521086a84",
+  "native_cli_calls_total": 88,
+  "native_four_qualified": true,
+  "native_system_provider_bodies_retained": false,
+  "native_targets": [
+    "linux-x86_64",
+    "linux-aarch64",
+    "macos-x86_64",
+    "macos-aarch64"
+  ],
+  "original_direct_modes": "GitHub-normalized ZIP modes retained as metadata; extracted0600 data only. Frozen Git TAR modes and hosted source-after/finalization checks verify the source mode contract.",
+  "original_zip_regular_bodies": 904,
+  "owner_commit": "a618e6ab293e2fb7a113d949197e1bb43ecc7733",
+  "owner_tree": "e81e89d6e6ae6a8ae7a83a6a6d82cdc9a2aa20bb",
+  "packet_completed_sha256": "6813f1a6a7b9f2bda381cdd2dd9fb5c0d0660d84a0602fd630cf1020ad1477e8",
+  "packet_seal_sha256": "e3ee1e8604259734a652a791a5b0bb8c0dee7357ee309919baada57c4aed7438",
+  "performance_claim": false,
+  "product": "rsomics-rnaseq-qc",
+  "publication": false,
+  "release": false,
+  "report_sha256": "43d64e98a0b076dc5cee71063c33f2ff24ed7ff1396a3601ed325b1ea59d3fc3",
+  "repository": "omics-rust/rsomics-world",
+  "run_attempt": 1,
+  "run_id": 41282068281,
+  "schema": "rsomics.rnaseq-qc.junction-native-adoption.v1",
+  "scope": "Compact junction correctness/default-five integration on four native platforms only; no full-input performance, fresh upstream runtime on each target, release or publication.",
+  "size_in_bytes": 1413965,
+  "snapshot": "green-1",
+  "source_archive_sha256": "9f327ca20de7fd9acce44206f62194a037ef56365bda64ca59c4ebe7245338af",
+  "source_files": 66,
+  "source_manifest_sha256": "2481ea186f7db63519c4cca3359445e20a18b82fafd08d071fbb89d9efde8650",
+  "source_on_native_qualified": false,
+  "source_receipt_sha256": "8ea60c35c952a600fa526ebfd3e020e142b01706f50a87a9fbc8818ce9ce5b2b",
+  "source_snapshot_path": ".autopilot/snapshots/rnaseq-qc-junctions-2026-11-01/green-1",
+  "status": "accepted",
+  "strict_alias_rejections": 16,
+  "target_bookworm_native_abi_admitted": false,
+  "targets": {
+    "linux-aarch64": {
+      "artifact_id": 13073379096,
+      "artifact_name": "rnaseq-qc-41282068281-1-linux-aarch64",
+      "binary": {
+        "bytes": 2696016,
+        "sha256": "82870bf0eb73f26cb49519adea90f54a4217dcc0c8218210f3b33680e6435b65",
+        "target": "linux-aarch64"
+      },
+      "captured_files": 45,
+      "carrier": {
+        "bytes": 1356937,
+        "sha256": "316a1c002e7b40965340dc6573009ca26ae4db20f81ebabf787da2c8b6222b2b"
+      },
+      "cli_calls": 22,
+      "integrity": {
+        "bytes": 40831,
+        "sha256": "7e298d1548da71a367a2019d80cd725c907096a5f3a5e2f260c70dc1518d3600"
+      },
+      "job_id": 124775834456,
+      "raw_job_log": {
+        "bytes": 123471,
+        "sha256": "45052448c77214aad2090035915677f7378b3c712fbddb21d340aa3bc56c6915"
+      },
+      "source_files": 66,
+      "strict_alias_rejections": 4,
+      "tests_each_mode": 12
+    },
+    "linux-x86_64": {
+      "artifact_id": 13074285515,
+      "artifact_name": "rnaseq-qc-41282068281-1-linux-x86_64",
+      "binary": {
+        "bytes": 2870600,
+        "sha256": "eb472af80dfa26a00819448f895ccbcceb570de3ad629ac81f9507c7534282ae",
+        "target": "linux-x86_64"
+      },
+      "captured_files": 45,
+      "carrier": {
+        "bytes": 1413965,
+        "sha256": "37c675f6196e81ab5d3b46088d1a5531de44d3ecf268f334459d2325b30c3a57"
+      },
+      "cli_calls": 22,
+      "integrity": {
+        "bytes": 40830,
+        "sha256": "f8bdabf0d736f597c9b60837fe81ef4b7da3586054e488e8f3730768ec7244d6"
+      },
+      "job_id": 124775834497,
+      "raw_job_log": {
+        "bytes": 123427,
+        "sha256": "01d29e64e3a01852cfae2b93b6787396fa9abf8f343e08d7a0993cf1639b5396"
+      },
+      "source_files": 66,
+      "strict_alias_rejections": 4,
+      "tests_each_mode": 12
+    },
+    "macos-aarch64": {
+      "artifact_id": 13074370213,
+      "artifact_name": "rnaseq-qc-41282068281-1-macos-aarch64",
+      "binary": {
+        "bytes": 2321792,
+        "sha256": "bc5b364c85c29cb2907b4f757f791f7f29dde77b0743b093a11ef27203e18ae1",
+        "target": "macos-aarch64"
+      },
+      "captured_files": 45,
+      "carrier": {
+        "bytes": 1273462,
+        "sha256": "e72369e8cdd9c7ab9fa4c59d8df015c2cc20e93e61d4a6cc55a968e3aa0e7d71"
+      },
+      "cli_calls": 22,
+      "integrity": {
+        "bytes": 40832,
+        "sha256": "9cfc7793b38793924dd5385ff2d1bf61bb5e1c478a6bd28e52ac939effcf3d42"
+      },
+      "job_id": 124775834483,
+      "raw_job_log": {
+        "bytes": 125143,
+        "sha256": "46672159c63c23500c0bc495d3ad71a6b181a42789881cef0b781fb57e3d4503"
+      },
+      "source_files": 66,
+      "strict_alias_rejections": 4,
+      "tests_each_mode": 12
+    },
+    "macos-x86_64": {
+      "artifact_id": 13074286256,
+      "artifact_name": "rnaseq-qc-41282068281-1-macos-x86_64",
+      "binary": {
+        "bytes": 2430160,
+        "sha256": "a85a10596f7777d4c8852915dd5f848d195f2f1e51aa15b398bdde05be82196b",
+        "target": "macos-x86_64"
+      },
+      "captured_files": 45,
+      "carrier": {
+        "bytes": 1324276,
+        "sha256": "26361dad3755b221b30a5bf2b924256e2856e31d3674e4d734f073ec68bfb5cf"
+      },
+      "cli_calls": 22,
+      "integrity": {
+        "bytes": 40830,
+        "sha256": "da269a4cb494e4b2da418533960bd68241aa2583f00f15762dc19a83b9003c6e"
+      },
+      "job_id": 124775834318,
+      "raw_job_log": {
+        "bytes": 127008,
+        "sha256": "501444de9aa0e177521df657691bf9b1122dc8c5ce867402d501a1f8816f6259"
+      },
+      "source_files": 66,
+      "strict_alias_rejections": 4,
+      "tests_each_mode": 12
+    }
+  },
+  "test_instances_total": 96,
+  "tests_passed_each_mode_each_target": 12,
+  "verification_sha256": "5964081e4e8a0c94cab330e6c8f3f67df559e82f09de6edbcc50e91f3f07c9a6",
+  "verified_packet_bodies": 990,
+  "verified_packet_bytes": 22686069,
+  "workflow_path": ".github/workflows/rnaseq-qc-candidate.yml"
+}

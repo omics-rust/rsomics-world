@@ -232,8 +232,10 @@ a618e6ab293e2fb7a113d949197e1bb43ecc7733 after one whole-feature review and
 full local verification. Source-only41277337904 qualifies its ordered rows,
 support, independent endpoint classes and nine counters. It observes original
 records in the same traversal, with focused/explicit report selection; the
-default five remain unchanged. Exact four-native41282068281 is in progress;
-new full-input junction performance is not yet accepted. Canonical geometry,
+default five remain unchanged. Exact four-native41282068281 is now accepted
+from complete originals:96 test instances and88 retained native calls with
+compact worker/platform byte identity. New full-input junction performance
+is not yet accepted. Canonical geometry,
 strict aliases and complete no-N/all-short results are explicit source
 differences. Native R/PDF/BED/Interact exports and saturation remain excluded.
 See the separately adopted 2026-11-01-rnaseq-qc-junctions plan and state ledger;

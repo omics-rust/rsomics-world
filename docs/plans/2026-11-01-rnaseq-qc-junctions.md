@@ -88,7 +88,10 @@ actual41277337904 source-only receipt
 `.autopilot/oracles/rnaseq-qc-junctions-2026-11-01.json` is accepted after full
 authenticated recovery and independent six-call reduction. Task2 is locally
 accepted after one whole-feature review and root full release verification;
-clean owner is a618e6ab293e2fb7a113d949197e1bb43ecc7733. Its exact additive
-four-native candidate is being prepared. Task3 and new four-native/performance/
-publication acceptance remain unearned. The
+clean owner is a618e6ab293e2fb7a113d949197e1bb43ecc7733. Actual additive
+four-native41282068281 is now accepted in
+`.autopilot/oracles/rnaseq-qc-junction-native-2026-11-01.json`, SHA
+647d2f5b77ccfb411606cd68af46dc7ece018e86b48f52a6b676d5056f38828c.
+Task3 implementation/preparation and full-input performance/publication remain
+unearned. The
 earlier failed startup run remains failed; no old-five proof is relabelled.

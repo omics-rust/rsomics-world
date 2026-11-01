@@ -1,5 +1,29 @@
 # SDD ledger — plan: docs/plans/2026-11-01-rnaseq-qc-junctions.md
 
+## Actual junction four-native originals accepted
+
+Root recovers all four complete originals/full APIs/logs for41282068281/1,
+verifies904 ZIP regular bodies and all source/controller/test/output bindings,
+then seals990 files/22686069B at rnaseq-junction-native-adoption-20261101.bUOMY8.
+REPORT43d64e98a0b076dc5cee71063c33f2ff24ed7ff1396a3601ed325b1ea59d3fc3;
+SEALe3ee1e8604259734a652a791a5b0bb8c0dee7357ee309919baada57c4aed7438;
+COMPLETED6813f1a6a7b9f2bda381cdd2dd9fb5c0d0660d84a0602fd630cf1020ad1477e8.
+New rnaseq-qc-junction-native-2026-11-01.json accepts exact a618e6ab source
+and all four actual platforms,96 test instances/88 native calls/72 complete
+output sets/16 genuine alias rejections. Full source rows/counters and native
+canonical/zero differences qualify; compact report bodies match across workers
+and platforms. Canonical is compared to previously reviewed native data, not
+relabelled as upstream evidence. Pure-stdlib current-controller readers are
+explicitly reused; no captured scientific program/runtime executes on Mac.
+
+Actual Linux ELF eb472af80dfa26a00819448f895ccbcceb570de3ad629ac81f9507c7534282ae
+is retained. GitHub-normalized ZIP permissions are not original binary modes;
+frozen Git TAR source modes and hosted finalization independently bind source.
+This is compact native correctness, not fresh upstream on every platform,
+Bookworm ABI/provider admission, full-input performance or publication. Task3
+may now prepare its exact21-call full9.8M-record benchmark without borrowing
+historical five-metric timings. Old authorities remain immutable.
+
 ## Actual additive junction four-native gate dispatched
 
 Exact-head Control41281822854 succeeds at
