@@ -5,6 +5,13 @@ The initial six-operation scope has passed pinned compatibility, four-native-
 platform exact-head CI, package verification, and its representative release
 performance gate. Registry publication remains.
 
+Native GitHub delivery is being qualified at owning
+`e98f54acb051ee827b858aadf7ee3de11f007869`. This adds packaged installation,
+complete enabled-dependency notices and one installed six-operation lifecycle
+without changing the accepted Rust implementation or locked dependencies.
+Actual delivery CI `41332571386` and complete originals remain pending; no
+GitHub release or registry publication is inferred from local installation.
+
 ## Boundary
 
 `rsomics-table` is one CSV/TSV product for selecting, filtering, joining,
