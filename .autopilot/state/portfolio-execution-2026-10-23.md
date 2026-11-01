@@ -3,8 +3,8 @@
 ## Current position
 
 Full30-family goal is active and unchanged. This table records named gates,
-not a rolling checkout HEAD. Last code checkpointf8b9d79f passes exact
-controller41259929663. Per-family current states
+not a rolling checkout HEAD. Last code checkpointb8db86cf passes exact
+controller41262794499. Per-family current states
 and immutable original receipts supersede the historical narrative below.
 
 The user resolves the2026-10-31 storage stop: keep all project data/builds/
@@ -21,11 +21,11 @@ No deletion or migration of project/shared application/user data occurred.
 | ecology | source40634594900 fully retained/qualified; real table/tree/IDs pass raw checks; reviewed sparse-alpha01c9089 plus actual sparse rarefactione1b03cb;984exact count cells/594alpha checks pass | undefined beta choice holds only that adapter; full product/native4/performance unearned |
 | structure | source40644150133 qualified; reviewed private2aee715 and native4 run41184818337 accepted | public torsion/full7/performance remain held or unearned; no coordinate foundation |
 | shared TMM | reviewed stats0.2.5 pushed at00a1819; real edgeR/limma contracts, persistent nonunit source regression and exact-head native4 run40648343214 all pass; primitive cost+2.53% | inherited working lock preserved; registry publication/adoption held |
-| signal | first-six native4/same-file source41217009133 accepted; approved data-loss/filter fixes remain known incompatibilities; actual C/F NPZ layout rejection corrected at unchanged numeric bounds | genuine shared4090 route selected; Git bundle/capsule transported, Docker-registry network blocks image build before science; system-image transport preparation continues; no representative performance claim |
+| signal | first-six native4/same-file source41217009133 accepted; approved data-loss/filter fixes remain known incompatibilities; actual C/F NPZ layout rejection corrected at unchanged numeric bounds | exact system-image transport and genuine shared4090 runtime/provider admission accepted; original unchanged prepare/campaign launch proceeds; no graph or representative performance claim |
 | peak | clean private63caec85 green3 native4/source41253851251 and complete real41255568382 accepted; all54 graphs/196 stages/output comparisons/14 strict wall decisions pass | no whole-graph parallel-speedup/exact-memory claim; public sparse-default and registry-auth holds remain; no unchanged accepted-slice replay |
-| PLINK | clean private00ce7b39 green3 native4/source41258923590 accepted after source-faithful QC/LD and bounded-cache optimization; all five originals retained; old source/relink delivery stays immutable | actual unchanged full929-HGDP green3 performance41260156411 active; new source/relink delivery and publication remain separate pending gates |
-| index | clean owner7f2d4fd exact native4 CI41259142238, captured samtools source and integrated streaming FAI/GZI/query/dict slice accepted | full-reference168-call real-performance preparation active; old13-lane missing-raw/publication hold unchanged; no new foundation |
-| popgen | complete source41252735560 authenticated and accepted: chr22/207persons/723783canonical SNVs, full SFS/windows/jackknife and distinct legacy outputs | one source-anchored streaming native design active; no owner/native/four-platform/performance or publication acceptance yet |
+| PLINK | clean private00ce7b39 green3 native4/source41258923590 and complete actual offline source/relink41262996186 accepted;340 byte-exact scientific files, real changed codec objects/ELFs; old proofs unchanged | unchanged full929-HGDP performance41260156411 active; ordinary Mac distribution/publication remain separate holds |
+| index | clean owner7f2d4fd exact native4 CI41259142238, captured samtools source and integrated streaming FAI/GZI/query/dict slice accepted | corrected real41262994994 passes runtime then stops at historical RAZF provider decoding; full original/CRC/84-contig FAI format forensics pass; narrow untimed preparation correction next; no scientific timing yet; old13-lane/publication hold unchanged |
+| popgen | clean privateff8e9513 coherent analyze workflow; source41252735560 and complete chr22 Mac1/4 parity accepted:50010408 comparison cells each, all11 scientific payloads worker-exact; no full-GT matrix/new foundation | complete four-native gate reviewed/prepared, actual exact-head CI/dispatch next; same-machine repeated performance design keeps source audits untimed; no public release acceptance yet |
 
 DESeq full14599×7 parametric/local R-inner medians5.264/5.375s versus native1
 1.02/1.05s and native4 .79/.81s. Both strict throughput AND process-RSS pass;
