@@ -1,5 +1,13 @@
 # Fixed private HGDP whole-workflow gate
 
+## Actual green-3 native/source gate dispatched
+
+Exact-head Control41258777312 succeeds for
+af137c73f4129dd9ba9d9157e31ff1a98b31146d. Root manually dispatches
+plink-candidate.yml snapshot=green-3: actual41258923590/1. Four native target
+classes and the unchanged source/official same-native consumer plan are
+pending; no source-relink or real-performance result is preaccepted.
+
 ## Green-3 frozen for the next actual native/source gate
 
 Root reads the complete three-controller/test diff, freeze generator, README
