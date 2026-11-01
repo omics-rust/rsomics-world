@@ -6,7 +6,7 @@
 
 **Architecture:** keep resource preparation/access in `rsomics-index`. Reuse common/help and existing product BGZF framing; new scanners, FAI/region/query/dict policy remain product-private. No new owner, product boundary or public foundation API.
 
-**Current delivery:** actual source casebook41255333228 accepted; the complete native reference slice is committed at owner7f2d4fdeda9d0062d10941258b40eee16fdb9042. Exact four-native CI41259142238 passes. Full-reference performance preparation follows the separately frozen 2026-11-01-index-reference-real-performance plan; publication remains pending and no local samtools execution occurred.
+**Current delivery:** actual source casebook41255333228 and baseline owner7f2d4fd full-reference correctness/scoped memory evidence are accepted; the baseline throughput gate fails. Bounded query optimization owner030be20895cb7806f78b2923e1c1ac3afa05cd96 now passes exact four-native CI41272452578/1 and requires a fresh unchanged full-reference benchmark under the separately frozen 2026-11-01-index-reference-real-performance plan. No baseline performance transfers to the optimization; publication and the older missing-raw gate remain pending. No local samtools execution occurred.
 
 ## Fixed source and behavior
 

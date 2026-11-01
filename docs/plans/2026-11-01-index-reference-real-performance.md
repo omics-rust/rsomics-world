@@ -23,8 +23,15 @@ Do not accept arbitrary post-gzip bytes or promote this private acquisition
 adapter into a public Index feature. The graph and advantage gates below
 remain unchanged; both earlier actual runs remain failed before science.
 
-Require actual owner7f2d4fdeda9d0062d10941258b40eee16fdb9042 four-native
-CI41259142238 success. Fresh hosted ubuntu24.04/four-CPU/eight-GiB uses the
+Original baseline owner7f2d4fdeda9d0062d10941258b40eee16fdb9042 four-native
+CI41259142238 and full-reference run41266649396 are now accepted for their
+explicit scopes. The bounded query optimization at
+owner030be20895cb7806f78b2923e1c1ac3afa05cd96 has separately passed actual
+four-native CI41272452578/1. Require that new exact owner/run for the next
+complete remeasurement; retain the baseline's throughput failure and memory
+benefit as historical results, never as performance acceptance of changed code.
+Only the owner/CI identity binding changes; all data, graph and decision rules
+below stay fixed. Fresh hosted ubuntu24.04/four-CPU/eight-GiB uses the
 same fixed GCC14.3 Bookworm image/source runtime admission as the accepted
 index_reference_source controller. Build exact clean owner source with
 official Rust1.91 components in a task-private prefix; retain compiler/source/
