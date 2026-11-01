@@ -1,5 +1,16 @@
 # Fixed real-input Peak performance gate
 
+## Actual buffered-caller real-input retry dispatched
+
+After green3 full native/source adoption and exact-head Control41255376744
+success atd6a334a78b3d2258d48650e973b6f6168a8bbe4e, root dispatches actual
+41255568382/1 with explicit green3 receipt, fresh standard ubuntu-24.04 host,
+CPUs0–3 and otherwise-idle confirmation. The full fixed data/graphs,512MiB,
+warmups/five pairs, strict whole/stage decisions and corrected-view branches
+are unchanged. No delegated cgroup is selected, so exact aggregate memory
+remains N/A. Prior failed green2 samples remain red and retained. This new
+run is pending; local speed observations do not pre-accept its result.
+
 ## Caller-local buffering prepared for the next unchanged gate
 
 Clean owner63caec8551ba9a2281d43026966d26d67684a4ee preserves all caller
