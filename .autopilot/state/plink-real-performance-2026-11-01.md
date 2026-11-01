@@ -1,5 +1,16 @@
 # Fixed private HGDP whole-workflow gate
 
+## Explicit green3 real-performance admission prepared
+
+Root extends the SAME existing preparation with the actual committed green3
+receipt. It genuinely fails the old green2-only selector in0.617s, then passes
+1/0.449s after admitting only the explicit supported green2/green3 profiles.
+All original receipt/controller/snapshot/body verification and real cohort,
+graph, comparator, schedule,2048MiB and64GiB decisions remain unchanged.
+The historical green2 default is preserved; the next actual manual run must
+explicitly select green3. Logs remain at
+plink-green3-real-route-20261101.qQKFP5. Exact-head CI precedes dispatch.
+
 ## Actual green-3 four-native/source adoption
 
 Actual41258923590/1 ataf137c73f4129dd9ba9d9157e31ff1a98b31146d
