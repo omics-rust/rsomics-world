@@ -1,5 +1,48 @@
 # Popgen connected source workflow
 
+## Complete private native workflow and full-chr22 Mac parity accepted
+
+Root reads the entire production/CLI/test/dependency/documentation wave, the
+frozen comparator and actual execution/comparison records. One independent
+whole-feature review finds no confirmedP1/P2 against the approved source
+profile; no per-helper test/review ladder is introduced. Root freshly verifies
+all204 sealed packet bodies/83130847B, five full original input bodies and
+all48 current owner bodies. The only post-freeze delta is THIRD_PARTY wording
+clarifying128-element reduction, with no code/binary/test or numeric change.
+
+Private owner is now clean independent main
+ff8e951344b5cd8f8c049c96afa9e2c585d14995, publish=false/no remote.
+Root's fresh external-guard fmt and all-target strictClippy pass; full release
+suite passes its ONE connected CLI test1/1.77s/0ignored. Native4, same-machine
+repeated upstream performance, public repository and publication are unearned.
+
+Material packet popgen-native-wave-20261101.CYSUm6Ns REPORT SHA
+9335bd77bd189a95659946bbfafedf3c9bbbea003ec679d2e001fbc3ad0eb990;
+completed209b04e47d2c9619c68e8372ba91df575944d2c730bdfdd1503e76e02643169d.
+Whole-review popgen-whole-review-20261101.w3n2_9gl REPORT SHA
+49a0c1d865853cc8e60402b0b5f1cf26032484857653b1d901addb4e8fcefcf9,
+seal5c223118adc6169bcc601b719498cd7a0e46a23b3d0fec83e59759de727177b0.
+Pre-real48-file source snapshot75cd5e1b6afa75bb4dcd3a1e096e79be6355c0df29b594e545162f470fe95332
+and immutable comparator d14f08cee17b395ff6460692c166d4740f352ea9ee6c33115449ce778d0177d9
+remain preserved. Final Mac executable
+b4d83f039866e09f84465a193a882cd3d2c3081bfc0426d03de868bfaa22b420
+produces all final casebook/real results; no upstream scientific program runs
+on Mac.
+
+Both unchanged chr22 native1/4 comparisons pass50010408 cells each:
+723783 canonical sites,514 windows,72 full blocks/3783-row disclosed tail,
+all SFS bins, original GT/record/AC and virtual derivative/list identities,
+plus all five distinct legacy tables. Native1/4 all11 scientific payloads
+are byte-exact. Maximum canonical budget fraction0.0107421875; no epsilon,
+clamp, source/estimator/input/subset or tolerance adjustment. Final casebook
+1/4 each passes1208 comparison cells and17 scientific goldens.
+
+Mac single-run wall52.93394/29.98895s and peakRSS44269568/51003392B are
+diagnostics only, not formal source speedup or repeated performance. Private
+count spool133639418B replaces the original GT matrix. Mandatory common/help
+are reused with no new public foundation/API. Next is the complete four-native
+candidate gate, then same-machine complete-source/native repeated comparison.
+
 ## Coherent native implementation authorized
 
 Root adopts docs/plans/2026-11-01-popgen-native-first-workflow.md after fully
