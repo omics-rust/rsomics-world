@@ -92,3 +92,28 @@ The maximum is the failed observer's one I plus14 corrected-route native calls.
 RUSAGE_CHILDREN before startup was already nonzero; keep its raw values but
 do not label its delta/peak native-only without a single-child proof. Owned
 /proc deltas and function samples remain diagnostic, never a performance score.
+
+## Actual stopped outcome supersedes the provisional route limits
+
+No complete graph is produced. Routes1/2 each run only I successfully and
+match its complete triple/transaction. The no-inferior GDB check proves
+`stop noprint nopass` actually leaves Stop=No: noprint overrides stop. It was
+not an established Python-GIL cause. Root then explicitly authorizes route3
+after this concrete proof, changing only the stop policy/output root and
+temporarily bounding the maximum at two prior I plus14 intended calls.
+
+Route3 captures function frames and also produces all four accepted I bodies,
+but optional /proc/io accounting raises EACCES during finalization. The
+controller kills its GDB; original SAMPLES JSON remains truncated. Native
+stdout is complete/stderr empty and its raw prefix records exit0, not a
+repaired successful observer record. Total actual native invocations=3;
+full graphs=0. No F/QC/LD/prune/P/worker4 runs or CPU-cause conclusion exist.
+
+Root stops observer development: no fourth route, further probe or scientific
+retry. The existing8GiB parent and all failed code/logs/outputs remain intact.
+Handoff REPORT89656fb95e20ad89a1ff34ab4cc1c069ab5ef0726bfcef0b302584cd4c4246d3
+is at plink-native-attribution-20261101.27HKzR/handoff.3I8LxP. Further work
+must select substantive source-proven candidates and keep their runtime
+benefit unearned until the original complete performance gate is run on a
+genuinely changed accepted binary. Nonessential observation cannot become
+another open-ended defensive-testing project.
