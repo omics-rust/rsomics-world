@@ -4,7 +4,7 @@ Base: private owner5ec85fd1363ca21cac621a3a682b684f688448e1.
 Spec: AGENTS.md and genotype-popgen dossier; full wave-B design fSV9DW.
 Task B implementation and whole/scoped review are complete. Green6 fails at
 the stale controller population after successful four-native Rust tests;
-corrected green7/native-source and final whole performance remain pending.
+corrected green7 native/source is accepted; final whole performance remains.
 Fresh implementer: /root/plink_pgen_ld_impl (gpt-6.1-sol/high).
 Independent whole reviewer: /root/plink_pgen_ld_review (gpt-6-astra/high),
 whole source review and single-P2 scoped re-review PASS.
@@ -134,3 +134,27 @@ Actual41329335343/1 is in progress. New complete originals are assigned to
 /root/plink_green6_originals in a fresh external512MiB packet plus8GiB
 headroom; old failed/successful originals stay unchanged. Only actual new
 native binaries/ABI/bindings and source comparisons can earn this gate.
+
+## Actual green7 complete originals accepted
+
+Actual41329335343/1 SUCCESS atff558968, all five jobs. Root fully reads the
+report, exact verifier/recovery/checker adaptations and freshly checks all
+10714 sealed files/473074092B, every complete fiveZIP/TAR/10571 member body,
+source/Git modes and reconstructed native/source data. Check exits0/empty
+stderr, BBAaHV/green7-native.stdout SHA6811b5f8b8e331f46c67d988f321060062b1884086a2fa33e2bf4ee5a3938181.
+Packet m21dVh REPORTd3c6ec0d/INVENTORY823bc136/proposale6553e12 stays unchanged;
+additive plink-native-2026-11-02-green-7.json records root adoption.
+
+All eight native mode graphs pass4lib+1whole/0ignored,36generations/74878raw,
+123 principal reports/worker/246 bound bodies and66 actual worker records.
+All303 owning/extracted/original-TAR source bodies and Git modes agree.
+Four source/official profiles each56 report calls plus36 total raw bridges
+retain3541QC/3193other rows per profile. Added14 native report paths are NOT
+new live upstream invocations. Official-to-source correspondence is unproven.
+
+New Linux release ELF3103032B SHA76a81eee24c7425615473d542413080d790a907f438100723a092577c0cfbc41
+has retained ABI requirements, not yet Bookworm provider/execution admission.
+No prior ELF/runtime/timing or old green3 source/relink proof transfers. Next
+is the existing unchanged final whole7-stage performance gate with this exact
+accepted native, fresh runtime admission and separately admitted custody.
+Old negative green4 performance and green6 failed controller remain unchanged.

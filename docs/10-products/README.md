@@ -38,7 +38,7 @@ operation will ship. It records:
 | `rsomics-minimap2` | 1 | [legacy wrapper; exact engine/lifetime and material product-value gates held](minimap2.md) |
 | `rsomics-peak` | 5 | [private native4/source/full-workflow performance accepted; public default held](peak.md) |
 | `rsomics-phylo` | 11 | [released 0.1.0](phylo.md#first-release-evidence) |
-| `rsomics-plink` | 42 | [prepared-PGEN/LD source reviewed; green7 control-profile correction, native/source and performance pending](genotype-popgen.md#rsomics-plink) |
+| `rsomics-plink` | 42 | [prepared-PGEN/LD green7 native/source accepted; final whole performance pending](genotype-popgen.md#rsomics-plink) |
 | `rsomics-popgen` | 14 | [GitHub 0.1.0 released and public install verified; registry held](genotype-popgen.md#rsomics-popgen) |
 | `rsomics-rnaseq-qc` | 21 | [GitHub 0.1.0 released and public install verified; registry held](rnaseq-qc-signal.md#rsomics-rnaseq-qc) |
 | `rsomics-sc` | 29 | [private inferCNV candidate; discovery contract held](sc.md) |
