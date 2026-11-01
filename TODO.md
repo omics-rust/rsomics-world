@@ -55,8 +55,9 @@ no longer a stop condition.
       [compression](docs/01-foundations/compression.md) surveys and
       [I/O format map](docs/01-foundations/io-formats.md) now record consumer
       ownership and adoption gates. The [preprocessing](docs/02-genomics/preprocessing.md),
-      [methylation](docs/05-epigenomics/methylation.md) and
-      [peak-calling](docs/05-epigenomics/peak-calling.md) surveys now distinguish
+      [methylation](docs/05-epigenomics/methylation.md),
+      [peak-calling](docs/05-epigenomics/peak-calling.md) and
+      [quantification](docs/03-transcriptomics/quantification.md) surveys now distinguish
       current product operations from retired micro-crate assets and historical
       upstream observations; other domain pages remain.
 - [x] Record the final reset gate and exact live counts.
