@@ -2,8 +2,9 @@
 
 Base: private owner5ec85fd1363ca21cac621a3a682b684f688448e1.
 Spec: AGENTS.md and genotype-popgen dossier; full wave-B design fSV9DW.
-Task B implementation and whole/scoped review are complete; exact green6
-native-four/source qualification and final whole performance remain pending.
+Task B implementation and whole/scoped review are complete. Green6 fails at
+the stale controller population after successful four-native Rust tests;
+corrected green7/native-source and final whole performance remain pending.
 Fresh implementer: /root/plink_pgen_ld_impl (gpt-6.1-sol/high).
 Independent whole reviewer: /root/plink_pgen_ld_review (gpt-6-astra/high),
 whole source review and single-P2 scoped re-review PASS.
@@ -93,3 +94,33 @@ one connected preparation pass; root full Control then passes539 tests/
 93.251s/two pre-existing skips, stdout2f655b8e/stderr f23ad336. Root-owned
 Control outputs are additive files in that private packet, not part of its
 earlier author identities. Exact-head CI and actual native/source run are next.
+
+## Green6 failure custody accepted; one controller-only correction
+
+Exact Control41327684738 succeeds at85038c15. Actual41327817535/1 then
+finishes FAILURE: all four debug/release Rust profiles pass4lib+1whole,
+0failed/0ignored, but bind_graph expects old116/52. Actual producer reports
+123 principal bodies/worker and66 worker records after B's six gaps reports
+and gt.bounded per worker. This was root's omitted integration contract,
+not an observed Rust/numerical failure. Source-on-native is skipped. Native
+binary/ABI/portable bindings are not copied before the guard, so no full
+native/source gate or new ELF/runtime acceptance follows from the test logs.
+
+Root reads the full failure assessment/report and freshly verifies all8841
+files/203711893B, four originalZIP/TAR/all8696 members, exact303 Git/source
+bodies and complete eight expanded graphs. All246 reports/mode bind and all
+123 are byte-exact1/4. Independent data rebuild exits0/empty stderr;
+BBAaHV/green6-failure-originals.stdout iscd6438fc. Additive root receipt
+plink-native-2026-11-02-green-6-failure.json adopts custody/diagnosis only.
+Green6 snapshot, original850 controller and earlier receipts remain immutable.
+
+Green7 reuses the exact same303-source archive/manifest and owner7b214436.
+Only the candidate profile and existing connected test change:123/66,
+rounding retained, every additional report/call explicitly bound. No relaxed
+guard, ignored output, Rust/source-consumer/workflow/performance change.
+Author cu40O7 REPORT4dfa8f25/full correction51ab0be5/sourceproofef2e1bcc;
+existing connected preparation passes1test/0skip in1.236s. Root reads the full
+diff, actual source reports and confirms identical source/archive hashes.
+The full Control suite is assigned to exact-head CI rather than repeating
+the unchanged local539-test suite again; actual corrected native/source gate
+remains required. No old ELF/timing/source-relink acceptance is inherited.

@@ -61,10 +61,10 @@ class PlinkCandidatePreparationTest(unittest.TestCase):
             for selector in ('missing', '../green-1', 'green-0', 'green-1/extra', 'green-99'):
                 with self.assertRaises((ValueError, OSError)):
                     gate.prepare_source(ROOT, root / selector.replace('/', '_'), selector)
-            for selector in ('green-1', 'green-2', 'green-3', 'green-4', 'green-5', 'green-6'):
+            for selector in ('green-1', 'green-2', 'green-3', 'green-4', 'green-5', 'green-6', 'green-7'):
                 prepared = root / ('prepared-' + selector)
                 manifest = gate.prepare_source(ROOT, prepared, selector)
-                self.assertEqual('src/numeric.rs' in manifest, selector in ('green-3', 'green-4', 'green-5', 'green-6'))
+                self.assertEqual('src/numeric.rs' in manifest, selector in ('green-3', 'green-4', 'green-5', 'green-6', 'green-7'))
                 self.assertEqual(hashlib.sha256((prepared / 'source/Cargo.lock').read_bytes()).hexdigest(),
                                  manifest['Cargo.lock'])
 
@@ -150,6 +150,30 @@ class PlinkCandidatePreparationTest(unittest.TestCase):
             record['generations'][0]['prefix'] = str(root / 'outside')
             (graph / 'native-graph.json').write_text(json.dumps(record))
             with self.assertRaises(ValueError): gate.bind_graph(graph, 'green-3')
+
+            record['generations'][0]['prefix'] = str(graph / '1/gt.I')
+            for workers in (1, 4):
+                for name in ('bed.gaps', 'ds.gaps', 'gt.bounded', 'gt.gaps',
+                             'hds.gaps', 'pgen.gaps', 'rich.gaps'):
+                    (graph / str(workers) / f'{name}.vcor').write_text('transport-only\n')
+                    directory = graph / str(workers) / 'calls' / f'{name}.pairs'
+                    directory.mkdir(parents=True)
+                    (directory / 'stdout.txt').write_text(json.dumps(dict(result={
+                        'requested_workers': workers, 'writer_workers': 1, 'effective_workers': workers})))
+            record['principal_report_files'] = 123
+            (graph / 'native-graph.json').write_text(json.dumps(record))
+            extended = gate.bind_graph(graph, 'green-7')
+            self.assertEqual(extended['principal_report_files_per_worker'], 123)
+            self.assertEqual(len(extended['reports']), 246)
+            self.assertEqual(set(extended['reports']) - set(mapped['reports']),
+                {f'{workers}/{name}.vcor' for workers in (1, 4) for name in
+                 ('bed.gaps', 'ds.gaps', 'gt.bounded', 'gt.gaps', 'hds.gaps', 'pgen.gaps', 'rich.gaps')})
+            workers = gate.worker_provenance(graph, 'green-7')
+            self.assertEqual(len(workers), 66)
+            self.assertTrue({f'{count}/{name}.pairs' for count in (1, 4) for name in
+                ('bed.gaps', 'ds.gaps', 'gt.bounded', 'gt.gaps', 'hds.gaps', 'pgen.gaps', 'rich.gaps')} <= workers.keys())
+            with self.assertRaises(ValueError): gate.bind_graph(graph, 'green-6')
+            with self.assertRaises(ValueError): gate.worker_provenance(graph, 'green-6')
 
             bodies_by_name = {'runtime/source/plink2': b'not an executable\n',
                               'case/A': b'upper\n', 'case/a': b'lower\n'}

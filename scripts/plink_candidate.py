@@ -31,7 +31,7 @@ CONTROLLERS = ('scripts/plink_candidate.py', 'scripts/plink_source_on_native.py'
     '.github/workflows/plink-candidate.yml', 'assets/plink-first-runtime-20261031.json')
 GRAPH_POPULATIONS = {'green-1': (114, 50), 'green-2': (114, 50),
                      'green-3': (116, 52), 'green-4': (116, 52), 'green-5': (116, 52),
-                     'green-6': (116, 52)}
+                     'green-6': (116, 52), 'green-7': (123, 66)}
 
 
 def check(condition, message):
@@ -81,7 +81,7 @@ def prepare_source(world, output, selector):
         'src/io/pgen.rs', 'src/stats/mod.rs', 'src/ld/pairs.rs', 'src/ld/prune.rs',
         'tests/workflow.rs', 'tests/workflow.py', 'tests/compare_workflow.py',
         'tests/COMPARISON.md', 'tests/fixtures/expected/SOURCE.json', 'tests/fixtures/inputs/manifest.json'}
-    if selector in ('green-3', 'green-4', 'green-5', 'green-6'):
+    if selector in ('green-3', 'green-4', 'green-5', 'green-6', 'green-7'):
         required.add('src/numeric.rs')
     check(required <= manifest.keys(), 'snapshot omits product/source/license/fixture closure')
     check(manifest['tests/COMPARISON.md'] == POLICY and
@@ -166,8 +166,11 @@ def report_paths(selector='green-1'):
                     rows.append(f'{workers}/{lane}.{stage}.qc.{extension}')
             rows += [f'{workers}/{lane}.F.{suffix}' for suffix in ('ld.vcor', 'prune.prune.in', 'prune.prune.out')]
         rows += [f'{workers}/tail.{suffix}' for suffix in ('hardy', 'hwe-log.hardy')]
-        if reports == 116:
+        if reports in (116, 123):
             rows += [f'{workers}/rounding.qc.{suffix}' for suffix in ('hardy', 'hwe-log.hardy')]
+        if reports == 123:
+            rows += [f'{workers}/{lane}.gaps.vcor' for lane in LANES]
+            rows.append(f'{workers}/gt.bounded.vcor')
     return rows
 
 
