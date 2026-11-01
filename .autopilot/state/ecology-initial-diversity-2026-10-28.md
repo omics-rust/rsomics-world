@@ -1,5 +1,35 @@
 # Ecology diversity source qualification
 
+## Exact four-native alpha/rarefaction integration accepted
+
+Actual41268190701/1 at5affb09ceeae9922f59a22b70736a3cec5ef8c1d succeeds
+on all4 native classes. Root reads the full report, complete proposed receipt
+and byte-only validator, then freshly verifies564 sealed files/23323253B
+at ecology-native-four-adoption-20261101.XPfjQP. REPORT
+a339e618ae1bf9fe19db1d1d3de488008d6b33722f85284d4e5a2353fdb0ebd4;
+SEAL57706e28fe80b0d6d629983b45258e3abdac536522dbd1e036364e008b811d55;
+completed7f236daa8aa07c06a4d370454180b52149517217b9c2a86951e089bf4d0e1512.
+
+All4 original ZIPs/TARs/raw job/run/attempt logs/APIs,448 regular bodies/
+444 manifest entries close. Each35-file owner body/mode/Git blob reconstructs
+the exact b5996ddd92f292714c82c0c53a50c041f2b90249 tree. All53 lock identities,
+7 exact-head controllers and8 fixture bodies match. Each target's12 captured
+commands return0; debug/release each pass4 existing integrations/0ignored,
+32 target/profile test instances total. Registry archive bodies and per-CLI
+TempDir outputs are not retained or claimed recovered. User-approved zero-
+depth dimension-preserving repair remains an explicit known incompatibility.
+
+Actual Cargo JSON non-test executables are retained with ELF/MachO/native-host
+identities. Linux x86 ELF1821480B SHA
+58cd2ec1e4072ee4e76d2a244c2547022524025faf6b406af8cd65ef08d45a0a
+belongs to artifact13068047240/ZIP867635B SHA
+0dfcd1b9a6aeca5c398e93615c43f11fbbd616da782cbaa11cebcfc70b798a7d.
+Accepted ecology-native-2026-11-01.json has SHA
+dfc1e96c369c18e0e5ef876779c4cc0e9f715916be1850757037e40514f28290.
+No local scientific/executable run occurs during recovery. This closes only
+unchanged-owner native integration. Bookworm ABI, complete-study source/native
+reference, performance, beta and first-release/publication gates remain open.
+
 ## Actual unchanged-owner native-four dispatched
 
 Exact-head Control41268019349 succeeds at

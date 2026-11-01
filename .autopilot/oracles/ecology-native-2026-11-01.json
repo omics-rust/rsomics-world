@@ -1,0 +1,402 @@
+{
+  "all_original_crc_manifest_bodies_verified": true,
+  "all_required_jobs_success": true,
+  "all_required_steps_success": true,
+  "captured_fixture_files": 8,
+  "controller_bodies_at_exact_head_each": 7,
+  "evidence_directory": "/Volumes/KIOXIA/Developments/tmp/ecology-native-four-adoption-20261101.XPfjQP",
+  "failed_tests": 0,
+  "fixture_scope": "unchanged compact alpha/rarefaction and three retained sampling profiles; not a complete study",
+  "full_study_native_qualified": false,
+  "head_sha": "5affb09ceeae9922f59a22b70736a3cec5ef8c1d",
+  "ignored_tests": 0,
+  "integrations": [
+    "multi_alpha_preserves_sparse_identities_root_weights_and_unavailable_values",
+    "invalid_inputs_and_aliases_leave_named_destinations_unchanged",
+    "captured_sampling_profiles_replay_with_workers_and_feed_alpha",
+    "zero_depth_and_failures_preserve_dimensions_and_atomic_outputs"
+  ],
+  "known_incompatibilities": [
+    "depth-zero empty/all-zero rarefaction returns dimension-preserving zeros"
+  ],
+  "links_restored": false,
+  "local_scientific_or_binary_execution": false,
+  "lock_sha256": "7d7218ba50202994ed28f61cbb127aaaafab7e0076e5d2cd35ce74e65d7d58c7",
+  "native_four_qualified": true,
+  "native_targets": [
+    "linux-aarch64",
+    "linux-x86_64",
+    "macos-aarch64",
+    "macos-x86_64"
+  ],
+  "original_recorded_commands_total": 48,
+  "owner_commit": "e1b03cb68876be2dd8bb9fbc520b5194be055d9e",
+  "owner_tree": "b5996ddd92f292714c82c0c53a50c041f2b90249",
+  "per_cli_originals_retained": false,
+  "performance_claim": false,
+  "product": "rsomics-ecology",
+  "publication": false,
+  "recorded_registry_archive_checksums": 53,
+  "registry_archive_bodies_retained": false,
+  "release": false,
+  "report": {
+    "bytes": 8373,
+    "sha256": "a339e618ae1bf9fe19db1d1d3de488008d6b33722f85284d4e5a2353fdb0ebd4"
+  },
+  "repository": "omics-rust/rsomics-world",
+  "root_fresh_review_required": false,
+  "run_attempt": 1,
+  "run_id": 41268190701,
+  "schema": "rsomics.ecology.native-adoption.v1",
+  "snapshot": "green-1",
+  "source_archive_sha256": "e202c3d8eefb216f19adfd20b8db2efe0dbb59bbf3cec68af25b89c9409177d2",
+  "source_files": 35,
+  "source_manifest_sha256": "8bd51f8b797a3e772ebdc9acb69a3a60d7d277f8196c4142a9ce6246dc31ca75",
+  "source_on_native_qualified": false,
+  "source_receipt_sha256": "eccf21627363b2999cea61655e92614261abe755c625467edd543432b7edfa85",
+  "source_run": {
+    "artifact_id": 12792734146,
+    "artifact_sha256": "51a14cfbbc64b6cd7c07d7a61788d224924a44a3de02ae51c593a3a4d3e792fe",
+    "head_sha": "e712975eceec6ac8120fa84ac617498016a12221",
+    "manifest_sha256": "34b96bfccadb55f6a2ff57e443c8089a1b3636171bea7be6b89c4d86ef727439",
+    "run_attempt": 1,
+    "run_id": 40634594900,
+    "witness_sha256": "b6eb9045c2dceba4754821f90c8c553a3da221f04405364bbd0639fd4fd146a1"
+  },
+  "status": "accepted",
+  "targets": {
+    "linux-aarch64": {
+      "artifact": {
+        "bytes": 853431,
+        "sha256": "ff1b4295cd3d61500bfa37eef342b7c2355e3aa7f4803e6215207e0096fd1994"
+      },
+      "artifact_id": 13068485199,
+      "artifact_name": "ecology-native-41268190701-1-linux-aarch64",
+      "binary": {
+        "bytes": 1751464,
+        "compiler_host": "aarch64-unknown-linux-gnu",
+        "format": "ELF64",
+        "mode": 493,
+        "selection_sha256": "9c157e398d2a1cd9ac9ac9b39a4ffc6959289a88c840e2d358b938ff6518470d",
+        "sha256": "85e5c648fa23558a6575e0459b786e1031d676757c5f0ce7188eb45541ecc868",
+        "target": "linux-aarch64"
+      },
+      "cargo_selected_executable": "/home/runner/work/_temp/ecology-cargo-target/release/rsomics-ecology",
+      "commands": 12,
+      "job_id": 124735302075,
+      "manifest_entries": 111,
+      "raw_job_log": {
+        "bytes": 66875,
+        "sha256": "bfc175c55bbc06d2a2fad548a5734b7e90b05f94cf1b38235edcbb963bbdacd0"
+      },
+      "required_steps": [
+        "Prepare native storage",
+        "Verify frozen source",
+        "Install native Rust 1.91",
+        "Admit compiler and locked dependencies",
+        "Formatting and strict Clippy",
+        "Full debug suite",
+        "Full release suite",
+        "Retain actual release executable",
+        "Verify unchanged source",
+        "Package complete originals",
+        "Upload complete originals"
+      ],
+      "successful_api_steps": 15,
+      "tar": {
+        "bytes": 2488320,
+        "sha256": "de66af9d9b650e934ada49310e1d010330828259e3d92f75972b949f551c82e7"
+      },
+      "tar_regular_bodies": 112,
+      "test_summaries": {
+        "debug": {
+          "captured_fixture_files": 8,
+          "integrations": [
+            "multi_alpha_preserves_sparse_identities_root_weights_and_unavailable_values",
+            "invalid_inputs_and_aliases_leave_named_destinations_unchanged",
+            "captured_sampling_profiles_replay_with_workers_and_feed_alpha",
+            "zero_depth_and_failures_preserve_dimensions_and_atomic_outputs"
+          ],
+          "passed": 4,
+          "per_cli_originals_retained": false,
+          "performance_claim": false,
+          "workers": [
+            1,
+            4
+          ]
+        },
+        "release": {
+          "captured_fixture_files": 8,
+          "integrations": [
+            "multi_alpha_preserves_sparse_identities_root_weights_and_unavailable_values",
+            "invalid_inputs_and_aliases_leave_named_destinations_unchanged",
+            "captured_sampling_profiles_replay_with_workers_and_feed_alpha",
+            "zero_depth_and_failures_preserve_dimensions_and_atomic_outputs"
+          ],
+          "passed": 4,
+          "per_cli_originals_retained": false,
+          "performance_claim": false,
+          "workers": [
+            1,
+            4
+          ]
+        }
+      }
+    },
+    "linux-x86_64": {
+      "artifact": {
+        "bytes": 867635,
+        "sha256": "0dfcd1b9a6aeca5c398e93615c43f11fbbd616da782cbaa11cebcfc70b798a7d"
+      },
+      "artifact_id": 13068047240,
+      "artifact_name": "ecology-native-41268190701-1-linux-x86_64",
+      "binary": {
+        "bytes": 1821480,
+        "compiler_host": "x86_64-unknown-linux-gnu",
+        "format": "ELF64",
+        "mode": 493,
+        "selection_sha256": "c1a8c21d56f6664092003f07559ed509a3765e8a9628ae37451b99e5320e8029",
+        "sha256": "58cd2ec1e4072ee4e76d2a244c2547022524025faf6b406af8cd65ef08d45a0a",
+        "target": "linux-x86_64"
+      },
+      "cargo_selected_executable": "/home/runner/work/_temp/ecology-cargo-target/release/rsomics-ecology",
+      "commands": 12,
+      "job_id": 124735302083,
+      "manifest_entries": 111,
+      "raw_job_log": {
+        "bytes": 66766,
+        "sha256": "d386d18ad73543cbf73a1ea28910ffb3d402a6f5c8dbe55d1f3a8fe9bef7d7fe"
+      },
+      "required_steps": [
+        "Prepare native storage",
+        "Verify frozen source",
+        "Install native Rust 1.91",
+        "Admit compiler and locked dependencies",
+        "Formatting and strict Clippy",
+        "Full debug suite",
+        "Full release suite",
+        "Retain actual release executable",
+        "Verify unchanged source",
+        "Package complete originals",
+        "Upload complete originals"
+      ],
+      "successful_api_steps": 15,
+      "tar": {
+        "bytes": 2560000,
+        "sha256": "d3921414658c0aa118ab5e34f3af2ad8cca9b3d7f20c04010b6269f8622bc424"
+      },
+      "tar_regular_bodies": 112,
+      "test_summaries": {
+        "debug": {
+          "captured_fixture_files": 8,
+          "integrations": [
+            "multi_alpha_preserves_sparse_identities_root_weights_and_unavailable_values",
+            "invalid_inputs_and_aliases_leave_named_destinations_unchanged",
+            "captured_sampling_profiles_replay_with_workers_and_feed_alpha",
+            "zero_depth_and_failures_preserve_dimensions_and_atomic_outputs"
+          ],
+          "passed": 4,
+          "per_cli_originals_retained": false,
+          "performance_claim": false,
+          "workers": [
+            1,
+            4
+          ]
+        },
+        "release": {
+          "captured_fixture_files": 8,
+          "integrations": [
+            "multi_alpha_preserves_sparse_identities_root_weights_and_unavailable_values",
+            "invalid_inputs_and_aliases_leave_named_destinations_unchanged",
+            "captured_sampling_profiles_replay_with_workers_and_feed_alpha",
+            "zero_depth_and_failures_preserve_dimensions_and_atomic_outputs"
+          ],
+          "passed": 4,
+          "per_cli_originals_retained": false,
+          "performance_claim": false,
+          "workers": [
+            1,
+            4
+          ]
+        }
+      }
+    },
+    "macos-aarch64": {
+      "artifact": {
+        "bytes": 812484,
+        "sha256": "7be7e0d24296f9c23309de90f027903e1ecb34dff69e0b22ff1f4361fd8d3368"
+      },
+      "artifact_id": 13067827626,
+      "artifact_name": "ecology-native-41268190701-1-macos-aarch64",
+      "binary": {
+        "bytes": 1557632,
+        "compiler_host": "aarch64-apple-darwin",
+        "format": "Mach-O64",
+        "mode": 493,
+        "selection_sha256": "56ff24f6dbf9bb7ef46c1c99721eaf0547408da7f14364294e65a4358d9458fe",
+        "sha256": "bc35954e072bcbfefde9e2fd519aa16cc7cbab9dcbd93d3c09a9f245281fe163",
+        "target": "macos-aarch64"
+      },
+      "cargo_selected_executable": "/Users/runner/work/_temp/ecology-cargo-target/release/rsomics-ecology",
+      "commands": 12,
+      "job_id": 124735302197,
+      "manifest_entries": 111,
+      "raw_job_log": {
+        "bytes": 67588,
+        "sha256": "537d3e1d6d4129ac57ac3a44109765df5e6456a42b5a3d389828019e3e872ad4"
+      },
+      "required_steps": [
+        "Prepare native storage",
+        "Verify frozen source",
+        "Install native Rust 1.91",
+        "Admit compiler and locked dependencies",
+        "Formatting and strict Clippy",
+        "Full debug suite",
+        "Full release suite",
+        "Retain actual release executable",
+        "Verify unchanged source",
+        "Package complete originals",
+        "Upload complete originals"
+      ],
+      "successful_api_steps": 15,
+      "tar": {
+        "bytes": 2293760,
+        "sha256": "3bb2366c8de7b4fa6117e9b2c9ab9a64ee7ab230a9363e34a53f0d89a30afce8"
+      },
+      "tar_regular_bodies": 112,
+      "test_summaries": {
+        "debug": {
+          "captured_fixture_files": 8,
+          "integrations": [
+            "multi_alpha_preserves_sparse_identities_root_weights_and_unavailable_values",
+            "invalid_inputs_and_aliases_leave_named_destinations_unchanged",
+            "captured_sampling_profiles_replay_with_workers_and_feed_alpha",
+            "zero_depth_and_failures_preserve_dimensions_and_atomic_outputs"
+          ],
+          "passed": 4,
+          "per_cli_originals_retained": false,
+          "performance_claim": false,
+          "workers": [
+            1,
+            4
+          ]
+        },
+        "release": {
+          "captured_fixture_files": 8,
+          "integrations": [
+            "multi_alpha_preserves_sparse_identities_root_weights_and_unavailable_values",
+            "invalid_inputs_and_aliases_leave_named_destinations_unchanged",
+            "captured_sampling_profiles_replay_with_workers_and_feed_alpha",
+            "zero_depth_and_failures_preserve_dimensions_and_atomic_outputs"
+          ],
+          "passed": 4,
+          "per_cli_originals_retained": false,
+          "performance_claim": false,
+          "workers": [
+            1,
+            4
+          ]
+        }
+      }
+    },
+    "macos-x86_64": {
+      "artifact": {
+        "bytes": 831747,
+        "sha256": "4a200989b71949ee671138c04559172ca40e7a8b152ddd2dac87f7a99888ad02"
+      },
+      "artifact_id": 13068148508,
+      "artifact_name": "ecology-native-41268190701-1-macos-x86_64",
+      "binary": {
+        "bytes": 1603016,
+        "compiler_host": "x86_64-apple-darwin",
+        "format": "Mach-O64",
+        "mode": 493,
+        "selection_sha256": "22135c48d09bfd1ca9626ef6f9dbfe5a4a72eed576c63e242e96294ad91a1ae8",
+        "sha256": "300ddedec6d9d64844e9b80d796254d91d08c96053583081a21b126cd57fa7ed",
+        "target": "macos-x86_64"
+      },
+      "cargo_selected_executable": "/Users/runner/work/_temp/ecology-cargo-target/release/rsomics-ecology",
+      "commands": 12,
+      "job_id": 124735301983,
+      "manifest_entries": 111,
+      "raw_job_log": {
+        "bytes": 70332,
+        "sha256": "970a20af8e6f1cdbe94cb19ba98f728233184f39597baa1dcc9c4e67d0678c8c"
+      },
+      "required_steps": [
+        "Prepare native storage",
+        "Verify frozen source",
+        "Install native Rust 1.91",
+        "Admit compiler and locked dependencies",
+        "Formatting and strict Clippy",
+        "Full debug suite",
+        "Full release suite",
+        "Retain actual release executable",
+        "Verify unchanged source",
+        "Package complete originals",
+        "Upload complete originals"
+      ],
+      "successful_api_steps": 15,
+      "tar": {
+        "bytes": 2344960,
+        "sha256": "1ba60ee8616f0d1c046baa0e992d40c187b1dca2f882505e7c111adec0cb28b3"
+      },
+      "tar_regular_bodies": 112,
+      "test_summaries": {
+        "debug": {
+          "captured_fixture_files": 8,
+          "integrations": [
+            "multi_alpha_preserves_sparse_identities_root_weights_and_unavailable_values",
+            "invalid_inputs_and_aliases_leave_named_destinations_unchanged",
+            "captured_sampling_profiles_replay_with_workers_and_feed_alpha",
+            "zero_depth_and_failures_preserve_dimensions_and_atomic_outputs"
+          ],
+          "passed": 4,
+          "per_cli_originals_retained": false,
+          "performance_claim": false,
+          "workers": [
+            1,
+            4
+          ]
+        },
+        "release": {
+          "captured_fixture_files": 8,
+          "integrations": [
+            "multi_alpha_preserves_sparse_identities_root_weights_and_unavailable_values",
+            "invalid_inputs_and_aliases_leave_named_destinations_unchanged",
+            "captured_sampling_profiles_replay_with_workers_and_feed_alpha",
+            "zero_depth_and_failures_preserve_dimensions_and_atomic_outputs"
+          ],
+          "passed": 4,
+          "per_cli_originals_retained": false,
+          "performance_claim": false,
+          "workers": [
+            1,
+            4
+          ]
+        }
+      }
+    }
+  },
+  "test_instances_total": 32,
+  "test_modes": [
+    "debug",
+    "release"
+  ],
+  "tests_passed_each_mode_each_target": 4,
+  "total_artifact_manifest_entries": 444,
+  "total_tar_regular_bodies": 448,
+  "verification": {
+    "bytes": 191169,
+    "sha256": "57d861972917c5a74701ce96e37bea9828294d812989315c27560aa66f5e1984"
+  },
+  "workers": [
+    1,
+    4
+  ],
+  "workflow_path": ".github/workflows/ecology-candidate.yml",
+  "root_freshly_verified_packet_bodies": 564,
+  "root_freshly_verified_packet_bytes": 23323253,
+  "packet_seal_sha256": "57706e28fe80b0d6d629983b45258e3abdac536522dbd1e036364e008b811d55",
+  "packet_completed_sha256": "7f236daa8aa07c06a4d370454180b52149517217b9c2a86951e089bf4d0e1512"
+}
