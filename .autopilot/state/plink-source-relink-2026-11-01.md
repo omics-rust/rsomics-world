@@ -1,5 +1,38 @@
 # Private offline source and replace-codec delivery
 
+## Actual green-3 complete offline/relink proof accepted
+
+Actual41262996186/1 atb8db86cf passes. Root fully reads the complete report,
+suggested new receipt, completed proof and the reused verifier's actual diff,
+then freshly verifies all1691 sealed bodies/115460479B at
+plink-green3-relink-adoption-20261101.VtL8Bh. REPORT SHA
+48ca1eea32be2491bd4f42cf62d2ef7f90001b4f46b61b09f403cc980e2b463c;
+completed ea2eb29a0c9e688337290b5b5c95b324b08a594f8bae37eb8fcae7b021d4f93e.
+Full original4106323B ZIP/27781120B TAR,1659 manifest bodies and54972B raw
+joblog are complete. New exact-head23863576B source bundle binds303 owner
+bodies,85 original locked dependencies and original notices/supplements.
+The gh binary-response failure remains; same-head Git blob/base64 recovery
+checks Git blob SHA1 and exact source SHA256, not a cached substitute.
+
+Both real fresh offline base/modified builds pass4lib+1whole/0ignored with
+36 generations/74878cells/116 reports per worker/52 worker records. Exactly
+340 scientific files are byte-exact; the only source change is the declared
+PgrInit marker. Actual reader object/static codec archive/ELF all change,
+marker only in modified. Accepted native-four ELF7ae7332b is not replaced by
+either rebuilt ELF. New explicit receipt
+.autopilot/oracles/plink-source-relink-2026-11-01-green-3.json is adopted;
+old green1/2 proofs remain immutable. No HGDP/performance, ordinary Mac install,
+OS network isolation, legal clearance or release follows from this proof.
+
+## Actual green-3 offline rebuild/replacement dispatched
+
+After exact-head Control41262794499 succeeds and remote main is verified at
+b8db86cfd3807443138e10fecd15f33877e1fe1b, root explicitly dispatches
+actual41262996186/1 with bundle=private-green-3 and native_run=41258923590.
+New original/modified offline builds, changed codec objects/ELFs and all340
+scientific-file equalities remain unaccepted until actual originals are read.
+This does not change or duplicate the separately running real-HGDP campaign.
+
 ## Green-3 complete offline delivery prepared; fresh rebuild required
 
 Root reads the full controller/bundle/test/workflow change, new source identity,
