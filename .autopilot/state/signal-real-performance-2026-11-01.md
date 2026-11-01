@@ -1,5 +1,41 @@
 # Real signal campaign
 
+## Actual SSH network hold; unchanged system-image export prepared
+
+Stable29-file capsule SHA767917bb865967bcf5dac57d5aed2525d7d0b600639e79c8ae2add19cd027f25
+and full158436982B Git bundle transfer/verify successfully. Remote task-owned
+world-from-bundle is clean detachedaf137c73, with the unchanged source/runtime
+authority. The first direct clone actually fails128 through the host's
+pre-existing URL rewrite; no global Git setting or credential is changed.
+
+Actual system Docker build exits1 at the pinned official FROM because4090
+cannot reach registry-1.docker.io. No image/container/context/setup/acquire/
+source import/ABI admission/prepare/campaign occurs. This is a transport hold,
+not a provider incompatibility. Root reads the complete raw-evidence report
+and freshly verifies all90 sealed bodies in
+signal-ssh-admission-20261101.f2dbdlg0; completed SHA
+28130672880185e13377928d47010d83d1e76ef4538b39dac5bc99528cdc7746.
+Original failures/private root remain; no other workload is touched.
+
+Root authorizes the normal system-image transport alternative: a manual-only
+hosted builder uses the EXACT unchanged Dockerfile/Ubuntu authority, a context
+containing only Dockerfile, private Docker client config and no credentials/
+data/scientific runtime in the image. Retain actual build/raw commands/image
+ID/rootFS/labels, complete docker-save TAR and original APT bodies. Export is
+not scientific/runtime admission. After full artifact verification, load that
+same actual image on4090 and continue genuine SSH/provider admission only.
+
+Root fully reads all201 workflow lines, the SAME connected-test extension,
+report and next commands, and verifies11 original preparation packet bodies
+plus the pinned recipe/authority. One independent integrated review finds a
+materialP2: validation failures could omit copied package originals from the
+artifact. Root moves the copy destination inside uploaded evidence; the SAME
+test exercises the actual workflow path and failure finalizer with a synthetic
+package body: actual RED KeyError, then all7 tests GREEN0.390s. No new helper
+test/review ladder. Original recipe/controller/capsule scientific bodies are
+unchanged. Exact-head CI and actual system-image workflow dispatch are next;
+no hosted image/export or remote load is yet accepted.
+
 ## Genuine SSH adapter reviewed; actual provider admission is next
 
 Root reads the full changed controller/test, image authority, system-only

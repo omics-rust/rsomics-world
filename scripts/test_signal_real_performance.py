@@ -133,6 +133,57 @@ class SignalPerformanceTests(unittest.TestCase):
         image=module.image_authority(ROOT)
         self.assertEqual(image['platform'],'linux/amd64')
         self.assertIn(image['manifest_digest'],(ROOT/'assets/signal-ssh.Dockerfile').read_text())
+        export_workflow=ROOT/'.github/workflows/signal-ssh-system-image.yml'
+        self.assertTrue(export_workflow.is_file(),'manual system-image transport workflow is absent')
+        export_steps=steps(export_workflow.read_text())
+        for name,step in export_steps.items():
+            if '        run: |\n' not in step:continue
+            body=re.sub(r'\$\{\{.*?\}\}','explicit-only',bash_body(step))
+            result=subprocess.run(['bash','-n'],input=body,text=True,capture_output=True)
+            self.assertEqual(result.returncode,0,name+result.stderr)
+            for program in re.findall(r"python3 -B -[^\n]*<<'PY'\n(.*?)\nPY(?:\n|$)",body,re.DOTALL):
+                ast.parse(program)
+        with tempfile.TemporaryDirectory(prefix='signal-system-image-preparation-') as directory:
+            scratch=Path(directory); environment=scratch/'environment'
+            env=dict(os.environ,RUNNER_TEMP=str(scratch),GITHUB_WORKSPACE=str(ROOT),GITHUB_ENV=str(environment),
+                GITHUB_SHA=subprocess.check_output(['git','-C',str(ROOT),'rev-parse','HEAD'],text=True).strip(),
+                RECIPE_SHA256='f879e8a04459428810a605298afd5415df2693756e4c5aafa6681e5bd73baf30',
+                IMAGE_AUTHORITY_SHA256='6264b0912903435969769f5068c465a22804796ca0d933ca85f4463dbc0edf20',
+                BASE_MANIFEST='sha256:78d4744ead1f5b19b04d0df558ab182a5300903900755e515b2ca4d10eb2044d')
+            result=subprocess.run(['bash','-euo','pipefail','-c',bash_body(export_steps['Bind unchanged recipe and tiny build context'])],env=env,text=True,capture_output=True)
+            self.assertEqual(result.returncode,0,result.stdout+result.stderr)
+            values=dict(line.split('=',1) for line in environment.read_text().splitlines())
+            prepared=Path(values['IMAGE_ROOT']); context=prepared/'context'; evidence=prepared/'evidence'
+            self.assertEqual([path.name for path in context.iterdir()],['Dockerfile'])
+            self.assertEqual((context/'Dockerfile').read_bytes(),(ROOT/'assets/signal-ssh.Dockerfile').read_bytes())
+            binding=json.loads((evidence/'source-binding.json').read_bytes())
+            self.assertEqual(binding['recipe_sha256'],env['RECIPE_SHA256'])
+            self.assertEqual(binding['base_manifest'],env['BASE_MANIFEST'])
+            self.assertFalse(binding['scientific_runtime_imported'])
+            self.assertFalse(binding['runtime_admission'])
+            (evidence/'build.stdout').write_text('retained failed build output\n')
+            (evidence/'build.stderr').write_text('controlled transport failure\n')
+            (evidence/'build.process.json').write_text(json.dumps(dict(returncode=7)))
+            export_tree=ast.parse(re.search(r"python3 -B -[^\n]*<<'PY'\n(.*?)\nPY(?:\n|$)",
+                bash_body(export_steps['Save actual image and complete system-package originals']),re.DOTALL).group(1))
+            package_value=next(node.value for node in export_tree.body if isinstance(node,ast.Assign)
+                and any(isinstance(target,ast.Name) and target.id=='packages' for target in node.targets))
+            packages=eval(compile(ast.Expression(package_value),'<package-output-route>','eval'),
+                {'root':prepared,'evidence':evidence})
+            (packages/'archives').mkdir(parents=True)
+            package_body=b'raw package transport fixture, not a real package\n'
+            (packages/'archives/fixture.deb').write_bytes(package_body)
+            env.update(values,BUILD_OUTCOME='failure',EXPORT_OUTCOME='skipped')
+            result=subprocess.run(['bash','-euo','pipefail','-c',bash_body(export_steps['Bind all system-image originals and actual outcomes'])],env=env,text=True,capture_output=True)
+            self.assertEqual(result.returncode,0,result.stdout+result.stderr)
+            retained=json.loads((evidence/'artifact-manifest.json').read_bytes())
+            self.assertEqual(retained['status'],'HELD-system-image-export-incomplete')
+            self.assertEqual(retained['build_outcome'],'failure')
+            self.assertEqual(retained['files']['build.stderr']['sha256'],hashlib.sha256(b'controlled transport failure\n').hexdigest())
+            self.assertEqual(retained['files']['system-tool-originals/archives/fixture.deb']['sha256'],
+                hashlib.sha256(package_body).hexdigest())
+            self.assertEqual(json.loads((evidence/'build.process.json').read_bytes())['returncode'],7)
+            self.assertFalse(retained['runtime_admission'])
         with tempfile.TemporaryDirectory(prefix='signal-no-fake-ssh-') as directory:
             ledger=Path(directory)/'ledger.json'
             with mock.patch.dict(os.environ,SSH_CONNECTION=''),self.assertRaises(ValueError):

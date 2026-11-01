@@ -1,0 +1,201 @@
+name: Signal SSH system-image transport
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: signal-ssh-system-image
+  cancel-in-progress: false
+
+jobs:
+  system-image:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    env:
+      PYTHONDONTWRITEBYTECODE: '1'
+      RECIPE_SHA256: f879e8a04459428810a605298afd5415df2693756e4c5aafa6681e5bd73baf30
+      IMAGE_AUTHORITY_SHA256: 6264b0912903435969769f5068c465a22804796ca0d933ca85f4463dbc0edf20
+      BASE_MANIFEST: sha256:78d4744ead1f5b19b04d0df558ab182a5300903900755e515b2ca4d10eb2044d
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+
+      - name: Bind unchanged recipe and tiny build context
+        run: |
+          set -euo pipefail
+          umask 077
+          export IMAGE_ROOT
+          IMAGE_ROOT=$(mktemp -d "$RUNNER_TEMP/signal-ssh-system-image.XXXXXX")
+          export EVIDENCE="$IMAGE_ROOT/evidence"
+          export DOCKER_CONFIG="$IMAGE_ROOT/docker-config"
+          mkdir -m 700 "$EVIDENCE" "$DOCKER_CONFIG" "$IMAGE_ROOT/context"
+          printf 'IMAGE_ROOT=%s\nEVIDENCE=%s\nDOCKER_CONFIG=%s\n' \
+            "$IMAGE_ROOT" "$EVIDENCE" "$DOCKER_CONFIG" >> "$GITHUB_ENV"
+          python3 -B - > "$EVIDENCE/preparation.stdout" 2> "$EVIDENCE/preparation.stderr" <<'PY'
+          import hashlib,json,os,shutil
+          from pathlib import Path
+          root=Path(os.environ['IMAGE_ROOT']); world=Path(os.environ['GITHUB_WORKSPACE'])
+          recipe=world/'assets/signal-ssh.Dockerfile'; authority=world/'assets/signal-ssh-image-20261101.json'
+          recipe_sha=hashlib.sha256(recipe.read_bytes()).hexdigest()
+          assert recipe_sha==os.environ['RECIPE_SHA256']
+          assert hashlib.sha256(authority.read_bytes()).hexdigest()==os.environ['IMAGE_AUTHORITY_SHA256']
+          image=json.loads(authority.read_bytes())
+          assert image['schema']=='rsomics.signal.ssh-image.v1' and image['platform']=='linux/amd64'
+          for name in ('index','manifest','config'):
+              assert 'sha256:'+hashlib.sha256(image['raw'][name].encode()).hexdigest()==image[name+'_digest']
+          assert image['manifest_digest']==os.environ['BASE_MANIFEST']
+          assert recipe.read_text().splitlines()[0]=='FROM docker.io/library/ubuntu@'+image['manifest_digest']
+          shutil.copyfile(recipe,root/'context/Dockerfile')
+          shutil.copyfile(recipe,root/'evidence/signal-ssh.Dockerfile')
+          shutil.copyfile(authority,root/'evidence/base-authority.json')
+          record=dict(schema='rsomics.signal.system-image-source.v1',controller_commit=os.environ['GITHUB_SHA'],
+              recipe_sha256=recipe_sha,base_manifest=image['manifest_digest'],base_config=image['config_digest'],
+              image_authority_sha256=os.environ['IMAGE_AUTHORITY_SHA256'],context_files=['Dockerfile'],
+              scientific_runtime_imported=False,scientific_runtime_rebuilt=False,runtime_admission=False)
+          (root/'evidence/source-binding.json').write_text(json.dumps(record,indent=2)+'\n')
+          PY
+
+      - name: Build only the pinned system derivative and retain raw commands
+        id: build
+        run: |
+          set -euo pipefail
+          test "$RUNNER_ENVIRONMENT" = github-hosted
+          test "$(uname -s)" = Linux
+          test "$(uname -m)" = x86_64
+          source /etc/os-release
+          test "$ID" = ubuntu && test "$VERSION_ID" = 24.04
+          python3 -B - > "$EVIDENCE/build-controller.stdout" 2> "$EVIDENCE/build-controller.stderr" <<'PY'
+          from datetime import datetime,timezone
+          import hashlib,json,os,platform,shutil,subprocess,time
+          from pathlib import Path
+          root=Path(os.environ['IMAGE_ROOT']); evidence=root/'evidence'
+          assert shutil.disk_usage(root).free>=8*2**30
+          assert [path.name for path in (root/'context').iterdir()]==['Dockerfile']
+          assert hashlib.sha256((root/'context/Dockerfile').read_bytes()).hexdigest()==os.environ['RECIPE_SHA256']
+          (evidence/'host.json').write_text(json.dumps(dict(platform=platform.platform(),
+              uname=list(platform.uname()),affinity=sorted(os.sched_getaffinity(0)),
+              disk=shutil.disk_usage(root)._asdict(),runner_environment=os.environ['RUNNER_ENVIRONMENT']),indent=2)+'\n')
+          def capture(name,argv):
+              start=time.monotonic(); began=datetime.now(timezone.utc).isoformat()
+              with (evidence/(name+'.stdout')).open('xb') as out,(evidence/(name+'.stderr')).open('xb') as err:
+                  result=subprocess.run(argv,stdout=out,stderr=err)
+              (evidence/(name+'.process.json')).write_text(json.dumps(dict(argv=argv,returncode=result.returncode,
+                  started=began,wall_seconds=time.monotonic()-start),indent=2)+'\n')
+              result.check_returncode()
+          capture('docker-version',['docker','version','--format','{{json .}}'])
+          base='docker.io/library/ubuntu@'+os.environ['BASE_MANIFEST']
+          capture('base-pull',['docker','pull','--platform','linux/amd64',base])
+          capture('base-inspect',['docker','image','inspect',base])
+          capture('build',['docker','build','--iidfile',str(evidence/'image-id'),
+              '--build-arg','RSOMICS_SIGNAL_RECIPE_SHA256='+os.environ['RECIPE_SHA256'],
+              '-f',str(root/'context/Dockerfile'),str(root/'context')])
+          PY
+
+      - name: Save actual image and complete system-package originals
+        id: export
+        run: |
+          set -euo pipefail
+          python3 -B - > "$EVIDENCE/export-controller.stdout" 2> "$EVIDENCE/export-controller.stderr" <<'PY'
+          from datetime import datetime,timezone
+          import hashlib,json,os,re,subprocess,tarfile,time
+          from pathlib import Path
+          root=Path(os.environ['IMAGE_ROOT']); evidence=root/'evidence'
+          def identity(path):
+              with path.open('rb') as stream: sha=hashlib.file_digest(stream,'sha256').hexdigest()
+              return dict(bytes=path.stat().st_size,sha256=sha)
+          def capture(name,argv):
+              start=time.monotonic(); began=datetime.now(timezone.utc).isoformat()
+              with (evidence/(name+'.stdout')).open('xb') as out,(evidence/(name+'.stderr')).open('xb') as err:
+                  result=subprocess.run(argv,stdout=out,stderr=err)
+              (evidence/(name+'.process.json')).write_text(json.dumps(dict(argv=argv,returncode=result.returncode,
+                  started=began,wall_seconds=time.monotonic()-start),indent=2)+'\n')
+              result.check_returncode()
+              return (evidence/(name+'.stdout')).read_text()
+          image_id=(evidence/'image-id').read_text().strip()
+          assert re.fullmatch(r'sha256:[0-9a-f]{64}',image_id)
+          image,=json.loads(capture('image-inspect',['docker','image','inspect',image_id]))
+          base,=json.loads((evidence/'base-inspect.stdout').read_bytes())
+          authority=json.loads((evidence/'base-authority.json').read_bytes())
+          config=json.loads(authority['raw']['config'])
+          assert image['Id']==image_id and image['Architecture']=='amd64' and image['Os']=='linux'
+          assert base['Id']==authority['config_digest']
+          assert any(value.rsplit('@',1)[-1]==authority['manifest_digest'] for value in base['RepoDigests'])
+          layers=config['rootfs']['diff_ids']
+          assert base['RootFS']['Layers']==layers and image['RootFS']['Layers'][:len(layers)]==layers
+          labels=image['Config']['Labels']
+          assert labels['org.rsomics.signal.base-manifest']==authority['manifest_digest']
+          assert labels['org.rsomics.signal.recipe-sha256']==os.environ['RECIPE_SHA256']
+          container=capture('container-create',['docker','create','--read-only','--network','none',
+              '--cap-drop','ALL','--security-opt','no-new-privileges',image_id,'/bin/true']).strip()
+          assert re.fullmatch('[0-9a-f]{64}',container)
+          capture('container-inspect',['docker','container','inspect',container])
+          packages=evidence/'system-tool-originals'
+          capture('package-copy',['docker','cp',container+':/usr/local/share/rsomics-system-closure',str(packages)])
+          bodies={}
+          for line in (packages/'bodies.sha256').read_text().splitlines():
+              sha,name=line.split(None,1); name=name.strip(); relative=Path(name)
+              assert re.fullmatch('[0-9a-f]{64}',sha) and not relative.is_absolute() and '..' not in relative.parts
+              path=packages/relative
+              assert path.is_file() and not path.is_symlink() and identity(path)['sha256']==sha
+              bodies[name]=identity(path)
+          assert any(name.startswith('archives/') and name.endswith('.deb') for name in bodies)
+          assert any('InRelease' in name for name in bodies)
+          (evidence/'packages.tsv').write_bytes((packages/'packages.tsv').read_bytes())
+          with tarfile.open(evidence/'system-tool-closure.tar','w') as archive:
+              archive.add(packages,arcname='system-tool-closure')
+          capture('image-save',['docker','image','save','--output',str(evidence/'system-image.tar'),image_id])
+          record=dict(schema='rsomics.signal.system-image-export.v1',image_id=image_id,
+              controller_commit=os.environ['GITHUB_SHA'],recipe_sha256=os.environ['RECIPE_SHA256'],
+              base_manifest=authority['manifest_digest'],rootfs_layers=image['RootFS']['Layers'],
+              image_tar=identity(evidence/'system-image.tar'),package_originals_tar=identity(evidence/'system-tool-closure.tar'),
+              package_bodies=bodies,packages_tsv=identity(evidence/'packages.tsv'),
+              system_image_export_complete=True,scientific_runtime_imported=False,
+              scientific_runtime_rebuilt=False,runtime_admission=False,qualified_graphs=False,performance_claim=False,release=False)
+          (evidence/'image-export.json').write_text(json.dumps(record,indent=2)+'\n')
+          (evidence/'system-image.tar.sha256').write_text(record['image_tar']['sha256']+'  system-image.tar\n')
+          PY
+
+      - name: Bind all system-image originals and actual outcomes
+        if: always()
+        env:
+          BUILD_OUTCOME: ${{ steps.build.outcome }}
+          EXPORT_OUTCOME: ${{ steps.export.outcome }}
+        run: |
+          set -euo pipefail
+          if [[ -z "${EVIDENCE:-}" || ! -d "$EVIDENCE" ]]; then
+            exit 1
+          fi
+          python3 -B - <<'PY'
+          import hashlib,json,os
+          from pathlib import Path
+          evidence=Path(os.environ['EVIDENCE']); files={}
+          for path in sorted(evidence.rglob('*')):
+              assert not path.is_symlink()
+              if not path.is_file():continue
+              with path.open('rb') as stream:sha=hashlib.file_digest(stream,'sha256').hexdigest()
+              files[path.relative_to(evidence).as_posix()]=dict(bytes=path.stat().st_size,sha256=sha)
+          complete=os.environ['BUILD_OUTCOME']==os.environ['EXPORT_OUTCOME']=='success' and (evidence/'image-export.json').is_file()
+          record=dict(schema='rsomics.signal.system-image-artifact.v1',files=files,
+              status='complete-system-image-export' if complete else 'HELD-system-image-export-incomplete',
+              build_outcome=os.environ['BUILD_OUTCOME'],export_outcome=os.environ['EXPORT_OUTCOME'],
+              scientific_runtime_imported=False,scientific_runtime_rebuilt=False,runtime_admission=False,
+              qualified_graphs=False,performance_claim=False,release=False)
+          (evidence/'artifact-manifest.json').write_text(json.dumps(record,indent=2)+'\n')
+          PY
+
+      - name: Retain full system image original TAR and raw evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: signal-ssh-system-image-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ env.EVIDENCE }}
+          include-hidden-files: true
+          if-no-files-found: error
+          retention-days: 90
