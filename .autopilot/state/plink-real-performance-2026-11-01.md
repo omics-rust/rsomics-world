@@ -1,5 +1,25 @@
 # Fixed private HGDP whole-workflow gate
 
+## Actual packed campaign failed; complete original recovery active
+
+Actual41282068831/1 at4d137b853ab055567bcc7716863d213dd9d03f01 is terminal
+FAILURE. Scientific step failed; sealing and encrypted upload succeeded.
+This does not establish whether correctness, performance or service failed.
+No new throughput/resource result is accepted and no scientific rerun follows.
+
+Actual artifact13078418420 is12063496320B, SHA
+66893bcb7994e7e976483358283b4548ee673ef53fcf9f704f23c3798645380c.
+Root admits one complete58GiB external-HDD recovery alongside separate RNA44
+under docs/plans/2026-11-01-plink-terminal-original-custody.md. New task root
+/Volumes/Zane's HDD/rsomics-fixtures/evidence/plink-whole-real-green4-20261101.zCJ7RN
+is active; completeness/authentication/member/science adoption is NOT yet
+earned. Controllers/metadata remain external in
+plink-green4-whole-custody-20261101.uTKntR. Exact hgdp.tar.age/receipt.json
+is preserved, never renamed to fit the Ecology helper. Official local age
+alone may read the existing key path; no controller handles private bytes.
+Preserve every original/partial and prior failed campaign. The never-created
+remote PLINK208 reserve is released, not a deletion of existing data.
+
 ## Actual packed full-cohort remeasurement dispatched
 
 Exact-head Control41281822854 succeeds at

@@ -9,8 +9,12 @@ Current2026-11-01 gates: packed private PLINK ownere03ada17 green4 passes
 actual four-native/same-generation-source41280585897 with complete originals
 independently accepted. The prior full-HGDP41260156411 finished with correct
 outputs but FAILED performance; that failure remains. Coherent packed-buffer
-optimization is now being remeasured on the unchanged full graph in actual
-41282068831. No formal new performance or source/relink delivery is accepted
+optimization was remeasured on the unchanged full graph in actual
+41282068831/1, which is now terminal FAILURE. Sealing/upload succeeded and
+the complete failed originals are being recovered under the external-HDD
+terminal-size custody plan. Actual cause, achieved coverage and performance
+remain unadopted until that original assessment; no source/native failure is
+inferred from service status. No formal new performance or source/relink delivery is accepted
 yet; green3's41262996186 offline delivery remains historical, not rebound.
 Popgen source41252735560 is now accepted after
 full authenticated original and output audits: complete chr22/207 persons,
