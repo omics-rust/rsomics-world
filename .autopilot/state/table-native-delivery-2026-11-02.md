@@ -112,4 +112,5 @@ table-public-delivery-2026-11-02.json records release/API/assets/public smoke.
 The release is not signed/notarized or minimum-OS/full-DSO qualified. Registry
 remains unpublished/held. Separate README-only mainac3788aa advertises the
 now-real release without changing its tag or artifacts; exact-head followup
-CI remains pending, not a replacement release-binary qualification.
+CI41337623958 succeeds, captured API SHA2ce25ab4. This docs-only result is
+not a replacement release-binary qualification.

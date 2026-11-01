@@ -1,16 +1,24 @@
 # Table product dossier
 
-Status: release candidate `2bd0fd3698c152bb27e7d0d7635d51fb41655112`.
+Status: GitHub0.1.0 delivered; measured implementation
+`2bd0fd3698c152bb27e7d0d7635d51fb41655112`.
 The initial six-operation scope has passed pinned compatibility, four-native-
 platform exact-head CI, package verification, and its representative release
 performance gate. Registry publication remains.
 
-Native GitHub delivery is being qualified at owning
+Native GitHub delivery is accepted at owning
 `e98f54acb051ee827b858aadf7ee3de11f007869`. This adds packaged installation,
 complete enabled-dependency notices and one installed six-operation lifecycle
 without changing the accepted Rust implementation or locked dependencies.
-Actual delivery CI `41332571386` and complete originals remain pending; no
-GitHub release or registry publication is inferred from local installation.
+Actual delivery CI `41332571386`, all four clean source packages/native
+archives and complete originals are root-adopted. The immutable
+[GitHub v0.1.0 release](https://github.com/omics-rust/rsomics-table/releases/tag/v0.1.0)
+has all four native archives, one source.crate and SHA256SUMS. A fresh actual
+public MacARM download passes all11 installed lifecycle calls (ten success,
+one intended atomic failure); no new performance is inferred. README-only
+mainac3788aa passes exactCI41337623958 without replacing that tag/assets.
+Registry publication remains held. See table-native-delivery and
+table-public-delivery2026-11-02 receipts for exact source/binary/asset pins.
 
 ## Boundary
 

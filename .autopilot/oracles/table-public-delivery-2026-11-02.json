@@ -125,7 +125,13 @@
   "signed_or_notarized": false,
   "full_system_library_or_minimum_os_qualified": false,
   "post_release_readme_commit": "ac3788aafae0d5b9a1e0829e6c1b1c4743743bc8",
-  "post_release_readme_ci_accepted": false,
+  "post_release_readme_ci_accepted": true,
+  "post_release_readme_ci": {
+    "run_id": 41337623958,
+    "head_sha": "ac3788aafae0d5b9a1e0829e6c1b1c4743743bc8",
+    "conclusion": "success",
+    "api_sha256": "2ce25ab4ff930264470507723bf8dd887c905b8fb51d89ad9c1448936656bc4f"
+  },
   "limitations": [
     "GitHub installation is delivered; crates.io remains held and unattempted.",
     "Historical throughput and RSS remain bound to the older measured executable, not these release binaries.",
