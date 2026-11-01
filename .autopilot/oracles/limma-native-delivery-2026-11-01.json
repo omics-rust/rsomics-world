@@ -1,0 +1,368 @@
+{
+  "binary_executed_locally": false,
+  "distinct_test_intents": 3,
+  "fresh_public_download_smoke_accepted": false,
+  "head_sha": "90d44575afcf8b0d50935c6c73b147ebced085d8",
+  "installed_calls_total": 52,
+  "limitations": [
+    "Actual CI delivery evidence, not a new scientific or performance campaign.",
+    "The same three test intents execute in debug/release/package-release on each native target; not nine distinct tests.",
+    "Archive executability/modes are checked from TAR; retained local evidence bodies stay inert0600.",
+    "Linux x86_64 delivered ELF is byte-identical to the historical ordinary-performance ELF; this is verified body identity, not a new timing. Other platforms are not assigned that Linux timing.",
+    "No signing, notarization or registry publication is claimed."
+  ],
+  "linked_binary_inventory": false,
+  "native_enabled_graphs_verified": true,
+  "new_performance_claim": false,
+  "owning_four_native_ci_terminal_success": true,
+  "profiles_per_target": 3,
+  "registry_published": false,
+  "release_published": false,
+  "repository": "omics-rust/rsomics-limma",
+  "repository_id": 1440901320,
+  "root_adopted": true,
+  "run_attempt": 1,
+  "run_id": 41310896586,
+  "schema": "rsomics.limma.native-delivery-adoption-proposal.v1",
+  "source_code_executed_locally": false,
+  "source_git_files": 98,
+  "source_package": {
+    "bytes": 107349,
+    "sha256": "338825937b564fceb17702dd22acb70eaf79a56e482890dac0c62ebb785e8304"
+  },
+  "source_package_byte_identical_across_four": true,
+  "source_tree": "73c6fb40cadeec70a5dea00bdb7e8288fe53b4e6",
+  "status": "accepted-actual-four-native-delivery-originals",
+  "targets": {
+    "linux-aarch64": {
+      "all_license_texts_verified": true,
+      "artifact": {
+        "bytes": 3622303,
+        "sha256": "ec2766f469d0728d52dcbafc6c5a126c52ad41e35c9ff5aab8218954026edcc3"
+      },
+      "artifact_id": 13085392114,
+      "binary": {
+        "bytes": 2820128,
+        "sha256": "5a3f00a75dc4623da3d39c5f1c63612aaabf50a0f6b065daf7696a2c450a0edb"
+      },
+      "header": {
+        "executable_type": 3,
+        "format": "ELF64-little",
+        "header_hex": "7f454c460201010000000000000000000300b70001000000c011020000000000400000000000000020002b000000000000000000400038000a00400020001f00",
+        "machine": 183
+      },
+      "host": "aarch64-unknown-linux-gnu",
+      "installed": {
+        "all_command_and_output_records": true,
+        "commands": 13,
+        "workflows": {
+          "counts": {
+            "bundle_unchanged": true,
+            "full_saved_result_reused": true,
+            "input_features": 13,
+            "output_features": 11,
+            "samples": 7,
+            "schema": 1,
+            "workers": 4
+          },
+          "expression": {
+            "bundle_unchanged": true,
+            "full_saved_result_reused": true,
+            "input_features": 6,
+            "output_features": 6,
+            "samples": 7,
+            "schema": 2,
+            "workers": 4
+          }
+        }
+      },
+      "job_id": 124860839629,
+      "native_archive": {
+        "bytes": 1111166,
+        "name": "rsomics-limma-0.1.0-linux-aarch64.tar.gz",
+        "sha256": "e2b7918b80b5ac8d29e63a008b2d29f5f210cd4ecf6a5d54acc1cd275be7b7ac"
+      },
+      "native_enabled_packages": 84,
+      "native_regular_files": 71,
+      "native_tar_members": 75,
+      "original_zip_files": 127,
+      "source_archive": {
+        "bytes": 107349,
+        "name": "rsomics-limma-0.1.0.crate",
+        "sha256": "338825937b564fceb17702dd22acb70eaf79a56e482890dac0c62ebb785e8304"
+      },
+      "source_regular_files": 100,
+      "tests": {
+        "Run cargo test --locked --all-targets --all-features": {
+          "raw_log": "linux-aarch64/6_Run cargo test --locked --all-targets --all-features.txt",
+          "sha256": "b4dabd4c7e9f75bb5fd7d3ccf423e5e8f20f5d4893b9e4244c3bb1ebbdbf3d7c",
+          "test_instances": 3
+        },
+        "Run cargo test --release --locked --all-targets --all-features": {
+          "raw_log": "linux-aarch64/7_Run cargo test --release --locked --all-targets --all-features.txt",
+          "sha256": "ac5ccbf13b164ca83df8c19c0ff4a949e817761101e98a847b5cdbe7dc5d9520",
+          "test_instances": 3
+        },
+        "Test packaged release": {
+          "raw_log": "linux-aarch64/12_Test packaged release.txt",
+          "sha256": "06b606eac33cb030096b2558c0fee7d9b9ac29c2652d3fc4a6705c44664cafcc",
+          "test_instances": 3
+        }
+      }
+    },
+    "linux-x86_64": {
+      "all_license_texts_verified": true,
+      "artifact": {
+        "bytes": 3776653,
+        "sha256": "5100622a71520f578605bc23905d6e8373dea603e60698273243852089ac075c"
+      },
+      "artifact_id": 13085327583,
+      "binary": {
+        "bytes": 2982448,
+        "sha256": "926da17363eb37c469b075361c36930471c0a1425fc214ac881f3340cbbcac80"
+      },
+      "header": {
+        "executable_type": 3,
+        "format": "ELF64-little",
+        "header_hex": "7f454c4602010100000000000000000003003e00010000005040080000000000400000000000000070792d000000000000000000400038000c00400023002100",
+        "machine": 62
+      },
+      "host": "x86_64-unknown-linux-gnu",
+      "installed": {
+        "all_command_and_output_records": true,
+        "commands": 13,
+        "workflows": {
+          "counts": {
+            "bundle_unchanged": true,
+            "full_saved_result_reused": true,
+            "input_features": 13,
+            "output_features": 11,
+            "samples": 7,
+            "schema": 1,
+            "workers": 4
+          },
+          "expression": {
+            "bundle_unchanged": true,
+            "full_saved_result_reused": true,
+            "input_features": 6,
+            "output_features": 6,
+            "samples": 7,
+            "schema": 2,
+            "workers": 4
+          }
+        }
+      },
+      "job_id": 124860839644,
+      "native_archive": {
+        "bytes": 1172071,
+        "name": "rsomics-limma-0.1.0-linux-x86_64.tar.gz",
+        "sha256": "c1d2ee262b523c1d0bb4bda8838a326cf7e5472bc84bfcfa4c2d00217e95ede5"
+      },
+      "native_enabled_packages": 84,
+      "native_regular_files": 71,
+      "native_tar_members": 75,
+      "original_zip_files": 127,
+      "source_archive": {
+        "bytes": 107349,
+        "name": "rsomics-limma-0.1.0.crate",
+        "sha256": "338825937b564fceb17702dd22acb70eaf79a56e482890dac0c62ebb785e8304"
+      },
+      "source_regular_files": 100,
+      "tests": {
+        "Run cargo test --locked --all-targets --all-features": {
+          "raw_log": "linux-x86_64/6_Run cargo test --locked --all-targets --all-features.txt",
+          "sha256": "6dde48578867c635fad10be6ee3f4973c0af056db9be26101f072140d9df2d71",
+          "test_instances": 3
+        },
+        "Run cargo test --release --locked --all-targets --all-features": {
+          "raw_log": "linux-x86_64/7_Run cargo test --release --locked --all-targets --all-features.txt",
+          "sha256": "18366cb51735ed9c12e5c61fd481624842834de67ac937af9e9cc2d48facc3e4",
+          "test_instances": 3
+        },
+        "Test packaged release": {
+          "raw_log": "linux-x86_64/12_Test packaged release.txt",
+          "sha256": "54037565a88b78121c46a192e40a7e16d65caeb683d0c9defcf2c431642337c6",
+          "test_instances": 3
+        }
+      }
+    },
+    "macos-aarch64": {
+      "all_license_texts_verified": true,
+      "artifact": {
+        "bytes": 3471050,
+        "sha256": "6f70fc3a67e04ca2d2781c6cbf372355b412bdedea1105fe4d175d8e6375da31"
+      },
+      "artifact_id": 13085048975,
+      "binary": {
+        "bytes": 2470688,
+        "sha256": "6f0b60db027e15c662329b72c961bb0b45e6409d29cce5b9dbc01fb40665b84e"
+      },
+      "header": {
+        "cpu_subtype": 0,
+        "cpu_type": 16777228,
+        "executable_type": 2,
+        "format": "Mach-O64-little",
+        "header_hex": "cffaedfe0c000001000000000200000012000000700800008500a00000000000"
+      },
+      "host": "aarch64-apple-darwin",
+      "installed": {
+        "all_command_and_output_records": true,
+        "commands": 13,
+        "workflows": {
+          "counts": {
+            "bundle_unchanged": true,
+            "full_saved_result_reused": true,
+            "input_features": 13,
+            "output_features": 11,
+            "samples": 7,
+            "schema": 1,
+            "workers": 4
+          },
+          "expression": {
+            "bundle_unchanged": true,
+            "full_saved_result_reused": true,
+            "input_features": 6,
+            "output_features": 6,
+            "samples": 7,
+            "schema": 2,
+            "workers": 4
+          }
+        }
+      },
+      "job_id": 124860839534,
+      "native_archive": {
+        "bytes": 1064613,
+        "name": "rsomics-limma-0.1.0-macos-aarch64.tar.gz",
+        "sha256": "ef73a27ea60fba7f7941bd34a5226c6bafdcbe832ddaa47bd5519ab8eee7ec4d"
+      },
+      "native_enabled_packages": 84,
+      "native_regular_files": 71,
+      "native_tar_members": 75,
+      "original_zip_files": 127,
+      "source_archive": {
+        "bytes": 107349,
+        "name": "rsomics-limma-0.1.0.crate",
+        "sha256": "338825937b564fceb17702dd22acb70eaf79a56e482890dac0c62ebb785e8304"
+      },
+      "source_regular_files": 100,
+      "tests": {
+        "Run cargo test --locked --all-targets --all-features": {
+          "raw_log": "macos-aarch64/6_Run cargo test --locked --all-targets --all-features.txt",
+          "sha256": "6971f1d42bab291326e8698c3d94c614ddcb65fc264eeb7685b0f96f971f6a13",
+          "test_instances": 3
+        },
+        "Run cargo test --release --locked --all-targets --all-features": {
+          "raw_log": "macos-aarch64/7_Run cargo test --release --locked --all-targets --all-features.txt",
+          "sha256": "21ea59fb3b47af96c9d052ce8fb1e1d031d365eecc12028adc6fc380406fb242",
+          "test_instances": 3
+        },
+        "Test packaged release": {
+          "raw_log": "macos-aarch64/12_Test packaged release.txt",
+          "sha256": "e413c74f51f3071e107f432a8b5653d88e819f0b74f9dd68699a0c75e53cec45",
+          "test_instances": 3
+        }
+      }
+    },
+    "macos-x86_64": {
+      "all_license_texts_verified": true,
+      "artifact": {
+        "bytes": 3628880,
+        "sha256": "e3be21c653c62351fff299319616f624542bd581ed2abcdaeff53cf89cb44e7b"
+      },
+      "artifact_id": 13085288326,
+      "binary": {
+        "bytes": 2639304,
+        "sha256": "ece4681c8f0695a7321b5ee3547e7205ffd5181d8c06065a8a06b95d6b580002"
+      },
+      "header": {
+        "cpu_subtype": 3,
+        "cpu_type": 16777223,
+        "executable_type": 2,
+        "format": "Mach-O64-little",
+        "header_hex": "cffaedfe07000001030000000200000010000000080800008500a00000000000"
+      },
+      "host": "x86_64-apple-darwin",
+      "installed": {
+        "all_command_and_output_records": true,
+        "commands": 13,
+        "workflows": {
+          "counts": {
+            "bundle_unchanged": true,
+            "full_saved_result_reused": true,
+            "input_features": 13,
+            "output_features": 11,
+            "samples": 7,
+            "schema": 1,
+            "workers": 4
+          },
+          "expression": {
+            "bundle_unchanged": true,
+            "full_saved_result_reused": true,
+            "input_features": 6,
+            "output_features": 6,
+            "samples": 7,
+            "schema": 2,
+            "workers": 4
+          }
+        }
+      },
+      "job_id": 124860839648,
+      "native_archive": {
+        "bytes": 1123856,
+        "name": "rsomics-limma-0.1.0-macos-x86_64.tar.gz",
+        "sha256": "df9a5d6fa9a61df20f813620b1f417914692cebfc76f3e2104139afe1db6f630"
+      },
+      "native_enabled_packages": 84,
+      "native_regular_files": 71,
+      "native_tar_members": 75,
+      "original_zip_files": 127,
+      "source_archive": {
+        "bytes": 107349,
+        "name": "rsomics-limma-0.1.0.crate",
+        "sha256": "338825937b564fceb17702dd22acb70eaf79a56e482890dac0c62ebb785e8304"
+      },
+      "source_regular_files": 100,
+      "tests": {
+        "Run cargo test --locked --all-targets --all-features": {
+          "raw_log": "macos-x86_64/6_Run cargo test --locked --all-targets --all-features.txt",
+          "sha256": "34d5679ff02f071249a65af6cfa18723029a4d5a658122275141896656852b2d",
+          "test_instances": 3
+        },
+        "Run cargo test --release --locked --all-targets --all-features": {
+          "raw_log": "macos-x86_64/7_Run cargo test --release --locked --all-targets --all-features.txt",
+          "sha256": "68892eacacb908ef699a98cbf19aa87acffb148bff0ef16de3e71024dda1c0f5",
+          "test_instances": 3
+        },
+        "Test packaged release": {
+          "raw_log": "macos-x86_64/12_Test packaged release.txt",
+          "sha256": "b5c7ed40a13d0565517069f7e186b2f82dcaa58a3b866a99756480c2f33ebc3a",
+          "test_instances": 3
+        }
+      }
+    }
+  },
+  "tests_instances": 36,
+  "upstream_runtime_executed_locally": false,
+  "github_release_eligible": true,
+  "registry_publication": false,
+  "root_verification": {
+    "packet": "/Volumes/KIOXIA/Developments/tmp/limma-delivery-root-20261101.qP001g",
+    "recovery_packet": "/Volumes/KIOXIA/Developments/tmp/limma-native-delivery-recovery-20261101.3FhTuc",
+    "sealed_files": 1467,
+    "sealed_bytes": 63768834,
+    "exact_file_set_modes_and_all_hashes": true,
+    "data_only_fresh_validator": true,
+    "all_four_artifacts_sources_native_archives_logs_lifecycles_verified": true,
+    "root_fresh_check_exit": 0,
+    "root_fresh_check_stderr_bytes": 0,
+    "root_fresh_check_stdout_sha256": "10c7fd84168b258f7e80eb88a5f5eec4aa89b742cbf5afc6c2d9d66d2b9e6e0c",
+    "report_sha256": "22bc9ca434cd1eca31e82e1cc376d8dbe9ff7b6988a1db31b10be370d6b550b5",
+    "seal_sha256": "651a48f59fc30f03bbd711a36b28cc1d4a6dbae2776894fe3a9bec4350908254",
+    "proposal_sha256": "52922a9cb9e9755c45b650b2e5cde67a0223232a998b4c16dc24576adef64821",
+    "original_proposal_preserved": true,
+    "local_clean_package_byte_identical": true,
+    "linux_historical_measured_elf_byte_identical": true,
+    "actual_different_binary_not_inferred_from_source_identity": true,
+    "no_new_science_or_timing": true
+  }
+}

@@ -1,0 +1,108 @@
+{
+  "schema": "rsomics.limma.github-release.v1",
+  "status": "published-and-fresh-public-native-install-accepted",
+  "root_adopted": true,
+  "repository": "omics-rust/rsomics-limma",
+  "release": {
+    "assets": {
+      "SHA256SUMS": {
+        "bytes": 518,
+        "sha256": "2a3cd5010679cc61c42955403a2aee99f36641fa88aacdf7d289a6a07ecc84b9"
+      },
+      "rsomics-limma-0.1.0-linux-aarch64.tar.gz": {
+        "bytes": 1111166,
+        "sha256": "e2b7918b80b5ac8d29e63a008b2d29f5f210cd4ecf6a5d54acc1cd275be7b7ac"
+      },
+      "rsomics-limma-0.1.0-linux-x86_64.tar.gz": {
+        "bytes": 1172071,
+        "sha256": "c1d2ee262b523c1d0bb4bda8838a326cf7e5472bc84bfcfa4c2d00217e95ede5"
+      },
+      "rsomics-limma-0.1.0-macos-aarch64.tar.gz": {
+        "bytes": 1064613,
+        "sha256": "ef73a27ea60fba7f7941bd34a5226c6bafdcbe832ddaa47bd5519ab8eee7ec4d"
+      },
+      "rsomics-limma-0.1.0-macos-x86_64.tar.gz": {
+        "bytes": 1123856,
+        "sha256": "df9a5d6fa9a61df20f813620b1f417914692cebfc76f3e2104139afe1db6f630"
+      },
+      "rsomics-limma-0.1.0.crate": {
+        "bytes": 107349,
+        "sha256": "338825937b564fceb17702dd22acb70eaf79a56e482890dac0c62ebb785e8304"
+      }
+    },
+    "downloaded_release_smoke": true,
+    "head": "90d44575afcf8b0d50935c6c73b147ebced085d8",
+    "registry_publication": false,
+    "release_id": 430609879,
+    "signed_release": false,
+    "tag": "v0.1.0",
+    "url": "https://github.com/omics-rust/rsomics-limma/releases/tag/v0.1.0"
+  },
+  "fresh_public_install": {
+    "all_98_source_bodies_verified": true,
+    "assets": {
+      "SHA256SUMS": {
+        "bytes": 518,
+        "sha256": "2a3cd5010679cc61c42955403a2aee99f36641fa88aacdf7d289a6a07ecc84b9"
+      },
+      "rsomics-limma-0.1.0-macos-aarch64.tar.gz": {
+        "bytes": 1064613,
+        "sha256": "ef73a27ea60fba7f7941bd34a5226c6bafdcbe832ddaa47bd5519ab8eee7ec4d"
+      },
+      "rsomics-limma-0.1.0.crate": {
+        "bytes": 107349,
+        "sha256": "338825937b564fceb17702dd22acb70eaf79a56e482890dac0c62ebb785e8304"
+      }
+    },
+    "binary": {
+      "bytes": 2470688,
+      "sha256": "6f0b60db027e15c662329b72c961bb0b45e6409d29cce5b9dbc01fb40665b84e"
+    },
+    "foreign_or_upstream_execution": false,
+    "head_sha": "90d44575afcf8b0d50935c6c73b147ebced085d8",
+    "installed_calls": 13,
+    "native_archive_modes_and_notices_verified": true,
+    "new_performance_claim": false,
+    "registry_publication": false,
+    "release_id": 430609879,
+    "status": "fresh-published-macos-aarch64-install-accepted",
+    "url": "https://github.com/omics-rust/rsomics-limma/releases/tag/v0.1.0",
+    "workflows": {
+      "counts": {
+        "bundle_unchanged": true,
+        "full_saved_result_reused": true,
+        "input_features": 13,
+        "output_features": 11,
+        "samples": 7,
+        "schema": 1,
+        "workers": 4
+      },
+      "expression": {
+        "bundle_unchanged": true,
+        "full_saved_result_reused": true,
+        "input_features": 6,
+        "output_features": 6,
+        "samples": 7,
+        "schema": 2,
+        "workers": 4
+      }
+    }
+  },
+  "evidence_packet": "/Volumes/KIOXIA/Developments/tmp/limma-release-20261101.r0u3uF",
+  "owning_native_run": 41310896586,
+  "run_attempt": 1,
+  "head_sha": "90d44575afcf8b0d50935c6c73b147ebced085d8",
+  "native_delivery_receipt": ".autopilot/oracles/limma-native-delivery-2026-11-01.json",
+  "publication_kind": "GitHub native archives and clean Cargo source package; not crates.io",
+  "published_asset_api_digests_sizes_tag_head_and_notes_verified": true,
+  "registry_published": false,
+  "signed_release": false,
+  "notarization_claim": false,
+  "new_scientific_or_performance_campaign": false,
+  "evidence_hashes": {
+    "published": "9788955fee15d88b0220c6e9731ec82677cda546e8bd4c61662c025243545354",
+    "fresh_verification": "c0f1ce32b34db9e523328e7959aef9e28e539409b02e872a92b2d0fdfeaa55ce",
+    "checksums": "2a3cd5010679cc61c42955403a2aee99f36641fa88aacdf7d289a6a07ecc84b9",
+    "installed_lifecycle": "4eada7f1db8a79763d7141c00eaa952f4004a1289c4490371848ac5ebede4585"
+  }
+}

@@ -1,5 +1,13 @@
 # Native ordinary-expression lifecycle
 
+## Native GitHub delivery completed
+
+The accepted count/ordinary slice now has actual owning90d44575 four-native
+deliveryCI41310896586, complete original adoption and published GitHubv0.1.0.
+Fresh public MacARM installed13-call lifecycle passes both input routes.
+See limma-native-delivery-2026-11-01.md and its separate native/release receipts.
+Registry authorization remains held; statistical scope is not expanded.
+
 ## Owning source/package delivery accepted
 
 The populated public repository https://github.com/omics-rust/rsomics-limma

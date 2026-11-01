@@ -42,11 +42,15 @@ four-host logs and all four original archives accepted. Corrected supplied-E
 performance41199697947 passes the fixed process-RSS1/4 and throughput4 gates;
 strict serial throughput and worker scaling fail, with the slow sample and
 larger output retained. Old count timings do not qualify this path.
-The populated [owning source repository](https://github.com/omics-rust/rsomics-limma)
-at f8c8f42 passes exact native-four/package/unpacked CI41207239669. Source
-metadata/README/CI changes leave the qualified statistical code and lock
-unchanged. The real local/Linux source packages match; registry publication
-remains authorization-held with publish=false. See
+The populated [owning repository](https://github.com/omics-rust/rsomics-limma)
+now publishes [GitHubv0.1.0](https://github.com/omics-rust/rsomics-limma/releases/tag/v0.1.0)
+at90d44575 after exact owning four-native/package/install CI41310896586 and
+complete original-artifact adoption. Four native TARs, a byte-identical clean
+source crate and checksums are delivered. Fresh public MacARM13-call installed
+count/ordinary workflows pass. Statistical source and lock stay unchanged;
+the delivered Linux ELF exactly matches the historical measured ordinary ELF,
+not a new timing. Registry remains authorization-held with publish=false. See
+`.autopilot/state/limma-native-delivery-2026-11-01.md` and
 `../plans/2026-10-31-limma-native-logexpression.md` and
 `.autopilot/state/limma-native-logexpression-2026-10-31.md`.
 
