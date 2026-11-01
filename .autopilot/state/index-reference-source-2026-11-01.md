@@ -1,5 +1,14 @@
 # Index reference-resource source workflow
 
+## Actual complete-reference RAZF retry dispatched
+
+Exact-head Control41266468976 succeeds at
+61254983acd344ec99d30d8984bc6c3e823e2423. Root verifies live remote main
+and dispatches actual41266649396/1 on that head. Only untimed reference
+preparation changes; complete observed RAZF/plain bodies,84-contig FAI,
+unchanged common BGZF and the full168-call graph remain mandatory.
+Runtime, scientific equality and performance outcomes are not preaccepted.
+
 ## Second failure originals accepted; private RAZF preparation corrected
 
 Actual41262994994/1 at b8db86cfd3807443138e10fecd15f33877e1fe1b fails
