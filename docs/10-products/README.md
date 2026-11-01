@@ -35,7 +35,7 @@ operation will ship. It records:
 | `rsomics-limma` | 16 | [count and ordinary workflows/native4/performance accepted; registry held](bulk-expression.md#rsomics-limma) |
 | `rsomics-metagenomics` | 5 | [released 0.1.0](metagenomics-gate-2026-08-02.md) |
 | `rsomics-methyl` | 1 | [released 0.1.0](methyl.md) |
-| `rsomics-minimap2` | 1 | [audited](minimap2.md); legacy release requires reconstruction |
+| `rsomics-minimap2` | 1 | [legacy wrapper; exact engine/lifetime and material product-value gates held](minimap2.md) |
 | `rsomics-peak` | 5 | [private native4/source/full-workflow performance accepted; public default held](peak.md) |
 | `rsomics-phylo` | 11 | [released 0.1.0](phylo.md#first-release-evidence) |
 | `rsomics-plink` | 42 | [private native4/source/offline relink accepted; whole-HGDP performance running](genotype-popgen.md#rsomics-plink) |

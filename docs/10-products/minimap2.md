@@ -1,8 +1,11 @@
 # Minimap2 product dossier
 
-Status: source and upstream-operation audit complete. Published version 0.1.0
-is a legacy proof of FFI linkage, not the implementation baseline for a new
-release.
+Status: the product boundary remains valid, but a new wrapper implementation
+and release are held pending exact engine/binding provenance, lifetime safety
+and demonstrated product value. The2026-11-01 source review corrects the old
+MMI and output-error claims below. Published0.1.0 is a legacy FFI proof, not
+the implementation baseline. No namespace retirement or scope reduction is
+authorized by this hold.
 
 ## Boundary
 
@@ -16,8 +19,9 @@ The primary behavior sources are:
 - [minimap2 2.31](https://github.com/lh3/minimap2/releases/tag/v2.31), its
   [user guide](https://github.com/lh3/minimap2#users-guide), and man page;
 - the [minimap2 method](https://doi.org/10.1093/bioinformatics/bty191);
-- [minimap2-rs 0.1.31](https://docs.rs/minimap2/0.1.31+minimap2.2.30/minimap2/)
-  and its statically linked minimap2 2.30 engine;
+- [minimap2-rs 0.1.31](https://docs.rs/minimap2/0.1.31+minimap2.2.30/minimap2/),
+  whose published package label names2.30; its exact vendored C revision is
+  not independently established by that label;
 - FASTA, FASTQ, MMI, PAF, SAM, BAM, CRAM, BED12, and relevant tag
   specifications.
 
@@ -81,8 +85,9 @@ A same-engine wrapper is not performance-exempt. Before another release,
 `rsomics-minimap2` must demonstrate at least one material benefit while keeping
 mapping results compatible:
 
-- a reproducible static Cargo installation across all four native target
-  classes;
+- a reproducible four-native installation with a material deployment benefit
+  against the existing upstream installation route, not Cargo install alone
+  or an unsupported claim that every platform binary is fully static;
 - direct transactional BAM output through `rsomics-bamio` that improves the
   composed `minimap2 | samtools view` workflow;
 - or a bounded streaming Rust API used by a concrete rsomics product without
@@ -93,6 +98,19 @@ none of these benefits survives compatibility, throughput, memory, and
 maintenance review, the correct decision is to keep upstream minimap2 as an
 external dependency and retire the rsomics product after a separate public
 boundary decision.
+
+The2026-11-01 read-only route review finds no landed downstream product
+consumer or measured composed-workflow benefit. Preserve the full intended
+release scope below, but do not begin its broad implementation merely to fill
+the allowlist. A later single-part/single-preset experiment can test value;
+it is not a narrowed substitute for completing this product.
+
+The correct direct-BAM baseline is the already-streaming
+`minimap2 -ax ... REF.mmi READS | samtools view -b -o OUT.bam -`, not a route
+that writes and rereads a disk SAM. The pinned binding's
+[HTS adapter](https://raw.githubusercontent.com/jguhlin/minimap2-rs/c3bae473f0d93218bdf224a985b33c8c9ea08a60/src/htslib.rs)
+itself formats SAM and parses it into a record. Merely attaching a BAM writer
+does not remove this text roundtrip or prove a resource advantage.
 
 ## Execution model
 
@@ -166,6 +184,18 @@ The published crate resolves `minimap2`
 `0.1.31+minimap2.2.30`, while the current upstream release is minimap2 2.31.
 A loose `minimap2 = "0.1"` dependency is insufficient release provenance.
 
+The generated sys MM_VERSION reports2.29-r1283, while package metadata says
+2.30. A stale generated constant is possible; neither establishes actual
+vendored C source. Pin the exact crate bodies, C file map and Git revision
+before interpreting runtime compatibility or performance.
+
+There is also a source-level reader-lifetime concern: the
+[binding revision](https://raw.githubusercontent.com/jguhlin/minimap2-rs/c3bae473f0d93218bdf224a985b33c8c9ea08a60/src/lib.rs)
+closes its reader and later copies through that pointer; the official
+[C close implementation](https://raw.githubusercontent.com/lh3/minimap2/v2.31/index.c)
+frees it. This requires exact-package verification and correction before
+reuse, not a claim of a reproduced crash or qualified installed binary.
+
 ## Existing implementation gaps
 
 The current 195-line wrapper is much narrower than its name and metadata imply.
@@ -175,11 +205,16 @@ The current 195-line wrapper is much narrower than its name and metadata imply.
 - Query input is read wholly as UTF-8 and split with a handwritten FASTA-only
   parser. FASTQ, gzip, stdin, pairs, qualities, comments, malformed records,
   and bounded memory are absent.
-- Every run rebuilds an index from FASTA. MMI input and index output are absent.
+- The REF path reaches the binding's MMI-capable reader, so implicit prebuilt
+  MMI input exists by source inspection. There is no explicit CLI contract,
+  index-writing operation or actual MMI/parameter-compatibility qualification.
+  Preloading every part is not proof of upstream split-index semantics.
 - Threads from the inherited common flags are unused.
 - Only the first 12 PAF fields are emitted. Optional minimap2 tags, base-level
   PAF, SAM, paired flags, read groups, and direct BAM are absent.
-- Formatting errors are discarded through `.ok()`.
+- Input and output are both wholly materialized. The String-only formatting
+  `.ok()` is not evidence of swallowed file I/O; a future streaming writer
+  must propagate write/flush/finish failures.
 - Reference path conversion can become an empty string on non-UTF-8 paths.
 - Query names, lengths, wrapping, and sequence symbols are not validated
   against upstream parsing.
