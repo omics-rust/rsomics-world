@@ -1,5 +1,31 @@
 # Native peak first-four construction
 
+## Actual green-3 four-native/source originals accepted
+
+Run41253851251/1 at72fb3bc2554e88ac4ce5925ba30896afc82f3d10 succeeds on
+all four native classes and the same-file upstream consumer. Root reads the
+complete adoption report and new explicit receipt, then freshly verifies all
+1201 sealed bodies in peak-green3-adoption-20261101._dfutff3. Full five original
+ZIP/TAR carriers, five raw logs, actual APIs, every manifest/CRC/body and13
+exact-runhead controllers verify; all34 source bodies bind clean owner63caec8.
+
+Each native target passes real Rust1.91 debug/release7+3+1, zero ignored;
+10 connected commands at1/4 agree on11 scientific files/five report states.
+Actual five source calls independently compare2265 legacy sparse and2667
+annotation/count rows, nine core/nine masks. Native272/restored21382 protected
+files,29 image trees/system ELF identities remain unchanged; private feature-hit
+IDs are still not independently oracle-qualified.
+
+New receipt peak-native-2026-11-01-green-3.json SHA
+66eeecee4cf451f5f061abb0a61c59299476afb7eb99582d494f109246a78eec binds
+actual Linux release ELF1a711992de74e735538080404b9408d8650d54625730039d70f6232bfd67353b,
+artifact13062012791/44831388B ZIPe1319af72c6bc3fba4d177df4e2a05c0908e2f7f50e7f9b268d6eae7193db341.
+REPORT7792649588636e46498fd44953de2394994605af001512eac30570c0dc81404c;
+completed843f90e3bd2be9c7da09f24aef4a1a94bba96bac5aee01f9a28a2e9062f74bf1.
+Both older receipts/snapshots remain unchanged. No real-input performance,
+public metadata or release acceptance is implied; the unchanged full real
+gate is the next earned check, not another old-ELF rerun.
+
 ## Actual green-3 gate dispatched
 
 Exact-head Control plane41253738854 succeeds at
