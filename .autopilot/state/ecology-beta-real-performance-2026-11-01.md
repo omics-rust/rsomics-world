@@ -1,5 +1,39 @@
 # Ecology complete-original beta performance
 
+## Original attempt terminal; one unchanged capacity-only retry admitted
+
+Original41288208209/1 finishes FAILURE solely from the previously preserved
+normalized init failure. Weighted UniFrac124793770126 succeeds; its complete
+artifact13080998436 is1772282930B, SHA
+7162c7d6c1276e204e67695e722395430de18d3c4e1965cfb774cbe0a956aca0.
+This is the seventh job's success, not yet root performance/original adoption.
+One complete attempt1-only recovery is active at
+ecology-beta-weighted-recovery-20261101.uYfrpi. The six accepted metrics and
+their sealed packets are not rerun or edited.
+
+After terminal state, root freshly admits all396GiB remote envelopes with
+ZERO own-allocation credit: actual600852553728B free vs425201762304B required,
+UID1006/dev2096/0700 roots, ext4/dev/sdd[/home/liangjy]. Initial read-only
+findmnt string assumption rejected the legitimate bind suffix; raw observation
+and corrected base-device interpretation remain in the retry packet, not a
+changed filesystem or weakened capacity. No bulk or CI action preceded this.
+
+Root requests exactly old failed-init job124793769919 once; request exits0.
+Actual attempt2 is IN_PROGRESS at unchanged7d68a900, new target124844218701,
+and reaches its scientific step12:11:31Z after capacity admission. No input,
+threshold, source, wall/resource budget or successful metric is selected anew.
+GitHub's attempt2 listing gives all seven carried successes NEW alias IDs and
+run_attempt2, but their original starts/completions/scientific-step timestamps
+are identical to attempt1. These are carried records, not seven new scientific
+runs. Preserve both API namespaces and bind old artifacts/context toattempt1.
+The new normalized target is not accepted by dispatch or initial progress.
+
+Full terminal APIs/physical admission/request/status remain at
+ecology-beta-terminal-capacity-retry-20261101.6v5UcQ. Earlier still-running
+rerun rejection YKEBxZ remains unchanged; no extra retry is authorized here.
+Future normalized artifacts require exact actualattempt2 originals and the
+unchanged same-metric contract. Other unblocked products continue meanwhile.
+
 ## Six complete metrics accepted; two remain outside acceptance
 
 Root adopts braycurtis, jaccard, canberra, cityblock, euclidean and
