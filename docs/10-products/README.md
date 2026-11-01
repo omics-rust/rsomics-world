@@ -25,25 +25,25 @@ operation will ship. It records:
 | `rsomics-cnv` | 2 | [released 0.1.0](variant.md#rsomics-cnv) |
 | `rsomics-composition` | 10 | [released 0.1.0](composition.md) |
 | `rsomics-count` | 4 | [released 0.1.0](count-gate-2026-08-02.md) |
-| `rsomics-deseq` | 12 | [qualified Wald/VST and owning package/native CI; registry held](bulk-expression.md#rsomics-deseq) |
-| `rsomics-ecology` | 19 | [private alpha/rarefaction native4 accepted; complete-study gate preparing, beta held](ecology.md) |
+| `rsomics-deseq` | 12 | [GitHub 0.1.0 released and public install verified; registry held](bulk-expression.md#rsomics-deseq) |
+| `rsomics-ecology` | 19 | [native4/alpha and seven beta metrics accepted; eighth originals under review](ecology.md) |
 | `rsomics-edger` | 17 | [private modern QL workflow; numerical contract held](bulk-expression.md#rsomics-edger) |
 | `rsomics-fastq-preprocess` | 12 | [released 0.1.1](fastq-preprocess-gate-2026-07-30.md) |
 | `rsomics-fastq-qc` | 1 | [released 0.1.0](fastq-qc-gate-2026-08-02.md) |
-| `rsomics-index` | 5 | [reference workflow/source/native4 accepted; complete-reference performance running](interval-annotation-index.md#rsomics-index) |
+| `rsomics-index` | 5 | [hot-path native4 accepted; corrected BGZF/tabix campaign running, performance unearned](interval-annotation-index.md#rsomics-index) |
 | `rsomics-liftover` | 1 | [released 0.1.0](liftover.md) |
-| `rsomics-limma` | 16 | [count and ordinary workflows/native4/performance accepted; registry held](bulk-expression.md#rsomics-limma) |
+| `rsomics-limma` | 16 | [GitHub 0.1.0 released and public install verified; registry held](bulk-expression.md#rsomics-limma) |
 | `rsomics-metagenomics` | 5 | [released 0.1.0](metagenomics-gate-2026-08-02.md) |
 | `rsomics-methyl` | 1 | [released 0.1.0](methyl.md) |
 | `rsomics-minimap2` | 1 | [legacy wrapper; exact engine/lifetime and material product-value gates held](minimap2.md) |
 | `rsomics-peak` | 5 | [private native4/source/full-workflow performance accepted; public default held](peak.md) |
 | `rsomics-phylo` | 11 | [released 0.1.0](phylo.md#first-release-evidence) |
-| `rsomics-plink` | 42 | [private native4/source/offline relink accepted; whole-HGDP performance running](genotype-popgen.md#rsomics-plink) |
-| `rsomics-popgen` | 14 | [private neutral workflow/full-chr22 Mac parity/native4 accepted; same-machine performance pending](genotype-popgen.md#rsomics-popgen) |
-| `rsomics-rnaseq-qc` | 21 | [qualified first slice; registry adoption held](rnaseq-qc-signal.md#rsomics-rnaseq-qc) |
+| `rsomics-plink` | 42 | [prepared-PGEN/LD source reviewed; green7 control-profile correction, native/source and performance pending](genotype-popgen.md#rsomics-plink) |
+| `rsomics-popgen` | 14 | [GitHub 0.1.0 released and public install verified; registry held](genotype-popgen.md#rsomics-popgen) |
+| `rsomics-rnaseq-qc` | 21 | [GitHub 0.1.0 released and public install verified; registry held](rnaseq-qc-signal.md#rsomics-rnaseq-qc) |
 | `rsomics-sc` | 29 | [private inferCNV candidate; discovery contract held](sc.md) |
 | `rsomics-seq` | 34 | [released 0.2.0](sequence-fastq.md#rsomics-seq) |
-| `rsomics-signal` | 15 | [six-operation source/native4 accepted; approved defect repairs, shared-host performance running](rnaseq-qc-signal.md#rsomics-signal) |
+| `rsomics-signal` | 15 | [six-operation source/native4 accepted; defect repairs approved, row-order/performance held](rnaseq-qc-signal.md#rsomics-signal) |
 | `rsomics-sketch` | 1 | [released 0.1.0](sketch-gate-2026-08-02.md) |
 | `rsomics-structure` | 9 | [reviewed private analysis/native4; public torsion contract held](structure.md) |
 | `rsomics-table` | 16 | [release candidate; registry credential blocked](table.md) |
