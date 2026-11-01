@@ -1,5 +1,26 @@
 # Ecology diversity source qualification
 
+## Alpha/beta/rarefaction native-four accepted from complete originals
+
+Root recovers full actual41280935272/1/head52cdb014 APIs/four ZIPs/TARs/full
+logs and all eight exact controllers, then independently validates every body,
+mode, source Git tree/compiler/test/binary binding using the fully read reused
+validator. Fresh complete seal checks908 files/27436748B at
+ecology-beta-native-adoption-20261101.T9bVOr; SEALc27871b8b4f9776496349cde8531e2053c7c448fb13e3de0dac6b9aea3d9083c;
+COMPLETEDe90178ac7cd82ca236d3904f5d8352b7bd86c057b3b8d93c1611396968970dd5.
+New ecology-native-beta-2026-11-01.json accepts exact owner111adf5e/120source/
+86fixtures and all four native classes, six integrations in debug/release,
+48 total test instances/zeroignored. Original modes and53 lock identities agree.
+
+This is compact native correctness against adopted source captures, not a
+fresh source runtime on every native host or complete-study beta evidence.
+Temporary Rust-test CLI outputs are not retained; source/fixtures/raw logs
+and each actual release executable are. Old green1/source/whole-alpha
+authorities remain immutable. The separately frozen contiguous-public eight-job
+benchmark requires fresh actual ELF/provider/runtime/input admission and total
+local recovery capacity; no alpha timing or full-product/publication acceptance
+transfers. Preparation can proceed without a guessed native receipt.
+
 ## Exact alpha/beta four-native gate dispatched
 
 Exact-head Control41280670167 succeeds at
