@@ -2,15 +2,17 @@
 
 Status: source and upstream-operation audit complete. The hosted0.7.3 diversity
 workflow and original real community table/tree are qualified. One private
-unpublished ecology repository has reviewed, source-matching sparse alpha and
-seeded rarefaction at maine1b03cb. Empty/all-zero depth-zero rarefaction now
+unpublished ecology repository has reviewed, source-matching sparse alpha,
+seeded rarefaction and eight beta modes at main111adf5. Empty/all-zero depth-zero rarefaction now
 returns same-dimensional zeros as the user selected, a documented upstream bug
 fix. Beta will use the dossier's finite reusable-matrix contract: genuinely
 undefined pairs fail with the metric/sample identities and protect the output;
 valid zero distances remain valid. This is root's explicit delegated engineering
 ruling and a stricter source domain, not a previously answered user choice.
-The beta implementation is in progress; nullable reports are not added.
-Actual41268190701 now passes all4 native classes on the unchanged owner;
+The beta implementation passes the integrated compact source/worker workflow;
+nullable reports are not added. Full-study beta and the new candidate's four
+native classes are pending. Actual41268190701 passes all4 native classes on
+the earlier e1b03cb6 alpha/rarefaction owner;
 complete original source/log/artifact/release-binary identities are accepted.
 See `.autopilot/state/ecology-initial-diversity-2026-10-28.md` and
 `../plans/2026-11-01-ecology-native-real.md`. Complete-study reference and

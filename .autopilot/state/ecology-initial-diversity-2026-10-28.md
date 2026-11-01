@@ -1,5 +1,29 @@
 # Ecology diversity source qualification
 
+## Corrected beta source accepted locally; new native candidate preparation active
+
+Root reads the complete corrected REPORT0ffa57cc8f2fb6c65e849eb2b1b56d07f8a479c637c131b557875fa5c885a703
+at ecology-beta-correction1.Otp2mX and all final production changes. Freshly
+verifies91 source paths and78 original captured bodies against manifest
+7359e70d170b88ef44a045991a28bf01481898a9b24c8af3d69e88180f273ad3,
+then runs the FULL guarded release suite: alpha2/beta2/rarefaction2 pass in
+.70/1.98/.20s with0ignored; root logs are at
+ecology-beta-root-acceptance-20261101.duSSih. The one reviewP2 is resolved
+by source-order sparse correction and exact masked internal/infinite-tip
+classification, without epsilon/tolerance/domain changes or another review.
+Original captures retain32 NaNs; no new upstream execution is claimed for
+the two source/IEEE-derived native regression cases.
+
+Root commits clean private owner main111adf5e8a3657a99c50a9832ca5ed9c53fd98d7,
+treed1963110fbee9b1c18b999a3a6e09d94dd37f977,120 tracked files. No remote,
+public library/dependency/foundation/publication change. Eight beta modes
+now function within this private slice; full-study beta/performance and new
+four-native acceptance remain pending, not inherited from e1b03cb6 alpha.
+One bounded operational author prepares additive green2 policy/snapshot and
+selector plumbing, preserving all green1 authorities/old whole-alpha gate.
+Only that native controller/test/workflow/newasset/newsnapshot scope is
+delegated; root owns state/Git/dispatch/adoption. No extra review ladder.
+
 ## One whole beta review; one localized correction wave
 
 Root reads the entire production/test/comparator/doc wave and fresh reviewer
