@@ -1,5 +1,9 @@
 # Ecology native/source delivery
 
+Current: GitHubv0.1.0 is public and its fresh public Mac14-call lifecycle
+passes. Post-release README exactCI41344601496 passes. Registry remains held;
+the sections below preserve the chronological decisions and earlier gates.
+
 Root adopts docs/plans/2026-11-02-ecology-native-delivery.md after reading the
 complete502-line dossier, actual CLI/README, eight-metric acceptance and the
 frozen C7KBLz proposal. The clean baseline is111adf5e8a3657a99c50a9832ca5ed9c53fd98d7,
@@ -129,3 +133,26 @@ their bytes; two bounded reader-classification corrections are preserved.
 Root adoption is ecology-native-delivery-2026-11-02.json. GitHub release and
 fresh public Mac download remain next; registry stays held. No new executable
 inherits old alpha/beta timing and no unchanged science benchmark is replayed.
+
+## Public release and fresh installation accepted
+
+Root publishes release430815514/v0.1.0 at60dd0bfd on2026-11-01T19:54:35Z:
+four native TARs, the clean source.crate and SHA256SUMS. All six draft/public
+API sizes/digests and notes match the accepted originals; no asset is replaced.
+The release and lightweight tag stay bound to60dd0bfd, not the later README.
+
+Fresh unauthenticated public Mac/source/checksum downloads all return200 and
+match the original uploaded bytes. The public Mac8a3f88ce executable performs
+the real14-call rarefy->11alpha->8beta installed lifecycle:13 successes and
+one intended failure, exact seed42 count results, retained-source values,
+labelled TSV/JSON and prior-output protection. No build, upstream scientific
+execution or new benchmark is involved. Proofpq8ucC/smoke.stdout has SHA
+ea76365f678a837d8577a322883eeec1801ff0f2189e8e227be4aa0f23bf9738;
+the lifecycle receipt has SHA8fb4f24e18b4b6ebc595db4634c18dc1ed446a8e30bf934f3df3961e6d07b9a0.
+
+Root adopts ecology-public-delivery-2026-11-02.json. The README-only owning
+commit7f27eb01133f577df48af8ea988ff0914aa515f0 passes exactCI41344601496.
+The fresh unauthenticated registry read is404/64B; no registry authentication,
+token read, publication retry or publish workflow is attempted. Old measured
+alpha/beta executables, charged UniFrac source policy and compact native
+source-on-native=false retain their separate original scope.

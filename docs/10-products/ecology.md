@@ -27,9 +27,15 @@ qualification remains false; full-study source comparisons are accepted
 separately. Public native/source delivery at60dd0bfd now passes exact
 four-platformCI41341218191 and complete original adoption:223 Git bodies,
 four identical clean source packages and56 installed workflow calls. The
-public repository is https://github.com/omics-rust/rsomics-ecology; release
-publication/fresh public download and registry publication remain separate
-gates. See ecology-native-delivery-2026-11-02.json for actual source/binary pins.
+public [v0.1.0 release](https://github.com/omics-rust/rsomics-ecology/releases/tag/v0.1.0)
+is published at that immutable delivery commit. Fresh unauthenticated Mac
+downloads match the uploaded archives; the actual14-call rarefy/11-alpha/
+8-beta lifecycle passes, including seeded counts, labelled exports and atomic
+failure. Post-release README7f27eb01 passes exactCI41344601496 without replacing
+the release/tag/assets. See ecology-public-delivery-2026-11-02.json and
+ecology-native-delivery-2026-11-02.json for the actual proofs/source/binary pins.
+Registry publication remains separately held; no new performance is measured
+or attributed to these release binaries.
 Actual41268190701 remains historical for the earlier e1b03cb6 alpha/rarefaction
 owner; its original authority is not rebound to the beta candidate.
 See `.autopilot/state/ecology-initial-diversity-2026-10-28.md` and

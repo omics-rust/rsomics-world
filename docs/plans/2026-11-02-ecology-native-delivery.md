@@ -66,10 +66,10 @@ archive bodies, existing compact captured primary table/tree/observations.
 **Produces:** source .crate, installed native TAR per target, BUILD/checksums,
 original dependency terms and raw install/lifecycle receipts.
 
-- [ ] Freeze exact protected-body/mode manifest first; retain baseline and plan.
+- [x] Freeze exact protected-body/mode manifest first; retain baseline and plan.
   A focused missing-delivery check fails before helper/CI exists, then the same
   connected check passes after implementation. No artificial Rust helper tests.
-- [ ] Derive actual locked normal/build graphs for x86_64/aarch64 Linux/macOS;
+- [x] Derive actual locked normal/build graphs for x86_64/aarch64 Linux/macOS;
   compare provisional static inventory (46 each,47 union) with cargo tree.
   Read-only inventory is /Volumes/KIOXIA/Developments/tmp/ecology-notice-plan-20261102.dV0Ojw/inventory.json,
   SHA262326a81968cb782390c101a5fc737eb2e6f67a4df679c60ef17368e0da49af.
@@ -77,12 +77,12 @@ original dependency terms and raw install/lifecycle receipts.
   unicode-ident LICENSE-UNICODE; document line endings and any SPDX-only gaps.
   Keep existing lowercase licenses/ canonical and add registry terms there;
   macOS resolves LICENSES/ to the same inode, so no case-colliding second tree.
-- [ ] Use one stdlib helper with source/smoke/bundle actions. Source verifies
+- [x] Use one stdlib helper with source/smoke/bundle actions. Source verifies
   complete Git body/mode membership, Cargo.toml.orig, normalized metadata and
   clean VCS head. Bundle includes one0755 native executable, all README/licenses/
   notices/BUILD at0644 and directories0755; metadata binds actual native host,
   Rust1.91, lock/source/head/run/attempt, without signing/OS-floor claims.
-- [ ] Installed lifecycle: --version/--help exact three-subcommand scope;
+- [x] Installed lifecycle: --version/--help exact three-subcommand scope;
   primary12x6 depth8/seed42 rarefy checked byte-exact with retained expected TSV;
   reload into11-metric alpha and all8 beta at four workers using retained
   original source observations and unchanged1e-10 absolute/relative bands;
@@ -91,14 +91,14 @@ original dependency terms and raw install/lifecycle receipts.
   metric/sample IDs. Record each argv/status/stdout/stderr/output and binarySHA.
   No extra one/four scientific campaign: existing six integrations already own
   worker equivalence and compact boundary coverage.
-- [ ] Native CI hosts: ubuntu-24.04 x86_64, ubuntu-24.04-arm aarch64,
+- [x] Native CI hosts: ubuntu-24.04 x86_64, ubuntu-24.04-arm aarch64,
   macos-15-intel x86_64, macos-15 aarch64. Prepare RUNNER_TEMP paths step-locally
   before toolchain setup; contents:read, fail-fast:false, pinned Rust1.91.
   Verify actual compiler host/resolved target; fmt/strictClippy/rustdoc plus full
   debug/release six integrations, zero ignored. Package clean source, test that
   package release, cargo install --path --locked, run installed lifecycle and
   assemble native. Upload all candidates/raw diagnostics always,90days.
-- [ ] README/MERGE accurately distinguish earned all8 science/native evidence,
+- [x] README/MERGE accurately distinguish earned all8 science/native evidence,
   current candidate delivery, exact upstream profiles, pending broader ecology
   features and registry hold. No premature release/install-from-registry claim.
   Run guarded local formatting/Clippy/fullrelease/actual install+lifecycle once,
@@ -106,6 +106,11 @@ original dependency terms and raw install/lifecycle receipts.
   logs/source and protected manifest in external packet for one whole review.
 
 ## Root adoption
+
+Completed: root-adopted native receipt ecology-native-delivery-2026-11-02.json
+and public receipt ecology-public-delivery-2026-11-02.json bind the actual
+four-native run41341218191, immutable60dd0bfd release, fresh public14-call
+lifecycle and README-only7f27eb01 exactCI41344601496. Registry remains held.
 
 Root reads the complete candidate and one independent integrated review;
 addresses material findings together; commits only this concern to owning main.

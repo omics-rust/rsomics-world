@@ -1,0 +1,163 @@
+{
+  "schema": "rsomics.ecology.github-release-adoption.v1",
+  "product": "rsomics-ecology",
+  "root_adopted": true,
+  "repository": "omics-rust/rsomics-ecology",
+  "release": {
+    "id": 430815514,
+    "tag_name": "v0.1.0",
+    "target_commitish": "60dd0bfd34c51518768bc52e2d6e1089b7378f9d",
+    "published_at": "2026-11-01T19:54:35Z",
+    "html_url": "https://github.com/omics-rust/rsomics-ecology/releases/tag/v0.1.0",
+    "draft": false,
+    "prerelease": false,
+    "assets": [
+      {
+        "id": 699343908,
+        "name": "rsomics-ecology-0.1.0-linux-aarch64.tar.gz",
+        "size": 768562,
+        "digest": "sha256:bc705126f493e39a3e4be778455d9aa61448455a5dac269f7731c258c7134995",
+        "browser_download_url": "https://github.com/omics-rust/rsomics-ecology/releases/download/v0.1.0/rsomics-ecology-0.1.0-linux-aarch64.tar.gz"
+      },
+      {
+        "id": 699343910,
+        "name": "rsomics-ecology-0.1.0-linux-x86_64.tar.gz",
+        "size": 794062,
+        "digest": "sha256:cf352702dbedeb0f43bd3ea4aed3fd2b71a94222cb6672f7e97fa94eadb86891",
+        "browser_download_url": "https://github.com/omics-rust/rsomics-ecology/releases/download/v0.1.0/rsomics-ecology-0.1.0-linux-x86_64.tar.gz"
+      },
+      {
+        "id": 699343912,
+        "name": "rsomics-ecology-0.1.0-macos-aarch64.tar.gz",
+        "size": 732408,
+        "digest": "sha256:349259b5d045b5a5c0cbcf57af2c1db5c55a904527cfc6d1867a3baf4c2e922d",
+        "browser_download_url": "https://github.com/omics-rust/rsomics-ecology/releases/download/v0.1.0/rsomics-ecology-0.1.0-macos-aarch64.tar.gz"
+      },
+      {
+        "id": 699343909,
+        "name": "rsomics-ecology-0.1.0-macos-x86_64.tar.gz",
+        "size": 755607,
+        "digest": "sha256:d7a8f2e0d1771393b1137970accb07479de313b8e82a9503ced344bc2938095a",
+        "browser_download_url": "https://github.com/omics-rust/rsomics-ecology/releases/download/v0.1.0/rsomics-ecology-0.1.0-macos-x86_64.tar.gz"
+      },
+      {
+        "id": 699343913,
+        "name": "rsomics-ecology-0.1.0.crate",
+        "size": 107090,
+        "digest": "sha256:df8944440f9978a00095a79f776e4b1447890e881a1721d1be4e4dd8acb97ec5",
+        "browser_download_url": "https://github.com/omics-rust/rsomics-ecology/releases/download/v0.1.0/rsomics-ecology-0.1.0.crate"
+      },
+      {
+        "id": 699343948,
+        "name": "SHA256SUMS",
+        "size": 528,
+        "digest": "sha256:315106fe48852774651a9821ca8e066186ef592ea3a46c5f019197c7aed804c9",
+        "browser_download_url": "https://github.com/omics-rust/rsomics-ecology/releases/download/v0.1.0/SHA256SUMS"
+      }
+    ]
+  },
+  "registry_published": false,
+  "native_delivery_receipt": ".autopilot/oracles/ecology-native-delivery-2026-11-02.json",
+  "native_delivery_ci": 41341218191,
+  "run_attempt": 1,
+  "tag_commit": "60dd0bfd34c51518768bc52e2d6e1089b7378f9d",
+  "tag_object_type": "commit",
+  "evidence_directory": "/Volumes/KIOXIA/Developments/tmp/ecology-public-release-20261102.pq8ucC",
+  "api_proofs": {
+    "public_release_sha256": "204f20ba56d529b5a65fe40364f31d792957133833ed4c08df31148d31e21f26",
+    "public_tag_sha256": "054a345fd7052ab50ef6c05a85e6b0604676339e59dd001b780c1aef5d142a8b",
+    "draft_sha256": "2899b72f2a1d6286036a533d64110799647170c5576fe527d89935dd55afb0ae",
+    "release_notes_sha256": "c3acf300e65e535e8bf217b9f845983377fd7aac4913a07dcb538681e77a815b"
+  },
+  "publication_checks": {
+    "prior_release_and_tag_absent": true,
+    "draft_asset_count": 6,
+    "all_api_digests_and_sizes_match_local_originals": true,
+    "public_release_notes_exact": true,
+    "no_asset_replacement": true
+  },
+  "public_download": {
+    "authenticated": false,
+    "host": "Darwin arm64",
+    "os_version": "27.2",
+    "http_status_each": 200,
+    "assets": [
+      "rsomics-ecology-0.1.0-macos-aarch64.tar.gz",
+      "rsomics-ecology-0.1.0.crate",
+      "SHA256SUMS"
+    ],
+    "byte_equal_to_original_uploaded_assets": true,
+    "source_vcs_commit": "60dd0bfd34c51518768bc52e2d6e1089b7378f9d",
+    "archive_sha256": "349259b5d045b5a5c0cbcf57af2c1db5c55a904527cfc6d1867a3baf4c2e922d",
+    "source_crate_sha256": "df8944440f9978a00095a79f776e4b1447890e881a1721d1be4e4dd8acb97ec5",
+    "checksums_sha256": "315106fe48852774651a9821ca8e066186ef592ea3a46c5f019197c7aed804c9"
+  },
+  "installed_lifecycle": {
+    "fresh_public_download": true,
+    "own_rust_binary_only": true,
+    "calls": 14,
+    "successes": 13,
+    "expected_failures": 1,
+    "exit_code": 0,
+    "stderr_bytes": 0,
+    "binary_bytes": 1676336,
+    "binary_sha256": "8a3f88ce57e5478d7b661cece433350f81bf430aabd62d2f57aba0cb6b23a512",
+    "stable_operations": [
+      "alpha",
+      "beta",
+      "rarefy"
+    ],
+    "all_alpha_metrics_checked": 11,
+    "beta_metrics": [
+      "braycurtis",
+      "jaccard",
+      "euclidean",
+      "canberra",
+      "cityblock",
+      "unweighted_unifrac",
+      "weighted_unifrac",
+      "weighted_normalized_unifrac"
+    ],
+    "samples": 6,
+    "features": 12,
+    "depth": 8,
+    "seed": "42",
+    "retained_expected_source": true,
+    "labelled_tsv_json_roundtrip": true,
+    "failure_preserves_prior_output": true,
+    "receipt_sha256": "8fb4f24e18b4b6ebc595db4634c18dc1ed446a8e30bf934f3df3961e6d07b9a0",
+    "stdout_sha256": "ea76365f678a837d8577a322883eeec1801ff0f2189e8e227be4aa0f23bf9738",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "new_performance_measurement": false,
+  "new_upstream_scientific_execution": false,
+  "new_build": false,
+  "performance_receipts": [
+    ".autopilot/oracles/ecology-whole-real-2026-11-01.json",
+    ".autopilot/oracles/ecology-beta-eight-real-2026-11-02.json"
+  ],
+  "compact_source_on_native_qualified": false,
+  "signed_or_notarized": false,
+  "full_system_library_or_minimum_os_qualified": false,
+  "registry_read": {
+    "status": 404,
+    "bytes": 64,
+    "sha256": "bd12d7f2bef903678c8731254526ab76a6dc4e373344dba11bbd1b8c16a0c999",
+    "authentication_attempted": false
+  },
+  "post_release_readme_commit": "7f27eb01133f577df48af8ea988ff0914aa515f0",
+  "post_release_readme_ci_accepted": true,
+  "post_release_readme_ci": {
+    "run_id": 41344601496,
+    "head_sha": "7f27eb01133f577df48af8ea988ff0914aa515f0",
+    "conclusion": "success",
+    "api_sha256": "a7c16a7d177d0a0d477b00a1e7ba4826cc13d447367882c2867a70ec9c93e427"
+  },
+  "limitations": [
+    "GitHub installation is delivered; crates.io remains held and unattempted.",
+    "Historical alpha and beta throughput and RSS remain bound to their actual measured executables, not these release binaries.",
+    "Full-study UniFrac uses the charged adapted public contiguous-layout source baseline; no unchanged-default baseline or aggregate memory claim.",
+    "Dedicated compact source-on-native qualification remains false; accepted full-study source comparisons are separate.",
+    "Post-release README changes do not replace the immutable release commit, tag or assets."
+  ]
+}

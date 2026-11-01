@@ -12,13 +12,15 @@ RED campaign, provenance audit and review for every small component. The
 four-native release gate, storage rules and no-placeholder rule still apply.
 See [current execution state](.autopilot/state/portfolio-execution-2026-10-23.md).
 
-Current frontier (2026-11-02): Popgen, DESeq, RNA-seq QC, limma and table have
+Current frontier (2026-11-02): Popgen, DESeq, RNA-seq QC, limma, table and ecology have
 earned GitHub native releases and fresh actual public-install lifecycles;
 registry authorization remains separately held. Each performance result stays
 bound to its measured implementation/binary, with losses and scope retained.
 Ecology's alpha/rarefaction and all eight complete-study beta modes now have
 accepted correctness/resource/original evidence. Its reviewed public delivery
-passes exact four-nativeCI41341218191; original adoption/release remain next.
+passes exact four-nativeCI41341218191 with complete originals adopted.
+GitHubv0.1.0 and the fresh public Mac14-call lifecycle pass; post-release
+README7f27eb01 passes exactCI41344601496. Registry remains separately held.
 PLINK's prepared-reader/LD change passes green7 native/source qualification;
 actual41335480371/1 runs the unchanged final seven-stage performance graph.
 Index's corrected whole41327532095 has complete correct originals adopted:

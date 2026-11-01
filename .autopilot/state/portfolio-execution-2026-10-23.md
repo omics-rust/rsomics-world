@@ -4,7 +4,7 @@
 
 Full30-family goal is active and unchanged. This table records named gates,
 not a rolling checkout HEAD. GitHub native delivery now includes Popgen,
-DESeq, RNA-seq QC, limma and table; registry authorization remains a separate hold.
+DESeq, RNA-seq QC, limma, table and ecology; registry authorization remains a separate hold.
 Per-family current states and immutable original receipts supersede the
 historical narrative below. No unmeasured candidate inherits an older speed.
 
@@ -20,7 +20,7 @@ No deletion or migration of project/shared application/user data occurred.
 | limma | count/ordinary science and performance accepted; actual owning90d44575 deliveryCI41310896586/full originals/GitHubv0.1.0/fresh public13-call two-route install pass | registry held/publish=false; serial throughput/scaling losses retained; no unchanged source/count replay |
 | table | reviewed six-operation delivery owninge98f54ac/exactCI41332571386/full originals accepted; GitHubv0.1.0/public Mac11-call lifecycle/READMEac3788aa exactCI41337623958 pass | registry held; immutable release/assets unchanged, old performance bound to2bd0fd3/measured6e490331 |
 | edgeR | complete private QL workflow; original P/FDR gate remains failed | explicit numerical-contract decision; no band tuning |
-| ecology | 111adf5e native4/alpha plus ALL8 full41328x1105 beta/source/resources/originals accepted; reviewed public60dd0bfd exactCI41341218191/four clean source packages/all56 installed calls and full originals root-adopted | earned GitHub release/fresh public download next; registry held, compact source-on-native flag staysfalse, old measured binaries not reassigned |
+| ecology | all8 full-study beta/source/resource originals accepted; reviewed delivery60dd0bfd/native4CI41341218191/full originals, GitHubv0.1.0 and fresh public Mac14-call lifecycle pass; README7f27eb01 exactCI41344601496 passes | registry held; compact source-on-native flag staysfalse, old measured binaries not reassigned, immutable release unchanged |
 | structure | source40644150133 qualified; reviewed private2aee715 and native4 run41184818337 accepted | public torsion/full7/performance remain held or unearned; no coordinate foundation |
 | shared TMM | reviewed stats0.2.5 pushed at00a1819; real edgeR/limma contracts, persistent nonunit source regression and exact-head native4 run40648343214 all pass; primitive cost+2.53% | inherited working lock preserved; registry publication/adoption held |
 | signal | first-six native4/source accepted; approved signed/zero/filter repairs remain known incompatibilities; complete failed-campaign originals adopted | separate region-order contract decision pending; no measured trial/performance acceptance or unchanged rerun |
