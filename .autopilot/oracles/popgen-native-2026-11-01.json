@@ -1,0 +1,287 @@
+{
+  "all_original_crc_manifest_bodies_verified": true,
+  "all_required_jobs_success": true,
+  "controller_bodies_at_exact_head_each": 7,
+  "evidence_directory": "/Volumes/KIOXIA/Developments/tmp/popgen-native-four-adoption-20261101.0X3qhx",
+  "failed_tests": 0,
+  "fixture_scope": "synthetic two-contig18-record casebook, not full chr22",
+  "full_chr22_native_qualified": false,
+  "head_sha": "a3d2e024a541dbd01c6a07cd12eadb3399903ecb",
+  "ignored_tests": 0,
+  "integration": "neutral_workflow_complete",
+  "links_restored": false,
+  "local_scientific_or_binary_execution": false,
+  "lock_sha256": "84f00eb7b34d86787c28116184f74374d80c8dcbbf729067ade367ce5d185f16",
+  "native_four_qualified": true,
+  "native_targets": [
+    "linux-aarch64",
+    "linux-x86_64",
+    "macos-aarch64",
+    "macos-x86_64"
+  ],
+  "original_recorded_commands_total": 48,
+  "owner_commit": "ff8e951344b5cd8f8c049c96afa9e2c585d14995",
+  "owner_tree": "8879ad1fbee6c1ed2d59cd32a4f255dfc0416d23",
+  "per_cli_originals_retained": false,
+  "performance_claim": false,
+  "product": "rsomics-popgen",
+  "publication": false,
+  "recorded_registry_archive_checksums": 69,
+  "registry_archive_bodies_retained": false,
+  "release": false,
+  "report": {
+    "bytes": 7799,
+    "sha256": "d2523842c060d296c637775d7a6b84d632a483b01517b90383e7d7966d265ef3"
+  },
+  "repository": "omics-rust/rsomics-world",
+  "root_fresh_review_required": false,
+  "run_attempt": 1,
+  "run_id": 41265985145,
+  "schema": "rsomics.popgen.native-adoption.v1",
+  "snapshot": "green-1",
+  "source_archive_sha256": "5565951e8ecd9352583e309be70bc861c877ae953da094e015b065e5db4db579",
+  "source_files": 48,
+  "source_goldens": 17,
+  "source_manifest_sha256": "f9d886ea1ffe00905eba6a29690f216119c62f8ece73d45711863ed79b0400b3",
+  "source_on_native_qualified": false,
+  "status": "accepted",
+  "target_bookworm_abi_admitted": false,
+  "targets": {
+    "linux-aarch64": {
+      "artifact": {
+        "bytes": 977586,
+        "sha256": "f7aee9dac5054a9911e1d6f06e7170418f5bd922d697b11c9b0682cab169f891"
+      },
+      "artifact_id": 13066984386,
+      "artifact_name": "popgen-native-41265985145-1-linux-aarch64",
+      "binary": {
+        "bytes": 1793344,
+        "compiler_host": "aarch64-unknown-linux-gnu",
+        "format": "ELF64",
+        "mode": 493,
+        "selection_sha256": "12effedebd9e06f53263d43bc2765fea67f6288fc9b86466d4db4a41b9b91476",
+        "sha256": "3864798473c824262896d14b17f82ef9f261333620ddcd04b4f3dec63547be92",
+        "target": "linux-aarch64"
+      },
+      "cargo_selected_executable": "/home/runner/work/_temp/popgen-cargo-target/release/rsomics-popgen",
+      "commands": 12,
+      "job_id": 124728773933,
+      "manifest_entries": 124,
+      "raw_job_log": {
+        "bytes": 66708,
+        "sha256": "d95ba5daa0279a2390fe89480c6d7b423bf7c080cae8e98ce2b89ab4493e9169"
+      },
+      "tar": {
+        "bytes": 2672640,
+        "sha256": "d9fc44271913c30b4e6f7aa47b377fa68aa6388400ed6e8d057c6c3f88a7a00a"
+      },
+      "tar_regular_bodies": 125,
+      "test_summaries": {
+        "debug": {
+          "integration": "neutral_workflow_complete",
+          "passed": 1,
+          "per_cli_originals_retained": false,
+          "performance_claim": false,
+          "source_goldens": 17,
+          "workers": [
+            1,
+            4
+          ]
+        },
+        "release": {
+          "integration": "neutral_workflow_complete",
+          "passed": 1,
+          "per_cli_originals_retained": false,
+          "performance_claim": false,
+          "source_goldens": 17,
+          "workers": [
+            1,
+            4
+          ]
+        }
+      }
+    },
+    "linux-x86_64": {
+      "artifact": {
+        "bytes": 1003610,
+        "sha256": "4cdd4b59b9e4d6bd1cb9aa842495e8b32ac6c5d18538541ff2e2774efd759573"
+      },
+      "artifact_id": 13067555415,
+      "artifact_name": "popgen-native-41265985145-1-linux-x86_64",
+      "binary": {
+        "bytes": 1886584,
+        "compiler_host": "x86_64-unknown-linux-gnu",
+        "format": "ELF64",
+        "mode": 493,
+        "selection_sha256": "4cdb29682e4506a44a2ca3d6ad5ce9a1b9d8c0b59f7b443cc39d07ab73899bbc",
+        "sha256": "2800d57d0508a4979dccb850688bc475c58c1cedb588427c1f5ba0fa05bb0525",
+        "target": "linux-x86_64"
+      },
+      "cargo_selected_executable": "/home/runner/work/_temp/popgen-cargo-target/release/rsomics-popgen",
+      "commands": 12,
+      "job_id": 124728773928,
+      "manifest_entries": 124,
+      "raw_job_log": {
+        "bytes": 66603,
+        "sha256": "5d48127a8ecfb5871902d8f1157fbb14089a144c56d95a29e3537b2f53e19cd1"
+      },
+      "tar": {
+        "bytes": 2764800,
+        "sha256": "fc5e61994e671962bfd7e6994a6015dfc348a03cdc7b7870a041141f729e6acc"
+      },
+      "tar_regular_bodies": 125,
+      "test_summaries": {
+        "debug": {
+          "integration": "neutral_workflow_complete",
+          "passed": 1,
+          "per_cli_originals_retained": false,
+          "performance_claim": false,
+          "source_goldens": 17,
+          "workers": [
+            1,
+            4
+          ]
+        },
+        "release": {
+          "integration": "neutral_workflow_complete",
+          "passed": 1,
+          "per_cli_originals_retained": false,
+          "performance_claim": false,
+          "source_goldens": 17,
+          "workers": [
+            1,
+            4
+          ]
+        }
+      }
+    },
+    "macos-aarch64": {
+      "artifact": {
+        "bytes": 936031,
+        "sha256": "47c1e6cbbc894a1947019e6183dfa4dd6adab32e5b3cb14fa8159fe9b1b4322a"
+      },
+      "artifact_id": 13066994411,
+      "artifact_name": "popgen-native-41265985145-1-macos-aarch64",
+      "binary": {
+        "bytes": 1606624,
+        "compiler_host": "aarch64-apple-darwin",
+        "format": "Mach-O64",
+        "mode": 493,
+        "selection_sha256": "5d0b41009f02860e76b3f3a6cc4659c1a99d65e2a16f9b3e9b1f69010070b8b1",
+        "sha256": "b3b8739035b2581b629934acb69c368e234586f994be2669ecc6461264f3d489",
+        "target": "macos-aarch64"
+      },
+      "cargo_selected_executable": "/Users/runner/work/_temp/popgen-cargo-target/release/rsomics-popgen",
+      "commands": 12,
+      "job_id": 124728773787,
+      "manifest_entries": 124,
+      "raw_job_log": {
+        "bytes": 67421,
+        "sha256": "3f1cc4608e287c9503241cd02fa429cd39bc012a881096db72695fbe5d867c25"
+      },
+      "tar": {
+        "bytes": 2488320,
+        "sha256": "06e6e8ef1ca9a83365f7a1282f768f341dfca9fc567d0ad16ec220dc659a7fec"
+      },
+      "tar_regular_bodies": 125,
+      "test_summaries": {
+        "debug": {
+          "integration": "neutral_workflow_complete",
+          "passed": 1,
+          "per_cli_originals_retained": false,
+          "performance_claim": false,
+          "source_goldens": 17,
+          "workers": [
+            1,
+            4
+          ]
+        },
+        "release": {
+          "integration": "neutral_workflow_complete",
+          "passed": 1,
+          "per_cli_originals_retained": false,
+          "performance_claim": false,
+          "source_goldens": 17,
+          "workers": [
+            1,
+            4
+          ]
+        }
+      }
+    },
+    "macos-x86_64": {
+      "artifact": {
+        "bytes": 974741,
+        "sha256": "9375b594e2dc0bea71344bdfa999fcd2f3a1b279202d0bb6ffe640fd92b47699"
+      },
+      "artifact_id": 13067029732,
+      "artifact_name": "popgen-native-41265985145-1-macos-x86_64",
+      "binary": {
+        "bytes": 1736280,
+        "compiler_host": "x86_64-apple-darwin",
+        "format": "Mach-O64",
+        "mode": 493,
+        "selection_sha256": "2899d540efcf2a1649f969792e40ddb986a78e94f828127871a0102cc8355cf9",
+        "sha256": "892bb66d371645dd95fd41690c618c839284f74a9e51ee842fd764ce693d8ef6",
+        "target": "macos-x86_64"
+      },
+      "cargo_selected_executable": "/Users/runner/work/_temp/popgen-cargo-target/release/rsomics-popgen",
+      "commands": 12,
+      "job_id": 124728773909,
+      "manifest_entries": 124,
+      "raw_job_log": {
+        "bytes": 70042,
+        "sha256": "c96e82894bc399a3fdc67af2f07a0dd6f15d7604ee1e7d5f6dad57581b19c255"
+      },
+      "tar": {
+        "bytes": 2621440,
+        "sha256": "fdaf2311df60851d17076526211937ffba7b113058c43e4ff3b5f7e47c0bc781"
+      },
+      "tar_regular_bodies": 125,
+      "test_summaries": {
+        "debug": {
+          "integration": "neutral_workflow_complete",
+          "passed": 1,
+          "per_cli_originals_retained": false,
+          "performance_claim": false,
+          "source_goldens": 17,
+          "workers": [
+            1,
+            4
+          ]
+        },
+        "release": {
+          "integration": "neutral_workflow_complete",
+          "passed": 1,
+          "per_cli_originals_retained": false,
+          "performance_claim": false,
+          "source_goldens": 17,
+          "workers": [
+            1,
+            4
+          ]
+        }
+      }
+    }
+  },
+  "test_modes": [
+    "debug",
+    "release"
+  ],
+  "tests_passed_each_mode_each_target": 1,
+  "total_artifact_manifest_entries": 496,
+  "total_tar_regular_bodies": 500,
+  "verification": {
+    "bytes": 203797,
+    "sha256": "a55b396b9d46fd1160b53922e9162c03c7fb94e44ee72c80783f6db45c09da18"
+  },
+  "workers": [
+    1,
+    4
+  ],
+  "workflow_path": ".github/workflows/popgen-candidate.yml",
+  "root_freshly_verified_packet_bodies": 713,
+  "root_freshly_verified_packet_bytes": 28122433,
+  "packet_seal_sha256": "e318e5d74e81ec61d3f200cd816df0f9099e7faf3ae1bd55c781f79ff47267ae",
+  "packet_completed_sha256": "28b9946dbabf6a32c15f42a7b988eabecbfb948e87257802effa470ddaaf7a9f"
+}

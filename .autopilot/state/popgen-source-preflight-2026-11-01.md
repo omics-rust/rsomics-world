@@ -1,5 +1,37 @@
 # Popgen connected source workflow
 
+## Exact four-native integration and actual release executables accepted
+
+Actual41265985145/1 at a3d2e024a541dbd01c6a07cd12eadb3399903ecb succeeds
+on Linux/macOS x86_64/aarch64. Root fully reads REPORT, proposed receipt and
+the complete byte-only validator, then freshly verifies713 sealed packet
+bodies/28122433B at popgen-native-four-adoption-20261101.0X3qhx.
+REPORT d2523842c060d296c637775d7a6b84d632a483b01517b90383e7d7966d265ef3;
+SEAL e318e5d74e81ec61d3f200cd816df0f9099e7faf3ae1bd55c781f79ff47267ae;
+completed28b9946dbabf6a32c15f42a7b988eabecbfb948e87257802effa470ddaaf7a9f.
+
+All4 original ZIP/API digests/CRCs/TARs,500 regular bodies/496 manifest
+entries and complete job/run/attempt logs close. Every platform's48 source
+bodies/modes/Git blobs reconstruct owner tree8879ad1fbee6c1ed2d59cd32a4f255dfc0416d23;
+all7 controller bodies match actual head. All12 captured commands per target
+return0; debug/release each pass the one complete17-golden worker1/4 integration,
+zero failed/ignored. Registry archives themselves and temporary per-CLI output
+bodies are not retained, and are not claimed independently recovered.
+
+Cargo JSON selects the actual non-test release executable, not a test harness.
+Linux x86_64 ELF1886584B has SHA
+2800d57d0508a4979dccb850688bc475c58c1cedb588427c1f5ba0fa05bb0525,
+in actual artifact13067555415/1003610B ZIP SHA
+4cdd4b59b9e4d6bd1cb9aa842495e8b32ac6c5d18538541ff2e2774efd759573.
+All4 ELF/Mach-O identities are recorded in accepted
+popgen-native-2026-11-01.json SHA2260adecef59e06e89dd973fa399ac8a58eedd787e339b0700314bac59786c34.
+The first local raw-log/UI-title assumption failure is preserved; narrow v2
+uses actual API step outcomes and raw artifact identities without text rewriting.
+No source/science or binary executes locally during recovery. Bookworm ABI,
+full-chr22 native/source-on-native, same-machine performance and publication
+remain separate unearned gates. The adopted whole-real controller may now
+bind the actual accepted native authority instead of predicting future IDs.
+
 ## Actual native-four candidate dispatched
 
 After actual exact-head Control41265781284 succeeds and remote main is

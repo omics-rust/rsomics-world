@@ -6,16 +6,20 @@ this is not a current live-registry assertion. Current PLINK source preflight
 is recorded in `.autopilot/state/plink-source-preflight-2026-10-31.md`.
 
 Current2026-11-01 gates: private PLINK owner00ce7b39 green3 passes actual
-four-native/same-generation-source41258923590; corrected full-HGDP performance
-is the next independent gate. Popgen source41252735560 is now accepted after
+four-native/same-generation-source41258923590 and offline source/relink41262996186;
+corrected full-HGDP performance41260156411 is running as an independent gate.
+Popgen source41252735560 is now accepted after
 full authenticated original and output audits: complete chr22/207 persons,
 723783 canonical SNVs,514 windows and full SFS/jackknife outputs, with separate
 legacy semantics and original nonfinite values. Private Popgen ownerff8e9513
 now implements the coherent streaming neutral workflow. Full chr22 Mac1/4
 each passes50010408 frozen comparison cells; all11 scientific payloads are
 worker-exact, with no new public foundation or full-GT matrix. One integrated
-review and fresh fmt/strictClippy/release pass. Native-four, same-machine
-repeated upstream performance and release remain separate unearned gates.
+review and fresh fmt/strictClippy/release pass. Actual41265985145 now passes
+all four native classes with complete original artifact/log recovery and true
+release executable identities accepted. The compact native4 fixture is not
+full-chr22 evidence; same-machine full upstream performance and release remain
+separate unearned gates.
 The dated source audits below remain historical context, not a reason to
 rerun those accepted preflights.
 
