@@ -1,5 +1,14 @@
 # SDD ledger — plan: docs/plans/2026-11-01-rnaseq-qc-junctions.md
 
+## Actual junction source qualification dispatched
+
+Exact-head Control41275820376 succeeds for
+37fc7f7c3f21fb5e02ac0150d9821d4a4ce06776. Root verifies live remote main,
+then dispatches rnaseq-qc-junctions.yml once: actual41275994387/1 on that same
+head. Hosted fresh-runtime admission and six original source calls remain
+pending until complete original recovery and root adoption. No Task2 native
+junction code or source/performance result is preaccepted.
+
 Root adopts the next meaningful RNA-seq QC junction workflow after reading
 the complete dossier/current implementation, actual RSeQC5.0.5 script,
 ParseBAM method/CIGAR helper and official documentation. Full detailed design
