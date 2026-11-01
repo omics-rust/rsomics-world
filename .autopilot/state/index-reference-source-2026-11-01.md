@@ -1,5 +1,31 @@
 # Index reference-resource source workflow
 
+## Actual first campaign stopped at offline metadata; locked closure fix
+
+After exact-head Control41261784186 succeeds and remote main is verified,
+root dispatches actual41262013458/1 at
+53f0893ecadbb11fb17f72fb86bbd3311ca8ba3b. The fixed complete-reference
+workflow exits1 before reference acquisition or scientific calls. The native
+release build and feature tree return0; subsequent Cargo metadata --offline
+fails because locked optional adler2-v2.0.1 is not cached by the active build.
+Source/runtime/compiler originals and raw command failures are retained.
+
+Root recovers both full original artifacts into
+index-real-first-failure-20261101.QrPc1m. Runtime ZIP870181312B SHA
+e1e2a112d7ec13793eb78bec74785d7def49eda6b2f5d5500a115ddcf5e6ccb8;
+evidence ZIP981585B SHA
+daf5b71ec531dd912165c572245d223161959788642f6637726efef21b6766e8.
+Both actual API identities and all201 ZIP CRC members agree. Full runtime/
+manifest/controller validation proceeds data-only, without local Linux restore.
+
+The narrow correction adds Cargo fetch --locked before the unchanged release
+build, so subsequent offline metadata can inspect the complete locked source
+closure. Product owner/provider features/scientific graph/thresholds/budgets
+are unchanged. The SAME ONE preparation test is RED on the missing fetch,
+then GREEN1/0.143s after correction. An earlier wrong-cwd import error is a
+local invocation error, not that regression. New exact-head CI and actual
+hosted retry remain required; no runtime or performance result is preaccepted.
+
 ## Complete-reference controller reviewed for actual execution
 
 Root reads every line of the three-file controller/workflow/ONE-test wave,

@@ -386,6 +386,7 @@ def prepare_native(root: Path) -> Path:
     source.command(root, 'native-cargo-version', [rust / 'bin/cargo', '-vV'])
     if not (root / 'calls/native-rustc-version/stdout.txt').read_text().startswith('rustc 1.91.0 '):
         raise ValueError('actual native Rust compiler differs')
+    source.command(root, 'native-fetch', [rust / 'bin/cargo', 'fetch', '--locked'], cwd=owner)
     source.command(root, 'native-build', [rust / 'bin/cargo', 'build', '--locked', '--release', '--bin', 'rsomics-index'], cwd=owner)
     source.command(root, 'native-feature-tree', [rust / 'bin/cargo', 'tree', '--locked', '--offline', '-e', 'features'], cwd=owner)
     source.command(root, 'native-cargo-metadata', [rust / 'bin/cargo', 'metadata', '--locked', '--offline', '--format-version', '1'], cwd=owner)

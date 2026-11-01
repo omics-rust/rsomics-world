@@ -1,4 +1,6 @@
+import ast
 import importlib
+import inspect
 import os
 from pathlib import Path
 import subprocess
@@ -17,6 +19,16 @@ class IndexReferenceRealPerformancePreparationTest(unittest.TestCase):
         self.assertTrue((ROOT / 'scripts/index_reference_real_performance.py').is_file(),
                         'complete reference performance controller is absent')
         controller = importlib.import_module('index_reference_real_performance')
+        calls = [node for node in ast.walk(ast.parse(inspect.getsource(controller.prepare_native)))
+                 if isinstance(node, ast.Call) and isinstance(node.func, ast.Attribute)
+                 and node.func.attr == 'command' and len(node.args) > 1
+                 and isinstance(node.args[1], ast.Constant)]
+        phases = [node.args[1].value for node in calls]
+        self.assertIn('native-fetch', phases, 'offline metadata requires the complete locked source closure')
+        self.assertLess(phases.index('native-fetch'), phases.index('native-build'))
+        fetch = calls[phases.index('native-fetch')]
+        self.assertEqual([node.value for node in fetch.args[2].elts if isinstance(node, ast.Constant)],
+                         ['fetch', '--locked'])
         root = Path(tempfile.mkdtemp(prefix='index-real-performance-preparation-', dir=os.environ['TMPDIR']))
         data = root / 'data'
         data.mkdir()
