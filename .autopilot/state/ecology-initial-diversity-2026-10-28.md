@@ -1,5 +1,30 @@
 # Ecology diversity source qualification
 
+## First native-four and complete-study implementation adopted
+
+Root fully reads the complete115-line design/report and current dossier,
+initial/sparse-alpha/rarefaction plans and actual owner CLI. Freshly verifies
+both sealed design bodies/24287B in ecology-native-real-design-20261101.UsyW31.
+PLAN9fb85bf08973c99c22def09c88f77e00040af160c7e99e6f844e59c1c9af7f6c;
+REPORTbf2bdcea4a34a89aaa99eb1b29154ded0df7539ebc0aacd017a8afa015c6f56b;
+SEALfe469f72aa869fa9a1f70b6e48fbebf2eb866cc70eb1aa598ec8184365644599.
+Adopted docs/plans/2026-11-01-ecology-native-real.md authorizes one preparation
+wave: unchanged35-file owner e1b03cb68876be2dd8bb9fbc520b5194be055d9e
+first native-four, then the actual complete41328x1105-study workflow.
+
+Original-count11-metric alpha is independently primary. No-drop depth3/seed42
+rarefaction and downstream alpha remain separate full-identity outputs; this
+does not measure all15 old profiles or tail-shuffle performance. Full-study
+public-driver reference is new and mandatory before source/native timing.
+Real upstream node setup is shared by Faith/quarter-weight PD, source can
+reuse parsed arrays across stages and use actual4-process chunks. Fixed
+allowance-specific original-alpha/whole endpoints,20% wall or25% conservative
+process-memory route, later-stage regression limits, all outputs retained and
+12GiB/no-AS/6GiB-retained envelopes are adopted before outcomes. Source failure
+holds, never wins by default. Native4 receipt/Bookworm ABI/full-study scientific
+and performance/publication gates remain unearned. Beta policy and complete
+first-release boundary are unchanged; no new foundation or owner change.
+
 ## Adopted sparse rarefaction extension, 2026-10-31
 
 Owning maine1b03cb commits the real private rarefaction extension after the
