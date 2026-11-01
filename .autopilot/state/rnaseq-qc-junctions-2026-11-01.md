@@ -1,5 +1,14 @@
 # SDD ledger — plan: docs/plans/2026-11-01-rnaseq-qc-junctions.md
 
+## Actual additive junction four-native gate dispatched
+
+Exact-head Control41281822854 succeeds at
+4d137b853ab055567bcc7716863d213dd9d03f01; live remote main matches. Root
+dispatches existing rnaseq-qc-candidate.yml once with authority=junctions,
+snapshot=green-1/bootstrap_dependencies=false. Actual41282068281/attempt1
+runs at that exact head. Four native originals/comparisons and independent
+adoption remain required; no runtime/performance/release acceptance is inferred.
+
 ## Exact additive junction four-native candidate prepared and verified
 
 Root reads the complete operational REPORT6dc564b0dc30ca7fa667897bd22f184e3a078c3c787c25269d40c2601f68193d,
