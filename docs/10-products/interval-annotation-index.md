@@ -5,8 +5,10 @@ verified. The complete BED family map is now maintained in `bed.md`. The BGZF
 and tabix slice of `rsomics-index` is implemented and compatibility-verified.
 The coherent FASTA indexing/query/dictionary slice is now committed with
 captured samtools1.24 comparisons and an accepted four-native gate. Publication
-still requires restoration or replacement of historical BGZF/tabix performance
-evidence and registry credentials; current reference-slice evidence alone is insufficient.
+still requires improved BGZF/tabix performance and registry credentials. The
+new complete13-lane campaign is correct, but binary serial compression and
+sparse serial queries fail their fixed performance gates; reference-slice
+evidence alone cannot rescue those failures.
 
 Routing corrections move table aggregation to `rsomics-table`, SEACR to
 `rsomics-peak`, FASTA masking to `rsomics-bed`, and FASTA indexing plus
@@ -311,6 +313,19 @@ hidden by the aggregate. These are same-job Linux x86_64 measurements, not
 a causal cross-run optimization comparison, exact aggregate memory, cold-cache,
 uniform parallel scaling or physical-I/O proof. Old baseline and missing-raw
 BGZF/tabix evidence/publication hold below remain unchanged.
+
+The new complete BGZF/tabix run41294913111/1 on this same owner is now
+adopted from the full original ZIP and inert remote CAS. All42 qualifications,
+78 warmups and260 measured calls are correct across13 lanes. Serial TBI/CSI
+builds pass their fixed throughput gates, but serial binary compression is
+1.111635 times source wall and sparse query1.286511 times. Sparse RSS is
+46.39% of source but violates the fixed1.05 wall cap; parallel or other-lane
+wins do not rescue either primary. Text output grows12.6743%, and CPU/fault/
+memory/I/O losses remain explicit. See index-bgzf-complete-failure-2026-11-01.json
+and index-bgzf-real-performance-2026-11-01.md. This replaces neither missing
+historical raw evidence nor the accepted reference receipt, does not identify
+a code-level cause, and does not qualify publication. A coherent hot-path
+change follows source review, not another unchanged campaign.
 
 The initial implementation runs from `acba3ec` through code head
 `05960a4609a3b2acc388c0a149b5e023d53027f1`. Harness revision

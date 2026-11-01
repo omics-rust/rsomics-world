@@ -1,5 +1,48 @@
 # Index complete BGZF/tabix real performance
 
+## Complete correct originals adopted; two primary performance routes fail
+
+Root adopts actual41294913111/1, owner030be208, from the complete original
+artifact13080522726. All42 qualifications and338 benchmark calls (78 warmups,
+260 measurements) finish correctly across13 lanes. All400 owned processes
+exit0 with empty groups; no scientific node or runtime fails. The actual
+exception is solely the unchanged each-primary material-performance gate.
+The additive index-bgzf-complete-failure-2026-11-01.json accepts correctness
+and full custody, NOT performance or publication; old authorities stay exact.
+
+Root reads the entire recovery/assessment program and full report, freshly
+checks all61 sealed local files/34191028B with exact membership/modes/hashes,
+and runs one read-only whole remote check, exit0/97.537s/empty stderr.
+Complete11.0368GB ZIP, all15130 inert CAS bodies/17228960674B, exact members,
+CRCs and independent raw reduction match. No recovered executable, science,
+build, download or deletion occurs. Remote allocation remains28328329216B
+on UID1006/dev2096/ext4/dev/sdd; current396GiB envelopes fit conservatively.
+Original packet index-bgzf-original-recovery-20261101.g0INce has REPORT
+1ac827e2cec06da315c391055c40f1c4cb4ea681270a7a2260a15bcd6e6a83b5,
+SEAL4ff1c78c160ce875e3eb7a8b4178d82a80bed6de234cc562c14e29a2b9ef0e98.
+Root proof index-bgzf-root-adoption-20261101.xJ5Qn5 has remote stdout
+ca3c51d8e15cb1d7130d5aedcf23082a1b1d07ef29b011de1180b235a2a02b75.
+
+All6000000 ordered records/24 contigs and full2GiB binary/512MiB partial
+data qualify, including8 complete cross-index reads and all4 query outputs.
+Source HTSlib1.24/libdeflate1.25 and native libdeflate-sys1.25.2/zlib-rs0.6.7
+differ explicitly. GNU time's banner is UNKNOWN; pinned Debian1.9-0.2 source
+is not an observed upstream1.9 banner or independently verified signature.
+
+| Serial primary | Source median s | Native median s | Fixed result |
+|---|---:|---:|---|
+| Binary compression |23.335|25.940|FAIL,1.111635 wall ratio|
+| TBI build |2.140|1.530|PASS throughput|
+| CSI build |2.130|1.560|PASS throughput|
+| Sparse query |25.985|33.430|FAIL,1.286511 wall ratio|
+
+Sparse processRSS falls to46.39%, but wall exceeds the fixed1.05 resource
+cap. Other lanes/parallel wins cannot rescue these primaries. Text compressed
+output grows12.6743%; non-sparse RSS ratios range1.316–1.931. CPU/fault/I/O
+losses and all distributions remain recorded, not reduced to a win count or
+summed pipeline. Source-level full hot-path review is active before a coherent
+substantive implementation wave; no unchanged benchmark retry is authorized.
+
 ## Actual run failed; available public logs accepted, full originals next
 
 Actual41294913111/1 atbf60a596 is terminal FAILURE. Execute exits1; original

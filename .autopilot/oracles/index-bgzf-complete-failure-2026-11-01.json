@@ -1,0 +1,5624 @@
+{
+  "accepted": true,
+  "artifact": {
+    "bytes": 11036840266,
+    "id": 13080522726,
+    "name": "index-bgzf-real-41294913111-1",
+    "sha256": "20400b99544920bed4898b12f4305ec4d1708d90887b08fc154119e26d7a6c3a"
+  },
+  "complete_qualification_output_pins": {
+    "build_csi": {
+      "native": {
+        "bytes": 4443,
+        "sha256": "e720540580b00e98f0179ea82746edbe7e9acc0b5a3106cc86b215353e2af86f"
+      },
+      "native_source_bytes_ratio": 0.9937374189219415,
+      "source": {
+        "bytes": 4471,
+        "sha256": "fd415c5a65134389a50c813e67cd0c6b97d8d5b347fe4533bc3dea0d9b609c72"
+      }
+    },
+    "build_tbi": {
+      "native": {
+        "bytes": 3988,
+        "sha256": "54c3991b1b8fcd19b5585a7e10bc0ae5e638d5381d4791f8db2acd0ed08f98ae"
+      },
+      "native_source_bytes_ratio": 1,
+      "source": {
+        "bytes": 3988,
+        "sha256": "54c3991b1b8fcd19b5585a7e10bc0ae5e638d5381d4791f8db2acd0ed08f98ae"
+      }
+    },
+    "compress_binary_t1": {
+      "native": {
+        "bytes": 2148504134,
+        "sha256": "df12220d759126a83241d849e330b52c69ec23a85969fa6f96efd0d111d41dab"
+      },
+      "native_source_bytes_ratio": 1.0000003030016034,
+      "source": {
+        "bytes": 2148503483,
+        "sha256": "f492f1960504f35744a1350a727557ebb90ed457bd82af92ea62c5adc398ea29"
+      }
+    },
+    "compress_binary_t4": {
+      "native": {
+        "bytes": 2148504134,
+        "sha256": "df12220d759126a83241d849e330b52c69ec23a85969fa6f96efd0d111d41dab"
+      },
+      "native_source_bytes_ratio": 1.0000003030016034,
+      "source": {
+        "bytes": 2148503483,
+        "sha256": "f492f1960504f35744a1350a727557ebb90ed457bd82af92ea62c5adc398ea29"
+      }
+    },
+    "compress_text_t1": {
+      "native": {
+        "bytes": 42978361,
+        "sha256": "8c64eedb61718b3b5ed3ce32d55dc19272cd849b51edf3027bc37c4064ce3e3c"
+      },
+      "native_source_bytes_ratio": 1.1267429396035413,
+      "source": {
+        "bytes": 38143892,
+        "sha256": "09f40fc8492a44bd9ecb231b983175aec4e5e9deb90e3daa87955b1ced0d3eb4"
+      }
+    },
+    "compress_text_t4": {
+      "native": {
+        "bytes": 42978361,
+        "sha256": "8c64eedb61718b3b5ed3ce32d55dc19272cd849b51edf3027bc37c4064ce3e3c"
+      },
+      "native_source_bytes_ratio": 1.1267429396035413,
+      "source": {
+        "bytes": 38143892,
+        "sha256": "09f40fc8492a44bd9ecb231b983175aec4e5e9deb90e3daa87955b1ced0d3eb4"
+      }
+    },
+    "decompress_binary_t1": {
+      "native": {
+        "bytes": 2147483648,
+        "sha256": "4b18c8570bf559c6bdf4ae1108056c2b9bb4d32c9d3b35e91356d378e6df57e1"
+      },
+      "native_source_bytes_ratio": 1,
+      "source": {
+        "bytes": 2147483648,
+        "sha256": "4b18c8570bf559c6bdf4ae1108056c2b9bb4d32c9d3b35e91356d378e6df57e1"
+      }
+    },
+    "decompress_text_t1": {
+      "native": {
+        "bytes": 2189973389,
+        "sha256": "9620ea9137b89492cac7ed268111a92ce90890d3f8f615fa33335b7503578283"
+      },
+      "native_source_bytes_ratio": 1,
+      "source": {
+        "bytes": 2189973389,
+        "sha256": "9620ea9137b89492cac7ed268111a92ce90890d3f8f615fa33335b7503578283"
+      }
+    },
+    "partial_binary_512m": {
+      "native": {
+        "bytes": 536870912,
+        "sha256": "fec6299886342f5aff07f4e062d3a550068873c5451d1fa8bf100fd20252477f"
+      },
+      "native_source_bytes_ratio": 1,
+      "source": {
+        "bytes": 536870912,
+        "sha256": "fec6299886342f5aff07f4e062d3a550068873c5451d1fa8bf100fd20252477f"
+      }
+    },
+    "query_dense_t4": {
+      "native": {
+        "bytes": 218372346,
+        "sha256": "b94a48bb5ee4dc40a06ba8296f226d9c612b4a7e6510a0781952b2e1973f18f6"
+      },
+      "native_source_bytes_ratio": 1,
+      "source": {
+        "bytes": 218372346,
+        "sha256": "b94a48bb5ee4dc40a06ba8296f226d9c612b4a7e6510a0781952b2e1973f18f6"
+      }
+    },
+    "query_overlap_unique_t4": {
+      "native": {
+        "bytes": 1049742370,
+        "sha256": "2ae4677b917f93b65805d2dac99586a49c51aef8caf082bdafba2d3adf31c203"
+      },
+      "native_source_bytes_ratio": 1,
+      "source": {
+        "bytes": 1049742370,
+        "sha256": "2ae4677b917f93b65805d2dac99586a49c51aef8caf082bdafba2d3adf31c203"
+      }
+    },
+    "query_sparse_t1": {
+      "native": {
+        "bytes": 3649939,
+        "sha256": "671e5af6c926cc8f2e8212883903152594638b0951581613d0dbe5d2ac6b104a"
+      },
+      "native_source_bytes_ratio": 1,
+      "source": {
+        "bytes": 3649939,
+        "sha256": "671e5af6c926cc8f2e8212883903152594638b0951581613d0dbe5d2ac6b104a"
+      }
+    },
+    "query_targets_t4": {
+      "native": {
+        "bytes": 218867095,
+        "sha256": "c3750adf6d06d63ce03e5369a45330ac649db2bfea46f670db3909c6cddad1f1"
+      },
+      "native_source_bytes_ratio": 1,
+      "source": {
+        "bytes": 218867095,
+        "sha256": "c3750adf6d06d63ce03e5369a45330ac649db2bfea46f670db3909c6cddad1f1"
+      }
+    }
+  },
+  "controller": "bf60a596153a98e43341cbc8ad82ec2dbec88fb8",
+  "created_utc": "2026-11-01T12:09:08Z",
+  "critical_original_body_pins": {
+    "artifact-manifest.json": {
+      "bytes": 959268,
+      "original_mode": null,
+      "sha256": "2e96135aeadff5ae8e5a1cb715f86eebc8ee1b10bd50cc6a6f634a769cb0ef41"
+    },
+    "controller-bindings.json": {
+      "bytes": 1778,
+      "original_mode": 384,
+      "sha256": "07a71f1ce13ee5ee753f998f3f18dede844ec4d486f86018c908fe0ddc67f7fe"
+    },
+    "failure-execute.json": {
+      "bytes": 703,
+      "original_mode": 384,
+      "sha256": "2d3a561c10c6d6268e0a66750bca8a2b42cc4948a0916eaffbe2ac1a75bead76"
+    },
+    "frozen-inputs.json": {
+      "bytes": 5561,
+      "original_mode": 384,
+      "sha256": "40135ae98555f491dc38ca6575035ecfb1de97d3e297ca127960100ade05c33e"
+    },
+    "frozen-runtime.json": {
+      "bytes": 148895,
+      "original_mode": 384,
+      "sha256": "23437edb68cabd458e99f27ca00045193c68bfdeecb18fd4b14cdc5b562295e1"
+    },
+    "graph.json": {
+      "bytes": 77363,
+      "original_mode": 384,
+      "sha256": "724004110bf0227cebe1c123abd3594faf726339acb51d44c54c80e7bf59f3ed"
+    },
+    "machine.json": {
+      "bytes": 10293,
+      "original_mode": 384,
+      "sha256": "d8ab71d0df0b7ff6c683e1ef36211b88d071452398415317eb0fbb354d30dd2d"
+    },
+    "measurements.json": {
+      "bytes": 409764,
+      "original_mode": 384,
+      "sha256": "eb8fb94329524b7b6cec0c07082fb88887cd88a7b15154815d483df6449fc68e"
+    },
+    "metadata/restored-runtime.json": {
+      "bytes": 28722,
+      "original_mode": 384,
+      "sha256": "da0669c6d120eb85c1aed4267c5e58b3c53833968ad840382827176b03a41c34"
+    },
+    "metadata/runtime-admission.json": {
+      "bytes": 8059,
+      "original_mode": 384,
+      "sha256": "1074d857877633fb8a025c77ed1e647b871033e8391c71175f7f1d3f7edee2fd"
+    },
+    "metadata/timer-small-child.json": {
+      "bytes": 180,
+      "original_mode": 384,
+      "sha256": "98e0e65306803d86f9e786dbfd8c8b624609294fff08256d3b7dee017d208b92"
+    },
+    "outcome.json": {
+      "bytes": 469,
+      "original_mode": 384,
+      "sha256": "1605256d4ff3b3e7d62a9ffa08ac46b0b0e52e8e03113ff7d0d502d6b45ff586"
+    },
+    "performance.json": {
+      "bytes": 89231,
+      "original_mode": 384,
+      "sha256": "bce403008481edb87ee1fef232691f35e67d291e03faa8a446fdc82c4dfeaf7f"
+    },
+    "qualification-records.json": {
+      "bytes": 27921,
+      "original_mode": 384,
+      "sha256": "c0b8776a79be4d49c43c246e22cb824574e5de3ae740d13cde5167c6de752a13"
+    },
+    "qualified-outputs.json": {
+      "bytes": 2363,
+      "original_mode": 384,
+      "sha256": "5b681ab528181a6331b13cdae1c63e0b044ba1f9cd9539f0b9cd5b84552f281b"
+    },
+    "runtime/carriers/carrier.json": {
+      "bytes": 352,
+      "original_mode": 384,
+      "sha256": "3465bded3d51ed4497e89309a96311e5c8e52f1d991d53f9fff7171d0ccd41f9"
+    },
+    "runtime/timer/source-and-version.json": {
+      "bytes": 1604,
+      "original_mode": 384,
+      "sha256": "68fb4141bbb6ebbd36b0b816124f2da3da72cbc161807291b270e167b0a290d3"
+    },
+    "time-budget.json": {
+      "bytes": 195,
+      "original_mode": 384,
+      "sha256": "ddbbda9914e7b25e9f7cecf1e410be7a935d02e82985bb2ebfc2ae5afd31092b"
+    }
+  },
+  "execution_evidence": {
+    "actual_exception": "Traceback (most recent call last):\n  File \"/__w/rsomics-world/rsomics-world/scripts/index_bgzf_real_performance.py\", line 1071, in main\n    {'init': initialize, 'execute': execute, 'finalize': finalize}[action]()\n  File \"/__w/rsomics-world/rsomics-world/scripts/index_bgzf_real_performance.py\", line 1035, in execute\n    raise RuntimeError('complete correct measurements did not qualify EACH of the four named serial primary hot paths')\nRuntimeError: complete correct measurements did not qualify EACH of the four named serial primary hot paths\n",
+    "all_13_correct_complete": true,
+    "all_reported_trials_raw_verified": true,
+    "benchmark_calls": 338,
+    "comparison_limit_seconds": 1200,
+    "comparison_seconds": 602.0042697730021,
+    "controller_limit_seconds": 18600,
+    "elapsed_seconds": 3346.642531267,
+    "failed_scientific_node": null,
+    "measured_calls": 260,
+    "qualification_calls": 42,
+    "warmup_calls": 78
+  },
+  "fixture": {
+    "records": 6000000,
+    "contigs": 24,
+    "payload_bytes": 320,
+    "vcf": {
+      "bytes": 2189973389,
+      "sha256": "9620ea9137b89492cac7ed268111a92ce90890d3f8f615fa33335b7503578283"
+    },
+    "binary": {
+      "bytes": 2147483648,
+      "sha256": "4b18c8570bf559c6bdf4ae1108056c2b9bb4d32c9d3b35e91356d378e6df57e1"
+    },
+    "slice": {
+      "offset": 536870912,
+      "bytes": 536870912,
+      "sha256": "fec6299886342f5aff07f4e062d3a550068873c5451d1fa8bf100fd20252477f"
+    },
+    "data_scope": "public deterministic synthetic engineering inputs, not biological performance validation"
+  },
+  "gate": {
+    "aggregate_gate": false,
+    "passed": false,
+    "policy": {
+      "aggregate_gate": false,
+      "all_primary_each_qualify": true,
+      "disjoint_wall_gap_exceeds_seconds": 0.01,
+      "primary": [
+        "compress_binary_t1",
+        "build_tbi",
+        "build_csi",
+        "query_sparse_t1"
+      ],
+      "publication_automatic": false,
+      "rss_median_ratio": 0.75,
+      "rss_wall_ratio": 1.05,
+      "throughput_median_ratio": 0.9
+    },
+    "primary": {
+      "build_csi": true,
+      "build_tbi": true,
+      "compress_binary_t1": false,
+      "query_sparse_t1": false
+    }
+  },
+  "independent_raw_reduction": {
+    "aggregate_gate": false,
+    "all_13_complete": true,
+    "all_losses": {
+      "build_csi": {
+        "minor_faults": 1.0569395017793595,
+        "peak_rss_bytes": 1.5417298937784523,
+        "system_seconds": 4
+      },
+      "build_tbi": {
+        "minor_faults": 1.0555555555555556,
+        "peak_rss_bytes": 1.5372790161414296,
+        "system_seconds": 5
+      },
+      "compress_binary_t1": {
+        "filesystem_outputs": 1.0000019064432062,
+        "minor_faults": 360.0433566433566,
+        "peak_rss_bytes": 1.680316091954023,
+        "system_seconds": 1.3787878787878791,
+        "total_cpu_seconds": 1.0523546435148643,
+        "user_seconds": 1.0358333333333334,
+        "wall_seconds": 1.111634883222627
+      },
+      "compress_binary_t4": {
+        "minor_faults": 123.01115241635688,
+        "peak_rss_bytes": 1.315644383184011,
+        "system_seconds": 1.8842592592592593
+      },
+      "compress_text_t1": {
+        "filesystem_outputs": 1.1267046064640824,
+        "minor_faults": 230.73853211009174,
+        "peak_rss_bytes": 1.8150375939849623,
+        "system_seconds": 2.5952380952380953
+      },
+      "compress_text_t4": {
+        "filesystem_outputs": 1.118895286841544,
+        "minor_faults": 113.25014376078205,
+        "peak_rss_bytes": 1.5943627450980393,
+        "system_seconds": 1.4948453608247423
+      },
+      "decompress_binary_t1": {
+        "minor_faults": 2.1872246696035242,
+        "peak_rss_bytes": 1.931340872374798,
+        "system_seconds": 1.138888888888889,
+        "total_cpu_seconds": 1.2258064516129032,
+        "user_seconds": 1.3076923076923077,
+        "wall_seconds": 1.1875
+      },
+      "decompress_text_t1": {
+        "minor_faults": 2.3049645390070923,
+        "peak_rss_bytes": 1.8974776240846216,
+        "system_seconds": 3.5000000000000004,
+        "total_cpu_seconds": 1.09375,
+        "wall_seconds": 1.09375
+      },
+      "partial_binary_512m": {
+        "minor_faults": 1.7740585774058577,
+        "peak_rss_bytes": 1.8630910374029641,
+        "system_seconds": 2,
+        "total_cpu_seconds": 2,
+        "user_seconds": 1.5,
+        "wall_seconds": 1.7500000000000002
+      },
+      "query_dense_t4": {
+        "minor_faults": 7.095933263816476,
+        "peak_rss_bytes": 1.5163157894736843
+      },
+      "query_overlap_unique_t4": {
+        "minor_faults": 33.77512953367876,
+        "peak_rss_bytes": 1.5501600853788686,
+        "system_seconds": 1.4035087719298245,
+        "total_cpu_seconds": 1.3383685800604228,
+        "user_seconds": 1.3284671532846715,
+        "wall_seconds": 1.1079999999999999
+      },
+      "query_sparse_t1": {
+        "system_seconds": 11.047619047619047,
+        "total_cpu_seconds": 1.286621751684312,
+        "user_seconds": 1.2070236709351958,
+        "wall_seconds": 1.2865114489128344
+      },
+      "query_targets_t4": {
+        "minor_faults": 6.035827186512118,
+        "peak_rss_bytes": 1.620748299319728
+      }
+    },
+    "fixed_primary_passed": false,
+    "lanes": {
+      "build_csi": {
+        "all_metric_losses": {
+          "minor_faults": 1.0569395017793595,
+          "peak_rss_bytes": 1.5417298937784523,
+          "system_seconds": 4
+        },
+        "complete": true,
+        "complete_pair_ids": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10
+        ],
+        "disjoint_wall_gap_seconds": "0.31",
+        "distributions": {
+          "native": {
+            "filesystem_inputs": {
+              "maximum": 0,
+              "median": 0,
+              "minimum": 0,
+              "values": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ]
+            },
+            "filesystem_outputs": {
+              "maximum": 16,
+              "median": 16,
+              "minimum": 16,
+              "values": [
+                16,
+                16,
+                16,
+                16,
+                16,
+                16,
+                16,
+                16,
+                16,
+                16
+              ]
+            },
+            "major_faults": {
+              "maximum": 0,
+              "median": 0,
+              "minimum": 0,
+              "values": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ]
+            },
+            "minor_faults": {
+              "maximum": 311,
+              "median": 297,
+              "minimum": 292,
+              "values": [
+                292,
+                311,
+                295,
+                292,
+                297,
+                306,
+                309,
+                294,
+                297,
+                309
+              ]
+            },
+            "peak_rss_bytes": {
+              "maximum": 4280320,
+              "median": 4161536,
+              "minimum": 4038656,
+              "values": [
+                4222976,
+                4153344,
+                4161536,
+                4161536,
+                4280320,
+                4038656,
+                4251648,
+                4206592,
+                4108288,
+                4083712
+              ]
+            },
+            "system_seconds": {
+              "maximum": 0.05,
+              "median": 0.04,
+              "minimum": 0.03,
+              "values": [
+                0.05,
+                0.04,
+                0.05,
+                0.04,
+                0.03,
+                0.04,
+                0.04,
+                0.04,
+                0.04,
+                0.05
+              ]
+            },
+            "total_cpu_seconds": {
+              "maximum": 1.81,
+              "median": 1.55,
+              "minimum": 1.55,
+              "values": [
+                1.56,
+                1.55,
+                1.56,
+                1.55,
+                1.55,
+                1.55,
+                1.81,
+                1.55,
+                1.55,
+                1.56
+              ]
+            },
+            "user_seconds": {
+              "maximum": 1.77,
+              "median": 1.51,
+              "minimum": 1.51,
+              "values": [
+                1.51,
+                1.51,
+                1.51,
+                1.51,
+                1.52,
+                1.51,
+                1.77,
+                1.51,
+                1.51,
+                1.51
+              ]
+            },
+            "wall_seconds": {
+              "maximum": 1.81,
+              "median": 1.56,
+              "minimum": 1.56,
+              "values": [
+                1.56,
+                1.56,
+                1.56,
+                1.56,
+                1.56,
+                1.56,
+                1.81,
+                1.56,
+                1.56,
+                1.56
+              ]
+            }
+          },
+          "source": {
+            "filesystem_inputs": {
+              "maximum": 0,
+              "median": 0,
+              "minimum": 0,
+              "values": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ]
+            },
+            "filesystem_outputs": {
+              "maximum": 16,
+              "median": 16,
+              "minimum": 16,
+              "values": [
+                16,
+                16,
+                16,
+                16,
+                16,
+                16,
+                16,
+                16,
+                16,
+                16
+              ]
+            },
+            "major_faults": {
+              "maximum": 0,
+              "median": 0,
+              "minimum": 0,
+              "values": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ]
+            },
+            "minor_faults": {
+              "maximum": 284,
+              "median": 281,
+              "minimum": 278,
+              "values": [
+                284,
+                282,
+                281,
+                281,
+                278,
+                281,
+                279,
+                282,
+                278,
+                282
+              ]
+            },
+            "peak_rss_bytes": {
+              "maximum": 2748416,
+              "median": 2699264,
+              "minimum": 2560000,
+              "values": [
+                2707456,
+                2703360,
+                2568192,
+                2572288,
+                2617344,
+                2707456,
+                2748416,
+                2695168,
+                2560000,
+                2703360
+              ]
+            },
+            "system_seconds": {
+              "maximum": 0.01,
+              "median": 0.01,
+              "minimum": 0,
+              "values": [
+                0.01,
+                0.01,
+                0,
+                0,
+                0.01,
+                0.01,
+                0.01,
+                0.01,
+                0,
+                0.01
+              ]
+            },
+            "total_cpu_seconds": {
+              "maximum": 2.14,
+              "median": 2.1199999999999997,
+              "minimum": 2.11,
+              "values": [
+                2.13,
+                2.1199999999999997,
+                2.11,
+                2.11,
+                2.1199999999999997,
+                2.13,
+                2.1399999999999997,
+                2.1199999999999997,
+                2.14,
+                2.1199999999999997
+              ]
+            },
+            "user_seconds": {
+              "maximum": 2.14,
+              "median": 2.11,
+              "minimum": 2.11,
+              "values": [
+                2.12,
+                2.11,
+                2.11,
+                2.11,
+                2.11,
+                2.12,
+                2.13,
+                2.11,
+                2.14,
+                2.11
+              ]
+            },
+            "wall_seconds": {
+              "maximum": 2.14,
+              "median": 2.13,
+              "minimum": 2.12,
+              "values": [
+                2.13,
+                2.13,
+                2.13,
+                2.12,
+                2.12,
+                2.14,
+                2.14,
+                2.13,
+                2.14,
+                2.13
+              ]
+            }
+          }
+        },
+        "material": true,
+        "measured_counts": {
+          "native": 10,
+          "source": 10
+        },
+        "median_metric_ratios": {
+          "filesystem_inputs": null,
+          "filesystem_outputs": 1,
+          "major_faults": null,
+          "minor_faults": 1.0569395017793595,
+          "peak_rss_bytes": 1.5417298937784523,
+          "system_seconds": 4,
+          "total_cpu_seconds": 0.7311320754716982,
+          "user_seconds": 0.7156398104265403,
+          "wall_seconds": 0.7323943661971831
+        },
+        "median_rss_ratio": 1.5417298937784523,
+        "median_wall_ratio": 0.7323943661971831,
+        "missing": [],
+        "paired_wall_ratios": [
+          0.7323943661971831,
+          0.7323943661971831,
+          0.7323943661971831,
+          0.7358490566037735,
+          0.7358490566037735,
+          0.7289719626168224,
+          0.8457943925233644,
+          0.7323943661971831,
+          0.7289719626168224,
+          0.7323943661971831
+        ],
+        "per_call_seconds": 30,
+        "resource": false,
+        "status": "complete",
+        "throughput": true,
+        "workers": 1
+      },
+      "build_tbi": {
+        "all_metric_losses": {
+          "minor_faults": 1.0555555555555556,
+          "peak_rss_bytes": 1.5372790161414296,
+          "system_seconds": 5
+        },
+        "complete": true,
+        "complete_pair_ids": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10
+        ],
+        "disjoint_wall_gap_seconds": "0.54",
+        "distributions": {
+          "native": {
+            "filesystem_inputs": {
+              "maximum": 0,
+              "median": 0,
+              "minimum": 0,
+              "values": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ]
+            },
+            "filesystem_outputs": {
+              "maximum": 8,
+              "median": 8,
+              "minimum": 8,
+              "values": [
+                8,
+                8,
+                8,
+                8,
+                8,
+                8,
+                8,
+                8,
+                8,
+                8
+              ]
+            },
+            "major_faults": {
+              "maximum": 0,
+              "median": 0,
+              "minimum": 0,
+              "values": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ]
+            },
+            "minor_faults": {
+              "maximum": 309,
+              "median": 294.5,
+              "minimum": 291,
+              "values": [
+                296,
+                309,
+                291,
+                292,
+                292,
+                308,
+                293,
+                291,
+                299,
+                308
+              ]
+            },
+            "peak_rss_bytes": {
+              "maximum": 4128768,
+              "median": 4096000,
+              "minimum": 4026368,
+              "values": [
+                4124672,
+                4079616,
+                4116480,
+                4046848,
+                4026368,
+                4075520,
+                4128768,
+                4112384,
+                4124672,
+                4063232
+              ]
+            },
+            "system_seconds": {
+              "maximum": 0.05,
+              "median": 0.05,
+              "minimum": 0.03,
+              "values": [
+                0.03,
+                0.05,
+                0.05,
+                0.04,
+                0.05,
+                0.05,
+                0.05,
+                0.05,
+                0.05,
+                0.05
+              ]
+            },
+            "total_cpu_seconds": {
+              "maximum": 1.54,
+              "median": 1.53,
+              "minimum": 1.5,
+              "values": [
+                1.5,
+                1.52,
+                1.53,
+                1.53,
+                1.52,
+                1.53,
+                1.53,
+                1.53,
+                1.54,
+                1.53
+              ]
+            },
+            "user_seconds": {
+              "maximum": 1.49,
+              "median": 1.48,
+              "minimum": 1.47,
+              "values": [
+                1.47,
+                1.47,
+                1.48,
+                1.49,
+                1.47,
+                1.48,
+                1.48,
+                1.48,
+                1.49,
+                1.48
+              ]
+            },
+            "wall_seconds": {
+              "maximum": 1.59,
+              "median": 1.53,
+              "minimum": 1.51,
+              "values": [
+                1.51,
+                1.53,
+                1.53,
+                1.53,
+                1.53,
+                1.53,
+                1.53,
+                1.53,
+                1.59,
+                1.54
+              ]
+            }
+          },
+          "source": {
+            "filesystem_inputs": {
+              "maximum": 0,
+              "median": 0,
+              "minimum": 0,
+              "values": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ]
+            },
+            "filesystem_outputs": {
+              "maximum": 8,
+              "median": 8,
+              "minimum": 8,
+              "values": [
+                8,
+                8,
+                8,
+                8,
+                8,
+                8,
+                8,
+                8,
+                8,
+                8
+              ]
+            },
+            "major_faults": {
+              "maximum": 0,
+              "median": 0,
+              "minimum": 0,
+              "values": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ]
+            },
+            "minor_faults": {
+              "maximum": 283,
+              "median": 279,
+              "minimum": 275,
+              "values": [
+                277,
+                280,
+                278,
+                280,
+                283,
+                278,
+                275,
+                278,
+                280,
+                281
+              ]
+            },
+            "peak_rss_bytes": {
+              "maximum": 2748416,
+              "median": 2664448,
+              "minimum": 2555904,
+              "values": [
+                2748416,
+                2654208,
+                2744320,
+                2674688,
+                2650112,
+                2555904,
+                2609152,
+                2633728,
+                2748416,
+                2748416
+              ]
+            },
+            "system_seconds": {
+              "maximum": 0.01,
+              "median": 0.01,
+              "minimum": 0,
+              "values": [
+                0,
+                0,
+                0.01,
+                0.01,
+                0.01,
+                0,
+                0.01,
+                0.01,
+                0.01,
+                0.01
+              ]
+            },
+            "total_cpu_seconds": {
+              "maximum": 2.15,
+              "median": 2.13,
+              "minimum": 2.1199999999999997,
+              "values": [
+                2.13,
+                2.12,
+                2.13,
+                2.1399999999999997,
+                2.1199999999999997,
+                2.14,
+                2.15,
+                2.1399999999999997,
+                2.13,
+                2.13
+              ]
+            },
+            "user_seconds": {
+              "maximum": 2.14,
+              "median": 2.125,
+              "minimum": 2.11,
+              "values": [
+                2.13,
+                2.12,
+                2.12,
+                2.13,
+                2.11,
+                2.14,
+                2.14,
+                2.13,
+                2.12,
+                2.12
+              ]
+            },
+            "wall_seconds": {
+              "maximum": 2.18,
+              "median": 2.14,
+              "minimum": 2.13,
+              "values": [
+                2.14,
+                2.13,
+                2.14,
+                2.14,
+                2.13,
+                2.15,
+                2.16,
+                2.14,
+                2.18,
+                2.14
+              ]
+            }
+          }
+        },
+        "material": true,
+        "measured_counts": {
+          "native": 10,
+          "source": 10
+        },
+        "median_metric_ratios": {
+          "filesystem_inputs": null,
+          "filesystem_outputs": 1,
+          "major_faults": null,
+          "minor_faults": 1.0555555555555556,
+          "peak_rss_bytes": 1.5372790161414296,
+          "system_seconds": 5,
+          "total_cpu_seconds": 0.7183098591549296,
+          "user_seconds": 0.6964705882352941,
+          "wall_seconds": 0.7149532710280374
+        },
+        "median_rss_ratio": 1.5372790161414296,
+        "median_wall_ratio": 0.7149532710280374,
+        "missing": [],
+        "paired_wall_ratios": [
+          0.7056074766355139,
+          0.7183098591549296,
+          0.7149532710280374,
+          0.7149532710280374,
+          0.7183098591549296,
+          0.7116279069767443,
+          0.7083333333333333,
+          0.7149532710280374,
+          0.7293577981651376,
+          0.719626168224299
+        ],
+        "per_call_seconds": 30,
+        "resource": false,
+        "status": "complete",
+        "throughput": true,
+        "workers": 1
+      },
+      "compress_binary_t1": {
+        "all_metric_losses": {
+          "filesystem_outputs": 1.0000019064432062,
+          "minor_faults": 360.0433566433566,
+          "peak_rss_bytes": 1.680316091954023,
+          "system_seconds": 1.3787878787878791,
+          "total_cpu_seconds": 1.0523546435148643,
+          "user_seconds": 1.0358333333333334,
+          "wall_seconds": 1.111634883222627
+        },
+        "complete": true,
+        "complete_pair_ids": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10
+        ],
+        "disjoint_wall_gap_seconds": "-5.33",
+        "distributions": {
+          "native": {
+            "filesystem_inputs": {
+              "maximum": 413672,
+              "median": 206836,
+              "minimum": 0,
+              "values": [
+                413672,
+                0,
+                413672,
+                0,
+                413672,
+                0,
+                413672,
+                0,
+                413672,
+                0
+              ]
+            },
+            "filesystem_outputs": {
+              "maximum": 4196304,
+              "median": 4196304,
+              "minimum": 4196304,
+              "values": [
+                4196304,
+                4196304,
+                4196304,
+                4196304,
+                4196304,
+                4196304,
+                4196304,
+                4196304,
+                4196304,
+                4196304
+              ]
+            },
+            "major_faults": {
+              "maximum": 0,
+              "median": 0,
+              "minimum": 0,
+              "values": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ]
+            },
+            "minor_faults": {
+              "maximum": 263694,
+              "median": 128715.5,
+              "minimum": 1309,
+              "values": [
+                114518,
+                44139,
+                142913,
+                1309,
+                168470,
+                24444,
+                149726,
+                36830,
+                229670,
+                263694
+              ]
+            },
+            "peak_rss_bytes": {
+              "maximum": 4833280,
+              "median": 4790272,
+              "minimum": 4648960,
+              "values": [
+                4812800,
+                4771840,
+                4804608,
+                4808704,
+                4673536,
+                4788224,
+                4833280,
+                4648960,
+                4792320,
+                4648960
+              ]
+            },
+            "system_seconds": {
+              "maximum": 1.66,
+              "median": 1.3650000000000002,
+              "minimum": 1.11,
+              "values": [
+                1.37,
+                1.27,
+                1.36,
+                1.11,
+                1.42,
+                1.18,
+                1.39,
+                1.24,
+                1.54,
+                1.66
+              ]
+            },
+            "total_cpu_seconds": {
+              "maximum": 20.3,
+              "median": 20,
+              "minimum": 19.77,
+              "values": [
+                19.990000000000002,
+                19.84,
+                20.009999999999998,
+                19.77,
+                20.14,
+                19.79,
+                20.04,
+                19.86,
+                20.21,
+                20.3
+              ]
+            },
+            "user_seconds": {
+              "maximum": 18.72,
+              "median": 18.645,
+              "minimum": 18.57,
+              "values": [
+                18.62,
+                18.57,
+                18.65,
+                18.66,
+                18.72,
+                18.61,
+                18.65,
+                18.62,
+                18.67,
+                18.64
+              ]
+            },
+            "wall_seconds": {
+              "maximum": 28.08,
+              "median": 25.94,
+              "minimum": 23.97,
+              "values": [
+                23.97,
+                26.04,
+                25.94,
+                24.34,
+                24.87,
+                24.79,
+                27.67,
+                28.08,
+                28.05,
+                25.94
+              ]
+            }
+          },
+          "source": {
+            "filesystem_inputs": {
+              "maximum": 413672,
+              "median": 206836,
+              "minimum": 0,
+              "values": [
+                0,
+                413672,
+                0,
+                413672,
+                0,
+                413672,
+                0,
+                413672,
+                0,
+                413672
+              ]
+            },
+            "filesystem_outputs": {
+              "maximum": 4196296,
+              "median": 4196296,
+              "minimum": 4196296,
+              "values": [
+                4196296,
+                4196296,
+                4196296,
+                4196296,
+                4196296,
+                4196296,
+                4196296,
+                4196296,
+                4196296,
+                4196296
+              ]
+            },
+            "major_faults": {
+              "maximum": 0,
+              "median": 0,
+              "minimum": 0,
+              "values": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ]
+            },
+            "minor_faults": {
+              "maximum": 360,
+              "median": 357.5,
+              "minimum": 357,
+              "values": [
+                360,
+                357,
+                357,
+                358,
+                358,
+                359,
+                358,
+                357,
+                357,
+                357
+              ]
+            },
+            "peak_rss_bytes": {
+              "maximum": 2998272,
+              "median": 2850816,
+              "minimum": 2785280,
+              "values": [
+                2785280,
+                2998272,
+                2961408,
+                2854912,
+                2789376,
+                2863104,
+                2936832,
+                2834432,
+                2846720,
+                2838528
+              ]
+            },
+            "system_seconds": {
+              "maximum": 1.11,
+              "median": 0.99,
+              "minimum": 0.93,
+              "values": [
+                1,
+                0.93,
+                0.94,
+                0.99,
+                0.98,
+                0.99,
+                1.11,
+                1.05,
+                0.94,
+                1.02
+              ]
+            },
+            "total_cpu_seconds": {
+              "maximum": 19.27,
+              "median": 19.005000000000003,
+              "minimum": 18.94,
+              "values": [
+                18.94,
+                19,
+                18.950000000000003,
+                19.049999999999997,
+                19.27,
+                18.979999999999997,
+                19.08,
+                19.01,
+                19.060000000000002,
+                18.99
+              ]
+            },
+            "user_seconds": {
+              "maximum": 18.29,
+              "median": 18,
+              "minimum": 17.94,
+              "values": [
+                17.94,
+                18.07,
+                18.01,
+                18.06,
+                18.29,
+                17.99,
+                17.97,
+                17.96,
+                18.12,
+                17.97
+              ]
+            },
+            "wall_seconds": {
+              "maximum": 29.18,
+              "median": 23.335,
+              "minimum": 22.75,
+              "values": [
+                23.17,
+                26.48,
+                23.12,
+                25.49,
+                22.75,
+                29.18,
+                23.5,
+                24.13,
+                22.82,
+                23
+              ]
+            }
+          }
+        },
+        "material": false,
+        "measured_counts": {
+          "native": 10,
+          "source": 10
+        },
+        "median_metric_ratios": {
+          "filesystem_inputs": 1,
+          "filesystem_outputs": 1.0000019064432062,
+          "major_faults": null,
+          "minor_faults": 360.0433566433566,
+          "peak_rss_bytes": 1.680316091954023,
+          "system_seconds": 1.3787878787878791,
+          "total_cpu_seconds": 1.0523546435148643,
+          "user_seconds": 1.0358333333333334,
+          "wall_seconds": 1.111634883222627
+        },
+        "median_rss_ratio": 1.680316091954023,
+        "median_wall_ratio": 1.111634883222627,
+        "missing": [],
+        "paired_wall_ratios": [
+          1.0345274061286145,
+          0.9833836858006042,
+          1.1219723183391004,
+          0.9548842683405258,
+          1.0931868131868132,
+          0.8495544893762851,
+          1.1774468085106384,
+          1.16369664318276,
+          1.229184925503944,
+          1.1278260869565218
+        ],
+        "per_call_seconds": 60,
+        "resource": false,
+        "status": "complete",
+        "throughput": false,
+        "workers": 1
+      },
+      "compress_binary_t4": {
+        "all_metric_losses": {
+          "minor_faults": 123.01115241635688,
+          "peak_rss_bytes": 1.315644383184011,
+          "system_seconds": 1.8842592592592593
+        },
+        "complete": true,
+        "complete_pair_ids": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10
+        ],
+        "disjoint_wall_gap_seconds": "1.41",
+        "distributions": {
+          "native": {
+            "filesystem_inputs": {
+              "maximum": 413672,
+              "median": 206836,
+              "minimum": 0,
+              "values": [
+                413672,
+                0,
+                413672,
+                0,
+                413672,
+                0,
+                413672,
+                0,
+                413672,
+                0
+              ]
+            },
+            "filesystem_outputs": {
+              "maximum": 4196304,
+              "median": 4196304,
+              "minimum": 4196304,
+              "values": [
+                4196304,
+                4196304,
+                4196304,
+                4196304,
+                4196304,
+                4196304,
+                4196304,
+                4196304,
+                4196304,
+                4196304
+              ]
+            },
+            "major_faults": {
+              "maximum": 0,
+              "median": 0,
+              "minimum": 0,
+              "values": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ]
+            },
+            "minor_faults": {
+              "maximum": 173937,
+              "median": 165450,
+              "minimum": 162101,
+              "values": [
+                166494,
+                162101,
+                173937,
+                163142,
+                169804,
+                167963,
+                163660,
+                163033,
+                167307,
+                164406
+              ]
+            },
+            "peak_rss_bytes": {
+              "maximum": 8040448,
+              "median": 7819264,
+              "minimum": 7405568,
+              "values": [
+                7983104,
+                7610368,
+                8040448,
+                7405568,
+                7864320,
+                7733248,
+                7921664,
+                7573504,
+                7966720,
+                7774208
+              ]
+            },
+            "system_seconds": {
+              "maximum": 2.11,
+              "median": 2.035,
+              "minimum": 1.89,
+              "values": [
+                1.89,
+                1.9,
+                2.11,
+                2.06,
+                1.99,
+                2,
+                2.03,
+                2.04,
+                2.05,
+                2.09
+              ]
+            },
+            "total_cpu_seconds": {
+              "maximum": 28.5,
+              "median": 28.39,
+              "minimum": 28.24,
+              "values": [
+                28.310000000000002,
+                28.24,
+                28.36,
+                28.29,
+                28.38,
+                28.5,
+                28.46,
+                28.439999999999998,
+                28.400000000000002,
+                28.4
+              ]
+            },
+            "user_seconds": {
+              "maximum": 26.5,
+              "median": 26.37,
+              "minimum": 26.23,
+              "values": [
+                26.42,
+                26.34,
+                26.25,
+                26.23,
+                26.39,
+                26.5,
+                26.43,
+                26.4,
+                26.35,
+                26.31
+              ]
+            },
+            "wall_seconds": {
+              "maximum": 14.05,
+              "median": 13.105,
+              "minimum": 11.58,
+              "values": [
+                13.05,
+                11.58,
+                12.51,
+                12.84,
+                13.42,
+                13.39,
+                12.98,
+                14.05,
+                13.16,
+                13.59
+              ]
+            }
+          },
+          "source": {
+            "filesystem_inputs": {
+              "maximum": 413672,
+              "median": 206836,
+              "minimum": 0,
+              "values": [
+                0,
+                413672,
+                0,
+                413672,
+                0,
+                413672,
+                0,
+                413672,
+                0,
+                413672
+              ]
+            },
+            "filesystem_outputs": {
+              "maximum": 4196744,
+              "median": 4196744,
+              "minimum": 4196744,
+              "values": [
+                4196744,
+                4196744,
+                4196744,
+                4196744,
+                4196744,
+                4196744,
+                4196744,
+                4196744,
+                4196744,
+                4196744
+              ]
+            },
+            "major_faults": {
+              "maximum": 0,
+              "median": 0,
+              "minimum": 0,
+              "values": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ]
+            },
+            "minor_faults": {
+              "maximum": 1348,
+              "median": 1345,
+              "minimum": 1279,
+              "values": [
+                1348,
+                1345,
+                1345,
+                1347,
+                1345,
+                1347,
+                1346,
+                1345,
+                1279,
+                1279
+              ]
+            },
+            "peak_rss_bytes": {
+              "maximum": 6172672,
+              "median": 5943296,
+              "minimum": 5713920,
+              "values": [
+                5959680,
+                6115328,
+                5713920,
+                5783552,
+                6172672,
+                6070272,
+                5926912,
+                5894144,
+                5898240,
+                6008832
+              ]
+            },
+            "system_seconds": {
+              "maximum": 1.12,
+              "median": 1.08,
+              "minimum": 1.03,
+              "values": [
+                1.05,
+                1.11,
+                1.08,
+                1.12,
+                1.08,
+                1.11,
+                1.04,
+                1.12,
+                1.03,
+                1.08
+              ]
+            },
+            "total_cpu_seconds": {
+              "maximum": 28.68,
+              "median": 28.58,
+              "minimum": 28.479999999999997,
+              "values": [
+                28.55,
+                28.599999999999998,
+                28.61,
+                28.68,
+                28.479999999999997,
+                28.56,
+                28.5,
+                28.62,
+                28.580000000000002,
+                28.58
+              ]
+            },
+            "user_seconds": {
+              "maximum": 27.56,
+              "median": 27.5,
+              "minimum": 27.4,
+              "values": [
+                27.5,
+                27.49,
+                27.53,
+                27.56,
+                27.4,
+                27.45,
+                27.46,
+                27.5,
+                27.55,
+                27.5
+              ]
+            },
+            "wall_seconds": {
+              "maximum": 20.36,
+              "median": 17.450000000000003,
+              "minimum": 15.46,
+              "values": [
+                15.63,
+                19.05,
+                18.14,
+                16.76,
+                15.46,
+                18.45,
+                18.49,
+                16.34,
+                16.17,
+                20.36
+              ]
+            }
+          }
+        },
+        "material": true,
+        "measured_counts": {
+          "native": 10,
+          "source": 10
+        },
+        "median_metric_ratios": {
+          "filesystem_inputs": 1,
+          "filesystem_outputs": 0.9998951568168084,
+          "major_faults": null,
+          "minor_faults": 123.01115241635688,
+          "peak_rss_bytes": 1.315644383184011,
+          "system_seconds": 1.8842592592592593,
+          "total_cpu_seconds": 0.9933519944016795,
+          "user_seconds": 0.9589090909090909,
+          "wall_seconds": 0.7510028653295128
+        },
+        "median_rss_ratio": 1.315644383184011,
+        "median_wall_ratio": 0.7510028653295128,
+        "missing": [],
+        "paired_wall_ratios": [
+          0.8349328214971209,
+          0.6078740157480315,
+          0.6896361631753032,
+          0.7661097852028639,
+          0.8680465717981888,
+          0.7257452574525746,
+          0.7020010816657654,
+          0.8598531211750307,
+          0.8138528138528138,
+          0.6674852652259332
+        ],
+        "per_call_seconds": 60,
+        "resource": false,
+        "status": "complete",
+        "throughput": true,
+        "workers": 4
+      },
+      "compress_text_t1": {
+        "all_metric_losses": {
+          "filesystem_outputs": 1.1267046064640824,
+          "minor_faults": 230.73853211009174,
+          "peak_rss_bytes": 1.8150375939849623,
+          "system_seconds": 2.5952380952380953
+        },
+        "complete": true,
+        "complete_pair_ids": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10
+        ],
+        "disjoint_wall_gap_seconds": "0.64",
+        "distributions": {
+          "native": {
+            "filesystem_inputs": {
+              "maximum": 0,
+              "median": 0,
+              "minimum": 0,
+              "values": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ]
+            },
+            "filesystem_outputs": {
+              "maximum": 83944,
+              "median": 83944,
+              "minimum": 83944,
+              "values": [
+                83944,
+                83944,
+                83944,
+                83944,
+                83944,
+                83944,
+                83944,
+                83944,
+                83944,
+                83944
+              ]
+            },
+            "major_faults": {
+              "maximum": 0,
+              "median": 0,
+              "minimum": 0,
+              "values": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ]
+            },
+            "minor_faults": {
+              "maximum": 75455,
+              "median": 75451.5,
+              "minimum": 75436,
+              "values": [
+                75443,
+                75436,
+                75450,
+                75448,
+                75453,
+                75439,
+                75455,
+                75454,
+                75453,
+                75455
+              ]
+            },
+            "peak_rss_bytes": {
+              "maximum": 5009408,
+              "median": 4943872,
+              "minimum": 4780032,
+              "values": [
+                4780032,
+                4964352,
+                4902912,
+                4980736,
+                4980736,
+                4952064,
+                4878336,
+                4935680,
+                4825088,
+                5009408
+              ]
+            },
+            "system_seconds": {
+              "maximum": 0.59,
+              "median": 0.545,
+              "minimum": 0.51,
+              "values": [
+                0.51,
+                0.52,
+                0.57,
+                0.52,
+                0.55,
+                0.54,
+                0.52,
+                0.59,
+                0.57,
+                0.55
+              ]
+            },
+            "total_cpu_seconds": {
+              "maximum": 5.06,
+              "median": 5.02,
+              "minimum": 5,
+              "values": [
+                5.01,
+                5.01,
+                5.03,
+                5.01,
+                5.01,
+                5.06,
+                5.029999999999999,
+                5.03,
+                5,
+                5.03
+              ]
+            },
+            "user_seconds": {
+              "maximum": 4.52,
+              "median": 4.485,
+              "minimum": 4.43,
+              "values": [
+                4.5,
+                4.49,
+                4.46,
+                4.49,
+                4.46,
+                4.52,
+                4.51,
+                4.44,
+                4.43,
+                4.48
+              ]
+            },
+            "wall_seconds": {
+              "maximum": 5.37,
+              "median": 5.21,
+              "minimum": 5.17,
+              "values": [
+                5.31,
+                5.24,
+                5.2,
+                5.21,
+                5.17,
+                5.21,
+                5.18,
+                5.37,
+                5.31,
+                5.18
+              ]
+            }
+          },
+          "source": {
+            "filesystem_inputs": {
+              "maximum": 0,
+              "median": 0,
+              "minimum": 0,
+              "values": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ]
+            },
+            "filesystem_outputs": {
+              "maximum": 74504,
+              "median": 74504,
+              "minimum": 74504,
+              "values": [
+                74504,
+                74504,
+                74504,
+                74504,
+                74504,
+                74504,
+                74504,
+                74504,
+                74504,
+                74504
+              ]
+            },
+            "major_faults": {
+              "maximum": 0,
+              "median": 0,
+              "minimum": 0,
+              "values": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ]
+            },
+            "minor_faults": {
+              "maximum": 330,
+              "median": 327,
+              "minimum": 322,
+              "values": [
+                326,
+                322,
+                329,
+                325,
+                328,
+                328,
+                330,
+                324,
+                325,
+                329
+              ]
+            },
+            "peak_rss_bytes": {
+              "maximum": 2809856,
+              "median": 2723840,
+              "minimum": 2658304,
+              "values": [
+                2727936,
+                2736128,
+                2719744,
+                2768896,
+                2809856,
+                2719744,
+                2666496,
+                2809856,
+                2658304,
+                2666496
+              ]
+            },
+            "system_seconds": {
+              "maximum": 0.24,
+              "median": 0.21,
+              "minimum": 0.2,
+              "values": [
+                0.21,
+                0.24,
+                0.2,
+                0.22,
+                0.21,
+                0.24,
+                0.21,
+                0.2,
+                0.2,
+                0.23
+              ]
+            },
+            "total_cpu_seconds": {
+              "maximum": 6,
+              "median": 5.890000000000001,
+              "minimum": 5.88,
+              "values": [
+                5.88,
+                5.94,
+                5.890000000000001,
+                5.8999999999999995,
+                5.9,
+                5.890000000000001,
+                6,
+                5.890000000000001,
+                5.88,
+                5.880000000000001
+              ]
+            },
+            "user_seconds": {
+              "maximum": 5.79,
+              "median": 5.6850000000000005,
+              "minimum": 5.65,
+              "values": [
+                5.67,
+                5.7,
+                5.69,
+                5.68,
+                5.69,
+                5.65,
+                5.79,
+                5.69,
+                5.68,
+                5.65
+              ]
+            },
+            "wall_seconds": {
+              "maximum": 6.38,
+              "median": 6.08,
+              "minimum": 6.01,
+              "values": [
+                6.13,
+                6.08,
+                6.15,
+                6.38,
+                6.05,
+                6.03,
+                6.14,
+                6.02,
+                6.08,
+                6.01
+              ]
+            }
+          }
+        },
+        "material": true,
+        "measured_counts": {
+          "native": 10,
+          "source": 10
+        },
+        "median_metric_ratios": {
+          "filesystem_inputs": null,
+          "filesystem_outputs": 1.1267046064640824,
+          "major_faults": null,
+          "minor_faults": 230.73853211009174,
+          "peak_rss_bytes": 1.8150375939849623,
+          "system_seconds": 2.5952380952380953,
+          "total_cpu_seconds": 0.8522920203735143,
+          "user_seconds": 0.7889182058047494,
+          "wall_seconds": 0.856907894736842
+        },
+        "median_rss_ratio": 1.8150375939849623,
+        "median_wall_ratio": 0.856907894736842,
+        "missing": [],
+        "paired_wall_ratios": [
+          0.8662316476345839,
+          0.861842105263158,
+          0.8455284552845528,
+          0.8166144200626959,
+          0.8545454545454546,
+          0.8640132669983416,
+          0.8436482084690554,
+          0.8920265780730898,
+          0.8733552631578947,
+          0.8618968386023295
+        ],
+        "per_call_seconds": 45,
+        "resource": false,
+        "status": "complete",
+        "throughput": true,
+        "workers": 1
+      },
+      "compress_text_t4": {
+        "all_metric_losses": {
+          "filesystem_outputs": 1.118895286841544,
+          "minor_faults": 113.25014376078205,
+          "peak_rss_bytes": 1.5943627450980393,
+          "system_seconds": 1.4948453608247423
+        },
+        "complete": true,
+        "complete_pair_ids": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10
+        ],
+        "disjoint_wall_gap_seconds": "-0.08",
+        "distributions": {
+          "native": {
+            "filesystem_inputs": {
+              "maximum": 0,
+              "median": 0,
+              "minimum": 0,
+              "values": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ]
+            },
+            "filesystem_outputs": {
+              "maximum": 83944,
+              "median": 83944,
+              "minimum": 83944,
+              "values": [
+                83944,
+                83944,
+                83944,
+                83944,
+                83944,
+                83944,
+                83944,
+                83944,
+                83944,
+                83944
+              ]
+            },
+            "major_faults": {
+              "maximum": 0,
+              "median": 0,
+              "minimum": 0,
+              "values": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ]
+            },
+            "minor_faults": {
+              "maximum": 104328,
+              "median": 98471,
+              "minimum": 47829,
+              "values": [
+                47829,
+                99471,
+                102381,
+                96103,
+                97624,
+                99318,
+                104328,
+                100431,
+                61376,
+                84655
+              ]
+            },
+            "peak_rss_bytes": {
+              "maximum": 8204288,
+              "median": 7993344,
+              "minimum": 7798784,
+              "values": [
+                8167424,
+                7917568,
+                7970816,
+                8060928,
+                8015872,
+                7946240,
+                7933952,
+                8204288,
+                8146944,
+                7798784
+              ]
+            },
+            "system_seconds": {
+              "maximum": 0.78,
+              "median": 0.725,
+              "minimum": 0.58,
+              "values": [
+                0.58,
+                0.69,
+                0.75,
+                0.71,
+                0.74,
+                0.74,
+                0.76,
+                0.78,
+                0.66,
+                0.65
+              ]
+            },
+            "total_cpu_seconds": {
+              "maximum": 8.45,
+              "median": 8.43,
+              "minimum": 8.299999999999999,
+              "values": [
+                8.299999999999999,
+                8.43,
+                8.45,
+                8.42,
+                8.44,
+                8.43,
+                8.43,
+                8.45,
+                8.34,
+                8.39
+              ]
+            },
+            "user_seconds": {
+              "maximum": 7.74,
+              "median": 7.7,
+              "minimum": 7.67,
+              "values": [
+                7.72,
+                7.74,
+                7.7,
+                7.71,
+                7.7,
+                7.69,
+                7.67,
+                7.67,
+                7.68,
+                7.74
+              ]
+            },
+            "wall_seconds": {
+              "maximum": 2.9,
+              "median": 2.36,
+              "minimum": 2.31,
+              "values": [
+                2.31,
+                2.78,
+                2.36,
+                2.43,
+                2.42,
+                2.9,
+                2.36,
+                2.35,
+                2.33,
+                2.34
+              ]
+            }
+          },
+          "source": {
+            "filesystem_inputs": {
+              "maximum": 0,
+              "median": 0,
+              "minimum": 0,
+              "values": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ]
+            },
+            "filesystem_outputs": {
+              "maximum": 75024,
+              "median": 75024,
+              "minimum": 75024,
+              "values": [
+                75024,
+                75024,
+                75024,
+                75024,
+                75024,
+                75024,
+                75024,
+                75024,
+                75024,
+                75024
+              ]
+            },
+            "major_faults": {
+              "maximum": 0,
+              "median": 0,
+              "minimum": 0,
+              "values": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ]
+            },
+            "minor_faults": {
+              "maximum": 935,
+              "median": 869.5,
+              "minimum": 866,
+              "values": [
+                872,
+                935,
+                868,
+                868,
+                866,
+                934,
+                868,
+                934,
+                869,
+                870
+              ]
+            },
+            "peak_rss_bytes": {
+              "maximum": 5259264,
+              "median": 5013504,
+              "minimum": 4710400,
+              "values": [
+                5107712,
+                4710400,
+                4976640,
+                5259264,
+                4870144,
+                5050368,
+                4878336,
+                5107712,
+                4890624,
+                5259264
+              ]
+            },
+            "system_seconds": {
+              "maximum": 0.51,
+              "median": 0.485,
+              "minimum": 0.45,
+              "values": [
+                0.46,
+                0.49,
+                0.51,
+                0.45,
+                0.48,
+                0.49,
+                0.51,
+                0.45,
+                0.48,
+                0.51
+              ]
+            },
+            "total_cpu_seconds": {
+              "maximum": 9.41,
+              "median": 9.38,
+              "minimum": 9.350000000000001,
+              "values": [
+                9.350000000000001,
+                9.38,
+                9.41,
+                9.37,
+                9.38,
+                9.4,
+                9.379999999999999,
+                9.389999999999999,
+                9.38,
+                9.37
+              ]
+            },
+            "user_seconds": {
+              "maximum": 8.94,
+              "median": 8.9,
+              "minimum": 8.86,
+              "values": [
+                8.89,
+                8.89,
+                8.9,
+                8.92,
+                8.9,
+                8.91,
+                8.87,
+                8.94,
+                8.9,
+                8.86
+              ]
+            },
+            "wall_seconds": {
+              "maximum": 5.56,
+              "median": 3.9699999999999998,
+              "minimum": 2.82,
+              "values": [
+                2.82,
+                5.04,
+                5.56,
+                3.37,
+                3.73,
+                4.96,
+                4.32,
+                3.09,
+                3.28,
+                4.21
+              ]
+            }
+          }
+        },
+        "material": false,
+        "measured_counts": {
+          "native": 10,
+          "source": 10
+        },
+        "median_metric_ratios": {
+          "filesystem_inputs": null,
+          "filesystem_outputs": 1.118895286841544,
+          "major_faults": null,
+          "minor_faults": 113.25014376078205,
+          "peak_rss_bytes": 1.5943627450980393,
+          "system_seconds": 1.4948453608247423,
+          "total_cpu_seconds": 0.8987206823027718,
+          "user_seconds": 0.8651685393258427,
+          "wall_seconds": 0.5944584382871536
+        },
+        "median_rss_ratio": 1.5943627450980393,
+        "median_wall_ratio": 0.5944584382871536,
+        "missing": [],
+        "paired_wall_ratios": [
+          0.8191489361702128,
+          0.5515873015873015,
+          0.4244604316546763,
+          0.7210682492581603,
+          0.6487935656836461,
+          0.5846774193548387,
+          0.5462962962962963,
+          0.7605177993527509,
+          0.7103658536585367,
+          0.5558194774346793
+        ],
+        "per_call_seconds": 45,
+        "resource": false,
+        "status": "complete",
+        "throughput": false,
+        "workers": 4
+      },
+      "decompress_binary_t1": {
+        "all_metric_losses": {
+          "minor_faults": 2.1872246696035242,
+          "peak_rss_bytes": 1.931340872374798,
+          "system_seconds": 1.138888888888889,
+          "total_cpu_seconds": 1.2258064516129032,
+          "user_seconds": 1.3076923076923077,
+          "wall_seconds": 1.1875
+        },
+        "complete": true,
+        "complete_pair_ids": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10
+        ],
+        "disjoint_wall_gap_seconds": "-0.06",
+        "distributions": {
+          "native": {
+            "filesystem_inputs": {
+              "maximum": 0,
+              "median": 0,
+              "minimum": 0,
+              "values": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ]
+            },
+            "filesystem_outputs": {
+              "maximum": 0,
+              "median": 0,
+              "minimum": 0,
+              "values": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ]
+            },
+            "major_faults": {
+              "maximum": 0,
+              "median": 0,
+              "minimum": 0,
+              "values": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ]
+            },
+            "minor_faults": {
+              "maximum": 510,
+              "median": 496.5,
+              "minimum": 495,
+              "values": [
+                508,
+                496,
+                495,
+                497,
+                510,
+                510,
+                495,
+                506,
+                495,
+                495
+              ]
+            },
+            "peak_rss_bytes": {
+              "maximum": 5033984,
+              "median": 4896768,
+              "minimum": 4812800,
+              "values": [
+                4882432,
+                4837376,
+                4952064,
+                4972544,
+                4829184,
+                4911104,
+                5033984,
+                4812800,
+                4931584,
+                4874240
+              ]
+            },
+            "system_seconds": {
+              "maximum": 0.21,
+              "median": 0.20500000000000002,
+              "minimum": 0.19,
+              "values": [
+                0.21,
+                0.21,
+                0.2,
+                0.21,
+                0.19,
+                0.2,
+                0.19,
+                0.21,
+                0.21,
+                0.19
+              ]
+            },
+            "total_cpu_seconds": {
+              "maximum": 0.38,
+              "median": 0.38,
+              "minimum": 0.37,
+              "values": [
+                0.37,
+                0.38,
+                0.37,
+                0.38,
+                0.37,
+                0.38,
+                0.38,
+                0.38,
+                0.38,
+                0.38
+              ]
+            },
+            "user_seconds": {
+              "maximum": 0.19,
+              "median": 0.17,
+              "minimum": 0.16,
+              "values": [
+                0.16,
+                0.17,
+                0.17,
+                0.17,
+                0.18,
+                0.18,
+                0.19,
+                0.17,
+                0.17,
+                0.19
+              ]
+            },
+            "wall_seconds": {
+              "maximum": 0.38,
+              "median": 0.38,
+              "minimum": 0.38,
+              "values": [
+                0.38,
+                0.38,
+                0.38,
+                0.38,
+                0.38,
+                0.38,
+                0.38,
+                0.38,
+                0.38,
+                0.38
+              ]
+            }
+          },
+          "source": {
+            "filesystem_inputs": {
+              "maximum": 0,
+              "median": 0,
+              "minimum": 0,
+              "values": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ]
+            },
+            "filesystem_outputs": {
+              "maximum": 0,
+              "median": 0,
+              "minimum": 0,
+              "values": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ]
+            },
+            "major_faults": {
+              "maximum": 0,
+              "median": 0,
+              "minimum": 0,
+              "values": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ]
+            },
+            "minor_faults": {
+              "maximum": 231,
+              "median": 227,
+              "minimum": 221,
+              "values": [
+                224,
+                231,
+                229,
+                221,
+                224,
+                226,
+                225,
+                228,
+                230,
+                231
+              ]
+            },
+            "peak_rss_bytes": {
+              "maximum": 2699264,
+              "median": 2535424,
+              "minimum": 2473984,
+              "values": [
+                2506752,
+                2523136,
+                2699264,
+                2531328,
+                2535424,
+                2551808,
+                2547712,
+                2535424,
+                2473984,
+                2547712
+              ]
+            },
+            "system_seconds": {
+              "maximum": 0.21,
+              "median": 0.18,
+              "minimum": 0.16,
+              "values": [
+                0.21,
+                0.18,
+                0.18,
+                0.18,
+                0.19,
+                0.17,
+                0.19,
+                0.18,
+                0.16,
+                0.19
+              ]
+            },
+            "total_cpu_seconds": {
+              "maximum": 0.33999999999999997,
+              "median": 0.31,
+              "minimum": 0.31,
+              "values": [
+                0.33999999999999997,
+                0.31,
+                0.31,
+                0.31,
+                0.31,
+                0.32,
+                0.33,
+                0.31,
+                0.31,
+                0.31
+              ]
+            },
+            "user_seconds": {
+              "maximum": 0.15,
+              "median": 0.13,
+              "minimum": 0.12,
+              "values": [
+                0.13,
+                0.13,
+                0.13,
+                0.13,
+                0.12,
+                0.15,
+                0.14,
+                0.13,
+                0.15,
+                0.12
+              ]
+            },
+            "wall_seconds": {
+              "maximum": 0.34,
+              "median": 0.32,
+              "minimum": 0.32,
+              "values": [
+                0.34,
+                0.32,
+                0.32,
+                0.32,
+                0.32,
+                0.32,
+                0.33,
+                0.32,
+                0.32,
+                0.32
+              ]
+            }
+          }
+        },
+        "material": false,
+        "measured_counts": {
+          "native": 10,
+          "source": 10
+        },
+        "median_metric_ratios": {
+          "filesystem_inputs": null,
+          "filesystem_outputs": null,
+          "major_faults": null,
+          "minor_faults": 2.1872246696035242,
+          "peak_rss_bytes": 1.931340872374798,
+          "system_seconds": 1.138888888888889,
+          "total_cpu_seconds": 1.2258064516129032,
+          "user_seconds": 1.3076923076923077,
+          "wall_seconds": 1.1875
+        },
+        "median_rss_ratio": 1.931340872374798,
+        "median_wall_ratio": 1.1875,
+        "missing": [],
+        "paired_wall_ratios": [
+          1.1176470588235294,
+          1.1875,
+          1.1875,
+          1.1875,
+          1.1875,
+          1.1875,
+          1.1515151515151514,
+          1.1875,
+          1.1875,
+          1.1875
+        ],
+        "per_call_seconds": 45,
+        "resource": false,
+        "status": "complete",
+        "throughput": false,
+        "workers": 1
+      },
+      "decompress_text_t1": {
+        "all_metric_losses": {
+          "minor_faults": 2.3049645390070923,
+          "peak_rss_bytes": 1.8974776240846216,
+          "system_seconds": 3.5000000000000004,
+          "total_cpu_seconds": 1.09375,
+          "wall_seconds": 1.09375
+        },
+        "complete": true,
+        "complete_pair_ids": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10
+        ],
+        "disjoint_wall_gap_seconds": "-0.03",
+        "distributions": {
+          "native": {
+            "filesystem_inputs": {
+              "maximum": 0,
+              "median": 0,
+              "minimum": 0,
+              "values": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ]
+            },
+            "filesystem_outputs": {
+              "maximum": 0,
+              "median": 0,
+              "minimum": 0,
+              "values": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ]
+            },
+            "major_faults": {
+              "maximum": 0,
+              "median": 0,
+              "minimum": 0,
+              "values": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ]
+            },
+            "minor_faults": {
+              "maximum": 497,
+              "median": 487.5,
+              "minimum": 475,
+              "values": [
+                495,
+                494,
+                479,
+                475,
+                477,
+                481,
+                497,
+                493,
+                497,
+                482
+              ]
+            },
+            "peak_rss_bytes": {
+              "maximum": 4857856,
+              "median": 4775936,
+              "minimum": 4677632,
+              "values": [
+                4825088,
+                4857856,
+                4751360,
+                4812800,
+                4759552,
+                4755456,
+                4792320,
+                4677632,
+                4808704,
+                4718592
+              ]
+            },
+            "system_seconds": {
+              "maximum": 0.08,
+              "median": 0.07,
+              "minimum": 0.06,
+              "values": [
+                0.07,
+                0.08,
+                0.06,
+                0.06,
+                0.08,
+                0.07,
+                0.07,
+                0.06,
+                0.08,
+                0.07
+              ]
+            },
+            "total_cpu_seconds": {
+              "maximum": 0.35000000000000003,
+              "median": 0.35000000000000003,
+              "minimum": 0.34,
+              "values": [
+                0.35000000000000003,
+                0.35000000000000003,
+                0.35,
+                0.35,
+                0.35000000000000003,
+                0.35000000000000003,
+                0.35000000000000003,
+                0.34,
+                0.35000000000000003,
+                0.35000000000000003
+              ]
+            },
+            "user_seconds": {
+              "maximum": 0.29,
+              "median": 0.28,
+              "minimum": 0.27,
+              "values": [
+                0.28,
+                0.27,
+                0.29,
+                0.29,
+                0.27,
+                0.28,
+                0.28,
+                0.28,
+                0.27,
+                0.28
+              ]
+            },
+            "wall_seconds": {
+              "maximum": 0.35,
+              "median": 0.35,
+              "minimum": 0.35,
+              "values": [
+                0.35,
+                0.35,
+                0.35,
+                0.35,
+                0.35,
+                0.35,
+                0.35,
+                0.35,
+                0.35,
+                0.35
+              ]
+            }
+          },
+          "source": {
+            "filesystem_inputs": {
+              "maximum": 0,
+              "median": 0,
+              "minimum": 0,
+              "values": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ]
+            },
+            "filesystem_outputs": {
+              "maximum": 0,
+              "median": 0,
+              "minimum": 0,
+              "values": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ]
+            },
+            "major_faults": {
+              "maximum": 0,
+              "median": 0,
+              "minimum": 0,
+              "values": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ]
+            },
+            "minor_faults": {
+              "maximum": 215,
+              "median": 211.5,
+              "minimum": 208,
+              "values": [
+                211,
+                215,
+                214,
+                212,
+                210,
+                208,
+                213,
+                208,
+                213,
+                211
+              ]
+            },
+            "peak_rss_bytes": {
+              "maximum": 2600960,
+              "median": 2516992,
+              "minimum": 2441216,
+              "values": [
+                2560000,
+                2506752,
+                2519040,
+                2600960,
+                2514944,
+                2445312,
+                2600960,
+                2514944,
+                2576384,
+                2441216
+              ]
+            },
+            "system_seconds": {
+              "maximum": 0.03,
+              "median": 0.02,
+              "minimum": 0.01,
+              "values": [
+                0.02,
+                0.02,
+                0.02,
+                0.02,
+                0.02,
+                0.02,
+                0.02,
+                0.02,
+                0.03,
+                0.01
+              ]
+            },
+            "total_cpu_seconds": {
+              "maximum": 0.32,
+              "median": 0.32,
+              "minimum": 0.31,
+              "values": [
+                0.32,
+                0.32,
+                0.32,
+                0.32,
+                0.32,
+                0.31,
+                0.32,
+                0.31,
+                0.31999999999999995,
+                0.31
+              ]
+            },
+            "user_seconds": {
+              "maximum": 0.3,
+              "median": 0.3,
+              "minimum": 0.29,
+              "values": [
+                0.3,
+                0.3,
+                0.3,
+                0.3,
+                0.3,
+                0.29,
+                0.3,
+                0.29,
+                0.29,
+                0.3
+              ]
+            },
+            "wall_seconds": {
+              "maximum": 0.32,
+              "median": 0.32,
+              "minimum": 0.32,
+              "values": [
+                0.32,
+                0.32,
+                0.32,
+                0.32,
+                0.32,
+                0.32,
+                0.32,
+                0.32,
+                0.32,
+                0.32
+              ]
+            }
+          }
+        },
+        "material": false,
+        "measured_counts": {
+          "native": 10,
+          "source": 10
+        },
+        "median_metric_ratios": {
+          "filesystem_inputs": null,
+          "filesystem_outputs": null,
+          "major_faults": null,
+          "minor_faults": 2.3049645390070923,
+          "peak_rss_bytes": 1.8974776240846216,
+          "system_seconds": 3.5000000000000004,
+          "total_cpu_seconds": 1.09375,
+          "user_seconds": 0.9333333333333335,
+          "wall_seconds": 1.09375
+        },
+        "median_rss_ratio": 1.8974776240846216,
+        "median_wall_ratio": 1.09375,
+        "missing": [],
+        "paired_wall_ratios": [
+          1.09375,
+          1.09375,
+          1.09375,
+          1.09375,
+          1.09375,
+          1.09375,
+          1.09375,
+          1.09375,
+          1.09375,
+          1.09375
+        ],
+        "per_call_seconds": 10,
+        "resource": false,
+        "status": "complete",
+        "throughput": false,
+        "workers": 1
+      },
+      "partial_binary_512m": {
+        "all_metric_losses": {
+          "minor_faults": 1.7740585774058577,
+          "peak_rss_bytes": 1.8630910374029641,
+          "system_seconds": 2,
+          "total_cpu_seconds": 2,
+          "user_seconds": 1.5,
+          "wall_seconds": 1.7500000000000002
+        },
+        "complete": true,
+        "complete_pair_ids": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10
+        ],
+        "disjoint_wall_gap_seconds": "-0.06",
+        "distributions": {
+          "native": {
+            "filesystem_inputs": {
+              "maximum": 0,
+              "median": 0,
+              "minimum": 0,
+              "values": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ]
+            },
+            "filesystem_outputs": {
+              "maximum": 0,
+              "median": 0,
+              "minimum": 0,
+              "values": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ]
+            },
+            "major_faults": {
+              "maximum": 0,
+              "median": 0,
+              "minimum": 0,
+              "values": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ]
+            },
+            "minor_faults": {
+              "maximum": 644,
+              "median": 636,
+              "minimum": 622,
+              "values": [
+                631,
+                625,
+                634,
+                642,
+                644,
+                640,
+                622,
+                641,
+                623,
+                638
+              ]
+            },
+            "peak_rss_bytes": {
+              "maximum": 5562368,
+              "median": 5406720,
+              "minimum": 5283840,
+              "values": [
+                5496832,
+                5378048,
+                5283840,
+                5406720,
+                5398528,
+                5468160,
+                5562368,
+                5406720,
+                5414912,
+                5406720
+              ]
+            },
+            "system_seconds": {
+              "maximum": 0.1,
+              "median": 0.09,
+              "minimum": 0.08,
+              "values": [
+                0.1,
+                0.1,
+                0.09,
+                0.09,
+                0.09,
+                0.08,
+                0.09,
+                0.09,
+                0.09,
+                0.09
+              ]
+            },
+            "total_cpu_seconds": {
+              "maximum": 0.14,
+              "median": 0.14,
+              "minimum": 0.13,
+              "values": [
+                0.14,
+                0.14,
+                0.13,
+                0.14,
+                0.14,
+                0.13,
+                0.13,
+                0.14,
+                0.14,
+                0.13
+              ]
+            },
+            "user_seconds": {
+              "maximum": 0.05,
+              "median": 0.045,
+              "minimum": 0.04,
+              "values": [
+                0.04,
+                0.04,
+                0.04,
+                0.05,
+                0.05,
+                0.05,
+                0.04,
+                0.05,
+                0.05,
+                0.04
+              ]
+            },
+            "wall_seconds": {
+              "maximum": 0.14,
+              "median": 0.14,
+              "minimum": 0.14,
+              "values": [
+                0.14,
+                0.14,
+                0.14,
+                0.14,
+                0.14,
+                0.14,
+                0.14,
+                0.14,
+                0.14,
+                0.14
+              ]
+            }
+          },
+          "source": {
+            "filesystem_inputs": {
+              "maximum": 0,
+              "median": 0,
+              "minimum": 0,
+              "values": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ]
+            },
+            "filesystem_outputs": {
+              "maximum": 0,
+              "median": 0,
+              "minimum": 0,
+              "values": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ]
+            },
+            "major_faults": {
+              "maximum": 0,
+              "median": 0,
+              "minimum": 0,
+              "values": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ]
+            },
+            "minor_faults": {
+              "maximum": 362,
+              "median": 358.5,
+              "minimum": 354,
+              "values": [
+                360,
+                359,
+                362,
+                356,
+                358,
+                357,
+                356,
+                360,
+                359,
+                354
+              ]
+            },
+            "peak_rss_bytes": {
+              "maximum": 2961408,
+              "median": 2902016,
+              "minimum": 2732032,
+              "values": [
+                2908160,
+                2961408,
+                2908160,
+                2895872,
+                2818048,
+                2912256,
+                2838528,
+                2961408,
+                2818048,
+                2732032
+              ]
+            },
+            "system_seconds": {
+              "maximum": 0.05,
+              "median": 0.045,
+              "minimum": 0.04,
+              "values": [
+                0.05,
+                0.04,
+                0.05,
+                0.04,
+                0.04,
+                0.05,
+                0.04,
+                0.05,
+                0.05,
+                0.04
+              ]
+            },
+            "total_cpu_seconds": {
+              "maximum": 0.08,
+              "median": 0.07,
+              "minimum": 0.07,
+              "values": [
+                0.07,
+                0.07,
+                0.08,
+                0.08,
+                0.07,
+                0.08,
+                0.07,
+                0.07,
+                0.08,
+                0.07
+              ]
+            },
+            "user_seconds": {
+              "maximum": 0.04,
+              "median": 0.03,
+              "minimum": 0.02,
+              "values": [
+                0.02,
+                0.03,
+                0.03,
+                0.04,
+                0.03,
+                0.03,
+                0.03,
+                0.02,
+                0.03,
+                0.03
+              ]
+            },
+            "wall_seconds": {
+              "maximum": 0.08,
+              "median": 0.08,
+              "minimum": 0.08,
+              "values": [
+                0.08,
+                0.08,
+                0.08,
+                0.08,
+                0.08,
+                0.08,
+                0.08,
+                0.08,
+                0.08,
+                0.08
+              ]
+            }
+          }
+        },
+        "material": false,
+        "measured_counts": {
+          "native": 10,
+          "source": 10
+        },
+        "median_metric_ratios": {
+          "filesystem_inputs": null,
+          "filesystem_outputs": null,
+          "major_faults": null,
+          "minor_faults": 1.7740585774058577,
+          "peak_rss_bytes": 1.8630910374029641,
+          "system_seconds": 2,
+          "total_cpu_seconds": 2,
+          "user_seconds": 1.5,
+          "wall_seconds": 1.7500000000000002
+        },
+        "median_rss_ratio": 1.8630910374029641,
+        "median_wall_ratio": 1.7500000000000002,
+        "missing": [],
+        "paired_wall_ratios": [
+          1.7500000000000002,
+          1.7500000000000002,
+          1.7500000000000002,
+          1.7500000000000002,
+          1.7500000000000002,
+          1.7500000000000002,
+          1.7500000000000002,
+          1.7500000000000002,
+          1.7500000000000002,
+          1.7500000000000002
+        ],
+        "per_call_seconds": 10,
+        "resource": false,
+        "status": "complete",
+        "throughput": false,
+        "workers": 1
+      },
+      "query_dense_t4": {
+        "all_metric_losses": {
+          "minor_faults": 7.095933263816476,
+          "peak_rss_bytes": 1.5163157894736843
+        },
+        "complete": true,
+        "complete_pair_ids": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10
+        ],
+        "disjoint_wall_gap_seconds": "0.07",
+        "distributions": {
+          "native": {
+            "filesystem_inputs": {
+              "maximum": 0,
+              "median": 0,
+              "minimum": 0,
+              "values": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ]
+            },
+            "filesystem_outputs": {
+              "maximum": 0,
+              "median": 0,
+              "minimum": 0,
+              "values": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ]
+            },
+            "major_faults": {
+              "maximum": 0,
+              "median": 0,
+              "minimum": 0,
+              "values": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ]
+            },
+            "minor_faults": {
+              "maximum": 3706,
+              "median": 3402.5,
+              "minimum": 2809,
+              "values": [
+                3569,
+                3580,
+                2890,
+                3433,
+                3372,
+                3535,
+                3706,
+                3016,
+                2809,
+                3355
+              ]
+            },
+            "peak_rss_bytes": {
+              "maximum": 6049792,
+              "median": 5900288,
+              "minimum": 5812224,
+              "values": [
+                5918720,
+                5873664,
+                5812224,
+                5881856,
+                5935104,
+                5853184,
+                5939200,
+                5820416,
+                6008832,
+                6049792
+              ]
+            },
+            "system_seconds": {
+              "maximum": 0.06,
+              "median": 0.05,
+              "minimum": 0.04,
+              "values": [
+                0.05,
+                0.05,
+                0.05,
+                0.05,
+                0.06,
+                0.05,
+                0.04,
+                0.06,
+                0.05,
+                0.05
+              ]
+            },
+            "total_cpu_seconds": {
+              "maximum": 0.29000000000000004,
+              "median": 0.28500000000000003,
+              "minimum": 0.28,
+              "values": [
+                0.28,
+                0.29,
+                0.28,
+                0.28,
+                0.29000000000000004,
+                0.29,
+                0.29,
+                0.29000000000000004,
+                0.28,
+                0.28
+              ]
+            },
+            "user_seconds": {
+              "maximum": 0.25,
+              "median": 0.23,
+              "minimum": 0.23,
+              "values": [
+                0.23,
+                0.24,
+                0.23,
+                0.23,
+                0.23,
+                0.24,
+                0.25,
+                0.23,
+                0.23,
+                0.23
+              ]
+            },
+            "wall_seconds": {
+              "maximum": 0.18,
+              "median": 0.175,
+              "minimum": 0.17,
+              "values": [
+                0.17,
+                0.18,
+                0.17,
+                0.17,
+                0.18,
+                0.18,
+                0.18,
+                0.18,
+                0.17,
+                0.17
+              ]
+            }
+          },
+          "source": {
+            "filesystem_inputs": {
+              "maximum": 0,
+              "median": 0,
+              "minimum": 0,
+              "values": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ]
+            },
+            "filesystem_outputs": {
+              "maximum": 0,
+              "median": 0,
+              "minimum": 0,
+              "values": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ]
+            },
+            "major_faults": {
+              "maximum": 0,
+              "median": 0,
+              "minimum": 0,
+              "values": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ]
+            },
+            "minor_faults": {
+              "maximum": 499,
+              "median": 479.5,
+              "minimum": 474,
+              "values": [
+                479,
+                480,
+                474,
+                499,
+                482,
+                479,
+                479,
+                479,
+                481,
+                484
+              ]
+            },
+            "peak_rss_bytes": {
+              "maximum": 4161536,
+              "median": 3891200,
+              "minimum": 3768320,
+              "values": [
+                3887104,
+                3895296,
+                3817472,
+                4161536,
+                3928064,
+                3899392,
+                3837952,
+                3768320,
+                3805184,
+                3911680
+              ]
+            },
+            "system_seconds": {
+              "maximum": 0.08,
+              "median": 0.065,
+              "minimum": 0.06,
+              "values": [
+                0.06,
+                0.07,
+                0.06,
+                0.06,
+                0.06,
+                0.07,
+                0.06,
+                0.07,
+                0.08,
+                0.07
+              ]
+            },
+            "total_cpu_seconds": {
+              "maximum": 0.39,
+              "median": 0.35,
+              "minimum": 0.34,
+              "values": [
+                0.35,
+                0.39,
+                0.34,
+                0.35,
+                0.34,
+                0.35000000000000003,
+                0.35,
+                0.35000000000000003,
+                0.36000000000000004,
+                0.35000000000000003
+              ]
+            },
+            "user_seconds": {
+              "maximum": 0.32,
+              "median": 0.28,
+              "minimum": 0.28,
+              "values": [
+                0.29,
+                0.32,
+                0.28,
+                0.29,
+                0.28,
+                0.28,
+                0.29,
+                0.28,
+                0.28,
+                0.28
+              ]
+            },
+            "wall_seconds": {
+              "maximum": 0.3,
+              "median": 0.265,
+              "minimum": 0.25,
+              "values": [
+                0.26,
+                0.3,
+                0.26,
+                0.27,
+                0.25,
+                0.26,
+                0.27,
+                0.27,
+                0.27,
+                0.26
+              ]
+            }
+          }
+        },
+        "material": true,
+        "measured_counts": {
+          "native": 10,
+          "source": 10
+        },
+        "median_metric_ratios": {
+          "filesystem_inputs": null,
+          "filesystem_outputs": null,
+          "major_faults": null,
+          "minor_faults": 7.095933263816476,
+          "peak_rss_bytes": 1.5163157894736843,
+          "system_seconds": 0.7692307692307693,
+          "total_cpu_seconds": 0.8142857142857144,
+          "user_seconds": 0.8214285714285714,
+          "wall_seconds": 0.660377358490566
+        },
+        "median_rss_ratio": 1.5163157894736843,
+        "median_wall_ratio": 0.660377358490566,
+        "missing": [],
+        "paired_wall_ratios": [
+          0.6538461538461539,
+          0.6,
+          0.6538461538461539,
+          0.6296296296296297,
+          0.72,
+          0.6923076923076923,
+          0.6666666666666666,
+          0.6666666666666666,
+          0.6296296296296297,
+          0.6538461538461539
+        ],
+        "per_call_seconds": 10,
+        "resource": false,
+        "status": "complete",
+        "throughput": true,
+        "workers": 4
+      },
+      "query_overlap_unique_t4": {
+        "all_metric_losses": {
+          "minor_faults": 33.77512953367876,
+          "peak_rss_bytes": 1.5501600853788686,
+          "system_seconds": 1.4035087719298245,
+          "total_cpu_seconds": 1.3383685800604228,
+          "user_seconds": 1.3284671532846715,
+          "wall_seconds": 1.1079999999999999
+        },
+        "complete": true,
+        "complete_pair_ids": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10
+        ],
+        "disjoint_wall_gap_seconds": "-0.18",
+        "distributions": {
+          "native": {
+            "filesystem_inputs": {
+              "maximum": 0,
+              "median": 0,
+              "minimum": 0,
+              "values": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ]
+            },
+            "filesystem_outputs": {
+              "maximum": 0,
+              "median": 0,
+              "minimum": 0,
+              "values": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ]
+            },
+            "major_faults": {
+              "maximum": 0,
+              "median": 0,
+              "minimum": 0,
+              "values": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ]
+            },
+            "minor_faults": {
+              "maximum": 17672,
+              "median": 16296.5,
+              "minimum": 14688,
+              "values": [
+                16022,
+                17672,
+                16571,
+                15567,
+                17160,
+                14688,
+                15438,
+                16943,
+                14815,
+                16682
+              ]
+            },
+            "peak_rss_bytes": {
+              "maximum": 6144000,
+              "median": 5949440,
+              "minimum": 5861376,
+              "values": [
+                5881856,
+                6144000,
+                5894144,
+                5959680,
+                5971968,
+                5963776,
+                5861376,
+                5906432,
+                6107136,
+                5939200
+              ]
+            },
+            "system_seconds": {
+              "maximum": 0.42,
+              "median": 0.4,
+              "minimum": 0.37,
+              "values": [
+                0.39,
+                0.37,
+                0.4,
+                0.39,
+                0.42,
+                0.4,
+                0.41,
+                0.42,
+                0.37,
+                0.4
+              ]
+            },
+            "total_cpu_seconds": {
+              "maximum": 2.24,
+              "median": 2.215,
+              "minimum": 2.2,
+              "values": [
+                2.21,
+                2.2,
+                2.22,
+                2.22,
+                2.24,
+                2.2,
+                2.21,
+                2.22,
+                2.2,
+                2.23
+              ]
+            },
+            "user_seconds": {
+              "maximum": 1.83,
+              "median": 1.82,
+              "minimum": 1.8,
+              "values": [
+                1.82,
+                1.83,
+                1.82,
+                1.83,
+                1.82,
+                1.8,
+                1.8,
+                1.8,
+                1.83,
+                1.83
+              ]
+            },
+            "wall_seconds": {
+              "maximum": 1.4,
+              "median": 1.3849999999999998,
+              "minimum": 1.37,
+              "values": [
+                1.38,
+                1.38,
+                1.39,
+                1.38,
+                1.4,
+                1.38,
+                1.39,
+                1.39,
+                1.37,
+                1.4
+              ]
+            }
+          },
+          "source": {
+            "filesystem_inputs": {
+              "maximum": 0,
+              "median": 0,
+              "minimum": 0,
+              "values": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ]
+            },
+            "filesystem_outputs": {
+              "maximum": 0,
+              "median": 0,
+              "minimum": 0,
+              "values": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ]
+            },
+            "major_faults": {
+              "maximum": 0,
+              "median": 0,
+              "minimum": 0,
+              "values": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ]
+            },
+            "minor_faults": {
+              "maximum": 499,
+              "median": 482.5,
+              "minimum": 478,
+              "values": [
+                496,
+                480,
+                478,
+                478,
+                499,
+                479,
+                485,
+                478,
+                495,
+                488
+              ]
+            },
+            "peak_rss_bytes": {
+              "maximum": 4042752,
+              "median": 3837952,
+              "minimum": 3637248,
+              "values": [
+                3768320,
+                3870720,
+                3780608,
+                3866624,
+                3866624,
+                3649536,
+                3809280,
+                3637248,
+                4001792,
+                4042752
+              ]
+            },
+            "system_seconds": {
+              "maximum": 0.34,
+              "median": 0.28500000000000003,
+              "minimum": 0.26,
+              "values": [
+                0.34,
+                0.3,
+                0.32,
+                0.29,
+                0.28,
+                0.31,
+                0.27,
+                0.26,
+                0.28,
+                0.28
+              ]
+            },
+            "total_cpu_seconds": {
+              "maximum": 1.69,
+              "median": 1.655,
+              "minimum": 1.6300000000000001,
+              "values": [
+                1.6500000000000001,
+                1.6500000000000001,
+                1.6400000000000001,
+                1.6300000000000001,
+                1.67,
+                1.6700000000000002,
+                1.69,
+                1.64,
+                1.67,
+                1.66
+              ]
+            },
+            "user_seconds": {
+              "maximum": 1.42,
+              "median": 1.37,
+              "minimum": 1.31,
+              "values": [
+                1.31,
+                1.35,
+                1.32,
+                1.34,
+                1.39,
+                1.36,
+                1.42,
+                1.38,
+                1.39,
+                1.38
+              ]
+            },
+            "wall_seconds": {
+              "maximum": 1.27,
+              "median": 1.25,
+              "minimum": 1.22,
+              "values": [
+                1.25,
+                1.24,
+                1.22,
+                1.22,
+                1.26,
+                1.25,
+                1.27,
+                1.23,
+                1.27,
+                1.25
+              ]
+            }
+          }
+        },
+        "material": false,
+        "measured_counts": {
+          "native": 10,
+          "source": 10
+        },
+        "median_metric_ratios": {
+          "filesystem_inputs": null,
+          "filesystem_outputs": null,
+          "major_faults": null,
+          "minor_faults": 33.77512953367876,
+          "peak_rss_bytes": 1.5501600853788686,
+          "system_seconds": 1.4035087719298245,
+          "total_cpu_seconds": 1.3383685800604228,
+          "user_seconds": 1.3284671532846715,
+          "wall_seconds": 1.1079999999999999
+        },
+        "median_rss_ratio": 1.5501600853788686,
+        "median_wall_ratio": 1.1079999999999999,
+        "missing": [],
+        "paired_wall_ratios": [
+          1.1039999999999999,
+          1.1129032258064515,
+          1.139344262295082,
+          1.1311475409836065,
+          1.111111111111111,
+          1.1039999999999999,
+          1.0944881889763778,
+          1.1300813008130082,
+          1.078740157480315,
+          1.1199999999999999
+        ],
+        "per_call_seconds": 30,
+        "resource": false,
+        "status": "complete",
+        "throughput": false,
+        "workers": 4
+      },
+      "query_sparse_t1": {
+        "all_metric_losses": {
+          "system_seconds": 11.047619047619047,
+          "total_cpu_seconds": 1.286621751684312,
+          "user_seconds": 1.2070236709351958,
+          "wall_seconds": 1.2865114489128344
+        },
+        "complete": true,
+        "complete_pair_ids": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10
+        ],
+        "disjoint_wall_gap_seconds": "-7.95",
+        "distributions": {
+          "native": {
+            "filesystem_inputs": {
+              "maximum": 0,
+              "median": 0,
+              "minimum": 0,
+              "values": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ]
+            },
+            "filesystem_outputs": {
+              "maximum": 0,
+              "median": 0,
+              "minimum": 0,
+              "values": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ]
+            },
+            "major_faults": {
+              "maximum": 0,
+              "median": 0,
+              "minimum": 0,
+              "values": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ]
+            },
+            "minor_faults": {
+              "maximum": 884,
+              "median": 867.5,
+              "minimum": 859,
+              "values": [
+                862,
+                884,
+                867,
+                863,
+                879,
+                866,
+                869,
+                868,
+                859,
+                882
+              ]
+            },
+            "peak_rss_bytes": {
+              "maximum": 6504448,
+              "median": 6363136,
+              "minimum": 6270976,
+              "values": [
+                6373376,
+                6361088,
+                6365184,
+                6283264,
+                6332416,
+                6270976,
+                6504448,
+                6287360,
+                6389760,
+                6438912
+              ]
+            },
+            "system_seconds": {
+              "maximum": 2.39,
+              "median": 2.32,
+              "minimum": 2.27,
+              "values": [
+                2.36,
+                2.27,
+                2.29,
+                2.32,
+                2.34,
+                2.29,
+                2.27,
+                2.39,
+                2.32,
+                2.34
+              ]
+            },
+            "total_cpu_seconds": {
+              "maximum": 33.81,
+              "median": 33.42,
+              "minimum": 33.33,
+              "values": [
+                33.410000000000004,
+                33.4,
+                33.39,
+                33.33,
+                33.81,
+                33.38,
+                33.43,
+                33.48,
+                33.54,
+                33.45
+              ]
+            },
+            "user_seconds": {
+              "maximum": 31.47,
+              "median": 31.105,
+              "minimum": 31.01,
+              "values": [
+                31.05,
+                31.13,
+                31.1,
+                31.01,
+                31.47,
+                31.09,
+                31.16,
+                31.09,
+                31.22,
+                31.11
+              ]
+            },
+            "wall_seconds": {
+              "maximum": 33.82,
+              "median": 33.43,
+              "minimum": 33.34,
+              "values": [
+                33.42,
+                33.41,
+                33.4,
+                33.34,
+                33.82,
+                33.38,
+                33.44,
+                33.49,
+                33.55,
+                33.46
+              ]
+            }
+          },
+          "source": {
+            "filesystem_inputs": {
+              "maximum": 0,
+              "median": 0,
+              "minimum": 0,
+              "values": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ]
+            },
+            "filesystem_outputs": {
+              "maximum": 0,
+              "median": 0,
+              "minimum": 0,
+              "values": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ]
+            },
+            "major_faults": {
+              "maximum": 0,
+              "median": 0,
+              "minimum": 0,
+              "values": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ]
+            },
+            "minor_faults": {
+              "maximum": 2920,
+              "median": 2919,
+              "minimum": 2915,
+              "values": [
+                2920,
+                2919,
+                2915,
+                2920,
+                2919,
+                2919,
+                2917,
+                2915,
+                2918,
+                2919
+              ]
+            },
+            "peak_rss_bytes": {
+              "maximum": 13766656,
+              "median": 13717504,
+              "minimum": 13647872,
+              "values": [
+                13688832,
+                13709312,
+                13647872,
+                13766656,
+                13754368,
+                13647872,
+                13721600,
+                13713408,
+                13742080,
+                13721600
+              ]
+            },
+            "system_seconds": {
+              "maximum": 0.23,
+              "median": 0.21,
+              "minimum": 0.2,
+              "values": [
+                0.22,
+                0.2,
+                0.2,
+                0.23,
+                0.21,
+                0.21,
+                0.2,
+                0.21,
+                0.21,
+                0.2
+              ]
+            },
+            "total_cpu_seconds": {
+              "maximum": 26.37,
+              "median": 25.975,
+              "minimum": 25.86,
+              "values": [
+                25.919999999999998,
+                25.95,
+                25.86,
+                26.19,
+                26.02,
+                26.37,
+                26.029999999999998,
+                25.970000000000002,
+                25.89,
+                25.98
+              ]
+            },
+            "user_seconds": {
+              "maximum": 26.16,
+              "median": 25.770000000000003,
+              "minimum": 25.66,
+              "values": [
+                25.7,
+                25.75,
+                25.66,
+                25.96,
+                25.81,
+                26.16,
+                25.83,
+                25.76,
+                25.68,
+                25.78
+              ]
+            },
+            "wall_seconds": {
+              "maximum": 26.37,
+              "median": 25.985,
+              "minimum": 25.87,
+              "values": [
+                25.92,
+                25.96,
+                25.87,
+                26.2,
+                26.03,
+                26.37,
+                26.03,
+                25.98,
+                25.9,
+                25.99
+              ]
+            }
+          }
+        },
+        "material": false,
+        "measured_counts": {
+          "native": 10,
+          "source": 10
+        },
+        "median_metric_ratios": {
+          "filesystem_inputs": null,
+          "filesystem_outputs": null,
+          "major_faults": null,
+          "minor_faults": 0.2971908187735526,
+          "peak_rss_bytes": 0.4638698118841445,
+          "system_seconds": 11.047619047619047,
+          "total_cpu_seconds": 1.286621751684312,
+          "user_seconds": 1.2070236709351958,
+          "wall_seconds": 1.2865114489128344
+        },
+        "median_rss_ratio": 0.4638698118841445,
+        "median_wall_ratio": 1.2865114489128344,
+        "missing": [],
+        "paired_wall_ratios": [
+          1.2893518518518519,
+          1.2869799691833588,
+          1.291070738306919,
+          1.2725190839694658,
+          1.2992700729927007,
+          1.2658323852863103,
+          1.284671532846715,
+          1.2890685142417244,
+          1.2953667953667953,
+          1.287418237783763
+        ],
+        "per_call_seconds": 120,
+        "resource": false,
+        "status": "complete",
+        "throughput": false,
+        "workers": 1
+      },
+      "query_targets_t4": {
+        "all_metric_losses": {
+          "minor_faults": 6.035827186512118,
+          "peak_rss_bytes": 1.620748299319728
+        },
+        "complete": true,
+        "complete_pair_ids": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10
+        ],
+        "disjoint_wall_gap_seconds": "0.61",
+        "distributions": {
+          "native": {
+            "filesystem_inputs": {
+              "maximum": 0,
+              "median": 0,
+              "minimum": 0,
+              "values": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ]
+            },
+            "filesystem_outputs": {
+              "maximum": 0,
+              "median": 0,
+              "minimum": 0,
+              "values": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ]
+            },
+            "major_faults": {
+              "maximum": 0,
+              "median": 0,
+              "minimum": 0,
+              "values": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ]
+            },
+            "minor_faults": {
+              "maximum": 5060,
+              "median": 2864,
+              "minimum": 1587,
+              "values": [
+                3761,
+                3015,
+                1587,
+                2713,
+                5060,
+                2453,
+                3432,
+                2613,
+                2331,
+                3480
+              ]
+            },
+            "peak_rss_bytes": {
+              "maximum": 5939200,
+              "median": 5855232,
+              "minimum": 5722112,
+              "values": [
+                5799936,
+                5869568,
+                5939200,
+                5877760,
+                5730304,
+                5779456,
+                5918720,
+                5840896,
+                5939200,
+                5722112
+              ]
+            },
+            "system_seconds": {
+              "maximum": 0.4,
+              "median": 0.36,
+              "minimum": 0.34,
+              "values": [
+                0.34,
+                0.35,
+                0.4,
+                0.35,
+                0.34,
+                0.37,
+                0.38,
+                0.36,
+                0.37,
+                0.36
+              ]
+            },
+            "total_cpu_seconds": {
+              "maximum": 2.4099999999999997,
+              "median": 2.325,
+              "minimum": 2.29,
+              "values": [
+                2.33,
+                2.3,
+                2.4099999999999997,
+                2.29,
+                2.3499999999999996,
+                2.32,
+                2.36,
+                2.32,
+                2.36,
+                2.29
+              ]
+            },
+            "user_seconds": {
+              "maximum": 2.01,
+              "median": 1.97,
+              "minimum": 1.93,
+              "values": [
+                1.99,
+                1.95,
+                2.01,
+                1.94,
+                2.01,
+                1.95,
+                1.98,
+                1.96,
+                1.99,
+                1.93
+              ]
+            },
+            "wall_seconds": {
+              "maximum": 1.61,
+              "median": 1.525,
+              "minimum": 1.49,
+              "values": [
+                1.52,
+                1.5,
+                1.61,
+                1.49,
+                1.55,
+                1.52,
+                1.57,
+                1.53,
+                1.57,
+                1.49
+              ]
+            }
+          },
+          "source": {
+            "filesystem_inputs": {
+              "maximum": 0,
+              "median": 0,
+              "minimum": 0,
+              "values": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ]
+            },
+            "filesystem_outputs": {
+              "maximum": 0,
+              "median": 0,
+              "minimum": 0,
+              "values": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ]
+            },
+            "major_faults": {
+              "maximum": 0,
+              "median": 0,
+              "minimum": 0,
+              "values": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ]
+            },
+            "minor_faults": {
+              "maximum": 480,
+              "median": 474.5,
+              "minimum": 471,
+              "values": [
+                476,
+                472,
+                471,
+                474,
+                471,
+                473,
+                476,
+                475,
+                480,
+                476
+              ]
+            },
+            "peak_rss_bytes": {
+              "maximum": 3940352,
+              "median": 3612672,
+              "minimum": 3485696,
+              "values": [
+                3653632,
+                3563520,
+                3571712,
+                3485696,
+                3538944,
+                3571712,
+                3940352,
+                3792896,
+                3862528,
+                3735552
+              ]
+            },
+            "system_seconds": {
+              "maximum": 0.46,
+              "median": 0.4,
+              "minimum": 0.37,
+              "values": [
+                0.38,
+                0.42,
+                0.46,
+                0.4,
+                0.41,
+                0.39,
+                0.37,
+                0.38,
+                0.4,
+                0.4
+              ]
+            },
+            "total_cpu_seconds": {
+              "maximum": 3.27,
+              "median": 3.185,
+              "minimum": 3.1,
+              "values": [
+                3.1599999999999997,
+                3.14,
+                3.18,
+                3.1,
+                3.21,
+                3.21,
+                3.21,
+                3.27,
+                3.15,
+                3.19
+              ]
+            },
+            "user_seconds": {
+              "maximum": 2.89,
+              "median": 2.785,
+              "minimum": 2.7,
+              "values": [
+                2.78,
+                2.72,
+                2.72,
+                2.7,
+                2.8,
+                2.82,
+                2.84,
+                2.89,
+                2.75,
+                2.79
+              ]
+            },
+            "wall_seconds": {
+              "maximum": 2.47,
+              "median": 2.37,
+              "minimum": 2.22,
+              "values": [
+                2.36,
+                2.29,
+                2.33,
+                2.22,
+                2.38,
+                2.4,
+                2.41,
+                2.47,
+                2.3,
+                2.38
+              ]
+            }
+          }
+        },
+        "material": true,
+        "measured_counts": {
+          "native": 10,
+          "source": 10
+        },
+        "median_metric_ratios": {
+          "filesystem_inputs": null,
+          "filesystem_outputs": null,
+          "major_faults": null,
+          "minor_faults": 6.035827186512118,
+          "peak_rss_bytes": 1.620748299319728,
+          "system_seconds": 0.8999999999999999,
+          "total_cpu_seconds": 0.7299843014128728,
+          "user_seconds": 0.7073608617594255,
+          "wall_seconds": 0.6434599156118143
+        },
+        "median_rss_ratio": 1.620748299319728,
+        "median_wall_ratio": 0.6434599156118143,
+        "missing": [],
+        "paired_wall_ratios": [
+          0.6440677966101696,
+          0.6550218340611353,
+          0.6909871244635193,
+          0.6711711711711711,
+          0.6512605042016807,
+          0.6333333333333334,
+          0.6514522821576764,
+          0.6194331983805668,
+          0.682608695652174,
+          0.6260504201680672
+        ],
+        "per_call_seconds": 30,
+        "resource": false,
+        "status": "complete",
+        "throughput": true,
+        "workers": 4
+      }
+    },
+    "measured_records": 260,
+    "primary": {
+      "build_csi": true,
+      "build_tbi": true,
+      "compress_binary_t1": false,
+      "query_sparse_t1": false
+    },
+    "publication": false,
+    "raw_complete_successful_records": 338,
+    "reported_records": 338,
+    "scaling": {
+      "compress_binary": {
+        "native": 1.9793971766501335,
+        "source": 1.3372492836676215
+      },
+      "compress_text": {
+        "native": 2.207627118644068,
+        "source": 1.531486146095718
+      }
+    },
+    "source_failure_or_missing_is_never_a_native_win": true,
+    "unaccepted_records": [],
+    "warmup_records": 78
+  },
+  "job_id": 124813613819,
+  "limitations": [
+    "No cold-cache or exclusive-host proof.",
+    "GNU time RSS is per-process maximum, not aggregate/heap; I/O counters remain raw kernel counters.",
+    "Read timing stdout was /dev/null; complete outputs exist for qualification, not every timed read.",
+    "Prior deleted transient duplicates are represented by original complete-comparison records and exact surviving backup bodies, not newly observed missing bytes.",
+    "Actual source/native codec graphs differ as predeclared; no pure-language causal attribution.",
+    "The slower code-level cause has not been profiled or fixed; no unchanged blind rerun is recommended."
+  ],
+  "original_custody": {
+    "assessment": {
+      "bytes": 915215,
+      "sha256": "cda433e4706d40da563e9af38edec78144760e369583427a717e5ac5e99b3a7f"
+    },
+    "cas_logical_bytes": 17228960674,
+    "cas_objects": 15130,
+    "foreign_runtime_restored": false,
+    "logical_outputs": 214,
+    "nested_runtime_members": 18191,
+    "nested_runtime_types": {
+      "directory": 1671,
+      "file": 16501,
+      "hardlink": 15,
+      "symlink": 4
+    },
+    "original_ledger": {
+      "bytes": 18087608,
+      "sha256": "45050d4e525f30efe5483ad22700923e17f5c331fd7b4739bbba84a50d40b85f"
+    },
+    "outer_members": 3758,
+    "prior_campaign_retired_duplicates": 201,
+    "root": "/home/liangjy/rsomics-index-bgzf-recovery-20261101",
+    "root_final_permissions": {
+      "allocated_bytes": 28328329216,
+      "directories": 3,
+      "logical_regular_bytes": 28284807968,
+      "no_symlinks_or_executable_modes": true,
+      "paths": 15141,
+      "regular_files": 15138,
+      "status": "complete-inert-permissions-verified",
+      "utc": "2026-11-01T12:06:44Z"
+    }
+  },
+  "output_size_losses": {
+    "compress_binary_t1": {
+      "native": {
+        "bytes": 2148504134,
+        "sha256": "df12220d759126a83241d849e330b52c69ec23a85969fa6f96efd0d111d41dab"
+      },
+      "native_source_bytes_ratio": 1.0000003030016034,
+      "source": {
+        "bytes": 2148503483,
+        "sha256": "f492f1960504f35744a1350a727557ebb90ed457bd82af92ea62c5adc398ea29"
+      }
+    },
+    "compress_binary_t4": {
+      "native": {
+        "bytes": 2148504134,
+        "sha256": "df12220d759126a83241d849e330b52c69ec23a85969fa6f96efd0d111d41dab"
+      },
+      "native_source_bytes_ratio": 1.0000003030016034,
+      "source": {
+        "bytes": 2148503483,
+        "sha256": "f492f1960504f35744a1350a727557ebb90ed457bd82af92ea62c5adc398ea29"
+      }
+    },
+    "compress_text_t1": {
+      "native": {
+        "bytes": 42978361,
+        "sha256": "8c64eedb61718b3b5ed3ce32d55dc19272cd849b51edf3027bc37c4064ce3e3c"
+      },
+      "native_source_bytes_ratio": 1.1267429396035413,
+      "source": {
+        "bytes": 38143892,
+        "sha256": "09f40fc8492a44bd9ecb231b983175aec4e5e9deb90e3daa87955b1ced0d3eb4"
+      }
+    },
+    "compress_text_t4": {
+      "native": {
+        "bytes": 42978361,
+        "sha256": "8c64eedb61718b3b5ed3ce32d55dc19272cd849b51edf3027bc37c4064ce3e3c"
+      },
+      "native_source_bytes_ratio": 1.1267429396035413,
+      "source": {
+        "bytes": 38143892,
+        "sha256": "09f40fc8492a44bd9ecb231b983175aec4e5e9deb90e3daa87955b1ced0d3eb4"
+      }
+    }
+  },
+  "owner_commit": "030be20895cb7806f78b2923e1c1ac3afa05cd96",
+  "performance_accepted": false,
+  "preservation": {
+    "blind_retry": false,
+    "bulk_Mac_copy": false,
+    "carrier_count": 1,
+    "deletions": false,
+    "git_or_registry_mutations": false,
+    "new_build_or_install": false,
+    "new_science": false,
+    "older_authorities_unchanged": true,
+    "original_failed_run_unchanged": true,
+    "source_or_gate_change": false
+  },
+  "proposed_next_action": "One source-level whole hot-path review followed by a coherent Index performance implementation wave, prioritizing failed compress_binary_t1 and query_sparse_t1 while reviewing all 13 losses; preserve data, gates, owner FAI authority and rerun only after a substantive reviewed change plus fresh capacity admission.",
+  "publication": false,
+  "root_adopted": true,
+  "run_attempt": 1,
+  "run_id": 41294913111,
+  "runtime": {
+    "accepted_reference": {
+      "bytes": 66180,
+      "controller": "b0950de23dadf239a858b44e11cf37716ad8b76b",
+      "path": ".autopilot/oracles/index-optimized-reference-real-performance-2026-11-01.json",
+      "run_attempt": 1,
+      "run_id": 41273328984,
+      "sha256": "048210afe734444d56956a1a8b5bac05e9f2c467e258ff804281eb7122f84d56",
+      "source_files": 116,
+      "source_tree": "d41f60a18d3da0629718e7c14feb4f5a68f65d26",
+      "workflow": ".github/workflows/index-reference-real-performance.yml"
+    },
+    "accepted_runtime": {
+      "anchors": {
+        "runtime/htslib-original/htslib-1.24/bgzip.c": {
+          "bytes": 29939,
+          "sha256": "85321d6ae17377c250882da0f460014053519fcb514531b77bc477cd29158305"
+        },
+        "runtime/htslib-original/htslib-1.24/htslib/hts.h": {
+          "bytes": 58286,
+          "sha256": "9b286747b6c954a264af8f4981bc777fbf687be04508ec815f0fa96eeb891a25"
+        },
+        "runtime/htslib-original/htslib-1.24/tabix.c": {
+          "bytes": 31833,
+          "sha256": "1356aede370a71f729064b5e918e99b521a22e9a3ac5f6f958f573597eba522b"
+        },
+        "runtime/lock.json": {
+          "bytes": 2283,
+          "sha256": "b742f5796938f0815c533557aee4a53e405d13b834705b3090031c341b88ce47"
+        }
+      },
+      "artifact_id": 13070438494,
+      "artifact_name": "index-reference-real-runtime-41273328984-1",
+      "binaries": {
+        "bgzip": {
+          "bytes": 3763560,
+          "path": "runtime/htslib-original/htslib-1.24/bgzip",
+          "sha256": "49b3c476385a9dfe88a10307e46af52fe9d501a1e1cf877852e292ccf894a593"
+        },
+        "native": {
+          "bytes": 2745336,
+          "path": "runtime/native/target/release/rsomics-index",
+          "sha256": "b42d28aef080af8fff2c12b746e30ddc1949cb0db738554c2a9330a2555c3714"
+        },
+        "tabix": {
+          "bytes": 4581040,
+          "path": "runtime/htslib-original/htslib-1.24/tabix",
+          "sha256": "2ba4dbb47c3422c0926be00842a714201eab93c388494bcdabad4dfb2ca28f3f"
+        }
+      },
+      "libdeflate": {
+        "bytes": 93880,
+        "path": "runtime/prefix/lib/libdeflate.so.0",
+        "sha256": "0cc41c99d40bb91c2454ade7a24e4f6f3850b4c536986fbc3c9ca8de990e9aad"
+      },
+      "members": 18191,
+      "provider_graph": "native static libdeflate-sys1.25.2 and Rust zlib-rs0.6.7; source shared libdeflate1.25; not a single shared DSO",
+      "session": "/__w/_temp/index-reference-real-rj4i4or7",
+      "tar": {
+        "bytes": 2034073600,
+        "sha256": "9e70cf8fb3f02131731b028ec41524591d57c640e98e5654cb849f57c1e65e62"
+      },
+      "zip": {
+        "bytes": 876708340,
+        "sha256": "e3d1e3b6f8485bee70fd998ba28de6e2ba494b3f1f02fd37626b9d4d977bc94f"
+      }
+    },
+    "actual_versions": {
+      "bgzip": [
+        "bgzip (htslib) 1.24",
+        "Copyright (C) 2026 Genome Research Ltd."
+      ],
+      "native": [
+        "rsomics-index 0.1.0"
+      ],
+      "tabix": [
+        "tabix (htslib) 1.24",
+        "Copyright (C) 2026 Genome Research Ltd."
+      ],
+      "timer": [
+        "time (GNU Time) UNKNOWN",
+        "Copyright (C) 2018 Free Software Foundation, Inc.",
+        "License GPLv3+: GNU GPL version 3 or later <https://gnu.org/licenses/gpl.html>.",
+        "This is free software: you are free to change and redistribute it.",
+        "There is NO WARRANTY, to the extent permitted by law.",
+        "",
+        "Written by David Keppel, David MacKenzie, and Assaf Gordon."
+      ]
+    },
+    "cgroup": {
+      "cpu.max": "400000 100000",
+      "memory.current": "438468608",
+      "memory.max": "8589934592",
+      "memory.peak": "473833472",
+      "memory.swap.max": "0"
+    },
+    "image": {
+      "config": "sha256:f3d916a4884034b89cb6148781f07d8c92d94b6c6dc1b74dcbec3475d16400da",
+      "manifest": "sha256:a689e29bc3adf4663ef9a141d23081252764d1319c63f591a027bd6fd676f4c1",
+      "name": "gcc:14.3.0-bookworm"
+    },
+    "owner_source_files": 116,
+    "provider_graph": "native static libdeflate-sys1.25.2 and Rust zlib-rs0.6.7; source shared libdeflate1.25; not a single shared DSO",
+    "selected_cpus": [
+      0,
+      1,
+      2,
+      3
+    ]
+  },
+  "schema": "rsomics.index.bgzf-real.failed-observation.v1",
+  "scope": "Complete original custody and correct 13-lane campaign adopted; unchanged fixed primary performance gate fails. No old authority replaced and no code-level causal diagnosis.",
+  "status": "accepted-complete-correct-campaign-with-material-performance-failure",
+  "storage": {
+    "Index_envelope_GiB": {
+      "CAS_regular_bodies": 32,
+      "independent_headroom": 8,
+      "metadata": 2,
+      "original_zip": 34
+    },
+    "Index_physical_allocation_credited_once": true,
+    "Mac_independent_headroom_bytes": 8589934592,
+    "Mac_metadata_cap_bytes": 1073741824,
+    "conservative_Ecology_credit": false,
+    "current_remote_envelopes_GiB": {
+      "Ecology": 320,
+      "Index": 76
+    },
+    "historical_604_GiB_reservation_retained_not_recharged": true,
+    "old_PLINK208_never_materialized_and_released": true
+  },
+  "timer": {
+    "actual_banner": "time (GNU Time) UNKNOWN",
+    "architecture": "amd64",
+    "package_version": "1.9-0.2",
+    "pins": {
+      "architecture": "amd64",
+      "copyright": {
+        "bytes": 2943,
+        "sha256": "9c5fb22ad687c290ca88f4064a2b5f89bb998a5caec2f5eada316d6caf889738",
+        "url": "https://metadata.ftp-master.debian.org/changelogs/main/t/time/time_1.9-0.2_copyright"
+      },
+      "deb": {
+        "bytes": 50776,
+        "sha256": "10257c6fe888e6578550b1f20705d282dd630b76f8df0c006aec3031fefe5e23",
+        "url": "https://deb.debian.org/debian/pool/main/t/time/time_1.9-0.2_amd64.deb"
+      },
+      "debian": {
+        "bytes": 14748,
+        "sha256": "42a9d951055290c5186a1b83808744bd07bf8675f24e99998e46a31825781480",
+        "url": "https://deb.debian.org/debian/pool/main/t/time/time_1.9-0.2.debian.tar.xz"
+      },
+      "dsc": {
+        "bytes": 1703,
+        "sha256": "32edee09df14a7e61fe0d02be477e7f2efd3df3f601dff6ecc51f18b99fd0f24",
+        "url": "https://deb.debian.org/debian/pool/main/t/time/time_1.9-0.2.dsc"
+      },
+      "licenses": {
+        "debian": "GPL-2+",
+        "debian/time.1": "freely-redistributable",
+        "upstream": "GPL-3+"
+      },
+      "metadata_url": "https://packages.debian.org/bookworm/amd64/time/download",
+      "orig": {
+        "bytes": 596779,
+        "sha256": "fbacf0c81e62429df3e33bda4cee38756604f18e01d977338e23306a3e3b521e",
+        "url": "https://deb.debian.org/debian/pool/main/t/time/time_1.9.orig.tar.gz"
+      },
+      "package": "time",
+      "signature_verified": false,
+      "small_child_max_rss_exclusive_bytes": 3145728,
+      "unknown_banner_is_not_observed_1_9": true,
+      "version": "1.9-0.2",
+      "wall_resolution_seconds": 0.01
+    },
+    "release_chain_verified": false,
+    "role": "standalone benchmark recorder only; not linked/copied into Rust products",
+    "signature_verified": false,
+    "small_child": {
+      "filesystem_inputs": 0,
+      "filesystem_outputs": 0,
+      "major_faults": 0,
+      "minor_faults": 128,
+      "peak_rss_bytes": 1339392,
+      "raw_gnu_time": {
+        "exit_status": 0,
+        "filesystem_inputs": 0,
+        "filesystem_outputs": 0,
+        "major_faults": 0,
+        "max_rss_kib": 1308,
+        "minor_faults": 128,
+        "system_seconds": 0,
+        "user_seconds": 0,
+        "wall_seconds": 0
+      },
+      "system_seconds": 0,
+      "total_cpu_seconds": 0,
+      "user_seconds": 0,
+      "wall_seconds": 0
+    },
+    "upstream_version_observed": "UNKNOWN"
+  },
+  "zero_baseline_metric_increases": {},
+  "correctness_accepted": true,
+  "root_verification": {
+    "packet": "/Volumes/KIOXIA/Developments/tmp/index-bgzf-root-adoption-20261101.xJ5Qn5",
+    "local_sealed_files": 61,
+    "local_sealed_bytes": 34191028,
+    "local_complete_file_set_hashes_modes": true,
+    "fully_read_recovery_program_sha256": "aac5a0d8ccdc7a9c47f69a1c05c0094791bd18ae7685ce636241175af58b114c",
+    "proposal_sha256": "f790983deec64925dba94da5e55272d8da1c7257ec135f118f35255d5d79cbce",
+    "report_sha256": "1ac827e2cec06da315c391055c40f1c4cb4ea681270a7a2260a15bcd6e6a83b5",
+    "seal_sha256": "4ff1c78c160ce875e3eb7a8b4178d82a80bed6de234cc562c14e29a2b9ef0e98",
+    "root_stdout_sha256": "05695f1d3262fd3125379b2113fcef0241a6ec494ff650d5653e81e53b873938",
+    "fresh_read_only_check": {
+      "returncode": 0,
+      "elapsed_seconds": 97.53735566599062,
+      "stdout": {
+        "bytes": 1880,
+        "sha256": "ca3c51d8e15cb1d7130d5aedcf23082a1b1d07ef29b011de1180b235a2a02b75"
+      },
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    "complete_remote_check": {
+      "status": "fresh-read-only-whole-verification",
+      "original_zip": {
+        "bytes": 11036840266,
+        "sha256": "20400b99544920bed4898b12f4305ec4d1708d90887b08fc154119e26d7a6c3a"
+      },
+      "cas_objects": 15130,
+      "cas_bytes": 17228960674,
+      "original_ledger": {
+        "bytes": 18087608,
+        "sha256": "45050d4e525f30efe5483ad22700923e17f5c331fd7b4739bbba84a50d40b85f"
+      },
+      "assessment": {
+        "bytes": 915215,
+        "sha256": "cda433e4706d40da563e9af38edec78144760e369583427a717e5ac5e99b3a7f"
+      },
+      "before": {
+        "uid": 1006,
+        "device": 2096,
+        "mode": "0o700",
+        "mount": [
+          "/dev/sdd[/home/liangjy]",
+          "ext4",
+          "/home/liangjy"
+        ],
+        "free_bytes": 597270593536,
+        "own_allocated_bytes": 28328329216,
+        "ecology_conservatively_reserved_bytes": 343597383680,
+        "index_envelope_bytes": 81604378624,
+        "required_unmaterialized_bytes": 396873433088,
+        "extra_margin_bytes": 200397160448,
+        "record_id": "index-bgzf-20261101-bf60a596-remote-dev-sdd-76GiB",
+        "historical_reservation_total_not_recharged": 648540061696
+      },
+      "after": {
+        "uid": 1006,
+        "device": 2096,
+        "mode": "0o700",
+        "mount": [
+          "/dev/sdd[/home/liangjy]",
+          "ext4",
+          "/home/liangjy"
+        ],
+        "free_bytes": 595795079168,
+        "own_allocated_bytes": 28328329216,
+        "ecology_conservatively_reserved_bytes": 343597383680,
+        "index_envelope_bytes": 81604378624,
+        "required_unmaterialized_bytes": 396873433088,
+        "extra_margin_bytes": 198921646080,
+        "record_id": "index-bgzf-20261101-bf60a596-remote-dev-sdd-76GiB",
+        "historical_reservation_total_not_recharged": 648540061696
+      },
+      "science_executed": false,
+      "publication": false
+    },
+    "fresh_api_artifact_binding": true,
+    "foreign_or_scientific_execution": false
+  }
+}
