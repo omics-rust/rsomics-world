@@ -3,6 +3,11 @@
 > Identification of enriched genomic regions from ChIP-seq, ATAC-seq,
 > CUT&RUN, and CUT&Tag data.
 
+Status: upstream operation survey. The [peak product dossier](../10-products/peak.md)
+and [namespace allowlist](../00-overview/registry-reset-keep.txt) define the
+accepted public boundary. Upstream language, backend, version, and license
+observations below are inherited survey records, not fresh upstream audits.
+
 ## Scope
 
 Algorithms that take aligned reads (BAM / BED) and emit a list of
@@ -12,27 +17,57 @@ chromatin-state segmentation (ChromHMM, Segway) and full pipelines
 Hi-C "peak"/loop callers (chromosight, mustache, HiCCUPS) live in
 [`chromatin-3d.md`](chromatin-3d.md).
 
+`rsomics-peak` owns one chromatin-enrichment workflow, not a separate product
+for every upstream caller. Its current private first slice is:
+
+| Operation | Current contract |
+|---|---|
+| `call` | narrow MACS-compatible calling from BAM / BAMPE treatments and optional pooled controls |
+| `call-sparse` | sparse positive-signal calling with an explicit compatibility profile; no public default selected |
+| `annotate` | transcript-level GTF / GFF3 annotation with stable peak identity |
+| `count` | identity-preserving multi-sample BAM counts in alignment units, not paired-fragment counts |
+
+Broad peaks, FRAG barcode selection, track calling, HMMRATAC, model-only, and
+refinement operations remain later dossier slices, not advertised commands.
+HOMER, SICER, and the other surveyed models are not implicitly implemented
+by a MACS-compatible caller.
+
+No public release is established by this survey. The SEACR sparse-default
+policy and registry-authorization holds remain separate. The
+[current native state](../../.autopilot/state/peak-native-first-four-2026-11-01.md)
+and [real-input gate](../../.autopilot/state/peak-real-performance-2026-11-01.md)
+own the exact evidence: no whole-graph parallel speedup or exact aggregate
+tree-memory advantage is established, and prior failed runs remain failed.
+Historical annotation goldens are not current-default authority; the dossier
+identifies the independently qualified source profiles.
+
 ## Design notes
 
-- MACS2/3 is essentially universal — the rsomics goal is a Rust binary
-  whose output BED / narrowPeak / broadPeak is bit-identical to
-  `macs3 callpeak` for the typical defaults so downstream pipelines
-  (nf-core/chipseq, ENCODE) work unchanged.
-- The bottleneck in MACS is the genome-wide Poisson background
-  estimation and the sliding-window peak shape model — both naturally
-  parallelise across chromosomes with `rayon`, and `noodles-bam` reads
-  the input cheaply.
-- Several peak callers are already in modern languages: `GoPeaks` is
-  Go, `GEM` is Java, `epic2` is Cython. Rust-rewrite priority should
-  favour tools that are pure-C and pure-Python (MACS, HOMER, SEACR,
-  SICER) where Rust has the largest performance / safety win.
-- All peak callers share the same upstream primitive — a coverage
-  pileup from BAM with optional fragment-length extension or paired-end
-  fragment reconstruction. `rsomics-coverage` is the right shared crate.
+- Compatibility is tied to a pinned caller, model, options, input, and output
+  set. BED / narrowPeak / broadPeak formats do not by themselves establish
+  identical calls or unchanged downstream behavior.
+- Fragment reconstruction, extension, duplicate handling, local background,
+  Poisson tails, q-values, broad-region rules, and sparse thresholds are
+  caller-specific policies. Coverage construction is shared inside the product
+  where the contracts agree; it does not justify a public coverage crate.
+- `rsomics-bamio` supplies validated alignment readers and `rsomics-intervals`
+  supplies checked geometry. `rsomics-common` supplies errors, execution
+  reports, aliases, and transactions; `rsomics-help` supplies CLI help.
+  Coverage indexes, transcript / strand models, MACS pileup and statistical
+  policy, and SEACR thresholds stay private. Any shared-foundation expansion
+  still needs two concrete consumers of the same policy-free contract.
+- Potential chromosome or sample parallelism is not a measured whole-workflow
+  speedup. Likewise, Go / Java / Cython / Rust implementation language alone
+  establishes neither compatibility nor a resource-use advantage.
+- SEACR 1.3 compatibility includes source quirks in first / final records,
+  threshold populations, normalization, control exclusion, and merge gaps.
+  The private legacy and corrected profiles remain distinct; corrected-view
+  downstream checks do not establish end-to-end SEACR equivalence or choose
+  the public default.
 
-## TODO
+## Upstream operation survey
 
-- [ ] **`MACS2`** — model-based ChIP-seq peak caller (legacy).
+- **`MACS2`** — model-based ChIP-seq peak caller (legacy).
   - Reference impl: `Python / C` · [macs3-project/MACS](https://github.com/macs3-project/MACS) · `BSD-3-Clause`
   - Existing Rust: none verified
   - Existing Rust kind: `none`
@@ -42,28 +77,24 @@ Hi-C "peak"/loop callers (chromosight, mustache, HiCCUPS) live in
   - Quadrant: —
   - GPU-amenable: maybe — coverage pileup is memory-bandwidth-bound
   - Upstream license: `BSD-3-Clause`
-  - Priority: `P1`
-  - Layer: `subcommand-of-rsomics-macs` (MACS2 mode flag inside the MACS3 binary)
-  - Consumes primitives: `noodles-bam`, `rsomics-coverage`, `statrs`, `rsomics-intervals`
-  - Notes: Most pipelines now pin MACS3. Keep MACS2 listed for reproducibility of older studies; the rsomics target is MACS3 with a compatibility flag.
+  - Portfolio routing: historical compatibility reference within the peak workflow, not a separate public crate or an implemented MACS2 flag.
+  - Notes: Retained for reproducibility of older studies. The current first slice uses the dossier's pinned MACS3 profile; MACS2 parity is not inferred from related command names or formats.
 
-- [ ] **`MACS3`** — current MACS with ATAC-seq, scATAC, and broad-peak improvements.
+- **`MACS3`** — MACS peak-calling family with ATAC-seq, scATAC, and broad-peak operations.
   - Reference impl: `Python / Cython` · [macs3-project/MACS](https://github.com/macs3-project/MACS) · `BSD-3-Clause`
-  - Existing Rust: none verified
-  - Existing Rust kind: `none`
+  - Existing Rust: the private `rsomics-peak` first slice above; retired `rsomics-macs` is an implementation asset, not an installable product.
   - Existing non-C alternatives: GoPeaks (Go), epic2 (Cython)
-  - Parallelism: rayon over chromosomes (when ported)
+  - Parallelism: worker behavior and whole-workflow evidence belong to the current dossier and gate, not this old chromosome-parallelism proposal.
   - SIMD: auto-vectorize on pileup loops
   - Quadrant: —
   - GPU-amenable: maybe — coverage pileup SIMT-trivial; the peak-shape model less so
   - Upstream license: `BSD-3-Clause`
-  - Priority: `P0`
-  - Layer: `B` (tool — `rsomics-macs`)
-  - Consumes primitives: `noodles-bam`, `rsomics-coverage`, `statrs` (Poisson, log-gamma), `rsomics-intervals`, `rayon`
-  - Notes: **Highest-impact Rust target in this module.** Pure-Rust `rsomics-macs` should match `narrowPeak` / `broadPeak` / `xls` outputs byte-for-byte at default settings.
+  - Portfolio routing: `rsomics-peak call`; broader MACS operations follow the dossier's explicit product-operation routing and later-slice gates.
+  - Historical source asset: `rsomics-macs` at `f914cdcad4c1ef63ac9930d13257518fd23531e3`, refactor then merge selected single-end no-control algorithms, model, goldens, and measurements.
+  - Notes: The dossier distinguishes its recorded MACS3 3.1.0 primary profile from historical 3.0.4 evidence. Treatment pooling, controls, model / no-model paths, duplicates, cutoffs, and output sets are explicit contracts; neither broad-peak parity nor a universal default byte-identity claim follows from the narrow slice.
 
-- [ ] **`HOMER findPeaks`** — tag-directory-based peak caller with GRO-seq / 4C / etc. modes.
-  - Reference impl: `Perl / C++` · [HOMER](http://homer.ucsd.edu/homer/) · unspecified open source
+- **`HOMER findPeaks`** — tag-directory-based peak caller with GRO-seq / 4C / etc. modes.
+  - Reference impl: `Perl / C++` · [HOMER](http://homer.ucsd.edu/homer/) · terms unverified here
   - Existing Rust: none verified
   - Existing Rust kind: `none`
   - Existing non-C alternatives: —
@@ -71,44 +102,38 @@ Hi-C "peak"/loop callers (chromosight, mustache, HiCCUPS) live in
   - SIMD: none
   - Quadrant: —
   - GPU-amenable: maybe — coverage pileup family
-  - Upstream license: unspecified open source
-  - Priority: `P1`
-  - Layer: `B` (tool — `rsomics-homer`)
-  - Consumes primitives: `noodles-bam`, `rsomics-coverage`, `rsomics-intervals`, future `rsomics-tagdir` (the HOMER tag-directory format)
-  - Notes: HOMER's tag directory is a non-standard format that downstream HOMER tools assume — a Rust port should preserve the format, not just the peak BEDs. Lower priority than MACS3 but still widely used.
+  - Upstream license: the old survey said “unspecified open source”; that is not a verified reuse license.
+  - Portfolio routing: surveyed peak-workflow model, not an implemented operation or a new HOMER / tag-directory crate plan.
+  - Notes: The tag-directory contract matters to downstream HOMER tools; matching only peak BED rows would not establish compatibility. Actual upstream terms and behavior require review before any implementation is selected.
 
-- [ ] **`SEACR`** — Sparse Enrichment Analysis for CUT&RUN.
-  - Reference impl: `R / Bash` · [FredHutch/SEACR](https://github.com/FredHutch/SEACR) · `GPL-3.0`
-  - Existing Rust: none verified
-  - Existing Rust kind: `none`
+- **`SEACR`** — Sparse Enrichment Analysis for CUT&RUN.
+  - Reference impl: `R / Bash` · [FredHutch/SEACR](https://github.com/FredHutch/SEACR) · see dossier's pinned license record
+  - Existing Rust: private `rsomics-peak call-sparse` with a mandatory explicit profile; no public sparse default is selected.
   - Existing non-C alternatives: —
   - Parallelism: upstream R serial + shell
   - SIMD: none
   - Quadrant: —
   - GPU-amenable: no — small algorithm
-  - Upstream license: `GPL-3.0`
-  - Priority: `P1`
-  - Layer: `subcommand-of-rsomics-macs` (peak-caller umbrella covering CUT&RUN mode)
-  - Consumes primitives: `noodles-bed`, `rsomics-coverage`, `statrs`, `rsomics-intervals`
-  - Notes: Small algorithm — global-distribution-based threshold over contiguous blocks. Compact Rust crate, < 1k LoC. Important for CUT&RUN pipelines.
+  - Upstream license: the dossier records `GPL-2.0` for the pinned source and corrects the historical `GPL-3.0` label. This survey performs no new license audit or reuse authorization.
+  - Portfolio routing: `rsomics-peak call-sparse`, separate from MACS statistical policy.
+  - Historical source asset: `rsomics-seacr` at `d6ed2f0890989fa2de2007a1763bed3d51e365b2`; selected threshold algorithms and the retained input pair are assets, not a current six-mode receipt from the skippable old harness.
+  - Notes: Contiguous sparse-signal blocks, control-derived versus numeric fractions, normalization, and stringent / relaxed thresholds remain distinct choices. Preserve the pending default-policy decision; source omissions and corrected handling must not be silently interchanged. Historical startup-heavy comparisons do not prove a current hot-path advantage.
 
-- [ ] **`SICER` / `SICER2`** — spatial-clustering peak caller for broad histone marks.
+- **`SICER` / `SICER2`** — spatial-clustering peak caller for broad histone marks.
   - Reference impl: `Python / C` · [zanglab/SICER2](https://github.com/zanglab/SICER2) · `MIT`
   - Existing Rust: none verified
   - Existing Rust kind: `none`
-  - Existing non-C alternatives: `epic2` (Cython, much faster)
+  - Existing non-C alternatives: `epic2` (Cython)
   - Parallelism: upstream Python multiprocessing
   - SIMD: none
   - Quadrant: —
   - GPU-amenable: maybe — clustering parallelises
   - Upstream license: `MIT`
-  - Priority: `P1`
-  - Layer: `subcommand-of-rsomics-macs` (broad-peak mode)
-  - Consumes primitives: `noodles-bam`, `rsomics-coverage`, `rsomics-intervals`, `statrs`
-  - Notes: epic2 is already a 30× speedup reimplementation. A Rust port of epic2's algorithm would be a small additional win and slot into `rsomics-macs` cleanly.
+  - Portfolio routing: surveyed broad-histone model, not an implemented MACS mode or a new crate queue.
+  - Notes: Spatial clustering is not interchangeable with MACS broad-region policy. The old survey quoted a 30× epic2 speedup without input, host, or version provenance; retain it only as a source-research lead, not a current rsomics performance claim.
 
-- [ ] **`PeakSeq`** — original ENCODE-era ChIP-seq peak caller.
-  - Reference impl: `C / Perl` · [gersteinlab/PeakSeq](https://github.com/gersteinlab/PeakSeq) · `GPL-2` — **upstream stale (last update 2023-05, ~24 months past CLAUDE.md aliveness threshold)**
+- **`PeakSeq`** — original ENCODE-era ChIP-seq peak caller.
+  - Reference impl: `C / Perl` · [gersteinlab/PeakSeq](https://github.com/gersteinlab/PeakSeq) · recorded `GPL-2`
   - Existing Rust: none verified
   - Existing Rust kind: `none`
   - Existing non-C alternatives: —
@@ -117,12 +142,10 @@ Hi-C "peak"/loop callers (chromosight, mustache, HiCCUPS) live in
   - Quadrant: —
   - GPU-amenable: no — historical
   - Upstream license: `GPL-2`
-  - Priority: `P2`
-  - Layer: —
-  - Consumes primitives: —
-  - Notes: Largely historical; ENCODE-era. Upstream past 18-month aliveness threshold. Listed for ENCODE legacy reproducibility only; no porting target.
+  - Portfolio routing: historical reference for ENCODE reproducibility, not a porting target.
+  - Notes: The old survey recorded a last update of 2023-05; this is not a current activity check or an active aliveness-policy gate.
 
-- [~] **`GoPeaks`** — modern Go peak caller for CUT&Tag.
+- **`GoPeaks`** — Go peak caller for CUT&Tag.
   - Reference impl: `Go` · [maxsonBraunLab/gopeaks](https://github.com/maxsonBraunLab/gopeaks) · `MIT`
   - Existing Rust: none verified
   - Existing Rust kind: `none`
@@ -132,12 +155,10 @@ Hi-C "peak"/loop callers (chromosight, mustache, HiCCUPS) live in
   - Quadrant: —
   - GPU-amenable: no — same family as MACS
   - Upstream license: `MIT`
-  - Priority: `P2`
-  - Layer: —
-  - Consumes primitives: —
-  - Notes: Marked `[~]` because the existing Go implementation is already a clean modern rewrite. Listed for completeness; a Rust port is a low-priority duplication.
+  - Portfolio routing: external caller and comparison context, not a new public product.
+  - Notes: Its CUT&Tag model and output contract need independent comparison; sharing the peak-workflow domain does not establish equivalence to MACS or SEACR.
 
-- [ ] **`GEM`** — Java peak caller with motif-aware refinement.
+- **`GEM`** — Java peak caller with motif-aware refinement.
   - Reference impl: `Java` · [gem](http://groups.csail.mit.edu/cgs/gem/) · `GPL-3.0`
   - Existing Rust: none verified
   - Existing Rust kind: `none`
@@ -147,7 +168,5 @@ Hi-C "peak"/loop callers (chromosight, mustache, HiCCUPS) live in
   - Quadrant: —
   - GPU-amenable: maybe — motif scanning is SIMT-friendly
   - Upstream license: `GPL-3.0`
-  - Priority: `P2`
-  - Layer: —
-  - Consumes primitives: —
-  - Notes: Niche; motif-coupled peak refinement is its differentiator. Not a porting target.
+  - Portfolio routing: external motif-aware caller reference, not a porting target.
+  - Notes: Motif-coupled peak refinement is a distinct model, not an implied feature of the current narrow-calling slice.
