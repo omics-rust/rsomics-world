@@ -1,0 +1,217 @@
+{
+  "schema": "rsomics.ecology.beta-eight-metric-adoption.v1",
+  "root_adopted": true,
+  "status": "accepted-all-eight-full-input-beta-correctness-and-performance",
+  "product": "rsomics-ecology",
+  "owner_commit": "111adf5e8a3657a99c50a9832ca5ed9c53fd98d7",
+  "native_four_qualified": true,
+  "compact_source_on_native_qualified": false,
+  "full_study_beta_upstream_comparison_qualified": true,
+  "full_eight_metric_beta_performance_qualified": true,
+  "qualified_metric_count": 8,
+  "input_features": 41328,
+  "input_samples": 1105,
+  "input_nonzeros": 314497,
+  "input_reads": 21227600,
+  "tree_tips": 162331,
+  "tree_nodes": 323372,
+  "metrics": [
+    {
+      "metric": "braycurtis",
+      "run_id": 41288208209,
+      "run_attempt": 1,
+      "job_id": 124793770196,
+      "artifact_id": 13076760099,
+      "original_zip": {
+        "bytes": 1733125836,
+        "sha256": "9a9858d10702f38430dd0f63772937f417c459ea3a3dbadd8fe548d422497d56"
+      },
+      "decision": {
+        "cpu_ratio": 0.14255006475726673,
+        "disjoint_rss": true,
+        "disjoint_wall": true,
+        "memory": true,
+        "native4_scaling": 1.7261815769081703,
+        "rss_ratio": 0.05338562653342646,
+        "throughput": true,
+        "wall_ratio": 0.15106303395979778
+      }
+    },
+    {
+      "metric": "canberra",
+      "run_id": 41288208209,
+      "run_attempt": 1,
+      "job_id": 124793770199,
+      "artifact_id": 13076332054,
+      "original_zip": {
+        "bytes": 1718059130,
+        "sha256": "cf6dd07d266d00f11c816667f7e412455d2c2ae5deca1243976d9a418f8ef8f5"
+      },
+      "decision": {
+        "cpu_ratio": 0.11941965327357755,
+        "disjoint_rss": true,
+        "disjoint_wall": true,
+        "memory": true,
+        "native4_scaling": 1.6820803597072482,
+        "rss_ratio": 0.051854770818033635,
+        "throughput": true,
+        "wall_ratio": 0.11827691570691799
+      }
+    },
+    {
+      "metric": "cityblock",
+      "run_id": 41288208209,
+      "run_attempt": 1,
+      "job_id": 124793770209,
+      "artifact_id": 13076356866,
+      "original_zip": {
+        "bytes": 1450852779,
+        "sha256": "1315161c320849e1322c5fd8703c4df4421a022b5a0b7f8da8950f759d12207a"
+      },
+      "decision": {
+        "cpu_ratio": 0.17604041314612526,
+        "disjoint_rss": true,
+        "disjoint_wall": true,
+        "memory": true,
+        "native4_scaling": 1.7776744296005411,
+        "rss_ratio": 0.052752221699908224,
+        "throughput": true,
+        "wall_ratio": 0.19381626743276006
+      }
+    },
+    {
+      "metric": "euclidean",
+      "run_id": 41288208209,
+      "run_attempt": 1,
+      "job_id": 124793770222,
+      "artifact_id": 13075549116,
+      "original_zip": {
+        "bytes": 1747741883,
+        "sha256": "eda6af341ed75d4b4ebe83a7d3c14c4e09076c46aaee2757764aacfefbec3ef2"
+      },
+      "decision": {
+        "cpu_ratio": 0.16912507059430448,
+        "disjoint_rss": true,
+        "disjoint_wall": true,
+        "memory": true,
+        "native4_scaling": 1.7631365830134111,
+        "rss_ratio": 0.05276614384752573,
+        "throughput": true,
+        "wall_ratio": 0.17599852296554333
+      }
+    },
+    {
+      "metric": "jaccard",
+      "run_id": 41288208209,
+      "run_attempt": 1,
+      "job_id": 124793770108,
+      "artifact_id": 13076601958,
+      "original_zip": {
+        "bytes": 1727287609,
+        "sha256": "f5553b201aee055bdf41f279d3c103039955d88de44f606a70de37934fafbb26"
+      },
+      "decision": {
+        "cpu_ratio": 0.06266420451855047,
+        "disjoint_rss": true,
+        "disjoint_wall": true,
+        "memory": true,
+        "native4_scaling": 1.7861200107114286,
+        "rss_ratio": 0.0509167661606686,
+        "throughput": true,
+        "wall_ratio": 0.06635941505390552
+      }
+    },
+    {
+      "metric": "unweighted_unifrac",
+      "run_id": 41288208209,
+      "run_attempt": 1,
+      "job_id": 124793770145,
+      "artifact_id": 13077359724,
+      "original_zip": {
+        "bytes": 1764478148,
+        "sha256": "3497df0c2479c0aa4f9a94d2418a9fad038ee49c14055736faeb9e9a4871d5f0"
+      },
+      "decision": {
+        "cpu_ratio": 0.03285750295915757,
+        "disjoint_rss": true,
+        "disjoint_wall": true,
+        "memory": true,
+        "native4_scaling": 2.153742935518805,
+        "rss_ratio": 0.024131462712944387,
+        "throughput": true,
+        "wall_ratio": 0.032878049096759225
+      }
+    },
+    {
+      "metric": "weighted_normalized_unifrac",
+      "run_id": 41288208209,
+      "run_attempt": 2,
+      "job_id": 124844218701,
+      "artifact_id": 13089287162,
+      "original_zip": {
+        "bytes": 1789633725,
+        "sha256": "ded21ade04beea9d9d52c0d04877662e6f3a865207ef0f6c4b03465b9bcde185"
+      },
+      "decision": {
+        "cpu_ratio": 0.011121955028643793,
+        "disjoint_rss": true,
+        "disjoint_wall": true,
+        "memory": true,
+        "native4_scaling": 2.0242301704952146,
+        "rss_ratio": 0.02412000194037434,
+        "throughput": true,
+        "wall_ratio": 0.011129230312916872
+      }
+    },
+    {
+      "metric": "weighted_unifrac",
+      "run_id": 41288208209,
+      "run_attempt": 1,
+      "job_id": 124793770126,
+      "artifact_id": 13080998436,
+      "original_zip": {
+        "bytes": 1772282930,
+        "sha256": "7162c7d6c1276e204e67695e722395430de18d3c4e1965cfb774cbe0a956aca0"
+      },
+      "decision": {
+        "cpu_ratio": 0.009166426964052033,
+        "disjoint_rss": true,
+        "disjoint_wall": true,
+        "memory": true,
+        "native4_scaling": 2.169726184124193,
+        "rss_ratio": 0.024135734545853747,
+        "throughput": true,
+        "wall_ratio": 0.009244648008321619
+      }
+    }
+  ],
+  "authorities": [
+    {
+      "path": ".autopilot/oracles/ecology-beta-six-real-2026-11-01.json",
+      "sha256": "f47e052eb3240db456af36d0e95aa282e7809b9de52b691166e7d99b4d3ab505"
+    },
+    {
+      "path": ".autopilot/oracles/ecology-beta-weighted-real-2026-11-01.json",
+      "sha256": "d90722f1eeb01ea0156cdf551169a40854554cd0dbba2052efa66f1f7fed0550"
+    },
+    {
+      "path": ".autopilot/oracles/ecology-beta-normalized-real-2026-11-02.json",
+      "sha256": "00b589cebc273ad338db6cf2afdf556a1f1e83713c17cf74587ff722c97124a7"
+    },
+    {
+      "path": ".autopilot/oracles/ecology-native-beta-2026-11-01.json",
+      "sha256": "048089f8ec2814670c75b584f51cc7005533df4df341af18db79a5c9798ece45"
+    }
+  ],
+  "limitations": [
+    "The native beta receipt does not qualify a dedicated compact source-on-native gate. Full-study upstream comparisons for all eight beta metrics are accepted separately.",
+    "UniFrac source baseline is contiguous-public; its 2858608480-byte layout copy is charged, not unchanged-default source memory.",
+    "Source CPython is 3.12.10; metrics used different actual hosts and their times are not summed.",
+    "Native4 CPU, faults and RSS costs remain recorded; no universal four-thread scaling or exact aggregate-tree RSS claim.",
+    "Original normalized initialization failure, interrupted 100MiB transport and every prior receipt remain unchanged."
+  ],
+  "public_delivery_qualified": false,
+  "publication": false,
+  "release": false,
+  "capacity_allowance_retired_by_this_receipt": false
+}

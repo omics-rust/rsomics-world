@@ -1,5 +1,37 @@
 # Ecology complete-original beta performance
 
+## All eight full-input beta metrics accepted
+
+Root adopts weighted_normalized_unifrac actual41288208209/2, job124844218701,
+artifact13089287162, after reading the full resumed report/transport proof and
+unchanged reader scope. Fresh root verification hashes every229 sealed local
+body/19054409B, all16772 remote files/3102835453B, originalZIP/TAR/CAS/modes,
+five transport originals and the unchanged100MiB partial. Check exits0/empty
+stderr; dBqyiy/check.stdout SHAfb8c64f7. Root independently reduces all27
+five-value distributions/27 loss comparisons and both unchanged primary routes;
+resources.stdout is53afb082. No scientific calculation is repeated.
+
+New individual ecology-beta-normalized-real-2026-11-02.json and aggregate
+ecology-beta-eight-real-2026-11-02.json qualify all eight full41328x1105 beta
+metrics. Existing six/seventh receipts and every original remain exact. The
+aggregate preserves the native beta receipt's compact_source_on_native=false:
+native-four and the eight actual full-study upstream comparisons are distinct
+accepted evidence, not a fabricated dedicated compact source-on-native gate.
+
+Normalized Source1/Native1/Native4 wall medians1594.336623/17.743739/8.765673s,
+RSS6417235968/154783744/162172928B. Fixed serial throughput and memory both
+pass. Native4's2.02423x wall scaling costs CPU/user/system/faults/RSS; all
+losses remain. Full tree162331tips/323372nodes and all21 complete matrices
+qualify at unchanged1e-10+rel1e-10; all14 native outputs are byte-identical.
+Source is contiguous-public with2858608480B copy charged/CPython3.12.10 on
+actualIntel8370C, not unchanged-default memory or a cross-host pipeline.
+
+Packet DBFYAR REPORT9190e59b/SOURCE02a79343/SEAL9b304dce is immutable. The
+resumed full ZIP/tail and original partial/first interrupted attempt remain
+separate identities; no causal network claim is made. This completes beta
+correctness/performance custody, not public repository/package/native-delivery
+or registry publication. No storage reservation is retired by these receipts.
+
 ## Final normalized job terminal success; complete-original recovery active
 
 Fresh actual41288208209/2 job124844218701 finishes SUCCESS15:21:25Z,

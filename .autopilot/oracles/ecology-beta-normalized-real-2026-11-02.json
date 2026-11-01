@@ -1,0 +1,332 @@
+{
+  "actual_job_conclusion": "success",
+  "actual_native_binary": {
+    "bytes": 1970360,
+    "sha256": "d7dc1832fab7857aba17179b4eb632438094b7f64c7ac7bf562bd64778017bd3"
+  },
+  "actual_owner": "111adf5e8a3657a99c50a9832ca5ed9c53fd98d7",
+  "actual_source_admission": {
+    "compiled_modules": {
+      "biom._subsample": {
+        "bytes": 563456,
+        "sha256": "5a33bb24a0c96901ae800ec288c1efe981380f57fbcc388f2a40100ca01bda8a"
+      },
+      "numpy.random._generator": {
+        "bytes": 845808,
+        "sha256": "e362c7a4c9d5d97404ee1fcbf00c2b345ecec945df50f6ea3e0f4631d4ab336e"
+      },
+      "numpy.random._pcg64": {
+        "bytes": 151344,
+        "sha256": "61175f3da7d43f4811277cdf743906b8d405d1800cee79632a17fbca478e6964"
+      },
+      "scipy.spatial._distance_pybind": {
+        "bytes": 616336,
+        "sha256": "e11e762210262b10593a77a1b5f433b14114d12da089f5516044641aced41ada"
+      },
+      "skbio.diversity._phylogenetic": {
+        "bytes": 613016,
+        "sha256": "f69780f0ab803b5fe487c5614a04012ad8448873205243d4a949bc86045bc957"
+      }
+    },
+    "executable": "/__w/_temp/ecology-beta-weighted_normalized_unifrac-726mq7xw/private/runtime/venv/bin/python",
+    "identical_original_interpreter": false,
+    "installed_source": {
+      "scipy/spatial/distance.py": {
+        "bytes": 92035,
+        "sha256": "e0cd0871d483a355eaf656ee0849e6579af45f579f33ec4ca326df2626b3f196"
+      },
+      "skbio/diversity/_driver.py": {
+        "bytes": 16590,
+        "sha256": "cce20bfab060b5abf81529a9566b3b1f0de94cdf21ac80d54ab01dd33a9065d7"
+      },
+      "skbio/diversity/_util.py": {
+        "bytes": 5919,
+        "sha256": "d2403b84ba0a49b2fb48aadcc8a24c703a623329ea4c8aab25cc15e8dcb4b70c"
+      },
+      "skbio/diversity/alpha/_base.py": {
+        "bytes": 41081,
+        "sha256": "ad55376df0694358feedf27a7a532d060927d6d574c9494e66830cb12b601cf7"
+      },
+      "skbio/diversity/alpha/_chao1.py": {
+        "bytes": 6370,
+        "sha256": "f329947f3e9950fb284a58b3d753e99dfdb8f03f147633cdc39dbf90094be6f5"
+      },
+      "skbio/diversity/alpha/_pd.py": {
+        "bytes": 17227,
+        "sha256": "b884fd146b47ef419837eed840f7cabadbfb6dd3952810dae3371fa406dfc635"
+      },
+      "skbio/diversity/beta/_unifrac.py": {
+        "bytes": 23149,
+        "sha256": "813aa7554a79a577c808c1fcd1525a5476174137bdcfd5b4e14b4f80ffbbb949"
+      },
+      "skbio/io/format/lsmat.py": {
+        "bytes": 10157,
+        "sha256": "6c886aaf0e0ad9201f3fa9d81de2ccf402f80bf5118b92c50068c721cdeb5263"
+      },
+      "skbio/stats/_subsample.py": {
+        "bytes": 7968,
+        "sha256": "355dcc624f523639f8b40f62c9bb108070f9007767ad325f82f972fb7c346fc8"
+      },
+      "skbio/tree/_tree.py": {
+        "bytes": 217133,
+        "sha256": "383b089b40589ec664d1d2ef81ede5a8a36106e87bb1aa92bc3b01116893a54e"
+      },
+      "skbio/tree/_utils.py": {
+        "bytes": 2996,
+        "sha256": "333903337875ec509020284c09b804d03bc63e7f4b3b20df11492bfb2a10b7f4"
+      },
+      "skbio/util/_misc.py": {
+        "bytes": 5491,
+        "sha256": "d1283c71fd1fa21cfa2a0b59ee4d1be2513db603dfa60d38e7de4a4c48db05f1"
+      }
+    },
+    "original_python": "3.12.15",
+    "prefix": "/__w/_temp/ecology-beta-weighted_normalized_unifrac-726mq7xw/private/runtime/venv",
+    "python": "3.12.10 (main, Apr  9 2025, 04:03:51) [Clang 20.1.0 ]",
+    "threadpools": [
+      {
+        "architecture": "SkylakeX",
+        "filepath": "/__w/_temp/ecology-beta-weighted_normalized_unifrac-726mq7xw/private/runtime/venv/lib/python3.12/site-packages/scipy.libs/libscipy_openblas-5f890258.so",
+        "internal_api": "openblas",
+        "num_threads": 1,
+        "prefix": "libscipy_openblas",
+        "threading_layer": "pthreads",
+        "user_api": "blas",
+        "version": "0.3.31.dev"
+      },
+      {
+        "architecture": "SkylakeX",
+        "filepath": "/__w/_temp/ecology-beta-weighted_normalized_unifrac-726mq7xw/private/runtime/venv/lib/python3.12/site-packages/numpy.libs/libscipy_openblas64_-f48b354e.so",
+        "internal_api": "openblas",
+        "num_threads": 1,
+        "prefix": "libscipy_openblas",
+        "threading_layer": "pthreads",
+        "user_api": "blas",
+        "version": "0.3.34.106.0"
+      },
+      {
+        "filepath": "/__w/_temp/ecology-beta-weighted_normalized_unifrac-726mq7xw/private/runtime/venv/lib/python3.12/site-packages/scikit_bio.libs/libgomp-e985bcbb.so.1.0.0",
+        "internal_api": "openmp",
+        "num_threads": 1,
+        "prefix": "libgomp",
+        "user_api": "openmp",
+        "version": null
+      }
+    ],
+    "versions": {
+      "array-api-compat": "1.16.0",
+      "biom-format": "2.1.17",
+      "certifi": "2026.10.23",
+      "charset-normalizer": "3.5.2",
+      "click": "8.5.0",
+      "decorator": "5.3.1",
+      "formulaic": "1.2.2",
+      "h5py": "3.16.0",
+      "idna": "3.20",
+      "interface-meta": "2.0.1",
+      "narwhals": "2.28.0",
+      "natsort": "8.4.0",
+      "numpy": "2.5.4",
+      "packaging": "26.3",
+      "pandas": "3.1.0",
+      "patsy": "1.0.3",
+      "python-dateutil": "3.0.0",
+      "requests": "2.34.2",
+      "scikit-bio": "0.7.3",
+      "scipy": "1.18.1",
+      "six": "1.17.0",
+      "statsmodels": "0.15.0",
+      "threadpoolctl": "3.7.0",
+      "typing-extensions": "4.16.0",
+      "tzdata": "2026.5",
+      "urllib3": "2.8.0",
+      "wrapt": "2.5.1"
+    }
+  },
+  "all_system_mapped_DSO_bodies_captured": false,
+  "artifact_id": 13089287162,
+  "authenticated_tar": {
+    "bytes": 1789194240,
+    "sha256": "8e6d7fa6f41914dadaec3ba5444656a3913b606368e9764e22777bf678f93969"
+  },
+  "cas_unique_bodies": 16761,
+  "cas_unique_bytes": 1299811695,
+  "complete_matrix_outputs": 21,
+  "cross_host_pipeline_aggregate_claim": false,
+  "duplicate_bodies_byte_compared": 1727,
+  "full_eight_metric_product_qualified": false,
+  "head_sha": "7d68a900a82100573cc927337eb4bf01003b3f87",
+  "job_id": 124844218701,
+  "local_verification": {
+    "bytes": 33970,
+    "sha256": "c61aa44e765296db715686e45d36ea3d9254371bdf083ff351248a45b831e746"
+  },
+  "metric": "weighted_normalized_unifrac",
+  "native14_worker_repeat_bytes_exact": true,
+  "no_foreign_scientific_execution": true,
+  "numeric_tolerance": {
+    "abs": 1e-10,
+    "rel": 1e-10
+  },
+  "only_official_age_read_existing_identity_path": true,
+  "operational_resumed_transport": {
+    "metadata_ledger": {
+      "bytes": 1154,
+      "sha256": "1e11f6edbd5d8a94c49a223a2180178f0ad73d1721d65badaf4b968f5eb3f506"
+    },
+    "original_interrupted_packet": "/Volumes/KIOXIA/Developments/tmp/ecology-beta-normalized-recovery-20261102.vlagkg",
+    "original_partial_preserved": true,
+    "scientific_budget_or_gate_changed": false,
+    "scientific_rerun": false,
+    "status": {
+      "actual_scientific_budget_changed": false,
+      "bytes": 1789633725,
+      "complete": true,
+      "failure_class": null,
+      "gh_stderr_bytes": 0,
+      "gh_stderr_content_discarded": true,
+      "gh_stderr_limit_reached": false,
+      "independently_streamed_tail": {
+        "bytes": 1684776125,
+        "sha256": "b6b5048cb8069b68f7624f757f65ee2747e6459cc1620fe2ffcd294d9402e233"
+      },
+      "old_partial": "/home/liangjy/rsomics-ecology-beta-recovery-20261101/artifact-13089287162-weighted_normalized_unifrac-attempt2.zip",
+      "old_partial_preserved": true,
+      "operator_admitted_transport_seconds": 10800,
+      "partial_or_complete_preserved": true,
+      "remote_path": "/home/liangjy/rsomics-ecology-beta-recovery-20261101/artifact-13089287162-weighted_normalized_unifrac-attempt2-resumed1.zip",
+      "response": {
+        "header_bytes": 1158,
+        "headers": {
+          "content-length": 1684776125,
+          "content-range": "bytes 104857600-1789633724/1789633725",
+          "content-type": "application/zip"
+        },
+        "protocol": "HTTP/1.1",
+        "raw_header_values_retained": false,
+        "status": 206
+      },
+      "seconds": 123.90815204201499,
+      "sink_exit": 0,
+      "source_exit": 0
+    },
+    "transport_only_seconds": 10800
+  },
+  "original_members": 21693,
+  "original_types": {
+    "directory": 2153,
+    "file": 18488,
+    "symlink": 1052
+  },
+  "original_zip": {
+    "bytes": 1789633725,
+    "sha256": "ded21ade04beea9d9d52c0d04877662e6f3a865207ef0f6c4b03465b9bcde185"
+  },
+  "performance_qualified_by_root": true,
+  "private_identity_bytes_handled_by_controller": false,
+  "publication": false,
+  "remote_authenticated_tar": "/home/liangjy/rsomics-ecology-beta-recovery-20261101/weighted_normalized_unifrac-41288208209-2-auth-resumed1/candidate.tar",
+  "remote_original_zip": "/home/liangjy/rsomics-ecology-beta-recovery-20261101/artifact-13089287162-weighted_normalized_unifrac-attempt2-resumed1.zip",
+  "remote_seal": {
+    "bytes": 3546013,
+    "large_body_hashes_reused": 16762,
+    "path": "/home/liangjy/rsomics-ecology-beta-recovery-20261101/weighted_normalized_unifrac-41288208209-2-auth-resumed1/REMOTE-SEAL.json",
+    "regular_bytes": 3102835453,
+    "regular_files": 16772,
+    "sha256": "d1487b566a523c0148475f0d2b11d6f1fe2a8d9c848fdf083f37cbed997c6f21"
+  },
+  "repository": "omics-rust/rsomics-world",
+  "resources": {
+    "independent_decision": {
+      "cpu_ratio": 0.011121955028643793,
+      "disjoint_rss": true,
+      "disjoint_wall": true,
+      "memory": true,
+      "native4_scaling": 2.0242301704952146,
+      "rss_ratio": 0.02412000194037434,
+      "throughput": true,
+      "wall_ratio": 0.011129230312916872
+    },
+    "losses": {
+      "native1_over_source": {
+        "cpu": false,
+        "input_blocks": false,
+        "major_faults": false,
+        "minor_faults": false,
+        "output_blocks": false,
+        "rss_bytes": false,
+        "system": false,
+        "user": false,
+        "wall": false
+      },
+      "native4_over_native1": {
+        "cpu": true,
+        "input_blocks": false,
+        "major_faults": false,
+        "minor_faults": true,
+        "output_blocks": false,
+        "rss_bytes": true,
+        "system": true,
+        "user": true,
+        "wall": false
+      },
+      "native4_over_source": {
+        "cpu": false,
+        "input_blocks": false,
+        "major_faults": false,
+        "minor_faults": false,
+        "output_blocks": false,
+        "rss_bytes": false,
+        "system": false,
+        "user": false,
+        "wall": false
+      }
+    },
+    "metric": "weighted_normalized_unifrac",
+    "native1_rss": 154783744,
+    "native1_wall": 17.743739476,
+    "native4_rss": 162172928,
+    "native4_wall": 8.765672864,
+    "source_rss": 6417235968,
+    "source_wall": 1594.336623208
+  },
+  "root_adopted": true,
+  "root_fresh_whole_review_required": false,
+  "run_attempt": 2,
+  "run_id": 41288208209,
+  "schema": "rsomics.ecology.beta-real-custody-adoption.v1",
+  "source_default_unmodified_performance_claim": false,
+  "source_profile": {
+    "layout_copy_time_and_rss_charged": true,
+    "name": "contiguous-public",
+    "numeric_bands_unchanged": true,
+    "pairwise_func": "scipy.spatial.distance.pdist(numpy.ascontiguousarray(X), metric=metric, **kwargs)",
+    "unifrac_layout_only": true,
+    "upstream_default_memory_claim": false,
+    "validate": true,
+    "writer": "DistanceMatrix.write(format=lsmat, delimiter=TAB)"
+  },
+  "status": "accepted-complete-normalized-weighted-unifrac-correctness-and-performance",
+  "recovery_proposal_schema": "rsomics.ecology.beta-real-custody-adoption-proposal.v1",
+  "root_adoption": {
+    "evidence_directory": "/Volumes/KIOXIA/Developments/tmp/ecology-beta-normalized-resumed-20261102.DBFYAR",
+    "report_sha256": "9190e59beff7368c9dfdb48d29b01457d11b04da164a98e4c3817a9809923acd",
+    "source_sha256": "02a793437f90cc0518f38120b567c65b5f7147987c9d5104a65ebc40ade0346e",
+    "seal_sha256": "9b304dcebfa1a0c2a06cebe969cf7a4726fa75349bb933917df534c0ce6e1930",
+    "root_directory": "/Volumes/KIOXIA/Developments/tmp/ecology-normalized-root-20261102.dBqyiy",
+    "fresh_whole_check_stdout_sha256": "fb8c64f7f55fad673832995e18b54aa6a0ddadc3ac25541d3f264ba6ec297b45",
+    "fresh_independent_resources_stdout_sha256": "53afb08228581846d2d2133f86ab7178f2e9131b48fc5a4a0326988912e32285",
+    "exit_code": 0,
+    "stderr_bytes": 0,
+    "sealed_local_files_excluding_seal": 229,
+    "sealed_local_bytes_excluding_seal": 19054409,
+    "remote_regular_files": 16772,
+    "remote_regular_bytes": 3102835453,
+    "old_partial_and_transport_originals_freshly_verified": true,
+    "all_complete_zip_tar_cas_modes_bodies_freshly_hashed": true,
+    "all_27_counter_distributions_and_27_loss_comparisons_reduced": true,
+    "both_unchanged_serial_primary_routes_pass": true,
+    "scientific_execution": false,
+    "packet_writes": false
+  }
+}

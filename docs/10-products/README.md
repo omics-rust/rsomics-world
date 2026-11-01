@@ -26,7 +26,7 @@ operation will ship. It records:
 | `rsomics-composition` | 10 | [released 0.1.0](composition.md) |
 | `rsomics-count` | 4 | [released 0.1.0](count-gate-2026-08-02.md) |
 | `rsomics-deseq` | 12 | [GitHub 0.1.0 released and public install verified; registry held](bulk-expression.md#rsomics-deseq) |
-| `rsomics-ecology` | 19 | [native4/alpha and seven beta metrics accepted; eighth originals under review](ecology.md) |
+| `rsomics-ecology` | 19 | [native4/alpha and all eight full-input beta metrics accepted; public delivery pending](ecology.md) |
 | `rsomics-edger` | 17 | [private modern QL workflow; numerical contract held](bulk-expression.md#rsomics-edger) |
 | `rsomics-fastq-preprocess` | 12 | [released 0.1.1](fastq-preprocess-gate-2026-07-30.md) |
 | `rsomics-fastq-qc` | 1 | [released 0.1.0](fastq-qc-gate-2026-08-02.md) |
