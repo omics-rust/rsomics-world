@@ -1,5 +1,13 @@
 # Index reference-resource source workflow
 
+## Corrected actual source retry dispatched
+
+Exact-head Control plane41255074004 succeeds at
+381848e07c8dceb5d30f208381e33ba17f4e9a7d. Root dispatches41255333228/1
+with the command-scoped checkout trust correction. Actual official runtime
+acquisition/build/casebook acceptance remains pending; previous failed originals
+are retained and never relabelled as scientific success.
+
 ## First actual source attempt: checkout ownership adapter
 
 Exact-head Control plane41254605717 passes at
