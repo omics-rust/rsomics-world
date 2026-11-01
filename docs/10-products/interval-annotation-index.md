@@ -287,8 +287,16 @@ Dictionary MD5/chr-MT aliases follow the captured source; plain/gzip/stdin are
 supported. Explicit build/query and strict malformed-input differences are
 documented in the owner merge record. Mac full debug/release each63pass and
 the focused real stdin short-read correction pass. Exact four-native
-CI41259142238 now passes; complete-reference performance remains pending. This does
-not restore the old missing-raw benchmark evidence below.
+CI41259142238 passes. Actual full-reference run41266649396 has now been
+adopted from complete original carriers:168 science calls/182 byte-exact
+outputs on the84-contig reference. The predeclared chromosome-query process
+memory route passes (48.9MB versus252.2–253.1MB), but the throughput route
+fails: plain short-region serial queries take2.037 times the source wall time,
+and BGZF serial queries1.109 times. The primary pipeline median is30.381s
+versus36.625s, not evidence that every operation is faster. A bounded query
+optimization is being verified separately; this accepted baseline cannot
+qualify changed source. No exact aggregate RSS, cold-cache, publication or
+restoration of the old missing-raw benchmark evidence below is claimed.
 
 The initial implementation runs from `acba3ec` through code head
 `05960a4609a3b2acc388c0a149b5e023d53027f1`. Harness revision

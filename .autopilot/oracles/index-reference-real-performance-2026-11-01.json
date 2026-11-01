@@ -1,0 +1,432 @@
+{
+  "acceptance_scope": "Original owner7f2d4fd only: full-reference correctness and predeclared bounded process-memory route accepted; throughput gate fails, all regressions retained. No acceptance transfer to optimized source; no old13-lane recovery, full-product or publication claim.",
+  "actual_conclusion": "success",
+  "all_runtime_bodies_modes_links_verified": true,
+  "artifact_manifest": {
+    "bytes": 4516473,
+    "sha256": "5266dcb381f2805257084a42649677759aa87adb974456fdd5537841d627d01d"
+  },
+  "artifacts": [
+    {
+      "carrier": {
+        "bytes": 7357573475,
+        "sha256": "c5d522367e23ee253c7381447c2bf50011a43cfe54cea95a8cb76e49668edef5"
+      },
+      "crc_members": 1279,
+      "id": 13068436274,
+      "name": "index-reference-real-evidence-41266649396-1"
+    },
+    {
+      "carrier": {
+        "bytes": 876673377,
+        "sha256": "c9c4ea82d5725d9060da3e88c2ef16d607a71611f9b9c338c156e528a5b74b86"
+      },
+      "crc_members": 1,
+      "id": 13068237081,
+      "name": "index-reference-real-runtime-41266649396-1"
+    }
+  ],
+  "controller_commit": "61254983acd344ec99d30d8984bc6c3e823e2423",
+  "controller_repository": "omics-rust/rsomics-world",
+  "correctness": {
+    "all_science_calls_zero": true,
+    "all_scientific_bodies_exact": true,
+    "full_query_profiles": {
+      "bulk": {
+        "all_other_round_engine_representation_worker_bodies_exact_by_full_sha256": true,
+        "bases": 10171504,
+        "expected_headers_and_lengths_exact": true,
+        "original_contig_line_widths": [
+          60,
+          70
+        ],
+        "records": 10423,
+        "source_default_input_contig_wrapping_exact": true
+      },
+      "chr1": {
+        "all_other_round_engine_representation_worker_bodies_exact_by_full_sha256": true,
+        "bases": 249250621,
+        "expected_headers_and_lengths_exact": true,
+        "original_contig_line_widths": [
+          60
+        ],
+        "records": 1,
+        "source_default_input_contig_wrapping_exact": true
+      }
+    },
+    "source_provider_qualification": {
+      "bulk": {
+        "bytes": 10571026,
+        "sha256": "25b5a911b1fa8c623d37072f81284e3a19a492766326a9d28c013f0e74e70bb4"
+      },
+      "chr1": {
+        "bytes": 253404802,
+        "sha256": "800e08540cb81c742143aac64122e12a0b529a8d52a9dc6851d3117869fc4c6e"
+      },
+      "dict": {
+        "bytes": 12693,
+        "sha256": "341446294eba4528545d262b2bc0e55bfeffc13519fd9cdd435ecc326dd2a629"
+      },
+      "fai": {
+        "bytes": 2746,
+        "sha256": "04aa12dcb4e7131d9c7361082bfd02f8415ee11e956bf358a339f0d3c54180ab"
+      },
+      "gzi": {
+        "bytes": 773032,
+        "sha256": "5145061ac9589de5deab4c430561917fa5554edf9aa1acb9132e865289db6628"
+      }
+    }
+  },
+  "custody_completed": {
+    "sha256": "919265ed4d983afc9db821dc51b4ff3c7d5d78c712a63208fd686688c4660617"
+  },
+  "custody_seal": {
+    "bytes": 274525,
+    "sha256": "1fbaf187f98f1eea671f1a4b32a86e844a6a980539ead2d50ed0daa012f733de"
+  },
+  "input_bodies": {
+    "bgzf": {
+      "bytes": 787384761,
+      "sha256": "97b4a112b39074062eab6b07f94215f40c6b752284b7f83b61c02b40f504a174"
+    },
+    "original": {
+      "bytes": 892331003,
+      "sha256": "8b6c538abf0dd92d3f3020f36cc1dd67ce004ffa421c2781205f1eb690bdb442"
+    },
+    "plain": {
+      "bytes": 3153506519,
+      "sha256": "2f9cd9e853a9284c53884e6a551b1c7284795dd053f255d630aeeb114d1fa81f"
+    },
+    "provider_fai": {
+      "bytes": 2746,
+      "sha256": "04aa12dcb4e7131d9c7361082bfd02f8415ee11e956bf358a339f0d3c54180ab"
+    }
+  },
+  "job_id": 124730729353,
+  "manifest_entries": 17799,
+  "native": {
+    "bytes": 2741408,
+    "elf64_little_x86_64": true,
+    "path": "runtime/native/target/release/rsomics-index",
+    "sha256": "49c56467d31688e4dc444f074187def12f172262957c23d571a350fb047df4b7"
+  },
+  "native_four_prior_gate": {
+    "head": "7f2d4fdeda9d0062d10941258b40eee16fdb9042",
+    "jobs": {
+      "linux-aarch64": 124708577759,
+      "linux-x86_64": 124708577637,
+      "macos-aarch64": 124708577498,
+      "macos-x86_64": 124708577572
+    },
+    "run_id": 41259142238
+  },
+  "native_lock": {
+    "bytes": 17756,
+    "sha256": "469601b48976964ef31f1a1bbaa54f63583239e94e73129ceb8f03961d29ccb6"
+  },
+  "native_manifest": {
+    "bytes": 1163,
+    "sha256": "33741a1f3dc1a89037aac0cf37512e0ef3cb3b9167e55178b8e797fb1b46a671"
+  },
+  "old_13_lane_missing_evidence_hold_unchanged": true,
+  "owner_commit": "7f2d4fdeda9d0062d10941258b40eee16fdb9042",
+  "packet": "/Volumes/KIOXIA/Developments/tmp/index-real-success-adoption-20261101.74CeWm",
+  "performance": {
+    "all_node_losses": {
+      "bgzf/build": {
+        "primary": true,
+        "rss_loss": false,
+        "rss_native_over_source": 1.0,
+        "wall_loss": false,
+        "wall_native_over_source": 0.872026103668773
+      },
+      "bgzf/bulk-1": {
+        "primary": true,
+        "rss_loss": false,
+        "rss_native_over_source": 1.0,
+        "wall_loss": true,
+        "wall_native_over_source": 1.1088542202267564
+      },
+      "bgzf/bulk-4": {
+        "primary": false,
+        "rss_loss": false,
+        "rss_native_over_source": 1.0,
+        "wall_loss": false,
+        "wall_native_over_source": 0.19931594761013516
+      },
+      "bgzf/chr1-1": {
+        "primary": true,
+        "rss_loss": false,
+        "rss_native_over_source": 0.19334423204545087,
+        "wall_loss": true,
+        "wall_native_over_source": 1.0040656443662663
+      },
+      "bgzf/chr1-4": {
+        "primary": false,
+        "rss_loss": false,
+        "rss_native_over_source": 0.19245331657724718,
+        "wall_loss": false,
+        "wall_native_over_source": 0.9667144299052867
+      },
+      "bgzf/dict": {
+        "primary": true,
+        "rss_loss": false,
+        "rss_native_over_source": 0.19411086013292816,
+        "wall_loss": false,
+        "wall_native_over_source": 0.7852016057687405
+      },
+      "plain/build": {
+        "primary": true,
+        "rss_loss": false,
+        "rss_native_over_source": 1.0,
+        "wall_loss": false,
+        "wall_native_over_source": 0.571949215359641
+      },
+      "plain/bulk-1": {
+        "primary": true,
+        "rss_loss": false,
+        "rss_native_over_source": 1.0,
+        "wall_loss": true,
+        "wall_native_over_source": 2.0369472709118916
+      },
+      "plain/bulk-4": {
+        "primary": false,
+        "rss_loss": false,
+        "rss_native_over_source": 1.0,
+        "wall_loss": true,
+        "wall_native_over_source": 1.2968777744060054
+      },
+      "plain/chr1-1": {
+        "primary": true,
+        "rss_loss": false,
+        "rss_native_over_source": 0.1939658672036114,
+        "wall_loss": false,
+        "wall_native_over_source": 0.8933171871690146
+      },
+      "plain/chr1-4": {
+        "primary": false,
+        "rss_loss": false,
+        "rss_native_over_source": 0.193906042011623,
+        "wall_loss": false,
+        "wall_native_over_source": 0.8788539768416227
+      },
+      "plain/dict": {
+        "primary": true,
+        "rss_loss": false,
+        "rss_native_over_source": 0.19410139746506339,
+        "wall_loss": false,
+        "wall_native_over_source": 0.8572194210698745
+      }
+    },
+    "cold_cache_proven": false,
+    "exact_aggregate_memory_bytes": null,
+    "frozen_decision": {
+      "bounded_memory_accepted": true,
+      "performance_accepted": true,
+      "throughput_accepted": false
+    },
+    "primary": {
+      "native": {
+        "maximum": 30.95085724500018,
+        "median": 30.381077712999968,
+        "minimum": 30.335755971999788,
+        "values": [
+          30.335755971999788,
+          30.36005916000022,
+          30.381077712999968,
+          30.45979894199968,
+          30.95085724500018
+        ]
+      },
+      "source": {
+        "maximum": 37.36260449999986,
+        "median": 36.624820894000095,
+        "minimum": 36.44456361300013,
+        "values": [
+          36.44456361300013,
+          36.892300643,
+          36.624820894000095,
+          37.36260449999986,
+          36.57789363400002
+        ]
+      }
+    },
+    "primary_paired_native_over_source": [
+      0.8323808262360077,
+      0.822937540648086,
+      0.8295215367995702,
+      0.8152482769770452,
+      0.8461629189120563
+    ],
+    "primary_wall_ratio": 0.8295215367995702,
+    "rss_scope": "wait4 whole-child lifetime process high-water, not heap or aggregate; small-node fork/exec floor retained",
+    "scaling": {
+      "bgzf/bulk/native": {
+        "median_serial_over_four": 2.3728851450377353,
+        "paired_serial_over_four": [
+          2.335339825890014,
+          2.3704207177362253,
+          2.359671267780241,
+          2.4453485733469518,
+          2.4356216960638575
+        ]
+      },
+      "bgzf/bulk/source": {
+        "median_serial_over_four": 0.42652482411663817,
+        "paired_serial_over_four": [
+          0.43570604166903715,
+          0.4250055849494847,
+          0.4303934868686565,
+          0.42817375768509647,
+          0.41029019910222153
+        ]
+      },
+      "bgzf/chr1/native": {
+        "median_serial_over_four": 1.211761181296449,
+        "paired_serial_over_four": [
+          1.2116342044297745,
+          1.2127239863933539,
+          1.214079017491597,
+          1.2132906257091491,
+          1.2096262107994735
+        ]
+      },
+      "bgzf/chr1/source": {
+        "median_serial_over_four": 1.1666836985521203,
+        "paired_serial_over_four": [
+          1.16596837093103,
+          1.1678304389622285,
+          1.1617253129565885,
+          1.1613340128053797,
+          1.1558700649413445
+        ]
+      },
+      "plain/bulk/native": {
+        "median_serial_over_four": 1.5060882551715336,
+        "paired_serial_over_four": [
+          1.4349901872287338,
+          1.5316699835829388,
+          1.4499949422691658,
+          1.526238134489624,
+          1.813091971803998
+        ]
+      },
+      "plain/bulk/source": {
+        "median_serial_over_four": 0.9588919714900017,
+        "paired_serial_over_four": [
+          0.955739416243302,
+          0.8591732234522058,
+          1.0016036955515923,
+          0.9406587161566661,
+          0.9861044040932524
+        ]
+      },
+      "plain/chr1/native": {
+        "median_serial_over_four": 1.0132103949780769,
+        "paired_serial_over_four": [
+          1.010508098835499,
+          1.022883841477209,
+          1.0132960969177096,
+          1.0181751885285222,
+          1.0132103949780769
+        ]
+      },
+      "plain/chr1/source": {
+        "median_serial_over_four": 0.9968060592516949,
+        "paired_serial_over_four": [
+          0.9919796121619326,
+          1.0004343474435184,
+          0.9846719520634905,
+          0.9979632554432176,
+          1.0047131871525898
+        ]
+      }
+    }
+  },
+  "performance_verification": {
+    "bytes": 35762,
+    "sha256": "e8bf9b746eef54c7150d7a9b112816bbf284bb4fc01d7567e94a8bb246631a41"
+  },
+  "product": "rsomics-index",
+  "providers": "native static libdeflate-sys1.25.2 and Rust zlib-rs0.6.7; source dynamically loaded libdeflate1.25, not one shared DSO",
+  "publication": false,
+  "raw_job_log": {
+    "bytes": 91023,
+    "sha256": "9a88ee426cdf3cbfb23e8c58eeb9e5f7d1e0d4c88c06454f9e923a5060c458f8"
+  },
+  "reference_bases": 3101804739,
+  "reference_checksum_provenance": "No advertised provider checksum; compressed/plain SHA frozen from full original failed run41262994994 before qualification, not independently provider-authenticated.",
+  "reference_contigs": 84,
+  "release": false,
+  "report": {
+    "bytes": 10932,
+    "sha256": "2ce32ce772b443cfb43fe629fd329b754cabc18b1d96cc9eee8bf2a48c749d57"
+  },
+  "repository": "omics-rust/rsomics-index",
+  "root_adopted": true,
+  "root_fresh_body_bytes": 29908942981,
+  "root_fresh_body_files": 1383,
+  "root_fresh_review_required": false,
+  "root_read_complete_validator_and_receipt": true,
+  "run_attempt": 1,
+  "run_id": 41266649396,
+  "runtime_restored_or_executed_locally": false,
+  "runtime_tar": {
+    "bytes": 2034053120,
+    "sha256": "3ad4b5c1605249c259e65cd709f3a28a0c4292b93734e7529b2af3dfaa74065d"
+  },
+  "runtime_tar_entries": 18191,
+  "runtime_tar_types": {
+    "directory": 1671,
+    "hardlink": 15,
+    "regular": 16501,
+    "symlink": 4
+  },
+  "schema": "rsomics.index.reference-real-performance.v1",
+  "source": {
+    "bytes": 6861264,
+    "elf64_little_x86_64": true,
+    "path": "runtime/samtools-original/samtools-1.24/samtools",
+    "sha256": "f61f111577a8600bebaeb53137df994802a2d53f41800e0d51e270cbd370ba5f"
+  },
+  "source_versions": {
+    "cmake": "3.31.8",
+    "htslib": "1.24",
+    "libdeflate": "1.25",
+    "samtools": "1.24"
+  },
+  "status": "accepted-scoped-reference-memory",
+  "this_run_platform": "same-job hosted linux-x86_64 only",
+  "verification": {
+    "bytes": 1095348,
+    "sha256": "10fd4ce675bb804d44387652a3f24a17d2f8bb2bfdf782672300d431d7c46189"
+  },
+  "workflow_path": ".github/workflows/index-reference-real-performance.yml",
+  "workload": {
+    "bulk_regions": 10423,
+    "full_bulk_outputs": 56,
+    "full_chr1_outputs": 56,
+    "full_scientific_output_bytes": 14793901108,
+    "graph": {
+      "bytes": 131137,
+      "sha256": "ac2f95d47aa7f5703d190b4a3e33afc279883f17348731d4bbe0c77d806ca2d7"
+    },
+    "measured_calls": 120,
+    "measured_pairs": 5,
+    "paired_order": [
+      "SN",
+      "NS",
+      "SN",
+      "NS",
+      "SN"
+    ],
+    "qualification_calls": 24,
+    "region_file": {
+      "bytes": 215944,
+      "sha256": "8ab1d4d2a0b42e1caf3098f7d3b702a322af27abc0bde60db3ae6af5c51cc5d2"
+    },
+    "science_calls": 168,
+    "scientific_outputs": 182,
+    "separate_warmup_calls": 24
+  }
+}

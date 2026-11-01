@@ -1,6 +1,39 @@
 # Index reference-resource source workflow
 
-## Complete-reference run succeeds; full originals under recovery
+## Complete-reference originals accepted; memory benefit and query losses retained
+
+Root reads the complete REPORT,389-line original-body validator and full
+proposed receipt, then freshly streams all1383 sealed regular bodies/modes,
+29908942981B at index-real-success-adoption-20261101.74CeWm. REPORT
+2ce32ce772b443cfb43fe629fd329b754cabc18b1d96cc9eee8bf2a48c749d57;
+SEAL1fbaf187f98f1eea671f1a4b32a86e844a6a980539ead2d50ed0daa012f733de;
+COMPLETED919265ed4d983afc9db821dc51b4ff3c7d5d78c712a63208fd686688c4660617.
+Both complete original ZIPs, full raw logs/APIs, runtime TAR/link metadata,
+eight actual61254983 controllers,17799 manifest entries and actual native/source
+ELFs are retained. No Linux runtime/program is restored or executed on Mac.
+
+All210 actual commands return0, including168 science calls;182 complete
+scientific bodies/14793901108B match the source exactly. Fixed full84-contig,
+3101804739-base input and10423 ordered bulk requests remain unchanged.
+OriginalFAI default wrapping includes MT70; the recovery checker's earlier
+all60-column assumption is corrected without changing scientific outputs.
+That checker failure is retained, not relabelled as a source failure.
+
+Five measured primary pipeline medians are30.381078s native/36.624821s source
+(ratio.829522). The predeclared bounded-memory route passes: full-chr1 native
+process peak48926720B versus252243968B plain/253054976B BGZF, with respective
+wall ratios.893317/1.004066. This is lifetime process high-water, not exact
+aggregate RSS, heap usage or a cold-cache claim. The throughput route FAILS:
+plain bulk1 wall ratio2.036947 and BGZF bulk1 ratio1.108854 exceed the node
+limit. Plain bulk4 also loses at1.296878; all other losses/scaling are retained.
+
+Receipt index-reference-real-performance-2026-11-01.json accepts only this
+owner7f2d4fd full-reference correctness and scoped memory result. The old
+13-lane missing-raw/publication hold is unchanged. No release or performance
+acceptance transfers to the new query optimization, which must pass fresh
+exact-source native-four CI and the same complete168-call benchmark.
+
+## Complete-reference run succeeds; full originals under recovery (historical)
 
 Actual41266649396/1 at61254983acd344ec99d30d8984bc6c3e823e2423 is
 terminal SUCCESS, job124730729353. Root verifies the actual API result and
