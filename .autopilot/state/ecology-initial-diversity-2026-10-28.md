@@ -1,5 +1,15 @@
 # Ecology diversity source qualification
 
+## Actual complete-study source/native qualification dispatched
+
+Exact-head Control41272321235 completes successfully at
+8406424a82ce94e6d400d509a5c7de4e491a020a. Root verifies live remote main,
+then dispatches actual41272473289/1 on that head with the actual tracked
+accepted native receipt/path and SHA dfc1e96c369c18e0e5ef876779c4cc0e9f715916be1850757037e40514f28290.
+Hosted ABI/runtime admission, old bridge, first complete public reference,
+all28 workflows and full authenticated original adoption remain unearned.
+No duplicate or performance/publication acceptance is inferred from dispatch.
+
 ## Complete-study controller reviewed for actual source/native execution
 
 Root reads all five complete delivery files,2071 lines, REPORT and timing
