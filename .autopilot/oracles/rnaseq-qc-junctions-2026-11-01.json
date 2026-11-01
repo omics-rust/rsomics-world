@@ -1,0 +1,214 @@
+{
+  "accepted_source_restoration": false,
+  "archived_members": {
+    "bytes": 4172700,
+    "extracted_path": "regular-blobs/0ea365d357ced4da887b81a85576bb64529dac3c48ba9e098d3790d473ffce1f",
+    "member": "archive-members.json",
+    "original_mode": 384,
+    "original_packet": "/Volumes/KIOXIA/Developments/tmp/rnaseq-junction-source-success-20261101.EQWawE",
+    "sha256": "0ea365d357ced4da887b81a85576bb64529dac3c48ba9e098d3790d473ffce1f"
+  },
+  "artifact_id": 13071489886,
+  "artifact_name": "rnaseq-qc-junctions-41277337904-1",
+  "artifact_sha256": "9a4dea3165704c3f65a91ecf3afbf09d2798a5fd8e70c663c9a0af76d8fd9e4a",
+  "authenticated_tar": {
+    "bytes": 1210255360,
+    "sha256": "94026886c01337651cce87740a5705741f73c68308d53e6cbf1196fc5daad221"
+  },
+  "authority": "root-adopted source-only junction annotation evidence; native and performance remain separate",
+  "controller": {
+    "bytes": 44478,
+    "git_blob": "4f5fa2f87102ae1ca58475c6b50ed5c0fb3851bd",
+    "sha256": "c1fd8aca6f164ec43c0f5806cc1e73636fc1c376062faca8a2a1d152befc209b"
+  },
+  "exclusions": [
+    "native junction acceptance",
+    "native four-platform qualification",
+    "junction performance acceptance",
+    "old five-metric proof substitution",
+    "native export/R/PDF compatibility",
+    "public API/release/publication"
+  ],
+  "fixture_cases": 5,
+  "head_sha": "b4cde25cde7a7d52d4b3947004929991b897a727",
+  "intentional_native_differences": [
+    "complete atomic zero outputs for valid no-N/all-short",
+    "strict exact annotation-header presence rejects source-only case alias",
+    "canonical CIGAR advances =/X while explicit RSeQC junction profile ignores =/X"
+  ],
+  "job_id": 124762085691,
+  "material_source_disagreements": [],
+  "old_python_version": "3.12.15",
+  "original_packet": "/Volumes/KIOXIA/Developments/tmp/rnaseq-junction-source-success-20261101.EQWawE",
+  "original_status_anomalies": {
+    "all_short": {
+      "R": "event-only partial",
+      "exit": 1,
+      "primary": "header only",
+      "stderr_distinct_counters": "not emitted"
+    },
+    "no_N": {
+      "R": "empty",
+      "exit": 0,
+      "primary": "empty",
+      "stderr_counters": "not emitted"
+    }
+  },
+  "original_zip": {
+    "bytes": 1210922639,
+    "sha256": "9a4dea3165704c3f65a91ecf3afbf09d2798a5fd8e70c663c9a0af76d8fd9e4a"
+  },
+  "policy": {
+    "bytes": 32163,
+    "git_blob": "4d5c98a11d2778494d4f54ae991d688f1074e85b",
+    "sha256": "2cdf41e11d4bfefb7b73c54d7eac87a7c47925f99a61b9d8ac4e6ab40ded7b68"
+  },
+  "product": "rsomics-rnaseq-qc",
+  "python_version": "3.12.10",
+  "qualification": {
+    "bytes": 12210,
+    "extracted_path": "regular-blobs/4ec10f4be82051769b886e32d7e372b9b81e6c1532ef9f0f6a4169b3a9a8c25e",
+    "member": "qualification.json",
+    "original_mode": 384,
+    "original_packet": "/Volumes/KIOXIA/Developments/tmp/rnaseq-junction-source-success-20261101.EQWawE",
+    "sha256": "4ec10f4be82051769b886e32d7e372b9b81e6c1532ef9f0f6a4169b3a9a8c25e"
+  },
+  "recovery_receipts": {
+    "ADMISSION.json": {
+      "bytes": 113,
+      "path": "/Volumes/KIOXIA/Developments/tmp/rnaseq-junction-source-success-20261101.EQWawE/ADMISSION.json",
+      "sha256": "42f1db60d31dcd172486c09d4d1bb5228244b13a664145d9f3dc7b786d6c6dde"
+    },
+    "DECRYPTION.json": {
+      "bytes": 262,
+      "path": "/Volumes/KIOXIA/Developments/tmp/rnaseq-junction-source-success-20261101.EQWawE/DECRYPTION.json",
+      "sha256": "2c43526217d36487f01b7d88644882f489b28f14366606b47a26f271c300d9a8"
+    },
+    "PUBLIC-VERIFICATION.json": {
+      "bytes": 2609,
+      "path": "/Volumes/KIOXIA/Developments/tmp/rnaseq-junction-source-success-20261101.EQWawE/PUBLIC-VERIFICATION.json",
+      "sha256": "29259211ff7373e003d4d57b6064c1e5dde0c222fcf8a68ac1a3f56ebba8c22f"
+    },
+    "TAR-VERIFICATION.json": {
+      "bytes": 4602135,
+      "path": "/Volumes/KIOXIA/Developments/tmp/rnaseq-junction-source-success-20261101.EQWawE/TAR-VERIFICATION.json",
+      "sha256": "4e1987a11415f5d6234b0fafbb4c4525e444ab418094260b42400b3b43145b20"
+    }
+  },
+  "repository": "omics-rust/rsomics-world",
+  "review_files": {
+    "REPORT.md": {
+      "bytes": 13762,
+      "path": "/Volumes/KIOXIA/Developments/tmp/rnaseq-junction-adoption-20261101.6p7APP/REPORT.md",
+      "sha256": "352272f24a8e075d3171537c0249a3c5954f05c24d7cc585cf3beb1330e4bbef"
+    },
+    "VALIDATION.json": {
+      "bytes": 933,
+      "path": "/Volumes/KIOXIA/Developments/tmp/rnaseq-junction-adoption-20261101.6p7APP/VALIDATION.json",
+      "sha256": "f53de5c3bc629b6b709e1aba2b302e8e63f3756d0165cd495d42bce616833d4e"
+    },
+    "actual-observations.json": {
+      "bytes": 19527,
+      "path": "/Volumes/KIOXIA/Developments/tmp/rnaseq-junction-adoption-20261101.6p7APP/actual-observations.json",
+      "sha256": "4b7df62517e624bf55feb562f42b24a00f652a1635245c170ef2a458379902d2"
+    },
+    "controller-map.json": {
+      "bytes": 2131,
+      "path": "/Volumes/KIOXIA/Developments/tmp/rnaseq-junction-adoption-20261101.6p7APP/controller-map.json",
+      "sha256": "fa0732741245d665413eb856bec816fa643c7364a9c99c304b11d16161234ee1"
+    },
+    "independent-raw-reduction.json": {
+      "bytes": 28171,
+      "path": "/Volumes/KIOXIA/Developments/tmp/rnaseq-junction-adoption-20261101.6p7APP/independent-raw-reduction.json",
+      "sha256": "5a6e09c3e599cd2ba63c053ed3e1b002598ab804276f6392ccbcb297e9384cee"
+    },
+    "original-file-map.json": {
+      "bytes": 2388963,
+      "path": "/Volumes/KIOXIA/Developments/tmp/rnaseq-junction-adoption-20261101.6p7APP/original-file-map.json",
+      "sha256": "35cd5f58dba5f5d125b51ad8101080ef8942746cf54eee8cd2a895dcde049554"
+    },
+    "runtime-bindings.json": {
+      "bytes": 79892,
+      "path": "/Volumes/KIOXIA/Developments/tmp/rnaseq-junction-adoption-20261101.6p7APP/runtime-bindings.json",
+      "sha256": "b200cb5052ce0b1a289ad48b655696974bb53d6daf7a4b960d17a378b98e5e11"
+    },
+    "validate.py": {
+      "bytes": 28897,
+      "path": "/Volumes/KIOXIA/Developments/tmp/rnaseq-junction-adoption-20261101.6p7APP/validate.py",
+      "sha256": "768ee98a646db978df430e7f18a46a8bcf876af63b206107b626347afec7a16d"
+    }
+  },
+  "root_fresh_review_required": false,
+  "run_attempt": 1,
+  "run_id": 41277337904,
+  "runtime": {
+    "bytes": 56144,
+    "extracted_path": "regular-blobs/a1426a7af6a5bb7b2dfe66ff7a23d5948825b688d13c7b44c0ff39e4fcac8335",
+    "member": "runtime/runtime.json",
+    "original_mode": 384,
+    "original_packet": "/Volumes/KIOXIA/Developments/tmp/rnaseq-junction-source-success-20261101.EQWawE",
+    "sha256": "a1426a7af6a5bb7b2dfe66ff7a23d5948825b688d13c7b44c0ff39e4fcac8335"
+  },
+  "runtime_disclosures": {
+    "generated_stdlib_cache_changes": 3,
+    "installed_wheel_payloads": 5169,
+    "loaded_elf_x86_64": 123,
+    "loaded_providers": 125,
+    "locked_packages": 18,
+    "preserved_original_dependency_versions": 17,
+    "provider_observation_scope": "actual admission probe, not per-call dynamic tracing",
+    "whole_runtime_byte_restoration": false
+  },
+  "schema": "rsomics.rnaseq-qc.junction-source-adoption.v1",
+  "schema_version": 1,
+  "size_in_bytes": 1210922639,
+  "source_invocations": 6,
+  "source_schema": "rsomics.rnaseq-qc.junction-source.v1",
+  "status": "accepted",
+  "validation": {
+    "artifact_id": 13071489886,
+    "elf_x86_64_providers": 123,
+    "head_sha": "b4cde25cde7a7d52d4b3947004929991b897a727",
+    "installed_wheel_payloads": 5169,
+    "job_id": 124762085691,
+    "key_access": false,
+    "link_metadata": 1052,
+    "loaded_providers": 125,
+    "locked_wheels": 18,
+    "material_source_disagreements": [],
+    "native_acceptance": false,
+    "old_python": "3.12.15",
+    "original_packet": "/Volumes/KIOXIA/Developments/tmp/rnaseq-junction-source-success-20261101.EQWawE",
+    "original_physical_files": 12514,
+    "performance_acceptance": false,
+    "preserved_dependency_versions": 17,
+    "python": "3.12.10",
+    "regular_members": 13454,
+    "release_acceptance": false,
+    "root_fresh_review_required": false,
+    "run_attempt": 1,
+    "run_id": 41277337904,
+    "scientific_imports_or_source_execution_by_validator": false,
+    "source_invocations": 6,
+    "status": "independent-source-data-consistency-reviewed-and-root-adopted",
+    "tar_members": 15633
+  },
+  "workflow_path": ".github/workflows/rnaseq-qc-junctions.yml",
+  "source_qualified": true,
+  "native_qualified": false,
+  "performance_qualified": false,
+  "release_or_publication_qualified": false,
+  "root_review": {
+    "packet": "/Volumes/KIOXIA/Developments/tmp/rnaseq-junction-adoption-20261101.6p7APP",
+    "report_sha256": "352272f24a8e075d3171537c0249a3c5954f05c24d7cc585cf3beb1330e4bbef",
+    "proposal_sha256": "49314f2a8894fb750731f078ac48a91d45d3cbc0f2b38220a7a47c248de5be7e",
+    "seal_sha256": "f3e489363d496c2866d4dd62cf14081c9f66b4036f679e70561cd46da5091649",
+    "completed_sha256": "0e6d2ed2d3cd7a82d8210794d6ed503682f033df5c48fbce4e2ff22143c8e0f5",
+    "fresh_review_output_files": 9,
+    "full_validator_read": true,
+    "actual_six_primary_files_and_statuses_read": true,
+    "complete_carrier_and_authentication_performed_by_root": true,
+    "scientific_execution_on_mac": false,
+    "previous_failed_run_remains_failed": 41275994387
+  }
+}

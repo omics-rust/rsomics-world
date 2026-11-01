@@ -83,4 +83,9 @@ Asset disposition: donor classifier/count identities are direct private type/alg
 
 Task1 produces the source receipt consumed by Tasks2/3; Task2 produces the exact native candidate consumed by Task3. These dependencies prohibit parallel implementation of source-dependent production. Source preparation is independent of active Index/Popgen/Ecology/Signal/PLINK work. One controller owns all four new source files to avoid guessed schema seams.
 
-Root adopts this plan under existing unattended authority. Task1 is next; Tasks2/3 are not implemented or accepted. The detailed source report and official documentation were read statically; no new junction science has run.
+Root adopts this plan under existing unattended authority. Task1 is complete:
+actual41277337904 source-only receipt
+`.autopilot/oracles/rnaseq-qc-junctions-2026-11-01.json` is accepted after full
+authenticated recovery and independent six-call reduction. Task2 is assigned;
+Task3 and native/performance/publication acceptance remain unearned. The
+earlier failed startup run remains failed; no old-five proof is relabelled.

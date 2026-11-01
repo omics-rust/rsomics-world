@@ -1,5 +1,59 @@
 # SDD ledger — plan: docs/plans/2026-11-01-rnaseq-qc-junctions.md
 
+## Actual six-call junction source accepted; Task2 implementation assigned
+
+Root fully reads225-line review REPORT352272f24a8e075d3171537c0249a3c5954f05c24d7cc585cf3beb1330e4bbef,
+447-line independent stdlib validator and all six actual primary/status bodies.
+Freshly verifies all9 review outputs/2570499B at
+rnaseq-junction-adoption-20261101.6p7APP; SEALf3e489363d496c2866d4dd62cf14081c9f66b4036f679e70561cd46da5091649,
+COMPLETED0e6d2ed2d3cd7a82d8210794d6ed503682f033df5c48fbce4e2ff22143c8e0f5.
+Root's complete original API/ZIP/cipher/whole authentication/TAR/CAS recovery
+at rnaseq-junction-source-success-20261101.EQWawE remains primary. Actual
+artifact13071489886 ZIP1210922639B SHA9a4dea3165704c3f65a91ecf3afbf09d2798a5fd8e70c663c9a0af76d8fd9e4a;
+TAR1210255360B SHA94026886c01337651cce87740a5705741f73c68308d53e6cbf1196fc5daad221.
+All13454 regular originals/15633 members/1052 unmaterialized links and ten
+actual controller Git blobs are bound; no private key bytes are inspected.
+
+Independent BAM/SAM/BED reduction verifies all six actual calls, exact primary
+rows/order/support/classes and nine counter labels. Single pre-min events11,
+filtered1/known6/partial1/novel3; paired22/filtered2/known12/partial2/novel6;
+both have6 distinct(2known/1partial/3novel). Source mixed CIGAR is522-572.
+NoN actually exits0 with empty pair; all-short exits1/header+partialR and no
+distinct counters. These are source observations, not native complete-zero
+success. Source-only case alias remains unsupported by strict native headers.
+
+All18 wheels/17 old dependency versions/5169 installed payloads/125 providers
+(123ELF) bind. Fresh interpreter is3.12.10, NOT old3.12.15. Three initial
+encodings caches regenerate under-I after extraction changes mtimes; byte
+proof narrows differences to timestamp+one relocated co_filename, with .py/
+ELF and all other portable bodies exact. This is fresh runtime admission, not
+whole-tree byte restoration or per-call dynamic-provider tracing. No source
+or scientific package executes on Mac, and no material disagreement remains.
+
+Root accepts source-only receipt
+.autopilot/oracles/rnaseq-qc-junctions-2026-11-01.json SHA8ea60c35c952a600fa526ebfd3e020e142b01706f50a87a9fbc8818ce9ce5b2b.
+Native junction/performance/release remain false and first failed41275994387
+stays failed. Task2 is assigned to one bounded /root/rnaseq_junction_native_impl
+in the clean91ba1d3 owner with the adopted private accumulator/opt-in report/
+old-default-five contracts. One whole-feature review follows its complete
+delivery, not per-helper checks or an old-five source/performance replay.
+
+The RNA owner has no local guard script. Root explicitly authorizes invoking
+the existing sibling PLINK guard by absolute path FROM the RNA owner cwd,
+removing inherited Java CPPFLAGS only. It verifies RNA Cargo metadata with
+all physical external homes/target/TMP/tool caches and pinsRust1.91. The
+shared target-directory label rsomics-plink is storage, not source identity;
+no concurrent local PLINK build or duplicated owner guard is introduced.
+
+## Actual implicit-parent-corrected source attempt dispatched
+
+Exact-head Control41277065488 succeeds for
+b4cde25cde7a7d52d4b3947004929991b897a727; root verifies live remote main
+and dispatches actual41277337904/1, job124762085691. The one-line extractor
+fix and unchanged full source/runtime/science policy are the only executable
+difference. Actual admission/six calls and complete authenticated adoption
+remain pending, not inferred from this retry. First failure stays failed.
+
 ## First failure adopted; implicit runtime-link parents corrected
 
 Complete original349706064B ZIP matches API8abe643743cc15dba2ff9ea84ad2b197998289c6ec7407dd4c7aa83da461b04b;
