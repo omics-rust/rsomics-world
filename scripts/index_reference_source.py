@@ -493,7 +493,8 @@ def execute() -> None:
     validate_workflow(ROOT / WORKFLOW)
     if shutil.disk_usage(root).free < 8 * 2**30:
         raise RuntimeError('less than8GiB free for the small source runtime/casebook')
-    command(root, 'controller-head', ['git', '-C', ROOT, 'rev-parse', 'HEAD'])
+    command(root, 'controller-head', ['git', '-c', 'safe.directory=' + str(ROOT),
+                                    '-C', ROOT, 'rev-parse', 'HEAD'])
     if (root / 'calls/controller-head/stdout.txt').read_text().strip() != os.environ['GITHUB_SHA']:
         raise ValueError('actual checkout differs from dispatched controller head')
     controller = root / 'controller'

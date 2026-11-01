@@ -1,5 +1,22 @@
 # Index reference-resource source workflow
 
+## First actual source attempt: checkout ownership adapter
+
+Exact-head Control plane41254605717 passes at
+2f5cf51b2b28f9416e84eae5ba735f74062581f1; root dispatches actual41254712775/1.
+Initialization/final TAR/upload pass, but the first controller-head Git call
+fails128 with detected-dubious-ownership on the actual container-mounted
+checkout. No source archive/compiler/runtime/casebook has been reached.
+
+Root retains full original ZIP3193B/API SHA
+36e6b008d50c1a257bf8715e0d863fd119805d69d2b3850ee8462fa25467957f,
+TAR51200B, all11 regular bodies/manifest/modes and actual API/run/job/rawlog
+under index-source-first-failure-20261101.k4ghrt. Full CRC/body checks precede
+reading the original stderr/request. The suggestion to change global Git
+configuration is not followed. Only this call now trusts its exact resolved
+checkout via command-scoped safe.directory, as existing Peak/PLINK adapters do.
+No source, data, system Git config, scientific policy or scope changes.
+
 Root adopts the coherent faidx/dict plan inside existing index after reading
 fixed1.24 manuals, FAI format and relevant actual CLI/index/region/dict source.
 No new crate/public API, native implementation, large reference body or
