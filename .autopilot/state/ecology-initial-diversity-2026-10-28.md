@@ -1,5 +1,19 @@
 # Ecology diversity source qualification
 
+## Beta private implementation design adopted
+
+Root fully reads and hashes the18853B design606e23e626e14a32c80ee25ed625c0171a157bb4c6bcbe275e08645721bd4abe,
+actual retained beta driver/UniFrac/root-path source and current owner models.
+Plan docs/plans/2026-11-01-ecology-beta.md adopts one private eight-mode wave,
+shared sparse Counts/tree preparation, finite matrix and integrated original
+then rarefy/reload/source1/4 lifecycle. Defined zero-feature and metric-specific
+empty cases remain valid; only actually undefined distinct pairs fail.
+No public foundation/API/dependency is added, no alpha/RNG behavior is changed.
+One whole-feature review and later native-four/real-performance gates remain;
+the197-billion-position full UniFrac cost needs separately adopted scheduling,
+not the alpha deadline or an easier subset. Owner is clean e1b03cb6 at adoption.
+No beta code/science/performance is accepted by this design decision.
+
 ## Beta finite-matrix policy resolved by explicit engineering ruling
 
 Root reads the dossier finite labelled-matrix contract, original adopted plan,
