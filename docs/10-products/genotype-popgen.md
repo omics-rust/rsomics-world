@@ -5,6 +5,15 @@ complete. The initial2026-07-31 inspection found neither target repository;
 this is not a current live-registry assertion. Current PLINK source preflight
 is recorded in `.autopilot/state/plink-source-preflight-2026-10-31.md`.
 
+Current2026-11-01 gates: private PLINK owner00ce7b39 green3 passes actual
+four-native/same-generation-source41258923590; corrected full-HGDP performance
+is the next independent gate. Popgen source41252735560 is now accepted after
+full authenticated original and output audits: complete chr22/207 persons,
+723783 canonical SNVs,514 windows and full SFS/jackknife outputs, with separate
+legacy semantics and original nonfinite values. No Popgen owner/native or
+performance result is yet accepted. The dated source audits below remain
+historical context, not a reason to rerun those accepted preflights.
+
 ## Portfolio decision
 
 Retain two products:

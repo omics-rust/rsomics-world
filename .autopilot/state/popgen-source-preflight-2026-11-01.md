@@ -1,5 +1,39 @@
 # Popgen connected source workflow
 
+## Complete actual casebook and full-chr22 source oracle accepted
+
+Root reads the complete final report and metadata/scientific audit code,
+then freshly verifies all7264 sealed packet bodies/7217036918B. Actual
+41252735560/1 at42d1138d is source-qualified: full original ZIP1891262928B,
+SHA4339253cfc63da01b90d4d466ae23a004c03a307f4357c0aa57d526adc76354f,
+full age-authenticated TAR1890222080B,7815 regular bodies and11 exact-head
+controllers.1052 links remain metadata only;33 casefold collisions use safe
+CAS. No Linux runtime/link/scientific program executes on Mac; key bytes are
+never read/hashed/copied/printed by this work. No Sigsum verification claim.
+
+Actual whole chr22 is1103547 original records and207 selected diploid persons
+(YRI108/CEU99), with allele width9/maxALT8. Canonical PASS/P-accessible literal
+SNVs retain723783 rows, including2613 multiallelic; accessible_bp23358803.
+Every source SFS bin,514 windows and72 full10000-variant jackknife blocks plus
+3783-row disclosed tail reconcile from complete exported counts/membership.
+All176 empty/zero-accessible windows and original NaNs remain; empty real
+warnings is not a claim of uniformly finite statistics. No clamping or new
+native tolerance follows from observed NumPy/stdlib summation-order deltas.
+
+Casebook and real manifests close at36/30 files plus self-manifests. All62
+controller calls return0; each lane's five legacy vcftools commands succeeds.
+The separate real legacy721170-row profile retains491997 site-FST -nan values;
+its bins/denominators are not relabelled canonical accessibility estimates.
+Originals/runtime/provider/source anchors are fully retained. Detailed report
+416a5615bddbdc5ab813220f026272219ee46d594e274420db61c5770d7bc9dc,
+seal8f1617d64b1160645d489371771e5aba5e6caa8215d6f4a983fc9dd605083d47
+at popgen-third-source-adoption-20261101.FIRTDpPx. Accepted receipt is
+.autopilot/oracles/popgen-source-2026-11-01.json.
+
+This accepts only the usable actual source oracle. No owner/native/four-target/
+performance or release is earned. Next is one source-anchored streaming native
+design and historical asset disposition; no new public foundation is justified.
+
 ## Third actual source attempt
 
 Root dispatches41252735560/1 at42d1138df77548d69d8ad90b4c747aedcc15035a
