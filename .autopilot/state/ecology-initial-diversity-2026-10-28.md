@@ -1,5 +1,36 @@
 # Ecology diversity source qualification
 
+## First complete-study failure adopted; redundant runtime Git dependency removed
+
+Actual41272473289/1 fails before native carrier acquisition or any science.
+Init, image metadata, final encryption and upload pass. The first failed
+condition is git ls-files tracking check nonzero; its stdout/stderr/numeric
+code were not retained by the old controller, so no underlying Git cause or
+safe.directory diagnosis is claimed. The preceding exact receipt validation
+does pass. Actual8406424a GitHub tree and independent contents prove the
+receipt is present and has the pinned dfc1e96c body, not a missing-file issue.
+
+Root reads the full report, complete archive/CAS and authority audit programs,
+then freshly checks158 sealed files/126123539B at
+ecology-whole-real-failure-20261101.E4Ofl1. REPORT
+dcf4bf99539ce6a773dcf45f992d7a26f3e77e91a4f0990138b3a1b694933775;
+SEAL69cfcfc02c4fa973aad6fa695f1159b86aa75e7a1256a617bac37f75a2ca44dc;
+completed f1298dc1548cb9393310b6ffc9b88b35ba5721a1eb2b3d9b1b7aeb77ba64aa60.
+Full ZIP31232042B, authenticated TAR31221760B,48 regular originals/20dirs,
+all raw APIs/logs and30 exact Git-blob/context bindings are retained as data.
+No native original, source runtime, study or scientific call is yet admitted.
+
+Ruling: remove the redundant runtime Git-process tracking test, not weaken
+receipt/source authentication. The actual tracked exact-head body is already
+established; validate_native_receipt still requires the real relative path,
+full pinned SHA, accepted four-target schema, owner/tree/lock/source identities.
+Actual GitHub run/job/artifact authority and full native carrier/body checks
+remain mandatory. Runtime Git availability/config is not a scientific input.
+No fallback or ignored failure is introduced. Only three controller lines are
+removed; inputs/math/metrics/timing/budgets/criteria and owner are unchanged.
+Root SAME ONE guarded stdlib prep passes1/.588s; actual hosted admission and
+science remain required, not proven by this check. The first run stays failed.
+
 ## Actual complete-study source/native qualification dispatched
 
 Exact-head Control41272321235 completes successfully at

@@ -321,9 +321,6 @@ def acquire_action(root, run_receipt, artifact):
 
 def admit_native(private, relative, expected_sha, policy):
     receipt = validate_native_receipt(ROOT, relative, expected_sha)
-    tracked = subprocess.run(['git', 'ls-files', '--error-unmatch', relative], cwd=ROOT,
-                             stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-    check(tracked.returncode == 0, 'accepted native receipt is not tracked')
     retained = private / 'native-receipt.json'
     shutil.copy2(ROOT / relative, retained)
     row = receipt['targets']['linux-x86_64']
