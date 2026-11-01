@@ -1,5 +1,37 @@
 # Popgen connected source workflow
 
+## Actual native-four candidate dispatched
+
+After actual exact-head Control41265781284 succeeds and remote main is
+verified at a3d2e024a541dbd01c6a07cd12eadb3399903ecb, root dispatches
+actual41265985145/1 with snapshot green-1. Four native jobs exercise the
+same frozen owner and retain actual release binaries. Original artifact/log
+recovery and root adoption follow completion; job success alone is not a
+full-chr22 performance or publication gate. No duplicate run is dispatched.
+
+## Whole-real timing/source design adopted, with explicit pre-outcome limits
+
+Root fully reads PLAN/SOURCE_TRACE/REPORT and freshly verifies all5 sealed
+design bodies at popgen-whole-real-design-20261101.sz1uOu; originalPLAN SHA
+c8a2d80767702abdfe8af359fb1145507df73c13d9d3d007680e6c5f0997988d,
+completedc16e40d8dfbd1eb91aec6a102d858814471268953703762a8e1523fe323875a7.
+Tracked docs/plans/2026-11-01-popgen-whole-real-performance.md records the
+complete proposal and root's prior-to-outcome amendments. Old363.76s source
+observation is not a fair speed denominator: it includes GT/record audits
+but excludes its earlier700MB derivative. Shared audits/install/checks stay
+untimed; actual source component sharing and lightweight derivative creation
+plus all outputs/legacy operations are timed. No artificial duplicate kernels.
+
+Approve24 complete source/native runs, same machine/1-or4 CPU allowance,
+warmups/five alternating pairs, unchanged full chr22 and comparator, fixed
+material20% wall or25% conservative-memory routes and regression limits at
+both allowances. Root rejects8GiB virtual-address-space restriction; use actual
+12GiB cgroup and common8GiB sampled-tree RSS guard, no exact/hard-RSS claim.
+Root must compare fresh-source/native originals against the original source
+after decryption before adopting performance, not only compare each other.
+Actual accepted native-four receipt/ELF/provider admission remains mandatory;
+no future identifier is invented and no benchmark is launched by this design.
+
 ## Complete native-four preparation reviewed; actual execution next
 
 All8 approved controller/workflow/authority/snapshot paths are implemented,
