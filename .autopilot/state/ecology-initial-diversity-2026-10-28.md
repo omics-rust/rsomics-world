@@ -1,5 +1,28 @@
 # Ecology diversity source qualification
 
+## Unchanged-owner native-four gate reviewed and prepared
+
+Root fully reads the native controller/workflow/ONE preparation test, original
+snapshot notes, authority policy and complete delivery report. Freshly verifies
+all23 sealed bodies/146318B at ecology-native-four-prep-20261101.hjmUXe,
+all8 current delivery files,35 clean owning Git bodies/modes/tree and53 exact
+registry lock identities. REPORTb220f62c0563e34b55379c539fdd82f47d012799206b30ac5273cff5728ce805;
+SEAL2b08262db40b0dd27591c73d1bb8741aa844f9e334f1de0a4c05c5d2c0eef149.
+Snapshot39157B SHAe202c3d8eefb216f19adfd20b8db2efe0dbb59bbf3cec68af25b89c9409177d2;
+source manifest8bd51f8b797a3e772ebdc9acb69a3a60d7d277f8196c4142a9ce6246dc31ca75.
+
+The SAME ONE connected stdlib preparation check is author RED1/.021s,
+intermediate wrong-receipt-name failure1/.098s retained, final GREEN1/.144s;
+root freshly runs it through the owning external guard:1pass/.103s. An exit9
+child is the deliberate retained-failure test, not a failed suite. Two older
+local guard/cwd invocation errors remain distinct from scientific failures.
+No owner/source/fixture/API changes or Mac science occur. Four existing
+lifecycle tests/debug/release, native host/compiler and actual Cargo-selected
+non-test binaries are mandatory on all4 hosts. Eight fixture/source bodies
+and raw logs survive, not temporary per-CLI outputs. Actual exact-head CI and
+manual native execution follow; source-on-native/full-study/performance/beta/
+publication are not preaccepted. Whole-study preparation continues separately.
+
 ## First native-four and complete-study implementation adopted
 
 Root fully reads the complete115-line design/report and current dossier,
