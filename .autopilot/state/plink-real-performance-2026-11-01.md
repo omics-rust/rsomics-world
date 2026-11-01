@@ -1,5 +1,15 @@
 # Fixed private HGDP whole-workflow gate
 
+## Packed green4 native/source gate dispatched
+
+Exact-head Control41279477985 succeeds for
+2ac9239323b260428f77956dcc88d6b789e74656. Root dispatches the existing
+plink-candidate.yml once with snapshot=green-4: actual41280585897/attempt1
+runs at that exact controller head. The four native classes and official/source
+consumer of the SAME newly generated Linux artifacts remain pending until
+complete original recovery and adoption. No whole-real retry or performance
+acceptance follows from dispatch; the prior actual whole failure stays failed.
+
 ## Packed source accepted locally and green4 frozen for actual native/source gate
 
 Root reads the complete review correction and report
