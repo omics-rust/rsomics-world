@@ -1,5 +1,15 @@
 # Index reference-resource source workflow
 
+## Actual optimized complete-reference remeasurement dispatched
+
+Exact-head Control41273149802 succeeds at
+b0950de23dadf239a858b44e11cf37716ad8b76b. Root verifies live remote main and
+dispatches actual41273328984/1, job124750418726, binding optimized owner030be20
+and its accepted native-four CI41272452578. Only source/native-CI identities
+change; the complete original reference/168-call graph and material gates
+remain fixed. Actual runtime/provider/correctness/performance and full original
+adoption are required; no old baseline result is inherited or preaccepted.
+
 ## Optimized exact native-four accepted; unchanged real graph rebound
 
 Actual ownerCI41272452578/1 succeeds at
