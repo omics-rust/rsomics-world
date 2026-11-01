@@ -97,3 +97,33 @@ Root committed/pushed the126-file delivery concern as owner
 41353788925/1 is in progress. Correction REPORT SHA
 5f3b336fdf93d1af7342ff1b077a3ed6a6c5a72d6bfb5cba06863b3abb8040ee.
 No measurement dispatch, public release or registry mutation followed this push.
+
+## Actual ARM oracle startup failure; bounded diagnosis
+
+Actual41353788925 LinuxARM job124989394237 fails before product compilation:
+the installed sourmash4.9.4 prints its version, then exits139/SIGSEGV. Other
+targets cannot substitute for this required platform. Raw log and exact
+132272B artifact13102088170 are retained in external bKect6; ZIP SHA
+dbac54582aec3fd6bd935cb5f9be54ca8ab6f42372bdd4e8a6f19f5120434007.
+No short-input compatibility or new native4 acceptance is inferred.
+
+Baseline actual34268416605 succeeded with the same sourmash4.9.4 on LinuxARM.
+Recovered logs show CPython3.12.14 versus3.12.15 now and several transitive/
+runner-image changes. Cffi2.1.1 and scipy1.18.1 were already in that successful
+environment; a generic rollback of them is not evidence-backed. Cause remains
+unestablished, not presumed to be the product or a particular dependency.
+The old version check used a command substitution inside test, which can mask
+the child exit status. Its green CI therefore proves three real operations
+whose tests checked child success, not a successful standalone version exit.
+Do not yet call this an introduced runtime regression. Source trace establishes
+eager Rust/CFFI, numpy, scipy.optimize/stats and bitstring imports; plain scipy
+or pure cffi imports alone would miss the actual native initialization boundary.
+
+Ruling: diagnose only this oracle environment on actual ubuntu24.04ARM, once
+with each of the two observed CPython versions and the identical21 current
+resolved package versions. Isolated module imports/version exit plus a native
+backtrace when preinstalled gdb is available should identify the failing
+boundary. No product build, compatibility waiver, source change, time/RSS
+measurement, blind pin or rerun of the whole product is part of this diagnosis.
+Cost: until actual cause/correction and native4 succeed, Sketch delivery stays
+held; other product work continues. All original failed outcomes remain.
