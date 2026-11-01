@@ -1,5 +1,17 @@
 # Fixed private HGDP whole-workflow gate
 
+## Explicit packed green4 real-cohort admission prepared
+
+The SAME existing connected preparation test consumes the actual committed
+green4 receipt and observes RED invalid snapshot1/1.245s, then GREEN1/.800s
+after admitting green4 alongside unchanged green2/3. Root logs are
+plink-green4-real-prep-20261101.CiSg7s. Only one explicit selector tuple and
+six actual-identity assertions change. Full HGDP929/four windows/I-F-P graph,
+source/reference/raw comparisons, original thresholds/budgets/retention and
+runtime-provider checks remain unchanged. Exact-head Control and one actual
+new run are required; no new real performance is preaccepted or old failure
+relabelled. Explicit native_receipt selects green4; default is not rebound.
+
 ## Packed green4 native-four and same-generation source acceptance
 
 Root reuses the fully read custody/scientific-binding verifiers with exact
