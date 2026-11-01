@@ -22,6 +22,7 @@ import stat
 import statistics
 import sys
 import tarfile
+import threading
 import time
 import traceback
 import urllib.error
@@ -36,6 +37,7 @@ from plink_first_workflow_oracle import download, save, sha256
 
 ROOT = Path(__file__).resolve().parents[1]
 ASSET = 'assets/index-bgzf-real-20261101.json'
+CHANGED_ASSET = 'assets/index-bgzf-changed-native-20261101.json'
 WORKFLOW = '.github/workflows/index-bgzf-real-performance.yml'
 PLAN = 'docs/plans/2026-11-01-index-bgzf-real-performance.md'
 OWNER = '030be20895cb7806f78b2923e1c1ac3afa05cd96'
@@ -88,7 +90,7 @@ def matches(path, pin):
           'complete body identity differs: ' + str(path))
 
 
-def read_policy(world=ROOT):
+def read_policy(world=ROOT, changed_native=None):
     p = load(Path(world) / ASSET)
     check(p['schema'] == 'rsomics.index.bgzf-real.v1' and p['owner'] == OWNER
           and p['owner_ci'] == 41272452578 and p['image']['manifest'] == source.IMAGE
@@ -105,6 +107,29 @@ def read_policy(world=ROOT):
           'pre-outcome per-primary material policy differs')
     check(p['timer']['deb']['sha256'] == '10257c6fe888e6578550b1f20705d282dd630b76f8df0c006aec3031fefe5e23'
           and p['timer']['deb']['bytes'] == 50776, 'exact Debian timer package differs')
+    if changed_native is None:
+        selection = os.environ.get('INDEX_CHANGED_NATIVE', 'false')
+        check(selection in ('true', 'false'), 'changed-native selection must be explicit true/false')
+        changed_native = selection == 'true'
+    check(type(changed_native) is bool, 'changed-native selection must be boolean')
+    if not changed_native:
+        return p
+    changed = load(Path(world) / CHANGED_ASSET)
+    matches(Path(world) / changed['base_policy']['path'], changed['base_policy'])
+    check(changed['base_policy']['path'] == ASSET
+          and changed['schema'] == 'rsomics.index.bgzf-changed-native.v1'
+          and changed['owner'] == 'd57bdaa2a19492d902a5f59c8de3c9f35113053a'
+          and (changed['owner_ci'], changed['owner_ci_attempt']) == (41313466286, 1),
+          'changed-native owner or immutable donor policy differs')
+    check(changed['build']['target_limit_bytes'] == 512 * 2**20
+          and changed['build']['monitor_seconds'] == .5
+          and changed['build']['offline'] is True and changed['build']['fresh_target_required'] is True
+          and changed['build']['observations_are_not_hard_quota'] is True
+          and changed['recovery']['allocated'] is False
+          and changed['recovery']['new_envelope_bytes'] == 76 * 2**30,
+          'changed-native build/recovery bounds differ')
+    p.update(schema=changed['schema'], owner=changed['owner'], owner_ci=changed['owner_ci'],
+             owner_ci_attempt=changed['owner_ci_attempt'], changed_native=changed)
     return p
 
 
@@ -122,8 +147,156 @@ def verify_context(world, policy):
     check(receipt['actual_native']['sha256'] == policy['runtime']['binaries']['native']['sha256']
           and receipt['carriers']['13070438494']['archive'] == policy['runtime']['zip'],
           'accepted exact runtime body binding differs')
-    return dict(owner_files=len(mapping['files']), receipt=identity(world / pin['path']),
-                controllers={name: identity(world / name) for name in CONTEXT})
+    result = dict(owner_files=len(mapping['files']), receipt=identity(world / pin['path']),
+                  controllers={name: identity(world / name) for name in CONTEXT})
+    if 'changed_native' in policy:
+        changed = policy['changed_native']
+        for name in ('source_selector', 'accepted_ci'):
+            matches(world / changed[name]['path'], changed[name])
+        selector, ci = (load(world / changed[name]['path']) for name in ('source_selector', 'accepted_ci'))
+        check(selector['schema'] == 'rsomics.index.changed-native-source.v1'
+              and selector['repository'] == ci['repository'] == policy['owner_repository']
+              and selector['head_sha'] == ci['owner_commit'] == policy['owner']
+              and selector['tree'] == ci['source_tree'] == 'b47ad82cd9127030dbdb94dbc85121b99a064d36'
+              and len(selector['files']) == ci['source_files'] == 116
+              and selector['source_only'] is True and selector['compiled_binary_inspected'] is False
+              and selector['performance_accepted'] is False and ci['root_adopted'] is True
+              and ci['all_required_jobs_success'] is True
+              and (ci['run_id'], ci['run_attempt']) == (policy['owner_ci'], policy['owner_ci_attempt']),
+              'changed-native source/accepted exact CI binding differs')
+        result.update(donor_owner=OWNER, native_owner=policy['owner'])
+        for name in (CHANGED_ASSET, changed['source_selector']['path'], changed['accepted_ci']['path'],
+                     changed['plan'], 'scripts/index_reference_real_performance.py'):
+            result['controllers'][name] = identity(world / name)
+    return result
+
+
+def native_source_binding(owner, selector):
+    owner = Path(owner)
+    observed, tree = {}, {}
+    actual = set()
+    for directory, directories, files in os.walk(owner):
+        directories[:] = [name for name in directories if name != '.git']
+        for name in files:
+            actual.add((Path(directory) / name).relative_to(owner).as_posix())
+    check(actual == set(selector['files']), 'changed-native source membership differs')
+    for name, expected in selector['files'].items():
+        parts = PurePosixPath(name).parts
+        check(parts and '..' not in parts and not PurePosixPath(name).is_absolute(), 'unsafe source path')
+        path = owner / name
+        check(not path.is_symlink(), 'changed-native source symlink is not admitted')
+        body = path.read_bytes()
+        row = dict(bytes=len(body), sha256=hashlib.sha256(body).hexdigest(),
+                   git_blob=hashlib.sha1(b'blob ' + str(len(body)).encode() + b'\0' + body).hexdigest(),
+                   git_mode='100755' if path.stat().st_mode & 0o111 else '100644')
+        check(row == expected, 'changed-native source body/mode differs: ' + name)
+        observed[name] = row
+        branch = tree
+        for part in parts[:-1]:
+            branch = branch.setdefault(part, {})
+        branch[parts[-1]] = row
+
+    def tree_hash(branch):
+        payload = bytearray()
+        for name, item in sorted(branch.items(), key=lambda pair: (pair[0] + ('/' if 'git_blob' not in pair[1] else '')).encode()):
+            mode, digest = ((item['git_mode'], item['git_blob']) if 'git_blob' in item else ('40000', tree_hash(item)))
+            payload.extend(mode.encode() + b' ' + name.encode() + b'\0' + bytes.fromhex(digest))
+        return hashlib.sha1(b'tree ' + str(len(payload)).encode() + b'\0' + payload).hexdigest()
+
+    observed_tree = tree_hash(tree)
+    check(observed_tree == selector['tree'], 'changed-native complete source Git tree differs')
+    return dict(head_sha=selector['head_sha'], tree=observed_tree, files=observed)
+
+
+def native_build_spec(root, policy):
+    root = Path(root)
+    native = root / 'runtime/native'
+    target, owner = native / 'target', native / 'owner'
+    check(not os.path.lexists(target) and not os.path.lexists(owner), 'changed-native target/checkout must be absent')
+    rust = native / 'rust'
+    environment = dict(CARGO_HOME=str(native / 'cargo-home'), CARGO_TARGET_DIR=str(target),
+        RUSTUP_HOME=str(root / 'cache/RUSTUP_HOME'), RUSTC=str(rust / 'bin/rustc'),
+        RUSTDOC=str(rust / 'bin/rustdoc'), CARGO_BUILD_JOBS='2', RUSTFLAGS='',
+        CPPFLAGS='', CFLAGS='', CXXFLAGS='', LDFLAGS='', PKG_CONFIG_PATH='',
+        CC='/usr/local/bin/gcc', CXX='/usr/local/bin/g++',
+        GIT_CONFIG_NOSYSTEM='1', GIT_CONFIG_GLOBAL='/dev/null', GIT_TERMINAL_PROMPT='0')
+    return dict(owner=owner, target=target, rust=rust, environment=environment,
+                build=[str(rust / 'bin/cargo'), 'build', '--offline', '--locked', '--release', '--bin', 'rsomics-index'],
+                target_limit_bytes=policy['changed_native']['build']['target_limit_bytes'])
+
+
+def native_build_usage(root, target):
+    root, target = Path(root), Path(target)
+    used, target_bytes = {name: 0 for name in CATEGORIES}, 0
+    for directory, _, files in os.walk(root):
+        for filename in files:
+            path = Path(directory) / filename
+            try:
+                metadata = path.lstat()
+            except FileNotFoundError:
+                continue
+            if not stat.S_ISREG(metadata.st_mode):
+                continue
+            relative = path.relative_to(root)
+            category = relative.parts[0] if relative.parts[0] in used else 'metadata'
+            if relative.parts[0] == 'inputs' and path.name in ('source-build.vcf.gz.tbi', 'source-build.vcf.gz.csi'):
+                category = 'active'
+            used[category] += metadata.st_size
+            if path.is_relative_to(target):
+                target_bytes += metadata.st_size
+    return dict(used=used, target_bytes=target_bytes, free_bytes=shutil.disk_usage(root).free)
+
+
+@contextmanager
+def monitor_native_build(root, target, target_limit_bytes=512 * 2**20, interval=.5):
+    stopped = threading.Event()
+    observations = dict(samples=0, peak_retained_bytes=0, peak_target_bytes=0,
+        peak_categories={name: 0 for name in CATEGORIES}, minimum_free_bytes=None,
+        poll_seconds=interval, target_limit_bytes=target_limit_bytes,
+        observed_peaks_only=True, hard_filesystem_quota=False, error=None)
+
+    def sample():
+        values = native_build_usage(root, target)
+        observations['samples'] += 1
+        observations['peak_retained_bytes'] = max(observations['peak_retained_bytes'], sum(values['used'].values()))
+        observations['peak_target_bytes'] = max(observations['peak_target_bytes'], values['target_bytes'])
+        for name, value in values['used'].items():
+            observations['peak_categories'][name] = max(observations['peak_categories'][name], value)
+        old_free = observations['minimum_free_bytes']
+        observations['minimum_free_bytes'] = values['free_bytes'] if old_free is None else min(old_free, values['free_bytes'])
+        capacity_decision(values['used'], values['free_bytes'])
+        check(values['target_bytes'] <= target_limit_bytes, 'capacity: changed-native target exceeds internal512MiB allowance')
+
+    def abort(_number, _frame):
+        raise RuntimeError('changed-native build capacity observation failed: ' + observations['error'])
+
+    def observe():
+        while not stopped.wait(interval):
+            try:
+                sample()
+            except BaseException as error:
+                observations['error'] = str(error)
+                os.kill(os.getpid(), signal.SIGUSR1)
+                return
+
+    previous = signal.signal(signal.SIGUSR1, abort)
+    worker = None
+    try:
+        sample()
+        worker = threading.Thread(target=observe, name='index-native-build-capacity')
+        worker.start()
+        yield observations
+        if observations['error'] is not None:
+            raise RuntimeError(observations['error'])
+        sample()
+    finally:
+        stopped.set()
+        try:
+            if worker is not None:
+                worker.join()
+        finally:
+            signal.signal(signal.SIGUSR1, previous)
+            save(Path(root) / 'metadata/changed-native-build-capacity.json', observations)
 
 
 @lru_cache(maxsize=1)
@@ -425,13 +598,17 @@ def reserve_time(started, now, remaining):
         raise RuntimeError('time: complete remaining fixed graph does not fit; no deadline/data reduction')
 
 
-def capture_child(root, name, argv, timeout):
+def capture_child(root, name, argv, timeout, cwd=None):
     directory = Path(root) / 'calls' / name
     directory.mkdir(parents=True)
-    save(directory / 'request.json', dict(argv=list(map(str, argv)), cwd=os.getcwd(), timeout=timeout,
+    request = dict(argv=list(map(str, argv)), cwd=str(cwd) if cwd is not None else os.getcwd(), timeout=timeout,
          environment={key: os.environ.get(key) for key in CACHE_KEYS +
              ('PATH', 'LD_LIBRARY_PATH', 'INDEX_CONTAINER_DIGEST', 'GCC_VERSION', 'GITHUB_SHA')},
-         started_utc=time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime())))
+         started_utc=time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime()))
+    if cwd is not None:
+        argv = ['bash', '-c', 'set -e; cd -- "$1"; shift; exec "$@"', 'index-native-cwd', str(cwd), *map(str, argv)]
+        request['cwd_exec_wrapper'] = argv
+    save(directory / 'request.json', request)
     child = run_child(list(map(str, argv)), directory / 'process', timeout=timeout, cleanup_timeout=5)
     return dict(status='returned', returncode=child.returncode, group_empty=child.group_empty,
                 owner_monotonic_seconds=(child.end_ns - child.start_ns) / 1e9,
@@ -448,6 +625,11 @@ def validate_workflow(path):
         '--cpus 4 --memory 8g --memory-swap 8g', 'timeout-minutes: 360', 'default: false',
         '${{ env.INDEX_SESSION }}', 'actions: read', 'retention-days: 90', 'if: always()')),
         'frozen workflow runtime/recovery/retention routes differ')
+    selected = re.search(r'^      changed_native:\n(.*?)(?=^      \S|\Z)', event.group(1), re.M | re.S)
+    check(selected is not None and all(value in selected.group(1) for value in (
+        'type: boolean', 'required: true', 'default: false'))
+        and 'INDEX_CHANGED_NATIVE: ${{ inputs.changed_native }}' in text,
+        'changed-native workflow must remain explicit default-false opt-in')
 
 
 def restore_selected(carrier, destination, selected):
@@ -557,11 +739,13 @@ def acquire_carrier(root, policy):
 
 def restore_runtime(root, carrier, policy, receipt):
     pin = policy['runtime']
-    selected = {row['path']: row for row in pin['binaries'].values()}
+    changed = policy.get('changed_native')
+    selected = {row['path']: row for name, row in pin['binaries'].items() if not changed or name != 'native'}
     selected.update(pin['anchors'])
     mapping = receipt['owner_source_git_mapping']['files']
-    selected.update({'runtime/native/owner/' + name: row for name, row in mapping.items()})
-    selected['runtime/native/admission.json'] = None
+    if not changed:
+        selected.update({'runtime/native/owner/' + name: row for name, row in mapping.items()})
+        selected['runtime/native/admission.json'] = None
     for name, spec in source.SOURCES.items():
         if name in ('htslib', 'libdeflate'):
             selected['runtime/downloads/' + spec['filename']] = dict(bytes=spec['size'], sha256=spec['sha256'])
@@ -571,20 +755,130 @@ def restore_runtime(root, carrier, policy, receipt):
             if m.name.startswith('runtime/prefix/') or m.name in (
                 'runtime/htslib-original/htslib-1.24/LICENSE',
                 'runtime/libdeflate-original/libdeflate-1.25/COPYING')})
+        if changed:
+            selected.update({m.name.rstrip('/'): None for m in archive.getmembers()
+                if m.name.startswith(('runtime/native/rust/', 'runtime/native/cargo-home/registry/'))})
+            regular_bytes = 0
+            for name in selected:
+                member = archive.getmember(name)
+                if member.isfile():
+                    digest, size = hashlib.sha256(), 0
+                    with archive.extractfile(member) as body:
+                        for block in iter(lambda: body.read(2**20), b''):
+                            digest.update(block)
+                            size += len(block)
+                    check(size == member.size, 'selected donor member is truncated')
+                    observed = dict(bytes=size, sha256=digest.hexdigest())
+                    if selected[name] is not None:
+                        check(observed == {k: selected[name][k] for k in ('bytes', 'sha256')}, 'selected donor pin differs')
+                    selected[name] = observed
+                    regular_bytes += size
+            check(len(selected) == changed['build']['donor_selected_members'] == 5307
+                  and regular_bytes == changed['build']['donor_selected_regular_bytes'] == 689263246,
+                  'complete changed-native donor selection differs')
     restore_selected(carrier, root, selected)
-    for name, expected in mapping.items():
-        path = root / 'runtime/native/owner' / name
-        body = path.read_bytes()
-        blob = hashlib.sha1(b'blob ' + str(len(body)).encode() + b'\0' + body).hexdigest()
-        check(blob == expected['git_blob'] and ('100755' if path.stat().st_mode & 0o111 else '100644') == expected['git_mode'],
-              'retained current-owner Git body/mode differs: ' + name)
-    check(sha256(root / 'runtime/native/owner/benchmarks/index-vs-htslib.sh') ==
-          policy['fixture']['historical_harness_sha256'], 'literal original harness changed')
+    if not changed:
+        for name, expected in mapping.items():
+            path = root / 'runtime/native/owner' / name
+            body = path.read_bytes()
+            blob = hashlib.sha1(b'blob ' + str(len(body)).encode() + b'\0' + body).hexdigest()
+            check(blob == expected['git_blob'] and ('100755' if path.stat().st_mode & 0o111 else '100644') == expected['git_mode'],
+                  'retained current-owner Git body/mode differs: ' + name)
+        check(sha256(root / 'runtime/native/owner/benchmarks/index-vs-htslib.sh') ==
+              policy['fixture']['historical_harness_sha256'], 'literal original harness changed')
     matches(root / pin['libdeflate']['path'], pin['libdeflate'])
-    save(root / 'metadata/restored-runtime.json', dict(selected=source.tree_files(root / 'runtime',
+    restored = dict(selected=source.tree_files(root / 'runtime',
          ('carriers/original-runtime.zip', 'carriers/runtime.tar')),
-         source_files=len(mapping), provider_graph=pin['provider_graph'], whole_original_zip_tar_retained=True))
-    return {name: root / row['path'] for name, row in pin['binaries'].items()}
+         source_files=len(mapping), provider_graph=pin['provider_graph'], whole_original_zip_tar_retained=True)
+    if changed:
+        restored.update(donor_owner=OWNER, changed_native_checkout_target_restored=False,
+                        selected_regular_bytes=regular_bytes, selected_members=len(selected))
+    save(root / 'metadata/restored-runtime.json', restored)
+    return {name: root / row['path'] for name, row in pin['binaries'].items() if not changed or name != 'native'}
+
+
+def prepare_changed_native(root, policy, receipt):
+    import index_reference_real_performance as reference
+
+    root = Path(root)
+    changed = policy['changed_native']
+    selector = load(ROOT / changed['source_selector']['path'])
+    spec = native_build_spec(root, policy)
+    for name in ('rustc', 'cargo'):
+        matches(root / changed['build'][name]['path'], changed['build'][name])
+    for key in tuple(os.environ):
+        if key in ('CARGO_ENCODED_RUSTFLAGS', 'RUSTC_WRAPPER', 'RUSTC_WORKSPACE_WRAPPER',
+                   'CARGO_BUILD_TARGET', 'CARGO_BUILD_BUILD_DIR', 'RUSTDOCFLAGS') or key.startswith(
+                       ('CC_', 'CXX_', 'CFLAGS_', 'CXXFLAGS_', 'CPPFLAGS_', 'HOST_CC', 'HOST_CXX', 'TARGET_CC', 'TARGET_CXX')):
+            os.environ.pop(key)
+    os.environ.update(spec['environment'])
+    os.environ['PATH'] = str(spec['rust'] / 'bin') + ':' + os.environ['PATH']
+    for key in CACHE_KEYS:
+        path = Path(os.environ[key])
+        if key != 'CARGO_TARGET_DIR':
+            path.mkdir(parents=True, exist_ok=True)
+        check(path.resolve().is_relative_to(root) and path.parent.stat().st_dev == root.stat().st_dev,
+              'changed-native build/cache path escapes session: ' + key)
+    save(root / 'metadata/changed-native-build-request.json', dict(owner=policy['owner'],
+        source_selector=changed['source_selector'], expected_tree=selector['tree'],
+        environment={key: os.environ.get(key) for key in reference.ENV_KEYS},
+        argv=spec['build'], target_limit_bytes=spec['target_limit_bytes'],
+        offline=True, fresh_target=True, installed_or_fetched_dependencies=False,
+        old_reference_performance_inherited=False))
+
+    def invoke(name, argv, cwd=None):
+        capture_child(root, 'changed-native-' + name, list(map(str, argv)), 1800, cwd=cwd)
+        return (root / 'calls' / ('changed-native-' + name) / 'process.stdout').read_text()
+
+    owner = spec['owner']
+    with monitor_native_build(root, spec['target'], spec['target_limit_bytes'], changed['build']['monitor_seconds']):
+        invoke('git-init', ['git', '-c', 'credential.helper=', 'init', owner])
+        invoke('git-fetch', ['git', '-c', 'credential.helper=', '-C', owner, 'fetch', '--depth=1',
+                           'https://github.com/omics-rust/rsomics-index.git', policy['owner']])
+        invoke('git-checkout', ['git', '-C', owner, 'checkout', '--detach', 'FETCH_HEAD'])
+        check(invoke('git-head', ['git', '-C', owner, 'rev-parse', 'HEAD']).strip() == policy['owner'], 'changed-native Git HEAD differs')
+        check(invoke('git-tree', ['git', '-C', owner, 'rev-parse', 'HEAD^{tree}']).strip() == selector['tree'], 'changed-native Git tree differs')
+        check(not invoke('git-clean-before', ['git', '-C', owner, 'status', '--porcelain', '--untracked-files=all']), 'changed-native source is dirty')
+        before = native_source_binding(owner, selector)
+        save(root / 'runtime/native/source-before.json', before)
+        check(sha256(owner / 'benchmarks/index-vs-htslib.sh') == policy['fixture']['historical_harness_sha256'], 'literal original harness changed')
+        rustc = invoke('rustc-version', [spec['rust'] / 'bin/rustc', '-vV'])
+        cargo = invoke('cargo-version', [spec['rust'] / 'bin/cargo', '-vV'])
+        check(rustc.startswith('rustc 1.91.0 ') and 'host: x86_64-unknown-linux-gnu' in rustc
+              and cargo.startswith('cargo 1.91.0 '), 'retained native Rust1.91 toolchain differs')
+        check(invoke('gcc-version', ['/usr/local/bin/gcc', '-dumpfullversion', '-dumpversion']).strip() == '14.3.0', 'changed-native GCC differs')
+        os.environ.pop('GH_TOKEN', None)
+        check(not spec['target'].exists(), 'changed-native target was created before fresh build')
+        invoke('build', spec['build'], owner)
+        invoke('feature-tree', [spec['rust'] / 'bin/cargo', 'tree', '--offline', '--locked', '-e', 'features'], owner)
+        metadata = json.loads(invoke('cargo-metadata', [spec['rust'] / 'bin/cargo', 'metadata', '--offline', '--locked', '--format-version', '1'], owner))
+        after = native_source_binding(owner, selector)
+        check(after == before and not invoke('git-clean-after', ['git', '-C', owner, 'status', '--porcelain', '--untracked-files=all']), 'changed-native source changed during offline build')
+        save(root / 'runtime/native/source-after.json', after)
+    binary = spec['target'] / 'release/rsomics-index'
+    check(identity(binary) != {k: receipt['actual_native'][k] for k in ('bytes', 'sha256')}, 'old native body cannot stand in for changed source')
+    check(invoke('version', [binary, '--version']).strip() == 'rsomics-index 0.1.0', 'changed-native product version differs')
+    provider = (root / policy['runtime']['libdeflate']['path']).resolve(strict=True)
+    elf = source.elf_admission(root, {'changed-native': binary}, provider)
+    packages = {package['name']: package for package in metadata['packages']}
+    check(all(packages[name]['version'] == version for name, version in (
+        ('libdeflate-sys', '1.25.2'), ('zlib-rs', '0.6.7'), ('flate2', '1.1.9'))), 'changed-native provider versions differ')
+    node = next(row for row in metadata['resolve']['nodes'] if row['id'] == packages['libdeflate-sys']['id'])
+    archives = list(spec['target'].glob('release/build/libdeflate-sys-*/out/lib/libdeflate.a'))
+    expected = receipt['provider_graph']
+    check(node['features'] == expected['native_provider_features'] and len(archives) == 1, 'changed-native static provider features differ')
+    matches(archives[0], expected['native_static_archive'])
+    manifests = {name: identity(Path(packages[name]['manifest_path'])) for name in expected['package_manifests']}
+    check(manifests == expected['package_manifests'], 'changed-native provider manifests differ')
+    save(root / 'runtime/native/admission.json', dict(owner=policy['owner'], source=before,
+        executable=elf['changed-native'], compiler=identity(spec['rust'] / 'bin/rustc'),
+        cargo=identity(spec['rust'] / 'bin/cargo'), native_static_archive=identity(archives[0]),
+        native_provider_features=node['features'], package_manifests=manifests,
+        owner_ci=policy['owner_ci'], owner_ci_attempt=policy['owner_ci_attempt'],
+        offline_locked=True, old_target_reused=False, source_tools_rebuilt=False,
+        provider_graph=policy['runtime']['provider_graph'], old_reference_performance_inherited=False))
+    capacity(root, 'changed-native-built')
+    return binary
 
 
 def command_text(root, name, argv, timeout=30):
@@ -663,15 +957,24 @@ def admit_runtime(root, programs, policy, receipt, cpus):
 
 
 def admit_owner(root, policy):
-    run = api(root, f"rsomics-index/actions/runs/{policy['owner_ci']}", 'owner-native-four')
-    jobs = api(root, f"rsomics-index/actions/runs/{policy['owner_ci']}/jobs?per_page=100", 'owner-native-four-jobs')
-    check(run['head_sha'] == OWNER and run['status'] == 'completed' and run['conclusion'] == 'success'
+    route = f"rsomics-index/actions/runs/{policy['owner_ci']}"
+    if 'changed_native' in policy:
+        route += f"/attempts/{policy['owner_ci_attempt']}"
+    run = api(root, route, 'owner-native-four')
+    jobs = api(root, route + '/jobs?per_page=100', 'owner-native-four-jobs')
+    check(run['head_sha'] == policy['owner'] and run['status'] == 'completed' and run['conclusion'] == 'success'
           and run['repository']['full_name'] == policy['owner_repository'], 'fresh exact owner native CI differs')
     names = {'linux-x86_64', 'linux-aarch64', 'macos-x86_64', 'macos-aarch64'}
     selected = [r for r in jobs['jobs'] if r['name'] in names]
     check(len(selected) == 4 and {r['name'] for r in selected} == names
           and all(r['status'] == 'completed' and r['conclusion'] == 'success' for r in selected),
           'fresh actual four-native owner CI differs')
+    if 'changed_native' in policy:
+        accepted = load(ROOT / policy['changed_native']['accepted_ci']['path'])
+        check(run['run_attempt'] == policy['owner_ci_attempt']
+              and {row['name']: row['id'] for row in selected} ==
+                  {name: row['job_id'] for name, row in accepted['targets'].items()},
+              'fresh changed-native CI attempt/jobs differ from accepted native-four')
 
 
 def generate_fixture(root, programs, policy, cpus):
@@ -879,7 +1182,7 @@ def qualification(root, programs, policy, cpus, frozen, state):
              tbi_payload_equal=True, tbi_payload_bytes=len(payloads[0]),
              tbi_payload_sha256=hashlib.sha256(payloads[0]).hexdigest(),
              csi_serialization_identity_required=False, full_tbi_csi_cross_reader_calls=8,
-             typed_compact_oracle_evidence=dict(owner=OWNER, native_four=policy['owner_ci'],
+             typed_compact_oracle_evidence=dict(owner=policy['owner'], native_four=policy['owner_ci'],
                  tests='all current owner116 Git bodies retained, including tests/tabix_compat.rs'),
              no_new_biological_or_index_parser=True))
         check_frozen(frozen, hash_bodies=True)
@@ -940,11 +1243,16 @@ def initialize():
     with Path(os.environ['GITHUB_ENV']).open('a') as stream:
         for key, value in values.items():
             stream.write(f'{key}={value}\n')
-    save(root / 'request.json', dict(schema=policy['schema'], controller=os.environ['GITHUB_SHA'], owner=OWNER,
+    request = dict(schema=policy['schema'], controller=os.environ['GITHUB_SHA'], owner=policy['owner'],
          run_id=os.environ['GITHUB_RUN_ID'], run_attempt=os.environ['GITHUB_RUN_ATTEMPT'],
          workflow_ref=os.environ.get('GITHUB_WORKFLOW_REF'), recovery_manually_admitted=True,
          recovery_record=record, recovery_bytes=76 * 2**30, historical_13_lane_hold_reclassified=False,
-         scientific_calls=380, canonical_setup_calls=4, publication=False))
+         scientific_calls=380, canonical_setup_calls=4, publication=False)
+    if 'changed_native' in policy:
+        request.update(changed_native_selected=True, donor_owner=OWNER,
+            changed_native_policy=CHANGED_ASSET, source_selector=policy['changed_native']['source_selector'],
+            old_reference_performance_inherited=False, recovery_is_additional_to_existing_404GiB=True)
+    save(root / 'request.json', request)
 
 
 def machine(root, policy):
@@ -984,7 +1292,7 @@ def execute():
     context = verify_context(ROOT, policy)
     check(command_text(root, 'controller-head', ['git', '-c', 'safe.directory=' + str(ROOT), '-C', ROOT,
           'rev-parse', 'HEAD']).strip() == os.environ['GITHUB_SHA'], 'actual controller checkout differs from dispatch')
-    for name in (*CONTEXT, policy['accepted_reference']['path']):
+    for name in (*context['controllers'], policy['accepted_reference']['path']):
         destination = root / 'controller' / name
         destination.parent.mkdir(parents=True, exist_ok=True)
         shutil.copy2(ROOT / name, destination)
@@ -1000,6 +1308,8 @@ def execute():
     receipt = load(ROOT / policy['accepted_reference']['path'])
     programs = restore_runtime(root, carrier, policy, receipt)
     os.environ['LD_LIBRARY_PATH'] = str(root / 'runtime/prefix/lib')
+    if 'changed_native' in policy:
+        programs['native'] = prepare_changed_native(root, policy, receipt)
     programs['timer'] = prepare_timer(root, policy)
     admit_runtime(root, programs, policy, receipt, cpus)
     os.environ.pop('GH_TOKEN', None)
@@ -1027,7 +1337,7 @@ def execute():
     save(root / 'performance.json', report)
     capacity(root, 'complete')
     save(root / 'outcome.json', dict(schema=policy['schema'], status='complete-correct-13-lane-campaign',
-         controller=os.environ['GITHUB_SHA'], owner=OWNER, qualification_calls=42, warmup_calls=78, measured_calls=260,
+         controller=os.environ['GITHUB_SHA'], owner=policy['owner'], qualification_calls=42, warmup_calls=78, measured_calls=260,
          primary_passed=report['primary_passed'], performance_accepted_by_root=False,
          manual_full_original_adoption_required=True, final_tradeoff_review_required=True, publication=False))
     signal.setitimer(signal.ITIMER_REAL, 0)
@@ -1048,8 +1358,9 @@ def finalize():
         check(backing['type'] == 'file' and {k: backing[k] for k in ('bytes', 'sha256')} == record['backup_identity'],
               'final unique backup body differs from its logical output identity')
     total = sum(row['bytes'] for row in files.values() if row['type'] == 'file')
-    save(root / 'artifact-manifest.json', dict(schema='rsomics.index.bgzf-real.manifest.v1',
-         controller=os.environ['GITHUB_SHA'], owner=OWNER, files=files, logical_outputs=logical,
+    policy = read_policy()
+    manifest = dict(schema='rsomics.index.bgzf-real.manifest.v1',
+         controller=os.environ['GITHUB_SHA'], owner=policy['owner'], files=files, logical_outputs=logical,
          retained_regular_bytes=total, retained_limit_bytes=32 * 2**30,
          artifact_zip_limit_bytes=34 * 2**30, complete_recovery_bytes=76 * 2**30,
          original_runtime_zip_tar_preserved=True, direct_modes_recorded=True,
@@ -1058,7 +1369,14 @@ def finalize():
          runtime_route='whole original mode/link-preserving TAR plus selective exact runtime; no new project TAR',
          timed_reads='stdout /dev/null; complete preceding qualification only, not fictitious per-trial read outputs',
          failed_and_novel_bodies_retained=True, publication=False,
-         finalization_elapsed_seconds=time.monotonic() - started))
+         finalization_elapsed_seconds=time.monotonic() - started)
+    if 'changed_native' in policy:
+        manifest.update(schema='rsomics.index.bgzf-changed-native.manifest.v1', donor_owner=OWNER,
+            changed_native_policy=CHANGED_ASSET, source_selector=policy['changed_native']['source_selector'],
+            runtime_route='whole original donor ZIP/TAR plus selected toolchain/source providers and fresh offline-built native; no old target/owner restored',
+            old_reference_performance_inherited=False, build_capacity_is_observed_not_hard_quota=True,
+            new_native_admission=load(root / 'runtime/native/admission.json') if (root / 'runtime/native/admission.json').exists() else None)
+    save(root / 'artifact-manifest.json', manifest)
     signal.setitimer(signal.ITIMER_REAL, 0)
     check(total <= 32 * 2**30, 'capacity: available originals exceed frozen retained cap; no cleanup authorized')
 

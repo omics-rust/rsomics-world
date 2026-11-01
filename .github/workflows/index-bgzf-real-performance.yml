@@ -3,6 +3,11 @@ name: Index complete BGZF tabix real performance
 on:
   workflow_dispatch:
     inputs:
+      changed_native:
+        description: Opt in to fresh offline d57 native build using the immutable old runtime donor
+        type: boolean
+        required: true
+        default: false
       recovery_admitted:
         description: Root verified an independent 76GiB external recovery reservation
         type: boolean
@@ -32,6 +37,7 @@ jobs:
       INDEX_CONTAINER_DIGEST: sha256:a689e29bc3adf4663ef9a141d23081252764d1319c63f591a027bd6fd676f4c1
       INDEX_RECOVERY_ADMITTED: ${{ inputs.recovery_admitted }}
       INDEX_RECOVERY_RECORD: ${{ inputs.recovery_record }}
+      INDEX_CHANGED_NATIVE: ${{ inputs.changed_native }}
       PYTHONDONTWRITEBYTECODE: '1'
       PYTHONNOUSERSITE: '1'
       PYTHONPATH: ''

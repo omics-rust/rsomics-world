@@ -1,0 +1,31 @@
+{
+  "schema": "rsomics.index.bgzf-changed-native.v1",
+  "base_policy": {"path": "assets/index-bgzf-real-20261101.json", "bytes": 6463, "sha256": "2e2e47da46698083d7a3bbbc64937e363393baa884a93320555eef9fb5b35914"},
+  "owner": "d57bdaa2a19492d902a5f59c8de3c9f35113053a",
+  "owner_ci": 41313466286,
+  "owner_ci_attempt": 1,
+  "source_selector": {"path": "assets/index-bgzf-native-d57-20261101.json", "bytes": 28933, "sha256": "28c360132b82d127fda184ff7d6189cc4b8baf15a866a2485c450beb32c7b160"},
+  "accepted_ci": {"path": ".autopilot/oracles/index-hotpath-native-2026-11-01.json", "bytes": 19336, "sha256": "e1600bbfaeffa0fb2f6fb10c63747dfbd3861047f0dba6d578d95a84540bc79b"},
+  "plan": "docs/plans/2026-11-01-index-changed-native-runtime.md",
+  "build": {
+    "target_limit_bytes": 536870912,
+    "monitor_seconds": 0.5,
+    "observations_are_not_hard_quota": true,
+    "donor_selected_members": 5307,
+    "donor_selected_regular_bytes": 689263246,
+    "rustc": {"path": "runtime/native/rust/bin/rustc", "bytes": 656832, "sha256": "1b4a8971db9b9f440d55f64c0c592e4f3cfe0efc085c1b1a0e4972dfffaa238b"},
+    "cargo": {"path": "runtime/native/rust/bin/cargo", "bytes": 40980664, "sha256": "6aef14418ff380d092bfcd1268781116e3134ac27049a8c08a0a4c9ed9fe5e72"},
+    "installed_rust_regular_bytes": 596720503,
+    "offline": true,
+    "fresh_target_required": true
+  },
+  "recovery": {
+    "allocated": false,
+    "new_envelope_bytes": 81604378624,
+    "existing_remote_envelopes_gib": 404,
+    "with_new_envelope_gib": 480,
+    "independent_headroom_gib": 8,
+    "preserve_old_index_originals": true,
+    "fresh_root_admission_required": true
+  }
+}

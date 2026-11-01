@@ -1,5 +1,28 @@
 # Index complete BGZF/tabix real performance
 
+## Changed-native operational route reviewed; exact Control and admission next
+
+Root adopts the six-path opt-in implementation after complete source/report
+review and one independent whole operational review. Author I0ptz5 retains
+575files/3826699B, REPORT67220e86/SEAL2f9b9184, world.diff f2645f28.
+Root freshly verifies the full author packet,15 context bodies and116 owning
+files, exit0/empty stderr; proof OlTAE0/packet-check.stdout SHA9674b8bf.
+Independent oO58un review REPORTbf9e6107 finds only one P2: tiny child-monitor
+preparation requires the full production40GiB free reservation. Root corrects
+only this test's explicit resource admission; unavailable hosts print named
+not-run coverage, while the remaining connected contract always runs. Actual
+production capacity/gates stay unchanged. No second review ladder is added.
+
+Root full control regression passes539 tests/82.881s with two pre-existing
+skips. Both actual monitor children execute on this external Mac volume;
+all116 source bodies are data-checked. OlTAE0/control-tests.stdout is
+863178bf873be6eee07283fcf2f119caff24369ac1eafe4fc91153acfa688fa2.
+Old default asset, receipts and scientific graph remain exact; the new route
+requires changed_native=true and a separate future recovery admission.
+No Linux fresh build/new ELF, capacity fit, science, performance or release is
+claimed by this operational acceptance. Exact-head Control, fresh480+8GiB
+recovery reconciliation and root-only single dispatch remain next.
+
 ## New hot-path source passes actual native-four and live HTSlib gates
 
 Clean owningd57bdaa2a19492d902a5f59c8de3c9f35113053a is committed and pushed

@@ -69,3 +69,16 @@ One whole operational review/concentrated correction, exact-head control CI
 and fresh capacity admission precede root-only dispatch. On terminal recovery,
 complete originals and independent reduction precede a separate
 index-bgzf-hot-path-real-performance-2026-11-01.json. Do not edit old receipts.
+
+## Operational implementation progress
+
+The opt-in controller/adjacent policy and116-source selector are implemented
+for author self-integration. The old default asset/receipts remain unchanged;
+workflow input `changed_native` defaults false. A connected preparation RED
+first showed that the old controller selected030be despite opt-in; the new
+route separates donor/source, plans an absent offline target and validates
+source Git bodies/tree. Untimed build monitoring records sampled all-retained,
+category/target maxima and interrupts through the existing owned-child cleanup;
+it explicitly is not a hard quota or proof of an unobserved instantaneous peak.
+Actual Linux build/admission/science, root whole operational review, exact-head
+control CI and the separate76GiB fresh recovery reservation remain unearned.

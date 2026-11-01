@@ -7,6 +7,7 @@ import io
 import json
 import os
 from pathlib import Path
+import shutil
 import subprocess
 import sys
 import tarfile
@@ -189,6 +190,98 @@ class IndexBgzfPreparation(unittest.TestCase):
         with self.assertRaisesRegex(RuntimeError, 'hosted'):
             p.hosted_session()
         self.assertFalse({'numpy', 'pysam', 'allel', 'rpy2'}.intersection(sys.modules))
+
+        previous = os.environ.get('INDEX_CHANGED_NATIVE')
+        os.environ['INDEX_CHANGED_NATIVE'] = 'true'
+        try:
+            changed = p.read_policy()
+            self.assertEqual(changed['owner'], 'd57bdaa2a19492d902a5f59c8de3c9f35113053a')
+            context = p.verify_context(ROOT, changed)
+            self.assertEqual(context['donor_owner'], '030be20895cb7806f78b2923e1c1ac3afa05cd96')
+            self.assertEqual(context['native_owner'], changed['owner'])
+            self.assertEqual(changed['material'], policy['material'])
+            self.assertEqual(changed['fixture'], policy['fixture'])
+            selector = json.loads((ROOT / changed['changed_native']['source_selector']['path']).read_text())
+            local_owner = os.environ.get('INDEX_PREP_OWNER')
+            source_fixture = root / 'native-source'
+            source_fixture.mkdir()
+            fixture_selector = dict(head_sha='public-stdlib-fixture', tree='9fbac661424a5e1e7fb9c1a6a516b58fc701f2f0', files={
+                'greeting': dict(bytes=6, sha256='5891b5b522d5df086d0ff0b110fbd9d21bb4fc7163af34d08286a2e846f6be03',
+                    git_blob='ce013625030ba8dba906f756967f9e9ca394464a', git_mode='100644')})
+            (source_fixture / 'greeting').write_bytes(b'hello\n')
+            binding = p.native_source_binding(source_fixture, fixture_selector)
+            self.assertEqual(binding['tree'], '9fbac661424a5e1e7fb9c1a6a516b58fc701f2f0')
+            if local_owner:
+                full_fixture = root / 'native-full-source'
+                for name, expected in selector['files'].items():
+                    path = full_fixture / name
+                    path.parent.mkdir(parents=True, exist_ok=True)
+                    path.write_bytes((Path(local_owner) / name).read_bytes())
+                    path.chmod(0o700 if expected['git_mode'] == '100755' else 0o600)
+                full = p.native_source_binding(full_fixture, selector)
+                self.assertEqual(full['tree'], 'b47ad82cd9127030dbdb94dbc85121b99a064d36')
+                self.assertEqual(len(full['files']), 116)
+                print('actual_local_owner_source_bodies=116; data_only=True')
+            else:
+                print('actual_local_owner_source_bodies=not_requested; portable_fixture_only=True')
+            wrong = copy.deepcopy(fixture_selector)
+            wrong['files']['greeting']['sha256'] = '0' * 64
+            with self.assertRaisesRegex(ValueError, 'source'):
+                p.native_source_binding(source_fixture, wrong)
+            self.assertEqual(p.read_policy(changed_native=False)['owner'], policy['owner'])
+            mixed = copy.deepcopy(changed)
+            mixed['owner'] = policy['owner']
+            with self.assertRaisesRegex(ValueError, 'source'):
+                p.verify_context(ROOT, mixed)
+            changed_workflow = root / 'incorrect-default.yml'
+            text = (ROOT / p.WORKFLOW).read_text()
+            text = text.replace('default: false', 'default: true', 1)
+            changed_workflow.write_text(text)
+            with self.assertRaisesRegex(ValueError, 'default-false'):
+                p.validate_workflow(changed_workflow)
+            spec = p.native_build_spec(root, changed)
+            self.assertEqual(spec['build'][1:], ['build', '--offline', '--locked', '--release', '--bin', 'rsomics-index'])
+            self.assertIn('runtime/native/target', str(spec['target']))
+            self.assertEqual(spec['target_limit_bytes'], 536870912)
+            self.assertEqual(spec['environment']['RUSTFLAGS'], '')
+            self.assertFalse(spec['target'].exists())
+            spec['target'].mkdir(parents=True)
+            with self.assertRaisesRegex(ValueError, 'target'):
+                p.native_build_spec(root, changed)
+            monitor_cases = [('bounded', 1024, 32), ('over-limit', 128, 256)]
+            free_bytes = shutil.disk_usage(root).free
+            required_free = sum(p.CATEGORIES.values()) + 8 * 2**30
+            if free_bytes < required_free:
+                print(f'child_monitor_cases=not_run; reason=resource_unavailable; '
+                      f'free_bytes={free_bytes}; required_free_bytes={required_free}')
+                monitor_cases = []
+            for name, limit, payload in monitor_cases:
+                observed = root / name
+                observed.mkdir()
+                target = observed / 'runtime/native/target'
+                target.mkdir(parents=True)
+                argv = [sys.executable, '-B', '-c',
+                    'from pathlib import Path;import sys,time;Path(sys.argv[1]).write_bytes(b"x"*int(sys.argv[2]));time.sleep(.2 if int(sys.argv[2])==32 else 5)',
+                    str(target / 'retained'), str(payload)]
+                if name == 'bounded':
+                    with p.monitor_native_build(observed, target, limit, .01):
+                        p.capture_child(observed, 'build-observation', argv, 2)
+                else:
+                    with self.assertRaises(p.TrialProcessError):
+                        with p.monitor_native_build(observed, target, limit, .01):
+                            p.capture_child(observed, 'build-observation', argv, 2)
+                process = json.loads((observed / 'calls/build-observation/process.process.json').read_text())
+                capacity = json.loads((observed / 'metadata/changed-native-build-capacity.json').read_text())
+                self.assertTrue(process['group_empty'])
+                self.assertEqual(capacity['peak_target_bytes'], payload)
+                self.assertFalse(capacity['hard_filesystem_quota'])
+                self.assertEqual((target / 'retained').stat().st_size, payload)
+                print(f'child_monitor_case={name}; executed=True')
+        finally:
+            if previous is None:
+                os.environ.pop('INDEX_CHANGED_NATIVE', None)
+            else:
+                os.environ['INDEX_CHANGED_NATIVE'] = previous
 
 
 if __name__ == '__main__':
