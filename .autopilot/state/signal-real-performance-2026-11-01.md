@@ -1,5 +1,37 @@
 # Real signal campaign
 
+## Complete system-image transport accepted; actual SSH admission next
+
+Root fully reads the actual transport report and both verification programs,
+then freshly verifies all195 sealed regular bodies/820813034B at
+signal-system-image-adoption-20261101.nl8dlH. REPORT SHA
+fcb7b5289f7bc05ccd13985e3583002c6ffc2b164c1c428aa6a66fea14db5711;
+completed SHA d085953c2cc2f702dfa535e5640b6e4650b6447ea72deaecd679203304c7ea9f.
+Original ZIP/API identity,124 CRC members/123 manifest bodies, actual image
+config/two rootFS layers and80 closure bodies agree. Actual image ID is
+sha256:82d2ec6154d317c422d6d512a26174588ffc8a21f12301298bd0e701ec1a30de;
+saved349930496B TAR SHA
+becd82c268e6231a9d5a187541dff273898b9d373563efbe8c19271a4252eaf7.
+
+This accepts system-image transport only, not loaded-image, ABI/provider/
+source admission or science/performance. Next is additive transfer/load into
+the existing private4090 task, followed by genuine ssh-context/setup/acquire/
+admit-ssh using clean scientific controlleraf137c73 and unchanged stable
+capsule. Stop after real admission for root review; no prepare/campaign or
+source package rebuilding is authorized by this transport result.
+
+## Actual hosted system-image export succeeded; full artifact adoption active
+
+After exact-head Control41260631870 passes for
+3e875eb4bd37b1919ceab30743b911fdb1ef9e64 and remote-main is checked, root
+dispatches actual system-image41260798615/1. The job succeeds. Complete original
+artifact13065455662 is305084199B, API SHA
+79522b26c9e229cf25d82f92677363a4e733617630296827adf72216a016ab9e.
+Full CRC/body/image-config/rootFS/APT-original verification is in progress at
+signal-system-image-adoption-20261101.nl8dlH before any load is authorized.
+No source/runtime/ABI/graph/performance acceptance follows from this export.
+Remote original-prefix runtime and source admission have still not executed.
+
 ## Actual SSH network hold; unchanged system-image export prepared
 
 Stable29-file capsule SHA767917bb865967bcf5dac57d5aed2525d7d0b600639e79c8ae2add19cd027f25
