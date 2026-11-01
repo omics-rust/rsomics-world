@@ -8,6 +8,11 @@ on:
         required: true
         type: string
         default: .autopilot/oracles/plink-native-2026-11-01-green-2.json
+      reuse_qualified_bodies:
+        description: Reuse exact own-role qualified content after six full qualifications
+        required: false
+        type: boolean
+        default: false
 
 permissions:
   contents: read
@@ -26,6 +31,7 @@ jobs:
       options: --cpuset-cpus 0,1,2,3 --cpus 4 --memory 8g --memory-swap 8g
     env:
       NATIVE_RECEIPT: ${{ inputs.native_receipt }}
+      REUSE_QUALIFIED_BODIES: ${{ inputs.reuse_qualified_bodies }}
       PLINK_CONTAINER_DIGEST: sha256:a689e29bc3adf4663ef9a141d23081252764d1319c63f591a027bd6fd676f4c1
       PYTHONDONTWRITEBYTECODE: '1'
       PYTHONNOUSERSITE: '1'
@@ -67,8 +73,12 @@ jobs:
           umask 077
           ulimit -c 0
           printf 'Running the fixed HGDP workflow; scientific logs remain private.\n'
+          validation_args=(--world "$GITHUB_WORKSPACE" --native-receipt "$NATIVE_RECEIPT" --cpus 0,1,2,3)
+          if [[ "$REUSE_QUALIFIED_BODIES" == true ]]; then
+            validation_args+=(--reuse-qualified-bodies)
+          fi
           python3 -B scripts/plink_real_performance.py run --root "$PRIVATE_CAMPAIGN" \
-            --world "$GITHUB_WORKSPACE" --native-receipt "$NATIVE_RECEIPT" --cpus 0,1,2,3 \
+            "${validation_args[@]}" \
               > "$PRIVATE_CAMPAIGN/controller.stdout" 2> "$PRIVATE_CAMPAIGN/controller.stderr"
 
       - name: Seal all retained originals including partial failures

@@ -21,6 +21,142 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 class PlinkRealPreparation(unittest.TestCase):
+    def test_qualified_repeat_reuses_only_exact_own_role_content_and_retains_failures(self):
+        real = importlib.import_module('plink_real_performance')
+        self.assertTrue(callable(getattr(real, 'freeze_qualification', None)),
+                        'own-role qualification certificates are not implemented')
+        with tempfile.TemporaryDirectory(prefix='plink-qualified-repeat-', dir=os.environ['TMPDIR']) as name:
+            root = Path(name)
+            def put(path, value):
+                path.parent.mkdir(parents=True, exist_ok=True)
+                path.write_text(json.dumps(value))
+            def inert(path):
+                path.parent.mkdir(parents=True, exist_ok=True)
+                path.write_bytes(b'inert transport body, never executed\n')
+                return path
+            runtime = dict(native=str(root / 'native'), restored=str(root / 'restored'),
+                           binary=str(inert(root / 'native/binary-release')),
+                           observer=str(inert(root / 'observer')))
+            for tool in ('source', 'official'):
+                inert(Path(runtime['restored']) / real.source.ENGINES[tool][0])
+            library = inert(root / 'image/library')
+            alias = root / 'image/library-alias'; alias.symlink_to(library.name)
+            library_identity = real.file_identity(library)
+            put(Path(runtime['restored']) / 'runtime/loaded-libraries.json',
+                {str(alias): dict(realpath=str(library), retained='library', sha256=library_identity['sha256'])})
+            put(root / 'evidence/native-elf/admission.json', dict(interpreter=str(alias),
+                binary_sha256=real.file_identity(runtime['binary'])['sha256'],
+                providers={'fixture': dict(path=str(library), sha256=library_identity['sha256'])}))
+            put(root / 'admitted-runtime.json', runtime)
+            put(root / 'evidence/controller.json', dict(commit=os.environ.get('GITHUB_SHA'), image=real.oracle.IMAGE,
+                files={path: real.oracle.sha256(real.ROOT / path) for path in set(real.CONTROLLERS)}))
+            inputs = root / 'prepared/INPUT'
+            for extension in ('pgen', 'pvar', 'psam'):
+                inert(Path(str(inputs) + '.' + extension))
+            put(root / 'prepared-input.json', dict(prefix=str(inputs), shape=[64, 64],
+                files={ext: real.file_identity(str(inputs) + '.' + ext) for ext in ('pgen', 'pvar', 'psam')}))
+            put(root / 'evidence/input.raw.jsonl.gz.json', dict(fixture='completed input capture record'))
+            bodies = [stage + '.' + ext for stage in ('I', 'F', 'P') for ext in ('pgen', 'pvar', 'psam')]
+            bodies += [stage + '.qc.' + ext for stage in ('F', 'P') for ext in
+                       ('acount', 'gcount', 'scount', 'smiss', 'vmiss', 'het', 'hardy', 'hwe-log.hardy')]
+            bodies += ['pairs.vcor', 'prune.prune.in', 'prune.prune.out']
+            def full_check_records(directory):
+                put(directory / 'whole-check.json', dict(original_input=str(inputs), own_projection=True,
+                    fresh_P_validated=True, exact_raw={stage: dict(fixture='original full raw proof') for stage in ('I', 'F', 'P')}))
+                for stage in ('I', 'F', 'P'):
+                    put(directory / (stage + '.raw.jsonl.gz.json'), dict(fixture='completed capture record'))
+                for engine in ('source', 'official'):
+                    put(directory / ('fresh-P-' + engine) / 'result.json', dict(status='returned', returncode=0))
+            def generation(directory, tool, workers, qualification=False):
+                products = directory / 'products'; products.mkdir(parents=True)
+                for relative in bodies + ([stage + '.rsomics.json' for stage in ('I', 'F', 'P')] if tool == 'native' else []):
+                    (products / relative).write_bytes(('unchanged synthetic payload ' + relative).encode())
+                binary = runtime['binary'] if tool == 'native' else str(Path(runtime['restored']) / real.source.ENGINES[tool][0])
+                stages = real.graph(tool, workers, inputs, products, binary)
+                put(directory / 'plan.json', dict(tool=tool, workers=workers, stages=stages))
+                measured = []
+                for command in stages:
+                    row = dict(name=command['name'], group=command['group'], argv=command['argv'], exit=0,
+                               wall_seconds=1.0, user_seconds=0.5, system_seconds=0.1)
+                    measured.append(row)
+                    put(directory / 'commands' / command['name'] / 'measurement.json', row)
+                    (directory / 'commands' / command['name'] / 'stderr.txt').write_text('')
+                    put(directory / 'commands' / command['name'] / 'stdout.txt', dict(result=dict(
+                        samples=64, variants=64, founders=64, requested_workers=workers, writer_workers=1,
+                        effective_worker_limit=workers, effective_workers=workers)))
+                files = {stage: {str(products / (stage + '.' + ext)): real.file_identity(products / (stage + '.' + ext))
+                         for ext in ('pgen', 'pvar', 'psam')} for stage in ('I', 'F', 'P')}
+                custody = dict(creation_files=files, unchanged_after_descendants=True,
+                               audit_included_in_outer_wall=True, audit_excluded_from_scientific_cli_times=True)
+                put(directory / 'generation-custody.json', custody)
+                put(directory / 'complete-measurement.json', dict(tool=tool, workers=workers, exit=0,
+                    failure=None, stages=measured, generation_custody=custody,
+                    wall_seconds=8.0, scientific_cli_wall_seconds=7.0))
+                if qualification:
+                    full_check_records(directory)
+                return directory
+            certificates = {}
+            for workers in (1, 4):
+                for tool in ('source', 'native', 'official'):
+                    directory = generation(root / 'evidence/qualification' / str(workers) / tool, tool, workers, True)
+                    certificates[workers, tool] = real.freeze_qualification(root, directory, runtime, inputs, [0, 1, 2, 3])
+            for workers in (1, 4):
+                for tool in ('source', 'native'):
+                    for pair in range(5):
+                        directory = generation(root / 'evidence/trials' / str(workers) / str(pair) / tool, tool, workers)
+                        proof = real.check_qualified_repeat(root, directory, certificates[workers, tool], runtime, inputs, [0, 1, 2, 3])
+                        self.assertEqual(proof['validation_kind'], 'qualified-content-reused')
+                        self.assertEqual(len(proof['scientific_payload']), 31 if tool == 'native' else 28)
+                        self.assertEqual(proof['fresh_observer_captures'], 0)
+                        self.assertEqual(proof['fresh_P_validations'], 0)
+                        self.assertFalse((directory / 'whole-check.json').exists())
+                        self.assertFalse((directory / 'I.raw.jsonl.gz').exists())
+            counts = real.validation_counts(root)
+            self.assertEqual(counts['observer_captures_completed'], 19)
+            self.assertEqual(counts['fresh_P_validations_completed'], 12)
+            self.assertEqual(counts['qualified_content_reused'], 20)
+            route = bash_body(steps((ROOT / '.github/workflows/plink-real-performance.yml').read_text())[
+                'Run fixed real whole workflow with private scientific logs'])
+            for enabled in ('false', 'true'):
+                directory = root / ('workflow-' + enabled); directory.mkdir()
+                record = directory / 'argv.txt'
+                result = subprocess.run(['bash', '-c', 'python3() { printf "%s\\n" "$@" > "$ARG_RECORD"; };\n' + route],
+                    env=dict(os.environ, REUSE_QUALIFIED_BODIES=enabled, ARG_RECORD=str(record),
+                        PRIVATE_CAMPAIGN=str(directory), GITHUB_WORKSPACE=str(ROOT), NATIVE_RECEIPT=real.DEFAULT_RECEIPT),
+                    capture_output=True, text=True)
+                self.assertEqual(result.returncode, 0, result.stderr)
+                self.assertEqual(record.read_text().splitlines().count('--reuse-qualified-bodies'), int(enabled == 'true'))
+            wrong = generation(root / 'wrong-role', 'native', 4)
+            with self.assertRaisesRegex(ValueError, 'role|context'):
+                real.check_qualified_repeat(root, wrong, certificates[1, 'native'], runtime, inputs, [0, 1, 2, 3])
+            changed = generation(root / 'changed-body', 'native', 1)
+            (changed / 'products/F.qc.het').write_bytes(b'different exact body\n')
+            self.assertIsNone(real.check_qualified_repeat(root, changed, certificates[1, 'native'], runtime, inputs, [0, 1, 2, 3]))
+            difference = real.load(changed / 'qualified-content-difference.json')
+            self.assertEqual(set(difference['differences']), {'F.qc.het'})
+            self.assertFalse((changed / 'qualified-content-reused.json').exists())
+            with self.assertRaises((OSError, ValueError)):
+                real.record_qualified_fallback(changed)
+            full_check_records(changed)
+            fallback = real.record_qualified_fallback(changed)
+            self.assertEqual(fallback['validation_kind'], 'full-check-after-body-difference')
+            self.assertEqual(fallback['fresh_observer_captures'], 3)
+            self.assertEqual(fallback['fresh_P_validations'], 2)
+            self.assertFalse(fallback['content_proof_reused'])
+            self.assertFalse((changed / 'qualified-content-reused.json').exists())
+            drift = generation(root / 'changed-context', 'native', 1)
+            plan = real.load(drift / 'plan.json'); plan['stages'][0]['argv'][5] = '2049'
+            put(drift / 'plan.json', plan)
+            with self.assertRaisesRegex(ValueError, 'context|plan|execution'):
+                real.check_qualified_repeat(root, drift, certificates[1, 'native'], runtime, inputs, [0, 1, 2, 3])
+            missing = generation(root / 'missing-body', 'native', 1)
+            (missing / 'products/P.rsomics.json').rename(missing / 'products/retained-sidecar')
+            with self.assertRaises((OSError, ValueError)):
+                real.check_qualified_repeat(root, missing, certificates[1, 'native'], runtime, inputs, [0, 1, 2, 3])
+            library.write_bytes(b'changed runtime provider\n')
+            with self.assertRaisesRegex(ValueError, 'runtime|provider|context'):
+                real.check_qualified_repeat(root, wrong, certificates[4, 'native'], runtime, inputs, [0, 1, 2, 3])
+
     def test_private_whole_workflow_identity_raw_stream_and_fixed_budgets(self):
         self.assertTrue((ROOT / 'scripts/plink_real_performance.py').is_file(),
                         'integrated private HGDP controller is not implemented')

@@ -41,6 +41,7 @@ RECIPIENT = 'assets/private-artifacts-20261101.recipient'
 RECIPIENT_SHA = '8bb86dc97982fc7b64d7e33f7c3741e7f3d27a21690f48ddce9dada4a230680d'
 TARGETS = ['linux-x86_64', 'linux-aarch64', 'macos-x86_64', 'macos-aarch64']
 REPORTS = ('acount', 'gcount', 'scount', 'smiss', 'vmiss', 'het', 'hardy', 'hwe-log.hardy')
+REUSE_PROTOCOL = 'rsomics.plink.qualified-content.v1'
 CONTROLLERS = ('scripts/plink_real_performance.py', 'scripts/plink_observer_admission.py',
     'scripts/test_plink_real_performance.py', 'assets/plink-real-hgdp-20261101.json',
     '.github/workflows/plink-real-performance.yml', 'scripts/signal_real_performance.py',
@@ -646,6 +647,19 @@ def trial(root, directory, tool, workers, inputs, binary, cpus, cgroup_parent=No
     return record
 
 
+def worker_provenance(directory, plan):
+    rows = {}
+    if plan['tool'] == 'native':
+        for name in ('F.qc', 'pairs', 'prune', 'P.qc'):
+            report = load(directory / 'commands' / name / 'stdout.txt')['result']
+            key = 'effective_worker_limit' if name.endswith('.qc') else 'effective_workers'
+            check(report['requested_workers'] == plan['workers'] and report['writer_workers'] == 1 and
+                  0 <= report[key] <= plan['workers'], 'actual native worker report differs')
+            rows[name] = dict(requested=report['requested_workers'], compute=report[key], writer=1,
+                measure='batch worker capacity' if key == 'effective_worker_limit' else 'actual distinct part-worker IDs')
+    return rows
+
+
 def check_graph(root, directory, baseline, runtime, comparison, input_prefix):
     products = directory / 'products'; observed = {}; generations = {}
     comparison.compare_metadata(products / 'I', input_prefix)
@@ -677,20 +691,171 @@ def check_graph(root, directory, baseline, runtime, comparison, input_prefix):
     for engine in ('source', 'official'):
         binary = Path(runtime['restored']) / source.ENGINES[engine][0]
         oracle.require(directory / ('fresh-P-' + engine), [binary, '--pfile', products / 'P', '--validate', '--threads', '1', '--memory', '2048', 'require', '--out', directory / ('P-check-' + engine)])
-    worker_rows = {}
     plan = load(directory / 'plan.json')
-    if plan['tool'] == 'native':
-        for name in ('F.qc', 'pairs', 'prune', 'P.qc'):
-            report = load(directory / 'commands' / name / 'stdout.txt')['result']
-            key = 'effective_worker_limit' if name.endswith('.qc') else 'effective_workers'
-            check(report['requested_workers'] == plan['workers'] and report['writer_workers'] == 1 and
-                  0 <= report[key] <= plan['workers'], 'actual native worker report differs')
-            worker_rows[name] = dict(requested=report['requested_workers'], compute=report[key], writer=1,
-                measure='batch worker capacity' if key == 'effective_worker_limit' else 'actual distinct part-worker IDs')
     save(directory / 'whole-check.json', dict(exact_raw=generations, own_projection=True, fresh_P_validated=True,
         original_input=str(input_prefix), baseline=str(baseline) if baseline else None, generation_files=observed,
-        native_worker_provenance=worker_rows))
+        native_worker_provenance=worker_provenance(directory, plan)))
     return generations
+
+
+def scientific_payload(directory, tool):
+    names = [stage + '.' + ext for stage in ('I', 'F', 'P') for ext in ('pgen', 'pvar', 'psam')]
+    names += [stage + '.qc.' + ext for stage in ('F', 'P') for ext in REPORTS]
+    names += ['pairs.vcor', 'prune.prune.in', 'prune.prune.out']
+    if tool == 'native':
+        names += [stage + '.rsomics.json' for stage in ('I', 'F', 'P')]
+    return {name: file_identity(directory / 'products' / name) for name in sorted(names)}
+
+
+def qualified_context(root, directory, runtime, input_prefix, cpus):
+    root, directory, input_prefix = map(Path, (root, directory, input_prefix))
+    check(directory.resolve(strict=True).is_relative_to(root.resolve(strict=True)), 'qualification context escapes campaign')
+    plan = load(directory / 'plan.json'); tool, workers = plan['tool'], plan['workers']
+    check(tool in ('source', 'native', 'official') and workers in (1, 4), 'qualification role differs')
+    binary = runtime['binary'] if tool == 'native' else str(Path(runtime['restored']) / source.ENGINES[tool][0])
+    expected = graph(tool, workers, input_prefix, directory / 'products', binary)
+    check(plan['stages'] == expected, 'qualification execution plan/context differs')
+    complete = load(directory / 'complete-measurement.json')
+    check(complete['tool'] == tool and complete['workers'] == workers and complete['exit'] == 0 and
+          complete['failure'] is None and len(complete['stages']) == len(expected), 'qualification execution failed')
+    for command, measured in zip(expected, complete['stages']):
+        check(all(measured[key] == command[key] for key in ('name', 'group', 'argv')) and measured['exit'] == 0 and
+              measured == load(directory / 'commands' / command['name'] / 'measurement.json'), 'qualification command execution differs')
+        check(all((directory / 'commands' / command['name'] / name).is_file() for name in ('stdout.txt', 'stderr.txt')),
+              'qualification command logs are missing')
+    custody = load(directory / 'generation-custody.json')
+    check(custody['unchanged_after_descendants'] and complete['generation_custody'] == custody,
+          'qualification generation custody differs')
+    generations = {stage: {str(directory / 'products' / (stage + '.' + ext)):
+                   file_identity(directory / 'products' / (stage + '.' + ext)) for ext in ('pgen', 'pvar', 'psam')}
+                   for stage in ('I', 'F', 'P')}
+    check(custody['creation_files'] == generations, 'qualification generation changed after descendants')
+    prepared = load(root / 'prepared-input.json')
+    inputs = {ext: file_identity(str(input_prefix) + '.' + ext) for ext in ('pgen', 'pvar', 'psam')}
+    check(prepared['prefix'] == str(input_prefix) and prepared['files'] == inputs, 'qualification input context differs')
+    check(load(root / 'admitted-runtime.json') == runtime, 'qualification admitted runtime differs')
+    controls = {name: oracle.sha256(ROOT / name) for name in set(CONTROLLERS)}
+    controller = load(root / 'evidence/controller.json')
+    check(controller['files'] == controls and controller['commit'] == os.environ.get('GITHUB_SHA') and
+          controller['image'] == oracle.IMAGE, 'qualification protected controller context differs')
+    libraries_path = Path(runtime['restored']) / 'runtime/loaded-libraries.json'
+    providers = {}
+    for path, row in load(libraries_path).items():
+        check(str(Path(path).resolve(strict=True)) == row['realpath'] and oracle.sha256(path) == row['sha256'],
+              'qualification runtime provider differs')
+        resolved = Path(path).resolve(strict=True)
+        providers[path] = dict(realpath=str(resolved), **file_identity(resolved))
+    admission_path = root / 'evidence/native-elf/admission.json'; admission = load(admission_path)
+    check(admission['binary_sha256'] == oracle.sha256(runtime['binary']), 'qualification native runtime differs')
+    for row in admission['providers'].values():
+        check(oracle.sha256(row['path']) == row['sha256'], 'qualification native provider differs')
+        resolved = Path(row['path']).resolve(strict=True)
+        providers[row['path']] = dict(realpath=str(resolved), **file_identity(resolved))
+    resolved = Path(admission['interpreter']).resolve(strict=True)
+    providers[admission['interpreter']] = dict(realpath=str(resolved), **file_identity(resolved))
+    executables = dict(native=runtime['binary'], observer=runtime['observer'],
+        **{name: str(Path(runtime['restored']) / source.ENGINES[name][0]) for name in ('source', 'official')})
+    environment = {key: os.environ.get(key) for key in (*oracle.ENV_KEYS, 'LD_PRELOAD', 'MKL_NUM_THREADS',
+        'BLIS_NUM_THREADS', 'NUMEXPR_NUM_THREADS', 'PYTHONNOUSERSITE')}
+    context = dict(role=dict(tool=tool, workers=workers), input_prefix=str(input_prefix), inputs=inputs,
+        prepared_input=file_identity(root / 'prepared-input.json'), runtime=runtime,
+        admitted_runtime=file_identity(root / 'admitted-runtime.json'),
+        executables={name: dict(path=path, **file_identity(path)) for name, path in executables.items()},
+        source_libraries=file_identity(libraries_path), native_admission=file_identity(admission_path), providers=providers,
+        controller=file_identity(root / 'evidence/controller.json'), protected_controllers=controls,
+        environment=environment, cpus=list(cpus[:workers]),
+        planned_semantic_argv=graph(tool, workers, input_prefix, Path('qualified-products'), binary))
+    return context, worker_provenance(directory, plan)
+
+
+def freeze_qualification(root, directory, runtime, input_prefix, cpus):
+    context, workers = qualified_context(root, directory, runtime, input_prefix, cpus)
+    role = context['role']
+    check(directory == root / 'evidence/qualification' / str(role['workers']) / role['tool'], 'qualification role directory differs')
+    checked = load(directory / 'whole-check.json')
+    check(checked['own_projection'] and checked['fresh_P_validated'] and set(checked['exact_raw']) == {'I', 'F', 'P'} and
+          checked['original_input'] == str(input_prefix), 'complete full qualification is missing')
+    path = directory / 'qualification-certificate.json'
+    save(path, dict(schema=REUSE_PROTOCOL, qualification=str(directory), context=context,
+        scientific_payload=scientific_payload(directory, role['tool']),
+        full_check=dict(path=str(directory / 'whole-check.json'), **file_identity(directory / 'whole-check.json')),
+        native_worker_provenance=workers))
+    return dict(path=str(path), **file_identity(path))
+
+
+def check_qualified_repeat(root, directory, binding, runtime, input_prefix, cpus):
+    context, workers = qualified_context(root, directory, runtime, input_prefix, cpus)
+    path = Path(binding['path'])
+    check(file_identity(path) == {key: binding[key] for key in ('bytes', 'sha256')}, 'qualification certificate identity differs')
+    certificate = load(path)
+    check(certificate['schema'] == REUSE_PROTOCOL and certificate['context'] == context, 'qualification role/context differs')
+    qualification = root / 'evidence/qualification' / str(context['role']['workers']) / context['role']['tool']
+    check(path == qualification / 'qualification-certificate.json' and certificate['qualification'] == str(qualification),
+          'qualification role binding differs')
+    full = certificate['full_check']
+    check(full['path'] == str(qualification / 'whole-check.json') and
+          file_identity(full['path']) == {key: full[key] for key in ('bytes', 'sha256')}, 'qualified full-check identity differs')
+    expected = certificate['scientific_payload']
+    check(scientific_payload(qualification, context['role']['tool']) == expected, 'qualified scientific body identity differs')
+    actual = scientific_payload(directory, context['role']['tool'])
+    differences = {name: dict(qualified=expected[name], actual=actual[name]) for name in expected if expected[name] != actual[name]}
+    if differences:
+        save(directory / 'qualified-content-difference.json', dict(schema=REUSE_PROTOCOL,
+            validation_kind='scientific-body-difference', certificate=binding, differences=differences,
+            fresh_observer_captures=0, fresh_P_validations=0, content_proof_reused=False))
+        return None
+    proof = dict(schema=REUSE_PROTOCOL, validation_kind='qualified-content-reused', certificate=binding,
+        qualified_full_check=full, qualified_properties=['exact_raw', 'own_projection', 'reports', 'ordered_prune', 'P_validation'],
+        scientific_payload=actual, native_worker_provenance=workers,
+        generation_custody=file_identity(directory / 'generation-custody.json'),
+        plan=file_identity(directory / 'plan.json'), complete_measurement=file_identity(directory / 'complete-measurement.json'),
+        fresh_observer_captures=0, fresh_P_validations=0,
+        scope='exact own-role qualified scientific content reused; no new observer capture or fresh P validation')
+    save(directory / 'qualified-content-reused.json', proof)
+    return proof
+
+
+def record_qualified_fallback(directory):
+    checked = load(directory / 'whole-check.json')
+    check(checked['own_projection'] and checked['fresh_P_validated'] and set(checked['exact_raw']) == {'I', 'F', 'P'},
+          'complete fallback full check is missing')
+    captures = {stage: file_identity(directory / (stage + '.raw.jsonl.gz.json')) for stage in ('I', 'F', 'P')}
+    validators = {}
+    for engine in ('source', 'official'):
+        result = directory / ('fresh-P-' + engine) / 'result.json'; row = load(result)
+        check(row['status'] == 'returned' and row['returncode'] == 0, 'fallback fresh P validation failed')
+        validators[engine] = file_identity(result)
+    proof = dict(schema=REUSE_PROTOCOL, validation_kind='full-check-after-body-difference',
+        difference=file_identity(directory / 'qualified-content-difference.json'),
+        full_check=file_identity(directory / 'whole-check.json'),
+        fresh_observer_captures=len(captures), fresh_P_validations=len(validators),
+        observer_completion_records=captures, P_validation_completion_records=validators,
+        content_proof_reused=False, scope='existing full semantic validation ran after exact-body mismatch')
+    save(directory / 'qualified-content-fallback.json', proof)
+    return proof
+
+
+def validation_counts(root):
+    directories = [path for pattern in ('evidence/qualification/*/*', 'evidence/trials/*/*/*')
+                   for path in root.glob(pattern) if path.is_dir()]
+    captures = int((root / 'evidence/input.raw.jsonl.gz.json').is_file())
+    validators = reused = full = differences = fallbacks = 0
+    for directory in directories:
+        captures += sum((directory / (stage + '.raw.jsonl.gz.json')).is_file() for stage in ('I', 'F', 'P'))
+        for engine in ('source', 'official'):
+            result = directory / ('fresh-P-' + engine) / 'result.json'
+            if result.is_file():
+                row = load(result)
+                validators += int(row['status'] == 'returned' and row['returncode'] == 0)
+        reused += int((directory / 'qualified-content-reused.json').is_file())
+        full += int((directory / 'whole-check.json').is_file())
+        differences += int((directory / 'qualified-content-difference.json').is_file())
+        fallbacks += int((directory / 'qualified-content-fallback.json').is_file())
+    return dict(schema=REUSE_PROTOCOL, observer_captures_completed=captures,
+        fresh_P_validations_completed=validators, qualified_content_reused=reused,
+        full_graph_check_records=full, scientific_body_difference_records=differences,
+        full_check_fallbacks=fallbacks, policy='exact-body mismatch requires the existing full semantic check',
+        scope='physical completion records, not repeated logical qualified-content properties')
 
 
 def coordinate_pairs(prefix):
@@ -728,9 +893,13 @@ def decision(rows):
         samples=rows, biological_claim=False, four_platform_performance=False)
 
 
-def campaign(root, runtime, cpus, cgroup_parent=None):
+def campaign(root, runtime, cpus, cgroup_parent=None, reuse_qualified_bodies=False):
     comparison = source.comparator(Path(runtime['native']) / 'source')
-    inputs = Path(load(root / 'prepared-input.json')['prefix']); qualified = {}; sizes = []; measurements = []
+    inputs = Path(load(root / 'prepared-input.json')['prefix']); qualified = {}; sizes = []; measurements = []; certificates = {}
+    if reuse_qualified_bodies:
+        save(root / 'evidence/validation-protocol.json', dict(schema=REUSE_PROTOCOL, reuse_qualified_bodies=True,
+            full_qualification_roles=6, changed_scientific_body_policy='retain exact differences; run existing full semantic check',
+            scope='out-of-clock validation only; new protocol, not causal CLI speed evidence'))
     for workers in (1, 4):
         baseline = None
         for tool in ('source', 'native', 'official'):
@@ -738,6 +907,8 @@ def campaign(root, runtime, cpus, cgroup_parent=None):
             binary = runtime['binary'] if tool == 'native' else str(Path(runtime['restored']) / source.ENGINES[tool][0])
             measured = trial(root, directory, tool, workers, inputs, binary, cpus, cgroup_parent)
             check_graph(root, directory, baseline or (qualified.get((1, 'source')) if workers == 4 else None), runtime, comparison, inputs)
+            if reuse_qualified_bodies:
+                certificates[workers, tool] = freeze_qualification(root, directory, runtime, inputs, cpus)
             if tool == 'source': baseline = directory
             qualified[workers, tool] = directory; sizes.append(tree_bytes(directory)); measurements.append(measured)
     geometry = {str(workers): coordinate_pairs(qualified[workers, 'source'] / 'products/F') for workers in (1, 4)}
@@ -752,16 +923,25 @@ def campaign(root, runtime, cpus, cgroup_parent=None):
             workers = entry['workers']; directory = root / 'evidence/trials' / str(workers) / str(entry['pair']) / tool
             binary = runtime['binary'] if tool == 'native' else str(Path(runtime['restored']) / source.ENGINES[tool][0])
             measured = trial(root, directory, tool, workers, inputs, binary, cpus, cgroup_parent)
-            check_graph(root, directory, qualified[workers, 'source'], runtime, comparison, inputs)
+            if reuse_qualified_bodies:
+                reused = check_qualified_repeat(root, directory, certificates[workers, tool], runtime, inputs, cpus)
+                if reused is None:
+                    check_graph(root, directory, qualified[workers, 'source'], runtime, comparison, inputs)
+                    record_qualified_fallback(directory)
+            else:
+                check_graph(root, directory, qualified[workers, 'source'], runtime, comparison, inputs)
             check(tree_bytes(directory) <= max(sizes) + 2**20, 'trial exceeded its unchanged-profile qualification storage bound')
             results.append(measured)
     outcome = {str(workers): decision([row for row in results if row['workers'] == workers]) for workers in (1, 4)}
-    save(root / 'evidence/performance-decision.json', dict(profiles=outcome, passed=all(row['passed'] for row in outcome.values()),
-        private_retention=True, release=False, real_scope='GT/phase PGEN; not DS/HDS/VCF-import or biological validation'))
+    decision_record = dict(profiles=outcome, passed=all(row['passed'] for row in outcome.values()),
+        private_retention=True, release=False, real_scope='GT/phase PGEN; not DS/HDS/VCF-import or biological validation')
+    if reuse_qualified_bodies:
+        decision_record['validation_protocol'] = REUSE_PROTOCOL
+    save(root / 'evidence/performance-decision.json', decision_record)
     check(all(row['passed'] for row in outcome.values()), 'strict real whole-workflow performance gate did not pass; all originals retained')
 
 
-def run(root, world, selector, cpus, cgroup_parent=None):
+def run(root, world, selector, cpus, cgroup_parent=None, reuse_qualified_bodies=False):
     check(os.environ.get('GITHUB_ACTIONS') == 'true', 'actual hosted execution required; no local/standalone mode')
     root = Path(root).resolve(strict=True); inner_environment(root)
     allocated = cpu_set(cpus)
@@ -779,7 +959,7 @@ def run(root, world, selector, cpus, cgroup_parent=None):
         acquire_cohort(root)
         comparison = source.comparator(Path(runtime['native']) / 'source')
         materialize(root, runtime, comparison)
-        campaign(root, runtime, allocated, cgroup_parent)
+        campaign(root, runtime, allocated, cgroup_parent, reuse_qualified_bodies)
     except BaseException as error:
         failure = dict(type=type(error).__name__, message=str(error))
         raise
@@ -790,6 +970,10 @@ def run(root, world, selector, cpus, cgroup_parent=None):
                       performance_passed=load(root / 'evidence/performance-decision.json')['passed']
                         if (root / 'evidence/performance-decision.json').is_file() else None,
                       private_retention=True, encrypted_upload_only=True, release=False)
+        if reuse_qualified_bodies:
+            save(root / 'evidence/validation-counts.json', validation_counts(root))
+            record['validation_protocol'] = REUSE_PROTOCOL
+            record['validation_counts'] = file_identity(root / 'evidence/validation-counts.json')
         save(root / 'run-status.json', record)
 
 
@@ -800,9 +984,11 @@ def main():
     parser.add_argument('--world', type=Path, default=ROOT); parser.add_argument('--native-receipt', default=DEFAULT_RECEIPT)
     parser.add_argument('--cpus', default='0,1,2,3')
     parser.add_argument('--cgroup-parent', type=Path); parser.add_argument('--plan', type=Path)
+    parser.add_argument('--reuse-qualified-bodies', action='store_true',
+                        help='Reuse exact own-role qualified content; keep all six full qualifications')
     args = parser.parse_args()
     if args.action == 'setup': setup(args.root, args.world, args.native_receipt, args.cpus)
-    elif args.action == 'run': run(args.root, args.world, args.native_receipt, args.cpus, args.cgroup_parent)
+    elif args.action == 'run': run(args.root, args.world, args.native_receipt, args.cpus, args.cgroup_parent, args.reuse_qualified_bodies)
     elif args.action == 'seal': print(json.dumps(seal(args.root, args.world, args.delivery), sort_keys=True))
     elif args.action == 'archive': archive_stream(args.root, sys.stdout.buffer)
     else:
