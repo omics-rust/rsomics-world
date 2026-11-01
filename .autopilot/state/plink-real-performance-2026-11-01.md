@@ -1,5 +1,31 @@
 # Fixed private HGDP whole-workflow gate
 
+## Actual green5 native/source originals adopted; coupled data-plane B assigned
+
+Root adopts plink-native-2026-11-01-green-5.json after complete report and all
+431lines of collector/verifier/seal source review. Fresh read-only check
+validates all9927files/466501492B, all5 ZIP CRCs,9819 TAR member bodies/modes,
+303 current/original-source-TAR bindings, exact actual jobs/controller, and
+rebuilds native/source data records without packet writes. BBAaHV/native-fresh
+stdout SHA751871897ccd2c4b9768375c28dacf0f1a29a8b6d9ac89d3734df61467fe07c8,
+exit0/empty stderr. Original proposal/report/inventory stay unchanged.
+
+Actual41319636397/1 at1ccacefe executes4native x2profiles x5test intents,
+0failed/ignored, plus same-generation source224report/36raw-bridge calls.
+Each mode has36generations/74878raw cells/116reports per worker/52worker
+records. Source-TAR modes are Git-bound; extracted actual modes are reported
+separately. Fresh source-body preservation is not a generic chmod claim.
+Actual Linux release ELF3115144B/f11e48bb is new; neither old032ea ELF's
+Bookworm context nor whole-real timings transfer. No new performance/release.
+Packet6QNRJO has REPORTbad50db0/INVENTORY00c9980d; source commit5ec85fd/treec11d.
+
+Root adopts docs/plans/2026-11-01-plink-prepared-pgen-ld.md and assigns one
+fresh source implementer with an independent whole reviewer. The coupled
+private PGEN owner/reader and LD resident-window interfaces share one wave;
+numeric renderer remains untouched. Implementation/verification state lives
+in plink-prepared-pgen-ld-2026-11-01.md and private aWdUtX. No A-only whole
+benchmark or public owner remote is created; old seven-stage failure remains.
+
 ## Actual green5 native-four/source gate succeeds; full originals pending
 
 Root dispatches plink-candidate.yml snapshot=green-5 exactly once after

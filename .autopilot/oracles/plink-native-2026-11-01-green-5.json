@@ -1,0 +1,879 @@
+{
+  "actual_artifact_source_modes_not_assumed_git_modes": true,
+  "controller_head": "1ccacefee97cdd67e95440e89a466cc2aa85d36f",
+  "every_source_body_verified": true,
+  "final_guard": {
+    "cap_bytes": 536870912,
+    "device": "/dev/disk12s1",
+    "device_number": 16777259,
+    "free_bytes": 48089726976,
+    "guarded_paths": {
+      "CARGO_HOME": "/Volumes/KIOXIA/Developments/cargo-home",
+      "CARGO_TARGET_DIR": "/Volumes/KIOXIA/Developments/cargo-target/rsomics-plink",
+      "GH_CACHE_DIR": "/Volumes/KIOXIA/Developments/tmp/gh-cache",
+      "RUSTUP_HOME": "/Volumes/KIOXIA/Developments/rustup-home",
+      "TMPDIR": "/Volumes/KIOXIA/Developments/tmp",
+      "XDG_CACHE_HOME": "/Volumes/KIOXIA/Developments/tmp/cache"
+    },
+    "independent_headroom_bytes": 8589934592,
+    "packet_bytes": 464010065,
+    "uid": 501
+  },
+  "local_scientific_execution": false,
+  "native": {
+    "linux-aarch64": {
+      "archived_extracted_source_mode_difference_names": [],
+      "archived_extracted_source_mode_differences": 0,
+      "archived_extracted_source_modes_authority": "/Volumes/KIOXIA/Developments/tmp/plink-green5-recovery-20261101.6QNRJO/13088955942/members.json",
+      "artifact_id": 13088955942,
+      "compiler": "rustc 1.91.0 (f8297e351 2025-10-28)\nbinary: rustc\ncommit-hash: f8297e351a40c1439a467bbbb6879088047f50b3\ncommit-date: 2025-10-28\nhost: aarch64-unknown-linux-gnu\nrelease: 1.91.0\nLLVM version: 21.1.2\n",
+      "compiler_stdout": {
+        "bytes": 197,
+        "sha256": "ef4eb6f26082172ceca392827ffa744b46db9a8b3cbbfec3d0ef8d1a7d59d409"
+      },
+      "cpp_version": "c++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0\nCopyright (C) 2023 Free Software Foundation, Inc.\nThis is free software; see the source for copying conditions.  There is NO\nwarranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n\n",
+      "host_log": {
+        "bytes": 310,
+        "sha256": "fd26526351ffa71a558c06fac41942fe1d4004ea7688f2f650c18c98e716c3cb"
+      },
+      "local_materialization_modes_not_runtime_modes": true,
+      "modes": {
+        "debug": {
+          "abi_stdout": {
+            "bytes": 9619,
+            "sha256": "49f108f0fb73eaf661cf4864bab381be0717e7f85cbcc0af3a4dd4991458b38e"
+          },
+          "binary": {
+            "bytes": 39425296,
+            "sha256": "44e1829c3359df910370532f4d8226ff8f65a021df1287459976a78eb8476f86"
+          },
+          "binary_metadata": {
+            "compiler_host": "aarch64-unknown-linux-gnu",
+            "selection_sha256": "95a657b4427dc277887c4aa72a8a77665e2d0a272d4308160672e491ac002565",
+            "sha256": "44e1829c3359df910370532f4d8226ff8f65a021df1287459976a78eb8476f86"
+          },
+          "bound_reports": 232,
+          "cpp_builds": {
+            "cpp-build/debug/rsomics-plink-3832ecccdbb2d808/compiler.txt": {
+              "bytes": 541,
+              "sha256": "7bca31ba27b0dd0bd57bec2356e09a9ba633ea4e39f4f3198bfcea0b8d85cc12"
+            },
+            "cpp-build/debug/rsomics-plink-67bdd0254e163c0d/compiler.txt": {
+              "bytes": 541,
+              "sha256": "7bca31ba27b0dd0bd57bec2356e09a9ba633ea4e39f4f3198bfcea0b8d85cc12"
+            }
+          },
+          "failed": 0,
+          "generation_binding": {
+            "bytes": 67070,
+            "sha256": "cbfcc5f1673be8bf1a84a7d0746a85c1f4c1bbd3c8f0851ab2eea828e1ef6640"
+          },
+          "generations": 36,
+          "graph": "test-debug-scratch/plink-whole-native-WrUhpL",
+          "graph_json": {
+            "bytes": 48457,
+            "sha256": "39e3b2a138383a8f355a8e796b80ba64f944846de8a12953e5daf5c462ed98e0"
+          },
+          "ignored": 0,
+          "principal_reports_per_worker": 116,
+          "raw_cells": 74878,
+          "test_populations": [
+            4,
+            0,
+            1,
+            0
+          ],
+          "test_stderr": {
+            "bytes": 3192,
+            "sha256": "6a4183db03d2f68ec1968191f3b11dec4455dac61c8f16ea4e5ffa6bde5770f4"
+          },
+          "test_stdout": {
+            "bytes": 1065,
+            "sha256": "74a76d5d20a21c9cd91832df0470d209a2bafc0cc6d882f5b95719480ca3639b"
+          },
+          "worker_binding": {
+            "bytes": 6591,
+            "sha256": "6666a8673b64b69021d8c8128795170f8b9512a285756d309c98bdd0ab8717e2"
+          },
+          "workers": 52
+        },
+        "release": {
+          "abi_stdout": {
+            "bytes": 9174,
+            "sha256": "c12358c1ec82b1ff1e0e969bbbaf80babd10509b9ba5ce08cc9fbf077bc84547"
+          },
+          "binary": {
+            "bytes": 2998904,
+            "sha256": "fe35aae2e4a9109392edb31f0f24714c6f249843e4fac29cdbc9399e9f69a244"
+          },
+          "binary_metadata": {
+            "compiler_host": "aarch64-unknown-linux-gnu",
+            "selection_sha256": "95a657b4427dc277887c4aa72a8a77665e2d0a272d4308160672e491ac002565",
+            "sha256": "fe35aae2e4a9109392edb31f0f24714c6f249843e4fac29cdbc9399e9f69a244"
+          },
+          "bound_reports": 232,
+          "cpp_builds": {
+            "cpp-build/release/rsomics-plink-8fea4919bda56a18/compiler.txt": {
+              "bytes": 495,
+              "sha256": "58eea328e5a405f87a23a7908043d1d535d3c3f50f27a3fe13de469dddc4ed0b"
+            }
+          },
+          "failed": 0,
+          "generation_binding": {
+            "bytes": 67072,
+            "sha256": "1185bcfedbca907be83993e4b5c980a871107f1fbad9028aca3069c963e1bdfa"
+          },
+          "generations": 36,
+          "graph": "test-release-scratch/plink-whole-native-RWNWqJ",
+          "graph_json": {
+            "bytes": 48961,
+            "sha256": "159cc1834eb3823980875d2ab99170f3312cdea3c9cd0d8c925ce49b5e3d1c9b"
+          },
+          "ignored": 0,
+          "principal_reports_per_worker": 116,
+          "raw_cells": 74878,
+          "test_populations": [
+            4,
+            0,
+            1,
+            0
+          ],
+          "test_stderr": {
+            "bytes": 3712,
+            "sha256": "3d13ebcbb51d668b61668b5967e2181304b3780f39e5111aa11f3414a9cb52b8"
+          },
+          "test_stdout": {
+            "bytes": 1067,
+            "sha256": "471b4dee3f6783badc4540d3a3cd3283e50353ccff0c73efe2595cf9b7ac1c5f"
+          },
+          "worker_binding": {
+            "bytes": 6591,
+            "sha256": "6666a8673b64b69021d8c8128795170f8b9512a285756d309c98bdd0ab8717e2"
+          },
+          "workers": 52
+        }
+      },
+      "original_source_tar_modes_exact_to_git": true,
+      "selection": {
+        "comparison_sha256": "4b99373876681ecc7379e0653d26eff696a6c2f7dbc97482c57a31b7c3caf806",
+        "controller_commit": "1ccacefee97cdd67e95440e89a466cc2aa85d36f",
+        "expected_manifest_sha256": "d04404749b8b28ba53fbfab3805c47101c2fc7b0e7fff35d69f76b3f532132bc",
+        "lock_sha256": "0b4eba1f752aa6011ee4a2a434d10fa737f90d2fb5ada5101b8ed5587a57d6bc",
+        "performance_claim": false,
+        "release": false,
+        "snapshot": "green-5",
+        "source_archive_sha256": "a492878c98b9bcf5090fc06fac10ba3fe1371b17c097a54f159f44b5cb977944",
+        "source_files": 303,
+        "source_manifest_sha256": "6b7d5b6a063385034a9f74b729c6f808c0448717088447b62f23d2208d1c609d",
+        "target": "linux-aarch64",
+        "vendor_manifest_sha256": "1d537fedf95a513f2e5fd4cffbc04de63f1c224e10b12eccf92221cd710bc99c"
+      },
+      "source_bodies_exact_to_owner": true,
+      "source_files": 303
+    },
+    "linux-x86_64": {
+      "archived_extracted_source_mode_difference_names": [],
+      "archived_extracted_source_mode_differences": 0,
+      "archived_extracted_source_modes_authority": "/Volumes/KIOXIA/Developments/tmp/plink-green5-recovery-20261101.6QNRJO/13088836255/members.json",
+      "artifact_id": 13088836255,
+      "compiler": "rustc 1.91.0 (f8297e351 2025-10-28)\nbinary: rustc\ncommit-hash: f8297e351a40c1439a467bbbb6879088047f50b3\ncommit-date: 2025-10-28\nhost: x86_64-unknown-linux-gnu\nrelease: 1.91.0\nLLVM version: 21.1.2\n",
+      "compiler_stdout": {
+        "bytes": 196,
+        "sha256": "f60bee0671b931b0636eee3808631479dce91d0f52601f9acc1aaeb53dba4e9c"
+      },
+      "cpp_version": "c++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0\nCopyright (C) 2023 Free Software Foundation, Inc.\nThis is free software; see the source for copying conditions.  There is NO\nwarranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n\n",
+      "host_log": {
+        "bytes": 306,
+        "sha256": "d3337161ce21f23e43bec8668fb914da326dbf28a0b1eede454ab20dc1b10cfe"
+      },
+      "local_materialization_modes_not_runtime_modes": true,
+      "modes": {
+        "debug": {
+          "abi_stdout": {
+            "bytes": 10364,
+            "sha256": "ed5c6b878053765f5f3e56c8dd49c1f979f31b20a37697ea06a4b6de7faeec10"
+          },
+          "binary": {
+            "bytes": 40478384,
+            "sha256": "85104ba00286f415846bdafbd31b9468eeb04209ea07c6eef0636cf0dfef78ca"
+          },
+          "binary_metadata": {
+            "compiler_host": "x86_64-unknown-linux-gnu",
+            "selection_sha256": "8ab6b95cebbb8487e7c21d56acc4ef532384a48ca857cfbbda43459ec59c61c2",
+            "sha256": "85104ba00286f415846bdafbd31b9468eeb04209ea07c6eef0636cf0dfef78ca"
+          },
+          "bound_reports": 232,
+          "cpp_builds": {
+            "cpp-build/debug/rsomics-plink-2c18abe96845a47e/compiler.txt": {
+              "bytes": 548,
+              "sha256": "20a3aadaac6197c81e1d4edbb0d58a050e2fe2645442c3b76c135c3dcc594ccc"
+            },
+            "cpp-build/debug/rsomics-plink-8b177da8de5d43b4/compiler.txt": {
+              "bytes": 548,
+              "sha256": "20a3aadaac6197c81e1d4edbb0d58a050e2fe2645442c3b76c135c3dcc594ccc"
+            }
+          },
+          "failed": 0,
+          "generation_binding": {
+            "bytes": 67070,
+            "sha256": "626f130253eadb5fc7044400d3d2128caacdbfd4f11842e579285c9a52aa8b2f"
+          },
+          "generations": 36,
+          "graph": "test-debug-scratch/plink-whole-native-HfebGP",
+          "graph_json": {
+            "bytes": 48457,
+            "sha256": "7100d96020b5e496d3fc53fc0b6140dd77e41bc0b215e0161712e1337ee9c171"
+          },
+          "ignored": 0,
+          "principal_reports_per_worker": 116,
+          "raw_cells": 74878,
+          "test_populations": [
+            4,
+            0,
+            1,
+            0
+          ],
+          "test_stderr": {
+            "bytes": 3192,
+            "sha256": "1bf2bd93d962e3e848b74a32dbac072ea729abf54d3fa2545c11fa5ee5d58e9f"
+          },
+          "test_stdout": {
+            "bytes": 1065,
+            "sha256": "cd4a87c5aa4ddd57ea03d7abd5c0a1ddebe0cefcca7602a5059ea133b3db2e15"
+          },
+          "worker_binding": {
+            "bytes": 6591,
+            "sha256": "6666a8673b64b69021d8c8128795170f8b9512a285756d309c98bdd0ab8717e2"
+          },
+          "workers": 52
+        },
+        "release": {
+          "abi_stdout": {
+            "bytes": 9972,
+            "sha256": "d211e07c427ef0e8b8feebfeb1fee02721f014d1894d9873ad09291b8256f132"
+          },
+          "binary": {
+            "bytes": 3115144,
+            "sha256": "f11e48bb5e4cd730f2082d592bb8b448bc4a2cb010eef3e66ea6da667c9bd7d2"
+          },
+          "binary_metadata": {
+            "compiler_host": "x86_64-unknown-linux-gnu",
+            "selection_sha256": "8ab6b95cebbb8487e7c21d56acc4ef532384a48ca857cfbbda43459ec59c61c2",
+            "sha256": "f11e48bb5e4cd730f2082d592bb8b448bc4a2cb010eef3e66ea6da667c9bd7d2"
+          },
+          "bound_reports": 232,
+          "cpp_builds": {
+            "cpp-build/release/rsomics-plink-eb9670bb128dc89f/compiler.txt": {
+              "bytes": 502,
+              "sha256": "ae248859dcfc0aec64ef06b29724387ae078f0a0c86718a36ff5647beb206a2b"
+            }
+          },
+          "failed": 0,
+          "generation_binding": {
+            "bytes": 67072,
+            "sha256": "64dc4546b64d114642ad965486ffd1dd1d22fefe0e7adcf8206180d50ba3e9ff"
+          },
+          "generations": 36,
+          "graph": "test-release-scratch/plink-whole-native-Om2rPY",
+          "graph_json": {
+            "bytes": 48961,
+            "sha256": "18b82a63c1f154ae301ec708ecf8e44827bbfce75c7917139c98dd29bb5e6902"
+          },
+          "ignored": 0,
+          "principal_reports_per_worker": 116,
+          "raw_cells": 74878,
+          "test_populations": [
+            4,
+            0,
+            1,
+            0
+          ],
+          "test_stderr": {
+            "bytes": 3712,
+            "sha256": "ab83bc34c962f5ed2a0e649cea16d7abab2cfefa822ba3e7c992e9c0b31098cc"
+          },
+          "test_stdout": {
+            "bytes": 1067,
+            "sha256": "3b14860337c63dbb92e9a63792e65830f38407c162e450c335a961191f2d4877"
+          },
+          "worker_binding": {
+            "bytes": 6591,
+            "sha256": "6666a8673b64b69021d8c8128795170f8b9512a285756d309c98bdd0ab8717e2"
+          },
+          "workers": 52
+        }
+      },
+      "original_source_tar_modes_exact_to_git": true,
+      "selection": {
+        "comparison_sha256": "4b99373876681ecc7379e0653d26eff696a6c2f7dbc97482c57a31b7c3caf806",
+        "controller_commit": "1ccacefee97cdd67e95440e89a466cc2aa85d36f",
+        "expected_manifest_sha256": "d04404749b8b28ba53fbfab3805c47101c2fc7b0e7fff35d69f76b3f532132bc",
+        "lock_sha256": "0b4eba1f752aa6011ee4a2a434d10fa737f90d2fb5ada5101b8ed5587a57d6bc",
+        "performance_claim": false,
+        "release": false,
+        "snapshot": "green-5",
+        "source_archive_sha256": "a492878c98b9bcf5090fc06fac10ba3fe1371b17c097a54f159f44b5cb977944",
+        "source_files": 303,
+        "source_manifest_sha256": "6b7d5b6a063385034a9f74b729c6f808c0448717088447b62f23d2208d1c609d",
+        "target": "linux-x86_64",
+        "vendor_manifest_sha256": "1d537fedf95a513f2e5fd4cffbc04de63f1c224e10b12eccf92221cd710bc99c"
+      },
+      "source_bodies_exact_to_owner": true,
+      "source_files": 303
+    },
+    "macos-aarch64": {
+      "archived_extracted_source_mode_difference_names": [],
+      "archived_extracted_source_mode_differences": 0,
+      "archived_extracted_source_modes_authority": "/Volumes/KIOXIA/Developments/tmp/plink-green5-recovery-20261101.6QNRJO/13088503618/members.json",
+      "artifact_id": 13088503618,
+      "compiler": "rustc 1.91.0 (f8297e351 2025-10-28)\nbinary: rustc\ncommit-hash: f8297e351a40c1439a467bbbb6879088047f50b3\ncommit-date: 2025-10-28\nhost: aarch64-apple-darwin\nrelease: 1.91.0\nLLVM version: 21.1.2\n",
+      "compiler_stdout": {
+        "bytes": 192,
+        "sha256": "28dd064782d116a8e5eea8ae5e3326c561e8617b79f1fc2c928f7a2a5e04bdde"
+      },
+      "cpp_version": "Apple clang version 17.0.0 (clang-1700.0.13.5)\nTarget: arm64-apple-darwin24.6.0\nThread model: posix\nInstalledDir: /Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin\n",
+      "host_log": {
+        "bytes": 455,
+        "sha256": "a5e11e3c709b932fb017355aa09fdfa543a3bdc4342f4026feb7f0b0df075a4e"
+      },
+      "local_materialization_modes_not_runtime_modes": true,
+      "modes": {
+        "debug": {
+          "abi_stdout": {
+            "bytes": 7509,
+            "sha256": "ba9fd94f20f4da7ce9d3beda7575abae60ae70e6f14695d4f8cdc2fec6f711c1"
+          },
+          "binary": {
+            "bytes": 10213680,
+            "sha256": "d1e14dc7472977fb377aa8caca2c9da819746cef766be32d241015943ccd90b4"
+          },
+          "binary_metadata": {
+            "compiler_host": "aarch64-apple-darwin",
+            "selection_sha256": "59ede713ef64ef8f61a81aefc3e81d2efe16c74d3a0dbf9ef1e5a77ac88474d6",
+            "sha256": "d1e14dc7472977fb377aa8caca2c9da819746cef766be32d241015943ccd90b4"
+          },
+          "bound_reports": 232,
+          "cpp_builds": {
+            "cpp-build/debug/rsomics-plink-14dcff5d7045a3dc/compiler.txt": {
+              "bytes": 556,
+              "sha256": "97960f7b6f5cf745b4f97f32b1abd43d888c2decc1986acf558796200460bba1"
+            },
+            "cpp-build/debug/rsomics-plink-7cae450ba92490d1/compiler.txt": {
+              "bytes": 556,
+              "sha256": "97960f7b6f5cf745b4f97f32b1abd43d888c2decc1986acf558796200460bba1"
+            }
+          },
+          "failed": 0,
+          "generation_binding": {
+            "bytes": 67070,
+            "sha256": "8660aa2d18a8ae7ec00a78ce377fe630589dd84bc2c61ab67660685b6803f807"
+          },
+          "generations": 36,
+          "graph": "test-debug-scratch/plink-whole-native-RZFpF1",
+          "graph_json": {
+            "bytes": 48745,
+            "sha256": "d7262c7dc28a1a853c58e950c484c5c9eae8f75b2c5a2e5d7f25b07af19b9574"
+          },
+          "ignored": 0,
+          "principal_reports_per_worker": 116,
+          "raw_cells": 74878,
+          "test_populations": [
+            4,
+            0,
+            1,
+            0
+          ],
+          "test_stderr": {
+            "bytes": 3188,
+            "sha256": "f1ac2ffee2d7e7b33cb5b3689a181caa90279cd0ae2683852a452cecdbc25568"
+          },
+          "test_stdout": {
+            "bytes": 1066,
+            "sha256": "8b13955a27f1711547e0491e0d88409ff64dfecb42c78f9f6f42c2dfc6cec596"
+          },
+          "worker_binding": {
+            "bytes": 6591,
+            "sha256": "a3e74b2bdd913126c95d9975db2c2a606655fe0b521376dede51a5a52629cc0a"
+          },
+          "workers": 52
+        },
+        "release": {
+          "abi_stdout": {
+            "bytes": 7263,
+            "sha256": "ebb779ec3106be1c6ae4f3652c32198f5fab543e96af8e2f3650195f531058d8"
+          },
+          "binary": {
+            "bytes": 2591536,
+            "sha256": "691920c96bbb3002fe077e487eef10e5e54b10741a10333164551b869cc57837"
+          },
+          "binary_metadata": {
+            "compiler_host": "aarch64-apple-darwin",
+            "selection_sha256": "59ede713ef64ef8f61a81aefc3e81d2efe16c74d3a0dbf9ef1e5a77ac88474d6",
+            "sha256": "691920c96bbb3002fe077e487eef10e5e54b10741a10333164551b869cc57837"
+          },
+          "bound_reports": 232,
+          "cpp_builds": {
+            "cpp-build/release/rsomics-plink-349958592ab24054/compiler.txt": {
+              "bytes": 510,
+              "sha256": "7113367d0f58877d1daf0060714e05075be312abc9c4e85a2d8f16a38e8c4b98"
+            }
+          },
+          "failed": 0,
+          "generation_binding": {
+            "bytes": 67072,
+            "sha256": "29817c285a85623be61da1818dd886a9863320a6d43f5ee4218b57c53024fdae"
+          },
+          "generations": 36,
+          "graph": "test-release-scratch/plink-whole-native-32HRXM",
+          "graph_json": {
+            "bytes": 49249,
+            "sha256": "95e66abf1a64ad2ce136d5f1b3f89ba5d112407f9dbc726952529b9c4a307f5c"
+          },
+          "ignored": 0,
+          "principal_reports_per_worker": 116,
+          "raw_cells": 74878,
+          "test_populations": [
+            4,
+            0,
+            1,
+            0
+          ],
+          "test_stderr": {
+            "bytes": 3708,
+            "sha256": "883e79823469c4a2052aaa72a05eaf53bcdc6e761ce19c8534bb69fb9f222ea2"
+          },
+          "test_stdout": {
+            "bytes": 1068,
+            "sha256": "dbe6462653a1674f45f58e029829edf3708d2904dd69bbd484a7f2d35147f088"
+          },
+          "worker_binding": {
+            "bytes": 6591,
+            "sha256": "a3e74b2bdd913126c95d9975db2c2a606655fe0b521376dede51a5a52629cc0a"
+          },
+          "workers": 52
+        }
+      },
+      "original_source_tar_modes_exact_to_git": true,
+      "selection": {
+        "comparison_sha256": "4b99373876681ecc7379e0653d26eff696a6c2f7dbc97482c57a31b7c3caf806",
+        "controller_commit": "1ccacefee97cdd67e95440e89a466cc2aa85d36f",
+        "expected_manifest_sha256": "d04404749b8b28ba53fbfab3805c47101c2fc7b0e7fff35d69f76b3f532132bc",
+        "lock_sha256": "0b4eba1f752aa6011ee4a2a434d10fa737f90d2fb5ada5101b8ed5587a57d6bc",
+        "performance_claim": false,
+        "release": false,
+        "snapshot": "green-5",
+        "source_archive_sha256": "a492878c98b9bcf5090fc06fac10ba3fe1371b17c097a54f159f44b5cb977944",
+        "source_files": 303,
+        "source_manifest_sha256": "6b7d5b6a063385034a9f74b729c6f808c0448717088447b62f23d2208d1c609d",
+        "target": "macos-aarch64",
+        "vendor_manifest_sha256": "1d537fedf95a513f2e5fd4cffbc04de63f1c224e10b12eccf92221cd710bc99c"
+      },
+      "source_bodies_exact_to_owner": true,
+      "source_files": 303
+    },
+    "macos-x86_64": {
+      "archived_extracted_source_mode_difference_names": [],
+      "archived_extracted_source_mode_differences": 0,
+      "archived_extracted_source_modes_authority": "/Volumes/KIOXIA/Developments/tmp/plink-green5-recovery-20261101.6QNRJO/13088728063/members.json",
+      "artifact_id": 13088728063,
+      "compiler": "rustc 1.91.0 (f8297e351 2025-10-28)\nbinary: rustc\ncommit-hash: f8297e351a40c1439a467bbbb6879088047f50b3\ncommit-date: 2025-10-28\nhost: x86_64-apple-darwin\nrelease: 1.91.0\nLLVM version: 21.1.2\n",
+      "compiler_stdout": {
+        "bytes": 191,
+        "sha256": "e36d09a546c21fdffda33d0a394f05d9a2db056bf3b1975d99a33c8af4347ab4"
+      },
+      "cpp_version": "Apple clang version 17.0.0 (clang-1700.0.13.5)\nTarget: x86_64-apple-darwin24.6.0\nThread model: posix\nInstalledDir: /Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin\n",
+      "host_log": {
+        "bytes": 448,
+        "sha256": "479b485cc196063643cf723034369eb3f9e0f52f7ef7bee6afa290d812ed73a0"
+      },
+      "local_materialization_modes_not_runtime_modes": true,
+      "modes": {
+        "debug": {
+          "abi_stdout": {
+            "bytes": 7115,
+            "sha256": "32ac9839811ed82cd4f9e61cfc5dadb67b9fee83a9d6f5b6fc4db41c89273dec"
+          },
+          "binary": {
+            "bytes": 9810600,
+            "sha256": "c42227f87631dcdad22c1478ce5a62d109094bea7fd5053f04198a8336742156"
+          },
+          "binary_metadata": {
+            "compiler_host": "x86_64-apple-darwin",
+            "selection_sha256": "369f33e039bfa7b337f8213b0dd54f925beea5df9c7196f8ad07b34e30618356",
+            "sha256": "c42227f87631dcdad22c1478ce5a62d109094bea7fd5053f04198a8336742156"
+          },
+          "bound_reports": 232,
+          "cpp_builds": {
+            "cpp-build/debug/rsomics-plink-7ba5bebccd1e93b6/compiler.txt": {
+              "bytes": 565,
+              "sha256": "95705b01f3f199631239660f561bb83a2636fc2566ba5fee04222601689f7ec4"
+            },
+            "cpp-build/debug/rsomics-plink-eb0114779d5ab220/compiler.txt": {
+              "bytes": 565,
+              "sha256": "95705b01f3f199631239660f561bb83a2636fc2566ba5fee04222601689f7ec4"
+            }
+          },
+          "failed": 0,
+          "generation_binding": {
+            "bytes": 67070,
+            "sha256": "2c3300e7944cb2eb767f9102f93a7bd27209b762b646b3ba427f0c3a78ef9c14"
+          },
+          "generations": 36,
+          "graph": "test-debug-scratch/plink-whole-native-Za0h4y",
+          "graph_json": {
+            "bytes": 48745,
+            "sha256": "7a9ff53bfd32aa14c7c13ba5c51cd1c915b9f26bebf1cb4231767d602ff22793"
+          },
+          "ignored": 0,
+          "principal_reports_per_worker": 116,
+          "raw_cells": 74878,
+          "test_populations": [
+            4,
+            0,
+            1,
+            0
+          ],
+          "test_stderr": {
+            "bytes": 3188,
+            "sha256": "e4c42175462efce66ba0bbb6e5b55b494d29dbd264574c9e3452f5536f94e877"
+          },
+          "test_stdout": {
+            "bytes": 1066,
+            "sha256": "a957c7737f0b23c50b63ff0c6a845ba396b977029d0316cf291457c410d518d2"
+          },
+          "worker_binding": {
+            "bytes": 6591,
+            "sha256": "6666a8673b64b69021d8c8128795170f8b9512a285756d309c98bdd0ab8717e2"
+          },
+          "workers": 52
+        },
+        "release": {
+          "abi_stdout": {
+            "bytes": 6875,
+            "sha256": "0ab01398e07c5671a1b0554bc0d40a2ea8c57a9a9bbe2b2b904b5748a34d2013"
+          },
+          "binary": {
+            "bytes": 2701632,
+            "sha256": "869dd45f056bae4297c121cef11aa2718303188a090a75c05ae878bb112ce6c9"
+          },
+          "binary_metadata": {
+            "compiler_host": "x86_64-apple-darwin",
+            "selection_sha256": "369f33e039bfa7b337f8213b0dd54f925beea5df9c7196f8ad07b34e30618356",
+            "sha256": "869dd45f056bae4297c121cef11aa2718303188a090a75c05ae878bb112ce6c9"
+          },
+          "bound_reports": 232,
+          "cpp_builds": {
+            "cpp-build/release/rsomics-plink-4de85541b49a8bb0/compiler.txt": {
+              "bytes": 519,
+              "sha256": "f23d36cfa790496de30d5f949d43edafc5d2259d16f0fee303f657182a3a8eca"
+            }
+          },
+          "failed": 0,
+          "generation_binding": {
+            "bytes": 67072,
+            "sha256": "20814ddc4a1533f2d750fef5d8f6744ac7abf6fb683ba49ea4c3fb357107f45a"
+          },
+          "generations": 36,
+          "graph": "test-release-scratch/plink-whole-native-0kyxLP",
+          "graph_json": {
+            "bytes": 49249,
+            "sha256": "51b8d7599281ffef2e100057af76c6c24a6c4352f9b7038a60ef9d8ddc6b18a8"
+          },
+          "ignored": 0,
+          "principal_reports_per_worker": 116,
+          "raw_cells": 74878,
+          "test_populations": [
+            4,
+            0,
+            1,
+            0
+          ],
+          "test_stderr": {
+            "bytes": 3708,
+            "sha256": "77de3d41293200bd4cfa04740fb21c843df255e4609a75c0324b176b8974b927"
+          },
+          "test_stdout": {
+            "bytes": 1068,
+            "sha256": "8a326b8f8cca9cde87b5ec00e8c2c8df1faf509a4d4f26d40e5efaa6fd842576"
+          },
+          "worker_binding": {
+            "bytes": 6591,
+            "sha256": "1fea2fd8b8e53dc952baf7f9b6cf224fd5f16f0ce5656bbec1b02dfaa295626f"
+          },
+          "workers": 52
+        }
+      },
+      "original_source_tar_modes_exact_to_git": true,
+      "selection": {
+        "comparison_sha256": "4b99373876681ecc7379e0653d26eff696a6c2f7dbc97482c57a31b7c3caf806",
+        "controller_commit": "1ccacefee97cdd67e95440e89a466cc2aa85d36f",
+        "expected_manifest_sha256": "d04404749b8b28ba53fbfab3805c47101c2fc7b0e7fff35d69f76b3f532132bc",
+        "lock_sha256": "0b4eba1f752aa6011ee4a2a434d10fa737f90d2fb5ada5101b8ed5587a57d6bc",
+        "performance_claim": false,
+        "release": false,
+        "snapshot": "green-5",
+        "source_archive_sha256": "a492878c98b9bcf5090fc06fac10ba3fe1371b17c097a54f159f44b5cb977944",
+        "source_files": 303,
+        "source_manifest_sha256": "6b7d5b6a063385034a9f74b729c6f808c0448717088447b62f23d2208d1c609d",
+        "target": "macos-x86_64",
+        "vendor_manifest_sha256": "1d537fedf95a513f2e5fd4cffbc04de63f1c224e10b12eccf92221cd710bc99c"
+      },
+      "source_bodies_exact_to_owner": true,
+      "source_files": 303
+    }
+  },
+  "original_artifact_verification": {
+    "bytes": 12449,
+    "sha256": "66947e05fe0a8c5ae651c321205664fdbe731299f4260422739f0894a553f464"
+  },
+  "original_source_tar_git_modes_verified": true,
+  "owner_commit": "5ec85fd1363ca21cac621a3a682b684f688448e1",
+  "owner_tree": "c11df466ad54c650d9e2e2522318558554cdaac8",
+  "performance_claim": false,
+  "release": false,
+  "root_adopted": true,
+  "run_attempt": 1,
+  "run_id": 41319636397,
+  "schema": "rsomics.plink.native-adoption.v1",
+  "source": {
+    "comparison": {
+      "bytes": 19220,
+      "sha256": "7490fcf7618142b42a593c4ee36e74c6d2d3f5f52d571425e17ea1db5032df8f"
+    },
+    "native_elf_executed": false,
+    "native_input_binding": {
+      "archive_sha256": "43c0180f8bb222f427cae8ae7a8e66594e7a022bff868d07ef5f2224bb0c26ab",
+      "manifest_sha256": "1f1e04ca3a907aca4e03c4ca2148609fe69bb3559e4c6412b9ef43472fc5b8d5",
+      "selection": {
+        "comparison_sha256": "4b99373876681ecc7379e0653d26eff696a6c2f7dbc97482c57a31b7c3caf806",
+        "controller_commit": "1ccacefee97cdd67e95440e89a466cc2aa85d36f",
+        "expected_manifest_sha256": "d04404749b8b28ba53fbfab3805c47101c2fc7b0e7fff35d69f76b3f532132bc",
+        "lock_sha256": "0b4eba1f752aa6011ee4a2a434d10fa737f90d2fb5ada5101b8ed5587a57d6bc",
+        "performance_claim": false,
+        "release": false,
+        "snapshot": "green-5",
+        "source_archive_sha256": "a492878c98b9bcf5090fc06fac10ba3fe1371b17c097a54f159f44b5cb977944",
+        "source_files": 303,
+        "source_manifest_sha256": "6b7d5b6a063385034a9f74b729c6f808c0448717088447b62f23d2208d1c609d",
+        "target": "linux-x86_64",
+        "vendor_manifest_sha256": "1d537fedf95a513f2e5fd4cffbc04de63f1c224e10b12eccf92221cd710bc99c"
+      }
+    },
+    "profiles": {
+      "official/1": {
+        "by_kind": {
+          "hwe_log": 12,
+          "pairs": 6,
+          "prune": 6,
+          "qc": 12,
+          "tail": 2,
+          "validate": 18
+        },
+        "commands": 56,
+        "full_qc_table_rows": 3541,
+        "hwe_ld_tail_rows": 3193
+      },
+      "official/4": {
+        "by_kind": {
+          "hwe_log": 12,
+          "pairs": 6,
+          "prune": 6,
+          "qc": 12,
+          "tail": 2,
+          "validate": 18
+        },
+        "commands": 56,
+        "full_qc_table_rows": 3541,
+        "hwe_ld_tail_rows": 3193
+      },
+      "source/1": {
+        "by_kind": {
+          "hwe_log": 12,
+          "pairs": 6,
+          "prune": 6,
+          "qc": 12,
+          "tail": 2,
+          "validate": 18
+        },
+        "commands": 56,
+        "full_qc_table_rows": 3541,
+        "hwe_ld_tail_rows": 3193
+      },
+      "source/4": {
+        "by_kind": {
+          "hwe_log": 12,
+          "pairs": 6,
+          "prune": 6,
+          "qc": 12,
+          "tail": 2,
+          "validate": 18
+        },
+        "commands": 56,
+        "full_qc_table_rows": 3541,
+        "hwe_ld_tail_rows": 3193
+      }
+    },
+    "protected": {
+      "bytes": 813707,
+      "sha256": "29141d3ce6b90a7847b6fb67ae621d5d2f988cbc8da6d4140199bdd509516046"
+    },
+    "protected_files": {
+      "/__w/_temp/plink-native-input": 2007,
+      "/__w/_temp/plink-source-work/restored": 21
+    },
+    "raw_bridge_commands": 36,
+    "raw_cells": 74878,
+    "report_commands": 224,
+    "result": {
+      "error": null,
+      "performance_claim": false,
+      "release": false,
+      "status": "passed"
+    },
+    "result_json": {
+      "bytes": 92,
+      "sha256": "99b81d665ed5a22bd56a2cdced860655dd1ddac5504887bcbd725eb20977bc6e"
+    },
+    "runtime": {
+      "engines": {
+        "helper": [
+          "runtime/plink_pgen_capture",
+          "d77966679a8f9f30b432afd45dd8bfa8baaddebd61af94260817bab425512eca"
+        ],
+        "official": [
+          "runtime/official/plink2",
+          "50ff05c332e8a4ff75f9bdbb9f513b0eab639e604c986ecd8b84b7f664253db2"
+        ],
+        "source": [
+          "runtime/source/2.0/build_dynamic/plink2",
+          "ec93f5a85e2d788acc40e808566e054eca89daae8f83af561ffcf557db75edba"
+        ]
+      },
+      "image": "sha256:a689e29bc3adf4663ef9a141d23081252764d1319c63f591a027bd6fd676f4c1",
+      "libraries": {
+        "/lib/x86_64-linux-gnu/libc.so.6": {
+          "realpath": "/usr/lib/x86_64-linux-gnu/libc.so.6",
+          "retained": "loaded-libraries/libc.so.6.1d25fd63234b",
+          "sha256": "1d25fd63234b59e4c581564c7a6d8f5c6cf36eee757e3d26f4b0808dd36a4896"
+        },
+        "/lib/x86_64-linux-gnu/libm.so.6": {
+          "realpath": "/usr/lib/x86_64-linux-gnu/libm.so.6",
+          "retained": "loaded-libraries/libm.so.6.067650d84b8f",
+          "sha256": "067650d84b8f554cedf0b9ff26137bdd10cd03d4bbcdba1029a543c59d1798e5"
+        },
+        "/lib/x86_64-linux-gnu/libz.so.1": {
+          "realpath": "/usr/lib/x86_64-linux-gnu/libz.so.1.2.13",
+          "retained": "loaded-libraries/libz.so.1.7e2a72b4c4b3",
+          "sha256": "7e2a72b4c4b38c61e6962de6e3f4a5e9ae692e732c68deead10a7ce2135a7f68"
+        },
+        "/lib64/ld-linux-x86-64.so.2": {
+          "realpath": "/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2",
+          "retained": "loaded-libraries/ld-linux-x86-64.so.2.582f2d3d4eda",
+          "sha256": "582f2d3d4edab86d601c54b37f04bd18fa2cda28be30e9f8c87df73c1c581354"
+        },
+        "/usr/local/lib64/libgcc_s.so.1": {
+          "realpath": "/usr/local/lib64/libgcc_s.so.1",
+          "retained": "loaded-libraries/libgcc_s.so.1.bc74aa72f906",
+          "sha256": "bc74aa72f90673a744681157ca83675abffdb91a8f4caf0fa8092ad3924b0b0b"
+        },
+        "/usr/local/lib64/libstdc++.so.6": {
+          "realpath": "/usr/local/lib64/libstdc++.so.6.0.33",
+          "retained": "loaded-libraries/libstdc++.so.6.4f600d6316df",
+          "sha256": "4f600d6316df6737ac694e612d7ec048e0e6144873a415335f80a7eef4d7fca7"
+        }
+      },
+      "official_source_commit_correspondence": "unproven",
+      "versions": {
+        "official": "PLINK v2.0.0-b.1.2LM 64-bit Intel (24 Oct 2026)\n",
+        "source": "PLINK v2.0.0-b.1.2NL 64-bit (24 Oct 2026)\n"
+      }
+    }
+  },
+  "status": "accepted",
+  "product": "rsomics-plink",
+  "repository": "omics-rust/rsomics-world",
+  "head_sha": "1ccacefee97cdd67e95440e89a466cc2aa85d36f",
+  "workflow_path": ".github/workflows/plink-candidate.yml",
+  "snapshot": "green-5",
+  "source_file_count": 303,
+  "source_archive_sha256": "a492878c98b9bcf5090fc06fac10ba3fe1371b17c097a54f159f44b5cb977944",
+  "source_manifest_sha256": "6b7d5b6a063385034a9f74b729c6f808c0448717088447b62f23d2208d1c609d",
+  "lock_sha256": "0b4eba1f752aa6011ee4a2a434d10fa737f90d2fb5ada5101b8ed5587a57d6bc",
+  "artifact_id": 13088836255,
+  "artifact_name": "plink-native-41319636397-1-linux-x86_64",
+  "artifact_sha256": "2e7b9a6f8593fd43ad296f452acbc6ec592e5726b98a381a0182699987202d1f",
+  "size_in_bytes": 13916656,
+  "native_tar_sha256": "43c0180f8bb222f427cae8ae7a8e66594e7a022bff868d07ef5f2224bb0c26ab",
+  "binary_sha256": "f11e48bb5e4cd730f2082d592bb8b448bc4a2cb010eef3e66ea6da667c9bd7d2",
+  "native_targets": [
+    "linux-x86_64",
+    "linux-aarch64",
+    "macos-x86_64",
+    "macos-aarch64"
+  ],
+  "test_modes": [
+    "debug",
+    "release"
+  ],
+  "workers": [
+    1,
+    4
+  ],
+  "tests_passed_per_mode": 5,
+  "ignored_tests": 0,
+  "own_generations_per_mode": 36,
+  "raw_cells_per_mode": 74878,
+  "principal_reports_per_worker": 116,
+  "worker_provenance_records_per_mode": 52,
+  "four_native_and_source_passed": true,
+  "full_originals_verified": 5,
+  "raw_job_logs_complete": 5,
+  "original_source_tar_modes_match_git": true,
+  "runtime_extracted_modes_not_generically_git_modes": true,
+  "target_bookworm_native_abi_admitted": false,
+  "controller_sha256": {
+    ".github/workflows/plink-candidate.yml": "bea055976e5630f10fa9c55c7c3ada327f19a7db3209aaea46e7c39280bf9193",
+    "assets/plink-first-runtime-20261031.json": "aef2041f34ea3a9c9d62f3ee73b866788a0b263f4ddf54501d59f68bd44761ba",
+    "scripts/infercnv_source_snapshot.py": "095ebb67a2d9a050c20b6e876f2b0c9cfd26fcbf8f0ce3601a8124b292b553f2",
+    "scripts/plink_candidate.py": "f94a70e2578b75d3984f237486c4a27959a4131d9b8cd3fd9528f024135e09d8",
+    "scripts/plink_first_workflow_inputs.py": "557e32764eec82ba67f69e6efa1b88e7626d55710337c248b1a8d921a613ece3",
+    "scripts/plink_first_workflow_oracle.py": "d0cdaf2093c6d7864c54fe97b38f317dd7d34ea9effdff5f69f172e1e6fb8153",
+    "scripts/plink_pgen_capture.cc": "399a00c85e1678b1f88c093a0ca9dea55d8d5b099c84036391bf61ea8441bf61",
+    "scripts/plink_source_on_native.py": "1749496f4049cd92604d50f2241ced2deb4a69f34a57e4c89b312a7763e978ee",
+    "scripts/signal_candidate.py": "a6e9c2782553919ed70939c4cdad6fcdd8f7bd889ed63ab96b2db82dc34f9712",
+    "scripts/test_plink_candidate_workflow.py": "bf5c1a8a1e9e96f6a595bf305b6b9512e559993caa672d50f09db026c1467772"
+  },
+  "source_on_native": {
+    "artifact_id": 13088394874,
+    "artifact_name": "plink-source-on-native-41319636397-1",
+    "artifact_sha256": "2f702b83d627753137115e0aa833e77c145f1ab2e534f228d4a99e000e4ca5b0",
+    "size_in_bytes": 546224,
+    "tar_sha256": "7cc6cc36433dc40f7b5ba0cb23936d461af650f9fe754cdbc0e14887a8bb3472",
+    "source_and_official_commands": 224,
+    "raw_bridge_commands": 36,
+    "raw_cells": 74878,
+    "qc_rows_per_engine_worker": 3541,
+    "hwe_ld_tail_rows_per_engine_worker": 3193,
+    "native_elf_executed": false,
+    "official_source_commit_correspondence_proven": false
+  },
+  "root_adoption": {
+    "evidence_directory": "/Volumes/KIOXIA/Developments/tmp/plink-green5-recovery-20261101.6QNRJO",
+    "report_sha256": "bad50db07f60c82f2b88b5d8f06c00090af4e40583a67d8c93d650ac41f2c8e1",
+    "inventory_sha256": "00c9980db72fc058116ea0e8a7f7d88f622ec619fd1249014585f9f3b8e79aa4",
+    "original_proposal_sha256": "2c0eb5645e32ab2debfeb5c295f156b736514ce43fb28df04c7b1337645a1cc8",
+    "fresh_check": "/Volumes/KIOXIA/Developments/tmp/plink-hwe-root-20261101.BBAaHV/check_native.py",
+    "fresh_check_sha256": "9eca4e9500884a92c23c1684c2c79840d40791e61bdcac973635505b2ea71c21",
+    "fresh_stdout_sha256": "751871897ccd2c4b9768375c28dacf0f1a29a8b6d9ac89d3734df61467fe07c8",
+    "exit_code": 0,
+    "stderr_bytes": 0,
+    "files_including_inventory": 9927,
+    "packet_bytes": 466501492,
+    "tar_regular_members": 9819,
+    "complete_zip_crc_and_tar_body_recheck": true,
+    "whole_303_owner_and_all_native_source_body_mode_check": true,
+    "full_native_and_source_data_records_rebuilt_without_packet_writes": true,
+    "preseal_storage_observations_preserved_fresh_capacity_checked_separately": true,
+    "historical_snapshots_receipts_and_negative_performance_unchanged": true
+  }
+}
