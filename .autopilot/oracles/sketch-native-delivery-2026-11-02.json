@@ -1,0 +1,187 @@
+{
+  "artifacts": {
+    "linux-aarch64": {
+      "artifact_id": 13104295053,
+      "binary": {
+        "bytes": 2067488,
+        "sha256": "80edc70392b06c15cd022280f95f272c14ccf57c11b5ff44c1634bbf1c4c765f"
+      },
+      "enabled_normal_build_packages": 53,
+      "lifecycle_calls": 11,
+      "live_oracles_per_profile": 4,
+      "native_archive": {
+        "bytes": 884770,
+        "sha256": "85230e1f36af0450996437c77a1689bde16b3a1b3ffb0a86e690a8374b06375f"
+      },
+      "native_files": 125,
+      "native_members": 187,
+      "oracle_references": [
+        "/home/runner/work/rsomics-sketch/rsomics-sketch/scripts/ci-sourmash"
+      ],
+      "original_terms": 114,
+      "own_tests_per_profile": 16,
+      "source_members": 210,
+      "zip": {
+        "bytes": 3140541,
+        "sha256": "f63e460264f81e33b7782216f37f6ec09d83d87a363e20e854b62a8b4207f4d0"
+      },
+      "zip_members": 193
+    },
+    "linux-x86_64": {
+      "artifact_id": 13104265315,
+      "binary": {
+        "bytes": 2153016,
+        "sha256": "94ae7fc12a5c1c2fc8115ad845e9341c5c5d4b266a6df898610a897fee1ef303"
+      },
+      "enabled_normal_build_packages": 53,
+      "lifecycle_calls": 11,
+      "live_oracles_per_profile": 4,
+      "native_archive": {
+        "bytes": 910654,
+        "sha256": "0ccd83d6dfdbc6356ce75c76adc0f75fe4773207a63ada96b31a48ecab67977c"
+      },
+      "native_files": 125,
+      "native_members": 187,
+      "oracle_references": [
+        "/opt/hostedtoolcache/Python/3.12.15/x64/bin/sourmash"
+      ],
+      "original_terms": 114,
+      "own_tests_per_profile": 16,
+      "source_members": 210,
+      "zip": {
+        "bytes": 3201912,
+        "sha256": "3bdebaf3628104fd3ef4509adf377f8d8b52aed601707eecbc155180bc36e62e"
+      },
+      "zip_members": 192
+    },
+    "macos-aarch64": {
+      "artifact_id": 13103448921,
+      "binary": {
+        "bytes": 1826688,
+        "sha256": "65b869e1a10dabc3bb51618ebb37d675358bb8dd893a8c32847ccfa1d28c208e"
+      },
+      "enabled_normal_build_packages": 53,
+      "lifecycle_calls": 11,
+      "live_oracles_per_profile": 4,
+      "native_archive": {
+        "bytes": 834057,
+        "sha256": "55995c9b6c1cdff2ae1225d4120ea38cd2af184287453b3526e596e5778c60b8"
+      },
+      "native_files": 125,
+      "native_members": 187,
+      "oracle_references": [
+        "/Users/runner/hostedtoolcache/Python/3.12.10/arm64/bin/sourmash"
+      ],
+      "original_terms": 114,
+      "own_tests_per_profile": 16,
+      "source_members": 210,
+      "zip": {
+        "bytes": 2985121,
+        "sha256": "f71b97218971ba43f76009a91ce84728bde5968f99813a30e9a35dbe61a1dea3"
+      },
+      "zip_members": 192
+    },
+    "macos-x86_64": {
+      "artifact_id": 13104031429,
+      "binary": {
+        "bytes": 1897832,
+        "sha256": "dc4a549f49fc5067e3566905890839a68d54d6a54e742f812dcfec3fcf9b850f"
+      },
+      "enabled_normal_build_packages": 53,
+      "lifecycle_calls": 11,
+      "live_oracles_per_profile": 4,
+      "native_archive": {
+        "bytes": 869194,
+        "sha256": "e6a9a244afcc609ff1b3c0e38aca727e5bd79c233fddfdd4817249fe3b5d16d6"
+      },
+      "native_files": 125,
+      "native_members": 187,
+      "oracle_references": [
+        "/Users/runner/hostedtoolcache/Python/3.12.10/x64/bin/sourmash"
+      ],
+      "original_terms": 114,
+      "own_tests_per_profile": 16,
+      "source_members": 210,
+      "zip": {
+        "bytes": 3072003,
+        "sha256": "8fe77a76b93d9e915cea843f0ad8bb6dbd4083f8575689fa80b6f9d683ca0057"
+      },
+      "zip_members": 192
+    }
+  },
+  "attempt": 1,
+  "final_head_performance_pending": true,
+  "normal_build_union": 54,
+  "original_terms": 114,
+  "original_terms_scope": "Source normal/build graph only; not legal, linked-runtime, minimum-OS or signing clearance.",
+  "public_release_qualified": false,
+  "raw_files": {
+    "artifacts.json": {
+      "bytes": 3021,
+      "sha256": "0ecb10bc28af5fee30ad63877d478d27d88c81723332e55f5592660b691d0a55"
+    },
+    "attempt-1-logs.zip": {
+      "bytes": 258657,
+      "sha256": "cf532e24dd9e22f503221c82d5d96cbf6240f3cee4dfa5467d3e356613dd9946"
+    },
+    "attempt.json": {
+      "bytes": 12694,
+      "sha256": "79b122401b2fdff28a0b1bcdffab54fc5721cf3be101514d98cfd339d9060781"
+    },
+    "jobs.json": {
+      "bytes": 16904,
+      "sha256": "ccde1ae794662855de70c31a819957ffe1c81fb0dd3825b38cdaefece6678c94"
+    },
+    "linux-aarch64.zip": {
+      "bytes": 3140541,
+      "sha256": "f63e460264f81e33b7782216f37f6ec09d83d87a363e20e854b62a8b4207f4d0"
+    },
+    "linux-x86_64.zip": {
+      "bytes": 3201912,
+      "sha256": "3bdebaf3628104fd3ef4509adf377f8d8b52aed601707eecbc155180bc36e62e"
+    },
+    "macos-aarch64.zip": {
+      "bytes": 2985121,
+      "sha256": "f71b97218971ba43f76009a91ce84728bde5968f99813a30e9a35dbe61a1dea3"
+    },
+    "macos-x86_64.zip": {
+      "bytes": 3072003,
+      "sha256": "8fe77a76b93d9e915cea843f0ad8bb6dbd4083f8575689fa80b6f9d683ca0057"
+    },
+    "run.json": {
+      "bytes": 12672,
+      "sha256": "707201ded445e3c36df6011c642fa1134e6f306ca591669f426889c6ca42ece7"
+    }
+  },
+  "root_adopted": true,
+  "run_id": 41357249401,
+  "schema": "rsomics.sketch.complete-native-originals.v1",
+  "source_dependencies_vendored": false,
+  "source_files": 142,
+  "source_head": "eb1b15102f1adaedb738e4ddb98bd9bd841669d1",
+  "source_registry_package": false,
+  "source_tar": {
+    "bytes": 1085440,
+    "sha256": "88313549d3d017675be733637d2fbaade98af59624b66c5e84ed86ae7f9c21a4"
+  },
+  "source_tree": "3f13cce3dff7fcc6630ef80d257a55c981b520dc",
+  "this_binary_remeasured": false,
+  "whole_attempt_log_members": 80,
+  "whole_job_logs": [
+    "0_native (macos-15, macos-aarch64, aarch64-apple-darwin).txt",
+    "1_native (macos-15-intel, macos-x86_64, x86_64-apple-darwin).txt",
+    "2_native (ubuntu-24.04-arm, linux-aarch64, aarch64-unknown-linux-gnu).txt",
+    "3_native (ubuntu-24.04, linux-x86_64, x86_64-unknown-linux-gnu).txt"
+  ],
+  "four_native_source_install_oracle_passed": true,
+  "status": "complete-native-four-source-install-oracle-adopted-performance-pending",
+  "root_adoption": {
+    "packet": "/Volumes/KIOXIA/Developments/tmp/sketch-final-native-originals-20261102.JZ3Vfz",
+    "proof_directory": "/Volumes/KIOXIA/Developments/tmp/sketch-final-native-root-adoption-20261102.FZLBuM",
+    "proof_stdout_sha256": "2211f8d5885656efc76ab5f71630e603eb2c492cae9a0e41be4cb571dd9e3cc5",
+    "proof_stderr_bytes": 0,
+    "exit_code": 0,
+    "checker_sha256": "6ae5fb10c9cc4c3ad486259806ce00050d216b236ddca72d62e948ed0e3cc35c",
+    "review": "Root read complete200-line data checker and report, ran it freshly under the physical external-path guard, verified whole API ZIP identities, exact Git source and native original bindings. No recovered source/launcher/binary executed."
+  }
+}

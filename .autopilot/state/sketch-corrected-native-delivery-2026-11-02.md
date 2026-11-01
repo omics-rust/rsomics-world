@@ -235,3 +235,31 @@ source membership is142. Launcher SHA
 6c1fe339ebce5e77cb4071454b0f4f0d695f03dc77a6335b42dc831277eac5de.
 Actual exact-head native4 CI41357249401/1 is queued. Await all required jobs
 and complete originals; no final performance dispatch or public release yet.
+
+## Final native4 originals adopted
+
+Actual41357249401/1 completes SUCCESS on all4 native classes. Complete JZ3Vfz
+packet preserves four whole ZIPs/API digests,80-member attempt log/four whole
+job logs and raw metadata. Root read the entire200-line data-only checker and
+report, then freshly ran it under the external guard: exit0/empty checker
+stderr, FZLBuM/check.stdout SHA
+2211f8d5885656efc76ab5f71630e603eb2c492cae9a0e41be4cb571dd9e3cc5.
+Adoption is sketch-native-delivery-2026-11-02.json; original proposal stays false.
+
+Identical source TAR1085440B/SHA88313549d3d017675be733637d2fbaade98af59624b66c5e84ed86ae7f9c21a4
+binds142 original Git bodies/blobs/modes at exact clean eb1b1510/tree3f13cce3.
+Each native TAR has125 files/187 members, one0755 executable and correct
+metadata/directory modes; source protocol links resolve and no oracle is
+bundled. Actual enabled graph is53 perhost/54 union,114 original terms.
+Perhost:16 own tests perprofile; four dedicated live oracles actually run
+perprofile despite four separately ignored defaults; source install and11-call
+lifecycle pass. All40 lifecycle files, installed/native/BUILD binary hashes
+bind. ARM oracle runtime identities/flags match the focused proof; other3
+are direct upstream entries. No source or recovered executable ran locally.
+
+Local packet checker format corrections remain in original logs, not native
+failures. The initial failed run and both failed diagnostic generations remain.
+All generated BUILD pending/not-remeasured/registry-false/signing-false flags
+are retained. This earns source/native/install compatibility only, not actual
+new performance, legal/system-runtime/minimumOS/signing or public availability.
+Next is ONE root-dispatched final-head8-job resource gate with both full inputs.
