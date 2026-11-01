@@ -1,0 +1,321 @@
+{
+  "UNKNOWN_is_not_observed_1_9": true,
+  "actual_small_child_peak_RSS_bytes": 1323008,
+  "actual_timer_banner": "time (GNU Time) UNKNOWN",
+  "aggregate_gate": false,
+  "all_13_complete": true,
+  "all_nine_resource_values_distributions_losses_and_scaling_retained": true,
+  "all_old_partials_requests_controllers_and_sink_records_preserved": true,
+  "all_owned_completed_exit_zero_group_empty": true,
+  "artifact_id": 13093208456,
+  "artifact_name": "index-bgzf-real-41327532095-1",
+  "benchmark_calls": 338,
+  "cas_bytes": 16674399859,
+  "cas_objects": 7171,
+  "code_level_cause_of_performance_losses_not_established": true,
+  "complete_original_CRC_modes_types_link_metadata_and_regular_bodies_verified": true,
+  "complete_resource_ledger": {
+    "bytes": 159974,
+    "sha256": "4d030655a2bbe5a994d29110be668620693884bf74bef345086625981683d486"
+  },
+  "controller": "7dd0be8bcb17c42fb3f61d11ca87da9a4d9fd20a",
+  "correctness_complete_body_comparisons_verified": true,
+  "correctness_outputs_not_invented_for_timed_dev_null_reads": true,
+  "current_native": {
+    "elf64_little_x86_64": true,
+    "identity": {
+      "bytes": 2783672,
+      "sha256": "f185956f93854d08ca5c19470d097fe4b2b0998e8f991e7dcc8f4e9259de1057"
+    },
+    "libraries": {
+      "/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2": {
+        "bytes": 215000,
+        "retained": "runtime/loaded-libraries/582f2d3d4edab86d601c54b37f04bd18fa2cda28be30e9f8c87df73c1c581354-ld-linux-x86-64.so.2",
+        "sha256": "582f2d3d4edab86d601c54b37f04bd18fa2cda28be30e9f8c87df73c1c581354"
+      },
+      "/usr/lib/x86_64-linux-gnu/libc.so.6": {
+        "bytes": 1922136,
+        "retained": "runtime/loaded-libraries/1d25fd63234b59e4c581564c7a6d8f5c6cf36eee757e3d26f4b0808dd36a4896-libc.so.6",
+        "sha256": "1d25fd63234b59e4c581564c7a6d8f5c6cf36eee757e3d26f4b0808dd36a4896"
+      },
+      "/usr/local/lib64/libgcc_s.so.1": {
+        "bytes": 904040,
+        "retained": "runtime/loaded-libraries/bc74aa72f90673a744681157ca83675abffdb91a8f4caf0fa8092ad3924b0b0b-libgcc_s.so.1",
+        "sha256": "bc74aa72f90673a744681157ca83675abffdb91a8f4caf0fa8092ad3924b0b0b"
+      }
+    }
+  },
+  "current_root_envelope_bytes": 81604378624,
+  "current_six_root_envelopes_bytes": 579820584960,
+  "current_source_before_after_Git_tree_verified": true,
+  "data_deleted": false,
+  "earlier_partial_packet": "/Volumes/KIOXIA/Developments/tmp/index-corrected-originals-20261102.AJlE3y",
+  "earlier_partial_packet_seal": {
+    "bytes": 17039,
+    "sha256": "4267cbb08b50f45f4da1233c4516d3be9f82d80b9587e5811ef704fac686bbc2"
+  },
+  "engine_flags_CPUs_deadlines_timer_wrappers_independently_bound": true,
+  "failure_assessment": {
+    "bytes": 3920691,
+    "sha256": "a9d2b09c697451b8ddc7817802b3baaa35e3c06d19ee7cfb2f59808bacba8bfe"
+  },
+  "fixed_gate_unchanged": true,
+  "fixed_primary": {
+    "build_csi": true,
+    "build_tbi": true,
+    "compress_binary_t1": false,
+    "query_sparse_t1": true
+  },
+  "fixed_primary_passed": false,
+  "fresh_build_seconds": 36.576164574,
+  "full_original_recovered": true,
+  "full_product_release": false,
+  "independent_global_headroom_bytes": 8589934592,
+  "job_id": 124910516747,
+  "logical_outputs": 214,
+  "machine": {
+    "affinity": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "cache": "Uncontrolled; preparation and complete hashing precede timings. No cold-cache or exclusive-host claim.",
+    "cgroup": {
+      "cpu.max": "400000 100000",
+      "memory.current": "442097664",
+      "memory.max": "8589934592",
+      "memory.peak": "476274688",
+      "memory.swap.max": "0"
+    },
+    "cpuinfo": "processor\t: 0\nvendor_id\t: AuthenticAMD\ncpu family\t: 25\nmodel\t\t: 1\nmodel name\t: AMD EPYC 7763 64-Core Processor\nstepping\t: 1\nmicrocode\t: 0xffffffff\ncpu MHz\t\t: 3242.531\ncache size\t: 512 KB\nphysical id\t: 0\nsiblings\t: 4\ncore id\t\t: 0\ncpu cores\t: 2\napicid\t\t: 0\ninitial apicid\t: 0\nfpu\t\t: yes\nfpu_exception\t: yes\ncpuid level\t: 13\nwp\t\t: yes\nflags\t\t: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm constant_tsc rep_good nopl tsc_reliable nonstop_tsc cpuid extd_apicid aperfmperf tsc_known_freq pni pclmulqdq ssse3 fma cx16 pcid sse4_1 sse4_2 movbe popcnt aes xsave avx f16c rdrand hypervisor lahf_lm cmp_legacy svm cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw topoext vmmcall fsgsbase bmi1 avx2 smep bmi2 erms invpcid rdseed adx smap clflushopt clwb sha_ni xsaveopt xsavec xgetbv1 xsaves user_shstk clzero xsaveerptr rdpru arat npt nrip_save tsc_scale vmcb_clean flushbyasid decodeassists pausefilter pfthreshold v_vmsave_vmload umip vaes vpclmulqdq rdpid fsrm\nbugs\t\t: sysret_ss_attrs null_seg spectre_v1 spectre_v2 spec_store_bypass srso spectre_v2_user tsa\nbogomips\t: 4890.85\nTLB size\t: 2560 4K pages\nclflush size\t: 64\ncache_alignment\t: 64\naddress sizes\t: 48 bits physical, 48 bits virtual\npower management:\n\nprocessor\t: 1\nvendor_id\t: AuthenticAMD\ncpu family\t: 25\nmodel\t\t: 1\nmodel name\t: AMD EPYC 7763 64-Core Processor\nstepping\t: 1\nmicrocode\t: 0xffffffff\ncpu MHz\t\t: 3135.970\ncache size\t: 512 KB\nphysical id\t: 0\nsiblings\t: 4\ncore id\t\t: 0\ncpu cores\t: 2\napicid\t\t: 1\ninitial apicid\t: 1\nfpu\t\t: yes\nfpu_exception\t: yes\ncpuid level\t: 13\nwp\t\t: yes\nflags\t\t: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm constant_tsc rep_good nopl tsc_reliable nonstop_tsc cpuid extd_apicid aperfmperf tsc_known_freq pni pclmulqdq ssse3 fma cx16 pcid sse4_1 sse4_2 movbe popcnt aes xsave avx f16c rdrand hypervisor lahf_lm cmp_legacy svm cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw topoext vmmcall fsgsbase bmi1 avx2 smep bmi2 erms invpcid rdseed adx smap clflushopt clwb sha_ni xsaveopt xsavec xgetbv1 xsaves user_shstk clzero xsaveerptr rdpru arat npt nrip_save tsc_scale vmcb_clean flushbyasid decodeassists pausefilter pfthreshold v_vmsave_vmload umip vaes vpclmulqdq rdpid fsrm\nbugs\t\t: sysret_ss_attrs null_seg spectre_v1 spectre_v2 spec_store_bypass srso spectre_v2_user tsa\nbogomips\t: 4890.85\nTLB size\t: 2560 4K pages\nclflush size\t: 64\ncache_alignment\t: 64\naddress sizes\t: 48 bits physical, 48 bits virtual\npower management:\n\nprocessor\t: 2\nvendor_id\t: AuthenticAMD\ncpu family\t: 25\nmodel\t\t: 1\nmodel name\t: AMD EPYC 7763 64-Core Processor\nstepping\t: 1\nmicrocode\t: 0xffffffff\ncpu MHz\t\t: 3283.435\ncache size\t: 512 KB\nphysical id\t: 0\nsiblings\t: 4\ncore id\t\t: 1\ncpu cores\t: 2\napicid\t\t: 2\ninitial apicid\t: 2\nfpu\t\t: yes\nfpu_exception\t: yes\ncpuid level\t: 13\nwp\t\t: yes\nflags\t\t: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm constant_tsc rep_good nopl tsc_reliable nonstop_tsc cpuid extd_apicid aperfmperf tsc_known_freq pni pclmulqdq ssse3 fma cx16 pcid sse4_1 sse4_2 movbe popcnt aes xsave avx f16c rdrand hypervisor lahf_lm cmp_legacy svm cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw topoext vmmcall fsgsbase bmi1 avx2 smep bmi2 erms invpcid rdseed adx smap clflushopt clwb sha_ni xsaveopt xsavec xgetbv1 xsaves user_shstk clzero xsaveerptr rdpru arat npt nrip_save tsc_scale vmcb_clean flushbyasid decodeassists pausefilter pfthreshold v_vmsave_vmload umip vaes vpclmulqdq rdpid fsrm\nbugs\t\t: sysret_ss_attrs null_seg spectre_v1 spectre_v2 spec_store_bypass srso spectre_v2_user tsa\nbogomips\t: 4890.85\nTLB size\t: 2560 4K pages\nclflush size\t: 64\ncache_alignment\t: 64\naddress sizes\t: 48 bits physical, 48 bits virtual\npower management:\n\nprocessor\t: 3\nvendor_id\t: AuthenticAMD\ncpu family\t: 25\nmodel\t\t: 1\nmodel name\t: AMD EPYC 7763 64-Core Processor\nstepping\t: 1\nmicrocode\t: 0xffffffff\ncpu MHz\t\t: 3244.476\ncache size\t: 512 KB\nphysical id\t: 0\nsiblings\t: 4\ncore id\t\t: 1\ncpu cores\t: 2\napicid\t\t: 3\ninitial apicid\t: 3\nfpu\t\t: yes\nfpu_exception\t: yes\ncpuid level\t: 13\nwp\t\t: yes\nflags\t\t: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm constant_tsc rep_good nopl tsc_reliable nonstop_tsc cpuid extd_apicid aperfmperf tsc_known_freq pni pclmulqdq ssse3 fma cx16 pcid sse4_1 sse4_2 movbe popcnt aes xsave avx f16c rdrand hypervisor lahf_lm cmp_legacy svm cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw topoext vmmcall fsgsbase bmi1 avx2 smep bmi2 erms invpcid rdseed adx smap clflushopt clwb sha_ni xsaveopt xsavec xgetbv1 xsaves user_shstk clzero xsaveerptr rdpru arat npt nrip_save tsc_scale vmcb_clean flushbyasid decodeassists pausefilter pfthreshold v_vmsave_vmload umip vaes vpclmulqdq rdpid fsrm\nbugs\t\t: sysret_ss_attrs null_seg spectre_v1 spectre_v2 spec_store_bypass srso spectre_v2_user tsa\nbogomips\t: 4890.85\nTLB size\t: 2560 4K pages\nclflush size\t: 64\ncache_alignment\t: 64\naddress sizes\t: 48 bits physical, 48 bits virtual\npower management:\n\n",
+    "device": 2049,
+    "disk": {
+      "free": 90039738368,
+      "total": 154894188544,
+      "used": 64837672960
+    },
+    "environment": {
+      "CARGO_HOME": "/__w/_temp/index-reference-real-rj4i4or7/cache/CARGO_HOME",
+      "CARGO_TARGET_DIR": "/__w/_temp/index-reference-real-rj4i4or7/cache/CARGO_TARGET_DIR",
+      "CCACHE_DIR": "/__w/_temp/index-reference-real-rj4i4or7/cache/CCACHE_DIR",
+      "CLANG_MODULE_CACHE_PATH": "/__w/_temp/index-reference-real-rj4i4or7/cache/CLANG_MODULE_CACHE_PATH",
+      "GCC_VERSION": "14.3.0",
+      "GITHUB_SHA": "7dd0be8bcb17c42fb3f61d11ca87da9a4d9fd20a",
+      "INDEX_CONTAINER_DIGEST": "sha256:a689e29bc3adf4663ef9a141d23081252764d1319c63f591a027bd6fd676f4c1",
+      "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+      "PIP_CACHE_DIR": "/__w/_temp/index-reference-real-rj4i4or7/cache/PIP_CACHE_DIR",
+      "PYTHONPYCACHEPREFIX": "/__w/_temp/index-reference-real-rj4i4or7/cache/PYTHONPYCACHEPREFIX",
+      "PYTHONUSERBASE": "/__w/_temp/index-reference-real-rj4i4or7/cache/PYTHONUSERBASE",
+      "RUNNER_TEMP": "/__w/_temp",
+      "RUSTUP_HOME": "/__w/_temp/index-reference-real-rj4i4or7/cache/RUSTUP_HOME",
+      "TMPDIR": "/__w/_temp/index-reference-real-rj4i4or7/cache/TMPDIR",
+      "XDG_CACHE_HOME": "/__w/_temp/index-reference-real-rj4i4or7/cache/XDG_CACHE_HOME",
+      "XDG_CONFIG_HOME": "/__w/_temp/index-reference-real-rj4i4or7/cache/XDG_CONFIG_HOME",
+      "XDG_DATA_HOME": "/__w/_temp/index-reference-real-rj4i4or7/cache/XDG_DATA_HOME"
+    },
+    "host_visible_meminfo": "MemTotal:       16367524 kB\nMemFree:        12653964 kB\nMemAvailable:   15142336 kB\nBuffers:           84852 kB\nCached:          2645812 kB\nSwapCached:            0 kB\nActive:           775088 kB\nInactive:        2250736 kB\nActive(anon):     349428 kB\nInactive(anon):        0 kB\nActive(file):     425660 kB\nInactive(file):  2250736 kB\nUnevictable:       46760 kB\nMlocked:           43688 kB\nSwapTotal:       3145724 kB\nSwapFree:        3145724 kB\nZswap:                 0 kB\nZswapped:              0 kB\nDirty:            183660 kB\nWriteback:             0 kB\nAnonPages:        342004 kB\nMapped:           366412 kB\nShmem:             45532 kB\nKReclaimable:     146612 kB\nSlab:             235336 kB\nSReclaimable:     146612 kB\nSUnreclaim:        88724 kB\nKernelStack:        4620 kB\nPageTables:         6556 kB\nSecPageTables:         0 kB\nNFS_Unstable:          0 kB\nBounce:                0 kB\nWritebackTmp:          0 kB\nCommitLimit:    11329484 kB\nCommitted_AS:    2354236 kB\nVmallocTotal:   34359738367 kB\nVmallocUsed:       43100 kB\nVmallocChunk:          0 kB\nPercpu:             2352 kB\nHardwareCorrupted:     0 kB\nAnonHugePages:         0 kB\nShmemHugePages:        0 kB\nShmemPmdMapped:        0 kB\nFileHugePages:         0 kB\nFilePmdMapped:         0 kB\nCmaTotal:              0 kB\nCmaFree:         1464320 kB\nUnaccepted:            0 kB\nBalloon:               0 kB\nGPUActive:             0 kB\nGPUReclaim:            0 kB\nHugePages_Total:       0\nHugePages_Free:        0\nHugePages_Rsvd:        0\nHugePages_Surp:        0\nHugepagesize:       2048 kB\nHugetlb:               0 kB\nDirectMap4k:      142464 kB\nDirectMap2M:     5095424 kB\nDirectMap1G:    13631488 kB\n",
+    "host_visible_memory_is_not_cgroup_entitlement": true,
+    "load_average": [
+      0.76708984375,
+      0.24951171875,
+      0.08935546875
+    ],
+    "platform": "Linux-7.0.0-1017-azure-x86_64-with-glibc2.36",
+    "python": "3.11.2 (main, Apr 28 2025, 14:11:48) [GCC 12.2.0]",
+    "python_executable": {
+      "bytes": 6831736,
+      "sha256": "a83c0370d91532c96d4060a0e7c107d1f2889dad8a98e03395e86ef0373fd467"
+    },
+    "resource_limits": {
+      "RLIMIT_AS": [
+        -1,
+        -1
+      ],
+      "RLIMIT_CORE": [
+        0,
+        0
+      ],
+      "RLIMIT_FSIZE": [
+        -1,
+        -1
+      ]
+    },
+    "selected_cpus": [
+      0,
+      1,
+      2,
+      3
+    ]
+  },
+  "measured_calls": 260,
+  "nested_donor_ZIP_TAR_preserved_as_complete_regular_bodies": true,
+  "nested_donor_runtime_unpacked": false,
+  "new_scientific_execution": false,
+  "offline_locked_fresh_build": true,
+  "old_reservations_and_final_PLINK208_unchanged": true,
+  "only_failed_serial_primary": "compress_binary_t1",
+  "original_carrier": {
+    "bytes": 11338643834,
+    "sha256": "238cd3aa86d37133fc023a22eb5f227dec27c0dbb0f28d30ebb2a4473667a9fc"
+  },
+  "original_ledger": {
+    "bytes": 6440572,
+    "sha256": "7a96967f10a19015fc0aa2b9467631f600da740f864f8e3846029b2a30a580fb"
+  },
+  "original_remote_path": "/home/liangjy/rsomics-index-bgzf-copyright-recovery-20261102/original-artifact-13093208456-resumed2.zip",
+  "outer_members": 8686,
+  "owned_processes": 414,
+  "owner_commit": "d57bdaa2a19492d902a5f59c8de3c9f35113053a",
+  "owner_native_four_attempt": 1,
+  "owner_native_four_run": 41313466286,
+  "performance_accepted": false,
+  "performance_scope": "one actual Linux x86_64 synthetic 13-lane campaign; not cross-platform or pure-language causal proof",
+  "prior_native_performance_inherited": false,
+  "private_key_access": false,
+  "publication": false,
+  "qualification_calls": 42,
+  "root_adopted": true,
+  "root_independent_adoption_required": false,
+  "run_attempt": 1,
+  "run_id": 41327532095,
+  "runtime_codec_graph": "native static libdeflate-sys1.25.2 and Rust zlib-rs0.6.7; source shared libdeflate1.25",
+  "schema": "rsomics.index.corrected-whole-adoption.v1",
+  "separate_ELF_captures": 10,
+  "separate_ELF_captures_have_no_owned_group_empty_claim": true,
+  "source_absence_never_counts_as_native_win": true,
+  "source_files": 116,
+  "source_tools_rebuilt": false,
+  "status": "accepted-complete-correctness-and-fixed-performance-failure",
+  "summary": {
+    "bytes": 18952,
+    "sha256": "3c930f591abcd1f5958faf58b68dddb8c170ddfcebd77c52e97ef44bf57c20aa"
+  },
+  "time_budget": {
+    "benchmark_limit_seconds": 13650,
+    "comparison_seconds": 478.6633462099952,
+    "controller_limit_seconds": 18600,
+    "elapsed_seconds": 3160.372468163,
+    "qualification_limit_seconds": 1750
+  },
+  "timer_four_GETs_archive_derived_copyright_and_DEB_binary_verified": true,
+  "timer_package": "time 1.9-0.2 amd64",
+  "verified_remote_snapshot": {
+    "after": {
+      "credited_unique_inode_blocks": 110878695424,
+      "current_authority": {
+        "identity": {
+          "bytes": 3412,
+          "sha256": "ed4bc4bbf5a37164c5bfc48fc9f224914d1e11c0ca051378efdda7dbbddbda0b"
+        },
+        "path": "/home/liangjy/rsomics-plink-green7-recovery-20261102/reservation.json",
+        "record": "plink-green7-20261102-40b2989b-remote-dev-sdd-208GiB"
+      },
+      "current_envelopes": {
+        "/home/liangjy/rsomics-ecology-beta-recovery-20261101": {
+          "entries": 136273,
+          "limit": 103079215104,
+          "unique_allocated_bytes": 38343782400
+        },
+        "/home/liangjy/rsomics-index-bgzf-copyright-recovery-20261102": {
+          "entries": 7196,
+          "limit": 81604378624,
+          "unique_allocated_bytes": 38290165760
+        },
+        "/home/liangjy/rsomics-index-bgzf-hotpath-recovery-20261101": {
+          "entries": 4417,
+          "limit": 81604378624,
+          "unique_allocated_bytes": 5816471552
+        },
+        "/home/liangjy/rsomics-index-bgzf-recovery-20261101": {
+          "entries": 15141,
+          "limit": 81604378624,
+          "unique_allocated_bytes": 28328329216
+        },
+        "/home/liangjy/rsomics-plink-attribution-20261101": {
+          "entries": 79,
+          "limit": 8589934592,
+          "unique_allocated_bytes": 99938304
+        },
+        "/home/liangjy/rsomics-plink-green7-recovery-20261102": {
+          "entries": 2,
+          "limit": 223338299392,
+          "unique_allocated_bytes": 8192
+        }
+      },
+      "current_total_envelopes_bytes": 579820584960,
+      "device": 2096,
+      "free_bytes": 528916582400,
+      "independent_headroom_bytes": 8589934592,
+      "mount": [
+        "/dev/sdd[/home/liangjy]",
+        "ext4",
+        "/home/liangjy"
+      ],
+      "original_reservation_preserved": true,
+      "other_required_unmaterialized_bytes": 434217611264,
+      "own_allocated_bytes": 38290165760,
+      "point_in_time_not_quota": true,
+      "required_unmaterialized_bytes": 477531824128,
+      "uid": 1006
+    },
+    "all_original_outer_crc_hash_bodies": true,
+    "assessment": {
+      "bytes": 3920691,
+      "sha256": "a9d2b09c697451b8ddc7817802b3baaa35e3c06d19ee7cfb2f59808bacba8bfe"
+    },
+    "attempt": 1,
+    "head": "7dd0be8bcb17c42fb3f61d11ca87da9a4d9fd20a",
+    "job": 124910516747,
+    "original_ledger": {
+      "bytes": 6440572,
+      "sha256": "7a96967f10a19015fc0aa2b9467631f600da740f864f8e3846029b2a30a580fb"
+    },
+    "original_zip": {
+      "bytes": 11338643834,
+      "sha256": "238cd3aa86d37133fc023a22eb5f227dec27c0dbb0f28d30ebb2a4473667a9fc"
+    },
+    "outer_members": 8686,
+    "physical_cas_bytes": 16674399859,
+    "physical_cas_objects": 7171,
+    "publication": false,
+    "root_independent_adoption_required": true,
+    "run": 41327532095,
+    "status": "complete-original-data-verification"
+  },
+  "warmup_calls": 78,
+  "zero_baseline_increases_hidden": false,
+  "recovery_proposal_schema": "rsomics.index.corrected-original-full-assessment.v1",
+  "accepted": true,
+  "root_adoption": {
+    "evidence_directory": "/Volumes/KIOXIA/Developments/tmp/index-corrected-resumed2-20261102.k9qyob",
+    "report_sha256": "35da827289e1d081b84da4274a2d2d22f0d691f22f491d1e8ed9f3fb70d8e3d4",
+    "proposal_sha256": "58b6ccd386de10aa41bde75278b8ff94fda4a29bbde355c4bc6e6e019f294cd5",
+    "seal_sha256": "445a41114d69ead1368e06d89cab5e58fe1b576c7f19db91dbedf436356e1134",
+    "physical_files_including_seal": 65,
+    "physical_bytes_including_seal": 19801901,
+    "root_directory": "/Volumes/KIOXIA/Developments/tmp/index-corrected-root-adoption-20261102.4yXz7m",
+    "fresh_stdout_sha256": "1abcb5046c043eecce49427aa115fce6dd56d5a0f77609b3d7de52e6b6062b80",
+    "exit_code": 0,
+    "stderr_bytes": 0,
+    "full_original_CRC_CAS_old_partials_and_current_source_verified": true,
+    "independent_graph_engine_flags_timer_body_and_raw_numeric_reduction": true,
+    "packet_or_remote_writes": false,
+    "scientific_execution": false
+  },
+  "followup_diagnosis": {
+    "report": "/Volumes/KIOXIA/Developments/tmp/index-binary-diagnosis-20261102.EzcBSG/REPORT.md",
+    "report_sha256": "b7cec35d476d75bc3e2cbb09a7f657f14de070ce2b9b9b47be7894b814ec4840",
+    "no_justified_material_fix_yet": true,
+    "shared_deflate_source_and_effort": true,
+    "CRC_share_unmeasured": true,
+    "profile_readiness_report": "/Volumes/KIOXIA/Developments/tmp/index-profiler-readiness-20261102.YonVJY/REPORT.md",
+    "profile_readiness_sha256": "e2861c912b628c78eaafdda099de077e6f50ecc0332ec8736320fe592aa04517",
+    "one_harmless_perf_permission_probe_exit": 255,
+    "perf_event_paranoid": 4,
+    "reachable_CPU_differs_and_lacks_VPCLMULQDQ": true,
+    "profile_or_scientific_execution": false,
+    "no_privilege_or_kernel_setting_change": true,
+    "no_automatic_retry_or_gating_waiver": true
+  }
+}

@@ -17,12 +17,14 @@ earned GitHub native releases and fresh actual public-install lifecycles;
 registry authorization remains separately held. Each performance result stays
 bound to its measured implementation/binary, with losses and scope retained.
 Ecology's alpha/rarefaction and all eight complete-study beta modes now have
-accepted correctness/resource/original evidence. Its bounded public delivery
-implementation is active; no new science API or benchmark replay is needed.
+accepted correctness/resource/original evidence. Its reviewed public delivery
+passes exact four-nativeCI41341218191; original adoption/release remain next.
 PLINK's prepared-reader/LD change passes green7 native/source qualification;
 actual41335480371/1 runs the unchanged final seven-stage performance graph.
-Index's corrected whole41327532095 is terminal failure; complete original
-recovery remains active, so the scientific failure cause/result is not inferred.
+Index's corrected whole41327532095 has complete correct originals adopted:
+three serial primaries pass throughput, binary compression alone fails the
+material-advantage gate. A new implementation/profile is not yet justified;
+retain the negative result and advance other products without an unchanged rerun.
 Signal's confirmed arithmetic/data-loss/filter repairs are approved known
 incompatibilities. The distinct optional sorted-BED row-order decision remains
 pending. Structure torsion, edgeR QL numerical policy, inferCNV Leiden quality

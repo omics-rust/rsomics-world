@@ -1,5 +1,60 @@
 # Index complete BGZF/tabix real performance
 
+## Complete corrected originals adopted; only binary serial primary fails
+
+Root adopts index-corrected-complete-failure-2026-11-02.json after reading the
+complete report/current425-line coverage adapter/264-line transport adapter/
+prior custody adapter and freshly checking the entire65-file/19801901B packet,
+full11.338GB ZIP/8686 members/all CRCs,7171 inert CAS bodies/16674399859B,
+both old partials and every current source/provider/timer/output/request/numeric
+binding. Proof4yXz7m/check.stdout SHA1abcb5046c043eecce49427aa115fce6dd56d5a0f77609b3d7de52e6b6062b80,
+exit0/empty stderr, no packet/remote writes or scientific execution. Original
+k9qyob REPORT35da8272/SEAL445a4111 and earlier AJlE3y remain unchanged.
+
+Actual41327532095/1 is complete and correct:42 full qualifications,338 valid
+benchmark records (78 warmups/260 measurements),414 owned successful closed
+processes and ten separately scoped ELF captures. New current f185956f ELF/
+116 source bodies/fresh36.576s build are independently bound to THIS attempt;
+no prior503 build duration or old030be speed is inherited. Timer's used ELF
+matches pinned DEB, all four GETs/copyright derivations agree, and independent
+engine/flag/CPU/timer wrappers and ordered qualification/measurement graphs match.
+
+| Serial primary | Source/native wall median s | Native/source | Fixed result |
+|---|---:|---:|---|
+| Binary compression |24.270/23.660|0.974866|FAIL|
+| TBI build |2.580/1.905|0.738372|throughput|
+| CSI build |2.580/1.920|0.744186|throughput|
+| Sparse query |29.915/16.335|0.546047|throughput|
+
+Only binary-N1 misses the unchanged EACH-primary predicate; its wall ranges
+overlap and RSS rises2.65->4.13MiB. Three genuine primary gains do not rescue
+that failure. All13 native RSS ratios exceed1; dense/overlap absolute peaks
+17.69/19.29MB have4.727/5.217 ratios. Text1/4, binary4, decode and partial wall
+regressions plus all CPU/fault/raw-I/O distributions/maxima stay explicit in
+ALL-RESOURCE-RANGES.json SHA4d030655. These are not aggregate/heap memory,
+device-byte throughput, cold-cache, pure-language or cross-platform claims.
+Full product performance/release remain false; no unchanged campaign repeats.
+
+## Bounded diagnosis; no unsupported implementation or profile
+
+Root reads full EzcBSG source diagnosis REPORTb7cec35d: native T1 already reuses
+compressor/input/frame without the old queue/per-block allocation/copy; both
+real effort7 paths use identical libdeflate deflate source. CRC dispatch differs
+but its share is unmeasured. A further1.817s is required even before range
+separation; deleting all CRC work cannot supply it unless CRC exceeds8.717%
+of native user time. This is a bound, not measured attribution or promised gain.
+Source hflush actually reaches fdatasync; removing native atomic persistence
+or claiming only native pays sync is not justified. No code change is selected.
+
+One bounded read-only readiness check YonVJY REPORTe2861c91 confirms symbols/
+unwind tables but the single harmless perf stat true probe exits255 under
+perf_event_paranoid4/zero capabilities. No profile, alternate event, install,
+sudo, kernel/Docker change or scientific invocation occurs. Reachable Xeon's
+CPU/glibc differ from the old EPYC and lack VPCLMULQDQ, so even hypothetical
+new-host samples cannot establish the original CRC share or old timing gate.
+The affected optimization/release stays unearned; advance unblocked products
+without inventing a fix, loosening the predicate or repeating the whole graph.
+
 ## Corrected run terminal; incomplete transport is not a scientific result
 
 Actual41327532095/1 at7dd0be8b finishes FAILURE; initial admission succeeds,
