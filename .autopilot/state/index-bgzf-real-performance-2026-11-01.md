@@ -1,5 +1,41 @@
 # Index complete BGZF/tabix real performance
 
+## Corrected run terminal; incomplete transport is not a scientific result
+
+Actual41327532095/1 at7dd0be8b finishes FAILURE; initial admission succeeds,
+execute fails and sealing/upload succeed. Artifact13093208456 is11338643834B,
+SHA238cd3aa86d37133fc023a22eb5f227dec27c0dbb0f28d30ebb2a4473667a9fc.
+Underlying cause/reached science counts/correctness/performance remain UNKNOWN
+until full original recovery; neither the outer exit nor artifact size proves
+them. The original graph remains13 lanes/42 qualifications/338 timed calls.
+
+Collector AJlE3y preserves the root-authorized first operational stop's
+71696384B/SHA3f955cb8 prefix and the sole resumed1 transport's later partial.
+The latter requests exact HTTP1.1 Range and receives206 but ends short at
+743.016s/source1/sink255. Stable remote bytes are10174431232/SHA65012086,
+not the Mac pipe's10174595072 bytes;163840 streamed bytes were not retained
+on disk. The missing original tail is1164212602B. No ZIP CRC/member/science
+qualification is attempted and no network cause is inferred from discarded
+source stderr. TRANSPORT-FAILURE-SUMMARY.json and full stable inventory retain
+both generations. All known writers exit; no global-writer/lease claim.
+
+The current540GiB/independent8 map preserves this full76GiB envelope and final
+PLINK208. There is no disk/permission blocker and no partial is deleted,
+appended or counted as a complete original. A new explicit bounded transport
+ruling is required before a further source request; it is not a new science
+campaign or relaxation of any numerical/resource predicate.
+
+Root reads the complete range controller and adopted transport, confirms the
+32GiB all-body CAS/2GiB metadata limits and authorizes ONE resumed2 continuation
+conditional on fresh current540+8 admission and stable actual on-disk prefix.
+Both partials +new full ZIP +32GiB CAS +2GiB metadata +own8GiB headroom total
+66681928058B, below the unchanged76GiB envelope by14922450566B. Nested donor
+ZIP/TAR bodies already count inside CAS, not another guessed credit/copy.
+An exclusive new file copies the stable10174431232B/SHA65012086 prefix;
+only Range10174431232-11338643833 is requested. Prior files/metadata/controllers
+stay untouched. Source/sink0/EOF and full pinned length/SHA remain mandatory;
+there is no automatic third request or new scientific authority.
+
 ## Corrected whole campaign dispatched once after exact-head Control
 
 Control41327249574 succeeds at7dd0be8bcb17c42fb3f61d11ca87da9a4d9fd20a.
