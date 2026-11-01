@@ -1,14 +1,16 @@
 # Peak product dossier
 
-Status: current full-four source casebook41209740891 is adopted after complete
-original/runtime/object verification. A private publish=false owner now exists;
-count and explicit-profile sparse workflows pass native debug/release checks
-against actual retained source outputs. Call and annotation construction and
-whole-product integration are active. Four-native, source-on-native, representative
-performance and public release remain unearned. Historical annotation goldens
-remain unqualified; current ChIPseeker1.48.0/TxDb is the independent authority.
+Status: current full-four source casebook41209740891 and owner63caec85 green3
+four-native/same-native-source gate41253851251 are adopted. Actual representative
+real-input run41255568382 passes all54 graphs/196 stage commands, complete
+output comparisons and14 strict wall decisions. Whole-P median source/native
+is36.324/5.374s at1worker and34.911/5.443s at4; no whole-graph parallel speedup
+or exact tree-memory advantage is claimed. Public release remains held by the
+separate sparse-default and registry-auth decisions. Historical annotation
+goldens remain unqualified; current ChIPseeker1.48.0/TxDb is the independent authority.
 See `.autopilot/state/peak-source-preflight-2026-10-31.md` and
-`.autopilot/state/peak-native-first-four-2026-11-01.md`.
+`.autopilot/state/peak-native-first-four-2026-11-01.md` and
+`.autopilot/state/peak-real-performance-2026-11-01.md`.
 
 The first slice is BAM/BAMPE narrow calling, explicit-profile sparse positive
 signal calling, transcript-level GTF/GFF3 annotation and alignment-unit BAM

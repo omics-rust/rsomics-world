@@ -1,5 +1,38 @@
 # Fixed real-input Peak performance gate
 
+## Green-3 actual real-input performance accepted
+
+Actual41255568382/1 atd6a334a78b3d2258d48650e973b6f6168a8bbe4e
+completes all54 graph/196 stage measurements, all exit0. Root reads the full
+report, complete recovery/comparison/decision code and original authority
+bindings, then freshly verifies2145 sealed local bodies/941161939B. Direct
+useful ZIP115578353B SHA
+404c255839670981eb68a7c518c98b1e3a76d0569c6a29b78d5b02bb4345e744
+has2077 CRC-verified members and2076 exact manifest bodies; no nested TAR.
+All16 archived controllers match the actual head. Source runtime, inputs,
+scientific options,512MiB algorithm budget and acceptance policy are unchanged.
+
+All14 P full-output,12 C downstream and2 C qualification comparisons pass;
+all14 predeclared strict wall decisions pass. P whole median source/native
+is36.324/5.374s atT1 and34.911/5.443s atT4. Caller median is1.241/0.303s
+and1.147/0.250s, now strict wins at both budgets. Every fitted P model remains
+d178/334 pairs, with306 peaks/3134 sparse/3440 annotation-count rows. Separate
+C has3441 rows and only matched downstream claims, not sparse/end-to-end
+equivalence. Native ELF1a711992de74e735538080404b9408d8650d54625730039d70f6232bfd67353b
+is the already adopted owner63caec85 green3 candidate.
+
+Exact aggregate tree memory/advantage remainsN/A. Native whole T1/T4 median
+ratio0.987364439 does not show parallel speedup; count has only3 useful sample
+workers. No cold-cache, durability, modern-PE, whole-genome or biological claim.
+Prior red run41250498517 remains failed and retained.
+
+Accepted receipt: .autopilot/oracles/peak-real-performance-2026-11-01-green-3.json.
+External packet peak-real-success-20261101.mtbb9k5w REPORT
+15df2925f6b7243a49e52cc2d187c0f9f58d23820d0ed30556595705969432c9;
+completedba9e65cdb61ee1c3aa3c2c5d291b6b27670ffddaa08fbe6dc1b6c412bc453009.
+This accepts the measured first slice, not publication or a public sparse
+default. The independent SEACR default-policy and registry-auth holds remain.
+
 ## Actual buffered-caller real-input retry dispatched
 
 After green3 full native/source adoption and exact-head Control41255376744
