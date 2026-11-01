@@ -1,5 +1,21 @@
 # Index reference-resource source workflow
 
+## Exact native-four integration accepted
+
+Owner7f2d4fdeda9d0062d10941258b40eee16fdb9042 actualCI41259142238/1
+passes all four native target classes. Root retains full run/jobs APIs and
+combined raw log in index-reference-native-ci-20261101.Xq2AAk, checks the
+exact head/jobs/required outcomes and actual test populations. Each debug/
+release profile passes63 default tests; the nine old live-oracle tests are
+explicitly ignored there, then all9 execute/pass in the separate Linux x86_64
+HTSlib1.24 lane. Format/strictClippy/rustdoc/package also pass.
+
+Raw log SHAaafc78395e24e841689e1feca6e6be17a1071e7c576c24c6aedc07862b0cffd2.
+Receipt index-reference-native-2026-11-01.json records this native integration,
+not uploaded compiled-binary authority or complete-reference performance.
+Next is the frozen real-reference route; older13-lane missing-raw/publication
+hold remains separate and unchanged.
+
 ## Complete native reference slice committed; exact four-native CI running
 
 Clean owner7f2d4fdeda9d0062d10941258b40eee16fdb9042 is pushed. Actual
