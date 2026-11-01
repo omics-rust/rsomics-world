@@ -1,5 +1,31 @@
 # Index complete BGZF/tabix real performance
 
+## Actual complete Linux campaign launched
+
+Exact-head Control41294210741 at
+bf60a596153a98e43341cbc8ad82ec2dbec88fb8 passes539 tests/58.861s with two
+pre-existing skips and architecture validationSUCCESS. Root freshly verifies
+the four source hashes, actual remote main and no earlier run. Original
+owner030be208 remains clean. New actual41294913111/1 starts at this head with
+manual recovery admission and public record
+index-bgzf-20261101-bf60a596-remote-dev-sdd-76GiB.
+
+Fresh remote physical probe identifies UID1006/device2096, ext4/dev/sdd bind
+at/home/liangjy. Conservative free634739101696B and existing Ecology actual
+allocation23383564288B leave625156497408B required for the604GiB combined
+envelopes, with9582604288B further margin. New owned0700 Index recovery root
+/home/liangjy/rsomics-index-bgzf-recovery-20261101 contains its valid reservation
+record. RNA44GiB remains separately on external Mac HDD; no double booking,
+exclusive quota, extra failed carrier, source/performance result or publication
+is implied. Refresh before later bulk writes.
+
+Full root launch/API/controlZIP/physical record and zero-exit dispatch remain
+at index-bgzf-launch-20261101.Je5q9p. ADMISSION SHA
+7c34c8303e53926a9a5131b4e99da9898f8163b8d2ef3afcc04adde8b66a7ebb;
+LAUNCHED97136346c2d7b209a3d8950c499501bcaf46b22ce16e868229400c0470080468.
+No actual runtime/42qualifications/338call performance adoption is earned
+merely by launch; originals and all tradeoffs must still be reviewed.
+
 ## Four-path operational wave adopted; actual run remains pending
 
 Root reads the complete1088-line controller,195-line SAME connected test,
