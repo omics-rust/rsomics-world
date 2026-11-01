@@ -1,5 +1,36 @@
 # Popgen whole-chr22 same-machine performance
 
+## Second actual failure adopted; source jackknife namespace corrected
+
+After exact-head Control41270476433 succeeds, root verifies remote53656eb5
+and dispatches41270671220/1, job124742616085. Init, public-recipient transport
+and actual accepted-native/provider admission succeed. Source qualification
+then fails before real chr22 acquisition/timing: source_statistics calls the
+non-exported allel.jackknife. This is harness wiring, not a scientific
+contradiction, source OOM or native failure. Both earlier failed runs remain red.
+
+Root reads the full report, archive/CAS validator, diagnosis audit and complete
+relevant original source functions, then freshly streams7297 sealed files/
+3458826095B at popgen-second-whole-failure-20261101.X3oK3L. REPORT
+0b728a742af05e32e19781c485f109e694c6c32a069b61867e24d5a5ef3bedc1;
+SEAL5eb9ba243120f35094ec4a51458be2437484db3bd34c5fcfc32764a119169c98;
+completed8dec4113139ff23e6380d188d9a7293c337fbfb210b2fe367fc4f652117b2a2e.
+Full ZIP952107864B, authenticated TAR951582720B, raw APIs/logs,7762 logical
+regular bodies,668 directories and1052 links are retained;33 casefold
+collisions remain safely represented by metadata/CAS, with no runtime restore.
+All11 actual53656eb5 controllers and the fixed casebook input identities match.
+Actual native receipt2260adece/ELF2800d57d and three schema/cache corrections
+really pass admission. No real performance observation is accepted.
+
+Original fst.py explicitly imports jackknife from allel.stats.misc; complete
+misc.py primitive SHA f9cc1b751ad6c1ed203b7f618eb975ff822b7b5eec75b4d8e3839a8a96feccaa
+is retained. Root makes only that lazy import/call correction, preserving masked
+block arrays, reduction/point estimates, source package, all inputs and fixed
+performance criteria. No monkeypatch, rewritten statistic, helper-test ladder
+or Mac scientific execution is added. The unchanged ONE stdlib preparation
+check freshly passes1/.732s; this is not proof of actual scientific import.
+New exact-head CI and the actual complete hosted qualification remain required.
+
 ## Actual initialization failure authenticated; two-line bootstrap corrected
 
 Root fully reads the complete failure report, recovery/manifest program,

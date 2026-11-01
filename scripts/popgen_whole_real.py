@@ -603,6 +603,8 @@ def _source_fsync_directory(path: Path) -> None:
 def source_statistics(np, allel, chrom: str, selected: dict, mask: bytearray,
                       admission: dict, spec: dict, output: Path) -> dict:
     """Export the source oracle contract using shared pinned FST components."""
+    from allel.stats.misc import jackknife
+
     output.mkdir(mode=0o700)
     pos = selected['variants/POS']
     g = allel.GenotypeArray(selected['calldata/GT'], copy=False)
@@ -689,8 +691,8 @@ def source_statistics(np, allel, chrom: str, selected: dict, mask: bytearray,
         num_bsum = allel.moving_statistic(numerator, statistic=np.nansum, size=blen)
         den_bsum = allel.moving_statistic(denominator, statistic=np.nansum, size=blen)
         vb = num_bsum / den_bsum
-        _, se, vj = allel.jackknife((num_bsum, den_bsum),
-                                   statistic=lambda n, d: np.sum(n) / np.sum(d))
+        _, se, vj = jackknife((num_bsum, den_bsum),
+                             statistic=lambda n, d: np.sum(n) / np.sum(d))
         return point, se, vb, vj
     hudson = average_components(num, den, np.nansum(num) / np.nansum(den))
     a_sum = np.nansum(a)
