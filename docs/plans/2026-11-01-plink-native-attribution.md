@@ -76,3 +76,19 @@ claim. Use the evidence to choose ONE coherent substantive optimization wave,
 not a generic profiling framework or speculative public component. Fresh
 normal native4 correctness and original unchanged performance gates remain
 required after a real implementation change.
+
+## First observer failure and one corrected observer route
+
+The first route runs only native I, exits0, but captures no function samples;
+the controller stops before F rather than executing an uninformative graph.
+Raw GDB output has no errors. Internal Python timer/GDB event scheduling is
+not proven suitable; this is an observer failure, not a native/source result.
+Root authorizes one external-controller owned-PID/starttime SIGSTOP observer
+correction, followed by the same two complete graphs once. Retain all first-
+route source/requests/logs/outputs. Put route-2 under the existing owned root
+and share its8GiB cap/full404GiB admission, without overwriting prior paths.
+No third route, source/native rebuild or extra scientific probes are authorized.
+The maximum is the failed observer's one I plus14 corrected-route native calls.
+RUSAGE_CHILDREN before startup was already nonzero; keep its raw values but
+do not label its delta/peak native-only without a single-child proof. Owned
+/proc deltas and function samples remain diagnostic, never a performance score.
