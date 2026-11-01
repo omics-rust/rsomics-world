@@ -1,5 +1,44 @@
 # Ecology complete-original beta performance
 
+## Remote custody route qualified; exact-head Control before launch
+
+Root adopts the concrete320GiB remote all-eight envelope in
+`docs/plans/2026-11-01-remote-original-custody.md`. Actual fresh probe identifies
+`/home/liangjy` as ext4/dev/sdd, not host root;658122715136B free. The task-owned
+directory `/home/liangjy/rsomics-ecology-beta-recovery-20261101` now exists0700.
+Its logical364GiB reserve covers Ecology320 plus separate futureRNA44; it is
+not an exclusive quota, complete packet or PLINK admission. Mac metadata uses
+at most1GiB plus8GiB independent headroom. Fresh free/device/reservation checks
+remain required before dispatch and each actual acquisition.
+
+New two-path remote transport helper is d99fb4ec; ONE connected test f97a2ce2.
+Author packet remote-private-recovery-prep-20261101.Oh18kt REPORT
+326954fba79519f633fae2ee6308f70548436afcf9436e1e21f2e97efdaab575,
+SEAL8b6dee9e390a51c146b5d74f77ac48973fe7258266e677eac4a293b9b4d493d3.
+Root reads the complete code/test/shared admission contracts and freshly
+verifies the sealed packet. One independent whole operational/security review
+finds noP1/P2: remote-private-recovery-whole-review-20261101.md SHA
+1c7007100f9aa2a82075653814097a5cc2740d01340249705c45713d6c245d08.
+
+Root's actual small pinned-age/SSH streamed-producer proof passes in
+remote-private-recovery-root-v2-20261101.JmuNt0/VERIFICATION.json SHA
+9ce28d72da7ff0e860a0c12fa03bb40b0bd10c8c99dfad1863500e902eab4fd2.
+All three source/age/sink exits0, both streams reach EOF and exact10240B TAR
+SHAc3b62ca735f498e1c8daee8c07b70a91afb8ad8aa4f55cf8720156cee83f1dfc
+matches local known bytes. Only after full authentication does root inspect
+the one known TAR member. No private identity bytes are read/logged/copied/
+transferred by the controller; pinned local age necessarily reads its existing
+identity. No key is generated, installed remotely or sent to CI.
+
+First small probe YjTo4F remains failed: root used input_file mode, which
+correctly records producer_exit=null and is rejected by the fixed streamed-
+producer0 contract. Original carrier/receipt/raw failure remain; no receipt is
+rewritten, no null is relabelled0 and no helper rule changes. Additivev2 uses
+a genuine producer process exiting0. This qualifies transport, not full TAR/
+CAS/science or a completed eight-metric result. The helper intentionally
+supports payload.tar.age for Ecology/RNA, not PLINK's hgdp.tar.age yet.
+Exact-head control CI and refreshed launch capacity still precede attestation.
+
 ## Five-path operational preparation accepted; recovery admission pending
 
 Root integrates only the operational preparation for the adopted
