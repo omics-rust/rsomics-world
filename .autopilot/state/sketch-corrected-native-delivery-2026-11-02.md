@@ -192,3 +192,46 @@ and no product executes. Cost: even a successful contrast is only a bounded
 oracle-runtime workaround candidate; full native4/source/oracle and actual
 eight-job resource gates remain required, with launcher configuration visible.
 Do not start another dependency/Python matrix or callback-by-callback campaign.
+
+Actual lifetime contrast41356083581/1 at Worldf759089b5481eb02ef6a2682a0f411cb20089c63
+passes after exact Control41355822807. Artifact13102334580/167325B/SHA
+0de6b2d1532e91bd7303ccfb06b287b7ac54efcbc4a3510327a41e9074c6a4c0 is retained
+and root-verified in BfxL2j/lifetime-contrast.zip. At sourmash_init, gdb maps
+lib_lowlevel.so text0xfffff6215000..0xfffff67dd000; later fatalPC0xfffff66ae974
+falls in that former mapping while the library is absent from the current
+shared-library list. The original entry still exits139. With only explicit
+RTLD_NODELETE retention, original console --version and real one-kmer sketch
+both exit0; canonical hash1731421407650554201/digest08c05d56c36a44d38e708f93eb4f87b2
+match independent expectations. Original entry/loader/library hashes are
+unchanged before/after. The supported mechanism is an unsafe library lifetime
+at process exit, not a general Rust/compiler/BLAS failure claim or an identified
+internal callback symbol.
+
+Ruling: adopt this demonstrated lifetime handling only in a private LinuxARM
+CI-oracle launcher. All other hosts keep the ordinary upstream entry. Forward
+all arguments/exits, leave upstream files/algorithm/version untouched, record
+actual runtime/entry/loader/library/launcher identities outside timed trials,
+and use the same selected runtime for all native oracles and measurements.
+Launcher startup and retained code are part of the ARM reference process;
+do not hide their resource cost or infer a causal/kernel speedup. No new LayerA
+API, Cargo dependency, product command or Rust body changes. Existing GitHub/
+registry/performance gates remain unearned. A bounded owning-repo repair is
+in progress, followed by actual final-head native4; no further diagnostic
+matrix, speculative pin or independent source implementation is needed.
+
+Root read the complete55-line private scripts/ci-sourmash and all workflow/doc
+changes, then independently verified their bounded five-path scope,0755 mode,
+Python/YAML/shell syntax and every other tracked body unchanged. The launcher's
+name preserves the unchanged oracle test helper's sourmash suffix dispatch.
+Normal calls do no added whole-library hashing; before/after record mode binds
+the exact official loader/library and launcher outside timed trials. A native
+README reference was made source-only text rather than a broken archive link.
+No Rust/Cargo/test/measurement predicate/term body changed, no local scientific
+execution or repeat Rust suite/lifecycle/review campaign ran.
+
+Owning source eb1b15102f1adaedb738e4ddb98bd9bd841669d1/tree
+3f13cce3dff7fcc6630ef80d257a55c981b520dc is committed/pushed and clean;
+source membership is142. Launcher SHA
+6c1fe339ebce5e77cb4071454b0f4f0d695f03dc77a6335b42dc831277eac5de.
+Actual exact-head native4 CI41357249401/1 is queued. Await all required jobs
+and complete originals; no final performance dispatch or public release yet.

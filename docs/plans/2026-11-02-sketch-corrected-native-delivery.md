@@ -144,3 +144,9 @@ Ruling: the whole review established seqio's separate gzip decoder thread.
 Environment caps do not bound total threads; Linux alone confines them to one
 CPU. Correct the protocol and deliver it inside native archives without changing
 the experiment or numeric gate. Cost: no equivalent one-thread/one-CPU Mac claim.
+Ruling: actual native CI exposed the official LinuxARM oracle library-lifetime
+failure. A focused unchanged-file RTLD_NODELETE contrast now passes true version
+and sketch exits. A private CI-only launcher adopts that handling for ARM;
+other hosts remain direct. Runtime/launcher identities and overhead are visible,
+and final exact-head native4 plus all8 resource jobs remain mandatory. This
+changes no Rust/Cargo/API or scientific behavior and creates no public component.
