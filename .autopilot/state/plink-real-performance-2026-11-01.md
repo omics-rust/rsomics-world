@@ -1,5 +1,51 @@
 # Fixed private HGDP whole-workflow gate
 
+## Packed source accepted locally and green4 frozen for actual native/source gate
+
+Root reads the complete review correction and report
+b8b09011cab4538de8c490fb226c9619a33555d734adb31db3b4a7bda1199dd1,
+freshly verifies all13 current source identities against corrected manifest
+180d985ebf9505a34119a7dddc2afd115a70c7ce9bcebeedf72533bed3c72ebe,
+then freshly runs the FULL guarded release suite:4lib/1wholeCLI/0ignored
+pass in3.05/7.28s at plink-packed-root-acceptance-20261101.oCTvwh. Admission
+now precedes both decision-index allocations; the empty-read fast path and
+science are unchanged. Root accepts the oneP2 fix without another review.
+Owner clean main is e03ada173d8dabb1c7894e2a0e53479d1cd41fa6,
+tree5ac9d035f19c1a29dce431a5d451c743960129c2. No remote is configured.
+
+Root freezes all303 Git/worktree-exact source bodies/modes into additive
+green4: archive524088B SHA0d666fcf52c43d103f2bb651eea2114744a4b851bd76c5eb98b9f3009acc2e36;
+manifest e3303b6f57a652f5b9a7c7fd11c576fdff08dd8b88a5908c30f6729632410ddf.
+All24 earlier snapshot/oracle/source-private authorities stay exact. Only
+explicit green4 admission is added, retaining green1/2/3 behavior and the
+same116/52 graph membership. The SAME preparation observes RED unknown
+selector1/1.274s, then GREEN1/1.095s. No new source operation or scientific
+oracle campaign is added. New four-native/same-binary source/relink admission
+and eventual unchanged whole-real gate are pending, not preaccepted. Original
+41260156411 remains performanceFAILED; no release or public repository yet.
+
+## One whole packed-workflow review; cached-path admission fix pending
+
+Root reads the complete1334-line thirteen-file diff, author REPORT/ABI3
+contract and actual pinned codec flag/read/writer bodies. Fresh whole review
+at plink-packed-review-20261101T053158Z/REPORT.md SHA
+f0fb8c72c3966a9fee4c4a43e09dddfc83ebc2bc46710005f5850e42f1654911
+finds noP0/P1 and oneP2: retained/pending decision indexes need admission
+before allocation even when the packed cache makes pending empty. One
+author fix wave adds that check/one bounded integrated assertion, retaining
+the empty-decode fast path and all science/durability. No second review or
+four-large-diagnostic replay is needed for a budget-only correction. Pair
+prefix reserve for prune is a nonblocking deferred resource concern.
+
+Original author report e5adf85d7c2d3b6826a5a68fee2664c3d547b763ff5714ceb565d105d9e0ee9b
+and source manifest3f91fbde5bf12c1867e7ba60a81f4f2d2ca1a3f39ba9321af70a975459372c4a
+remain historical before correction. Native-only real1/4 records preserve all
+28 data/report files before/after, full I/F/P shapes and33780398/2527798 pairs;
+before ELF has no asserted exact source/build binding. Single Mac stage
+observations, including worse B1 prune, are not formal performance evidence.
+The existing actual whole gate staysFAILED. No new candidate/native/source/
+relink/performance/publication receipt is yet accepted for this source wave.
+
 ## Complete green3 whole failure adopted; coherent optimization authorized
 
 Root reads the full REPORT, complete198-line audit and116-line TAR verifier;
