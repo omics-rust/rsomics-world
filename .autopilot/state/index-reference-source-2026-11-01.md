@@ -1,5 +1,15 @@
 # Index reference-resource source workflow
 
+## Complete-reference run succeeds; full originals under recovery
+
+Actual41266649396/1 at61254983acd344ec99d30d8984bc6c3e823e2423 is
+terminal SUCCESS, job124730729353. Root verifies the actual API result and
+starts full runtime/evidence ZIP recovery at
+index-real-success-adoption-20261101.74CeWm. The original full graph and
+resource decisions still require independent original-body/manifest/log
+checks and root adoption; green status alone is not performance acceptance.
+No existing failed run is relabelled, replayed or replaced.
+
 ## Actual complete-reference RAZF retry dispatched
 
 Exact-head Control41266468976 succeeds at

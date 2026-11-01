@@ -1,5 +1,18 @@
 # Popgen whole-chr22 same-machine performance
 
+## First actual run stops at initialization; no scientific execution
+
+Exact-head Control41269061764 succeeds at
+5addd6108799a500094880751af1b66556e8b1e4. Root verifies remote main and
+dispatches actual41269279456/1 with the accepted native receipt. The run is
+terminal FAILURE at its first private-route initialization step; transport,
+native admission and all source/scientific/measurement steps are skipped.
+Always-finalization and ciphertext-only upload succeed. This is not a measured
+performance outcome. Full original recovery/authentication and diagnosis are
+in progress at popgen-whole-bootstrap-failure-20261101.MB9a0m; no cause or
+retry is preaccepted, no duplicate is launched, and workload/math/criteria
+remain fixed. Old failed originals must remain intact after a correction.
+
 ## Complete implementation and one integrated review accepted for execution
 
 Root reads the complete controller/workflow/policy/frozen comparator/SAME
