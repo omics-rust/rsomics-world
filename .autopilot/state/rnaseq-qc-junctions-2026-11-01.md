@@ -34,6 +34,10 @@ deletion follow user instructions. External task workspace is
 rnaseq-junction-source-implementation-20261101.TqDMVY; task brief is extracted
 with the skill's provided helper and contract stored beside it.
 
-Task1: pending implementation assignment. Owning scope is exactly the four
+Task1: implementation assigned to fresh agent /root/rnaseq_junction_source,
+standard gpt-6.1-sol/high with no inherited history. It reads the extracted
+task brief and binding contract, writes task-1-report.md in the external
+workspace and may not spawn subagents, mutate Git or run scientific code.
+Owning scope is exactly the four
 new source-controller/workflow/asset/ONE-test paths in the plan; no owning
 Rust code yet. Tasks2/3 remain pending actual earlier receipts.
