@@ -1,5 +1,18 @@
 # Concurrent complete-original custody
 
+## Current terminal-size placement
+
+The subsequently admitted terminal PLINK artifact is12063496320B. Its complete
+58GiB external Mac HDD envelope replaces the NEVER-materialized remote208GiB
+maximum below; see `2026-11-01-plink-terminal-original-custody.md`. RNA44GiB
+remains separately admitted on that HDD. Current remote envelopes therefore
+total396GiB: Ecology320+Index76. No remote PLINK body/root is moved or deleted.
+The604GiB probes and original maximum-bound calculations below are historical,
+more-conservative records, not a second outstanding reservation. New writes
+still require fresh device/free/actual-allocation admission.
+
+## Original maximum-bound admission
+
 This additive allocation supersedes the earlier provisional PLINK64GiB and
 remoteRNA44GiB planning strings. It does not change scientific runs, create
 large placeholders, delete old data, or adopt a result. Private identities
