@@ -1,5 +1,27 @@
 # Index reference-resource source workflow
 
+## Actual corrected complete-reference run dispatched
+
+Exact-head Control41262794499 succeeds at
+b8db86cfd3807443138e10fecd15f33877e1fe1b; root rechecks remote main and
+dispatches actual41262994994/1 on that head. The complete locked fetch is the
+only runtime correction. Full reference/168-call scientific graph, original
+numeric/performance criteria, CPU masks and capacity bounds are unchanged.
+The new runtime/acquisition/scientific result is not preaccepted.
+
+Root fully reads the independent first-failure report and validation program,
+freshly checks all5 sealed validation bodies at
+index-real-first-failure-20261101.QrPc1m/validation-_v1nl7b4. REPORT SHA
+2523f9ced63d45adb1734d2d3096ffc3e901e69fef05f7d42613cb2cbff97dd4;
+seal90344424e3be2aed71c85865d6d1aad0bfe2400b49ac1512eb0dd77e060829ce.
+All16269 manifest entries close:199 direct bodies,16069 runtime members and
+runtime.tar itself. TAR17458 members preserve16050 regular bodies,15 hardlink
+aliases,4 symlinks and1389 directories as data-only metadata/body checks.
+All8 controllers match actual53f0893e;36 calls are35success/metadata101.
+The old failure remains failure; no native provider/reference/performance
+acceptance or local Linux execution is inferred. The same integrated review
+finds no material issue in the narrow two-file correction.
+
 ## Actual first campaign stopped at offline metadata; locked closure fix
 
 After exact-head Control41261784186 succeeds and remote main is verified,
