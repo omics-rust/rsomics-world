@@ -1,5 +1,26 @@
 # Ecology diversity source qualification
 
+## Beta finite-matrix policy resolved by explicit engineering ruling
+
+Root reads the dossier finite labelled-matrix contract, original adopted plan,
+prior pending question and original source REPORT boundary observations. The
+actual40634594900 source keeps eight ordinary beta matrices plus zero-sample/
+feature/branch NaNs; no source NaN is changed or accepted as zero.
+
+Ruling: implement the already specified finite reusable matrix, fail-loud only
+for actually undefined pairs, naming metric/sample IDs and preserving atomic
+outputs. Keep valid zero distances and metric-specific defined empty behavior.
+A separate nullable report is extra scope rather than a second prerequisite;
+defer it. This narrows the native admitted domain explicitly without numeric
+band changes, new foundation/API, cross-product lock-in or silent imputation.
+It is root's choice under delegated normal decisions, not a user reply to the
+old async question. The amended plan explicitly supersedes that old hold;
+older pending-question paragraphs below are historical. Cost if the type
+contract needs a nullable report later is an additional explicit output mode,
+not reinterpretation of already emitted matrices. Beta code/native/source/
+real-performance evidence is still pending; no implementation acceptance or
+full product/release claim follows. Current alpha/rarefy campaign is separate.
+
 ## Actual pinned-receipt complete-study retry dispatched
 
 After exact-head Control41273149802 succeeds, root verifies live remote

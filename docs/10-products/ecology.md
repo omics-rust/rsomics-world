@@ -5,7 +5,11 @@ workflow and original real community table/tree are qualified. One private
 unpublished ecology repository has reviewed, source-matching sparse alpha and
 seeded rarefaction at maine1b03cb. Empty/all-zero depth-zero rarefaction now
 returns same-dimensional zeros as the user selected, a documented upstream bug
-fix. The undefined beta-distance public boundary decision remains pending.
+fix. Beta will use the dossier's finite reusable-matrix contract: genuinely
+undefined pairs fail with the metric/sample identities and protect the output;
+valid zero distances remain valid. This is root's explicit delegated engineering
+ruling and a stricter source domain, not a previously answered user choice.
+The beta implementation itself remains pending; nullable reports are not added.
 Actual41268190701 now passes all4 native classes on the unchanged owner;
 complete original source/log/artifact/release-binary identities are accepted.
 See `.autopilot/state/ecology-initial-diversity-2026-10-28.md` and

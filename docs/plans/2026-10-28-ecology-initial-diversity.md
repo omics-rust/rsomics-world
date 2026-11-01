@@ -51,7 +51,8 @@ source drivers are the baseline, not artificially slow callable pair loops.
 Retain all selected output fields and unavailable-value classifications;
 capture source failures as actual expected statuses, never swallowed success.
 The source may emit NaN for undefined beta pairs; preserve that observation
-without deciding the pending native public boundary or substituting zero.
+without substituting zero. The native finite-matrix ruling below narrows the
+admitted distance domain explicitly; it does not rewrite source observations.
 Freeze numerical bands/exact identities/nonfinite rules from mathematical
 and source precision requirements before native output, not after mismatch.
 Initial alpha/phylogenetic/beta bands are abs1e-10+rel1e-10; identities,
@@ -66,15 +67,24 @@ tree tips are allowed; table features map exactly once, required non-root
 lengths exist and are finite/nonnegative. Preserve source stored-root-length
 effects. Missing root length follows its declared zero convention.
 
-## Affected public-boundary hold
+## Finite-matrix boundary ruling, 2026-11-01
 
-An explicit user choice is pending for undefined Bray-Curtis/normalized
-UniFrac pairs. Dossier requires finite reusable distances; source can return
-NaN. Recommendation is an informative fail-loud error and atomic destination,
-documented as a stricter input domain. The alternative is a distinct nullable
-distance report, not admitting NaN silently into a reusable matrix. Do not
-implement/advertise either branch before the answer. This does not block
-source capture, other ecology semantics, current performance or the portfolio.
+Root revisits the earlier pending-question hold against the already specified
+dossier contract and user's delegated ordinary engineering decisions. The
+internal reusable matrix is finite, so an actually undefined Bray-Curtis or
+zero-denominator normalized-UniFrac pair produces an informative error naming
+the metric and sample pair, with atomic destination protection. Normal zero
+distances and each metric's defined empty/zero conventions remain valid.
+Do not globally reject zero samples, impute zero, sanitize NaN or relax the
+unchanged1e-10 numeric bands. Original upstream NaNs remain recorded as source
+observations and this narrower native domain is a known incompatibility.
+
+This explicitly supersedes the old instruction to await a human answer; no
+answer is claimed. A separate nullable distance report is additional product
+scope, not required to satisfy the existing finite-matrix contract, and is
+deferred until needed. No cross-product/public-foundation model is introduced
+or locked. This resolves only the implementation-policy hold; actual beta
+implementation/source comparisons/native-four/performance remain required.
 
 ## Implementation and acceptance
 
