@@ -61,10 +61,10 @@ class PlinkCandidatePreparationTest(unittest.TestCase):
             for selector in ('missing', '../green-1', 'green-0', 'green-1/extra', 'green-99'):
                 with self.assertRaises((ValueError, OSError)):
                     gate.prepare_source(ROOT, root / selector.replace('/', '_'), selector)
-            for selector in ('green-1', 'green-2', 'green-3', 'green-4', 'green-5'):
+            for selector in ('green-1', 'green-2', 'green-3', 'green-4', 'green-5', 'green-6'):
                 prepared = root / ('prepared-' + selector)
                 manifest = gate.prepare_source(ROOT, prepared, selector)
-                self.assertEqual('src/numeric.rs' in manifest, selector in ('green-3', 'green-4', 'green-5'))
+                self.assertEqual('src/numeric.rs' in manifest, selector in ('green-3', 'green-4', 'green-5', 'green-6'))
                 self.assertEqual(hashlib.sha256((prepared / 'source/Cargo.lock').read_bytes()).hexdigest(),
                                  manifest['Cargo.lock'])
 
@@ -142,6 +142,8 @@ class PlinkCandidatePreparationTest(unittest.TestCase):
             self.assertEqual(len(gate.worker_provenance(graph, 'green-4')), 52)
             self.assertEqual(gate.bind_graph(graph, 'green-5'), mapped)
             self.assertEqual(len(gate.worker_provenance(graph, 'green-5')), 52)
+            self.assertEqual(gate.bind_graph(graph, 'green-6'), mapped)
+            self.assertEqual(len(gate.worker_provenance(graph, 'green-6')), 52)
             for selector in ('green-1', 'green-2', 'green-99'):
                 with self.assertRaises(ValueError): gate.bind_graph(graph, selector)
                 with self.assertRaises(ValueError): gate.worker_provenance(graph, selector)

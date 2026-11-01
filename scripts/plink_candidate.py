@@ -30,7 +30,8 @@ CONTROLLERS = ('scripts/plink_candidate.py', 'scripts/plink_source_on_native.py'
     'scripts/plink_first_workflow_inputs.py', 'scripts/plink_pgen_capture.cc',
     '.github/workflows/plink-candidate.yml', 'assets/plink-first-runtime-20261031.json')
 GRAPH_POPULATIONS = {'green-1': (114, 50), 'green-2': (114, 50),
-                     'green-3': (116, 52), 'green-4': (116, 52), 'green-5': (116, 52)}
+                     'green-3': (116, 52), 'green-4': (116, 52), 'green-5': (116, 52),
+                     'green-6': (116, 52)}
 
 
 def check(condition, message):
@@ -80,7 +81,7 @@ def prepare_source(world, output, selector):
         'src/io/pgen.rs', 'src/stats/mod.rs', 'src/ld/pairs.rs', 'src/ld/prune.rs',
         'tests/workflow.rs', 'tests/workflow.py', 'tests/compare_workflow.py',
         'tests/COMPARISON.md', 'tests/fixtures/expected/SOURCE.json', 'tests/fixtures/inputs/manifest.json'}
-    if selector in ('green-3', 'green-4', 'green-5'):
+    if selector in ('green-3', 'green-4', 'green-5', 'green-6'):
         required.add('src/numeric.rs')
     check(required <= manifest.keys(), 'snapshot omits product/source/license/fixture closure')
     check(manifest['tests/COMPARISON.md'] == POLICY and
