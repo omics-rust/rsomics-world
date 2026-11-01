@@ -86,6 +86,9 @@ Task1 produces the source receipt consumed by Tasks2/3; Task2 produces the exact
 Root adopts this plan under existing unattended authority. Task1 is complete:
 actual41277337904 source-only receipt
 `.autopilot/oracles/rnaseq-qc-junctions-2026-11-01.json` is accepted after full
-authenticated recovery and independent six-call reduction. Task2 is assigned;
-Task3 and native/performance/publication acceptance remain unearned. The
+authenticated recovery and independent six-call reduction. Task2 is locally
+accepted after one whole-feature review and root full release verification;
+clean owner is a618e6ab293e2fb7a113d949197e1bb43ecc7733. Its exact additive
+four-native candidate is being prepared. Task3 and new four-native/performance/
+publication acceptance remain unearned. The
 earlier failed startup run remains failed; no old-five proof is relabelled.

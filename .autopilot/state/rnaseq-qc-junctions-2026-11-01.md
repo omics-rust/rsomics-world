@@ -1,5 +1,31 @@
 # SDD ledger — plan: docs/plans/2026-11-01-rnaseq-qc-junctions.md
 
+## Complete native junction wave locally accepted and committed
+
+Root reads the complete author REPORT909e6f5099106fc99357f00fc3ee7f8333dacf29d94156b7f334ba90c1e331d4,
+all production/test/doc changes and fresh whole-feature review
+e877da17c1ecbf091c70ef38fdb9ff0aeca82e33f3522895c2134363c2800dc5
+at rnaseq-junction-native-review-20261101.XCRLMD. No actionableP1/P2 or fix
+wave is required. Root freshly verifies all66 candidate and139 author-packet
+files, then runs the FULL guarded release suite:4unit/8workflow/0ignored,
+workflow5.47s. Logs are rnaseq-junction-root-acceptance-20261101.om97M6.
+
+Root commits clean private owner maina618e6ab293e2fb7a113d949197e1bb43ecc7733,
+treee81e89d6e6ae6a8ae7a83a6a6d82cdc9a2aa20bb. Original-record junction
+observation precedes ownership transfer and shares one BAM traversal; focused
+and typed opt-in report selection preserve the default five. Original captured
+rows/counters/order, strict aliases, source/canonical CIGAR distinctions and
+atomic-set failures qualify locally. Captured chr1/CHR1 stress input keeps the
+old Distribution rejection; separate native single-contig data checks all-six
+projection, not a fabricated new five-metric upstream witness.
+
+No dependencies/public APIs/foundations/second binary change. No-N/all-short
+complete zeros remain explicitly intentional source incompatibilities. One
+bounded operational author now prepares additive exact-source four-native
+qualification; all old source/native/performance authorities stay historical.
+New four-native/full-input21-command/performance/publication gates remain
+pending. No extra review/test ladder or unchanged old-five campaign is added.
+
 ## Actual six-call junction source accepted; Task2 implementation assigned
 
 Root fully reads225-line review REPORT352272f24a8e075d3171537c0249a3c5954f05c24d7cc585cf3beb1330e4bbef,
