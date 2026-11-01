@@ -1,6 +1,28 @@
 # Fixed private HGDP whole-workflow gate
 
-## Prepared-reader green7 accepted; final whole route prepared
+## Prepared-reader green7 accepted; final whole campaign dispatched
+
+Exact Control41334861328 passes at40b2989b419c9eb3eb61603a0c3e8d0cde254d74.
+After fresh remote allocation accounting, root admits the final208GiB recovery
+root and dispatches the unchanged whole workflow exactly once: actual
+41335480371/1 at that controller, explicitly selecting the committed green7
+receipt. The latest live API observes in_progress, not a performance result.
+Fresh Bookworm/native runtime, all seven original stage gates and complete
+terminal-original recovery remain required; do not reuse prior timings.
+
+Actual current remote envelopes total540GiB plus independent8GiB headroom:
+Ecology96, old Index76, observer8, failed changed Index76, corrected Index76,
+and final PLINK208. Only Ecology's224GiB UNUSED planning allowance is retired
+after all eight originals are root-adopted. No files/partials/old reservation
+records are deleted or altered. Fresh unique-device/inode allocated-block
+credit72588529664B leaves required515821989888B versus free569886441472B.
+The new authoritative reservation is3412B/SHAed4bc4bb under the final PLINK
+root. Full admission and single-dispatch binding are recorded in
+plink-final-recovery-admission-2026-11-02.json; cWd8q9/admission.stdout
+SHA47667202 is the original proof, exit0/empty stderr. This is a logical
+reservation, not an exclusive filesystem quota or global-writer proof.
+
+## Prepared-reader source and route acceptance
 
 Root adopts actual41329335343/1 atff558968 over clean owner7b214436,
 all five complete originals in m21dVh. New ELF76a81eee/3103032B and complete
@@ -16,11 +38,10 @@ stderr a36f534b. No cohort/region/flag/comparator/graph/trial/resource/gate
 function changes and no new benchmark executes locally. Bookworm runtime
 admission, complete final performance and new original custody remain gates.
 
-Separate final-campaign capacity planning is active. Existing remote556GiB
-envelopes/8GiB headroom and all old originals are preserved. The terminal
-Ecology original recovery must be complete/root-adopted before retiring any
-unused planning allowance; do not assume old12GiB PLINK terminal size or
-silently reuse released208GiB. Fresh admission precedes any scientific launch.
+The earlier556GiB capacity map is historical; the newly admitted540GiB map
+above supersedes its unused planning allowances, not its original records.
+No old12GiB PLINK terminal size is assumed and the new208GiB envelope is not
+silently reused from the earlier never-created recovery proposal.
 
 ## Actual green5 native/source originals adopted; coupled data-plane B assigned
 

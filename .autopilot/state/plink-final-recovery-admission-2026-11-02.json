@@ -1,0 +1,101 @@
+{
+  "admitted": true,
+  "all_existing_bodies_partials_preserved": true,
+  "all_remaining_allowances_reserved": true,
+  "control_ci": 41334861328,
+  "controller": "40b2989b419c9eb3eb61603a0c3e8d0cde254d74",
+  "corrected_index_full_76_gib_preserved": true,
+  "credit_method": "unique (st_dev,st_ino) allocated st_blocks*512 in same owned envelope once",
+  "data_deleted": false,
+  "device": 2096,
+  "ecology_all_eight_adopted": true,
+  "ecology_prior_planning_bytes": 343597383680,
+  "ecology_receipt": ".autopilot/oracles/ecology-beta-eight-real-2026-11-02.json",
+  "ecology_receipt_sha256": "e3bee7c374b893cca73ba1cb1fb37fdc701e05139023938ada456375e201f7a5",
+  "ecology_terminal_envelope_bytes": 103079215104,
+  "ecology_unused_allowance_retired_bytes": 240518168576,
+  "existing_envelopes": {
+    "corrected_index": {
+      "allocated_bytes": 8192,
+      "credited_unique_allocated_bytes": 8192,
+      "entries": 2,
+      "logical_envelope_bytes": 81604378624,
+      "path": "/home/liangjy/rsomics-index-bgzf-copyright-recovery-20261102",
+      "regular_bytes": 2750
+    },
+    "ecology": {
+      "allocated_bytes": 38343782400,
+      "credited_unique_allocated_bytes": 38343782400,
+      "entries": 136273,
+      "logical_envelope_bytes": 103079215104,
+      "path": "/home/liangjy/rsomics-ecology-beta-recovery-20261101",
+      "regular_bytes": 37985536905
+    },
+    "failed_changed_index": {
+      "allocated_bytes": 5816471552,
+      "credited_unique_allocated_bytes": 5816471552,
+      "entries": 4417,
+      "logical_envelope_bytes": 81604378624,
+      "path": "/home/liangjy/rsomics-index-bgzf-hotpath-recovery-20261101",
+      "regular_bytes": 5804564140
+    },
+    "old_index": {
+      "allocated_bytes": 28328329216,
+      "credited_unique_allocated_bytes": 28328329216,
+      "entries": 15141,
+      "logical_envelope_bytes": 81604378624,
+      "path": "/home/liangjy/rsomics-index-bgzf-recovery-20261101",
+      "regular_bytes": 28284807968
+    },
+    "plink_observer": {
+      "allocated_bytes": 99938304,
+      "credited_unique_allocated_bytes": 99938304,
+      "entries": 79,
+      "logical_envelope_bytes": 8589934592,
+      "path": "/home/liangjy/rsomics-plink-attribution-20261101",
+      "regular_bytes": 99714610
+    }
+  },
+  "free_bytes": 569886441472,
+  "guessed_dedup_credit": false,
+  "independent_headroom_bytes": 8589934592,
+  "logical_reservation_not_exclusive_quota": true,
+  "mount": [
+    "/dev/sdd[/home/liangjy]",
+    "ext4",
+    "/home/liangjy"
+  ],
+  "native_attempt": 1,
+  "native_ci": 41329335343,
+  "native_receipt": ".autopilot/oracles/plink-native-2026-11-02-green-7.json",
+  "native_receipt_sha256": "b24e6750cc5021d026b79497de9bff434bdc5bebb5f1262fa2d6cdf8de1d9446",
+  "new_envelope_bytes": 223338299392,
+  "new_root": "/home/liangjy/rsomics-plink-green7-recovery-20261102",
+  "new_root_was_absent": true,
+  "old_reservation_records_modified": false,
+  "own_allocation_credit_bytes": 72588529664,
+  "owner": "7b21443622321b3bd9adeb5059e3035de69c4ea4",
+  "prior_total_envelopes_bytes": 597000454144,
+  "record": "plink-green7-20261102-40b2989b-remote-dev-sdd-208GiB",
+  "required_after_verified_same_envelope_credit_bytes": 515821989888,
+  "required_zero_credit_bytes": 588410519552,
+  "schema": "rsomics.plink.final-whole-recovery-admission.v1",
+  "scientific_execution": false,
+  "total_envelopes_bytes": 579820584960,
+  "uid": 1006,
+  "utc": "2026-11-01T18:08:48Z",
+  "root_proof": {
+    "local_directory": "/Volumes/KIOXIA/Developments/tmp/plink-final-admission-20261102.cWd8q9",
+    "stdout_sha256": "47667202aec65ca3573e0a9734fb53034ce4f1053bb066f8cc71475128bfdb83",
+    "remote_authority": "/home/liangjy/rsomics-plink-green7-recovery-20261102/reservation.json",
+    "remote_authority_bytes": 3412,
+    "remote_authority_sha256": "ed4bc4bbf5a37164c5bfc48fc9f224914d1e11c0ca051378efdda7dbbddbda0b",
+    "exit_code": 0,
+    "stderr_bytes": 0,
+    "exact_control_success": true,
+    "dispatched_run_id": 41335480371,
+    "run_attempt": 1,
+    "dispatch_count": 1,
+    "runtime_or_performance_acceptance_inferred": false
+  }
+}
