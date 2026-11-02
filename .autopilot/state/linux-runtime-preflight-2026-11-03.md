@@ -156,3 +156,140 @@ a future actual build receipt and separately reviewed ABI proof, retains all
 four product pins/five phases/seven counts and unchanged inputs, and makes no
 benchmark/publication claim. It remains unexecuted; no successful build or
 runtime support is inferred from that source review.
+
+## Once-only offline completion admission
+
+Root reads the full361-line complete_offline.py and its complete README,
+freshly verifies the frozen helper19933B SHA-256
+`f545ad14093dee9106f43269b38391da965630b9f42d538da69c7633acd606e0`,
+and authorizes exactly one bounded171-body transfer/offline completion.
+Preparation packet: `plink-iw1-phase-prep-20261103.0xDzr1VR/offline-completion-prep`.
+Actual original acquire.failure.json is360B SHA-256
+`1c3ca191c6c15b39f1397394297bda4cddcde86faae129bd4b02224b6a5818c1`;
+root reads it directly, alongside the retained successful1.91/f8297e351 version.
+
+Carry full joined618GiB and private8GiB root,64MiB local preparation,
+32MiB transfer and existing process/time/stream/cache bounds. Transfer only
+the pinned archives/index/config into private registry; preserve identical
+existing files and stop on conflicts. Run only direct version verification
+and locked offline fetch, with network-offline configuration. Preserve all
+old failed-acquire bodies and all partials. No reinstall, online retry, build,
+science, baseline replacement, cleanup or automatic retry is authorized.
+After actual success only, the previously absent acquire.success.json may
+truthfully record action=acquire-offline-completion and the preserved original
+failure, providing the unmodified v2 build result schema. It must not claim
+the original online action succeeded. Compilation requires a later decision.
+
+Offline completion handle74845 exits0. Root independently reads the actual
+33604B acquire.success.json SHA-256
+`34e4c528dd3ff525e0acc36028444aae9d9a82e7d0886080dff14999c72b3175`.
+Its action explicitly records the separate offline completion, not original
+online success; original failure SHA remains1c3ca191..., installation and online
+fetch are not rerun. Offline fetch actually exits0 with empty stdout/stderr;
+all85 archives and original lock remain exact. Own allocation846422016B and
+cache11102861B remain below existing limits; fresh free853337153536B passes.
+Transfer receipt59923B SHA-256
+`dd231dfb1df8d66c47925ee575d53501a27e6e585ce3bee22165876e82a36643`.
+
+## Once-only offline build admission
+
+After actual offline completion, root authorizes one build action using the
+unchanged v2 controller a51c392d... and its original8GiB/process/time/stdio/
+joined-capacity bounds. Reverify source/lock, actual private compiler/manifest,
+all exact archives and system compiler inputs, then require actual Cargo
+metadata's resolved external target before the fixed jobs2 locked offline
+release build. No dependency download, source change, compiler fallback,
+baseline replacement, scientific execution or automatic retry is authorized.
+The diagnostic artifact remains separate from the owning product and cannot
+be called performance-qualified or release-ready by compilation alone.
+
+Build observation handle56972 remains live. Root directly observes Cargo
+PID/PGID869840, startticks396562581, with the matching recorded target identity;
+compilation has reached rsomics-plink and no build success/failure receipt yet
+exists. Inspect this same process/handle, never restart on observation timeout.
+
+Build handle56972 exits0. Root independently reads build.success.json6702B
+SHA-256`fd51e517f3fb1cf1628f2c2062bd7e5a9d5ac1a868a84753e76e5e238c431de2`;
+artifact3367856B SHA-256
+`7027653f15200f7fae317ca5170467b73571c4ced5b0c53746944a49df10c837`.
+Actual Cargo metadata resolves the approved target, original source/lock remain
+exact, and release compilation exits0. Actual own allocation1016594432B and
+sampled build-group RSS535748608B remain within the admitted bounds.
+
+## Diagnostic staging and static preflight admission
+
+Root authorizes one inert copy of the two previously fully reviewed frozen
+one-iw1 helpers into the new one-iw1 subdirectory, then one static preflight
+with that exact build receipt. Runner SHA22ff9039... and ABI helper SHA0b16d815...
+are rechecked in full before transfer/execution; unchanged v2 capacity and
+private-root guards apply. Preflight may create a separate diagnostic binary
+copy and run only pinned metadata inspectors to prove actual ELF/providers/ISA.
+No scientific target/loader execution, product-input mutation, old-baseline
+replacement, cleanup or retry is authorized. Root must review the actual
+static proof before admitting the single I-w1 command.
+
+Inert stage62559 exits0 with both exact helper bodies; static preflight3780
+exits0 without scientific execution. Actual STATIC-ABI.json16641B SHA-256
+`3922a4fa4d08b3a5a6f2d16872ce02e49dad725b9d2af03014aa427af21f1945`
+binds the actual built diagnostic copy,126 mandatory native imports and five
+fresh providers. Seven retained inspector calls establish no unmet mandatory
+symbols/versions, unknown ISA declarations or missing declared CPU features;
+no search paths/preload are admitted. Root reads the actual proof summary,
+provider bodies' identities and build/runner bindings. This does not prove
+absence of undeclared ISA requirements or scientific correctness.
+
+## Once-only I-w1 diagnostic admission
+
+Root authorizes exactly one run action of the frozen22ff9039... runner using
+the above actual build and ABI hashes. Actual BED FINISHED.json SHA-256
+`c6c84fd53e19d737256ba43892263c1a7a74b0d61423cbac26ef6266083bc9a7`
+is independently read and confirms24 commands/full outputs equal; its runner
+was already observed absent. No timed BED work remains to contend with this.
+Keep the full929-sample/231470-variant I-w1 input and four product pins,
+five phase records/seven append counters, one command/no warmup or comparator,
+original2GiB application argument, fixed affinity0–3 and all existing root/
+subtree/process/time/stream bounds. Preserve actual target/wrapper status and
+any partial/failure; no automatic retry, source comparison, old32-call rerun,
+performance acceptance or product optimization is authorized by this launch.
+
+Actual I-w1 handle10111 exits0. Root directly reads run.success.json8907B,
+SHA-256`536ffbe95c078323ca0ecd5c811e52977dbd6d2db56409a67915619ec893c26f`.
+Both actual target wait status and guardian exit are0. All four product
+size/SHA pins match the original native baseline; JSON dimensions remain
+929samples/231470variants/requested1/writer1. Seven append counts total231470:
+221914 biallelic_genovec,9556 multiallelic_sparse, all others0.
+
+| Observed interval | Seconds |
+|---|---:|
+| metadata/index preparation |0.310615654|
+| read/append/finish |0.391202195|
+| metadata output |0.058841137|
+| output hashing |0.237101583|
+| manifest/commit |0.275726330|
+
+Actual target wall1.410436432s, phase sum1.273486899s and unassigned residual
+0.136949533s; CPU user0.927742/system0.166594s, max-process RSS96137216B.
+This one instrumented observation is diagnosis, not a benchmark median,
+source-cost attribution, aggregate memory or green13 causal speedup. Cost is
+distributed across metadata, codec/ownership, hashes and commit; redundant
+mask stores alone cannot be asserted to explain the whole negative gate.
+Next read-only source analysis must preserve output pins, durability, hashes
+and requested-worker contract; no new instrumentation/replay is implied.
+
+Small-original packet plink-iw1-phase-evidence-20261103.8kL0NSeV retains48
+bodies/253187B. Root reads its full report/replay, verifies packet and current
+owner/consumed-dependency pins, then independently runs the full data-only
+replay: exit0. Failed online acquisition, offline completion/build, actual
+target/guardian records and five phases/seven counts/four recorded pins agree.
+Large genotype payloads are not retransferred or freshly rehashed by replay.
+
+Root reads both actual metadata construction files and BED/VCF call sites,
+then adopts docs/plans/2026-11-03-plink-metadata-construction.md for one
+product-private construction wave. No foundation or codec/hash/durability
+policy is introduced; the original whole-performance gap remains open.
+
+Task1 implementation is dispatched as bounded isolated agent
+`/root/plink_metadata_wave` against clean e210101. Only the two planned metadata
+files/inline consumers may change; no remote/campaign/publish or Git staging is
+delegated. Its baseline resource criterion and RED precede production edits;
+one whole-feature review/integration remains a future gate.
