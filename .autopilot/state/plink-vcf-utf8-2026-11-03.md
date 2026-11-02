@@ -66,3 +66,26 @@ All3 existing preparation tests pass under the external guard. The retained
 workflow graph remains123 reports/66 worker calls; new complete Rust population
 is13 library/3 integration, and older snapshot requirements remain unchanged.
 Exact-head control CI and actual combined native/source execution are next.
+
+Controller556d2dce258ed6451f37ca75e0628f9cb3b1e922 passes exact-head
+Control plane41484392712. One green12 native-four/source run41484808138 is
+dispatched from that head. Its result and complete original artifact adoption
+remain pending. Preserve this handle; no duplicate launch on observation timeout.
+
+## Actual first-attempt infrastructure failure
+
+41484808138/1 is terminalFAILURE. Linux2 and MacIntel pass and their complete
+originals are verified; MacARM job125412224300 has runner_id0/steps[] and is
+cancelled after15 minutes. Raw annotations explicitly identify hosted arm64
+capacity constraints and failure to acquire a runner. Source consumer is
+skipped. Root reads terminal APIs/report/original annotations and records
+`.autopilot/oracles/plink-native-2026-11-03-green-12-attempt-1-failure.json`.
+No four-platform/source or performance acceptance follows.
+
+Root requests one full rerun of the same immutable run/head, expected attempt2.
+Not failed-jobs-only: the unchanged source workflow requires this attempt's
+Linux artifact, so selective rerun would lack its actual carrier. All previous
+failure, partial-download and successful-target originals remain preserved.
+No third automatic capacity retry is authorized here; other unblocked product
+work continues if runner capacity fails again. No scientific benchmark starts
+before actual combined native/source adoption.

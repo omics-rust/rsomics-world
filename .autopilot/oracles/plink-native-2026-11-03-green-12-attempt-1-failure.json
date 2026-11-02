@@ -1,0 +1,27 @@
+{
+  "schema": "rsomics.plink.native-failure.v1",
+  "run_id": 41484808138,
+  "run_attempt": 1,
+  "head_sha": "556d2dce258ed6451f37ca75e0628f9cb3b1e922",
+  "snapshot": "green-12",
+  "owner_commit": "1906a48b8e6e70bf2478c8e3daf1a44c38c56572",
+  "conclusion": "failure",
+  "failure_class": "hosted macOS arm64 runner capacity; no product test executed on that target",
+  "successful_native_targets": ["linux-x86_64", "linux-aarch64", "macos-x86_64"],
+  "cancelled_job": {
+    "id": 125412224300,
+    "target": "macos-aarch64",
+    "runner_id": 0,
+    "steps": [],
+    "annotation": "The job was not acquired by Runner of type hosted even after multiple attempts"
+  },
+  "source_consumer": "skipped because native prerequisite failed",
+  "four_native_and_source_passed": false,
+  "performance_acceptance": false,
+  "publication_acceptance": false,
+  "original_packet": "/Volumes/KIOXIA/Developments/tmp/plink-green12-originals-20261103.i653webr",
+  "proposal_sha256": "5676fbfde63ba19a9b384d0d1da983d07a2f4f575e50e0a03dc65284a4a1dcdd",
+  "original_verification_sha256": "93e3d30609057ec24aa5ab1806416e3d2c6606dbe5f5fb809adbfae537fd3aa7",
+  "annotations_sha256": "72d19b993537da99cc42dc58890bde56cd9ee29b5ec08b042bd0feb945d8eaa3",
+  "root_review": "Read terminal APIs, complete report and original cancellation annotations; no nonexistent target/source logs inferred. Three native originals replayed by bounded acquisition worker."
+}
