@@ -1,9 +1,9 @@
 # VCF current-source four-native integration
 
-Current: frozen176-body candidate and existing workflow update root-adopted
-for one full integration attempt. No native result, representative performance,
-owning release or public compatibility-policy acceptance is claimed. Dispatch
-follows the exact-head World Control pass; missing-LF and tied-order choices
+Current: full native integration41411386463/1 is actually running on frozen
+World0c360522b190479ef440a3fed0dfb8e367afeac4. No native result,
+representative performance, owning release or public compatibility-policy
+acceptance is claimed. Missing-LF and tied-order choices
 remain human-pending and do not authorize frozen0.6 publication.
 
 ## Frozen source, not only owning HEAD
@@ -58,3 +58,17 @@ native result. Platform compilation/testing is not throughput/RSS/I/O evidence,
 not full concat/public delivery, and not resolution of the known foundation
 non-UTF8 filename follow-up or the two pending public policies. Existing
 accepted local452/64ignored plus14 explicit tests retain their exact scope.
+
+## Actual dispatch
+
+Exact-head Control41383866471 succeeds at0c360522b190479ef440a3fed0dfb8e367afeac4.
+Root freshly verifies public refs/heads/main equals that head, then dispatches
+`vcf-candidate.yml --ref main -f regressions_only=false` once. Actual run
+41411386463/1 is created2026-11-02T08:12:47Z with that exact head/event and
+statusin_progress. The dispatch is not a pass or release. No earlier expected-
+red run is restarted and no duplicate attempt is authorized.
+
+Retain all four actual original artifacts/job logs and assess required steps,
+complete frozen source and built binaries before adopting any terminal result.
+No recovered executable/scientific source needs local execution for retention.
+PLINK's independent product-local pipeline continues while this gate runs.
