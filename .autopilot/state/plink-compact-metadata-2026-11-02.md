@@ -1,8 +1,40 @@
 # PLINK compact metadata wave
 
-Status: implementation in progress, no integration/native/performance or
-publication acceptance. Full portfolio goal remains active; the previous
-turn made concrete code, namespace and32-command diagnostic progress.
+Status: private source integrated as499693cf5629420a0a5171e700afdda264e3aa0d;
+new native/performance/publication acceptance remains pending. Full portfolio
+goal remains active.
+
+## Integration 2026-11-03
+
+Root independently matches all11 frozen source hashes and reads the complete
+delta. One fresh whole-feature review finds no blocking or actionable issue
+in ownership, cross-arena content equality, constructor coverage or shared
+versus clone accounting. No additional review ladder or policy change.
+
+Implementer logs retain full debug/release10-library plus3-integration passes,
+strict all-target/all-feature Clippy and formatting passes. Root's earlier
+session66742 is absent, with no recoverable exit status; it is not counted as
+a successful run. A new guarded full debug run54669 finishes exit0,10 library
+and3 integration tests, zero failed/ignored, plus zero main/doc tests. The
+guard verifies external disk12s1,36GiB free, resolved Cargo target and all
+Cargo/Rustup/scratch/cache paths before execution.
+
+The fixed resource regression moves from5022863 to4106987 owned-accounting
+bytes; this is not actual cohort RSS or throughput. Existing negative real
+performance evidence remains authoritative. The commit does not change pair
+scheduling, numeric behavior, output schemas, dependencies or public APIs.
+Next gate: immutable Git-source green11 capture and one actual four-native/
+same-generation source-consumer qualification before representative timing.
+
+Green11 now captures all306 Git blobs and modes from commit499693cf, tree
+8d3097b449fd82d4893fa6d9f267fd2aff3447fa. Root independently compares every
+archive member against its Git blob and mode and replays snapshot checksums.
+Archive541474 bytes SHA256
+9c86cd9048b4d275b63869d4c283f1421473a6c349b8053ad5b1bc125bc48920;
+no AppleDouble or untracked files. All3 existing preparation tests pass under
+the external guard. The source workflow remains123 reports/66 worker calls;
+only green11's complete Rust population changes to10 library/3 integration.
+Old snapshot requirements remain unchanged. Hosted qualification is pending.
 
 Owner: `/Volumes/KIOXIA/Documents/omics-rust/rsomics-plink`, base
 `9d43df417bf2a729438fb4194e9f82cbba10fe6c`.

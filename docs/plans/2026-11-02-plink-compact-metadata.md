@@ -13,7 +13,7 @@ crate or borrowed self-referential model.
 
 **Tech stack:** Rust1.91, standard-library Arc/ranges and existing dependencies.
 
-**Spec:** rsomics-world/AGENTS.md; `docs/10-products/plink.md`;
+**Spec:** rsomics-world/AGENTS.md; `docs/10-products/genotype-popgen.md`;
 `.autopilot/state/plink-locality-batches-2026-11-02.md` and root-adopted
 `plink-targeted-diagnostic-2026-11-02-green-10.json`.
 
@@ -83,37 +83,37 @@ allocate per default. Allele substrings share the same owned text; no unsafe
 view or per-field Arc<str> allocation. Arc to a sized Arena keeps reference
 storage compact. Row field boundaries are flat, not Vec<String> per row.
 
-- [ ] Add the real resource regression before implementation: parse PSAM
+- [x] Add the real resource regression before implementation: parse PSAM
   plus10,000 valid five-column PVAR rows, compare owned metadata accounting
   with a fixed byte budget. First measure/retain the old count, then set one
   literal useful limit below that count that the compact representation can
   meet. Expected RED is existing duplicate storage exceeding that budget,
   not a benchmark or arbitrary struct-size/text assertion. Preserve fixture
   and exact old result; do not delete failure data.
-- [ ] Add one small consumer-visible roundtrip with unknown PSAM/PVAR
+- [x] Add one small consumer-visible roundtrip with unknown PSAM/PVAR
   columns, UTF-8 values, multiple ALT alleles and INFO/PR updates. Literal
   full output bytes derive from the current writer's retained pre-change
   output. Exercise a clone after original metadata/source buffers drop.
   Existing actual VCF workflow tests own cross-pass/arena semantic equality;
   do not add tests for every getter or layout constant.
-- [ ] Implement the private arena/row/text ownership model and migrate
+- [x] Implement the private arena/row/text ownership model and migrate
   Sample/Variant textual fields plus every constructor (PGEN, BED and VCF).
   VCF metadata should finalize a shared table, while its transient second-pass
   record may own a separate arena; contents must still compare equal.
-- [ ] Adapt consumer lookups/formatting with borrowed string access, preserving
+- [x] Adapt consumer lookups/formatting with borrowed string access, preserving
   selection and order. Keep sample selector semantics; do not redesign the
   selector file grammar or other chromosomes in this wave.
-- [ ] Update metadata_bytes and VCF reader/make/LD workspace estimates.
+- [x] Update metadata_bytes and VCF reader/make/LD workspace estimates.
   Count unique arena backing once per live ownership scope, vector capacity
   and owned allele containers accurately; document only the non-obvious
   shared-ownership invariant if needed. Do not drop budget checks or rely on
   allocator-private layouts. A conservative small Arc/control allowance is
   acceptable; representation tests cannot replace code review of accounting.
-- [ ] Run guarded fmt, strict all-target/all-feature Clippy, full debug/release
+- [x] Run guarded fmt, strict all-target/all-feature Clippy, full debug/release
   tests including the existing complete native workflow and raw GT/DS/HDS
   cases. Expected: all existing and new tests pass; no suppressed diagnostic.
   Do not claim remote representative speed/RSS improvement from unit budgets.
-- [ ] Freeze the exact complete source delta and logs, including actual RED,
+- [x] Freeze the exact complete source delta and logs, including actual RED,
   literal pre-change outputs, final test populations and known limitations.
   Leave owning index empty and report root-ready; no partial CLI advertised.
 

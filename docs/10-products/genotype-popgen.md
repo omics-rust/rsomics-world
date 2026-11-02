@@ -5,7 +5,17 @@ complete. The initial2026-07-31 inspection found neither target repository;
 this is not a current live-registry assertion. Current PLINK source preflight
 is recorded in `.autopilot/state/plink-source-preflight-2026-10-31.md`.
 
-Current2026-11-02 PLINK: bounded ordered-output/PGEN pipeline owner80fafbf8
+Current2026-11-03 PLINK: private compact metadata owner499693cf is integrated
+after complete source review, one independent whole-feature review and root
+debug10-library/3-integration tests. A new immutable native/source gate remains
+pending; owned-metadata accounting decreases5022863 to4106987 bytes on the
+fixed regression, not a measured cohort RSS or speed claim. Prior green10
+owner9d43df4 native/source41443045747 passes. Its same-campaign32-command
+diagnostic retains slower/higher-RSS import and poor four-worker LD scaling;
+see `.autopilot/state/plink-locality-batches-2026-11-02.md` and
+`.autopilot/state/plink-compact-metadata-2026-11-02.md`.
+
+Historical2026-11-02 PLINK: bounded ordered-output/PGEN pipeline owner80fafbf8
 and actual green9 native/source41415209242/1 are accepted after complete
 original adoption and root data-only numeric/raw replay. Its305 exact Git
 source bodies, native4 debug/release7-library+1-whole-CLI tests and224 source
