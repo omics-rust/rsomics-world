@@ -5,6 +5,10 @@ review and root source/hash inspection. Native-four and same-generation source
 fixture correctness are accepted; representative performance and publication
 remain unearned. The previous complete negative whole
 run remains authoritative; no numerical or durability policy is relaxed.
+Two separately retained diagnostic launches stop at the first warmup's
+evidence guardian despite native exit0; no accepted paired timing exists.
+Further scientific launches are held pending an accounting/lifecycle decision,
+while independent product work continues.
 
 Plan: `docs/plans/2026-11-02-plink-locality-batches.md`.
 Packet: `/Volumes/KIOXIA/Developments/tmp/plink-locality-batches-20261102.aFybZb`.
@@ -172,3 +176,54 @@ remain, with metadata-only observed sizes13209205/10966762/35450/478 bytes;
 no product body correctness or performance acceptance follows. Guardian's raw
 waitpid value was not retained and must not be invented. Permission failure
 cause remains to diagnose; do not silently ignore it or relax the guard.
+
+Root reads the full frozen lifecycle and a single controlled non-scientific
+probe. Same-host/UID1006 sibling and parent both read target fds while live;
+after exit0 but before reap both observe stateZ/mm0 and EACCES13; after reap
+both observe ENOENT2. Probe4548 bytes SHA256
+`0661ae65540341cbfd0c08d69c94dbe975b4f51077fb1bd1d6c94b62c00d3755`.
+No product/genotype access, remote files, scientific execution or repetitions.
+Actual native state at the original failing instant was not recorded, so this
+demonstrates a mechanism rather than proving unique historical causality.
+
+The guardian can already be scanning when parent wait4 returns and signals
+stop. Root authorizes preparation/tests of a minimal pidfd-bound lifecycle
+correction in a new packet only: proven target termination can end fd sampling,
+while unreadable live targets must still fail. Existing byte/capacity/time/
+stdio/input/output/manifest checks remain. No revised scientific launch is
+authorized before reviewing the new frozen runner and admission binding.
+
+## Reviewed pidfd revision and actual second guardian failure
+
+Root fully reads the13738-byte revised runner, admission helper, narrow diffs,
+RED/GREEN originals and capacity evidence. Independent frozen helper/stage/
+native identities pass. Actual ABI-bound admission-v1 PLAN equals the new PLAN
+after only administrative namespace replacement; scientific32 argv/inputs/
+thresholds are unchanged. An earlier comparison against pre-ABI revision2
+metadata was the wrong reference and is not a scientific discrepancy.
+
+Frozen revision packet: DqUmZX/pidfd-v2, FROZEN.json SHA256
+`d47c5b21ce2c17eeb59f7b3d9f7e0fde714d8913c70997cde76e2b8e273a48fe`.
+Runner SHA256
+`74efe2a13369be973bc998011c8a3bdede85e79d2c76e90be5a895aa6088195c`.
+One root-authorized fresh admit/launch session51953 exits0. Actual admission
+SHA256 `3a8826b8061a11f615dfdbe76e93e97bb6ef354511d8646b9558aa1dcb211399`.
+Root reads durable launch PID/PGID202670/start_ticks393857802 at14:35:15Z.
+New root is diagnostic-green10-pidfd-v2; original failed namespace remains.
+Both12GiB subcaps fit inside the existing208GiB authority; no global expansion.
+
+At14:35:36Z this exact runner is terminal. Again only the first native I/w1
+warmup starts; no COMPLETE/FINISHED, zero of32 valid diagnostic observations.
+Root reads original RESOURCES/GUARD-FAILURE/runner stderr: native202723 exits0,
+stderr empty, guardian202724 raw wait_status256/exit1. This time the recorded
+pidfd is NOT ready at EACCES on /proc/202723/fd, but is ready after parent wait.
+The earlier single-thread Python probe covered a later terminal state, not
+this observed interval. Do not label the actual cause fully solved or treat
+the failed guard's raw warmup wall as an accepted measurement.
+
+Original small terminal packet13596 bytes SHA256
+`d85bc7f899929d66fff39798092e07dbeb32c6fdbf288dbebcda938d580a0ad2`.
+All four named products remain; no deletion, third scientific attempt,
+permission/threshold change or additional monitor patch is authorized. A
+bounded read-only architectural diagnosis and comparison of already-produced
+I product hashes may proceed, independently of unearned timing acceptance.
