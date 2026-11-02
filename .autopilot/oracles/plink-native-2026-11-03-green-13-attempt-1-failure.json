@@ -1,0 +1,17 @@
+{
+  "root_adopted_failure_custody": true,
+  "run": 41505309863,
+  "attempt": 1,
+  "controller_head": "7961661f5c6adb7fd7fb6b45add644077db60866",
+  "owner_head": "e21010108cd40c716f2c79d2e175875446977d60",
+  "packet": "/Volumes/KIOXIA/Developments/tmp/plink-green13-originals-20261103.oEdDuCvB",
+  "pins_sha256": "dffb7f2278a829db5de67b95cb8c44670de77ff365341a0172cf9b06e591edc9",
+  "report_sha256": "20948166a1dc17b5a05236d3cef3d141631b4e2dff377d0c4ec2a82ff3f94aa5",
+  "root_replay": "6956 pinned body lengths/hashes/local modes and three original ZIP CRCs independently pass; root reads terminal run API and hosted-ARM failure annotations",
+  "macos_arm_job": 125482980790,
+  "failure": "hosted runner not acquired; runner_id0, steps empty; source consumer skipped without execution",
+  "successful_native_targets": ["linux-x86_64", "linux-aarch64", "macos-x86_64"],
+  "native_four_source_acceptance": false,
+  "performance_acceptance": false,
+  "publication_acceptance": false
+}

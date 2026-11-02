@@ -1,0 +1,90 @@
+{
+  "schema": "rsomics.plink.native-adoption.v1",
+  "product": "rsomics-plink",
+  "repository": "omics-rust/rsomics-world",
+  "workflow_path": ".github/workflows/plink-candidate.yml",
+  "run_id": 41505309863,
+  "run_attempt": 2,
+  "head_sha": "7961661f5c6adb7fd7fb6b45add644077db60866",
+  "conclusion": "success",
+  "root_adopted": true,
+  "owner_commit": "e21010108cd40c716f2c79d2e175875446977d60",
+  "owner_tree": "95c93807bd61ea5c953b786072103a74b1d41535",
+  "snapshot": "green-13",
+  "source_file_count": 307,
+  "source_archive_sha256": "de4bf7d4021c4d0bc3b479d8373076725166c58dcb2c3546fa534d8bfabd7ac7",
+  "source_manifest_sha256": "a186da2c4c214512b61635b31665a36956075cdf3e4a7688d89fc9c561617a8b",
+  "artifact_id": 13172972228,
+  "artifact_name": "plink-native-41505309863-2-linux-x86_64",
+  "size_in_bytes": 16026313,
+  "artifact_sha256": "e7d4fc4a14febdc088b4918d49663d634028e8d90fb67954f35a81a00408babe",
+  "binary_sha256": "b00af1dfd0f59064a261f021767443d3129b5609073f34c42fcecf7cdefc1bf3",
+  "native_tar_sha256": "4386c1a66092202661e460dc16c52bd462d1034cbf5f231d771bdf4a30a51ae7",
+  "four_native_and_source_passed": true,
+  "workers": [
+    1,
+    4
+  ],
+  "native_targets": [
+    "linux-x86_64",
+    "linux-aarch64",
+    "macos-x86_64",
+    "macos-aarch64"
+  ],
+  "controller_sha256": {
+    ".github/workflows/plink-candidate.yml": "bea055976e5630f10fa9c55c7c3ada327f19a7db3209aaea46e7c39280bf9193",
+    "assets/plink-first-runtime-20261031.json": "aef2041f34ea3a9c9d62f3ee73b866788a0b263f4ddf54501d59f68bd44761ba",
+    "scripts/infercnv_source_snapshot.py": "095ebb67a2d9a050c20b6e876f2b0c9cfd26fcbf8f0ce3601a8124b292b553f2",
+    "scripts/plink_candidate.py": "09c447b5115d4241cc4791c697f4762ea366b49043d741c9a205eb89833504fd",
+    "scripts/plink_first_workflow_inputs.py": "557e32764eec82ba67f69e6efa1b88e7626d55710337c248b1a8d921a613ece3",
+    "scripts/plink_first_workflow_oracle.py": "d0cdaf2093c6d7864c54fe97b38f317dd7d34ea9effdff5f69f172e1e6fb8153",
+    "scripts/plink_pgen_capture.cc": "399a00c85e1678b1f88c093a0ca9dea55d8d5b099c84036391bf61ea8441bf61",
+    "scripts/plink_source_on_native.py": "1749496f4049cd92604d50f2241ced2deb4a69f34a57e4c89b312a7763e978ee",
+    "scripts/signal_candidate.py": "a6e9c2782553919ed70939c4cdad6fcdd8f7bd889ed63ab96b2db82dc34f9712",
+    "scripts/test_plink_candidate_workflow.py": "cc1df84a2359d6c40fd0b67381aaf5429d4dc5a29e67a74cc42032b36deef3d3"
+  },
+  "each_native_debug_and_release": {
+    "library_tests": 15,
+    "integration_tests": 3,
+    "failed": 0,
+    "ignored": 0,
+    "generations": 36,
+    "raw_cells": 74878,
+    "reports": 246,
+    "reports_per_worker_profile": 123,
+    "worker_records": 66,
+    "writer_workers": 1,
+    "git_source_bodies_and_modes_verified": true
+  },
+  "upstream_consumers": {
+    "same_native_generation_binding": true,
+    "report_commands": 224,
+    "raw_bridge_commands": 36,
+    "raw_cells": 74878,
+    "command_failures": 0,
+    "protected_runtime_controller_unchanged": true,
+    "official_source_commit_correspondence": "unproven",
+    "native_elf_executed_in_source_job": false
+  },
+  "original_packet": "/Volumes/KIOXIA/Developments/tmp/plink-green13-attempt2-originals-20261103.sHpG1qCb",
+  "proposal_sha256": "b6a2a8dfa56264f1999cb216079b0f95720980c916a96bbc6d40e75db5dba527",
+  "original_verification_sha256": "6332ed7845dfbc25297352a847799e3c9ed3b293c7b10fa59fa7b4cdac483ea4",
+  "root_original_replay": {
+    "zip_and_tar_pairs": 5,
+    "extracted_original_bodies": 10891,
+    "pinned_files": 11012,
+    "all_sizes_and_sha256_match": true,
+    "all_local_modes_match": true,
+    "four_exact_git_source_archives": true,
+    "controller_git_bodies_verified": true,
+    "profile_and_source_binding_replayed": true,
+    "local_scientific_execution": false
+  },
+  "linux_x86_64_release": {
+    "bytes": 3331696,
+    "sha256": "b00af1dfd0f59064a261f021767443d3129b5609073f34c42fcecf7cdefc1bf3"
+  },
+  "performance_acceptance": false,
+  "publication_acceptance": false,
+  "limits": "Exact fixture/native and same-generation upstream compatibility of private shared LD preparation only. No new throughput/RSS, target-provider execution, full-macro or publication acceptance. Official runtime/source-commit correspondence remains unproven; no universal allocator or metadata-first-pass budget guarantee."
+}

@@ -3,8 +3,9 @@
 Plan: `docs/plans/2026-11-03-plink-shared-pairs.md`.
 Integrated private owner is e21010108cd40c716f2c79d2e175875446977d60,
 tree95c93807bd61ea5c953b786072103a74b1d41535, clean after root commit.
-It starts from1906a48 and remains private: native-four/source qualification
-and representative performance acceptance are not yet earned.
+It starts from1906a48 and remains private. Native-four/same-generation source
+qualification is now adopted at41505309863/2; representative performance and
+publication acceptance remain unearned.
 
 Packet: `/Volumes/KIOXIA/Developments/tmp/plink-shared-pairs-20261103.w4cjwy65`.
 Root reads the actual consumer and retained RED/GREEN logs. The128-variant
@@ -113,3 +114,55 @@ workflow_dispatch event, initially queued. This is not native/source acceptance.
 Bounded observation/original retention must use this run/attempt and preserve
 any actual failure without automatic restart. No scientific benchmark begins
 before complete native-four/source adoption of this exact candidate.
+
+## Attempt1 infrastructure failure and bounded retry authorization
+
+41505309863/1 is terminalFAILURE. Linux2/MacIntel pass; MacARM125482980790
+never acquires a runner (runner_id0, steps[]), and source consumer is skipped.
+Root reads actual terminal run API and the original annotations identifying
+hosted ARM capacity/admission failure. No fourth-native/source test ran.
+
+Three available original native ZIP/TAR/body/job-log sets are sealed in
+`/Volumes/KIOXIA/Developments/tmp/plink-green13-originals-20261103.oEdDuCvB`.
+Root independently replays6956 pinned lengths/hashes/local modes and three
+ZIP CRCs, then reads the complete failure report. Missing ARM/source log HTTP
+404/BlobNotFound responses are retained, not invented execution logs. Initial
+nonfinal live-log seal mismatch is retained; final PINS has no live writer.
+Receipt: `.autopilot/oracles/plink-native-2026-11-03-green-13-attempt-1-failure.json`.
+
+Root authorizes one full rerun of this immutable run/head only after custody
+closure. Full, not failed-only: source consumers require the current attempt's
+actual Linux carrier. Do not mix attempt1 successes into attempt2 acceptance,
+and do not automatically request a third attempt. Actual rerun request/API
+state remains to be recorded. No unchanged benchmark rerun is authorized.
+
+## Attempt2 original-data adoption
+
+The single full-rerun request exits0; actual API confirms attempt2 at the same
+controller7961661f. All four native jobs actually execute and succeed, followed
+by the same-generation source consumer. Attempt1 remains failed and preserved.
+Original packet:
+`/Volumes/KIOXIA/Developments/tmp/plink-green13-attempt2-originals-20261103.sHpG1qCb`.
+Root reads the report and independently replays11012 pinned bodies/modes,
+five ZIP API digests/CRC/TAR correspondences,10891 extracted original members,
+four exact307-member Git source archives, ten controller Git bodies per
+artifact, eight15/3 populations and the source's actual Linux carrier binding.
+
+Each native debug/release population has15 library/3 integration,36 generations,
+74878 raw cells,246 reports/66 worker records; source has224 report/36 raw
+commands. Protected policy/runtime/source and official-source correspondence
+limits are unchanged. Source does not execute the native ELF. Root adoption:
+`.autopilot/oracles/plink-native-2026-11-03-green-13.json`.
+
+Actual Linux release3331696B SHA256
+b00af1dfd0f59064a261f021767443d3129b5609073f34c42fcecf7cdefc1bf3.
+No new performance/publication or universal memory-ceiling acceptance follows.
+The local originals cap is explicitly768MiB with8GiB independent headroom;
+actual conservative peak621593100B fits, with no remote budget change.
+
+One next matched diagnostic is PREP ONLY in
+`/Volumes/KIOXIA/Developments/tmp/plink-green13-diagnostic-proposal-20261103.FXg2WjYn`.
+Reuse the32-command protocol, source/input/product pins and actual new ELF.
+The fifth12GiB namespace would make60GiB reservations inside unchanged208GiB;
+four old roots stay intact and global594+8GiB stays unchanged. No admission,
+upload, launch or measurement has yet occurred; root must review/authorize once.
