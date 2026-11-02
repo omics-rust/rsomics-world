@@ -71,3 +71,39 @@ green-10. Actual run handle: `41443045747`, attempt1. This is an execution
 handle to poll, not qualification/performance success. Do not redispatch on
 observation timeout. All original native/source artifacts and failures must
 be retained and independently adopted before the next diagnostic gate.
+
+## Actual native-four/source originals adopted
+
+Exact `41443045747/1` finishes SUCCESS at the dispatch head above, all five
+jobs. Packet:
+`/Volumes/KIOXIA/Developments/tmp/plink-native-green10-41443045747.d07sXL`.
+All five original artifact ZIPs, raw APIs, complete attempt logs and inert
+extracted bodies are retained. Root independently verifies all carrier/API
+digests and CRCs, all305 source bodies and exact manifest/compiler/binary pins
+per host, all eight9-test native profiles, native graph identities/counts,
+same Linux-TAR source input and unchanged protected inputs/providers.
+
+The root metadata reader initially looked at wrapper status logs rather than
+the retained raw test streams; inspection corrected the path to
+candidate/test-MODE/stdout.txt and stderr.txt. Source observations also contain
+the raw_cells field alongside the four engine/worker maps. These were reader
+shape corrections only, not native/scientific retries or predicate changes.
+
+Each debug/release profile has8 library plus1 CLI test, zero failed/ignored,
+36 generations,246 principal reports,66 worker records and74878 raw cells.
+Source/official workers1/4 each have56 observations; the separate raw-cell
+envelope is74878. Source/official source-commit correspondence remains unproven;
+same-generation behavior is the accepted claim, not source-build equivalence.
+
+Root receipt: `.autopilot/oracles/plink-native-2026-11-02-green-10.json`.
+Actual Linux x86 release is3231104 bytes, SHA256
+`7d9b1d5bcd5cf50edc875d8e6fcae722218af491f3746a6e2b25d1a4fb057665`.
+This accepts native fixture correctness, not representative performance.
+
+The proposed32-command I/pairs diagnostic retains all outputs under a12GiB
+subcap inside the existing green9 208GiB envelope, not a new global allowance.
+Its revised runner binds actual worker1 original metadata and uses blocking
+target wait4 with a separate guardian. Fresh inert ELF/provider closure is
+prepared, but admission/launch remain unearned until root reads the exact
+final runner/plan/static pins and verifies current capacity. No diagnostic or
+new whole-workflow benchmark has executed for green10.

@@ -1,0 +1,292 @@
+{
+  "run_id": 41443045747,
+  "attempt": 1,
+  "head": "10d725c07bca0abdb4e24c8edcafeed51083d8a8",
+  "conclusion": "success",
+  "native": [
+    {
+      "target": "linux-aarch64",
+      "host": "aarch64-unknown-linux-gnu",
+      "source_files_verified": 305,
+      "modes": {
+        "debug": {
+          "test_populations": [
+            8,
+            0,
+            1,
+            0
+          ],
+          "generations": 36,
+          "raw_cells": 74878,
+          "reports": 246,
+          "worker_records": 66
+        },
+        "release": {
+          "test_populations": [
+            8,
+            0,
+            1,
+            0
+          ],
+          "generations": 36,
+          "raw_cells": 74878,
+          "reports": 246,
+          "worker_records": 66
+        }
+      }
+    },
+    {
+      "target": "linux-x86_64",
+      "host": "x86_64-unknown-linux-gnu",
+      "source_files_verified": 305,
+      "modes": {
+        "debug": {
+          "test_populations": [
+            8,
+            0,
+            1,
+            0
+          ],
+          "generations": 36,
+          "raw_cells": 74878,
+          "reports": 246,
+          "worker_records": 66
+        },
+        "release": {
+          "test_populations": [
+            8,
+            0,
+            1,
+            0
+          ],
+          "generations": 36,
+          "raw_cells": 74878,
+          "reports": 246,
+          "worker_records": 66
+        }
+      }
+    },
+    {
+      "target": "macos-aarch64",
+      "host": "aarch64-apple-darwin",
+      "source_files_verified": 305,
+      "modes": {
+        "debug": {
+          "test_populations": [
+            8,
+            0,
+            1,
+            0
+          ],
+          "generations": 36,
+          "raw_cells": 74878,
+          "reports": 246,
+          "worker_records": 66
+        },
+        "release": {
+          "test_populations": [
+            8,
+            0,
+            1,
+            0
+          ],
+          "generations": 36,
+          "raw_cells": 74878,
+          "reports": 246,
+          "worker_records": 66
+        }
+      }
+    },
+    {
+      "target": "macos-x86_64",
+      "host": "x86_64-apple-darwin",
+      "source_files_verified": 305,
+      "modes": {
+        "debug": {
+          "test_populations": [
+            8,
+            0,
+            1,
+            0
+          ],
+          "generations": 36,
+          "raw_cells": 74878,
+          "reports": 246,
+          "worker_records": 66
+        },
+        "release": {
+          "test_populations": [
+            8,
+            0,
+            1,
+            0
+          ],
+          "generations": 36,
+          "raw_cells": 74878,
+          "reports": 246,
+          "worker_records": 66
+        }
+      }
+    }
+  ],
+  "source_on_native": {
+    "status": "qualified",
+    "raw_cells": 74878,
+    "observation_counts": {
+      "source/1": 56,
+      "source/4": 56,
+      "official/1": 56,
+      "official/4": 56
+    },
+    "input_archive_sha256": "e596b557fa4df9a974027f5cf91abf828696f765e603981d397788c23d93059a",
+    "protected_inputs_unchanged": true
+  },
+  "logs_zip_sha256": "555aa362000cd6d5c93e8f9ee6af47236de9f7c5fd752595c4878967f9eff1fd",
+  "logs_members": 77,
+  "free_bytes": 40015208448,
+  "reserved_pending_BED_bytes": 17740000000,
+  "independent_headroom_bytes": 8589934592,
+  "performance_claim": false,
+  "release": false,
+  "schema": "rsomics.plink.native-four-adoption.v1",
+  "root_adopted": true,
+  "owner_head": "9d43df417bf2a729438fb4194e9f82cbba10fe6c",
+  "owner_tree": "989afd93e6114727ef9546c8349e4ceb25be174c",
+  "snapshot": "green-10",
+  "source_archive_sha256": "6d28c22495ea9b7271f07a2a7703393e1e5ab7d5400a851a27c2f27c22622843",
+  "source_manifest_sha256": "16ced023f384948d2fa04c825fbc25709b8d505e28f0ab1181bfaadf74d30836",
+  "root_closed_data_replay_passed": true,
+  "root_reader_scope": "Five carrier digests/CRCs; all305source bodies perhost; compiler/manifest/binary/8profile/graph pins; sameLinuxTAR and4x56source observations+74878rawcell-count envelope; no source or genotype execution",
+  "reader_correction": "Wrapper debug.log is only a status summary; actual native test streams are candidate/test-MODE/stdout.txt and stderr.txt. Source observations also include raw_cells.",
+  "source_official_commit_correspondence": "unproven",
+  "release_binaries": {
+    "linux-aarch64": {
+      "path": "/Volumes/KIOXIA/Developments/tmp/plink-native-green10-41443045747.d07sXL/plink-native-41443045747-1-linux-aarch64/plink-evidence/candidate/binary-release",
+      "bytes": 3100856,
+      "sha256": "8d69f35c7a7ab21608687196ef2fd2c8793f4fbcba0cc499b1e2f3198d259ab2"
+    },
+    "linux-x86_64": {
+      "path": "/Volumes/KIOXIA/Developments/tmp/plink-native-green10-41443045747.d07sXL/plink-native-41443045747-1-linux-x86_64/plink-evidence/candidate/binary-release",
+      "bytes": 3231104,
+      "sha256": "7d9b1d5bcd5cf50edc875d8e6fcae722218af491f3746a6e2b25d1a4fb057665"
+    },
+    "macos-aarch64": {
+      "path": "/Volumes/KIOXIA/Developments/tmp/plink-native-green10-41443045747.d07sXL/plink-native-41443045747-1-macos-aarch64/plink-evidence/candidate/binary-release",
+      "bytes": 2677248,
+      "sha256": "0be650c8c68914f5435caaa20e37371bd7527bbe1a34eb13571ad947cd8e157c"
+    },
+    "macos-x86_64": {
+      "path": "/Volumes/KIOXIA/Developments/tmp/plink-native-green10-41443045747.d07sXL/plink-native-41443045747-1-macos-x86_64/plink-evidence/candidate/binary-release",
+      "bytes": 2812136,
+      "sha256": "62e6ab920353c59a283a8087b2458bb5bbb318e1ecccf74c82f4c135c64b303f"
+    }
+  },
+  "original_artifacts": [
+    {
+      "id": 13140489138,
+      "node_id": "MDg6QXJ0aWZhY3QxMzE0MDQ4OTEzOA==",
+      "name": "plink-native-41443045747-1-macos-x86_64",
+      "size_in_bytes": 5943279,
+      "url": "https://api.github.com/repos/omics-rust/rsomics-world/actions/artifacts/13140489138",
+      "archive_download_url": "https://api.github.com/repos/omics-rust/rsomics-world/actions/artifacts/13140489138/zip",
+      "expired": false,
+      "digest": "sha256:d928ecef46a11fa3a1a8bcd79ddbd4d51bfa7407faffc94648303dd4354b2d71",
+      "created_at": "2026-11-02T12:20:06Z",
+      "updated_at": "2026-11-02T12:20:06Z",
+      "expires_at": "2027-01-31T12:14:23Z",
+      "workflow_run": {
+        "id": 41443045747,
+        "repository_id": 1236717790,
+        "head_repository_id": 1236717790,
+        "head_branch": "main",
+        "head_sha": "10d725c07bca0abdb4e24c8edcafeed51083d8a8"
+      }
+    },
+    {
+      "id": 13140354092,
+      "node_id": "MDg6QXJ0aWZhY3QxMzE0MDM1NDA5Mg==",
+      "name": "plink-native-41443045747-1-macos-aarch64",
+      "size_in_bytes": 6112111,
+      "url": "https://api.github.com/repos/omics-rust/rsomics-world/actions/artifacts/13140354092",
+      "archive_download_url": "https://api.github.com/repos/omics-rust/rsomics-world/actions/artifacts/13140354092/zip",
+      "expired": false,
+      "digest": "sha256:ccba44bc8f6847a117dc5a338cd503e65ea854468328e4c9a699013c17707c02",
+      "created_at": "2026-11-02T12:16:46Z",
+      "updated_at": "2026-11-02T12:16:46Z",
+      "expires_at": "2027-01-31T12:14:23Z",
+      "workflow_run": {
+        "id": 41443045747,
+        "repository_id": 1236717790,
+        "head_repository_id": 1236717790,
+        "head_branch": "main",
+        "head_sha": "10d725c07bca0abdb4e24c8edcafeed51083d8a8"
+      }
+    },
+    {
+      "id": 13140243666,
+      "node_id": "MDg6QXJ0aWZhY3QxMzE0MDI0MzY2Ng==",
+      "name": "plink-source-on-native-41443045747-1",
+      "size_in_bytes": 557175,
+      "url": "https://api.github.com/repos/omics-rust/rsomics-world/actions/artifacts/13140243666",
+      "archive_download_url": "https://api.github.com/repos/omics-rust/rsomics-world/actions/artifacts/13140243666/zip",
+      "expired": false,
+      "digest": "sha256:67bd2d87d8c8038350f60f6ab04e3d710832261ae6f46143276e4ed2dd07a090",
+      "created_at": "2026-11-02T12:21:06Z",
+      "updated_at": "2026-11-02T12:21:06Z",
+      "expires_at": "2027-01-31T12:14:23Z",
+      "workflow_run": {
+        "id": 41443045747,
+        "repository_id": 1236717790,
+        "head_repository_id": 1236717790,
+        "head_branch": "main",
+        "head_sha": "10d725c07bca0abdb4e24c8edcafeed51083d8a8"
+      }
+    },
+    {
+      "id": 13139359786,
+      "node_id": "MDg6QXJ0aWZhY3QxMzEzOTM1OTc4Ng==",
+      "name": "plink-native-41443045747-1-linux-aarch64",
+      "size_in_bytes": 13122361,
+      "url": "https://api.github.com/repos/omics-rust/rsomics-world/actions/artifacts/13139359786",
+      "archive_download_url": "https://api.github.com/repos/omics-rust/rsomics-world/actions/artifacts/13139359786/zip",
+      "expired": false,
+      "digest": "sha256:9afa8ce2fc365f60fb322e9264edb0e8618d8d8aec54c8590e19f387fbe5ddd3",
+      "created_at": "2026-11-02T12:16:29Z",
+      "updated_at": "2026-11-02T12:16:29Z",
+      "expires_at": "2027-01-31T12:14:23Z",
+      "workflow_run": {
+        "id": 41443045747,
+        "repository_id": 1236717790,
+        "head_repository_id": 1236717790,
+        "head_branch": "main",
+        "head_sha": "10d725c07bca0abdb4e24c8edcafeed51083d8a8"
+      }
+    },
+    {
+      "id": 13139179702,
+      "node_id": "MDg6QXJ0aWZhY3QxMzEzOTE3OTcwMg==",
+      "name": "plink-native-41443045747-1-linux-x86_64",
+      "size_in_bytes": 14431654,
+      "url": "https://api.github.com/repos/omics-rust/rsomics-world/actions/artifacts/13139179702",
+      "archive_download_url": "https://api.github.com/repos/omics-rust/rsomics-world/actions/artifacts/13139179702/zip",
+      "expired": false,
+      "digest": "sha256:c7875871356cd6ff695ee2bf030069850026f1ea1f3a75de2fc99ff4fde2696b",
+      "created_at": "2026-11-02T12:16:20Z",
+      "updated_at": "2026-11-02T12:16:20Z",
+      "expires_at": "2027-01-31T12:14:23Z",
+      "workflow_run": {
+        "id": 41443045747,
+        "repository_id": 1236717790,
+        "head_repository_id": 1236717790,
+        "head_branch": "main",
+        "head_sha": "10d725c07bca0abdb4e24c8edcafeed51083d8a8"
+      }
+    }
+  ],
+  "original_packet": "/Volumes/KIOXIA/Developments/tmp/plink-native-green10-41443045747.d07sXL",
+  "producer_receipt": {
+    "bytes": 3353,
+    "sha256": "660f0b734ba46d6ab76b0448aadc4e2b0aca8321407290a9c39c5a8d041e1892"
+  },
+  "limits": "Native fixture correctness only; actual representative performance remains unearned, no diagnostic launch or publication"
+}
