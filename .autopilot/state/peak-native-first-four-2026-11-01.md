@@ -1,5 +1,17 @@
 # Native peak first-four construction
 
+## Delivery documentation aligned
+
+Private owner3925d27 changes README only from accepted implementation63caec85.
+Root reads the complete delta and accepted performance bindings, preserving
+the original measured binary/source/run identities. README no longer falsely
+calls accepted source/native-four/performance checks future work. Required
+explicit compatibility selection, human-held default, publish=false and absent
+public remote/metadata remain unchanged. Diff-check passes; no science/build,
+benchmark rerun, remote creation, push or publication follows this documentation
+commit. Original green-3 receipts are not relabelled as this new documentation
+head's native qualification.
+
 ## Actual green-3 four-native/source originals accepted
 
 Run41253851251/1 at72fb3bc2554e88ac4ce5925ba30896afc82f3d10 succeeds on
