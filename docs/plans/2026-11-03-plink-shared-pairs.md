@@ -89,27 +89,31 @@ while old caches/readers and the new slabs coexist. Keep prune resources intact.
 
 ## One coherent task
 
-- [ ] Add one meaningful RED consumer for repeated-window preparation: execute
+- [x] Add one meaningful RED consumer for repeated-window preparation: execute
   existing pairs on overlapping windows with four workers, assert full output
   and semantic report counts against the serial/oracle baseline, and assert one decode per
   required variant using test-only instrumentation. Before implementation the
   decode-count assertion must fail for the real duplicated-preparation reason.
-- [ ] Implement shared compact preparation and route serial/parallel pair
+- [x] Implement shared compact preparation and route serial/parallel pair
   calculation through it while keeping exact pair/job order and writer bytes.
-- [ ] Add one integrated mixed hardcall/DS/HDS, missingness and selected-founder
+- [x] Add one integrated mixed hardcall/DS/HDS, missingness and selected-founder
   consumer comparing complete output and semantic counts with the fallback;
   worker-count fields must report actual execution, not equal serial by fiat.
   Include a hardcall-only partner of a dosage row and non-word-aligned founders.
-- [ ] Exercise optional no-fit fallback and zero-pair behavior in existing
+- [x] Exercise optional no-fit fallback and zero-pair behavior in existing
   budget tests; confirm previously admitted input still succeeds byte-exactly.
   Long-ID serial fallback remains covered by the existing test.
-- [ ] Run guarded full debug/release, fmt and strict all-target/all-feature
+- [x] Run guarded full debug/release, fmt and strict all-target/all-feature
   Clippy. Expected full suite green, zero ignored diagnostics, no weakened old
   assertions or changed output pins. Record RED and final commands/statuses.
-- [ ] Freeze whole patch/source/log identities and allocation equations in an
+- [x] Freeze whole patch/source/log identities and allocation equations in an
   external packet. Owner index stays empty; root-ready, no speed claim.
 
 ## Review focus and final gates
+
+Root integrated e210101 after one fresh whole-feature review with no findings,
+307-body freeze verification and independent full debug15+3 pass. Native-four,
+source and matched performance gates remain open; see the linked state ledger.
 
 Review dosage-presence semantics outside selected founders, duplicate/overlap
 window row mapping, capacity overflow and fallback at tight budgets, error

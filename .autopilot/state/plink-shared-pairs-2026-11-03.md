@@ -1,9 +1,10 @@
 # PLINK shared immutable pair preparation
 
 Plan: `docs/plans/2026-11-03-plink-shared-pairs.md`.
-Owner starts at1906a48b8e6e70bf2478c8e3daf1a44c38c56572; the current
-implementation delta is intentionally uncommitted. Do not discard it or
-mistake it for accepted/pushed code.
+Integrated private owner is e21010108cd40c716f2c79d2e175875446977d60,
+tree95c93807bd61ea5c953b786072103a74b1d41535, clean after root commit.
+It starts from1906a48 and remains private: native-four/source qualification
+and representative performance acceptance are not yet earned.
 
 Packet: `/Volumes/KIOXIA/Developments/tmp/plink-shared-pairs-20261103.w4cjwy65`.
 Root reads the actual consumer and retained RED/GREEN logs. The128-variant
@@ -40,3 +41,48 @@ eviction when a two-row resident window still fits. Preserve both bounded
 fallback and output equality, without a production test flag or new matrix.
 Cost if wrong: the old low-memory path could silently lose coverage; therefore
 real fallback/eviction assertions remain required before full acceptance.
+
+## Frozen candidate and root integration
+
+Final builder debug and release each pass15 library/3 integration tests,
+zero failed/ignored; strict all-target/all-feature Clippy and fmt pass.
+One fresh whole-feature reviewer reads all five changed source files plus
+reader/selection/resources/ordered/pruning callers and finds no critical,
+important or actionable minor issue. Root separately reads the new module,
+entire delta and full report, verifies all packet-body identities and307
+source bodies/modes, including302 unchanged baseline bodies.
+
+Root's full guarded debug replay session9870 exits0:15 library/3 integration,
+zero failed/ignored. First guard invocation rejects inheritedCPPFLAGS before
+compilation; corrected explicit unset of compiler/target overrides precedes
+the successful physical-external preflight and replay. It is not a product
+test failure or a boot-disk write.
+
+The integrated8-row-window mixed consumer proves actual1-worker low-memory
+execution, shared no-fit, resident_span=None and CACHE_EVICTIONS>0; its output
+and semantic counts equal4-worker shared execution. Shared prepares4091 of
+4096 rows, skipping five isolated rows; zero-pair input decodes nothing.
+The old540000-byte invocation/full-output comparison is retained.
+
+Frozen patch SHA25672c7cf0ad24b4be78a8116e660aabc03d07538bceb8dca8df5446c8201191ce2;
+source-manifest SHA256cd1288dde030bf263891443b31588b875bfe6c39b961bbefbd2482cd71da7bb6;
+REPORT SHA256f5ed3e9a33afce30dffaa5bd25ae277083dff09666b9d0d46cdb7c4d4e0bbe3d.
+No dependency, public API/CLI, codec ABI, make/prune policy or ordered-writer
+protocol changed. Only five exact source paths are committed; no Co-Author.
+
+Root rulings on review exclusions:
+
+1. Decode reduction is not speed/RSS evidence; negative green12 remains until
+   exact-candidate native/source qualification and real matched measurement.
+2. Four-native compatibility/publication are open gates, not inferred from Mac.
+3. Ownership/error propagation is reviewed; no new fault-injection or concurrent
+   external file-mutation guarantee is claimed or required for this feature.
+4. Checked allocation/capacity/lifetimes are not an allocator/OS-wide RSS ceiling;
+   existing conservative worker admission remains, without synthetic extremes.
+5. Root independent full debug execution above closes the reviewer's test-rerun
+   exclusion; release/fmt/Clippy retain their actual frozen builder evidence.
+
+Next transport snapshotgreen13 captures exact committed307-file source.
+Reuse123 reports/66 worker records and unchanged source/numeric/output policy;
+qualify15 library/3 integration tests per native mode. No scientific rerun or
+publication is authorized by snapshot preparation alone.
