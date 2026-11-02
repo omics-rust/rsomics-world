@@ -122,27 +122,32 @@ under JSON, and reuse parent helpers/open_input/write_output/common/help.
 
 ## One coherent implementation task
 
-- [ ] Start with an actual failing consumer test for missing map behavior,
+- [x] Start with an actual failing consumer test for missing map behavior,
   using the retained complete numeric-all23 output, not getter/enum tests.
-- [ ] Implement streaming map, checked options and shared reducer integration.
+- [x] Implement streaming map, checked options and shared reducer integration.
   Import small golden inputs/outputs with original source provenance from
   bed-map-contract and bed-map-sweep-supplement packets. Correct only the two
   explicitly named point-loss expectations; do not rewrite source originals.
-- [ ] Exercise complete outputs for numeric-all23, text/broadcast/custom/null,
+- [x] Exercise complete outputs for numeric-all23, text/broadcast/custom/null,
   encounter/sortout, ordinary split, strands/fractions, genome/nonlex ordering,
   header/canonical coords, point0 and both repaired point-order cases.
   Use a few integrated fixtures, not a test for every scalar helper.
-- [ ] Exercise real CLI common JSON/named-output behavior and all-input aliases;
+- [x] Exercise real CLI common JSON/named-output behavior and all-input aliases;
   selected invalid numeric/column/empty-B, unsupported split+fractions and
   late sortedness errors must exit nonzero and preserve an existing named
   output. One installed multi-reducer JSON call extends the existing lifecycle.
-- [ ] Run guarded full debug/release, fmt, strict all-target/all-feature Clippy,
+- [x] Run guarded full debug/release, fmt, strict all-target/all-feature Clippy,
   package/install and existing installed lifecycle. Preserve all old calls;
   record actual populations and any real failure, no ignored diagnostics.
-- [ ] Freeze the whole delta, source/log hashes and rulings, index empty,
+- [x] Freeze the whole delta, source/log hashes and rulings, index empty,
   root-ready. No public release or representative performance claim.
 
 ## Root final gates
+
+Implementation and one fresh whole-feature review are integrated atbcf65d7;
+see bed-map-execution-2026-11-02.md for the retained evidence and deferred minor.
+The original owner/base and worker restrictions above describe task entry,
+not the current committed state. Native-four and performance remain incomplete.
 
 Read the entire feature and obtain one fresh whole-feature review; independently
 verify, integrate one coherent concern, then qualify actual native4 including

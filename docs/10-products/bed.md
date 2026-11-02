@@ -57,6 +57,16 @@ or registry acceptance follows. See
 `.autopilot/state/bed-annotate-execution-2026-11-02.md` and
 `.autopilot/oracles/bed-annotate-performance-2026-11-02.json`.
 
+Unreleased `map` source at `bcf65d7accdf4ff956680cfdef8e5d4eeb9634f8`
+adds a sorted streaming workflow with23 shared column reducers. Full local
+debug verification passes118 tests; one fresh whole-feature review identifies
+no critical or important issue. Exact-head native CI41495972529 is still
+incomplete, so native-four acceptance is not yet claimed. The user-approved
+point-cache repair and the same-class tied-B lookahead repair are documented
+known incompatibilities, not accidental oracle mismatches. Representative
+whole-mapping performance and release gates remain open. See
+`.autopilot/state/bed-map-execution-2026-11-02.md`.
+
 ## Boundary
 
 `rsomics-bed` is one BED and BEDPE interval-workflow product. It owns strict
@@ -121,7 +131,7 @@ may be migration aliases, but the typed long-form contract owns the help.
 | `closest` | BEDTools `closest`; BEDOPS `closest-features` | GitHub 0.2; complete declared single-B contract before multi-B extensions |
 | `coverage` | BEDTools `coverage` | unreleased native/performance-qualified candidate; summary/count/mean/histogram/depth, pooled B and ordinary blocks; split plus fractions held |
 | `annotate` | BEDTools `annotate` | unreleased native/performance-qualified candidate; independent multi-file count/fraction/both output |
-| `map` | BEDTools `map`; BEDOPS `bedmap` | source/real-oracle contract recovered;23 private reducers; point-cache repair approved as known incompatibility, sweep/CLI not yet stable |
+| `map` | BEDTools `map`; BEDOPS `bedmap` | sorted sweep/CLI and23 private reducers integrated atbcf65d7; known point-loss repairs recorded; native-four/performance/release gates open |
 | `jaccard` | BEDTools `jaccard` | later metrics slice; base-pair set similarity and overlap filters |
 | `fisher` | BEDTools `fisher` | later metrics slice; requires a genome-size universe |
 | `reldist` | BEDTools `reldist` | later metrics slice; fixed historical midpoint-straddle behavior is retained |
