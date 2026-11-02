@@ -86,3 +86,23 @@ Next transport snapshotgreen13 captures exact committed307-file source.
 Reuse123 reports/66 worker records and unchanged source/numeric/output policy;
 qualify15 library/3 integration tests per native mode. No scientific rerun or
 publication is authorized by snapshot preparation alone.
+
+## Green13 exact-source capture
+
+Snapshot `.autopilot/snapshots/plink-native-2026-11-01/green-13` contains all307
+exact committed Git blobs/modes frome210101. Root independently replays every
+regular archive member against Git, metadata normalization and outer checksums;
+the capture does not include generated scratch or personal cohort data.
+source.tar.gz558760B SHA256
+de4bf7d4021c4d0bc3b479d8373076725166c58dcb2c3546fa534d8bfabd7ac7;
+files.sha256 SHA256a186da2c4c214512b61635b31665a36956075cdf3e4a7688d89fc9c561617a8b.
+
+Transport packet:
+`/Volumes/KIOXIA/Developments/tmp/plink-green13-capture-20261103.W5Q6QX`.
+Root reads the full two-script delta and static report. Existing guarded
+transport tests pass3/3 and control-plane validation is internally consistent.
+Only green13 selector/module requirements and15/3 library/integration counts
+are added; all older selectors and123/66 graph populations remain unchanged.
+POLICY/EXPECTED hashes, runtime, scientific source consumer and workflow bodies
+are unchanged. Scope is capture/transport only; native/source execution has not
+started. Commit/push and exact-head control CI precede one workflow dispatch.

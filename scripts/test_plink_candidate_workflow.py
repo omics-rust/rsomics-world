@@ -27,7 +27,7 @@ class PlinkCandidatePreparationTest(unittest.TestCase):
 
     def test_compact_metadata_uses_existing_extended_graph_population(self):
         gate = importlib.import_module('plink_candidate')
-        for selector in ('green-11', 'green-12'):
+        for selector in ('green-11', 'green-12', 'green-13'):
             with self.subTest(snapshot=selector):
                 self.assertEqual(gate.graph_population(selector), (123, 66))
 
@@ -71,11 +71,12 @@ class PlinkCandidatePreparationTest(unittest.TestCase):
             for selector in ('missing', '../green-1', 'green-0', 'green-1/extra', 'green-99'):
                 with self.assertRaises((ValueError, OSError)):
                     gate.prepare_source(ROOT, root / selector.replace('/', '_'), selector)
-            for selector in ('green-1', 'green-2', 'green-3', 'green-4', 'green-5', 'green-6', 'green-7', 'green-8', 'green-9', 'green-10', 'green-11', 'green-12'):
+            for selector in ('green-1', 'green-2', 'green-3', 'green-4', 'green-5', 'green-6', 'green-7', 'green-8', 'green-9', 'green-10', 'green-11', 'green-12', 'green-13'):
                 prepared = root / ('prepared-' + selector)
                 manifest = gate.prepare_source(ROOT, prepared, selector)
-                self.assertEqual('src/numeric.rs' in manifest, selector in ('green-3', 'green-4', 'green-5', 'green-6', 'green-7', 'green-8', 'green-9', 'green-10', 'green-11', 'green-12'))
-                self.assertEqual('src/dataset/metadata/text.rs' in manifest, selector in ('green-11', 'green-12'))
+                self.assertEqual('src/numeric.rs' in manifest, selector in ('green-3', 'green-4', 'green-5', 'green-6', 'green-7', 'green-8', 'green-9', 'green-10', 'green-11', 'green-12', 'green-13'))
+                self.assertEqual('src/dataset/metadata/text.rs' in manifest, selector in ('green-11', 'green-12', 'green-13'))
+                self.assertEqual('src/ld/prepared.rs' in manifest, selector == 'green-13')
                 self.assertEqual(hashlib.sha256((prepared / 'source/Cargo.lock').read_bytes()).hexdigest(),
                                  manifest['Cargo.lock'])
 
@@ -192,6 +193,8 @@ class PlinkCandidatePreparationTest(unittest.TestCase):
             self.assertEqual(gate.worker_provenance(graph, 'green-11'), workers)
             self.assertEqual(gate.bind_graph(graph, 'green-12'), extended)
             self.assertEqual(gate.worker_provenance(graph, 'green-12'), workers)
+            self.assertEqual(gate.bind_graph(graph, 'green-13'), extended)
+            self.assertEqual(gate.worker_provenance(graph, 'green-13'), workers)
             self.assertTrue({f'{count}/{name}.pairs' for count in (1, 4) for name in
                 ('bed.gaps', 'ds.gaps', 'gt.bounded', 'gt.gaps', 'hds.gaps', 'pgen.gaps', 'rich.gaps')} <= workers.keys())
             with self.assertRaises(ValueError): gate.bind_graph(graph, 'green-6')
