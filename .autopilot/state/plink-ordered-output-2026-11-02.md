@@ -273,3 +273,44 @@ with fresh capacity checks. This phase is currently running. No source/runtime
 execution, benchmark retry, scientific acceptance or failure-cause conclusion
 follows merely from successful transport/authentication. All ZIP/cipher/TAR/
 partial/old-controller evidence and historical reservation records remain.
+
+## Original failure diagnosed without rerunning science
+
+Originals verification completes once, exit0/empty stderr:5311 members,
+5309 manifest entries,4620 files and691 directories;2049 unique CAS bodies
+total2044132771 bytes. All paths/types/modes/links/bodies verify;2571 duplicate
+bodies are independently compared, zero casefold collisions. Receipt SHA256
+`bfbd9bf024495c1b6403eb538796d9845678af27c4d91f888c64bbf387c4de42`.
+Post-custody free893823606784 bytes exceeds remaining commitments423547068416.
+
+Rather than making a second exhaustive assessor a prerequisite for diagnosis,
+root fully reads a bounded data-only reader. One read-only execution checks
+CAS body sizes/hashes and emits exact original status/decision and26 graph
+records. It exits0/empty stderr; stdout438186 bytes, SHA256
+`bf4b6b189c842c12b407c06d10d99203ba278c318587aa0733b0f95ccd4da31a`.
+Root independently reads status, predicates and paired medians from that body.
+No recovered source, executable, genotype decoder or scientific command runs.
+
+Original status explicitly fails the unchanged performance predicate.
+All26 graphs have complete measurements,210 stage records, no missing complete
+graphs and no nonzero stage exits. Original qualification says six whole
+graphs passed; repeat body differences0, reused20, full fallbacks0. These
+are bound original records, not a fresh independent scientific acceptance.
+
+Whole wall medians, source/native seconds:
+
+| Workers | Source | Native |
+|---|---:|---:|
+| 1 | 4.633660337 | 8.569171307 |
+| 4 | 2.619672190 | 9.787449408 |
+
+Both strict-wall and median-wall-nonregression predicates are false; exact
+tree-memory advantage is unavailable. All seven stage medians regress, not
+merely a tiny-stage noise veto. Four-worker I is0.136759803/2.479113972s,
+pairs2.125873766/5.282467345s and F0.091988335/0.667495888s. Kernel max-process
+RSS medians are source92753920/110825472 bytes versus native198881280/198815744;
+these are not aggregate-tree peaks. Do not claim speedup versus green8 across
+changed validation/cache timing, causal bottlenecks or publication eligibility.
+
+Next is bounded source/command-path diagnosis of thread overhead and main slow
+paths, not a blind rerun or relaxed criterion. Durability policy stays unchanged.
