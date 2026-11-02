@@ -39,3 +39,32 @@ BED12/strand/CLI behavior. No generic public reducer is justified by this
 single consumer. Existing checked parser/index are reuse candidates, not yet
 proof of sorted-sweep parity. This inventory does not authorize a speculative
 API, implementation, publication or repair of source anomalies.
+
+## Missing source recovered; oracle work is separate
+
+Bounded read-only retrieval freshly verifies the exact remote archive:
+`/data1/liangjy/rsomics-bed-coverage-source-20261102.Kfp595/bedtools-2.31.1.tar.gz.part`,
+19629373 bytes, SHA256
+`fc7e660c2279b1e008b80aca0165a4a157daf4994d08a533ee925d73ce732b97`.
+New external packet:
+`/Volumes/KIOXIA/Developments/tmp/bed-map-contract-source-20261102.53Ijah`.
+SOURCE/SUPPLEMENT/CLOSURE retain exact archive member identities and commands;
+original-base64 preserves original bytes, while src is a labelled normalized
+text view. Root independently decodes and verifies all23 original identities.
+An initial root reader omitted the documented .b64 suffix; correcting that
+reader path yields23/23, not a source repair or runtime retry.
+
+Root reads NewChromSweep's cache/scan/chromosome-order paths and the reducer
+dispatch/method bodies. Cached and newly read candidates preserve B encounter
+order; sortout separately sorts by coordinates without a stable equal-key
+guarantee. Without a genome, cross-file encounter-order tracking and lexical
+fallback interact; a blanket lexical requirement is not source parity.
+With a genome, explicit chromosome rank owns ordering. Frequency tie order
+is lexical within either ascending or descending frequency direction.
+
+Architecture-specific header recognition and invalid-number warnings are
+source observations, not a requirement to reproduce malformed-data quirks
+or broaden the product parser. No upstream implementation body was copied
+into product code. One compact real-oracle activity is authorized to establish
+complete outputs for reducer families and meaningful ordering/format/selection
+contracts before the implementation plan. This is not performance acceptance.
