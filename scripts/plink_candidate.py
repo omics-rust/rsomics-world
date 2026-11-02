@@ -31,7 +31,8 @@ CONTROLLERS = ('scripts/plink_candidate.py', 'scripts/plink_source_on_native.py'
     '.github/workflows/plink-candidate.yml', 'assets/plink-first-runtime-20261031.json')
 GRAPH_POPULATIONS = {'green-1': (114, 50), 'green-2': (114, 50),
                      'green-3': (116, 52), 'green-4': (116, 52), 'green-5': (116, 52),
-                     'green-6': (116, 52), 'green-7': (123, 66), 'green-8': (123, 66)}
+                     'green-6': (116, 52), 'green-7': (123, 66), 'green-8': (123, 66),
+                     'green-9': (123, 66)}
 
 
 def check(condition, message):
@@ -81,7 +82,7 @@ def prepare_source(world, output, selector):
         'src/io/pgen.rs', 'src/stats/mod.rs', 'src/ld/pairs.rs', 'src/ld/prune.rs',
         'tests/workflow.rs', 'tests/workflow.py', 'tests/compare_workflow.py',
         'tests/COMPARISON.md', 'tests/fixtures/expected/SOURCE.json', 'tests/fixtures/inputs/manifest.json'}
-    if selector in ('green-3', 'green-4', 'green-5', 'green-6', 'green-7', 'green-8'):
+    if selector in ('green-3', 'green-4', 'green-5', 'green-6', 'green-7', 'green-8', 'green-9'):
         required.add('src/numeric.rs')
     check(required <= manifest.keys(), 'snapshot omits product/source/license/fixture closure')
     check(manifest['tests/COMPARISON.md'] == POLICY and
@@ -236,7 +237,7 @@ def tests(root, mode):
         text = (logs / 'stdout.txt').read_text() + (logs / 'stderr.txt').read_text()
         populations = [int(value) for value in re.findall(r'test result: ok\. (\d+) passed; 0 failed; 0 ignored;', text)]
         selector = load(root / 'selection.json')['snapshot']
-        library_tests = 5 if selector == 'green-8' else 4
+        library_tests = 7 if selector == 'green-9' else 5 if selector == 'green-8' else 4
         check(sorted(populations) == [0, 0, 1, library_tests], 'complete library+workflow test population absent')
         graphs = [path for path in scratch.glob('plink-whole-native-*') if path.is_dir()]
         check(len(graphs) == 1, 'one complete kept native workflow graph required per mode')
