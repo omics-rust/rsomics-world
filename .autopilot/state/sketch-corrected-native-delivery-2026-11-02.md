@@ -337,5 +337,7 @@ Adoption is sketch-public-delivery-2026-11-02.json. README/protocol-only owning
 commit ddc4e76c2d57ba80e7c58995b34c01942bbd4c0d now documents the real release,
 all8 current mean resource pairs and slower cases. Source/lock/tests/scripts/
 licenses remain exact; this does not replace formal tag/assets or earn another
-benchmark. Exact-head documentation CI41368042858 passes at ddc4e76c. No source build,
-upstream oracle, registry publication or new performance run was performed.
+benchmark. Exact-head documentation CI41368042858 passes at ddc4e76c and
+executes its normal hosted native/source tests. The public-download check
+performs no local build or upstream execution; no registry publication or
+new performance run was performed.
