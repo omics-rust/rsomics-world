@@ -1,5 +1,10 @@
 # Next PLINK performance iteration
 
+Current: green8 actual41365352863/1 completed all210 scientific commands and
+its bounded correctness checks, but FAILED both unchanged material-performance
+gates. Root adopts complete originals and the negative result below. No release,
+unchanged retry, threshold change or claimed packed-QC speedup follows.
+
 Plan: docs/plans/2026-11-02-plink-packed-qc-and-qualified-repeats.md.
 The iteration started at private owner7b214436. Root has adopted the complete
 green7 correctness/negative result, not a release. No unchanged performance
@@ -163,3 +168,62 @@ remain. Reduced post-timing validation is not causal CLI speed evidence.
 Current actual correctness/resources/original-adoption result is still pending;
 do not redispatch unchanged, infer pass, publish or discard old negative data.
 Admission detail: plink-green8-real-admission-2026-11-02.json.
+
+## Complete green8 actual originals and negative result adopted
+
+Receipt: `.autopilot/oracles/plink-real-performance-green8-failure-2026-11-02.json`.
+Actualrun41365352863/1 at43d77b32, failed scientific-wrapper job125024241447,
+artifact13109055332. The first controller failure is the strict whole-workflow
+performance gate, not a scientific CLI failure. All210 original exits are0;
+original qualification sayssix_whole_graphs_passed. There is no producer
+correctness_passed field; the recovery's bounded evidence must not invent one.
+
+Packet D4DvaN retains full11355258176B ZIP/SHA14f596f11e914dab3f8c7b0cc346015ec60316ef4e9ddc7960a81c5f31503328,
+cipher and authenticated TAR11352483840B/SHA55d7d2b140cb285ecb8a361968e69b5f5762189ccc37623cf4b8852c5d234ec2.
+All5309 original members/5307 manifest entries,2048 unique CAS bodies and2570
+independently byte-compared duplicates remain. Authenticated partial/final TAR
+share their retained inode. No original mode/link is installed as executable.
+Existing pinned external age alone reads the existing key; no controller
+reads/hashes/copies its contents, and no large plaintext is stored on Mac.
+
+Root reads the complete846-line assessor,218-line protocol checker,74-line
+custody helper, root wrapper, full validator, seal program, report/proposal and
+pointer identities. Fresh guarded readonly root verification exits0 under
+`/Volumes/KIOXIA/Developments/tmp/plink-green8-root-adoption-20261102.xqSMy9`.
+It rehashes every retained ZIP/cipher/TAR/CAS body, validates exact2354-file
+membership/modes/47475129924 logical bytes, checks ZIP CRC and repeats the
+deterministic data assessment without writes or scientific execution. Replay
+stdout7002B matchesSHA7357e3658a08ed70f49108aedf9800f05a08b2df0cc17ab32a908bbae3fdf4bc,
+stderr0. Outer stderr is only the external guard. Root proof stdout3146B
+SHAb928ae3c5fd010902d2d486959786715b8cb5f3d70c509e7538dd2bc0f092532.
+Seal SHA15f69a2cdcff8e491671f99bc8c987d96f87397a08ec9bdb1df0a1ecfdb09583.
+Reservation and append-only binding remain exact; all378GiB terminal/current
+envelopes plus independent8GiB remain accounted, fresh margin207685750784B.
+No physical space is freed or historical reservation rewritten.
+
+The protocol independently reconstructs26 complete graphs/78 logical generations,
+six full qualifications and20 exact OWN-role reuse proofs, zero differences or
+fallbacks. Actual physical executions are19 captures/12 fresh-P validators,
+not the legacy79/52. Numeric/ordered metadata/reports, raw decompressed hashes/
+headers/rows and retained projection/validation bindings pass. No PGEN/ZSTD
+decoder, full genotype-array reparse or recovered scientific program executes
+during adoption. Full PLINK/DS/HDS/VCF/biology/build-correspondence claims remain
+excluded. Changed validation/cache activity forbids causal green7→green8 claims.
+
+| Workers | Source/native whole wall seconds | Native/source | Source/native max-process RSS MiB |
+|---:|---:|---:|---:|
+| 1 | 4.605100 / 7.070710 | 1.535408 | 88.7578 / 189.5586 |
+| 4 | 2.608447 / 5.728680 | 2.196204 | 105.5469 / 189.4844 |
+
+All seven stage wall medians regress at both profiles. Strict wall and whole-wall
+nonregression are false; exact aggregate tree memory is unavailable, not zero.
+The complete507117B resource distributions remain at D4DvaN/INDEPENDENT-PERFORMANCE.json,
+SHA0d81af5b01c4909455ed0b4a15662f49361f658d838d6262e4eee92c310ea6cb.
+Every timing/CPU/RSS/fault/IO win, tie and loss remains there; primary wall/RSS
+summaries are also in the adopted receipt. Kernel RSS is maximum process, not
+aggregate tree memory; filesystem blocks are not physical IO bytes. No lower
+selected-stage RSS is substituted for the failed whole gate.
+
+Next work is the evidence-led execution/output-pipeline diagnosis in
+`plink-execution-pipeline-diagnosis-2026-11-02.md`, not another unchanged full
+campaign or an unmeasured isolated arithmetic edit.

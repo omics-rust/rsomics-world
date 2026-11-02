@@ -1,0 +1,1039 @@
+{
+  "actual_native_elf": {
+    "bytes": 3120520,
+    "sha256": "d9c448e30f988b23f5dd3df025674483d469f9812d37e58712c8c55cd19ec882"
+  },
+  "actual_native_source_files": 303,
+  "all_existing_bodies_partials_reservations_preserved": true,
+  "all_originals": {
+    "all_paths_types_modes_links_and_bodies_verified": true,
+    "archive_authenticated_before_inspection": true,
+    "authenticated_tar": {
+      "bytes": 11352483840,
+      "sha256": "55d7d2b140cb285ecb8a361968e69b5f5762189ccc37623cf4b8852c5d234ec2"
+    },
+    "cas_unique_bodies": 2048,
+    "cas_unique_bytes": 2041309135,
+    "casefold_collision_groups": [],
+    "custody_only_not_science_adoption": true,
+    "duplicate_bodies_independently_compared": 2570,
+    "hardlink_bindings_verified_without_duplicate_body_reads": 0,
+    "key_bytes_read_by_controller": false,
+    "original_manifest_files": 5307,
+    "original_members": 5309,
+    "original_regular_logical_bytes": 11343251041,
+    "original_zip": {
+      "bytes": 11355258176,
+      "sha256": "14f596f11e914dab3f8c7b0cc346015ec60316ef4e9ddc7960a81c5f31503328"
+    },
+    "schema": "rsomics.plink.complete-original-custody.v1",
+    "science_executed": false,
+    "types": {
+      "directory": 691,
+      "file": 4618
+    },
+    "utc": "2026-11-02T01:34:37Z"
+  },
+  "artifact_id": 13109055332,
+  "artifact_name": "plink-real-encrypted-41365352863-1",
+  "authenticated_tar": {
+    "bytes": 11352483840,
+    "path": "/home/liangjy/rsomics-plink-green8-recovery-20261102/authenticated.tar",
+    "sha256": "55d7d2b140cb285ecb8a361968e69b5f5762189ccc37623cf4b8852c5d234ec2"
+  },
+  "biological_claim": false,
+  "capacity_authority": {
+    "bytes": 10061,
+    "sha256": "535c1fccbab5b81581f5b05e6999f8bdd203a4da2546db92950b01ce8c7b7419"
+  },
+  "causal_old_new_CLI_speedup_claim": false,
+  "complete_campaign": true,
+  "complete_graphs": 26,
+  "complete_stage_commands": 210,
+  "fresh_P_validations": 12,
+  "full_product_or_four_platform_performance_qualification": false,
+  "head_sha": "43d77b3248f22214c47242849e34fd45112099c2",
+  "independent_performance": {
+    "bytes": 507117,
+    "sha256": "0d81af5b01c4909455ed0b4a15662f49361f658d838d6262e4eee92c310ea6cb"
+  },
+  "inter_trial_cache_pattern_changed": true,
+  "job_conclusion": "failure",
+  "job_id": 125024241447,
+  "legacy_fresh_capture_or_validator_counts_not_imposed": true,
+  "material_gate_both_worker_profiles_passed": false,
+  "median_stage_regressions": {
+    "1": [
+      "I",
+      "F",
+      "F.qc",
+      "pairs",
+      "prune",
+      "P",
+      "P.qc"
+    ],
+    "4": [
+      "I",
+      "F",
+      "F.qc",
+      "pairs",
+      "prune",
+      "P",
+      "P.qc"
+    ]
+  },
+  "native_owner": "f49f3675184801bb1e2cbf935f0ecadbc6a22e84",
+  "native_snapshot": "green-8",
+  "no_scientific_retry_or_cancel": true,
+  "older_campaigns_unchanged": true,
+  "original_cipher": {
+    "bytes": 11355257099,
+    "path": "/home/liangjy/rsomics-plink-green8-recovery-20261102/hgdp.tar.age",
+    "sha256": "9e60b6dd1b94f5781c14957f865727317f83ffc49160e508e2f6de13e3fb1598"
+  },
+  "original_failure": {
+    "encrypted_upload_only": true,
+    "failure": {
+      "message": "strict real whole-workflow performance gate did not pass; all originals retained",
+      "type": "ValueError"
+    },
+    "performance_passed": false,
+    "private_retention": true,
+    "release": false,
+    "status": "failed",
+    "validation_counts": {
+      "bytes": 438,
+      "sha256": "b1104d0fe66c8a2ff073a5baf438c1894a0e8a60196fb0457681c06cba518990"
+    },
+    "validation_protocol": "rsomics.plink.qualified-content.v1"
+  },
+  "original_failure_and_partials": {
+    "bytes": 2296358,
+    "sha256": "e510fb7f875ed58d15cd41966b175212089b76f4cfc292cc4a2113ae8ce37a75"
+  },
+  "original_runtime_links_or_executable_modes_restored": false,
+  "original_zip": {
+    "bytes": 11355258176,
+    "path": "/home/liangjy/rsomics-plink-green8-recovery-20261102/original.zip",
+    "sha256": "14f596f11e914dab3f8c7b0cc346015ec60316ef4e9ddc7960a81c5f31503328"
+  },
+  "own_generations": 78,
+  "physical_validation_counts": {
+    "fresh_P_validations_completed": 12,
+    "full_check_fallbacks": 0,
+    "full_graph_check_records": 6,
+    "observer_captures_completed": 19,
+    "policy": "exact-body mismatch requires the existing full semantic check",
+    "qualified_content_reused": 20,
+    "schema": "rsomics.plink.qualified-content.v1",
+    "scientific_body_difference_records": 0,
+    "scope": "physical completion records, not repeated logical qualified-content properties"
+  },
+  "private_key_bytes_read_hashed_printed_or_copied_by_controller": false,
+  "recovery_bulk_failures_or_retries": 0,
+  "release": false,
+  "remote_recovery_root": "/home/liangjy/rsomics-plink-green8-recovery-20261102",
+  "repository": "omics-rust/rsomics-world",
+  "root_adopted": true,
+  "root_fresh_whole_custody_verification_required": false,
+  "run_attempt": 1,
+  "run_id": 41365352863,
+  "schema": "rsomics.plink.real-performance-green8-negative-adoption.v1",
+  "science_coverage": {
+    "bytes": 84000,
+    "sha256": "e33420cb0c73cddb8fd25b956fb9c43dcc5c4469f3bf38031d92f672d9472efb"
+  },
+  "scientific_or_recovered_program_execution": false,
+  "source_and_gates_unchanged": true,
+  "source_pins": {
+    "bytes": 76161,
+    "sha256": "08699087744a3f0af5c1b075a1cf6fb00b5949c93201d32c0852d2ea9bdd61b1"
+  },
+  "status": "root-adopted-complete-custody-bounded-correctness-negative-performance",
+  "validation_protocol": "rsomics.plink.qualified-content.v1",
+  "workflow": ".github/workflows/plink-real-performance.yml",
+  "root_verification": {
+    "path": "/Volumes/KIOXIA/Developments/tmp/plink-green8-root-adoption-20261102.xqSMy9",
+    "stdout_sha256": "b928ae3c5fd010902d2d486959786715b8cb5f3d70c509e7538dd2bc0f092532",
+    "exit_code": 0,
+    "guard_stderr_only": true,
+    "full_reader_closure_read": true,
+    "root_checker_sha256": "549b7ecb2a62dd301f46df4cd0486afe7d5e1b794d95b6f1dad9cd5d0fa60498",
+    "validator_sha256": "ac4e0fc9b1c2fe98250f9bb04a7eee0f56d06f6ee74d6cd6bce6144c7bb3c81d",
+    "assessor_sha256": "6dc0ad39d1b711fd477849aa2d49bcf93b1140cd5cf129f6b2e19cc0ff77eef5",
+    "qualified_content_sha256": "9edf91c41c656245fa7ffe3dd676f82a4d59230447a049cd7b43ca063a7ae93a",
+    "custody_reader_sha256": "39d22898575c082d2b6f5b5ece3fb62b3cefd122e793ae819576c813998dffc2",
+    "readonly_originals_check": {
+      "capacity": {
+        "credited_unique_allocated_bytes": 185267109888,
+        "device": 2096,
+        "envelopes": {
+          "corrected_index": {
+            "allocated_bytes": 38290169856,
+            "credited_unique_allocated_bytes": 38290169856,
+            "entries": 7197,
+            "logical_envelope_bytes": 40802189312,
+            "path": "/home/liangjy/rsomics-index-bgzf-copyright-recovery-20261102",
+            "regular_bytes": 38269549316
+          },
+          "ecology": {
+            "allocated_bytes": 38343782400,
+            "credited_unique_allocated_bytes": 38343782400,
+            "entries": 136273,
+            "logical_envelope_bytes": 40802189312,
+            "path": "/home/liangjy/rsomics-ecology-beta-recovery-20261101",
+            "regular_bytes": 37985536905
+          },
+          "failed_changed_index": {
+            "allocated_bytes": 5816471552,
+            "credited_unique_allocated_bytes": 5816471552,
+            "entries": 4417,
+            "logical_envelope_bytes": 8589934592,
+            "path": "/home/liangjy/rsomics-index-bgzf-hotpath-recovery-20261101",
+            "regular_bytes": 5804564140
+          },
+          "green7": {
+            "allocated_bytes": 38257053696,
+            "credited_unique_allocated_bytes": 38257053696,
+            "entries": 2776,
+            "logical_envelope_bytes": 52613349376,
+            "path": "/home/liangjy/rsomics-plink-green7-recovery-20261102",
+            "regular_bytes": 50311623484
+          },
+          "green8": {
+            "allocated_bytes": 36131364864,
+            "credited_unique_allocated_bytes": 36131364864,
+            "entries": 2627,
+            "logical_envelope_bytes": 223338299392,
+            "path": "/home/liangjy/rsomics-plink-green8-recovery-20261102",
+            "regular_bytes": 47476014462
+          },
+          "old_index": {
+            "allocated_bytes": 28328329216,
+            "credited_unique_allocated_bytes": 28328329216,
+            "entries": 15141,
+            "logical_envelope_bytes": 31138512896,
+            "path": "/home/liangjy/rsomics-index-bgzf-recovery-20261101",
+            "regular_bytes": 28284807968
+          },
+          "plink_observer": {
+            "allocated_bytes": 99938304,
+            "credited_unique_allocated_bytes": 99938304,
+            "entries": 79,
+            "logical_envelope_bytes": 8589934592,
+            "path": "/home/liangjy/rsomics-plink-attribution-20261101",
+            "regular_bytes": 99714610
+          }
+        },
+        "free_bytes": 436882984960,
+        "free_inodes": 483687417,
+        "guessed_dedup_credit": false,
+        "independent_headroom_bytes": 8589934592,
+        "logical_not_exclusive_quota_or_writer_lease": true,
+        "margin_bytes": 207685750784,
+        "mount": [
+          "/dev/sdd[/home/liangjy]",
+          "ext4",
+          "/home/liangjy"
+        ],
+        "old_roots_records_modified": false,
+        "required_free_bytes": 229197234176,
+        "reservation_unchanged": {
+          "bytes": 10061,
+          "sha256": "535c1fccbab5b81581f5b05e6999f8bdd203a4da2546db92950b01ce8c7b7419"
+        },
+        "run_binding_unchanged": {
+          "bytes": 691,
+          "sha256": "43226485486f8edf4100cfbc36900e53b14a9b124295174a7e3d612ad25cd185"
+        },
+        "schema": "rsomics.plink.green8.recovery-capacity-observation.v1",
+        "total_envelopes_bytes": 405874409472,
+        "uid": 1006,
+        "utc": "2026-11-02T01:46:25Z"
+      },
+      "data_assessment_replay": {
+        "exit": 0,
+        "stderr": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stdout": {
+          "bytes": 7002,
+          "sha256": "7357e3658a08ed70f49108aedf9800f05a08b2df0cc17ab32a908bbae3fdf4bc"
+        }
+      },
+      "data_only": true,
+      "every_whole_zip_cipher_tar_and_cas_hash_fresh": true,
+      "file_set_sizes_modes_verified": true,
+      "freshly_hashed_bytes": 47475129924,
+      "metadata_only": false,
+      "original_reservation_unchanged": true,
+      "publication": false,
+      "regular_bytes": 47475129924,
+      "regular_files": 2354,
+      "root_adopted": false,
+      "scientific_execution": false
+    }
+  },
+  "packet": {
+    "path": "/Volumes/KIOXIA/Developments/tmp/plink-green8-terminal-originals-20261102.D4DvaN",
+    "report_sha256": "93a3893bc6d98b8b482a1e5f1ec9027acd138e6c7c18ccebf609c9b8c8cb7dd8",
+    "unchanged_proposal_sha256": "2b2eff73509aad41d8b267cae36e3dba34ab2b6d615b552f903d8449fba5040c",
+    "pointer_sha256": "cc422c3d4fd9f51cc017f13c9dd207e035d1cc5eefd7de0af64009202c99cd2d",
+    "seal_sha256": "15f69a2cdcff8e491671f99bc8c987d96f87397a08ec9bdb1df0a1ecfdb09583",
+    "full_resource_distributions": {
+      "path": "/Volumes/KIOXIA/Developments/tmp/plink-green8-terminal-originals-20261102.D4DvaN/INDEPENDENT-PERFORMANCE.json",
+      "bytes": 507117,
+      "sha256": "0d81af5b01c4909455ed0b4a15662f49361f658d838d6262e4eee92c310ea6cb"
+    },
+    "original_packet_and_remote_derived_files_unchanged": true
+  },
+  "primary_performance": {
+    "profiles": {
+      "1": {
+        "passed": false,
+        "strict_wall": false,
+        "exact_tree_memory_advantage": null,
+        "whole_wall_nonregression": false,
+        "median_stage_regressions": [
+          "I",
+          "F",
+          "F.qc",
+          "pairs",
+          "prune",
+          "P",
+          "P.qc"
+        ],
+        "whole_wall": {
+          "native_median": 7.07070972,
+          "native_median_equal": false,
+          "native_median_improvement": false,
+          "native_median_loss": true,
+          "native_over_source_ratio": 1.5354084292726782,
+          "native_range": [
+            7.014877629,
+            8.138688964
+          ],
+          "native_range_entirely_better": false,
+          "native_range_entirely_worse": true,
+          "source_median": 4.605100236,
+          "source_range": [
+            4.5779813,
+            4.615907145
+          ],
+          "source_zero_denominator": false
+        },
+        "whole_cli_wall": {
+          "native_median": 7.021600312,
+          "native_median_equal": false,
+          "native_median_improvement": false,
+          "native_median_loss": true,
+          "native_over_source_ratio": 1.5414746036196727,
+          "native_range": [
+            6.965793376000001,
+            8.089437928
+          ],
+          "native_range_entirely_better": false,
+          "native_range_entirely_worse": true,
+          "source_median": 4.555119037,
+          "source_range": [
+            4.528108393,
+            4.565604971
+          ],
+          "source_zero_denominator": false
+        },
+        "whole_cpu": {
+          "native_median": 5.657541999999999,
+          "native_median_equal": false,
+          "native_median_improvement": false,
+          "native_median_loss": true,
+          "native_over_source_ratio": 1.1383453018831098,
+          "native_range": [
+            5.637207,
+            5.668983
+          ],
+          "native_range_entirely_better": false,
+          "native_range_entirely_worse": true,
+          "source_median": 4.96997,
+          "source_range": [
+            4.940212999999999,
+            4.977123000000001
+          ],
+          "source_zero_denominator": false
+        },
+        "whole_max_process_rss": {
+          "native_median": 198766592,
+          "native_median_equal": false,
+          "native_median_improvement": false,
+          "native_median_loss": true,
+          "native_over_source_ratio": 2.1356834785670276,
+          "native_range": [
+            198746112,
+            198889472
+          ],
+          "native_range_entirely_better": false,
+          "native_range_entirely_worse": true,
+          "source_median": 93069312,
+          "source_range": [
+            93069312,
+            93069312
+          ],
+          "source_zero_denominator": false
+        },
+        "stage_wall": {
+          "F": {
+            "native_median": 0.45130566,
+            "native_median_equal": false,
+            "native_median_improvement": false,
+            "native_median_loss": true,
+            "native_over_source_ratio": 4.371972522075907,
+            "native_range": [
+              0.448906721,
+              0.455518295
+            ],
+            "native_range_entirely_better": false,
+            "native_range_entirely_worse": true,
+            "source_median": 0.103227012,
+            "source_range": [
+              0.103177183,
+              0.114146539
+            ],
+            "source_zero_denominator": false
+          },
+          "F.qc": {
+            "native_median": 0.344161586,
+            "native_median_equal": false,
+            "native_median_improvement": false,
+            "native_median_loss": true,
+            "native_over_source_ratio": 5.779225372428856,
+            "native_range": [
+              0.343805105,
+              0.348171737
+            ],
+            "native_range_entirely_better": false,
+            "native_range_entirely_worse": true,
+            "source_median": 0.059551508,
+            "source_range": [
+              0.057182466,
+              0.07118369599999999
+            ],
+            "source_zero_denominator": false
+          },
+          "I": {
+            "native_median": 0.50361421,
+            "native_median_equal": false,
+            "native_median_improvement": false,
+            "native_median_loss": true,
+            "native_over_source_ratio": 3.6172909702955525,
+            "native_range": [
+              0.478766483,
+              1.029318121
+            ],
+            "native_range_entirely_better": false,
+            "native_range_entirely_worse": true,
+            "source_median": 0.139224136,
+            "source_range": [
+              0.138570052,
+              0.148930819
+            ],
+            "source_zero_denominator": false
+          },
+          "P": {
+            "native_median": 0.036405383,
+            "native_median_equal": false,
+            "native_median_improvement": false,
+            "native_median_loss": true,
+            "native_over_source_ratio": 2.7303538277837975,
+            "native_range": [
+              0.035864667,
+              0.036890403
+            ],
+            "native_range_entirely_better": false,
+            "native_range_entirely_worse": true,
+            "source_median": 0.013333577,
+            "source_range": [
+              0.010951535,
+              0.013523751
+            ],
+            "source_zero_denominator": false
+          },
+          "P.qc": {
+            "native_median": 0.023197798,
+            "native_median_equal": false,
+            "native_median_improvement": false,
+            "native_median_loss": true,
+            "native_over_source_ratio": 1.1982636338283543,
+            "native_range": [
+              0.02266098,
+              0.023374205
+            ],
+            "native_range_entirely_better": false,
+            "native_range_entirely_worse": true,
+            "source_median": 0.019359511,
+            "source_range": [
+              0.018551729,
+              0.020714376
+            ],
+            "source_zero_denominator": false
+          },
+          "pairs": {
+            "native_median": 5.165538043,
+            "native_median_equal": false,
+            "native_median_improvement": false,
+            "native_median_loss": true,
+            "native_over_source_ratio": 1.277993373805438,
+            "native_range": [
+              5.111797277,
+              5.539765819
+            ],
+            "native_range_entirely_better": false,
+            "native_range_entirely_worse": true,
+            "source_median": 4.041913009,
+            "source_range": [
+              4.039358745,
+              4.052921005
+            ],
+            "source_zero_denominator": false
+          },
+          "prune": {
+            "native_median": 0.496132065,
+            "native_median_equal": false,
+            "native_median_improvement": false,
+            "native_median_loss": true,
+            "native_over_source_ratio": 3.151303657894176,
+            "native_range": [
+              0.493272063,
+              0.728064696
+            ],
+            "native_range_entirely_better": false,
+            "native_range_entirely_worse": true,
+            "source_median": 0.157437086,
+            "source_range": [
+              0.155786724,
+              0.165780913
+            ],
+            "source_zero_denominator": false
+          }
+        },
+        "stage_rss": {
+          "F": {
+            "native_median": 198766592,
+            "native_median_equal": false,
+            "native_median_improvement": false,
+            "native_median_loss": true,
+            "native_over_source_ratio": 3.4277742459560643,
+            "native_range": [
+              198746112,
+              198889472
+            ],
+            "native_range_entirely_better": false,
+            "native_range_entirely_worse": true,
+            "source_median": 57987072,
+            "source_range": [
+              57921536,
+              58048512
+            ],
+            "source_zero_denominator": false
+          },
+          "F.qc": {
+            "native_median": 29663232,
+            "native_median_equal": false,
+            "native_median_improvement": true,
+            "native_median_loss": false,
+            "native_over_source_ratio": 0.9976580796252927,
+            "native_range": [
+              29614080,
+              29777920
+            ],
+            "native_range_entirely_better": false,
+            "native_range_entirely_worse": false,
+            "source_median": 29732864,
+            "source_range": [
+              29609984,
+              29782016
+            ],
+            "source_zero_denominator": false
+          },
+          "I": {
+            "native_median": 185962496,
+            "native_median_equal": false,
+            "native_median_improvement": false,
+            "native_median_loss": true,
+            "native_over_source_ratio": 2.339172548817559,
+            "native_range": [
+              185856000,
+              185999360
+            ],
+            "native_range_entirely_better": false,
+            "native_range_entirely_worse": true,
+            "source_median": 79499264,
+            "source_range": [
+              79335424,
+              79544320
+            ],
+            "source_zero_denominator": false
+          },
+          "P": {
+            "native_median": 29663232,
+            "native_median_equal": false,
+            "native_median_improvement": true,
+            "native_median_loss": false,
+            "native_over_source_ratio": 0.9976580796252927,
+            "native_range": [
+              29614080,
+              29777920
+            ],
+            "native_range_entirely_better": false,
+            "native_range_entirely_worse": false,
+            "source_median": 29732864,
+            "source_range": [
+              29609984,
+              29782016
+            ],
+            "source_zero_denominator": false
+          },
+          "P.qc": {
+            "native_median": 29675520,
+            "native_median_equal": false,
+            "native_median_improvement": true,
+            "native_median_loss": false,
+            "native_over_source_ratio": 0.9976590470944643,
+            "native_range": [
+              29626368,
+              29790208
+            ],
+            "native_range_entirely_better": false,
+            "native_range_entirely_worse": false,
+            "source_median": 29745152,
+            "source_range": [
+              29622272,
+              29794304
+            ],
+            "source_zero_denominator": false
+          },
+          "pairs": {
+            "native_median": 31784960,
+            "native_median_equal": false,
+            "native_median_improvement": true,
+            "native_median_loss": false,
+            "native_over_source_ratio": 0.3619402985074627,
+            "native_range": [
+              31625216,
+              31813632
+            ],
+            "native_range_entirely_better": true,
+            "native_range_entirely_worse": false,
+            "source_median": 87818240,
+            "source_range": [
+              87724032,
+              87891968
+            ],
+            "source_zero_denominator": false
+          },
+          "prune": {
+            "native_median": 31387648,
+            "native_median_equal": false,
+            "native_median_improvement": false,
+            "native_median_loss": true,
+            "native_over_source_ratio": 1.0556550489048078,
+            "native_range": [
+              31285248,
+              31535104
+            ],
+            "native_range_entirely_better": false,
+            "native_range_entirely_worse": true,
+            "source_median": 29732864,
+            "source_range": [
+              29609984,
+              29782016
+            ],
+            "source_zero_denominator": false
+          }
+        }
+      },
+      "4": {
+        "passed": false,
+        "strict_wall": false,
+        "exact_tree_memory_advantage": null,
+        "whole_wall_nonregression": false,
+        "median_stage_regressions": [
+          "I",
+          "F",
+          "F.qc",
+          "pairs",
+          "prune",
+          "P",
+          "P.qc"
+        ],
+        "whole_wall": {
+          "native_median": 5.728680031,
+          "native_median_equal": false,
+          "native_median_improvement": false,
+          "native_median_loss": true,
+          "native_over_source_ratio": 2.1962037297567085,
+          "native_range": [
+            5.086731045,
+            6.423293118
+          ],
+          "native_range_entirely_better": false,
+          "native_range_entirely_worse": true,
+          "source_median": 2.608446545,
+          "source_range": [
+            2.587837952,
+            2.638245062
+          ],
+          "source_zero_denominator": false
+        },
+        "whole_cli_wall": {
+          "native_median": 5.678710632,
+          "native_median_equal": false,
+          "native_median_improvement": false,
+          "native_median_loss": true,
+          "native_over_source_ratio": 2.2197564391964004,
+          "native_range": [
+            5.037032534,
+            6.372989525999999
+          ],
+          "native_range_entirely_better": false,
+          "native_range_entirely_worse": true,
+          "source_median": 2.558258434,
+          "source_range": [
+            2.5372813499999998,
+            2.588061816
+          ],
+          "source_zero_denominator": false
+        },
+        "whole_cpu": {
+          "native_median": 8.632961,
+          "native_median_equal": false,
+          "native_median_improvement": false,
+          "native_median_loss": true,
+          "native_over_source_ratio": 1.0618902913415513,
+          "native_range": [
+            8.574258,
+            8.667636
+          ],
+          "native_range_entirely_better": false,
+          "native_range_entirely_worse": true,
+          "source_median": 8.129805,
+          "source_range": [
+            8.102319999999999,
+            8.185327
+          ],
+          "source_zero_denominator": false
+        },
+        "whole_max_process_rss": {
+          "native_median": 198688768,
+          "native_median_equal": false,
+          "native_median_improvement": false,
+          "native_median_loss": true,
+          "native_over_source_ratio": 1.795262768319763,
+          "native_range": [
+            198557696,
+            198840320
+          ],
+          "native_range_entirely_better": false,
+          "native_range_entirely_worse": true,
+          "source_median": 110673920,
+          "source_range": [
+            110637056,
+            110723072
+          ],
+          "source_zero_denominator": false
+        },
+        "stage_wall": {
+          "F": {
+            "native_median": 0.464569018,
+            "native_median_equal": false,
+            "native_median_improvement": false,
+            "native_median_loss": true,
+            "native_over_source_ratio": 5.191012477630563,
+            "native_range": [
+              0.458709126,
+              0.966897245
+            ],
+            "native_range_entirely_better": false,
+            "native_range_entirely_worse": true,
+            "source_median": 0.089494876,
+            "source_range": [
+              0.085688597,
+              0.096179809
+            ],
+            "source_zero_denominator": false
+          },
+          "F.qc": {
+            "native_median": 0.310353247,
+            "native_median_equal": false,
+            "native_median_improvement": false,
+            "native_median_loss": true,
+            "native_over_source_ratio": 4.977824764501711,
+            "native_range": [
+              0.309122437,
+              0.902273202
+            ],
+            "native_range_entirely_better": false,
+            "native_range_entirely_worse": true,
+            "source_median": 0.062347162,
+            "source_range": [
+              0.05746557399999999,
+              0.064085937
+            ],
+            "source_zero_denominator": false
+          },
+          "I": {
+            "native_median": 0.612308028,
+            "native_median_equal": false,
+            "native_median_improvement": false,
+            "native_median_loss": true,
+            "native_over_source_ratio": 4.648987469043695,
+            "native_range": [
+              0.52727828,
+              1.098538641
+            ],
+            "native_range_entirely_better": false,
+            "native_range_entirely_worse": true,
+            "source_median": 0.131707825,
+            "source_range": [
+              0.129067062,
+              0.13765565
+            ],
+            "source_zero_denominator": false
+          },
+          "P": {
+            "native_median": 0.036753279,
+            "native_median_equal": false,
+            "native_median_improvement": false,
+            "native_median_loss": true,
+            "native_over_source_ratio": 2.82090227201679,
+            "native_range": [
+              0.035900603,
+              0.036954133
+            ],
+            "native_range_entirely_better": false,
+            "native_range_entirely_worse": true,
+            "source_median": 0.013028909,
+            "source_range": [
+              0.011592027,
+              0.013439549
+            ],
+            "source_zero_denominator": false
+          },
+          "P.qc": {
+            "native_median": 0.022162763,
+            "native_median_equal": false,
+            "native_median_improvement": false,
+            "native_median_loss": true,
+            "native_over_source_ratio": 1.2050207323633544,
+            "native_range": [
+              0.021166837,
+              0.027528491
+            ],
+            "native_range_entirely_better": false,
+            "native_range_entirely_worse": true,
+            "source_median": 0.018392018000000003,
+            "source_range": [
+              0.01738273,
+              0.019636066
+            ],
+            "source_zero_denominator": false
+          },
+          "pairs": {
+            "native_median": 3.453449572,
+            "native_median_equal": false,
+            "native_median_improvement": false,
+            "native_median_loss": true,
+            "native_over_source_ratio": 1.6228950018416166,
+            "native_range": [
+              3.421530683,
+              3.488911382
+            ],
+            "native_range_entirely_better": false,
+            "native_range_entirely_worse": true,
+            "source_median": 2.127956256,
+            "source_range": [
+              2.100856711,
+              2.164261756
+            ],
+            "source_zero_denominator": false
+          },
+          "prune": {
+            "native_median": 0.261612218,
+            "native_median_equal": false,
+            "native_median_improvement": false,
+            "native_median_loss": true,
+            "native_over_source_ratio": 2.281281518757467,
+            "native_range": [
+              0.257454629,
+              0.281247133
+            ],
+            "native_range_entirely_better": false,
+            "native_range_entirely_worse": true,
+            "source_median": 0.114677744,
+            "source_range": [
+              0.110608609,
+              0.123795532
+            ],
+            "source_zero_denominator": false
+          }
+        },
+        "stage_rss": {
+          "F": {
+            "native_median": 198688768,
+            "native_median_equal": false,
+            "native_median_improvement": false,
+            "native_median_loss": true,
+            "native_over_source_ratio": 3.441015818968575,
+            "native_range": [
+              198557696,
+              198840320
+            ],
+            "native_range_entirely_better": false,
+            "native_range_entirely_worse": true,
+            "source_median": 57741312,
+            "source_range": [
+              57565184,
+              57835520
+            ],
+            "source_zero_denominator": false
+          },
+          "F.qc": {
+            "native_median": 29614080,
+            "native_median_equal": false,
+            "native_median_improvement": true,
+            "native_median_loss": false,
+            "native_over_source_ratio": 0.9971038477451386,
+            "native_range": [
+              29577216,
+              29736960
+            ],
+            "native_range_entirely_better": false,
+            "native_range_entirely_worse": false,
+            "source_median": 29700096,
+            "source_range": [
+              29540352,
+              29708288
+            ],
+            "source_zero_denominator": false
+          },
+          "I": {
+            "native_median": 185892864,
+            "native_median_equal": false,
+            "native_median_improvement": false,
+            "native_median_loss": true,
+            "native_over_source_ratio": 1.6796447076239822,
+            "native_range": [
+              185847808,
+              186146816
+            ],
+            "native_range_entirely_better": false,
+            "native_range_entirely_worse": true,
+            "source_median": 110673920,
+            "source_range": [
+              110637056,
+              110723072
+            ],
+            "source_zero_denominator": false
+          },
+          "P": {
+            "native_median": 29614080,
+            "native_median_equal": false,
+            "native_median_improvement": true,
+            "native_median_loss": false,
+            "native_over_source_ratio": 0.9971038477451386,
+            "native_range": [
+              29577216,
+              29736960
+            ],
+            "native_range_entirely_better": false,
+            "native_range_entirely_worse": false,
+            "source_median": 29700096,
+            "source_range": [
+              29540352,
+              29708288
+            ],
+            "source_zero_denominator": false
+          },
+          "P.qc": {
+            "native_median": 29626368,
+            "native_median_equal": false,
+            "native_median_improvement": true,
+            "native_median_loss": false,
+            "native_over_source_ratio": 0.9971050454921423,
+            "native_range": [
+              29589504,
+              29749248
+            ],
+            "native_range_entirely_better": false,
+            "native_range_entirely_worse": false,
+            "source_median": 29712384,
+            "source_range": [
+              29552640,
+              29765632
+            ],
+            "source_zero_denominator": false
+          },
+          "pairs": {
+            "native_median": 50827264,
+            "native_median_equal": false,
+            "native_median_improvement": true,
+            "native_median_loss": false,
+            "native_over_source_ratio": 0.5795077756503059,
+            "native_range": [
+              50663424,
+              51040256
+            ],
+            "native_range_entirely_better": true,
+            "native_range_entirely_worse": false,
+            "source_median": 87707648,
+            "source_range": [
+              87486464,
+              87801856
+            ],
+            "source_zero_denominator": false
+          },
+          "prune": {
+            "native_median": 40034304,
+            "native_median_equal": false,
+            "native_median_improvement": false,
+            "native_median_loss": true,
+            "native_over_source_ratio": 1.3479520066197765,
+            "native_range": [
+              39833600,
+              40128512
+            ],
+            "native_range_entirely_better": false,
+            "native_range_entirely_worse": true,
+            "source_median": 29700096,
+            "source_range": [
+              29540352,
+              29708288
+            ],
+            "source_zero_denominator": false
+          }
+        }
+      }
+    },
+    "filesystem_blocks_not_physical_io_bytes": true,
+    "rss_is_wait4_maximum_process_not_aggregate_tree": true,
+    "exact_tree_memory_not_available": true
+  },
+  "correctness_scope": {
+    "complete_graphs": 26,
+    "scientific_commands": 210,
+    "logical_generations": 78,
+    "complete_qualifications": 6,
+    "qualified_reused_trial_proofs": 20,
+    "physical_raw_captures": 19,
+    "fresh_P_validators": 12,
+    "body_differences": 0,
+    "full_check_fallbacks": 0,
+    "metadata_and_numeric_reports_independently_checked": true,
+    "raw_decompressed_hash_header_row_count_and_cross_engine_identity_checked": true,
+    "full_call_arrays_reparsed": false,
+    "independent_pgen_zstd_decode": false,
+    "recovered_code_executed": false,
+    "biological_claim": false,
+    "source_official_build_correspondence": "unproven",
+    "producer_correctness_passed_field": "absent; bounded correctness is recovery-derived, not a fabricated producer field"
+  }
+}
