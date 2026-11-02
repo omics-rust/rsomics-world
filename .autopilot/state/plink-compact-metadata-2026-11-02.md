@@ -40,6 +40,20 @@ same-generation source-consumer run41478980090 is dispatched from that head;
 qualification results and original artifact adoption remain pending. Do not
 restart merely because observation times out or the run is queued.
 
+Subsequent actual run/attempt/jobs APIs show41478980090/1 terminalSUCCESS,
+all five jobs successful. Complete original acquisition/replay remains in
+progress at `/Volumes/KIOXIA/Developments/tmp/plink-green11-originals-20261103.7l_ax6ok`.
+Linux originals already replay306 source Git bodies/modes and debug/release
+10-library/3-integration,36 generations/74878 raw cells/246 reports/66 worker
+records each. Do not equate aggregate green status with root artifact adoption.
+
+Root adoption is now recorded in
+`.autopilot/oracles/plink-native-2026-11-03-green-11.json` after reading complete
+verification/adaptation code and original report/source bindings, plus an
+independent size/SHA replay of all5 ZIP/TAR pairs and10674 extracted original
+bodies. All4 native modes and224 report/36 raw upstream commands qualify the
+frozen metadata commit only. No representative performance/publication passes.
+
 ## Next scheduling investigation, not adopted implementation
 
 Read-only follow-up confirms ordered.rs uses one queued message per lane,

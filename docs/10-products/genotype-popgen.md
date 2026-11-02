@@ -7,8 +7,9 @@ is recorded in `.autopilot/state/plink-source-preflight-2026-10-31.md`.
 
 Current2026-11-03 PLINK: private compact metadata owner499693cf is integrated
 after complete source review, one independent whole-feature review and root
-debug10-library/3-integration tests. A new immutable native/source gate remains
-pending; owned-metadata accounting decreases5022863 to4106987 bytes on the
+debug10-library/3-integration tests. Its immutable green11 native/source gate
+41478980090 passes with complete originals adopted in
+`plink-native-2026-11-03-green-11.json`; owned-metadata accounting decreases5022863 to4106987 bytes on the
 fixed regression, not a measured cohort RSS or speed claim. Prior green10
 owner9d43df4 native/source41443045747 passes. Its same-campaign32-command
 diagnostic retains slower/higher-RSS import and poor four-worker LD scaling;
