@@ -1,8 +1,10 @@
 # BED map execution
 
 Task1 private23-operation reducer kernel is implemented, not integrated as a
-CLI or accepted as the complete map operation. Point-cache policy remains a
-pending user decision; Task2 sweep/CLI work has not begun.
+CLI or accepted as the complete map operation. On2026-11-03 the user approves
+repairing the point-cache data-loss defect and recording known incompatibility.
+Task2 sweep/CLI is now unblocked on that policy; its technical brief and full
+implementation remain to be completed. Split-plus-fraction is still held.
 
 Owner remains at cdf736337d8bd63b2770723a8a667f7af83409b9 with an intentional
 uncommitted three-path source delta. Do not discard it, stage unrelated files,

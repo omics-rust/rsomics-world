@@ -59,14 +59,20 @@ the existing source aggregate-fraction policy question; do not guess or reuse
 coverage's full policy. All selected inputs and genome paths participate in
 alias rejection; only A may be stdin. Unsupported format/flags error.
 
-## One pending valid-input policy
+## Approved point-cache repair
 
 The source accepts identical chr1:10–10 queries before and after ordinary A
 rows with start10 but evicts B[0,10) in between: count4/sum17 becomes3/14.
-Root independently reads those actual rows and asks a nonblocking user choice:
-repair and record incompatibility, or reproduce source cache loss. No default
-is selected yet. Hold the affected eviction rule/public map acceptance, not
-independent reducer work. Do not introduce a placeholder public point mode.
+Root independently reads those actual rows. On2026-11-03 the user explicitly
+chooses repair, recorded as `BEDMAP-2311-POINT-CACHE-LOSS`, not source cache-loss
+emulation. Identical point queries at the same raw A start must retain the
+same eligible B records before and after ordinary intervals: the observed
+case stays count4/sum17 instead of degrading to3/14. Cache eviction must retain
+boundary candidates needed by a later point query at that same start; each
+query still applies its actual overlap/strand/fraction filters. Do not expose
+a bug-emulation switch or a placeholder point mode. Preserve both original
+source outputs and corrected native expectations in compatibility evidence.
+This resolves the point-cache policy only; split-plus-fraction remains held.
 
 ## Boundaries and delivery
 

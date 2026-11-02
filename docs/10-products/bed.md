@@ -121,7 +121,7 @@ may be migration aliases, but the typed long-form contract owns the help.
 | `closest` | BEDTools `closest`; BEDOPS `closest-features` | GitHub 0.2; complete declared single-B contract before multi-B extensions |
 | `coverage` | BEDTools `coverage` | unreleased native/performance-qualified candidate; summary/count/mean/histogram/depth, pooled B and ordinary blocks; split plus fractions held |
 | `annotate` | BEDTools `annotate` | unreleased native/performance-qualified candidate; independent multi-file count/fraction/both output |
-| `map` | BEDTools `map`; BEDOPS `bedmap` | source/real-oracle contract recovered;23 reducers in private implementation; valid-input point-cache policy pending, no stable CLI yet |
+| `map` | BEDTools `map`; BEDOPS `bedmap` | source/real-oracle contract recovered;23 private reducers; point-cache repair approved as known incompatibility, sweep/CLI not yet stable |
 | `jaccard` | BEDTools `jaccard` | later metrics slice; base-pair set similarity and overlap filters |
 | `fisher` | BEDTools `fisher` | later metrics slice; requires a genome-size universe |
 | `reldist` | BEDTools `reldist` | later metrics slice; fixed historical midpoint-straddle behavior is retained |
