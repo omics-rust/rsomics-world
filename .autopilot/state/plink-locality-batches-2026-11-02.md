@@ -133,3 +133,42 @@ new allowance, input modification, scientific call or deletion occurs.
 Wait for suitable host conditions before a separately recorded fresh admission
 attempt; preserve this failure and never blindly restart. This affected task
 does not block unblocked BED/other product work or change the full active goal.
+
+## Fresh admission succeeds after host conditions change
+
+Read-only2026-11-02T14:07:48Z observation records load1=84.8672 against112
+allowed CPUs; proposed diagnostic root is still absent. Root authorizes one
+separately recorded fresh admission/launch with the same frozen helpers,
+runner,32-command plan,12GiB subcap and existing208GiB envelope. Original
+refusal files remain unchanged. New logs live in
+`/Volumes/KIOXIA/Developments/tmp/plink-green10-diagnostic-proposal-20261102.DqUmZX/admission-v1/attempt2`.
+The local invocation context changes, not the frozen helper bodies or remote
+path. No threshold relaxation or additional global allowance is introduced.
+
+Actual sequential session12255 exits0. Admission13278 bytes SHA256
+`bd550ec8aa2c602804f89c2273308d838a5947b2e487a71c2cc607b50d2b5b13`.
+Root reads the actual launch receipt: UTC14:09:22Z, PID/PGID161188,
+start_ticks393702433; durable launch record precedes runner release.
+Frozen runner SHA256 remains
+`030d880df3a0a79e2e97d3ecf319b0cfef68c1122ecdf731262e0e137ff05d7d`.
+The worker monitors this exact identity, not a blind PID or duplicate launch.
+This is a targeted diagnostic, not a measured whole-workflow performance
+acceptance or permission to publish.
+
+At14:10:37Z the worker reports the exact runner identity no longer exists,
+no FINISHED record and zero of32 completed observations. Only the first
+I-w1-warmup-0-native directory started. A runner/guardian assertion terminated
+the activity; this is not a monitoring timeout. Original stderr, resources,
+guard evidence and partial products are being read to distinguish execution
+infrastructure from product failure. Do not infer a native regression, timings
+or completed diagnostic. No restart is authorized or performed.
+
+Root reads the original small terminal records in attempt2/TERMINAL-ORIGINALS.json:
+the first native command exits0 with empty stderr and an ok JSON result for
+929 samples/231470 variants. RESOURCES.json and GUARD-FAILURE.json both name
+`[Errno 13] Permission denied: '/proc/161247/fd'`, the recorded target PID.
+The evidence guardian fails, not a nonzero native command. Four product files
+remain, with metadata-only observed sizes13209205/10966762/35450/478 bytes;
+no product body correctness or performance acceptance follows. Guardian's raw
+waitpid value was not retained and must not be invented. Permission failure
+cause remains to diagnose; do not silently ignore it or relax the guard.
