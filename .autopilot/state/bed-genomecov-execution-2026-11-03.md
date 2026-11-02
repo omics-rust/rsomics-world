@@ -158,3 +158,8 @@ review invoked helper/output/cache paths and fresh capacity, then authorize
 once-only stage/build and the24-command campaign. A2.30 oracle, smaller subset,
 unverified binary execution or hidden project/system cache write is not a
 fallback. Mac proposal remains preserved and unexecuted.
+
+The later joined Linux preparation supersedes the preliminary47-contig/610GiB
+planning above: use the full official93-contig genome and conservatively reserve
+both new BED/PLINK8GiB roots,618GiB including independent headroom. See
+`linux-runtime-preflight-2026-11-03.md`; neither new route is yet admitted.
