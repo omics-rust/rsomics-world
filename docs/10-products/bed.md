@@ -43,31 +43,31 @@ errors, without changing the locked runtime or public API. See
 Public release and installation proof is
 `.autopilot/oracles/bed-public-delivery-2026-11-02.json`.
 
-Unreleased coverage source `3b2314a6912a849b21e7afbbb86b45fd8d6e294e`
-now passes actual four-native CI `41442092689`: 103 debug, release and packaged
+The pre-release coverage source `3b2314a6912a849b21e7afbbb86b45fd8d6e294e`
+passed actual four-native CI `41442092689`: 103 debug, release and packaged
 tests per host plus a twelve-call nine-operation installed lifecycle. One
 RefSeq annotation-derived sparse/nested campaign accepts strict throughput
 and maximum-process-RSS gates for summary/count/histogram reports. All 72
 complete outputs match; median speedups are 2.41–85.46x on Apple M2, with the
-85x result specific to nested histogram. This is not a new release or a
+85x result specific to nested histogram. Those measurements are not a
 thread-scaling, biological-effect or universal speed claim. The split-plus-
 explicit-fraction policy remains a pending user choice, explicitly rejected
 in this candidate. See `.autopilot/state/bed-coverage-execution-2026-11-02.md`
 and `.autopilot/oracles/bed-coverage-performance-2026-11-02.json`.
 
-Unreleased `annotate` at `cdf736337d8bd63b2770723a8a667f7af83409b9`
-passes four-native CI `41453635215`, with107 tests per debug/release/packaged
+The pre-release `annotate` source `cdf736337d8bd63b2770723a8a667f7af83409b9`
+passed four-native CI `41453635215`, with107 tests per debug/release/packaged
 profile and13 installed calls across ten operations. Multi-file independent
 count/fraction/both output retains the pinned point, bin-order and header
 semantics. One complete dual-file RefSeq-derived `both` campaign has12 exact
 source-matching outputs. On Apple M2 its median wall is0.392s versus37.403s
 and peak process RSS medians56.9MB versus175.0MB. These are specific workflow
-results, not universal speed, scaling or biological claims. No new release
-or registry acceptance follows. See
+results, not universal speed, scaling or biological claims. Their original
+source/binary bindings remain unchanged by v0.3.0 delivery. See
 `.autopilot/state/bed-annotate-execution-2026-11-02.md` and
 `.autopilot/oracles/bed-annotate-performance-2026-11-02.json`.
 
-Unreleased `map` source at `bcf65d7accdf4ff956680cfdef8e5d4eeb9634f8`
+The pre-release `map` source at `bcf65d7accdf4ff956680cfdef8e5d4eeb9634f8`
 adds a sorted streaming workflow with23 shared column reducers. Full local
 debug verification passes118 tests; one fresh whole-feature review identifies
 no critical or important issue. Exact-head native CI41495972529 passes all four
@@ -78,7 +78,8 @@ known incompatibilities, not accidental oracle mismatches. Representative
 whole-mapping performance has12 byte-identical outputs: median native/source
 wall0.577/0.470s and process RSS4.31/4.98MB on Apple M2. This is a13.49percent
 RSS advantage but22.84percent slower throughput, not a speedup. The resource
-gate is accepted under the throughput-or-resource rule; release remains open. See
+gate is accepted under the throughput-or-resource rule. The subsequent v0.3.0
+delivery and installation gates are recorded separately above. See
 `.autopilot/state/bed-map-execution-2026-11-02.md`.
 
 ## Boundary
