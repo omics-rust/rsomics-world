@@ -1,11 +1,11 @@
 # BED genomecov candidate execution
 
-Owner `c6e35f8650e812d7dbaaab1e8e2a9c1894e0c1b6` is committed, clean and
-pushed to main. Exact-head native run41519713617 attempt1 succeeds on all four
-actual hosts; complete original source/package/binary evidence is root-adopted.
-Immutable GitHubv0.3.0 remains bc40084; registry0.1.0 and authentication hold
-are unchanged. The matched full-input performance gate is now accepted below;
-no new release is claimed.
+Implementationc6e35f8 has accepted full-input performance and native originals.
+Versioned source5e5b709 now has exact-head native run41532198240/1 adopted and
+ships GitHubv0.4.0 with fresh anonymous15-call public installation accepted.
+See `bed-04-delivery-2026-11-03.md`. Older GitHubv0.3.0 remains immutable at
+bc40084; registry0.1.0 and authentication hold are unchanged. Measurements
+remain bound to actual c6e35/older binaries, not reassigned to the release.
 
 Plan: `docs/plans/2026-11-03-bed-genomecov.md`.
 Spec/evidence: `bed-track-contract-2026-11-03.md`.
@@ -292,3 +292,17 @@ Exact-head four-native run41532198240 is queued at initial observation.
 No automatic retry, tag, public release, registry retry or replacement of0.3.0
 assets is authorized by this candidate push. Inspect the same run and retain
 actual package/binary originals before any delivery decision.
+
+Run41532198240/1 completes actual success on all four native hosts, including
+the previously queued Mac ARM runner. Root freshly confirms the live run/head,
+reads complete retainer/verifier/report and verifies all733 PINS bodies, then
+independently replays the full data-only verifier before its receipt write:
+exit0. Original four ZIP API digests/CRC/full body mappings,266 exact Git
+source bodies/modes, clean135155B source package, normalized metadata, actual
+hosts, all three126-test profiles and15 installed calls/version0.4 all agree.
+License/dependency graphs and bundle/source/binary correspondence pass.
+Canonical adoption: `../oracles/bed-native-delivery-2026-11-03-v04.json`.
+This is separate from the earlier dirty local package. No benchmark is rerun,
+no measured c6e35 identity is reassigned, and no publication is inferred.
+Fresh live0.4 release API returns404 and remote0.4 tag lookup is empty before
+preparing a new six-asset delivery; older releases remain untouched.

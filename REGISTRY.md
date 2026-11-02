@@ -12,6 +12,12 @@ The latest exact namespace snapshot is
 
 Status meanings are defined in [CONVENTIONS.md](CONVENTIONS.md).
 
+Subsequent delivery: [BED GitHub0.4.0](https://github.com/omics-rust/rsomics-bed/releases/tag/v0.4.0)
+ships twelve qualified operations at5e5b709 with four-native and fresh public
+installation evidence. Its registry sparse index still contains only0.1.0;
+see `.autopilot/state/bed-04-delivery-2026-11-03.md`. Other namespace rows retain
+the snapshot above; no full namespace refresh or registry publication is implied.
+
 ## Product families
 
 | Product | Status | Initial scope / upstream anchors |

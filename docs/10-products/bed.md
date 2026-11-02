@@ -1,12 +1,13 @@
 # BED product dossier
 
-Status: [GitHub v0.3.0](https://github.com/omics-rust/rsomics-bed/releases/tag/v0.3.0)
-ships eleven operations atbc40084. Native-four attempt2 originals, clean source
-package and fresh anonymous public MacARM14-call installation are root-adopted.
+Status: [GitHub v0.4.0](https://github.com/omics-rust/rsomics-bed/releases/tag/v0.4.0)
+ships twelve operations at5e5b709, adding BED-only genomecov. Exact-head
+native-four originals, clean source package and fresh anonymous public
+MacARM15-call installation are root-adopted. Older0.3.0 remains immutable.
 Registry remains0.1.0 with authentication held. Source/binary performance
 bindings and map's slower throughput remain explicit; this is not a new timing
-claim. See `.autopilot/oracles/bed-native-delivery-2026-11-03.json` and
-`.autopilot/oracles/bed-public-delivery-2026-11-03.json`.
+claim. See `.autopilot/oracles/bed-native-delivery-2026-11-03-v04.json` and
+`.autopilot/oracles/bed-public-delivery-2026-11-03-v04.json`.
 
 ## Historical and measured-source evidence
 
@@ -151,7 +152,7 @@ may be migration aliases, but the typed long-form contract owns the help.
 | `fisher` | BEDTools `fisher` | later metrics slice; requires a genome-size universe |
 | `reldist` | BEDTools `reldist` | later metrics slice; fixed historical midpoint-straddle behavior is retained |
 | `multiinter` | BEDTools `multiinter`; BEDOPS partition | later multi-file sweep slice |
-| `genomecov` | BEDTools `genomecov` | unreleased BED-only candidatec6e35f8; native4 run41519713617/full original packages adopted,126 tests/profile and15 installed calls; full584846-row/93-contig histogram and bedgraph-all output/performance accepted in `bed-genomecov-performance-2026-11-03.json`; BAM input belongs to `rsomics-bam` |
+| `genomecov` | BEDTools `genomecov` | GitHub0.4.0 at5e5b709; native4 run41532198240/full originals and fresh public installation adopted,126 tests/profile and15 installed calls; full584846-row/93-contig histogram and bedgraph-all output/performance accepted atc6e35 in `bed-genomecov-performance-2026-11-03.json`; BAM input belongs to `rsomics-bam` |
 | `unionbedg` | BEDTools `unionbedg` | later track slice |
 | `flank` | BEDTools `flank` | later coordinate-generation slice |
 | `slop` | BEDTools `slop`; BEDOPS range padding | later coordinate-generation slice |

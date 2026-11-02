@@ -1,0 +1,53 @@
+{
+  "schema": "rsomics.bed.native-delivery.v1",
+  "version": "0.4.0",
+  "head": "5e5b709d00c07977ce81deb0f7f0f70fece91c4a",
+  "run": 41532198240,
+  "attempt": 1,
+  "root_adopted": true,
+  "native_four_accepted": true,
+  "publication_accepted": true,
+  "publication_kind": "GitHub native/source delivery only",
+  "registry_publication": false,
+  "public_receipt": "bed-public-delivery-2026-11-03-v04.json",
+  "packet": "/Volumes/KIOXIA/Developments/tmp/bed-04-native-5e5b709-20261103.GVA9bd",
+  "proof": {
+    "VERIFIED.json": "6b0858942614a8835fc4757e32fa0e63015916b53050025897595af14721b730",
+    "PINS.sha256": "adaf68cbdbbd806c24519c7ab9a11e09ec6ca4009ecfccc066336c758eae1624",
+    "root_checked_pinned_files": 733,
+    "independent_replay": "full reviewed data-only verifier in memory before receipt write, exit 0",
+    "checks": ["original API ZIP digests and CRC", "complete source Git bodies and modes", "clean exact-head VCS and normalized metadata", "actual native hosts", "three test profiles", "installed lifecycle and output bytes", "dependency graphs and license provenance", "bundle/source/installed binary correspondence"]
+  },
+  "source_package": {
+    "bytes": 135155,
+    "sha256": "6786acc13315ce1b0b69dd6f223ab1bf70429828bb954a95a2464ee427c4a16d",
+    "members": 268,
+    "exact_git_originals": 266,
+    "identical_on_all_four_hosts": true
+  },
+  "each_native_target": {
+    "debug_tests": 126,
+    "release_tests": 126,
+    "packaged_tests": 126,
+    "failed_or_ignored_tests": 0,
+    "installed_calls": 15,
+    "successful_calls": 14,
+    "expected_invalid_input_calls": 1,
+    "operations": 12,
+    "actual_version_and_json": "0.4.0"
+  },
+  "binaries": {
+    "linux-x86_64": {"bytes": 2274128, "sha256": "e20a4d10f2a87eff6d1d79c60c8562356c349569045915f417a22f41df891445"},
+    "linux-aarch64": {"bytes": 2090160, "sha256": "5c6a296acfb63e4d3fb70a69c6d591567e88f29f3c83c89fd1c09a6bb1e77274"},
+    "macos-x86_64": {"bytes": 2042104, "sha256": "baab91096e66c2e6e4d380ab3f880d8fbdcb87aee78d9accd960386a752fd37e"},
+    "macos-aarch64": {"bytes": 1859936, "sha256": "95831f6f57f875e859c32bbe9e468835ef037cb02bd685f9e69696c3ef99ecef"}
+  },
+  "scope": {
+    "recovered_code_executed_by_adoption": false,
+    "rerun": false,
+    "performance_remeasured": false,
+    "prior_measured_binary_identities_preserved": true,
+    "old_public_assets_replaced": false,
+    "registry_authentication_hold_unchanged": true
+  }
+}
