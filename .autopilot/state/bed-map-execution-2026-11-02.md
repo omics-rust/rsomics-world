@@ -2,7 +2,9 @@
 
 Current status: the complete map feature is committed and pushed at
 bcf65d7accdf4ff956680cfdef8e5d4eeb9634f8. Native exact-head CI run41495972529
-was queued at the latest observation. Performance and release gates remain open.
+passes all four targets with root original-data adoption. Representative
+performance demonstrates lower process RSS, not faster throughput. Release
+gates remain open.
 The user approves repairing the point-cache data-loss defect and recording
 known incompatibility. Split-plus-fraction is still held.
 
@@ -108,3 +110,32 @@ Runner SHA256fd868a41596c923e6dd11aa5850a28d3796eca57bfaeb01e7401bd98571f6ea8.
 This packet has not executed a scientific command, executable version check
 or benchmark. Root authorization/executable pins and actual native-four
 acceptance remain required before its run action. No performance claim yet.
+
+## Actual native qualification and representative performance
+
+All four native jobs pass at exact sourcebcf65d7, with118 tests in each of
+debug/release/packaged profiles and14 installed calls across11 operations.
+Root reads the full data-only verifier, independently replays every retained
+body identity, four ZIP CRC/body mappings and the complete source/package/
+bundle/lifecycle/provenance verification without overwriting its receipt.
+Replay exits0. Four identical clean source packages contain250 exact Git
+originals plus two Cargo-generated members. No recovered code was executed.
+Receipt: `.autopilot/oracles/bed-map-native-2026-11-03.json`.
+
+After guarded clean exact-head offline release build and executable pinning,
+root authorizes and executes the single prepared campaign. Session17508
+exits0; all12 complete outputs compare byte-for-byte, retaining45913020 bytes.
+Root independently replays all outputs, input/runner/measured executable pins,
+raw resource stderr and five-pair wall/RSS medians; replay exits0.
+
+Native/source wall medians0.577190375/0.469887792s: native is22.84percent slower.
+Native/source peak-process RSS medians4308992/4980736 bytes:13.49percent lower,
+with all native RSS samples below all source samples. Under the explicit
+throughput-or-resource rule this qualifies a resource-use advantage only;
+do not describe it as faster, universal or thread-scalable. The absolute
+median RSS saving is671744 bytes, not a large-memory-workload claim.
+Sorting is excluded equally; measured stdout includes parse/sweep/reduction.
+Receipt: `.autopilot/oracles/bed-map-performance-2026-11-03.json`.
+
+The earlier preparation-only paragraphs are historical. No release or registry
+publication has occurred; immutable0.2 GitHub and0.1 registry slices are unchanged.

@@ -1,0 +1,23 @@
+{
+  "root_adopted": true,
+  "head": "bcf65d7accdf4ff956680cfdef8e5d4eeb9634f8",
+  "run": 41495972529,
+  "attempt": 1,
+  "packet": "/Volumes/KIOXIA/Developments/tmp/bed-map-native-bcf65d7-20261103.H0VHJM",
+  "verified_sha256": "73094fb2819a2d06c8e5bd25d83c48fb2851f8aaaf3539d06427db79a2414eac",
+  "native_targets": ["linux-x86_64", "linux-aarch64", "macos-x86_64", "macos-aarch64"],
+  "tests_per_target_per_profile": 118,
+  "profiles": ["debug", "release", "packaged-tests"],
+  "installed_calls_per_target": 14,
+  "operations": 11,
+  "source_package": {
+    "bytes": 125077,
+    "sha256": "20ea64275ba626b7b2e6fc22eaa2241319006dd66919068e9599a19221eb0a3f",
+    "members": 252,
+    "exact_git_originals": 250
+  },
+  "root_replay": "All retained body identities, four ZIP CRCs and extracted-body correspondence; complete data-only verifier replay including exact Git bodies/modes, native profiles, installed outputs, bundles and dependency provenance; exit0; original receipt not overwritten",
+  "recovered_code_executed": false,
+  "performance_acceptance": false,
+  "publication_acceptance": false
+}

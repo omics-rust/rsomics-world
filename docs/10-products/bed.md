@@ -60,11 +60,15 @@ or registry acceptance follows. See
 Unreleased `map` source at `bcf65d7accdf4ff956680cfdef8e5d4eeb9634f8`
 adds a sorted streaming workflow with23 shared column reducers. Full local
 debug verification passes118 tests; one fresh whole-feature review identifies
-no critical or important issue. Exact-head native CI41495972529 is still
-incomplete, so native-four acceptance is not yet claimed. The user-approved
+no critical or important issue. Exact-head native CI41495972529 passes all four
+native targets with118 tests/profile and14 installed calls each; original
+source/package/bundle/lifecycle evidence is root-adopted. The user-approved
 point-cache repair and the same-class tied-B lookahead repair are documented
 known incompatibilities, not accidental oracle mismatches. Representative
-whole-mapping performance and release gates remain open. See
+whole-mapping performance has12 byte-identical outputs: median native/source
+wall0.577/0.470s and process RSS4.31/4.98MB on Apple M2. This is a13.49percent
+RSS advantage but22.84percent slower throughput, not a speedup. The resource
+gate is accepted under the throughput-or-resource rule; release remains open. See
 `.autopilot/state/bed-map-execution-2026-11-02.md`.
 
 ## Boundary
@@ -131,7 +135,7 @@ may be migration aliases, but the typed long-form contract owns the help.
 | `closest` | BEDTools `closest`; BEDOPS `closest-features` | GitHub 0.2; complete declared single-B contract before multi-B extensions |
 | `coverage` | BEDTools `coverage` | unreleased native/performance-qualified candidate; summary/count/mean/histogram/depth, pooled B and ordinary blocks; split plus fractions held |
 | `annotate` | BEDTools `annotate` | unreleased native/performance-qualified candidate; independent multi-file count/fraction/both output |
-| `map` | BEDTools `map`; BEDOPS `bedmap` | sorted sweep/CLI and23 private reducers integrated atbcf65d7; known point-loss repairs recorded; native-four/performance/release gates open |
+| `map` | BEDTools `map`; BEDOPS `bedmap` | sorted sweep/CLI and23 private reducers integrated atbcf65d7; native-four and lower-RSS workflow accepted, throughput slower; release gate open |
 | `jaccard` | BEDTools `jaccard` | later metrics slice; base-pair set similarity and overlap filters |
 | `fisher` | BEDTools `fisher` | later metrics slice; requires a genome-size universe |
 | `reldist` | BEDTools `reldist` | later metrics slice; fixed historical midpoint-straddle behavior is retained |
