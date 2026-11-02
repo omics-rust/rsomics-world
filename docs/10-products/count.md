@@ -3,6 +3,16 @@
 Status: first release slice published as `rsomics-count 0.1.0`. Later slices
 remain audited but unimplemented.
 
+The [GitHub native/source release](https://github.com/omics-rust/rsomics-count/releases/tag/v0.1.0)
+is pinned to `8ae7a2b0294557d78edba30c0a1aa9cfef1c0350`, with independently
+adopted four-native source/install evidence and a fresh public Mac ARM
+count-to-normalization lifecycle. README-only main
+`b207b4e5fbb3df047e453ce62496c7013ec8e666` passes exact-head native-four
+CI `41372971679`. The corrected GitHub source package is not the old immutable
+registry archive. No algorithm, public API, version or historical performance
+result changes; the slower-wall/lower-RSS evidence remains explicitly scoped.
+See the [delivery record](../../.autopilot/state/count-native-delivery-2026-11-02.md).
+
 ## Boundary
 
 `rsomics-count` is one genomic feature-counting and count-normalization

@@ -4,8 +4,8 @@ Current: GitHub native/source releasev0.1.0/430972817 is public, pinned to
 8ae7a2b0294557d78edba30c0a1aa9cfef1c0350. Actual native4 CI41367589211/1,
 complete originals and public Mac ARM nine-call installation are root-adopted.
 One integrated review and its single P2 correction are adopted below. The
-README-only public-install update is committed asb207b4e; its exact-head
-post-documentation CI gate remains pending. Release tag and original assets
+README-only public-install updateb207b4e5fbb3df047e453ce62496c7013ec8e666
+passes exact-head native4 CI41372971679/1. Release tag and original assets
 are unchanged; no registry archive is replaced or new timing inherited.
 
 ## Initial scope
@@ -183,3 +183,13 @@ roughly87% RSS advantage, three-live/ARM-frozen coverage and team-owned bamio
 supplement scope remain explicit. Production/tests/Cargo/lock/scripts/notices,
 formal tag and original archives are untouched. Exact new native CI remains
 the post-documentation gate; this does not move the formal release source.
+
+## Post-documentation exact-head gate closed
+
+Actual CI41372971679/1 succeeds at the full owning main
+b207b4e5fbb3df047e453ce62496c7013ec8e666 on all four native target classes.
+The one-file README-only delta preserves production/Cargo/tests/scripts and
+does not replace formalv0.1.0/8ae7a2b0 or its original carriers. This closes
+the later documentation-head gate, not a new benchmark, native-artifact
+adoption or registry publication. Count's declared native/source/public-install
+delivery slice is complete; later product features remain out of scope.
