@@ -1,7 +1,7 @@
 # Sequence strand-extraction execution
 
 Current: reviewed source integrated as3ba1818e85477573995f6a391522f2ef35054c79;
-exact-head four-native CI41424424381 is running. Clean packaging passes;
+exact-head four-native CI41424424381 passes and raw logs are adopted. Clean packaging passes;
 representative performance, delivery and publication remain unearned.
 
 Active plan: `docs/plans/2026-11-02-seq-strand-extraction.md`, committed as
@@ -112,3 +112,26 @@ Actual exact-head owning CI41424424381 is created2026-11-02T09:54:17Z at
 four actual native hosts, both profiles and pinned SeqKit2.13 witnesses;
 local2.14 tests alone are not that acceptance. Representative performance
 and any version bump/delivery/publication remain subsequent gates.
+
+## Actual four-native correctness accepted
+
+Actual41424424381/1 completes SUCCESS at exact3ba1818e85477573995f6a391522f2ef35054c79.
+Root retains raw run/jobs API bodies, complete attempt log and exact Git source
+TAR under `/Volumes/KIOXIA/Developments/tmp/seq-strand-native-20261102.Sj6Rdx`.
+Four-file checksums manifest SHA256:
+13941d36d6b32ec532ac57381028b412529e3ba8078c900f4d756266415c0370.
+Root freshly verifies every digest and actual job/required-step metadata;
+all four native-host checks, pinned source build and debug/release suites pass.
+Raw Rusthosts are x86_64/aarch64 Linux GNU and x86_64/aarch64 Apple Darwin.
+All eight profiles contain7+5+35+1+8=56 passes and zero failed/ignored.
+The source revision d13b5fa388cc869de05abe1bdb07980eef5efb4e is built and
+asserts SeqKit2.13.0 on every host; new live whole-record suites pass there.
+Linux x86_64 also passes format, strict Clippy, rustdoc, clean package and
+existing benchmark smoke. This closes native correctness, not performance.
+
+No final native executable artifacts are uploaded by this CI; do not call
+these logs binary-delivery/architecture-inspection/public-install evidence.
+Representative gate is now fixed in
+`docs/plans/2026-11-02-seq-strand-performance.md`. One worker prepares a
+simple full-input runner/admission, but no timed campaign is yet authorized
+until root inspects its paths, command/resource recording and capacity check.

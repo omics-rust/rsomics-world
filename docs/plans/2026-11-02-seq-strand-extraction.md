@@ -59,29 +59,29 @@ Historical team-owned assets, not dependencies:
 
 ## One coherent implementation wave
 
-- [ ] Read complete owner input/output/CLI/library/tests and selected historical
+- [x] Read complete owner input/output/CLI/library/tests and selected historical
   algorithms/tests; freeze exact source baseline and inspect dirty state.
-- [ ] Prepare an owner-specific external preflight from the already inspected
+- [x] Prepare an owner-specific external preflight from the already inspected
   intervals guard. Verify physical volume, paths, resolved target, Rustup,
   caches and8GiB external headroom before every build/oracle invocation. Use
   Cargo locked/offline; no new downloads/dependencies or boot-disk output.
-- [ ] Capture actual installed SeqKit identity, then a compact connected set
+- [x] Capture actual installed SeqKit identity, then a compact connected set
   of complete FASTA/FASTQ source outputs for both operations: signed/clamped/
   empty ranges, coordinate headers, DNA/RNA/IUPAC and full reversed qualities.
   If installed version differs, do not call it2.13.0 or reuse old goldens as
   fresh evidence. Record source behavior contradictions before implementation.
-- [ ] Add connected CLI regressions first and observe their failure because
+- [x] Add connected CLI regressions first and observe their failure because
   commands are absent. Include the extraction→revcomp pipeline, compressed
   named output/rollback and JSON summary using existing helpers, not a new
   framework or exhaustive helper matrix.
-- [ ] Implement modules `operations/subseq.rs` and `operations/revcomp.rs`,
+- [x] Implement modules `operations/subseq.rs` and `operations/revcomp.rs`,
   narrowly necessary private strand/region internals, library exports and CLI
   routing. Keep comments rare; no manual FASTX parser/writer or new public
   Layer A item. Prefer a validated region type with private coordinate fields.
-- [ ] Run formatting, strict all-target/all-feature Clippy, full debug/release
+- [x] Run formatting, strict all-target/all-feature Clippy, full debug/release
   tests and actual complete-output source differentials. Record all failures;
   missing upstream is not a passing compatibility test.
-- [ ] Obtain one fresh integrated review of region/quality/header/order/error
+- [x] Obtain one fresh integrated review of region/quality/header/order/error
   behavior and bounded allocation, then one material correction pass. Preserve
   source/fixture provenance in the owner merge record; root reviews final delta.
 

@@ -116,6 +116,19 @@ BGZF convert and grep streams match SeqKit at
 `56d4d5931d35fb089fa4ac1b58dda5fd76924400ca466d5d537550163b5b449b`
 and `e752a8bf2615a96a4cebd4dd13ff8379003054e514b07c208ac5660949c3e9c3`.
 
+### Current unreleased strand-extraction wave
+
+Reviewed source3ba1818e85477573995f6a391522f2ef35054c79 adds `subseq` and
+`revcomp` using existing input/output/help and product-private logic; no
+foundation API or dependency is added. Complete FASTQ quality/header/order
+contracts and retained historical fixtures pass locally against actual
+SeqKit2.14.0. Exact native4 CI41424424381 also passes both profiles and pinned
+SeqKit2.13.0 live comparisons; raw APIs/logs/source are retained and adopted.
+This is not a new release, binary delivery or performance claim. The complete
+input representative gate and its remaining boundaries are recorded in
+`.autopilot/state/seq-strand-extraction-2026-11-02.md` and
+`docs/plans/2026-11-02-seq-strand-performance.md`.
+
 ### Later operation groups
 
 | Group | Target operations | Primary source assets |
