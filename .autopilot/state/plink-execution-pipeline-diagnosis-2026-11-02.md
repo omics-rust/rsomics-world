@@ -3,6 +3,10 @@
 Status: data-only diagnosis adopted as direction; no new production change or
 performance qualification. Owner remains cleanprivatef49f3675. Green8 whole
 negative receipt is `plink-real-performance-green8-failure-2026-11-02.json`.
+The completed eight-command host trace is now adopted in
+`plink-phase-diagnostic-2026-11-02.md`: target-only sync and two-batch temporary
+output lifetimes support a bounded ordered-output wave, not an old-CI causal
+explanation or durability-policy change. Do not repeat that diagnostic.
 
 ## Rejected arithmetic proposal
 
@@ -47,7 +51,8 @@ Root reads pinned common0.12.3 `AtomicFile::commit_all/prepare/persist` source:
 every output is flushed/synced, then every rename syncs its parent directory.
 Make/stats/pairs/prune use4/8/1/2 outputs respectively. The controller's
 fsync_durability_claim=false does not disable those calls. Source PLINK syscall
-behavior and exact native sync wall contributions remain unmeasured. Do not
+behavior and native sync wall contributions were unmeasured at this initial
+diagnosis; the later single host trace establishes only its own context. Do not
 remove barriers, weaken ordinary-error recovery, silently change durability
 policy or waive the existing performance gate. Repeated same-parent sync is a
 potential shared-foundation issue, not an already authorized API/policy change.
