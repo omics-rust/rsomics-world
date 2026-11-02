@@ -56,6 +56,39 @@ genome-length storage. This is a design hypothesis, not measured performance.
 No new foundation: named existing consumers coverage/annotate/genomecov share
 only private depth reduction, not their distinct point/format/output policies.
 
+## Unionbedg inventory and affected policy hold
+
+Packet `/Volumes/KIOXIA/Developments/tmp/bed-unionbedg-contract-20261103.n7WBnQ`.
+CAPTURE.json SHA-256
+`98195c3e2fa3255e7881c6d4701b243e160ffcd3c6bb5b263f26116284ac1238`;
+REPORT.md SHA-256
+`89a584a8f9e69aec45bfc171913d63b66365677a8ef302d4b3f0002325a469ef`.
+Root reads the bounded report and verifies every PINS.sha256 entry. Ten pinned
+source members and16 tiny workflow calls plus version are retained externally;
+source/parser/CLI members also match fresh exact-revision public raw bodies.
+
+Presence is separate from a textual value or zero. Preserve every interval
+boundary, including adjacent equal vectors. Header without names has only
+three coordinate column names in the actual2.31.1 oracle, unlike the rendered
+documentation example. Names alone do not turn on the header. Empty-region
+output covers encountered chromosomes only, not every genome entry; genome
+order does not control output. A single empty input retains its filler column.
+
+Do not inherit the legacy whole-event sort/global first-seen chromosome rank,
+signed coordinate permissiveness or missing-fourth-field default. Keep its
+fixtures/reference as class3 assets; source preconditions require grouped,
+sorted, nonoverlapping per-file tracks. A target common-chromosome ordering
+rule still needs to be frozen before implementation; arbitrary source reentry
+from conflicting inputs is not a valid ordered-track contract.
+
+Actual source drops the last valid record without a final newline and aborts
+when all inputs are empty. Root asks the user asynchronously whether to repair
+these as known incompatibilities (preserve the record, return empty output).
+These two behaviors remain held pending reply. Malformed-width silent
+truncation and overlapping-input data loss are not accepted product policies:
+the existing fail-fast parser boundary applies. Other source/design work is
+unblocked; no implementation or automatic compatibility waiver follows.
+
 ## Remaining before implementation
 
 Finish unionbedg source/oracle inventory and freeze narrow typed interfaces,

@@ -151,7 +151,7 @@ may be migration aliases, but the typed long-form contract owns the help.
 | `fisher` | BEDTools `fisher` | later metrics slice; requires a genome-size universe |
 | `reldist` | BEDTools `reldist` | later metrics slice; fixed historical midpoint-straddle behavior is retained |
 | `multiinter` | BEDTools `multiinter`; BEDOPS partition | later multi-file sweep slice |
-| `genomecov` | BEDTools `genomecov` | later track slice for BED input; BAM input belongs to `rsomics-bam` |
+| `genomecov` | BEDTools `genomecov` | unreleased BED-only candidatec6e35f8; sparse tracks/histograms,126 local tests and18 source workflows pass; native4/performance open; BAM input belongs to `rsomics-bam` |
 | `unionbedg` | BEDTools `unionbedg` | later track slice |
 | `flank` | BEDTools `flank` | later coordinate-generation slice |
 | `slop` | BEDTools `slop`; BEDOPS range padding | later coordinate-generation slice |

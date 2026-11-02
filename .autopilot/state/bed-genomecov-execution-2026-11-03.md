@@ -1,0 +1,97 @@
+# BED genomecov candidate execution
+
+Owner `c6e35f8650e812d7dbaaab1e8e2a9c1894e0c1b6` is committed, clean and
+pushed to main. Exact-head native run41519713617 is live, not yet accepted.
+Immutable GitHubv0.3.0 remains bc40084; registry0.1.0 and authentication hold
+are unchanged. No release or performance acceptance is claimed.
+
+Plan: `docs/plans/2026-11-03-bed-genomecov.md`.
+Spec/evidence: `bed-track-contract-2026-11-03.md`.
+
+## Implemented operation
+
+Typed BED-only genome coverage provides histogram, bedgraph, bedgraph-all,
+one-based all-base and zero-based nonzero depth, strand and endpoint selection,
+BED12 split, max, binary32 scale and browser track options. Sparse events/runs
+reuse existing private DepthBuffer; only one chromosome group is retained.
+Map and genomecov share an extracted, unchanged private numeric formatter.
+No dependency, foundation, package version or other product boundary changes.
+
+Unified help/JSON/input alias/atomic named output use existing common/help.
+CLI is implemented, not a placeholder; public stable-release documentation
+and release promotion await actual native and performance gates.
+
+## Observed verification
+
+Initial CLI golden test is RED because genomecov does not exist. After the
+first implementation,13 complete real BEDTools2.31.1 workflows and4 literal
+golden outputs pass, including all ordinary modes and selected options.
+A targeted source comparison then exposes filter-before-visit ordering;
+moving strand selection before chromosome visit is RED/GREEN verified.
+
+One whole-feature reviewer finds an important genomecov-specific split
+adapter defect: exact BED12 width, virtual point geometry and selected-origin
+checks differ from existing map/coverage block policy. Two tests are observed
+RED (point block falsely rejected; origin block incorrectly succeeds), then
+GREEN after a narrow private blocks_in adapter. The original blocks caller
+retains its raw-span contract; only genomecov requests virtual bounds and
+exact12-field splitting. BED12+ source behavior and interior BED12 point
+coverage now match actual complete oracle outputs. No second review ladder.
+
+Final complete guarded debug and release each pass126 tests, zero failed or
+ignored (77 library;4 annotate;20 CLI;3 compatibility;8 coverage;1 differential;
+8 genomecov;5 map). Strict all-target/all-feature Clippy and fmt check pass.
+The new tests include18 actual source workflows, sparse1e12-base coverage,
+selected geometry errors and stdin/JSON/late-error output preservation.
+
+The real release binary passes the updated installed-style15-call lifecycle:
+12 operations,14 successes and one expected malformed-input failure. Packet:
+`/Volumes/KIOXIA/Developments/tmp/bed-genomecov-local-20261103.QMFHlO`;
+lifecycle VERIFIED.json SHA-256
+`464a6309c5945848afd213185a8309ae1673899b47dba9abb3c8a47a6b499bc5`.
+This is local binary qualification, not a fresh cargo install/package gate.
+CI still must verify normalized packages and install actual binaries on all
+four native target classes.
+
+All builds/tests/scratch/cache use physically verified external/dev/disk12s1
+paths with31GiB free before the gates. No project write/download is placed on
+the boot disk. A read-only tool call with BED cwd stalls but eventually exits0;
+subsequent build calls use the established PLINK-cwd/explicit BED cd route,
+without restarting any running scientific process.
+
+## Root rulings and review exclusions
+
+- Geometry/genome lookup follows strand selection, as source does; excluded
+  records still undergo basic BED parsing. API docs explicitly state selected
+  geometry, resolving the review's minor documentation ambiguity.
+- Preserve source's uncapped final bedGraph run with max, and exact-width
+  splitting. These are compatibility quirks, not silently repaired policies.
+- Selected origin, unknown contig, out-of-bounds span and required endpoint
+  strand errors stay fail-fast. No unsafe zero-size-block source behavior is
+  promised; no malformed-input permissiveness is imported.
+- Review of unchanged eleven-operation science/performance is not repeated;
+  all existing tests still pass, including consumers of moved formatting and
+  the unchanged raw-coordinate blocks adapter.
+- Unionbedg's two valid-input repair choices remain held independently;
+  BAM/GFF/VCF/fragment/CIGAR and new foundations are excluded.
+- Streaming stdout may contain a partial result before a late error; named
+  output retains the existing transactional guarantee, not an all-I/O rollback
+  promise.
+- Reviewer did not execute or accept performance, packaging, native4 or
+  publication. Root local gates above close local test exclusions only.
+  License provenance is not legal clearance; upstream expression is not copied.
+
+## Next gates
+
+Root integrates the qualified private candidate before performance so that
+measurement can bind an actual committed/four-native-qualified source, not a
+dirty proposal. Run41519713617 must reach actual terminal state with originals;
+unacquired infrastructure jobs are failures, not native passes. No automatic
+rerun or output/performance waiver is authorized.
+
+Performance preparation reuses all584846 real hg19 RefSeq exon rows, not a
+tiny substitute or another accepted eleven-operation campaign. Whole histogram
+and zero-inclusive bedGraph output, real genome sizes, source/native identities,
+RAM/output/time/external-space budget and matched measured pairs must be fixed
+before execution. Mac physical RAM is8GiB, so dense-source capacity matters.
+No unchanged PLINK experiment, benchmark or registry credential retry follows.
