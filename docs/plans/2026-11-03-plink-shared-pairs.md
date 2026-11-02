@@ -46,6 +46,12 @@ source analysis at
   compact effective-dosage moments; old pruning consumers retain behavior.
 - Extend existing LD tests/fixtures, not another external testing framework.
 
+Root ruling during implementation also permits one existing assertion change
+in `src/native_workflow.rs`: preserve its fixed-budget call/output comparison,
+but relocate the old layout-specific mandatory-eviction assertion to the real
+no-fit integrated LD consumer. See plink-shared-pairs-2026-11-03.md for the
+actual14/15 failure and retained fallback requirement; no fixture/import change.
+
 `PreparedPairs` is private owned immutable data. Its row lookup takes the
 existing SelectedOrdinal and returns borrowed bitplanes/prefix and optional
 effective dosage. No queued borrowed codec view or mutex-protected shared
