@@ -20,17 +20,17 @@ operation will ship. It records:
 |---|---:|---|
 | `rsomics-annotation` | 4 | [released 0.1.0](interval-annotation-index.md#rsomics-annotation) |
 | `rsomics-bam` | 41 | [released 0.29.0](bam.md) |
-| `rsomics-bed` | 42 | [released 0.1.0](bed-gate-2026-07-30.md) |
+| `rsomics-bed` | 42 | [GitHub 0.2.0 released and public install verified; registry remains 0.1.0](bed.md) |
 | `rsomics-call` | 2 | [released 0.1.3](variant.md#rsomics-call) |
 | `rsomics-cnv` | 2 | [released 0.1.0](variant.md#rsomics-cnv) |
 | `rsomics-composition` | 10 | [released 0.1.0](composition.md) |
-| `rsomics-count` | 4 | [released 0.1.0](count-gate-2026-08-02.md) |
+| `rsomics-count` | 4 | [GitHub 0.1.0 native/source delivery and public install verified; immutable registry archive is separate](count.md) |
 | `rsomics-deseq` | 12 | [GitHub 0.1.0 released and public install verified; registry held](bulk-expression.md#rsomics-deseq) |
-| `rsomics-ecology` | 19 | [native4/alpha and all eight full-input beta metrics accepted; public delivery pending](ecology.md) |
+| `rsomics-ecology` | 19 | [GitHub 0.1.0 released and public install verified; registry held](ecology.md) |
 | `rsomics-edger` | 17 | [private modern QL workflow; numerical contract held](bulk-expression.md#rsomics-edger) |
 | `rsomics-fastq-preprocess` | 12 | [released 0.1.1](fastq-preprocess-gate-2026-07-30.md) |
 | `rsomics-fastq-qc` | 1 | [released 0.1.0](fastq-qc-gate-2026-08-02.md) |
-| `rsomics-index` | 5 | [hot-path native4 accepted; corrected BGZF/tabix campaign running, performance unearned](interval-annotation-index.md#rsomics-index) |
+| `rsomics-index` | 5 | [native4 and full workflow correctness accepted; complete performance result retains failed binary-serial gate](interval-annotation-index.md#rsomics-index) |
 | `rsomics-liftover` | 1 | [released 0.1.0](liftover.md) |
 | `rsomics-limma` | 16 | [GitHub 0.1.0 released and public install verified; registry held](bulk-expression.md#rsomics-limma) |
 | `rsomics-metagenomics` | 5 | [released 0.1.0](metagenomics-gate-2026-08-02.md) |
@@ -38,16 +38,16 @@ operation will ship. It records:
 | `rsomics-minimap2` | 1 | [legacy wrapper; exact engine/lifetime and material product-value gates held](minimap2.md) |
 | `rsomics-peak` | 5 | [private native4/source/full-workflow performance accepted; public default held](peak.md) |
 | `rsomics-phylo` | 11 | [released 0.1.0](phylo.md#first-release-evidence) |
-| `rsomics-plink` | 42 | [prepared-PGEN/LD green7 native/source accepted; final whole performance pending](genotype-popgen.md#rsomics-plink) |
+| `rsomics-plink` | 42 | [green8 native/source and whole correctness accepted; whole wall/RSS gates failed, bounded output-pipeline work active](genotype-popgen.md#rsomics-plink) |
 | `rsomics-popgen` | 14 | [GitHub 0.1.0 released and public install verified; registry held](genotype-popgen.md#rsomics-popgen) |
 | `rsomics-rnaseq-qc` | 21 | [GitHub 0.1.0 released and public install verified; registry held](rnaseq-qc-signal.md#rsomics-rnaseq-qc) |
 | `rsomics-sc` | 29 | [private inferCNV candidate; discovery contract held](sc.md) |
 | `rsomics-seq` | 34 | [released 0.2.0](sequence-fastq.md#rsomics-seq) |
 | `rsomics-signal` | 15 | [six-operation source/native4 accepted; defect repairs approved, row-order/performance held](rnaseq-qc-signal.md#rsomics-signal) |
-| `rsomics-sketch` | 1 | [released 0.1.0](sketch-gate-2026-08-02.md) |
+| `rsomics-sketch` | 1 | [GitHub 0.1.1 corrected delivery and public install verified; registry held](metagenomics-sketch.md) |
 | `rsomics-structure` | 9 | [reviewed private analysis/native4; public torsion contract held](structure.md) |
-| `rsomics-table` | 16 | [release candidate; registry credential blocked](table.md) |
-| `rsomics-vcf` | 30 | [released 0.5.0; 0.6.0 registry credential blocked](variant.md#rsomics-vcf) |
+| `rsomics-table` | 16 | [GitHub 0.1.0 released and public install verified; registry held](table.md) |
+| `rsomics-vcf` | 30 | [registry 0.5.0; frozen 0.6.0 has a known defect, corrected private candidate still has policy/performance/native-delivery gates](variant.md#rsomics-vcf) |
 
 Counts are generated from
 [`portfolio-inventory.tsv`](../00-overview/portfolio-inventory.tsv). They
@@ -56,6 +56,10 @@ describe recoverable inputs, not planned subcommand counts.
 All 30 accepted product boundaries now have a source and upstream-operation
 dossier. An audited dossier authorizes reconstruction work; it does not mean
 the product or every listed operation is implemented or release-ready.
+Current family states and original receipts in `.autopilot/state` and
+`.autopilot/oracles` own detailed acceptance boundaries. A GitHub binary/source
+release does not replace an immutable crates.io archive, and a first-slice
+release does not complete every later operation in its dossier.
 
 ## Rejected public boundary
 
