@@ -10,7 +10,9 @@ and actual green9 native/source41415209242/1 are accepted after complete
 original adoption and root data-only numeric/raw replay. Its305 exact Git
 source bodies, native4 debug/release7-library+1-whole-CLI tests and224 source
 commands pass. The changed candidate's whole-performance41421169780/1 is
-running; no performance or release acceptance follows from native correctness.
+terminal FAILURE with encrypted sealing/upload success; full authenticated
+original recovery precedes cause classification. No performance or release
+acceptance follows from native correctness.
 Opt-in own-role content reuse retains all6 full qualifications and every timed
 scientific command; it reduces out-of-clock validation, not a claimed CLI
 speedup. Default selectors and durability remain unchanged. See

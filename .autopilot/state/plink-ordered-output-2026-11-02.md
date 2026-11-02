@@ -6,6 +6,8 @@ e582752b33719b9ccdabea136c6ec710334168c6, is clean with no public remote.
 Green9 current-source native/source integration41415209242/1 and complete
 originals are now root-adopted. No new speed/RSS/release claim or durability
 change. The actual green8 whole-wall/RSS failures remain failed.
+Current green9 whole41421169780/1 is terminal FAILURE; encrypted sealing/upload
+succeeded. Full original recovery precedes any scientific/performance verdict.
 
 Plan: docs/plans/2026-11-02-plink-ordered-output-pipeline.md.
 The adopted phase diagnostic justifies eliminating temporary output recopy,
@@ -172,3 +174,42 @@ SUCCESS and a fresh live-main/prior-workflow check. The dispatch is invoked
 once with the explicit green9 receipt and qualified-content reuse enabled.
 Fresh API observes in_progress; no scientific or performance result is yet
 accepted. Recover encrypted originals from this exact run, not a rerun.
+
+## Terminal failure and exclusive recovery admission
+
+Fresh APIs observe41421169780/1 completed/FAILURE at the same exact head.
+The private run step fails, while seal and upload succeed. This alone does
+not distinguish a scientific mismatch, performance predicate or runtime fault.
+Artifact13133155049 is11358085104B, API SHA256
+8d913965228745f4d367edb2431378c9610496effb4345d0c29b591d2adeed77.
+No workflow/scientific retry or performance waiver is authorized.
+
+Preparation and original public APIs/logs are retained at
+`/Volumes/KIOXIA/Developments/tmp/plink-green9-failure-preparation-20261102.3m2lvs`.
+Root reads the complete preparation/walker, report and authored admission/
+transport/custody helpers with narrow prior-green8 diffs. Closed proposal
+7c5a1f64a9915046c61846c105ab231c684f8cc7d68c18e6d59d55545c67c224
+is independently checked for all eight caps, unique-inode credits, arithmetic
+and unchanged old green8/phase authority hashes. No old allowance is reduced.
+
+Actual admission and bounded67-file context upload each execute once, exit0
+with empty stderr. New exclusive0700 root:
+`/home/liangjy/rsomics-plink-green9-recovery-20261102`.
+Reservation40597B/SHA b574fd77a05100c2a841ed76032d03a746a65a0473f052bee58d74d4b304173a;
+binding1480B/SHA627a4f2eea555262692689b85c037f2dc046d9819a5e8be11936f0408f571b05.
+Root freshly rechecks both remote hashes and absence of original ZIP/TAR.
+
+Existing378GiB plus phase8GiB, new208GiB and independent8GiB total602GiB;
+scope-verified unique allocation credit186718277632B yields required free
+459674300416B versus observed933030608896B. Prior bodies/partials/reservations
+are untouched. Higher free space is observed, not attributed to any deletion.
+These are logical commitments, not a filesystem quota or global writer lease.
+
+All four complete helpers are root-reviewed. Authenticated-stream metadata is
+corrected to distinguish remote-only plaintext files from local age/pipe RAM;
+no zero-OS/swap-footprint claim. Private key contents are not read/copied/hashed
+by the controller. Official pinned age alone may use the existing identity.
+No bulk acquisition/extraction/decryption/originals phase has run yet. Wait
+for the local sequence benchmark to finish before11GB TLS/SSH/age traffic;
+do not perturb its measured workload. Then acquire this exact original once
+under the unchanged admission, retaining any partial on failure.
