@@ -249,3 +249,27 @@ Revalidate this exact process before any restart decision. No automatic retry,
 scientific re-execution, extraction/decryption/originals phase is authorized
 by the transport start. Await full11358085104B/SHA8d913965...adeed77 and
 both successful endpoint exits before progressing to the reviewed next gate.
+
+## Complete original transport and authenticated stream
+
+The preceding live description is historical: V2 acquisition session81677
+finishes successfully, source/receiver exits0, all stderr empty. Actual
+11358085104-byte ZIP SHA256 matches the exact GitHub artifact digest above.
+Root reads both independently computed transport identities before extraction.
+Single extraction then passes full ZIP digest, both member CRCs and exact
+producer receipt/context checks. Ciphertext is11358084027 bytes, SHA256
+`bc92b64f2826fddac78c692065b19862cd731d56f8a3b4d55ba13090ec2171f7`.
+
+Single reviewed opaque decryption pipeline completes in337.789 seconds with
+source/age/receiver all0 and empty stderr. Root reads its actual pipeline and
+authentication records. Retained authenticated TAR is11355310080 bytes,
+SHA256 `8ed0a5037b718f04779e0373a09bb90134f2ab8c5abb2eea2f7da226a26ceb01`.
+Only after complete authentication is a final hardlink published; the partial
+remains preserved. Official pinned age alone reads the identity file. No bulk
+local plaintext file is created; the stream does pass through local pipe RAM.
+
+Root authorizes one inert originals verification into remote CAS, session99960,
+with fresh capacity checks. This phase is currently running. No source/runtime
+execution, benchmark retry, scientific acceptance or failure-cause conclusion
+follows merely from successful transport/authentication. All ZIP/cipher/TAR/
+partial/old-controller evidence and historical reservation records remain.
