@@ -7,9 +7,10 @@ remain unearned. The previous complete negative whole
 run remains authoritative; no numerical or durability policy is relaxed.
 Two separately retained diagnostic launches stop at the first warmup's
 evidence guardian despite native exit0; no accepted paired timing exists.
-An explicitly scoped observational-accounting revision is subsequently
-reviewed/admitted below; its current measurements remain unaccepted until
-actual terminal originals close. Independent product work continues.
+The scoped observational-accounting revision completes32/32 below and its
+originals are root-adopted. Correctness checks pass; I remains slower/higher
+RSS and pairs does not wall-scale at four workers. Full macro performance
+and publication remain held. Independent product work continues.
 
 Plan: `docs/plans/2026-11-02-plink-locality-batches.md`.
 Packet: `/Volumes/KIOXIA/Developments/tmp/plink-locality-batches-20261102.aFybZb`.
@@ -294,3 +295,46 @@ The exact identity is monitored; no terminal or paired result is adopted here.
 Source/native originals, output-body checks and all prior failures remain.
 Do not reuse inputs as identity-copy outputs: their pgen/pvar sizes differ
 from required I products. No full macro, public or registry gate is earned.
+
+## Actual32-command diagnostic completed and adopted
+
+At15:15:56Z the exact runner identity is absent; FINISHED records32 commands,
+all32 target/guardian exits0, all32 role-specific expected-body comparisons
+pass, no guard failure and runner stderr empty. Detached runner shell status
+is unavailable and is not fabricated as exit0. Small originals225751 bytes
+SHA256 `cd1c59ac814c229c4f204f8b72049dcc0d0e784e5dc5efba6e3e52cb7725da1a`;
+DIAGNOSTIC-SUMMARY.json SHA256
+`1948edbbe79aec0680ead1e83ad9c4c2625c9e5e272998b866bfabd33f58c523`.
+
+Root independently verifies239 original small identities and replays all32
+actual COMMAND/RESOURCES/TARGET/COMPLETE/PRODUCTS records against the frozen
+plan. All8 engine-population arrays, medians and paired ratios recompute;
+named-allocation observations remain inside12GiB. No product/genotype bodies
+are downloaded. Root receipt:
+`.autopilot/oracles/plink-targeted-diagnostic-2026-11-02-green-10.json`.
+
+| Target | Workers | Source/native median wall s | Source/native median RSS bytes |
+|---|---:|---|---|
+| I | 1 | 0.321711 / 1.820395 | 74317824 / 184242176 |
+| I | 4 | 0.304488 / 1.588596 | 105512960 / 185176064 |
+| pairs | 1 | 11.302083 / 10.639658 | 82575360 / 52469760 |
+| pairs | 4 | 5.168483 / 10.790732 | 82575360 / 52469760 |
+
+Each row has three paired measured repetitions; warmups excluded. I is
+materially slower/higher-RSS at both worker counts. Pairs w1 wall populations
+overlap (paired native/source1.228,0.922,1.039), not a stable wall win. Pairs
+w4 is slower in all3pairs (2.04–2.09x) despite four reported effective workers;
+native wall medians10.64→10.79s do not demonstrate scaling. Its lower process
+RSS is a real resource benefit, not a full product/macro pass. No cross-run
+green9-to-green10 causal attribution is made.
+
+Differentiated source inventory identifies substantive next targets: metadata
+field/typed-string duplication and codec track copying/serial commit for I;
+ordered one-slot lane head-of-line blocking and repeated window preparation
+for pairs. These are confirmed structures, not measured causal fractions.
+Retained user/system fields show more native CPU at four workers with flat
+wall. Next work should attribute these phases/utilization before another
+batch-constant change or whole-macro rerun. Read-only profiling-tool feasibility
+is authorized; new profiling/scientific execution or implementation is not
+implicitly authorized by the receipt. All source/CLI/numeric/durability
+contracts and the previous complete negative macro remain intact.

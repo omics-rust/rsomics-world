@@ -1,0 +1,30 @@
+{
+  "root_adopted": true,
+  "diagnostic_only": true,
+  "full_macro_acceptance": false,
+  "publication_acceptance": false,
+  "owner_head": "9d43df417bf2a729438fb4194e9f82cbba10fe6c",
+  "packet": "/Volumes/KIOXIA/Developments/tmp/plink-green10-diagnostic-proposal-20261102.DqUmZX/observational-accounting-v3-final",
+  "originals_sha256": "cd1c59ac814c229c4f204f8b72049dcc0d0e784e5dc5efba6e3e52cb7725da1a",
+  "summary_sha256": "1948edbbe79aec0680ead1e83ad9c4c2625c9e5e272998b866bfabd33f58c523",
+  "native_sha256": "7d9b1d5bcd5cf50edc875d8e6fcae722218af491f3746a6e2b25d1a4fb057665",
+  "source_sha256": "ec93f5a85e2d788acc40e808566e054eca89daae8f83af561ffcf557db75edba",
+  "executions": 32,
+  "target_exits_zero": 32,
+  "guardian_exits_zero": 32,
+  "role_specific_expected_body_checks_passed": 32,
+  "runner_stderr_bytes": 0,
+  "finished_record_present": true,
+  "detached_runner_exit_status": "unavailable; not inferred from target exits or FINISHED",
+  "measured_pairs_per_profile": 3,
+  "accounting_scope": "sampled owned named-directory allocation, complete named before/after checks and physical free/inodes; not kernel quota or all-thread/unlinked/transient peak",
+  "profiles": [
+    {"operation":"I","workers":1,"source_median_wall_seconds":0.3217109888792038,"native_median_wall_seconds":1.8203952223993838,"source_median_process_rss_bytes":74317824,"native_median_process_rss_bytes":184242176,"median_paired_native_over_source_wall":5.500991513486694},
+    {"operation":"I","workers":4,"source_median_wall_seconds":0.3044880861416459,"native_median_wall_seconds":1.5885960250161588,"source_median_process_rss_bytes":105512960,"native_median_process_rss_bytes":185176064,"median_paired_native_over_source_wall":5.194784419796964},
+    {"operation":"pairs","workers":1,"source_median_wall_seconds":11.302082687616348,"native_median_wall_seconds":10.639658263884485,"source_median_process_rss_bytes":82575360,"native_median_process_rss_bytes":52469760,"median_paired_native_over_source_wall":1.0389224094485046},
+    {"operation":"pairs","workers":4,"source_median_wall_seconds":5.168482919223607,"native_median_wall_seconds":10.790732340887189,"source_median_process_rss_bytes":82575360,"native_median_process_rss_bytes":52469760,"median_paired_native_over_source_wall":2.069168268630127}
+  ],
+  "decision": "I slower and higher RSS at both worker counts; pairs w1 wall overlaps, w4 native slower in all3pairs with no observed native wall scaling; pairs lower process RSS is real but not a complete workflow pass",
+  "root_verification": "Independent replay of239 small originals, actual32command/status/guardian/product-identity/scope records, complete markers and all8 engine-population arrays/medians/paired ratios",
+  "limitations": "No aggregate-tree RSS, cross-run causal speedup, exclusive CPU, source/official commit correspondence or full macro acceptance. Warmups excluded. Product/genotype bodies retained remote and not downloaded."
+}
