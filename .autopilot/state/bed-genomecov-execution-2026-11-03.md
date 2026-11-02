@@ -1,7 +1,8 @@
 # BED genomecov candidate execution
 
 Owner `c6e35f8650e812d7dbaaab1e8e2a9c1894e0c1b6` is committed, clean and
-pushed to main. Exact-head native run41519713617 is live, not yet accepted.
+pushed to main. Exact-head native run41519713617 attempt1 succeeds on all four
+actual hosts; complete original source/package/binary evidence is root-adopted.
 Immutable GitHubv0.3.0 remains bc40084; registry0.1.0 and authentication hold
 are unchanged. No release or performance acceptance is claimed.
 
@@ -19,7 +20,27 @@ No dependency, foundation, package version or other product boundary changes.
 
 Unified help/JSON/input alias/atomic named output use existing common/help.
 CLI is implemented, not a placeholder; public stable-release documentation
-and release promotion await actual native and performance gates.
+and release promotion await representative performance and publication gates.
+
+## Four-native originals adopted
+
+Root reads the full167-line data-only verifier and94-line retainer. After
+actual terminal success, root independently verifies all PINS bodies and
+replays the reviewed verifier without its receipt write: exit0. Original ZIP
+API digests/CRC/extraction, each source Git body/mode, normalized source package,
+native host, dependency inventory, bundle and installed byte/JSON checks pass.
+All four hosts run126 tests per debug/release/packaged profile with zero
+failed/ignored tests, plus15 installed calls across12 operations. The18 new
+source workflows and previous map numeric contracts pass in all profiles.
+
+Packet `/Volumes/KIOXIA/Developments/tmp/bed-genomecov-native-c6e35-20261103.taor1k`
+uses about38MB within its256MiB cap. Four identical132928-byte source crates
+contain268 regular members and266 exact Git originals/modes, SHA-256
+`a3901bcdd3ef9125a5cf4704a377c0c807d130e72b78c035220ac26a45dfd78e`.
+Canonical receipt:
+`.autopilot/oracles/bed-genomecov-native-2026-11-03.json`.
+No recovered code execution, new public release or performance acceptance
+follows. Existing immutable v0.3.0 assets and measurements remain unchanged.
 
 ## Observed verification
 
@@ -85,9 +106,10 @@ without restarting any running scientific process.
 
 Root integrates the qualified private candidate before performance so that
 measurement can bind an actual committed/four-native-qualified source, not a
-dirty proposal. Run41519713617 must reach actual terminal state with originals;
-unacquired infrastructure jobs are failures, not native passes. No automatic
-rerun or output/performance waiver is authorized.
+dirty proposal. Run41519713617 now has actual terminal success and adopted
+originals. Unacquired infrastructure jobs would not count as native passes;
+none occurred in this attempt. No automatic rerun or output/performance waiver
+is authorized.
 
 Performance preparation reuses all584846 real hg19 RefSeq exon rows, not a
 tiny substitute or another accepted eleven-operation campaign. Whole histogram
