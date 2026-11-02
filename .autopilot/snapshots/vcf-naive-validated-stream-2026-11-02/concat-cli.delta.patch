@@ -1,0 +1,153 @@
+--- before/tests/concat_cli.rs
++++ after/tests/concat_cli.rs
+@@ -2285,3 +2285,150 @@
+     assert_eq!((extra_runs, control_runs), (32, 4));
+     assert!(failures.is_empty(), "{failures:#?}");
+ }
++
++#[test]
++fn naive_accepts_long_empty_frame_prefixes_in_either_input() {
++    use std::io::Read;
++
++    use noodles_vcf::variant::io::Write as _;
++
++    let fixture = Fixture::new();
++    let directory = fixture._directory.path();
++    let source = directory.join("prefix-second.vcf");
++    fs::write(
++        &source,
++        fs::read_to_string(&fixture.first)
++            .unwrap()
++            .replace("chr1\t10\ta\t", "chr1\t20\tb\t"),
++    )
++    .unwrap();
++    let mut empty = BGZF_EOF;
++    empty[4] = 1;
++    let prefix = empty.repeat(400);
++    assert!(prefix.len() > 8192);
++    let mut failures = Vec::new();
++    for encoding in ["z", "b"] {
++        let first = directory.join(format!("prefix-first-{encoding}"));
++        let second = directory.join(format!("prefix-second-{encoding}"));
++        let output_path = directory.join(format!("prefix-output-{encoding}"));
++        convert(&fixture.first, &first, encoding);
++        convert(&source, &second, encoding);
++        let originals = [fs::read(&first).unwrap(), fs::read(&second).unwrap()];
++        for prefixed in [0, 1] {
++            let inputs = [&first, &second];
++            for input in 0..2 {
++                let bytes = if input == prefixed {
++                    [prefix.as_slice(), originals[input].as_slice()].concat()
++                } else {
++                    originals[input].clone()
++                };
++                fs::write(inputs[input], bytes).unwrap();
++            }
++            for named in [false, true] {
++                let mut child = command();
++                child.args(["concat", "--naive", path(&first), path(&second)]);
++                if named {
++                    child.args(["--output", path(&output_path)]);
++                }
++                let output = child.output().unwrap();
++                let case = format!("{encoding}, prefixed={prefixed}, named={named}");
++                if !output.status.success() {
++                    failures.push(format!(
++                        "{case}: {}",
++                        String::from_utf8_lossy(&output.stderr)
++                    ));
++                    continue;
++                }
++                let bytes = if named {
++                    fs::read(&output_path).unwrap()
++                } else {
++                    output.stdout
++                };
++                let mut decoded = Vec::new();
++                flate2::read::MultiGzDecoder::new(bytes.as_slice())
++                    .read_to_end(&mut decoded)
++                    .unwrap();
++                let mut reader =
++                    noodles_util::variant::io::Reader::new(decoded.as_slice()).unwrap();
++                let header = reader.read_header().unwrap();
++                let mut writer = noodles_vcf::io::Writer::new(Vec::new());
++                for record in reader.records(&header) {
++                    writer
++                        .write_variant_record(&header, record.unwrap().as_ref())
++                        .unwrap();
++                }
++                assert_eq!(
++                    writer.into_inner(),
++                    b"chr1\t10\ta\tA\tC\t.\tPASS\tDP=4\tGT\t0/1\n\
++chr1\t20\tb\tA\tC\t.\tPASS\tDP=4\tGT\t0/1\n",
++                    "{case}"
++                );
++            }
++        }
++    }
++    assert!(failures.is_empty(), "{failures:#?}");
++}
++
++#[test]
++fn naive_rejects_late_second_input_failures_before_any_output() {
++    fn frame(payload: &[u8]) -> Vec<u8> {
++        let mut writer = noodles_bgzf::io::Writer::new(Vec::new());
++        writer.write_all(payload).unwrap();
++        let mut bytes = writer.finish().unwrap();
++        bytes.truncate(bytes.len() - BGZF_EOF.len());
++        bytes
++    }
++
++    let fixture = Fixture::new();
++    let directory = fixture._directory.path();
++    let first = directory.join("late-first.vcf.gz");
++    let second = directory.join("late-second.vcf.gz");
++    let output_path = directory.join("late-output.vcf.gz");
++    convert(&fixture.first, &first, "z");
++    let text = fs::read(&fixture.first).unwrap();
++    let header: Vec<_> = text
++        .split_inclusive(|byte| *byte == b'\n')
++        .take_while(|line| line.starts_with(b"#"))
++        .flatten()
++        .copied()
++        .collect();
++    for case in ["crc", "isize", "typed"] {
++        let body = if case == "typed" {
++            b"chr1\t30\tc\tG\tT\tbad\tPASS\tDP=8\tGT\t1/1\n".as_slice()
++        } else {
++            b"chr1\t30\tc\tG\tT\t.\tPASS\tDP=8\tGT\t1/1\n".as_slice()
++        };
++        let mut late = frame(body);
++        let length = late.len();
++        if case == "crc" {
++            late[length - 8] ^= 1;
++        } else if case == "isize" {
++            late[length - 4] ^= 1;
++        }
++        let bytes = [
++            frame(&header),
++            frame(b"chr1\t20\tb\tA\tC\t.\tPASS\tDP=4\tGT\t0/1\n"),
++            late,
++            BGZF_EOF.to_vec(),
++        ]
++        .concat();
++        fs::write(&second, bytes).unwrap();
++        for named in [false, true] {
++            fs::write(&output_path, b"existing output").unwrap();
++            let mut child = command();
++            child.args(["concat", "--naive", path(&first), path(&second)]);
++            if named {
++                child.args(["--output", path(&output_path)]);
++            }
++            let output = child.output().unwrap();
++            assert!(!output.status.success(), "{case}, named={named}");
++            assert!(output.stdout.is_empty(), "{case}, named={named}");
++            assert_eq!(
++                fs::read(&output_path).unwrap(),
++                b"existing output",
++                "{case}"
++            );
++            assert!(!output.stderr.is_empty(), "{case}, named={named}");
++        }
++    }
++}

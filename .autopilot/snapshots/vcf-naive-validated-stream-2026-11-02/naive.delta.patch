@@ -1,0 +1,143 @@
+--- before/src/concat/naive.rs
++++ after/src/concat/naive.rs
+@@ -1,5 +1,5 @@
+ use std::fs::File;
+-use std::io::{Cursor, Read, Write};
++use std::io::Write;
+ use std::path::{Path, PathBuf};
+ 
+ use noodles_bgzf as bgzf;
+@@ -7,7 +7,7 @@
+ use rsomics_common::{Context, Result, RsomicsError};
+ 
+ use super::Summary;
+-use crate::format::bgzf::{EOF_BLOCK, Frame, FrameReader};
++use crate::format::bgzf::{EOF_BLOCK, Frame, FrameReader, inflate_frame};
+ use crate::format::{OutputFormat, Reader, RecordScratch};
+ 
+ #[derive(Clone, Copy, Debug, Eq, PartialEq)]
+@@ -90,8 +90,12 @@
+ }
+ 
+ fn inspect(path: &Path) -> Result<Inspected> {
+-    let encoding = inspect_frames(path)?;
+-    let mut reader = Reader::open(path)?;
++    let mut reader = Reader::open_bgzf(path)?;
++    let encoding = if reader.is_text() {
++        Encoding::Vcf
++    } else {
++        Encoding::Bcf
++    };
+     let (header, _, _) = reader.read_header()?;
+     let mut scratch = RecordScratch::default();
+     let mut records = 0u64;
+@@ -112,56 +116,6 @@
+     })
+ }
+ 
+-fn inspect_frames(path: &Path) -> Result<Encoding> {
+-    let file = File::open(path)
+-        .rs_with_context(|| format!("opening naive concat input {}", path.display()))?;
+-    let mut frames = FrameReader::new(file);
+-    let mut encoding = None;
+-    let mut prefix = Vec::new();
+-    loop {
+-        match frames.next().map_err(|error| frame_error(path, error))? {
+-            Some(Frame::Data(raw)) => {
+-                let inflated = inflate(&raw, path)?;
+-                if encoding.is_none() && !inflated.is_empty() {
+-                    prefix.extend_from_slice(&inflated);
+-                    encoding = detect_encoding(&prefix, path)?;
+-                }
+-            }
+-            Some(Frame::Eof) => break,
+-            None => {
+-                return Err(RsomicsError::InvalidInput(format!(
+-                    "canonical BGZF EOF block is missing: {}",
+-                    path.display()
+-                )));
+-            }
+-        }
+-    }
+-    encoding.ok_or_else(|| {
+-        RsomicsError::InvalidInput(format!(
+-            "BGZF input contains no variant data: {}",
+-            path.display()
+-        ))
+-    })
+-}
+-
+-fn detect_encoding(prefix: &[u8], path: &Path) -> Result<Option<Encoding>> {
+-    const BCF_MAGIC: &[u8] = b"BCF\x02\x02";
+-    const VCF_MAGIC: &[u8] = b"##fileformat=VCF";
+-
+-    if prefix.starts_with(BCF_MAGIC) {
+-        Ok(Some(Encoding::Bcf))
+-    } else if prefix.starts_with(VCF_MAGIC) {
+-        Ok(Some(Encoding::Vcf))
+-    } else if BCF_MAGIC.starts_with(prefix) || VCF_MAGIC.starts_with(prefix) {
+-        Ok(None)
+-    } else {
+-        Err(RsomicsError::InvalidInput(format!(
+-            "BGZF stream is not VCF or BCF: {}",
+-            path.display()
+-        )))
+-    }
+-}
+-
+ fn copy_first(path: &Path, output: &mut impl Write) -> Result<()> {
+     let file = File::open(path)
+         .rs_with_context(|| format!("opening naive concat input {}", path.display()))?;
+@@ -189,7 +143,7 @@
+     loop {
+         match frames.next().map_err(|error| frame_error(path, error))? {
+             Some(Frame::Data(raw)) if !header_complete => {
+-                let inflated = inflate(&raw, path)?;
++                let inflated = inflate_frame(&raw).map_err(|error| frame_error(path, error))?;
+                 let previous = prefix.len();
+                 prefix.extend_from_slice(&inflated);
+                 if let Some(end) = header_end(&prefix, encoding)? {
+@@ -270,43 +224,6 @@
+     output.write_all(&encoded).map_err(RsomicsError::Io)
+ }
+ 
+-fn inflate(raw: &[u8], path: &Path) -> Result<Vec<u8>> {
+-    let mut reader = bgzf::io::Reader::new(Cursor::new(raw));
+-    let mut inflated = Vec::new();
+-    reader.read_to_end(&mut inflated).map_err(|error| {
+-        RsomicsError::InvalidInput(format!("invalid BGZF frame in {}: {error}", path.display()))
+-    })?;
+-    Ok(inflated)
+-}
+-
+ fn frame_error(path: &Path, error: std::io::Error) -> RsomicsError {
+     RsomicsError::InvalidInput(format!("invalid BGZF stream {}: {error}", path.display()))
+ }
+-
+-#[cfg(test)]
+-mod tests {
+-    use std::io::Write;
+-
+-    use super::{Encoding, inspect_frames};
+-    use crate::format::bgzf::EOF_BLOCK;
+-
+-    #[test]
+-    fn detects_vcf_magic_split_across_bgzf_frames() {
+-        let mut stream = Vec::new();
+-        for chunk in [
+-            b"#".as_slice(),
+-            b"#file".as_slice(),
+-            b"format=VCFv4.3\n".as_slice(),
+-        ] {
+-            let mut writer = noodles_bgzf::io::Writer::new(Vec::new());
+-            writer.write_all(chunk).unwrap();
+-            let mut frame = writer.finish().unwrap();
+-            frame.truncate(frame.len() - EOF_BLOCK.len());
+-            stream.extend_from_slice(&frame);
+-        }
+-        stream.extend_from_slice(&EOF_BLOCK);
+-        let file = tempfile::NamedTempFile::new().unwrap();
+-        std::fs::write(file.path(), stream).unwrap();
+-        assert_eq!(inspect_frames(file.path()).unwrap(), Encoding::Vcf);
+-    }
+-}

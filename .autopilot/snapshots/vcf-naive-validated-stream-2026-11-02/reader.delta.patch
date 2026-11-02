@@ -1,0 +1,182 @@
+--- before/src/format/reader.rs
++++ after/src/format/reader.rs
+@@ -1,5 +1,5 @@
+ use std::fs::File;
+-use std::io::{self, BufRead, BufReader, Read};
++use std::io::{self, BufRead, BufReader, Cursor, Read};
+ use std::path::Path;
+ 
+ use flate2::bufread::MultiGzDecoder;
+@@ -8,6 +8,7 @@
+ use rsomics_common::{Context, Result, RsomicsError};
+ 
+ use super::HeaderTypes;
++use super::bgzf::DecodedReader;
+ 
+ type Source = Box<dyn Read>;
+ type Buffered = BufReader<Source>;
+@@ -60,6 +61,41 @@
+             (false, false) => Inner::Vcf(input),
+         };
+ 
++        Ok(Self { inner, source })
++    }
++
++    pub(crate) fn open_bgzf(path: &Path) -> Result<Self> {
++        let input = File::open(path)
++            .rs_with_context(|| format!("opening BGZF variant input {}", path.display()))?;
++        Self::from_bgzf(input, path.display().to_string())
++    }
++
++    fn from_bgzf<R: Read + 'static>(input: R, source: String) -> Result<Self> {
++        let mut decoded = DecodedReader::new(BufReader::new(input));
++        let mut prefix = [0; 16];
++        let mut length = 0;
++        while length < prefix.len() {
++            match decoded.read(&mut prefix[length..]) {
++                Ok(0) => break,
++                Ok(read) => length += read,
++                Err(error) if error.kind() == io::ErrorKind::Interrupted => {}
++                Err(error) => return Err(invalid(&source, "detecting BGZF variant format", error)),
++            }
++        }
++        let prefix = prefix[..length].to_vec();
++        let bcf = prefix.starts_with(b"BCF\x02\x02");
++        if !bcf && !prefix.starts_with(b"##fileformat=VCF") {
++            return Err(RsomicsError::InvalidInput(format!(
++                "{source}: BGZF stream is not VCF or BCF 2.2"
++            )));
++        }
++        let input: Source = Box::new(Cursor::new(prefix).chain(decoded));
++        let buffered = BufReader::new(input);
++        let inner = if bcf {
++            Inner::BcfRaw(bcf::io::Reader::from(buffered))
++        } else {
++            Inner::Vcf(buffered)
++        };
+         Ok(Self { inner, source })
+     }
+ 
+@@ -414,8 +450,122 @@
+ #[cfg(test)]
+ mod tests {
+     use super::*;
++
++    fn bgzf_bytes(source: &[u8]) -> Vec<u8> {
++        use std::io::Write;
++
++        let mut writer = noodles_bgzf::io::Writer::new(Vec::new());
++        writer.write_all(source).unwrap();
++        writer.finish().unwrap()
++    }
++
++    #[test]
++    fn detects_vcf_magic_split_across_bgzf_frames() {
++        use crate::format::bgzf::EOF_BLOCK;
++
++        let mut stream = Vec::new();
++        for chunk in [
++            b"#".as_slice(),
++            b"#file".as_slice(),
++            b"format=VCFv4.3\n".as_slice(),
++            b"##contig=<ID=sq0,length=10>\n\
++#CHROM\tPOS\tID\tREF\tALT\tQUAL\tFILTER\tINFO\n\
++sq0\t1\t.\tA\tC\t.\tPASS\t.\n"
++                .as_slice(),
++        ] {
++            let mut frame = bgzf_bytes(chunk);
++            frame.truncate(frame.len() - EOF_BLOCK.len());
++            stream.extend_from_slice(&frame);
++        }
++        stream.extend_from_slice(&EOF_BLOCK);
++        let mut reader = Reader::from_bgzf(Cursor::new(stream), "split magic".to_owned()).unwrap();
++        let (header, _, _) = reader.read_header().unwrap();
++        let mut scratch = RecordScratch::default();
++        let record = reader
++            .read_record(&header, &mut scratch, 1)
++            .unwrap()
++            .unwrap();
++        assert_eq!(record.reference_sequence_name(), "sq0");
++        assert_eq!(usize::from(record.variant_start().unwrap()), 1);
++        assert!(
++            reader
++                .read_record(&header, &mut scratch, 2)
++                .unwrap()
++                .is_none()
++        );
++    }
+ 
+     #[test]
++    fn bgzf_constructor_handles_fragmented_and_interrupted_input() {
++        use noodles_vcf::variant::io::Write as _;
++
++        struct Fragmented {
++            bytes: Cursor<Vec<u8>>,
++            interrupt: bool,
++        }
++
++        impl Read for Fragmented {
++            fn read(&mut self, buffer: &mut [u8]) -> io::Result<usize> {
++                if buffer.is_empty() {
++                    return Ok(0);
++                }
++                self.interrupt = !self.interrupt;
++                if self.interrupt {
++                    return Err(io::ErrorKind::Interrupted.into());
++                }
++                self.bytes.read(&mut buffer[..1])
++            }
++        }
++
++        let text = b"##fileformat=VCFv4.3\n##contig=<ID=sq0,length=10>\n\
++#CHROM\tPOS\tID\tREF\tALT\tQUAL\tFILTER\tINFO\n\
++sq0\t1\t.\tA\tC\t.\tPASS\t.\n";
++        let mut vcf = vcf::io::Reader::new(text.as_slice());
++        let header = vcf.read_header().unwrap();
++        let mut writer = bcf::io::Writer::from(Vec::new());
++        writer.write_header(&header).unwrap();
++        writer
++            .write_variant_record(&header, &vcf.records().next().unwrap().unwrap())
++            .unwrap();
++        for raw in [text.to_vec(), writer.into_inner()] {
++            let input = Fragmented {
++                bytes: Cursor::new(bgzf_bytes(&raw)),
++                interrupt: false,
++            };
++            let mut reader = Reader::from_bgzf(input, "fragmented".to_owned()).unwrap();
++            let (header, _, _) = reader.read_header().unwrap();
++            let mut scratch = RecordScratch::default();
++            let record = reader
++                .read_record(&header, &mut scratch, 1)
++                .unwrap()
++                .unwrap();
++            let mut writer = vcf::io::Writer::new(Vec::new());
++            writer.write_variant_record(&header, &record).unwrap();
++            assert_eq!(writer.into_inner(), b"sq0\t1\t.\tA\tC\t.\tPASS\t.\n");
++            assert!(
++                reader
++                    .read_record(&header, &mut scratch, 2)
++                    .unwrap()
++                    .is_none()
++            );
++        }
++    }
++
++    #[test]
++    fn bgzf_constructor_rejects_invalid_or_incomplete_magic() {
++        for raw in [
++            b"".as_slice(),
++            b"#",
++            b"BCF\x02",
++            b"BCF\x02\x01",
++            b"not a variant stream",
++        ] {
++            let input = Cursor::new(bgzf_bytes(raw));
++            assert!(Reader::from_bgzf(input, "invalid magic".to_owned()).is_err());
++        }
++    }
++
++    #[test]
+     fn header_preserves_order_and_inserts_pass() {
+         let raw = b"##fileformat=VCFv4.3\n##source=x\n##contig=<ID=chr1,length=9>\n#CHROM\tPOS\n";
+         let actual = canonical_header(raw).unwrap();
