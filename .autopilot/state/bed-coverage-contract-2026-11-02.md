@@ -59,3 +59,13 @@ Existing common/help/intervals contracts suffice; any candidate/event/reducer
 sharing remains private inside BED until another concrete product needs it.
 No new public crate/API, placeholder command or source performance replay.
 Local sequence performance proceeds independently without oracle/build load.
+
+## Column-operation registry count correction
+
+Root independently reads retained exact2.31.1 `KeyListOps.cpp` lines16–39 and
+`KeyListOps.h` enum:23 registered map operation strings, plus the non-operation
+INVALID sentinel. The earlier24 count in the source report/working summary
+included that sentinel. Preserve the original packet, but do not invent a
+24th reducer. Current dossier uses23. Coverage/annotation/column mapping share
+candidate plumbing only where appropriate; f32/f64 formatting, point-feature
+coverage and output ordering remain operation-specific policies.

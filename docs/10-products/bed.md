@@ -1,7 +1,9 @@
 # BED product dossier
 
-Status: `rsomics-bed 0.1.0` is published with `sort`, `merge`, `intersect`,
-`subtract`, and `complement`. Release candidate 0.2.0 at
+Status: immutable [GitHub v0.2.0](https://github.com/omics-rust/rsomics-bed/releases/tag/v0.2.0)
+ships eight operations at `bcbee5f87aeda2e7664c279b32c5a3098635ca9b`.
+Registry 0.1.0 retains `sort`, `merge`, `intersect`, `subtract`, and `complement`;
+registry authentication remains separately held. The earlier 0.2.0 candidate at
 `02b85a1a348c271e485cca629dc4e71fa075388a` adds `cluster`, `window`, and
 `closest` and passed exact-head four-platform CI run `32329089591`. The
 representative performance source is
@@ -10,7 +12,7 @@ by registry authentication: publish run `32329397022`
 completed package verification and then received crates.io `403 authentication
 failed`. The registry therefore still serves 0.1.0.
 
-The2026-11-02 delivery task adds four-native GitHub installation for the
+The 2026-11-02 delivery task added four-native GitHub installation for the
 unchanged eight-operation0.2 slice; it does not retry registry authentication
 or add later operations. Historical raw performance JSONs and runners are
 freshly retained/hash-checked and their340 sample summaries recompute, including
@@ -30,6 +32,18 @@ errors, without changing the locked runtime or public API. See
 `.autopilot/oracles/bed-native-delivery-2026-11-02.json`.
 Public release and installation proof is
 `.autopilot/oracles/bed-public-delivery-2026-11-02.json`.
+
+Unreleased coverage source `3b2314a6912a849b21e7afbbb86b45fd8d6e294e`
+now passes actual four-native CI `41442092689`: 103 debug, release and packaged
+tests per host plus a twelve-call nine-operation installed lifecycle. One
+RefSeq annotation-derived sparse/nested campaign accepts strict throughput
+and maximum-process-RSS gates for summary/count/histogram reports. All 72
+complete outputs match; median speedups are 2.41–85.46x on Apple M2, with the
+85x result specific to nested histogram. This is not a new release or a
+thread-scaling, biological-effect or universal speed claim. The split-plus-
+explicit-fraction policy remains a pending user choice, explicitly rejected
+in this candidate. See `.autopilot/state/bed-coverage-execution-2026-11-02.md`
+and `.autopilot/oracles/bed-coverage-performance-2026-11-02.json`.
 
 ## Boundary
 
@@ -90,12 +104,12 @@ may be migration aliases, but the typed long-form contract owns the help.
 | `intersect` | BEDTools `intersect`; BEDOPS intersect/element-of | published clipped-output slice; later report modes stay options here |
 | `subtract` | BEDTools `subtract`; BEDOPS `--difference` | published |
 | `complement` | BEDTools `complement`; bounded BEDOPS complement | published with an explicit genome file |
-| `cluster` | BEDTools `cluster` | implemented on main; sorted streaming, distance, and strand policy |
-| `window` | BEDTools `window` | implemented on main; symmetric/asymmetric, strand-relative, and report modes |
-| `closest` | BEDTools `closest`; BEDOPS `closest-features` | implemented on main; complete declared single-B contract before multi-B extensions |
-| `coverage` | BEDTools `coverage` | later coverage slice; BED input only, with count, breadth, histogram, and depth modes |
+| `cluster` | BEDTools `cluster` | GitHub 0.2; sorted streaming, distance, and strand policy |
+| `window` | BEDTools `window` | GitHub 0.2; symmetric/asymmetric, strand-relative, and report modes |
+| `closest` | BEDTools `closest`; BEDOPS `closest-features` | GitHub 0.2; complete declared single-B contract before multi-B extensions |
+| `coverage` | BEDTools `coverage` | unreleased native/performance-qualified candidate; summary/count/mean/histogram/depth, pooled B and ordinary blocks; split plus fractions held |
 | `annotate` | BEDTools `annotate` | later coverage slice; multi-file count/fraction output |
-| `map` | BEDTools `map`; BEDOPS `bedmap` | later coverage slice; one private reducer shared with `annotate` |
+| `map` | BEDTools `map`; BEDOPS `bedmap` | later slice; 23 pinned BEDTools reducer strings, shared candidate plumbing but distinct column-reduction policy |
 | `jaccard` | BEDTools `jaccard` | later metrics slice; base-pair set similarity and overlap filters |
 | `fisher` | BEDTools `fisher` | later metrics slice; requires a genome-size universe |
 | `reldist` | BEDTools `reldist` | later metrics slice; fixed historical midpoint-straddle behavior is retained |
@@ -153,7 +167,8 @@ discarded.
 | `bed-closest` `e85ed1339165` | 2, completed | retained corrected distance, zero-length, no-hit, and tie cases; replaced the permissive parser and full B scan |
 | `bed-cluster` `b63b75567ba7` | 2, completed | retained the sorted sweep and oracle cases; moved behavior onto the product parser and output layer |
 | `bed-window` `875459ee2f79` | 3, completed | retained fixtures and benchmark recipe; rewrote indexing, parsing, output modes, and CLI |
-| `bed-coverage` `269e1f6ca740`, `bed-annotate` `551632db1dce`, `bed-map` `1fb4c6cc8d84` | 2/3 | retain coverage math and goldens; replace three readers and converge on one candidate/reducer core |
+| `bed-coverage` `269e1f6ca740` | 3, reviewed | reference/contracts only; coverage rebuilt with the product parser, duplicate-preserving index and clipped depth events |
+| `bed-annotate` `551632db1dce`, `bed-map` `1fb4c6cc8d84` | 2/3, pending implementation | retain useful fixtures; share checked parser/candidate machinery, not incompatible numeric/ordering/zero-length policies |
 | `bed-jaccard` `ca81d15e39d0` | 2 | retain merged-set sweep, numeric formatting tests, and fixtures; add checked filters and product I/O |
 | `bed-fisher` `fc7bb057f3d2` (dirty), `bed-reldist` `36cdfdead5f6`, `bed-multiinter` `6c07acd0a68e` | 2/3 | retain fixed reldist oracle cases and multi-file fixtures; audit dirty fisher state before reuse |
 | `bed-genomecov` `0087cf10fc15`, `bed-unionbedg` `17190fd1bff7` | 2 | refactor into one track sweep and shared genome ordering |
@@ -212,7 +227,8 @@ archive has SHA-256
 `6ce9d3cc727e385e4e66accc85c774b18f8ac7b902315c0782551e4266b1c80e`.
 Publish run `32329397022` reached the upload and failed with crates.io `403
 authentication failed`; it was not retried. No `v0.2.0` tag or GitHub release
-was created for an unpublished version.
+was created at that earlier registry attempt; the later independent GitHub
+delivery is recorded above.
 
 The 0.2 implementation slice is complete:
 
