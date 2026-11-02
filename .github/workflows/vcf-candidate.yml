@@ -58,9 +58,9 @@ jobs:
           export EVIDENCE="$RUNNER_TEMP/vcf-evidence"
           printf 'CARGO_HOME=%s\nCARGO_TARGET_DIR=%s\nRUSTUP_HOME=%s\nTMPDIR=%s\nEVIDENCE=%s\n' \
             "$CARGO_HOME" "$CARGO_TARGET_DIR" "$RUSTUP_HOME" "$TMPDIR" "$EVIDENCE" >> "$GITHUB_ENV"
-          snapshot=.autopilot/snapshots/vcf-naive-extra-red-2026-09-09
-          echo "d183f02759bb34d75dfa63e4260828d8f21b772306c5cf6e67e5b6849be8d328  $snapshot/source.tar.gz" | shasum -a 256 --check
-          echo "7d5649d0b15ff6f4e120d811eb90c9e8820f2926073e43bb633bffe54e38a9b8  $snapshot/files.sha256" | shasum -a 256 --check
+          snapshot=.autopilot/snapshots/vcf-region-native-2026-11-02
+          echo "c196a5cf254ad62b2821f6447e1a20316c15065faa80e29f755c025e9ea51d6d  $snapshot/source.tar.gz" | shasum -a 256 --check
+          echo "2ceca46765c96f7a456010b398fc905424ab6b02b2680e47eae141c93e36fe53  $snapshot/files.sha256" | shasum -a 256 --check
           mkdir "$RUNNER_TEMP/vcf-candidate"
           mkdir -p "$CARGO_HOME" "$CARGO_TARGET_DIR" "$RUSTUP_HOME" "$TMPDIR" "$EVIDENCE"
           tar -xzf "$snapshot/source.tar.gz" -C "$RUNNER_TEMP/vcf-candidate" --no-same-owner
@@ -68,7 +68,7 @@ jobs:
             cd "$RUNNER_TEMP/vcf-candidate"
             shasum -a 256 --check "$GITHUB_WORKSPACE/$snapshot/files.sha256"
           ) | tee "$EVIDENCE/source-verification.log"
-          cp "$snapshot/files.sha256" "$snapshot/README.md" "$EVIDENCE/"
+          cp "$snapshot/source.tar.gz" "$snapshot/files.sha256" "$snapshot/README.md" "$EVIDENCE/"
           {
             git rev-parse HEAD
             uname -a
@@ -255,6 +255,23 @@ jobs:
         run: |
           set -euo pipefail
           shasum -a 256 --check "$EVIDENCE/files.sha256" | tee "$EVIDENCE/source-post-test.log"
+
+      - name: Retain tested native binaries
+        if: ${{ !cancelled() && steps.metadata.outcome == 'success' }}
+        run: |
+          set -euo pipefail
+          binaries=(debug/rsomics-vcf)
+          if [[ '${{ inputs.regressions_only }}' != true ]]; then
+            binaries+=(release/rsomics-vcf)
+          fi
+          cd "$CARGO_TARGET_DIR"
+          for binary in "${binaries[@]}"; do
+            test -f "$binary" && test -x "$binary" && test ! -L "$binary"
+          done
+          shasum -a 256 "${binaries[@]}" > "$EVIDENCE/native-binaries.sha256"
+          COPYFILE_DISABLE=1 tar -czf "$EVIDENCE/native-binaries.tar.gz" "${binaries[@]}"
+          cd "$EVIDENCE"
+          shasum -a 256 native-binaries.tar.gz > native-binaries-archive.sha256
 
       - name: Retain audit evidence
         if: always()
