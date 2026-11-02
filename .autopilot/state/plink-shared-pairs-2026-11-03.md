@@ -104,5 +104,12 @@ transport tests pass3/3 and control-plane validation is internally consistent.
 Only green13 selector/module requirements and15/3 library/integration counts
 are added; all older selectors and123/66 graph populations remain unchanged.
 POLICY/EXPECTED hashes, runtime, scientific source consumer and workflow bodies
-are unchanged. Scope is capture/transport only; native/source execution has not
-started. Commit/push and exact-head control CI precede one workflow dispatch.
+are unchanged. At capture, scope is transport only, not native/source execution.
+
+Controller7961661f5c6adb7fd7fb6b45add644077db60866 is pushed and exact-head
+control CI41504900286 passes. Root uniquely dispatches workflow run41505309863,
+attempt1, green13; returned API confirms that immutable controller head and
+workflow_dispatch event, initially queued. This is not native/source acceptance.
+Bounded observation/original retention must use this run/attempt and preserve
+any actual failure without automatic restart. No scientific benchmark begins
+before complete native-four/source adoption of this exact candidate.
