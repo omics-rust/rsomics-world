@@ -2,7 +2,8 @@
 
 Current: reviewed source integrated as3ba1818e85477573995f6a391522f2ef35054c79;
 exact-head four-native CI41424424381 passes and raw logs are adopted. Clean packaging passes;
-representative performance, delivery and publication remain unearned.
+one representative campaign is running; performance acceptance, delivery
+and publication remain unearned.
 
 Active plan: `docs/plans/2026-11-02-seq-strand-extraction.md`, committed as
 97dcb2812526dd5ad52ffb0b86d6abb725166d83 with exact Control41422350129 SUCCESS.
@@ -135,3 +136,37 @@ Representative gate is now fixed in
 `docs/plans/2026-11-02-seq-strand-performance.md`. One worker prepares a
 simple full-input runner/admission, but no timed campaign is yet authorized
 until root inspects its paths, command/resource recording and capacity check.
+
+## Single representative campaign started
+
+Fresh guarded locked/offline release build uses clean3ba1818e and native SHA
+12c188736686a8ba44714ad6e3500ed24585731e2099aeca538d60d827d69df9.
+Actual SeqKit2.14.0 SHA is
+2f7d024ddce72519d0b6dd913eb7ff6c22229487c6ede2467e237ab615b7f1c4.
+Complete input admission finds6282141 FASTQ records, all101nt with equal
+quality lengths,634496241 bases and1474080927 uncompressed bytes.
+Conservative36-output capacity plus8GiB is61656847964B; admitted HDD free
+is about77712392192B. Nothing is deleted to create that capacity.
+
+Root reads the entire runner before authorizing execution. One privacy issue
+is corrected first: blanket environment/SPHardwareDataType capture is removed
+from the task-owned admission metadata without printing its values or keeping
+duplicate potentially sensitive contents. No campaign output or public upload
+had occurred. Root verifies the broad fields absent and one-shot marker absent;
+safe CPU/RAM/count and explicit reproducibility fields replace that capture,
+with hostname omitted. Existing project/scientific originals are untouched.
+
+The authorized runner remains private scratch:
+`/Volumes/KIOXIA/Developments/tmp/seq-strand-campaign-20261102.JNGmJL/campaign.py`,
+SHA912d68ff339aafa6c2500e0f09bc8d5ab976f23f54be3b60dbe16a0b0815eff0.
+Root checks macOS time supports the selected-l/-o resource-output options;
+pipeline stages have separately observed exits, not a last-command-only pass.
+
+Actual campaign session20441, Python PID16182 is freshly observed running.
+Output root:
+`/Volumes/Zane's HDD/rsomics-fixtures/evidence/seq-strand-20261102-i6yc6i6d`.
+Log: `campaign.log` in the scratch above. The trials ledger has begun; no
+performance conclusion is yet accepted. Re-poll this exact handle/PID before
+any restart decision. Retain all36 full outputs and48 per-stage original
+resource/exit records, including failure; do not rerun unchanged on timeout
+or an expired observation. No root/source edits while this campaign runs.
