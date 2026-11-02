@@ -1,6 +1,6 @@
 # PLINK locality batch wave
 
-Private owner integrated as `9d43df4` after one fresh-context whole-feature
+Private owner integrated as `9d43df417bf2a729438fb4194e9f82cbba10fe6c` after one fresh-context whole-feature
 review and root source/hash inspection. No representative performance,
 native-four acceptance or publication. The previous complete negative whole
 run remains authoritative; no numerical or durability policy is relaxed.
@@ -36,3 +36,27 @@ Declined-to-judge review items remain unearned: speedup/RSS magnitude, native
 cross-platform behavior, placeholder-bound diagnostic readiness and release
 eligibility. Preparing deterministic green-10 source capture and existing
 native workflow is next; no dispatch or timed campaign has run for this wave.
+
+## Green-10 captured; controller qualification prepared
+
+Snapshot: `.autopilot/snapshots/plink-native-2026-11-01/green-10`.
+Source tree `989afd93e6114727ef9546c8349e4ceb25be174c`;
+archive538778 bytes, SHA256
+`6d28c22495ea9b7271f07a2a7703393e1e5ab7d5400a851a27c2f27c22622843`.
+Root independently verifies every one of305 exact Git bodies/modes, canonical
+member uniqueness, deterministic owner/time metadata, all four snapshot file
+digests and exactly the three reviewed changes from green-9. Protected source
+contracts and previous snapshots remain unchanged.
+
+Minimal existing-controller enablement adds green-10 to the123-report/66-worker
+graph profile, requires its existing numeric module and expects the actual
+eight library tests. Older selectors retain their exact prior populations.
+Root reads the full narrow diff and runs the existing guarded controller test
+suite:2/2 pass, session92313 exit0; observed unsupported-selector RED is
+retained in the implementation packet. No source/official engine, comparator,
+runtime image, scientific predicate or workflow matrix change.
+
+Next: commit/push the closed snapshot/controller delta, wait exact-head Control,
+then dispatch the existing native-four/same-generation source gate once with
+snapshot green-10. No performance campaign or registry attempt is authorized
+by that dispatch. Representative diagnostic placeholders remain unbound.

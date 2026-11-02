@@ -21,6 +21,10 @@ WORKFLOW = ROOT / '.github/workflows/plink-candidate.yml'
 
 
 class PlinkCandidatePreparationTest(unittest.TestCase):
+    def test_green10_uses_existing_extended_graph_population(self):
+        gate = importlib.import_module('plink_candidate')
+        self.assertEqual(gate.graph_population('green-10'), (123, 66))
+
     def test_plink_candidate_workflow(self):
         self.assertTrue(WORKFLOW.is_file(), 'complete PLINK native-four/source gate is absent')
         gate = importlib.import_module('plink_candidate')
@@ -61,10 +65,10 @@ class PlinkCandidatePreparationTest(unittest.TestCase):
             for selector in ('missing', '../green-1', 'green-0', 'green-1/extra', 'green-99'):
                 with self.assertRaises((ValueError, OSError)):
                     gate.prepare_source(ROOT, root / selector.replace('/', '_'), selector)
-            for selector in ('green-1', 'green-2', 'green-3', 'green-4', 'green-5', 'green-6', 'green-7', 'green-8', 'green-9'):
+            for selector in ('green-1', 'green-2', 'green-3', 'green-4', 'green-5', 'green-6', 'green-7', 'green-8', 'green-9', 'green-10'):
                 prepared = root / ('prepared-' + selector)
                 manifest = gate.prepare_source(ROOT, prepared, selector)
-                self.assertEqual('src/numeric.rs' in manifest, selector in ('green-3', 'green-4', 'green-5', 'green-6', 'green-7', 'green-8', 'green-9'))
+                self.assertEqual('src/numeric.rs' in manifest, selector in ('green-3', 'green-4', 'green-5', 'green-6', 'green-7', 'green-8', 'green-9', 'green-10'))
                 self.assertEqual(hashlib.sha256((prepared / 'source/Cargo.lock').read_bytes()).hexdigest(),
                                  manifest['Cargo.lock'])
 
@@ -175,6 +179,8 @@ class PlinkCandidatePreparationTest(unittest.TestCase):
             self.assertEqual(gate.graph_population('green-9'), (123, 66))
             self.assertEqual(gate.bind_graph(graph, 'green-9'), extended)
             self.assertEqual(gate.worker_provenance(graph, 'green-9'), workers)
+            self.assertEqual(gate.bind_graph(graph, 'green-10'), extended)
+            self.assertEqual(gate.worker_provenance(graph, 'green-10'), workers)
             self.assertTrue({f'{count}/{name}.pairs' for count in (1, 4) for name in
                 ('bed.gaps', 'ds.gaps', 'gt.bounded', 'gt.gaps', 'hds.gaps', 'pgen.gaps', 'rich.gaps')} <= workers.keys())
             with self.assertRaises(ValueError): gate.bind_graph(graph, 'green-6')
