@@ -1,7 +1,8 @@
 # BED eleven-operation release preparation
 
 Current ownerbc40084ccc2d3837384da1377d4d57f0600fcb75 prepares version0.3.0;
-its exact-head native CI41501347467 is queued at the latest observation.
+its exact-head native CI41501347467 has two Linux successes, MacIntel still
+running, and a cancelled unacquired MacARM job. Four-native acceptance is open.
 Documentation head1de1e422b586663131f0c2e3ccb89d202194f62c changes only README
 and PERFORMANCE from the root-adopted runtimebcf65d7; its exact-head
 CI41499074943 now passes all four native targets, without restart.
@@ -45,6 +46,21 @@ CI41499074943 passed all four targets. The new version has its own exact-head
 CI41501347467; original native/package/install gate remains open. A bounded
 data-only observer will retain this run's originals only after actual success.
 No publication acceptance is implied by metadata preparation or a queued run.
+
+## Attempt1 MacARM admission failure
+
+Job125469329117 is completed/cancelled after15m1s, runner_id0, empty runner
+name and steps[]. Root independently reads job API and raw check annotations:
+“The job was not acquired by Runner of type hosted even after multiple
+attempts”, with hosted macOS ARM capacity notices. No native test ran there.
+This is an infrastructure admission failure, not product-test evidence.
+
+Preserve attempt1 APIs/annotations and actual missing-log HTTP404/BlobNotFound
+body; there is no executed MacARM log to invent. Intel remains running in the
+same run, so do not cancel/restart it. A data-only observer is retaining the
+failure custody and available successful originals. Do not rerun before full
+terminal custody is sealed; then root may authorize one bounded full rerun of
+the same immutable candidate. No automatic retry or third attempt is authorized.
 
 ## Fresh public and credential-state checks
 
