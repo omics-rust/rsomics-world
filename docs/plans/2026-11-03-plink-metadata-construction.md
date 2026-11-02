@@ -48,11 +48,14 @@ review covers the whole delta, not a helper review ladder.
 ## Later performance gate
 
 After correctness/review, separately admit a bounded matched changed-source
-comparison on the same complete I-w1 inputs/output pins and unchanged coarse
-timers. Preserve green13 negative evidence. A memory-unit-test win, single noisy
+comparison on the same complete I-w1 inputs/output pins using the qualified
+uninstrumented CI binaries and the existing wait4 wrapper. Preserve green13
+negative evidence. A memory-unit-test win, single noisy
 timing or cross-campaign ratio is not whole-product acceptance.
 
 Implementation/private integration complete at7cee8e4 after one clean final
 review; baseline4106987, fixed ceiling3706987, final2911523 accounted bytes.
+Native-four and same-file source compatibility are accepted through green14
+attempt2; the matched performance comparison remains open.
 See `.autopilot/state/plink-metadata-construction-2026-11-03.md` for evidence
-and the still-open native/source/performance gates.
+and the separate runtime/performance/publication gates.

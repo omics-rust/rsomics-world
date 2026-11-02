@@ -136,3 +136,92 @@ only is delegated under the existing external paths; SSH staging, fresh static
 ABI proof and execution require separate root admission. Do not rebuild or
 add temporary phase instrumentation. The original green13 negative whole-
 performance gate remains unchanged.
+
+## Qualified-binary comparison staging admission
+
+Control-plane acceptance commit605c463105dbfcefcbfacfebe30afdb5dc8fc401
+passes exact-head CI41546753479. Root reads the complete402-line comparison
+runner and scoped153-line static ABI helper. Admit inert staging only into
+the new metadata-ci-comparison child of the existing remote8GiB root, with
+a512MiB child cap and the unchanged joined618GiB planning envelope. Both
+original CI binaries, input/output pins and12-call plan are fixed; no target
+execution, download or build follows from staging admission.
+
+Runner SHA-2568e323c3ba279fe709dfd19570e6bfa2984f7dad2d98c8d08722d150a7a72a871;
+plan SHA-2564f46e9a85de1090cd3682d148dbd0421b24dc3064d7439a8839d33179126ee92.
+Use strict SSH, no connection multiplexing/agent forwarding/host-key updates,
+in-memory payload and external-only local/remote cache/tmp. Root rechecks
+physical external devices and free space; the pinned remote controller checks
+UID1006/device2096, source authority and capacity before creating the child.
+
+Ruling: use uninstrumented qualified CI binaries rather than the later-plan
+phrase "unchanged coarse timers". The prior one-off instrumented diagnosis
+already justified the source change; actual delivery-binary wait4 measurements
+avoid rebuilding or timer perturbation. This measures delivered artifacts,
+not an isolated causal effect. Static ABI proof and runtime remain separately
+unadmitted until their actual preceding receipts are checked.
+
+Before SSH, the local hash check rejects an unfrozen preparation body. No
+remote connection, scratch creation or stage occurs. The preparer freezes
+the final runner after adding two pre-try absence assertions so a failed
+duplicate stage cannot write a failure record into an existing child; the
+plan additionally records the already-known candidate tree. Root reads that
+delta. Superseding stage pins are runner
+e474ec25d86b7bd6e1aa9d674b8aea81d7ded48d19ae7e07673a29c8b14221f9
+and plan4c442fdca531c84e5a2e522abd52f9c7ef5f9a99567bfdc63d5bd02c3893e4f0.
+Only these frozen final bodies are admitted for the first actual remote stage.
+
+Actual stage exits0 with empty stderr, zero target calls; stage.success.json
+6702B SHA-256a63d67910bb896dad4cb46fe0c8778fce504b1187802f782e495750447e95f86.
+Root reads actual runner/plan bindings, child6746112 allocated bytes, parent
+1052782592 allocated bytes and429174894592B capacity margin. Admit only the
+separate static preflight now: two ELF/provider/CPU proofs, no target/loader
+execution or scientific call, unchanged512MiB child/8GiB parent envelopes.
+
+Static preflight actually exits0 with zero target commands. Root retains and
+reads both original proofs: baseline16988B SHA-256
+f6dfd08c5579731e0d6703976830f506cf188747c9e3ca87e1906149449db444;
+candidate17006B SHA-256
+9a65045d50b450eeb9f175c1d77b95d78ab63fe792f1bb35bc696335cc01db89.
+Each binds the intended ELF and five current providers, seven inspector calls,
+127 mandatory native imports and CPUs0–3. No unmet versions/symbols, unknown
+ISA declarations or missing declared flags; no RPATH/preload or target/loader
+execution. OS providers are existing read-only runtime files, not project
+writes. Absence of undeclared ISA requirements is not claimed.
+
+Root observes no known active native/PLINK/BED/comparison diagnostic workload.
+The shared112-CPU host has unrelated Python activity and load average about72;
+affinity is not exclusive. Preserve that context rather than pretending an
+idle host or modifying another user's processes. Admit exactly one12-call
+uninstrumented full-I-w1 comparison with the two actual proof hashes above,
+unchanged fixed inputs/outputs, thread1/memory2048/CPUs0–3, one warmup each
+and five alternating pairs. Report all calls, load and distributions; no
+retry, new source comparator, whole-product acceptance or publication follows.
+
+## Actual paired result and incremental acceptance
+
+The single admitted run exits0 after all12 calls. Both native wait4 and guardian
+statuses are0; all48 complete product pins match and scientific stderr is empty.
+Root retains202 small originals totaling3596437B, independently rehashes all,
+matches per-call argv/PID/PGID/wait4/guardian/JSON/durable manifests, then
+recomputes every distribution, median and pair. An initial root replay has an
+argv-slice off-by-one; correcting that checker to argv[1:-2] passes without
+changing scientific code, evidence, target calls or acceptance thresholds.
+Large product bodies remain remote; their pins come from actual runner hashes,
+not a claimed second local payload hash. No additional runtime is performed.
+
+Median kernel max-process RSS falls96153600→85483520B, saving10670080B
+(11.0969%). All five pairs save10129408–10674176B. Accept this actual incremental
+full-I-w1 memory improvement, distinct from the29.11% owned-metadata unit
+accounting improvement. Median wall0.936344→0.903597s is descriptive only:
+candidate/baseline ratios0.9911/0.8695/1.0205/0.9420/0.6571 include one slower
+pair and a noisy baseline tail on the shared host. Do not claim stable speedup,
+isolated causality, source superiority or whole-product/publication acceptance.
+
+Canonical receipt:
+`.autopilot/oracles/plink-metadata-ci-comparison-2026-11-03.json`.
+Child allocated301453312B, parent1347506176B, within512MiB/8GiB respectively.
+No retry, cleanup, compiler invocation or upstream comparator occurs. Original
+green13 negative gate remains unchanged. The metadata implementation wave is
+complete; further PLINK work must address the remaining whole-workflow source
+gap rather than rerunning these unchanged accepted checks.
