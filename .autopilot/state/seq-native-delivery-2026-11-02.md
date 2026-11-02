@@ -3,7 +3,8 @@
 Owning main: `8eaf9c8a685c08bdf1698745b65a3a01c609ec70`.
 Actual exact-head CI `41435718744` is SUCCESS on Linux and macOS,
 each x86_64 and aarch64. Original artifact acquisition and independent
-acceptance are in progress; no GitHub release or registry publication yet.
+acceptance pass. GitHub v0.3.0 is published; fresh public installation is
+in progress. No registry publication.
 
 Plan: `docs/plans/2026-11-02-seq-native-delivery.md`.
 The reviewed delivery delta changes owning version/lock metadata, CI,
@@ -42,8 +43,27 @@ The earlier standalone resource-use acceptance does not become fresh timings
 for metadata-only 0.3 binaries. Standalone wall-time regressions and overlapping
 ranges remain disclosed; no universal throughput claim.
 
-Next: retain and independently inspect four original CI artifacts, then check
-the live tag/release namespace before an immutable GitHub v0.3.0 release and
-fresh public binary/source installation. Registry credentials remain on hold;
+## Original delivery assets and GitHub release adopted
+
+Packet: `/Volumes/KIOXIA/Developments/tmp/seq-native4-evidence-20261102.UMyrRF`.
+Root reads the verifier and independently checks all four original artifact
+ZIP digests against raw GitHub metadata, all five release asset hashes,
+BUILD exact-head/run/binary/source identities and all eight profiles at
+56 passes each. All four source archives equal the clean local source crate.
+The packet retains raw APIs/log ZIP and safe complete archive member tables.
+Four 48-file bundles contain only explicit executable/docs/license paths;
+actual ELF/Mach-O CPU identities and installed lifecycle proofs match.
+
+Both live release and tag queries return 404 before creation. One release
+creation succeeds at 2026-11-02T11:33:45Z:
+https://github.com/omics-rust/rsomics-seq/releases/tag/v0.3.0
+Fresh live metadata confirms tag commit `8eaf9c8a685c08bdf1698745b65a3a01c609ec70`,
+published/non-draft/non-prerelease status and exactly six uploaded assets:
+four native bundles, the source crate and SHA256SUMS. Public asset digests
+match the adopted local files. SHA256SUMS is 508 bytes, SHA256
+`9e12791d56faeb419c29642aa6576096c6ff3899fd90181db3dccf1096ed4315`.
+Assets are unsigned; none is described as remeasured or registry-published.
+
+Next: fresh public binary/source installation. Registry credentials remain on hold;
 do not retry the unchanged organization secret. No unrelated files or old
 releases are removed.

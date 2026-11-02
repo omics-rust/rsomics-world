@@ -36,27 +36,27 @@ native4CI41424424381 and seq-strand-performance-2026-11-02.json.
 
 ## One delivery implementation
 
-- [ ] Read existing owning CI/publish/README/merge record and the accepted
+- [x] Read existing owning CI/publish/README/merge record and the accepted
   Count/BED native-delivery patterns; choose the smallest existing pattern,
   not another release framework. Keep registry-only publish untouched.
-- [ ] Set Cargo package0.3.0/own lock entry, retain exact dependency resolution.
+- [x] Set Cargo package0.3.0/own lock entry, retain exact dependency resolution.
   Update README/MERGE_RECORD for candidate delivery, explicit seven-operation
   scope and source-bound performance limitations; no universal speed claim.
-- [ ] Add one owner-private native delivery helper under scripts/ and extend
+- [x] Add one owner-private native delivery helper under scripts/ and extend
   existing four-native CI. Retain current pinned SeqKit2.13.0, formatting,
   strict Clippy/rustdoc, package, full debug/release tests and benchmark smoke.
   Keep actual uname/Rusthost and executable-format/CPU evidence.
-- [ ] Produce complete clean normalized source crate and one binary bundle
+- [x] Produce complete clean normalized source crate and one binary bundle
   per native class, exact-head/version/target/hash manifest and original logs.
   Bundle only explicit product/license/provenance paths; never broad temp,
   Cargo cache or repository-tree uploads. Use Cargo registry sources, not
   cross-product local patches. Retain required project/dependency notices
   using existing organization patterns, not newly invented license policy.
-- [ ] Exercise a real fresh installed binary/source-package lifecycle covering
+- [x] Exercise a real fresh installed binary/source-package lifecycle covering
   all seven commands, connected subseq→revcomp with nonuniform FASTQ quality,
   JSON, named BGZF decode, invalid late input/alias preservation. Reuse compact
   existing goldens; no helper matrix or second representative benchmark.
-- [ ] Run local guarded format/strictClippy/tests/package and delivery smoke
+- [x] Run local guarded format/strictClippy/tests/package and delivery smoke
   proportionately; one fresh integrated review of archive boundaries, installs,
   licensing/provenance and CI. Freeze source delta; root reviews/integrates.
 
