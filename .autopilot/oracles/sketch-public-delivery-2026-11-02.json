@@ -1,0 +1,448 @@
+{
+  "schema": "rsomics.sketch.public-delivery-adoption.v1",
+  "root_adopted": true,
+  "product": "rsomics-sketch",
+  "version": "0.1.1",
+  "source_head": "eb1b15102f1adaedb738e4ddb98bd9bd841669d1",
+  "source_tree": "3f13cce3dff7fcc6630ef80d257a55c981b520dc",
+  "release": {
+    "id": 430953430,
+    "url": "https://github.com/omics-rust/rsomics-sketch/releases/tag/v0.1.1",
+    "tag": "v0.1.1",
+    "published_at": "2026-11-02T00:26:34Z",
+    "draft": false,
+    "prerelease": false,
+    "tag_object_type": "commit",
+    "tag_sha": "eb1b15102f1adaedb738e4ddb98bd9bd841669d1",
+    "notes_sha256": "df58c6221e49bb2d1868ee6472eedf6de8784b8bb8ee1dd514eb8d235077c024",
+    "draft_public_notes_and_asset_content_identities_equal": true,
+    "assets": [
+      {
+        "id": 699951740,
+        "name": "rsomics-sketch-0.1.1-linux-aarch64.tar.gz",
+        "bytes": 884770,
+        "sha256": "85230e1f36af0450996437c77a1689bde16b3a1b3ffb0a86e690a8374b06375f",
+        "url": "https://github.com/omics-rust/rsomics-sketch/releases/download/v0.1.1/rsomics-sketch-0.1.1-linux-aarch64.tar.gz"
+      },
+      {
+        "id": 699951742,
+        "name": "rsomics-sketch-0.1.1-linux-x86_64.tar.gz",
+        "bytes": 910654,
+        "sha256": "0ccd83d6dfdbc6356ce75c76adc0f75fe4773207a63ada96b31a48ecab67977c",
+        "url": "https://github.com/omics-rust/rsomics-sketch/releases/download/v0.1.1/rsomics-sketch-0.1.1-linux-x86_64.tar.gz"
+      },
+      {
+        "id": 699951739,
+        "name": "rsomics-sketch-0.1.1-macos-aarch64.tar.gz",
+        "bytes": 834057,
+        "sha256": "55995c9b6c1cdff2ae1225d4120ea38cd2af184287453b3526e596e5778c60b8",
+        "url": "https://github.com/omics-rust/rsomics-sketch/releases/download/v0.1.1/rsomics-sketch-0.1.1-macos-aarch64.tar.gz"
+      },
+      {
+        "id": 699951738,
+        "name": "rsomics-sketch-0.1.1-macos-x86_64.tar.gz",
+        "bytes": 869194,
+        "sha256": "e6a9a244afcc609ff1b3c0e38aca727e5bd79c233fddfdd4817249fe3b5d16d6",
+        "url": "https://github.com/omics-rust/rsomics-sketch/releases/download/v0.1.1/rsomics-sketch-0.1.1-macos-x86_64.tar.gz"
+      },
+      {
+        "id": 699951743,
+        "name": "rsomics-sketch-0.1.1-source.tar",
+        "bytes": 1085440,
+        "sha256": "88313549d3d017675be733637d2fbaade98af59624b66c5e84ed86ae7f9c21a4",
+        "url": "https://github.com/omics-rust/rsomics-sketch/releases/download/v0.1.1/rsomics-sketch-0.1.1-source.tar"
+      },
+      {
+        "id": 699951821,
+        "name": "SHA256SUMS",
+        "bytes": 528,
+        "sha256": "c9a3a9c40aa6b12cf5441f5ee10e42a8372f873117b3016ed48afa0e9e22b4a9",
+        "url": "https://github.com/omics-rust/rsomics-sketch/releases/download/v0.1.1/SHA256SUMS"
+      }
+    ]
+  },
+  "native_receipt": ".autopilot/oracles/sketch-native-delivery-2026-11-02.json",
+  "performance_receipt": {
+    "path": ".autopilot/oracles/sketch-final-performance-2026-11-02.json",
+    "bytes": 93217,
+    "sha256": "f4180a189bbab0c5409d136ef8bb135268618645a77c0d7b202299505acbc155"
+  },
+  "all_eight_measured_binaries_match_released_native_bytes": true,
+  "public_download": {
+    "directory": "/Volumes/KIOXIA/Developments/tmp/sketch-public-install-20261102.UTz9Oq",
+    "unauthenticated_curl_without_user_config": true,
+    "final_http_status": 200,
+    "files": {
+      "SHA256SUMS": {
+        "bytes": 528,
+        "sha256": "c9a3a9c40aa6b12cf5441f5ee10e42a8372f873117b3016ed48afa0e9e22b4a9"
+      },
+      "rsomics-sketch-0.1.1-macos-aarch64.tar.gz": {
+        "bytes": 834057,
+        "sha256": "55995c9b6c1cdff2ae1225d4120ea38cd2af184287453b3526e596e5778c60b8"
+      },
+      "rsomics-sketch-0.1.1-source.tar": {
+        "bytes": 1085440,
+        "sha256": "88313549d3d017675be733637d2fbaade98af59624b66c5e84ed86ae7f9c21a4"
+      }
+    },
+    "header_identities": {
+      "checksums.headers": {
+        "bytes": 6354,
+        "sha256": "4d8c530540e7c2ba56bd9f18909c22bc3dcb59d2b7a84c280f1fd99359693b2b"
+      },
+      "native.headers": {
+        "bytes": 6451,
+        "sha256": "deaddebd5d5e9caa0e36e90af9f0b374cb3f6923306475089931bd2b3fddf83a"
+      },
+      "source.headers": {
+        "bytes": 6419,
+        "sha256": "5f6f1f8ac0b1ec310da242b17d0bff624aea8b7fe2c54fd71a6971b401ea864b"
+      }
+    },
+    "all_three_bodies_equal_adopted_uploads": true
+  },
+  "public_installed_lifecycle": {
+    "calls": [
+      {
+        "argv": [
+          "/Volumes/KIOXIA/Developments/tmp/sketch-public-install-20261102.UTz9Oq/installed/rsomics-sketch-0.1.1-macos-aarch64/rsomics-sketch",
+          "--version"
+        ],
+        "returncode": 0
+      },
+      {
+        "argv": [
+          "/Volumes/KIOXIA/Developments/tmp/sketch-public-install-20261102.UTz9Oq/installed/rsomics-sketch-0.1.1-macos-aarch64/rsomics-sketch",
+          "--help"
+        ],
+        "returncode": 0
+      },
+      {
+        "argv": [
+          "/Volumes/KIOXIA/Developments/tmp/sketch-public-install-20261102.UTz9Oq/installed/rsomics-sketch-0.1.1-macos-aarch64/rsomics-sketch",
+          "--json",
+          "sketch",
+          "/Volumes/KIOXIA/Developments/tmp/sketch-public-install-20261102.UTz9Oq/delivery/lifecycle/mixed.fa",
+          "--ksize",
+          "3",
+          "--scaled",
+          "1",
+          "--seed",
+          "42",
+          "--name",
+          "constructed",
+          "-o",
+          "/Volumes/KIOXIA/Developments/tmp/sketch-public-install-20261102.UTz9Oq/delivery/lifecycle/built.sig.gz"
+        ],
+        "returncode": 0
+      },
+      {
+        "argv": [
+          "/Volumes/KIOXIA/Developments/tmp/sketch-public-install-20261102.UTz9Oq/installed/rsomics-sketch-0.1.1-macos-aarch64/rsomics-sketch",
+          "--json",
+          "sketch",
+          "/Volumes/KIOXIA/Developments/tmp/sketch-public-install-20261102.UTz9Oq/delivery/lifecycle/short.fa",
+          "--ksize",
+          "31",
+          "--scaled",
+          "93",
+          "--seed",
+          "42",
+          "--abundance",
+          "--name",
+          "short",
+          "-o",
+          "/Volumes/KIOXIA/Developments/tmp/sketch-public-install-20261102.UTz9Oq/delivery/lifecycle/short.sig.gz"
+        ],
+        "returncode": 0
+      },
+      {
+        "argv": [
+          "/Volumes/KIOXIA/Developments/tmp/sketch-public-install-20261102.UTz9Oq/installed/rsomics-sketch-0.1.1-macos-aarch64/rsomics-sketch",
+          "--json",
+          "inspect",
+          "/Volumes/KIOXIA/Developments/tmp/sketch-public-install-20261102.UTz9Oq/delivery/lifecycle/built.sig.gz",
+          "/Volumes/KIOXIA/Developments/tmp/sketch-public-install-20261102.UTz9Oq/delivery/lifecycle/short.sig.gz",
+          "/Volumes/KIOXIA/Developments/tmp/sketch-public-install-20261102.UTz9Oq/delivery/lifecycle/collection.sig",
+          "/Volumes/KIOXIA/Developments/tmp/sketch-public-install-20261102.UTz9Oq/delivery/lifecycle/high.sig",
+          "-o",
+          "/Volumes/KIOXIA/Developments/tmp/sketch-public-install-20261102.UTz9Oq/delivery/lifecycle/inspect.tsv"
+        ],
+        "returncode": 0
+      },
+      {
+        "argv": [
+          "/Volumes/KIOXIA/Developments/tmp/sketch-public-install-20261102.UTz9Oq/installed/rsomics-sketch-0.1.1-macos-aarch64/rsomics-sketch",
+          "--json",
+          "compare",
+          "/Volumes/KIOXIA/Developments/tmp/sketch-public-install-20261102.UTz9Oq/delivery/lifecycle/collection.sig",
+          "-o",
+          "/Volumes/KIOXIA/Developments/tmp/sketch-public-install-20261102.UTz9Oq/delivery/lifecycle/collection-pairs.tsv"
+        ],
+        "returncode": 0
+      },
+      {
+        "argv": [
+          "/Volumes/KIOXIA/Developments/tmp/sketch-public-install-20261102.UTz9Oq/installed/rsomics-sketch-0.1.1-macos-aarch64/rsomics-sketch",
+          "--json",
+          "compare",
+          "/Volumes/KIOXIA/Developments/tmp/sketch-public-install-20261102.UTz9Oq/delivery/lifecycle/collection.sig",
+          "--shape",
+          "matrix",
+          "--matrix-measure",
+          "containment",
+          "-o",
+          "/Volumes/KIOXIA/Developments/tmp/sketch-public-install-20261102.UTz9Oq/delivery/lifecycle/containment.tsv"
+        ],
+        "returncode": 0
+      },
+      {
+        "argv": [
+          "/Volumes/KIOXIA/Developments/tmp/sketch-public-install-20261102.UTz9Oq/installed/rsomics-sketch-0.1.1-macos-aarch64/rsomics-sketch",
+          "--json",
+          "search",
+          "/Volumes/KIOXIA/Developments/tmp/sketch-public-install-20261102.UTz9Oq/delivery/lifecycle/query.sig",
+          "/Volumes/KIOXIA/Developments/tmp/sketch-public-install-20261102.UTz9Oq/delivery/lifecycle/database.sig",
+          "--threshold",
+          "0",
+          "-o",
+          "/Volumes/KIOXIA/Developments/tmp/sketch-public-install-20261102.UTz9Oq/delivery/lifecycle/search.tsv"
+        ],
+        "returncode": 0
+      },
+      {
+        "argv": [
+          "/Volumes/KIOXIA/Developments/tmp/sketch-public-install-20261102.UTz9Oq/installed/rsomics-sketch-0.1.1-macos-aarch64/rsomics-sketch",
+          "--json",
+          "compare",
+          "/Volumes/KIOXIA/Developments/tmp/sketch-public-install-20261102.UTz9Oq/delivery/lifecycle/built.sig.gz",
+          "/Volumes/KIOXIA/Developments/tmp/sketch-public-install-20261102.UTz9Oq/delivery/lifecycle/known.sig",
+          "-o",
+          "/Volumes/KIOXIA/Developments/tmp/sketch-public-install-20261102.UTz9Oq/delivery/lifecycle/constructed-pairs.tsv"
+        ],
+        "returncode": 0
+      },
+      {
+        "argv": [
+          "/Volumes/KIOXIA/Developments/tmp/sketch-public-install-20261102.UTz9Oq/installed/rsomics-sketch-0.1.1-macos-aarch64/rsomics-sketch",
+          "--json",
+          "search",
+          "/Volumes/KIOXIA/Developments/tmp/sketch-public-install-20261102.UTz9Oq/delivery/lifecycle/built.sig.gz",
+          "/Volumes/KIOXIA/Developments/tmp/sketch-public-install-20261102.UTz9Oq/delivery/lifecycle/known.sig",
+          "--threshold",
+          "0",
+          "-o",
+          "/Volumes/KIOXIA/Developments/tmp/sketch-public-install-20261102.UTz9Oq/delivery/lifecycle/constructed-search.tsv"
+        ],
+        "returncode": 0
+      },
+      {
+        "argv": [
+          "/Volumes/KIOXIA/Developments/tmp/sketch-public-install-20261102.UTz9Oq/installed/rsomics-sketch-0.1.1-macos-aarch64/rsomics-sketch",
+          "--json",
+          "sketch",
+          "/Volumes/KIOXIA/Developments/tmp/sketch-public-install-20261102.UTz9Oq/delivery/lifecycle/invalid.fa",
+          "--ksize",
+          "3",
+          "--check-sequence",
+          "-o",
+          "/Volumes/KIOXIA/Developments/tmp/sketch-public-install-20261102.UTz9Oq/delivery/lifecycle/built.sig.gz"
+        ],
+        "returncode": 1
+      }
+    ],
+    "canonical_hash_fixture": true,
+    "collection_wide_comparison": true,
+    "constructed_signature_reloaded": true,
+    "files": {
+      "0.stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "0.stdout": {
+        "bytes": 21,
+        "sha256": "ca46a1a798fbb2cf717ca9008eee175f396dcad4861de3bce0566a03b60adf80"
+      },
+      "1.stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "1.stdout": {
+        "bytes": 606,
+        "sha256": "a2287b6b7e5a1a6bcf749451f5655dc5b0e550c8fa1b632d8f30c8cd396f7ad8"
+      },
+      "10.stderr": {
+        "bytes": 317,
+        "sha256": "3edee1b361bbfc36d174bf4c315ec3388b52a3256e7eceb4896dd7c983d6012c"
+      },
+      "10.stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "2.stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "2.stdout": {
+        "bytes": 332,
+        "sha256": "45a2e2efd15b582d553e7ff6bf7b902f3114cda1ecd05375e0b0c17d03b68d84"
+      },
+      "3.stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "3.stdout": {
+        "bytes": 333,
+        "sha256": "1e0bbd62da5b024bae4a7f9526fe625a0fc1cd8a6cebbaee4517fcadf2363bc4"
+      },
+      "4.stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "4.stdout": {
+        "bytes": 247,
+        "sha256": "5113efd545ac800d5c4f32c1fe7a0bf1708fbc79be78e5f0453af4622dc3c085"
+      },
+      "5.stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "5.stdout": {
+        "bytes": 272,
+        "sha256": "71e1833189689f75443db1b209d136ab2cbc6d12e6c8340cf5d16acfb7679ad4"
+      },
+      "6.stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "6.stdout": {
+        "bytes": 267,
+        "sha256": "a62bfceda84ac2824f535fe308b05eaa9877602aee11900f480cd2d2a45ef767"
+      },
+      "7.stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "7.stdout": {
+        "bytes": 293,
+        "sha256": "1fc16a98412a541d6b4a7968ea34d5c66da9ac7a09ef96d1b148937857ffd240"
+      },
+      "8.stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "8.stdout": {
+        "bytes": 273,
+        "sha256": "e2df05ebee0d666d6332dce3124b1afb42f923a28c1355e4c4833f98ae0e2b65"
+      },
+      "9.stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "9.stdout": {
+        "bytes": 305,
+        "sha256": "14c7b4e78531c2f8ae8518bf9a98857551148a5e99210946019e4b9540f576a6"
+      },
+      "built.sig.gz": {
+        "bytes": 319,
+        "sha256": "22a3c42c022b4d00a1e3f8360bb098d172b8f20eec0c38dc7a87dbd1fc42f0d1"
+      },
+      "collection-pairs.tsv": {
+        "bytes": 435,
+        "sha256": "e1c39e033067d9557bb12b3ca2893c16d73ea49ec279be1e9ade045ab5ae5378"
+      },
+      "collection.sig": {
+        "bytes": 1359,
+        "sha256": "2b39afe9514e1b73139ece4022b74d33ed250c890f56a0abe49399f48ebb695a"
+      },
+      "commands.json": {
+        "bytes": 5674,
+        "sha256": "d8f9a1211e8ed69a846bd3f621f075aaba9203f13baaf80717692e1fd31007e8"
+      },
+      "constructed-pairs.tsv": {
+        "bytes": 273,
+        "sha256": "940e7ec4dc38a4570ca729dd954212272bdb0c809863ec8b43ec830c79e056c6"
+      },
+      "constructed-search.tsv": {
+        "bytes": 446,
+        "sha256": "d3caaedc01ccf58cce9a5eed8013f2496ca7eac3de6c51027e05d4a1f7fa772e"
+      },
+      "containment.tsv": {
+        "bytes": 31,
+        "sha256": "68e097ed4ae8edfda89d8caf306de1a9f2274b026d2192d79114cff29f25b67e"
+      },
+      "database.sig": {
+        "bytes": 886,
+        "sha256": "069bf04c92d2f7a0cc7c21acfb6fda53fcc156bf7bc4dab573afe56200dfa2a4"
+      },
+      "high.sig": {
+        "bytes": 441,
+        "sha256": "c2f4edc4b822f5e424894efb0dacef9f588e97786cb5ccd3deaa6b37db8cd730"
+      },
+      "inspect.tsv": {
+        "bytes": 1313,
+        "sha256": "70e6cf45cedec75613a0bbdc9464678f9a7a31cbcd3827ccd5194e97085f637b"
+      },
+      "installed-binary": {
+        "bytes": 1826688,
+        "sha256": "65b869e1a10dabc3bb51618ebb37d675358bb8dd893a8c32847ccfa1d28c208e"
+      },
+      "invalid.fa": {
+        "bytes": 14,
+        "sha256": "7d98891ec087202612f98146c7cbb9b9fffd3cb5ebb9fcac9c4be0b5a27d18d8"
+      },
+      "known.sig": {
+        "bytes": 471,
+        "sha256": "e6d7b6b88c28b30e22c391e83c23f8518e4b3e235e07dae83c0e3c70d048de14"
+      },
+      "mixed.fa": {
+        "bytes": 35,
+        "sha256": "d1568c6f669d19a59e94e39c493c0446c6c91141932f4d7ea8d9b464e60ce76c"
+      },
+      "query.sig": {
+        "bytes": 476,
+        "sha256": "641247449abd7396afc719c73710991aecd358fdfa7cb0b6d67efd9f43e3ed00"
+      },
+      "search.tsv": {
+        "bytes": 461,
+        "sha256": "3a283d9f77e77a9a8417157ebf2f040b4e8067d3056221809cd6753d8d78496d"
+      },
+      "short.fa": {
+        "bytes": 50,
+        "sha256": "6ea2fc7ec31d23c1bf40b520c83b8d56d4b5143a378ef68befa564313af3947c"
+      },
+      "short.sig.gz": {
+        "bytes": 306,
+        "sha256": "34468096b72201489deb1abbe6c70f83a7c332c3de1100239a953514f43f4f82"
+      }
+    },
+    "git_foundation_commit": "c79111f31651bad581920b7b5c2ddde9a57534e1",
+    "high_scale_recovery": true,
+    "installed_binary": {
+      "bytes": 1826688,
+      "sha256": "65b869e1a10dabc3bb51618ebb37d675358bb8dd893a8c32847ccfa1d28c208e"
+    },
+    "pair_local_search": true,
+    "pre_commit_failure_preserves_output": true,
+    "scale93_gzip_roundtrip": true,
+    "scope": "installed four-command Git-source workflow only; not local sourmash execution or new performance",
+    "short_input_success": true,
+    "receipt": {
+      "bytes": 11790,
+      "sha256": "708ac107cf26dabc81c53b25ebcf48bf23b2d727a862117e10db0a1fb266b333"
+    },
+    "own_public_binary_executed": true,
+    "source": "live owning scripts/delivery.py at exact release head",
+    "successful_calls": 10,
+    "expected_failure_calls": 1,
+    "complete_recorded_file_hashes_rechecked": true,
+    "outer_stderr_bytes": 641,
+    "outer_stderr_verified_guard_diagnostics_only": true
+  },
+  "old_build_pending_flags_preserved_as_construction_time_records": true,
+  "original_packets_and_losses_preserved": true,
+  "registry_publication": false,
+  "registry_corrected_version_qualified": false,
+  "scope": "Root verified complete current-head native/source/oracle/install originals, all8 current-binary workload originals and every measured pair, fresh public release/tag/six asset contents and actual unauthenticated Mac/source/checksum downloads. Public Mac binary performs full11-call four-command/short-input/scale/collection/search/failure-preservation lifecycle. No new build, upstream oracle or benchmark run, metadata replacement, signing, minimum-OS or legal clearance."
+}

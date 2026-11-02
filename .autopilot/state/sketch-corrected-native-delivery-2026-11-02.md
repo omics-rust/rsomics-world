@@ -1,6 +1,15 @@
 # Corrected Sketch native delivery
 
-The concrete unresolved adoption is registry kmer0.2.2's empty/short canonical
+Current: GitHubv0.1.1/release430953430 at immutable eb1b1510 is public, and a
+fresh unauthenticated public Mac/source/checksum download plus11-call product
+lifecycle passes. Native4 and all8 actual identity-matched resource jobs are
+adopted; lower RSS96/96 does not hide42 wall losses. Registry remains held.
+Post-release documentation head ddc4e76c is separate from the formal tag/assets;
+its exact-head CI is pending at this update. Full evidence is recorded below.
+
+## Initial scope
+
+The original unresolved adoption was registry kmer0.2.2's empty/short canonical
 Murmur iterator. Producer c79111f/0.2.3 is already source/native/consumer and
 resource-qualified, but unpublished. Sketchf430522 still uses0.2.2 and its
 ordinary CI expects the panic. Seqd9734e5 uses the unaffected KmerCounts path;
@@ -302,3 +311,31 @@ rewriting old BUILD pending/not-remeasured flags or earlier failed runtime
 evidence. Native/source/install and actual resource gates now pass. Root's
 fresh GitHub release preflight/public action and actual public Mac install
 remain required; registry authorization/publication is still held.
+
+## Public release and fresh installation accepted
+
+Root fresh preflight finds public main eb1b1510 and no tag/release. Draft
+430953430 has exactly six intended assets, all sizes/SHA digests equal adopted
+native4/source bytes and notes SHA
+df58c6221e49bb2d1868ee6472eedf6de8784b8bb8ee1dd514eb8d235077c024.
+Root publishesv0.1.1 at2026-11-02T00:26:34Z; public API preserves IDs/names/
+contents/notes and the lightweight tag points exactly to eb1b1510. Expected
+draft-untagged to public-v0.1.1 browser URLs are checked separately, not treated
+as asset-content mutation. No original artifact or BUILD flag is rewritten.
+
+Fresh unauthenticated public downloads returnHTTP200 with834057/1085440/528B,
+byte-identical to accepted MacARM/source/checksum uploads. UTz9Oq retains
+headers/bodies and the extracted actual65b869e1 executable. The real public
+binary performs the entire11-call four-command workflow:10 success,1 intended
+parse failure; short inputs, scale93/high-scale, gzip reload, collection-wide
+comparison, pair-local search, constructed-signature reuse and old-output
+preservation all pass. Root rechecks all40 recorded file hashes and statuses.
+Lifecycle receipt SHA708ac107cf26dabc81c53b25ebcf48bf23b2d727a862117e10db0a1fb266b333.
+641 outer stderr bytes are physical-guard diagnostics only, not command errors.
+
+Adoption is sketch-public-delivery-2026-11-02.json. README/protocol-only owning
+commit ddc4e76c2d57ba80e7c58995b34c01942bbd4c0d now documents the real release,
+all8 current mean resource pairs and slower cases. Source/lock/tests/scripts/
+licenses remain exact; this does not replace formal tag/assets or earn another
+benchmark. Exact-head documentation CI remains mandatory. No source build,
+upstream oracle, registry publication or new performance run was performed.
