@@ -8,6 +8,8 @@ originals are now root-adopted. No new speed/RSS/release claim or durability
 change. The actual green8 whole-wall/RSS failures remain failed.
 Current green9 whole41421169780/1 is terminal FAILURE; encrypted sealing/upload
 succeeded. Full original recovery precedes any scientific/performance verdict.
+Current recovery: append-onlyV2 carrier transfer is live after one corrected
+prewrite metadata failure. No extraction/decryption or science replay yet.
 
 Plan: docs/plans/2026-11-02-plink-ordered-output-pipeline.md.
 The adopted phase diagnostic justifies eliminating temporary output recopy,
@@ -213,3 +215,37 @@ No bulk acquisition/extraction/decryption/originals phase has run yet. Wait
 for the local sequence benchmark to finish before11GB TLS/SSH/age traffic;
 do not perturb its measured workload. Then acquire this exact original once
 under the unchanged admission, retaining any partial on failure.
+
+## Actual prewrite transport failure; narrow metadata correction
+
+First acquisition session72229 fails before receiver opens original.zip.
+Root reads the actual traceback and ZIP-TRANSPORT.json: custody.capacity's
+new historical-authority loop shadows its filename parameter with `name`,
+so context writes admission.json.json and the next exclusive write collides.
+Receiver exit1, local source-9 after1048576 bytes read, complete=false. No
+carrier file is retained by this attempt; do not claim complete ZIP custody.
+All failure logs/helpers/metadata remain in the original preparation packet.
+This is an authored recovery-reader error, not the product's whole-run cause.
+
+Append-only V2:
+`/Volumes/KIOXIA/Developments/tmp/plink-green9-custody-attempt2-20261102.DrV9EI`.
+Root reviews complete narrow diffs and one real metadata regression. Only
+the shadowed authority filename is renamed; transport logs/controllers use
+fresh local and remote controller-v2 namespaces. No old controller, authority,
+wrong ledger, artifact, cap, runtime or scientific predicate is replaced.
+
+Repair-context and the single regression each execute once, exit0/empty
+stderr. Actual old collision is reproduced, then production exclusive save
+creates the correct unique probe; stdout SHA256
+1c2a6c6314727c2fa0d96909db5ca696751131a2a3c86b5f0d646f56f3b5e660.
+Root independently reads/verifies that result and preserved old pins.
+Probe3602B/SHA10827981f123b4eb655909e0976b5435b1aa8a94ae0cc7dfbf23b49451428acb.
+
+After actual GREEN and sequence's terminal36-output campaign, root authorizes
+one changed-transport acquisition. Actual session81677 is live, exclusively
+writing remote original.zip after fresh nine-root capacity checks; progress
+and all errors are retained as DrV9EI/acquire-once.* and zip-source/receiver.*.
+Revalidate this exact process before any restart decision. No automatic retry,
+scientific re-execution, extraction/decryption/originals phase is authorized
+by the transport start. Await full11358085104B/SHA8d913965...adeed77 and
+both successful endpoint exits before progressing to the reviewed next gate.
