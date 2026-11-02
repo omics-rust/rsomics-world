@@ -16,6 +16,13 @@ diagnostic retains slower/higher-RSS import and poor four-worker LD scaling;
 see `.autopilot/state/plink-locality-batches-2026-11-02.md` and
 `.autopilot/state/plink-compact-metadata-2026-11-02.md`.
 
+Subsequent private owner1906a48 combines complete byte-admitted ordered output
+jobs (9cc22cac) with the VCF record-boundary UTF-8 repair. Both receive fresh
+whole-feature reviews and root complete debug verification; combined source
+needs its own green12 native/source gate. Existing positive metadata receipts
+do not qualify these later changes. No new representative speed/RSS or release
+claim follows; source and residual limits are in the two2026-11-03 states.
+
 Historical2026-11-02 PLINK: bounded ordered-output/PGEN pipeline owner80fafbf8
 and actual green9 native/source41415209242/1 are accepted after complete
 original adoption and root data-only numeric/raw replay. Its305 exact Git

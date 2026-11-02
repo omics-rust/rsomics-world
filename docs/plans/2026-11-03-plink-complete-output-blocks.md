@@ -77,23 +77,23 @@ do not add work stealing, shared caches or affinity scheduling in this wave.
 **Files:** `src/ordered.rs`, `src/ld/pairs.rs`, `src/ld/mod.rs`,
 `src/make/pipeline.rs`; existing native workflow tests only where necessary.
 
-- [ ] Add one deterministic real producer/consumer test showing complete work
+- [x] Add one deterministic real producer/consumer test showing complete work
   can finish in every lane before the writer drains the first result. Do not
   rely on tight timing thresholds; retain order and failure/cancel coverage.
-- [ ] Add one meaningful pair-planning/output bound regression using long
+- [x] Add one meaningful pair-planning/output bound regression using long
   identifiers and the existing serial/parallel full-output comparison. Include
   an over-cap line selecting serial fallback without changing output.
-- [ ] Observe the old protocol's actual failure of the new concurrency contract
+- [x] Observe the old protocol's actual failure of the new concurrency contract
   before replacing it; retain the external log. No exhaustive getter tests.
-- [ ] Implement the complete-result protocol, one payload per lane, shutdown
+- [x] Implement the complete-result protocol, one payload per lane, shutdown
   and finish/error propagation; migrate make and remove the old streaming Sink.
-- [ ] Replace LD streaming Blocks with an admitted complete buffer, derive line
+- [x] Replace LD streaming Blocks with an admitted complete buffer, derive line
   bounds and byte-capped jobs; update LD/make accounting and serial fallback.
   Preserve all original output bytes and scientific job membership.
-- [ ] Run guarded full debug/release all-feature tests, fmt and strict
+- [x] Run guarded full debug/release all-feature tests, fmt and strict
   all-target/all-feature Clippy. Expected: complete source workflow passes,
   raw state and one/four-worker output agree, no ignored failures/diagnostics.
-- [ ] Freeze complete delta, source hashes and logs; leave index empty and
+- [x] Freeze complete delta, source hashes and logs; leave index empty and
   report root-ready. Do not commit/push/publish/dispatch or run cohort timing.
 
 ## Root integration
