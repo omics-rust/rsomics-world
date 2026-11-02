@@ -50,6 +50,8 @@ chooses native default repairs, with recorded known incompatibilities:
 - make the BED plus rejected-read output path function rather than reproducing
   the source TypeError, with explicit output-format contracts.
 
+The user explicitly reconfirms this same repair-and-record decision on
+2026-11-02; it does not reopen or broaden the scope.
 This resolves the affected native policy hold. Normal approximate/zoom
 statistics, normalization, chromosome aliases and intentional shifted-alignment
 metadata semantics remain separate and unchanged. Legitimate NaN/Inf classes
