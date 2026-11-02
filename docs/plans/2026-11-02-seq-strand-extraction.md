@@ -100,3 +100,12 @@ arithmetic without overflow; first-record DNA/RNA selection versus later
 records; byte headers/coordinate suffix formatting; named-output rollback
 after malformed late input or write failure. Existing strict boundary/type
 checks should not be duplicated in every operation.
+
+## Observed contract clarifications
+
+Installed local SeqKit is2.14.0; its full-output witnesses are not labeled
+2.13.0. Historical2.13 goldens remain separate, while owning native CI still
+pins2.13 for subsequent live qualification. Root checks both pinned bio
+header-parser sources: the repeated-whitespace cursor behavior is shared.
+Header byte preservation is within seqio's existing printable-ASCII-plus-tab
+domain, not an instruction to widen the foundation's input validation.

@@ -35,9 +35,11 @@ Old documented local SRR341550 path is absent. Bounded filename searches in
 external fixture/retired/tmp roots find no matching R1 FASTQ; the old explicit
 4090 benchmark path also lacks it. This does not prove global deletion.
 
-One fresh public ENA HTTPS download is live, observed curl PID85012 and
-exec session69501. Do not start another merely because a tool observation
-expires. Revalidate this handle/PID and file state first.
+The initial ENA HTTPS download was observed live as curl PID85012 and exec
+session69501. It subsequently terminates with actual curl18 after1711748B.
+A prefix backup is copied and cmp-verified before one bounded range-resume
+in session4729; that also terminates curl18, leaving3167435B. Both failed
+partials remain preserved, not accepted fixtures. No ENA download remains live.
 
 - URL: https://ftp.sra.ebi.ac.uk/vol1/fastq/SRR341/SRR341550/SRR341550_1.fastq.gz
 - Pending: `/Volumes/Zane's HDD/rsomics-fixtures/fastq/seq-strand-20261102/SRR341550_1.fastq.gz.part`
@@ -51,3 +53,17 @@ resolved destination and8GiB headroom. It refuses existing final/partial
 targets, writes only the named external partial, hashes then renames without
 overwrite. Partial data is not an accepted fixture; no benchmark has run.
 Old source performance is not reassigned to this candidate.
+
+## Verified input recovered from existing remote copy
+
+A subsequent bounded filename inventory of the old benchmark root locates
+`/data1/liangjy/rsomics-linux-x86_64-20260730/fixtures/SRR341550_1.fastq.gz`
+on4090. This corrects the earlier checked-but-absent root-level path; the
+fixture was not globally absent. Actual remote stat reports87439836B and
+fresh SHA256 equals the expected d7a15c1762d64a5434ced0cc665d7f5d167ca81a71e239f8237b9cd490dd7683.
+
+SCP under the same external preflight copies it once into a distinct
+`.ssh.part` destination; fresh local full SHA256 agrees, then non-overwriting
+rename creates the final path above. Actual session10638 exits0. This proves
+byte identity, not a freshly recounted record population or performance.
+The original remote copy and both failed ENA partials remain untouched.
