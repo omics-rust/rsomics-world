@@ -88,3 +88,23 @@ paths:118 passed,0 failed/ignored, command exit0. Local packaging used
 The owner is clean after commit and push. CI, native-four qualification,
 representative whole-mapping performance and publication remain separate gates;
 this source integration does not change any already-published release.
+
+## Representative performance preparation
+
+Packet: `/Volumes/KIOXIA/Developments/tmp/bed-map-performance-20261103.aOBNKf`.
+Root reads the complete adapted runner and dossier, verifies its identity and
+independently reconstructs both full stable-sort derivatives from unchanged
+originals. All61177 transcript and584846 exon rows/columns are preserved.
+The original coverage inputs are not sorted; direct reuse would be invalid.
+
+One full sorted-map workflow requests columns2,3,4 with min,max,count and
+precision10: overlapping exon coordinate envelope/count, not expression or
+union length. Sorting is excluded equally from both timed tools. Two warmups
+and five alternating measured pairs retain and compare all complete outputs.
+Required external capacity is9013884044 bytes including8GiB headroom; the
+preparation observed37379612672 free bytes. Admission must recheck capacity.
+Runner SHA256fd868a41596c923e6dd11aa5850a28d3796eca57bfaeb01e7401bd98571f6ea8.
+
+This packet has not executed a scientific command, executable version check
+or benchmark. Root authorization/executable pins and actual native-four
+acceptance remain required before its run action. No performance claim yet.
