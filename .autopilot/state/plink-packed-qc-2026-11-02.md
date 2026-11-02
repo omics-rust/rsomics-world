@@ -143,3 +143,23 @@ The real controller adds only this explicit selector to the admitted list;
 defaultgreen2/older receipts, strict performance predicate and comparisons
 stay unchanged. Local reader setup errors remain in the packet and are not
 CI failures. New actual whole resources and publication are still unearned.
+
+Exact Controller43d77b3248f22214c47242849e34fd45112099c2 passes Control
+41364067315. Root reads/executes the bounded x9ZBua admission helper under
+owning external guard: fresh known-six-root metadata and remaining budgets
+pass, no active whole run, exclusive new208GiB recovery root admitted with
+independent8GiB; old reservations/records remain exact. Its write-once10061B
+authority SHA535c1fccbab5b81581f5b05e6999f8bdd203a4da2546db92950b01ce8c7b7419
+has an independently matching external local copy. Free-after477455790080B,
+required265328582656B; this is a logical allowance, not a global quota/lease.
+
+Root dispatches ONE actual new-source whole run41365352863/1 at43d77b32,
+explicit green8 receipt +reuse=true, qualified-content.v1. Fresh run API binds
+the exact head/event/path. Separate691B append-only run-binding.json SHA
+43226485486f8edf4100cfbc36900e53b14a9b124295174a7e3d612ad25cd185
+binds dispatch while leaving reservation.json unchanged. Six full qualifications,
+all210 scientific commands, both worker profiles and strict material gate
+remain. Reduced post-timing validation is not causal CLI speed evidence.
+Current actual correctness/resources/original-adoption result is still pending;
+do not redispatch unchanged, infer pass, publish or discard old negative data.
+Admission detail: plink-green8-real-admission-2026-11-02.json.
