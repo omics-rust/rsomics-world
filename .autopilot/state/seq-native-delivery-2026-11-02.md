@@ -82,7 +82,7 @@ Both are functional acceptance, not byte-reproducible builds or new timings.
 All caches, install roots, source target and scratch remain external.
 
 Post-release README commit `b3d045affba732f2075cac4fc164bf08e204d220`
-points users to actual GitHub assets. Its CI `41438098373` is pending;
+points users to actual GitHub assets. Its exact-head CI `41438098373` passes;
 immutable release/tag/assets remain at accepted `8eaf9c8`, never retagged or
 rebuilt from this documentation-only head. Tag-triggered CI `41437808068`
 is additional CI, not registry publication; Publish is dispatch-only.
