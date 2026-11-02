@@ -5,7 +5,21 @@ complete. The initial2026-07-31 inspection found neither target repository;
 this is not a current live-registry assertion. Current PLINK source preflight
 is recorded in `.autopilot/state/plink-source-preflight-2026-10-31.md`.
 
-Current2026-11-03 PLINK: private compact metadata owner499693cf is integrated
+Latest2026-11-03 PLINK: private scientific owner7cee8e4 passes green14
+native-four and same-file source41542779786/2; root adopts complete originals
+in `plink-native-2026-11-03-green-14.json`. The qualified uninstrumented CI
+binaries then complete one full-I-w1 comparison: one warmup each and five
+alternating measured pairs, all12 target/guardian exits0 and48 full-output
+pins equal. Median process RSS96153600→85483520B is11.0969% lower in this
+incremental comparison; every pair is lower. Wall medians0.936344→0.903597s
+include one slower pair and shared-host noise, not accepted stable speedup.
+See `plink-metadata-ci-comparison-2026-11-03.json`. Green13's upstream-negative
+gate remains unchanged; no upstream superiority or publication is accepted.
+The next bounded private wave compacts unused completed-arena capacity without
+changing parsing/types/dependencies; implementation and later gates remain
+separate from these accepted7cee observations.
+
+Earlier2026-11-03 PLINK: private compact metadata owner499693cf is integrated
 after complete source review, one independent whole-feature review and root
 debug10-library/3-integration tests. Its immutable green11 native/source gate
 41478980090 passes with complete originals adopted in
