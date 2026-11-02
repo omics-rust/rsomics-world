@@ -2,7 +2,8 @@
 
 Reviewed source integrated and pushed as
 `88169954cce59986c58d4afeca9f903b8705cd20`.
-Actual exact-head native CI `41440046744` is in progress. No performance,
+Actual exact-head native CI `41440046744` exposes failures; the remaining
+Intel Mac job is still running. No performance,
 native-four or release acceptance yet. Current immutable BED0.2 assets remain
 unchanged; split-plus-fraction compatibility choice is still held.
 
@@ -35,3 +36,29 @@ defect. Ordinary blocks and non-split filters are implemented. Sorted execution,
 header passthrough and BAM are excluded, with unsupported flags rejected.
 No stable delivery documentation/lifecycle/version is expanded before the
 remaining qualification gates. Representative performance has not run.
+
+## Actual native failures; one corrective pass
+
+Original APIs, three artifact ZIPs and job logs are retained in
+`/Volumes/KIOXIA/Developments/tmp/bed-coverage-native-20261102.p0XLq4`.
+Root independently verifies all three API ZIP digests/CRCs and reads raw
+Linux test failures plus the Mac ARM traceback.
+
+Linux ARM debug and Linux x86 release fail the same test harness line:
+`coverage_rejects_unsupported_and_invalid_selections`, stdin `write_all`
+unwrap sees OS32 BrokenPipe when a child rejects flags before reading input.
+Seven other coverage tests pass in each affected profile. This is an early-
+exit test transport race, not an observed report-byte disagreement.
+
+Mac ARM passes both103-test profiles and packaging, then installed smoke
+fails its exact help-command list: the helper still expects eight operations
+while the executable exposes nine. It stops after version/help, so do not
+claim an installed coverage lifecycle from this failed run.
+
+One bounded correction is authorized: make the existing invalid-input test
+reliably reproduce early-close with larger stdin, handle only BrokenPipe in
+its helper while preserving status/output assertions and other I/O failures;
+extend the existing installed lifecycle with an actual coverage command and
+exact nine-operation scope, not a weakened list check. No production engine
+change or unchanged workflow retry. Await the final Intel job and corrected
+source/package checks before a new exact-head native run.

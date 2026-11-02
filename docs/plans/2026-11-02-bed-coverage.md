@@ -43,12 +43,20 @@ outside this wave, with unsupported flags rejected rather than ignored.
 4. One fresh integrated review follows the complete wave. Root owns staging,
    commits, push, exact-head four-native acceptance and publication decisions.
    Update delivery/help/docs only for actually qualified stable behavior.
-5. Before release, one representative campaign uses existing real BED inputs,
+5. Before release, one representative campaign uses non-trivial BED inputs,
    complete index construction/output and sparse plus nested fan-out. Compare
    distinct summary/count/hist paths, warmup and five alternating pairs with
    full output equivalence, wall/RSS and exact identities. Per-base output
    needs correctness smoke, not a huge text benchmark matrix. Require a strict
    throughput or resource advantage; record failure honestly if absent.
+
+Input-provenance ruling: the retained million-record BED benchmark generators
+produce deterministic synthetic workloads, not biological measurements. Do
+not label them real biological data or reuse the relation-window B lane as a
+coverage-hit lane without checking overlap geometry. A declared deterministic
+sparse/dense/nested interval workload is appropriate for this interval engine;
+record generation provenance and actual fan-out. A biological annotation lane
+is optional if already available, not a new blocking download requirement.
 
 All source/build/cache/tmp/fixtures remain on verified external disks. No
 deletion, registry retry, speculative public API, placeholder or release before
