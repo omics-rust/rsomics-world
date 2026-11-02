@@ -84,3 +84,9 @@ Summary SHA256:
 5add6069df602b09380958dc79e1fd0ec9988f1450e0a6a28f8e54d34cd99b0e.
 Terminal replay SHA256:
 f0f71cdc5e7caa869e72b5ede11daf1f9050a7b1909626a9dfb039659c7a9e00.
+
+Root additionally compares all32 actual COMMAND bodies to the frozen PLAN,
+all64 role-specific product pins, retained metadata cross-identities and all
+target/guardian statuses, then independently recomputes all eight measured
+wall/RSS populations from original resource records. Replay exits0.
+Adoption: `.autopilot/oracles/plink-targeted-diagnostic-2026-11-03-green-12.json`.

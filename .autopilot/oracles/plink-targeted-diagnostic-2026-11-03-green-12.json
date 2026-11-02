@@ -1,0 +1,30 @@
+{
+  "schema": "rsomics.plink.targeted-diagnostic-adoption.v1",
+  "root_adopted": true,
+  "owner_head": "1906a48b8e6e70bf2478c8e3daf1a44c38c56572",
+  "native_correctness_run": "41484808138/2",
+  "packet": "/Volumes/KIOXIA/Developments/tmp/plink-green12-diagnostic-proposal-20261103.buvr177b",
+  "originals_sha256": "9305bd7de4916e56edead521d29c289f0af4930d03e0dda5a924f415c87605a0",
+  "summary_sha256": "5add6069df602b09380958dc79e1fd0ec9988f1450e0a6a28f8e54d34cd99b0e",
+  "terminal_replay_sha256": "f0f71cdc5e7caa869e72b5ede11daf1f9050a7b1909626a9dfb039659c7a9e00",
+  "root_independent_replay": {
+    "small_original_body_identities": 239,
+    "actual_commands_equal_frozen_plan": 32,
+    "target_and_guardian_exit_zero": 32,
+    "role_specific_product_pins": 64,
+    "measured_wall_and_rss_populations_recomputed": 8,
+    "samples_per_population": 3,
+    "warmups_excluded_per_population": 1,
+    "native_empty_stderr": 16,
+    "source_existing_255_byte_warning": 16,
+    "result": "passed"
+  },
+  "detached_runner_shell_exit": "unavailable_not_inferred",
+  "genotype_or_product_body_transfer": false,
+  "local_scientific_execution": false,
+  "outcome": "import slower in all pairs; single-worker pairs mixed; four-worker pairs slower in all pairs; pairs process RSS lower",
+  "performance_acceptance": false,
+  "full_macro_acceptance": false,
+  "publication_acceptance": false,
+  "limitations": "Shared host; named-directory allocation accounting is not kernel quota or all-thread/unlinked peak accounting. Role-specific output pins are not input-file identity copies. No cross-campaign causal speedup claim."
+}
