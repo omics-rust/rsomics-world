@@ -163,3 +163,71 @@ The later joined Linux preparation supersedes the preliminary47-contig/610GiB
 planning above: use the full official93-contig genome and conservatively reserve
 both new BED/PLINK8GiB roots,618GiB including independent headroom. See
 `linux-runtime-preflight-2026-11-03.md`; neither new route is yet admitted.
+
+## Once-only stage and oracle-build authorization
+
+Root authorizes one stage of the exact frozen Linux packet and, only after
+verified stage success, one source-oracle build. Packet:
+`/Volumes/KIOXIA/Developments/tmp/bed-genomecov-linux-prep-20261103.d6YBl1UU`.
+FROZEN.json3294 bytes SHA-256
+`51ba9a2f7a3a3236d51e41a31e742cc3cbc151d0e8055d5a55c975ce414733aa`.
+Root reads the complete controller/static-pair helper and prior full worker,
+then its timing/fast-check updates. Independent identity replay verifies every
+staged body plus frozen controller, budget and native ABI proof. The plan has
+24 full93-contig commands and exact c6e35 qualified native binary; source build
+uses pinned complete2.31.1 archive with fixed existing GCC12 tools and make-j2.
+
+Stage is inert, not candidate/scientific execution. The following build must
+retain raw stdout/stderr and real process identity,8GiB named-root cap,4GiB
+sampled build-group RSS and1800s bound, full joined618GiB pre/post checks and
+fast own-root live checks. Final source/native provider ABI proof precedes
+source version execution. No older roots, authority records or files may be
+deleted or changed. No automatic retry, compiler/dependency download or
+performance launch is authorized here; those are distinct from this build.
+
+Execution results are pending; these authorizations are not success claims.
+
+Stage session84938 exits0. Remote admission.json is9850 bytes, SHA-256
+`87aff29e6e9805cc885f8a835bc0bf292ab202f603ea98388bdb774bef18ca77`.
+The staged root, full input,93-contig genome, source archive and candidate
+remain inside the explicit8GiB envelope. Stage executed no scientific tool.
+
+Root invokes the authorized one build using that exact admission/FROZEN pair;
+local observation handle86480 remains live. Direct remote observation confirms
+make PID/PGID746130, start_ticks396271749, parent745671, still running with
+the same process identity. Raw upstream compiler warnings are retained, not
+treated as Rust-product failures or suppressed. SOURCE-BUILD.json does not
+yet exist. Do not restart the build because an observation times out; inspect
+this same process/record. No performance launch has occurred.
+
+## Oracle built; once-only performance launch authorized
+
+Build handle86480 exits0. Source ELF39951800 bytes SHA-256
+`e7d4b84005efc6accef3b7867cfe47df2201bd33a68660928b270a1ed31e682a`;
+SOURCE-BUILD.json10454 bytes SHA-256
+`672d73f7cfc4d750ea3a5be8fb024cc1a15d90ff886ee6c79803b174d1b3c8e3`.
+Root independently collects eight original build/admission/ABI/version/log
+bodies into local BUILD-ORIGINALS.json. Source build exit0, fresh native/source
+static support with eight providers and zero unmet symbols/versions, and
+actual empty-stderr `bedtools v2.31.1` version output all verify. Retained raw
+upstream compiler warnings do not disappear from the build evidence.
+
+Root authorizes exactly one launch of the frozen24-command campaign using
+that build receipt and the already verified admission/FROZEN pair. Both whole
+histogram and whole zero-inclusive bedGraph use every584846 input row and all
+93 official contigs. Each operation has one warmup/tool plus five alternating
+measured pairs; complete output equality is required within each operation.
+Primary wall is GNU time%e at0.01s resolution; controller timing is diagnostic.
+RSS is actual maximum-process RSS, not aggregate/all-thread memory. Preserve
+the shared-host/affinity scope and all output/error/resource partials. No
+automatic rerun or performance/publication acceptance is authorized by launch.
+
+Launch handle97264 exits0. Actual detached runner PID/PGID764461,
+start_ticks396317065, has the frozen eab21ddc... worker identity and expected
+build receipt. Root immediately observes the exact same live process, no
+FINISHED yet and empty runner stderr. An independent bounded read-only
+observer follows this handle and will retain small originals/output comparison
+proof, not restart it or download huge output bodies. Task-owned PLINK
+installation/build is deferred until BED timing completes, avoiding deliberate
+owned build/decompression contention. Recovery state and results remain here;
+the full30-family objective is not paused or complete.
