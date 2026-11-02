@@ -4,7 +4,8 @@ Owner `c6e35f8650e812d7dbaaab1e8e2a9c1894e0c1b6` is committed, clean and
 pushed to main. Exact-head native run41519713617 attempt1 succeeds on all four
 actual hosts; complete original source/package/binary evidence is root-adopted.
 Immutable GitHubv0.3.0 remains bc40084; registry0.1.0 and authentication hold
-are unchanged. No release or performance acceptance is claimed.
+are unchanged. The matched full-input performance gate is now accepted below;
+no new release is claimed.
 
 Plan: `docs/plans/2026-11-03-bed-genomecov.md`.
 Spec/evidence: `bed-track-contract-2026-11-03.md`.
@@ -231,3 +232,34 @@ proof, not restart it or download huge output bodies. Task-owned PLINK
 installation/build is deferred until BED timing completes, avoiding deliberate
 owned build/decompression contention. Recovery state and results remain here;
 the full30-family objective is not paused or complete.
+
+## Actual full-input performance adopted
+
+Root directly observes the same runner absent,24 samples, FINISHED present,
+no failure records and empty runner stderr. All24 actual target exits are0;
+no separate detached-runner OS wait status is invented. The observer retains
+small originals and independently rereads/hashes/byte-compares every complete
+remote output without transferring large output bodies.
+
+Root reads the complete data-only verifier and independently replays it in
+memory before its receipt write: exit0. Frozen plan, source/native/input pins,
+all command/sample/resource originals, GNU primary timing and KiB conversion,
+whole output comparisons and recomputed five-pair summaries agree.
+
+| Full workflow | Native median s | BEDTools2.31.1 median s | Native/source max-process RSS B |
+|---|---:|---:|---:|
+| histogram |0.21|113.77|5505024 /1998323712|
+| bedgraph-all |0.36|20.80|5505024 /1998323712|
+
+One warmup per tool/operation is excluded; five alternating measured pairs
+remain intact. Histogram native range0.20–0.23s, source110.89–115.43s;
+bedgraph-all native0.36–0.38s, source20.71–21.19s. All measured RSS values
+equal the values above. Output29805B/b9d181d4... and13290104B/a8d60cd6...
+respectively match completely, including unrepresented zero-coverage contigs.
+
+Root accepts strict throughput and memory advantages for these two complete
+workflows only. Shared host, affinity0–3 and GNU0.01s wall resolution remain
+explicit; no exclusive/cold-cache/I/O/thread-scaling/general BED claims follow.
+Old map regression and immutable public0.3.0 remain unchanged. Canonical receipt:
+`../oracles/bed-genomecov-performance-2026-11-03.json`.
+New versioned packaging/release and registry authentication remain separate.

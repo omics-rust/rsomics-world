@@ -1,0 +1,68 @@
+{
+  "schema": "rsomics.bed.genomecov.performance.v1",
+  "head": "c6e35f8650e812d7dbaaab1e8e2a9c1894e0c1b6",
+  "root_adopted": true,
+  "performance_accepted": true,
+  "publication_accepted": false,
+  "scope": "complete histogram and zero-inclusive bedGraph on full hg19 RefSeq exon input",
+  "machine": "4090 SSH host, Xeon Gold 6238R, Ubuntu 22.04.5, kernel 6.8.0-130-generic x86_64, shared nonexclusive host, CPU affinity 0-3",
+  "packet": "/Volumes/KIOXIA/Developments/tmp/bed-genomecov-linux-observe-20261103.yuUFmw",
+  "remote_root": "/home/liangjy/rsomics-bed-genomecov-20261103",
+  "evidence": {
+    "VERIFIED.json": "ef3586b89ab06a890bcfae5da2f1376457b687f5e01dc3afc2de028f30d0a415",
+    "collection.stdout": "da52abcabec31e7ef8dd37a944a0915485f03235957cb2c48b4f2c340eb4f674",
+    "verify-small.py": "79370ce612e9fa2b6a8d34a663ef537044288075bf7b77119fbd7599de2b1cf8",
+    "HOST.json": "53b4561e018c91dc6d500cd91b4e3ab37a3f73f7247795d14da3e35ab751f6b8",
+    "root_replay": "full reviewed verifier independently executed in memory before its receipt write; exit 0"
+  },
+  "input": {
+    "rows": 584846,
+    "bytes": 28597646,
+    "sha256": "9fe2006b8aa58653b0f18141451473af71dc5c9ed3274ea90e0b3b627fd684bb",
+    "genome_contigs": 93,
+    "genome_bases": 3137161264,
+    "genome_sha256": "b404927655a4aada254ea94ad4da0c8901ed0737e67a0dcabedf673354b1f505",
+    "subset_or_clipping": false
+  },
+  "native_sha256": "00b1f5805a441fa368209b265bbfc0c94914558d5a80e0bb1e41128ea5de6609",
+  "source": {
+    "version": "BEDTools 2.31.1",
+    "revision": "705ccfdf2c9a77d71560c8adcece0663c2f5e18e",
+    "binary_sha256": "e7d4b84005efc6accef3b7867cfe47df2201bd33a68660928b270a1ed31e682a"
+  },
+  "protocol": {
+    "commands": 24,
+    "warmups_per_tool_per_operation": 1,
+    "measured_alternating_pairs_per_operation": 5,
+    "all_target_exits_zero": true,
+    "independent_complete_byte_comparisons": 24,
+    "extra_tool_stderr": false,
+    "primary_wall": "GNU time %e, 0.01-second resolution; controller monotonic excluded",
+    "memory": "GNU maximum-process RSS, KiB multiplied by 1024; not aggregate tree RSS"
+  },
+  "histogram": {
+    "native_seconds": [0.21, 0.20, 0.23, 0.20, 0.21],
+    "source_seconds": [115.43, 113.77, 114.81, 112.00, 110.89],
+    "native_median_seconds": 0.21,
+    "source_median_seconds": 113.77,
+    "output_bytes": 29805,
+    "output_sha256": "b9d181d4b97b4bad8c14aceb4bc308b0c23a01df788a94f2a235fd7665c14bbe"
+  },
+  "bedgraph_all": {
+    "native_seconds": [0.37, 0.36, 0.36, 0.38, 0.36],
+    "source_seconds": [21.19, 21.03, 20.71, 20.71, 20.80],
+    "native_median_seconds": 0.36,
+    "source_median_seconds": 20.80,
+    "output_bytes": 13290104,
+    "output_sha256": "a8d60cd6d4fd91c4f675a5958384520b37fb57a8b9228e99ce05a3dc15c08478"
+  },
+  "all_measured_runs_rss_bytes": {
+    "native": 5505024,
+    "source": 1998323712
+  },
+  "limitations": [
+    "Shared host; no exclusive CPU, cold-cache, physical-I/O or thread-scaling claim.",
+    "No universal BED operation speedup; old map wall regression remains unchanged.",
+    "Immutable v0.3.0 assets are not replaced; versioned release and registry gates remain separate."
+  ]
+}

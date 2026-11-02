@@ -65,8 +65,9 @@ Progress: steps1–4 complete with126 debug/release tests, strict Clippy/fmt,
 18 source workflow comparisons and15-call local binary lifecycle. One review's
 split adapter issue is RED/GREEN fixed; no re-review requested. Candidate
 c6e35f8 is pushed; native run41519713617/full originals are adopted and
-representative performance remains open. Step5 integrates the qualified
-private candidate before measurement to
-bind committed/four-native source; it does not promote a release. Detailed
+representative performance is accepted after24 complete matched executions:
+histogram median0.21/113.77s and bedgraph-all0.36/20.80s native/source,
+with byte-identical outputs and max-process RSS5505024/1998323712B.
+Step5 binds committed/four-native source; it does not promote a release. Detailed
 rulings and retained identities are in
 `.autopilot/state/bed-genomecov-execution-2026-11-03.md`.
