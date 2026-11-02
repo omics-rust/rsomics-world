@@ -7,8 +7,9 @@ remain unearned. The previous complete negative whole
 run remains authoritative; no numerical or durability policy is relaxed.
 Two separately retained diagnostic launches stop at the first warmup's
 evidence guardian despite native exit0; no accepted paired timing exists.
-Further scientific launches are held pending an accounting/lifecycle decision,
-while independent product work continues.
+An explicitly scoped observational-accounting revision is subsequently
+reviewed/admitted below; its current measurements remain unaccepted until
+actual terminal originals close. Independent product work continues.
 
 Plan: `docs/plans/2026-11-02-plink-locality-batches.md`.
 Packet: `/Volumes/KIOXIA/Developments/tmp/plink-locality-batches-20261102.aFybZb`.
@@ -261,3 +262,35 @@ not remote staging, a third scientific launch or publication. Fresh scoped
 labels must appear in admission/resource records; root must review the frozen
 revision and cumulative old/new reservations before any execution. No new
 privilege, filesystem mount/quota, deletion or total allowance is authorized.
+
+## Observational revision reviewed and launched once
+
+Root reviews the complete13795-byte final runner/admission helper and narrow
+diffs, independently verifies all frozen stage/helper/native identities, and
+checks exact32-command PLAN equivalence after namespace plus the explicit
+scope label. Original budget provision is unchanged; added metadata reserves
+old12+old12+new12GiB inside208GiB. Kernel-quota/transient-unlinked claims are
+explicitly absent. FROZEN.json SHA256
+`568f38a4abff2c83b1df4ffc1edf06480c9fdfa4a3c9a1d2f5eaea9cacc09d97`;
+runner SHA256
+`d52db52f1fffccaed8a77b3f9b36930c9d09bb72e7ea14dbd779d1ab4a05022a`.
+Packet is DqUmZX/observational-accounting-v3-final; previous revisions remain.
+
+One real filesystem rename regression catches disappeared child names between
+enumeration and stat: initial revision RED, final GREEN. Missing ROOT,
+permissions and other named errors still propagate. The first RED helper's
+TemporaryDirectory removes only its own newly-created8KiB fixture on failure;
+this unintended deviation is disclosed. No prior/private/source/product data
+was removed. The GREEN fixture is retained; there is no further cleanup.
+
+Root explicitly authorizes ONE fresh guarded admit/launch after this review,
+superseding preparation-only scope, without an automatic retry. Actual helper
+session41598 exits0. Admission14267 bytes SHA256
+`426ff87a6e81bfd64aa45aba1aef350381f839600f09fc254c084ee972af9fd0`;
+new native inode191576966/mode0700. Durable detached launch at15:10:29Z:
+PID/PGID258084,start_ticks394069200. New root is
+`/home/liangjy/rsomics-plink-green9-recovery-20261102/diagnostic-green10-observational-v3`.
+The exact identity is monitored; no terminal or paired result is adopted here.
+Source/native originals, output-body checks and all prior failures remain.
+Do not reuse inputs as identity-copy outputs: their pgen/pvar sizes differ
+from required I products. No full macro, public or registry gate is earned.
