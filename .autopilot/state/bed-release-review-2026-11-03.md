@@ -62,6 +62,23 @@ failure custody and available successful originals. Do not rerun before full
 terminal custody is sealed; then root may authorize one bounded full rerun of
 the same immutable candidate. No automatic retry or third attempt is authorized.
 
+Attempt1 is now terminalFAILURE: both Linux and MacIntel succeed; MacARM never
+runs. Packet `/Volumes/KIOXIA/Developments/tmp/bed-03-native-bc40084-20261103.Mj9Sss`
+retains terminal APIs, original annotations/missing-log response and three
+successful original artifacts/logs. Root independently replays557 pinned
+bodies and all three ZIP CRCs, then reads the terminal immutable head/attempt.
+PINS.sha256 SHA2568a1540edad04c45321a933767afca7c7fa8df3f96d06f50021e4fad539340090.
+No four-native-success verifier/receipt is created for this attempt.
+
+Root authorizes exactly one full rerun of41501347467 at unchangedbc40084 after
+this custody closure, to obtain a coherent four-host attempt2. This is not
+an unchanged performance rerun or a test waiver. Actual request/attempt state
+must still be observed; no third automatic capacity retry is authorized.
+
+Root request exits0 and fresh run API confirms attempt2 queued at unchanged
+bc40084. Attempt1 packet remains immutable. A fresh separate attempt2 original
+packet is required; never mix old successful targets into an attempt2 receipt.
+
 ## Fresh public and credential-state checks
 
 GitHub latest release API confirmsv0.2.0 at
