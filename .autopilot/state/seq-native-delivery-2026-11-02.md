@@ -3,8 +3,8 @@
 Owning main: `8eaf9c8a685c08bdf1698745b65a3a01c609ec70`.
 Actual exact-head CI `41435718744` is SUCCESS on Linux and macOS,
 each x86_64 and aarch64. Original artifact acquisition and independent
-acceptance pass. GitHub v0.3.0 is published; fresh public installation is
-in progress. No registry publication.
+acceptance pass. GitHub v0.3.0 is published and fresh public binary/source
+installation passes. No registry publication.
 
 Plan: `docs/plans/2026-11-02-seq-native-delivery.md`.
 The reviewed delivery delta changes owning version/lock metadata, CI,
@@ -64,6 +64,29 @@ match the adopted local files. SHA256SUMS is 508 bytes, SHA256
 `9e12791d56faeb419c29642aa6576096c6ff3899fd90181db3dccf1096ed4315`.
 Assets are unsigned; none is described as remeasured or registry-published.
 
-Next: fresh public binary/source installation. Registry credentials remain on hold;
+## Fresh public installation accepted
+
+Packet: `/Volumes/KIOXIA/Developments/tmp/seq-public-install-20261102.r7RHbf`.
+Unauthenticated public Mac ARM bundle, source crate and sums downloads match
+adopted bytes/hashes and live GitHub asset digests. Fresh binary installation
+and isolated-target offline source installation each pass the existing
+22-call seven-command lifecycle. Root independently verifies all downloaded
+and installed body hashes and both lifecycle records, including connected
+quality preservation, JSON, BGZF and late-error/alias preservation.
+
+Downloaded binary: 1673872 bytes, SHA256
+`373380e66d20e5da51bee600e612f0bab2d964e2f62b060dc7173dd2672d1faf`.
+Fresh source-built binary: 1673968 bytes, SHA256
+`2ee1f04f7cfde121af24298d2e6e67e3cb3672acf07ea09de98be218602bc89a`.
+Both are functional acceptance, not byte-reproducible builds or new timings.
+All caches, install roots, source target and scratch remain external.
+
+Post-release README commit `b3d045affba732f2075cac4fc164bf08e204d220`
+points users to actual GitHub assets. Its CI `41438098373` is pending;
+immutable release/tag/assets remain at accepted `8eaf9c8`, never retagged or
+rebuilt from this documentation-only head. Tag-triggered CI `41437808068`
+is additional CI, not registry publication; Publish is dispatch-only.
+
+Registry credentials remain on hold;
 do not retry the unchanged organization secret. No unrelated files or old
 releases are removed.
