@@ -95,3 +95,44 @@ and zero-inclusive bedGraph output, real genome sizes, source/native identities,
 RAM/output/time/external-space budget and matched measured pairs must be fixed
 before execution. Mac physical RAM is8GiB, so dense-source capacity matters.
 No unchanged PLINK experiment, benchmark or registry credential retry follows.
+
+## Performance route evidence
+
+Mac preparation packet:
+`/Volumes/KIOXIA/Developments/tmp/bed-genomecov-performance-prep-20261103.RsaDEXyL`.
+It retains the official UCSC1971-byte hg19 chromosome-size file and a905-byte
+47-contig derivative (all input contigs, all their original complete lengths).
+All584846 input rows remain byte-identical; total declared span is3133690948bp,
+largest chromosome249250621bp. Source's largest8-byte/base dense array is
+1994004968 bytes before other runtime memory. Two complete workflows with one
+warmup/tool and five alternating measured pairs each would mean24 executions;
+no timing or scientific execution is authorized or performed by preparation.
+
+Root independently queries Mac physical RAM8589934592 bytes and
+memory_pressure -Q: current free estimate24percent, below the proposed4GiB
+estimated-available gate. Do not relax the dataset or close unrelated user
+applications to force this campaign through.
+
+Root read-only SSH survey of4090 confirms UID1006, st_dev2096 and
+`/dev/sdd[/home/liangjy] ext4 /home/liangjy`,112 allowed CPUs, load1 around72
+and MemAvailable924950452kB. No `rsomics-bed*` root exists at this observation.
+Existing `/usr/bin/bedtools --version` is2.30.0: it is not an acceptable2.31.1
+scientific oracle. No remote directory, source upload, build or workload is
+created by these checks. Existing swap occupancy is not a claim about a new
+task's behavior or a reason to clean unrelated data.
+
+Root chooses a separate Linux preparation route for the same complete input
+and two workflows. Prospective root:
+`/home/liangjy/rsomics-bed-genomecov-20261103`, proposed8GiB logical envelope.
+Preserve all existing594GiB envelopes and independent8GiB headroom; any later
+admission must account for the new8GiB separately (610GiB including headroom),
+fresh physical free space and actual allocations. Do not modify old authority
+records or describe the reservation as a kernel quota.
+
+Linux execution remains unadmitted: first adopt actual four-native originals,
+bind the inert Linux candidate, freshly check mandatory ELF/provider/CPU ABI,
+prepare checksum-pinned2.31.1 source/oracle build entirely under the new root,
+review invoked helper/output/cache paths and fresh capacity, then authorize
+once-only stage/build and the24-command campaign. A2.30 oracle, smaller subset,
+unverified binary execution or hidden project/system cache write is not a
+fallback. Mac proposal remains preserved and unexecuted.
