@@ -89,3 +89,21 @@ failure, partial-download and successful-target originals remain preserved.
 No third automatic capacity retry is authorized here; other unblocked product
 work continues if runner capacity fails again. No scientific benchmark starts
 before actual combined native/source adoption.
+
+## Attempt2 adopted
+
+41484808138/2 is terminalSUCCESS, all five jobs successful. MacARM actually
+executes its native job this time; no missing-platform substitution or third
+retry. Complete attempt2 originals are retained separately at
+`/Volumes/KIOXIA/Developments/tmp/plink-green12-attempt2-originals-20261103.5cwl1ndy`.
+Root reads the full report/verifier adaptations, checks controller Git bodies
+and independently replays all5 ZIP/TAR pairs plus10770 extracted original bodies.
+Receipt: `.autopilot/oracles/plink-native-2026-11-03-green-12.json`.
+
+All4 native debug/release profiles pass13 library/3 integration tests,306 Git
+source bodies/modes,36 generations/74878 raw cells/246 reports/66 worker records.
+Same-attempt source consumers pass224 report/36 raw commands with unchanged
+protected/runtime/controller identities. This closes the concrete UTF-8 repair
+qualification hold and qualifies the combined complete-job source. It does not
+accept representative throughput/RSS, universal memory-budget enforcement or
+publication. The original attempt1 infrastructure failure remains preserved.

@@ -59,3 +59,9 @@ items: native-four/source qualification, representative throughput/RSS and
 remains a separate publication hold. Reviewer deliberately did not rerun tools;
 root's actual debug run and retained final tool logs supply execution evidence.
 No claim is made that cache locality or all four-worker regressions are fixed.
+
+Combined1906a48 subsequently passes actual native-four/source41484808138/2;
+root adopts complete originals in plink-native-2026-11-03-green-12.json.
+This qualifies the complete-job protocol with the separate VCF repair, not a
+representative performance improvement. One matched retained-cohort diagnostic
+is being prepared before any further source optimization or whole-macro rerun.
