@@ -165,3 +165,10 @@ plink-real-performance.yml once with native_receipt set to
 reuse_qualified_bodies=true, as in the previous full campaign. Check live runs
 first to exclude a duplicate. Retain encrypted originals even on failure;
 native correctness alone does not qualify performance or publication.
+
+Actual whole-workflow dispatch41421169780/1 is created2026-11-02T09:30:09Z
+at6dfad2731d364f02221d05895bdc2adf32d8488b, after exact-head Control41420859031
+SUCCESS and a fresh live-main/prior-workflow check. The dispatch is invoked
+once with the explicit green9 receipt and qualified-content reuse enabled.
+Fresh API observes in_progress; no scientific or performance result is yet
+accepted. Recover encrypted originals from this exact run, not a rerun.
