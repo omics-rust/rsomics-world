@@ -1,11 +1,13 @@
 # Variant format, calling, and copy-number product dossiers
 
 Status: boundary, upstream-operation, and historical-source audit complete.
-`rsomics-vcf` 0.5.0 is the latest published release. The complete typed
-`setgt` slice is release-ready at revision
-`682942cfa69768dc3a127a8544f2f07213b704ea`; exact-head four-native-platform
-CI passes, while 0.6.0 publication remains gated only by a revoked crates.io
-credential.
+`rsomics-vcf` 0.5.0 is the latest recorded registry release. The complete typed
+`setgt` slice passed its historical exact-head four-native gate at revision
+`682942cfa69768dc3a127a8544f2f07213b704ea`, but this frozen head has a subsequently
+demonstrated default-index byte-path defect and must not be published unchanged.
+Credential repair alone is insufficient. The inherited dirty concat candidate
+contains source-snapshot-qualified index/reheader repairs and a confirmed naive
+BGZF defect; its bounded repair and remaining product gates are recorded below.
 `rsomics-call` 0.1.3 is published with its complete three-command first
 release. `rsomics-cnv` 0.1.0 is published with its complete two-command first
 release.
@@ -758,6 +760,16 @@ repair and test-first coverage of a newly exposed non-UTF-8 path defect. These
 are component-level diagnostic results, not a completed concat release or a
 substitute for the remaining resource and compatibility gates.
 
+The [completed run receipts](../../.autopilot/state/vcf-final-run-receipts-2026-09-26.md)
+separate indexed green `34299936099` from naive red `34300381682`. The latter
+rejects all 32 legal extended-BGZF cases on every native platform while its four
+canonical controls pass. The
+[November repair plan](../plans/2026-11-02-vcf-naive-validated-stream.md) reuses
+the existing private validated decoder for one complete typed preflight and a
+raw-copy pass. This does not change ordinary format detection or create a public
+BGZF API. Full concat oracle, representative performance, BCF-reheader resource,
+owning exact-head CI and delivery gates remain open.
+
 The old 0.1.2 micro-crate supplies only fixture and behavior seeds. Its
 text-only string header merge, double-open readers, unchecked coordinates,
 direct file truncation, tiny launch benchmark, standalone help surface, and
@@ -775,8 +787,9 @@ Named output is atomic, one standard-input stream works in ordinary mode, and
 automatic indexing remains absent until output and index share one grouped
 transaction.
 
-This slice creates one concrete Layer A extraction after 0.6.0 publication.
-Format-neutral BGZF frame parsing, validation, raw access, and EOF handling
+This slice identifies a concrete Layer A extraction candidate, not an automatic
+publication prerequisite. After the product repair and separate consumer gate,
+format-neutral BGZF frame parsing, validation, raw access, and EOF handling may
 move to `rsomics-seqio::bgzf`, with consumer tests in the BAM cat/reheader and
 VCF reheader/concat call sites. BAM headers, VCF headers, BCF
 dictionaries, and command policy remain product-private. The extraction must
