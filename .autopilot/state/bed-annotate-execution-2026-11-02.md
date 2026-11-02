@@ -3,8 +3,9 @@
 Reviewed source integrated/pushed as
 `cdf736337d8bd63b2770723a8a667f7af83409b9`.
 Actual native CI `41453635215/1` succeeds on all four target classes;
-complete original retention has passed root closed-data adoption. No
-representative annotate performance, release or registry acceptance yet.
+complete original retention has passed root closed-data adoption.
+Representative annotate performance is accepted below; no release or registry
+acceptance yet.
 
 Plan: `docs/plans/2026-11-02-bed-annotate.md`.
 Packet: `/Volumes/KIOXIA/Developments/tmp/bed-annotate-20261102.6mCCkU`.
@@ -54,3 +55,29 @@ clean exact-head offline release build and actual executable pins. The worker
 must record those pins before execution and preserve all outputs/partials.
 Authorization is not an observation: no performance acceptance is recorded
 here. No tiny-input fallback, automatic retry or per-format matrix.
+
+## Actual representative performance accepted
+
+The authorized campaign session13114/PID78324 exits0 without retry. All12
+actual full outputs match the source exactly;47503812 output bytes retained.
+Root independently replays all12 execution/output/resource records, hashes
+all retained complete outputs and pinned inputs/runner/measured executables,
+and recomputes both five-sample distributions. Raw time-l-p and wrapper
+monotonic wall agree with recorded populations. The root replay exits0.
+
+Native wall median0.391555291s, range0.337509584–0.635766000s; source
+median37.402949750s, range35.569709041–40.183851167s. Native/source peak
+process RSS medians56885248/175046656 bytes; both wall and RSS populations
+are strictly separated. Median wall ratio95.524x and RSS reduction67.503%
+apply only to this full dual-file RefSeq-derived annotation workflow on
+Apple M2/arm64, Darwin27.2.0,8GiB. No physical-I/O, cold-cache, aggregate-tree
+memory, thread-scaling or general biological claim follows.
+
+Actual measured native1665072 bytes SHA256
+`9166adf1b9e7150d7ecc04bcc95cb5db415000fa64ac82688dc6343de0c79bd9`
+is copied/preserved, not rebound to a later build or CI binary. Source remains
+the pinned Homebrew2.31.1 executable. COMPLETE.json SHA256
+`b113cb00d4576ab8aae6785dbbecdb9599bbfd08e91bae48f7bff199011f8f92`.
+Root receipt: `.autopilot/oracles/bed-annotate-performance-2026-11-02.json`.
+Earlier authorization-only paragraphs describe preparation, not current status.
+Coverage split/fraction choice, release scope and registry hold remain separate.
