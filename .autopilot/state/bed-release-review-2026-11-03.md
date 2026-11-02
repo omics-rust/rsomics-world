@@ -1,9 +1,10 @@
 # BED eleven-operation release preparation
 
-Documentation head1de1e422b586663131f0c2e3ccb89d202194f62c changes only README and
-PERFORMANCE from the root-adopted runtimebcf65d7. Exact-head CI41499074943
-has both Linux targets passed and both macOS targets still running at the
-latest observation; do not restart it or claim this newer head fully qualified.
+Current ownerbc40084ccc2d3837384da1377d4d57f0600fcb75 prepares version0.3.0;
+its exact-head native CI41501347467 is queued at the latest observation.
+Documentation head1de1e422b586663131f0c2e3ccb89d202194f62c changes only README
+and PERFORMANCE from the root-adopted runtimebcf65d7; its exact-head
+CI41499074943 now passes all four native targets, without restart.
 
 The source candidate has11 operations. Runtimebcf65d7 native-four/source/
 installed evidence and full map performance are adopted separately. Map
@@ -39,10 +40,11 @@ b45d0a422e7a0c357e6957816ad0c03f21031ea5851769d3ae752a0eb98d9806.
 Guarded offline full debug suite, strict all-target/all-feature Clippy and fmt
 all exit0 after physical external disk/path/target/free-space validation.
 
-Owner is clean after this local commit. It is not yet pushed: wait for the
-already-running documentation-head CI41499074943 rather than cancel/restart
-it. The new version then needs its own exact-head native/package/install gate;
-no publication acceptance is implied by local metadata preparation.
+Owner is clean after this commit, now pushed after documentation-head
+CI41499074943 passed all four targets. The new version has its own exact-head
+CI41501347467; original native/package/install gate remains open. A bounded
+data-only observer will retain this run's originals only after actual success.
+No publication acceptance is implied by metadata preparation or a queued run.
 
 ## Fresh public and credential-state checks
 
