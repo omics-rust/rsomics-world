@@ -60,3 +60,14 @@ Next: commit/push the closed snapshot/controller delta, wait exact-head Control,
 then dispatch the existing native-four/same-generation source gate once with
 snapshot green-10. No performance campaign or registry attempt is authorized
 by that dispatch. Representative diagnostic placeholders remain unbound.
+
+## Actual native qualification dispatched once
+
+Live World main is freshly verified as
+`10d725c07bca0abdb4e24c8edcafeed51083d8a8`; its exact-head Control
+`41442677307` is SUCCESS. Prior workflow listing shows only older green-9/
+green-8 runs. Root then dispatches `plink-candidate.yml` once with snapshot
+green-10. Actual run handle: `41443045747`, attempt1. This is an execution
+handle to poll, not qualification/performance success. Do not redispatch on
+observation timeout. All original native/source artifacts and failures must
+be retained and independently adopted before the next diagnostic gate.
