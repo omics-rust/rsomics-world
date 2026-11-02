@@ -1,6 +1,16 @@
 # BED product dossier
 
-Status: immutable [GitHub v0.2.0](https://github.com/omics-rust/rsomics-bed/releases/tag/v0.2.0)
+Status: [GitHub v0.3.0](https://github.com/omics-rust/rsomics-bed/releases/tag/v0.3.0)
+ships eleven operations atbc40084. Native-four attempt2 originals, clean source
+package and fresh anonymous public MacARM14-call installation are root-adopted.
+Registry remains0.1.0 with authentication held. Source/binary performance
+bindings and map's slower throughput remain explicit; this is not a new timing
+claim. See `.autopilot/oracles/bed-native-delivery-2026-11-03.json` and
+`.autopilot/oracles/bed-public-delivery-2026-11-03.json`.
+
+## Historical and measured-source evidence
+
+Immutable [GitHub v0.2.0](https://github.com/omics-rust/rsomics-bed/releases/tag/v0.2.0)
 ships eight operations at `bcbee5f87aeda2e7664c279b32c5a3098635ca9b`.
 Registry 0.1.0 retains `sort`, `merge`, `intersect`, `subtract`, and `complement`;
 registry authentication remains separately held. The earlier 0.2.0 candidate at
@@ -133,9 +143,9 @@ may be migration aliases, but the typed long-form contract owns the help.
 | `cluster` | BEDTools `cluster` | GitHub 0.2; sorted streaming, distance, and strand policy |
 | `window` | BEDTools `window` | GitHub 0.2; symmetric/asymmetric, strand-relative, and report modes |
 | `closest` | BEDTools `closest`; BEDOPS `closest-features` | GitHub 0.2; complete declared single-B contract before multi-B extensions |
-| `coverage` | BEDTools `coverage` | unreleased native/performance-qualified candidate; summary/count/mean/histogram/depth, pooled B and ordinary blocks; split plus fractions held |
-| `annotate` | BEDTools `annotate` | unreleased native/performance-qualified candidate; independent multi-file count/fraction/both output |
-| `map` | BEDTools `map`; BEDOPS `bedmap` | sorted sweep/CLI and23 private reducers integrated atbcf65d7; native-four and lower-RSS workflow accepted, throughput slower; release gate open |
+| `coverage` | BEDTools `coverage` | GitHub0.3; summary/count/mean/histogram/depth, pooled B and ordinary blocks; split plus fractions held |
+| `annotate` | BEDTools `annotate` | GitHub0.3; independent multi-file count/fraction/both output |
+| `map` | BEDTools `map`; BEDOPS `bedmap` | GitHub0.3; sorted sweep/CLI and23 private reducers; lower-RSS workflow accepted, throughput slower; registry held |
 | `jaccard` | BEDTools `jaccard` | later metrics slice; base-pair set similarity and overlap filters |
 | `fisher` | BEDTools `fisher` | later metrics slice; requires a genome-size universe |
 | `reldist` | BEDTools `reldist` | later metrics slice; fixed historical midpoint-straddle behavior is retained |

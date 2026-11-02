@@ -1,4 +1,9 @@
-# BED eleven-operation release preparation
+# BED eleven-operation release
+
+Current delivery: GitHubv0.3.0 is published atbc40084; fresh public MacARM
+binary installation passes14 calls/11 operations. Exact-version native-four
+attempt2 originals are root-adopted. Registry remains0.1.0/auth held.
+Preparation/failure observations below are historical, not current status.
 
 Current ownerbc40084ccc2d3837384da1377d4d57f0600fcb75 prepares version0.3.0;
 its exact-head native CI41501347467 has two Linux successes, MacIntel still
@@ -96,3 +101,27 @@ version change or a new authenticated-publish attempt. The public sparse index
 https://index.crates.io/rs/om/rsomics-bed succeeds and contains only0.1.0,
 yanked=false. Registry and GitHub are intentionally different delivery slices,
 not contradictory evidence. No download, cache or scratch was placed on boot.
+
+## Actual attempt2 and public delivery accepted
+
+Attempt2 succeeds on all four actual native targets. Root independently
+replays the full reviewed data-only verifier and retained body identities:
+ZIP/source-package/Git-mode/native-bundle/dependency/lifecycle closure, exit0.
+Each target has118 tests per debug/release/packaged profile and14 installed
+calls/11 operations. Four source crates are126922B, SHA256
+3c991b8882c3bace6a00bbcee15b91f008acbe21b5d40bac88cfbcecc0170814,
+with252 regular members/250 exact Git originals. Attempt1 remains failed.
+Receipt: `.autopilot/oracles/bed-native-delivery-2026-11-03.json`.
+
+Fresh release/tag404 checks precede creation. Root uploads six verified
+original assets to a draft, checks every API digest/size and notes/head, then
+publishes431868702/v0.3.0 at2026-11-02T19:18:09Z. Live tag resolves exactly
+tobc40084; public assets equal draft originals. Old releases are unchanged.
+
+Anonymous public API, MacARM TAR, source crate and sums downloads all return200
+and match original/public API digests. Fresh public binary runs the existing
+14-call lifecycle:13 successes/one expected failure,11 operations, actual0.3.0
+version/JSON. Root independently verifies173 pinned files and all lifecycle
+output identities, exit0. No source recompile, upstream oracle or benchmark.
+Source download correspondence is not a fresh source install. Receipt:
+`.autopilot/oracles/bed-public-delivery-2026-11-03.json`.
