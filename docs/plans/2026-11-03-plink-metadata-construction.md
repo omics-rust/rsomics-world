@@ -30,11 +30,11 @@ and a few integrated checks, not a scalar-helper matrix.
 
 **Interfaces:** Retain `samples(&[String], Vec<Fields>) -> Result<Vec<Sample>>` for BED/VCF. Add private `RowsBuilder::into_rows(self) -> impl ExactSizeIterator<Item=Fields>`; retain `finish(self) -> Vec<Fields>` as its collector. Check row-range widths before consuming the builder. Column schemas remain private and preserve first-match semantics.
 
-- [ ] Observe the existing10000-variant metadata-budget consumer before production edits. Pin an absolute ceiling requiring at least400000 fewer accounted owned bytes on that same fixture, justified by saving at least40 bytes per biallelic row. Record the numeric ceiling before implementation, tighten that consumer and observe RED. This is an owned-memory contract, not RSS/timing; no source-text/private-capacity assertion.
-- [ ] Implement column ordinals bound once, owning row iteration and REF+ALT Vec initial capacity2. Reuse construction across PGEN and existing Vec callers without other-module changes or weakened validation. Preserve bounded typed-vector capacity.
-- [ ] Retain existing UTF-8/unknown-column/PR roundtrip and low-memory/transaction tests. Add only an integrated reordered/duplicate-column and iterator-lifetime case if existing coverage is missing, with literal outputs. Any discovered defect gets a focused RED/GREEN.
-- [ ] Run guarded fmt, strict all-target/all-feature Clippy and complete debug/release suites: zero failures/ignored, previous consumers retained. No new scientific campaign or unchanged32-command rerun.
-- [ ] Freeze two-file delta/logs in external scratch; report tests, accounted memory before/after and remaining performance gap. No staging/commit/push; root reviews before integration.
+- [x] Observe the existing10000-variant metadata-budget consumer before production edits. Pin an absolute ceiling requiring at least400000 fewer accounted owned bytes on that same fixture, justified by saving at least40 bytes per biallelic row. Record the numeric ceiling before implementation, tighten that consumer and observe RED. This is an owned-memory contract, not RSS/timing; no source-text/private-capacity assertion.
+- [x] Implement column ordinals bound once, owning row iteration and REF+ALT Vec initial capacity2. Reuse construction across PGEN and existing Vec callers without other-module changes or weakened validation. Preserve bounded typed-vector capacity.
+- [x] Retain existing UTF-8/unknown-column/PR roundtrip and low-memory/transaction tests. Add only an integrated reordered/duplicate-column and iterator-lifetime case if existing coverage is missing, with literal outputs. Any discovered defect gets a focused RED/GREEN.
+- [x] Run guarded fmt, strict all-target/all-feature Clippy and complete debug/release suites: zero failures/ignored, previous consumers retained. No new scientific campaign or unchanged32-command rerun.
+- [x] Freeze two-file delta/logs in external scratch; report tests, accounted memory before/after and remaining performance gap. Agent does not stage/commit/push; root reviews before integration.
 
 ## Preflight and rulings
 
@@ -51,3 +51,8 @@ After correctness/review, separately admit a bounded matched changed-source
 comparison on the same complete I-w1 inputs/output pins and unchanged coarse
 timers. Preserve green13 negative evidence. A memory-unit-test win, single noisy
 timing or cross-campaign ratio is not whole-product acceptance.
+
+Implementation/private integration complete at7cee8e4 after one clean final
+review; baseline4106987, fixed ceiling3706987, final2911523 accounted bytes.
+See `.autopilot/state/plink-metadata-construction-2026-11-03.md` for evidence
+and the still-open native/source/performance gates.
