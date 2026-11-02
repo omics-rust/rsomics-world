@@ -1,5 +1,14 @@
 # Whole-first-six native signal implementation
 
+## User policy reconfirmed 2026-11-03
+
+The user's delayed question reply reconfirms the already-adopted default:
+repair confirmed signed-arithmetic data loss, omitted explicit zero tails and
+all-zero chromosomes, and the filtered-output BED TypeError. Preserve their
+named known incompatibilities in the adopted plan and dossier. This does not
+change ordinary approximate statistics, normalization or chromosome aliases,
+and is not new implementation, performance or release acceptance.
+
 ## Actual signed-download401 diagnosed; API authorization no longer redirects
 
 Full-path retry41223600857 at47c58798 passes host setup, committed receipt,
