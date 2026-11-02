@@ -17,6 +17,7 @@ No deletion or migration of project/shared application/user data occurred.
 
 | Workstream | Verified current position | Next affected gate |
 |---|---|---|
+| seq | reviewed3ba1818e adds record-preserving subseq/revcomp; actual native4CI41424424381 and complete6282141-read representative resource gates accepted,36 full outputs equal | standalone wall losses2.57%/5.72% and all overlapping ranges retained; prepare0.3 source/binary/install delivery, registry0.2 unchanged; later dossier operations remain |
 | DESeq | accepted green7/schema5/performance; actual owning5563528d deliveryCI41293914322 and complete originals accepted; GitHubv0.1.0/fresh public Mac1200x12 lifecycle pass | registry authorization held/publish=false; no unchanged source/native/performance replay |
 | limma | count/ordinary science and performance accepted; actual owning90d44575 deliveryCI41310896586/full originals/GitHubv0.1.0/fresh public13-call two-route install pass | registry held/publish=false; serial throughput/scaling losses retained; no unchanged source/count replay |
 | table | reviewed six-operation delivery owninge98f54ac/exactCI41332571386/full originals accepted; GitHubv0.1.0/public Mac11-call lifecycle/READMEac3788aa exactCI41337623958 pass | registry held; immutable release/assets unchanged, old performance bound to2bd0fd3/measured6e490331 |

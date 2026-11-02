@@ -124,8 +124,13 @@ foundation API or dependency is added. Complete FASTQ quality/header/order
 contracts and retained historical fixtures pass locally against actual
 SeqKit2.14.0. Exact native4 CI41424424381 also passes both profiles and pinned
 SeqKit2.13.0 live comparisons; raw APIs/logs/source are retained and adopted.
-This is not a new release, binary delivery or performance claim. The complete
-input representative gate and its remaining boundaries are recorded in
+One complete6282141-read representative campaign now also passes both new
+operations' strict process-RSS gates (about10.2MB versus64.4/81.1MB). Their
+wall medians are2.57%/5.72%slower, with overlapping ranges; no throughput or
+scaling win is claimed. All36 complete outputs agree across source/native,
+and the connected workflow retains full qualities/order. These measurements
+bind the3ba1818e executable, not a future version-only binary. This is not a
+new release or public binary delivery. The gate and remaining boundaries are recorded in
 `.autopilot/state/seq-strand-extraction-2026-11-02.md` and
 `docs/plans/2026-11-02-seq-strand-performance.md`.
 

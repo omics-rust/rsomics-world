@@ -2,8 +2,8 @@
 
 Current: reviewed source integrated as3ba1818e85477573995f6a391522f2ef35054c79;
 exact-head four-native CI41424424381 passes and raw logs are adopted. Clean packaging passes;
-one representative campaign is running; performance acceptance, delivery
-and publication remain unearned.
+one representative campaign is complete and standalone resource gates are
+accepted; throughput wins, delivery and publication remain unearned.
 
 Active plan: `docs/plans/2026-11-02-seq-strand-extraction.md`, committed as
 97dcb2812526dd5ad52ffb0b86d6abb725166d83 with exact Control41422350129 SUCCESS.
@@ -170,3 +170,36 @@ performance conclusion is yet accepted. Re-poll this exact handle/PID before
 any restart decision. Retain all36 full outputs and48 per-stage original
 resource/exit records, including failure; do not rerun unchanged on timeout
 or an expired observation. No root/source edits while this campaign runs.
+
+## Complete representative resource result adopted
+
+Actual session20441 exits0 with no retry; PID16182 terminates. All36 full
+outputs and48 raw stage records are retained,40703659884 output bytes.
+Every output contains6282141 valid records, and all18 native/source pairs
+pass full SHA/byte comparisons. Root reads the complete campaign/summary
+readers, freshly verifies clean Git/native/source/input/runner identities,
+replays all36 qualification records and48 raw resource records and recomputes
+counts/sizes/distributions. Root does not redundantly rehash40GB of output
+or rerun science; actual campaign performed those complete body comparisons.
+
+Root receipt: `.autopilot/oracles/seq-strand-performance-2026-11-02.json`.
+Closed metadata manifest SHA256:
+7d7faa3698062a7d118c4feb83b3836d4c2632af4fd79b54243e731533430156.
+
+| Workflow | Native/source median wall seconds | Native/source median process RSS bytes | Decision |
+|---|---|---|---|
+| subseq |10.6652/10.3984|10174464/64421888|strict standalone RSS advantage; wall2.57%slower |
+| revcomp |18.0871/17.1088|10158080/81084416|strict standalone RSS advantage; wall5.72%slower |
+| connected |9.9257/10.3183|10436608/76709888 max-process proxy only|correct workflow; overlapping wall ranges, no exact-tree-memory claim |
+
+All wall ranges overlap; pair wins are3/5,2/5,3/5, not universal throughput.
+Both standalone RSS populations are fully separated, meeting the predeclared
+strict throughput-OR-resource rule. Mac block-I/O counters0/0 do not mean
+no physical I/O. No scaling or stronger speed claim follows. Source remains
+the measured3ba1818e candidate/version0.2.0; any subsequent metadata version
+bump must not reassign these executable hashes or timing observations.
+
+Next is the coherent0.3 source/binary/native-install delivery with unchanged
+production paths, not an unchanged benchmark replay. Registry authorization
+remains separately held. This acceptance does not finish the later sequence
+dossier operations or the full30-family goal.

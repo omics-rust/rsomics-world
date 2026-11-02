@@ -1,0 +1,198 @@
+{
+  "schema": "rsomics.seq.strand-performance.v1",
+  "root_adopted": true,
+  "source_commit": "3ba1818e85477573995f6a391522f2ef35054c79",
+  "identity": {
+    "head": "3ba1818e85477573995f6a391522f2ef35054c79",
+    "lock_sha256": "b28f9bd0dfc256de61659867ececb4741c60e2d637bd9c4a73a5650c206b84d4",
+    "native_sha256": "12c188736686a8ba44714ad6e3500ed24585731e2099aeca538d60d827d69df9",
+    "source_sha256": "2f7d024ddce72519d0b6dd913eb7ff6c22229487c6ede2467e237ab615b7f1c4",
+    "native_version": "rsomics-seq 0.2.0",
+    "source_version": "seqkit v2.14.0"
+  },
+  "input_sha256": "d7a15c1762d64a5434ced0cc665d7f5d167ca81a71e239f8237b9cd490dd7683",
+  "input_population": {
+    "records": 6282141,
+    "bytes": 1474080927,
+    "bases": 634496241,
+    "lengths": {
+      "101": 6282141
+    }
+  },
+  "hardware": {
+    "machdep.cpu.brand_string": "Apple M2",
+    "hw.memsize": "8589934592",
+    "hw.ncpu": "8"
+  },
+  "os": "ProductName:\t\tmacOS\nProductVersion:\t\t27.2\nBuildVersion:\t\t26B123",
+  "cpu_pinning": "none; macOS host",
+  "originals": "/Volumes/Zane's HDD/rsomics-fixtures/evidence/seq-strand-20261102-i6yc6i6d",
+  "scratch": "/Volumes/KIOXIA/Developments/tmp/seq-strand-campaign-20261102.JNGmJL",
+  "metadata_manifest_sha256": "7d7faa3698062a7d118c4feb83b3836d4c2632af4fd79b54243e731533430156",
+  "workflow_invocations": 36,
+  "executable_invocations": 48,
+  "all_stage_exits_zero": true,
+  "full_output_pairs_compared_by_campaign": 18,
+  "retained_output_files": 36,
+  "retained_output_bytes": 40703659884,
+  "workflows": {
+    "subseq": {
+      "native": {
+        "wall_seconds": [
+          9.869906333000003,
+          10.665163709000012,
+          11.336085916000002,
+          9.323087084000008,
+          11.412547125000003
+        ],
+        "wall_median": 10.665163709000012,
+        "wall_range": [
+          9.323087084000008,
+          11.412547125000003
+        ],
+        "rss_bytes": [
+          10485760,
+          9371648,
+          10092544,
+          10174464,
+          10338304
+        ],
+        "rss_median": 10174464
+      },
+      "source": {
+        "wall_seconds": [
+          10.088061624999995,
+          11.714509792000001,
+          10.398362083000023,
+          12.208522083000048,
+          9.917765833000033
+        ],
+        "wall_median": 10.398362083000023,
+        "wall_range": [
+          9.917765833000033,
+          12.208522083000048
+        ],
+        "rss_bytes": [
+          64602112,
+          63684608,
+          64421888,
+          66469888,
+          63356928
+        ],
+        "rss_median": 64421888
+      },
+      "output_sha256": "f3db0b77d2f7f2195c4f8f9510d95003913bf0b75a4bc00c578a9fc169b4f5fa",
+      "wall_ranges_overlap": true,
+      "strict_standalone_rss_advantage": true
+    },
+    "revcomp": {
+      "native": {
+        "wall_seconds": [
+          14.82359795800005,
+          18.087085624999986,
+          18.348750875000064,
+          19.796084500000006,
+          16.597023584
+        ],
+        "wall_median": 18.087085624999986,
+        "wall_range": [
+          14.82359795800005,
+          19.796084500000006
+        ],
+        "rss_bytes": [
+          9502720,
+          10076160,
+          10321920,
+          10764288,
+          10158080
+        ],
+        "rss_median": 10158080
+      },
+      "source": {
+        "wall_seconds": [
+          17.108825708999916,
+          17.84032754100008,
+          16.233510291000016,
+          13.790145124999981,
+          23.91855366699997
+        ],
+        "wall_median": 17.108825708999916,
+        "wall_range": [
+          13.790145124999981,
+          23.91855366699997
+        ],
+        "rss_bytes": [
+          81264640,
+          80756736,
+          80805888,
+          81281024,
+          81084416
+        ],
+        "rss_median": 81084416
+      },
+      "output_sha256": "86921fd0a12cc91d20f10ad1b6a82e0ca499f3fc9e894b3cbafa87a82e6e19f6",
+      "wall_ranges_overlap": true,
+      "strict_standalone_rss_advantage": true
+    },
+    "connected": {
+      "native": {
+        "wall_seconds": [
+          10.363006166000105,
+          9.601308999999901,
+          9.925715416999992,
+          8.700278709000031,
+          10.00694329199996
+        ],
+        "wall_median": 9.925715416999992,
+        "wall_range": [
+          8.700278709000031,
+          10.363006166000105
+        ],
+        "rss_bytes": [
+          10436608,
+          10158080,
+          10862592,
+          10747904,
+          10027008
+        ],
+        "rss_median": 10436608
+      },
+      "source": {
+        "wall_seconds": [
+          9.657803666999826,
+          10.318272959000069,
+          11.215217582999912,
+          7.531418750000057,
+          10.729670250000026
+        ],
+        "wall_median": 10.318272959000069,
+        "wall_range": [
+          7.531418750000057,
+          11.215217582999912
+        ],
+        "rss_bytes": [
+          76988416,
+          76709888,
+          76660736,
+          76447744,
+          76988416
+        ],
+        "rss_median": 76709888
+      },
+      "output_sha256": "f103b253a535c2a88755d8765b71fb4df92092a16fa0dfa398450054f21213e0",
+      "wall_ranges_overlap": true,
+      "strict_standalone_rss_advantage": false
+    }
+  },
+  "decision": {
+    "standalone_resource_gates_passed": true,
+    "standalone_throughput_gates_passed": false,
+    "connected_correct": true,
+    "connected_memory_is_max_process_proxy_only": true,
+    "all_wall_ranges_overlap": true,
+    "block_io_zero_does_not_mean_no_physical_io": true,
+    "no_worker_scaling_or_universal_throughput_claim": true,
+    "release_or_public_install_accepted": false
+  },
+  "root_replay_scope": "Exact clean Git/binary/input/runner identities; complete36 qualification and48 raw resource records, populations, sizes, exits, comparisons and medians; output bodies fully read/hashed/cmp by actual campaign, not rehashed40GB by root; no scientific rerun."
+}
