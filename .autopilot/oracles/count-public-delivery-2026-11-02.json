@@ -1,0 +1,503 @@
+{
+  "actual_cli_statuses": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    1,
+    1
+  ],
+  "all_recorded_file_hashes_verified": true,
+  "calls": 9,
+  "default_count_summary_all_three_normalizations_stdin_failures": true,
+  "exact_native_lifecycle_matches": [
+    "0.stderr",
+    "0.stdout",
+    "1.stderr",
+    "1.stdout",
+    "2.stderr",
+    "2.stdout",
+    "3.stderr",
+    "3.stdout",
+    "4.stderr",
+    "4.stdout",
+    "5.stderr",
+    "5.stdout",
+    "6.stderr",
+    "6.stdout",
+    "7.stdout",
+    "8.stdout",
+    "counts.summary.tsv",
+    "counts.tsv",
+    "fpkm-uq.tsv",
+    "fpkm.tsv",
+    "genes.gtf",
+    "installed-binary",
+    "library-a.sam",
+    "library-b.sam",
+    "malformed-counts.tsv",
+    "malformed.sam",
+    "protected.summary.tsv",
+    "protected.tsv",
+    "stdin.tsv",
+    "stdin.tsv.summary",
+    "tpm.tsv"
+  ],
+  "fresh_release_api": {
+    "bytes": 14758,
+    "sha256": "6a1fc77013fb4d04f8fa95eea42f7ddf2e3e1163f63015d80cc036ba4524a507"
+  },
+  "fresh_tag_api": {
+    "bytes": 349,
+    "sha256": "2a2673163f6c7681ecdb9f34a18c7c6ab42830c055379faaa2094b57794d460a"
+  },
+  "full_argv_verified": true,
+  "github_platform_immutable": false,
+  "helper_process_exit_observed": null,
+  "helper_terminal_session": "87723 vanished; do not infer a captured process exit",
+  "historical_performance_only": true,
+  "independent_three_downloads": {
+    "argv_log": {
+      "bytes": 1932,
+      "sha256": "c662077c05af95b94f07af2e496a8a4dab6a2af672795f371df24108251d8bc9"
+    },
+    "credential_free_env_i": true,
+    "curl_disable_config": true,
+    "files": {
+      "SHA256SUMS": {
+        "asset_id": 700042090,
+        "bytes": 525,
+        "independent_curl_exit": 0,
+        "independent_response_statuses": [
+          302,
+          200
+        ],
+        "original_response_statuses": [
+          302,
+          200
+        ],
+        "public_url": "https://github.com/omics-rust/rsomics-count/releases/download/v0.1.0/SHA256SUMS",
+        "sha256": "3341f765db78d722a688a689dff9b6f820c30555a44bdac9ed2d6bf7c9f86f66",
+        "upload_identity_match": true
+      },
+      "rsomics-count-0.1.0-macos-aarch64.tar.gz": {
+        "asset_id": 700042027,
+        "bytes": 1265181,
+        "independent_curl_exit": 0,
+        "independent_response_statuses": [
+          302,
+          200
+        ],
+        "original_response_statuses": [
+          302,
+          200
+        ],
+        "public_url": "https://github.com/omics-rust/rsomics-count/releases/download/v0.1.0/rsomics-count-0.1.0-macos-aarch64.tar.gz",
+        "sha256": "8edd4fb5f7ee709a30f386b1b34bd5359b97e08f05d1856a797e278ebac05956",
+        "upload_identity_match": true
+      },
+      "rsomics-count-0.1.0-source.crate": {
+        "asset_id": 700042028,
+        "bytes": 113101,
+        "independent_curl_exit": 0,
+        "independent_response_statuses": [
+          302,
+          200
+        ],
+        "original_response_statuses": [
+          302,
+          200
+        ],
+        "public_url": "https://github.com/omics-rust/rsomics-count/releases/download/v0.1.0/rsomics-count-0.1.0-source.crate",
+        "sha256": "7a4670fba4ee3fd26e34b51376f9be9389570d76cf14c1d4d8a971e4688113a9",
+        "upload_identity_match": true
+      }
+    },
+    "script": {
+      "bytes": 1350,
+      "sha256": "c18f5e48919ceffd65d00277914e229e1c1d4cf57179acecdf4ea7ead502d590"
+    }
+  },
+  "installed_binary": {
+    "bytes": 3000864,
+    "sha256": "e746d5822ea4d1c7b8c651be1543cdc5f27b94d16a631da2a2d0f3ad5ca93632"
+  },
+  "installed_lifecycle": {
+    "bytes": 9534,
+    "sha256": "715c85f386495a60cfbf39cba4783312679f4047942c85cef980734eb59ab9bb"
+  },
+  "intentional_path_specific_differences": [
+    "commands.json",
+    "VERIFIED.json",
+    "7.stderr",
+    "8.stderr"
+  ],
+  "native_extracted_files": {
+    "ATTRIBUTION.md": {
+      "bytes": 817,
+      "sha256": "8490726a6f27cf32c58918750f6d2f9ffe8cb6304bd071b94620ff3143ed29a4"
+    },
+    "BUILD.json": {
+      "bytes": 18449,
+      "sha256": "eb62e9213a697e151fbde9ac19a7c2d65c436264e1852c4ffebbeda6efc56966"
+    },
+    "LICENSE-APACHE-2.0": {
+      "bytes": 11282,
+      "sha256": "6d061273eb5b605d391caddff4855419b2222ff4d40183b22fdd551c49f9b8d2"
+    },
+    "LICENSE-MIT": {
+      "bytes": 1067,
+      "sha256": "e7a94e2f444c13b00256a046f677f62ed7a8511d4241a898ce687551909833e1"
+    },
+    "README.md": {
+      "bytes": 4260,
+      "sha256": "a022f8243908a71ebec047f13ccc400de773a53ba0cb994428b96ef4ebd52e55"
+    },
+    "THIRD_PARTY_NOTICES.md": {
+      "bytes": 24405,
+      "sha256": "15e8a68186d35ac1e80526874fe4df5c47c86d611efb86cb1cd1889a1bf1f799"
+    },
+    "licenses/dependencies/01c266bced4a434da0051174d6bee16a4c82cf634e2679b6155d40d75012390f.txt": {
+      "bytes": 126,
+      "sha256": "01c266bced4a434da0051174d6bee16a4c82cf634e2679b6155d40d75012390f"
+    },
+    "licenses/dependencies/025436edff4cfcdde17a5811fdea78892d8482efd1abdec5a17872d07a4f2112.txt": {
+      "bytes": 1062,
+      "sha256": "025436edff4cfcdde17a5811fdea78892d8482efd1abdec5a17872d07a4f2112"
+    },
+    "licenses/dependencies/0b28172679e0009b655da42797c03fd163a3379d5cfa67ba1f1655e974a2a1a9.txt": {
+      "bytes": 1072,
+      "sha256": "0b28172679e0009b655da42797c03fd163a3379d5cfa67ba1f1655e974a2a1a9"
+    },
+    "licenses/dependencies/0f96a83840e146e43c0ec96a22ec1f392e0680e6c1226e6f3ba87e0740af850f.txt": {
+      "bytes": 1081,
+      "sha256": "0f96a83840e146e43c0ec96a22ec1f392e0680e6c1226e6f3ba87e0740af850f"
+    },
+    "licenses/dependencies/123a331b5dbf04c30097fa43b8f858bc85df671fe776de498d01f3d6b7c1f69e.txt": {
+      "bytes": 1066,
+      "sha256": "123a331b5dbf04c30097fa43b8f858bc85df671fe776de498d01f3d6b7c1f69e"
+    },
+    "licenses/dependencies/1e697ce8d21401fbf1bddd9b5c3fd4c4c79ae1e3bdf51f81761c85e11d5a89cd.txt": {
+      "bytes": 1166,
+      "sha256": "1e697ce8d21401fbf1bddd9b5c3fd4c4c79ae1e3bdf51f81761c85e11d5a89cd"
+    },
+    "licenses/dependencies/23f18e03dc49df91622fe2a76176497404e46ced8a715d9d2b67a7446571cca3.txt": {
+      "bytes": 1023,
+      "sha256": "23f18e03dc49df91622fe2a76176497404e46ced8a715d9d2b67a7446571cca3"
+    },
+    "licenses/dependencies/268872b9816f90fd8e85db5a28d33f8150ebb8dd016653fb39ef1f94f2686bc5.txt": {
+      "bytes": 12243,
+      "sha256": "268872b9816f90fd8e85db5a28d33f8150ebb8dd016653fb39ef1f94f2686bc5"
+    },
+    "licenses/dependencies/3290ae0fbc9ddb77d2239121d710f0bb9d31b3b4744e6d97fe01e652b4c1870b.txt": {
+      "bytes": 881,
+      "sha256": "3290ae0fbc9ddb77d2239121d710f0bb9d31b3b4744e6d97fe01e652b4c1870b"
+    },
+    "licenses/dependencies/377c2e7c53250cc5905c0b0532d35973392af16ffb9596a41d99d202cf3617c9.txt": {
+      "bytes": 853,
+      "sha256": "377c2e7c53250cc5905c0b0532d35973392af16ffb9596a41d99d202cf3617c9"
+    },
+    "licenses/dependencies/378f5840b258e2779c39418f3f2d7b2ba96f1c7917dd6be0713f88305dbda397.txt": {
+      "bytes": 1057,
+      "sha256": "378f5840b258e2779c39418f3f2d7b2ba96f1c7917dd6be0713f88305dbda397"
+    },
+    "licenses/dependencies/43070e2d4e532684de521b885f385d0841030efa2b1a20bafb76133a5e1379c1.txt": {
+      "bytes": 11356,
+      "sha256": "43070e2d4e532684de521b885f385d0841030efa2b1a20bafb76133a5e1379c1"
+    },
+    "licenses/dependencies/4455bf75a91154108304cb283e0fea9948c14f13e20d60887cf2552449dea3b1.txt": {
+      "bytes": 1092,
+      "sha256": "4455bf75a91154108304cb283e0fea9948c14f13e20d60887cf2552449dea3b1"
+    },
+    "licenses/dependencies/45f522cacecb1023856e46df79ca625dfc550c94910078bd8aec6e02880b3d42.txt": {
+      "bytes": 1055,
+      "sha256": "45f522cacecb1023856e46df79ca625dfc550c94910078bd8aec6e02880b3d42"
+    },
+    "licenses/dependencies/4ad69099cb4374836fd27583d9991e2838cd86b6e4666ab26b2d32582c91e73a.txt": {
+      "bytes": 1078,
+      "sha256": "4ad69099cb4374836fd27583d9991e2838cd86b6e4666ab26b2d32582c91e73a"
+    },
+    "licenses/dependencies/516b24e051bf5630880ebbd55c40a25ce9552ebaf8970a53e8976eb70e522406.txt": {
+      "bytes": 10835,
+      "sha256": "516b24e051bf5630880ebbd55c40a25ce9552ebaf8970a53e8976eb70e522406"
+    },
+    "licenses/dependencies/523a42c25d245dde9c015f882cec7f4555aad883382a6cf19b4b7d9b2cd5419b.txt": {
+      "bytes": 1130,
+      "sha256": "523a42c25d245dde9c015f882cec7f4555aad883382a6cf19b4b7d9b2cd5419b"
+    },
+    "licenses/dependencies/54e1fd7bd53273e601c9599eb162a004dacddee031ae297ee7109a7beb93b1c2.txt": {
+      "bytes": 2123,
+      "sha256": "54e1fd7bd53273e601c9599eb162a004dacddee031ae297ee7109a7beb93b1c2"
+    },
+    "licenses/dependencies/553fffcd9b1cb158bc3e9edc35da85ca5c3b3d7d2e61c883ebcfa8a65814b583.txt": {
+      "bytes": 566,
+      "sha256": "553fffcd9b1cb158bc3e9edc35da85ca5c3b3d7d2e61c883ebcfa8a65814b583"
+    },
+    "licenses/dependencies/5734ed989dfca1f625b40281ee9f4530f91b2411ec01cb748223e7eb87e201ab.txt": {
+      "bytes": 1099,
+      "sha256": "5734ed989dfca1f625b40281ee9f4530f91b2411ec01cb748223e7eb87e201ab"
+    },
+    "licenses/dependencies/62c7a1e35f56406896d7aa7ca52d0cc0d272ac022b5d2796e7d6905db8a3636a.txt": {
+      "bytes": 9723,
+      "sha256": "62c7a1e35f56406896d7aa7ca52d0cc0d272ac022b5d2796e7d6905db8a3636a"
+    },
+    "licenses/dependencies/6485b8ed310d3f0340bf1ad1f47645069ce4069dcc6bb46c7d5c6faf41de1fdb.txt": {
+      "bytes": 1071,
+      "sha256": "6485b8ed310d3f0340bf1ad1f47645069ce4069dcc6bb46c7d5c6faf41de1fdb"
+    },
+    "licenses/dependencies/68653aaa727a2bfa31b7a751e31701ce33c49d695c12dd291a07d1c54da4c14b.txt": {
+      "bytes": 262,
+      "sha256": "68653aaa727a2bfa31b7a751e31701ce33c49d695c12dd291a07d1c54da4c14b"
+    },
+    "licenses/dependencies/6b7374c39a57e57fc2c38eb529c4c88340152b10f51dd5ae2d819dfa67f61715.txt": {
+      "bytes": 1086,
+      "sha256": "6b7374c39a57e57fc2c38eb529c4c88340152b10f51dd5ae2d819dfa67f61715"
+    },
+    "licenses/dependencies/6d061273eb5b605d391caddff4855419b2222ff4d40183b22fdd551c49f9b8d2.txt": {
+      "bytes": 11282,
+      "sha256": "6d061273eb5b605d391caddff4855419b2222ff4d40183b22fdd551c49f9b8d2"
+    },
+    "licenses/dependencies/6efb0476a1cc085077ed49357026d8c173bf33017278ef440f222fb9cbcb66e6.txt": {
+      "bytes": 1062,
+      "sha256": "6efb0476a1cc085077ed49357026d8c173bf33017278ef440f222fb9cbcb66e6"
+    },
+    "licenses/dependencies/70c9d40f1f9545c3f133b8a67206e89da850f6468eed072281bb3701514114a9.txt": {
+      "bytes": 1082,
+      "sha256": "70c9d40f1f9545c3f133b8a67206e89da850f6468eed072281bb3701514114a9"
+    },
+    "licenses/dependencies/7365cc8878a1d7ce155a58c4ca09c3d7a6be413efa5334a80ea842912b669349.txt": {
+      "bytes": 1049,
+      "sha256": "7365cc8878a1d7ce155a58c4ca09c3d7a6be413efa5334a80ea842912b669349"
+    },
+    "licenses/dependencies/73b9dc2e79c7308998dd30296e073aefaefb944a68fb89aa412c23c0edcabcaa.txt": {
+      "bytes": 1082,
+      "sha256": "73b9dc2e79c7308998dd30296e073aefaefb944a68fb89aa412c23c0edcabcaa"
+    },
+    "licenses/dependencies/7b63ecd5f1902af1b63729947373683c32745c16a10e8e6292e2e2dcd7e90ae0.txt": {
+      "bytes": 1071,
+      "sha256": "7b63ecd5f1902af1b63729947373683c32745c16a10e8e6292e2e2dcd7e90ae0"
+    },
+    "licenses/dependencies/7e12e5df4bae12cb21581ba157ced20e1986a0508dd10d0e8a4ab9a4cf94e85c.txt": {
+      "bytes": 1211,
+      "sha256": "7e12e5df4bae12cb21581ba157ced20e1986a0508dd10d0e8a4ab9a4cf94e85c"
+    },
+    "licenses/dependencies/8173d5c29b4f956d532781d2b86e4e30f83e6b7878dce18c919451d6ba707c90.txt": {
+      "bytes": 10850,
+      "sha256": "8173d5c29b4f956d532781d2b86e4e30f83e6b7878dce18c919451d6ba707c90"
+    },
+    "licenses/dependencies/831e0f43ad0bf014c1c4fec5767aae470434c1d66d6e671be2d823e729063e25.txt": {
+      "bytes": 1196,
+      "sha256": "831e0f43ad0bf014c1c4fec5767aae470434c1d66d6e671be2d823e729063e25"
+    },
+    "licenses/dependencies/8764a597675778ddfd4e25f81b08a05dbcf089ac05662df7613fe67f150e3aa2.txt": {
+      "bytes": 1054,
+      "sha256": "8764a597675778ddfd4e25f81b08a05dbcf089ac05662df7613fe67f150e3aa2"
+    },
+    "licenses/dependencies/8b427f5bc501764575e52ba4f9d95673cf8f6d80a86d0d06599852e1a9a20a36.txt": {
+      "bytes": 1056,
+      "sha256": "8b427f5bc501764575e52ba4f9d95673cf8f6d80a86d0d06599852e1a9a20a36"
+    },
+    "licenses/dependencies/98181e7249d0c01737645ec982499ce99a0f07eb8f7d625b8840d799d10dbc01.txt": {
+      "bytes": 1082,
+      "sha256": "98181e7249d0c01737645ec982499ce99a0f07eb8f7d625b8840d799d10dbc01"
+    },
+    "licenses/dependencies/99aab70a96f3ecab683d8a319d9070af2213ae4c1601fb053fbe85e1361e32fe.txt": {
+      "bytes": 19251,
+      "sha256": "99aab70a96f3ecab683d8a319d9070af2213ae4c1601fb053fbe85e1361e32fe"
+    },
+    "licenses/dependencies/a60eea817514531668d7e00765731449fe14d059d3249e0bc93b36de45f759f2.txt": {
+      "bytes": 10847,
+      "sha256": "a60eea817514531668d7e00765731449fe14d059d3249e0bc93b36de45f759f2"
+    },
+    "licenses/dependencies/a825bd853ab71619a4923d7b4311221427848070ff44d990da39b0b274c1683f.txt": {
+      "bytes": 1083,
+      "sha256": "a825bd853ab71619a4923d7b4311221427848070ff44d990da39b0b274c1683f"
+    },
+    "licenses/dependencies/a9040321c3712d8fd0b09cf52b17445de04a23a10165049ae187cd39e5c86be5.txt": {
+      "bytes": 10849,
+      "sha256": "a9040321c3712d8fd0b09cf52b17445de04a23a10165049ae187cd39e5c86be5"
+    },
+    "licenses/dependencies/aaff376532ea30a0cd5330b9502ad4a4c8bf769c539c87ffe78819d188a18ebf.txt": {
+      "bytes": 10849,
+      "sha256": "aaff376532ea30a0cd5330b9502ad4a4c8bf769c539c87ffe78819d188a18ebf"
+    },
+    "licenses/dependencies/ae9baa7beea910273c2f384c2a6b721fb7bd02bda3436074a1072e4ee689f985.txt": {
+      "bytes": 1082,
+      "sha256": "ae9baa7beea910273c2f384c2a6b721fb7bd02bda3436074a1072e4ee689f985"
+    },
+    "licenses/dependencies/af59cea35d7f5e2777a713b8d155d65efa2c339eb43f3c14e868c6ac8506edad.txt": {
+      "bytes": 1103,
+      "sha256": "af59cea35d7f5e2777a713b8d155d65efa2c339eb43f3c14e868c6ac8506edad"
+    },
+    "licenses/dependencies/b16db96b93b1d7cf7bea533f572091ec6bca3234fbe0a83038be772ff391a44c.txt": {
+      "bytes": 33447,
+      "sha256": "b16db96b93b1d7cf7bea533f572091ec6bca3234fbe0a83038be772ff391a44c"
+    },
+    "licenses/dependencies/b38f11f6096706e6de553dabe2a7ed142d59b6fa8c97e290c67496154745cdd5.txt": {
+      "bytes": 1072,
+      "sha256": "b38f11f6096706e6de553dabe2a7ed142d59b6fa8c97e290c67496154745cdd5"
+    },
+    "licenses/dependencies/bc8dcbbd559a61b8a8c0c89d5c3e15d0dc47c6fae94e78ac428d6a7b7da3c4f9.txt": {
+      "bytes": 1072,
+      "sha256": "bc8dcbbd559a61b8a8c0c89d5c3e15d0dc47c6fae94e78ac428d6a7b7da3c4f9"
+    },
+    "licenses/dependencies/c6596eb7be8581c18be736c846fb9173b69eccf6ef94c5135893ec56bd92ba08.txt": {
+      "bytes": 11358,
+      "sha256": "c6596eb7be8581c18be736c846fb9173b69eccf6ef94c5135893ec56bd92ba08"
+    },
+    "licenses/dependencies/c8c6324cf2f0f076e3ed5dea4a21f00bd4dd6fce44f72b110bc52e7fe06f6e1e.txt": {
+      "bytes": 1079,
+      "sha256": "c8c6324cf2f0f076e3ed5dea4a21f00bd4dd6fce44f72b110bc52e7fe06f6e1e"
+    },
+    "licenses/dependencies/cb3c929a05e6cbc9de9ab06a4c57eeb60ca8c724bef6c138c87d3a577e27aa14.txt": {
+      "bytes": 1081,
+      "sha256": "cb3c929a05e6cbc9de9ab06a4c57eeb60ca8c724bef6c138c87d3a577e27aa14"
+    },
+    "licenses/dependencies/d2e7ec5355c96eeade56b09187ceb48a6a30299da3ce7531a66d3d11405ab963.txt": {
+      "bytes": 1070,
+      "sha256": "d2e7ec5355c96eeade56b09187ceb48a6a30299da3ce7531a66d3d11405ab963"
+    },
+    "licenses/dependencies/db11fec9946737df39ca3898d9cd8c10ec6f6c3a884a6802b0ad0b81b4e8f23a.txt": {
+      "bytes": 17,
+      "sha256": "db11fec9946737df39ca3898d9cd8c10ec6f6c3a884a6802b0ad0b81b4e8f23a"
+    },
+    "licenses/dependencies/e4c9b06fa850cb9b540a5e400e9f6394cf15efcf4098144de477d1d3dae10150.txt": {
+      "bytes": 1052,
+      "sha256": "e4c9b06fa850cb9b540a5e400e9f6394cf15efcf4098144de477d1d3dae10150"
+    },
+    "licenses/dependencies/e72111c52b7d96ebe25348dee19f0744f444d3c95ae6b1ecb6ccaecc5bce05ba.txt": {
+      "bytes": 856,
+      "sha256": "e72111c52b7d96ebe25348dee19f0744f444d3c95ae6b1ecb6ccaecc5bce05ba"
+    },
+    "licenses/dependencies/e7a94e2f444c13b00256a046f677f62ed7a8511d4241a898ce687551909833e1.txt": {
+      "bytes": 1067,
+      "sha256": "e7a94e2f444c13b00256a046f677f62ed7a8511d4241a898ce687551909833e1"
+    },
+    "licenses/dependencies/ecc269ef87fd38a1d98e30bfac9ba964a9dbd9315c3770fed98d4d7cb5882055.txt": {
+      "bytes": 1049,
+      "sha256": "ecc269ef87fd38a1d98e30bfac9ba964a9dbd9315c3770fed98d4d7cb5882055"
+    },
+    "licenses/dependencies/f51ac2c59a222f7476ce507ca879960e2b64ea64bb2786eefdbeb7b0b538d1b7.txt": {
+      "bytes": 1071,
+      "sha256": "f51ac2c59a222f7476ce507ca879960e2b64ea64bb2786eefdbeb7b0b538d1b7"
+    },
+    "licenses/dependencies/f7db81051789b729fea528a63ec4c938fdcb93d9d61d97dc8cc2e9df6d47f2a1.txt": {
+      "bytes": 1995,
+      "sha256": "f7db81051789b729fea528a63ec4c938fdcb93d9d61d97dc8cc2e9df6d47f2a1"
+    },
+    "licenses/dependencies/fabb1552f03c2091f7eac99f3161a07698fd783b2b0ac1001431cd840f65a7a1.txt": {
+      "bytes": 1071,
+      "sha256": "fabb1552f03c2091f7eac99f3161a07698fd783b2b0ac1001431cd840f65a7a1"
+    },
+    "licenses/dependencies/ff8f68cb076caf8cefe7a6430d4ac086ce6af2ca8ce2c4e5a2004d4552ef52a2.txt": {
+      "bytes": 1060,
+      "sha256": "ff8f68cb076caf8cefe7a6430d4ac086ce6af2ca8ce2c4e5a2004d4552ef52a2"
+    },
+    "licenses/provenance.json": {
+      "bytes": 134042,
+      "sha256": "55b013b2f182e6125b087b9cad45efcd86932fb376e7c3894cca47a36e44ec01"
+    },
+    "rsomics-count": {
+      "bytes": 3000864,
+      "sha256": "e746d5822ea4d1c7b8c651be1543cdc5f27b94d16a631da2a2d0f3ad5ca93632"
+    }
+  },
+  "native_original_receipt": {
+    "bytes": 128904,
+    "sha256": "5ba491d52944ee6e7e0d28497ad50cfb0a099d4cbefa80191b71249da2242d6f"
+  },
+  "new_benchmark": false,
+  "new_lifecycle_execution": false,
+  "original_public_download_authentication": "root-recorded transcript only; request command was not retained",
+  "path_specific_error_json_checked_exactly": true,
+  "registry_action": false,
+  "release_id": 430972817,
+  "release_public": true,
+  "release_url": "https://github.com/omics-rust/rsomics-count/releases/tag/v0.1.0",
+  "root_adopted": true,
+  "scientific_bodies_normalized": false,
+  "scope": "public Mac aarch64 delivery; independent repeated three-file download, existing nine-call lifecycle data, not new science or a review",
+  "source_commit": "8ae7a2b0294557d78edba30c0a1aa9cfef1c0350",
+  "source_download_is_registry_archive": false,
+  "tag": "v0.1.0",
+  "schema": "rsomics.count.public-delivery-adoption.v1",
+  "product": "rsomics-count",
+  "release_notes_sha256": "a158abdd5e2f8b5b1f6fd933871011e5ad8b65dda67b2233ee9c3ed90914a402",
+  "version": "0.1.0",
+  "source_tree": "b14a335799e9336f574cc7df8e2e1adcf328a806",
+  "original_asset_identities_preserved": true,
+  "release": {
+    "id": 430972817,
+    "tag_name": "v0.1.0",
+    "target_commitish": "8ae7a2b0294557d78edba30c0a1aa9cfef1c0350",
+    "draft": false,
+    "prerelease": false,
+    "immutable": false,
+    "published_at": "2026-11-02T01:08:18Z",
+    "html_url": "https://github.com/omics-rust/rsomics-count/releases/tag/v0.1.0",
+    "assets": [
+      {
+        "id": 700042021,
+        "name": "rsomics-count-0.1.0-linux-aarch64.tar.gz",
+        "size": 1362686,
+        "digest": "sha256:0bdab3e867add2627eee66822e326abc9701348689312c24c49183b7b8f0e531",
+        "browser_download_url": "https://github.com/omics-rust/rsomics-count/releases/download/v0.1.0/rsomics-count-0.1.0-linux-aarch64.tar.gz"
+      },
+      {
+        "id": 700042029,
+        "name": "rsomics-count-0.1.0-linux-x86_64.tar.gz",
+        "size": 1418622,
+        "digest": "sha256:c13d4e3a5525153bc1d7d98bf016ec7d5862377d540ce2b012b092355b43e79c",
+        "browser_download_url": "https://github.com/omics-rust/rsomics-count/releases/download/v0.1.0/rsomics-count-0.1.0-linux-x86_64.tar.gz"
+      },
+      {
+        "id": 700042027,
+        "name": "rsomics-count-0.1.0-macos-aarch64.tar.gz",
+        "size": 1265181,
+        "digest": "sha256:8edd4fb5f7ee709a30f386b1b34bd5359b97e08f05d1856a797e278ebac05956",
+        "browser_download_url": "https://github.com/omics-rust/rsomics-count/releases/download/v0.1.0/rsomics-count-0.1.0-macos-aarch64.tar.gz"
+      },
+      {
+        "id": 700042025,
+        "name": "rsomics-count-0.1.0-macos-x86_64.tar.gz",
+        "size": 1335925,
+        "digest": "sha256:afad39858012035f9d56232c94ec6b73a32f9128b18837f0288ea57fe62c8895",
+        "browser_download_url": "https://github.com/omics-rust/rsomics-count/releases/download/v0.1.0/rsomics-count-0.1.0-macos-x86_64.tar.gz"
+      },
+      {
+        "id": 700042028,
+        "name": "rsomics-count-0.1.0-source.crate",
+        "size": 113101,
+        "digest": "sha256:7a4670fba4ee3fd26e34b51376f9be9389570d76cf14c1d4d8a971e4688113a9",
+        "browser_download_url": "https://github.com/omics-rust/rsomics-count/releases/download/v0.1.0/rsomics-count-0.1.0-source.crate"
+      },
+      {
+        "id": 700042090,
+        "name": "SHA256SUMS",
+        "size": 525,
+        "digest": "sha256:3341f765db78d722a688a689dff9b6f820c30555a44bdac9ed2d6bf7c9f86f66",
+        "browser_download_url": "https://github.com/omics-rust/rsomics-count/releases/download/v0.1.0/SHA256SUMS"
+      }
+    ]
+  },
+  "root_verification": {
+    "packet": "/Volumes/KIOXIA/Developments/tmp/count-public-closure-20261102.HaWU68",
+    "report_sha256": "f6dd59df6d9eda1e2955dfb3a14bbc4204f5b0eb2755bfa17d89940a5473a321",
+    "original_verifier_sha256": "3d410adfbd608d6179d53ac8acf7ff6a49c766903981fa8f181f3ee85d78afc2",
+    "unchanged_proposal_sha256": "e2dcd2220a6626b24dd7db1f37174408a510fdbf1839f32cc0093227789c9153",
+    "readonly_replay": "/Volumes/KIOXIA/Developments/tmp/count-public-root-20261102.Wpwe61/check-readonly.py",
+    "readonly_replay_sha256": "deadee5dd96b7fe00d457ff52c6a2f09eb39386996ab27cca304e23aaaceedfa",
+    "stdout_sha256": "5ed33c0eccd21f088cc39106063999acfab6e2f25a3b9524ea5471f3dbf13ac4",
+    "exit_code": 0,
+    "stderr_scope": "external guard diagnostics only; no checker error",
+    "original_program_fully_read": true,
+    "sole_in_memory_change": "Replace proposed receipt write with exact canonical-byte assertion; preserve original packet and every substantive check.",
+    "verifier_data_only": true,
+    "new_product_execution": false,
+    "new_benchmark": false,
+    "native_original_receipt": ".autopilot/oracles/count-native-delivery-2026-11-02.json"
+  }
+}

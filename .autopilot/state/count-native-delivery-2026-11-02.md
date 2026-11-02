@@ -1,10 +1,12 @@
 # Count native/source delivery
 
-Current: owning main8ae7a2b0294557d78edba30c0a1aa9cfef1c0350 is pushed;
-actual native4 CI41367589211/1 passes, and complete originals are root-adopted.
-One integrated review and its single P2 correction are adopted below. Fresh
-public-install/release gates remain pending; dirty local carriers were never
-used to satisfy the clean native/source gates.
+Current: GitHub native/source releasev0.1.0/430972817 is public, pinned to
+8ae7a2b0294557d78edba30c0a1aa9cfef1c0350. Actual native4 CI41367589211/1,
+complete originals and public Mac ARM nine-call installation are root-adopted.
+One integrated review and its single P2 correction are adopted below. The
+README-only public-install update is committed asb207b4e; its exact-head
+post-documentation CI gate remains pending. Release tag and original assets
+are unchanged; no registry archive is replaced or new timing inherited.
 
 ## Initial scope
 
@@ -132,3 +134,52 @@ Fresh release/tag preflight is empty. rpOlez preparation preserves four actual
 native TARs and byte-identical source, named *-source.crate for distribution,
 plus aggregate checksums. Registry0.1.0 is not replaced. Public action/install
 and post-release documentation remain next; no new timing is inherited.
+
+## Public release and installation adopted
+
+Release430972817/v0.1.0 published2026-11-02T01:08:18Z at8ae7a2b0, with four
+native TARs, clean *-source.crate and aggregate SHA256SUMS. Fresh release/tag
+APIs bind all six original asset IDs/sizes/digests and the pinned commit.
+GitHub's platform immutable flag isfalse; original byte identities are
+preserved, not claimed platform-immutable. Current/original release notes
+match exactly, SHAa158abdd5e2f8b5b1f6fd933871011e5ad8b65dda67b2233ee9c3ed90914a402.
+
+ZO5GaB retains the original three public downloads/response headers and9534B
+VERIFIED for nine real CLI calls. Root transcript supplied initial request
+provenance; a saved request script was not retained. Session87723 vanished,
+so its wrapper process exit is unknown, not inferred. All nine CLI statuses
+and recorded bodies are independently checked: seven success/two intended
+failure, complete unequal-library matrix/14summary/all3 normalizations,
+stdin/default summary and preservation of prior outputs. The actual public
+Mac ARM binary3000864B/e746d5822ea4d1c7b8c651be1543cdc5f27b94d16a631da2a2d0f3ad5ca93632
+matches the root-adopted native binary and every extracted carrier member.
+Path-specific command/error JSON differences are checked explicitly; scientific
+body hashes are not normalized or relaxed.
+
+HaWU68 retains complete earlier public/preparation data and three additional
+small downloads authorized solely for delivery provenance. The readable
+script runs env-i /usr/bin/curl --disable --fail --location without credential,
+header, token, config or secret-environment input, through the owning external
+guard. All three return0/HTTP302→200 and match the original uploads and first
+public bodies. Raw signed redirect URLs remain only in local headers.
+
+Root reads full167-line data verifier, report, download script and README
+delta; a readonly in-memory adaptation replaces its sole derived receipt write
+with exact canonical-byte comparison. Fresh guarded replay exits0; stderr is
+guard diagnostics only. Original proposal and packet remain unchanged.
+Proof: count-public-root-20261102.Wpwe61/check.stdout
+SHA5ed33c0eccd21f088cc39106063999acfab6e2f25a3b9524ea5471f3dbf13ac4;
+reader SHAdeadee5dd96b7fe00d457ff52c6a2f09eb39386996ab27cca304e23aaaceedfa.
+Original checker SHA3d410adfbd608d6179d53ac8acf7ff6a49c766903981fa8f181f3ee85d78afc2;
+proposal SHAe2dcd2220a6626b24dd7db1f37174408a510fdbf1839f32cc0093227789c9153.
+Root receipt: `.autopilot/oracles/count-public-delivery-2026-11-02.json`.
+No product, recovered lifecycle, oracle, benchmark or second review executes
+during this replay.
+
+Only README changes inb207b4e: actual public native/source/checksum installation,
+absolute benchmark link pinned to8ae, later installed lifecycle status and
+preservation of construction-time carrier wording. Historical slower wall/
+roughly87% RSS advantage, three-live/ARM-frozen coverage and team-owned bamio
+supplement scope remain explicit. Production/tests/Cargo/lock/scripts/notices,
+formal tag and original archives are untouched. Exact new native CI remains
+the post-documentation gate; this does not move the formal release source.
