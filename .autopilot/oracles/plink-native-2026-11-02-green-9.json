@@ -1,0 +1,104 @@
+{
+  "schema": "rsomics.plink.native-adoption.v1",
+  "product": "rsomics-plink",
+  "repository": "omics-rust/rsomics-world",
+  "root_adopted": true,
+  "four_native_and_source_passed": true,
+  "head_sha": "8a6f063f406417a3d476acbc53cd81417711df1d",
+  "workflow_path": ".github/workflows/plink-candidate.yml",
+  "run_id": 41415209242,
+  "run_attempt": 1,
+  "snapshot": "green-9",
+  "owner_commit": "80fafbf8eaed950f03d7fed88dd641d58ca99882",
+  "owner_tree": "e582752b33719b9ccdabea136c6ec710334168c6",
+  "source_file_count": 305,
+  "source_archive_sha256": "0ab2e0e2cac04a682b795414d82f2181f630d79b9d0a9494ab05322665ddfa67",
+  "source_manifest_sha256": "a1ef55afcd387cc8359264027bdf33384cab447c44390eef0c5c806facbd1bde",
+  "lock_sha256": "0b4eba1f752aa6011ee4a2a434d10fa737f90d2fb5ada5101b8ed5587a57d6bc",
+  "artifact_id": 13126673604,
+  "artifact_name": "plink-native-41415209242-1-linux-x86_64",
+  "artifact_sha256": "802fb7a5c496d89892c556f4ef0c5b2b20c82a9d2c278b1de9fce0aaff771046",
+  "size_in_bytes": 14434535,
+  "native_tar_sha256": "a6ee97385739a3e61ab795c710b793ced5eb4ab6f9be5ebb5a40aac2e8d951f5",
+  "binary_sha256": "9a5a427d1881103be4577434c8306c43bfa04817dbf1c954d9de2c557ee7a22a",
+  "native_targets": [
+    "linux-x86_64",
+    "linux-aarch64",
+    "macos-x86_64",
+    "macos-aarch64"
+  ],
+  "test_modes": [
+    "debug",
+    "release"
+  ],
+  "workers": [
+    1,
+    4
+  ],
+  "library_tests_per_mode": 7,
+  "whole_workflow_tests_per_mode": 1,
+  "ignored_tests": 0,
+  "principal_reports_per_worker": 123,
+  "worker_provenance_records_per_mode": 66,
+  "generations_per_mode": 36,
+  "raw_cells_per_mode": 74878,
+  "controller_sha256": {
+    ".github/workflows/plink-candidate.yml": "bea055976e5630f10fa9c55c7c3ada327f19a7db3209aaea46e7c39280bf9193",
+    "assets/plink-first-runtime-20261031.json": "aef2041f34ea3a9c9d62f3ee73b866788a0b263f4ddf54501d59f68bd44761ba",
+    "scripts/infercnv_source_snapshot.py": "095ebb67a2d9a050c20b6e876f2b0c9cfd26fcbf8f0ce3601a8124b292b553f2",
+    "scripts/plink_candidate.py": "d87fcc50b85b3229acf5d624f61338bb3659af7330738bc3c96a2ab0b89cafdc",
+    "scripts/plink_first_workflow_inputs.py": "557e32764eec82ba67f69e6efa1b88e7626d55710337c248b1a8d921a613ece3",
+    "scripts/plink_first_workflow_oracle.py": "d0cdaf2093c6d7864c54fe97b38f317dd7d34ea9effdff5f69f172e1e6fb8153",
+    "scripts/plink_pgen_capture.cc": "399a00c85e1678b1f88c093a0ca9dea55d8d5b099c84036391bf61ea8441bf61",
+    "scripts/plink_source_on_native.py": "1749496f4049cd92604d50f2241ced2deb4a69f34a57e4c89b312a7763e978ee",
+    "scripts/signal_candidate.py": "a6e9c2782553919ed70939c4cdad6fcdd8f7bd889ed63ab96b2db82dc34f9712",
+    "scripts/test_plink_candidate_workflow.py": "241f7ce03eef3ade8c90bb93f2f90531410e789f71954c63cb5bdd4afc4ea399"
+  },
+  "release_binaries": {
+    "linux-aarch64": {
+      "bytes": 3097120,
+      "sha256": "8deedc19b301347740d0de1b6e3ba656d34b04c03b39975f6df9b795781d188d"
+    },
+    "linux-x86_64": {
+      "bytes": 3226528,
+      "sha256": "9a5a427d1881103be4577434c8306c43bfa04817dbf1c954d9de2c557ee7a22a"
+    },
+    "macos-aarch64": {
+      "bytes": 2678288,
+      "sha256": "e1b585307999c3501ac2ea0400e739cc42e91e0908b245cd2e958745114084ee"
+    },
+    "macos-x86_64": {
+      "bytes": 2812200,
+      "sha256": "75a156bb800905fc1317c1785b478bafe0da653b28978b3592c2b4cf4a361761"
+    }
+  },
+  "source_observations": {
+    "artifact_id": 13127347530,
+    "artifact_name": "plink-source-on-native-41415209242-1",
+    "artifact_sha256": "96e24a5062339f0b7e29fdc22238db9b394462ceea33d2d36874471d53290622",
+    "size_in_bytes": 557944,
+    "source_and_official_commands": 224,
+    "raw_bridge_commands": 36,
+    "raw_cells": 74878,
+    "qc_rows_per_engine_worker": 3541,
+    "hwe_ld_tail_rows_per_engine_worker": 3193,
+    "all_actual_numeric_and_raw_observations_independently_rechecked": true,
+    "native_elf_executed": false,
+    "official_source_commit_correspondence_proven": false
+  },
+  "root_adoption": {
+    "packet": "/Volumes/KIOXIA/Developments/tmp/plink-green9-native-originals-20261102.pWG3Cw",
+    "inventory_sha256": "c55abcbf34a064d3bb8ff90946e25bba3b213e68cef93002cef3a50965e327a8",
+    "proposed_receipt_sha256": "963de08f5cf2443e0c6b1f863ea395877280d4789f624b90471b5e3a546c187b",
+    "checker_sha256": "786fa036b8b2f45c0382f4369b530b92832cfeb95e7cee9977b769e1963466a7",
+    "exit_code": 0,
+    "complete_artifacts": 5,
+    "original_regular_tar_members": 10579,
+    "scope": "Root read entire508-line data-only checker and report, then freshly replayed pinned closed packet inventory, all original ZIP/TAR/manifest bodies, exact Git source/tree/modes, all8 native modes,224 source commands and36 raw bridges. No network/subprocess/recovered code/scientific execution or packet writes. Original proposal stays false. Replay stdout is retained in the tool transcript, not claimed as a separately captured file."
+  },
+  "canonical_git_modes_verified": true,
+  "local_materialization_modes_not_runtime_modes": true,
+  "performance_claim": false,
+  "public_release": false,
+  "local_scientific_execution": false
+}

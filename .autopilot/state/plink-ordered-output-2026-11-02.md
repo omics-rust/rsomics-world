@@ -3,9 +3,9 @@
 Current: local semantics and one fresh whole-feature review root-adopted;
 private owner main80fafbf8eaed950f03d7fed88dd641d58ca99882, tree
 e582752b33719b9ccdabea136c6ec710334168c6, is clean with no public remote.
-Green9 current-source native/source integration is prepared, not run or
-accepted yet. No new speed/RSS/release claim and no durability-policy change.
-The actual green8 whole-wall/RSS failures remain failed.
+Green9 current-source native/source integration41415209242/1 and complete
+originals are now root-adopted. No new speed/RSS/release claim or durability
+change. The actual green8 whole-wall/RSS failures remain failed.
 
 Plan: docs/plans/2026-11-02-plink-ordered-output-pipeline.md.
 The adopted phase diagnostic justifies eliminating temporary output recopy,
@@ -98,4 +98,57 @@ actual7-library-test population. Old selectors/counts and all scientific
 source/fixture/performance gates remain unchanged. The connected transport
 test first rejects unsupported green9, then passes after the routing update;
 no native/upstream scientific execution is part of that preparation test.
+
+## Actual green9 dispatch
+
+Exact-head World Control41414048894 succeeds at
+8a6f063f406417a3d476acbc53cd81417711df1d. Root freshly verifies live main
+matches, checks the workflow's previous runs to exclude a duplicate green9,
+then invokes existing plink-candidate.yml --ref main -f snapshot=green-9 once.
+Actual41415209242/1 is created2026-11-02T08:44:04Z at that head; fresh API
+confirms in_progress. The outer dispatch result is recovered after a tool
+observation delay, not retried. Retain complete originals and assess native
+four plus same-generation source consumers before accepting the result.
+
+The subsequent actual API observes completed/SUCCESS at the same exact head
+and attempt1. This is terminal workflow evidence only; no original-artifact,
+full source-consumer or representative performance acceptance is inferred.
+
+## Complete originals and native/source adoption
+
+Packet:
+`/Volumes/KIOXIA/Developments/tmp/plink-green9-native-originals-20261102.pWG3Cw`.
+All five original ZIPs/TARs, raw APIs, full-attempt ZIP and five job logs are
+retained. Pinned inventory c55abcbf34a064d3bb8ff90946e25bba3b213e68cef93002cef3a50965e327a8
+seals10706 files/479192060B, including10579 regular TAR members. Original
+proposal963de08f5cf2443e0c6b1f863ea395877280d4789f624b90471b5e3a546c187b
+stays root_adopted=false. Root's actual adoption is
+`.autopilot/oracles/plink-native-2026-11-02-green-9.json`.
+
+Root reads the complete508-line data checker/report and freshly replays its
+pinned closed inventory: exit0. Every original ZIP/TAR/manifest/body, exact
+305 Git source blobs/tree/modes, controller bindings, actual native Rust1.91
+hosts and executable formats/CPUs, all eight7-unit+1-CLI populations, ordered
+reports/genotypes/worker/generation bindings and command exits agree. This
+does not execute recovered code, network, subprocess or scientific programs,
+and writes no packet files. Checker SHA
+786fa036b8b2f45c0382f4369b530b92832cfeb95e7cee9977b769e1963466a7.
+
+Each native mode has123 reports per worker(246combined),66 worker records,
+36 generations and74878 raw cells checked. Same-generation actual source/
+official consumers complete224 commands plus36 raw bridges. Root directly
+rechecks all full table fields and raw genotype observations under the frozen
+comparison contract, not a status-only pass. Official and source executable
+builds remain distinct; official/source commit correspondence is unproven.
+No representative whole-study throughput/RSS or new biological claim follows.
+
+Canonical archive Git modes are verified; extracted/materialized source modes
+are separately recorded and not claimed to preserve every runtime permission.
+Normal connected GH auth is used read-only after one retained metadata-only
+mistake forced an absent external config; no credential values are read,
+migrated or printed. All downloads/materialization/caches stay external.
+
+Next is one complete representative graph on this changed, now-qualified
+candidate with original scientific/resource predicates unchanged. It is not
+an unchanged green8 replay; remaining QC/prune/sync losses may still fail.
 Exact-head Control and actual green9 four-native dispatch/adoption follow.
