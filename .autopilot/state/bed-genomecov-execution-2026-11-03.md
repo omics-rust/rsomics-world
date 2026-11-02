@@ -263,3 +263,32 @@ explicit; no exclusive/cold-cache/I/O/thread-scaling/general BED claims follow.
 Old map regression and immutable public0.3.0 remain unchanged. Canonical receipt:
 `../oracles/bed-genomecov-performance-2026-11-03.json`.
 New versioned packaging/release and registry authentication remain separate.
+
+## Versioned0.4.0 candidate
+
+Owner5e5b709d00c07977ce81deb0f7f0f70fece91c4a is committed/pushed and clean.
+Only six version/description/lock-provenance/README/performance/migration files
+change from c6e35; source, dependencies, CI and delivery logic are unchanged.
+Root reviews the complete delta and freshly reviews genomecov public options,
+CLI adapter, whole operation and private sparse DepthBuffer; no blocking finding.
+The former reviewer implements one factual documentation clarification, not a
+second algorithm or helper-review ladder.
+
+Local packet: `/Volumes/KIOXIA/Developments/tmp/bed-04-candidate-20261103.AOyCZt`.
+Root independently verifies all nine completed check exits/log identities:
+fmt, strict Clippy, debug/release126 each, warning-free rustdoc, verified package,
+packaged-release126, source install and15 actual installed calls over12 operations.
+All test profiles have zero failed/ignored tests. The installed lifecycle has
+14 successful calls plus one expected malformed-input failure. Root separately
+compares all266 packaged working bodies/modes and the lock-provenance digest;
+268-member local package135169B/f8a618f3... explicitly retains dirty c6e35 VCS
+metadata. This is not a clean exact-head package or native-four acceptance.
+COMPLETE.json SHA-256
+`5250bd27abee3d97e3743ffc20c3a53a15e8dd1bf715209527042ffa518a60a6`;
+CHECKS.json SHA-256
+`b7d9203d3fb65bdf0d367b00faff117541f38ba3cf3d38433b64223a919dc782`.
+
+Exact-head four-native run41532198240 is queued at initial observation.
+No automatic retry, tag, public release, registry retry or replacement of0.3.0
+assets is authorized by this candidate push. Inspect the same run and retain
+actual package/binary originals before any delivery decision.
