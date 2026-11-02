@@ -2,8 +2,9 @@
 
 Reviewed source integrated and pushed as
 `88169954cce59986c58d4afeca9f903b8705cd20`.
-Actual exact-head native CI `41440046744` exposes failures; the remaining
-Intel Mac job is still running. No performance,
+Initial exact-head native CI `41440046744` finishes FAILURE with all originals
+retained. Corrective head `3b2314a6912a849b21e7afbbb86b45fd8d6e294e`
+is pushed; exact native run `41442092689` is pending. No performance,
 native-four or release acceptance yet. Current immutable BED0.2 assets remain
 unchanged; split-plus-fraction compatibility choice is still held.
 
@@ -62,3 +63,36 @@ extend the existing installed lifecycle with an actual coverage command and
 exact nine-operation scope, not a weakened list check. No production engine
 change or unchanged workflow retry. Await the final Intel job and corrected
 source/package checks before a new exact-head native run.
+
+Both Macs ultimately fail the same old eight-command installed-scope check;
+all four original artifact ZIPs/APIs/job logs and full attempt logs are retained.
+This is a completed negative run, never retried unchanged.
+
+## Narrow corrective source integrated
+
+Packet: `/Volumes/KIOXIA/Developments/tmp/bed-coverage-fix-20261102.Ke2UR7`.
+FROZEN-FIX.json SHA256
+`a5f7d6c4231a8b8b5674e5d8e96e0d0dd5050cc538c9ead84e9dfdfaa5c726fe`.
+Only `tests/coverage.rs` and `scripts/delivery.py` change. Both original failures
+are reproduced RED before correction. Retained full debug/release each103 pass,
+strict Clippy/fmt pass and a fresh candidate source install executes12 recorded
+calls, retaining all eight prior commands plus actual coverage stdin/multi-B/
+JSON named-output/full-golden verification. Candidate packaging explicitly uses
+allow-dirty and clean_vcs=false, not final source acceptance.
+
+Root reads both complete diffs, independently verifies file/lifecycle hashes
+and all12 actual exit records, then runs the external guard and complete
+coverage suite:8/8 pass, session94160 exit0. No second review ladder or runtime
+engine change. Owning corrective commit is
+`3b2314a6912a849b21e7afbbb86b45fd8d6e294e`; wait new exact-head native run
+`41442092689` and original artifact adoption before claiming native acceptance.
+
+Representative campaign is prepared but unexecuted in
+`/Volumes/KIOXIA/Developments/tmp/bed-coverage-performance-20261102.cGrqBK`.
+Root reads the full runner and proposal. Already retained hg19 RefSeq annotation
+provides584846 duplicate-preserving exon B records,242221 merged-exon sparse A
+rows and61177 transcript-span nested A rows, without downloads. Six profiles
+and72 retained executions have a17.74GB conservative capacity requirement
+including8GiB independent headroom, versus observed40.32GB external free space.
+Actual head/native/source byte/build pins and corrected native qualification
+remain required before one explicit campaign authorization. No timings yet.
