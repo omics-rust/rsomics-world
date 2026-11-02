@@ -227,3 +227,37 @@ All four named products remain; no deletion, third scientific attempt,
 permission/threshold change or additional monitor patch is authorized. A
 bounded read-only architectural diagnosis and comparison of already-produced
 I product hashes may proceed, independently of unearned timing acceptance.
+
+## Independent I output check and accounting-scope ruling
+
+The authorized read-only pass checks the three already-produced native I
+files against that exact command's retained expected bodies, with inode/
+size/mtime/mode unchanged during hashing. All match:
+pgen13209205B/d485e29df5ca60c031c80536dec90e85d206a76a722e2e676964f7c1c29da800,
+pvar10966762B/ffa68bf12ca71fa69c27b61449ca6e06ce1ee383bb4feda6d20360628e0fd9c5,
+psam35450B/d4ffa5e1307303858ad0a420b2a6682e71bb00cd057791d8a5a872143f738cc5.
+Receipt SHA256
+`6e5a407a74c5872ae2cff98fba5489ea6ce4dd48dc3b47b98b6494fafea29e62`.
+This is one representative native I output check, not a newly executed source
+comparison, measured pair, pairs operation or macro performance acceptance.
+
+The read-only architectural report identifies a documented distinction between
+leader fd visibility and whole-process pidfd readiness. Actual Rayon teardown
+makes it plausible, not a proven unique historical interleaving. Leader-only
+polling cannot guarantee all-thread/unlinked or between-sample peak allocation.
+Report SHA256
+`1c8cc876eede81f01fa08e264705f4336c87ceec5622ea793283ccc0c620463f`.
+
+Root explicitly chooses truthful observational accounting for a proposed
+third revision: owned named-directory allocated-block samples plus complete
+pre/post named checks and physical free-space/inode monitoring. Existing208GiB
+logical envelope and12GiB diagnostic reservations, all prior failed products,
+output/stdio/time bounds and body verification remain. No hard kernel quota,
+all-thread/unlinked peak or exclusive writer lease is claimed. Do not turn
+unreliable /proc permission observations into purported product failures.
+
+This authorizes only a small revised preparation/named-accounting check,
+not remote staging, a third scientific launch or publication. Fresh scoped
+labels must appear in admission/resource records; root must review the frozen
+revision and cumulative old/new reservations before any execution. No new
+privilege, filesystem mount/quota, deletion or total allowance is authorized.
