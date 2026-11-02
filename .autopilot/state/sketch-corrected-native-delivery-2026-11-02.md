@@ -269,3 +269,36 @@ root dispatches benchmark.yml exactly once: actual41360132692/1, same exact
 head eb1b15102f1adaedb738e4ddb98bd9bd841669d1, queued. All8 native/workload
 jobs and complete raw originals remain required. No new result, favorable
 subset, publication or registry attempt is inferred. Do not redispatch unchanged.
+
+## Complete current-binary performance originals adopted
+
+Single41360132692/1 completes SUCCESS on all8 native/workload jobs. Root reads
+full186-line data checker and report, freshly executes it under owning external
+guard, and confirms its emitted complete receipt is byte-identical to the
+unchanged proposal: vrdaci/correct-path.stdout SHA
+b5b3c72f8f743b298e3065265cf2ec7362d0db7d983eade83ca10a8f44c8fd1f.
+Exit0;641 stderr bytes are inspected guard diagnostics only. First invocation
+used an incorrectly quoted literal-backslash-x27 path and failed before data
+processing; its logs remain, not a measurement/checker-data failure.
+
+Packet1wamaG retains all8 whole ZIPs39192207B, raw terminal APIs and complete
+attempt log346630B/85 members/eight whole-job logs. All232 trials/192 measured
+observations/96 pairs bind original timing argv/resources/signature bytes.
+Strict candidate process RSS is lower in96/96. Wall/user/system losses remain
+42/40/27 pairs; mean wall loses in4/8 cohorts. Intel Mac FASTQ mean is266.38s
+versus136.375s, not a throughput win. All paired values and distributions are
+retained in sketch-final-performance-2026-11-02.json; no favorable subset.
+
+Crucially, ALL8 actual measured binaries match the adopted four native binary
+bytes, zero mismatches. Both workloads perhost reconstruct65 normal compiled
+external-feature records/53 packages and agree; host-specific feature hashes
+stay distinct. All8 source TARs equal the adopted142-file Git source. The
+LinuxARM reference/runtime closure is unchanged before/after. Warm-cache,
+Linux-one-allowed-CPU/macOS-unforced-affinity/separate-decoder/ARM-launcher
+scope remains; no equal-thread, pure-kernel, causal or universal-speed claim.
+
+This later adoption establishes current shipped-binary measurements without
+rewriting old BUILD pending/not-remeasured flags or earlier failed runtime
+evidence. Native/source/install and actual resource gates now pass. Root's
+fresh GitHub release preflight/public action and actual public Mac install
+remain required; registry authorization/publication is still held.
