@@ -1,9 +1,10 @@
 # Count native/source delivery
 
 Current: owning main8ae7a2b0294557d78edba30c0a1aa9cfef1c0350 is pushed;
-actual native4 CI41367589211/1 is running. One integrated review and its single
-P2 correction are adopted below. Clean CI/originals/public-install/release
-gates remain pending, not earned by the dirty local carriers.
+actual native4 CI41367589211/1 passes, and complete originals are root-adopted.
+One integrated review and its single P2 correction are adopted below. Fresh
+public-install/release gates remain pending; dirty local carriers were never
+used to satisfy the clean native/source gates.
 
 ## Initial scope
 
@@ -101,3 +102,33 @@ not a redispatch. Complete native4 originals are assigned to bvfm3O recovery.
     claim; this read-only review supplies no current external-state conclusion.
 17. The existing manual cargo publisher remains untouched and uninvoked;
     no token read, registry retry or publication action is added.
+
+## Complete native/source originals adopted
+
+All4 actual jobs41367589211/1 pass at8ae7a2b0. Packet bvfm3O retains590 files/
+56504262B, all4 original ZIPs and550 extracted original bodies, complete86-
+member attempt log and raw APIs. Each source crate is113101B/7a4670fba4ee3fd26e34b51376f9be9389570d76cf14c1d4d8a971e4688113a9,
+103 exact Git originals/modes plus2 generated metadata files, clean VCS8ae.
+All24 protected bodies/modes/Cargo.toml and native92packages/93union/59terms,
+explicit bamio supplement, normal/feature trees and installed binary/BUILD/
+source/carrier/checksum bindings agree. All four distinct-library nine-call
+lifecycles pass full matrix/14summary/all3 normalizations/stdin/two failures.
+Debug/release have35 asserted+1 inert; packaged source runs the actual live
+oracle on the three supported hosts, while Linux ARM remains frozen-only.
+
+Root reads complete293-line data checker/report, freshly verifies every packet
+inventory checksum under owning external guard and replays all data bindings.
+Original checker regenerated two derived JSONs. A root copy outside the sealed
+packet replaces those writes with exact comparisons. Its initial direct Python
+dict equality encounters integer artifact keys versus JSON string keys only at
+the final receipt assertion; v1/logs remain. V2 compares canonical serialized
+receipt bytes exactly, with all substantive checks unchanged. midWHR replay
+exit0/stderr0, stdout SHA045018e2efd0546d317ac87d9cf7c7330eaef10bdac7e8c93b420f349b457290;
+reader SHAeadc184f9787f92a3b77d70310a8c34b7921fa8e6d5971a6cc767ef76a42fc6e.
+No packet byte, source, recovered code, tests, oracle or benchmark is changed/
+executed by that replay. Adoption: count-native-delivery-2026-11-02.json.
+
+Fresh release/tag preflight is empty. rpOlez preparation preserves four actual
+native TARs and byte-identical source, named *-source.crate for distribution,
+plus aggregate checksums. Registry0.1.0 is not replaced. Public action/install
+and post-release documentation remain next; no new timing is inherited.
