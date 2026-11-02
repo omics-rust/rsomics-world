@@ -136,3 +136,23 @@ passes;542 tests run, zero failures/errors and two defined skips. An initial
 invocation mistakenly used system Python3.9.6 and the BED working directory;
 its unsupported typing/Counter semantics and fixture-path failures are not
 product failures or accepted gates. No source changes hide those failures.
+
+## Offline recovery preparation
+
+Read-only local inventory finds all85 locked archive checksums and all85 exact
+sparse version/checksum records, including the seven absent remotely. Official
+public config is present without auth-required. Root reads the full inventory
+helper and independently replays it under the external guard: same complete
+result, no Cargo, download, transfer or remote mutation. Proposed171 bodies
+total18371107 bytes (archives11102861, sparse caches7268170, config76).
+Packet: `plink-iw1-phase-prep-20261103.0xDzr1VR/local-cache-inventory`.
+The proposal is not execution or a successful acquisition receipt. Prepare a
+separate bounded offline-completion transition preserving the original failure;
+do not rerun online acquire or fabricate its success.
+
+Root also reads all293 diagnostic-runner lines and153 static-ABI adapter lines
+in the packet's `one-iw1-runner` directory. The single-command route consumes
+a future actual build receipt and separately reviewed ABI proof, retains all
+four product pins/five phases/seven counts and unchanged inputs, and makes no
+benchmark/publication claim. It remains unexecuted; no successful build or
+runtime support is inferred from that source review.
