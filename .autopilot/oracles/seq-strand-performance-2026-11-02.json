@@ -2,6 +2,18 @@
   "schema": "rsomics.seq.strand-performance.v1",
   "root_adopted": true,
   "source_commit": "3ba1818e85477573995f6a391522f2ef35054c79",
+  "preserved_measured_executables": {
+    "native": {
+      "path": "/Volumes/KIOXIA/Developments/tmp/seq-strand-campaign-20261102.JNGmJL/measured-rsomics-seq",
+      "bytes": 1674064,
+      "sha256": "12c188736686a8ba44714ad6e3500ed24585731e2099aeca538d60d827d69df9"
+    },
+    "source": {
+      "path": "/Volumes/KIOXIA/Developments/tmp/seq-strand-campaign-20261102.JNGmJL/measured-seqkit",
+      "bytes": 19657138,
+      "sha256": "2f7d024ddce72519d0b6dd913eb7ff6c22229487c6ede2467e237ab615b7f1c4"
+    }
+  },
   "identity": {
     "head": "3ba1818e85477573995f6a391522f2ef35054c79",
     "lock_sha256": "b28f9bd0dfc256de61659867ececb4741c60e2d637bd9c4a73a5650c206b84d4",
