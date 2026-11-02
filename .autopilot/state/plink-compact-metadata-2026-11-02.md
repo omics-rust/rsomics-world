@@ -34,7 +34,29 @@ Archive541474 bytes SHA256
 no AppleDouble or untracked files. All3 existing preparation tests pass under
 the external guard. The source workflow remains123 reports/66 worker calls;
 only green11's complete Rust population changes to10 library/3 integration.
-Old snapshot requirements remain unchanged. Hosted qualification is pending.
+Old snapshot requirements remain unchanged. Controller27513f97bade2e0749d9dab911701ccb993b611c
+passes exact-head Control plane41478624302. One actual green11 native-four/
+same-generation source-consumer run41478980090 is dispatched from that head;
+qualification results and original artifact adoption remain pending. Do not
+restart merely because observation times out or the run is queued.
+
+## Next scheduling investigation, not adopted implementation
+
+Read-only follow-up confirms ordered.rs uses one queued message per lane,
+cyclic job assignment and whole-partition draining, while LD pairs emits
+multiple64KiB messages within one job. This structurally blocks non-current
+lanes inside production; it is not causal runtime attribution of the measured
+four-worker loss. Make already emits one completed block per partition.
+Prune does not use ordered and retains its independent interval/tempfile path.
+
+Candidate next design: byte-admitted complete-result blocks with a bounded
+in-flight window and one ordered writer, rather than larger message queues or
+per-job disk spools. Before implementation, derive output bounds from actual
+IDs/alleles, count every live buffer and cache, preserve serial fallback for
+over-budget rows, cancellation/reader close and existing commit ordering.
+Finite ordered buffers still permit head-of-line backpressure; do not promise
+unbounded concurrency. Preserve pair ordinals/numerics and private boundaries.
+Do not bundle cache/affinity redesign or claim measured improvement yet.
 
 Owner: `/Volumes/KIOXIA/Documents/omics-rust/rsomics-plink`, base
 `9d43df417bf2a729438fb4194e9f82cbba10fe6c`.
