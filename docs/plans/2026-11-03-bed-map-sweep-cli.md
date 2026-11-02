@@ -147,7 +147,10 @@ under JSON, and reuse parent helpers/open_input/write_output/common/help.
 Implementation and one fresh whole-feature review are integrated atbcf65d7;
 see bed-map-execution-2026-11-02.md for the retained evidence and deferred minor.
 The original owner/base and worker restrictions above describe task entry,
-not the current committed state. Native-four and performance remain incomplete.
+not the current committed state. Native-four originals and full mapping
+performance are now adopted; the measured advantage is RSS only, with slower
+throughput. See bed-map-native and bed-map-performance2026-11-03 receipts.
+Release/publication remains separate; docs-only owner1de1e42 has its own CI.
 
 Read the entire feature and obtain one fresh whole-feature review; independently
 verify, integrate one coherent concern, then qualify actual native4 including
