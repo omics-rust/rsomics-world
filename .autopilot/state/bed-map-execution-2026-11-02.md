@@ -1,10 +1,13 @@
 # BED map execution
 
-Task1 private23-operation reducer kernel is implemented, not integrated as a
-CLI or accepted as the complete map operation. On2026-11-03 the user approves
-repairing the point-cache data-loss defect and recording known incompatibility.
-Task2 sweep/CLI now follows the expanded2026-11-03 brief and is implementing.
-Split-plus-fraction is still held.
+Current status: the complete map feature is committed and pushed at
+bcf65d7accdf4ff956680cfdef8e5d4eeb9634f8. Native exact-head CI run41495972529
+was queued at the latest observation. Performance and release gates remain open.
+The user approves repairing the point-cache data-loss defect and recording
+known incompatibility. Split-plus-fraction is still held.
+
+The following Task1/Task2 entries preserve earlier implementation evidence;
+their uncommitted-owner descriptions are historical, not current status.
 
 Owner remains at cdf736337d8bd63b2770723a8a667f7af83409b9 with an intentional
 uncommitted three-path source delta. Do not discard it, stage unrelated files,
@@ -61,3 +64,27 @@ Actual RED red-consumer.log exits101 because the complete numeric-all23 CLI
 consumer cannot invoke the absent map subcommand; this is not an unrelated
 compile/import failure. The full feature, source review/native4/performance
 and publication acceptance remain pending. No reducer-only feature is shipped.
+
+## Integrated feature 2026-11-03
+
+The source commit contains47 exact feature paths, including the existing reducer
+kernel, sorted sweep, typed options, CLI dispatch and golden fixtures. No new
+dependency, public foundation, unsafe code or version bump was introduced.
+Both point-cache and tied-B lookahead data-loss repairs are documented as known
+incompatibilities; ordinary valid-input behavior retains its upstream oracle.
+
+Root independently matches250 frozen owner bodies and the complete feature
+patch. One fresh whole-feature review finds no critical or important issue.
+Its minor suggestion for an additional invalid-unused-B-tail rollback test is
+deferred: the implementation already validates that tail, and no current bug
+was identified. No extra defensive test expansion is required for integration.
+
+Worker evidence records full debug/release/packaged-release118-test passes,
+strict Clippy, fmt, rustdoc and14 installed CLI calls. Root independently reruns
+the full debug suite through guarded-cargo after validating physical external
+paths:118 passed,0 failed/ignored, command exit0. Local packaging used
+--allow-dirty before commit and does not replace clean exact-head CI.
+
+The owner is clean after commit and push. CI, native-four qualification,
+representative whole-mapping performance and publication remain separate gates;
+this source integration does not change any already-published release.
