@@ -1,0 +1,495 @@
+{
+  "schema": "rsomics.bed.coverage-performance-adoption.v1",
+  "root_adopted": true,
+  "source_head": "3b2314a6912a849b21e7afbbb86b45fd8d6e294e",
+  "native_correctness": {
+    "run_id": 41442092689,
+    "attempt": 1,
+    "actual_native_classes": 4,
+    "root_data_replay_exit": 0,
+    "source_crate_sha256": "0692d27fcd61c3734c05f77054b1db8dbf10c5dadc63a0feace63f4a0845576b"
+  },
+  "campaign": "/Volumes/KIOXIA/Developments/tmp/bed-coverage-performance-20261102.cGrqBK",
+  "exec_session": 53274,
+  "terminal_exit": 0,
+  "executions": 72,
+  "warmups": 12,
+  "measured": 60,
+  "output_files": 72,
+  "output_bytes": 620841012,
+  "all_full_outputs_cmp_equal": true,
+  "no_retry": true,
+  "root_independent_metadata_replay_passed": true,
+  "large_outputs_rehashed_again": false,
+  "measured_native": {
+    "path": "/Volumes/KIOXIA/Developments/cargo-target/rsomics-bed/release/rsomics-bed",
+    "identity": {
+      "bytes": 1608240,
+      "sha256": "c1ae356bec9e27a663c8ae9c98b9ae6365732cae4bb3233393031a5ae7d07a73"
+    },
+    "version": "rsomics-bed 0.2.0"
+  },
+  "measured_source": {
+    "path": "/opt/homebrew/Cellar/bedtools/2.31.1/bin/bedtools",
+    "identity": {
+      "bytes": 1691808,
+      "sha256": "fc994e1fcfdce8ce8591630d71f21fe67e2275c2a8d967dc0e3dfb4cfa4677a3"
+    },
+    "version": "bedtools v2.31.1"
+  },
+  "build": {
+    "guard": "/Volumes/KIOXIA/Documents/omics-rust/rsomics-bed/scripts/guarded-cargo.sh",
+    "arguments": [
+      "build",
+      "--release",
+      "--locked",
+      "--offline"
+    ],
+    "exit": 0,
+    "rustc": "1.91.0 f8297e351a40c1439a467bbbb6879088047f50b3 aarch64-apple-darwin",
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr_sha256": "dc20ec748e8a216cca52e979659e8f6556cd66251560c47837b17e055bf1205c"
+  },
+  "host": {
+    "os": "Darwin",
+    "architecture": "arm64",
+    "os_release": "27.2.0",
+    "cpu": "Apple M2",
+    "logical_cpus": "8",
+    "memory_bytes": "8589934592"
+  },
+  "original_annotation": {
+    "bytes": 2567192,
+    "path": "/Volumes/KIOXIA/Developments/tmp/rnaseq-qc-chr21-qualify-20261028.egJWCT/hg19_RefSeq.bed.gz",
+    "sha256": "eb7070cfb52b9011c132346fd27baffb8a7acf3c034ebf996cebd52fbb52aa19"
+  },
+  "derivation": "B retains every exon block and isoform duplicate in original order; nested A retains transcript first6 fields; sparse A is lexical-chrom/start sorted touching/overlapping exon union BED3",
+  "input_files": {
+    "b.bed": {
+      "bytes": 28597646,
+      "sha256": "e9a0b35f48d6c2f5cc14655b4dfbc273d1e4b23db5805fa7ea1b13b8be6cdee8"
+    },
+    "nested-a.bed": {
+      "bytes": 2534262,
+      "sha256": "2564ca29492fac4bfa0dc852b47190c0cf9eb8a14b9a98fd2eca715422d72a8c"
+    },
+    "sparse-a.bed": {
+      "bytes": 5844542,
+      "sha256": "aaf7a39d487a46e9f3444f59e9d8f0ecd17091307c93b8c3d6447028a2a4ed7a"
+    }
+  },
+  "profiles": [
+    {
+      "a": "sparse-a.bed",
+      "b": "b.bed",
+      "candidate_pairs": 584846,
+      "maximum_fanout": 78,
+      "mode": "summary",
+      "output_bound": 36848830,
+      "rows": 242221,
+      "shape": "sparse"
+    },
+    {
+      "a": "sparse-a.bed",
+      "b": "b.bed",
+      "candidate_pairs": 584846,
+      "maximum_fanout": 78,
+      "mode": "counts",
+      "output_bound": 21346686,
+      "rows": 242221,
+      "shape": "sparse"
+    },
+    {
+      "a": "sparse-a.bed",
+      "b": "b.bed",
+      "candidate_pairs": 584846,
+      "maximum_fanout": 78,
+      "mode": "hist",
+      "output_bound": 125799232,
+      "rows": 242221,
+      "shape": "sparse"
+    },
+    {
+      "a": "nested-a.bed",
+      "b": "b.bed",
+      "candidate_pairs": 3093393,
+      "maximum_fanout": 2172,
+      "mode": "summary",
+      "output_bound": 10364918,
+      "rows": 61177,
+      "shape": "nested"
+    },
+    {
+      "a": "nested-a.bed",
+      "b": "b.bed",
+      "candidate_pairs": 3093393,
+      "maximum_fanout": 2172,
+      "mode": "counts",
+      "output_bound": 6449590,
+      "rows": 61177,
+      "shape": "nested"
+    },
+    {
+      "a": "nested-a.bed",
+      "b": "b.bed",
+      "candidate_pairs": 3093393,
+      "maximum_fanout": 2172,
+      "mode": "hist",
+      "output_bound": 535888121,
+      "rows": 61177,
+      "shape": "nested"
+    }
+  ],
+  "summary": {
+    "nested-counts": {
+      "native": {
+        "peak_rss_bytes": [
+          35454976,
+          35422208,
+          35454976,
+          35422208,
+          35422208
+        ],
+        "rss_median": 35422208,
+        "wall_median": 0.18002445803722367,
+        "wall_range": [
+          0.1772315000416711,
+          0.1824167079757899
+        ],
+        "wall_seconds": [
+          0.18107141699874774,
+          0.1789161249762401,
+          0.1772315000416711,
+          0.18002445803722367,
+          0.1824167079757899
+        ]
+      },
+      "source": {
+        "peak_rss_bytes": [
+          189464576,
+          189431808,
+          189431808,
+          189464576,
+          189480960
+        ],
+        "rss_median": 189464576,
+        "wall_median": 0.8584152500261553,
+        "wall_range": [
+          0.8492113340180367,
+          0.8731248339754529
+        ],
+        "wall_seconds": [
+          0.8584152500261553,
+          0.8492113340180367,
+          0.8560395839740522,
+          0.8630179169704206,
+          0.8731248339754529
+        ]
+      }
+    },
+    "nested-hist": {
+      "native": {
+        "peak_rss_bytes": [
+          35553280,
+          35569664,
+          35536896,
+          35536896,
+          35586048
+        ],
+        "rss_median": 35553280,
+        "wall_median": 0.2842545000021346,
+        "wall_range": [
+          0.28369354200549424,
+          0.3110381669830531
+        ],
+        "wall_seconds": [
+          0.2842545000021346,
+          0.3110381669830531,
+          0.28385158302262425,
+          0.2987378340330906,
+          0.28369354200549424
+        ]
+      },
+      "source": {
+        "peak_rss_bytes": [
+          191954944,
+          198279168,
+          193363968,
+          217104384,
+          207093760
+        ],
+        "rss_median": 198279168,
+        "wall_median": 24.29162712499965,
+        "wall_range": [
+          24.22181062499294,
+          24.98326074995566
+        ],
+        "wall_seconds": [
+          24.23232841695426,
+          24.98326074995566,
+          24.29162712499965,
+          24.22181062499294,
+          24.303080958954524
+        ]
+      }
+    },
+    "nested-summary": {
+      "native": {
+        "peak_rss_bytes": [
+          35569664,
+          35553280,
+          35553280,
+          35553280,
+          35520512
+        ],
+        "rss_median": 35553280,
+        "wall_median": 0.23530812497483566,
+        "wall_range": [
+          0.23254679201636463,
+          0.24706466699717566
+        ],
+        "wall_seconds": [
+          0.24706466699717566,
+          0.23254679201636463,
+          0.24356233299477026,
+          0.23525866703130305,
+          0.23530812497483566
+        ]
+      },
+      "source": {
+        "peak_rss_bytes": [
+          197394432,
+          197361664,
+          197328896,
+          197345280,
+          197361664
+        ],
+        "rss_median": 197361664,
+        "wall_median": 2.075975334038958,
+        "wall_range": [
+          2.064214250014629,
+          2.1039677090011537
+        ],
+        "wall_seconds": [
+          2.1039677090011537,
+          2.065194083028473,
+          2.075975334038958,
+          2.0952089999918826,
+          2.064214250014629
+        ]
+      }
+    },
+    "sparse-counts": {
+      "native": {
+        "peak_rss_bytes": [
+          35438592,
+          35471360,
+          35454976,
+          36093952,
+          35487744
+        ],
+        "rss_median": 35471360,
+        "wall_median": 0.22199254197767004,
+        "wall_range": [
+          0.2054047500132583,
+          0.2482412499957718
+        ],
+        "wall_seconds": [
+          0.21163908299058676,
+          0.2301119589828886,
+          0.2482412499957718,
+          0.22199254197767004,
+          0.2054047500132583
+        ]
+      },
+      "source": {
+        "peak_rss_bytes": [
+          167247872,
+          169984000,
+          168738816,
+          169984000,
+          169984000
+        ],
+        "rss_median": 169984000,
+        "wall_median": 0.5487292499747127,
+        "wall_range": [
+          0.5279251669999212,
+          0.5965083330520429
+        ],
+        "wall_seconds": [
+          0.5965083330520429,
+          0.5487292499747127,
+          0.5796627500094473,
+          0.5279251669999212,
+          0.5287146249902435
+        ]
+      }
+    },
+    "sparse-hist": {
+      "native": {
+        "peak_rss_bytes": [
+          35569664,
+          35520512,
+          35504128,
+          35454976,
+          35520512
+        ],
+        "rss_median": 35520512,
+        "wall_median": 0.26991854200605303,
+        "wall_range": [
+          0.2608412079862319,
+          0.27263837499776855
+        ],
+        "wall_seconds": [
+          0.26991854200605303,
+          0.27167554205516353,
+          0.2665990000241436,
+          0.2608412079862319,
+          0.27263837499776855
+        ]
+      },
+      "source": {
+        "peak_rss_bytes": [
+          200097792,
+          203538432,
+          203505664,
+          203538432,
+          203489280
+        ],
+        "rss_median": 203505664,
+        "wall_median": 1.044192707980983,
+        "wall_range": [
+          1.032424709002953,
+          1.0858830839861184
+        ],
+        "wall_seconds": [
+          1.0858830839861184,
+          1.044192707980983,
+          1.0521148329717107,
+          1.032424709002953,
+          1.0420934170251712
+        ]
+      }
+    },
+    "sparse-summary": {
+      "native": {
+        "peak_rss_bytes": [
+          35520512,
+          35504128,
+          35520512,
+          35520512,
+          35536896
+        ],
+        "rss_median": 35520512,
+        "wall_median": 0.25248125003417954,
+        "wall_range": [
+          0.25073649996193126,
+          0.2820807909592986
+        ],
+        "wall_seconds": [
+          0.25248125003417954,
+          0.2820807909592986,
+          0.2614873749553226,
+          0.25155458302469924,
+          0.25073649996193126
+        ]
+      },
+      "source": {
+        "peak_rss_bytes": [
+          201113600,
+          201146368,
+          199032832,
+          201113600,
+          201113600
+        ],
+        "rss_median": 201113600,
+        "wall_median": 0.6085545410169289,
+        "wall_range": [
+          0.6007221250329167,
+          0.6427436249796301
+        ],
+        "wall_seconds": [
+          0.6085545410169289,
+          0.6007221250329167,
+          0.6427436249796301,
+          0.62437316699652,
+          0.6067175000207499
+        ]
+      }
+    }
+  },
+  "decisions": {
+    "nested-counts": {
+      "one_output": {
+        "bytes": 2708371,
+        "sha256": "9f9b6ad9845812becc93e37145a382e7efcc88d79e7e522bb97b5d07f6f508d8"
+      },
+      "rss_populations_separated": true,
+      "rss_source_over_native": 5.348751156336725,
+      "wall_populations_separated": true,
+      "wall_speedup": 4.768325700770395
+    },
+    "nested-hist": {
+      "one_output": {
+        "bytes": 16735655,
+        "sha256": "a65058480303882034bc2d302e272c50c72b4d10e9ad630a4c1d63b0efec4647"
+      },
+      "rss_populations_separated": true,
+      "rss_source_over_native": 5.576958525345622,
+      "wall_populations_separated": true,
+      "wall_speedup": 85.45731773751069
+    },
+    "nested-summary": {
+      "one_output": {
+        "bytes": 3970530,
+        "sha256": "4156cf78cccffcea329f3c8c8b09b7630a272c9cd6019881e6c6a019a118075b"
+      },
+      "rss_populations_separated": true,
+      "rss_source_over_native": 5.551152073732719,
+      "wall_populations_separated": true,
+      "wall_speedup": 8.822369963897197
+    },
+    "sparse-counts": {
+      "one_output": {
+        "bytes": 6333186,
+        "sha256": "95a693573ac46dd80a30be94b46251a75003302dc9c3fcd4b9c6d8a7c0e2f241"
+      },
+      "rss_populations_separated": true,
+      "rss_source_over_native": 4.7921478060046185,
+      "wall_populations_separated": true,
+      "wall_speedup": 2.471836418855498
+    },
+    "sparse-hist": {
+      "one_output": {
+        "bytes": 11397651,
+        "sha256": "0b36a201fb28cae3153e2221793925901a6313c3947872169865adfa36347988"
+      },
+      "rss_populations_separated": true,
+      "rss_source_over_native": 5.729243542435424,
+      "wall_populations_separated": true,
+      "wall_speedup": 3.868547526303571
+    },
+    "sparse-summary": {
+      "one_output": {
+        "bytes": 10591358,
+        "sha256": "9e85ba1fe6345c3df20e6d0b6bcbff2f7f07f90a68311116976dfde19ad08697"
+      },
+      "rss_populations_separated": true,
+      "rss_source_over_native": 5.66190036900369,
+      "wall_populations_separated": true,
+      "wall_speedup": 2.410295976174651
+    }
+  },
+  "performance_gate": "all six measured native wall and max-process-RSS populations strictly below source populations",
+  "public_release_accepted": false,
+  "compatibility_hold": "split plus explicit fractions remains an unresolved user choice",
+  "registry_publication": false,
+  "limitations": [
+    "This is annotation-derived interval coverage, not sequencing-read coverage or biology",
+    "Mac arm64 single-process wall/RSS only; no thread scaling, physical-I/O or aggregate-tree-memory claim",
+    "Monotonic wall includes time-wrapper launch and parent polling at10ms; raw time-l real values retained",
+    "No new publication or split-fraction compatibility decision"
+  ],
+  "metadata_files": 155,
+  "metadata_manifest_sha256": "e8518d56ae27af203faba5fe6b0e06dcc43578dc100e213c0322d2fa4c4e13e5"
+}
