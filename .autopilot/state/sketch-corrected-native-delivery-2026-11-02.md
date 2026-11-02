@@ -5,7 +5,7 @@ fresh unauthenticated public Mac/source/checksum download plus11-call product
 lifecycle passes. Native4 and all8 actual identity-matched resource jobs are
 adopted; lower RSS96/96 does not hide42 wall losses. Registry remains held.
 Post-release documentation head ddc4e76c is separate from the formal tag/assets;
-its exact-head CI is pending at this update. Full evidence is recorded below.
+its exact CI41368042858 passes. Full evidence is recorded below.
 
 ## Initial scope
 
@@ -337,5 +337,5 @@ Adoption is sketch-public-delivery-2026-11-02.json. README/protocol-only owning
 commit ddc4e76c2d57ba80e7c58995b34c01942bbd4c0d now documents the real release,
 all8 current mean resource pairs and slower cases. Source/lock/tests/scripts/
 licenses remain exact; this does not replace formal tag/assets or earn another
-benchmark. Exact-head documentation CI remains mandatory. No source build,
+benchmark. Exact-head documentation CI41368042858 passes at ddc4e76c. No source build,
 upstream oracle, registry publication or new performance run was performed.
