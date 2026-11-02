@@ -3,8 +3,8 @@
 Task1 private23-operation reducer kernel is implemented, not integrated as a
 CLI or accepted as the complete map operation. On2026-11-03 the user approves
 repairing the point-cache data-loss defect and recording known incompatibility.
-Task2 sweep/CLI is now unblocked on that policy; its technical brief and full
-implementation remain to be completed. Split-plus-fraction is still held.
+Task2 sweep/CLI now follows the expanded2026-11-03 brief and is implementing.
+Split-plus-fraction is still held.
 
 Owner remains at cdf736337d8bd63b2770723a8a667f7af83409b9 with an intentional
 uncommitted three-path source delta. Do not discard it, stage unrelated files,
@@ -45,3 +45,19 @@ One fresh whole-feature review remains for after Task2, not another kernel
 review ladder now. Full existing-suite/package/install/native4/performance
 and release gates remain open. No benchmark or public map feature claim is
 made by these six focused tests.
+
+## Task2 started 2026-11-03
+
+Plan: `docs/plans/2026-11-03-bed-map-sweep-cli.md`.
+Root independently replays43 supplemental oracle identities and all eight
+actual outputs/statuses, plus reads the pinned ContextIntersect validation
+closure. Source gaps, point0 support, canonical A coordinates and the second
+tied-B point-loss repair are recorded in the contract, not guessed by builder.
+All3 inherited Task1 source hashes still match their original freeze.
+
+Implementation packet:
+`/Volumes/KIOXIA/Developments/tmp/bed-map-sweep-cli-20261103.xzaa4v`.
+Actual RED red-consumer.log exits101 because the complete numeric-all23 CLI
+consumer cannot invoke the absent map subcommand; this is not an unrelated
+compile/import failure. The full feature, source review/native4/performance
+and publication acceptance remain pending. No reducer-only feature is shipped.
