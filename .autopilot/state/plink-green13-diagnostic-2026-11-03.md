@@ -38,3 +38,36 @@ Launch exited zero at `2026-11-02T19:58:13Z`: PID/PGID 637738, Linux start
 ticks 395795588. Its launch record was fsynced before releasing the runner.
 Local `admit-once.stdout` and `launch-once.stdout` preserve both results.
 No automation was created. Completion and measured results remain pending.
+
+## Terminal diagnostic result
+
+Root directly verifies FINISHED32, all32 COMPLETE, empty runner stderr and
+the original PID absent. The detached runner's shell wait status is unavailable;
+it is not inferred. All32 target and guardian wait statuses are individually0.
+
+Root independently verifies239 small original bodies and64 role-specific
+product pins, all32 actual commands, native worker/count manifests,16 empty
+native stderr and16 unchanged255-byte source phenotype warnings. Separate
+root arithmetic recomputes every median and all three paired wall ratios;
+the complete reviewed data-only replay also passes without rewriting its
+receipt. An initial local replay-wrapper delimiter lookup fails before data
+processing; correcting the wrapper does not alter the experiment or originals.
+
+| Operation/workers | Source median wall (s) | Native median wall (s) | Native/source paired wall ratios | Source/native median process RSS (bytes) |
+|---|---:|---:|---|---|
+| I/1 | 0.387330 | 1.545454 | 3.34958, 4.28496, 3.75225 | 75235328 / 96157696 |
+| I/4 | 0.331384 | 1.593523 | 3.97823, 5.11920, 4.86540 | 106430464 / 96813056 |
+| pairs/1 | 16.524546 | 12.781176 | 0.77347, 0.79686, 0.79776 | 83492864 / 52674560 |
+| pairs/4 | 6.055279 | 7.740154 | 1.28567, 1.19964, 1.25302 | 83492864 / 52674560 |
+
+Each population excludes one warmup and contains three measured commands.
+Single-worker pairs wins each observed pair; four-worker pairs loses each.
+Import remains slower at both worker counts. Lower pairs RSS is not sufficient
+to accept the whole product while import/parallel performance remain unearned.
+No cross-campaign causal comparison, macro acceptance or publication follows.
+Do not repeat the unchanged campaign. Inspect actual import and pairs hot paths
+before proposing the next bounded optimization; no formatter/SIMD/batch change
+is justified solely by reduced decode counts.
+
+Canonical receipt:
+`.autopilot/oracles/plink-targeted-diagnostic-2026-11-03-green-13.json`.
