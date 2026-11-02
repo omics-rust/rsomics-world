@@ -151,4 +151,17 @@ migrated or printed. All downloads/materialization/caches stay external.
 Next is one complete representative graph on this changed, now-qualified
 candidate with original scientific/resource predicates unchanged. It is not
 an unchanged green8 replay; remaining QC/prune/sync losses may still fail.
-Exact-head Control and actual green9 four-native dispatch/adoption follow.
+Green9 native/source adoption is complete. World adoption commit
+ae6570aec9171d29750c2adf71e27e09c005e581 has exact-head Control41419758625
+SUCCESS. The real-performance receipt selector now admits green9 alongside
+the historical candidates; its regression first fails on the absent selector,
+then both existing controller tests pass after that single allowlist change.
+No default receipt, scientific comparison, performance predicate, privacy
+policy, workload or resource budget changes.
+
+After exact-head Control for this routing change, dispatch the existing
+plink-real-performance.yml once with native_receipt set to
+.autopilot/oracles/plink-native-2026-11-02-green-9.json and
+reuse_qualified_bodies=true, as in the previous full campaign. Check live runs
+first to exclude a duplicate. Retain encrypted originals even on failure;
+native correctness alone does not qualify performance or publication.
