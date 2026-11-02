@@ -1,8 +1,9 @@
 # PLINK locality batch wave
 
 Private owner integrated as `9d43df417bf2a729438fb4194e9f82cbba10fe6c` after one fresh-context whole-feature
-review and root source/hash inspection. No representative performance,
-native-four acceptance or publication. The previous complete negative whole
+review and root source/hash inspection. Native-four and same-generation source
+fixture correctness are accepted; representative performance and publication
+remain unearned. The previous complete negative whole
 run remains authoritative; no numerical or durability policy is relaxed.
 
 Plan: `docs/plans/2026-11-02-plink-locality-batches.md`.
@@ -107,3 +108,28 @@ target wait4 with a separate guardian. Fresh inert ELF/provider closure is
 prepared, but admission/launch remain unearned until root reads the exact
 final runner/plan/static pins and verifies current capacity. No diagnostic or
 new whole-workflow benchmark has executed for green10.
+
+## Authorized admission declined before staging
+
+Root fully reads the final admission/launch helpers, revision2 runner and final
+narrow runner diff, and independently verifies all helper/stage/native hashes
+and the actual32 argv/profile plan. Frozen packet SHA256
+`a86e06fae72c2221cbdae9d3a9993a4e7c4ba99f73f449958d69a73dcf0eb833`.
+Root also confirms the launch interpreter is Python3.10.12; the pinned capacity
+helper uses compatible manual hashing, not newer file_digest.
+
+One guarded `admit && launch` attempt, actual session70889, exits1. The remote
+load preflight rejects with `host load1 exceeds available affinity CPU count`
+inside before=check(), prior to root.mkdir or any staging write. The sequential
+condition prevents launch. Read-only reconciliation confirms the proposed
+diagnostic-green10 root does not exist and is not a symlink: no admission,
+LAUNCH or detached PID exists. Do not report a live diagnosis process.
+
+Original logs/ACTUAL-ONCE.md remain in DqUmZX/admission-v1. Follow-up observation
+at13:48:24Z records load1=141.3037 and available-affinity112; this is not a
+fabricated measurement at the rejection instant. No retry, threshold change,
+new allowance, input modification, scientific call or deletion occurs.
+
+Wait for suitable host conditions before a separately recorded fresh admission
+attempt; preserve this failure and never blindly restart. This affected task
+does not block unblocked BED/other product work or change the full active goal.
