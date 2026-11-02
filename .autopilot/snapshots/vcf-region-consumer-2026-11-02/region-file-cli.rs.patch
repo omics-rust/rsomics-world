@@ -1,0 +1,125 @@
+--- before/tests/regions_file_cli.rs
++++ after/tests/regions_file_cli.rs
+@@ -0,0 +1,122 @@
++use std::fs;
++use std::io::Write;
++use std::process::{Command, Output};
++
++const HEADER: &[u8] = b"##fileformat=VCFv4.3\n\
++##FILTER=<ID=PASS,Description=\"All filters passed\">\n\
++##contig=<ID=chr1,length=100>\n\
++#CHROM\tPOS\tID\tREF\tALT\tQUAL\tFILTER\tINFO\n";
++const FIRST: &[u8] = b"chr1\t10\tdel10\tAC\tA\t.\tPASS\t.\n";
++const SECOND: &[u8] = b"chr1\t11\tsnp11\tC\tG\t.\tPASS\t.\n";
++
++fn command() -> Command {
++    Command::new(env!("CARGO_BIN_EXE_rsomics-vcf"))
++}
++
++fn success(output: Output) -> Output {
++    assert!(
++        output.status.success(),
++        "stdout={}\nstderr={}",
++        String::from_utf8_lossy(&output.stdout),
++        String::from_utf8_lossy(&output.stderr)
++    );
++    output
++}
++
++fn body(bytes: &[u8]) -> Vec<u8> {
++    bytes
++        .split_inclusive(|byte| *byte == b'\n')
++        .filter(|line| !line.starts_with(b"#"))
++        .flatten()
++        .copied()
++        .collect()
++}
++
++fn gzip(source: &[u8]) -> Vec<u8> {
++    let mut writer = flate2::write::GzEncoder::new(Vec::new(), flate2::Compression::default());
++    writer.write_all(source).unwrap();
++    writer.finish().unwrap()
++}
++
++#[test]
++fn shared_region_files_preserve_coordinates_exclusion_and_transactions() {
++    let directory = tempfile::tempdir().unwrap();
++    let input = directory.path().join("input.vcf.gz");
++    let mut writer = noodles_bgzf::io::Writer::new(Vec::new());
++    writer.write_all(HEADER).unwrap();
++    writer.write_all(FIRST).unwrap();
++    writer.write_all(SECOND).unwrap();
++    fs::write(&input, writer.finish().unwrap()).unwrap();
++    success(command().arg("index").arg(&input).output().unwrap());
++
++    let both = [FIRST, SECOND].concat();
++    let vcf = [HEADER, b"chr1\t10\tregion\tAC\tA\t.\tPASS\t.\n"].concat();
++    let formats = [
++        ("point.tsv", b"chr1\t10\n".to_vec(), FIRST),
++        ("interval.tsv", b"chr1\t10\t11\n".to_vec(), both.as_slice()),
++        ("interval.bed", b"chr1\t9\t10\n".to_vec(), FIRST),
++        ("interval.BED.gz", gzip(b"chr1\t9\t10\n"), FIRST),
++        ("interval.tsv.gz", gzip(b"chr1\t10\t11\n"), both.as_slice()),
++        ("regions.vcf", vcf, FIRST),
++        ("legacy.regions", b"chr1:10-11\n".to_vec(), both.as_slice()),
++    ];
++    let mut failures = Vec::new();
++    for (name, bytes, expected) in formats {
++        let regions = directory.path().join(name);
++        fs::write(&regions, bytes).unwrap();
++        for consumer in ["view", "concat"] {
++            let mut child = command();
++            child.arg(consumer);
++            if consumer == "concat" {
++                child.arg("-a");
++            }
++            let output = child
++                .arg("-R")
++                .arg(&regions)
++                .args(["--regions-overlap", "pos"])
++                .arg(&input)
++                .output()
++                .unwrap();
++            eprintln!(
++                "region file {consumer}/{name}: status={}, body={:?}, stderr={}",
++                output.status,
++                String::from_utf8_lossy(&body(&output.stdout)),
++                String::from_utf8_lossy(&output.stderr)
++            );
++            if !output.status.success() || body(&output.stdout) != expected {
++                failures.push(format!("{consumer}/{name}"));
++            }
++        }
++    }
++
++    let point = directory.path().join("point.tsv");
++    let excluded = command()
++        .args(["view", "-T"])
++        .arg(format!("^{}", point.display()))
++        .args(["--targets-overlap", "pos"])
++        .arg(&input)
++        .output()
++        .unwrap();
++    if !excluded.status.success() || body(&excluded.stdout) != SECOND {
++        failures.push("caret target-file exclusion".to_owned());
++    }
++
++    let invalid = directory.path().join("invalid.bed");
++    let destination = directory.path().join("preserved.vcf");
++    fs::write(&invalid, b"chr1\t11\t10\n").unwrap();
++    fs::write(&destination, b"existing output").unwrap();
++    let output = command()
++        .args(["view", "-R"])
++        .arg(&invalid)
++        .arg("-o")
++        .arg(&destination)
++        .arg(&input)
++        .output()
++        .unwrap();
++    assert!(!output.status.success());
++    assert_eq!(fs::read(&destination).unwrap(), b"existing output");
++    if !String::from_utf8_lossy(&output.stderr).contains("invalid.bed") {
++        failures.push("malformed file diagnostic path".to_owned());
++    }
++    assert!(failures.is_empty(), "{failures:#?}");
++}

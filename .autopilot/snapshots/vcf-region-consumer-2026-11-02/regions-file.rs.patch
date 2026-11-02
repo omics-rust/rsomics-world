@@ -1,0 +1,51 @@
+--- before/src/regions/file.rs
++++ after/src/regions/file.rs
+@@ -0,0 +1,48 @@
++use std::io;
++use std::path::Path;
++
++use noodles_core::{Position, Region};
++use rsomics_common::{Result, RsomicsError};
++use rsomics_intervals::{GenomicRegion, RegionFileError, RegionFileMode, read_region_file};
++
++pub(super) fn read(path: &Path) -> Result<Vec<Region>> {
++    read_region_file(path, RegionFileMode::Targets)
++        .map_err(|error| match error {
++            RegionFileError::Input { path, source } => RsomicsError::Io(io::Error::new(
++                source.kind(),
++                format!("reading region file {}: {source}", path.display()),
++            )),
++            error => RsomicsError::InvalidInput(error.to_string()),
++        })?
++        .into_iter()
++        .map(|region| convert(path, region))
++        .collect()
++}
++
++fn convert(path: &Path, region: GenomicRegion) -> Result<Region> {
++    let (start, end) = match (region.start(), region.end()) {
++        (None, None) => {
++            return super::parse_region(region.chrom()).map_err(|error| {
++                RsomicsError::InvalidInput(format!("{}: {error}", path.display()))
++            });
++        }
++        (Some(start), Some(end)) => (start, end),
++        _ => unreachable!("genomic region bounds are paired"),
++    };
++    let coordinate_error = || {
++        RsomicsError::InvalidInput(format!(
++            "{}: region coordinate exceeds the supported range",
++            path.display()
++        ))
++    };
++    let start = usize::try_from(start)
++        .ok()
++        .and_then(|value| value.checked_add(1))
++        .and_then(Position::new)
++        .ok_or_else(coordinate_error)?;
++    let end = usize::try_from(end)
++        .ok()
++        .and_then(Position::new)
++        .ok_or_else(coordinate_error)?;
++    Ok(Region::new(region.chrom().to_owned(), start..=end))
++}

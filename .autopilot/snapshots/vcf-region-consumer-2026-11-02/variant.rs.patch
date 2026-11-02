@@ -1,0 +1,96 @@
+--- before/src/commands/variant.rs
++++ after/src/commands/variant.rs
+@@ -47,10 +47,11 @@
+     file: Option<&Path>,
+     overlap: OverlapMode,
+ ) -> Result<Option<RegionSet>> {
+-    let Some(values) = read_list(list, file, "region")? else {
+-        return Ok(None);
+-    };
+-    RegionSet::parse(values, overlap).map(Some)
++    match (list, file) {
++        (Some(list), _) => RegionSet::parse(list.split(',').map(str::to_owned), overlap).map(Some),
++        (None, Some(path)) => RegionSet::read_file(path, overlap).map(Some),
++        (None, None) => Ok(None),
++    }
+ }
+ 
+ pub(crate) fn read_targets(
+@@ -58,10 +59,11 @@
+     file: Option<&Path>,
+     overlap: OverlapMode,
+ ) -> Result<Option<RegionSelection>> {
+-    let Some((values, exclude)) = read_excludable_list(list, file, "target region")? else {
++    let Some((regions, exclude)) = read_excludable_regions(list, file, overlap, "target region")?
++    else {
+         return Ok(None);
+     };
+-    RegionSelection::parse(values, overlap, exclude).map(Some)
++    Ok(Some(RegionSelection::new(regions, exclude)))
+ }
+ 
+ pub(crate) fn read_mask(
+@@ -69,10 +71,7 @@
+     file: Option<&Path>,
+     overlap: OverlapMode,
+ ) -> Result<Option<(RegionSet, bool)>> {
+-    let Some((values, negate)) = read_excludable_list(list, file, "mask region")? else {
+-        return Ok(None);
+-    };
+-    RegionSet::parse(values, overlap).map(|regions| Some((regions, negate)))
++    read_excludable_regions(list, file, overlap, "mask region")
+ }
+ 
+ pub(crate) fn read_list(
+@@ -103,12 +102,12 @@
+     Ok(Some(values))
+ }
+ 
+-fn read_excludable_list(
++fn read_excludable_regions(
+     list: Option<String>,
+     file: Option<&Path>,
++    overlap: OverlapMode,
+     kind: &str,
+-) -> Result<Option<(Vec<String>, bool)>> {
+-    let list_supplied = list.is_some();
++) -> Result<Option<(RegionSet, bool)>> {
+     let mut exclude = false;
+     let mut selected_file = file.map(Path::to_path_buf);
+     if let Some(path) = file
+@@ -123,18 +122,23 @@
+         exclude = true;
+     }
+ 
+-    let Some(mut values) = read_list(list, selected_file.as_deref(), kind)? else {
++    let regions = if let Some(list) = list {
++        let mut values: Vec<_> = list.split(',').map(str::to_owned).collect();
++        if let Some(value) = values.first().and_then(|value| value.strip_prefix('^')) {
++            let value = value.to_owned();
++            if value.is_empty() {
++                return Err(RsomicsError::InvalidInput(format!(
++                    "{kind} list is empty after ^"
++                )));
++            }
++            values[0] = value;
++            exclude = true;
++        }
++        RegionSet::parse(values, overlap)?
++    } else if let Some(path) = selected_file {
++        RegionSet::read_file(&path, overlap)?
++    } else {
+         return Ok(None);
+     };
+-    if list_supplied && let Some(value) = values.first().and_then(|value| value.strip_prefix('^')) {
+-        let value = value.to_owned();
+-        if value.is_empty() {
+-            return Err(RsomicsError::InvalidInput(format!(
+-                "{kind} list is empty after ^"
+-            )));
+-        }
+-        values[0] = value;
+-        exclude = true;
+-    }
+-    Ok(Some((values, exclude)))
++    Ok(Some((regions, exclude)))
+ }

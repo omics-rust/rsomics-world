@@ -1,0 +1,10 @@
+--- before/Cargo.toml
++++ after/Cargo.toml
+@@ -28,6 +28,7 @@
+ regex = "1"
+ rsomics-common = "0.12"
+ rsomics-help = "0.4"
++rsomics-intervals = "0.4.0"
+ rsomics-seqio = "0.6"
+ serde = { version = "1", features = ["derive"] }
+ 

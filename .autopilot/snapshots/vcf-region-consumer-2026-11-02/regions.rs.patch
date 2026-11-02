@@ -1,0 +1,22 @@
+--- before/src/regions.rs
++++ after/src/regions.rs
+@@ -10,6 +10,8 @@
+ 
+ use crate::format::read_bcf_record_checked;
+ 
++mod file;
++
+ #[derive(Clone, Copy, Debug, Default, Eq, PartialEq)]
+ pub enum OverlapMode {
+     Position,
+@@ -418,6 +420,10 @@
+ }
+ 
+ impl RegionSet {
++    pub(crate) fn read_file(path: &Path, overlap: OverlapMode) -> Result<Self> {
++        Self::new(file::read(path)?, overlap)
++    }
++
+     pub fn new(regions: Vec<Region>, overlap: OverlapMode) -> Result<Self> {
+         if regions.is_empty() {
+             return Err(RsomicsError::InvalidInput(

@@ -1,7 +1,9 @@
 # VCF concat normal compatibility and region-file consumer
 
-Status: observed source/native captures adopted as diagnosis and plan inputs,
-not accepted tests or full concat qualification. Consumer wave plan:
+Status: shared public-parser consumer and maintained normal-oracle increment
+root-adopted after one whole-feature review and one P2 test-only correction.
+Capture evidence remains diagnosis; the corrected local test bundle is now
+accepted for this bounded wave, not full concat qualification. Consumer plan:
 `docs/plans/2026-11-02-vcf-region-files-and-normal-oracles.md`.
 
 ## Captured normal workflows
@@ -25,8 +27,10 @@ LF policy remains a separate pending question.
 The two TSV `-R` cases fail natively before output because a whole tabbed line
 is interpreted as the reference name. Root reads actual shared entry points
 and primary installed manual; this is not an invalid fixture or CLI setup.
-Other observed safety contrasts retain exact outputs, including upstream
-QUAL=bad coercion to0/exit0. Native fail-loud behavior is preserved.
+Other observed safety contrasts retain exact outputs. Specifically, upstream
+concat exits0 and retains raw QUAL=bad; a subsequent view decode exits0 and
+coerces it to0. These are distinct stages, not concat coercion. Native fail-loud
+behavior and destination preservation remain unchanged.
 
 Report uIrZ88/REPORT.md SHA64a0601d348def4eb5381dd7c5ec2ae23331dedde6d427a71c7febe23db44d47;
 runnerSHA36feb2c7ff0d626e812c10acdbad447643fcbc25ff08e43a10628e3be562d4fb.
@@ -62,4 +66,77 @@ The planned wave is unambiguous shared-consumer repair plus observed normal
 workflow oracles, not a request to implement every hypothetical corner case.
 Both public-policy holds, performance, broader resource/integration and owning
 native-four/delivery gates remain separate. No owning stage/commit/publication
-or new test/production code has occurred for this wave yet.
+has occurred. The now-accepted production/test increment is recorded below.
+
+## Completed bounded consumer and oracle increment
+
+Packet:
+`/Volumes/KIOXIA/Developments/tmp/vcf-region-consumer-wave-20261102.pAZRxI`.
+Final REPORTSHAcb7ca2d9c02c69cd9cf114c4b9a274887af6189ae263a48e3441d0a4305154c4;
+72-payload manifestSHAa44c5e9592f8fadc575ba5e9f6adb30b744eae13a11b38407e678185182f3ddd.
+Root reads the complete report/command record, one review and sole P2 delta,
+checks all72 final payloads and freshly checks every176 live source body.
+Raw result lines total30 groups/452pass/0fail/64ignored per full profile and
+7concat+3filter+4view explicit passes per profile. No scientific rerun is needed
+for adoption. The initial failed logs and wrong-stage expectation remain.
+
+Exactly seven paths form this increment: Cargo.toml/lock, shared variant entry,
+RegionSet, new private region-file adapter, new connected CLI regression and
+concat compatibility tests. Published intervals0.4.0 is the only lock addition,
+checksumd55e00dc3e6c0423430ed2ac84dfb21fe05acf522e83db1b75b09c995fa5b593;
+other locked versions, generic sample-list body and three protected BGZF
+repair bodies remain exact. No new public item, foundation edit, flag/version,
+overlap or indexed-traversal policy is introduced.
+
+The connected real CLI regression moves12 normal view/concat format commands
+from observed failure to exact full-body success, retains both legacy-colon
+controls, and checks caret target exclusion plus malformed-file rollback/path
+context. Maintained normal oracles now cover all16 encodings, relative file
+lists, four BCF-G outputs, six complete two-sample PS handoffs, complete safety
+contrasts and actual stdin. No body-row sorting hides source differences.
+
+Initial format/Clippy/full suites pass, but both explicit concat runs fail6/1
+because the new test expected post-view QUAL0 directly from raw concatbad.
+The one fresh whole-feature review finds no material new production defect;
+root authorizes only the P2 test-stage correction. It now asserts successful
+raw concatbad, explicitly successful view0, unchanged native rejection and
+marker preservation. The previously blocked stdin block now completes.
+Fresh coherent format/strict Clippy/full debug+release/explicit selection bundle
+exits0. Explicit14 were default-ignored, not ordinary passes; other50 ignored
+tests remain unexecuted. Existing3 resource CLI tests pass without a new
+representative resource/performance claim.
+
+Review: vcf-region-consumer-whole-review-20261102.bCIHPx/REVIEW.md,
+SHA0f530b8acaac38fb0dfc480d3e4dc38caaf0f12e2fbde8d740fcb2cc178ad5ee.
+No second reviewer or helper campaign. Final concat-test SHA
+d054d8c3b45d180f4af1e48bdaadcb9a35eedae2d678a9dd8faf7d6c18f0ed7f;
+six other reviewed bodies remain exact. Final source174→176:5changed,
+169untouched,2new0644, all prior modes preserved and index empty. Owner HEAD
+still682942cfa69768dc3a127a8544f2f07213b704ea; unrelated work is not staged.
+Final source manifestSHA2ceca46765c96f7a456010b398fc905424ab6b02b2680e47eae141c93e36fe53.
+Exact seven final patches/manifests are retained under
+`.autopilot/snapshots/vcf-region-consumer-2026-11-02/`, only over its identified
+174-body predecessor, not owning HEAD alone.
+
+## Review rulings and independent remaining gates
+
+- P2 QUAL stage is corrected as above; no scientific/production relaxation.
+- P3 empty/comment-only selection-file path-context loss is explicitly deferred
+  as minor; no helper test matrix or polish patch is added.
+- Missing-final-LF splice remains P1/human-policy held; no error/insert choice
+  is inferred and no corruption is reclassified as compatibility.
+- Same-coordinate indexed ordering remains human-pending; equal membership/
+  dedup winners do not prove body-order equality.
+- Foundation non-UTF8 suffix inference remains a source-established follow-up
+  before public delivery; no new runtime pass or duplicate parser workaround.
+- Targets mixed-column/whole-token permissiveness is retained product grammar,
+  not new upstream-strictness parity or a shared API change.
+- Indexed/streamed file processing, chromosome ordering and INFO/END/symbolic/
+  gVCF semantics beyond observed VCF POS selection remain outside this repair.
+- Generic sample files and unusual caret/non-UTF8 combinations retain existing
+  behavior, not new qualification or a sample-selection redesign.
+- Unrelated inherited concat/reader/index code was not re-reviewed/reclassified
+  by this increment. Its earlier repairs retain their own bounded evidence.
+- Representative throughput/RSS/I/O, many-input resource evidence, owning
+  exact-head native-four, package/API/delivery and registry gates remain open.
+  This bounded local acceptance does not authorize public frozen0.6 unchanged.

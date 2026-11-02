@@ -1,0 +1,412 @@
+--- /Volumes/KIOXIA/Developments/tmp/vcf-region-consumer-wave-20261102.pAZRxI/before-tests_concat_compat.rs	2026-08-19 23:25:27
++++ /Volumes/KIOXIA/Documents/omics-rust/rsomics-vcf/tests/concat_compat.rs	2026-11-02 11:04:40
+@@ -1,6 +1,7 @@
+ use std::fs;
++use std::io::Write;
+ use std::path::{Path, PathBuf};
+-use std::process::{Command, Output};
++use std::process::{Command, Output, Stdio};
+ 
+ fn ours() -> Command {
+     Command::new(env!("CARGO_BIN_EXE_rsomics-vcf"))
+@@ -330,6 +331,16 @@
+         path(&right),
+     ]));
+     let expected = records(&expected.stdout);
++    assert_eq!(
++        expected,
++        records(
++            b"chr1\t10\tl1a\tA\tC\t.\tPASS\t.\tGT:PS\t0|1:10\n\
++chr1\t20\tl1b\tG\tT\t.\tPASS\t.\tGT:PS\t0|1:10\n\
++chr1\t30\tr1c\tA\tG\t.\tPASS\t.\tGT:PS\t0|1:10\n\
++chr2\t20\tr2b\tT\tA\t.\tPASS\t.\tGT:PS\t1|0:20\n\
++chr2\t30\tr2c\tG\tA\t.\tPASS\t.\tGT:PS\t1|0:20\n"
++        )
++    );
+     assert!(
+         expected
+             .iter()
+@@ -495,6 +506,21 @@
+         path(&left),
+         path(&unmatched),
+     ]));
++    assert_eq!(
++        records(&actual_warn.stdout),
++        records(
++            b"chr1\t10\tl1\tA\tC\t.\tPASS\t.\tGT:PS\t0|1:10\n\
++chr1\t40\tu4\tT\tC\t.\tPASS\t.\tGT:PS\t1|0:10\n"
++        )
++    );
++    assert_eq!(
++        records(&expected_warn.stdout),
++        records(
++            b"chr1\t10\tl1\tA\tC\t.\tPASS\t.\tGT:PS\t0|1:10\n\
++chr1\t30\tu3\tC\tT\t.\tPASS\t.\tGT:PS\t0|1:10\n\
++chr1\t40\tu4\tT\tC\t.\tPASS\t.\tGT:PS\t1|0:10\n"
++        )
++    );
+     assert!(records(&actual_warn.stdout).iter().all(|record| {
+         !record
+             .windows(b"\tu3\t".len())
+@@ -573,33 +599,42 @@
+         encoded.push((name, left, right));
+     }
+ 
+-    for (case, output) in encoded.iter().zip(["v", "z", "b", "u"]) {
+-        let (input, left, right) = case;
+-        let actual = directory.path().join(format!("actual-{input}-{output}"));
+-        let expected = directory.path().join(format!("expected-{input}-{output}"));
+-        run(ours().args([
+-            "concat",
+-            "-O",
+-            output,
+-            "-o",
+-            path(&actual),
+-            path(left),
+-            path(right),
+-        ]));
+-        run(Command::new(oracle()).args([
+-            "concat",
+-            "--no-version",
+-            &format!("-O{output}"),
+-            "-o",
+-            path(&expected),
+-            path(left),
+-            path(right),
+-        ]));
+-        let actual =
+-            run(Command::new(oracle()).args(["view", "--no-version", "-Ov", path(&actual)]));
+-        let expected =
+-            run(Command::new(oracle()).args(["view", "--no-version", "-Ov", path(&expected)]));
+-        assert_eq!(canonical(&actual.stdout), canonical(&expected.stdout));
++    for (input, left, right) in &encoded {
++        for output in ["v", "z", "b", "u"] {
++            let actual = directory.path().join(format!("actual-{input}-{output}"));
++            let expected = directory.path().join(format!("expected-{input}-{output}"));
++            run(ours().args([
++                "concat",
++                "-O",
++                output,
++                "-o",
++                path(&actual),
++                path(left),
++                path(right),
++            ]));
++            run(Command::new(oracle()).args([
++                "concat",
++                "--no-version",
++                &format!("-O{output}"),
++                "-o",
++                path(&expected),
++                path(left),
++                path(right),
++            ]));
++            let actual =
++                run(Command::new(oracle()).args(["view", "--no-version", "-Ov", path(&actual)]));
++            let expected =
++                run(Command::new(oracle()).args(["view", "--no-version", "-Ov", path(&expected)]));
++            assert_eq!(canonical(&actual.stdout), canonical(&expected.stdout));
++            assert_eq!(
++                records(&actual.stdout),
++                records(
++                    b"chr1\t10\ta\tA\tC\t.\tPASS\tDP=2\n\
++chr1\t20\tb\tG\tT\t.\tPASS\tDP=3\n"
++                ),
++                "{input} -> {output}"
++            );
++        }
+     }
+ 
+     let (_, left, right) = encoded.iter().find(|(name, _, _)| *name == "b").unwrap();
+@@ -621,3 +656,291 @@
+         run(Command::new(oracle()).args(["view", "--no-version", "-Ov", path(&expected_path)]));
+     assert_eq!(canonical(&actual.stdout), canonical(&expected.stdout));
+ }
++
++#[test]
++#[ignore = "release oracle: requires bcftools 1.24"]
++fn ordered_list_sites_only_and_safety_contracts_match_observed_bcftools_1_24() {
++    assert_oracle_version();
++    let directory = tempfile::tempdir().unwrap();
++    let root = directory.path();
++    let header = "##fileformat=VCFv4.3\n\
++##contig=<ID=chr1,length=100>\n\
++##INFO=<ID=DP,Number=1,Type=Integer,Description=\"Depth\">\n\
++##FORMAT=<ID=GT,Number=1,Type=String,Description=\"Genotype\">\n\
++#CHROM\tPOS\tID\tREF\tALT\tQUAL\tFILTER\tINFO\tFORMAT\tS1\n";
++    let rows = [
++        "chr1\t10\ta\tA\tC\t.\tPASS\tDP=2\tGT\t0/1\n",
++        "chr1\t20\tb\tG\tT\t.\tPASS\tDP=3\tGT\t1/1\n",
++        "chr1\t30\tc\tC\tG\t.\tPASS\tDP=4\tGT\t0/0\n",
++    ];
++    let mut inputs = Vec::new();
++    let mut bcf_inputs = Vec::new();
++    for (name, row) in ["A", "B", "C"].into_iter().zip(rows) {
++        let input = root.join(format!("{name}.vcf"));
++        let bcf = root.join(format!("{name}.bcf"));
++        fs::write(&input, format!("{header}{row}")).unwrap();
++        run(Command::new(oracle()).args([
++            "view",
++            "--no-version",
++            "-Ob",
++            "-o",
++            path(&bcf),
++            path(&input),
++        ]));
++        inputs.push(input);
++        bcf_inputs.push(bcf);
++    }
++    fs::create_dir(root.join("sub")).unwrap();
++    let list = root.join("sub/inputs.list");
++    fs::write(&list, b"A.vcf\n\nB.vcf\nC.vcf\n").unwrap();
++    let actual = run(ours().current_dir(root).args(["concat", "-f", path(&list)]));
++    let expected = run(Command::new(oracle()).current_dir(root).args([
++        "concat",
++        "--no-version",
++        "-Ov",
++        "-f",
++        path(&list),
++    ]));
++    let complete = b"chr1\t10\ta\tA\tC\t.\tPASS\tDP=2\tGT\t0/1\n\
++chr1\t20\tb\tG\tT\t.\tPASS\tDP=3\tGT\t1/1\n\
++chr1\t30\tc\tC\tG\t.\tPASS\tDP=4\tGT\t0/0\n";
++    assert_eq!(records(&actual.stdout), records(complete));
++    assert_eq!(canonical(&actual.stdout), canonical(&expected.stdout));
++
++    fs::write(&list, b"# chunks\nA.vcf\nB.vcf\nC.vcf\n").unwrap();
++    let actual = run(ours().current_dir(root).args(["concat", "-f", path(&list)]));
++    assert_eq!(records(&actual.stdout), records(complete));
++    let rejected = Command::new(oracle())
++        .current_dir(root)
++        .args(["concat", "--no-version", "-Ov", "-f", path(&list)])
++        .output()
++        .unwrap();
++    assert!(!rejected.status.success());
++
++    for encoding in ["v", "z", "b", "u"] {
++        let mut outputs = Vec::new();
++        for (name, mut child) in [("native", ours()), ("upstream", Command::new(oracle()))] {
++            let output = root.join(format!("sites-{name}-{encoding}"));
++            child.arg("concat");
++            if name == "upstream" {
++                child.arg("--no-version");
++            }
++            run(child
++                .args(["-G", "-O", encoding, "-o", path(&output)])
++                .args(&bcf_inputs));
++            let decoded =
++                run(Command::new(oracle()).args(["view", "--no-version", "-Ov", path(&output)]));
++            assert_eq!(
++                records(&decoded.stdout),
++                records(
++                    b"chr1\t10\ta\tA\tC\t.\tPASS\tDP=2\n\
++chr1\t20\tb\tG\tT\t.\tPASS\tDP=3\n\
++chr1\t30\tc\tC\tG\t.\tPASS\tDP=4\n"
++                )
++            );
++            let text = std::str::from_utf8(&decoded.stdout).unwrap();
++            assert!(!text.contains("##FORMAT="));
++            assert_eq!(
++                text.lines()
++                    .find(|line| line.starts_with("#CHROM"))
++                    .unwrap(),
++                "#CHROM\tPOS\tID\tREF\tALT\tQUAL\tFILTER\tINFO"
++            );
++            outputs.push(decoded.stdout);
++        }
++        assert_eq!(canonical(&outputs[0]), canonical(&outputs[1]));
++    }
++
++    let destination = root.join("safe.vcf");
++    for (name, second_header, second_row, upstream_body) in [
++        ("regression", header.to_owned(), "chr1\t5\tb\tG\tT\t.\tPASS\tDP=3\tGT\t1/1\n",
++         b"chr1\t10\ta\tA\tC\t.\tPASS\tDP=2\tGT\t0/1\nchr1\t5\tb\tG\tT\t.\tPASS\tDP=3\tGT\t1/1\n".as_slice()),
++        ("schema", header.replace("Type=Integer", "Type=Float"), rows[1],
++         b"chr1\t10\ta\tA\tC\t.\tPASS\tDP=2\tGT\t0/1\nchr1\t20\tb\tG\tT\t.\tPASS\tDP=3\tGT\t1/1\n".as_slice()),
++        ("qual", header.to_owned(), "chr1\t20\tb\tG\tT\tbad\tPASS\tDP=3\tGT\t1/1\n",
++         b"chr1\t10\ta\tA\tC\t.\tPASS\tDP=2\tGT\t0/1\nchr1\t20\tb\tG\tT\tbad\tPASS\tDP=3\tGT\t1/1\n".as_slice()),
++    ] {
++        let second = root.join(format!("{name}.vcf"));
++        fs::write(&second, format!("{second_header}{second_row}")).unwrap();
++        fs::write(&destination, b"existing output").unwrap();
++        let actual = ours().args(["concat", "-o", path(&destination), path(&inputs[0]), path(&second)])
++            .output().unwrap();
++        assert!(!actual.status.success(), "{name}");
++        assert_eq!(fs::read(&destination).unwrap(), b"existing output", "{name}");
++        let expected = run(Command::new(oracle()).args([
++            "concat", "--no-version", "-Ov", path(&inputs[0]), path(&second),
++        ]));
++        assert_eq!(records(&expected.stdout), records(upstream_body), "{name}");
++        if name == "qual" {
++            let raw = root.join("qual-upstream.vcf");
++            fs::write(&raw, &expected.stdout).unwrap();
++            let decoded =
++                run(Command::new(oracle()).args(["view", "--no-version", "-Ov", path(&raw)]));
++            assert_eq!(
++                records(&decoded.stdout),
++                records(
++                    b"chr1\t10\ta\tA\tC\t.\tPASS\tDP=2\tGT\t0/1\n\
++chr1\t20\tb\tG\tT\t0\tPASS\tDP=3\tGT\t1/1\n"
++                )
++            );
++        }
++    }
++
++    for (native, mut child) in [(true, ours()), (false, Command::new(oracle()))] {
++        child.arg("concat");
++        if !native {
++            child.args(["--no-version", "-Ov"]);
++        }
++        let mut child = child
++            .args(["-", path(&inputs[1])])
++            .stdin(Stdio::piped())
++            .stdout(Stdio::piped())
++            .stderr(Stdio::piped())
++            .spawn()
++            .unwrap();
++        child
++            .stdin
++            .take()
++            .unwrap()
++            .write_all(&fs::read(&inputs[0]).unwrap())
++            .unwrap();
++        let output = child.wait_with_output().unwrap();
++        if native {
++            assert!(output.status.success());
++            assert_eq!(
++                records(&output.stdout),
++                records(
++                    b"chr1\t10\ta\tA\tC\t.\tPASS\tDP=2\tGT\t0/1\n\
++chr1\t20\tb\tG\tT\t.\tPASS\tDP=3\tGT\t1/1\n"
++                )
++            );
++        } else {
++            assert!(!output.status.success());
++        }
++    }
++}
++
++#[test]
++#[ignore = "release oracle: requires bcftools 1.24"]
++fn complete_compact_phase_handoffs_match_bcftools_1_24() {
++    assert_oracle_version();
++    let directory = tempfile::tempdir().unwrap();
++    let header = "##fileformat=VCFv4.3\n\
++##contig=<ID=chr1,length=100>\n\
++##FORMAT=<ID=GT,Number=1,Type=String,Description=\"Genotype\">\n\
++#CHROM\tPOS\tID\tREF\tALT\tQUAL\tFILTER\tINFO\tFORMAT\tS1\tS2\n";
++    let fixtures = [
++        [
++            "chr1\t10\tl1\tA\tC\t.\tPASS\t.\tGT\t0|1\t0|0\n\
++chr1\t20\tl2\tG\tT\t.\tPASS\t.\tGT\t0|1\t1|0\n\
++chr1\t30\tl3\tC\tG\t.\tPASS\t.\tGT\t1|0\t0|1\n",
++            "chr1\t20\tl2\tG\tT\t.\tPASS\t.\tGT\t1|0\t1|0\n\
++chr1\t30\tl3\tC\tG\t.\tPASS\t.\tGT\t0|1\t0|1\n\
++chr1\t40\tl4\tT\tA\t.\tPASS\t.\tGT\t1|0\t0|1\n",
++        ],
++        [
++            "chr1\t10\tl1\tT\tC\t.\tPASS\t.\tGT\t0|1\t0|0\n\
++chr1\t20\tl2\tA\tC\t.\tPASS\t.\tGT\t0|1\t0|1\n\
++chr1\t30\tl3\tG\tT\t.\tPASS\t.\tGT\t0|1\t1|0\n",
++            "chr1\t20\tr2\tA\tC\t.\tPASS\t.\tGT\t0|1\t0|1\n\
++chr1\t30\tr3\tG\tT\t.\tPASS\t.\tGT\t1|0\t1|0\n\
++chr1\t40\tr4\tC\tA\t.\tPASS\t.\tGT\t0|1\t0|1\n",
++        ],
++    ];
++    let inputs: Vec<_> = fixtures
++        .into_iter()
++        .enumerate()
++        .map(|(case, chunks)| {
++            chunks
++                .into_iter()
++                .enumerate()
++                .map(|(chunk, body)| {
++                    let source = directory.path().join(format!("phase-{case}-{chunk}.vcf"));
++                    let compressed = directory
++                        .path()
++                        .join(format!("phase-{case}-{chunk}.vcf.gz"));
++                    fs::write(&source, format!("{header}{body}")).unwrap();
++                    index(&source, &compressed);
++                    compressed
++                })
++                .collect::<Vec<_>>()
++        })
++        .collect();
++    let cases = [
++        (
++            0,
++            false,
++            "30",
++            "chr1\t10\tl1\tA\tC\t.\tPASS\t.\tGT:PS\t0|1:10\t0|0:10\n\
++chr1\t20\tl2\tG\tT\t.\tPASS\t.\tGT:PS\t0|1:10\t1|0:10\n\
++chr1\t30\tl3\tC\tG\t.\tPASS\t.\tGT:PQ:PS\t1|0:99:10\t0|1:99:10\n\
++chr1\t40\tl4\tT\tA\t.\tPASS\t.\tGT:PS\t0|1:10\t0|1:10\n",
++        ),
++        (
++            0,
++            true,
++            "30",
++            "chr1\t10\tl1\tA\tC\t.\tPASS\t.\tGT:PS\t0|1:10\t0|0:10\n\
++chr1\t20\tl2\tG\tT\t.\tPASS\t.\tGT\t0|1\t1|0\n\
++chr1\t30\tl3\tC\tG\t.\tPASS\t.\tGT:PQ\t1|0:99\t0|1:99\n\
++chr1\t40\tl4\tT\tA\t.\tPASS\t.\tGT\t0|1\t0|1\n",
++        ),
++        (
++            1,
++            false,
++            "30",
++            "chr1\t10\tl1\tT\tC\t.\tPASS\t.\tGT:PS\t0|1:10\t0|0:10\n\
++chr1\t20\tl2\tA\tC\t.\tPASS\t.\tGT:PS\t0|1:10\t0|1:10\n\
++chr1\t30\tr3\tG\tT\t.\tPASS\t.\tGT:PQ:PS\t1|0:0:30\t1|0:99:10\n\
++chr1\t40\tr4\tC\tA\t.\tPASS\t.\tGT:PS\t0|1:30\t0|1:10\n",
++        ),
++        (
++            1,
++            true,
++            "30",
++            "chr1\t10\tl1\tT\tC\t.\tPASS\t.\tGT:PS\t0|1:10\t0|0:10\n\
++chr1\t20\tl2\tA\tC\t.\tPASS\t.\tGT\t0|1\t0|1\n\
++chr1\t30\tr3\tG\tT\t.\tPASS\t.\tGT:PQ:PS\t1|0:0:30\t1|0:99:.\n\
++chr1\t40\tr4\tC\tA\t.\tPASS\t.\tGT\t0|1\t0|1\n",
++        ),
++        (
++            1,
++            false,
++            "0",
++            "chr1\t10\tl1\tT\tC\t.\tPASS\t.\tGT:PS\t0|1:10\t0|0:10\n\
++chr1\t20\tl2\tA\tC\t.\tPASS\t.\tGT:PS\t0|1:10\t0|1:10\n\
++chr1\t30\tr3\tG\tT\t.\tPASS\t.\tGT:PQ:PS\t1|0:0:10\t1|0:99:10\n\
++chr1\t40\tr4\tC\tA\t.\tPASS\t.\tGT:PS\t0|1:10\t0|1:10\n",
++        ),
++        (
++            1,
++            true,
++            "0",
++            "chr1\t10\tl1\tT\tC\t.\tPASS\t.\tGT:PS\t0|1:10\t0|0:10\n\
++chr1\t20\tl2\tA\tC\t.\tPASS\t.\tGT\t0|1\t0|1\n\
++chr1\t30\tr3\tG\tT\t.\tPASS\t.\tGT:PQ\t1|0:0\t1|0:99\n\
++chr1\t40\tr4\tC\tA\t.\tPASS\t.\tGT\t0|1\t0|1\n",
++        ),
++    ];
++    for (fixture, compact, threshold, expected_body) in cases {
++        let mut outputs = Vec::new();
++        for (native, mut child) in [(true, ours()), (false, Command::new(oracle()))] {
++            child.arg("concat");
++            if !native {
++                child.args(["--no-version", "-Ov"]);
++            }
++            child.args(["--ligate", "--min-PQ", threshold]);
++            if compact {
++                child.arg("--compact-PS");
++            }
++            let output = run(child.args(&inputs[fixture]));
++            assert_eq!(
++                records(&output.stdout),
++                records(expected_body.as_bytes()),
++                "fixture={fixture}, compact={compact}, threshold={threshold}, native={native}"
++            );
++            outputs.push(output.stdout);
++        }
++        assert_eq!(canonical(&outputs[0]), canonical(&outputs[1]));
++    }
++}

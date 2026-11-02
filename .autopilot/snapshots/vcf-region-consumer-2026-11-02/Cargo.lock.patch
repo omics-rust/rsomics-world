@@ -1,0 +1,27 @@
+--- before/Cargo.lock
++++ after/Cargo.lock
+@@ -718,6 +718,16 @@
+ ]
+ 
+ [[package]]
++name = "rsomics-intervals"
++version = "0.4.0"
++source = "registry+https://github.com/rust-lang/crates.io-index"
++checksum = "d55e00dc3e6c0423430ed2ac84dfb21fe05acf522e83db1b75b09c995fa5b593"
++dependencies = [
++ "flate2",
++ "thiserror",
++]
++
++[[package]]
+ name = "rsomics-seqio"
+ version = "0.6.0"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+@@ -750,6 +760,7 @@
+  "regex",
+  "rsomics-common",
+  "rsomics-help",
++ "rsomics-intervals",
+  "rsomics-seqio",
+  "serde",
+  "serde_json",
