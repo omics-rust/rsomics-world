@@ -1,10 +1,15 @@
 # Sequence strand-extraction execution
 
+Current: reviewed source integrated as3ba1818e85477573995f6a391522f2ef35054c79;
+exact-head four-native CI41424424381 is running. Clean packaging passes;
+representative performance, delivery and publication remain unearned.
+
 Active plan: `docs/plans/2026-11-02-seq-strand-extraction.md`, committed as
 97dcb2812526dd5ad52ffb0b86d6abb725166d83 with exact Control41422350129 SUCCESS.
 One isolated worker owns source/test edits in rsomics-seq, starting clean at
 d9734e51c4ed557f6d8790d97a686717ebc4769e; it may not stage/commit/push/publish.
-No current implementation or release acceptance is recorded yet.
+The initial handoff below predates source acceptance; the final section
+records integration evidence. No release acceptance is recorded.
 
 Scratch and worker ledger:
 `/Volumes/KIOXIA/Developments/tmp/seq-strand-20261102.GMB2B7`.
@@ -67,3 +72,43 @@ SCP under the same external preflight copies it once into a distinct
 rename creates the final path above. Actual session10638 exits0. This proves
 byte identity, not a freshly recounted record population or performance.
 The original remote copy and both failed ENA partials remain untouched.
+
+## Reviewed source integrated; native qualification running
+
+The prior in-progress description above is historical. Source integration
+is now owning3ba1818e85477573995f6a391522f2ef35054c79, pushed to live main.
+Root fully reads production/new tests/docs, verifies every one of the23
+frozen file hashes and independently cmp-checks all13 historical fixture
+copies. Manifest SHA256 is1dba8c57d2dd960b1487e32c2f71b378fd7be90008347d7396a7f0820d60bd47.
+Full debug/release each have56 passes, zero failed/ignored, including eight
+live suites; strict Clippy/fmt/rustdoc pass. Logs remain in the scratch above.
+
+One fresh integrated reviewer inspects the complete frozen delta and surrounding
+traversal/output/writer/classifier contracts; no P0/P1/P2 material finding.
+P3 suffix allocation even without -R is deferred: one tiny allocation per
+invocation, not a hot-path defect. No cosmetic correction or second reviewer.
+Reviewed exclusions remain later BED/GTF/flank/wrapping/indexed operations,
+existing strict header domain, incidental source warnings/index side effects
+and unproven exhaustive input agreement. None qualifies release/performance.
+
+Root additionally extends existing owning CI with actual uname/Rust-host
+assertions and full release-profile tests on the same four existing runners;
+no oracle revision, compiler or comparison changes. The23-file review manifest
+does not include this root-owned YAML extension; production remains unchanged.
+
+The first staged diff check identifies four intentional trailing spaces in
+two copied coordinate-header golden files. They are exact source output and
+were cmp-verified, not code whitespace defects. A narrowly scoped check
+excluding only those two fixture files passes; preserve the data bytes.
+No global whitespace configuration or source-format waiver is introduced.
+
+After the reviewed source commit, clean cargo package --locked --offline
+passes (50files157.9KiB/41.5KiBcompressed), including actual package build;
+no --allow-dirty. Log: `clean-package.log` in the same scratch. Version0.2.0
+remains unchanged and no registry archive is overwritten or published.
+
+Actual exact-head owning CI41424424381 is created2026-11-02T09:54:17Z at
+3ba1818e85477573995f6a391522f2ef35054c79 and initially queued. Wait for its
+four actual native hosts, both profiles and pinned SeqKit2.13 witnesses;
+local2.14 tests alone are not that acceptance. Representative performance
+and any version bump/delivery/publication remain subsequent gates.
