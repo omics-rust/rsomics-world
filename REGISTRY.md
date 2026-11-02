@@ -8,7 +8,7 @@ Live state is verified against crates.io and the
 operation-sized code is indexed separately in
 [`docs/00-overview/portfolio-inventory.tsv`](docs/00-overview/portfolio-inventory.tsv).
 The latest exact namespace snapshot is
-[`registry-live-state-2026-08-20.md`](docs/00-overview/registry-live-state-2026-08-20.md).
+[`registry-live-state-2026-11-02.md`](docs/00-overview/registry-live-state-2026-11-02.md).
 
 Status meanings are defined in [CONVENTIONS.md](CONVENTIONS.md).
 
@@ -24,21 +24,21 @@ Status meanings are defined in [CONVENTIONS.md](CONVENTIONS.md).
 | `rsomics-composition` | live | Aitchison geometry, log-ratio transforms, zero handling, proportionality, and composition-native inference |
 | `rsomics-count` | live | feature and read counting workflows |
 | `rsomics-deseq` | repo-only | DESeq2-style fitted Wald/count-transform workflow; package and owning native CI qualification |
-| `rsomics-ecology` | planned | community-table diversity, ecological dissimilarity, ordination, metadata association, and permutation analysis |
+| `rsomics-ecology` | repo-only | community-table diversity, ecological dissimilarity, ordination, metadata association, and permutation analysis |
 | `rsomics-edger` | planned | edgeR-style differential-expression workflow |
 | `rsomics-fastq-preprocess` | live | trimming and filtering (initial fastp-compatible subset); later correction, UMI, merge, deduplication |
 | `rsomics-fastq-qc` | live | FASTQ quality metrics and FastQC-compatible reports |
 | `rsomics-index` | repo-only | bgzip/tabix and reusable sequence-index workflows |
 | `rsomics-liftover` | live | UCSC chain validation/inspection and strict BED3-6/BED12 coordinate conversion |
-| `rsomics-limma` | planned | limma/voom workflow |
+| `rsomics-limma` | repo-only | limma/voom workflow |
 | `rsomics-metagenomics` | live | abundance-aware amplicon processing, taxonomic databases, read classification, and reports |
 | `rsomics-methyl` | live | methylation extraction and analysis |
 | `rsomics-minimap2` | live | published legacy FFI wrapper; reconstruction required |
 | `rsomics-peak` | planned | chromatin peak calling, annotation, and quantification |
 | `rsomics-phylo` | live | alignment trimming, evolutionary distance, tree inference, comparison, measures, and later likelihood/species-tree/placement workflows |
 | `rsomics-plink` | planned | PLINK-style genotype analysis |
-| `rsomics-popgen` | planned | population-genetic statistics outside the PLINK workflow |
-| `rsomics-rnaseq-qc` | planned | RSeQC/Picard-like RNA-seq quality control |
+| `rsomics-popgen` | repo-only | population-genetic statistics outside the PLINK workflow |
+| `rsomics-rnaseq-qc` | repo-only | RSeQC/Picard-like RNA-seq quality control |
 | `rsomics-sc` | planned | stateful single-cell and spatial analysis workflow |
 | `rsomics-seq` | live | coherent FASTA/FASTQ sequence utility suite |
 | `rsomics-signal` | planned | deepTools/bigWig signal workflows |
@@ -52,20 +52,24 @@ Product status summary:
 | Status | Count |
 |---|---:|
 | live | 17 |
-| repo-only | 3 |
+| repo-only | 7 |
 | pilot | 0 |
-| planned | 10 |
+| planned | 6 |
 | **Total** | **30** |
 
 `pilot` means the boundary and source audit are active. It does not imply that
-a public repository or installable release exists. `repo-only` likewise does
-not imply that the crate has passed its publication gate.
+a public repository or installable release exists. `repo-only` means no
+crates.io release; it may already have a GitHub binary release. Neither a
+namespace status nor a release's existence proves reconstruction quality.
 
 DESeq owning repository was created and populated on2026-10-31 after complete
 source/native/performance qualification. The identified public registry API
 still returns404; this is not a published package or a reserved empty name.
-See `.autopilot/state/deseq-release-preparation-2026-10-31.md` for exact-head
-owning CI and remaining release/authorization gates.
+GitHub delivery is independently present for DESeq, ecology, limma, population
+genetics, RNA-seq QC and table at0.1.0. Registry API still returns404 for those
+six names. The snapshot above separates all30 products' public repositories,
+crates.io versions and observed GitHub releases; it does not revalidate their
+assets or repeat publication attempts with unchanged credentials.
 
 ## Public foundations
 

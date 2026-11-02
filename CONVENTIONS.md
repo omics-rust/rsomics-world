@@ -245,11 +245,16 @@ require a semver-major change and coordinated consumer updates.
 
 Control-plane registry states:
 
-- `planned` — accepted boundary, no public repository or release;
+- `planned` — accepted boundary, no observed public repository or registry release;
 - `source-pool` — historical implementations exist for consolidation;
 - `pilot` — active consolidation with an unpublished interface;
-- `live` — public repository and at least one non-yanked release;
-- `repo-only` — public repository exists but no release;
+- `live` — public repository and at least one non-yanked crates.io version;
+- `repo-only` — public repository exists but no crates.io release;
 - `temporary` — public only because migration or immutable registry history
   prevents immediate removal;
 - `retired` — removed from live GitHub and crates.io surfaces.
+
+These describe public namespace availability, not implementation progress or
+reconstruction quality. Private implementations may exist under `planned`.
+GitHub binary releases are tracked separately: a `repo-only` product may have
+an installable GitHub release while registry publication remains held.
