@@ -1,0 +1,53 @@
+{
+  "schema": "rsomics.plink.native-adoption.v1",
+  "product": "rsomics-plink",
+  "run_id": 41542779786,
+  "run_attempt": 2,
+  "head_sha": "40f533bf1d321040516505662f703ed920aaaab3",
+  "owner_commit": "7cee8e4366ef957981c1741055c3ff716dd5b53b",
+  "owner_tree": "985b13ec27da3ee7fab26053d542bb955eacbaa2",
+  "snapshot": "green-14",
+  "conclusion": "success",
+  "root_adopted": true,
+  "native_targets": ["linux-aarch64", "linux-x86_64", "macos-aarch64", "macos-x86_64"],
+  "artifact_ids": [13189105246, 13188471374, 13188232313, 13188177657, 13188645933],
+  "each_native_debug_and_release": {
+    "library_tests": 17,
+    "workflow_test_executions": 5,
+    "failed": 0,
+    "ignored": 0,
+    "source_bodies_and_git_modes": 307,
+    "generations": 36,
+    "raw_cells": 74878,
+    "reports": 246,
+    "worker_records": 66
+  },
+  "upstream_consumers": {
+    "same_attempt_linux_archive_binding": true,
+    "report_commands": 224,
+    "raw_bridge_commands": 36,
+    "command_failures": 0,
+    "native_elf_executed_in_source_job": false,
+    "official_source_commit_correspondence": "unproven"
+  },
+  "linux_release_binary": {
+    "bytes": 3337824,
+    "sha256": "78a4c503c9dcdd8cf5d93e46e361e73b77e0271945b80eea11735b958fc1973e"
+  },
+  "original_packet": "/Volumes/KIOXIA/Developments/tmp/plink-green14-attempt2-originals-20261103.Dr3BzmKY",
+  "proposal_sha256": "750b4ddf3718a3147d4f726bc32a65f0b2a3f5b9efa3c6aeb33889f2af47fbaa",
+  "original_verification_sha256": "9c4749210189b707b6073e3c0e924f3b2a1828e8d57fd759113277530f97c3b2",
+  "pins_sha256": "edda0e24ee51190a23fd6d0aa4278f41a49884a3272c475fddce8bb5414882fb",
+  "root_replay": {
+    "pinned_files_rehashed": 11083,
+    "recipe_inputs_rehashed": true,
+    "full_adapted_data_verifier_replayed": true,
+    "three_existing_receipts_compared_without_overwrite": true,
+    "scientific_execution": false
+  },
+  "attempt1": "preserved separately: Intel checkout DNS failure; source job skipped",
+  "performance_accepted": false,
+  "target_host_abi_accepted": false,
+  "publication_accepted": false,
+  "prior_green13_negative_performance_gate_unchanged": true
+}
