@@ -5,14 +5,24 @@ complete. The initial2026-07-31 inspection found neither target repository;
 this is not a current live-registry assertion. Current PLINK source preflight
 is recorded in `.autopilot/state/plink-source-preflight-2026-10-31.md`.
 
-Current2026-11-02 PLINK: packed-QC ownerf49f3675 and actual green8
-native/source41362616110/1 are accepted after complete original adoption and
-root data-only numeric/raw replay. Its303 exact Git source bodies, native4
-debug/release5-library+1-whole-CLI tests and224 source commands pass. Real
-performance of this new candidate remains pending. Opt-in own-role content
-reuse retains all6 full qualifications and every timed scientific command;
-it reduces out-of-clock validation, not a claimed CLI speedup. Old/default
-selectors remain unchanged; new whole-run admission must use fresh capacity.
+Current2026-11-02 PLINK: bounded ordered-output/PGEN pipeline owner80fafbf8
+and actual green9 native/source41415209242/1 are accepted after complete
+original adoption and root data-only numeric/raw replay. Its305 exact Git
+source bodies, native4 debug/release7-library+1-whole-CLI tests and224 source
+commands pass. The changed candidate's whole-performance41421169780/1 is
+running; no performance or release acceptance follows from native correctness.
+Opt-in own-role content reuse retains all6 full qualifications and every timed
+scientific command; it reduces out-of-clock validation, not a claimed CLI
+speedup. Default selectors and durability remain unchanged. See
+`.autopilot/state/plink-ordered-output-2026-11-02.md` and the green9 native
+adoption receipt for exact identities and original custody.
+
+Prior packed-QC ownerf49f3675/green8 native/source41362616110/1 remains
+accepted. Its actual whole41365352863/1 has complete originals adopted:
+all26 graphs/210 commands are correct, but strict whole-wall ratios1.5354/
+2.1962 fail at1/4 workers and native process RSS is about189.5MiB versus
+source88.8/105.5MiB. All7 stage wall medians regress. The green9 work does not
+erase this negative evidence or retrospectively qualify that binary.
 
 Prior prepared-reader/LD owner7b214436 and green7 native/source41329335343
 remain accepted historical evidence. Actual whole41335480371/1 at

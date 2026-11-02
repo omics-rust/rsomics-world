@@ -38,7 +38,7 @@ operation will ship. It records:
 | `rsomics-minimap2` | 1 | [legacy wrapper; exact engine/lifetime and material product-value gates held](minimap2.md) |
 | `rsomics-peak` | 5 | [private native4/source/full-workflow performance accepted; public default held](peak.md) |
 | `rsomics-phylo` | 11 | [released 0.1.0](phylo.md#first-release-evidence) |
-| `rsomics-plink` | 42 | [green8 native/source and whole correctness accepted; whole wall/RSS gates failed, bounded output-pipeline work active](genotype-popgen.md#rsomics-plink) |
+| `rsomics-plink` | 42 | [green9 ordered-output pipeline native/source accepted; changed-candidate whole performance running, prior green8 failure retained](genotype-popgen.md#rsomics-plink) |
 | `rsomics-popgen` | 14 | [GitHub 0.1.0 released and public install verified; registry held](genotype-popgen.md#rsomics-popgen) |
 | `rsomics-rnaseq-qc` | 21 | [GitHub 0.1.0 released and public install verified; registry held](rnaseq-qc-signal.md#rsomics-rnaseq-qc) |
 | `rsomics-sc` | 29 | [private inferCNV candidate; discovery contract held](sc.md) |
@@ -47,7 +47,7 @@ operation will ship. It records:
 | `rsomics-sketch` | 1 | [GitHub 0.1.1 corrected delivery and public install verified; registry held](metagenomics-sketch.md) |
 | `rsomics-structure` | 9 | [reviewed private analysis/native4; public torsion contract held](structure.md) |
 | `rsomics-table` | 16 | [GitHub 0.1.0 released and public install verified; registry held](table.md) |
-| `rsomics-vcf` | 30 | [registry 0.5.0; frozen 0.6.0 has a known defect, corrected private candidate still has policy/performance/native-delivery gates](variant.md#rsomics-vcf) |
+| `rsomics-vcf` | 30 | [registry 0.5.0; corrected private integration native4 accepted, policy/performance/public delivery gates remain; frozen 0.6.0 must not publish unchanged](variant.md#rsomics-vcf) |
 
 Counts are generated from
 [`portfolio-inventory.tsv`](../00-overview/portfolio-inventory.tsv). They
