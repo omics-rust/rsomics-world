@@ -70,3 +70,32 @@ to `phylo-wpgma-performance-20261103.sEuLzo9O/measured-native`, SHA256
 The old mutable Cargo output path may now contain another build; the canonical
 performance receipt adds the retained original path without changing the
 historical execution identity or assigning its measurement to a new carrier.
+
+## Native originals adopted
+
+Exact6624fef run41589534278/1 completes successfully on all four native
+platforms, including package installation and lifecycle. Worldb316e626
+CI41590041194 passes. Canonical native receipt:
+`.autopilot/oracles/phylo-native-delivery-2026-11-03.json`.
+
+Original packet
+`/Volumes/KIOXIA/Developments/tmp/phylo-native-originals-20261103.Cq2NwDtR`.
+Root reads complete collector before executing it. Initial preflight exits1
+before any API call because current diskutil has no Mounted field. Root reads
+actual volume/synthesized/physical-store metadata and uses MountPoint plus
+is_mount and the actual USB physical store disk11s2. Failed helper and cause
+are retained; this is not a remount or repeated build/test/performance run.
+The corrected collection20048 exits0, retaining raw4artifact ZIPs, original
+run-log ZIP and API metadata; all four recognized API artifact digests match.
+
+Root-authored independent verifier exits0, rehashes410original pins, checks
+each complete source archive against150Git bodies/modes, clean VCS and152
+members; all four source archives are byte-identical99126B/db301a8f6f2302b134eed9f680af4f58fc9bc424eee6ef8b6452aa2400d2d56a.
+It checks original debug/release profiles, installed lifecycle15statuses
+(13success, errors2/1), recorded output bodies/hashes, license inventory,
+bundle member bodies/modes, source/binary/lifecycle linkage, actual ELF/Mach-O
+CPU fields and checksums. Linux source oracle is135distance/64inference/
+11tree/1trim. No target is executed locally during this adoption.
+
+This closes actual native/source carrier gates, not public availability or
+fresh public installation. No GitHub release is created at this point.

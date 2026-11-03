@@ -1,0 +1,19 @@
+{
+  "product": "rsomics-phylo",
+  "version": "0.2.0",
+  "source_head": "6624fef40dcffbec47a1ac77f86056bf832f551d",
+  "run_id": 41589534278,
+  "run_attempt": 1,
+  "native_four_success": true,
+  "root_adopted": true,
+  "packet": "/Volumes/KIOXIA/Developments/tmp/phylo-native-originals-20261103.Cq2NwDtR",
+  "proof": {"file": "VERIFIED.json", "sha256": "3fb94a1ff5382a3548595e5b20ac25f0c20419730880ff05bbfb4bdf8201411f", "verifier_sha256": "2f0d431961bf97567847e7a324596d62bef5630dc8686e8d701f61aa40d9469a", "collection_sha256": "884ced01f72c5904b5c67679aa42174b3f388e0a1e24beef84745f3e61eaa634", "manifest_sha256": "6f2b6f45b930b81cf499c1b1b4fdf8a083dea9dc81cca6ac956478caf8fd0159", "explicit_original_pins_rehashed": 410},
+  "source": {"bytes": 99126, "sha256": "db301a8f6f2302b134eed9f680af4f58fc9bc424eee6ef8b6452aa2400d2d56a", "all_four_archives_equal": true, "original_git_body_mode_matches": 150, "members": 152, "clean_vcs": true, "normalized_metadata_verified_in_ci": true},
+  "scope": {"library_tests_per_profile_per_host": 17, "cli_tests_per_profile_per_host": 4, "profiles": ["debug", "release"], "benchmark_smoke_programs_per_profile": 2, "stable_operations": 7, "installed_calls_per_host": 15, "installed_statuses": [0,0,0,0,0,0,0,0,0,0,0,0,0,2,1], "enabled_normal_build_dependencies_per_target": 53, "license_texts": 111, "source_oracle": {"distance":135,"inference":64,"tree":11,"trim":1}, "local_target_execution": false, "public_install": false, "publication": false, "new_binary_performance": false},
+  "targets": {
+    "linux-x86_64": {"artifact_id":13209940651,"artifact_zip_sha256":"6678124724414e89aef1ba26c10793345e0e737162f9337704fc661756301347","api_digest_verified":true,"binary_bytes":2277096,"binary_sha256":"bb4a9dba013760366189f4182281c92309ea0db011145ca67c117e65ce9fa94d","bundle_bytes":934458,"bundle_sha256":"d70547165cb00afa3517139da5f7260ae0fd59fb9fe2a84c1ad48c3fbdca1c78"},
+    "linux-aarch64": {"artifact_id":13208734985,"artifact_zip_sha256":"97feef6fc6192812cedee8e7a2f842ae0d033d053b27780c5089a4292d85398b","api_digest_verified":true,"binary_bytes":2165936,"binary_sha256":"a0471c9a401efe70a8f5fbba5369146a79da80aa9f40d5c01fff0e2c4c73bcaf","bundle_bytes":898530,"bundle_sha256":"c34fab8d5eeb2875bab26edc917b666a67b2d2c26418e1212f8608d72ee1e72c"},
+    "macos-x86_64": {"artifact_id":13209223366,"artifact_zip_sha256":"41194023cd51c937d3fafa4020055d340b1588ca2519be30f2b8ed436d808766","api_digest_verified":true,"binary_bytes":2008996,"binary_sha256":"d950246a94a66874be05637c73634153df3300a6ae35f0ddf185e2657f238c85","bundle_bytes":893443,"bundle_sha256":"d84c47d51d86923e7ddd7616392bfb5f0771453b9ec99170b69b7306b232ed70"},
+    "macos-aarch64": {"artifact_id":13209655975,"artifact_zip_sha256":"6d1463b042a14608eef67b2da8937457d38750d108c4d470a51257864aac1b6d","api_digest_verified":true,"binary_bytes":1884208,"binary_sha256":"956a4cbfea1f6f1553a92acfac96acceedfe360a183d3dbaadf78def5d6674da","bundle_bytes":854165,"bundle_sha256":"296f7789f56c01228ecb2bed20296dc4613f41f5c65d72770bb62db36cabb20f"}
+  }
+}
