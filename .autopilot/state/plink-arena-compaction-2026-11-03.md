@@ -116,3 +116,21 @@ reportf4e904812f696cc84ac99c98eb5ef3de73340fd42128bfdcfef921ec551e5966.
 Native/source workflow, runtime,307/17+5/123-report/66-worker populations and
 scientific tolerances remain unchanged. Commit/control CI precede any separate
 native/source dispatch; no performance command or publication is admitted.
+
+## Once-only green15 native/source admission
+
+Controllerc3f407eba45a21bbbaa4333cec5c93f805224e28 is pushed; actual exact-head
+control CI41550165726 succeeds. Root freshly reads remote main at that head
+and observes no same-head plink-candidate run. Admit one existing workflow
+dispatch with snapshot=green-15, all four native targets and unchanged same-
+attempt Linux-artifact source consumer. Bind the actual returned run/head;
+preserve failure/partial originals, no automatic retry or source/policy change.
+This authorizes compatibility qualification, not timing, publication or reuse
+of earlier binary measurements for the new source.
+
+Actual dispatch exits0 and returns41550834496; fresh listing binds attempt1
+workflow_dispatch to exact controllerc3f407eb. Read-only observation/retention
+uses external plink-green15-originals-20261103.AefSWuqe,2GiB cap plus8GiB
+independent headroom. First attempt-specific jobs API has both Linux jobs
+successful, both Macs in progress, no failure. This is not native-four/source
+acceptance. Preserve this exact run; no duplicate dispatch or automatic retry.
