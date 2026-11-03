@@ -271,3 +271,8 @@ oracle. Observe this same run without rerun or release replacement. The immutabl
 and measured161961c binaries retain their separate evidence identities.
 World07772d7c passes exact-head control CI41575516658. No product source or
 release asset changes are pending in the owner worktree.
+
+Run41574945324/1 finishes success at exact33d07f6 on all four native hosts.
+The post-release documentation gate is closed without rerun, asset replacement
+or another performance campaign. World139ab8f5 also passes exact-head control
+CI41575778205. Subsequent spacing work is a separate source candidate.
