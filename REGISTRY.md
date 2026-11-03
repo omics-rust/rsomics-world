@@ -18,6 +18,11 @@ installation evidence. Its registry sparse index still contains only0.1.0;
 see `.autopilot/state/bed-04-delivery-2026-11-03.md`. Other namespace rows retain
 the snapshot above; no full namespace refresh or registry publication is implied.
 
+Count subsequently ships [GitHub0.2.0](https://github.com/omics-rust/rsomics-count/releases/tag/v0.2.0)
+at91bc8a2, with four-native originals and a fresh public projected-count/
+normalization installation. Its registry remains0.1.0; see
+`.autopilot/state/count-02-delivery-2026-11-03.md`.
+
 ## Product families
 
 | Product | Status | Initial scope / upstream anchors |

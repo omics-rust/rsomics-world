@@ -1,8 +1,9 @@
 # Count0.2 delivery candidate
 
 Owner source91bc8a2823f8e4d2b948ab6beb8458c39eeaa3fd is pushed to main.
-Exact-head native-four CI41610411682 is queued/running. No new registry or
-GitHub release. Original0.1.0 tags/assets/registry archive remain untouched.
+Exact-head native-four CI41610411682 passed. GitHub0.2.0/release432503348 is
+public at2026-11-03T09:40:10Z with six verified assets. Registry remains0.1.0.
+Original0.1.0 tags/assets/registry archive remain untouched.
 Plan: docs/plans/2026-11-03-count-02-delivery.md.
 
 Five-file change only: Cargo.toml/root Cargo.lock version0.2.0, exact license
@@ -51,8 +52,43 @@ adaptation. Collector accepts run41610411682 and pins source91bc8a2, actual
 external USB device/cache/scratch, exact four artifacts and original logs.
 Collection is not root adoption, target execution, or publication.
 
-Next: verify successful exact-head native-four CI, collect originals and
-independently adopt complete source/package/install/carrier identities, then
-publish new GitHub0.2 assets and verify a fresh public installation. Registry
-403 remains separate; do not retry unchanged credentials or claim crates.io
-publication. Full30-product goal remains active.
+## Original and public adoption
+
+Root verifies585 original pins, all117 Git source bodies/modes and119 source
+members, normalized metadata, native architecture, dependency/license graph,
+ten-call installed records and all nine complete output files on all four
+hosts. Same clean source archive122554 bytes SHA-256
+cb579326cc891e3a3bd062c4d49af8273c0e1766a7acc906fe6f2a6b4061a43f.
+ROOT-VERIFIED.json SHA-256:
+c9d54c21e167f6a8d830ec0005a9b2410c1f73fa837090c99b601f5ae83b32d4.
+No target binary is executed during collection/adoption.
+
+Release/public packet:
+/Volumes/KIOXIA/Developments/tmp/count-02-release-20261103.lpqiDuFi.
+One draft creation/upload and one publish PATCH; exact tag resolves91bc8a2.
+All six uploaded asset sizes/digests match adopted originals. Old0.1.0
+release identity/body/assets are checked unchanged, excluding ordinary
+download-count changes. PUBLISHED.json SHA-256:
+b6bf37ff91adde209812518fd6a876600f41de00c34c6a4f0c9494c1fa35afff.
+
+Fresh unauthenticated HTTPS downloads retrieve all six public assets plus
+release metadata and registry state. Their bytes match the adopted pins.
+Downloaded MacARM binary passes the downloaded source helper's ten calls,
+with complete matrices/summaries, normalization, JSON and protected errors.
+Root independently rehashes246 pins and checks all nine complete output
+files and actual binary path/version against the native artifact. Public
+source is not rebuilt; all four source-package installations ran in CI.
+public/COMPLETE.json SHA-256:
+8a0bfaba5c31c43a48306e4c4be2ff54cb66944014c9746abfbc1a33577f7024.
+public/PINS.json SHA-256:
+81797e695bf0548eed4feb20e880a3e401aaa0d07dfd5e806ddfb52208db93b6.
+PUBLIC-ROOT-VERIFIED.json SHA-256:
+3a705ead1683e36b29e34726dd3f731277e73aa96416bf689dd179af261186f9.
+
+README-only21d9a57b3a8036b57ddeba63ac8fd5ec64c57c9b now supplies the actual
+public0.2 installation links; exact-head native-four CI41613499242 passed.
+No code, lock, tag or existing asset changes for that documentation update.
+Registry sparse index freshly reports only non-yanked0.1.0 before and after
+GitHub delivery; no unchanged403 credential retry. Full30-product goal remains
+active. Canonical public receipt:
+.autopilot/oracles/count-public-delivery-2026-11-03-v02.json.

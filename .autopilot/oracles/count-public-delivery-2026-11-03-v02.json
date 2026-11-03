@@ -1,0 +1,50 @@
+{
+  "product": "rsomics-count",
+  "version": "0.2.0",
+  "head": "91bc8a2823f8e4d2b948ab6beb8458c39eeaa3fd",
+  "native_ci": {"run_id": 41610411682, "conclusion": "success", "target_classes": 4, "root_adopted": true},
+  "originals": {
+    "packet": "/Volumes/KIOXIA/Developments/tmp/count-02-native-originals-20261103.Tv5AEUIN",
+    "manifest_pins": 585,
+    "source_bodies_modes": 117,
+    "source_members": 119,
+    "root_proof_sha256": "c9d54c21e167f6a8d830ec0005a9b2410c1f73fa837090c99b601f5ae83b32d4",
+    "collection_sha256": "b8a8ebf55f9bdc7736a28d6d8abf05c1dc71846c055a798fcc2a6b75c339ae54",
+    "manifest_sha256": "d42dd5bf0f373882db6a3501e2fdb2d5235b336f5b4be60277d1df60e5735155",
+    "lifecycle_calls_per_target": 10,
+    "complete_output_files_per_target": 9,
+    "unique_license_texts": 59,
+    "enabled_dependency_union": 93,
+    "linux_aarch64_oracle": "frozen, not live"
+  },
+  "release": {
+    "id": 432503348,
+    "url": "https://github.com/omics-rust/rsomics-count/releases/tag/v0.2.0",
+    "published_at": "2026-11-03T09:40:10Z",
+    "tag_head_verified": true,
+    "old_0_1_0_unchanged": true,
+    "assets": [
+      {"id": 705065538, "name": "rsomics-count-0.2.0-linux-aarch64.tar.gz", "bytes": 1374806, "sha256": "2985da4ebe64e3a10f7d0f384445a96301c713a8ed6fab7e379908976ff31e2b"},
+      {"id": 705065524, "name": "rsomics-count-0.2.0-linux-x86_64.tar.gz", "bytes": 1434651, "sha256": "f2732fa0ea618d88921c136a5e7588e2e704588bf4b10499ceb7848e5e8f94b4"},
+      {"id": 705065539, "name": "rsomics-count-0.2.0-macos-aarch64.tar.gz", "bytes": 1275359, "sha256": "54707edb452cad73fc9e7c1396176f2e05ef73ad56925f7fdfccc092b5fc619c"},
+      {"id": 705065532, "name": "rsomics-count-0.2.0-macos-x86_64.tar.gz", "bytes": 1345604, "sha256": "667856e0977870934fef0fb332a7af417d6414cfc63c7e4104958327f463119e"},
+      {"id": 705065520, "name": "rsomics-count-0.2.0.crate", "bytes": 122554, "sha256": "cb579326cc891e3a3bd062c4d49af8273c0e1766a7acc906fe6f2a6b4061a43f"},
+      {"id": 705065611, "name": "SHA256SUMS", "bytes": 518, "sha256": "4df1c15591868a37b1a892552f0a1cca02ad2fff92b676ff98c6e0f0289c941c"}
+    ]
+  },
+  "public_install": {
+    "packet": "/Volumes/KIOXIA/Developments/tmp/count-02-release-20261103.lpqiDuFi/public",
+    "unauthenticated_http_200_downloads": 8,
+    "verified_pins": 246,
+    "native_target": "macos-aarch64",
+    "lifecycle_calls": 10,
+    "complete_output_files": 9,
+    "source_rebuilt": false,
+    "receipt_sha256": "8a0bfaba5c31c43a48306e4c4be2ff54cb66944014c9746abfbc1a33577f7024",
+    "pins_sha256": "81797e695bf0548eed4feb20e880a3e401aaa0d07dfd5e806ddfb52208db93b6",
+    "root_verification_sha256": "3a705ead1683e36b29e34726dd3f731277e73aa96416bf689dd179af261186f9"
+  },
+  "registry": {"latest": "0.1.0", "yanked": false, "version_0_2_0_published": false, "unchanged_failed_credentials_retried": false},
+  "performance": {"qualified_source": "2b5e450372689063736721dc1b807dcba9d62717", "gate": "resource use, not throughput", "attached_binaries_remeasured": false},
+  "post_documentation": {"head": "21d9a57b3a8036b57ddeba63ac8fd5ec64c57c9b", "run_id": 41613499242, "status": "completed", "conclusion": "success"}
+}

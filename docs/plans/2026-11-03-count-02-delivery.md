@@ -13,10 +13,10 @@ Registry authentication remains a separate documented blocker.
 - [x] Run local formatting, strict Clippy, debug/release/source oracle and a
   source-package install/lifecycle candidate, with all paths physically
   external. One fresh whole-delivery review; at most one necessary fix pass.
-- [ ] Commit/push the delivery candidate and require exact-head native-four
+- [x] Commit/push the delivery candidate and require exact-head native-four
   source/package/install CI. Independently collect and verify original
   artifacts and source/binary/license/lifecycle identities.
-- [ ] Publish a new GitHub0.2.0 tag/release/assets, preserving0.1.0. Freshly
+- [x] Publish a new GitHub0.2.0 tag/release/assets, preserving0.1.0. Freshly
   download the public source/native artifacts and run the installed lifecycle.
   Record GitHub versus crates.io state separately; do not retry unchanged
   registry credentials or mark the full portfolio goal complete.
@@ -27,5 +27,8 @@ Specs and source evidence:
 `.autopilot/state/count-projection-ci-2026-11-03.json`.
 
 Candidate source91bc8a2823f8e4d2b948ab6beb8458c39eeaa3fd is pushed;
-exact-head native-four CI41610411682 is queued/running. Local dirty candidate
-checks pass, but no clean original CI artifacts or new release are adopted yet.
+exact-head native-four CI41610411682 passed. Root adopts585 original pins and
+all four source/install carriers, then publishes release432503348. Fresh
+public download/install passes ten calls; independent replay checks246 pins
+and nine complete output files. Registry remains0.1.0. README-only21d9a57
+native-four CI41613499242 passed; tag/assets remain pinned to91bc8a2.

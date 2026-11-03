@@ -1,9 +1,9 @@
 # Count product dossier
 
-Status: first release slice published as `rsomics-count 0.1.0`. Later slices
-remain audited but unimplemented.
+Status: GitHub0.2.0 is public at91bc8a2823f8e4d2b948ab6beb8458c39eeaa3fd;
+registry distribution remains0.1.0. Later slices remain audited but unimplemented.
 
-The [GitHub native/source release](https://github.com/omics-rust/rsomics-count/releases/tag/v0.1.0)
+The historical [GitHub0.1.0 delivery](https://github.com/omics-rust/rsomics-count/releases/tag/v0.1.0)
 is pinned to `8ae7a2b0294557d78edba30c0a1aa9cfef1c0350`, with independently
 adopted four-native source/install evidence and a fresh public Mac ARM
 count-to-normalization lifecycle. README-only main
@@ -23,19 +23,28 @@ advantage, not throughput:82–85% lower median RSS while wall time is1.48–1.6
 slower than featureCounts2.1.1. See the
 [correction record](../../.autopilot/state/count-cigar-overlap-2026-11-03.md).
 
-Unreleased main `2b5e450` additionally implements read-extension5/3 and
+Source `2b5e450`, now shipped in0.2.0, additionally implements read-extension5/3 and
 read2pos3/5, with original CIGAR denominators, per-mate raw direction and
 alignment-header bounds. Exact-head native-four CI41607175618 passed.
-The public projection configuration requires a minor-version release before
-publication; immutable0.1.0 remains unchanged. Fresh projection/default
+The public projection configuration is versioned in0.2.0;
+immutable0.1.0 remains unchanged. Fresh projection/default
 benchmarks preserve complete output parity and82–85% lower median RSS,
 with1.43–1.64x slower wall time. See the
 [projection record](../../.autopilot/state/count-projection-execution-2026-11-03.md).
 
-The0.2.0 delivery candidate91bc8a2 changes only package/root-lock version,
+The0.2.0 delivery commit91bc8a2 changes only package/root-lock version,
 license-lock binding, installed workflow verification and delivery prose.
 Local source-package install and ten-call count/projection/normalization
-lifecycle pass. Native-four CI41610411682 is pending;0.2.0 is not published.
+lifecycle pass. Native-four CI41610411682 passed. Root adopts585 original
+pins, identical clean source packages and all four native installation/carrier
+identities. [GitHub release432503348](https://github.com/omics-rust/rsomics-count/releases/tag/v0.2.0)
+is public. A fresh public MacARM installation passes ten calls and all nine
+complete output files; independent replay checks246 pins. No registry0.2.0
+publication is implied. See the
+[delivery record](../../.autopilot/state/count-02-delivery-2026-11-03.md) and
+[public receipt](../../.autopilot/oracles/count-public-delivery-2026-11-03-v02.json).
+README-only main21d9a57 provides verified0.2 entry points; its separate
+native-four CI41613499242 passed. Tag/assets remain pinned to91bc8a2.
 
 ## Boundary
 
