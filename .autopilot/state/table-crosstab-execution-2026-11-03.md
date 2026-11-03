@@ -57,11 +57,23 @@ successfully by actual differential tests and both performance campaigns; no
 source rebuild or hidden oracle replacement was performed.
 
 Owner commit `463ad7cf18a971c54371fe0314ebe19472574a59` was pushed to main.
-Exact-head CI run `41617642479` exists and was observed queued:
+Exact-head CI run `41617642479` completed successfully: all four native
+platform jobs, benchmark artifact and the Linux pinned live-oracle job passed.
+Each native job exercised debug/release, packaged-source tests and the existing
+six-operation installed-binary smoke. This does not claim that the install
+smoke already exercises crosstab; adding it is the next delivery task.
 https://github.com/omics-rust/rsomics-table/actions/runs/41617642479
 Corrected performance manifest SHA-256:
 `d4b8d6edd3c3052deceda30e9c51ac1c6d651c8ae510c6573513b6cefae302b2`.
 
-Next: wait for exact-head four-native CI plus Linux live-oracle job;
-only then expose/document the operation and advance the release slice. The
+Independent root verification rehashed all 37 manifest source/artifact pins and
+all 24 complete matrix outputs: every matrix has 500 rows and 40 value columns,
+count totals 5,000,000 and sum totals 252,500,000. No substitution of shape-only
+checks for upstream full-byte equality was made.
+
+World evidence commit `8168316093bb67c1adeff10ef2ab1d43229aeafb` also passed
+exact-head control-plane CI `41617712498`.
+
+Next: extend installed-binary crosstab count/sum smoke, explicitly document the
+matrix/header contract, expose the operation, and advance the release slice. The
 remaining portfolio and registry-auth holds remain unchanged.

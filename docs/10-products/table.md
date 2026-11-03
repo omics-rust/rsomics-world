@@ -73,7 +73,7 @@ subcommand.
 | `reverse` | datamash `reverse` | reverse fields per record |
 | `expand` | bedtools `expand` | zip-expand list-valued fields |
 | `groupby` | csvtk `summary`; datamash and bedtools `groupby` | one grouped aggregation engine |
-| `crosstab` | datamash `crosstab` | long-to-wide pivot with optional aggregation |
+| `crosstab` | datamash `crosstab` | hidden candidate `463ad7c`: global long-to-wide pivot using the shared private aggregate engine; four-native and pinned Linux oracle CI `41617642479` passed; 5M-row count/sum resource gate passed; installed-binary smoke/public interface adoption still pending |
 | `correlate` | csvtk `corr`; datamash covariance and correlation operations | table-oriented pairwise statistics |
 | `to-json` | csvtk `csv2json` | JSON records or objects keyed by a field |
 | `render` | csvtk `csv2md`, `csv2rst`, `pretty` | `markdown`, `rst`, and terminal presentation formats |
