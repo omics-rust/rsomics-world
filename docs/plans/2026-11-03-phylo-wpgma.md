@@ -48,7 +48,7 @@ existing `infer_tree(&DistanceMatrix, InferenceMethod, NegativeBranchPolicy)`.
 - [x] Extend existing source oracle with WPGMA and deterministic tie/zero/two-tip
   cases; run against pinned real source, with full results retained externally.
 - [x] Obtain one fresh whole-feature review and at most one necessary fix pass.
-- [ ] Measure representative WPGMA workflow timing/RSS with full topology and
+- [x] Measure representative WPGMA workflow timing/RSS with full topology and
   branch-length checks; retain losses and do not relabel old measurements.
-- [ ] Commit/push owning changes when correct; wait for exact-head native4 CI.
+- [x] Commit/push owning changes when correct; wait for exact-head native4 CI.
 - [ ] Record actual release decision; no placeholder/publication claims.

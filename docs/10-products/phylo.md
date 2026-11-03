@@ -4,6 +4,12 @@ Status: the complete initial slice is published as `rsomics-phylo 0.1.0`.
 Source head `8971f75d6649776ecad54c8e0f0ee8427f0abc63` passes exact-head CI on
 native Linux and macOS `x86_64` and `aarch64`.
 
+Unreleased WPGMA extension at784cef7cd42640880a1d24f35954edea54008fdb
+passes fresh native4 CI41586653945 and64live inference checks. A shared
+2500-taxon workflow has18.32%lower median maximum-process RSS than the pinned
+source. Algorithm-only throughput is not established. Candidate evidence is
+in `.autopilot/state/phylo-wpgma-2026-11-03.md`; no new release is claimed.
+
 ## Boundary
 
 `rsomics-phylo` is one phylogenetic analysis product. It owns alignment

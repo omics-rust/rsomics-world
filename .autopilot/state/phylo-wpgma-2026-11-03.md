@@ -74,3 +74,40 @@ that source version alone, owns compatibility evidence. Native4/performance/
 release remain open. Existing timing and combined NJ+UPGMA RSS do not qualify
 WPGMA. Historical fixture directory cited in phylo benchmark README is
 currently absent; use a new shared input, do not assert it was recovered.
+
+## Native and representative resource gates
+
+Owner784cef7cd42640880a1d24f35954edea54008fdb is committed/pushed and clean.
+Exact-head native4 CI41586653945 passes Linux/macOS x86_64/aarch64, debug
+and release, with17library+4CLI tests and both benchmark smoke programs.
+Linux also passes fmt, strict Clippy, docs, package and actual full source
+oracle including trimAl. World1660b7be CI41586673846 passes.
+
+Root reads complete external performance proposal/runner before execution,
+replaces an unnecessary source full-table string/float-list representation
+with NumPy loadtxt before freezing/running it. No predicates or measured
+results exist at that point. One actual prepare44884 exits0; one campaign
+39138 exits0, no retry. Physical-external guard is rechecked before each.
+Packet and canonical pins are in
+`.autopilot/oracles/phylo-wpgma-performance-2026-11-03.json`.
+
+Same119918537B labeled2500-taxon matrix, one retained warmup/tool then five
+alternating pairs. Each output is checked for rooted RF, all tip identities
+and full branch score. Root's independent replay99562 exits0: input/helper/
+binary/output hashes, exact alternating order/status, original raw RSS and
+stdout records, all12complete trees; clade maps including tip branches have
+maximum absolute difference0.0. This is not a sampled checksum-only check.
+
+Median maximum-process RSS native224673792B versus source275070976B, lower
+50397184B/18.3215%; all measured native RSS values are below every source
+value. Accept this representative workflow resource gate. Median full-process
+wall0.290964458s versus2.372631208s is secondary: Python imports/startup are
+included and do not establish a kernel throughput advantage. Source inner
+times0.0676–0.0759s have a different scope; native core is not measured.
+All raw vectors and both warmups are retained, with no cold-cache, affinity,
+parallel-scaling or universal-platform performance claim.
+
+This qualifies local source784cef7 resource use, not another binary/version.
+No package-version bump, GitHub release or registry publication is performed.
+The next owning change is release metadata/documentation and actual native/
+source delivery preparation; do not advertise an already published WPGMA.
