@@ -39,3 +39,14 @@ Native-four and same-file source qualification must consume the new immutable ca
 Private candidate integration is223e342f845bdb280bd369395483f8f72a1d445f after
 one clean whole-feature review and root verification. Green16 preparation is
 separate; new native/source/performance/publication gates remain pending.
+
+## Final disposition
+
+Green16 native/source originals pass and are independently adopted. One
+matched12-call delivery-binary comparison demonstrates no throughput or RSS
+benefit; all outputs match, but wall median is6.21percent higher, with three
+slower pairs. Shared load is retained, not causal attribution or retry grounds.
+Candidate223e342 remains recoverable; private da64da53 withdraws its three-file
+delta and restores the exact green15 tree. No new-head test/CI claim or
+publication follows from source identity. The bounded candidate evaluation is
+closed; do not reopen it without a materially different evidenced hypothesis.

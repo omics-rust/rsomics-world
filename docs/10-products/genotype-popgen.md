@@ -5,7 +5,17 @@ complete. The initial2026-07-31 inspection found neither target repository;
 this is not a current live-registry assertion. Current PLINK source preflight
 is recorded in `.autopilot/state/plink-source-preflight-2026-10-31.md`.
 
-Latest2026-11-03 PLINK: private scientific owner270caf5 passes green15
+Latest2026-11-03 PLINK: SHA backend candidate223e342 passes green16 four-native/
+same-file source qualification41558979368/1, with complete originals adopted.
+Its subsequent12-call actual-CI-binary comparison against270caf shows no
+benefit: median wall0.995921→1.057775s, three of five pairs slower, RSS
+85467136→85475328B. Shared-host load prevents causal attribution; it does not
+demonstrate an advantage. The upgrade is withdrawn; private da64da53 restores
+exactly the green15 source tree. All candidate/evidence bodies remain, with
+no unchanged retry or publication. See
+`plink-sha2-ci-comparison-2026-11-03.json`.
+
+Retained scientific source270caf5 passes green15
 native-four and same-file source41550834496/1, with complete originals
 independently adopted in `plink-native-2026-11-03-green-15.json`. Completed-table
 arena compaction retains parsing/ownership and transient VCF behavior. The

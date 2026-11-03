@@ -1,8 +1,9 @@
 # PLINK maintained SHA-256 dependency candidate
 
-Current: private candidate223e342f is green16 native/source qualified with full
-originals adopted. Matched new-binary comparison is at inert staging; no
-throughput/RSS improvement, target-host execution or publication is claimed.
+Current: green16 candidate223e342f passes compatibility but demonstrates no
+throughput/RSS benefit in the actual matched comparison. Its three-file change
+is withdrawn; private da64da53 restores the exact qualified green15 source tree.
+All candidate originals and negative measurements remain. No publication.
 Plan: `docs/plans/2026-11-03-plink-sha2-backend.md`.
 
 ## Baseline and reason
@@ -222,3 +223,101 @@ Existing parent8GiB/joined618GiB envelope,512MiB child, UID1006/dev2096 and
 guarded capacity checks remain. Preserve transport/stdout/stderr/claims and
 partials; no overwrite/retry, build, provider proof, target/loader or benchmark
 execution is admitted. Canonical green16 adoption is the governance reference.
+
+Staging-admission commit748e2325b285034384ffd53d7c68295215d5a88e is pushed;
+exact-head Control plane41561019973 succeeds. The once-issued inert stage is
+live under handle50696/local SSH PID47500, with external observation packet
+plink-sha2-ci-stage-observation-20261103.9b1y3j1s. Its fresh physical guard and
+all26 immutable/hard core/payload checks pass before transport. Observe this
+same handle; no duplicate stage or provider/runtime action follows from being
+live. Terminal receipt and actual remote identities remain pending.
+
+## Actual inert stage and static-proof admission
+
+Root reads the actual terminal transport result: return0, failure=null,
+6695424 payload bytes sent,10.461605s elapsed,61 stdout bytes and zero stderr.
+Stdout reports stage completed with target_commands=0; local SSH PID is gone.
+No retry occurs. The fully read stage implementation emits that success only
+after its actual runner/plan/binary identity checks and guarded scoped writes.
+Read-only retrieval preserves the remote stage claim/success and current pins.
+
+Admit the existing preflight action ONCE for both actual binaries, with frozen
+runner23c5187c/planbfe29670 and canonical green16 reference. Fresh rechecks of
+those identities, parent/device/UID/capacity precede inspection. Only the
+existing static ELF/provider/loader-cache/tool/CPU proof runs; no ldd, native
+target, loader execution, build, dependency download or benchmark is admitted.
+Retain actual proof bodies and hashes before the separate12-call run decision.
+
+Root reads the original stage.success body and independently checks all seven
+remote identity records against actual local bodies, including decoded
+claim/success bytes. Stage receipt SHA-256
+8983de7813c6cb4e3e603bb6140393e654c12e7f55b458403041939c40c0d711.
+Remote mount remains /dev/sdd ext4 at /home/liangjy, UID1006/dev2096;
+child allocated6754304B, parent1655824384B, conservative capacity margin
+428571877376B. No old authority or result is modified.
+
+Static transport94875 also terminates return0/failure=null,58.141401s,
+empty stderr and action=preflight completed with target_commands=0. Root
+reads that terminal result/stdout directly; local SSH PID48769 is gone.
+The actual two proofs still need retrieval/read before runtime admission;
+no absence of unmet versions/symbols is inferred merely from this paragraph.
+
+## Actual static proof and once-only runtime admission
+
+Root reads candidate proof and both decoded proof data, confirms identical
+provider/tool/cache/CPU contracts, and independently rehashes all74 retained
+static receipt/log identities plus each inspector stdout/stderr binding.
+Each has seven inspectors/five providers/127 mandatory imports, static_support
+true and no unmet symbols/versions/ISA declarations/declared CPU features.
+Actual baseline proof SHA-256
+83d3e5bb6a80524458402c77a5bd90b0d3c581514e97533b6a4bdf10e9e147b8;
+candidatea7385565bf7b2727467660d57bb94708180ecd63a9538d2dba2bdbb1f50068ab;
+preflight success5912b3dbf3039257f4a40f4d993b5e478e52dc8dd1666216c607a76aa1b243bf.
+Static proof makes no absence-of-undeclared-ISA claim. This host does not
+advertise SHA-NI; do not predict hardware SHA acceleration on it.
+
+Actual host context01:48:16Z has112 CPUs, nonexclusive affinity0..3, load
+71.54/76.30/75.34 and no observed known scoped timed workload. This is not
+global host inactivity. Root admits exactly the existing12 calls: two warmups
+and five alternating measured pairs, full929/231470 I-w1, unchanged inputs,
+four output pins, threads1/memory2048/CPUs0..3, kernel wait4 and guardian.
+Use the actual two proofs above and frozen runner/plan; fresh capacity,
+provider/binary/input checks still run before execution. No upstream rerun,
+instrumentation, build, retry, cleanup or publication. Retain every failure,
+partial, distribution and48 output identities. High shared load is context,
+not a reason to discard slow calls or repeat unchanged measurements.
+
+The admitted run is issued once under handle34733/local SSH PID51102. Root
+checks that live process rather than treating an observation delay as failure.
+It then terminates return0/failure=null after75.339293s transport,60 stdout
+bytes and zero stderr. Root reads actual stdout reporting run completed with
+target_commands=12. No retry occurs. Original per-call time/RSS/output records
+are being retrieved read-only; no performance advantage is inferred from exit0.
+
+## Actual negative comparison and restoration
+
+Root independently rehashes all232 packet entries and123 original small bodies,
+replays all12 argv/binary/PID/PGID/wait4/guardian/JSON/manifest bindings, checks
+all48 output identities including fresh remote hashes, and recomputes every
+distribution, median and paired ratio. All calls and products are correct;
+large product bodies remain remote. Packet PINS SHA-256
+fe2ebf04233458c0d2e2c1c3151f7c1914b24500f8b65b380afac89299c37202;
+run successcb7a9d4a8a2b9616c0ea7fc132776dbfe1d2ffb64a6392169cdd411f003bddbd.
+
+Baseline/candidate median wall0.995921325/1.057774511s: candidate6.21percent
+higher, three of five pairs slower. Median process RSS85467136/85475328B
+is effectively unchanged; median user0.605087/0.671955s. Actual sweep load
+before75.85/77.13/75.90 and after81.47/78.20/76.34 is retained. High shared
+load prevents a causal regression claim, but no benefit is demonstrated.
+No unchanged rerun, crypto microbenchmark or performance acceptance follows.
+
+Ruling: withdraw this performance-motivated dependency/API upgrade rather than
+retain extra migration without demonstrated benefit. Apply only the inverse
+three-file change. Whole working-tree comparison against270caf is empty;
+private restoration da64da53b22532131fc536def25997fcd3f9de49 has exactly its
+tree0e3392246fda32bc7a569906118832c077221202 and a clean owner. This is source
+identity to the already qualified baseline, not newly executed tests or a new-
+head CI claim. No build, fresh review ladder, deletion or publication occurs.
+Candidate223e/green16/source/performance originals remain recoverable in Git
+and external evidence. Canonical negative comparison is
+`.autopilot/oracles/plink-sha2-ci-comparison-2026-11-03.json`.

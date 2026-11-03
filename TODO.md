@@ -26,8 +26,10 @@ stage material-performance profiles remain retained, not a release gate pass.
 Green15 native/source originals are adopted; its subsequent arena comparison
 shows no material cohort RSS benefit. The maintained SHA-256 candidate223e342f
 now passes green16 run41558979368/1 on all four native jobs and its same-attempt
-upstream consumer. Complete originals are root-adopted; new-binary matched
-measurements remain pending. No performance or publication claim follows.
+upstream consumer. Complete originals and the12-call matched measurement are
+root-adopted, but wall median is6.21percent higher and RSS effectively unchanged.
+The upgrade is withdrawn: private da64da53 restores the exact green15 source
+tree. Preserve the negative candidate evidence; no unchanged rerun or release.
 See `.autopilot/state/plink-sha2-backend-2026-11-03.md`.
 Sketch's corrected adoption at eb1b1510 has completed native4 originals,
 all eight current-binary resource jobs, GitHubv0.1.1 and the fresh public
