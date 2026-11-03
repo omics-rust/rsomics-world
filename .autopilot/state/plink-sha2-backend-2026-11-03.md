@@ -127,3 +127,30 @@ original and inspect actual job outcomes before adopting qualification.
 Actual dispatch returns run41558979368, attempt1, controller517cc538 above;
 the immediate independent run-list read reports queued with that exact head.
 No qualification or timing result is available at this admission.
+
+The dispatch-record commit33c51dae322fb0e5cccef6102f1dbb398b82a96b is pushed;
+its exact-head Control plane run41559024171 completes SUCCESS. Green16 itself
+remains a separate live run, not implied successful by this control-plane gate.
+
+## Comparison draft, not runtime admission
+
+Root fully reads comparison.py, its minimal delta from the accepted arena
+runner, and PLAN.json in external packet
+plink-sha2-ci-comparison-prep-20261103.3vAOdSTV. Draft runner SHA-256
+d8be24faa8fb66de05dbf273a02fd337619bff91c0293418413d284de659c18c;
+draft plan5aa27c7c9baf96215d5f993fa57c41142c2097836edf9376dbfd10f74aa4457a.
+It retains the existing12-call paired workflow/input/output/resource contract,
+uses qualified270caf as baseline, and leaves new artifact/body/budget pins
+explicitly unresolved. A main-entry assertion rejects the unresolved candidate
+before importing the remote guard or writing remotely. No staging payload,
+SSH, provider proof or scientific call is admitted by this draft read. Final
+actual CI originals, root adoption, resolved pins and a separate bounded
+admission remain required; do not fabricate a candidate or run an old binary.
+
+Final draft handoff leaves those core hashes unchanged. Root reads the complete
+README, all12 proposed COMMANDS and STATIC-CHECK, then independently verifies
+all16 explicit PINS entries plus PINS.json SHA-256
+c0b85d97b7084c4940c91900c6ba2713ee5a26c9a8950f6da1f4403eb03a709c.
+Candidate body and stage payload remain absent. Local data/AST scope checks
+are not target execution or qualification. All .remember application state is
+preserved and excluded, not treated as an experimental identity.

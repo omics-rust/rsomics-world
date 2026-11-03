@@ -21,10 +21,15 @@ accepted correctness/resource/original evidence. Its reviewed public delivery
 passes exact four-nativeCI41341218191 with complete originals adopted.
 GitHubv0.1.0 and the fresh public Mac14-call lifecycle pass; post-release
 README7f27eb01 passes exactCI41344601496. Registry remains separately held.
-PLINK's prepared-reader/LD change passes green7 native/source qualification;
-actual41335480371/1 complete originals and26 correct graphs are root-adopted,
-but both whole/stage material-performance profiles fail. All losses remain;
-no unchanged retry or release follows. Sketch's corrected adoption now passes
+PLINK's historical green7 prepared-reader/LD qualification and failed whole/
+stage material-performance profiles remain retained, not a release gate pass.
+Green15 native/source originals are adopted; its subsequent arena comparison
+shows no material cohort RSS benefit. The maintained SHA-256 candidate223e342f
+now passes all four native jobs in green16 run41558979368/1; its same-attempt
+upstream consumer is still live, and full originals adoption and new-binary
+measurements remain pending. No performance or publication claim follows.
+See `.autopilot/state/plink-sha2-backend-2026-11-03.md`.
+Sketch's corrected adoption now passes
 exact-head native4 CI41357249401 at eb1b1510 after a demonstrated ARM-only
 oracle library-lifetime repair. Complete original artifact adoption is next;
 final-head eight-job resource and public-delivery gates remain unearned.
