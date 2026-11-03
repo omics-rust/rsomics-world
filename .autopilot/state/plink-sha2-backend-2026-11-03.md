@@ -1,7 +1,8 @@
 # PLINK maintained SHA-256 dependency candidate
 
-Implementation admission only; no new candidate, throughput/RSS improvement,
-native/source qualification or publication is claimed here.
+Current: private candidate223e342f is green16 native/source qualified with full
+originals adopted. Matched new-binary comparison is at inert staging; no
+throughput/RSS improvement, target-host execution or publication is claimed.
 Plan: `docs/plans/2026-11-03-plink-sha2-backend.md`.
 
 ## Baseline and reason
@@ -185,3 +186,39 @@ This adopts compatibility only. Official runtime/source correspondence remains
 unproven; target-host providers, new-binary matched performance and publication
 remain separate. Earlier negative whole-performance and no-material-arena-RSS
 results remain immutable. No registry retry or performance command occurs.
+
+## Resolved comparison core
+
+Adoption commitf6165bf975cd56a06f37530f0f981a4fefe8faca is pushed; exact-head
+Control plane run41560277556 completes SUCCESS. Root fully reads the final
+PLAN/README and verifies the runner delta is solely the actual candidate
+tuple substituted into the previously fully read draft. Final packet
+plink-sha2-ci-comparison-final-prep-20261103.xrt5cyZC preserves the sealed
+unresolved draft rather than rewriting it.
+
+Runner23c5187c155dfd9a781b09403c1de9b567dd4eda45fc6d0cb9182137b3bc576c;
+planbfe29670298019c0afa7c633326eb0e8c96f4cf31b8682e7a23e1c1e431e7569.
+Payload6695424B SHA-256
+dbc384cf7fcbdcdf9916ed072fb5d405e7d2fcdd150bc0a09e451fe39cf14ffd.
+The actual old/new binaries require297219796B with all12 output sets; the
+512MiB child retains239651116B allowance for helpers/logs/receipts/tmp.
+Final immutable PINS and retained context verification precede inert staging.
+No remote child, provider proof or runtime has yet been admitted or created.
+
+## Inert staging admission
+
+Root verifies all26 final PINS entries, referenced original build-context files,
+canonical adoption, the exact single-tuple runner substitution, and all four
+payload members against their local bodies. PINS SHA-256
+6aff0ba7b2c65981061443625ebc5cadfd39e2394cd7c67070032fc6102e68c1;
+context3d13f1b3a3cdeff3290f111e774e4843471cd66bbbb50d2189f747ac048947c8.
+Fresh diskutil confirms USB external KIOXIA and30.64GB free; local128MiB plus
+8GiB headroom fits. Matching compiler/image/argv records are observed, not
+reproducibility or isolated-causality proof; VM regions differ.
+
+Admit ONE inert stage using those frozen runner/plan/payload pins, established
+strict SSH and hash-checked bootstrap into absent sha2-ci-comparison only.
+Existing parent8GiB/joined618GiB envelope,512MiB child, UID1006/dev2096 and
+guarded capacity checks remain. Preserve transport/stdout/stderr/claims and
+partials; no overwrite/retry, build, provider proof, target/loader or benchmark
+execution is admitted. Canonical green16 adoption is the governance reference.
