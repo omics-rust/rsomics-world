@@ -155,9 +155,9 @@ may be migration aliases, but the typed long-form contract owns the help.
 | `genomecov` | BEDTools `genomecov` | GitHub0.4.0 at5e5b709; native4 run41532198240/full originals and fresh public installation adopted,126 tests/profile and15 installed calls; full584846-row/93-contig histogram and bedgraph-all output/performance accepted atc6e35 in `bed-genomecov-performance-2026-11-03.json`; BAM input belongs to `rsomics-bam` |
 | `unionbedg` | BEDTools `unionbedg` | later track slice |
 | `flank` | BEDTools `flank` | integrated source witness retained with slop/shift; illegal point-output policy held before implementation/delivery |
-| `slop` | BEDTools `slop`; BEDOPS range padding | source161961c native-four/package/install originals adopted (127 tests/profile,17 installed calls/14 ops); full584846-exon workflow throughput3.0x, RSS higher; formal release pending |
-| `shift` | BEDTools `shift` | same qualified coordinate wave; full-input throughput3.2x with complete byte equality, source fractional/endpoint ordering and invalid-output errors retained; RSS higher, not a released operation yet |
-| `makewindows` | BEDTools `makewindows`; BEDOPS chop/stagger | later coordinate-generation slice |
+| `slop` | BEDTools `slop`; BEDOPS range padding | GitHub0.5.0 at91f2bf9; exact-head native4 run41573159869 and fresh public17-call/14-operation installation adopted;127 tests/profile. Full584846-exon workflow throughput3.0x at measured161961c, RSS higher; final release binary not retimed |
+| `shift` | BEDTools `shift` | GitHub0.5.0 delivered with slop; source fractional/endpoint ordering and invalid-output errors retained. Full-input measured161961c throughput3.2x with complete byte equality, higher RSS; executable binding unchanged |
+| `makewindows` | BEDTools `makewindows`; BEDOPS chop/stagger | complete core/main/test and historical asset inventory plus six source workflows retained; floor/remainder, naming/order and short-interval warnings established; origin negative-output/loss policy pending, no implementation |
 | `random` | BEDTools `random` | later seeded-generation slice |
 | `shuffle` | BEDTools `shuffle` | later seeded-generation slice |
 | `sample` | BEDTools `sample` | later deterministic sampling slice |

@@ -241,3 +241,22 @@ GitHub draft/public installation remain next gates, not achieved claims.
 Fresh organization-secret metadata still reports updated2026-09-08T20:26:08Z;
 no unchanged failed registry authentication is retried. Worlddb7ef82f passes
 exact-head control CI41574034893. Full30-product goal remains active.
+
+## Public0.5.0 delivery accepted
+
+Root compares all five prepared archive bodies with adopted originals and all
+four source crates, reads final notes, freshly confirms release404/tag absence,
+and creates one six-asset draft432257319. Exact draft target/notes/names/sizes/
+SHA digests match before publication. Publishing that ID succeeds at
+2026-11-03T03:50:43Z without changing assets or old tags.
+
+The once-issued anonymous public installer exits0. Root independently replays
+public/tag/three-download HTTP200 statuses, all six asset identities, all276
+source Git bodies/modes, exact fresh binary,17 command statuses/argv, complete
+new/old goldens, JSON/error and transactional output records. All189 packet
+files are rehashed; no mutable .remember data is included. Fourteen operations
+are delivered; source correspondence is not a fresh public source compile and
+no new benchmark/oracle run is claimed. Canonical receipt:
+`../oracles/bed-public-delivery-2026-11-03-v05.json`.
+Registry and flank holds are unchanged; makewindows has its own origin policy
+question, not a reason to withdraw this completed slop/shift delivery.
