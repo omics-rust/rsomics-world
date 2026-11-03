@@ -189,3 +189,14 @@ Worldfa587957 passes exact-head control CI41579911767. Fresh organization
 secret metadata is still updated2026-09-08T20:26:08Z, so no unchanged failed
 registry authentication is retried. GitHub delivery does not claim crates.io
 publication or completion of the full30-product goal.
+
+## Post-release documentation gate closed
+
+Root reads the complete README/MIGRATION/PERFORMANCE-only update, clarifies
+that fc994e1f is the source tool executable hash rather than an archive hash,
+then commits/pushes b4a32820adf2236bf86843973112e3cfb37dce9b. Code, version,
+lock, tests, scripts and license inventory are unchanged. Exact-head native4
+run41581694132/1 finishes success on all four hosts, with no rerun or release
+replacement. Public35d656f assets and actual measured binary remain immutable.
+World9b711017 passes exact-head control CI41581377642. Registry scope/auth
+revalidation is separate in `registry-auth-scope-check-2026-11-03.md`.
