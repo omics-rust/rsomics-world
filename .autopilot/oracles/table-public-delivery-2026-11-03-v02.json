@@ -1,0 +1,59 @@
+{
+  "downloads": {
+    "metadata": {
+      "url": "https://api.github.com/repos/omics-rust/rsomics-table/releases/tags/v0.2.0",
+      "status": 200,
+      "bytes": 14821,
+      "sha256": "d6714542a0fcf5e7cec78938ae52ac4140d434b88dd4d8cb46bc9a6b308edca8"
+    },
+    "rsomics-table-0.2.0-linux-aarch64.tar.gz": {
+      "url": "https://github.com/omics-rust/rsomics-table/releases/download/v0.2.0/rsomics-table-0.2.0-linux-aarch64.tar.gz",
+      "status": 200,
+      "bytes": 1543837,
+      "sha256": "10442bc27379d8ada908f6e5b70c1a3a2b87c73d1e3a90e3587b77fdc148a801"
+    },
+    "rsomics-table-0.2.0-linux-x86_64.tar.gz": {
+      "url": "https://github.com/omics-rust/rsomics-table/releases/download/v0.2.0/rsomics-table-0.2.0-linux-x86_64.tar.gz",
+      "status": 200,
+      "bytes": 1587870,
+      "sha256": "942721071474dc0045a83851b8b0e49780eefc4ad7f3cd2b33edafc12dc79204"
+    },
+    "rsomics-table-0.2.0-macos-aarch64.tar.gz": {
+      "url": "https://github.com/omics-rust/rsomics-table/releases/download/v0.2.0/rsomics-table-0.2.0-macos-aarch64.tar.gz",
+      "status": 200,
+      "bytes": 1425928,
+      "sha256": "c55b2eda956fdc23d414dbcabf0a7d6b20a5f0350e6d786f685593f85630991f"
+    },
+    "rsomics-table-0.2.0-macos-x86_64.tar.gz": {
+      "url": "https://github.com/omics-rust/rsomics-table/releases/download/v0.2.0/rsomics-table-0.2.0-macos-x86_64.tar.gz",
+      "status": 200,
+      "bytes": 1505258,
+      "sha256": "d4f90f7f1fc6c2922deb399663c3cc6ccb351cbb140b8028a62e01e1b5f5f223"
+    },
+    "rsomics-table-0.2.0.crate": {
+      "url": "https://github.com/omics-rust/rsomics-table/releases/download/v0.2.0/rsomics-table-0.2.0.crate",
+      "status": 200,
+      "bytes": 115450,
+      "sha256": "51e19ab70da2cf5c028ef688bf681466772623f74e07c371ad023326faca3fe6"
+    },
+    "SHA256SUMS": {
+      "url": "https://github.com/omics-rust/rsomics-table/releases/download/v0.2.0/SHA256SUMS",
+      "status": 200,
+      "bytes": 518,
+      "sha256": "e8628571fce8dea923fd50bf6b0599286c483acbbc1e837831a1684d3c0ebf62"
+    },
+    "registry": {
+      "url": "https://index.crates.io/rs/om/rsomics-table",
+      "status": 404,
+      "bytes": 310,
+      "sha256": "4b2fc117a4d93109835a28fc4448b3b2c9251f4b81950c2b5b1a247af92153bd"
+    }
+  },
+  "release_id": 432557746,
+  "head_sha": "2376972224f08de9a5b7cb2157019a0a64272cf5",
+  "calls": 14,
+  "source_helper_and_downloaded_binary_used": true,
+  "source_rebuilt": false,
+  "registry_versions": [],
+  "registry_published": false
+}

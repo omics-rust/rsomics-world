@@ -59,7 +59,7 @@ contract in `docs/10-products/table.md`.
 - [x] One fresh whole-feature review, one necessary correction pass if needed.
   Inspect empty/header-only input, matrix shape/label ambiguity, text ordering,
   selector cardinality, and errors through the shared output transaction.
-- [ ] Only after the evidence gate, document stable behavior, commit the
+- [x] Only after the evidence gate, document stable behavior, commit the
   concern on owner main, push, and wait for exact-head four-native CI. Update
   the world dossier and delivery frontier. Publication remains subject to the
   complete release gate and the separately recorded registry-auth hold.

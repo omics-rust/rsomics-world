@@ -23,6 +23,13 @@ at91bc8a2, with four-native originals and a fresh public projected-count/
 normalization installation. Its registry remains0.1.0; see
 `.autopilot/state/count-02-delivery-2026-11-03.md`.
 
+Table subsequently ships [GitHub0.2.0](https://github.com/omics-rust/rsomics-table/releases/tag/v0.2.0)
+at2376972, with seven operations including the globally aggregated crosstab,
+four-native originals and fresh anonymous public installation. Its sparse
+registry endpoint still returns404; see
+`.autopilot/state/table-02-delivery-2026-11-03.md`. This is a product-specific
+delivery update, not a full namespace refresh.
+
 ## Product families
 
 | Product | Status | Initial scope / upstream anchors |

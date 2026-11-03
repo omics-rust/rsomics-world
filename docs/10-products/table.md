@@ -1,6 +1,7 @@
 # Table product dossier
 
-Status: GitHub0.1.0 delivered; measured implementation
+Status: GitHub0.2.0 delivered with seven operations; registry remains404/held.
+The six-operation measured implementation remains
 `2bd0fd3698c152bb27e7d0d7635d51fb41655112`.
 The initial six-operation scope has passed pinned compatibility, four-native-
 platform exact-head CI, package verification, and its representative release
@@ -17,8 +18,15 @@ has all four native archives, one source.crate and SHA256SUMS. A fresh actual
 public MacARM download passes all11 installed lifecycle calls (ten success,
 one intended atomic failure); no new performance is inferred. README-only
 mainac3788aa passes exactCI41337623958 without replacing that tag/assets.
-Registry publication remains held. See table-native-delivery and
-table-public-delivery2026-11-02 receipts for exact source/binary/asset pins.
+The old release is preserved. GitHub0.2.0 at source
+`2376972224f08de9a5b7cb2157019a0a64272cf5` adds crosstab using the shared
+private engine; exact-head CI `41619468413` passes all four native classes and
+the 120-test full oracle. All four packages/installations and a fresh anonymous
+public MacARM download pass the seven-operation 14-call lifecycle. Crosstab's
+5M-row count/sum gate qualifies through approximately98.8% lower median peak
+RSS; release binaries are not independently remeasured. See
+`.autopilot/state/table-02-delivery-2026-11-03.md` and the v02 native/public
+receipts for exact source/binary/asset pins. Registry publication remains held.
 
 ## Boundary
 
@@ -73,7 +81,7 @@ subcommand.
 | `reverse` | datamash `reverse` | reverse fields per record |
 | `expand` | bedtools `expand` | zip-expand list-valued fields |
 | `groupby` | csvtk `summary`; datamash and bedtools `groupby` | one grouped aggregation engine |
-| `crosstab` | datamash `crosstab` | hidden candidate `463ad7c`: global long-to-wide pivot using the shared private aggregate engine; four-native and pinned Linux oracle CI `41617642479` passed; 5M-row count/sum resource gate passed; installed-binary smoke/public interface adoption still pending |
+| `crosstab` | datamash `crosstab` | GitHub0.2.0 delivered: global long-to-wide pivot using the shared private aggregate engine; four-native/full oracle CI41619468413, 5M-row count/sum resource gate and actual installed/public lifecycle accepted |
 | `correlate` | csvtk `corr`; datamash covariance and correlation operations | table-oriented pairwise statistics |
 | `to-json` | csvtk `csv2json` | JSON records or objects keyed by a field |
 | `render` | csvtk `csv2md`, `csv2rst`, `pretty` | `markdown`, `rst`, and terminal presentation formats |

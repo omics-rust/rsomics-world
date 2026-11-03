@@ -4,9 +4,11 @@
 
 Implements the existing table dossier's long-to-wide workflow inside the owner
 repository, not a revived micro-crate or new public foundation. Base owner
-`ac3788aafae0d5b9a1e0829e6c1b1c4743743bc8` was clean. Command remains hidden
-pending exact-head native CI and acceptance/documentation adoption. No version
-bump, publication, registry retry, or released-asset mutation in this step.
+`ac3788aafae0d5b9a1e0829e6c1b1c4743743bc8` was clean. The initial command was
+hidden pending exact-head native CI and acceptance/documentation adoption.
+This implementation step made no version bump, publication, registry retry or
+released-asset mutation. Subsequent promotion and GitHub0.2.0 delivery are
+accepted in `table-02-delivery-2026-11-03.md`.
 
 Private `operations/crosstab.rs` uses strict incremental records, interned byte
 axes, sparse aggregate states, deterministic byte ordering and existing encoded
@@ -74,6 +76,6 @@ checks for upstream full-byte equality was made.
 World evidence commit `8168316093bb67c1adeff10ef2ab1d43229aeafb` also passed
 exact-head control-plane CI `41617712498`.
 
-Next: extend installed-binary crosstab count/sum smoke, explicitly document the
-matrix/header contract, expose the operation, and advance the release slice. The
-remaining portfolio and registry-auth holds remain unchanged.
+The installed-binary matrix smoke, explicit matrix/header contract, command
+promotion and GitHub release are now completed in the linked delivery record.
+The remaining portfolio and registry-auth holds remain unchanged.

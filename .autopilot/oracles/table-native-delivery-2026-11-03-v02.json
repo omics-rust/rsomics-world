@@ -1,0 +1,78 @@
+{
+  "head_sha": "2376972224f08de9a5b7cb2157019a0a64272cf5",
+  "run_id": 41619468413,
+  "root_adopted": true,
+  "source_files": 185,
+  "source_members": 187,
+  "license_texts": 122,
+  "targets": {
+    "linux-x86_64": {
+      "artifact_id": 13223147138,
+      "source": {
+        "bytes": 115450,
+        "sha256": "51e19ab70da2cf5c028ef688bf681466772623f74e07c371ad023326faca3fe6"
+      },
+      "carrier": {
+        "bytes": 1587870,
+        "sha256": "942721071474dc0045a83851b8b0e49780eefc4ad7f3cd2b33edafc12dc79204"
+      },
+      "binary": {
+        "bytes": 4558680,
+        "sha256": "513fa8d2cee5e6952d3eff808a21b5bff2e91ec5918150d88d466ca5b390a6b7"
+      },
+      "calls": 14
+    },
+    "linux-aarch64": {
+      "artifact_id": 13222543383,
+      "source": {
+        "bytes": 115450,
+        "sha256": "51e19ab70da2cf5c028ef688bf681466772623f74e07c371ad023326faca3fe6"
+      },
+      "carrier": {
+        "bytes": 1543837,
+        "sha256": "10442bc27379d8ada908f6e5b70c1a3a2b87c73d1e3a90e3587b77fdc148a801"
+      },
+      "binary": {
+        "bytes": 4356888,
+        "sha256": "8619899936ef19d779c2e97dc4eb6ac021381a101772769b3095462147295df2"
+      },
+      "calls": 14
+    },
+    "macos-x86_64": {
+      "artifact_id": 13222802633,
+      "source": {
+        "bytes": 115450,
+        "sha256": "51e19ab70da2cf5c028ef688bf681466772623f74e07c371ad023326faca3fe6"
+      },
+      "carrier": {
+        "bytes": 1505258,
+        "sha256": "d4f90f7f1fc6c2922deb399663c3cc6ccb351cbb140b8028a62e01e1b5f5f223"
+      },
+      "binary": {
+        "bytes": 3840344,
+        "sha256": "fa9c5e1a609b851cf175a718fedb5b1a96ae9d47d42567dd7de7aaedfb9b60dc"
+      },
+      "calls": 14
+    },
+    "macos-aarch64": {
+      "artifact_id": 13222897177,
+      "source": {
+        "bytes": 115450,
+        "sha256": "51e19ab70da2cf5c028ef688bf681466772623f74e07c371ad023326faca3fe6"
+      },
+      "carrier": {
+        "bytes": 1425928,
+        "sha256": "c55b2eda956fdc23d414dbcabf0a7d6b20a5f0350e6d786f685593f85630991f"
+      },
+      "binary": {
+        "bytes": 3599568,
+        "sha256": "a09c56379ae9f07fc33682dbfc2d17218c839a8710ae8996cc2dc85f9809f045"
+      },
+      "calls": 14
+    }
+  },
+  "full_oracle_passed": 120,
+  "original_data_only": true,
+  "release": false,
+  "registry_publication": false
+}
