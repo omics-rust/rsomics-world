@@ -39,7 +39,15 @@
   "source_wall_median_seconds": 0.36,
   "native_wall_median_seconds": 0.16,
   "source_over_native_wall": 2.25,
-  "every_native_pair_faster": true,
+  "every_measured_native_pair_faster": true,
+  "warmups_excluded_by_predeclared_protocol": {
+    "source_wall_seconds": 0.39,
+    "native_wall_seconds": 1.18,
+    "source_rss_bytes": 2981888,
+    "native_rss_bytes": 3309568,
+    "native_warmup_slower": true,
+    "cause_established": false
+  },
   "source_rss_bytes": [2932736, 2949120, 2949120, 2949120, 2932736],
   "native_rss_bytes": [3260416, 3309568, 3309568, 3309568, 3309568],
   "source_rss_median_bytes": 2949120,

@@ -159,3 +159,33 @@ Canonical receipt: `../oracles/bed-spacing-performance-2026-11-03.json`.
 This accepts spacing throughput on the actual final candidate artifact, not
 new timing for old operations or a publication claim. GitHub/public-install
 and unchanged registry authorization remain separate gates.
+
+Predeclared warmups remain part of the raw evidence: source/native wall0.39/
+1.18s and RSS2981888/3309568B. Native's first warmup is slower; it is excluded
+from the five measured medians by the original protocol, not a retry or selected
+omission. No cold-start cause or advantage is inferred. Both warmup outputs
+also match completely. Public notes must preserve this loss as well as RSS.
+
+## Public0.6 delivery adopted
+
+Root compares every prepared original archive body and reads final notes,
+freshly confirms0.6 release404/tag absence/remote35d main, then creates one
+draft432289022 with exactly six assets. Root independently verifies exact
+draft/head/notes/asset IDs/sizes/digests before publishing that same ID at
+2026-11-03T04:53:07Z. Existing versions/assets stay immutable. Actual public
+state and all six identities remain unchanged after publication. Warmup and
+RSS losses are retained in notes and the canonical performance receipt.
+
+The once-issued anonymous public installer43304 exits0. Root independent
+data replay42859 checks all191 packet file hashes, public/tag/three-download
+HTTP200 records, all six asset identities, all287 source Git bodies/modes,
+fresh actual binary,18 command statuses/argv/complete goldens/JSON/errors and
+prior-destination preservation. Fifteen operations pass installed lifecycle;
+source correspondence is not another public source compile. No new benchmark
+or upstream oracle is executed. Canonical public receipt:
+`../oracles/bed-public-delivery-2026-11-03-v06.json`.
+
+Worldfa587957 passes exact-head control CI41579911767. Fresh organization
+secret metadata is still updated2026-09-08T20:26:08Z, so no unchanged failed
+registry authentication is retried. GitHub delivery does not claim crates.io
+publication or completion of the full30-product goal.
