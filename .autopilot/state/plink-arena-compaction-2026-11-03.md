@@ -91,3 +91,28 @@ Next prepare an immutable green15 snapshot/selector using the existing route,
 unchanged307 files/17+5 populations/scientific consumer/runtime. Preparation
 alone authorizes no native/source dispatch, benchmark, download or release.
 Previous green13/14 observations and negative gates remain immutable.
+
+## Green15 preparation accepted
+
+Preparation packet plink-green15-preparation-20261103.wPIzPTpR records the
+unchanged existing three preparation tests passing, exit0, and preserves the
+expected missing-selector RED. Root reads the complete selector/test-only
+registration delta, snapshot README, admission and report, rehashes all frozen
+report inputs, and independently compares every307 archived body and committed
+Git mode against owner270caf. Exactly305 members remain unchanged from7cee;
+only the two intended metadata files differ. Regular sorted USTAR metadata and
+gzipmtime0 are verified. Owner/index remain clean; no scientific run occurs.
+
+An initial root checker compares archive permissions from git archive, whose
+default tar mode is0664, rather than committed tree100644. Actual Cargo.lock
+bytes match. Correcting the checker to use git ls-tree modes passes all307
+members without changing snapshot, source or thresholds. This is a verifier
+authority correction, not a product/artifact discrepancy or permission waiver.
+
+Owner tree0e3392246fda32bc7a569906118832c077221202. Source559710B SHA-256
+0db2a250274cc02491bbc2a5b68c536191b082f65cab75e29e455c2c2502c52e;
+files manifest5bd84cd59118937f2b1bf8dc8249f949f2b0e4b4a954eaa204c8e737ba95c60f;
+reportf4e904812f696cc84ac99c98eb5ef3de73340fd42128bfdcfef921ec551e5966.
+Native/source workflow, runtime,307/17+5/123-report/66-worker populations and
+scientific tolerances remain unchanged. Commit/control CI precede any separate
+native/source dispatch; no performance command or publication is admitted.
