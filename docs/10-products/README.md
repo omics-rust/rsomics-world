@@ -37,7 +37,7 @@ operation will ship. It records:
 | `rsomics-methyl` | 1 | [released 0.1.0](methyl.md) |
 | `rsomics-minimap2` | 1 | [legacy wrapper; exact engine/lifetime and material product-value gates held](minimap2.md) |
 | `rsomics-peak` | 5 | [private native4/source/full-workflow performance accepted; public default held](peak.md) |
-| `rsomics-phylo` | 11 | [released0.1.0; unreleased WPGMA extension native4/oracle accepted with18.32%lower workflow RSS, delivery pending](phylo.md) |
+| `rsomics-phylo` | 11 | [GitHub0.2.0 delivered with WPGMA, native4/source originals and anonymous public installation; registry0.1.0 remains separate](phylo.md) |
 | `rsomics-plink` | 42 | [green15 native/source accepted; arena comparison shows no material RSS gain, earlier incremental RSS evidence and upstream-negative whole/publication gates retained](genotype-popgen.md#rsomics-plink) |
 | `rsomics-popgen` | 14 | [GitHub 0.1.0 released and public install verified; registry held](genotype-popgen.md#rsomics-popgen) |
 | `rsomics-rnaseq-qc` | 21 | [GitHub 0.1.0 released and public install verified; registry held](rnaseq-qc-signal.md#rsomics-rnaseq-qc) |

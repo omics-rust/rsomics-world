@@ -1,0 +1,24 @@
+{
+  "product": "rsomics-phylo",
+  "version": "0.2.0",
+  "head_sha": "6624fef40dcffbec47a1ac77f86056bf832f551d",
+  "tag": "v0.2.0",
+  "release_id": 432359356,
+  "published_at": "2026-11-03T06:52:46Z",
+  "url": "https://github.com/omics-rust/rsomics-phylo/releases/tag/v0.2.0",
+  "native_receipt": "phylo-native-delivery-2026-11-03.json",
+  "release_packet": "/Volumes/KIOXIA/Developments/tmp/phylo-02-release-20261103.WTvsvgtf",
+  "public_install_packet": "/Volumes/KIOXIA/Developments/tmp/phylo-02-public-install-20261103.OAR7XAqY",
+  "root_adopted": true,
+  "public_install": {"platform":"macos-aarch64","anonymous_downloads":6,"http_statuses":[200,200,200,200,200,200],"original_pins_rehashed":358,"installed_calls":15,"stable_operations":7,"statuses":[0,0,0,0,0,0,0,0,0,0,0,0,0,2,1],"source_build":false,"performance_rerun":false,"binary_bytes":1884208,"binary_sha256":"956a4cbfea1f6f1553a92acfac96acceedfe360a183d3dbaadf78def5d6674da","complete_sha256":"603bcce7221316f9e8578f5a2178cb0697a2d9163408b95a6873f04ff79c67d3","pins_sha256":"5d230cde798fa17c91501f28b9d0c37d456ac2c702050df39aa27e74819438a5","root_proof_sha256":"78eb5961d9e728bd6ee4f2f2be8c41cf0f3019b20ff697f3bc68f4acad636c5f","lifecycle_sha256":"0aa4596f0c7f5beb6b681f73470dc1270563cc69dc15cc8d868dd66d1034a85b","installer_sha256":"561d007c816e301abe3e12cb18ee691e628ab1706d4fb8ce1a2addc57916d1f0","root_verifier_sha256":"c97ec02934a9657bcba9fdcbd60d24d591d34830b4ae6e21b0f8fee86a56fd35"},
+  "assets": [
+    {"id":704624386,"name":"rsomics-phylo-0.2.0-linux-aarch64.tar.gz","bytes":898530,"sha256":"c34fab8d5eeb2875bab26edc917b666a67b2d2c26418e1212f8608d72ee1e72c"},
+    {"id":704624381,"name":"rsomics-phylo-0.2.0-linux-x86_64.tar.gz","bytes":934458,"sha256":"d70547165cb00afa3517139da5f7260ae0fd59fb9fe2a84c1ad48c3fbdca1c78"},
+    {"id":704624380,"name":"rsomics-phylo-0.2.0-macos-aarch64.tar.gz","bytes":854165,"sha256":"296f7789f56c01228ecb2bed20296dc4613f41f5c65d72770bb62db36cabb20f"},
+    {"id":704624385,"name":"rsomics-phylo-0.2.0-macos-x86_64.tar.gz","bytes":893443,"sha256":"d84c47d51d86923e7ddd7616392bfb5f0771453b9ec99170b69b7306b232ed70"},
+    {"id":704624388,"name":"rsomics-phylo-0.2.0.crate","bytes":99126,"sha256":"db301a8f6f2302b134eed9f680af4f58fc9bc424eee6ef8b6452aa2400d2d56a"},
+    {"id":704624508,"name":"SHA256SUMS","bytes":518,"sha256":"257fc19f1834cd9efdf4bb013dcb42f4a81a4c5342ee21ba23b2c1f62524c718"}
+  ],
+  "registry": {"version_observed_before_github_publication":"0.1.0","yanked":false,"new_publication_performed":false,"github_source_not_registry_archive":true},
+  "performance": {"accepted_implementation":"784cef7cd42640880a1d24f35954edea54008fdb","rust_production_sources_unchanged_for_delivery":true,"uploaded_binaries_individually_remeasured":false,"receipt":"phylo-wpgma-performance-2026-11-03.json"}
+}

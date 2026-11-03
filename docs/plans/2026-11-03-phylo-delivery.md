@@ -42,6 +42,6 @@ and lock, README/PERFORMANCE and generated `licenses`/THIRD_PARTY_NOTICES.
 - [x] Run fmt, strictClippy, full debug/release suite and whole-delivery review.
 - [x] Push final candidate once complete; wait for exact-head native4 including
   normalized crate install and lifecycle, and retain original artifacts/logs.
-- [ ] Independently verify original native/source carriers, then publish a
+- [x] Independently verify original native/source carriers, then publish a
   GitHub release and perform a fresh public-install lifecycle if gates pass.
-- [ ] Record publication/authentication boundaries in the control plane.
+- [x] Record publication/authentication boundaries in the control plane.

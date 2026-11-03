@@ -1,5 +1,9 @@
 # Phylo0.2 source and native delivery
 
+Current: GitHub0.2.0 published and fresh anonymous MacARM installation adopted;
+registry remains the separate0.1.0 archive. See final section and canonical
+public receipt. Earlier candidate/gate paragraphs are historical executions.
+
 Plan `docs/plans/2026-11-03-phylo-delivery.md`.
 Accepted implementation784cef7cd42640880a1d24f35954edea54008fdb.
 Owning delivery candidate6624fef40dcffbec47a1ac77f86056bf832f551d is pushed,
@@ -99,3 +103,41 @@ CPU fields and checksums. Linux source oracle is135distance/64inference/
 
 This closes actual native/source carrier gates, not public availability or
 fresh public installation. No GitHub release is created at this point.
+
+## Public0.2 delivery adopted
+
+World729cfd4f exact-head CI41591730602 passes before release publication.
+Root prepares five exact adopted carriers plus518B SHA256SUMS, freshly
+confirms no prior GitHub releases/tags, remote main6624fef and official
+registry index0.1.0 only/not-yanked. Rust production source diff784cef7→6624fef
+is empty; performance provenance stays with its actual older measured binary.
+
+One draft is created, ID432359356; root checks target/source/body and six
+asset IDs/sizes/server SHA256 digests before one publish PATCH. Actual public
+time2026-11-03T06:52:46Z; remote lightweight tagv0.2.0 resolves to6624fef.
+The first postpublish analysis asserts entire asset objects and exits1:
+only browser_download_url changed from draft to official URLs. Root compares
+the actual changed fields and stable ID/name/size/digest/state successfully;
+no repeat publish, tag move, asset overwrite or content discrepancy occurred.
+
+Root reads the complete prepared public installer, pins system curl and
+excludes mutable Remember files from immutable pins before execution70348,
+which exits0. Six fresh anonymous HTTPS-only downloads all return200 and
+match full adopted bytes/digests before extraction or target execution.
+The downloaded normalized source helper exercises the downloaded MacARM
+binary, not the local candidate:15calls,13success and expected errors2/1,
+seven operations, three inference methods, shared JSON and prior-output
+preservation. No source compilation or performance rerun is claimed here.
+
+Root-authored independent replay exits0, rehashes358explicit original pins,
+checks all six public asset identities/anonymous requests, source VCS,
+actual public executable path/SHA, complete lifecycle files/statuses,
+version/JSON envelopes, WPGMA golden, connected NJ path matrix and protected
+output. Public packet
+`/Volumes/KIOXIA/Developments/tmp/phylo-02-public-install-20261103.OAR7XAqY`.
+Canonical `.autopilot/oracles/phylo-public-delivery-2026-11-03-v02.json`.
+
+This completes the planned GitHub carrier/public-install slice. No crates.io
+0.2 publication, registry credential change, new namespace or later phylo
+placeholder operation is performed. Continue other portfolio work; do not
+misstate this one product release as completion of the full30 goal.

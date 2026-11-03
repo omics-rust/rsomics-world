@@ -1,5 +1,10 @@
 # Phylo WPGMA execution ledger
 
+Current: WPGMA is delivered in GitHub0.2.0 at6624fef, release432359356,
+with four-native carriers and fresh anonymous public installation adopted.
+See `phylo-delivery-2026-11-03.md` and the public receipt. Registry0.1.0 is
+separate; the resource measurement below retains its original implementation.
+
 Plan: `docs/plans/2026-11-03-phylo-wpgma.md`.
 Owning base8971f75d6649776ecad54c8e0f0ee8427f0abc63, clean before edits.
 Existing dossier explicitly includes WPGMA as an inference method.

@@ -51,4 +51,4 @@ existing `infer_tree(&DistanceMatrix, InferenceMethod, NegativeBranchPolicy)`.
 - [x] Measure representative WPGMA workflow timing/RSS with full topology and
   branch-length checks; retain losses and do not relabel old measurements.
 - [x] Commit/push owning changes when correct; wait for exact-head native4 CI.
-- [ ] Record actual release decision; no placeholder/publication claims.
+- [x] Record actual release decision; no placeholder/publication claims.

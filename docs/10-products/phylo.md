@@ -1,14 +1,17 @@
 # Phylogenetics product dossier
 
-Status: the complete initial slice is published as `rsomics-phylo 0.1.0`.
-Source head `8971f75d6649776ecad54c8e0f0ee8427f0abc63` passes exact-head CI on
-native Linux and macOS `x86_64` and `aarch64`.
+Status: GitHub0.2.0 is delivered with seven commands including WPGMA, four
+native binary archives, normalized source and fresh anonymous MacARM public
+installation. Source6624fef40dcffbec47a1ac77f86056bf832f551d passes exact-head
+native4 CI41589534278. Registry0.1.0 remains a separate immutable archive.
+See `.autopilot/state/phylo-delivery-2026-11-03.md` and the canonical public
+receipt for actual carrier/public-install boundaries.
 
-Unreleased WPGMA extension at784cef7cd42640880a1d24f35954edea54008fdb
-passes fresh native4 CI41586653945 and64live inference checks. A shared
-2500-taxon workflow has18.32%lower median maximum-process RSS than the pinned
-source. Algorithm-only throughput is not established. Candidate evidence is
-in `.autopilot/state/phylo-wpgma-2026-11-03.md`; no new release is claimed.
+The WPGMA implementation784cef7 passes64live inference checks and a shared
+2500-taxon resource workflow with18.32%lower median maximum-process RSS.
+Algorithm-only throughput is not established. Rust production sources are
+unchanged in the0.2delivery commit; uploaded binaries are not individually
+remeasured. Original initial-release0.1.0 evidence is retained below.
 
 ## Boundary
 
