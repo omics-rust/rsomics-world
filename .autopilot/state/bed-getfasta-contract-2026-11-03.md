@@ -1,7 +1,7 @@
 # BED reference-extraction source contract
 
-Source inspection only. No native implementation, new foundation API,
-runtime oracle result, performance qualification or release is claimed.
+Source inspection and seven real source workflows. No native implementation,
+new foundation API, performance qualification or release is claimed.
 
 ## Upstream contract
 
@@ -31,16 +31,16 @@ These behaviors are not covered by the approved map point-loss repair.
 GFF/VCF input and malformed-block semantics need their own explicit scope
 decision and evidence; BED support must not silently imply them.
 
-## Output-routing discrepancy requiring a real witness
+## Output-routing discrepancy
 
 In `ReportSeq`, `-bedOut` calls `_bed->reportBedTab(bed)`, which uses
 `printf` to stdout, then writes sequence to `*_faOut`. The constructor points
 `_faOut` at the requested `-fo` file when present. Source therefore routes
 BED columns and sequence to different streams for this combination. This
-is a source-level finding, not a captured runtime oracle or approved repair.
-Before implementing named-output behavior, capture both full streams/file
-and resolve compatibility policy. Do not reproduce mixed routing accidentally
-or silently extend the user's map-specific defect decision.
+is now confirmed by the real witness below, but is not an approved repair.
+An async question requests unified complete BED-plus-sequence file output
+with known incompatibility versus strict source routing. Do not reproduce
+mixed routing accidentally or extend the user's map-specific decision.
 
 ## Historical asset disposition
 
@@ -74,3 +74,34 @@ Plain indexed files are supported by the current File-backed reader.
 Auto-index creation, compressed indexed access, full-header naming and
 transactional diagnostic policy remain explicit integration questions.
 No speculative public API or dependency change is authorized by this note.
+
+## Seven real source workflows
+
+Packet `/Volumes/KIOXIA/Developments/tmp/bed-getfasta-witness-20261103.5FzHQADd`.
+Root authors and reads the complete2811B helper, fixed49B mixed-case/IUPAC
+reference and78B two-row BED12 input. The owning BED guard verifies physical
+external USB disk12s1, all Cargo/Rustup/tool/cache/tmp paths, actual resolved
+Cargo target and27GiB free before execution. Each source call has10s timeout,
+core0 and32KiB output-file limits; the packet has1MiB size/8GiB headroom
+checks. No build, benchmark or retry. Exact existing BEDTools binary identity
+is1691808B SHA256
+fc994e1fcfdce8ce8591630d71f21fe67e2275c2a8d967dc0e3dfb4cfa4677a3.
+
+Exactly seven calls all exit0: default; name-plus-strand; nameOnly/tab;
+split/strand; RNA/strand; BED output/stdout; BED output/named file.
+Root reads every complete stdout/stderr and the named file. All stderr
+streams are empty. Default extraction is `AaCGtrYnUuBD`; DNA minus is
+`HVaAnRyaCGtT`, RNA minus `HVaAnRyaCGuU`. Split output is `AaCGUuBD`
+forward and `HVaACGtT` reverse. Names include coordinates for `-name`,
+not for `-nameOnly`. The named BED-output call retains only26B of sequence
+lines in its file and78B of concatenated BED columns without newline in
+stdout; ordinary stdout mode produces104B of two complete BED-plus-sequence
+rows. This confirms the source routing discrepancy on valid input.
+
+Helper SHA256 f6b7f6a2d76482cf116d049283f2a4212526c5ffefc6c211444d2adbd8fb1525;
+reference70ad872bf24323f6b134854da0128b2309ed2682e38d44b821b5e040d1d18530;
+BEDb77fc21a793c96631c6a908b41ef220dba8b25b65db6acf0a6f18d930f2c71af;
+ORACLEe8f56ce1b7add93616ea03098a49d5ccf4ce92943dca4ef9779a891fbfeac932.
+The source-generated17B FAI and all full outputs remain in the packet.
+This small witness establishes these semantics, not compressed-reference,
+large-input, malformed-block, absent-reference or native correctness claims.
