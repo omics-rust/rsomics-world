@@ -81,3 +81,36 @@ missing genome contig/out-of-bounds and contradictory track order remain
 unwitnessed and unresolved before implementation. No broader behavior is
 proved by these five integrated calls. Existing BED0.4 and unionbedg's separate
 human hold are unchanged.
+
+## Two remaining valid-input boundary observations admitted
+
+The integrated witness leaves two concrete public-input contract gaps: whether
+all inputs can be empty, and the origin-point geometry. Root reads the complete
+new frozen helper/PLAN/four literal fixtures in
+bed-multiinter-boundaries-20261103.ogPB. Admit only those two source calls,
+not a malformed/genome/order matrix or product implementation. Fresh exact
+tool/input hashes bind the previously witnessed version without another
+version call. Existing external guard,4MiB packet,8GiB headroom,10s timeout,
+zero core and32KiB streams remain. Nonzero/signaled exit is retained evidence;
+timeout/limit stops further calls, no retry or crash emulation.
+
+Global repair-versus-per-case policy has been asked asynchronously; no answer
+is presumed. Any observed behavior requiring a product-policy decision remains
+separate from source observation and unblocked PLINK qualification.
+
+Actual guarded helper exits0 after exactly two observations, with no timeout
+or capture limit. The all-empty tool exits-11 (SIGSEGV), no stdout/stderr and
+core disabled. The origin point exits0 and emits three complete rows, starting
+chr1:-1–0, then0–1 and1–5. Root reads both actual per-call records/raw streams
+and rehashes tool/helper/input/stdio/prior-version bindings independently.
+ORACLE.json SHA-256
+93bc2d646f20f2ee48ca82894bb6c66657fb00b93d18fd0997c3c2634da37997.
+The helper's successful exit means observations were retained, not that both
+source operations succeeded or native compatibility is accepted.
+
+All-empty repair remains within the pending global bug-policy question.
+Negative virtual output is separately a coordinate-semantic choice: root
+asks asynchronously whether native multiinter should explicitly reject origin
+points and record incompatibility, or retain signed output. No answer, clamp,
+compatibility switch or crash emulation is presumed. Stop the affected input
+policy/implementation decision; PLINK qualification remains unblocked.

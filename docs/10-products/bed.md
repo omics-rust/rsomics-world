@@ -151,7 +151,7 @@ may be migration aliases, but the typed long-form contract owns the help.
 | `jaccard` | BEDTools `jaccard` | later metrics slice; base-pair set similarity and overlap filters |
 | `fisher` | BEDTools `fisher` | later metrics slice; requires a genome-size universe |
 | `reldist` | BEDTools `reldist` | later metrics slice; fixed historical midpoint-straddle behavior is retained |
-| `multiinter` | BEDTools `multiinter`; BEDOPS partition | later multi-file sweep slice |
+| `multiinter` | BEDTools `multiinter`; BEDOPS partition | source inventory and five integrated plus two boundary witnesses retained; all-empty/origin policy pending, no implementation or release claim |
 | `genomecov` | BEDTools `genomecov` | GitHub0.4.0 at5e5b709; native4 run41532198240/full originals and fresh public installation adopted,126 tests/profile and15 installed calls; full584846-row/93-contig histogram and bedgraph-all output/performance accepted atc6e35 in `bed-genomecov-performance-2026-11-03.json`; BAM input belongs to `rsomics-bam` |
 | `unionbedg` | BEDTools `unionbedg` | later track slice |
 | `flank` | BEDTools `flank` | later coordinate-generation slice |
@@ -209,7 +209,8 @@ discarded.
 | `bed-annotate` `551632db1dce` | 3, completed | reference/fixture assets; rebuilt on the checked parser/index and private span-depth primitive, preserving distinct point, numeric and ordering rules |
 | `bed-map` `1fb4c6cc8d84` | 3, source/oracle reviewed | reference/fixture only, not a direct reducer/parser merge; new private streaming/reduction design retains separate source contracts |
 | `bed-jaccard` `ca81d15e39d0` | 2 | retain merged-set sweep, numeric formatting tests, and fixtures; add checked filters and product I/O |
-| `bed-fisher` `fc7bb057f3d2` (dirty), `bed-reldist` `36cdfdead5f6`, `bed-multiinter` `6c07acd0a68e` | 2/3 | retain fixed reldist oracle cases and multi-file fixtures; audit dirty fisher state before reuse |
+| `bed-fisher` `fc7bb057f3d2` (dirty), `bed-reldist` `36cdfdead5f6` | 2/3 | retain fixed reldist oracle cases; audit dirty fisher state before reuse |
+| `bed-multiinter` `6c07acd0a68e` | 3 | fixture/reference/benchmark-input assets only; permissive parser, incorrect tie/order assumptions and chromosome-wide event retention are not merged; new private streaming contract in `bed-multiinter-contract-2026-11-03.md` |
 | `bed-genomecov` `0087cf10fc15`, `bed-unionbedg` `17190fd1bff7` | 2 | refactor into one track sweep and shared genome ordering |
 | `bed-flank` `3082414312e5`, `bed-slop` `5fc4c99797b1`, `bed-shift` `06ae585329e4`, `bed-makewindows` `e3d7050be07f` | 2 | retain coordinate algorithms and oracle fixtures; centralize overflow and genome bounds |
 | `bed-random` `492873673ef8`, `bed-shuffle` `c2bc689ee791`, `bed-sample` `23a95f5919e1` | 2/3 | retain deterministic fixtures; replace unrelated RNG and whole-file policies with one seeded contract |
