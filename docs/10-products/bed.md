@@ -163,7 +163,7 @@ may be migration aliases, but the typed long-form contract owns the help.
 | `sample` | BEDTools `sample` | later deterministic sampling slice |
 | `getfasta` | BEDTools `getfasta` | later reference slice using `rsomics-seqio` random access |
 | `maskfasta` | BEDTools `maskfasta` | later reference slice; one implementation replaces two historical clones |
-| `nuc` | BEDTools `nuc` | later reference slice |
+| `nuc` | BEDTools `nuc` | core/Main/shared reference source and six real workflows pinned; existing published seqio IndexedFasta matches archive and CALL consumer; ordinary stats/strand/pattern/header semantics established, missing-reference/overrun warning-versus-error policy pending; no implementation |
 | `overlap` | BEDTools `overlap` | later BEDPE/shape slice |
 | `pair-to-bed` | BEDTools `pairtobed` | deferred until the BEDPE record contract is complete |
 | `pair-to-pair` | BEDTools `pairtopair` | deferred with `pair-to-bed` |
