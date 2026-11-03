@@ -5,7 +5,15 @@ complete. The initial2026-07-31 inspection found neither target repository;
 this is not a current live-registry assertion. Current PLINK source preflight
 is recorded in `.autopilot/state/plink-source-preflight-2026-10-31.md`.
 
-Latest2026-11-03 PLINK: private scientific owner7cee8e4 passes green14
+Latest2026-11-03 PLINK: private scientific owner270caf5 passes green15
+native-four and same-file source41550834496/1, with complete originals
+independently adopted in `plink-native-2026-11-03-green-15.json`. Completed-table
+arena compaction retains parsing/ownership and transient VCF behavior. The
+fixed10000-variant consumer reports2911523→2578544 owned bytes, not a cohort
+RSS or speed result. New-binary matched-workflow measurement remains pending;
+whole-performance/publication gates are unchanged.
+
+Previous qualified owner7cee8e4 passes green14
 native-four and same-file source41542779786/2; root adopts complete originals
 in `plink-native-2026-11-03-green-14.json`. The qualified uninstrumented CI
 binaries then complete one full-I-w1 comparison: one warmup each and five
@@ -15,9 +23,8 @@ incremental comparison; every pair is lower. Wall medians0.936344→0.903597s
 include one slower pair and shared-host noise, not accepted stable speedup.
 See `plink-metadata-ci-comparison-2026-11-03.json`. Green13's upstream-negative
 gate remains unchanged; no upstream superiority or publication is accepted.
-The next bounded private wave compacts unused completed-arena capacity without
-changing parsing/types/dependencies; implementation and later gates remain
-separate from these accepted7cee observations.
+The subsequent completed-arena compaction's separate evidence is above; these
+accepted7cee RSS/time observations are not rebound to270caf.
 
 Earlier2026-11-03 PLINK: private compact metadata owner499693cf is integrated
 after complete source review, one independent whole-feature review and root

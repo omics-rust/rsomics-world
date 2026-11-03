@@ -134,3 +134,31 @@ uses external plink-green15-originals-20261103.AefSWuqe,2GiB cap plus8GiB
 independent headroom. First attempt-specific jobs API has both Linux jobs
 successful, both Macs in progress, no failure. This is not native-four/source
 acceptance. Preserve this exact run; no duplicate dispatch or automatic retry.
+
+## Green15 native/source adoption
+
+Attempt1 completes SUCCESS on all four actual native jobs and the dependent
+same-attempt source consumer. No retry occurs. Root reads the complete frozen
+report/current wrappers/explicit verifier adaptations, independently rehashes
+all11079 packet files and recipe inputs, then replays the entire adapted data
+verifier against immutable270caf Git bodies and committed modes. All four
+native debug/release profiles retain17+5 executions,36 generations,74878 raw
+cells,246 reports and66 workers, zero failed/ignored. Source224 report plus36
+raw bridge calls succeed and bind this attempt's actual Linux TAR/manifest.
+The replay compares three existing receipts without overwriting them; no
+scientific code is executed locally. Source/native compatibility is adopted
+in `.autopilot/oracles/plink-native-2026-11-03-green-15.json`.
+
+Linux release3337200B SHA-256
+46af1f4220bc9164732fed7a76a71254d85c0030df76f4970fdafd8b649bf755,
+artifact13191022217. The sealed original proposal stays root_adopted=false;
+the new canonical receipt records root's independent adoption. Official runtime/
+source correspondence, target-host provider support, RSS/time, whole-performance
+and publication remain separate gates. Old7cee measurements are not reassigned
+to this binary; original green13 negative evidence remains unchanged.
+
+Data-only preparation of a matched7cee→270caf full-I-w1 comparison is delegated
+using the established uninstrumented12-call runner and unchanged input/output
+pins. Prospective new arena-ci-comparison child is512MiB within existing8GiB
+root/joined618GiB envelope; no new root, hidden worker, dependency, instrumentation,
+SSH stage, provider check or runtime is authorized by preparation alone.

@@ -38,7 +38,7 @@ operation will ship. It records:
 | `rsomics-minimap2` | 1 | [legacy wrapper; exact engine/lifetime and material product-value gates held](minimap2.md) |
 | `rsomics-peak` | 5 | [private native4/source/full-workflow performance accepted; public default held](peak.md) |
 | `rsomics-phylo` | 11 | [released 0.1.0](phylo.md#first-release-evidence) |
-| `rsomics-plink` | 42 | [green14 native/source accepted; full-I-w1 incremental RSS improvement accepted, upstream-negative whole gate and publication hold remain](genotype-popgen.md#rsomics-plink) |
+| `rsomics-plink` | 42 | [green15 native/source accepted; new-binary workflow measurement pending, earlier incremental RSS evidence and upstream-negative whole/publication gates retained](genotype-popgen.md#rsomics-plink) |
 | `rsomics-popgen` | 14 | [GitHub 0.1.0 released and public install verified; registry held](genotype-popgen.md#rsomics-popgen) |
 | `rsomics-rnaseq-qc` | 21 | [GitHub 0.1.0 released and public install verified; registry held](rnaseq-qc-signal.md#rsomics-rnaseq-qc) |
 | `rsomics-sc` | 29 | [private inferCNV candidate; discovery contract held](sc.md) |

@@ -1,0 +1,57 @@
+{
+  "schema": "rsomics.plink.native-adoption.v1",
+  "product": "rsomics-plink",
+  "run_id": 41550834496,
+  "run_attempt": 1,
+  "head_sha": "c3f407eba45a21bbbaa4333cec5c93f805224e28",
+  "owner_commit": "270caf52d2aa87375cfd1ab5c6ef8d0ca2acf29c",
+  "owner_tree": "0e3392246fda32bc7a569906118832c077221202",
+  "snapshot": "green-15",
+  "conclusion": "success",
+  "root_adopted": true,
+  "source_file_count": 307,
+  "source_archive_bytes": 559710,
+  "source_archive_sha256": "0db2a250274cc02491bbc2a5b68c536191b082f65cab75e29e455c2c2502c52e",
+  "source_manifest_sha256": "5bd84cd59118937f2b1bf8dc8249f949f2b0e4b4a954eaa204c8e737ba95c60f",
+  "native_targets": ["linux-aarch64", "linux-x86_64", "macos-aarch64", "macos-x86_64"],
+  "artifact_ids": [13191946298, 13191022217, 13190423969, 13192131631, 13192970535],
+  "each_native_debug_and_release": {
+    "library_tests": 17,
+    "workflow_test_executions": 5,
+    "failed": 0,
+    "ignored": 0,
+    "git_source_bodies_and_modes_verified": true,
+    "generations": 36,
+    "raw_cells": 74878,
+    "reports": 246,
+    "worker_records": 66
+  },
+  "upstream_consumers": {
+    "same_attempt_linux_archive_binding": true,
+    "report_commands": 224,
+    "raw_bridge_commands": 36,
+    "command_failures": 0,
+    "native_elf_executed_in_source_job": false,
+    "official_source_commit_correspondence": "unproven"
+  },
+  "linux_release_binary": {
+    "artifact_id": 13191022217,
+    "bytes": 3337200,
+    "sha256": "46af1f4220bc9164732fed7a76a71254d85c0030df76f4970fdafd8b649bf755"
+  },
+  "original_packet": "/Volumes/KIOXIA/Developments/tmp/plink-green15-originals-20261103.AefSWuqe",
+  "proposal_sha256": "b16b1977c82408244ce1b6efec355c4075d30c4a674fef267a278ac21c1a67a8",
+  "original_verification_sha256": "418b354b579fc5b3bf0a695f999d58c6b5bfd58e19be3e417dbd225e8c52f1b2",
+  "pins_sha256": "aeaad23b1b0d3c02aaf008619bc7fad770c5e6ca793dc686fda29a9e63d2ca23",
+  "root_replay": {
+    "pinned_files_rehashed": 11079,
+    "recipe_inputs_rehashed": true,
+    "full_adapted_data_verifier_replayed": true,
+    "three_existing_receipts_compared_without_overwrite": true,
+    "scientific_execution": false
+  },
+  "performance_accepted": false,
+  "target_host_abi_accepted": false,
+  "publication_accepted": false,
+  "prior_green13_negative_performance_gate_unchanged": true
+}
