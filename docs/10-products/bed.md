@@ -155,8 +155,8 @@ may be migration aliases, but the typed long-form contract owns the help.
 | `genomecov` | BEDTools `genomecov` | GitHub0.4.0 at5e5b709; native4 run41532198240/full originals and fresh public installation adopted,126 tests/profile and15 installed calls; full584846-row/93-contig histogram and bedgraph-all output/performance accepted atc6e35 in `bed-genomecov-performance-2026-11-03.json`; BAM input belongs to `rsomics-bam` |
 | `unionbedg` | BEDTools `unionbedg` | later track slice |
 | `flank` | BEDTools `flank` | integrated source witness retained with slop/shift; illegal point-output policy held before implementation/delivery |
-| `slop` | BEDTools `slop`; BEDOPS range padding | coordinated streaming transform wave; actual fractional/strand/shrink behavior retained in `bed-coordinate-contract-2026-11-03.md` |
-| `shift` | BEDTools `shift` | same coordinate wave; actual independent endpoint clipping preserves boundary1bp, not old asset's dropped rows |
+| `slop` | BEDTools `slop`; BEDOPS range padding | implemented in source446b144, unified CLI and single full-output consumer; local debug/release127 each pass, exact-head native/install and representative performance pending at161961c |
+| `shift` | BEDTools `shift` | implemented in the same coordinate wave; source fractional ordering/endpoint clipping, invalid-output errors and atomic rollback verified locally; not a released operation yet |
 | `makewindows` | BEDTools `makewindows`; BEDOPS chop/stagger | later coordinate-generation slice |
 | `random` | BEDTools `random` | later seeded-generation slice |
 | `shuffle` | BEDTools `shuffle` | later seeded-generation slice |

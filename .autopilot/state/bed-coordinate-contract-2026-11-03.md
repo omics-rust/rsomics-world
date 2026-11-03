@@ -72,3 +72,74 @@ point cases. No reply or broader bug-policy authority is presumed. Stop that
 affected flank policy/interface decision; ordinary transforms and slop/shift
 contract work may continue. Do not advertise unfinished behavior or expose a
 bug-emulation placeholder.
+
+## Actual slop/shift implementation and local qualification
+
+Plan: `docs/plans/2026-11-03-bed-coordinate-generation.md`. Root implements
+the shared streaming/signed-coordinate kernel and private optional-field
+accessor; one isolated agent implements only unified CLI plumbing. All required
+column callers keep their error contract; missing/unknown strand semantics
+use a typed Option, not swallowed required-field errors. No new dependency,
+public foundation, version, unrelated comment cleanup or flank placeholder.
+
+One integrated CLI consumer first fails because slop is unavailable, then
+passes five complete byte-exact source goldens, JSON named output, command
+composition and late-error output preservation. Root verifies all seven
+fixture/golden bodies against the original source-witness inputs/outputs.
+Actual local fmt, strict all-target/all-feature Clippy and complete debug/
+release each pass127 executions, zero failed/ignored. Each includes the same
+single coordinate consumer; these are not254 distinct cases.
+
+ONE fresh whole-feature review finds one Important output-bound omission,
+no Critical/other Important/Minor findings. At size9007199254740995 binary64
+rounding can otherwise write end9007199254740996. Root adds the reproduction
+to the existing consumer, observes its actual failure, then adds one final
+integer end<=size postcondition before writing. Overflow fails loudly without
+altering source-prescribed float arithmetic or selecting a flank policy.
+The same consumer and entire final suite pass afterward. No second review or
+helper matrix. Root reads/adjudicates the complete review, including its
+declined native/install/performance/publication gates.
+
+External logs: bed-coordinate-implementation-20261103.GVbJQvyI.
+Review7586f16d399afdba846527efaa53fa6b419d4e1025d2ee976c3f5591a54f1c8f;
+initial RED973e931a72a98deb98c7e7b74d11de0cec1d3fa75343109b2d024ab34f6359f1;
+rounding REDb08ae6a0921d48386a7c03e8d1a8b854bc0c53bfcab9e2629cb3e76ffbefc7da;
+rounding GREENe6e006def26e474c754298017f027e3d4e844ac4927f3780be8a57f1fb37828a;
+final form0164de2f6e233c33fc99adad52c1fb3b4dec5b5493339bd88caa03779c069f0b;
+Clippye9e91e8eee150651f9fd1a9c2bc3b3fb060448c3797b1df2693db219ca39d460;
+debuga9d85f35cee7f944f65f1f13e1e6d027706f499759d8811bd98ee15d6f844cda;
+release770cd55b80ff4b82dec3c9a74fff1acfacdd17960fbdcdee19e6906708c78c3a.
+All actual guards verify external disk12s1/Cargo/Rustup/resolved-target/tmp/
+cache routes, offline execution and28GiB free space. No boot project output.
+
+Private feature446b144ed5e0b6c35be1057a8ee297022c5ff09d commits13 paths,
+tree d143f3c23347acc765933a2f6d142dff04de35ea. Separate CI concern
+161961c688a5c2ecedfe28e3dc152abd8a56a011 only extends existing installed
+lifecycle to14 operations/17 calls, including both new actual-binary goldens.
+Root reads the full surrounding source/package/smoke logic and exact diff;
+AST syntax passes. No hard-coded126 test gate existed; no workflow, source
+membership, dependency inventory or historical test counts are weakened.
+
+Fresh public main still49cd59 before the intended fast-forward push. Exact-head
+native-four/package/install results remain pending; no publication or time/RSS
+advantage is inferred. The released v0.4.0 assets stay immutable. Flank's point
+decision and the existing registry authorization hold remain separate.
+
+The fast-forward push succeeds. Actual native-four CI41569005243/1 binds
+161961c688a5c2ecedfe28e3dc152abd8a56a011. Read-only full-original collection
+uses external bed-coordinate-native-161961c-20261103.vEzROm,256MiB cap plus
+8GiB headroom; no retry or scientific execution by the collector. Preserve
+actual new-head source/package/install evidence before qualification claims.
+
+Performance preparation is independent and unexecuted at
+bed-coordinate-performance-prep-20261103.LmcGpPFl. It reuses all584846 RefSeq
+exon rows/28597646B from the accepted full input, not a toy subset; the full
+93-contig genome and existing2.31.1 source binary are unchanged. Data-only
+inspection finds zero points and297458+/287388- records. Candidate binary
+pins remain unresolved pending adopted actual Mac ARM originals. Proposed
+24 whole slop/shift runs use one warmup/tool/operation then five alternating
+pairs each, complete output comparisons and retained wall/RSS distributions.
+No target execution, invented native pin or performance claim is authorized
+by preparation; root must read/admit the final runner separately. The old
+genomecov dense-source Mac memory obstacle does not describe these streaming
+operations, and its original Linux measurements are not reassigned.
