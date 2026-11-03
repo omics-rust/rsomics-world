@@ -51,3 +51,65 @@ one fresh whole-feature review, adjudicates private integration, and separately
 qualifies immutable native/source then real-workflow measurements before any
 performance/release claim. Existing negative gates and BED input-policy holds
 remain unchanged.
+
+## Actual candidate and private integration
+
+Owner223e342f845bdb280bd369395483f8f72a1d445f integrates exactly3 authorized
+files,28 insertions/31 deletions; index/worktree clean afterward. Offline Cargo
+resolution changes only sha2/digest/block-buffer/crypto-common/cpufeatures,
+adds hybrid-array and removes generic-array/version_check. Shared cfg-if,
+libc and typenum are unchanged. All9 closure archives match lock checksums,
+declare MIT OR Apache-2.0 and MSRV at most1.88; actual compiler is1.91.0/f8297e351.
+No missing cache, network download or compiler fallback occurs.
+
+The initial real offline build failsE0277 because the new fixed Array output
+lacks LowerHex. Preserve that compile error, not a fabricated behavioral RED.
+The permitted transaction API adaptation uses one64-capacity String and standard
+byte02x formatting; its short String-write expect covers an infallible sink,
+not I/O. Open/read errors,64KiB streaming/update/finalize, hash/manifest schema,
+file/directory syncs, worker and generation contracts remain unchanged.
+
+Final offline build/fmt/strict all-target/all-feature Clippy pass. Complete
+debug/release each17-library+5-workflow executions, zero failed/ignored; each
+full CLI graph checks74878 raw cells. Existing consumers/fixtures are unchanged.
+An independent data-only replay checks72 actual produced manifests/216 digest
+fields against Python SHA-256,64 lowercase characters including600 bytes that
+need zero padding; no extra CLI/scientific calls. Root repeats that data replay,
+verifies all19 explicit immutable pins, exact3-file patch/current source hashes
+and all9 locked archives/manifest MSRVs/licenses. Mutable .remember state is
+preserved and excluded, not silently resealed as experimental evidence.
+
+Packet plink-sha2-backend-20261103.S8w3WtDd, report SHA-256
+4369ec3fc2218b8dde4efa23d671bf1aaeb04273331b5c7ab4b63159eefbfd05;
+PINS63e188a50ee8e45df9538885fc7f4a85cce9227ff0c2b20adf0f603547b1ad86;
+delta03305007adb6c306c13e49b48be1e86e65c79026f186d0af7720de3ac957ebf7.
+Frozen Cargo.toml10f0528b8be4b84bbe33c0a422b1679f441d17f4a197eeeeafd7487de9ed96d4;
+Cargo.lock94cf69d2651deecf518c59ac3c29f265e71a95c270b413dac03bf92ec5a45574;
+transaction.rs7cc960a5aa49b921e89ff4eab83e16a08c246c3b53638b589106f405b51eb31d.
+
+ONE fresh whole-feature review finds no critical/important/minor issue; root
+reads the entire report, SHA-256
+1841983092938940f801cdcb1f44d99ddaad3762dea56a0922722cedf3044eeb.
+Final test results are independently verified before integration. Its declined
+native/source/provider/performance/publication/cryptographic-internals scope
+remains separate: this is normal external-library API maintenance, not a new
+cryptographic audit, security claim or performance win. No extra fix/review loop.
+
+## Green16 preparation adoption
+
+Preparation packet plink-green16-preparation-20261103.CRCJ6Xhd retains expected
+missing-selector RED and the existing3 preparation tests passing, exit0.
+Root reads full minimal selector/test delta, report/admission/snapshot README,
+rehashes all frozen prep inputs and independently verifies307 exact committed
+source bodies/modes,304 unchanged versus270caf. Only Cargo.toml/Cargo.lock/
+transaction.rs differ. Regular sorted USTAR/gzipmtime0 and clean owner/tree
+f0596e2476ebe2c53d61cc2c70d4c2e002c3f445 are verified.
+
+Snapshot source559714B SHA-256
+38d5aff557934b7b738a9347d00a75f62e6cc8b5a8077c25a8fffba2cb15858a;
+files manifest6e841253a0accfd33d720a4d3c8b6fd0958280eb0ff2534651c955db0aeac11f;
+prep report44776b58e230fdefc921fb05de06509297dee7b604418276e56e07dff6b24a5f.
+Workflow/runtime/scientific policy and17+5/123-report/66-worker/74878-cell
+populations are unchanged. Commit and exact-head control CI precede any
+separate native/source dispatch. No timing, archive reuse as qualification,
+public remote or publication is authorized by capture.
