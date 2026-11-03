@@ -154,9 +154,9 @@ may be migration aliases, but the typed long-form contract owns the help.
 | `multiinter` | BEDTools `multiinter`; BEDOPS partition | source inventory and five integrated plus two boundary witnesses retained; all-empty/origin policy pending, no implementation or release claim |
 | `genomecov` | BEDTools `genomecov` | GitHub0.4.0 at5e5b709; native4 run41532198240/full originals and fresh public installation adopted,126 tests/profile and15 installed calls; full584846-row/93-contig histogram and bedgraph-all output/performance accepted atc6e35 in `bed-genomecov-performance-2026-11-03.json`; BAM input belongs to `rsomics-bam` |
 | `unionbedg` | BEDTools `unionbedg` | later track slice |
-| `flank` | BEDTools `flank` | later coordinate-generation slice |
-| `slop` | BEDTools `slop`; BEDOPS range padding | later coordinate-generation slice |
-| `shift` | BEDTools `shift` | later coordinate-generation slice |
+| `flank` | BEDTools `flank` | integrated source witness retained with slop/shift; illegal point-output policy held before implementation/delivery |
+| `slop` | BEDTools `slop`; BEDOPS range padding | coordinated streaming transform wave; actual fractional/strand/shrink behavior retained in `bed-coordinate-contract-2026-11-03.md` |
+| `shift` | BEDTools `shift` | same coordinate wave; actual independent endpoint clipping preserves boundary1bp, not old asset's dropped rows |
 | `makewindows` | BEDTools `makewindows`; BEDOPS chop/stagger | later coordinate-generation slice |
 | `random` | BEDTools `random` | later seeded-generation slice |
 | `shuffle` | BEDTools `shuffle` | later seeded-generation slice |
@@ -212,7 +212,8 @@ discarded.
 | `bed-fisher` `fc7bb057f3d2` (dirty), `bed-reldist` `36cdfdead5f6` | 2/3 | retain fixed reldist oracle cases; audit dirty fisher state before reuse |
 | `bed-multiinter` `6c07acd0a68e` | 3 | fixture/reference/benchmark-input assets only; permissive parser, incorrect tie/order assumptions and chromosome-wide event retention are not merged; new private streaming contract in `bed-multiinter-contract-2026-11-03.md` |
 | `bed-genomecov` `0087cf10fc15`, `bed-unionbedg` `17190fd1bff7` | 2 | refactor into one track sweep and shared genome ordering |
-| `bed-flank` `3082414312e5`, `bed-slop` `5fc4c99797b1`, `bed-shift` `06ae585329e4`, `bed-makewindows` `e3d7050be07f` | 2 | retain coordinate algorithms and oracle fixtures; centralize overflow and genome bounds |
+| `bed-flank` `3082414312e5`, `bed-slop` `5fc4c99797b1`, `bed-shift` `06ae585329e4` | 3 | fixture/input/reference assets only; old fractional, strand, missing-genome and clipping cores are not merged; rebuild on existing private stream/model after the coordinate contract witness |
+| `bed-makewindows` `e3d7050be07f` | 2 | retain useful coordinate algorithms and oracle fixtures after its own source contract review |
 | `bed-random` `492873673ef8`, `bed-shuffle` `c2bc689ee791`, `bed-sample` `23a95f5919e1` | 2/3 | retain deterministic fixtures; replace unrelated RNG and whole-file policies with one seeded contract |
 | `bed-getfasta` `82783b773f90`, `bed-nuc` `3e20a5e4f659` | 2 | retain byte-exact sequence and nucleotide fixtures; consume the shared sequence reader |
 | `bed-maskfasta` `d5e540e305d0` (dirty), `fasta-mask` `4bda5f191c91` | 3/4 | audit the dirty stronger asset, keep its oracle cases, and discard the duplicate implementation |
