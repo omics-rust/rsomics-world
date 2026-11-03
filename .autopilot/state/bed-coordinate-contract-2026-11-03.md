@@ -219,3 +219,25 @@ byte-identical to qualified161961c. Final-head native-four run41573159869 is
 queued; no success, release or fresh public installation is asserted yet.
 World evidence head a3be99c21f8f41a49da856dd506992c1c4839150 passes exact-head
 control CI41572298719. Flank and registry holds remain unchanged.
+
+## Final-head native delivery adopted
+
+Run41573159869/1 at exact91f2bf9 is terminal success on all four native hosts.
+Root reads the complete adapted data verifier, independently rehashes747
+explicit pinned files, checks artifact run IDs and replays the entire verifier
+in memory against existing VERIFIED.json without rewriting it. All276 original
+Git bodies/modes and278 source members match; all four source crates agree.
+Each host passes127 debug/release/packaged tests and17 installed calls across
+14 operations (16 successes plus the expected transactional error). Version,
+new slop/shift complete outputs, dependencies, notices and binary correspondence
+are checked. No delivery binary or scientific oracle is rerun by adoption.
+Canonical receipt: `../oracles/bed-native-delivery-2026-11-03-v05.json`.
+
+Root rereads the current coordinate API/hot paths and confirms the complete
+six-file final delta changes no source/tests/CI/dependency. Existing review's
+one important correction remains integrated. Actual161961c performance stays
+bound to that measured binary; final0.5 binaries are not falsely remeasured.
+GitHub draft/public installation remain next gates, not achieved claims.
+Fresh organization-secret metadata still reports updated2026-09-08T20:26:08Z;
+no unchanged failed registry authentication is retried. Worlddb7ef82f passes
+exact-head control CI41574034893. Full30-product goal remains active.

@@ -1,0 +1,54 @@
+{
+  "schema": "rsomics.bed.native-delivery-adoption.v1",
+  "root_adopted": true,
+  "head": "91f2bf9498341b1d1fd4cf27fd244c2820f73ad4",
+  "run": 41573159869,
+  "attempt": 1,
+  "version": "0.5.0",
+  "native_four_accepted": true,
+  "packet": "/Volumes/KIOXIA/Developments/tmp/bed-05-native-91f2bf9-20261103.iVt4z4",
+  "proof_sha256": "6bc737fc0e733c33c200b54e2c493757311455fa1e931f8e28908c86b2789504",
+  "pins_sha256": "966d40b8793fa581cee342627d3a1e91dde549497aa3a4982235130b4b70e604",
+  "root_replay": {
+    "pinned_files_rehashed": 747,
+    "complete_reviewed_data_verifier_replayed": true,
+    "existing_receipt_compared_without_rewriting": true,
+    "artifact_run_ids_checked": true,
+    "scientific_or_delivery_binary_executed": false,
+    "mutable_remember_state_excluded": true
+  },
+  "source_package": {
+    "bytes": 142009,
+    "sha256": "d4c3a9ec60186f2b5edacac49481b0641037cfc56c89ba9e54c00f0e9e04f7f8",
+    "exact_git_originals": 276,
+    "members": 278,
+    "git_bodies_modes_clean_vcs_and_normalized_metadata_checked": true,
+    "identical_across_all_four_hosts": true
+  },
+  "each_native_target": {
+    "debug_tests": 127,
+    "release_tests": 127,
+    "packaged_tests": 127,
+    "failed_or_ignored": 0,
+    "installed_operations": 14,
+    "installed_calls": 17,
+    "successful_calls": 16,
+    "expected_error_calls": 1,
+    "new_slop_shift_argv_and_complete_output_checked": true,
+    "dependency_license_and_binary_correspondence_checked": true
+  },
+  "binaries": {
+    "linux-aarch64": {"bytes": 2163760, "sha256": "a9227ae31b91e143caeb96f3ddb06d21780633e7f502eb69b2eaad0904a6eb85"},
+    "linux-x86_64": {"bytes": 2333472, "sha256": "b8b49c92152b4649953a639cdb9e9e96729d2b0b3130d05c6ab1c58075336153"},
+    "macos-aarch64": {"bytes": 1915760, "sha256": "cbbd518fc76d85999d8f18beb832d51a9fc892ae7dd324892ac3b5522ba951ce"},
+    "macos-x86_64": {"bytes": 2104360, "sha256": "3a086b66d50c5faa5f76dbd44c61086e9f288f6b63ea7fe47486634dd745e8b4"}
+  },
+  "implementation_review": "Root rereads current coordinate public API and hot paths; six-file metadata-only delta from reviewed and qualified161961c is independently checked. No source/test/CI/dependency changes.",
+  "performance_receipt": "bed-coordinate-performance-2026-11-03.json",
+  "performance_scope": "Actual161961c Mac ARM artifact slop/shift wall advantage; higher RSS. This final rebuilt binary has not been timed. Earlier losses and executable bindings remain unchanged.",
+  "publication_accepted": false,
+  "fresh_public_installation_accepted": false,
+  "registry_publication": false,
+  "older_release_assets_replaced": false,
+  "flank_policy_resolved": false
+}
