@@ -260,3 +260,14 @@ no new benchmark/oracle run is claimed. Canonical receipt:
 `../oracles/bed-public-delivery-2026-11-03-v05.json`.
 Registry and flank holds are unchanged; makewindows has its own origin policy
 question, not a reason to withdraw this completed slop/shift delivery.
+
+## Post-release documentation head
+
+Root reviews the complete README/MIGRATION/PERFORMANCE-only delta and pushes
+33d07f60212f84e7d0e1470d3a5a1fda457a99c3. Version, lock, production source,
+tests and CI are unchanged. Exact-head run41574945324 is live: Linux x86_64,
+Linux aarch64 and macOS aarch64 succeed; Intel macOS is building the pinned
+oracle. Observe this same run without rerun or release replacement. The immutable91f2bf9 release
+and measured161961c binaries retain their separate evidence identities.
+World07772d7c passes exact-head control CI41575516658. No product source or
+release asset changes are pending in the owner worktree.
