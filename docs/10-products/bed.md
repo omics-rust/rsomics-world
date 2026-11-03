@@ -155,8 +155,8 @@ may be migration aliases, but the typed long-form contract owns the help.
 | `genomecov` | BEDTools `genomecov` | GitHub0.4.0 at5e5b709; native4 run41532198240/full originals and fresh public installation adopted,126 tests/profile and15 installed calls; full584846-row/93-contig histogram and bedgraph-all output/performance accepted atc6e35 in `bed-genomecov-performance-2026-11-03.json`; BAM input belongs to `rsomics-bam` |
 | `unionbedg` | BEDTools `unionbedg` | later track slice |
 | `flank` | BEDTools `flank` | integrated source witness retained with slop/shift; illegal point-output policy held before implementation/delivery |
-| `slop` | BEDTools `slop`; BEDOPS range padding | implemented in source446b144, unified CLI and single full-output consumer; local debug/release127 each pass, exact-head native/install and representative performance pending at161961c |
-| `shift` | BEDTools `shift` | implemented in the same coordinate wave; source fractional ordering/endpoint clipping, invalid-output errors and atomic rollback verified locally; not a released operation yet |
+| `slop` | BEDTools `slop`; BEDOPS range padding | source161961c native-four/package/install originals adopted (127 tests/profile,17 installed calls/14 ops); full584846-exon workflow throughput3.0x, RSS higher; formal release pending |
+| `shift` | BEDTools `shift` | same qualified coordinate wave; full-input throughput3.2x with complete byte equality, source fractional/endpoint ordering and invalid-output errors retained; RSS higher, not a released operation yet |
 | `makewindows` | BEDTools `makewindows`; BEDOPS chop/stagger | later coordinate-generation slice |
 | `random` | BEDTools `random` | later seeded-generation slice |
 | `shuffle` | BEDTools `shuffle` | later seeded-generation slice |

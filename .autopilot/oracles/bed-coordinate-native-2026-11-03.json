@@ -1,0 +1,51 @@
+{
+  "schema": "rsomics.bed.coordinate-native-adoption.v1",
+  "root_adopted": true,
+  "head": "161961c688a5c2ecedfe28e3dc152abd8a56a011",
+  "run": 41569005243,
+  "attempt": 1,
+  "package_version": "0.4.0",
+  "release_status": "unreleased new head; not formal v0.4.0 assets",
+  "native_four_accepted": true,
+  "packet": "/Volumes/KIOXIA/Developments/tmp/bed-coordinate-native-161961c-20261103.vEzROm",
+  "proof_sha256": "10f3597064a5ae30f851d1f2a620495c109640b5b1d247604b6fb99ca8685adf",
+  "pins_sha256": "eae08b8c81289ff6a84eab11bd1eeb087e3647b9bc5b5fb9ba0327b64631f8c5",
+  "root_replay": {
+    "pinned_files_rehashed": 748,
+    "complete_reviewed_data_verifier_replayed": true,
+    "existing_receipt_compared_without_rewriting": true,
+    "artifact_run_ids_checked": true,
+    "recovered_or_scientific_code_executed": false
+  },
+  "source_package": {
+    "bytes": 139021,
+    "sha256": "a7d300c461396da0cec52f4bf4fbe78d3f8fc33a881bd7dd3b763ad430b05bbc",
+    "exact_git_originals": 276,
+    "members": 278,
+    "git_bodies_modes_and_clean_vcs_checked": true,
+    "normalized_metadata_checked": true
+  },
+  "each_native_target": {
+    "debug_tests": 127,
+    "release_tests": 127,
+    "packaged_tests": 127,
+    "failed_or_ignored": 0,
+    "installed_operations": 14,
+    "installed_calls": 17,
+    "successful_calls": 16,
+    "expected_error_calls": 1,
+    "new_slop_shift_installed_argv_and_complete_golden_bytes_checked": true,
+    "dependency_license_and_binary_correspondence_checked": true
+  },
+  "binaries": {
+    "linux-aarch64": {"bytes": 2163784, "sha256": "6f442cb1e4abe5012bee739f11224258875de911b4e7811c757802db1be5a735"},
+    "linux-x86_64": {"bytes": 2333544, "sha256": "eaeed5ce7959a3d1efb9158c2e7059c2142d714d74e229b7833f0b1dd1285aeb"},
+    "macos-aarch64": {"bytes": 1915856, "sha256": "7f77660e24edaeeb1c2d9cf1cda05bb9966a889f474f8982bd4687422cec5c3a"},
+    "macos-x86_64": {"bytes": 2104408, "sha256": "71b8674694e3239c0f0f696e4bd671cc041f83b81795b763db2326c0152ea61c"}
+  },
+  "performance_accepted": false,
+  "publication_accepted": false,
+  "registry_publication": false,
+  "formal_release_assets_replaced": false,
+  "flank_policy_resolved": false
+}

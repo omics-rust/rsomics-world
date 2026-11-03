@@ -143,3 +143,68 @@ No target execution, invented native pin or performance claim is authorized
 by preparation; root must read/admit the final runner separately. The old
 genomecov dense-source Mac memory obstacle does not describe these streaming
 operations, and its original Linux measurements are not reassigned.
+
+## Exact-head native originals adopted and performance admission
+
+All four jobs in41569005243/1 succeed. Root reads the full175-line adapted
+verifier and report, independently rehashes all748 explicit packet pins,
+checks actual artifact run IDs, replays the complete data verifier in memory
+before its receipt write, and compares its whole core result with the existing
+VERIFIED without overwriting it. All276 Git source bodies/modes,278 package
+members, normalized clean VCS, three127-test profiles per host,14 installed
+operations/17 calls, exact new slop/shift installed golden output/argv and
+dependency/license/binary correspondences pass. No scientific/recovered code
+runs in data adoption. New canonical receipt is
+`.autopilot/oracles/bed-coordinate-native-2026-11-03.json`.
+
+Package139021B SHA-256
+a7d300c461396da0cec52f4bf4fbe78d3f8fc33a881bd7dd3b763ad430b05bbc;
+MacARM1915856B SHA-256
+7f77660e24edaeeb1c2d9cf1cda05bb9966a889f474f8982bd4687422cec5c3a.
+This source still reports0.4.0 metadata; it is not a new formal release or a
+replacement of the immutable0.4.0 assets.
+
+Root fully reads the prepared24-call benchmark and the final two-change delta:
+disable core dumps and rehash input/genome/source/native after the campaign.
+Final packet bed-coordinate-performance-final-20261103.OtOc3Uyz;
+runner10253B SHA-256
+7802931896e694a6a9f62c61afa88578c45efed6f2b99c1a564c28ba2d68a144.
+Root rehashes all input/genome/source/native bodies and the runner, confirms
+the staged0500 native is byte-identical to the adopted artifact, and reads
+its Mach-O metadata: arm64, minimum macOS11.0, only libSystem/libiconv; actual
+host macOS27.2. These checks authorize this run, not general signing/minimumOS
+compatibility promises. No target executes during preparation/metadata reads.
+
+Admit exactly24 full-input slop/shift calls using the recorded fixed flags,
+one warmup/tool/operation then five alternating pairs, complete stdout byte
+comparisons and raw BSD time wall/RSS. Child300s, core0,40294566B stdout hard
+limit,2GiB sampled RSS/packet caps and independent8GiB external headroom.
+Actual physical external/caches and source/inputs are rechecked by the guard;
+source and native pins are rechecked at completion. No extra probe, local
+rebuild, favorable subset, automatic retry or publication. All partial output
+and negative results remain. Root AUTHORIZATION contains the actual adopted
+pins, not unresolved placeholders. Earlier accepted campaigns are unchanged.
+
+## Actual complete-input throughput accepted
+
+The once-issued benchmark handle14042 exits0 after all24 calls; COMPLETE is
+present and FAILED absent. Root independently rehashes/byte-compares every
+full output, checks584846 rows each, all exact argv, raw BSD time wall/RSS,
+absence of unexpected scientific stderr and all before/after input/genome/
+source/native pins, then recomputes all measured medians. No target reruns.
+COMPLETE SHA-256
+237498a92fcfbacbc8726d7dae2451b6aaaaf67d8b382ef05116428fa96fad67.
+
+On actual AppleM2/macOS27.2, source/native slop wall medians0.48/0.16s (3.0x)
+and shift0.48/0.15s (3.2x). Every measured native call is faster than its paired
+source. Source RSS median2605056B; native slop3260416B and shift3244032B:
+memory is higher, not an RSS benefit. Shared host, warm-cache possibility and
+0.01s time resolution remain explicit; no universal speed/thread-scaling or
+causal claim. The native body is the actual adopted CI artifact, not a rebuild.
+
+Canonical full distributions/provenance:
+`.autopilot/oracles/bed-coordinate-performance-2026-11-03.json`.
+This earns the representative throughput gate for slop/shift only. Formal
+version/release metadata, final-head delivery and fresh public installation
+remain unearned; registry authorization and flank point policy remain held.
+The overall three-operation wave and30-product goal are not marked complete.

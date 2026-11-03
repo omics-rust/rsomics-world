@@ -20,7 +20,7 @@ operation will ship. It records:
 |---|---:|---|
 | `rsomics-annotation` | 4 | [released 0.1.0](interval-annotation-index.md#rsomics-annotation) |
 | `rsomics-bam` | 41 | [released 0.29.0](bam.md) |
-| `rsomics-bed` | 42 | [GitHub0.4.0 delivered; new slop/shift source implemented with native-four/install CI pending, flank point policy held; registry remains0.1.0](bed.md) |
+| `rsomics-bed` | 42 | [GitHub0.4.0 delivered; new slop/shift native-four/install and full-input throughput accepted, formal release pending; flank point policy held, registry remains0.1.0](bed.md) |
 | `rsomics-call` | 2 | [released 0.1.3](variant.md#rsomics-call) |
 | `rsomics-cnv` | 2 | [released 0.1.0](variant.md#rsomics-cnv) |
 | `rsomics-composition` | 10 | [released 0.1.0](composition.md) |
