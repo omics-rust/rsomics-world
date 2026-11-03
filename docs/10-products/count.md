@@ -9,9 +9,19 @@ adopted four-native source/install evidence and a fresh public Mac ARM
 count-to-normalization lifecycle. README-only main
 `b207b4e5fbb3df047e453ce62496c7013ec8e666` passes exact-head native-four
 CI `41372971679`. The corrected GitHub source package is not the old immutable
-registry archive. No algorithm, public API, version or historical performance
+registry archive. At that delivery no algorithm, public API, version or historical performance
 result changes; the slower-wall/lower-RSS evidence remains explicitly scoped.
 See the [delivery record](../../.autopilot/state/count-native-delivery-2026-11-02.md).
+
+Subsequent source corrections exclude deletion gaps (`54cbc05`, native-four
+CI41601044144 passed) and use original CIGAR/read-fragment geometry for read
+fractions (`1e63643`, native-four CI41604306484 pending). They are not part of
+the immutable0.1.0 distributions. The latter shares a private SAM/BAM geometry
+parser and corrects paired overlap unions without expanding the public API
+or foundations. Fresh complete-output benchmarks qualify a resource-use
+advantage, not throughput:82–85% lower median RSS while wall time is1.48–1.67x
+slower than featureCounts2.1.1. See the
+[correction record](../../.autopilot/state/count-cigar-overlap-2026-11-03.md).
 
 ## Boundary
 

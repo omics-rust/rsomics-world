@@ -1,0 +1,19 @@
+{
+  "product": "rsomics-count",
+  "owner_head": "54cbc05446af38331edf0baded726d4f7f28a8de",
+  "run_id": 41601044144,
+  "conclusion": "success",
+  "native_targets": ["linux-x86_64", "linux-aarch64", "macos-x86_64", "macos-aarch64"],
+  "linux_aarch64_source_oracle": "frozen, not live",
+  "other_targets_source_oracle": "live featureCounts 2.1.1",
+  "scope": "Exclude CIGAR deletion gaps from feature overlap; preserve N-only split classification",
+  "local_test_functions": 37,
+  "local_live_oracle_enabled": true,
+  "strict_clippy": "pass",
+  "review": "No material findings",
+  "world_head": "2bd3a1adfe58e865b15fc1075c6e198781cf2bfb",
+  "world_run_id": 41601672350,
+  "world_conclusion": "success",
+  "new_release": false,
+  "remaining": "Original CIGAR fraction denominator semantics, then read-position projection"
+}
