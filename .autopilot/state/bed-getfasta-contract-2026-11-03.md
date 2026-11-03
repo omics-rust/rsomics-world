@@ -70,9 +70,11 @@ sequence. A long fetch can therefore allocate much more than the default
 bounded queries or explicitly account for the full interval and assembled
 blocks; do not advertise constant memory from the cache setting alone.
 
-Plain indexed files are supported by the current File-backed reader.
-Auto-index creation, compressed indexed access, full-header naming and
-transactional diagnostic policy remain explicit integration questions.
+Plain and BGZF indexed files are supported by the current reader enum;
+the actual dependency dispatch and existing four passing integration tests
+are recorded in `bed-nuc-contract-2026-11-03.md`. Generic gzip and arbitrary
+filename sniffing are not implied. Auto-index creation, full-header naming
+and transactional diagnostic policy remain explicit integration questions.
 No speculative public API or dependency change is authorized by this note.
 
 ## Seven real source workflows

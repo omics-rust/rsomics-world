@@ -15,8 +15,8 @@ dca3ba9dee1cb8208f91914edd32eb936629f6a32ec467ed5095ed4cc84566c8.
 Fresh public sparse-index lookup confirms the same checksum and not-yanked0.6.
 CALL is the current concrete consumer; BED nuc/getfasta is a concrete next
 consumer, not justification for another public reference crate or speculative
-API. The existing adapter is plain-file-backed; compressed-reference coverage
-must be established separately, not inferred from sequential gzip support.
+API. The adapter uses noodles' buffered-reader enum, which supports plain
+files and indexed BGZF; this is separate from sequential gzip support.
 
 ## Actual source behavior
 
@@ -79,3 +79,23 @@ fatal under fail-fast/transactional output or preserve upstream warning/skip.
 This is an intentional upstream contract, not a proven bug. Point handling
 remains its observed source rule. No native lookup/output API is locked before
 that choice. Existing reader reuse and ordinary nucleotide contract are clear.
+
+## Indexed-reader integration correction
+
+Root inspects complete cached noodles-fasta0.61.0 indexed-reader builder and
+BufReader enum plus noodles-bgzf0.47.0 indexed builder. The File type parameter
+does not imply plain-only access: `.gz`/`.bgz` paths select the BGZF variant,
+requiring existing `.fai` and `.gzi`; other extensions select uncompressed.
+This is extension-based dispatch, not generic gzip support or auto-indexing.
+The earlier plain-file-only interpretation was incorrect.
+
+On Nov3 root runs the existing seqio `cargo test --locked --offline --test
+indexed_fasta` once under the owning BED physical-external guard, from the
+clean seqio bf8c2c8 tree. Guard verifies USB disk12s1,27GiB free, all external
+tool/cache/tmp paths and resolved external BED target directory. Actual
+session3592 exits0:4passed,0failed/ignored, including real BGZF writer plus
+FAI/GZI extraction, plain cross-line/cache queries, invalid ranges/names and
+duplicate-name rejection. No source edits, dependency downloads or new API.
+This is local MacARM debug coverage of that existing integration test only,
+not a new all-platform/full-suite/performance qualification. BED consumer
+still needs its integrated coverage and explicit reference policy.
