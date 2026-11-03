@@ -24,11 +24,11 @@ This is an unreleased API addition and requires a minor-version release later.
 - [x] Compare complete counts/summaries through the existing live oracle,
   run debug/release/strict Clippy and one whole-feature review. Measure a
   representative projected counting workload before publication.
-- [ ] Commit/push owning source only when ready, then require exact-head
+- [x] Commit/push owning source only when ready, then require exact-head
   four-native CI. Never replace immutable0.1.0 artifacts or claim new binary
   performance from historical measurements.
 
 Owning source `2b5e450372689063736721dc1b807dcba9d62717` is pushed. Exact-head
-CI41607175618 is running. Local debug/release each pass40 test functions,
+CI41607175618 passed. Local debug/release each pass40 test functions,
 including actually enabled source compatibility; strict Clippy and one fresh
 whole-feature review pass. No package or GitHub release is published.

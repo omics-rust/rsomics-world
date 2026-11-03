@@ -25,12 +25,17 @@ slower than featureCounts2.1.1. See the
 
 Unreleased main `2b5e450` additionally implements read-extension5/3 and
 read2pos3/5, with original CIGAR denominators, per-mate raw direction and
-alignment-header bounds. Exact-head native-four CI41607175618 is running.
+alignment-header bounds. Exact-head native-four CI41607175618 passed.
 The public projection configuration requires a minor-version release before
 publication; immutable0.1.0 remains unchanged. Fresh projection/default
 benchmarks preserve complete output parity and82–85% lower median RSS,
 with1.43–1.64x slower wall time. See the
 [projection record](../../.autopilot/state/count-projection-execution-2026-11-03.md).
+
+The0.2.0 delivery candidate91bc8a2 changes only package/root-lock version,
+license-lock binding, installed workflow verification and delivery prose.
+Local source-package install and ten-call count/projection/normalization
+lifecycle pass. Native-four CI41610411682 is pending;0.2.0 is not published.
 
 ## Boundary
 

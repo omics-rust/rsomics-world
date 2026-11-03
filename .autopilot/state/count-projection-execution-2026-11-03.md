@@ -2,7 +2,7 @@
 
 Owner: `/Volumes/KIOXIA/Documents/omics-rust/rsomics-count`.
 Source: `2b5e450372689063736721dc1b807dcba9d62717`, pushed to main.
-Exact-head native-four CI41607175618 is running. Prior original-CIGAR
+Exact-head native-four CI41607175618 passed. Prior original-CIGAR
 correction1e63643/native-four41604306484 and Worlda5ef09f1/41604511759 passed.
 No new registry or GitHub release. New public ProjectionOptions/ReadPosition
 and CountOptions field require a minor version before publication.

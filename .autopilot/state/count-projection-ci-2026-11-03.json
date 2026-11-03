@@ -1,0 +1,35 @@
+{
+  "product": "rsomics-count",
+  "owner_head": "2b5e450372689063736721dc1b807dcba9d62717",
+  "run_id": 41607175618,
+  "status": "completed",
+  "conclusion": "success",
+  "native_jobs": {
+    "linux-x86_64": "success",
+    "linux-aarch64": "success",
+    "macos-x86_64": "success",
+    "macos-aarch64": "success"
+  },
+  "oracle_scope": "featureCounts2.1.1 live on Linux x86_64 and both macOS hosts; Linux aarch64 frozen",
+  "local_debug_test_functions": 40,
+  "local_release_test_functions": 40,
+  "local_live_oracle_enabled": true,
+  "strict_clippy": "pass",
+  "whole_feature_review": "No Critical or Important findings",
+  "performance_result_sha256": "223a2c9b00e01c8355ad959a19a2495d05031594d65c914939c5b3007d0e3cb4",
+  "performance_verification_sha256": "1f3afc37c212937d38f54e08cb7c9b53e8f049b9d9f74957a08684e047a0d373",
+  "measured_source_files_match_owner_head": true,
+  "source_performance_gate": "resource-use advantage, not throughput",
+  "native_ci_artifacts_independently_downloaded": false,
+  "world_head": "3c637978a25826c1346b6c54ed58f65474eefce1",
+  "world_run_id": 41607352971,
+  "world_conclusion": "success",
+  "new_release": false,
+  "minor_version_required_before_publication": true,
+  "supersedes_pending_status_in": [
+    "docs/10-products/count.md",
+    "docs/plans/2026-11-03-count-projection.md",
+    ".autopilot/state/count-projection-execution-2026-11-03.md"
+  ],
+  "next": ".autopilot/state/count-02-delivery-frontier-2026-11-03.md"
+}
