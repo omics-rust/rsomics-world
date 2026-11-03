@@ -113,3 +113,17 @@ Workflow/runtime/scientific policy and17+5/123-report/66-worker/74878-cell
 populations are unchanged. Commit and exact-head control CI precede any
 separate native/source dispatch. No timing, archive reuse as qualification,
 public remote or publication is authorized by capture.
+
+## Green16 once-only dispatch admission
+
+Root confirms remote main517cc538a9f06babc0c543d916408409caa52dc2 and its
+exact-head Control plane run41558221553 completed successfully. The current
+PLINK workflow list has no same-head run. Admit one workflow_dispatch of
+plink-candidate.yml at main with snapshot=green-16, binding this controller and
+owner223e342f845bdb280bd369395483f8f72a1d445f. No automatic retry, performance
+campaign or publication follows from dispatch. Retain every native/source
+original and inspect actual job outcomes before adopting qualification.
+
+Actual dispatch returns run41558979368, attempt1, controller517cc538 above;
+the immediate independent run-list read reports queued with that exact head.
+No qualification or timing result is available at this admission.
