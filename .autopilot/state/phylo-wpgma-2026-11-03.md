@@ -111,3 +111,13 @@ This qualifies local source784cef7 resource use, not another binary/version.
 No package-version bump, GitHub release or registry publication is performed.
 The next owning change is release metadata/documentation and actual native/
 source delivery preparation; do not advertise an already published WPGMA.
+
+Fresh readonly GitHub API inventory on Nov3 confirms zero phylo releases,
+zero tags and zero artifacts for successful run41586653945. Existing0.1.0
+publication evidence refers to crates.io, not GitHub native carriers. The
+current owning CI has no upload step and publish.yml only runs cargo publish.
+Do not infer any recoverable four-binary delivery from this green run.
+Reuse the existing seq product delivery pattern only after adapting its
+source packaging, license inventory and seven-command lifecycle to phylo;
+obtain a new exact-head native4 run with actual carriers, retain originals,
+then independently verify before GitHub release and fresh public install.
