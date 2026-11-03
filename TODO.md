@@ -29,10 +29,13 @@ now passes all four native jobs in green16 run41558979368/1; its same-attempt
 upstream consumer is still live, and full originals adoption and new-binary
 measurements remain pending. No performance or publication claim follows.
 See `.autopilot/state/plink-sha2-backend-2026-11-03.md`.
-Sketch's corrected adoption now passes
-exact-head native4 CI41357249401 at eb1b1510 after a demonstrated ARM-only
-oracle library-lifetime repair. Complete original artifact adoption is next;
-final-head eight-job resource and public-delivery gates remain unearned.
+Sketch's corrected adoption at eb1b1510 has completed native4 originals,
+all eight current-binary resource jobs, GitHubv0.1.1 and the fresh public
+11-call lifecycle. All96 measured pairs use less RSS;42 wall losses remain,
+so this is a resource advantage rather than universal faster throughput.
+Documentation head ddc4e76c has passed exact CI41368042858. Registry delivery
+remains separately held; do not repeat the accepted native/resource/install
+campaigns. See `.autopilot/state/sketch-corrected-native-delivery-2026-11-02.md`.
 Index's corrected whole41327532095 has complete correct originals adopted:
 three serial primaries pass throughput, binary compression alone fails the
 material-advantage gate. A new implementation/profile is not yet justified;

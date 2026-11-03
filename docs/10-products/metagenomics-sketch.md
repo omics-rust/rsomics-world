@@ -9,6 +9,16 @@ The [September sketch contract recheck](sketch-contract-review-2026-09-09.md)
 records later correctness findings and source repairs that are not yet
 registry-delivered; publication history alone is not a current correctness gate.
 
+The corrected sketch slice is delivered as GitHubv0.1.1 at eb1b1510, with
+four-native originals, all eight identity-matched resource jobs and the fresh
+public11-call lifecycle adopted. All96 measured pairs use less RSS;42 wall
+losses remain visible. This is not a universal throughput claim. Current
+documentation head ddc4e76c is separate from the immutable release assets.
+Registry delivery remains held; existing native/resource/public-install gates
+must not be repeated merely because an older checklist omitted their adoption.
+See `.autopilot/state/sketch-corrected-native-delivery-2026-11-02.md` and the
+three canonical sketch native, final-performance and public-delivery receipts.
+
 ## Boundary decision
 
 `rsomics-metagenomics` and `rsomics-sketch` remain separate products.
