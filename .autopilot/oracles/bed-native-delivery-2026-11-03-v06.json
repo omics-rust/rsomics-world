@@ -1,0 +1,52 @@
+{
+  "schema": "rsomics.bed.native-delivery-adoption.v1",
+  "root_adopted": true,
+  "head": "35d656f00f0db19877b16aec23453db14520b8aa",
+  "run": 41577594195,
+  "attempt": 1,
+  "version": "0.6.0",
+  "native_four_accepted": true,
+  "packet": "/Volumes/KIOXIA/Developments/tmp/bed-06-native-35d656f-20261103.gkBAkR",
+  "proof_sha256": "bd4dc1b5f296af6270f2ac957d009298d1fa8ba5d4acf3728c3f1dea4e825612",
+  "pins_sha256": "1be83c709610af5a0e26e1aa0f3f7785eae4a7a212be957ecc31a0161ebfc9a7",
+  "root_replay": {
+    "pinned_files_rehashed": 755,
+    "whole_reviewed_data_verifier_replayed": true,
+    "existing_receipt_compared_without_rewriting": true,
+    "artifact_run_ids_checked": true,
+    "target_binary_or_scientific_oracle_executed": false,
+    "mutable_remember_state_excluded": true
+  },
+  "source_package": {
+    "bytes": 145682,
+    "sha256": "81ff0f00b8ecf2aecef78c449da7b344d5b2937e69d5d9ff9a15491b532c5348",
+    "exact_git_originals": 287,
+    "members": 289,
+    "git_bodies_modes_clean_vcs_and_normalized_metadata_checked": true,
+    "identical_across_all_four_hosts": true
+  },
+  "each_native_target": {
+    "debug_tests": 128,
+    "release_tests": 128,
+    "packaged_tests": 128,
+    "failed_or_ignored": 0,
+    "installed_operations": 15,
+    "installed_calls": 18,
+    "successful_calls": 17,
+    "expected_error_calls": 1,
+    "spacing_argv_and_complete_output_checked": true,
+    "dependency_license_and_binary_correspondence_checked": true
+  },
+  "binaries": {
+    "linux-aarch64": {"bytes": 2166136, "sha256": "627a2e0c5b7ac739c557b01152e6ae1de38db22c69b7f0b0b43c8810b1c68d3d"},
+    "linux-x86_64": {"bytes": 2385568, "sha256": "1a0095ce90c31d1f9c13ceb3817576647d5c044f853fb63cceec5503a9fae5c2"},
+    "macos-aarch64": {"bytes": 1950112, "sha256": "117b67d009ec91f748fbe781a182ee95afcf3931801b355b80f5a8c40bb1ce2d"},
+    "macos-x86_64": {"bytes": 2156984, "sha256": "3ecd508c4c7a7e0454147cb265495626ab82d56187ee7c2f2e8e63913f47efed"}
+  },
+  "api_hotpath_review": "One fresh whole-feature review at implementation, root full source/metadata/lifecycle delta inspection; same qualified source bodies. No new public foundation or dependency.",
+  "spacing_performance_accepted": false,
+  "publication_accepted": false,
+  "fresh_public_installation_accepted": false,
+  "registry_publication": false,
+  "older_release_assets_replaced": false
+}

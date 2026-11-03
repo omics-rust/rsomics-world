@@ -49,9 +49,9 @@ alias rejection. Genome checks order/membership only; parser remains two-column.
 - [x] GREEN integrated test, formatting, strict all-target/all-feature Clippy,
   full debug/release suite. Review current public API/hot path once with fresh
   context; at most one necessary Important/Critical fix pass, no review ladder.
-- [ ] Wire one existing installed-lifecycle spacing call; scoped commits and
+- [x] Wire one existing installed-lifecycle spacing call; scoped commits and
   push, observe exact-head native-four CI and preserve original artifacts.
-- [ ] Measure actual qualified native artifact versus pinned source on the
+- [x] Measure actual qualified native artifact versus pinned source on the
   unchanged584846-row full BED: one warmup/tool and five alternating pairs,
   full byte equality, wall/RSS/input/binary provenance and all losses. No
   release until actual correctness/performance/delivery gates are earned.

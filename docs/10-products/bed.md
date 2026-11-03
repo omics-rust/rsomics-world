@@ -169,7 +169,7 @@ may be migration aliases, but the typed long-form contract owns the help.
 | `pair-to-pair` | BEDTools `pairtopair` | deferred with `pair-to-bed` |
 | `convert` | BEDTools `bed12tobed6`; historical BED-to-GFF | later format slice with explicit `bed6` and `gff3` targets |
 | `split` | BEDTools source-level `split` utility | later multi-output slice; not confused with BED12 block splitting |
-| `spacing` | BEDTools source-level `spacing` utility | full source and six real workflows pinned; streaming implementation6158b28 plus0.6 metadata35d656f passes local128 debug/release and one clean whole-feature review; exact native4 run41577594195 active, performance/release pending |
+| `spacing` | BEDTools source-level `spacing` utility | final0.6 source35d656f native4 run41577594195/full originals adopted (128 tests/profile,18 installed calls/15 ops); actual MacARM CI binary full584846-row output matches and wall2.25x, RSS higher0.34375MiB; publication/public install pending |
 
 BEDOPS symmetric difference and partition remain possible modes of the set
 algebra above. They do not justify duplicate commands until a workflow needs

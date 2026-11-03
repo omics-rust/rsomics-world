@@ -115,3 +115,47 @@ unchanged584846-row full BED, actual future adopted MacARM CI binary versus
 pinned source, one warmup/tool then five alternating pairs and full outputs.
 No native artifact, authorization or measured benefit is inferred from a draft.
 Final native adoption and root full helper/pin review must precede execution.
+
+## Final-head native originals adopted; timing admitted
+
+Exact run41577594195/1 finishes success on all four hosts at35d656f. Root reads
+the whole adapted verifier, rehashes755 explicit pins, checks original artifact
+run IDs and replays all source/body/mode/normalized metadata/dependency/license/
+test/lifecycle/binary checks against existing VERIFIED without rewriting it.
+Each native host has128 debug/release/packaged passes and18 installed calls
+across15 operations (17successes plus expected error). Source287 Git bodies/
+289 members is clean and identical across hosts. Canonical receipt:
+`../oracles/bed-native-delivery-2026-11-03-v06.json`.
+
+Root reads the complete10394B spacing timing runner/proposal, rehashes final
+copies and compares the mode0500 native body byte-for-byte with the adopted
+original. Actual static metadata is arm64 and only system libiconv/libSystem;
+no target or oracle executes during these checks. Final packet:
+`/Volumes/KIOXIA/Developments/tmp/bed-spacing-performance-final-20261103.ZvNSGcrM`.
+Root authorizes exactly the prepared12 calls, with full input/source/native
+initial/final pins,64MiB per stdout,300s/call,3900s total,2GiB sampled RSS/
+packet and independent8GiB external headroom; physical paths recheck in guard.
+No benefit, failure or publication is inferred before the actual result.
+
+## Actual full-input throughput gate accepted
+
+The once-issued guarded run41295 exits0 with COMPLETE and no FAILED. Root
+independently compares every full output/584846 rows and actual argv/order/
+warmups, raw time/RSS and all before/after input/source/native pins. An initial
+analysis-only diagnostic regex mistakes BSD time's normal `0 signals received`
+field for a target diagnostic; root reads the raw field and replaces that
+analysis with known timer-field parsing. The complete data-only replay3228
+then exits0. No scientific call, binary, output, runner or gate is rerun/changed.
+
+Source wall[.37,.36,.36,.35,.36], median.36s; actual final0.6 native
+[.16,.16,.16,.17,.16], median.16s:2.25x and all five pairs faster, disjoint
+ranges. Source peak-process RSS median2949120B; native3309568B, higher360448B
+(0.34375MiB), not a memory benefit. All12 outputs30777224B/hash
+84fb1fc03b4dc02d97d330699d7a08dc176869bb46907d6094413823277c78f4 match.
+Shared AppleM2/macOS27.2, warm-cache possibility and0.01s timer resolution
+remain explicit. Complete SHA256
+65acdaf56169248c5fdba6b15e3dc16f5141a80d6801542959fe37942b152815.
+Canonical receipt: `../oracles/bed-spacing-performance-2026-11-03.json`.
+This accepts spacing throughput on the actual final candidate artifact, not
+new timing for old operations or a publication claim. GitHub/public-install
+and unchanged registry authorization remain separate gates.
