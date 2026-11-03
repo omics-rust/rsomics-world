@@ -154,3 +154,34 @@ c0b85d97b7084c4940c91900c6ba2713ee5a26c9a8950f6da1f4403eb03a709c.
 Candidate body and stage payload remain absent. Local data/AST scope checks
 are not target execution or qualification. All .remember application state is
 preserved and excluded, not treated as an experimental identity.
+
+## Green16 native/source originals adopted
+
+Run41558979368/1 completes SUCCESS on all four native jobs and the dependent
+same-attempt source job without retry. Root reads the complete report, current
+acquire/verify wrappers, all172 lines of the reused data verifier and explicit
+adaptations. Root independently replays the full adapted verifier with saves
+replaced by comparisons: three existing receipts compare unchanged, excluding
+only volatile final_guard after a fresh real physical guard passes. No output
+is overwritten and no scientific/native executable runs locally.
+
+Root also rehashes all11093 explicit packet files/modes and four external
+recipe inputs. All307 source bodies and committed modes, four native debug/
+release17+5 executions,36 generations/74878 raw cells/246 reports/66 workers,
+and source224 report plus36 raw bridge calls pass. Their source binding is
+this attempt's actual Linux TAR/manifest, not an older candidate.
+
+Canonical adoption is `.autopilot/oracles/plink-native-2026-11-03-green-16.json`.
+Original proposal remains root_adopted=false. Packet
+plink-green16-originals-20261103.QIB90hqr retains five ZIPs/TARs,10923 original
+bodies and all five raw logs. PINS SHA-256
+603b3d4c2b8b132b4609d880530b3f92d02ea3ecbcaf3d128695b7f95d3dd71b;
+proposal4a7783938f00e59d1f922c66ab1b38b6bec1c6c4f659780635881582837caa68;
+original verificationa04fe9cd8995373512ded116ed797447e9115091bcaefe991e96dc8027a393bb.
+Linux artifact13196655821 release3339856B SHA-256
+4b91395ab024a86c408d216cbd26d30b2ebe1f24c2ff94415b8b572b4aa4c4d8.
+
+This adopts compatibility only. Official runtime/source correspondence remains
+unproven; target-host providers, new-binary matched performance and publication
+remain separate. Earlier negative whole-performance and no-material-arena-RSS
+results remain immutable. No registry retry or performance command occurs.

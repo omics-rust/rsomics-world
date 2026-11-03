@@ -25,8 +25,8 @@ PLINK's historical green7 prepared-reader/LD qualification and failed whole/
 stage material-performance profiles remain retained, not a release gate pass.
 Green15 native/source originals are adopted; its subsequent arena comparison
 shows no material cohort RSS benefit. The maintained SHA-256 candidate223e342f
-now passes all four native jobs in green16 run41558979368/1; its same-attempt
-upstream consumer is still live, and full originals adoption and new-binary
+now passes green16 run41558979368/1 on all four native jobs and its same-attempt
+upstream consumer. Complete originals are root-adopted; new-binary matched
 measurements remain pending. No performance or publication claim follows.
 See `.autopilot/state/plink-sha2-backend-2026-11-03.md`.
 Sketch's corrected adoption at eb1b1510 has completed native4 originals,
