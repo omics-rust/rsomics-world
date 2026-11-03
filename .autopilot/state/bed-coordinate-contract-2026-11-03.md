@@ -208,3 +208,14 @@ This earns the representative throughput gate for slop/shift only. Formal
 version/release metadata, final-head delivery and fresh public installation
 remain unearned; registry authorization and flank point policy remain held.
 The overall three-operation wave and30-product goal are not marked complete.
+
+## 0.5.0 metadata candidate
+
+Root reviews the complete six-file metadata/documentation diff and pushes
+`91f2bf9498341b1d1fd4cf27fd244c2820f73ad4` to product main. Only Cargo package
+self-version/description, lock self-version, provenance lock digest and
+README/PERFORMANCE/MIGRATION change. Production source, tests and CI remain
+byte-identical to qualified161961c. Final-head native-four run41573159869 is
+queued; no success, release or fresh public installation is asserted yet.
+World evidence head a3be99c21f8f41a49da856dd506992c1c4839150 passes exact-head
+control CI41572298719. Flank and registry holds remain unchanged.
