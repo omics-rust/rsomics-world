@@ -9,6 +9,7 @@
   "versions": {"rust": "1.91.0", "scikit-bio": "0.7.3", "DendroPy": "5.0.8", "numpy": "2.5.1", "scipy": "1.18.0", "python": "3.12.11"},
   "input": {"taxa": 2500, "dimensions": 8, "generator": "LCG seed77, Euclidean, single serialized labeled TSV shared by both implementations", "bytes": 119918537, "sha256": "2bf32f3e62c6e44216e5aad79202d1aa12dce8e3533a36a2a31383c9537beb8b"},
   "binary": {"path": "/Volumes/KIOXIA/Developments/cargo-target/rsomics-bed/release/rsomics-phylo", "bytes": 1884864, "sha256": "4a53cffab9503280fbcab521137a8088ed3c849050b43e97f9cf1b79f971f6e3", "origin": "local release build of clean accepted source head; not a downloaded native CI artifact"},
+  "retained_measured_binary": "/Volumes/KIOXIA/Developments/tmp/phylo-wpgma-performance-20261103.sEuLzo9O/measured-native",
   "helper_sha256": "7a02f67a2e23e5b6dc7a7ce6635ad677f2d9461ee4c2651086909672e9adaa9b",
   "trials_sha256": "647ebfb393e2b6c9049e49788ab65099dd61f9a15b9e64590b282c3fc3775582",
   "provenance_sha256": "7e1a4fd693e7bcfd1172b2f0391e889653602fc69f93a2f82e38745948074ba8",
