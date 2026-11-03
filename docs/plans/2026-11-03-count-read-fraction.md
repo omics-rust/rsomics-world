@@ -25,5 +25,5 @@ as `FRACTION-GEOMETRY-SOURCE.json` and `geometry-*-source.tsv*`.
 
 Steps1–4 are complete. Step5 source commit
 `1e636433bf50da9be33018d91796775e8b2ef95c` is pushed; exact-head native-four
-CI41604306484 is running. Debug and release suites each pass38 actual test
+CI41604306484 passed. Debug and release suites each pass38 actual test
 functions with the source oracle enabled. No new registry/GitHub release.

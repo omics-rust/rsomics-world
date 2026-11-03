@@ -15,13 +15,22 @@ See the [delivery record](../../.autopilot/state/count-native-delivery-2026-11-0
 
 Subsequent source corrections exclude deletion gaps (`54cbc05`, native-four
 CI41601044144 passed) and use original CIGAR/read-fragment geometry for read
-fractions (`1e63643`, native-four CI41604306484 pending). They are not part of
+fractions (`1e63643`, native-four CI41604306484 passed). They are not part of
 the immutable0.1.0 distributions. The latter shares a private SAM/BAM geometry
 parser and corrects paired overlap unions without expanding the public API
 or foundations. Fresh complete-output benchmarks qualify a resource-use
 advantage, not throughput:82–85% lower median RSS while wall time is1.48–1.67x
 slower than featureCounts2.1.1. See the
 [correction record](../../.autopilot/state/count-cigar-overlap-2026-11-03.md).
+
+Unreleased main `2b5e450` additionally implements read-extension5/3 and
+read2pos3/5, with original CIGAR denominators, per-mate raw direction and
+alignment-header bounds. Exact-head native-four CI41607175618 is running.
+The public projection configuration requires a minor-version release before
+publication; immutable0.1.0 remains unchanged. Fresh projection/default
+benchmarks preserve complete output parity and82–85% lower median RSS,
+with1.43–1.64x slower wall time. See the
+[projection record](../../.autopilot/state/count-projection-execution-2026-11-03.md).
 
 ## Boundary
 

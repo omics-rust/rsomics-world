@@ -1,0 +1,35 @@
+{
+  "product": "rsomics-count",
+  "owner_head": "1e636433bf50da9be33018d91796775e8b2ef95c",
+  "run_id": 41604306484,
+  "status": "completed",
+  "conclusion": "success",
+  "native_jobs": {
+    "linux-x86_64": "success",
+    "linux-aarch64": "success",
+    "macos-x86_64": "success",
+    "macos-aarch64": "success"
+  },
+  "oracle_scope": "featureCounts2.1.1 live on Linux x86_64 and both macOS hosts; Linux aarch64 frozen",
+  "local_debug_test_functions": 38,
+  "local_release_test_functions": 38,
+  "local_live_oracle_enabled": true,
+  "strict_clippy": "pass",
+  "fresh_whole_change_review": "No Critical or Important findings",
+  "performance_packet": "/Volumes/KIOXIA/Developments/tmp/count-read-fraction-perf-20261103.jmlsTpR5",
+  "performance_result_sha256": "fd87cd4a329939b9bfbfda3cca9716c06c09efa40b26365970244c0789307fea",
+  "performance_verification_sha256": "db953177df8aee1025944c29e21cef97f6f442fe86cd8e65dc55e3a2484bd0ba",
+  "measured_source_files_match_owner_head": true,
+  "source_performance_gate": "resource-use advantage, not throughput",
+  "native_ci_artifacts_independently_downloaded": false,
+  "world_head": "a5ef09f140fc0d955455963e7fe6e794861490ce",
+  "world_run_id": 41604511759,
+  "world_conclusion": "success",
+  "new_release": false,
+  "supersedes_pending_status_in": [
+    "docs/10-products/count.md",
+    "docs/plans/2026-11-03-count-read-fraction.md",
+    ".autopilot/state/count-cigar-overlap-2026-11-03.md"
+  ],
+  "next": "Implement extension5/extension3/read2pos using actual source contract and preserved original extent; endpoint witness in count-projection-contract-2026-11-03.md"
+}
