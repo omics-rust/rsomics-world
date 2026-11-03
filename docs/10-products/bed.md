@@ -161,7 +161,7 @@ may be migration aliases, but the typed long-form contract owns the help.
 | `random` | BEDTools `random` | later seeded-generation slice |
 | `shuffle` | BEDTools `shuffle` | later seeded-generation slice |
 | `sample` | BEDTools `sample` | later deterministic sampling slice |
-| `getfasta` | BEDTools `getfasta` | later reference slice using `rsomics-seqio` random access |
+| `getfasta` | BEDTools `getfasta` | complete core/Main/complement source inspected; existing `seqio` reader selected, long-fetch allocation and named BED-output routing recorded in `bed-getfasta-contract-2026-11-03.md`; runtime witness/policies precede implementation |
 | `maskfasta` | BEDTools `maskfasta` | later reference slice; one implementation replaces two historical clones |
 | `nuc` | BEDTools `nuc` | core/Main/shared reference source and six real workflows pinned; existing published seqio IndexedFasta matches archive and CALL consumer; ordinary stats/strand/pattern/header semantics established, missing-reference/overrun warning-versus-error policy pending; no implementation |
 | `overlap` | BEDTools `overlap` | later BEDPE/shape slice |
