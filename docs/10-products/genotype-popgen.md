@@ -10,8 +10,12 @@ native-four and same-file source41550834496/1, with complete originals
 independently adopted in `plink-native-2026-11-03-green-15.json`. Completed-table
 arena compaction retains parsing/ownership and transient VCF behavior. The
 fixed10000-variant consumer reports2911523→2578544 owned bytes, not a cohort
-RSS or speed result. New-binary matched-workflow measurement remains pending;
-whole-performance/publication gates are unchanged.
+RSS or speed result. The subsequent full-I-w1 comparison completes12 calls
+with48 matching output pins but shows no material RSS advantage: medians
+85483520→85475328B, with two paired increases. Wall medians0.787979→0.768942s
+are descriptive, not accepted stable speedup. See
+`plink-arena-ci-comparison-2026-11-03.json`; no unchanged rerun is warranted.
+Whole-performance/publication gates are unchanged.
 
 Previous qualified owner7cee8e4 passes green14
 native-four and same-file source41542779786/2; root adopts complete originals

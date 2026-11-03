@@ -162,3 +162,98 @@ using the established uninstrumented12-call runner and unchanged input/output
 pins. Prospective new arena-ci-comparison child is512MiB within existing8GiB
 root/joined618GiB envelope; no new root, hidden worker, dependency, instrumentation,
 SSH stage, provider check or runtime is authorized by preparation alone.
+
+## Arena comparison inert staging admission
+
+Native/source adoption commit9efacf041650b7667e2f33ba208422169c96077b is pushed;
+exact-head control CI41552409706 succeeds. Root reads the complete frozen
+plan/report and eight-substitution runner delta against the previously read
+accepted runner. ABI helper is byte-identical. Experiment/inputs/output pins,
+wait4 wrapper and guardian semantics are unchanged; only new child/log names,
+actual old/new artifact/owner pins and binary-derived budget differ.
+
+Preparation plink-arena-ci-comparison-prep-20261103.acfHIjDK pins runner
+c79c2502027bad9eee54a7341ac009d9bbb6ff1d3cab90bf93aab9db20265998,
+plan199a747c1ec3a0cfe7a143894e6b8c00bf22dd7dbf9134e3a4c93eaa927bc14f,
+payload19a61f7e8d32446cbee5821f6b0aa587039ca9bdf06ed267532151fe820aaa14.
+Root admits inert staging ONLY into absent arena-ci-comparison under the
+existing remote8GiB root,512MiB child, unchanged joined618GiB capacity. Verify
+all frozen local pins/physical external paths and fresh remote device/UID/
+capacity. Strict SSH with no multiplexing, forwarding or host-key update;
+no download/build/target/loader execution, overwrite or automatic retry.
+Static proof and12-call runtime require separate actual-receipt admissions.
+
+Local preflight stops before SSH or observation-directory creation: the
+preparer's whole-directory PINS includes live .remember application sidecars.
+Only four such entries changed (append-only memory log plus timestamp/PID/
+scan-offset markers);35 other entries are unchanged. The memory log's original
+807-byte prefix still matches its original hash. Frozen source/PLAN/ABI/binary/
+payload/context evidence is unchanged. Do not treat application checkpoint
+state as immutable experiment evidence or edit/delete the active state.
+
+Ruling: preserve the original PINS and all sidecars, independently verify every
+non-.remember evidence entry against that original manifest, and retain a new
+scoped root verification receipt that explicitly excludes application state.
+All hard admitted core/payload hashes remain identical. This corrects the
+manifest's evidence scope, not a source/result hash mismatch waiver. The first
+actual inert stage remains separately admitted under those unchanged pins;
+no scientific command or remote stage has yet occurred.
+
+Actual first stage handle62102 exits0, empty stderr, zero target commands.
+Root reads stage.success6731B SHA-256
+72212ca1a4b6f960720716377bd702d3314125ec5edcebeb4d90d50b315ddbbc,
+correct runner/plan, child6750208B and parent1354305536B allocated; capacity
+margin428873363456B. All27 immutable evidence entries pass;12 application
+sidecars remain preserved/excluded. Admit only separate static preflight now:
+both actual ELF/provider/CPU closures, no target or loader execution, same
+existing parent/child/capacity and unchanged ABI-reader semantics.
+
+Actual static preflight85985 exits0, zero target commands. Root retains and
+reads both original proofs: baseline16937B SHA-256
+56045ac3648c3eb47d5c4ef354b6985f6b9b915dc1d0ed5ca6af3120b13a1c72;
+candidate16955B SHA-256
+01204829054911ead1454c0faaf84691b4f6386b204f425f02b5a496af0035c8.
+Each binds the intended binary, five actual providers,127 mandatory native
+imports and seven inspector calls. No unmet versions/symbols, unknown ISA
+declarations, missing declared CPU flags, RPATH or preload; no target/loader
+execution and no assertion about undeclared ISA absence.
+
+Root freshly observes112 CPUs, available affinity0–3, no known timed native/
+PLINK/BED/comparison workload and shared-host load42.55/39.06/49.49. Affinity
+is not exclusive; prior campaign timings are not paired to this campaign.
+Admit exactly one12-call full-I-w1 run with the actual proof hashes above,
+one warmup each and five alternating measured pairs, unchanged thread1/
+memory2048/CPUs0–3 and all four output pins. No retries, source comparator,
+new build/instrumentation or performance/publication acceptance is preauthorized.
+
+## Actual comparison: no material RSS improvement
+
+The single run29923 exits0 after all12 calls, both native wait4 and guardian
+statuses0, all48 full output pins equal and empty scientific stderr. Root
+collects202 small originals/3596094B, rehashes all, matches individual command,
+PID/PGID, native/guardian/result/manifest/stdout records and recomputes complete
+distributions/medians/pair ratios. Large product bodies remain remote; their
+pins are actual runner hashes, not a second local payload observation.
+
+Median process RSS85483520→85475328B differs by only8192B. Pair differences
+-532480/-8192/-8192/+516096/+512000B include two increases. This does not
+establish material process-memory savings. Owned-capacity accounting's11.44%
+reduction is not an RSS result. Median wall0.787979→0.768942s (2.416% lower)
+has candidate/baseline ratios1.0174/0.9152/0.9897/0.9565/0.9806: one slower
+pair and shared-host variation. No stable speedup, isolated causality, source
+superiority, whole-performance or publication acceptance follows.
+
+Retain the narrow table compaction for the demonstrated allocation-budget
+contract, without promoting it as a cohort performance win. Do not rerun this
+unchanged comparison to chase a favorable number or continue capacity-only
+changes as a presumed RSS fix. Original green13 negative gate and green14's
+separate earlier RSS improvement remain bound to their own actual binaries.
+
+Canonical observations:
+`.autopilot/oracles/plink-arena-ci-comparison-2026-11-03.json`.
+Child allocated301457408B, parent1649020928B, within512MiB/8GiB; no retry,
+cleanup, source comparator or rebuild. Actual machine/load/CPU observations
+remain in the raw packet. Next performance work needs another concrete hot
+path, not reinterpretation of the owned-byte test. Read-only source inspection
+also confirms ld/moments.rs already dispatches hardware POPCNT; do not propose
+that existing optimization again as new work.
