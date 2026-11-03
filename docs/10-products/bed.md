@@ -169,7 +169,7 @@ may be migration aliases, but the typed long-form contract owns the help.
 | `pair-to-pair` | BEDTools `pairtopair` | deferred with `pair-to-bed` |
 | `convert` | BEDTools `bed12tobed6`; historical BED-to-GFF | later format slice with explicit `bed6` and `gff3` targets |
 | `split` | BEDTools source-level `split` utility | later multi-output slice; not confused with BED12 block splitting |
-| `spacing` | BEDTools source-level `spacing` utility | deferred until its under-documented contract is recovered from the pinned executable and source |
+| `spacing` | BEDTools source-level `spacing` utility | full source and six real workflows pinned; streaming implementation6158b28 plus0.6 metadata35d656f passes local128 debug/release and one clean whole-feature review; exact native4 run41577594195 active, performance/release pending |
 
 BEDOPS symmetric difference and partition remain possible modes of the set
 algebra above. They do not justify duplicate commands until a workflow needs
@@ -219,7 +219,8 @@ discarded.
 | `bed-getfasta` `82783b773f90`, `bed-nuc` `3e20a5e4f659` | 2 | retain byte-exact sequence and nucleotide fixtures; consume the shared sequence reader |
 | `bed-maskfasta` `d5e540e305d0` (dirty), `fasta-mask` `4bda5f191c91` | 3/4 | audit the dirty stronger asset, keep its oracle cases, and discard the duplicate implementation |
 | `bed-overlap` `859c0e243b1e`, `bed12-to-bed6` `cd5382590b8c`, `bed-to-gff` `b215fe4e50eb` | 2/3 | retain shape/conversion fixtures; rebuild on validated optional fields |
-| `bed-split` `d73fb8249648` (dirty), `bed-spacing` `fb4ede5c9a18` | 3 | retain recoverable fixtures only after the under-documented upstream contracts are pinned |
+| `bed-split` `d73fb8249648` (dirty) | 3 | retain recoverable fixtures only after the under-documented upstream contract is pinned |
+| `bed-spacing` `fb4ede5c9a18` | 3 | fixture/reference assets only; pinned previous-record, signed-point, binary32 overlap and sorted/header/genome semantics are rebuilt on shared product internals |
 | `bed-count` `bf831e87e79f`, `bed-len` `c8c31c5c6f7d`, `bed-midpoint` `22e507b3abfd`, `bed-stats` `456bcdc41a5d`, `bed-summary` `227a928b3fa4`, `bed-total-bp` `170e5775ecdd`, `bed-unique` `91b85b570c74`, `bed-validate` `4ac82c17923a` | 3/4 | keep useful malformed and summary fixtures; discard duplicated line parsers and atomic binaries |
 | `bed-multicov` `70b478da366e` | 3, routed | BAM fixture and command recipe move to `rsomics-bam`; BED product code is discarded |
 | `bed-expand` `23aa4ee69ab6`, `bed-groupby` `30cf021d1c59` | 3, routed | table fixtures and reducer cases belong to `rsomics-table` |
