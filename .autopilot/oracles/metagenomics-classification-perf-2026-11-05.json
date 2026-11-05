@@ -1,0 +1,376 @@
+{
+  "all_full_outputs_equivalent": true,
+  "database": {
+    "bytes": 66617380,
+    "capacity": 16653531,
+    "cells_sha256": "a55338a078200ce0249099a8bfeb1672645dce9864b52d3d6a555ff93fd0dab2",
+    "occupied": 11654303,
+    "taxonomy": [
+      {
+        "external": 0,
+        "name": "",
+        "parent": 0,
+        "rank": ""
+      },
+      {
+        "external": 1,
+        "name": "root",
+        "parent": 0,
+        "rank": "no rank"
+      },
+      {
+        "external": 131567,
+        "name": "cellular organisms",
+        "parent": 1,
+        "rank": "cellular root"
+      },
+      {
+        "external": 2,
+        "name": "Bacteria",
+        "parent": 2,
+        "rank": "domain"
+      },
+      {
+        "external": 2759,
+        "name": "Eukaryota",
+        "parent": 2,
+        "rank": "domain"
+      },
+      {
+        "external": 3379134,
+        "name": "Pseudomonadati",
+        "parent": 3,
+        "rank": "kingdom"
+      },
+      {
+        "external": 33154,
+        "name": "Opisthokonta",
+        "parent": 4,
+        "rank": "clade"
+      },
+      {
+        "external": 1224,
+        "name": "Pseudomonadota",
+        "parent": 5,
+        "rank": "phylum"
+      },
+      {
+        "external": 33208,
+        "name": "Metazoa",
+        "parent": 6,
+        "rank": "kingdom"
+      },
+      {
+        "external": 1236,
+        "name": "Gammaproteobacteria",
+        "parent": 7,
+        "rank": "class"
+      },
+      {
+        "external": 6072,
+        "name": "Eumetazoa",
+        "parent": 8,
+        "rank": "clade"
+      },
+      {
+        "external": 91347,
+        "name": "Enterobacterales",
+        "parent": 9,
+        "rank": "order"
+      },
+      {
+        "external": 33213,
+        "name": "Bilateria",
+        "parent": 10,
+        "rank": "clade"
+      },
+      {
+        "external": 543,
+        "name": "Enterobacteriaceae",
+        "parent": 11,
+        "rank": "family"
+      },
+      {
+        "external": 33511,
+        "name": "Deuterostomia",
+        "parent": 12,
+        "rank": "clade"
+      },
+      {
+        "external": 561,
+        "name": "Escherichia",
+        "parent": 13,
+        "rank": "genus"
+      },
+      {
+        "external": 7711,
+        "name": "Chordata",
+        "parent": 14,
+        "rank": "phylum"
+      },
+      {
+        "external": 562,
+        "name": "Escherichia coli",
+        "parent": 15,
+        "rank": "species"
+      },
+      {
+        "external": 89593,
+        "name": "Craniata",
+        "parent": 16,
+        "rank": "subphylum"
+      },
+      {
+        "external": 83333,
+        "name": "Escherichia coli K-12",
+        "parent": 17,
+        "rank": "strain"
+      },
+      {
+        "external": 7742,
+        "name": "Vertebrata",
+        "parent": 18,
+        "rank": "clade"
+      },
+      {
+        "external": 511145,
+        "name": "Escherichia coli str. K-12 substr. MG1655",
+        "parent": 19,
+        "rank": "no rank"
+      },
+      {
+        "external": 7776,
+        "name": "Gnathostomata",
+        "parent": 20,
+        "rank": "clade"
+      },
+      {
+        "external": 117570,
+        "name": "Teleostomi",
+        "parent": 22,
+        "rank": "clade"
+      },
+      {
+        "external": 117571,
+        "name": "Euteleostomi",
+        "parent": 23,
+        "rank": "clade"
+      },
+      {
+        "external": 8287,
+        "name": "Sarcopterygii",
+        "parent": 24,
+        "rank": "superclass"
+      },
+      {
+        "external": 1338369,
+        "name": "Dipnotetrapodomorpha",
+        "parent": 25,
+        "rank": "clade"
+      },
+      {
+        "external": 32523,
+        "name": "Tetrapoda",
+        "parent": 26,
+        "rank": "clade"
+      },
+      {
+        "external": 32524,
+        "name": "Amniota",
+        "parent": 27,
+        "rank": "clade"
+      },
+      {
+        "external": 40674,
+        "name": "Mammalia",
+        "parent": 28,
+        "rank": "class"
+      },
+      {
+        "external": 32525,
+        "name": "Theria",
+        "parent": 29,
+        "rank": "clade"
+      },
+      {
+        "external": 9347,
+        "name": "Eutheria",
+        "parent": 30,
+        "rank": "clade"
+      },
+      {
+        "external": 1437010,
+        "name": "Boreoeutheria",
+        "parent": 31,
+        "rank": "clade"
+      },
+      {
+        "external": 314146,
+        "name": "Euarchontoglires",
+        "parent": 32,
+        "rank": "superorder"
+      },
+      {
+        "external": 9443,
+        "name": "Primates",
+        "parent": 33,
+        "rank": "order"
+      },
+      {
+        "external": 376913,
+        "name": "Haplorrhini",
+        "parent": 34,
+        "rank": "suborder"
+      },
+      {
+        "external": 314293,
+        "name": "Simiiformes",
+        "parent": 35,
+        "rank": "infraorder"
+      },
+      {
+        "external": 9526,
+        "name": "Catarrhini",
+        "parent": 36,
+        "rank": "parvorder"
+      },
+      {
+        "external": 314295,
+        "name": "Hominoidea",
+        "parent": 37,
+        "rank": "superfamily"
+      },
+      {
+        "external": 9604,
+        "name": "Hominidae",
+        "parent": 38,
+        "rank": "family"
+      },
+      {
+        "external": 207598,
+        "name": "Homininae",
+        "parent": 39,
+        "rank": "subfamily"
+      },
+      {
+        "external": 9605,
+        "name": "Homo",
+        "parent": 40,
+        "rank": "genus"
+      },
+      {
+        "external": 9606,
+        "name": "Homo sapiens",
+        "parent": 41,
+        "rank": "species"
+      }
+    ],
+    "value_bits": 6
+  },
+  "outputs": {
+    "calls": {
+      "bytes": 62993019,
+      "sha256": "b4a0f985d8b645ef82bf3f89c6ab14264b38e65efb72eee0304e4d7b9be8ee5c"
+    },
+    "report": {
+      "bytes": 2736,
+      "sha256": "127755e83cb9f9d316cc307b2ea7dbcb30bd6deb65909f449b02dafc64655bd5"
+    }
+  },
+  "pairs": 24,
+  "publication_authorized_by_this_record": false,
+  "summary": [
+    {
+      "medians": {
+        "native": {
+          "rss_bytes": 131727360,
+          "sys_s": 0.11,
+          "user_s": 3.85,
+          "wall_s": 4.373174917
+        },
+        "source": {
+          "rss_bytes": 175063040,
+          "sys_s": 0.18,
+          "user_s": 6.94,
+          "wall_s": 7.868703
+        }
+      },
+      "resource_gate": true,
+      "strict": {
+        "rss_bytes": true,
+        "wall_s": true
+      },
+      "workers": 1,
+      "workflow": "build"
+    },
+    {
+      "medians": {
+        "native": {
+          "rss_bytes": 135905280,
+          "sys_s": 0.19,
+          "user_s": 4.21,
+          "wall_s": 3.757124708
+        },
+        "source": {
+          "rss_bytes": 175128576,
+          "sys_s": 0.72,
+          "user_s": 10.19,
+          "wall_s": 8.039114541
+        }
+      },
+      "resource_gate": true,
+      "strict": {
+        "rss_bytes": false,
+        "wall_s": true
+      },
+      "workers": 4,
+      "workflow": "build"
+    },
+    {
+      "medians": {
+        "native": {
+          "rss_bytes": 75382784,
+          "sys_s": 0.33999999999999997,
+          "user_s": 7.25,
+          "wall_s": 8.473687792
+        },
+        "source": {
+          "rss_bytes": 140378112,
+          "sys_s": 0.34,
+          "user_s": 7.73,
+          "wall_s": 9.122271334
+        }
+      },
+      "resource_gate": true,
+      "strict": {
+        "rss_bytes": true,
+        "wall_s": true
+      },
+      "workers": 1,
+      "workflow": "classify-report"
+    },
+    {
+      "medians": {
+        "native": {
+          "rss_bytes": 75546624,
+          "sys_s": 0.57,
+          "user_s": 8.16,
+          "wall_s": 5.387512
+        },
+        "source": {
+          "rss_bytes": 309411840,
+          "sys_s": 0.69,
+          "user_s": 9.58,
+          "wall_s": 4.896345833
+        }
+      },
+      "resource_gate": true,
+      "strict": {
+        "rss_bytes": true,
+        "wall_s": false
+      },
+      "workers": 4,
+      "workflow": "classify-report"
+    }
+  ]
+}

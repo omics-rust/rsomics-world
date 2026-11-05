@@ -91,25 +91,25 @@ generic plugin, trait hierarchy, public matrix or taxonomy foundation APIs.
 
 ## Task1: implement the connected lifecycle
 
-- [ ] Import the small team-owned taxonomy/reference/read fixtures and actual
+- [x] Import the small team-owned taxonomy/reference/read fixtures and actual
   output goldens from the two accepted source packets, with exact pins and
   upstream attribution. No runtime test relies on an absolute scratch path.
-- [ ] Add `tests/classification_lifecycle.rs` with one connected
+- [x] Add `tests/classification_lifecycle.rs` with one connected
   `database_classify_report_matches_pinned_kraken` workflow: build, inspect,
   classify and report; assert retained read identities, complete five/six-column
   bytes, LCA/collision behavior,1/4-worker identity and unchanged amplicon route.
   Run it against the old CLI first: expected FAIL at missing `database`, not
   a missing-oracle skip or a compilation typo.
-- [ ] Implement the modules/interfaces above. Internalize only audited taxonomy
+- [x] Implement the modules/interfaces above. Internalize only audited taxonomy
   and report assets; port minimizer/compact logic from the pinned allowed source.
   Preserve copyright/license originals where code is derived. Bound per-worker
   sequence/output buffers; use sorted deduplicated zone vectors, not duplicate
   whole-reference collections or an unordered-map approximation of the table.
-- [ ] Add one combined failed-output lifecycle: invalid taxonomy, corrupted
+- [x] Add one combined failed-output lifecycle: invalid taxonomy, corrupted
   database and a late malformed query must fail without committing the affected
   named output or altering an existing destination. Checked model construction,
   not speculative defensive branches, owns the underlying invariants.
-- [ ] Run guarded offline formatting, strict Clippy, docs, full debug/release
+- [x] Run guarded offline formatting, strict Clippy, docs, full debug/release
   suites and required live pinned VSEARCH plus Kraken comparisons. Expected:
   all existing amplicon tests and connected new tests pass without oracle skips.
   Do not add an unrelated test matrix or split one workflow into microcrates.
@@ -118,37 +118,46 @@ generic plugin, trait hierarchy, public matrix or taxonomy foundation APIs.
 
 Consumes Task1's complete workflows and portable database.
 
-- [ ] Select/version an existing or public reference collection with at least
+- [x] Select/version an existing or public reference collection with at least
   ten million bases plus at least one million nontrivial mixed query reads;
   record accession/source, hashes, taxonomy, ordering and compression. Pin the
   manifest before timing; no seed/input changes to erase a negative result.
-- [ ] Run both build and full classify/report at1/4 workers against the actual
+- [x] Run both build and full classify/report at1/4 workers against the actual
   pinned source with identical capacity and explicit partition parameters.
   Check decoded database/table/taxonomy equivalence and complete classification/
   report outputs before timing. Include retained unknown/ambiguous reads.
-- [ ] One warmup plus five alternating paired trials, no competing build or
+- [x] One warmup plus five alternating paired trials, no competing build or
   benchmark. Retain all argv, inputs/outputs, versions, binary/source identities,
   wall/user/system CPU, RSS, database/scratch sizes and timing distributions.
   Require a strict hot-path throughput or resource advantage; report failed
   scaling, I/O or wall results without broad replacement claims.
-- [ ] One fresh whole-feature API/hot-path review, covering all five classes
+- [x] One fresh whole-feature API/hot-path review, covering all five classes
   below; resolve important findings in one RED→GREEN fix pass plus full suite.
   No repeated unchanged review or performance campaigns.
 
 ## Task3: deliver only the qualified complete slice
 
-- [ ] Update product scope, provenance, license notices and a0.2 candidate only
+- [x] Update product scope, provenance, license notices and a0.2 candidate only
   after the full workflow is real. Preserve original amplicon evidence and
   distinguish native-format/profile choices from upstream defaults.
-- [ ] Commit one concern per commit on owning main, push through the available
+- [x] Commit one concern per commit on owning main, push through the available
   authenticated transport and wait for exact-head native Linux/macOS x86_64/
-  aarch64 tests with mandatory real oracles. Package and install from the clean
-  source; exercise the complete installed workflow on each native class.
+  aarch64 tests with mandatory real oracles. Run41972846684 passed at
+  `be46071cdc2ff639a166c0315b7459ef13be8736`.
+- [ ] Resolve zero-read standalone report behavior. The source emits `nan`
+  with zero rows requested; the candidate rejects a zero denominator.
+- [ ] Package and install from clean source; exercise the complete installed
+  workflow on each native class. Linux x86_64 source packaging passed in
+  run41972846684; it is not four-platform installed acceptance.
 - [ ] Adopt original CI/source/license/binary receipts and public installation
   before GitHub distribution; crates.io publication additionally needs restored
   valid registry authentication. Never retry an unchanged known-invalid secret.
 - [ ] Update control-plane dossier/state with exact delivered identities,
   residual exclusions and failed gates; then advance the broader portfolio.
+
+The implemented candidate, local evidence, representative performance and CI
+are recorded in `.autopilot/state/metagenomics-classification-execution-2026-11-05.md`.
+The installed and public delivery gates above remain separate.
 
 ## Whole-feature review focus
 

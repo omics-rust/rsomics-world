@@ -119,11 +119,21 @@ build/inspect/classify/report lifecycle and a separate partition-aware compact
 collision witness run against that source. Both retain actual1/4-worker output
 agreement. Compact fingerprints affect false-positive assignments and build
 LCA; capacity and build partitioning therefore belong to the compatibility
-contract. The planned native versioned container preserves those semantics
-without claiming `.k2d` interchange. No native classifier or new public command
-exists yet. See
+contract. See
 `.autopilot/state/metagenomics-classification-frontier-2026-11-05.md` for exact
 source, fixtures, failed fixture assumptions, stress-profile bounds and receipts.
+
+The unpublished 0.2.0 candidate implements native `database build`,
+`database inspect`, single-end `classify` and six-column `report` with a
+versioned checksummed `.rsdb` container, not `.k2d` interchange. The pinned
+Kraken2.17.1 oracle matches complete calls, reports, taxonomy and compact cells
+for the selected nucleotide profile. A 55.9-million-base reference and one
+million 150-base reads qualify all four measured build/query lanes on at
+least one resource axis; at four workers, classify plus report uses about
+76% less peak process RSS but takes about 10% longer than the source.
+Exact-head native-four CI passes at `be46071`. Zero-read report policy,
+installed delivery and publication remain open. See
+`.autopilot/state/metagenomics-classification-execution-2026-11-05.md`.
 
 ### Later amplicon operations
 
