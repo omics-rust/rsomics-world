@@ -1,0 +1,119 @@
+{
+  "product": "rsomics-fastq-preprocess",
+  "version": "0.2.0",
+  "head_sha": "10db8ef2cde7423b456b24eb0ef47177abf95014",
+  "hosted_install_and_audit": {
+    "run_id": 41998285325,
+    "attempt": 1,
+    "head": "10db8ef2cde7423b456b24eb0ef47177abf95014",
+    "event": "push",
+    "branch": "main",
+    "source": "https://github.com/omics-rust/rsomics-fastq-preprocess/actions/runs/41998285325",
+    "status": "success",
+    "native_jobs": 4,
+    "original_audit": "success",
+    "original_zip_sha256": {
+      "linux-aarch64": "07a24fcce109d74bbf1c74a081a3886fba941b1abb33f7f5ac6eeca0ab30d6c5",
+      "linux-x86_64": "ef27202e83e39802fe551bb2a1c9e1e90c21d6a01a8d5987404458998996eb0d",
+      "macos-aarch64": "368fac3da7000fdae7f5355f529f92033571c2c3e50e069de7edf481851cd09c",
+      "macos-x86_64": "2395b661bf1e088756213855ed457f0d8073577b2d956bcfd24f46c9018ea963",
+      "audit_receipt_carrier": "e23cf4ef0fd48d3b0b60da9060daee20d2f0e5f3b2083b77c6d3c34901f3c143"
+    },
+    "local_original_download": false
+  },
+  "local_exact_package": {
+    "packet": "/Volumes/KIOXIA/Developments/tmp/fastq-02-exact-20261105.Z25dkh67/tmp/fastq-phred64-candidate.WPBrclpH",
+    "installed_calls": 14,
+    "installed_expected_failures": 1,
+    "original_invalid_input_rejected": true,
+    "files": {
+      "/Volumes/KIOXIA/Developments/tmp/fastq-02-exact-20261105.Z25dkh67/tmp/fastq-phred64-candidate.WPBrclpH/installed/bin/rsomics-fastq-preprocess": {
+        "bytes": 1866128,
+        "sha256": "42631a5932994a27f8ee02d73e963bbd18e65283d34c159d419ed585b7b05f56"
+      },
+      "/Volumes/KIOXIA/Developments/tmp/fastq-quality-source-20261103.98ZifXEs/fastp-23d6211d4f05d61f561899f1b7702435a4b5d408/fastp": {
+        "bytes": 956776,
+        "sha256": "7fb979ed4d571be495a0f5cc210122cc98a4e8f1bb1224d2aa5120947f34401d"
+      },
+      "/Volumes/KIOXIA/Developments/tmp/fastq-quality-perf-20261103.q8zY938x/r1.fastq": {
+        "bytes": 317888890,
+        "sha256": "fdd4bc499e07727fbb52a672c72e2f1be3f1577afb353e8b41eea8785544ae72"
+      },
+      "/Volumes/KIOXIA/Developments/tmp/fastq-quality-perf-20261103.q8zY938x/r2.fastq": {
+        "bytes": 317888890,
+        "sha256": "7c8186a326144bd8c022ab09c5e27172a1ed6b8997fab841ba76cfbce949785e"
+      },
+      "/Volumes/KIOXIA/Developments/tmp/fastq-quality-perf-20261103.q8zY938x/generate.rs": {
+        "bytes": 1314,
+        "sha256": "132709da760839fdb0f380a7acd0162b1f3aa772317e47c54fd1119fa26dd2e0"
+      },
+      "/Volumes/KIOXIA/Developments/tmp/fastq-02-exact-20261105.Z25dkh67/tmp/fastq-phred64-candidate.WPBrclpH/measure.py": {
+        "bytes": 6129,
+        "sha256": "ba2c907e5b00755b99b0dc61803e60b0bd3fe2b20010bb55e79a1eb1cd6e667b"
+      },
+      "/Volumes/KIOXIA/Developments/tmp/fastq-02-exact-20261105.Z25dkh67/tmp/fastq-phred64-candidate.WPBrclpH/delivery/rsomics-fastq-preprocess-0.2.0.crate": {
+        "bytes": 58025,
+        "sha256": "df00a6105ad0751088806ef6573c56bf5a3eaa440f2be29a4980192dcd275b64"
+      },
+      "/Volumes/KIOXIA/Developments/tmp/fastq-02-exact-20261105.Z25dkh67/tmp/fastq-phred64-candidate.WPBrclpH/delivery/SOURCE.json": {
+        "bytes": 1055,
+        "sha256": "9c17f88d1715d4ea3089f431e2f4b8f7b1ffbd469851c5e81e3583dc77c7a23d"
+      },
+      "/Volumes/KIOXIA/Developments/tmp/fastq-02-exact-20261105.Z25dkh67/tmp/fastq-phred64-candidate.WPBrclpH/delivery/lifecycle/VERIFIED.json": {
+        "bytes": 499,
+        "sha256": "059851ec2b498a3c3cc4154c49e9b1e98363fd8501a282da408ac1c4c58f6b14"
+      },
+      "/Volumes/KIOXIA/Developments/tmp/fastq-quality-perf-20261103.q8zY938x/RESULT.json": {
+        "bytes": 36576,
+        "sha256": "433749a0327fa291cae0788cb92d67f82b7cf8e7120cdba67675415e56192002"
+      }
+    }
+  },
+  "benchmark": {
+    "platform": "macOS-27.2-arm64-arm-64bit",
+    "cpu": "Apple M2",
+    "ram_bytes": 8589934592,
+    "reads_per_mate": 1000000,
+    "protocol": "same pinned Phred+33 synthetic SE stdout (1 worker) and PE gzip level 4 (4 workers) benchmark as the earlier quality-window candidate",
+    "raw_result": "/Volumes/KIOXIA/Developments/tmp/fastq-02-exact-20261105.Z25dkh67/tmp/fastq-phred64-candidate.WPBrclpH/RESULT.json",
+    "raw_result_sha256": "3ac39e51058bafb1a72db5e0f0c1c6201dd4e2dfec002d9b6008fe85185c9873",
+    "full_output_groups": 14,
+    "full_output_expected": [
+      {
+        "sha256": "8e2c298936ac9ebb8accb6bed299746189c3ca85c681d781d7644dd0ff51a0b9",
+        "records": 960000
+      },
+      {
+        "sha256": "4c6cdc38e2348463955fb86d10a69d18b549d7b904071579d64936fb12f2ea4b",
+        "records": 960000
+      }
+    ]
+  },
+  "publication": false,
+  "samples": [
+    {"workflow":"single-stdout","implementation":"native","iteration":0,"warmup":true,"wall_seconds":0.9373180830152705,"user_seconds":0.47,"system_seconds":0.1,"peak_rss_bytes":7077888},
+    {"workflow":"single-stdout","implementation":"source","iteration":0,"warmup":true,"wall_seconds":1.2233384160790592,"user_seconds":1.15,"system_seconds":0.16,"peak_rss_bytes":58867712},
+    {"workflow":"single-stdout","implementation":"source","iteration":1,"warmup":false,"wall_seconds":0.9130334999645129,"user_seconds":1.1,"system_seconds":0.06,"peak_rss_bytes":39845888},
+    {"workflow":"single-stdout","implementation":"native","iteration":1,"warmup":false,"wall_seconds":0.47512758302036673,"user_seconds":0.43,"system_seconds":0.02,"peak_rss_bytes":8142848},
+    {"workflow":"single-stdout","implementation":"native","iteration":2,"warmup":false,"wall_seconds":0.5162548330845311,"user_seconds":0.45,"system_seconds":0.03,"peak_rss_bytes":8093696},
+    {"workflow":"single-stdout","implementation":"source","iteration":2,"warmup":false,"wall_seconds":0.9450739999301732,"user_seconds":1.11,"system_seconds":0.07,"peak_rss_bytes":39747584},
+    {"workflow":"single-stdout","implementation":"source","iteration":3,"warmup":false,"wall_seconds":0.9301093750400469,"user_seconds":1.11,"system_seconds":0.07,"peak_rss_bytes":39862272},
+    {"workflow":"single-stdout","implementation":"native","iteration":3,"warmup":false,"wall_seconds":0.4619893750641495,"user_seconds":0.43,"system_seconds":0.02,"peak_rss_bytes":6799360},
+    {"workflow":"single-stdout","implementation":"native","iteration":4,"warmup":false,"wall_seconds":0.44684191700071096,"user_seconds":0.41,"system_seconds":0.02,"peak_rss_bytes":6766592},
+    {"workflow":"single-stdout","implementation":"source","iteration":4,"warmup":false,"wall_seconds":0.9149328329367563,"user_seconds":1.1,"system_seconds":0.07,"peak_rss_bytes":40894464},
+    {"workflow":"single-stdout","implementation":"source","iteration":5,"warmup":false,"wall_seconds":0.9257399999769405,"user_seconds":1.12,"system_seconds":0.07,"peak_rss_bytes":41189376},
+    {"workflow":"single-stdout","implementation":"native","iteration":5,"warmup":false,"wall_seconds":0.4488756249193102,"user_seconds":0.41,"system_seconds":0.02,"peak_rss_bytes":6799360},
+    {"workflow":"paired-gzip","implementation":"native","iteration":0,"warmup":true,"wall_seconds":1.7582537920679897,"user_seconds":3.55,"system_seconds":0.25,"peak_rss_bytes":31326208},
+    {"workflow":"paired-gzip","implementation":"source","iteration":0,"warmup":true,"wall_seconds":2.2126461670268327,"user_seconds":6.41,"system_seconds":0.7,"peak_rss_bytes":92930048},
+    {"workflow":"paired-gzip","implementation":"source","iteration":1,"warmup":false,"wall_seconds":1.8677672499325126,"user_seconds":6.31,"system_seconds":0.56,"peak_rss_bytes":101548032},
+    {"workflow":"paired-gzip","implementation":"native","iteration":1,"warmup":false,"wall_seconds":3.4774738328997046,"user_seconds":3.98,"system_seconds":0.36,"peak_rss_bytes":33390592},
+    {"workflow":"paired-gzip","implementation":"native","iteration":2,"warmup":false,"wall_seconds":2.5074957080651075,"user_seconds":3.65,"system_seconds":0.31,"peak_rss_bytes":32800768},
+    {"workflow":"paired-gzip","implementation":"source","iteration":2,"warmup":false,"wall_seconds":2.4023201670497656,"user_seconds":6.96,"system_seconds":0.82,"peak_rss_bytes":101679104},
+    {"workflow":"paired-gzip","implementation":"source","iteration":3,"warmup":false,"wall_seconds":2.2262531250016764,"user_seconds":6.44,"system_seconds":0.71,"peak_rss_bytes":102318080},
+    {"workflow":"paired-gzip","implementation":"native","iteration":3,"warmup":false,"wall_seconds":2.5478294159984216,"user_seconds":3.71,"system_seconds":0.33,"peak_rss_bytes":32489472},
+    {"workflow":"paired-gzip","implementation":"native","iteration":4,"warmup":false,"wall_seconds":2.567202000063844,"user_seconds":3.71,"system_seconds":0.31,"peak_rss_bytes":35061760},
+    {"workflow":"paired-gzip","implementation":"source","iteration":4,"warmup":false,"wall_seconds":2.078828874975443,"user_seconds":6.17,"system_seconds":0.67,"peak_rss_bytes":100958208},
+    {"workflow":"paired-gzip","implementation":"source","iteration":5,"warmup":false,"wall_seconds":2.034118750016205,"user_seconds":6.22,"system_seconds":0.69,"peak_rss_bytes":88227840},
+    {"workflow":"paired-gzip","implementation":"native","iteration":5,"warmup":false,"wall_seconds":1.9161507079843432,"user_seconds":3.55,"system_seconds":0.21,"peak_rss_bytes":31064064}
+  ]
+}

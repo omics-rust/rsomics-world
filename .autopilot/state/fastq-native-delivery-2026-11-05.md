@@ -1,5 +1,9 @@
 # FASTQ 0.2 native delivery
 
+This earlier candidate is superseded by the
+[Phred+64 validation repair](fastq-phred64-validation-2026-11-05.md).
+Keep these receipts as historical evidence; do not publish `b6872a50`.
+
 FASTQ delivery-only owner commit `ca3a6fb73372de2631f0f1902f79f0ef1253e9d4`
 extends the four native jobs with exact clean source verification, installation
 from the extracted crate, a live fastp comparison on the installed binary,
