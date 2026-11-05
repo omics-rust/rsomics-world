@@ -252,6 +252,19 @@ Rayon pool and product scheduling policy. Exact-head CI run `30731874951` and
 publish run `30732312288` passed; no preprocessing behavior or public product
 boundary changed.
 
+The0.2 source candidate adds coherent front/tail/right quality windows to
+`run`/`trim`, not a separate product or foundation. Local mandatory fastp1.3.6
+comparisons cover combinations, original-coordinate fixed cuts, poly ordering,
+Phred33/64 and synchronized SE/PE output. Current source
+`a0796cae7a908cb3f6f18c323c9dc0c6d9421c6d` passes exact-head four-native
+run41963314684; the earlier macOS ARM release-test failure is retained separately
+without an invented cause. A clean `ad92c90` source-package install passes14
+actual Mac ARM calls. New million-pair measurements show an SE throughput/RSS
+advantage and a PE gzip RSS advantage with approximately27% slower wall time;
+the old fixed/poly benchmark is not reassigned to the new workflow. Public
+0.2 delivery remains incomplete. See
+`.autopilot/state/fastq-quality-execution-2026-11-05.md` for originals and gates.
+
 ## `rsomics-fastq-qc`
 
 ### Boundary
