@@ -26,3 +26,10 @@ Read-only review found no Critical or Important issue. Additional receipt
 boundary cases can reuse the upstream auditor's tests; staging adds no
 independent audit or publication authority. Invoke it in the audit job while
 the original ZIPs are available, not from the receipt-only artifact.
+
+Hosted control-plane run [41999655845](https://github.com/omics-rust/rsomics-world/actions/runs/41999655845)
+at `825414b5` failed in the script suite, before ledger validation. The
+public annotation only gives exit 1 and the anonymous job log returns 403.
+The local 548-test pass does not explain that failure. Hold owner wiring
+until a qualified helper pin is available; expose the suite failure and
+runner identity without changing the test selection.
