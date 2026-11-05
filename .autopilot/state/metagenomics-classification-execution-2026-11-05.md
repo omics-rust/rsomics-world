@@ -79,3 +79,19 @@ does not decide this unrelated policy. Clean-source installed four-native
 lifecycle, license/artifact adoption and public installation are still
 required. No 0.2.0 GitHub release or registry publication was attempted.
 Do not retry the unchanged known-invalid registry secret.
+
+## Source-package reuse check
+
+Mac ARM clean `be46071` also passes the shared delivery helper pinned by
+FASTQ at World `f580be87`. Guarded offline Cargo packaging and exact Git
+body/mode plus normalized metadata verification accept 48 originals and
+50 packaged files. The 57,857-byte source crate has SHA-256
+`22e45fdbd4e8d8ed3ec072101dac4b8252bbbcd5585e64e2fefab4428f1ac35f`.
+The archive-checksum-backed native graph contains 60 dependency packages
+and 124 original notice files.
+
+Packet: `/Volumes/KIOXIA/Developments/tmp/metagenomics-source-delivery-20261105.wxPIox`.
+This is reuse of the package/notice check only, not installed or bundled
+metagenomics evidence. The owner has MIT/Apache originals and Kraken's
+original license but does not yet have the product-level notice required
+by the native carrier. No owner changes or release were made.
