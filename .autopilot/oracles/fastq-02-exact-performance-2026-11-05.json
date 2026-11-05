@@ -1,0 +1,320 @@
+{
+  "product": "rsomics-fastq-preprocess",
+  "version": "0.2.0",
+  "head_sha": "b6872a50c00309b86b78611cd88c707681d9ac7d",
+  "host": {
+    "platform": "macOS-27.2-arm64-arm-64bit",
+    "cpu": "Apple M2",
+    "ram_bytes": 8589934592,
+    "rustc": "rustc 1.91.0 (f8297e351 2025-10-28)\nbinary: rustc\ncommit-hash: f8297e351a40c1439a467bbbb6879088047f50b3\ncommit-date: 2025-10-28\nhost: aarch64-apple-darwin\nrelease: 1.91.0\nLLVM version: 21.1.2\n"
+  },
+  "origin": "locally installed exact source package, not hosted release binary",
+  "native_install_ci_run": 41992261637,
+  "fixture": {
+    "kind": "synthetic mixed quality",
+    "reads_per_mate": 1000000,
+    "read_length": 150,
+    "inputs": {
+      "/Volumes/KIOXIA/Developments/tmp/fastq-quality-source-20261103.98ZifXEs/fastp-23d6211d4f05d61f561899f1b7702435a4b5d408/fastp": {
+        "bytes": 956776,
+        "sha256": "7fb979ed4d571be495a0f5cc210122cc98a4e8f1bb1224d2aa5120947f34401d"
+      },
+      "/Volumes/KIOXIA/Developments/tmp/fastq-quality-perf-20261103.q8zY938x/r1.fastq": {
+        "bytes": 317888890,
+        "sha256": "fdd4bc499e07727fbb52a672c72e2f1be3f1577afb353e8b41eea8785544ae72"
+      },
+      "/Volumes/KIOXIA/Developments/tmp/fastq-quality-perf-20261103.q8zY938x/r2.fastq": {
+        "bytes": 317888890,
+        "sha256": "7c8186a326144bd8c022ab09c5e27172a1ed6b8997fab841ba76cfbce949785e"
+      },
+      "/Volumes/KIOXIA/Developments/tmp/fastq-quality-perf-20261103.q8zY938x/generate.rs": {
+        "bytes": 1314,
+        "sha256": "132709da760839fdb0f380a7acd0162b1f3aa772317e47c54fd1119fa26dd2e0"
+      }
+    }
+  },
+  "result": {
+    "path": "/Volumes/KIOXIA/Developments/tmp/fastq-02-exact-20261105.Z25dkh67/RESULT.json",
+    "sha256": "ec376f63e55c97b92d72c95d4502d5d1df943be632d8932dd0424dd3e7df0ed4"
+  },
+  "files": {
+    "/Volumes/KIOXIA/Developments/tmp/fastq-02-exact-20261105.Z25dkh67/installed/bin/rsomics-fastq-preprocess": {
+      "bytes": 1865920,
+      "sha256": "b5bfc71c9f2e37b15ea3883554bd22e4412653552823e482bc2649e9b8f503f9"
+    },
+    "/Volumes/KIOXIA/Developments/tmp/fastq-02-exact-20261105.Z25dkh67/measure.py": {
+      "bytes": 6129,
+      "sha256": "de6f26acf5ff403fdeb294c7251ec26394c37c4fcf8554a2bd7e00b2728ea5f1"
+    },
+    "/Volumes/KIOXIA/Developments/tmp/fastq-02-exact-20261105.Z25dkh67/delivery/rsomics-fastq-preprocess-0.2.0.crate": {
+      "bytes": 57971,
+      "sha256": "eeff6abe119d07c860ea64c4f3606657772ea4235fa7fb6b0d1963d875bf963f"
+    },
+    "/Volumes/KIOXIA/Developments/tmp/fastq-02-exact-20261105.Z25dkh67/delivery/SOURCE.json": {
+      "bytes": 1055,
+      "sha256": "c2a5a4464868836e96d6098610ab03feb885f96d7d5897872b7bd7a4fde55b9f"
+    },
+    "/Volumes/KIOXIA/Developments/tmp/fastq-02-exact-20261105.Z25dkh67/delivery/lifecycle/VERIFIED.json": {
+      "bytes": 499,
+      "sha256": "a79701608e61c9ce77b9d844f93ca07777054cbdba4585592bbc831e5bca2420"
+    }
+  },
+  "warmup_commands": [
+    {
+      "workflow": "single-stdout",
+      "implementation": "native",
+      "argv": [
+        "/Volumes/KIOXIA/Developments/tmp/fastq-02-exact-20261105.Z25dkh67/installed/bin/rsomics-fastq-preprocess",
+        "--threads",
+        "1",
+        "run",
+        "-Q",
+        "-L",
+        "--cut-front",
+        "--cut-right",
+        "-i",
+        "/Volumes/KIOXIA/Developments/tmp/fastq-quality-perf-20261103.q8zY938x/r1.fastq",
+        "-o",
+        "-"
+      ]
+    },
+    {
+      "workflow": "single-stdout",
+      "implementation": "source",
+      "argv": [
+        "/Volumes/KIOXIA/Developments/tmp/fastq-quality-source-20261103.98ZifXEs/fastp-23d6211d4f05d61f561899f1b7702435a4b5d408/fastp",
+        "-w",
+        "1",
+        "-A",
+        "-G",
+        "-Q",
+        "-L",
+        "--cut_front",
+        "--cut_right",
+        "--dont_eval_duplication",
+        "-i",
+        "/Volumes/KIOXIA/Developments/tmp/fastq-quality-perf-20261103.q8zY938x/r1.fastq",
+        "-j",
+        "/Volumes/KIOXIA/Developments/tmp/fastq-02-exact-20261105.Z25dkh67/single-stdout-0-source/report.json",
+        "-h",
+        "/Volumes/KIOXIA/Developments/tmp/fastq-02-exact-20261105.Z25dkh67/single-stdout-0-source/report.html",
+        "--stdout"
+      ]
+    },
+    {
+      "workflow": "paired-gzip",
+      "implementation": "native",
+      "argv": [
+        "/Volumes/KIOXIA/Developments/tmp/fastq-02-exact-20261105.Z25dkh67/installed/bin/rsomics-fastq-preprocess",
+        "--threads",
+        "4",
+        "run",
+        "-Q",
+        "-L",
+        "--cut-front",
+        "--cut-right",
+        "-i",
+        "/Volumes/KIOXIA/Developments/tmp/fastq-quality-perf-20261103.q8zY938x/r1.fastq",
+        "-I",
+        "/Volumes/KIOXIA/Developments/tmp/fastq-quality-perf-20261103.q8zY938x/r2.fastq",
+        "-o",
+        "/Volumes/KIOXIA/Developments/tmp/fastq-02-exact-20261105.Z25dkh67/paired-gzip-0-native/r1.fastq.gz",
+        "-O",
+        "/Volumes/KIOXIA/Developments/tmp/fastq-02-exact-20261105.Z25dkh67/paired-gzip-0-native/r2.fastq.gz",
+        "--gzip-level",
+        "4"
+      ]
+    },
+    {
+      "workflow": "paired-gzip",
+      "implementation": "source",
+      "argv": [
+        "/Volumes/KIOXIA/Developments/tmp/fastq-quality-source-20261103.98ZifXEs/fastp-23d6211d4f05d61f561899f1b7702435a4b5d408/fastp",
+        "-w",
+        "4",
+        "-A",
+        "-G",
+        "-Q",
+        "-L",
+        "--cut_front",
+        "--cut_right",
+        "--dont_eval_duplication",
+        "-i",
+        "/Volumes/KIOXIA/Developments/tmp/fastq-quality-perf-20261103.q8zY938x/r1.fastq",
+        "-j",
+        "/Volumes/KIOXIA/Developments/tmp/fastq-02-exact-20261105.Z25dkh67/paired-gzip-0-source/report.json",
+        "-h",
+        "/Volumes/KIOXIA/Developments/tmp/fastq-02-exact-20261105.Z25dkh67/paired-gzip-0-source/report.html",
+        "-I",
+        "/Volumes/KIOXIA/Developments/tmp/fastq-quality-perf-20261103.q8zY938x/r2.fastq",
+        "-o",
+        "/Volumes/KIOXIA/Developments/tmp/fastq-02-exact-20261105.Z25dkh67/paired-gzip-0-source/r1.fastq.gz",
+        "-O",
+        "/Volumes/KIOXIA/Developments/tmp/fastq-02-exact-20261105.Z25dkh67/paired-gzip-0-source/r2.fastq.gz",
+        "-z",
+        "4"
+      ]
+    }
+  ],
+  "full_output_groups": {
+    "single-stdout-0-native": [
+      {
+        "sha256": "8e2c298936ac9ebb8accb6bed299746189c3ca85c681d781d7644dd0ff51a0b9",
+        "records": 960000
+      }
+    ],
+    "single-stdout-0-source": [
+      {
+        "sha256": "8e2c298936ac9ebb8accb6bed299746189c3ca85c681d781d7644dd0ff51a0b9",
+        "records": 960000
+      }
+    ],
+    "paired-gzip-0-native": [
+      {
+        "sha256": "8e2c298936ac9ebb8accb6bed299746189c3ca85c681d781d7644dd0ff51a0b9",
+        "records": 960000
+      },
+      {
+        "sha256": "4c6cdc38e2348463955fb86d10a69d18b549d7b904071579d64936fb12f2ea4b",
+        "records": 960000
+      }
+    ],
+    "paired-gzip-0-source": [
+      {
+        "sha256": "8e2c298936ac9ebb8accb6bed299746189c3ca85c681d781d7644dd0ff51a0b9",
+        "records": 960000
+      },
+      {
+        "sha256": "4c6cdc38e2348463955fb86d10a69d18b549d7b904071579d64936fb12f2ea4b",
+        "records": 960000
+      }
+    ],
+    "paired-gzip-1-source": [
+      {
+        "sha256": "8e2c298936ac9ebb8accb6bed299746189c3ca85c681d781d7644dd0ff51a0b9",
+        "records": 960000
+      },
+      {
+        "sha256": "4c6cdc38e2348463955fb86d10a69d18b549d7b904071579d64936fb12f2ea4b",
+        "records": 960000
+      }
+    ],
+    "paired-gzip-1-native": [
+      {
+        "sha256": "8e2c298936ac9ebb8accb6bed299746189c3ca85c681d781d7644dd0ff51a0b9",
+        "records": 960000
+      },
+      {
+        "sha256": "4c6cdc38e2348463955fb86d10a69d18b549d7b904071579d64936fb12f2ea4b",
+        "records": 960000
+      }
+    ],
+    "paired-gzip-2-native": [
+      {
+        "sha256": "8e2c298936ac9ebb8accb6bed299746189c3ca85c681d781d7644dd0ff51a0b9",
+        "records": 960000
+      },
+      {
+        "sha256": "4c6cdc38e2348463955fb86d10a69d18b549d7b904071579d64936fb12f2ea4b",
+        "records": 960000
+      }
+    ],
+    "paired-gzip-2-source": [
+      {
+        "sha256": "8e2c298936ac9ebb8accb6bed299746189c3ca85c681d781d7644dd0ff51a0b9",
+        "records": 960000
+      },
+      {
+        "sha256": "4c6cdc38e2348463955fb86d10a69d18b549d7b904071579d64936fb12f2ea4b",
+        "records": 960000
+      }
+    ],
+    "paired-gzip-3-source": [
+      {
+        "sha256": "8e2c298936ac9ebb8accb6bed299746189c3ca85c681d781d7644dd0ff51a0b9",
+        "records": 960000
+      },
+      {
+        "sha256": "4c6cdc38e2348463955fb86d10a69d18b549d7b904071579d64936fb12f2ea4b",
+        "records": 960000
+      }
+    ],
+    "paired-gzip-3-native": [
+      {
+        "sha256": "8e2c298936ac9ebb8accb6bed299746189c3ca85c681d781d7644dd0ff51a0b9",
+        "records": 960000
+      },
+      {
+        "sha256": "4c6cdc38e2348463955fb86d10a69d18b549d7b904071579d64936fb12f2ea4b",
+        "records": 960000
+      }
+    ],
+    "paired-gzip-4-native": [
+      {
+        "sha256": "8e2c298936ac9ebb8accb6bed299746189c3ca85c681d781d7644dd0ff51a0b9",
+        "records": 960000
+      },
+      {
+        "sha256": "4c6cdc38e2348463955fb86d10a69d18b549d7b904071579d64936fb12f2ea4b",
+        "records": 960000
+      }
+    ],
+    "paired-gzip-4-source": [
+      {
+        "sha256": "8e2c298936ac9ebb8accb6bed299746189c3ca85c681d781d7644dd0ff51a0b9",
+        "records": 960000
+      },
+      {
+        "sha256": "4c6cdc38e2348463955fb86d10a69d18b549d7b904071579d64936fb12f2ea4b",
+        "records": 960000
+      }
+    ],
+    "paired-gzip-5-source": [
+      {
+        "sha256": "8e2c298936ac9ebb8accb6bed299746189c3ca85c681d781d7644dd0ff51a0b9",
+        "records": 960000
+      },
+      {
+        "sha256": "4c6cdc38e2348463955fb86d10a69d18b549d7b904071579d64936fb12f2ea4b",
+        "records": 960000
+      }
+    ],
+    "paired-gzip-5-native": [
+      {
+        "sha256": "8e2c298936ac9ebb8accb6bed299746189c3ca85c681d781d7644dd0ff51a0b9",
+        "records": 960000
+      },
+      {
+        "sha256": "4c6cdc38e2348463955fb86d10a69d18b549d7b904071579d64936fb12f2ea4b",
+        "records": 960000
+      }
+    ]
+  },
+  "publication": false,
+  "samples": [
+    {"workflow":"single-stdout","iteration":0,"warmup":true,"implementation":"native","wall_seconds":1.5795511660398915,"user_seconds":0.48,"system_seconds":0.13,"peak_rss_bytes":6684672},
+    {"workflow":"single-stdout","iteration":0,"warmup":true,"implementation":"source","wall_seconds":1.4111833749338984,"user_seconds":1.17,"system_seconds":0.14,"peak_rss_bytes":55721984},
+    {"workflow":"single-stdout","iteration":1,"warmup":false,"implementation":"source","wall_seconds":0.9298312499886379,"user_seconds":1.11,"system_seconds":0.07,"peak_rss_bytes":39747584},
+    {"workflow":"single-stdout","iteration":1,"warmup":false,"implementation":"native","wall_seconds":0.45697983307763934,"user_seconds":0.42,"system_seconds":0.02,"peak_rss_bytes":6733824},
+    {"workflow":"single-stdout","iteration":2,"warmup":false,"implementation":"native","wall_seconds":0.44532225001603365,"user_seconds":0.41,"system_seconds":0.02,"peak_rss_bytes":6766592},
+    {"workflow":"single-stdout","iteration":2,"warmup":false,"implementation":"source","wall_seconds":0.9263091249158606,"user_seconds":1.09,"system_seconds":0.07,"peak_rss_bytes":40173568},
+    {"workflow":"single-stdout","iteration":3,"warmup":false,"implementation":"source","wall_seconds":0.9136621250072494,"user_seconds":1.1,"system_seconds":0.06,"peak_rss_bytes":41172992},
+    {"workflow":"single-stdout","iteration":3,"warmup":false,"implementation":"native","wall_seconds":0.4515564169269055,"user_seconds":0.41,"system_seconds":0.02,"peak_rss_bytes":6733824},
+    {"workflow":"single-stdout","iteration":4,"warmup":false,"implementation":"native","wall_seconds":0.44211704190820456,"user_seconds":0.41,"system_seconds":0.02,"peak_rss_bytes":6750208},
+    {"workflow":"single-stdout","iteration":4,"warmup":false,"implementation":"source","wall_seconds":1.1439449581084773,"user_seconds":1.15,"system_seconds":0.11,"peak_rss_bytes":39780352},
+    {"workflow":"single-stdout","iteration":5,"warmup":false,"implementation":"source","wall_seconds":1.2042849999852479,"user_seconds":1.15,"system_seconds":0.14,"peak_rss_bytes":40435712},
+    {"workflow":"single-stdout","iteration":5,"warmup":false,"implementation":"native","wall_seconds":0.8170196659630165,"user_seconds":0.47,"system_seconds":0.11,"peak_rss_bytes":6701056},
+    {"workflow":"paired-gzip","iteration":0,"warmup":true,"implementation":"native","wall_seconds":2.3464366659754887,"user_seconds":3.71,"system_seconds":0.33,"peak_rss_bytes":32948224},
+    {"workflow":"paired-gzip","iteration":0,"warmup":true,"implementation":"source","wall_seconds":2.345261250040494,"user_seconds":6.81,"system_seconds":0.78,"peak_rss_bytes":102760448},
+    {"workflow":"paired-gzip","iteration":1,"warmup":false,"implementation":"source","wall_seconds":2.103654250036925,"user_seconds":6.26,"system_seconds":0.68,"peak_rss_bytes":102645760},
+    {"workflow":"paired-gzip","iteration":1,"warmup":false,"implementation":"native","wall_seconds":2.694755709031597,"user_seconds":3.87,"system_seconds":0.37,"peak_rss_bytes":35618816},
+    {"workflow":"paired-gzip","iteration":2,"warmup":false,"implementation":"native","wall_seconds":2.8029131660005078,"user_seconds":4,"system_seconds":0.41,"peak_rss_bytes":36012032},
+    {"workflow":"paired-gzip","iteration":2,"warmup":false,"implementation":"source","wall_seconds":3.7128579169511795,"user_seconds":7.49,"system_seconds":1.01,"peak_rss_bytes":102694912},
+    {"workflow":"paired-gzip","iteration":3,"warmup":false,"implementation":"source","wall_seconds":3.328120916034095,"user_seconds":7.74,"system_seconds":0.98,"peak_rss_bytes":103366656},
+    {"workflow":"paired-gzip","iteration":3,"warmup":false,"implementation":"native","wall_seconds":5.0687620829558,"user_seconds":4.19,"system_seconds":0.58,"peak_rss_bytes":33488896},
+    {"workflow":"paired-gzip","iteration":4,"warmup":false,"implementation":"native","wall_seconds":4.646958458004519,"user_seconds":4.04,"system_seconds":0.68,"peak_rss_bytes":30736384},
+    {"workflow":"paired-gzip","iteration":4,"warmup":false,"implementation":"source","wall_seconds":3.495478666969575,"user_seconds":6.52,"system_seconds":0.87,"peak_rss_bytes":83427328},
+    {"workflow":"paired-gzip","iteration":5,"warmup":false,"implementation":"source","wall_seconds":3.2965014160145074,"user_seconds":6.62,"system_seconds":0.77,"peak_rss_bytes":101498880},
+    {"workflow":"paired-gzip","iteration":5,"warmup":false,"implementation":"native","wall_seconds":4.288290499942377,"user_seconds":4.3,"system_seconds":0.55,"peak_rss_bytes":35307520}
+  ]
+}

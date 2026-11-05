@@ -76,6 +76,40 @@ receipt carrier is artifact 13398768414. See the [exact artifact identities](nat
 The original-body verification gate is satisfied inside GitHub Actions.
 This does not imply a local download or a public release/install.
 
+## Exact candidate performance replay
+
+The clean `b6872a50` crate (57,971 bytes) was packaged, verified against all
+46 original Git paths and normalized Cargo metadata, and installed offline.
+Its 14 installed calls passed, including one expected malformed-input error.
+This is a fresh local exact-source binary, not an earlier measurement or an
+execution of a hosted artifact. Packet:
+`/Volumes/KIOXIA/Developments/tmp/fastq-02-exact-20261105.Z25dkh67`.
+Exact crate, binary, fixture, oracle, and receipt pins plus all 24 samples
+are in [the performance record](../oracles/fastq-02-exact-performance-2026-11-05.json).
+Complete `RESULT.json` SHA-256 is
+`ec376f63e55c97b92d72c95d4502d5d1df943be632d8932dd0424dd3e7df0ed4`.
+
+Apple M2/macOS 27.2 arm64, 8 GiB RAM, Rust 1.91.0; original deterministic
+1M pairs at 150 bases per mate. Both sides use front+right quality windows
+with the same flags as the earlier study and pinned fastp 1.3.6. One warmup
+and five alternating measured pairs per workflow. The two full SE warmup
+outputs and all 12 decompressed PE output pairs match the pinned hashes
+(960,000 reads per mate). Measured SE stdout goes to `/dev/null` on
+both sides. No parallel builds during measurement.
+
+| Workflow | Wall median native / fastp | Peak RSS median native / fastp | User CPU median native / fastp |
+| --- | --- | --- | --- |
+| SE stdout, 1 worker | 0.452 / 0.930 s | 6,733,824 / 40,173,568 B | 0.41 / 1.11 s |
+| PE gzip level 4, 4 workers | 4.288 / 3.328 s | 35,307,520 / 102,645,760 B | 4.04 / 6.62 s |
+
+The resource gate passes on both workloads: every measured native RSS is
+below every measured fastp RSS for its workflow. SE wall throughput is 2.06x
+and improves in all five pairs. PE is about 29% slower by wall median while
+using about 66% less peak memory and less user CPU. PE wins only one of five
+timed pairs. RSS is BSD time's maximum process value, not aggregate-tree
+memory. Shared-host timings vary; this does not establish cold-cache,
+cross-platform or universal performance. No production source changed.
+
 ## Publication gates
 
 The public GitHub tag and release lookup both return 404 for v0.2.0. The
