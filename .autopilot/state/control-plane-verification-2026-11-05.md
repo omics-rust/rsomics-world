@@ -21,3 +21,8 @@ modified to conceal the unsupported-interpreter failure.
 
 The local Python3.12 verification and exact-head hosted Control-plane CI remain
 separate gates; do not infer the latter from the former.
+
+Hosted run41965530121 at exact head
+`794669677f23afd5ba716af696c803f8b5f36de7` subsequently finishes SUCCESS,
+including both full control-plane tests and architecture-ledger validation.
+Later plan-only commits must still pass their own exact-head run.
