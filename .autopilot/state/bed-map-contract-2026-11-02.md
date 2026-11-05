@@ -94,6 +94,12 @@ monotone or expose a bug-emulation switch. Original source outputs remain
 unchanged evidence. Cost of this ruling is explicit divergence from the
 upstream's order-dependent missing result, not a different overlap definition.
 
+On 2026-11-05 the user explicitly confirmed `BEDMAP-2311-POINT-LOOKAHEAD-LOSS`:
+repair the omission and document the incompatibility. A fresh replay with the
+verified macOS arm64 binary from GitHub v0.6.0 returns `point`, count1 and sum7
+in both B orders. The pinned BEDTools2.31.1 binary returns no hit, count0 and
+null sum in ordinary-first order. No code or release change was needed.
+
 Source accepts A point0–0 against B0–10 and emits B/count1/sum3. Map therefore
 uses private widened virtual coordinates that can represent -1; do not route
 it through the existing u64 point-expansion helper that rejects zero. Raw BED

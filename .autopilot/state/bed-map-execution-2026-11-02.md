@@ -3,13 +3,16 @@
 Current status: the complete map feature is committed and pushed at
 bcf65d7accdf4ff956680cfdef8e5d4eeb9634f8. Native exact-head CI run41495972529
 passes all four targets with root original-data adoption. Representative
-performance demonstrates lower process RSS, not faster throughput. Release
-gates remain open.
-The user approves repairing the point-cache data-loss defect and recording
-known incompatibility. Split-plus-fraction is still held.
+performance demonstrates lower process RSS, not faster throughput. The feature
+is included in the verified GitHub v0.6.0 delivery; see
+`.autopilot/oracles/bed-public-delivery-2026-11-03-v06.json`.
+The user approves repairing both point-cache and tied-B lookahead data-loss
+defects and recording known incompatibility. The v0.6.0 macOS arm64 binary
+was replayed against both B tie orders on 2026-11-05. Split-plus-fraction is
+still held. This check does not publish a registry version.
 
-The following Task1/Task2 entries preserve earlier implementation evidence;
-their uncommitted-owner descriptions are historical, not current status.
+The entries below preserve earlier implementation and qualification evidence;
+their uncommitted-owner and pre-delivery descriptions are historical.
 
 Owner remains at cdf736337d8bd63b2770723a8a667f7af83409b9 with an intentional
 uncommitted three-path source delta. Do not discard it, stage unrelated files,
