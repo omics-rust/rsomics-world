@@ -38,17 +38,20 @@ API digests; they are transport evidence, not FASTQ qualification.
 - [x] Run GREEN and the control-plane suite on physically verified external
   scratch. Replay the exact local FASTQ package as a local sample, never as
   a hosted original. Obtain one independent review and verify its fixes.
-- [ ] Commit and push the gate; verify exact control-plane CI.
+- [x] Commit and push the gate; verify exact control-plane CI
+  (`1c5c7b08002be0c0042f50a295d888cc3e281650`, run 41991715211).
 
 ## Task 2: Exercise in the owning workflow
 
-- [ ] In `rsomics-fastq-preprocess/.github/workflows/ci.yml`, pin the checked
+- [x] In `rsomics-fastq-preprocess/.github/workflows/ci.yml`, pin the checked
   control revision. Add the attempt to four artifact names and an audit
   job requiring the full native matrix, on trusted main pushes only.
   Give only that job `actions: read`; pass the repository token only to
   the verifier step. No release/tag/registry side effect.
-- [ ] Push one owner CI commit. Observe the exact head, attempt, all four
+- [x] Push one owner CI commit. Observe the exact head, attempt, all four
   native jobs and the original-body audit. Record actual artifact IDs and
-  audit receipt metadata. Do not claim local download or public install.
+  audit receipt metadata: FASTQ `b6872a50`, run 41992261637 attempt 1;
+  [evidence](../../.autopilot/state/native-original-audit-2026-11-05.md#hosted-execution).
+  Do not claim local download or public install.
   Metagenomics is the second concrete user of this existing delivery
   format; its distinct zero-read policy and release gates remain separate.

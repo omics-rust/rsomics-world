@@ -41,8 +41,39 @@ FASTQ and metagenomics delivery contract.
   install/build chain. It does not execute recovered binaries or
   regenerate the native oracle or registry inputs.
 
-The exact-head hosted audit must still run after all four native jobs.
-Its result is a body-verification receipt, distinct from a local download,
+The hosted body-verification receipt is distinct from a local download,
 public installation, performance approval, or publication. Do not retry
 the unchanged registry credential. The metagenomics zero-read decision
 and the separate sequence/BED semantic holds are unchanged.
+
+## Hosted execution
+
+The shared helper is live at control-plane
+`1c5c7b08002be0c0042f50a295d888cc3e281650`; exact-head
+[CI 41991715211](https://github.com/omics-rust/rsomics-world/actions/runs/41991715211)
+passed. FASTQ main `b6872a50c00309b86b78611cd88c707681d9ac7d`
+changes only CI: attempt-qualified names, a post-matrix audit job, and
+an audit receipt uploaded on success. Producer, product, benchmark,
+version, and publication workflow are unchanged.
+
+[FASTQ run 41992261637](https://github.com/omics-rust/rsomics-fastq-preprocess/actions/runs/41992261637)
+completed successfully at that exact head, attempt 1. All four native
+install jobs passed. The dependent [original-body audit job](https://github.com/omics-rust/rsomics-fastq-preprocess/actions/runs/41992261637/job/127129195868)
+downloaded and verified the four uploaded ZIPs and uploaded its audit receipt.
+
+| Artifact | ID | ZIP SHA-256 from GitHub |
+| --- | --- | --- |
+| Linux x86_64 | 13397844581 | `a0d05548a5863ed549e30bbc0495475b81478fdab4fb205d2c19cca0ea188e29` |
+| Linux aarch64 | 13398468012 | `127ebe999c9a449b75eada48021caf70f9e2702d0b21f4345ac7436471d66d33` |
+| macOS x86_64 | 13398758261 | `d47ea41211a51cd1b1a893bd83cf8322655c15f87c462de45e39a81e28527359` |
+| macOS aarch64 | 13398189465 | `e00f2c49eaf1c49402787eda67c386fa639c94260d62d149fd585d14019fbb2a` |
+| Audit receipt carrier | 13398768414 | `f3749353ec8347cec2d57c00979593885baad4173d1c94e67db58329debb3efd` |
+
+The external packet above also retains the public run, jobs and artifact
+API responses. `FASTQ-HOSTED-AUDIT.json` binds their observed result to
+the run, attempt and helper revision; its SHA-256 is
+`5b96c239eaa0a0b505cd9d25bde72f6a94f426b5b498f9eda4d33c13580741c9`.
+It is a local observation of hosted verification, not the hosted
+`AUDITED.json` body. No original ZIP was downloaded to this Mac, and no
+release or registry publication was attempted. Metagenomics has only
+the local helper replay, not this hosted original-body result.

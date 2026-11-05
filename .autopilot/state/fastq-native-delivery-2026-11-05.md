@@ -67,12 +67,21 @@ artifact IDs, byte counts, API digests and expirations are recorded in
 These are hosted installation results and upload metadata, not adoption of
 the original artifact bodies.
 
+At the later CI-only main `b6872a50c00309b86b78611cd88c707681d9ac7d`,
+[run 41992261637](https://github.com/omics-rust/rsomics-fastq-preprocess/actions/runs/41992261637)
+attempt 1 passed four native installs and the post-matrix original ZIP audit.
+It checked the original bytes against the GitHub digests, then checked the
+source, installed binaries and notices inside those carriers. The audit
+receipt carrier is artifact 13398768414. See the [exact artifact identities](native-original-audit-2026-11-05.md#hosted-execution).
+The original-body verification gate is satisfied inside GitHub Actions.
+This does not imply a local download or a public release/install.
+
 ## Publication gates
 
 The public GitHub tag and release lookup both return 404 for v0.2.0. The
 registry index still exposes only 0.1.0 and 0.1.1. No publication was attempted.
-A fresh read-only GitHub API identity request returns HTTP 401. The anonymous
-ZIP request for actual artifact13391887980 also returns 401. SSH pushes do not
-confer artifact download or release API authority. Original carrier adoption
-and fresh public installation are still held. The registry token hold is
-independent, and the unchanged credential was not retried.
+The earlier read-only GitHub API identity and anonymous ZIP request for
+artifact 13391887980 both returned HTTP 401. The later hosted verification
+does not grant local release API authority. Public installation has not been
+tested. The registry token hold is independent, and the unchanged credential
+was not retried.
