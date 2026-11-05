@@ -136,6 +136,12 @@ new release or public binary delivery. The gate and remaining boundaries are rec
 
 ### Later operation groups
 
+Translation is the next selected operation. The
+`.autopilot/state/seq-translate-frontier-2026-11-05.md` preflight pins actual
+SeqKit 2.13.0 and verifies retained full outputs, signed frames, FASTQ input
+and distinct genetic codes. The documented-versus-actual trim behavior is
+held separately. No translation command is advertised yet.
+
 | Group | Target operations | Primary source assets |
 |---|---|---|
 | generic transforms | sample, shuffle, sort, split, head, rename, revcomp, wrap, case conversion, subseq, interleave | `fasta-utils`, `fastq-utils`, `fastq-sample`, `fasta-subseq` |
