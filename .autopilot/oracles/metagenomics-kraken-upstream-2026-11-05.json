@@ -1,0 +1,95 @@
+{
+  "build": {
+    "k": 35,
+    "masking": false,
+    "minimizer_length": 31,
+    "minimizer_spaces": 7,
+    "threads": 1
+  },
+  "classified": 8,
+  "executables": {
+    "build_db": {
+      "bytes": 117752,
+      "sha256": "8379e9e03f2be76ab658646232cf5cb0f33186df72d0267960bcc6f9475467b2"
+    },
+    "classify": {
+      "bytes": 258312,
+      "sha256": "45109cb6f0022ab6ec62e2f89b71604c748e84fd0aa70f114c3e178523934dc0"
+    },
+    "dump_table": {
+      "bytes": 190184,
+      "sha256": "84f64f1240ae44099b0ac8f7bfbaaf22ecf43edadc190595c1f7e177753868fd"
+    }
+  },
+  "expected_taxa": {
+    "alpha": 11,
+    "ambiguous": 0,
+    "beta": 12,
+    "cross_genus_tie": 2,
+    "gamma": 21,
+    "lowercase": 11,
+    "reverse_complement": 11,
+    "shared": 10,
+    "short": 0,
+    "sibling_tie": 10,
+    "unknown": 0
+  },
+  "files": {
+    "witness-attempt3/classifications-1.tsv": {
+      "bytes": 300,
+      "sha256": "80ced4cf9f0999d706a17f100a9bb0db650a3ef6fb5e8e8d22356da2765f240d"
+    },
+    "witness-attempt3/db/hash.k2d": {
+      "bytes": 52692,
+      "sha256": "59c4621098ba26cb3c594df9be3aef56cabf19b7c22b28f050d0634b71b276b5"
+    },
+    "witness-attempt3/db/opts.k2d": {
+      "bytes": 64,
+      "sha256": "8bfe2cb6f4108f9226c719af7b5e4d46a3caf8836f111a224164166ac6fe8f6b"
+    },
+    "witness-attempt3/db/taxo.k2d": {
+      "bytes": 622,
+      "sha256": "e3d4ce6e9ddf3a4301b84bcafdb225747744a2a73e8229e63bd2ab25da7f5dcb"
+    },
+    "witness-attempt3/db/taxonomy/names.dmp": {
+      "bytes": 301,
+      "sha256": "37bc7efa6ac76ea75f91a497e30a172117bf05c4e78508c35031ba9bd2d6b1eb"
+    },
+    "witness-attempt3/db/taxonomy/nodes.dmp": {
+      "bytes": 401,
+      "sha256": "16fde38f2d3d8c25ba947b3f840efaa547c62243d6f17e1b978c90a7612a63b6"
+    },
+    "witness-attempt3/inspect.tsv": {
+      "bytes": 599,
+      "sha256": "0af084dfc80cb5dbb518ec9c7b36003433ff6e0c39b93104aea7ab62ef844cb2"
+    },
+    "witness-attempt3/reads.fastq": {
+      "bytes": 3768,
+      "sha256": "6ef980cee23b69847ae94864610489833eccc95e0446747586fe34686b4a92fa"
+    },
+    "witness-attempt3/reference.fna": {
+      "bytes": 2472,
+      "sha256": "57fb5b23ed914443a30d34d5d8c9793259523ed09e2c0bfd97b2d6d4e2670c85"
+    },
+    "witness-attempt3/report-1.tsv": {
+      "bytes": 273,
+      "sha256": "a090002de9f6c518bd8e26e41b4c02586f231c765fd8b8d4296fd2046c96d2c7"
+    },
+    "witness-attempt3/report-minimizers.tsv": {
+      "bytes": 326,
+      "sha256": "4d9b97a1bc38a82d1acec114938840a415826a9d74da19d954f2d903da64be8d"
+    }
+  },
+  "fixture": "project-owned synthetic taxonomy and sequences, no biological claim",
+  "native_implementation_or_performance_accepted": false,
+  "oracle_version": "2.17.1",
+  "reads": 11,
+  "seed": "0x5E2AA928",
+  "source_commit": "5e2aa928d00b96d61f204d517437637863da1d8c",
+  "source_only": true,
+  "unclassified": 3,
+  "worker_outputs_equal": [
+    1,
+    4
+  ]
+}

@@ -1,0 +1,126 @@
+{
+  "backend_capacity_explicit_not_wrapper_default": true,
+  "block_size": 256,
+  "capacity": 1024,
+  "cross_genus_reference_key_intersection": 0,
+  "exact_key_intersection": 0,
+  "fixture": {
+    "reference.sequences": {
+      "bytes": 2403,
+      "sha256": "683c0c11c991877d56354add0dec3c5b69f836c0a6e4655d182e3d9a41a2117e"
+    },
+    "unknown.fastq": {
+      "bytes": 31390,
+      "sha256": "2716b2df5a9d983cc8e5e0052357205e6eeb8bffbceca869856dab3372a69ee5"
+    },
+    "unknown.sequences": {
+      "bytes": 15100,
+      "sha256": "8cb7eba7e5c0180d6830cbe5143a4a31c4b09e34eb8f44e8e6f25587018c6e4b"
+    }
+  },
+  "native_implementation_or_performance_accepted": false,
+  "partition_scanner_binary": {
+    "bytes": 41288,
+    "sha256": "20113fb1617a6bbe81483409d9254f9b51cecba2ea2149d2e0d5679c13294380"
+  },
+  "partition_scanner_source": {
+    "bytes": 1099,
+    "sha256": "1796ba302b508f87d7262ec34221037b6418e119e424fbe5559d44209cb2b87a"
+  },
+  "profiles": {
+    "28": {
+      "capacity": 1024,
+      "classification": {
+        "bytes": 7466,
+        "sha256": "fdc89420f64f7f67e03d830bc7e05f3db8d0c55ff86224691aa82bee7476e6b2"
+      },
+      "construction_and_classification_workers_equal": [
+        1,
+        4
+      ],
+      "decoded_options": [
+        35,
+        31,
+        4611686018212639539,
+        16392584516609989165,
+        true,
+        0,
+        1,
+        0,
+        0
+      ],
+      "domain_direct_minimizers": 24,
+      "exact_absent_reads_classified": 99,
+      "hash_table": {
+        "bytes": 4128,
+        "sha256": "76452c715b162bf1134d0864c8cd9b7db7a7fd3d4681aab72fd4f452c6df0068"
+      },
+      "key_bits": 4,
+      "occupied": 662,
+      "report": {
+        "bytes": 283,
+        "sha256": "a79ecc54866485ba3e993133df37ade056e0016bcb1df4e5323828518cf491c1"
+      },
+      "taxonomy": {
+        "bytes": 622,
+        "sha256": "e3d4ce6e9ddf3a4301b84bcafdb225747744a2a73e8229e63bd2ab25da7f5dcb"
+      },
+      "value_bits": 28
+    },
+    "3": {
+      "capacity": 1024,
+      "classification": {
+        "bytes": 2290,
+        "sha256": "49ffd3f863656bc26414f385e83f54d324999b26f55ade0da664c20610af1f7a"
+      },
+      "construction_and_classification_workers_equal": [
+        1,
+        4
+      ],
+      "decoded_options": [
+        35,
+        31,
+        4611686018212639539,
+        16392584516609989165,
+        true,
+        0,
+        1,
+        0,
+        0
+      ],
+      "domain_direct_minimizers": 0,
+      "exact_absent_reads_classified": 0,
+      "hash_table": {
+        "bytes": 4128,
+        "sha256": "a07fd08806ad5d6fb9fbe280d63d755a27991998b030b540fb3ed9e5ea632995"
+      },
+      "key_bits": 29,
+      "occupied": 702,
+      "report": {
+        "bytes": 32,
+        "sha256": "52509c04693f2ecba37bdb8f958138abd1b3343707ff4da4e235d59c797678ca"
+      },
+      "taxonomy": {
+        "bytes": 622,
+        "sha256": "e3d4ce6e9ddf3a4301b84bcafdb225747744a2a73e8229e63bd2ab25da7f5dcb"
+      },
+      "value_bits": 3
+    }
+  },
+  "reference_keys": 702,
+  "scanner_binary": {
+    "bytes": 41280,
+    "sha256": "1441c72053bfe1777434439d93e287225ffa9fa147242781bcc4b1e87cf8eed1"
+  },
+  "scanner_source": {
+    "bytes": 752,
+    "sha256": "1a78efbdea0cea938da21d9bae5ef731eda93b3ce504eac0bb7ea1383dddf397"
+  },
+  "scanner_uses_actual_upstream_minimizer_source": true,
+  "source_commit": "5e2aa928d00b96d61f204d517437637863da1d8c",
+  "source_only": true,
+  "subblock_size": 64,
+  "unknown_keys": 3843,
+  "unknown_reads": 100,
+  "unknown_seed": "0xC0111510"
+}

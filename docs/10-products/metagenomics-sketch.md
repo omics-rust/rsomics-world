@@ -113,6 +113,18 @@ option profile than Kraken 2. It cannot call a plain hash-to-taxid TSV a Kraken
 database, and it cannot advertise classification until database construction,
 classification, and reporting form one tested slice.
 
+The2026-11-05 source preflight now pins actual Kraken2.17.1 at
+`5e2aa928d00b96d61f204d517437637863da1d8c`. A project-owned synthetic
+build/inspect/classify/report lifecycle and a separate partition-aware compact
+collision witness run against that source. Both retain actual1/4-worker output
+agreement. Compact fingerprints affect false-positive assignments and build
+LCA; capacity and build partitioning therefore belong to the compatibility
+contract. The planned native versioned container preserves those semantics
+without claiming `.k2d` interchange. No native classifier or new public command
+exists yet. See
+`.autopilot/state/metagenomics-classification-frontier-2026-11-05.md` for exact
+source, fixtures, failed fixture assumptions, stress-profile bounds and receipts.
+
 ### Later amplicon operations
 
 | Operation group | Upstream anchors | Required boundary |
