@@ -187,6 +187,35 @@ the FASTQ install campaign proves that source/archive contract.
   steps and uploaded artifact metadata. Track original artifact adoption
   and final release separately.
 
+### Same-run original audit and staging
+
+Owner starts at `335d1039d4a9422b0c79fc98e3093bd63b5b7750`. This is
+delivery evidence only: no production, version, lock, benchmark, registry
+workflow or zero-read report change. Use the three shared delivery scripts
+at `46f68f15c2d0e83a71979cc5f51d105d3ddb6c01`, the pin qualified by the
+FASTQ staged and published runs.
+
+- [x] Verify that exact prior run 41978983755 has four native uploads but
+  no original audit or stage receipt. Retain the existing lifecycle contract.
+- [x] Add the attempt to native artifact names and run the read-only
+  original auditor after all four jobs pass on owning main pushes. Check out
+  only the pinned helpers. Give the audit job `actions: read` and
+  `contents: read`; do not change PR scope or add release permissions.
+- [x] Stage from those same four ZIPs, verify the combined SHA256SUMS, and
+  upload the six files plus STAGED.json and the separate AUDITED.json.
+  No publisher, tag or registry dispatch.
+- [x] Check workflow syntax, protected source diff and exact native CI.
+  Require actual audit and staging success and both attempt-bound uploads
+  before adopting the receipt metadata. Record what is not downloaded locally.
+
+Owner `9092568` passed [exact run 42009300914](https://github.com/omics-rust/rsomics-metagenomics/actions/runs/42009300914)
+with four native jobs and the read-only audit/stage job. Local helper tests
+and Bash/YAML checks passed; the single workflow review found no blocking
+issue. A partial job rerun cannot reuse native artifacts from an earlier
+attempt. The [metadata receipt](../../.autopilot/oracles/metagenomics-hosted-stage-2026-11-05.json)
+binds six uploaded ZIP identities, not locally downloaded file contents.
+The candidate remains unpublished, with the zero-read report policy held.
+
 ## Whole-feature review focus
 
 1. Taxdump/reference identity resolution and source ordering must not silently

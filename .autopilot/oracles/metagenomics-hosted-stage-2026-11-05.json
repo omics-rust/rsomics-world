@@ -1,0 +1,84 @@
+{
+  "schema": "rsomics.metagenomics.hosted-stage-metadata.v1",
+  "repository": "omics-rust/rsomics-metagenomics",
+  "product": "rsomics-metagenomics",
+  "version": "0.2.0",
+  "previous_owner_head": "335d1039d4a9422b0c79fc98e3093bd63b5b7750",
+  "delivery_helper": "46f68f15c2d0e83a71979cc5f51d105d3ddb6c01",
+  "run": {
+    "id": 42009300914,
+    "head_sha": "9092568f06b309e0b4b5958e570514aa82a08153",
+    "head_branch": "main",
+    "event": "push",
+    "status": "completed",
+    "conclusion": "success",
+    "run_attempt": 1,
+    "html_url": "https://github.com/omics-rust/rsomics-metagenomics/actions/runs/42009300914",
+    "run_started_at": "2026-11-05T10:16:13Z",
+    "updated_at": "2026-11-05T10:21:42Z"
+  },
+  "native_jobs": {
+    "linux-aarch64": 127183921179,
+    "linux-x86_64": 127183921007,
+    "macos-aarch64": 127183920713,
+    "macos-x86_64": 127183921092
+  },
+  "audit_job": 127186273171,
+  "hosted_audit_and_stage_verified": true,
+  "worktree_production_diff": false,
+  "artifact_zip_metadata": [
+    {
+      "id": 13406740539,
+      "name": "rsomics-metagenomics-delivery-linux-aarch64-9092568f06b309e0b4b5958e570514aa82a08153-a1",
+      "size_in_bytes": 1073242,
+      "digest": "sha256:d48efc9aa942eb7184c8947ed30e5f7af836390f9a63868c3303b4e0db77c800",
+      "expires_at": "2027-02-03T10:16:13Z"
+    },
+    {
+      "id": 13405499356,
+      "name": "rsomics-metagenomics-delivery-linux-x86_64-9092568f06b309e0b4b5958e570514aa82a08153-a1",
+      "size_in_bytes": 1110070,
+      "digest": "sha256:445fdb9701df28bb474801be342d7ca6865b98dbe7bae4d38078ba03811cc881",
+      "expires_at": "2027-02-03T10:16:13Z"
+    },
+    {
+      "id": 13405184469,
+      "name": "rsomics-metagenomics-delivery-macos-aarch64-9092568f06b309e0b4b5958e570514aa82a08153-a1",
+      "size_in_bytes": 1015691,
+      "digest": "sha256:7bd4fe825a60b82bd1c0d3e68b0abd4b6fe45e28a3265e93708c08fd6bafe58f",
+      "expires_at": "2027-02-03T10:16:13Z"
+    },
+    {
+      "id": 13405169564,
+      "name": "rsomics-metagenomics-delivery-macos-x86_64-9092568f06b309e0b4b5958e570514aa82a08153-a1",
+      "size_in_bytes": 1063046,
+      "digest": "sha256:13fccab23181b25f889e0cbec7c8af21c5dd667761890b48ec79b00de2f3319d",
+      "expires_at": "2027-02-03T10:16:13Z"
+    },
+    {
+      "id": 13405808940,
+      "name": "rsomics-metagenomics-native-audit-9092568f06b309e0b4b5958e570514aa82a08153-a1",
+      "size_in_bytes": 1297,
+      "digest": "sha256:664525d71872f06e406a3516a41cc454d2670d6f372921ac4856ce8fa270a113",
+      "expires_at": "2027-02-03T10:16:13Z"
+    },
+    {
+      "id": 13406103388,
+      "name": "rsomics-metagenomics-release-stage-9092568f06b309e0b4b5958e570514aa82a08153-a1",
+      "size_in_bytes": 3988198,
+      "digest": "sha256:062bbaa83613762eaaa3606f84f875505646c7f9d389b4f58f9ac9ea710bb196",
+      "expires_at": "2027-02-03T10:16:13Z"
+    }
+  ],
+  "local_stage_download_http_status": 401,
+  "local_stage_bodies_verified": false,
+  "release_authorized": false,
+  "github_release": false,
+  "registry": {
+    "observed_non_yanked_versions": [
+      "0.1.0"
+    ],
+    "publication_attempted": false
+  },
+  "zero_read_report_policy": "held"
+}

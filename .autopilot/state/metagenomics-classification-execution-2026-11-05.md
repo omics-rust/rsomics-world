@@ -147,3 +147,23 @@ The original ZIP probe for artifact13392559033 returns HTTP 401. This
 verifies an access gate, not archive contents or a failed CI run. Original
 carrier adoption, zero-denominator policy and public installation remain
 open. No GitHub or crates.io release was attempted.
+
+## Same-run original audit and staged candidate
+
+Owner `9092568f06b309e0b4b5958e570514aa82a08153` changes only CI from
+`335d103`. [Run 42009300914](https://github.com/omics-rust/rsomics-metagenomics/actions/runs/42009300914)
+attempt 1 passed all four native tests, package installations and live
+oracles. Job `127186273171` read the actual original ZIPs using the pinned
+control-plane helper, verified source, carrier, license and installation
+receipts, then staged four native carriers, one identical source crate and
+SHA256SUMS. It uploaded AUDITED.json and the staged packet separately.
+
+The [hosted metadata receipt](../oracles/metagenomics-hosted-stage-2026-11-05.json)
+records the run, jobs, and all six ZIP IDs/sizes/digests. Stage artifact
+`13406103388` is 3,988,198 bytes with ZIP SHA-256
+`062bbaa83613762eaaa3606f84f875505646c7f9d389b4f58f9ac9ea710bb196`.
+Anonymous ZIP download returned 401; no local adoption or public install
+is claimed. The native standalone report still rejects zero input rows
+where the retained Kraken witness returns eight zero-count rows with
+`nan` percentages. No tag, GitHub release, registry dispatch or credential
+change was made. The sparse registry index still lists only 0.1.0.

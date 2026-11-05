@@ -131,9 +131,11 @@ for the selected nucleotide profile. A 55.9-million-base reference and one
 million 150-base reads qualify all four measured build/query lanes on at
 least one resource axis; at four workers, classify plus report uses about
 76% less peak process RSS but takes about 10% longer than the source.
-Exact-head four-native package installation and live-oracle comparison pass
-at `335d103`. The original hosted carriers still require adoption; zero-read
-report policy and publication remain open. See
+Exact-head four-native installation, original-carrier audit and release-file
+staging pass at `9092568`. This is a hosted candidate, not a public download
+or locally adopted stage; zero-read report policy and publication remain open.
+See the [hosted metadata receipt](../../.autopilot/oracles/metagenomics-hosted-stage-2026-11-05.json)
+and
 `.autopilot/state/metagenomics-classification-execution-2026-11-05.md`.
 
 ### Later amplicon operations
