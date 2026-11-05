@@ -6,8 +6,10 @@ registry reset was explicitly authorized and is tracked below.
 
 The final live namespace and recovery check is recorded in
 [`registry-reset-gate-2026-07-31.md`](registry-reset-gate-2026-07-31.md).
-The current post-reconstruction namespace is recorded independently in
-[`registry-live-state-2026-08-20.md`](registry-live-state-2026-08-20.md).
+The post-reconstruction public namespace has a
+[November 2 full snapshot](registry-live-state-2026-11-02.md) and a
+[November 5 delta](registry-live-delta-2026-11-05.md). They distinguish
+registry versions, public repositories and GitHub releases.
 
 The generated crate-level ledger is
 [`portfolio-inventory.tsv`](portfolio-inventory.tsv). Regenerate it with:
