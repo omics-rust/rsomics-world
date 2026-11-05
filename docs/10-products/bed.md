@@ -148,7 +148,7 @@ may be migration aliases, but the typed long-form contract owns the help.
 | `coverage` | BEDTools `coverage` | GitHub0.3; summary/count/mean/histogram/depth, pooled B and ordinary blocks; split plus fractions held |
 | `annotate` | BEDTools `annotate` | GitHub0.3; independent multi-file count/fraction/both output |
 | `map` | BEDTools `map`; BEDOPS `bedmap` | GitHub0.3; sorted sweep/CLI and23 private reducers; lower-RSS workflow accepted, throughput slower; registry held |
-| `jaccard` | BEDTools `jaccard` | later metrics slice; base-pair set similarity and overlap filters |
+| `jaccard` | BEDTools `jaccard` | local merged-span core and RefSeq parity/performance evidence retained; point, split-merge and zero-width-hit policies held, not shipped |
 | `fisher` | BEDTools `fisher` | later metrics slice; requires a genome-size universe |
 | `reldist` | BEDTools `reldist` | full core/main/test and historical library inspected; three real source workflows establish summary/detail and valid0.50; large-coordinate narrowing/loss policy pending before native implementation |
 | `multiinter` | BEDTools `multiinter`; BEDOPS partition | source inventory and five integrated plus two boundary witnesses retained; all-empty/origin policy pending, no implementation or release claim |
