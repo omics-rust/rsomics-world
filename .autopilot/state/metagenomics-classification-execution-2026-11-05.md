@@ -91,7 +91,59 @@ The archive-checksum-backed native graph contains 60 dependency packages
 and 124 original notice files.
 
 Packet: `/Volumes/KIOXIA/Developments/tmp/metagenomics-source-delivery-20261105.wxPIox`.
-This is reuse of the package/notice check only, not installed or bundled
-metagenomics evidence. The owner has MIT/Apache originals and Kraken's
-original license but does not yet have the product-level notice required
-by the native carrier. No owner changes or release were made.
+This was the initial package/notice check, without carrier assembly. The
+local install from that extraction subsequently passed the nonempty
+classification workflow against retained goldens (`INSTALLED.json`, SHA-256
+`04cbce27deb4db45762da62922a8449e47581250f62dfffe87ce998af5892adf`).
+It did not re-execute the oracles or exercise amplicon operations.
+
+## Installed 0.2 delivery candidate
+
+Owner `335d1039d4a9422b0c79fc98e3093bd63b5b7750` adds the product notice,
+installed CLI comparison and four-native delivery CI. No Rust source, Cargo
+manifest/lock, version, benchmark or publication workflow changed. CI pins the
+same World `f580be87` helper as FASTQ. Kraken's preserved MIT original
+matches the pinned source archive byte-for-byte; neither oracle is shipped
+as a runtime binary.
+
+Packet:
+`/Volumes/KIOXIA/Developments/tmp/metagenomics-installed-delivery-20261105.Ro996v`.
+The installed gate first fails on the absent script, then passes against the
+previous package-installed executable. The final clean-head offline package
+contains 50 Git originals and 52 files. Installed from its verified
+extraction, the executable passes eight native invocations and full
+classification/report comparison with live Kraken2.17.1 plus connected
+dereplicate, abundance selection and rereplication against live VSEARCH2.31.0.
+The local fmt, strict Clippy, rustdoc and 23-test debug/release suites pass
+with both oracles. No new benchmark or empty-report qualification is implied.
+
+| Local exact-head evidence | SHA-256 |
+|---|---|
+| Source crate, 61,122 bytes | `588f74f4ec8cd817e0b8ad3daa4c9370803aaed065866554cdeb26235c3f2d04` |
+| Mac ARM tarball, 936,950 bytes | `59af8623e6f19a074192c39d671f8ddcb30e9b783f6bc2945c8901d65ea76295` |
+| Installed binary, 2,121,696 bytes | `20f28a084757037aecafc476eb33e205876d39b0e89618eef8a9e804215cd4e0` |
+| `SOURCE.json` | `d59b42bb93aceea9e49c4ba2976159bacf8191f06f0518c7359805903a1db055` |
+| `lifecycle/VERIFIED.json` | `fff8aa842deafd0072da677db136c3334c1a0651113532635e38c8f4b6c2b5f3` |
+
+The tarball independently matches the tested executable, upstream/product
+notices and all 124 indexed notice originals from 60 enabled registry
+packages. The Mac ARM binary records only system libiconv and libSystem.
+The fresh delivery review found no Critical/Important defect. Its minor
+timeout diagnostic finding is deferred: a timeout fails before a success
+receipt, but that command's partial output is not saved. Existing production
+review and performance decisions remain separate.
+
+## Hosted installed qualification
+
+[Run 41978983755](https://github.com/omics-rust/rsomics-metagenomics/actions/runs/41978983755)
+passes at exact main `335d1039d4a9422b0c79fc98e3093bd63b5b7750` on Linux and
+macOS x86_64/aarch64. All four run the pinned source oracles, debug and
+release suites, source package verification, installed CLI comparison,
+carrier assembly and upload. The actual job, step and artifact identities,
+byte counts, API digests and expiration are in
+`.autopilot/oracles/metagenomics-installed-delivery-metadata-2026-11-05.json`.
+
+The original ZIP probe for artifact13392559033 returns HTTP 401. This
+verifies an access gate, not archive contents or a failed CI run. Original
+carrier adoption, zero-denominator policy and public installation remain
+open. No GitHub or crates.io release was attempted.

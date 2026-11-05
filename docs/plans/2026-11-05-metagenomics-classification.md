@@ -146,9 +146,9 @@ Consumes Task1's complete workflows and portable database.
   `be46071cdc2ff639a166c0315b7459ef13be8736`.
 - [ ] Resolve zero-read standalone report behavior. The source emits `nan`
   with zero rows requested; the candidate rejects a zero denominator.
-- [ ] Package and install from clean source; exercise the complete installed
-  workflow on each native class. Linux x86_64 source packaging passed in
-  run41972846684; it is not four-platform installed acceptance.
+- [x] Package and install from clean source; exercise the nonempty
+  classification and amplicon workflows on each native class.
+  Run41978983755 passes at `335d103`, including uploaded candidates.
 - [ ] Adopt original CI/source/license/binary receipts and public installation
   before GitHub distribution; crates.io publication additionally needs restored
   valid registry authentication. Never retry an unchanged known-invalid secret.
@@ -158,6 +158,34 @@ Consumes Task1's complete workflows and portable database.
 The implemented candidate, local evidence, representative performance and CI
 are recorded in `.autopilot/state/metagenomics-classification-execution-2026-11-05.md`.
 The installed and public delivery gates above remain separate.
+
+### Installed delivery implementation
+
+Owner starts clean at `be46071`. Work on its main as authorized; no
+production, version, lock, benchmark or publish-workflow changes. Reuse the
+control-plane verifier at exact `f580be8705678234fd4b1abdcf9e56860f43b33f`;
+the FASTQ install campaign proves that source/archive contract.
+
+- [x] Invoke the intended `scripts/verify_install.py --binary PATH
+  --kraken-dir PATH --vsearch PATH --delivery PATH` against the retained
+  local installed candidate. Expected RED: gate script absent.
+- [x] Add the product-level notice from the verified Kraken MIT original.
+  Implement the installed gate using the packaged classification fixture:
+  one four-worker compact collision build/inspect/classify/report with live
+  Kraken output comparison, and one connected full-length dereplicate/sort/
+  rereplicate with live VSEARCH comparisons. Retain all command results and
+  emit `lifecycle/VERIFIED.json` only on success, with binary digest, source
+  head and version as required by the bundler. Do not test or decide the
+  held zero-denominator behavior here.
+- [x] Extend the existing four native CI jobs with exact helper checkout,
+  package verification, installation from extraction, the installed gate,
+  carrier assembly and explicit evidence upload. Retain both pinned upstream
+  oracles and existing suites. No new release job or credentials.
+- [x] Replay local guarded checks and the complete exact-head package/install
+  flow, verify notice and binary bodies in the carrier, and perform one
+  integrated delivery review. Push owner main and verify exact four-native
+  steps and uploaded artifact metadata. Track original artifact adoption
+  and final release separately.
 
 ## Whole-feature review focus
 

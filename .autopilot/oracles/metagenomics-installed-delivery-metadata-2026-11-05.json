@@ -1,0 +1,467 @@
+{
+  "schema": "rsomics.metagenomics.native-delivery-metadata.v1",
+  "exact_head_installed_ci": true,
+  "helper_head": "f580be8705678234fd4b1abdcf9e56860f43b33f",
+  "run": {
+    "id": 41978983755,
+    "head_sha": "335d1039d4a9422b0c79fc98e3093bd63b5b7750",
+    "event": "push",
+    "head_branch": "main",
+    "status": "completed",
+    "conclusion": "success",
+    "run_attempt": 1,
+    "html_url": "https://github.com/omics-rust/rsomics-metagenomics/actions/runs/41978983755"
+  },
+  "jobs": [
+    {
+      "id": 127084415122,
+      "name": "macos-x86_64",
+      "head_sha": "335d1039d4a9422b0c79fc98e3093bd63b5b7750",
+      "status": "completed",
+      "conclusion": "success",
+      "steps": [
+        {
+          "name": "Set up job",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/checkout@v6",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/checkout@v6",
+          "conclusion": "success"
+        },
+        {
+          "name": "Prepare runner storage",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/setup-python@v6",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run dtolnay/rust-toolchain@1.91.0",
+          "conclusion": "success"
+        },
+        {
+          "name": "Verify native compiler and build target directory",
+          "conclusion": "success"
+        },
+        {
+          "name": "Build Kraken 2.17.1 oracle",
+          "conclusion": "success"
+        },
+        {
+          "name": "Install VSEARCH 2.31.0 oracle",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run cargo fmt --all -- --check",
+          "conclusion": "skipped"
+        },
+        {
+          "name": "Run cargo clippy --locked --all-targets --all-features -- -D warnings",
+          "conclusion": "skipped"
+        },
+        {
+          "name": "Run cargo doc --locked --no-deps --all-features",
+          "conclusion": "skipped"
+        },
+        {
+          "name": "Run vsearch --version",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run cargo test --locked --all-targets --all-features",
+          "conclusion": "success"
+        },
+        {
+          "name": "Test release",
+          "conclusion": "success"
+        },
+        {
+          "name": "Package and verify exact source",
+          "conclusion": "success"
+        },
+        {
+          "name": "Install verified source and compare installed CLI",
+          "conclusion": "success"
+        },
+        {
+          "name": "Assemble native delivery candidate",
+          "conclusion": "success"
+        },
+        {
+          "name": "Retain source, installed evidence and carrier",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/setup-python@v6",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/checkout@v6",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/checkout@v6",
+          "conclusion": "success"
+        },
+        {
+          "name": "Complete job",
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "id": 127084415435,
+      "name": "macos-aarch64",
+      "head_sha": "335d1039d4a9422b0c79fc98e3093bd63b5b7750",
+      "status": "completed",
+      "conclusion": "success",
+      "steps": [
+        {
+          "name": "Set up job",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/checkout@v6",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/checkout@v6",
+          "conclusion": "success"
+        },
+        {
+          "name": "Prepare runner storage",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/setup-python@v6",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run dtolnay/rust-toolchain@1.91.0",
+          "conclusion": "success"
+        },
+        {
+          "name": "Verify native compiler and build target directory",
+          "conclusion": "success"
+        },
+        {
+          "name": "Build Kraken 2.17.1 oracle",
+          "conclusion": "success"
+        },
+        {
+          "name": "Install VSEARCH 2.31.0 oracle",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run cargo fmt --all -- --check",
+          "conclusion": "skipped"
+        },
+        {
+          "name": "Run cargo clippy --locked --all-targets --all-features -- -D warnings",
+          "conclusion": "skipped"
+        },
+        {
+          "name": "Run cargo doc --locked --no-deps --all-features",
+          "conclusion": "skipped"
+        },
+        {
+          "name": "Run vsearch --version",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run cargo test --locked --all-targets --all-features",
+          "conclusion": "success"
+        },
+        {
+          "name": "Test release",
+          "conclusion": "success"
+        },
+        {
+          "name": "Package and verify exact source",
+          "conclusion": "success"
+        },
+        {
+          "name": "Install verified source and compare installed CLI",
+          "conclusion": "success"
+        },
+        {
+          "name": "Assemble native delivery candidate",
+          "conclusion": "success"
+        },
+        {
+          "name": "Retain source, installed evidence and carrier",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/setup-python@v6",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/checkout@v6",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/checkout@v6",
+          "conclusion": "success"
+        },
+        {
+          "name": "Complete job",
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "id": 127084415465,
+      "name": "linux-aarch64",
+      "head_sha": "335d1039d4a9422b0c79fc98e3093bd63b5b7750",
+      "status": "completed",
+      "conclusion": "success",
+      "steps": [
+        {
+          "name": "Set up job",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/checkout@v6",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/checkout@v6",
+          "conclusion": "success"
+        },
+        {
+          "name": "Prepare runner storage",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/setup-python@v6",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run dtolnay/rust-toolchain@1.91.0",
+          "conclusion": "success"
+        },
+        {
+          "name": "Verify native compiler and build target directory",
+          "conclusion": "success"
+        },
+        {
+          "name": "Build Kraken 2.17.1 oracle",
+          "conclusion": "success"
+        },
+        {
+          "name": "Install VSEARCH 2.31.0 oracle",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run cargo fmt --all -- --check",
+          "conclusion": "skipped"
+        },
+        {
+          "name": "Run cargo clippy --locked --all-targets --all-features -- -D warnings",
+          "conclusion": "skipped"
+        },
+        {
+          "name": "Run cargo doc --locked --no-deps --all-features",
+          "conclusion": "skipped"
+        },
+        {
+          "name": "Run vsearch --version",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run cargo test --locked --all-targets --all-features",
+          "conclusion": "success"
+        },
+        {
+          "name": "Test release",
+          "conclusion": "success"
+        },
+        {
+          "name": "Package and verify exact source",
+          "conclusion": "success"
+        },
+        {
+          "name": "Install verified source and compare installed CLI",
+          "conclusion": "success"
+        },
+        {
+          "name": "Assemble native delivery candidate",
+          "conclusion": "success"
+        },
+        {
+          "name": "Retain source, installed evidence and carrier",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/setup-python@v6",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/checkout@v6",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/checkout@v6",
+          "conclusion": "success"
+        },
+        {
+          "name": "Complete job",
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "id": 127084415518,
+      "name": "linux-x86_64",
+      "head_sha": "335d1039d4a9422b0c79fc98e3093bd63b5b7750",
+      "status": "completed",
+      "conclusion": "success",
+      "steps": [
+        {
+          "name": "Set up job",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/checkout@v6",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/checkout@v6",
+          "conclusion": "success"
+        },
+        {
+          "name": "Prepare runner storage",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/setup-python@v6",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run dtolnay/rust-toolchain@1.91.0",
+          "conclusion": "success"
+        },
+        {
+          "name": "Verify native compiler and build target directory",
+          "conclusion": "success"
+        },
+        {
+          "name": "Build Kraken 2.17.1 oracle",
+          "conclusion": "success"
+        },
+        {
+          "name": "Install VSEARCH 2.31.0 oracle",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run cargo fmt --all -- --check",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run cargo clippy --locked --all-targets --all-features -- -D warnings",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run cargo doc --locked --no-deps --all-features",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run vsearch --version",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run cargo test --locked --all-targets --all-features",
+          "conclusion": "success"
+        },
+        {
+          "name": "Test release",
+          "conclusion": "success"
+        },
+        {
+          "name": "Package and verify exact source",
+          "conclusion": "success"
+        },
+        {
+          "name": "Install verified source and compare installed CLI",
+          "conclusion": "success"
+        },
+        {
+          "name": "Assemble native delivery candidate",
+          "conclusion": "success"
+        },
+        {
+          "name": "Retain source, installed evidence and carrier",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/setup-python@v6",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/checkout@v6",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/checkout@v6",
+          "conclusion": "success"
+        },
+        {
+          "name": "Complete job",
+          "conclusion": "success"
+        }
+      ]
+    }
+  ],
+  "artifacts": [
+    {
+      "id": 13392817082,
+      "name": "rsomics-metagenomics-delivery-linux-aarch64-335d1039d4a9422b0c79fc98e3093bd63b5b7750",
+      "head_sha": "335d1039d4a9422b0c79fc98e3093bd63b5b7750",
+      "size_in_bytes": 1074236,
+      "digest": "sha256:dc7c6207e809b2b321a288e38fd995692a52ef8485d78fa9dddc348b430f6866",
+      "expired": false,
+      "expires_at": "2027-02-03T06:13:31Z"
+    },
+    {
+      "id": 13392599191,
+      "name": "rsomics-metagenomics-delivery-macos-x86_64-335d1039d4a9422b0c79fc98e3093bd63b5b7750",
+      "head_sha": "335d1039d4a9422b0c79fc98e3093bd63b5b7750",
+      "size_in_bytes": 1063017,
+      "digest": "sha256:7bbf1ff37324c976e40574cbac622dfdf772fefc3b4007eb14982b1ec246eabb",
+      "expired": false,
+      "expires_at": "2027-02-03T06:13:31Z"
+    },
+    {
+      "id": 13392559033,
+      "name": "rsomics-metagenomics-delivery-macos-aarch64-335d1039d4a9422b0c79fc98e3093bd63b5b7750",
+      "head_sha": "335d1039d4a9422b0c79fc98e3093bd63b5b7750",
+      "size_in_bytes": 1013638,
+      "digest": "sha256:d6c6676326d18035594b5517e655f369d16e75266f767b0d2df15e43c57b5fe4",
+      "expired": false,
+      "expires_at": "2027-02-03T06:13:31Z"
+    },
+    {
+      "id": 13392309781,
+      "name": "rsomics-metagenomics-delivery-linux-x86_64-335d1039d4a9422b0c79fc98e3093bd63b5b7750",
+      "head_sha": "335d1039d4a9422b0c79fc98e3093bd63b5b7750",
+      "size_in_bytes": 1109578,
+      "digest": "sha256:adb0dfd05257bc9a76c878cbd5dc61ec293f989bb8866b7a23cee3fc13656338",
+      "expired": false,
+      "expires_at": "2027-02-03T06:13:31Z"
+    }
+  ],
+  "anonymous_original_probe": {
+    "artifact_id": 13392559033,
+    "http_status": 401
+  },
+  "root_adopted_originals": false,
+  "zero_denominator_policy_resolved": false,
+  "github_release": false,
+  "crates_io_publication": false
+}
