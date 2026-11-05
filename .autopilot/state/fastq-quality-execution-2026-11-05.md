@@ -76,6 +76,7 @@ Run metadata pins in the packet:
 - `ci-first.json`: `c5d8b7c260bf8f3f3859ecbe1de6fb8568bbaed28e6ccbd73b9475a647bb13f2`;
 - `ci-final.json`: `3c518a76d7517b26bca02531c0e761b2af69537f78f97b53a86576dfbc808ec2`.
 
-Version0.2.0 is not published. Native distribution/source/license delivery and
-public installation remain future release gates; current registry0.1.1 is
+Version0.2.0 is not published. Subsequent four-native installed delivery CI and
+remaining original-artifact/public installation gates are tracked in
+`.autopilot/state/fastq-native-delivery-2026-11-05.md`. Registry0.1.1 is
 not changed by these commits. Do not retry unchanged registry credentials.

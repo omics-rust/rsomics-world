@@ -1,0 +1,541 @@
+{
+  "schema": "rsomics.fastq.native-delivery-metadata.v1",
+  "root_adopted_originals": false,
+  "exact_head_installed_ci": true,
+  "helper_head": "f580be8705678234fd4b1abdcf9e56860f43b33f",
+  "helper_control_plane_ci": 41976325830,
+  "run": {
+    "id": 41976716505,
+    "head_sha": "ca3a6fb73372de2631f0f1902f79f0ef1253e9d4",
+    "event": "push",
+    "head_branch": "main",
+    "status": "completed",
+    "conclusion": "success",
+    "run_attempt": 1,
+    "html_url": "https://github.com/omics-rust/rsomics-fastq-preprocess/actions/runs/41976716505"
+  },
+  "jobs": [
+    {
+      "id": 127077158499,
+      "name": "macos-aarch64",
+      "head_sha": "ca3a6fb73372de2631f0f1902f79f0ef1253e9d4",
+      "status": "completed",
+      "conclusion": "success",
+      "steps": [
+        {
+          "name": "Set up job",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/checkout@v6",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/checkout@v6",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/checkout@v6",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/checkout@v6",
+          "conclusion": "skipped"
+        },
+        {
+          "name": "Prepare runner storage",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/setup-python@v6",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run dtolnay/rust-toolchain@1.91.0",
+          "conclusion": "success"
+        },
+        {
+          "name": "Verify native host and resolved Cargo target",
+          "conclusion": "success"
+        },
+        {
+          "name": "Build fastp dependencies on Ubuntu",
+          "conclusion": "skipped"
+        },
+        {
+          "name": "Install fastp build dependencies on macOS",
+          "conclusion": "success"
+        },
+        {
+          "name": "Build exact fastp oracle",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run cargo fmt --all -- --check",
+          "conclusion": "skipped"
+        },
+        {
+          "name": "Run cargo clippy --locked --all-targets --all-features -- -D warnings",
+          "conclusion": "skipped"
+        },
+        {
+          "name": "Run cargo doc --locked --no-deps --all-features",
+          "conclusion": "skipped"
+        },
+        {
+          "name": "Run cargo test --locked --all-features",
+          "conclusion": "success"
+        },
+        {
+          "name": "Test release",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run cargo bench --locked --bench pipeline -- --test",
+          "conclusion": "skipped"
+        },
+        {
+          "name": "Package and verify exact source",
+          "conclusion": "success"
+        },
+        {
+          "name": "Install verified source and check installed CLI",
+          "conclusion": "success"
+        },
+        {
+          "name": "Assemble native delivery candidate",
+          "conclusion": "success"
+        },
+        {
+          "name": "Retain source, installed evidence and carrier",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/setup-python@v6",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/checkout@v6",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/checkout@v6",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/checkout@v6",
+          "conclusion": "success"
+        },
+        {
+          "name": "Complete job",
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "id": 127077158543,
+      "name": "macos-x86_64",
+      "head_sha": "ca3a6fb73372de2631f0f1902f79f0ef1253e9d4",
+      "status": "completed",
+      "conclusion": "success",
+      "steps": [
+        {
+          "name": "Set up job",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/checkout@v6",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/checkout@v6",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/checkout@v6",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/checkout@v6",
+          "conclusion": "skipped"
+        },
+        {
+          "name": "Prepare runner storage",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/setup-python@v6",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run dtolnay/rust-toolchain@1.91.0",
+          "conclusion": "success"
+        },
+        {
+          "name": "Verify native host and resolved Cargo target",
+          "conclusion": "success"
+        },
+        {
+          "name": "Build fastp dependencies on Ubuntu",
+          "conclusion": "skipped"
+        },
+        {
+          "name": "Install fastp build dependencies on macOS",
+          "conclusion": "success"
+        },
+        {
+          "name": "Build exact fastp oracle",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run cargo fmt --all -- --check",
+          "conclusion": "skipped"
+        },
+        {
+          "name": "Run cargo clippy --locked --all-targets --all-features -- -D warnings",
+          "conclusion": "skipped"
+        },
+        {
+          "name": "Run cargo doc --locked --no-deps --all-features",
+          "conclusion": "skipped"
+        },
+        {
+          "name": "Run cargo test --locked --all-features",
+          "conclusion": "success"
+        },
+        {
+          "name": "Test release",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run cargo bench --locked --bench pipeline -- --test",
+          "conclusion": "skipped"
+        },
+        {
+          "name": "Package and verify exact source",
+          "conclusion": "success"
+        },
+        {
+          "name": "Install verified source and check installed CLI",
+          "conclusion": "success"
+        },
+        {
+          "name": "Assemble native delivery candidate",
+          "conclusion": "success"
+        },
+        {
+          "name": "Retain source, installed evidence and carrier",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/setup-python@v6",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/checkout@v6",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/checkout@v6",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/checkout@v6",
+          "conclusion": "success"
+        },
+        {
+          "name": "Complete job",
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "id": 127077158580,
+      "name": "linux-aarch64",
+      "head_sha": "ca3a6fb73372de2631f0f1902f79f0ef1253e9d4",
+      "status": "completed",
+      "conclusion": "success",
+      "steps": [
+        {
+          "name": "Set up job",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/checkout@v6",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/checkout@v6",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/checkout@v6",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/checkout@v6",
+          "conclusion": "success"
+        },
+        {
+          "name": "Prepare runner storage",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/setup-python@v6",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run dtolnay/rust-toolchain@1.91.0",
+          "conclusion": "success"
+        },
+        {
+          "name": "Verify native host and resolved Cargo target",
+          "conclusion": "success"
+        },
+        {
+          "name": "Build fastp dependencies on Ubuntu",
+          "conclusion": "success"
+        },
+        {
+          "name": "Install fastp build dependencies on macOS",
+          "conclusion": "skipped"
+        },
+        {
+          "name": "Build exact fastp oracle",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run cargo fmt --all -- --check",
+          "conclusion": "skipped"
+        },
+        {
+          "name": "Run cargo clippy --locked --all-targets --all-features -- -D warnings",
+          "conclusion": "skipped"
+        },
+        {
+          "name": "Run cargo doc --locked --no-deps --all-features",
+          "conclusion": "skipped"
+        },
+        {
+          "name": "Run cargo test --locked --all-features",
+          "conclusion": "success"
+        },
+        {
+          "name": "Test release",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run cargo bench --locked --bench pipeline -- --test",
+          "conclusion": "skipped"
+        },
+        {
+          "name": "Package and verify exact source",
+          "conclusion": "success"
+        },
+        {
+          "name": "Install verified source and check installed CLI",
+          "conclusion": "success"
+        },
+        {
+          "name": "Assemble native delivery candidate",
+          "conclusion": "success"
+        },
+        {
+          "name": "Retain source, installed evidence and carrier",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/setup-python@v6",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/checkout@v6",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/checkout@v6",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/checkout@v6",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/checkout@v6",
+          "conclusion": "success"
+        },
+        {
+          "name": "Complete job",
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "id": 127077158727,
+      "name": "linux-x86_64",
+      "head_sha": "ca3a6fb73372de2631f0f1902f79f0ef1253e9d4",
+      "status": "completed",
+      "conclusion": "success",
+      "steps": [
+        {
+          "name": "Set up job",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/checkout@v6",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/checkout@v6",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/checkout@v6",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/checkout@v6",
+          "conclusion": "success"
+        },
+        {
+          "name": "Prepare runner storage",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/setup-python@v6",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run dtolnay/rust-toolchain@1.91.0",
+          "conclusion": "success"
+        },
+        {
+          "name": "Verify native host and resolved Cargo target",
+          "conclusion": "success"
+        },
+        {
+          "name": "Build fastp dependencies on Ubuntu",
+          "conclusion": "success"
+        },
+        {
+          "name": "Install fastp build dependencies on macOS",
+          "conclusion": "skipped"
+        },
+        {
+          "name": "Build exact fastp oracle",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run cargo fmt --all -- --check",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run cargo clippy --locked --all-targets --all-features -- -D warnings",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run cargo doc --locked --no-deps --all-features",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run cargo test --locked --all-features",
+          "conclusion": "success"
+        },
+        {
+          "name": "Test release",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run cargo bench --locked --bench pipeline -- --test",
+          "conclusion": "success"
+        },
+        {
+          "name": "Package and verify exact source",
+          "conclusion": "success"
+        },
+        {
+          "name": "Install verified source and check installed CLI",
+          "conclusion": "success"
+        },
+        {
+          "name": "Assemble native delivery candidate",
+          "conclusion": "success"
+        },
+        {
+          "name": "Retain source, installed evidence and carrier",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/setup-python@v6",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/checkout@v6",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/checkout@v6",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/checkout@v6",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/checkout@v6",
+          "conclusion": "success"
+        },
+        {
+          "name": "Complete job",
+          "conclusion": "success"
+        }
+      ]
+    }
+  ],
+  "artifacts": [
+    {
+      "id": 13392158135,
+      "name": "rsomics-fastq-preprocess-delivery-linux-x86_64-ca3a6fb73372de2631f0f1902f79f0ef1253e9d4",
+      "head_sha": "ca3a6fb73372de2631f0f1902f79f0ef1253e9d4",
+      "size_in_bytes": 995057,
+      "digest": "sha256:4b615c375c08b37e57e6c5fd1d65d0455998149c2aa8808b7d9f95fd7cc6db97",
+      "expired": false,
+      "expires_at": "2027-02-03T05:52:18Z"
+    },
+    {
+      "id": 13391887980,
+      "name": "rsomics-fastq-preprocess-delivery-macos-aarch64-ca3a6fb73372de2631f0f1902f79f0ef1253e9d4",
+      "head_sha": "ca3a6fb73372de2631f0f1902f79f0ef1253e9d4",
+      "size_in_bytes": 917842,
+      "digest": "sha256:b671f85edf79550286cd19ea469f1a1b3c8b2ff8caf3e8fe6937126d925d373e",
+      "expired": false,
+      "expires_at": "2027-02-03T05:52:18Z"
+    },
+    {
+      "id": 13391674237,
+      "name": "rsomics-fastq-preprocess-delivery-linux-aarch64-ca3a6fb73372de2631f0f1902f79f0ef1253e9d4",
+      "head_sha": "ca3a6fb73372de2631f0f1902f79f0ef1253e9d4",
+      "size_in_bytes": 970511,
+      "digest": "sha256:35f6710a951c21063ed9316112783aeb3a4e635a322125c53096c70f73159cf2",
+      "expired": false,
+      "expires_at": "2027-02-03T05:52:18Z"
+    },
+    {
+      "id": 13391449701,
+      "name": "rsomics-fastq-preprocess-delivery-macos-x86_64-ca3a6fb73372de2631f0f1902f79f0ef1253e9d4",
+      "head_sha": "ca3a6fb73372de2631f0f1902f79f0ef1253e9d4",
+      "size_in_bytes": 949989,
+      "digest": "sha256:adce2fcb647f0a78122886fc98b5018ca5bafa53f220c6af55ad6758e1d01e55",
+      "expired": false,
+      "expires_at": "2027-02-03T05:52:18Z"
+    }
+  ],
+  "github_identity_http": 401,
+  "anonymous_original_probe": {
+    "artifact_id": 13391887980,
+    "http_status": 401
+  },
+  "original_bodies_retrieved": false,
+  "github_release": false,
+  "crates_io_publication": false
+}

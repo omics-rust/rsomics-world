@@ -12,7 +12,7 @@ one private control-plane script. FASTQ owns only its installed behavior check
 and orchestration. Metagenomics is the next intended consumer once its report
 policy is settled; no Rust foundation or Layer B dependency is introduced.
 
-**Tech stack:** Rust 1.91, locked Cargo, Python standard library, native GitHub
+**Tech stack:** Rust 1.91, locked Cargo, Python 3.12 standard library, native GitHub
 Actions, pinned fastp 1.3.6.
 
 **Spec:** `AGENTS.md`, `docs/10-products/sequence-fastq.md`, and
@@ -36,36 +36,37 @@ Actions, pinned fastp 1.3.6.
 
 ## Task 1: shared package and carrier proof
 
-- [ ] Add `scripts/test_native_delivery.py`: real Git and source-archive
+- [x] Add `scripts/test_native_delivery.py`: real Git and source-archive
   fixture accepts an exact package and rejects one altered source body before
   extraction. Observe the absent verifier failure first.
-- [ ] Add `scripts/native_delivery.py`. Its `source` mode takes owner, commit,
+- [x] Add `scripts/native_delivery.py`. Its `source` mode takes owner, commit,
   Rust host and output root; uses the current Cargo package from its resolved
   target; extracts to a fresh directory under the output root; verifies metadata
   and retains the enabled dependency graph/notice originals. Its `bundle` mode
   consumes the source receipt, installed binary and successful lifecycle
   receipt; checks their binary identity, native format/arch and records
   checksums. Print the extracted package directory for the workflow to use.
-- [ ] Run the new test and full control-plane checks. Verify against a real
+- [x] Run the new test and full control-plane checks. Verify against a real
   clean FASTQ source package and native installed binary before relying on CI.
-  Commit the control-plane script; push and qualify exact Control plane CI.
+  Commit the control-plane script; push and qualify exact Control plane CI
+  (run41976325830 at `f580be87`).
 
 ## Task 2: FASTQ installed CLI gate
 
-- [ ] In `scripts/verify_install.py`, retain the real SE/PE quality-window
+- [x] In `scripts/verify_install.py`, retain the real SE/PE quality-window
   lifecycle from the prior packet, parameterizing binary, pinned fastp,
   version and output directory. Emit a success receipt only after full
   outputs, ordered workers, Phred64, gzip, JSON and rollback checks pass.
-- [ ] Extend `.github/workflows/ci.yml` on the existing four native classes:
+- [x] Extend `.github/workflows/ci.yml` on the existing four native classes:
   check real Rust host, retain debug/release/fastp gates, package clean source,
   install from verified extraction, execute the installed lifecycle, bundle
   that same binary, upload only delivery artifacts. Checkout the helper at an
   exact verified World commit, outside the owning tracked tree.
-- [ ] Replay source/installation/carrier locally on physical external storage.
+- [x] Replay source/installation/carrier locally on physical external storage.
   Verify no production diff and one integrated review of the whole delivery
   surface. Commit/push owner main, wait exact-head CI, and verify all four
-  artifact identities/metadata. Original artifact adoption is separate from
-  run or upload success.
+  artifact identities/metadata. Run41976716505 passes at `ca3a6fb`.
+  Original artifact adoption is separate from run or upload success.
 
 ## Delivery and review boundaries
 
@@ -78,3 +79,6 @@ After exact-head installed gates, adopt original archives and verify license,
 build and package closure. Public release needs a usable authorized GitHub
 API path and a fresh anonymous installation. crates.io is separately gated;
 do not retry the unchanged invalid token or announce an unpublished version.
+
+Local exact-head evidence and the independent review are recorded in
+`.autopilot/state/fastq-native-delivery-2026-11-05.md`.
