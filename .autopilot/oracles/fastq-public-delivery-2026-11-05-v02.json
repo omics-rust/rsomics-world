@@ -1,0 +1,49 @@
+{
+  "schema": "rsomics.fastq.public-delivery-adoption.v1",
+  "product": "rsomics-fastq-preprocess",
+  "tag": "v0.2.0",
+  "head": "a87d76503ac0fbbca8e081d0352b44fbe35d4c70",
+  "url": "https://github.com/omics-rust/rsomics-fastq-preprocess/releases/tag/v0.2.0",
+  "published_at": "2026-11-05T09:54:27Z",
+  "main_ci": 42004045502,
+  "tag_ci": 42005312750,
+  "tag_attempt": 1,
+  "publish_job": 127173482922,
+  "metadata_source": "Anonymous GitHub release and expanded assets pages; numeric release and asset IDs were not observed by this check.",
+  "assets": {
+    "SHA256SUMS": {"bytes": 573, "sha256": "46fdce1ad4d7aa96ddfa2dea8132b9061106889491cd4796ef74e3b02b1739b6"},
+    "rsomics-fastq-preprocess-0.2.0-linux-aarch64.tar.gz": {"bytes": 843687, "sha256": "f7a6f86bbcdc17093305bad16836fa6b5d67f897f9f42379092d57cd505f64ae"},
+    "rsomics-fastq-preprocess-0.2.0-linux-x86_64.tar.gz": {"bytes": 866946, "sha256": "ecb92ca7dbec7e3fd1d7f812b3fd8f05c58ec7c6ed314cf2c1e79c864739003f"},
+    "rsomics-fastq-preprocess-0.2.0-macos-aarch64.tar.gz": {"bytes": 791163, "sha256": "014b777bc145c58a996581edae645bffa2efc40aa4d5a616e5347cd6aff9fca1"},
+    "rsomics-fastq-preprocess-0.2.0-macos-x86_64.tar.gz": {"bytes": 821227, "sha256": "c5e4759069e6aba029a92467b7780551a25f724ef6f5d46d18fd9d5609d1af45"},
+    "rsomics-fastq-preprocess-0.2.0.crate": {"bytes": 63938, "sha256": "ca18c889f5bfbb349d52c4d9d0fc73d5bb28de37fb501e2c4307175f6202e5e2"}
+  },
+  "checks": {
+    "sha256sums_matches_downloaded_assets": true,
+    "native_carriers_match_tag_run_source_binary_and_notices": true,
+    "source_package_files": 51,
+    "exact_git_bodies_and_modes": 49,
+    "clean_vcs_and_normalized_metadata": true,
+    "fresh_public_source_compile": false,
+    "new_benchmark": false
+  },
+  "macos_aarch64_install": {
+    "binary_bytes": 1865904,
+    "binary_sha256": "af022f8464ec8f635bfef8dd8000c584c39e8ee304a3d2a4df2b4a9861d3562f",
+    "native_calls": 14,
+    "expected_failures": 1,
+    "oracle": "fastp 1.3.6",
+    "oracle_sha256": "7fb979ed4d571be495a0f5cc210122cc98a4e8f1bb1224d2aa5120947f34401d",
+    "whole_output_equivalence": true,
+    "quality_report_and_transaction_verified": true,
+    "additional_invalid_phred64_exit": 1,
+    "lifecycle_sha256": "9c6e5acd62b7ce74bd64bad105bf98b078ef8f6935b3b2128dd370b239e6b441"
+  },
+  "verification_packet": "/Volumes/KIOXIA/Developments/tmp/fastq-02-exact-20261105.Z25dkh67/tmp/fastq-02-public.hjCfGsB9",
+  "public_receipt_sha256": "0bf155d816fa34b141a69318540ff2587bdfb16169339a0fe169e375b4042d19",
+  "performance_receipt": "fastq-02-exact-performance-2026-11-05.json",
+  "crates_io": {
+    "non_yanked_versions": ["0.1.0", "0.1.1"],
+    "publication_attempted": false
+  }
+}

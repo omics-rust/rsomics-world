@@ -1,8 +1,10 @@
 # Sequence and FASTQ product dossier
 
-Status: source audit complete; `rsomics-seq 0.2.0`,
-`rsomics-fastq-preprocess 0.1.1`, and `rsomics-fastq-qc 0.1.0` are published
-and independently verified.
+Status: source audit complete; the independently verified registry releases
+are `rsomics-seq 0.2.0`, `rsomics-fastq-preprocess 0.1.1`, and
+`rsomics-fastq-qc 0.1.0`. FASTQ preprocessing 0.2.0 is also available
+[on GitHub](https://github.com/omics-rust/rsomics-fastq-preprocess/releases/tag/v0.2.0),
+not on crates.io.
 
 The source pool contains 47 relevant historical crates after routing
 corrections: 34 for `rsomics-seq`, 12 for preprocessing, and one for QC. The
@@ -258,18 +260,16 @@ Rayon pool and product scheduling policy. Exact-head CI run `30731874951` and
 publish run `30732312288` passed; no preprocessing behavior or public product
 boundary changed.
 
-The0.2 source candidate adds coherent front/tail/right quality windows to
-`run`/`trim`, not a separate product or foundation. Local mandatory fastp1.3.6
-comparisons cover combinations, original-coordinate fixed cuts, poly ordering,
-Phred33/64 and synchronized SE/PE output. Current source
-`a0796cae7a908cb3f6f18c323c9dc0c6d9421c6d` passes exact-head four-native
-run41963314684; the earlier macOS ARM release-test failure is retained separately
-without an invented cause. A clean `ad92c90` source-package install passes14
-actual Mac ARM calls. New million-pair measurements show an SE throughput/RSS
-advantage and a PE gzip RSS advantage with approximately27% slower wall time;
-the old fixed/poly benchmark is not reassigned to the new workflow. Public
-0.2 delivery remains incomplete. See
-`.autopilot/state/fastq-quality-execution-2026-11-05.md` for originals and gates.
+GitHub 0.2.0 adds front/tail/right quality windows to `run` and `trim`,
+validates Phred+64 before trimming, and keeps the existing product boundary.
+[Exact tag CI](https://github.com/omics-rust/rsomics-fastq-preprocess/actions/runs/42005312750)
+passed native Linux and macOS on x86_64 and aarch64 at `a87d765`.
+Anonymous verification matched all six asset digests; the downloaded macOS
+arm64 binary passed 14 installed calls, including whole-output comparisons
+with fastp 1.3.6. The
+[delivery receipt](../../.autopilot/oracles/fastq-public-delivery-2026-11-05-v02.json)
+and [performance receipt](../../.autopilot/oracles/fastq-02-exact-performance-2026-11-05.json)
+separate the hosted release from the measured `10db8ef` production build.
 
 ## `rsomics-fastq-qc`
 

@@ -17,9 +17,10 @@ the [native audit contract](2026-11-05-native-original-audit.md).
   identical source crate, and create a receipt only after all bytes agree.
 - [x] Verify the FASTQ owner's exact-head `main` run stages the original
   bodies with read-only permissions and retains the six assets plus receipt.
-- [ ] Add and test a separate version-tag release job, then verify the full
-  hosted gate and anonymously install the public macOS arm64 carrier. Do
-  not use a stale registry credential, move tags, or modify older releases.
+- [x] Add and locally test the separate version-tag release job.
+- [x] Verify the exact `main` and tag runs, then anonymously verify all
+  six public assets and install the macOS arm64 carrier. Do not use a stale
+  registry credential, move tags, or modify older releases.
 
 The staging tests fail before the helper exists, then pass against four
 fixture ZIPs. The full control suite runs 548 tests with two resource skips.
@@ -73,3 +74,35 @@ Use the [paginated release list](https://docs.github.com/en/rest/releases/releas
 to discover drafts and the [release-ID asset list](https://docs.github.com/en/rest/releases/assets#list-release-assets)
 to verify the draft. Use the returned, validated GitHub upload endpoint and
 raw file inputs; do not perform tag-based overwrite or reuse an old draft.
+
+Owner implementation: `scripts/publish_release.py` consumes the staged
+directory, same-run receipt SHA-256, notes, and tag event. Test the real
+gate and bytes against a local GitHub API double: successful draft, edited
+packet, moved tag, existing draft, and wrong uploaded digest. `ci.yml`
+exports the stage receipt hash and grants the release token only to the
+new tag job; the `main` workflow tests the gate without a write token.
+Before pushing the tag, verify that production source, Cargo metadata, and
+lockfile are unchanged from the measured `10db8ef` and that the final owner
+commit passes the entire `main` workflow. Verify the tag run separately.
+
+The owner tag gate is `a87d76503ac0fbbca8e081d0352b44fbe35d4c70`.
+Seven release-gate cases passed after the expected missing-script RED.
+Local Debug/Release each passed 56 Rust tests with the actual fastp 1.3.6
+oracle, plus formatting, strict Clippy and rustdoc. Source, Cargo metadata,
+lockfile, and the manual registry workflow are unchanged from `10db8ef`.
+Read-only review found no Critical or Important issue. Use a lightweight
+tag; an annotated tag fails the exact commit-ref gate. The owner's default
+branch is `main`. Its exact main run is
+[42004045502](https://github.com/omics-rust/rsomics-fastq-preprocess/actions/runs/42004045502).
+
+The tag was pushed once. Its exact run
+[42005312750](https://github.com/omics-rust/rsomics-fastq-preprocess/actions/runs/42005312750)
+passed all four native installs, original-carrier audit, staging, and the
+tag-only publisher. [GitHub v0.2.0](https://github.com/omics-rust/rsomics-fastq-preprocess/releases/tag/v0.2.0)
+is public. The anonymous verification matched the six downloaded bodies to
+GitHub's SHA-256 digests and matched the source package to all 49 Git file
+bodies and modes. The public macOS arm64 binary passed 14 installed calls
+with fastp 1.3.6 and rejected an invalid Phred+64 byte before trimming.
+See the [public receipt](../../.autopilot/oracles/fastq-public-delivery-2026-11-05-v02.json).
+This is delivery verification, not a new benchmark or a registry release.
+The sparse index still lists only 0.1.0 and 0.1.1.
